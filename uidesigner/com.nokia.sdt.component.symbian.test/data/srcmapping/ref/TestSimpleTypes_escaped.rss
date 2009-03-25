@@ -1,0 +1,7 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES r_test1_esc
+	{
+	buf = "dir\\file";
+	buf8 = "escaped\ttab";
+	}

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- =============================================================================== -->
+<!-- CONTEXT HELP FOR CARBIDE DEBUGGER DIALOGS AND PLUGINS                           -->
+<!-- Location for all Carbide debugger context help.                                 -->
+<!-- Includes context help references for:                                           -->
+<!--    plugin="com.freescale.cdt.debug.cw.core.ui"                                  -->
+<!--    plugin="com.nokia.cdt.debug.cw.symbian"                                      -->
+<!--    plugin="com.nokia.carbide.cpp.debug.kernelaware"                                     -->
+<!--    plugin="com.nokia.cdt.debug.launch"                                          -->
+<!-- =============================================================================== -->
+
+<contexts>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.freescale.cdt.debug.cw.core.ui                                      -->
+<!-- =============================================================================== -->
+	
+
+	<!-- Carbide.c++ debugging preference panel -->
+	<context id="debugger_global_settings_page_help" >
+		<description>Carbide.c++ global debugger settings</description>
+		<topic label="Carbide.c++ Debugger preferences"	  href="html/reference/wnd_debugger_prefs.htm" />
+	</context>
+
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.cdt.debug.cw.symbian                                          -->
+<!-- FILE: GlobalSettings.java                                                       -->	
+<!-- =============================================================================== -->
+
+		
+<!-- =============================================================================== -->
+<!-- Define help for Carbide.c++ Symbian OS Data View                                -->
+<!-- PLUGIN: com.nokia.carbide.cpp.debug.kernelaware                                         -->
+<!-- FILE: SymbianOSView.java                                                        -->	
+<!-- =============================================================================== -->
+
+	<!-- Symbian OS Data View main window -->
+	<context id="symbian_os_data_view" >
+		<description>Use the Symbian OS Data view to view processes, threads, chunks, and library information</description>
+		<topic label="Symbian OS Data"						href="html/reference/view_symbian_kernel.htm" />
+		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+	</context>
+
+	<!-- Symbian OS Data View Overview pane -->
+	<context id="symbian_os_data_view_overview_tab" >
+		<description>The Overview pane displays kernel objects by their heirarchical owner relationship</description>
+		<topic label="Symbian OS Data Overview"				href="html/reference/view_symbian_kernel.htm#overview" />
+		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+	</context>
+
+		<!-- Symbian OS Data View Processes pane -->
+	<context id="symbian_os_data_view_process_tab" >
+		<description>The Processes pane lists processes in the target's Symbian OS</description>
+		<topic label="Symbian OS Processes"					href="html/reference/view_symbian_kernel.htm#processes" />
+		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+	</context>
+
+		<!-- Symbian OS Data View Thread pane -->
+	<context id="symbian_os_data_view_thread_tab" >
+		<description>The Threads pane lists threads in the target's Symbian OS</description>
+		<topic label="Symbian OS Threads"						href="html/reference/view_symbian_kernel.htm#threads" />
+		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+	</context>
+		
+	<!-- Symbian OS Data View Chunk pane -->
+	<context id="symbian_os_data_view_chunk_tab" >
+		<description>The Chunks pane lists chunks in the target's Symbian OS</description>
+		<topic label="Symbian OS Chunks"						href="html/reference/view_symbian_kernel.htm#chunks" />
+		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+	</context>
+
+	<!-- Symbian OS Data View Library pane -->
+	<context id="symbian_os_data_view_library_tab" >
+		<description>The Libraries pane lists libraries in the target's Symbian OS</description>
+		<topic label="Symbian OS Library List"					href="html/reference/view_symbian_kernel.htm#Library" />
+		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+	</context>
+
+		
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.cdt.debug.launch                                              -->
+<!-- FILE: LaunchTabHelpIds.java                                                     -->	
+<!-- =============================================================================== -->
+
+	<!-- EXECUTABLES -->
+	<context id="all_executables">
+		<description>Control which executables are included in the debug process.</description>
+		<topic label="Executables" 							href="html/reference/trk/panel_trk_exes.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+	
+	<!-- ============================================================== -->
+	<!-- EMULATOR SECTION                                               -->
+	<!-- ============================================================== -->
+	
+	<context id="context_main" >
+		<description>Define the project's launch configuration.</description>
+		<topic label="Main"         						href="html/reference/emulator/panel_emulator_main.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+
+	<!-- LAUNCH.MAIN -->
+	<context id="emulation_main" >
+		<description>Define the project's launch configuration.</description>
+		<topic label="Main"         						href="html/reference/emulator/panel_emulator_main.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+
+	<!-- LAUNCH.DEBUGGER -->
+	<context id="emulation_debugger" >
+		<description>Control symbolics loading and other debugger options.</description>
+		<topic label="Debugger" 							href="html/reference/emulator/panel_debugger.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+
+	<!-- LAUNCH.EXCEPTIONS -->
+	<context id="emulation_exceptions" >
+		<description>Control the exceptions the debugger should catch.</description>
+		<topic label="x86 Exceptions" 						href="html/reference/emulator/panel_debug_exceptions.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	
+
+	<!-- ============================================================== -->
+	<!-- TRK ATTACH TO PROCESS SECTION                                  -->
+	<!-- ============================================================== -->
+	
+	<!-- LAUNCH.ATTACH -->
+	<context id="attach_main" >
+		<description>Create an Attach to Process launch configuration.</description>
+		<topic label="Attach to Process"  					href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	
+	<!-- ATTACH TO PROCESS WINDOW -->
+	<context id="attach_choose_process" >
+		<description>Attaching to a process on the target device.</description>
+		<topic label="Attach to Process"  					href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Symbian OS Data view"  				href="html/reference/view_symbian_kernel.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	
+	
+	<!-- ============================================================== -->
+	<!-- TRK RUN-MODE SECTION                                           -->
+	<!-- ============================================================== -->
+	
+	<!-- RUNMODE.MAIN -->
+	<context id="runmode_main" >
+		<description>Control symbolics loading and other debugger options.</description>
+		<topic label="Main" 								href="html/reference/trk/panel_trk_main.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>S
+
+	<!-- RUNMODE.DEBUGGER -->
+	<context id="runmode_debugger" >
+		<description>Control entry points, message handling, and instruction set default settings.</description>
+		<topic label="Debugger"      						href="html/reference/trk/panel_trk_debugger.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<!-- RUNMODE.CONNECTION -->
+	<context id="runmode_connection" >
+		<description>Specify the method used to transfer files to the target device.</description>
+		<topic label="Connection"    						href="html/reference/trk/panel_trk_connection.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<!-- RUNMODE.INSTALLATION -->
+	<context id="runmode_installation" >
+		<description>Specify the .sis file to install on the target device.</description>
+		<topic label="Installation"  						href="html/reference/trk/panel_trk_installation.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<!-- RUNMODE.FILETRANSFER -->
+	<context id="runmode_filetransfer" >
+		<description>Manage the files transfered to the target device at the start of each launch.</description>
+		<topic label="File Transfer" 						href="html/reference/trk/panel_trk_file_transfer.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<!-- RUNMODE.FILETRANSFERDIALOG -->
+	<context id="runmode_filetransferDialog" >
+		<description>Select additional files for addition to the file transfer list.</description>
+		<topic label="File Transfer" 						href="html/reference/trk/panel_trk_file_transfer.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	
+	<!-- ============================================================== -->
+	<!-- TRK STOP-MODE SECTION                                          -->
+	<!-- ============================================================== -->
+	
+	<!-- STOPMODE.MAIN -->
+	<context id="stopmode_main" >
+		<description>Control symbolics loading and other debugger options.</description>
+		<topic label="Main" 								href="html/reference/trk/panel_trk_main.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+	</context>
+
+	<!-- STOPMODE.DEBUGGER -->
+	<context id="stopmode_debugger" >
+		<description>Control entry points, message handling, and instruction set default settings.</description>
+		<topic label="Debugger"      						href="html/reference/trk/panel_trk_debugger.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+	</context>
+
+	<!-- STOPMODE.T32CONNECTION -->
+	<context id="stopmode_t32connection" >
+		<description>Specify the settings for Trace32 debugging.</description>
+		<topic label="Trace32 Support"    					href="html/reference/wnd_Trace32_config.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+	</context>
+
+	<!--  STOPMODE.SOPHIACONNECTION -->
+	<context id="stopmode_sophiaconnection" >
+		<description>Specify the settings for Sophia debugging.</description>
+		<topic label="Sophia Target Interface Support"    	href="html/reference/wnd_sophia_config.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<!--  STOPMODE.ROMIMAGE -->
+	<context id="stopmode_romimage" >
+		<description>Specify the ROM image details.</description>
+		<topic label="Stop Mode ROM Image"					href="html/tasks/debugger/stop_mode_debug_launchcfg.htm" />
+		<topic label="ROM Log"								href="html/tasks/debugger/stop_mode_debug_rom_log_file.htm" />
+	</context>
+
+	<!--  STOPMODE.ROMLOGFILE -->
+	<context id="stopmode_romlogfile" >
+		<description>Specify the ROM Log file details.</description>
+		<topic label="ROM Log"								href="html/reference/launch_configs/sys_trk_rom_log.htm" />
+	</context>
+
+	
+	<!-- ============================================================== -->
+	<!-- LAUNCH WIZARDS SECTION                                         -->
+	<!-- FILE: LaunchWizardHelpIds.java                                 -->	
+	<!-- ============================================================== -->
+
+	<!-- WIZARD BINARY SELECTION PAGE (LAUNCH CONFIG WIZARD) -->
+	<context id="wizard_binary_selection_page">
+		<description>Control which executables are included in the debug process.</description>
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	
+	<context id="wizard_selection_page" >
+		<description>Select a launch type to create a launch configuration.</description>
+		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Filter"		href="html/reference/launch_configuration_filter.htm" />
+		<topic label="Carbide Project Settings"		    href="html/reference/build_properties/pane_project_settings.htm" />
+	</context>
+
+	<context id="wizard_summary_page" >
+		<description>Review launch configuration information.</description>
+		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<context id="wizard_sophia_page" >
+		<description>Specify Sophia configuration information.</description>
+		<topic label="Creating a Launch Configuration"				href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Symbian OS Sophia Target Interface Support"	href="html/reference/wnd_sophia_config.htm" />
+	</context>
+
+	<context id="wizard_trace32_page" >
+		<description>Specify Trace32 configuration information.</description>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Symbian OS Trace32 Support"			href="html/reference/wnd_Trace32_config.htm" />
+	</context>
+
+	<context id="wizard_trk_connection_page" >
+		<description>Specify TRK connection information.</description>
+  <topic href="html/reference/launch_configs/page_connection.htm" label="Connection options"/>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+
+	<context id="wizard_trk_sis_connection_page" >
+		<description>Specify TRK SIS connection information.</description>
+  <topic href="html/reference/launch_configs/page_connection.htm" label="Connection options"/>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+
+	<context id="wizard_rom_image_page" >
+		<description>Specify ROM image information.</description>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"				href="html/concepts/launch_configuration.htm" />
+  <topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
+	</context>
+
+	<context id="wizard_stop_mode_rom_img_page" >
+		<description>Define startup options and ROM image download information.</description>
+		<topic label="Stop-mode Debugger"					href="html/reference/launch_configs/page_trk_debugger.htm" />
+		<topic label="ROM Image options"						href="html/reference/launch_configs/stop_mode_rom_image.htm" />
+  <topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
+	</context>
+
+	<context id="wizard_trk_sis_selection_page" >
+		<description>Specify the SIS file to install.</description>
+		<topic label="SIS Builder"							href="html/reference/build_properties/pane_build_config_sis.htm" />
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<context id="get_sis_info_dialog" >
+		<description>Specify SIS information.</description>
+		<topic label="Set PKG File for Build Configuration"		href="html/reference/build_properties/pane_pkg_config.htm" />
+		<topic label="Creating a Launch Configuration"			href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	
+	<context id="trk_connection_bluetooth" >
+    <description>Learn how to connect to a device using Bluetooth.</description>
+		<topic label="Bluetooth Connection Setup" 				href="html/tasks/trk/trk_connection_bluetooth.htm"/>
+		<topic label="On-Device Setup" 							href="html/reference/trk/wnd_on_device_setup.htm"/>
+	</context>
+
+	<context id="trk_connection_usb" >
+    <description>Learn how to connect to a device using USB.</description>
+		<topic label="USB Connection Setup" 					href="html/tasks/trk/trk_connection_usb.htm"/>
+		<topic label="On-Device Setup" 							href="html/reference/trk/wnd_on_device_setup.htm"/>
+	</context>
+	
+	<context id="check_existing_trk_page" >
+    <description>Connect and verify the version of TRK on the device.</description>
+		<topic label="Check TRK version" 						href="html/reference/trk/wnd_on_device_check_tab.htm"/>
+		<topic label="On-Device Setup" 							href="html/reference/trk/wnd_on_device_setup.htm"/>
+	</context>
+	
+	<context id="install_trk_page" >
+    <description>Download and install the latest TRK to the device.</description>
+		<topic label="Install latest TRK" 						href="html/reference/trk/wnd_on_device_install_tab.htm"/>
+		<topic label="On-Device Setup" 							href="html/reference/trk/wnd_on_device_setup.htm"/>
+	</context>
+
+</contexts>

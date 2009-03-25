@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- =============================================================================== -->
+<!-- CONTEXT HELP FOR ECLIPSE DIALOGS AND PLUGINS USED BY CARBIDE                    -->
+<!-- Includes context help references for:                                           -->
+<!--    plugin="org.eclipse.debug.ui"                                                -->
+<!--    plugin="org.eclipse.ui"                                                      -->
+<!--    plugin="org.eclipse.ui.console"                                              -->
+<!--    plugin="org.eclipse.ui.ide"                                                  -->
+<!--    plugin="org.eclipse.ui.workbench"                                            -->
+<!-- =============================================================================== -->
+
+<contexts>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.debug.ui                                                    -->
+<!-- =============================================================================== -->
+	
+	<!-- ============================================================== -->
+	<!-- DEBUG VIEW                                                     -->
+	<context id="debug_view_context" >
+		<description>The Debug view shows the target debugging information in a tree hierarchy.</description>
+		<topic label="Debug view"  						href="html/reference/view_debug.htm" />
+		<topic label="Controlling debugger execution"  	href="html/concepts/working_with_debugger.htm" />
+	</context>
+
+
+	<!-- ============================================================== -->
+	<!-- VARIABLES VIEW                                                 -->
+	<context id="variable_view_context" >
+		<description>Use the Variables view to manipulate the variables or variable hierarchy used in source code.</description>
+		<topic label="Variables view"             		href="html/reference/view_variables.htm" />
+		<topic label="Show Variables View"		  		href="html/tasks/variables/show_variables_view.htm" />
+		<topic label="Showing Global Variables"	  		href="html/tasks/variables/show_global_variables.htm" />
+	</context>
+
+	
+	<!-- ============================================================== -->
+	<!-- BREAKPOINTS VIEW                                               -->
+	<context id="breakpoint_view_context"  >
+		<description>Use the Breakpoints view to examine, enable or disable the breakpoints in one or more build configurations.</description>
+		<topic label="Breakpoints view"  					href="html/reference/view_breakpoints.htm" />
+		<topic label="Breakpoints" 				            href="html/concepts/breakpoints.htm" />
+	</context>
+
+
+	<!-- ============================================================== -->
+	<!-- EXPRESSIONS VIEW                                               -->
+	<context id="expression_view_context" >
+		<description>Use the Expressions view to monitor and manipulate variables, structures, and arrays.</description>
+		<topic label="Expressions view"  				href="html/reference/view_expressions.htm" />
+		<topic label="Adding Expressions" 				href="html/tasks/expressions/expr_adding.htm" />
+		<topic label="Editing Expressions" 				href="html/tasks/expressions/expr_editding.htm" />
+		<topic label="Removing Expressions" 			href="html/tasks/expressions/expr_removing.htm" />
+	</context>
+
+
+	<!-- LAUNCH CONFIGURATION VIEW 
+	<context id="launch_configuration_view_context" >
+		<description>Use the Launch view to </description>
+		<topic label="Launch Configuration view"  							href="html/reference/.htm" />
+	</context>
+   -->
+	
+	<!-- ============================================================== -->
+	<!-- REGISTERS VIEW                                                 -->
+	<context id="registers_view_context" >
+		<description>Use the Registers view to view general, FPU, and host-specific registers of the host computer, not the target device.</description>
+		<topic label="Registers view"  						href="html/reference/view_registers.htm" />
+		<topic label="Opening a Registers View"				href="html/tasks/registers/mem_reg_open_wnd.htm" />
+		<topic label="Viewing Registers"					href="html/tasks/registers/mem_reg_viewing.htm" />
+		<topic label="Changing Register Values"				href="html/tasks/registers/mem_reg_changing.htm" />
+	</context>
+
+		
+	<!-- ============================================================== -->
+	<!-- MEMORY VIEW                                                    -->
+	<context id="MemoryView_context" >
+		<description>Use the Memory view to inspect and change process memory.</description>
+		<topic label="Memory view"  							href="html/reference/view_memory_wnd.htm" />
+		<topic label="Adding Memory Monitors"					href="html/tasks/memory/memory_monitor_adding.htm" />
+		<topic label="Adding Memory Renderings"					href="html/tasks/memory/memory_rendering_adding.htm" />
+		<topic label="Removing Memory Monitors or Renderings"	href="html/tasks/memory/memory_monitor_removing.htm" />
+	</context>
+
+	<!-- SOURCES -->
+	<context id ="source_container_lookup_tab" >
+	   <description>Specify where the debugger should look for source files.</description>
+	   <topic label="Source" href="../org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
+	</context>
+	
+	<!-- COMMON -->
+	<context id ="launch_configuration_dialog_common_tab ">
+	   <description>Specify where the debugger should store the debug configuration.</description>
+	   <topic label="Common"	href="../org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm" />
+	</context>
+
+	<context id="wizard_selection_page" >
+		<description>Select a launch type to create a launch configuration.</description>
+		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Filter"		href="html/reference/launch_configuration_filter.htm" />
+		<topic label="Carbide Project Settings"		    href="html/reference/build_properties/pane_project_settings.htm" />
+	</context>
+
+	<context id="wizard_summary_page" >
+		<description>Review launch configuration information.</description>
+		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<context id="wizard_sophia_page" >
+		<description>Specify Sophia configuration information.</description>
+		<topic label="Creating a Launch Configuration"				href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Symbian OS Sophia Target Interface Support"	href="html/reference/wnd_sophia_config.htm" />
+	</context>
+
+	<context id="wizard_trace32_page" >
+		<description>Specify Trace32 configuration information.</description>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Symbian OS Trace32 Support"			href="html/reference/wnd_Trace32_config.htm" />
+	</context>
+
+	<context id="wizard_trk_connection_page" >
+		<description>Specify TRK connection information.</description>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+
+	<context id="wizard_rom_image_page" >
+		<description>Specify ROM image information.</description>
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configurations"				href="html/concepts/launch_configuration.htm" />
+	</context>
+
+	<context id="get_sis_info_dialog" >
+		<description>Specify SIS information.</description>
+		<topic label="Set PKG File for Build Configuration"		href="html/reference/build_properties/pane_pkg_config.htm" />
+		<topic label="Creating a Launch Configuration"			href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	
+	<!-- PREFERENCE PAGES  -->
+
+	<!--
+	<context id="debug_preference_page_context" >
+	</context>
+	 -->
+
+	<!--
+	<context id="debug_action_groups_views_preference_page_context" >
+	</context>
+	 -->
+
+	<!--
+	<context id="launch_history_preference_page_context" >
+	</context>
+	 -->
+
+	<!--
+	<context id="simple_variable_preference_page_context" >
+	</context>
+	 -->
+
+
+	<!-- DIALOGS  -->
+
+	<!--
+	<context id="launch_configuration_properties_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="single_launch_configuration_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="variable_selection_dialog_context" >
+	</context>
+	 -->
+
+	<!--
+	<context id="edit_source_lookup_path_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="source_container_lookup_tab" >
+	</context>
+	 -->
+
+	<!--
+	<context id="edit_source_lookup_path_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="add_source_container_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="project_source_container_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="folder_source_container_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="archive_source_container_dialog" >
+	</context>
+	 -->
+
+	<!--
+	<context id="multiple_source_selection_dialog" >
+	</context>
+	 -->
+
+
+	<!-- PROPERTY PAGES  -->
+
+	<!--
+	<context id="process_property_page_context" >
+	</context>
+	 -->
+
+	
+	<!-- LAUNCH CONFIGURATION DIALOG PAGES  -->
+
+	<!-- ============================================================== -->
+	<!-- LAUNCH CONFIGURATION DIALOG                                    -->
+	<context id="launch_configuration_dialog" >
+		<description>Use the Debug or Run panels to create launch configurations for your applications.</description>
+		<topic label="Creating Launch Configurations"			href="html/tasks/projects/prj_debug_config.htm" />
+	</context>
+	 
+	<!--
+	<context id="launch_configuration_dialog_common_tab" >
+	</context>
+	 -->
+
+	<!--
+	<context id="launch_configuration_dialog_perspective_tab" >
+	</context>
+	 -->
+
+	<!--    -->
+	<context id="launch_configuration_dialog_environment_tab" >
+        <description>Use the environment pane to add or remove environment variables.</description>
+		<topic label="Environment pane"  				href="html/reference/emulator/wnd_emulator_overview.htm" />
+	</context>
+
+	
+	<!-- WORKING SET PAGE  -->
+
+	<!--
+	<context id="working_set_page_context" >
+	</context>
+	 -->	
+	
+	<!-- DEBUGGER EDITOR  -->
+
+	<!--
+	<context id="debugger_editor_no_source_common" >
+	</context>
+	 -->	
+
+		
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.ui                                                          -->
+<!-- =============================================================================== -->
+
+	<!-- ============================================================== -->
+	<!-- NEW WIZARD -->
+	<context id="new_wizard_selection_wizard_page_context" >
+		<description>Select the project, class, or file to create.</description>
+		<topic label="New Symbian OS ++ Projects" 				href="html/tasks/CreatingNewProjects.html"/>
+		<topic label="New Symbian OS C++ Classes"				href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		<topic label="New Symbian OS MMP File"		        	href="html/reference/NewMMP_wizard.html" />
+	</context>
+
+
+	<!-- ============================================================== -->
+	<!-- IMPORT WIZARD                                                  -->
+	<context id="import_wizard_selection_wizard_page_context" >
+		<description>Select the type of file to import for debugging.</description>
+		<topic label="Importing Projects from a BLD.INF File"	href="html/tasks/ImportingProjects.html"/>
+		<topic label="Importing a Symbian Executable"  			href="html/reference/projects/prj_import_exe.htm" />
+		<topic label="Carbide.c++ Perspective" 					href="html/concepts/SymbianPerspective.html" />
+		<topic label="C/C++ Project and File Properties"		href="html/reference/ProjectPreferences.html" />
+	</context>
+
+    <context id="import_wizard_context">
+		<description>Import an executable for debugging.</description>
+		<topic label="Importing a Symbian Executable"  			href="html/tasks/projects/prj_import_exe.htm" />
+    </context>
+
+	
+	<!-- ============================================================== -->
+	<!-- EXPORT WIZARD                                                  -->
+	<context id="export_wizard_selection_wizard_page_context" >
+		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
+		<topic label="Console view"  			href="html/reference/view_log.htm" />
+	</context>
+
+	
+	<!-- PREFERENCE PANELS -->
+
+	<!-- KEYS
+	<context id="keys_preference_page_context" >
+		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
+		<topic label="Console view"  			href="html/reference/view_log.htm" />
+	</context>
+	-->
+	
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.ui.console                                                  -->
+<!-- =============================================================================== -->
+	
+	<!-- ============================================================== -->
+	<!-- CONSOLE VIEW                                                   -->
+	<context id="console_view_context" >
+		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
+		<topic label="Console view"  			href="html/reference/view_log.htm" />
+	</context>
+
+	<!-- PREFERENCE PANEL 
+	<context id="console_preference_page_context" >
+	</context>
+	 -->
+	
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.ui.ide                                                      -->
+<!-- =============================================================================== -->
+	
+	<!-- ============================================================== -->
+	<!-- NEW PROJECT WIZARD PAGE                                        -->
+	<context id="new_project_wizard_page_context" >
+		<description>Select the project type to create.</description>
+		<topic label="Creating New Projects"		href="html/tasks/CreatingNewProjects.html" />
+	</context>
+
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.ui.workbench                                                -->
+<!-- =============================================================================== -->
+	
+	<!-- CONFIGURATION DETAILS CONTROL -->
+	<context id="system_summary_dialog_context" >
+		<description>Configuration details of this Carbide.c++ installation. May include useful information that should be included with a bug report.</description>
+	</context>
+
+	<!-- FEATURE DETAILS CONTROL
+	<context id="about_features_dialog_context" >
+		<description>This dialog shows configuration details for this Carbide.c++ installation.</description>
+	</context>
+    -->
+	
+	<!-- PLUG-IN DETAILS CONTROL
+	<context id="about_plugins_dialog_context" >
+		<description>This dialog shows configuration details of this Carbide.c++ installation.</description>
+	</context>
+    -->
+	
+	<!-- ? DETAILS CONTROL
+	<context id="about_plugins_dialog_context" >
+		<description>2.This dialog shows configuration details of this Carbide.c++ installation.</description>
+	</context>
+	 -->
+
+
+</contexts>

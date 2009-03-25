@@ -1,0 +1,7 @@
+#include <enumsheader.rh>
+#include "TestEnumTooManyConflicts.hrh"
+
+RESOURCE COMMAND r_test_enum_uniqueness1
+	{
+	command = EMyContainerTestEnumUniqueness1TheCmd100;
+	}

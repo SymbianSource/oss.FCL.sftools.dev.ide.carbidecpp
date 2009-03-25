@@ -1,0 +1,11 @@
+#include <enumsheader.rh>
+#include "TestEnumUniqueness2.hrh"
+
+RESOURCE COMMAND r_test_enum_uniqueness1
+	{
+	command = EMyContainerTestEnumUniqueness1TheCmd;
+	}
+RESOURCE COMMAND r_test_enum_uniqueness2
+	{
+	command = EMyContainerTestEnumUniqueness2TheCmd;
+	}

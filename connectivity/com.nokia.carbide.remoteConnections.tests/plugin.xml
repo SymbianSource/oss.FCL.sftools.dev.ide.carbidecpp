@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectionType">
+      <connectionType
+            class="com.nokia.carbide.remoteconnections.tests.extensions.IntervalConnectionType">
+      </connectionType>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.service">
+      <service
+            class="com.nokia.carbide.remoteconnections.tests.extensions.RandomCycleService">
+      </service>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectionType">
+      <connectionType
+            class="com.nokia.carbide.remoteconnections.tests.extensions.NoSettingsConnectionType">
+      </connectionType>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.service">
+      <service
+            class="com.nokia.carbide.remoteconnections.tests.extensions.UnknownStatusService">
+      </service>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="com.nokia.carbide.remoteconnections.tests.extensions.actionSet"
+            label="Service Dialogs"
+            visible="true">
+         <action
+               class="com.nokia.carbide.remoteconnections.tests.extensions.RandomCycleServiceDialogAction"
+               id="com.nokia.carbide.remoteconnections.tests.randomCycle.action"
+               label="Random Cycle Service Dialog..."
+               menubarPath="help/TestServiceDialogs">
+         </action>
+         <action
+               class="com.nokia.carbide.remoteconnections.tests.extensions.UnknownStatusServiceDialogAction"
+               id="com.nokia.carbide.remoteconnections.tests.unknownStatus.action"
+               label="Unknown Status Service Dialog..."
+               menubarPath="help/TestServiceDialogs">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.extensionFilter">
+      <extensionFilter
+            class="com.nokia.carbide.remoteconnections.tests.extensions.TestFilter">
+      </extensionFilter>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectedServiceFactory">
+      <connectedServiceFactory
+            class="com.nokia.carbide.remoteconnections.tests.extensions.ConnectedServiceFactory">
+      </connectedServiceFactory>
+   </extension>
+
+</plugin>

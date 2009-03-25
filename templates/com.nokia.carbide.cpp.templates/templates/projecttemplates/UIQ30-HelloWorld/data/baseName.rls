@@ -1,0 +1,26 @@
+/*
+============================================================================
+ Name		: $(baseName)_loc.rls
+ Author	  : $(author)
+ Version	 :
+ Copyright   : $(copyright)
+ Description : An .rls file defines symbolic identifiers for strings, to 
+				which the resource file refers when it needs the associated 
+				string. For more information about .rls see "How to localise 
+				resources" section in the SDK documentation. 
+============================================================================
+*/
+
+// Text showed in the view
+rls_string STRING_r_$(baseName)_text "$(baseName)"
+
+// Infoprint text
+rls_string STRING_r_$(baseName)_infoprint1_text "Infoprint 1"
+rls_string STRING_r_$(baseName)_infoprint2_text "Infoprint 2"
+rls_string STRING_r_$(baseName)_infoprint3_text "Infoprint 3"
+
+// Text for commands in the view
+rls_string STRING_r_$(baseName)_close_debug_cmd "Close (debug)"
+rls_string STRING_r_$(baseName)_infoprint1_cmd "Infoprint 1"
+rls_string STRING_r_$(baseName)_infoprint2_cmd "Infoprint 2"
+rls_string STRING_r_$(baseName)_infoprint3_cmd "Infoprint 3"

@@ -1,0 +1,554 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*	JavaCC input file for generic preprocessor-level parsing.
+*	Only preprocessor directives and raw text are produced by this parser.
+*
+*/
+
+
+
+options {
+	STATIC=false;
+	USER_TOKEN_MANAGER=true;
+}
+
+PARSER_BEGIN(PreParserCore)
+
+package com.nokia.carbide.internal.cpp.epoc.engine.parser.generated;
+
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.*;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class PreParserCore extends ParserBase {
+    
+    public IASTTranslationUnit parse() {
+        this.tokenLocation = ((BaseTokenManager)token_source).getTokenLocation();
+		IASTTranslationUnit tu = null;;
+		try {
+			tu = TranslationUnit();
+		} catch (ParseException e) {
+			// should not reach
+		}
+		return tu;
+    }
+}
+
+PARSER_END(PreParserCore)
+
+
+
+IASTTranslationUnit TranslationUnit() : 
+{ 
+	IASTListNode<IASTTopLevelNode> topLevelNodes = null;
+	Token eof;
+}
+{
+	[ topLevelNodes = TopLevelNodes() ]
+	eof=<EOF>
+	{
+		IASTTranslationUnit tu = ASTFactory.createTranslationUnit(topLevelNodes);
+		if (topLevelNodes != null) {
+			ParserUtils.setSourceRangeForListNode(null, tu.getNodes(), eof);
+			ParserUtils.copySourceInfo(tu, tu.getNodes());
+		} else {
+			ParserUtils.setSourceRangeFromTokenSpan(tu.getNodes(), eof, eof);
+			ParserUtils.setSourceRangeFromTokenSpan(tu, eof, eof);
+		}
+		return tu;
+	}
+}
+
+/*
+// stack overflow, idiot!
+IASTListNode<IASTTopLevelNode> TopLevelNodes() : 
+{ 
+	IASTListNode<IASTTopLevelNode> tail = null;
+	IASTTopLevelNode node;
+}
+{
+	node = TopLevelNode() [ tail = TopLevelNodes() ]
+	{
+		if (tail == null)
+			tail = ASTFactory.createTopLevelNodeListNode();
+		if (node != null)
+			tail.add(0, node);
+		return tail;
+	}
+}
+*/
+
+JAVACODE
+IASTListNode<IASTTopLevelNode> TopLevelNodes() {
+	IASTListNode<IASTTopLevelNode> nodes = null; 
+	while (((jj_ntk==-1)?jj_ntk():jj_ntk) != EOF) {
+		try {
+			IASTTopLevelNode node = TopLevelNode();
+			if (node != null) {
+				if (nodes == null) {
+					nodes = ASTFactory.createTopLevelNodeListNode();				
+				}
+				nodes.add(node);
+			}
+		} catch (ParseException e) {
+			hadErrors = true;
+			getNextToken();
+		}
+	}
+	return nodes;
+}
+
+IASTTopLevelNode TopLevelNode() : 
+{
+	IASTTopLevelNode node=null; 
+	Token start = token;
+}
+{
+	try {
+	    ( node=Directive()
+	    | node=TokenText()
+	    | node=Empty()
+	    )
+	    {
+	   		return node;
+	    }
+	} catch (ParseException e) {
+		return createProblemTopLevelNode(start, e);
+	}
+}
+
+JAVACODE
+IASTTopLevelNode createProblemTopLevelNode(Token start, ParseException e)
+{
+	IASTTopLevelNode stmt;
+
+	ppRestOfLine(false);
+	List<IToken> tokens = new ArrayList<IToken>();
+	start = start.next;
+	while (true) {
+		tokens.add(((ASTToken)start).iToken);
+		if (start == token)
+			break;
+		start = start.next;
+	}
+	IASTPreprocessorTokenStream stream = ASTFactory.createPreprocessorTokenStream(tokens);
+	ParserUtils.setSourceRangeForTokenStream(stream, stream);
+	stmt = ASTFactory.createProblemTopLevelNode(stream, createMessage(start, e));
+	ParserUtils.copySourceInfo(stmt, stream);
+	
+	hadErrors = true;
+	return stmt;
+
+}
+
+/**
+ *	Preprocessor directive
+ */
+IASTTopLevelNode Directive() :
+{
+	Token pound = null;
+	Token eol = null;
+	IASTTopLevelNode node = null;
+}
+{
+	pound=<POUND>
+	(
+      node=ppIf() 
+    | node=ppIfdef() 
+    | node=ppIfndef() 
+    | node=ppElse() 
+    | node=ppElif()
+    | node=ppEndif()
+    | node=ppDefine()
+    | node=ppUndef()
+    | node=ppInclude()
+    | node=ppError()
+    | node=ppWarning()
+    | node=ppPragma()
+    | node=ppUnknown()
+    //| node=ppText()
+	)
+	eol=<EOL>
+	{
+		ParserUtils.setSourceRangeFromTokenSpan(node, pound, eol);
+		ParserUtils.expandSourceRangeToLine(node);
+		return node;
+	}
+}
+
+IASTPreprocessorIfStatement ppIf() : 
+{
+	Token start;
+ 	IASTPreprocessorTokenStream expr = null;
+}
+{
+	{ resetDirectiveParsing(); }
+	start=<IF> expr=Tokens(true)
+    {
+    	if (expr == null) {
+    		expr = ASTFactory.createPreprocessorTokenStream();
+    		ParserUtils.setSourceRangeFromTokenAfter(expr, start);
+    	}
+    	return ASTFactory.createPreprocessorIfStatement(expr);
+    }
+}
+
+IASTPreprocessorElifStatement ppElif() : 
+{
+	Token start;
+ 	IASTPreprocessorTokenStream expr = null;
+}
+{
+	{ resetDirectiveParsing(); }
+	start=<ELIF> expr=Tokens(true)
+    {
+    	if (expr == null) {
+    		expr = ASTFactory.createPreprocessorTokenStream();
+    		ParserUtils.setSourceRangeFromTokenAfter(expr, start);
+    	}
+    	return ASTFactory.createPreprocessorElifStatement(expr);
+    }
+}
+
+IASTPreprocessorIfdefStatement ppIfdef() : 
+{
+ 	Token name;
+}
+{
+	<IFDEF> name=<IDENTIFIER> [ Tokens(true) ]
+    {
+    	return ASTFactory.createPreprocessorIfdefStatement(
+    		getLiteralTextNodeSpanning(name, name));
+    }
+}
+
+IASTPreprocessorIfndefStatement ppIfndef() : 
+{
+ 	Token name;
+}
+{
+	<IFNDEF> name=<IDENTIFIER> [ Tokens(true) ]
+    {
+    	return ASTFactory.createPreprocessorIfndefStatement(
+    		getLiteralTextNodeSpanning(name, name));
+    }
+}
+
+IASTPreprocessorElseStatement ppElse() : 
+{
+}
+{
+	{ resetDirectiveParsing(); }
+	<ELSE> [ Tokens(true) ]
+    {
+    	return ASTFactory.createPreprocessorElseStatement();
+    }
+}
+
+IASTPreprocessorEndifStatement ppEndif() : 
+{
+}
+{
+	{ resetDirectiveParsing(); }
+	<ENDIF> [ Tokens(true) ]
+    {
+    	return ASTFactory.createPreprocessorEndifStatement();
+    }
+}
+
+
+IASTPreprocessorDefineStatement ppDefine() : 
+{
+ 	Token name;
+ 	Token lparen=null, rparen=null;
+ 	IASTListNode<IASTLiteralTextNode> arguments = null;
+ 	IASTPreprocessorTokenStream expansion = null;
+}
+{
+	<DEFINE> name=<IDENTIFIER>
+	/* LPAREN is only generated if no space precedes it */
+	[ lparen=<LPAREN> arguments=ppMacroArgs() rparen=<RPAREN> ]
+	[ expansion = Tokens(true) ]
+    {
+     	if (expansion != null && expansion.getTokens().size() == 0)
+     		expansion = null;
+    	if (arguments != null)
+	    	ParserUtils.setSourceRangeForListNode(lparen, arguments, rparen);
+    	return ASTFactory.createPreprocessorDefineStatement(
+    		getLiteralTextNodeSpanning(name, name),
+    		arguments,
+    		expansion);
+    }
+}
+
+
+IASTPreprocessorUndefStatement ppUndef() : 
+{
+ 	Token name;
+}
+{
+	<UNDEF> name=<IDENTIFIER> [ Tokens(true) ]
+    {
+    	return ASTFactory.createPreprocessorUndefStatement(getLiteralTextNodeSpanning(name, name));
+    }
+}
+
+IASTListNode<IASTLiteralTextNode> ppMacroArgs() : 
+{
+	Token name = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	[ ( name=<IDENTIFIER> | name=<ELLIPSIS> ) [ <COMMA> args=ppMacroArgs() ] ]
+	{
+		if (args == null)
+			args = ASTFactory.createLiteralTextNodeList();
+		if (name != null)
+			args.add(0, getLiteralTextNodeSpanning(name, name));
+	   	return args;
+   	}
+}
+
+IASTPreprocessorIncludeStatement ppInclude() : 
+{
+	Token start;
+ 	IASTPreprocessorTokenStream nameTokens = null;
+}
+{
+	start=<INCLUDE> nameTokens = Tokens(true)
+    {
+    	if (nameTokens == null) {
+    		nameTokens = ASTFactory.createPreprocessorTokenStream();
+    		ParserUtils.setSourceRangeFromTokenAfter(nameTokens, start);
+    	}
+    	return ASTFactory.createPreprocessorIncludeStatement(nameTokens);
+    }
+}
+
+IASTPreprocessorErrorStatement ppError() : 
+{
+	Token start;
+ 	IASTPreprocessorTokenStream expr = null;
+}
+{
+	start=<ERROR> expr=Tokens(true)
+    {
+    	if (expr == null) {
+    		expr = ASTFactory.createPreprocessorTokenStream();
+    		ParserUtils.setSourceRangeFromTokenAfter(expr, start);
+    	}
+    	return ASTFactory.createPreprocessorErrorStatement(expr);
+    }
+}
+
+IASTPreprocessorWarningStatement ppWarning() : 
+{
+	Token start;
+ 	IASTPreprocessorTokenStream expr = null;
+}
+{
+	start=<WARNING> expr=Tokens(true)
+    {
+    	if (expr == null) {
+    		expr = ASTFactory.createPreprocessorTokenStream();
+    		ParserUtils.setSourceRangeFromTokenAfter(expr, start);
+    	}
+    	return ASTFactory.createPreprocessorWarningStatement(expr);
+    }
+}
+
+IASTPreprocessorPragmaStatement ppPragma() : 
+{
+	Token start;
+ 	IASTPreprocessorTokenStream expr = null;
+}
+{
+	start=<PRAGMA> expr=Tokens(true)
+    {
+    	if (expr == null) {
+    		expr = ASTFactory.createPreprocessorTokenStream();
+    		ParserUtils.setSourceRangeFromTokenAfter(expr, start);
+    	}
+    	return ASTFactory.createPreprocessorPragmaStatement(expr);
+    }
+}
+
+IASTPreprocessorUnknownStatement ppUnknown() : 
+{
+ 	IASTPreprocessorTokenStream expr = null;
+}
+{
+	expr=Tokens(true)
+    {
+    	return ASTFactory.createPreprocessorUnknownStatement(expr);
+    }
+}
+
+IASTTopLevelNode Empty() :
+{
+	Token eol;
+}
+{
+	eol=<EOL>
+	{
+		IASTPreprocessorTokenStreamStatement stmt = ASTFactory.createPreprocessorTokenStreamStatement(
+			ASTFactory.createTokenList(new IToken[] { ((ASTToken) eol).iToken }));
+		ParserUtils.setSourceRangeFromTokenSpan(stmt.getTokenStream(), eol, eol);
+		ParserUtils.setSourceRangeFromTokenSpan(stmt, eol, eol);
+		ParserUtils.expandSourceRangeToLine(stmt);
+		return stmt;
+	}
+}
+
+/**
+ *	Tokenized text
+ */
+IASTTopLevelNode TokenText() :
+{
+	Token eol = null;
+	IASTPreprocessorTokenStream tokens = null;
+}
+{
+	tokens=Tokens(false) eol=<EOL>
+	{
+		if (tokens == null) {
+			//return expandToLine(getPreprocessorTextStatementSpanning(eol, eol));
+			tokens = ASTFactory.createPreprocessorTokenStream();
+		}
+ 	 	tokens.getTokens().add(((ASTToken)eol).iToken);
+	 	IASTPreprocessorTokenStreamStatement stmt =
+ 	 		 ASTFactory.createPreprocessorTokenStreamStatement(tokens);
+    	ParserUtils.setSourceRangeForTokenStream(tokens, stmt.getTokenStream());
+    	ParserUtils.setSourceRangeForTokenStream(stmt, stmt.getTokenStream());
+		ParserUtils.expandSourceRangeToLine(stmt);
+ 	 		
+	  	return stmt;
+	}
+}
+
+
+/**
+ *	Tokenized text -- anything up to an EOL
+ */
+IASTPreprocessorTokenStream Tokens(boolean first) :
+{
+	List<IToken> tokens = null;
+}
+{
+	{ resetDirectiveParsing(); }
+	tokens=TokenList(first)
+	{
+		if (tokens != null) {
+			IASTPreprocessorTokenStream stream = ASTFactory.createPreprocessorTokenStream(tokens);
+			ParserUtils.setSourceRangeForTokenStream(stream, stream);
+			return stream;
+		} else {
+			return null;
+		}
+	}
+}
+
+JAVACODE
+void resetDirectiveParsing()
+{
+	if (token instanceof ASTToken) 
+		((PreTokenManager) token_source).resetDirectiveScanningState((ASTToken)token); 
+}
+
+IToken Token() :
+{
+	Token tok = null;
+}
+{
+	( tok=<PPTOKEN>  | tok=<IDENTIFIER> | tok=<INTEGER> | tok=<STRING> | tok=<CHAR> )
+	{
+		return ((ASTToken) tok).iToken;
+	}
+}
+
+JAVACODE
+List<IToken> TokenList(boolean first)
+{
+	    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+	    case IDENTIFIER:
+	    case PPTOKEN:
+	    case INTEGER:
+	    case STRING:
+	    case CHAR:
+	      break;
+	    case EOL:
+	      //return new ArrayList<IToken>();
+	      return null;
+	    default:
+	      return null;
+	    }
+
+	IToken token = null;
+	boolean finished = false;
+	List<IToken> tokens = new ArrayList<IToken>();
+	do {
+		token = Token();
+		if (token != null) {
+			if (first) {
+				token.setFollowsSpace(false);
+				first = false;
+			}
+			tokens.add(token);
+		}
+	    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+	    case IDENTIFIER:
+	    case PPTOKEN:
+	    case INTEGER:
+	    case STRING:
+	    case CHAR:
+	      break;
+	    default:
+	      finished = true;
+	      break;
+	    }
+	} while (!finished);
+	return tokens;
+}
+
+IASTLiteralTextNode ppRestOfLine(boolean skip) : 
+{
+        Token start = token, end = start;
+}
+{
+	{
+        if (skip)
+	        start = end = getNextToken();
+        while (true) {
+        	end = getNextToken();
+        	if (end.kind == EOL || end.kind == EOF)
+        		break;
+        }
+  		return getLiteralTextNodeSpanningUpTo(start, end);
+   	}
+}
+
+void UNUSED() : { }
+{
+	<ERROR> skip()
+}
+
+JAVACODE
+void skip() {
+	 getToken(1);
+}
+
+

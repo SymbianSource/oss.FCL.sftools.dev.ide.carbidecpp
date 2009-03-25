@@ -1,0 +1,3 @@
+a#carbide-sample img { background-image : url(carbide_sample.gif); }
+a#carbide-sample:hover img { background-image : url(carbide_sample_hov.gif); }
+

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>access_errors</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>objective_c</h3>
+<p>  Controls the use of Objective-C keywords.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma objective_c on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler lets you use the following additional objective C keywords:</p>
+<table width="76%"  border="0" cellpadding="2" cellspacing="0">
+  <tr class="code">
+    <td>@class</td>
+    <td>@def</td>
+    <td>@encode</td>
+  </tr>
+  <tr class="code">
+    <td>@end</td>
+    <td>@implementation</td>
+    <td>@interface</td>
+  </tr>
+  <tr class="code">
+    <td>@private</td>
+    <td>@protocol</td>
+    <td>@protected</td>
+  </tr>
+  <tr class="code">
+    <td>@public</td>
+    <td>@selector</td>
+    <td>bycopy</td>
+  </tr>
+  <tr class="code">
+    <td>byref</td>
+    <td>in</td>
+    <td>inout</td>
+  </tr>
+  <tr class="code">
+    <td>oneway</td>
+    <td>out</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>The <span class="code">@protocol</span> forward declarations are supported</p>
+<p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (objective_c)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. </p>
+<p>By default, this setting is automatically enabled when a file&rsquo;s extension is &ldquo;.m&rdquo; or &ldquo;.pchm&rdquo;. This setting and <span class="code">#pragma <a href="p_cplusplus.htm">cplusplus</a></span> on are automatically enabled when a file's extension is &ldquo;.mm&rdquo;, &ldquo;.M&rdquo;, or &ldquo;.pchmm&rdquo;.</p>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

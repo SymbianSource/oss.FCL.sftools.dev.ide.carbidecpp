@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.cdt.ui.textHovers">
+      <hover
+            activate="true"
+            class="com.nokia.carbide.cpp.sysdoc.internal.hover.core.HoverEntryPoint"
+            description="Developer Library Hover Help"
+            id="com.nokia.carbide.cpp.sysdoc"
+            label="Developer Library Hover Help">
+      </hover>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.nokia.carbide.cpp.sysdoc.internal.hover.preferences.PreferencePageView"
+            id="com.nokia.carbide.cpp.sysdoc.internal.hover.preferences.HoverHelpPreferencePage"
+            name="Hover Help"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.nokia.carbide.cpp.sysdoc.internal.hover.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   
+   <extension point="org.eclipse.ui.startup">
+   		<startup class="com.nokia.carbide.cpp.sysdoc.hover.StartUp"/>
+	</extension>
+
+    <extension point="org.eclipse.help.contexts">
+        <contexts file="hoverHelpContext.xml" />
+    </extension>
+    <extension
+          point="org.eclipse.equinox.http.registry.servlets">
+       <servlet
+             alias="/hover"
+             class="com.nokia.carbide.cpp.sysdoc.internal.hover.webserver.HoverServlet">
+       </servlet>
+    </extension>
+    <extension
+          point="org.eclipse.ui.views">
+       <category
+             id="com.nokia.carbide.cpp.sysdoc.hover.view.browser"
+             name="Developer Library">
+       </category>
+       <view
+             category="com.nokia.carbide.cpp.sysdoc.hover.view.browser"
+             class="com.nokia.carbide.cpp.sysdoc.internal.hover.view.DeveloperLibraryView"
+             icon="icons/view.gif"
+             id="com.nokia.carbide.cpp.sysdoc.internal.hover.view.DeveloperLibraryView"
+             name="Devloper Library">
+       </view>
+    </extension>
+  	
+<!-- =================================================================================== -->
+<!-- INSERT HOVER TOC INTO CARBIDE MANUAL                                                -->
+<!-- =================================================================================== -->
+
+  	<extension
+         point="org.eclipse.help.toc" >
+      <toc
+            file="resources/help context/hoverTOC.xml"
+            primary="false" />      
+    </extension>
+	
+  	
+</plugin>

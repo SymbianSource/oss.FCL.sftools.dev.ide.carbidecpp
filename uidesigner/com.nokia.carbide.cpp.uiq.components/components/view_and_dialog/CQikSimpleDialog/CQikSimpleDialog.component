@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgenAndSourceMapping SYSTEM "CQikSimpleDialog_srcgen_and_srcmapping.inc">
+<!ENTITY common_events SYSTEM "CQikSimpleDialog_events.inc">
+]>
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">	
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.carbide.uiq.CQikSimpleDialog"
+		baseComponent="com.nokia.carbide.uiq.ViewDialogBase"
+		instanceNameRoot="SimpleDialog"
+		version="1.0">
+		
+		<documentation>
+			<wizardDescription>%information</wizardDescription>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CQikSimpleDialog" classHelpTopic=""
+			resourceType="EDWIN" resourceHelpTopic=""/>	
+		
+		<designerImages thumbnailFile="cqiksimpledialog_tn.png"
+			smallIconFile="CQikSimpleDialog_sm.png"
+			largeIconFile="CQikSimpleDialog.png"/>
+				
+		<attributes>
+			<attribute key="is-appui-container">false</attribute>
+			<attribute key="is-top-level-content-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="layout-group-component-id">com.nokia.carbide.uiq.ContainersGroup</attribute>
+			<attribute key="ui-configuration-group-component-id">com.nokia.carbide.uiq.DialogConfigurationsGroup</attribute>
+		</attributes>	
+
+		<properties>
+			<property  name="allowForcedExit" type="boolean" 
+				default="false"
+				descriptionKey="allowForcedExitDescription" 
+				category="%category.behavior"/>					
+			<property  name="forcedExitCommandId" type="integer" 
+				default="0"
+				descriptionKey="forcedExitCommandIdDescription" 
+				category="%category.data"/>								
+			<property category="%category.appearance"
+				name="overriddenAppTitleName" type="localizedString"
+				default="A simple dialog"
+				descriptionKey="overriddenAppTitleNameDescription"/>
+			<compoundProperty category="%category.appearance"
+				name="overriddenAppTitleIcon" type="com.nokia.carbide.uiq.MbmImageProperty"
+				descriptionKey="overriddenAppTitleIconDescription"/>
+		</properties>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>				
+				<script file="CQikSimpleDialog.js" prototype="CQikSimpleDialog"/>										
+			</implementation>			
+		</implementations>	
+
+		<propertyOverrides>
+		   <propertyOverride name="name" readOnly="true"/>
+		</propertyOverrides>
+
+		<events>
+			&common_events;
+		</events>
+
+			&common_srcgenAndSourceMapping;
+
+	</component>	
+</componentDefinition>

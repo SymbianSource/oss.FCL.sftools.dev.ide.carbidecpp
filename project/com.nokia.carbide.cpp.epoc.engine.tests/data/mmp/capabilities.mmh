@@ -1,0 +1,30 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Symbian Foundation License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*/
+
+
+
+
+
+#define J2ME_SYSTEMAMS_CAPABILITIES LocalServices NetworkServices ProtServ Drm WriteDeviceData ReadDeviceData ReadUserData WriteUserData UserEnvironment SwEvent Location MultimediaDD NetworkControl AllFiles
+
+// This list of capabilities must be kept in line with the VMs compile time capability set. These are
+// defined by the capabilities as listed in the .component files. If you add a capability here then
+// you need to add it to a relevant .component file as well
+#define J2ME_VMS_CAPABILITIES LocalServices NetworkServices ProtServ Drm WriteDeviceData ReadDeviceData ReadUserData WriteUserData UserEnvironment SwEvent Location MultiMediaDD NetworkControl TrustedUI 
+
+// External library capabilities
+#define EIKSVR_CAPABILITIES ProtServ TrustedUI

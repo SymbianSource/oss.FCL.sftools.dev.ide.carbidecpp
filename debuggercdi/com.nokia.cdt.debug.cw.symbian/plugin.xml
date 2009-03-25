@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.core.runtime.contentTypes"> 
+      <file-association 
+       content-type="org.eclipse.cdt.managedbuilder.core.executableFile"
+       file-extensions="app, aps, csy, fsy, ldd, pdd, esy, tsy, mdl, drv, cpm, pdl, prt, wsy, fxt, pyd"/>
+   </extension> 
+
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Carbide.c++ Debugger"
+            category="org.eclipse.cdt.debug.ui.CDebugPreferencePage"
+            class="com.nokia.cdt.debug.cw.symbian.ui.GlobalSettings"
+            id="com.nokia.cdt.debug.cw.symbian.ui.GlobalSettings">
+      </page>
+   </extension>
+  <extension
+         point="org.eclipse.cdt.debug.core.CDebugger">
+      <debugger
+            platform="*"
+            name="Symbian Debugger"
+            modes="run,attach"
+            cpu="*"
+            class="com.nokia.cdt.debug.cw.symbian.SymbianDebugger"
+            id="com.nokia.cdt.debug.cw.symbian.SymbianDebugger">
+      </debugger>
+   </extension>
+ 
+    <extension
+         point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            class="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputerDelegate"
+            id="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"/>
+   </extension>
+ 
+ <!-- Import Executable Wizard -->
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            icon="icons/icon_symbian.gif"
+            name="Symbian OS Executable"
+            category="com.nokia.carbide.cpp.importWizards.symbianos"
+            class="com.nokia.cdt.debug.cw.symbian.ImportSymbianExecutableWizard"
+            id="com.nokia.cdt.debug.cw.symbian.ImportSymbianExecutableWizard">
+            <description> 
+              Imports a Symbian executable file. Will create a project and launch configuration for debugging.
+          </description>
+      </wizard>
+   </extension>
+ 
+ <!-- *************** Console Factory **************** -->
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New Windows System Messages Console"
+            class="com.nokia.cdt.debug.cw.symbian.SystemMessagesConsoleFactory"/>
+   </extension>
+ 
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New Emulation Program Output Console"
+            class="com.nokia.cdt.debug.cw.symbian.DebugMessagesConsoleFactory"/>
+   </extension>
+ 
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New TRK Program Output Console"
+            class="com.nokia.cdt.debug.cw.symbian.UnframedMessagesConsoleFactory"/>
+   </extension>
+ 
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New TRK Communications Log Console"
+            class="com.nokia.cdt.debug.cw.symbian.TRKCommLogConsoleFactory"/>
+   </extension>
+    <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New Trace32 Communications Log Console"
+            class="com.nokia.cdt.debug.cw.symbian.T32CommLogConsoleFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New Symbian Rom Log Console"
+            class="com.nokia.cdt.debug.cw.symbian.RomLogConsoleFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            label="New Emulator Output Console"
+            class="com.nokia.cdt.debug.cw.symbian.DebugTraceConsoleFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consolePageParticipants">
+      <consolePageParticipant
+            class="com.freescale.cdt.debug.cw.core.ui.console.ConsolePageParticipant"
+            id="com.freescale.cdt.debug.cw.core.ui.console.ConsolePageParticipant">
+         <enablement>
+            <instanceof value="com.freescale.cdt.debug.cw.core.ui.console.LoggingConsole"/>
+         </enablement>
+      </consolePageParticipant>
+   </extension>
+ 
+  <extension
+         point="org.eclipse.cdt.debug.core.BreakpointActionType">
+      <actionType
+            name="%SkipAction.name"
+            class="com.nokia.cdt.debug.cw.symbian.breakpointactions.SkipAction"
+            id="com.nokia.cdt.debug.cw.symbian.breakpointactions.SkipAction"/>
+   </extension>
+  <extension
+         point="org.eclipse.cdt.debug.ui.BreakpointActionPage">
+      <actionPage
+             class="com.nokia.cdt.debug.cw.symbian.breakpointactions.SkipActionPage"
+            id="com.nokia.cdt.debug.cw.symbian.breakpointactions.SkipActionPage"
+            actionType="com.nokia.cdt.debug.cw.symbian.breakpointactions.SkipAction"/>
+   </extension>
+  
+ <!-- *************** Binary Parser **************** -->
+   <extension
+         id="SymbianE32"
+         name="Symbian E32 Parser"
+         point="org.eclipse.cdt.core.BinaryParser">
+      <cextension>
+         <run
+               class="com.nokia.cdt.debug.cw.symbian.binaryparser.SymbianE32Parser">
+         </run>
+      </cextension>
+   </extension>
+    
+ <!-- *************** Source Container Types **************** -->
+   
+      <extension
+         point="org.eclipse.debug.core.sourceContainerTypes">
+      <sourceContainerType
+            class="com.nokia.cdt.debug.cw.symbian.SymbianSourceContainerType"
+            description="Maps source files to EPOCROOT"
+            id="com.nokia.cdt.debug.cw.symbian.containerType.mapping"
+            name="Symbian OS SDK Mapping"/>
+    </extension>
+  
+     <!-- *************** HW Breakpoint Actions **************** -->
+   
+     <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            targetID="#CEditorRulerContext"
+            id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.CEditorRulerHwBkptActions">
+         <action
+               label="%HwBreakpoint.label"
+               menubarPath="additions"
+               class="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.ManageHwBreakpointRulerActionDelegate"               
+               id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.CEditor.ManageHWBreakpointRulerAction">
+         </action>
+      </viewerContribution>
+     
+      <viewerContribution
+            targetID="#ASMEditorRulerContext"            
+            id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.AsmEditorRulerHwBkptAction">
+         <action
+               label="%HwBreakpoint.label"
+               menubarPath="additions"
+               class="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.ManageHwBreakpointRulerActionDelegate"               
+               id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.AsmTextEditor.ManageHWBreakpointRulerAction">
+         </action>
+      </viewerContribution>
+                  
+      <viewerContribution
+            targetID="#DisassemblyEditorRulerContext"            
+            id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.DisassemblyEditorRulerHwBkptAction">
+         <action
+               label="%HwBreakpoint.label"
+               menubarPath="additions"
+               class="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.ManageHwBreakpointRulerActionDelegate"               
+               id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.DisassemblyEditor.ManageHWBreakpointRulerAction">
+         </action>
+      </viewerContribution>
+   </extension>   
+    
+</plugin>

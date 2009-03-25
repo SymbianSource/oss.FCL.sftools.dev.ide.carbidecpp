@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.index"?>
+
+
+<index>
+
+	<!-- AAAAAA  -->
+
+	<entry keyword="Application editor" >
+		<topic href="html/reference/app_editor/ref_app_editor.htm" />
+		<topic href="html/reference/app_editor/ref_ui_design.htm" />
+		<topic href="html/reference/app_editor/ref_ui_design_import.htm" />
+		<topic href="html/reference/app_editor/ref_languages.htm" />
+		<topic href="html/reference/app_editor/ref_language_add.htm" />
+		<topic href="html/reference/app_editor/ref_appui.htm" />
+		<topic href="html/reference/app_editor/ref_appui_bindings.htm" />
+	</entry>
+
+	<entry keyword="AppUI" >
+		<topic href="html/reference/app_editor/ref_appui.htm" />
+		<topic href="html/reference/app_editor/ref_appui_bindings.htm" />
+	</entry>
+
+	<entry keyword="Application Properties page" >
+		<topic href="html/reference/uidesign/ref_ui_design_wizard_01.htm" />
+	</entry>
+
+	<entry keyword="Add Symbian Languages dialog" >
+		<topic href="html/reference/app_editor/ref_language_add.htm" />
+	</entry>
+
+	<entry keyword="Align Objects" >
+		<topic href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<!-- BBBBBB  -->
+	
+	<entry keyword="bindings" >
+		<topic title="UI Designer, AppUI" href="html/reference/app_editor/ref_appui_bindings.htm" />
+	</entry>
+
+	
+	<!-- CCCCCC  -->
+	
+	<entry keyword="Component Palette" >
+		<topic href="html/reference/components/ref_palette.htm" />
+		<topic href="html/reference/components/ref_controls.htm" />
+		<topic href="html/reference/components/ref_editors.htm" />
+		<topic href="html/reference/components/ref_information.htm" />
+		<topic href="html/reference/components/ref_menu.htm" />
+		<topic title="Notes and Dialogs Components" href="html/reference/components/ref_notes_dialogs.htm" />
+		<topic title="Palette Filtering" 			href="html/reference/views/ref_tool_bar.htm" />
+		<topic href="html/reference/components/ref_status_control.htm" />
+	</entry>
+
+	<entry keyword="Component Information pane" >
+		<topic href="html/reference/components/ref_information.htm" />
+	</entry>
+
+	<entry keyword="components" >
+		<topic href="html/concepts/con_com_components.htm" />
+		<topic title="Custom components" href="html/concepts/con_com_custom_components.htm" />
+		<topic href="html/concepts/con_com_types_standard.htm" />
+	</entry>
+
+	<entry keyword="control components" >
+		<topic href="html/reference/components/ref_controls.htm" />
+	</entry>
+
+	<entry keyword="Content Varients page" >
+		<topic href="html/reference/uidesign/ref_ui_design_wizard_03.htm" />
+	</entry>
+	
+	<entry keyword="Container Name and Type page" >
+		<topic href="html/reference/uidesign/ref_ui_design_wizard_04.htm" />
+	</entry>
+	
+	<entry keyword="custom components" >
+		<topic title="Custom components"    href="html/concepts/con_com_custom_components.htm" />
+		<topic title="definition"           href="html/concepts/con_com_components.htm" />
+	</entry>
+	
+	<entry keyword="code" >
+		<topic title="generated" href="html/concepts/con_generated_code.htm" />
+		<topic title="examining" href="html/tasks/generate/task_gen_examine.htm" />
+		<topic title="modifying" href="html/tasks/generate/task_gen_mod.htm" />
+	</entry>
+	
+	
+	<!-- DDDDDD  -->
+
+	<entry keyword="dialogs" >
+		<topic href="html/reference/views/ref_edit_image_property.htm" />
+		<topic href="html/reference/views/ref_string_list_editor.htm" />
+		<topic href="html/reference/uidesign/ref_ui_designer_prefs.htm" />
+		<topic href="html/reference/views/ref_properties_eap.htm" />
+		<topic href="html/reference/views/ref_palette_settings.htm" />
+		<topic href="html/reference/app_editor/ref_language_add.htm" />
+		<topic href="html/reference/app_editor/ref_ui_design_import.htm" />
+	</entry>
+
+	<entry keyword="design tools" >
+		<topic href="html/concepts/con_uidesigntools.htm" />
+	</entry>
+
+	<!-- EEEEEE  -->
+	
+	<entry keyword="editor components" >
+		<topic href="html/reference/components/ref_editors.htm" />
+	</entry>
+
+	<entry keyword="Edit Image Property dialog" >
+		<topic href="html/reference/views/ref_edit_image_property.htm" />
+	</entry>
+
+	<entry keyword="Edit Multi-Image Property dialog" >
+		<topic href="html/reference/views/ref_edit_multiimage_property.htm" />
+	</entry>
+	
+	<entry keyword="Edit Array Property dialog" >
+		<topic href="html/reference/views/ref_properties_eap.htm" />
+	</entry>
+
+	<entry keyword="Events view" >
+		<topic href="html/reference/views/ref_events_view.htm" />
+	</entry>
+
+	<entry keyword="events" >
+		<topic title="event driven" href="html/concepts/con_com_events.htm" />
+		<topic title="inspecting"   href="html/tasks/prop_events/task_comp_mod_events.htm" />		
+		<topic title="Events view"  href="html/reference/views/ref_events_view.htm" />
+		<topic title="Event Handlers" 								href="html/tasks/prop_events/task_comp_mod_events.htm" />
+		<topic title="Adding a New Event Handler" 					href="html/tasks/prop_events/task_comp_mod_events_add.htm" />
+		<topic title="Handling the Default Event" 					href="html/tasks/prop_events/task_comp_mod_events_handle_default.htm" />
+		<topic title="Implementing an Event Handler" 				href="html/tasks/prop_events/task_comp_mod_events_implement.htm" />
+		<topic title="Renaming an Event Handler" 					href="html/tasks/prop_events/task_comp_mod_events_rename.htm" />
+		<topic title="Showing/Hiding Event Categories" 				href="html/tasks/prop_events/task_comp_mod_events_categories.htm" />
+	</entry>
+
+	<!-- FFFFFF  -->
+	
+	<entry keyword="filtering" >
+		<topic href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<!-- GGGGGG  -->
+	
+	<entry keyword="Gallery view" >
+		<topic title="Gallery view"    href="html/reference/views/ref_gallery_view.htm" />
+		<topic title="display all"     href="html/tasks/uidesign/task_uid_display_all.htm" />		
+		<topic title="opening"         href="html/tasks/uidesign/task_uid_open.htm" />		
+		<topic title="magnification"   href="html/tasks/uidesign/task_uid_display_all_mag.htm" />		
+	</entry>
+
+	<entry keyword="generated code" >
+		<topic title="generated" href="html/concepts/con_generated_code.htm" />
+		<topic title="Generated Files" 						href="html/tasks/generate/task_gen.htm" />
+		<topic title="Examining Generated Files" 			href="html/tasks/generate/task_gen_examine.htm" />
+		<topic title="Inspecting Header/Source Files" 		href="html/tasks/generate/task_comp_header_source.htm" />
+		<topic title="Modifying Generated Files" 			href="html/tasks/generate/task_gen_mod.htm" />
+	</entry>
+	
+	<!-- HHHHHH  -->
+	<!-- IIIIII  -->
+
+	<entry keyword="internationalization" >
+		<topic href="html/concepts/con_s60_internationalization.htm" />
+		<topic title="adding a language"   href="html/tasks/app_edit/task_lang_add.htm" />
+		<topic title="deleting a language" href="html/tasks/app_edit/task_lang_remove.htm" />
+		<topic title="localization format" href="html/tasks/app_edit/task_lang_format.htm" />
+		<topic title="translating text"    href="html/tasks/app_edit/task_lang_translate.htm" />
+	</entry>
+	
+	<entry keyword="Import UI Designs dialog" >
+		<topic href="html/reference/app_editor/ref_ui_design_import.htm" />
+	</entry>
+
+	<entry keyword="image properties" >
+		<topic href="html/tasks/properties/task_comp_mod_properties_image.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_image_add.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_image_select.htm" />
+	</entry>
+
+	<!-- JJJJJJ  -->
+	<!-- KKKKKK  -->
+	
+	<entry keyword="keys" >
+		<topic title="UI Designer, AppUI" href="html/reference/app_editor/ref_appui_bindings.htm" />
+	</entry>
+
+
+	<!-- LLLLLL  -->
+
+	<entry keyword="Layout pane" >
+		<topic href="html/reference/views/ref_layout.htm" />
+	</entry>
+
+	<entry keyword="languages" >
+		<topic href="html/reference/app_editor/ref_languages.htm" />
+		<topic title="adding a language"   href="html/tasks/app_edit/task_lang_add.htm" />
+		<topic title="deleting a language" href="html/tasks/app_edit/task_lang_remove.htm" />
+	</entry>
+
+	<entry keyword="layout configurations" >
+		<topic href="html/concepts/con_s60_layout_configurations.htm" />
+		<topic title="toolbar" href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<entry keyword="landscape resolution" >
+		<topic href="html/concepts/con_s60_layout_configurations.htm" />
+	</entry>
+
+	<entry keyword="localization" >
+		<topic href="html/tasks/app_edit/task_lang_format.htm" />
+	</entry>
+
+	<!-- MMMMMM  -->
+
+	<entry keyword="menus" >
+		<topic href="html/reference/components/ref_menu.htm" />
+		<topic title="adding menus" 						href="html/tasks/prop_menu/task_comp_mod_menu_add.htm" />
+		<topic title="adding menu items" 					href="html/tasks/prop_menu/task_comp_mod_menu_add_item.htm" />
+		<topic title="adding submenus" 						href="html/tasks/prop_menu/task_comp_mod_menu_add_submenu.htm" />
+		<topic title="deleting menus" 						href="html/tasks/prop_menu/task_comp_mod_menu_del_menu.htm" />
+		<topic title="deleting menu items" 					href="html/tasks/prop_menu/task_comp_mod_menu_del_item.htm" />
+		<topic title="renaming menu items" 					href="html/tasks/prop_menu/task_comp_mod_menu_rename_item.htm" />
+		<topic title="reordering menu items" 				href="html/tasks/prop_menu/task_comp_mod_menu_reorder.htm" />
+		<topic title="handling menu events" 				href="html/tasks/prop_menu/task_comp_mod_menu_handle_selection.htm" />
+	</entry>
+
+	<entry keyword="magnification" >
+		<topic title="UI Design" href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<entry keyword="middle soft key" >
+		<topic title="middle soft key" href="html/tasks/properties/task_comp_mod_properties_cba.htm#msk" />
+	</entry>
+
+	<entry keyword="MSK" >
+		<topic title="middle soft key" href="html/tasks/properties/task_comp_mod_properties_cba.htm#msk" />
+	</entry>
+
+	<!-- NNNNNN  -->
+
+	
+	<entry keyword="Non-layout pane" >
+		<topic href="html/reference/views/ref_non-layout.htm" />
+	</entry>
+
+	<entry keyword="notes and dialog components" >
+		<topic href="html/reference/components/ref_notes_dialogs.htm" />
+	</entry>
+
+	<!-- OOOOOO  -->
+	
+	<entry keyword="objects" >
+		<topic title="aligning" 		href="html/tasks/components/task_comp_align_objs.htm" />
+		<topic title="deleting" 		href="html/tasks/components/task_comp_delete_obj.htm" />
+		<topic title="matching" 		href="html/tasks/components/task_comp_match_objs.htm" />
+		<topic title="moving" 			href="html/tasks/components/task_comp_move_obj.htm" />
+		<topic title="creating" 		href="html/tasks/components/task_comp_new_obj.htm" />
+		<topic title="reordering" 		href="html/tasks/components/task_comp_reorder_obj.htm" />
+		<topic title="resizing" 		href="html/tasks/components/task_comp_resize_obj.htm" />
+		<topic title="selectinig" 		href="html/tasks/components/task_comp_sel_obj.htm" />
+	</entry>
+
+	<entry keyword="Overview, Application editor" >
+		<topic href="html/reference/app_editor/ref_app_editor.htm" />
+	</entry>
+
+	<entry keyword="Outline view" >
+		<topic href="html/reference/views/ref_outline_view.htm" />
+	</entry>
+
+	<!-- PPPPPP  -->
+
+	<entry keyword="Palette Filtering" >
+		<topic href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<entry keyword="Properties view" >
+		<topic href="html/reference/views/ref_properties_view.htm" />
+	</entry>
+
+	<entry keyword="Palette Settings dialog" >
+		<topic href="html/reference/views/ref_palette_settings.htm" />
+		<topic href="html/tasks/palette/task_palette_settings_font.htm" />
+		<topic href="html/tasks/palette/task_palette_settings_icon.htm" />
+		<topic href="html/tasks/palette/task_palette_settings_layout.htm" />
+		<topic href="html/tasks/palette/task_palette_show_hide_drawer_components.htm" />
+	</entry>
+
+	<entry keyword="properties" >
+		<topic href="html/concepts/con_com_properties.htm" />
+		<topic href="html/reference/views/ref_properties_view.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties.htm" />
+		<topic href="html/tasks/components/task_comp_prop_eap.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_color_data.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_cba.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_date.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_enumerated.htm" />
+
+		<topic href="html/tasks/properties/task_comp_mod_properties_image.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_image_add.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_image_select.htm" />
+
+		<topic href="html/tasks/properties/task_comp_mod_properties_loc_size.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_numeric.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_string.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_text.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_time.htm" />
+		<topic href="html/tasks/properties/task_comp_mod_properties_restore.htm" />
+	</entry>
+
+	<entry keyword="portrait resolution" >
+		<topic href="html/concepts/con_s60_layout_configurations.htm" />
+	</entry>
+
+	<entry keyword="preferences" >
+		<topic title="UI Designer"		href="html/reference/uidesign/ref_ui_designer_prefs.htm" />
+	</entry>
+
+	<entry keyword="projects, UI Designer" >
+		<topic href="html/tasks/projects/task_proj_new.htm" />
+		<topic href="html/tasks/projects/task_proj_new-00.htm" />
+		<topic href="html/tasks/projects/task_proj_new-01.htm" />
+		<topic href="html/tasks/projects/task_proj_new-02.htm" />
+		<topic href="html/tasks/projects/task_proj_new-03.htm" />
+		<topic href="html/tasks/projects/task_proj_new-04.htm" />
+		<topic href="html/tasks/projects/task_proj_new-05.htm" />
+		<topic href="html/tasks/projects/task_proj_new-06.htm" />
+		<topic href="html/tasks/projects/task_proj_new-07.htm" />
+		<topic href="html/tasks/projects/task_proj_new-08.htm" />
+		<topic href="html/tasks/projects/task_proj_new-09.htm" />
+	</entry>
+
+
+	<!-- QQQQQQ  -->
+	<!-- RRRRRR  -->
+	
+	<entry keyword="redraw events" >
+		<topic href="html/concepts/con_com_events.htm" />
+	</entry>
+
+	<entry keyword="resolutions" >
+		<topic href="html/concepts/con_s60_layout_configurations.htm" />
+	</entry>
+
+	<entry keyword="reference, developer" >
+		<topic href="html/gettingstarted/start_dev_refs.htm" />
+	</entry>
+
+	<!-- SSSSSS  -->
+	
+	<entry keyword="shortcuts" >
+		<topic title="AppUI, UI Designer" href="html/reference/app_editor/ref_appui_bindings.htm" />
+	</entry>
+
+	<entry keyword="status and control components" >
+		<topic href="html/reference/components/ref_status_control.htm" />
+	</entry>
+
+	<entry keyword="String List Editor dialog" >
+		<topic href="html/reference/views/ref_string_list_editor.htm" />
+	</entry>
+
+	<entry keyword="standard components" >
+		<topic href="html/concepts/con_com_types_standard.htm" />
+		<topic title="definition"  href="html/concepts/con_com_components.htm" />
+	</entry>
+	
+	<entry keyword="Symbian OS" >
+		<topic href="html/concepts/con_symbian_os.htm" />
+	</entry>
+
+	<entry keyword="S60 UI" >
+		<topic href="html/concepts/con_s60_series_60_ui.htm" />
+	</entry>
+
+	<entry keyword="scalable strings" >
+		<topic href="html/concepts/con_scalable_strings.htm" />
+		<topic title="editing"  href="html/tasks/properties/task_comp_mod_properties_string.htm" />
+	</entry>
+
+	<entry keyword="SDK" >
+		<topic href="html/concepts/con_sdks.htm" />
+		<topic title="project SDK"             href="html/tasks/projects/task_proj_new-03.htm" />
+		<topic title="baseline SDK, changing"  href="html/tasks/app_edit/task_overview_baseline_sdk.htm" />
+	</entry>
+
+	<!-- TTTTTT  -->
+
+	<entry keyword="tool bar" >
+		<topic href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<entry keyword="translation" >
+		<topic href="html/tasks/app_edit/task_lang_translate.htm" />
+	</entry>
+
+	<!-- UUUUUU  -->
+	
+	<entry keyword="UI designs" >
+		<topic href="html/reference/app_editor/ref_ui_design.htm" />
+		<topic href="html/tasks/components/task_comp_new_obj.htm" />
+		<topic href="html/tasks/uidesign/task_uid_new_with_designer.htm" />
+		<topic href="html/tasks/uidesign/task_uid_delete.htm" />
+		<topic href="html/tasks/uidesign/task_uid_select.htm" />
+		<topic href="html/tasks/uidesign/task_uid_rename.htm" />
+		<topic href="html/tasks/uidesign/task_uid_open.htm" />
+		<topic href="html/tasks/uidesign/task_uid_magnification.htm" />
+		<topic href="html/tasks/uidesign/task_uid_layout_configuration.htm" />
+		<topic href="html/tasks/uidesign/task_uid_copy_in.htm" />
+		<topic href="html/tasks/uidesign/task_uid_display_all.htm" />
+		<topic href="html/tasks/uidesign/task_uid_display_all_mag.htm" />
+	</entry>
+		
+	<entry keyword="UI Design editor" >
+		<topic title="editor" href="html/reference/uidesign/ref_ui_design_editor.htm" />
+		<topic title="Layout pane"                href="html/reference/views/ref_layout.htm" />
+		<topic title="Non-layout pane"            href="html/reference/views/ref_non-layout.htm" />
+		<topic title="Component Palette pane"     href="html/reference/components/ref_palette.htm" />
+		<topic title="Component Information pane" href="html/reference/components/ref_information.htm" />
+		<topic title="Palette Filtering"          href="html/reference/views/ref_tool_bar.htm" />
+	</entry>
+
+	<entry keyword="UI Designer" >
+		<topic href="html/gettingstarted/start_overview.htm" /> 
+		<topic href="html/gettingstarted/start_tut_walkthrough.htm" />
+		<topic href="html/gettingstarted/start_dev_refs.htm" />
+	</entry>
+
+	<entry keyword="UI Designer preferences" >
+		<topic href="html/reference/uidesign/ref_ui_designer_prefs.htm" />
+	</entry>
+
+	<entry keyword="UI Design Selection page" >
+		<topic href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+	</entry>
+
+	<entry keyword="user initiated events" >
+		<topic href="html/concepts/con_com_events.htm" />
+	</entry>
+
+
+	<!-- VVVVVV  -->
+	
+	<entry keyword="views" >
+		<topic href="html/reference/views/ref_events_view.htm" />
+		<topic href="html/reference/views/ref_gallery_view.htm" />
+		<topic href="html/reference/views/ref_outline_view.htm" />
+		<topic href="html/reference/views/ref_properties_view.htm" />
+	</entry>
+
+	<!-- WWWWWW  -->
+	
+	<entry keyword="wizards" >
+		<topic title="New Project" href="html/reference/projects/ref_new_proj_wizard.htm" />
+		<entry keyword="UI Design" >
+			<topic title="UI Design" href="html/reference/uidesign/ref_ui_design_wizard.htm" />
+			<topic title="Application Properties page" href="html/reference/uidesign/ref_ui_design_wizard_01.htm" />
+			<topic title="UI Design Selection page" href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+			<topic title="Content Variants page" href="html/reference/uidesign/ref_ui_design_wizard_03.htm" />
+			<topic title="Container Name and Type page" href="html/reference/uidesign/ref_ui_design_wizard_04.htm" />
+		</entry>
+	</entry>
+
+
+	<!-- XXXXXX  -->
+	<!-- YYYYYY  -->
+	<!-- ZZZZZZ  -->
+	
+</index>

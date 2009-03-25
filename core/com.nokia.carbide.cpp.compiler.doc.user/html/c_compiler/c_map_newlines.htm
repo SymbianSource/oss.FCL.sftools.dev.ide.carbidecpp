@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Map Newlines to CR</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Map Newlines to CR</h3>
+<p>  Use the <span class="code">#pragma mpwc_newline</span> to set how the C compiler interprets the newline ('<span class="code">\n</span>') and return ('<span class="code">\r</span>') characters.</p>
+<p>Most compilers, including the Carbide C/C++ compilers, translate '<span class="code">\r</span>' to <span class="code">0x0D</span>, the standard value for carriage return, and '<span class="code">\n</span>' to <span class="code">0x0A</span>, the standard value for linefeed.</p>
+<p>However, a few C compilers translate '<span class="code">\r</span>' to <span class="code">0x0A</span> and '<span class="code">\n</span>' to <span class="code">0x0D</span>&mdash;the opposite of the typical behavior.</p>
+<p>If you enable this setting, the compiler uses these non-standard conventions for the '<span class="code">\n</span>' and '<span class="code">\r</span>' characters. Otherwise, the compiler uses the Carbide C/C++ language&rsquo;s conventions for these characters.</p>
+<p>Also if you enable this setting, use ISO C/C++ libraries that were compiled when this setting was enabled. Otherwise, you cannot read and write '<span class="code">\n</span>' and '<span class="code">\r</span>' properly. For example, printing '<span class="code">\n</span>' takes you to the beginning of the current line instead of inserting a new line.</p>
+<p>This setting corresponds to the pragma mpwc_newline. To check this setting, use <span class="code">__option (mpwc_newline)</span>. By default, this setting is disabled.</p>
+<p>See also &ldquo;mpwc_newline&rdquo;, and <a href="../symbols/sym_settings.htm">Checking Settings</a>.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

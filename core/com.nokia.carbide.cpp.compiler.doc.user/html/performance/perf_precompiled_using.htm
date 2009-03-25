@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Using a Precompiled Header File</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Using a Precompiled Header File</h3>
+<p>Although a precompiled file is not a text file, you use it like you would a regular header file. To include a precompiled header file in a source code file, use the <span class="code">#include</span> directive.</p>
+<p class="note"><strong>NOTE</strong> Unlike regular header files in text format, a source code file may include only one precompiled file.</p>
+<p class="note"><strong>TIP</strong> Instead of explicitly including a precompiled file in each source code file with the<span class="code"> #include</span> directive, put the precompiled file name in the Prefix File field of the C/C++ Language settings panel. If the Prefix File field already specifies a file name, include the precompiled file in the prefix file with the <span class="code">#include</span> directive.</p>
+<p>Listing 5.1 and Listing 5.2 show an example.</p>
+<div class="listing">
+  <h5>Listing 5.1 Header File that Creates a Precompiled Header File for C</h5>
+  <p>// sock_header.pch<br />
+    // When compiled or precompiled, this file will generate a <br />
+    // precompiled file named &quot;sock_precomp.mch&quot;</p>
+  <p>#pragma precompile_target &quot;sock_precomp.mch&quot;</p>
+  <p>#define SOCK_VERSION &quot;SockSorter 2.0&quot;<br />
+    #include &quot;sock_std.h&quot;<br />
+    #include &quot;sock_string.h&quot;<br />
+    #include &quot;sock_sorter.h&quot;</p>
+</div>
+<div class="listing">
+  <h5>Listing 5.2 Using a Precompiled File</h5>
+  <p>// sock_main.c<br />
+    // Instead of including all the files included in <br />
+    // sock_header.pch, we use sock_precomp.h instead.<br />
+    //<br />
+    // A precompiled file must be included before anything else.</p>
+  <p>#include &quot;sock_precomp.mch&quot;</p>
+  <p>int main(void)<br />
+    {<br />
+    // ...<br />
+    return 0;<br />
+    }
+  </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Getting Started" link_to="sdkTOC.xml#sdkGettingStarted">
+	<topic label="Background information" href="html/gettingStarted/background.htm"/>
+	<topic label="Setting up your development environment" 	href="html/gettingStarted/env_setup.htm"/>
+	<topic label="Installing the Carbide.c++ Plug-in SDK help" href="html/gettingStarted/sdk_help.htm"/>
+	<topic label="Importing the SDK example and leavescan plug-ins" href="html/gettingStarted/import_examples.htm"/>
+	<topic label="Debugging a Carbide.c++ plug-in" href="html/gettingStarted/launchconfig.htm"/>
+</toc>
+
+ 

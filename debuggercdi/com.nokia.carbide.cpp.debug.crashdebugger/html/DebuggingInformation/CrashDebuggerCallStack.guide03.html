@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Finding the Stack</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" >
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" >
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+	<div class="Head2">
+<h2>Finding the Stack</h2>
+</div><div>
+<p>To trace back through a thread&#8217;s kernel or user stack, you first
+need to find the stack pointer value. On the ARM, R13 always
+points to the stack, but there are different R13 registers for
+each processor mode:</p>
+<ul>
+<li><p>In thread context:</p>
+<ul>
+<li>
+<p>R13usr points to the thread&#8217;s user
+stack,</p>
+</li>
+<li>
+<p>R13svc points to the thread&#8217;s kernel
+stack.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>When handling interrupts, dedicated stacks are used:</p>
+<ul>
+<li>
+<p>R13Fiq points to the stack used when
+processing fast interrupts (FIQ).</p>
+</li>
+<li>
+<p>R13Irq points to the stack used when
+processing general purpose interrupts (IRQ)</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>To find out which stack to inspect, you need to know what mode the
+CPU was in when the fault occurred. The
+<a href="CrashDebuggerARMexceptionsProcessorModes.guide.html" title="ARM Exception types, fault status register values, processor modes / ARM processor modes (CPSR register)">processor mode</a> is identified by the five least-significant bits of the CPSR
+register. To get the value of the CPSR register:</p>
+<ul>
+<li>
+<p>use the <a href="CrashDebugger_cmd_f.guide.html" title="The debug monitor and command syntax / f - display kernel fault information">f</a> command when the
+debug monitor is triggered by a hardware exception.</p>
+</li>
+<li>
+<p>use the <a href="CrashDebugger_cmd_r.guide.html" title="The debug monitor and command syntax / r - dump register contents">r</a> command when the
+debug monitor is triggered by a panic.</p>
+</li>
+</ul>
+<p>The following examples show how to find the stack(s):</p>
+<ul>
+<li>
+<p><b><a href="CrashDebuggerCallStack.guide03.html#call01" title="Examining the call stack / Finding the stack / Kernel &amp; user stacks of the current thread after a hardware exception">Kernel &amp; user stacks of the current thread after a hardware exception</a></b></p>
+</li>
+<li class="style6">
+<p><a href="CrashDebuggerCallStack.guide03.html#call02" title="Examining the call stack / Finding the stack / Kernel &amp; user stacks of the current thread after a panic">Kernel &amp; user stacks of the current thread after a panic</a></p>
+</li>
+<li class="style6">
+<p><a href="CrashDebuggerCallStack.guide03.html#call03" title="Examining the call stack / Finding the stack / Interrupt stacks">Interrupt stacks</a></p>
+</li>
+<li>
+<p><b><a href="CrashDebuggerCallStack.guide03.html#call04" title="Examining the call stack / Finding the stack / Kernel &amp; user stacks of a non-current thread">Kernel &amp; user stacks of a non-current thread</a></b></p>
+</li>
+</ul>
+</div>
+<div class="Head3">
+<h3><a name="call01"></a>Kernel &amp; user stacks of the current thread after a
+hardware exception</h3>
+</div><div>
+<p>Use the <a href="CrashDebugger_cmd_f.guide.html" title="The debug monitor and command syntax / f - display kernel fault information">f</a> command.</p>
+<p class="CodeBlock">Fault Category: Exception  Fault Reason: 10000000<br>ExcId 00000001 CodeAddr f816c908 DataAddr 80000001 Extra c0007003<br>Exc 1 Cpsr=60000010 FAR=80000001 FSR=c0007003<br>&nbsp;R0=00000000  R1=00000000  R2=30000000  R3=80000001<br>&nbsp;R4=00000001  R5=00403d88  R6=00002000  R7=f816c768<br>&nbsp;R8=00000012  R9=00000040 R10=00000000 R11=00403fa4<br>R12=00403d5c R13=00403d70 R14=f80906f8 R15=f816c908<br>R13Svc=6571e000 R14Svc=f80074bc SpsrSvc=80000010</p>
+<p>In this example:</p>
+<ul>
+<li>
+<p>the kernel stack is the value of R13Svc, i.e.
+0x6571e00.</p>
+</li>
+<li>
+<p>the user stack is the value of R13, i.e.
+0x00403d70.</p>
+</li>
+</ul>
+</div>
+<div class="Head3">
+<h3><a name="call02" id="call02"></a>Kernel &amp; user stacks of the current thread after a
+panic</h3>
+</div><div>
+<p>Use the <a href="CrashDebugger_cmd_r.guide.html" title="The debug monitor and command syntax / r - dump register contents">r</a> command.</p>
+<p class="CodeBlock">MODE_USR:<br>&nbsp;R0=6571de54  R1=0000002a  R2=00000002  R3=ffffffff<br>&nbsp;R4=0000002a  R5=f8170414  R6=6571df14  R7=6403cc50<br>&nbsp;R8=00000001  R9=6403c44c R10=640002f8 R11=6571de70<br>R12=00000020 R13=00404e00 R14=f80818c0 R15=f800bfa8<br>CPSR=60000013<br>MODE_FIQ:<br>&nbsp;R8=00000000  R9=ffffffff R10=ffffffff R11=00000000<br>R12=00000000 R13=64000d0c R14=c080079c SPSR=e00000dc<br>MODE_IRQ:<br>R13=6400110c R14=00000013 SPSR=20000013<br>MODE_SVC:<br>R13=6571de54 R14=f80328bc SPSR=60000010<br>MODE_ABT:<br>R13=6400090c R14=ccbfd0e0 SPSR=b00000d9<br>MODE_UND:<br>R13=6400090c R14=b5a39950 SPSR=f000009d</p>
+<p>In this example:</p>
+<ul>
+<li>
+<p>the kernel stack is the value of R13 under
+MODE_SVC:, i.e. 0x6571de54.</p>
+</li>
+<li>
+<p>the user stack is the value of R13 under
+MODE_USR:, i.e. 0x00404e00.</p>
+</li>
+</ul>
+</div>
+<div class="Head3">
+<h3><a name="call03" id="call03"></a>Interrupt stacks</h3>
+</div><div>
+<p>Use the <a href="CrashDebugger_cmd_r.guide.html" title="The debug monitor and command syntax / r - dump register contents">r</a> command.</p>
+<p class="CodeBlock">MODE_USR:<br>&nbsp;R0=6571de54  R1=0000002a  R2=00000002  R3=ffffffff<br>&nbsp;R4=0000002a  R5=f8170414  R6=6571df14  R7=6403cc50<br>&nbsp;R8=00000001  R9=6403c44c R10=640002f8 R11=6571de70<br>R12=00000020 R13=00404e00 R14=f80818c0 R15=f800bfa8<br>CPSR=60000013<br>MODE_FIQ:<br>&nbsp;R8=00000000  R9=ffffffff R10=ffffffff R11=00000000<br>R12=00000000 R13=64000d0c R14=c080079c SPSR=e00000dc<br>MODE_IRQ:<br>R13=6400110c R14=00000013 SPSR=20000013<br>MODE_SVC:<br>R13=6571de54 R14=f80328bc SPSR=60000010<br>MODE_ABT:<br>R13=6400090c R14=ccbfd0e0 SPSR=b00000d9<br>MODE_UND:<br>R13=6400090c R14=b5a39950 SPSR=f000009d</p>
+<p>In this example:</p>
+<ul>
+<li>
+<p>the IRQ stack is the value of R13 under
+MODE_IRQ:, i.e. 0x6400110c.</p>
+</li>
+<li>
+<p>the FRQ stack is the value of R13 under
+MODE_FIQ:, i.e. 0x64000d0c.</p>
+</li>
+</ul>
+</div>
+<div class="Head3">
+<h3><a name="call04" id="call04"></a>Kernel &amp; user stacks of a non-current
+thread</h3>
+</div><div>
+<p>Use the output of the
+<a href="CrashDebugger_cmd_i.guide.html" title="The debug monitor and command syntax / i - display information for the current process and thread">i</a>,
+<a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a> and
+<a href="CrashDebugger_cmd_c.guide.html" title="The debug monitor and command syntax / c - display contents of object container">c</a>
+commands.</p>
+<p class="CodeBlock">THREAD at 6403c194 VPTR=f8046c18 AccessCount=5 Owner=6403bb4c<br>Full name t_dmasim::Main<br>Thread MState READY<br>Default priority 12 WaitLink Priority 12<br>ExitInfo 3,0,<br>Flags 00000002, Handles 6403b418<br>Supervisor stack base 6571d000 size 1000<br>User stack base 00403000 size 2000<br>Id=25, Alctr=00700000, Created alctr=00700000, Frame=00000000<br>Trap handler=00000000, ActiveScheduler=007000c8, Exception handler=00000000<br>TempObj=00000000 TempAlloc=00000000<br>NThread @ 6403c44c Pri 12 NState READY<br>Next=6403c44c Prev=6403c44c Att=03 iUserContextType=02<br>HeldFM=00000000 WaitFM=00000000 AddrSp=6403bb4c<br>Time=0 Timeslice=20 ReqCount=0<br>SuspendCount=0 CsCount=1 CsFunction=00000000<br>SavedSP=6571df98<br>DACR f800bd2c<br>R13_USR 0d404c38 R14_USR 00000001 SPSR_SVC 00000000<br>&nbsp;R4 f8022d84  R5 6571dfd4  R6 6571dfbc  R7 f8022db8<br>&nbsp;R8 f800bddc  R9 f800a454 R10 00000000 R11 f801daac<br>&nbsp;PC 60000010</p>
+<p>In this example:</p>
+<ul>
+<li>
+<p>the kernel stack is the value of SavedSP, i.e.
+0x6571df98.</p>
+</li>
+<li>
+<p>the user stack is the value of R13_USR, i.e.
+0x0d404c38.</p>
+</li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="CrashDebuggerCallStack.guide02.html">General Points</a></li>
+  <li><a href="CrashDebuggerCallStack.guide04.html">Tracing through the Call Stack Heuristically</a></li>
+  <li><a href="CrashDebuggerCallStack.guide05.html">Walking through the Call Stack</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   

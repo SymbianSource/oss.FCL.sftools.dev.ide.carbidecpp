@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>Optimizing CodeScanner</title>
+<link rel="StyleSheet" href="../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+   <body>
+   <div class="Head1">
+<h2>Optimizing CodeScanner</h2>
+</div>
+   <p>Below are some ways of optimizing how CodeScanner operates, including:</p>
+   <ul>
+     <li><a href="#IGNORE">Commenting out CodeScanner messages</a></li>
+   </ul>
+   <h3><a name="IGNORE" id="IGNORE"></a>Commenting out CodeScanner messages</h3>
+   <p>It's possible to tell CodeScanner to ignore specific error or warning messages by inserting specifically formatted comments into source code. This is useful for example, when you have a source line that generates error messages that you know are false and would like to suppress for that single line of code without disabling it elsewhere in the project.</p>
+   <p>All CodeScanner rules are applicable when commenting out any line of code. The rule names that can be used are listed in the <img src="images/command_link.png" width="16" height="12" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand(&quot;org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.codescanner.ui.CSPreferencePage)&quot;)'> CodeScanner</a> <a href="pref_codescanner_03.htm">Rules</a> page in the <b>Preferences</b> window. The command to implement a rule suppression looks like this:</p>
+   <p class="code">codescanner(::&lt;rule_name&gt;)+ </p>
+   <p>And rules to suppress must appear after the C/C++ comment  style of &quot;<span class="code">//</span>&quot; or enclosed in &quot;<span class="code">/*</span>&quot; and &quot;<span class="code">*/</span>&quot;. For example:</p>
+   <p class="listing">void CTestCase::Foo() {   <br />
+     &nbsp;&nbsp;&nbsp;RPtrArr *iMember = obj.Array; &nbsp;&nbsp;// codescanner::pointertoarrays::variablenames<br />
+   &nbsp;&nbsp;&nbsp;array-&gt;At(a); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// codescanner::accessArrayElementWithoutCheck<br />
+   &nbsp;&nbsp;&nbsp;User::Leave(KErrNone); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* codescanner::LeaveNoError */ <br />
+   }</p>
+   <p>Note that multiple rules can be applied  to a single line (e.g. <span class="code">RPtrArr</span> as shown above) when prefixed by  &quot;<span class="code">::</span>&quot;. All rules only apply to the line they are matched with and rules must be contained within that  single line.</p>
+   <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+   </html>
+   

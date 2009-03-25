@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.componentValidator.compoundProperty">
+		<property name="m1" type="string"/>
+		<property name="m2" type="string"/>
+		<property name="oddonly" type="integer"/>
+	</compoundPropertyDeclaration>
+
+	<component
+		qualifiedName="com.nokia.test.componentValidator" 
+		version="1.0">
+		<properties>
+			<property name="always" type="string"/>
+			<property name="never" type="string"/>
+			<property name="notnull" type="string"/>
+			<compoundProperty name="compound" type="com.nokia.test.componentValidator.compoundProperty"/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="validate.js" prototype="ComponentValidator"/>
+			</implementation>
+		</implementations>
+	</component>
+</componentDefinition>

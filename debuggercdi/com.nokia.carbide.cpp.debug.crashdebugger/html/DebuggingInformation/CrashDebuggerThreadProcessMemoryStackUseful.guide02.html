@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Process, thread, stack and memory useful information in Debugging information</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Process and Thread Priorities</h2>
+</div>
+<div>
+<p>
+Internally the scheduler always deals with nanokernel threads,
+NThread objects, and their associated priority between 0 (lowest)
+and 63 (highest). In general, a thread with a higher priority that is ready to
+run will always run in preference to threads with a lower priority. The only
+exception is where a higher priority thread waits on a nanokernel fast mutex
+held by a lower priority thread. In this case, the higher priority thread will
+yield to the lower priority thread holding the mutex. 
+</p>
+<p>
+A Symbian OS thread, a DThread object, has an embedded
+NThread, which enables it to be scheduled by the nanokernel. 
+</p>
+<p>
+There are two ways of setting a priority for Symbian OS thread: 
+</p>
+<ul>
+<li>
+<p>
+using the two-level priority scheme 
+</p>
+</li>
+<li>
+<p>
+using an absolute priority. 
+</p>
+</li>
+</ul>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.4.7"></a></span>The two level priority scheme</h3>
+</div><div>
+<p>
+In this scheme, a Symbian OS thread priority is relative to the
+priority of its owning process. By default, Symbian OS threads inherit the
+priority of their owning process when they are created. This priority can be
+raised or lowered relative to the process priority - this just sets the
+thread&#8217;s priority to the process priority plus or minus a specified priority
+weighting. If the priority of the process is changed, the priority of its
+threads will change relative to other threads in the system but will remain the
+same relative to each other. 
+</p>
+<p>
+The default priority of a process is
+EPriorityForgeround, which is an absolute priority of 350. Threads
+by default are created with relative priority EPriorityNormal
+which sets them to the same priority as the owning process. The window server
+lowers the priority of background UI processes to
+EPriorityBackground (250). 
+</p>
+<p>
+The NULL thread, also known as the idle thread, runs at priority 0,
+and means that it will only run when there are no other threads ready to run. 
+</p>
+<p>
+Symbian OS thread priorities map onto NThread priorities
+in the range 1 to 31 as shown in the table below. 
+</p><table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0"><tr valign="top"><td class="Cell">
+<p>
+<b>Thread priority</b>
+</p></td><td class="Cell">
+<p>
+Idle 
+</p></td><td class="Cell">
+<p>
+Much Less 
+</p></td><td class="Cell">
+<p>
+Less 
+</p></td><td class="Cell">
+<p>
+Normal 
+</p></td><td class="Cell">
+<p>
+More 
+</p></td><td class="Cell">
+<p>
+Much More 
+</p></td><td class="Cell">
+<p>
+Real Time 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+<b>Process priority</b>
+</p></td><td class="Cell">
+<p>
+</p></td><td class="Cell">
+<p>
+</p></td><td class="Cell">
+<p>
+</p></td><td class="Cell">
+<p>
+</p></td><td class="Cell">
+<p>
+</p></td><td class="Cell">
+<p>
+</p></td><td class="Cell">
+<p>
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+Low 
+</p></td><td class="Cell">
+<p>
+1</p></td><td class="Cell">
+<p>
+1</p></td><td class="Cell">
+<p>
+2</p></td><td class="Cell">
+<p>
+3</p></td><td class="Cell">
+<p>
+4</p></td><td class="Cell">
+<p>
+5</p></td><td class="Cell">
+<p>
+22 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+Background 
+</p></td><td class="Cell">
+<p>
+3</p></td><td class="Cell">
+<p>
+5</p></td><td class="Cell">
+<p>
+6</p></td><td class="Cell">
+<p>
+7</p></td><td class="Cell">
+<p>
+8</p></td><td class="Cell">
+<p>
+9</p></td><td class="Cell">
+<p>
+22 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+Foreground 
+</p></td><td class="Cell">
+<p>
+3</p></td><td class="Cell">
+<p>
+10 
+</p></td><td class="Cell">
+<p>
+11 
+</p></td><td class="Cell">
+<p>
+12 
+</p></td><td class="Cell">
+<p>
+13 
+</p></td><td class="Cell">
+<p>
+14 
+</p></td><td class="Cell">
+<p>
+22 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+High 
+</p></td><td class="Cell">
+<p>
+3</p></td><td class="Cell">
+<p>
+17 
+</p></td><td class="Cell">
+<p>
+18 
+</p></td><td class="Cell">
+<p>
+19 
+</p></td><td class="Cell">
+<p>
+20 
+</p></td><td class="Cell">
+<p>
+22 
+</p></td><td class="Cell">
+<p>
+23 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+SystemServer1 
+</p></td><td class="Cell">
+<p>
+9</p></td><td class="Cell">
+<p>
+15 
+</p></td><td class="Cell">
+<p>
+16 
+</p></td><td class="Cell">
+<p>
+21 
+</p></td><td class="Cell">
+<p>
+24 
+</p></td><td class="Cell">
+<p>
+25 
+</p></td><td class="Cell">
+<p>
+28 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+SystemServer2 
+</p></td><td class="Cell">
+<p>
+9</p></td><td class="Cell">
+<p>
+15 
+</p></td><td class="Cell">
+<p>
+16 
+</p></td><td class="Cell">
+<p>
+21 
+</p></td><td class="Cell">
+<p>
+24 
+</p></td><td class="Cell">
+<p>
+25 
+</p></td><td class="Cell">
+<p>
+28 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+SystemServer3 
+</p></td><td class="Cell">
+<p>
+9</p></td><td class="Cell">
+<p>
+15 
+</p></td><td class="Cell">
+<p>
+16 
+</p></td><td class="Cell">
+<p>
+21 
+</p></td><td class="Cell">
+<p>
+24 
+</p></td><td class="Cell">
+<p>
+25 
+</p></td><td class="Cell">
+<p>
+28 
+</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>
+RealTimeServer 
+</p></td><td class="Cell">
+<p>
+18 
+</p></td><td class="Cell">
+<p>
+26 
+</p></td><td class="Cell">
+<p>
+27 
+</p></td><td class="Cell">
+<p>
+28 
+</p></td><td class="Cell">
+<p>
+29 
+</p></td><td class="Cell">
+<p>
+30 
+</p></td><td class="Cell">
+<p>
+31 
+</p></td></tr>
+</table></td></tr></table>
+<p>
+where: 
+</p>
+<ul>
+<li>
+<p>
+the process priority values are defined by the internal Symbian
+OS enum TProcPriority, defined in
+...\e32\include\kernel\kern_priv.h. The symbols in the table
+correspond to the symbols in the enum. 
+</p>
+</li>
+<li>
+<p>
+the thread priority values are defined by the internal Symbian OS
+enum TThrdPriority, defined in
+...\e32\include\kernel\kern_priv.h. The symbols in the table
+correspond to the symbols in the enum. 
+</p>
+</li>
+</ul>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.4.8"></a></span>Absolute priority scheme</h3>
+</div><div>
+<p>
+It is possible to set an absolute priority that is not relative to
+the process priority; it is not affected by changes in the process priority. 
+</p>
+</div><div class="Head2"></div><div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

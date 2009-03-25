@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Generated Code</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Generated Code  </h2>
+
+<p>The UI Designer related files consist of *.RSS, *.RSSI, *.HRH, *.LOC, *.LXX, and *.RLS files.  These files may be edited, but designer-generated resources, strings, and <span class="code"> #include</span> statements should not be renamed or removed.  </p>
+<p>New resources and <span class="code"> #include</span> statements may be added freely.</p> <p>You may add initializers for otherwise unhandled fields of RESOURCE statements or expressions, but any that the designer handles will be replaced on save to match the contents of the design.  The designer does not have "two-way" support in this regard.  Check whether the object supports the properties you need, and edit those first, before resorting to editing RSS.  
+</p>
+<p>The designer allows, and is aware of, edits to existing strings in .LOC, .LXX, and .RLS files.  Existing <span class="code">#define</span> directives or <span class="code">rls_string</span> statements may be edited, and these changes will be reflected back in the model (immediately, if the design is open in an editor, or upon opening the design).  New strings may be added but are not otherwise visible in the designer.  Strings should not be renamed, since the designer will write back the names with the old values on the next save.  Note: only strings stored in the correct format for the expected file extensions are recognized (.LXX files contains <span class="code">#define</span>, not .LOC; and .RLS contains <span class="code">rls_string</span>, not macros)</p> <p>
+To remove generated resources, delete the appropriate object from the design, or take ownership of an .RSSI file by removing the design from the UI Designs page of the Application Editor.  Otherwise, deleted resources will be regenerated on save.    
+</p>
+<p>The designer will replace <span class="code"> #include &quot;....rssi&quot;</span> statements in the primary <span class="code">.rss</span> file whenever the application design is saved.  To avoid conflicts, when adding custom resource <span class="code"> #include</span> statements, or when resurrecting a removed design's resources, be sure to use a different suffix from <span class="code"> .rssi</span> or use a system <span class="code"> #include</span> statement (<span class="code"> #include &lt;...&gt;</span>).</p>
+<p>In generated C++ sources, certain regions of code are marked with block comments of the form &quot;<span class="code">// [[[</span>&quot; and &quot;<span class="code">// ]]]</span>&quot;. These sections are important to the source generator and must not be deleted. The comments themselves should never be modified, although variations in spacing are tolerated, for example by a source formatting program. The following shows how these regions may appear in a source file: </p>
+<p class="listing">CHelloUIDAgainSettingItemList::~CHelloUIDAgainSettingItemList()<br />
+{<br />
+// [[[ begin generated region: do not modify [Generated Contents]<br />
+// ]]] end generated region [Generated Contents]<br />
+}</p>
+<p>If the first comment of a region says &quot;do not modify!&quot;, such regions are considered &quot;owned&quot; by the designer. All edits within it will be lost upon the next save.</p>
+<p>Other such regions are used for placement of new code (i.e., methods, base classes), and their contents may be edited. User edits are allowed outside any such comments. If such sources contain syntax errors, further UI design save operations may corrupt the source.</p>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="../tasks/generate/task_gen.htm">Generated File Tasks</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../reference/views/ref_generated_files.htm">Generated Files</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

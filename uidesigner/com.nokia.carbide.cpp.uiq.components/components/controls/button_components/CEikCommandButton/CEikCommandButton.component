@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU17 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_commandButton_srcmapping SYSTEM "../CEikCommandButtonBase_common_srcmapping.inc">
+]>
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikCommandButton"
+			baseComponent="com.nokia.carbide.uiq.CEikCommandButtonBase"
+			instanceNameRoot="commandButton"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikCommandButton" classHelpTopic=""
+			resourceType="CMBUT" resourceHelpTopic=""/>	
+				
+		<designerImages smallIconFile="CEikCommandButton_sm.png"
+			largeIconFile="CEikCommandButton.png"/>
+				
+		<attributes>
+			<attribute key ="rss-control-type-enum">EEikCtCommandButton</attribute>		
+			<attribute key ="cpp-class-name">CEikCommandButton</attribute>		
+		</attributes>
+		
+		<properties>
+			<enumProperty  name="layout" 
+				type="com.nokia.carbide.uiq.CEikCommandButton.TLayout" 
+				default="EEikCmdButTextRightPictureLeft"
+				descriptionKey="layoutDescription" 
+				category="%category.appearance"/>
+			<property  name="text" type="localizedString" 
+				default="button"
+				descriptionKey="textDescription" 
+				category="%category.data"/>		
+			<compoundProperty  name="image" 
+				type="com.nokia.carbide.uiq.MbmImageProperty" 
+				descriptionKey="imageDescription" 
+				category="%category.appearance"/>		
+		</properties>
+		
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true"
+				category="Hidden"/>
+		</propertyOverrides>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+<!--				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>-->
+				<script file="CEikCommandButton.js" prototype="CEikCommandButton"/>
+			</implementation>
+		</implementations>	
+		
+		<sourceMapping>
+				<mapResource struct="CMBUT" headers="uikon.rh">
+					&common_commandButton_srcmapping;
+					<mapMemberFromType property="layout" member="layout"/>				
+					<mapSimpleMember property="text" member="txt"/>
+					<mapSimpleMember property="helpText" member="helptxt"/>
+	            <select property="image.bmpfile">
+					<choice value="">
+					</choice>
+		            <choice>	
+						<mapSimpleMember property="image.bmpfile" member="bmpfile"/>			
+					</choice>
+				</select>	
+	            <select property="image.bmpid">
+					<choice value="">
+					</choice>
+		            <choice>	
+						<mapEnumMember property="image.bmpid" member="bmpid" validate="false"/>				
+					</choice>
+				</select>
+				<select property="image.bmpmask">
+					<choice value="">
+					</choice>
+		            <choice>	
+						<mapEnumMember property="image.bmpmask" member="bmpmask" validate="false"/>						
+					</choice>
+				</select>																			
+				</mapResource>
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>
+			<useTemplateGroup ids="CommonSourceGenCommandButtons"/>
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

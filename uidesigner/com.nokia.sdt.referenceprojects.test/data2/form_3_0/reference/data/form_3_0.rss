@@ -1,0 +1,38 @@
+NAME FORM
+
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <eikon.rh>
+#include <appinfo.rh>
+#include "form_3_0.hrh"
+#include "form_3_0.loc"
+
+RESOURCE RSS_SIGNATURE
+	{
+	}
+RESOURCE TBUF
+	{
+	buf = "form_3_0";
+	}
+RESOURCE EIK_APP_INFO r_application_form_3_0_app_ui
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
+	status_pane = r_application_status_pane;
+	}
+RESOURCE STATUS_PANE_APP_MODEL r_application_status_pane
+	{
+	}
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = STR_form_3_0Application_4;
+	caption_and_icon = CAPTION_AND_ICON_INFO
+		{
+		caption = STR_form_3_0Application_3;
+		number_of_icons = 0;
+		};
+	}
+RESOURCE TBUF r_application_akn_view_reference1
+	{
+	}
+
+#include "Form_3_0Form.rssi"

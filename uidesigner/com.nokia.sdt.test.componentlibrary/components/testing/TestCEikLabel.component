@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<enumPropertyDeclaration qualifiedName="com.nokia.examples.CEikLabel.HAlignment">
+		<enumElement value="EEikLabelAlignHLeft" displayValue="left"/>
+		<enumElement value="EEikLabelAlignHCenter" displayValue="center"/>
+		<enumElement value="EEikLabelAlignHRight" displayValue="right"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.examples.CEikLabel.NumericHacks">
+		<enumElement value="-1" displayValue="NegOne"/>
+		<enumElement value="0" displayValue="Zero"/>
+		<enumElement value="1" displayValue="One"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.examples.CEikLabel.TextEmphasis">
+		<enumElement value="ENoEmphasis" displayValue="%none"/>
+		<enumElement value="EPartialEmphasis" displayValue="partial"/>
+		<enumElement value="EFullEmphasis" displayValue="full"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.examples.CEikLabel.StandardFont">
+		<enumElement value="NormalFont" displayValue="normal"/>
+		<enumElement value="LegendFont" displayValue="legend"/>
+		<enumElement value="AnnotationFont" displayValue="annotation"/>
+	</enumPropertyDeclaration>
+	
+	<component  
+		qualifiedName="com.nokia.examples.CEikLabelTest" 
+		category="Controls"
+		instanceNameRoot="label"
+		version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikLabel" classHelpTopic=""
+			resourceType="LABEL" resourceHelpTopic="" />
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key="cpp-class-name">CEikLabel</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="rss-control-type-enum">EEikCtLabel</attribute>
+		</attributes>
+		<properties>
+			<property name="name" type="uniqueName" />
+			<enumProperty category="Appearance" name="alignment" 
+				type="com.nokia.examples.CEikLabel.HAlignment" 
+				default="EEikLabelAlignHCenter"
+				descriptionKey="alignmentDescription" 
+				extendWithEnum="com.nokia.examples.CEikLabel.NumericHacks"/>
+			<property category="Label" name="text" type="localizedString" 
+				default="label"
+				descriptionKey="textDescription" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" 
+				extendWithEnum="com.nokia.examples.CEikLabel.NumericHacks"
+				
+				/>
+			<enumProperty category="Appearance" name="font" 
+				type="com.nokia.examples.CEikLabel.StandardFont"
+				descriptionKey="fontDescription" />
+			<enumProperty category="Appearance" name="emphasis" 
+				type="com.nokia.examples.CEikLabel.TextEmphasis"
+				descriptionKey="emphasisDescription"
+				extendWithEnum="com.nokia.examples.CEikLabel.NumericHacks"
+				default="EPartialEmphasis"
+				 />
+			<property category="Appearance" name="pixelGapBetweenLines" 
+				type="integer"
+				descriptionKey="pixelGapBetweenLinesDescription" 
+				extendWithEnum="com.nokia.examples.CEikLabel.NumericHacks"
+				/>
+			<property category="Appearance" name="underline" type="boolean"
+				descriptionKey="underlineDescription"
+				extendWithEnum="com.nokia.examples.CEikLabel.NumericHacks"
+				
+				 />
+			<property category="Appearance" name="strikethrough" type="boolean"
+				descriptionKey="strikethroughDescription" />
+		</properties>
+		
+	</component>
+</componentDefinition>

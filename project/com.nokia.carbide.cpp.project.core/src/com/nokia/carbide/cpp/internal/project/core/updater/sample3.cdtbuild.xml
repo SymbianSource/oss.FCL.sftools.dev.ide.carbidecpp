@@ -1,0 +1,1638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+	<project id="Carbide11_4.com.symbian.cdt.build.projectType.pdll.1745401624"
+		name="Symbian Polymorphic DLL Project"
+		projectType="com.symbian.cdt.build.projectType.pdll">
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="S60_2nd_FP3_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP3.1083309579"
+			name="S60 2.8 Phone (Thumb) Release"
+			parent="S60_2nd_FP3_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP3">
+			<toolChain
+				id="com.nokia.sdk.S60_28.build.toolChain.gcc98.thumbUrelPdll.1981081549"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_28.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_28.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.676140509"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_28.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.81a.build.gcc98.pdll.targetType.1017011485"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.81a.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.153489117"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.1371758807"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.714291220"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1336379600"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.970729179"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_28.build.gcc98.compiler.thumbUrelPdll.936302104"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_28.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1995701566"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.1459963562"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.1069336115"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1561123988"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1014667027"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.841225617"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.729850259"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1000142512"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1638683397"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.248391645"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1388711914"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.127986636"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.908132916"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.1890330399"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.419100348"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.228430490"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.1759482744"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.861558703"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+				<tool
+					id="com.nokia.sdk.S60_28.build.gcc98.mif.thumbUrelPdll.506475018"
+					name="MIF Compiler"
+					superClass="com.nokia.sdk.S60_28.build.gcc98.mif.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mif.general.targetPath.1112193309"
+						superClass="com.symbian.cdt.build.buildDefinitions.mif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.80143426"
+			name="S60 2.6 Phone (ARMI) Release"
+			parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_26.build.toolChain.gcc98.armiUrelPdll.818674573"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_26.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.2099109435"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType.1024728802"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.261744753"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.1375898743"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.347801536"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.666182368"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.609516385"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.592971503"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.827910390"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.1532945593"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.671956554"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.480523477"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1134094480"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.416023696"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.742985387"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.855349861"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1175933999"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.1562234174"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.749792568"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1044094834"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.2020682781"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.1435042908"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.1101337894"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.1895048988"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.1764962682"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.1401225500"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.1185510375"
+			name="S60 2.1 Emulator Debug"
+			parent="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_21.build.winscw.toolChain.winscwUdebPdll.246625233"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_21.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_21.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.840339781"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_21.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType.1454363587"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb.1955200947"
+					name="UID2"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb.1253571337"
+					name="UID3"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.vendorid.udeb.2007429702"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.vendorid.udeb"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.679447144"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.341114259"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb.826822977"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1308535302"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.404998497"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll.1183346549"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.1368275157"
+						superClass="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false" value="euser.lib"/>
+						<listOptionValue builtIn="false" value="apparc.lib"/>
+						<listOptionValue builtIn="false" value="cone.lib"/>
+						<listOptionValue builtIn="false" value="eikcore.lib"/>
+						<listOptionValue builtIn="false" value="avkon.lib"/>
+						<listOptionValue builtIn="false" value="eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.152750575"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.aif.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.2028818422"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.2038711476"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1267513122"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.73405814"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb.1191341753"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1381845295"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll.1066407072"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="S60_2nd_FP3_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP3.2088095231"
+			name="S60 2.8 Emulator Debug"
+			parent="S60_2nd_FP3_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP3">
+			<toolChain
+				id="com.nokia.sdk.S60_28.build.winscw.toolChain.winscwUdebPdll.1757484174"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_28.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_28.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.2013447607"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_28.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.81a.build.winscw.polymorphicDllUdeb.targetType.1938022813"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.81a.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.uid2.udeb.1745571260"
+					name="UID2"
+					superClass="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.uid3.udeb.1412997487"
+					name="UID3"
+					superClass="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.vendorid.udeb.616458474"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.vendorid.udeb"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.607278416"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.1131976327"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.targetPath.udeb.10942588"
+					superClass="com.symbian.cdt.build.81a.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_28.build.winscw.compiler.udebPDll.1505052968"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_28.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.610017730"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.81a.build.winscw.linker.udebPDll.1182766215"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.81a.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.81a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.1224938875"
+						superClass="com.symbian.cdt.build.81a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false" value="euser.lib"/>
+						<listOptionValue builtIn="false" value="apparc.lib"/>
+						<listOptionValue builtIn="false" value="cone.lib"/>
+						<listOptionValue builtIn="false" value="eikcore.lib"/>
+						<listOptionValue builtIn="false" value="avkon.lib"/>
+						<listOptionValue builtIn="false" value="eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.81a.tool.winscw.aif.udeb.849744757"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.81a.tool.winscw.aif.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.22529416"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.81a.tool.winscw.rcomp.udeb.1543292940"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.81a.tool.winscw.rcomp.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1442641853"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.924286591"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.81a.tool.winscw.mbm.udeb.1959706616"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.81a.tool.winscw.mbm.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.349758156"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.81a.build.buildDefinitions.winscw.defFileManager.udebPDll.117667008"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.81a.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+				<tool
+					id="com.nokia.sdk.S60_28.build.winscw.mif.udebPDll.785946586"
+					name="MIF Compiler"
+					superClass="com.nokia.sdk.S60_28.build.winscw.mif.udebPDll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mif.general.targetPath.636873160"
+						superClass="com.symbian.cdt.build.buildDefinitions.mif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="S60_2nd_FP3_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP3.1011869474"
+			name="S60 2.8 Phone (ARMI) Release"
+			parent="S60_2nd_FP3_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP3">
+			<toolChain
+				id="com.nokia.sdk.S60_28.build.toolChain.gcc98.armiUrelPdll.329637740"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_28.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_28.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.1594463729"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_28.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.81a.build.gcc98.pdll.targetType.1465065856"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.81a.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.384815555"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.519234863"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.2059411836"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.734861528"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.1386717069"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_28.build.gcc98.compiler.armiUrelPdll.312706928"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_28.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.1509350328"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.1834104109"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.1100398369"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1377245121"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1890965567"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.961929948"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.355764825"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1071819801"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1673830377"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.1396494457"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.699808166"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.956435749"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.664380481"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.325638791"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.275317425"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.707329130"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.1917287880"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.2051584531"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+				<tool
+					id="com.nokia.sdk.S60_28.build.gcc98.mif.armiUrelPdll.576979881"
+					name="MIF Compiler"
+					superClass="com.nokia.sdk.S60_28.build.gcc98.mif.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mif.general.targetPath.193363208"
+						superClass="com.symbian.cdt.build.buildDefinitions.mif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.337791027"
+			name="S60 2.0 Phone (ARMI) Release"
+			parent="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_20.build.toolChain.gcc98.armiUrelPdll.138426636"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_20.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.2073821005"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.727019602"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.88193630"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.573440397"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.1788641727"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1120892655"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.599415627"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1942915618"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.1085128055"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.1904171499"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.1430473628"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1300350625"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1620940899"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.1101106048"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.813862524"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1993449871"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.539681027"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.874044057"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.165285893"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1623293281"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1072849111"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.369583237"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.95164275"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.1325832065"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.1573450515"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.2024471640"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1828392831"
+			name="S60 2.0 Emulator Debug"
+			parent="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_20.build.winscw.toolChain.winscwUdebPdll.1410403030"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_20.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_20.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.389784905"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_20.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType.977802022"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb.1649473709"
+					name="UID2"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb.906468501"
+					name="UID3"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.vendorid.udeb.1788221952"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.vendorid.udeb"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.1745669112"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.1500208914"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb.673910656"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.1513693008"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.805656511"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll.1196324022"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.1714509983"
+						superClass="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false" value="euser.lib"/>
+						<listOptionValue builtIn="false" value="apparc.lib"/>
+						<listOptionValue builtIn="false" value="cone.lib"/>
+						<listOptionValue builtIn="false" value="eikcore.lib"/>
+						<listOptionValue builtIn="false" value="avkon.lib"/>
+						<listOptionValue builtIn="false" value="eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.1025562826"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.aif.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.94857265"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.160422141"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.106457243"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.1924038583"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb.1761045916"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.74788778"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll.1264685187"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.1576038040"
+			name="S60 2.0 Phone (Thumb) Release"
+			parent="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_20.build.toolChain.gcc98.thumbUrelPdll.412259941"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_20.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.1957459930"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.1002648952"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.802196404"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.629619435"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.938553545"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1547860643"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.553121312"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.711768023"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1821365730"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.751753216"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.168710561"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.973072045"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.427650366"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.2138929679"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.1615900526"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1743515225"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.61831273"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.1927093867"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1255991559"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.293893614"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1321283574"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.1525393408"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.1900681640"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.1913813839"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.365151674"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.1105528603"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.652847208"
+			name="S60 2.1 Phone (Thumb) Release"
+			parent="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_21.build.toolChain.gcc98.thumbUrelPdll.1518492600"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_21.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.1076752077"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.834661350"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.810128234"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.1298241339"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.1123154807"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1124534134"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.2053422805"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.1884249849"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1008908044"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.1484361876"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.397287551"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1805608036"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.900425126"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.101310274"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.1321524246"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2363714"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.2031788401"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.1320397041"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1153786556"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.914728802"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1824570099"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.2047189682"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.140176492"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.1359274626"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.1640558995"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.1199328492"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.267124767"
+			name="S60 2.6 Emulator Debug"
+			parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_26.build.winscw.toolChain.winscwUdebPdll.842786510"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_26.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_26.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.464255309"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_26.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.80a.build.winscw.polymorphicDllUdeb.targetType.235016353"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.80a.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid2.udeb.1999810683"
+					name="UID2"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid3.udeb.925905856"
+					name="UID3"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.vendorid.udeb.1235670737"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.vendorid.udeb"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.1656798626"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.1027410778"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.targetPath.udeb.813056727"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.205389741"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.198343079"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.80a.build.winscw.linker.udebPDll.908287439"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.80a.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.80a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.1692903200"
+						superClass="com.symbian.cdt.build.80a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false" value="euser.lib"/>
+						<listOptionValue builtIn="false" value="apparc.lib"/>
+						<listOptionValue builtIn="false" value="cone.lib"/>
+						<listOptionValue builtIn="false" value="eikcore.lib"/>
+						<listOptionValue builtIn="false" value="avkon.lib"/>
+						<listOptionValue builtIn="false" value="eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.aif.udeb.1559787964"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.aif.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1542546219"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1810959116"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.432190367"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.1022326596"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.mbm.udeb.1834997478"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.mbm.udeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.2101944037"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.80a.build.buildDefinitions.winscw.defFileManager.udebPDll.94190502"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.80a.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+				<macros/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1321860965"
+			name="S60 2.6 Phone (Thumb) Release"
+			parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_26.build.toolChain.gcc98.thumbUrelPdll.1799136473"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_26.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.1464564319"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType.2098532054"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.351430513"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.997495298"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.58572701"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.888173583"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.101506413"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1945574582"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1409890131"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.1158120902"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\thumb\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.1257305094"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.839677243"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.933623627"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.659223630"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.1648787650"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1023053069"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1314832104"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.340378224"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1306429224"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.863784013"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1255348876"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.654942497"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.502503819"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.980688494"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.162069799"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.35305054"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+			</toolChain>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Carbide11_4"
+			cleanCommand="del /s/q" description=""
+			id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1641727858"
+			name="S60 2.1 Phone (ARMI) Release"
+			parent="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_21.build.toolChain.gcc98.armiUrelPdll.975719605"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_21.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.1580563823"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"/>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.541296202"
+					name="TargetType"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.925182289"
+					name="UID2"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.661108294"
+					name="UID3"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0957BE08" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll.453199130"
+					name="Vendor Id"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.vendorid.pdll"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1701284763"
+					name="User Include Paths"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${ProjDirPath}\data&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.1752706929"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="system\apps\Carbide11_4" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.413580079"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.1632861533"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.840340202"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\euser.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\apparc.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\cone.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcore.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\avkon.lib"/>
+						<listOptionValue builtIn="false"
+							value="${EPOCROOT}epoc32\release\armi\urel\eikcoctl.lib"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.744413259"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.433294039"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.876493737"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.305589778"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.2087822336"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.742638289"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1189482184"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.1597404011"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1471789691"
+						superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1211726027"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1752653410"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="system\apps\Carbide11_4" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.939505033"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.572105508"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.2128788662"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.1140176852"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.1629170771"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+			</toolChain>
+		</configuration>
+		<macros/>
+	</project>
+</ManagedProjectBuildInfo>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>defer_defarg_parsing</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>defer_defarg_parsing</h3>
+<p>  Defers the parsing of default arguments in member functions.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma defer_defarg_parsing on | off
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>To be accepted as valid, some default expressions with template arguments will require additional parentheses. For example, the following source code generates an error:</p>
+  <div class="listing">
+      <p>template&lt;typename T,typename U&gt; struct X { T t; U u; };</p>
+      <p>struct Y {<br />
+      // the following line is not accepted, and generates <br />
+      // an error with defer_defarg_parsing on<br />
+      void f(X&lt;int,int&gt; = X&lt;int,int&gt;());<br />
+      };</p>
+  </div>
+  <p>While this version will not:</p>
+  <div class="listing">
+      <p>template&lt;typename T,typename U&gt; struct X { T t; U u; }; </p>
+      <p>struct Y {<br />
+    // following line is OK, <br />
+    // if default argument is parenthesized<br />
+    void f(X&lt;int,int&gt; = (X&lt;int,int&gt;()) );<br />
+  };</p>
+  </div>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (defer_defarg_parsing)</span>. The default setting  is on.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for Debug Perspective default views -->
+<!-- plugin="org.eclipse.ui.ide" -->
+
+<contexts>
+	
+	<!-- NEW PROJECT WIZARD PAGE -->
+	
+	<context id="new_project_wizard_page_context" >
+		<topic label="Creating New GUI Projects"		href="html/tasks/projects/task_proj_new.htm" />
+	</context>
+
+	
+</contexts>

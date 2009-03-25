@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.nokia.sdt.uidesigner.tests"
+      label="Internal unit tests for UI Designer"
+      version="0.0.1"
+      provider-name="Nokia">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright>
+      Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <url>
+      <!-- all Carbide.c++ features should use the exact same text for update label and discovery label -->
+      <update label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide203"/>
+      <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide203"/>
+   </url>
+
+   <requires>
+      <import feature="com.nokia.sdt.uidesigner-feature" version="0.0.1"/>
+   </requires>
+
+   <plugin
+        id="abbot.swt.hierarchy"
+        download-size="0"
+        install-size="0"
+        version="0.0.0"/>
+
+   <plugin
+        id="com.nokia.carbide.autotest.util"
+        download-size="0"
+        install-size="0"
+        version="0.0.0"/>
+
+   <plugin
+        id="com.nokia.carbide.tests.debug"
+        download-size="0"
+        install-size="0"
+        version="0.0.0"/>
+
+   <plugin
+        id="com.nokia.sdt.autotest"
+        download-size="0"
+        install-size="0"
+        version="0.0.0"/>
+
+   <plugin
+        id="com.nokia.carbide.autotest.testController"
+        download-size="0"
+        install-size="0"
+        version="0.0.0"/>
+
+<!-- UI Designer tests -->
+
+   <plugin
+         id="com.nokia.sdt.component.symbian.test"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="com.nokia.sdt.emf.dm.tests"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="com.nokia.sdt.uimodel.tests"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="com.nokia.sdt.uidesigner.autotest"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="com.nokia.sdt.testsupport"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="com.nokia.sdt.test.componentlibrary"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="com.nokia.sdt.symbian.tests"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="abbot"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="abbot.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="abbot.swt.eclipse"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="com.nokia.abbot"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.nokia.sdt.referenceprojects.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

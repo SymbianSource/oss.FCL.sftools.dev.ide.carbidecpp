@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE general-guide-doc SYSTEM "guide.dtd">
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. License: http://www.eclipse.org/legal/epl-v10.html. -->
+<general-guide-doc> 
+
+  <section>
+	 <anchor name="hover.gs"/> 
+	 <heading>Hover Help Overview</heading>
+		<para>
+		  Hover Help provides a link
+		  between the Carbide IDE and the Symbian OS C++ Developer Library. When activated, Hover Help
+		  provides developers with easy access to the API reference documentation. When a
+		  user hovers over a C++ API item, such as a class name, the editor shows the documentation for that API
+		  reference.
+		</para> 
+		<para>
+		  Hover Help uses <emph>Developer Library plug-ins</emph>. These are Eclipse
+		  documentation plug-ins that contain the information displayed when an
+		  API reference item is hovered over.
+		</para> 
+		<para>
+		  You can download Developer Library plug-ins from the
+		  <uri target="http://symbianfoundation.org/">Symbian Foundation</uri> website. 
+		</para> 
+	 </section> 
+
+
+  </section> 
+
+</general-guide-doc> 

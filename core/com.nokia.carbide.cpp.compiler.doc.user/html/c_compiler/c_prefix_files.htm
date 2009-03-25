@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Prefix Files</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Prefix Files</h3>
+<p>In previous Carbide compilers, the prefix file was a distinct setting that told the compiler to include a source code file at the beginning of each source code file in a project&rsquo;s build target, or include a precompiled header file into the project.</p>
+<p>With this compiler release, the concept of prefixing files, <span class="code">#defines</span>, and <span class="code">#pragmas</span> has been extended.</p>
+<p>To specify a prefix file, add an <span class="code">#include</span> directive to this field, for example:</p>
+<p class="listing">#include &quot;Win32Headers.h&quot;</p>
+<p>To specify <span class="code">#defines</span> or <span class="code">#pragmas</span>, enter them here as you would in source code:</p>
+<p class="listing">#define DEBUG_BUILD 1<br />
+  #pragma warn_illtokenpasting off</p>
+<p>When building precompiled headers, note the Include prefix text in precompiled headers setting. When enabled, the contents of the Prefix Text are used to generate the precompiled header. If your project generates a precompiled header in the same target that uses it, follow the form:</p>
+<p class="listing">#if !<span class="code">__option(precompile)</span><br />
+  #include &quot;MyHeaders.mch&quot;<br />
+  #endif</p>
+<p>to exclude the <span class="code">*.mch</span> file when generating it.</p>
+<p class="note"><strong>NOTE</strong> <span class="code">#pragmas</span> may affect aspects of parsing and type declaration while building a precompiled header, but these settings are not retained in the body of the precompiled header. Thus the prefix text is used for every file in the target. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

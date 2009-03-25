@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugger Settings</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Run Mode On-Device Debugging</h2>
+<p>To implement run mode on-device debugging the following tasks need to be completed.</p>
+<ol>
+  <li><a href="run_mode_debug.htm">Install device connection software</a></li>
+  <li><a href="run_mode_debug_01.htm">Install Perl</a></li>
+  <li><a href="run_mode_debug_02.htm">Install an SDK</a></li>
+  <li><a href="run_mode_debug_03.htm">Setup environment variables</a></li>
+  <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
+  <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
+  <li><a href="run_mode_debug_06.htm">Install the SISX file on the target device</a></li>
+  <li><b>Configure TRK connection on the device</b></li>
+  <li><a href="run_mode_debug_08.htm">Create a launch configuration</a></li>
+</ol>
+<div class="step">
+<h4><a name="runConfig" id="runConfig"> </a>Configure TRK Connection on the Device</h4>
+<h5>Connecting with Bluetooth</h5>
+  <ol>
+    <li>On the device make sure the Bluetooth port is turned on</li>
+    <li>On the phone launch TRK.</li>
+    <p>The location of the TRK on-device debug agent will vary based on the phone. On some phones it will be in the Installed folder, on others it may be in the My Own folder.</p>
+    <li>TRK will ask which host you want to pair with. When requested, select your computer from the available Bluetooth devices list.</li>
+    <li>After the host and phone are paired, TRK should be connected. Verify that TRK is running.</li>
+    <li>On the PC:
+      <ol type="a">
+        <li>Right click on the Bluetooth icon in the System tray and select Advanced Configuration</li>
+        <li>Click the Local Services tab</li>
+        <li>Write down the Bluetooth COM Port number from the Local Services tab (Figure 1).</li>
+        <p>The Port number will be used when configuring the TRK launch configuration. The Bluetooth COM Port number in the Local Services tab should match the COM port used in the Connections tab of the TRK launch configuration.</p>
+        <li>Click OK to close the Bluetooth Configuration window</li>
+        <p align="center"><img src="images/Bluetooth_localservices.png" width="460" height="437" /></p>
+        <p class="figure">Figure 1. Bluetooth Configuration window's Local Services panel</p>
+      </ol>
+    </li>
+  </ol>
+<h5>Connecting with PC Suite</h5>
+
+  <ol>
+    <li>Connect the USB cable to the PC and then to the target device</li>
+    <li>On the device select PC suite from the USB mode list</li>
+    <li>Launch the TRK agent</li>
+    <p>The location of the TRK on-device debug agent will vary based on the phone. On some phones it will be in the Installed folder, on others it may be in My Own folder.</p>
+    <li>Halt the Bluetooth device search by pressing Cancel</li>
+    <li>Click Options &gt; Settings &gt; Connection</li>
+    <li>Change Connection type to USB and set connection options (Figure 2) </li>
+    <li>Select Back and start the TRK again and you should be connected</li>
+    <p align="center"><img src="images/TRK_USB_settings.png" width="211" height="250" /></p>
+    <p class="figure">Figure 2. USB Connection Settings</p>
+    <li>On the PC</li>
+        <ol type="a">
+          <li>Open Window's Computer Management by right-clicking My Computer and select Manage from the context menu to open the Computer Management window.</li>
+            <li>Select System Tools &gt; Device Manager &gt; Ports (COM &amp; LPT) to display all active ports</li>
+            <li>Locate the S60 Phone USB (COMxx) item in the list</li>
+
+        <p align="center"><img src="images/comp_manage_ports.png" width="507" height="546" />        </p>
+    <p class="figure">Figure 3. Device Manager - Ports</p>
+
+      <li>Write down the port ID and Communication Port Properties.</li>
+      <p>The COM Port number in the Device Manager window should match the COM port used in the Connections tab of the TRK launch configuration.</p>
+      <li>Close the Device Manager window </li>
+    </ol>
+  </ol>
+  </div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

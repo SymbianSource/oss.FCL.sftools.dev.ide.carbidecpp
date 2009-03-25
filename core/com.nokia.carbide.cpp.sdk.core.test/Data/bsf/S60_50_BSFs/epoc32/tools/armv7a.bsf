@@ -1,0 +1,7 @@
+#<bsf>#
+
+# This BSF file is to support building for ARMV 7-A architecture.
+
+CUSTOMIZES ARMV5
+
+INVARIANT_OPTIONS --cpu 7-A --enum_is_int --library_interface=aeabi_clib --fpmode ieee_no_fenv --export_all_vtbl --no_vfe --apcs /inter --no_unaligned_access

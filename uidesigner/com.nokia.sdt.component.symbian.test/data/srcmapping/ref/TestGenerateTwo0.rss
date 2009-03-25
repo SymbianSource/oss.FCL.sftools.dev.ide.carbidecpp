@@ -1,0 +1,10 @@
+#include <basicheader.rh>
+
+RESOURCE ONE_STRING r_test_multi0
+	{
+	text = "text";
+	}
+RESOURCE ONE_STRING r_test_multi0_2
+	{
+	text = "alternate";
+	}

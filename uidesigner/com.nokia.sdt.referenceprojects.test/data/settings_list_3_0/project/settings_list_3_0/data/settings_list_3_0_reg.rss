@@ -1,0 +1,21 @@
+
+#include <eikon.rh>
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <appinfo.rh>
+#include "settings_list_3_0_reg.loc"
+#include <settings_list_3_0.rsg>
+
+UID2 KUidAppRegistrationResourceFile
+UID3 0xEEF51C45
+
+RESOURCE APP_REGISTRATION_INFO
+	{
+	app_file="settings_list_3_0";
+	localisable_resource_file =  qtn_loc_resource_file_1;
+	localisable_resource_id = R_LOCALISABLE_APP_INFO;
+
+	embeddability=KAppNotEmbeddable;
+	newfile=KAppDoesNotSupportNewFile;
+	}
+

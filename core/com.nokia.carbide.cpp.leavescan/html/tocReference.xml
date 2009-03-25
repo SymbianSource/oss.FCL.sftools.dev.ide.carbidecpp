@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc>
+	
+	<!-- Enter topic entries here for References section of help -->
+	
+	<topic label="How it Works" href="html/reference/reference.htm" />
+	
+</toc>

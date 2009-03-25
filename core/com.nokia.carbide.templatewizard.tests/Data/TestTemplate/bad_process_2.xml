@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<template version="1.0" label="%template.label">
+	<description>%template.desc</description>
+	
+	<!-- bad class and bad plugin -->
+	<process class="bar.foo.NewProject"
+	 	bundle="no.such.plugin">
+		<parameter name="foo"/>
+	</process>
+
+
+</template>

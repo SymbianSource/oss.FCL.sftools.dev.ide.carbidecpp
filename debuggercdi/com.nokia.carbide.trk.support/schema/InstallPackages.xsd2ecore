@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="schema/InstallPackages.xsd#/"
+    outputs="InstallPackages.ecore#/" topToBottom="true">
+  <nested inputs="bundleentry://211/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=7"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition"
+      outputs="InstallPackages.ecore#//PackageType">
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="InstallPackages.ecore#//PackageType/information"/>
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition/XSDAttributeUse=3"
+        outputs="InstallPackages.ecore#//PackageType/displayName"/>
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition/XSDAttributeUse=4"
+        outputs="InstallPackages.ecore#//PackageType/installFilePath"/>
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition/XSDAttributeUse=2"
+        outputs="InstallPackages.ecore#//PackageType/packageVersion"/>
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition/XSDAttributeUse"
+        outputs="InstallPackages.ecore#//PackageType/sdkFamily"/>
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/Package;XSDElementDeclaration/XSDComplexTypeDefinition/XSDAttributeUse=1"
+        outputs="InstallPackages.ecore#//PackageType/sdkVersion"/>
+  </nested>
+  <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition"
+      outputs="InstallPackages.ecore#//PackagesType">
+    <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="InstallPackages.ecore#//PackagesType/package"/>
+  </nested>
+  <nested inputs="schema/InstallPackages.xsd#//Packages;XSDElementDeclaration" outputs="InstallPackages.ecore#//DocumentRoot/packages"/>
+</xsd2ecore:XSD2EcoreMappingRoot>

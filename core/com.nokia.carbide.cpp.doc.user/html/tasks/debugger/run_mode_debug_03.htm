@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugger Settings</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Run Mode On-Device Debugging</h2>
+<p>To implement run mode on-device debugging the following tasks need to be completed.</p>
+<ol>
+  <li><a href="run_mode_debug.htm">Install device connection software</a></li>
+  <li><a href="run_mode_debug_01.htm">Install Perl</a></li>
+  <li><a href="run_mode_debug_02.htm">Install an SDK</a></li>
+  <li><b>Setup environment variables</b></li>
+  <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
+  <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
+  <li><a href="run_mode_debug_06.htm">Install the SISX file on the target device</a></li>
+  <li><a href="run_mode_debug_07.htm">Configure TRK connection on the device</a></li>
+  <li><a href="run_mode_debug_08.htm">Create a launch configuration</a></li>
+  </ol>
+<div class="step">
+<h4><a name="runEnvVars" id="runEnvVars"> </a>Setup Environment Variables</h4>
+<ol>
+  <li>Set EPOCROOT variable
+    <ol type="a">
+      <li>Right click on My Computer and select Properties</li>
+      <li>Select the Advanced tab</li>
+      <li>Select the Environmental Variables button</li>
+      <li>Setup a new System variable called EPOCROOT. The value will depend on the path of the epoc32 folder in the kit, for example: </li>
+      <p>Variable name: <span class="code">EPOCROOT</span><br />
+      Variable value: <span class="code">\bin\techview\</span></p>
+    </ol>
+   </li>
+  <p class="note"><b>NOTE</b> Take note of the location of the epoc32 folder when using multiple kits. Some kits place the epoc32 folder at \bin\techview\ and some kits will place it at the root. If you have multiple installations and switch to a new kit, you will need to change the EPOCROOT path; otherwise build problems may occur. When building the ROM image, scripts may complain  about the EPOCROOT path or that it can&rsquo;t find bldmake.bat if an incorrect EPOCROOT path is set.</p>
+  <li>Set Path to Tools Directory
+    <ol type="a">
+      <li>If using an installer the tools path is set up automatically and points to:</li>
+          Variable: <span class="code">PATH</span><br>
+          Value: <span class="code">C:\Program Files\Common Files\Symbian\Tools</span>      
+        <li>If installing from zip files you will need to setup the tools path manually. Add the path to the beginning of the PATH variable:</li>
+       Variable: <span class="code">PATH</span><br />
+       Variable Value: <span class="code">\epoc32\tools;\epoc32\gcc\bin;</span>       
+       <li>If using multiple kits that use a mix of installer and zip files then you can set up your PATH variable like this:</li>
+       Variable: <span class="code">PATH</span><br />
+       Value: <span class="code">\epoc32\tools;\epoc32\gcc\bin;C:\Program Files\Common Files\Symbian\Tools</span>
+    </ol>
+  </li>
+  </ol>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

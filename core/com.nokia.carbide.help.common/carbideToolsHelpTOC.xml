@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<!-- Carbide tools include all tool plugins not developed by the Native Tools  -->
+<!-- in Austin, but from other Nokia groups or even external developer plugins -->
+<!-- that want their tools to work in Carbide -->
+
+<toc label="Carbide Tools" >
+  
+   <anchor id="anchorCarbideToolsInfo" /> 	    		<!-- tool manuals -->
+   <anchor id="anchorCarbideToolsMisc" />	    		<!-- tool addendums, etc -->
+   <anchor id="anchorCarbideToolsExample" />     		<!-- tool examples -->	   
+
+</toc>

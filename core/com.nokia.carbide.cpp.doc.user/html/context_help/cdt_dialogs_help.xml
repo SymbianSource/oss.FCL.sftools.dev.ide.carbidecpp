@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- =============================================================================== -->
+<!-- CONTEXT HELP FOR CDT DIALOGS AND PLUGINS USED BY CARBIDE                        -->
+<!-- Includes context help references for:                                           -->
+<!--    plugin="org.eclipse.cdt.debug.ui"                                            -->
+<!--    plugin="org.eclipse.cdt.ui"                                                  -->
+<!-- =============================================================================== -->
+
+<contexts>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.cdt.debug.ui                                                -->
+<!-- FILE: org.eclipse.cdt.debug.ui                                                -->
+<!-- =============================================================================== -->
+
+
+	<!-- EXECUTABLES VIEW -->
+	<context id="executables_View_context">
+		<description>Control which executables are included in the project.</description>
+		<topic label="Executables" 							href="html/reference/view_executables.htm" />
+		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+	</context>
+	
+	<!-- MEMORY VIEW -->
+	<context id="memory_view_context" >
+		<description>Inspect and change process memory.</description>
+		<topic label="Memory view"  							href="html/reference/view_memory_wnd.htm" />
+		<topic label="Adding Memory Monitors"					href="html/tasks/memory/memory_monitor_adding.htm" />
+		<topic label="Adding Memory Renderings"					href="html/tasks/memory/memory_rendering_adding.htm" />
+		<topic label="Removing Memory Monitors or Renderings"	href="html/tasks/memory/memory_monitor_removing.htm" />
+	</context>
+
+	
+	<!-- SHARED LIBRARIES VIEW
+	<context id="shared_libraries_view_context" >
+	</context>
+	 -->
+
+	<!-- MODULES VIEW -->
+	<context id="modules_view_context" >
+		<description>Shows the list of loaded modules while debugging.</description>
+		<topic label="Modules view"  					href="html/reference/view_module_wnd.htm" />
+	</context>
+
+	
+	<!-- DISASSEMBLY VIEW 	 -->
+	<context id="disassembly_view_context" >
+        <description>Disassemble the loaded program and view the assembly instructions.</description>
+		<topic label="Disassembly view"  				href="html/reference/view_disassembly.htm" />
+	</context>
+
+	
+	<!-- SIGNALS VIEW -->
+	<context id="signals_view_context" >
+		<description>Show the signals defined on the selected debug target.</description>
+		<topic label="Signals view"  					href="html/reference/view_signals_wnd.htm" />
+	</context>
+	
+
+	<!-- PREFERENCE PANELS
+	
+	<context id="source_preference_page_context" >
+	</context>
+
+	<context id="shared_libraries_preference_page_context" >
+	</context>
+
+	<context id="memory_preference_page_context" >
+	</context>
+
+	<context id="c_debug_preference_page_context" >
+	</context>
+		
+	 -->
+	
+
+	<!-- DIALOGS
+	
+	<context id="source_path_mapping_dialog_context" >
+	</context>
+
+	<context id="source_path_map_entry_dialog_context" >
+	</context>
+
+	<context id="add_source_container_dialog" >
+	</context>
+
+	<context id="add_directory_container_dialog" >
+	</context>
+		
+	<context id="register_group_dialog" >
+	</context>
+		
+	 -->
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: org.eclipse.cdt.ui                                                      -->
+<!-- =============================================================================== -->
+	
+	<!-- PROJECTS VIEW -->
+	<context id="projects_view" >
+		<description>Click below to see help.</description>
+		<topic label="Project Explorer view"  				href="html/reference/view_cpp_projects.htm" />
+	</context>
+
+
+</contexts>

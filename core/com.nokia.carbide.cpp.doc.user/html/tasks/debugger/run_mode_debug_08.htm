@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugger Settings</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Run Mode On-Device Debugging</h2>
+<p>To implement run mode on-device debugging the following tasks need to be completed.</p>
+<ol>
+  <li><a href="run_mode_debug.htm">Install device connection software</a></li>
+  <li><a href="run_mode_debug_01.htm">Install Perl</a></li>
+  <li><a href="run_mode_debug_02.htm">Install an SDK</a></li>
+  <li><a href="run_mode_debug_03.htm">Setup environment variables</a></li>
+  <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
+  <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
+  <li><a href="run_mode_debug_06.htm">Install the SISX file on the target device</a></li>
+  <li><a href="run_mode_debug_07.htm">Configure TRK connection on the device</a></li>
+  <li><b>Create a launch configuration</b></li>
+</ol>
+<div class="step">
+<h4><a name="runLaunch" id="runLaunch"> </a>Creating a Launch Configuration setup</h4>
+<ol>
+    <li>Import the MMP or INF file</li>
+    <li>Select the Project in the C/C++ Project pane you want to debug</li>
+    <li>From the IDE select Run &gt; Debug&hellip;</li>
+    <li>The <a href="../projects/wiz_new_launch_config.htm">New Launch Configuration Wizard</a>  appears</li>
+    <p>To communicate between the Carbide.c++ debugger and the on-device debug agent or protocol interface you must define a debug launch configuration. The Debug window is where you define the type of debug launch configuration to use when debugging programs on the target device (Figure 4).</p>
+    <p><img src="images/Debug_Config_main.png" width="830" height="506" /></p>
+    <p class="figure">Figure 4. Debug Window</p>
+    <li>Select either a Symbian OS Application TRK or Symbian OS System TRK configuration type for on-device debugging and click New</li>
+    <p>For debug launch configurations using the TRK debug agent, the following pages require review and possible option settings:</p>
+    <ul>
+      <li><b>Main</b> - defines the project to be launched on the target device</li>
+      <li>Arguments (<i>Eclipse</i>) - defines the arguments to be passed to the application and to the virtual machine</li>
+      <li><b>Debugger</b> - provides control over entry points, message handling, and instruction set default settings</li>
+      <li><b>Connection</b> - specifies the method used to transfer files to the target device</li>
+      <li><b>File Transfer</b> - files transfered to the target device at the start of each launch</li>
+      <li><b>Installation</b> - specifies the .sis or .pkg file to install on the target device</li>
+      <li>Executables -  specifies which executables are debugged by your project</li>
+      <li>Source (<i>Eclipse</i>) -  defines the location of source files used to display source when debugging </li>
+      <li>Common (<i>Eclipse</i>) - defines general information about the launch configuration</li>
+    </ul>
+    <p>Click Debug after all the preference panels have been set. The Debug window closes and the Carbide.c++ debugger begins a debugging session using the new configuration. The next time you click the Debug icon, this debug launch configuration is used to start a debug session.</p>
+</ol>
+  <h5>Main Tab</h5>
+  <p>The Main pane defines the project to be launched on the target device. Table 1 defines the fields.</p>
+  <p align="center"><img src="images/Debug_Config_main_run.png" width="594" height="255" /></p>
+  <p class="figure">Figure 5. Debug window - Main Tab </p>
+    <p>Table 1. Main pane</p>
+    <table width="94%"  border="0" cellpadding="2" cellspacing="0">
+      <tr>
+        <th width="38%" scope="col">Item</th>
+        <th width="62%" scope="col">Explanation</th>
+      </tr>
+      <tr>
+        <td><b>Project</b></td>
+        <td><p>The project to associate with this debug launch configuration. Click Browse to select a different project. </p></td>
+      </tr>
+      <tr>
+        <td><b>Remote process to launch</b></td>
+        <td>The absolute path of the remote process to launch on the target device.</td>
+      </tr>
+    </table>
+  </ol>
+    <h5>Debugger Tab</h5>
+    <p>The Debug or launch configuration window's Debugger pane provides control over entry points, message handling, and instruction set default settings.</p>
+    <p align="center"><img src="images/Debug_Config_debugger_run.png" width="594" height="255" /></p>
+    <p class="figure">Figure 6. Debug window's Debugger Pane </p>
+    <p>Table 2. Debugger pane</p>
+    <table width="94%"  border="0" cellpadding="2" cellspacing="0">
+      <tr>
+        <th width="38%" scope="col">Item</th>
+        <th width="62%" scope="col">Explanation</th>
+      </tr>
+      <tr>
+        <td><b>Break at entry point</b></td>
+        <td><p>When checked, break at the specified entry point entered in the text field. For .EXE targets, the default entry point is set to E32Main. By default, the Break at entry point option is unchecked for all other target types.</p></td>
+      </tr>
+      <tr>
+        <td><b>View program output </b></td>
+        <td>When checked, show the contents of any unframed messages from the communications port in a Console view.</td>
+      </tr>
+      <tr>
+        <td><b>View messages between Carbide and debug agent</b></td>
+        <td><p>When checked, show the communications between the PC and the target device in a Console view when the TRK Communciation message log is visible.</p>
+        <p class="note"><b>NOTE</b> You can pin the TRK Communication message log view so that it does not lose focus.</p></td>
+      </tr>
+      <tr>
+        <td><b>Message retry delay (ms)</b></td>
+        <td>Enter the delay time in milliseconds (ms) between 100 and 10000 that the debugger should wait for a response. The default Message retry delay value is 2000.</td>
+      </tr>
+      <tr>
+        <td><b>Default Instructon Set</b></td>
+        <td><p>Specifies the default instruction set to use if the debugger cannot determine the processor mode in order to set breakpoints and to disassemble code. The options are:</p>
+        Auto (examine code at current PC location)<br />
+		ARM (32-bit)<br />
+        THUMB (16-bit)<br />
+        <br />
+        By default the Instruction Set option uses ARM 32-bit.</td>
+      </tr>
+    </table>
+  
+  <h5>Connection Tab</h5>
+  <p>Select the Connection tab that is available for TRK. Specify the Serial port for your configuration. The Connection pane specifies the method used to transfer files to the target device. Once the <b>Current Connection to Target</b> type is selected, the remaining options contain default values for the specific connection type. You can change these options to match the target device's communication specifications.</p>
+  <p align="center"><img src="images/Debug_Config_connection_run.png" width="594" height="280" /></p>
+  <p class="figure">Figure 7. Debug window's Connection pane using PC Suite</p>
+    <p>Table 3. Connection pane</p>
+    <table width="94%"  border="0" cellpadding="2" cellspacing="0">
+      <tr>
+        <th width="38%" scope="col">Item</th>
+        <th width="62%" scope="col">Explanation</th>
+      </tr>
+      <tr>
+        <td><b>Current Connection to Target </b></td>
+        <td>Choose the connection type to use when communicating with a device. </td>
+      </tr>
+      <tr>
+        <td><b>Serial Port</b></td>
+        <td><p>Select the serial port option to use for the  launch configuration. Once set, this port will be used for all subsequent launch configurations until it is set again.</p>
+        <p class="note"><b>NOTE</b> USB and Bluetooth can be dynamically assigned, so its critical that the port ID assigned here matches the one the system is using to communicate with the target device.</p></td>
+      </tr>
+      <tr>
+        <td><b>Baud Rate</b></td>
+        <td>Use the Baud Rate option to select the baud rate for communication. The default baud rate value is 115200 bits per second (bps).</td>
+      </tr>
+      <tr>
+        <td><b>Data Bits</b></td>
+        <td><p>Use the Data Bits option to select a common data bits size (4, 5, 6, 7, and 8). The default data bits value is 8.</p>            </td>
+      </tr>
+      <tr>
+        <td><b>Parity</b></td>
+        <td>Use the Parity option to select the parity setting (None, Odd, or Even). The default parity value is None.</td>
+      </tr>
+      <tr>
+        <td><b>Stop Bits</b></td>
+        <td><p>Use the Stop Bits option to select the stop bits setting (1, 1.5, 2). The default stop bits value is 2.</p>        </td>
+      </tr>
+      <tr>
+        <td><b>Flow Control</b></td>
+        <td>Use the Flow Control option to select the flow control setting (None, Hardware (RTS/CTS), and Software (XON/XOFF)). The default flow control value is None.</td>
+      </tr>
+    </table>
+  <h5>Installation Tab</h5>
+  <p>For Application TRK select the Installation tab. The Installation pane specifies the .sis file to install on the target device. This is used by Application TRK because Application TRK downloads all files via a SIS file. This is required when using the TRK debug agent with 9.x based SDK&rsquo;s.</p>
+  <p align="center"><img src="images/Debug_Config_installation_run.png" width="595" height="280" /></p>
+  <p class="figure">Figure 8. Debug window's Installation pane</p>
+    <p>Table 4. Installation pane</p>
+    <table width="94%"  border="0" cellpadding="2" cellspacing="0">
+      <tr>
+        <th width="38%" scope="col">Item</th>
+        <th width="62%" scope="col">Explanation</th>
+      </tr>
+      <tr>
+        <td><b>Installation file </b></td>
+        <td><p>Browse to and select the file to be installed.</p>            </td>
+      </tr>
+      <tr>
+        <td><b>Download directory </b></td>
+        <td>Specify directory to receive download. </td>
+      </tr>
+      <tr>
+        <td><b>Install each launch even if installer file has not changed </b></td>
+        <td><p>Check this option to always install the .sis file. </p></td>
+      </tr>
+      <tr>
+        <td><b>Do not show installer UI on the phone </b></td>
+        <td>Check this option to hide the installer interface on the phone. </td>
+      </tr>
+      <tr>
+        <td><b>Install to drive: </b></td>
+        <td><p>Select drive on phone to install the .sis file. </p></td>
+      </tr>
+    </table>
+  <h5>File Transfer Tab</h5>
+  <p>For System TRK select the File Transfer pane. The File Transfer pane displays a list of files the Carbide IDE transfers to the target device at the start of each launch. By default, any file added is automatically checked for downloading to the device.</p>
+  <p class="note"><b>NOTE</b> If debugging a DLL from an application and using System TRK, ensure that the DLL is included so that it is deployed to the device with the application. It is not added by default.</p>
+  <p align="center"><img src="images/Debug_Config_filetransfer_run.png" width="595" height="280" /></p>
+  <p class="figure">Figure 9. Debug window's File Transfer pane </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

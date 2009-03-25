@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="carbideCPPBuilder"
+         name="Carbide CPP Project Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            callOnEmptyDelta="true"
+            hasNature="true">
+         <run
+               class="com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="carbideCPPBuilderNature"
+         name="Carbide CPP Builder Project Nature"
+         point="org.eclipse.core.resources.natures">
+          <requires-nature id="org.eclipse.cdt.core.cnature"/>
+      <runtime>
+         <run
+               class="com.nokia.carbide.cdt.internal.builder.CarbideCPPBuilderNature">
+         </run>
+      </runtime>
+      <builder
+            id="com.nokia.carbide.cdt.builder.carbideCPPBuilder">
+      </builder>
+   </extension>
+
+   <extension
+         id="carbideSBSv2BuilderNature"
+         name="Carbide SBSv2 Builder Project Nature"
+         point="org.eclipse.core.resources.natures">
+          <requires-nature id="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature"/>
+      <runtime>
+         <run
+               class="com.nokia.carbide.cdt.internal.builder.CarbideSBSv2BuilderNature">
+         </run>
+      </runtime>
+   </extension>
+
+   <extension
+         id="CarbideConfigurationDataProvider"
+         name="Carbide.c++ Configuration Data Provider"
+         point="org.eclipse.cdt.core.CConfigurationDataProvider">
+         <provider
+         	natures="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature"
+         	class="com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider"
+         />
+   </extension>
+
+      <extension
+            point="org.eclipse.cdt.ui.ConfigManager">
+         <manager
+               class="com.nokia.carbide.cdt.internal.builder.CarbideConfigManager">
+         </manager>
+      </extension>
+
+	<!-- ************* PREFERENCE PAGES ************** -->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Build"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+            class="com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage"
+            id="com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage">
+      </page>
+   </extension>
+  <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferenceInitializer">
+      </initializer>
+   </extension>
+
+	<!-- ************* PROPERTY PAGES ************** -->
+	<extension
+         point="org.eclipse.ui.propertyPages">
+    <page
+            name="%CarbideBuilder.Carbide_group"
+            class="com.nokia.carbide.cdt.internal.builder.ui.CarbideProjectPropertiesGroup"
+            id="com.nokia.carbide.cdt.builder.ui.CarbideProjectPropertiesGroup">
+             <filter
+               	name="nature"
+        		value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature">
+    	     </filter>            
+         <enabledWhen>
+            <or>
+		     <instanceof value="org.eclipse.core.resources.IProject"/>
+		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
+		    </or>          
+         </enabledWhen>
+      </page>
+    <page
+            name="%CarbideBuilder.Carbide_Project_Settings"
+            class="com.nokia.carbide.cdt.internal.builder.ui.CarbideCPPProjectSettingsPage"
+            category="com.nokia.carbide.cdt.builder.ui.CarbideProjectPropertiesGroup"
+            id="com.nokia.carbide.cdt.builder.ui.CarbideCPPProjectSettingsPage">
+             <filter
+               	name="nature"
+        		value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature">
+    	     </filter>            
+         <enabledWhen>
+            <or>
+		     <instanceof value="org.eclipse.core.resources.IProject"/>
+		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
+		    </or>          
+         </enabledWhen>
+      </page>
+      <page
+            name="%CarbideBuilder.Carbide_Build_Configurations"
+            class="com.nokia.carbide.cdt.internal.builder.ui.CarbideBuildConfigurationsPage"
+            category="com.nokia.carbide.cdt.builder.ui.CarbideProjectPropertiesGroup"
+            id="com.nokia.carbide.cdt.internal.builder.ui.CarbideBuildConfigurationsPage">
+             <filter
+               	name="nature"
+        		value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature">
+    	     </filter>            
+         <enabledWhen>
+            <or>
+		     <instanceof value="org.eclipse.core.resources.IProject"/>
+		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
+		    </or>          
+         </enabledWhen>
+      </page>
+      <page
+            name="%CarbideBuilder.Carbide_Macro_Settings"
+            class="com.nokia.carbide.cdt.internal.builder.ui.CarbideMacroSettingsPage"
+            category="com.nokia.carbide.cdt.builder.ui.CarbideProjectPropertiesGroup"
+            id="com.nokia.carbide.cdt.internal.builder.ui.CarbideMacroSettingsPage">
+             <filter
+               	name="nature"
+        		value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature">
+    	     </filter>            
+         <enabledWhen>
+            <or>
+		     <instanceof value="org.eclipse.core.resources.IProject"/>
+		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
+		    </or>          
+         </enabledWhen>
+      </page>
+    </extension>
+	<!-- ************* ERROR PARSERS ************** -->
+	<extension
+         id="RVCTCompilerErrorParser"
+         name="RVCT Compiler Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.RVCTCompilerErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="RVCTLinkerErrorParser"
+         name="RVCT Linker Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.RVCTLinkerErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="GCCEErrorParser"
+         name="GCCE Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.GCCEErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="MakeDefErrorParser"
+         name="Makedef Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.MakeDefErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="MakeSisErrorParser"
+         name="Makesis Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.MakeSisErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="RCOMPErrorParser"
+         name="Symbian Resource Compiler (rcomp) Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.RCOMPErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="MakmakeErrorParser"
+         name="Makmake Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.MakmakeErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="MWLDErrorParser"
+         name="Nokia x86 Linker Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.MWLDErrorParser">
+      </errorparser>
+    </extension>
+     <extension
+         id="DLLToolErrorParser"
+         name="DLL Tool Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.DLLToolErrorParser">
+      </errorparser>
+    </extension>
+     <extension
+         id="Elf2E32ErrorParser"
+         name="Elf2E32 Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.Elf2E32ErrorParser">
+      </errorparser>
+    </extension>
+     <extension
+         id="CarbideMakeErrorParser"
+         name="Carbide Make Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.CarbideMakeErrorParser">
+      </errorparser>
+    </extension>
+     <extension
+         id="BldmakeErrorParser"
+         name="Bldmake Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.BldmakeErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="RomBuildErrorParser"
+         name="Rom Build Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.RomBuildErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="SBSv2ErrorParser"
+         name="SBSv2 Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.SBSv2ErrorParser">
+      </errorparser>
+    </extension>
+    
+    <!-- ************* PROBLEM MARKERS ************** -->
+   <extension
+         id="CarbideBuilderMarkers"
+         name="Carbide.c++ Build Problem"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   
+   <extension-point id="environmentModifier" name="Environment Modifier" schema="schema/environmentModifier.exsd"/>
+
+</plugin>

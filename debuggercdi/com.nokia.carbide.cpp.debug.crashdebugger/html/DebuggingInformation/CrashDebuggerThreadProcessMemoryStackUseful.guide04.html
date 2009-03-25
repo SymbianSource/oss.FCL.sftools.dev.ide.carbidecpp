@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Thread and Process Exit Information Summary</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head2">
+  <h2>Thread and Process Exit Information Summary</h2>
+</div><div>
+<p>
+User threads and processes have &#8220;exit information&#8221;. When a thread or
+process terminates the reason for the termination is found in the exit
+information. For example, a panic will store the panic category and reason in
+the exit information. Exit information has three parts: the exit type, exit
+reason and exit category. 
+</p>
+<p>
+Exit type is defined by the TExitType enum. 
+</p>
+<p>
+When a thread or process is created, its exit type is set to 3. An exit
+type of 3 indicates that the thread is still active, though not necessarily
+running. If the thread terminates for any reason, then the exit type is changed
+to reflect the cause of the exit. 
+</p>
+<p>
+Once the thread or process has exited, the exit reason and exit type
+fields will contain useful information. The contents depends on the type of
+exit. 
+</p>
+<p>
+Note that if the main thread in a process exits, then the process will
+exit with the same exit information as the thread. 
+</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.6.8"></a></span>Exit category: Terminate</h3>
+</div><div>
+<p>
+if RThread::Terminate() or RProcess::Terminate() is called, then the exit category is
+Terminate, and the exit reason is the value of the
+aReason argument passed to these functions. 
+</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.6.9"></a></span>Exit category: Kill</h3>
+</div><div>
+<p>
+If RThread::Kill() or RProcess::Kill() is called, then the exit category is
+Kill, and the exit reason is the value of the aReason
+argument passed to these functions. 
+</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.6.10"></a></span>Exit category: panic</h3>
+</div><div>
+<p>
+If a thread panics, then the exit category is panic, and
+the exit reason is the panic number. For example a USER-19 panic would give the
+following exit information: 
+</p>
+<p class="listing">exit type = 2<br>
+  exit category = “USER”<br>exit reason = 19</p>
+</div><div class="Head2"></div><div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

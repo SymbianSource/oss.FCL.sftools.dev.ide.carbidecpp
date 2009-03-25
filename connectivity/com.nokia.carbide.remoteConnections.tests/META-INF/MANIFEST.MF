@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCTests Plug-in
+Bundle-SymbolicName: com.nokia.carbide.remoteConnections.tests;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.carbide.remoteconnections.tests.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.nokia.carbide.remoteConnections,
+ org.junit;bundle-version="3.8.2",
+ com.nokia.cpp.utils.core,
+ com.nokia.carbide.trk.support
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

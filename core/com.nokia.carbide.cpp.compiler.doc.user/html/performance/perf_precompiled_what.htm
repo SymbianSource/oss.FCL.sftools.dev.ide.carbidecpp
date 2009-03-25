@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>What Can be Precompiled</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>What Can be Precompiled</h3>
+<p>A file to be precompiled does not have to be a header file (.h or .hpp files, for example), but it must meet these requirements:</p>
+<ul>
+  <li>The file must be a C or C++ source code file in text format. </li>
+</ul>
+<p>You cannot precompile libraries or other binary files.</p>
+<ul>
+  <li>A C source code file that will be automatically precompiled must have .pch file name extension.</li>
+  <li>A C++ source code file that will be automatically precompiled must have a .pch++ file name extension.</li>
+  <li>Precompiled files must have a .mch file name extension.</li>
+  <li>The file to be precompiled does not have to be in a Carbide IDE project, although a project must be open to precompile the file.</li>
+</ul>
+<p>The Carbide IDE uses the build target settings to precompile a file.</p>
+<ul>
+  <li>The file must not contain any statements that generate data or executable code. </li>
+</ul>
+<p>However, the file may define static data. C++ source code can contain inline functions and constant variable declarations (const).</p>
+<ul>
+  <li>Precompiled header files for different build targets are not interchangeable. </li>
+</ul>
+<p>For example, to generate a precompiled header for use with Windows&reg; compilers, you must use a Windows&reg; compiler.</p>
+<ul>
+  <li>C source code may not include precompiled C++ header files and C++ source code may not include precompiled C header files. </li>
+  <li>A source file may include only one precompiled file.</li>
+  <li>A file may not define any items before including a precompiled file.</li>
+</ul>
+<p>Typically, a source code file includes a precompiled header file before anything else (except comments). </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

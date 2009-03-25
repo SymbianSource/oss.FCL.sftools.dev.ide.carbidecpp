@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>inline_max_total_size</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>inline_max_total_size</h3>
+<p>  Sets the maximum total size a function can grow to when the function it calls is inlined.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma inline_max_total_size ( max_size )</p>
+  <h5> Parameters</h5>
+  <p class="code"> max_size</p>
+  <blockquote>
+    <p> The maximum number of statements, operands, and operators the inlined function calls that are also inlined, up to a maximum of 10000.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (inline_max_total_size)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default is 10000.
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

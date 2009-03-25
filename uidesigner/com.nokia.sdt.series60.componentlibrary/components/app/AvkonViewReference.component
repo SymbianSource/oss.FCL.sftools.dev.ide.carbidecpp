@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<component
+	friendlyName="%friendlyName" 
+	qualifiedName="com.nokia.sdt.series60.AvkonViewReference" 
+	baseComponent="com.nokia.sdt.series60.DesignReference"
+	instanceNameRoot="aknViewReference"
+	version="1.0">
+	<documentation>
+		<information>%information</information>
+	</documentation>
+	<attributes>
+		<!-- needed for NaviTab sourcemapping -->
+		<attribute key="is-view-reference">true</attribute>
+	</attributes>
+	<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+	<designerImages smallIconFile="AvkonViewReference_sm.png" 
+		largeIconFile="AvkonViewReference.png" 
+		layoutImageFile=""/>
+	<properties>
+		<property name="inTabGroup" type="boolean" category="Behavior"
+			descriptionKey="inTabGroupDescription" />
+		<property name="tabText" type="localizedString" category="Appearance"
+			descriptionKey="tabTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<compoundProperty name="tabImage" category="Appearance"
+			type="com.nokia.sdt.symbian.imageProperty"
+			descriptionKey="tabImageDescription"/>
+	</properties>
+	<implementations>
+		<implementation>
+			<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+			<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+			<script file="AvkonViewReference_impl.js" prototype="AvkonViewReferenceImpl"/>
+		</implementation>
+	</implementations>
+
+	<sourceMapping>
+		<mapResource struct="TBUF" id="tabText" headers="eikon.rh">
+			<mapSimpleMember property="tabText" member="buf"/>
+		</mapResource>
+	</sourceMapping>
+
+</component>
+</componentDefinition>

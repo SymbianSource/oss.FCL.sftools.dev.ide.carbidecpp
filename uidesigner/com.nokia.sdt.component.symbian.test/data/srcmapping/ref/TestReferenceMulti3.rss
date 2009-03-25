@@ -1,0 +1,13 @@
+#include <basicheader.rh>
+
+RESOURCE TWO_REFS r_test_multi_ref3
+	{
+	link1 = r_test_multi_ref3_child1;
+	link2 = r_test_multi_ref3_child1_2;
+	}
+RESOURCE ONE_STRING r_test_multi_ref3_child1
+	{
+	}
+RESOURCE SIMPLE_TYPES r_test_multi_ref3_child1_2
+	{
+	}

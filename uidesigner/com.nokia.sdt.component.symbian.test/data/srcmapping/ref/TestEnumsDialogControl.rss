@@ -1,0 +1,7 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+
+RESOURCE DIALOG_LINE r_test_enum_dialog_control
+	{
+	type = EEikCtDubiousControl;
+	}

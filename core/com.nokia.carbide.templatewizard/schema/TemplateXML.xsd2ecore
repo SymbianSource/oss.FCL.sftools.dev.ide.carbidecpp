@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="Template.ecore#/"
+    outputs="TemplateXML.xsd#/">
+  <nested inputs="Template.ecore#/" outputs="TemplateXML.xsd#/">
+    <nested inputs="Template.ecore#//BaseFieldType" outputs="TemplateXML.xsd#//BaseFieldType;XSDComplexTypeDefinition">
+      <nested inputs="Template.ecore#//BaseFieldType/description" outputs="TemplateXML.xsd#//BaseFieldType;XSDComplexTypeDefinition/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//BaseFieldType/id" outputs="TemplateXML.xsd#//BaseFieldType;XSDComplexTypeDefinition/XSDAttributeUse=1"/>
+      <nested inputs="Template.ecore#//BaseFieldType/label" outputs="TemplateXML.xsd#//BaseFieldType;XSDComplexTypeDefinition/XSDAttributeUse=2"/>
+      <nested inputs="Template.ecore#//BaseFieldType/mandatory" outputs="TemplateXML.xsd#//BaseFieldType;XSDComplexTypeDefinition/XSDAttributeUse=3"/>
+      <nested inputs="Template.ecore#//BaseFieldType/persist" outputs="TemplateXML.xsd#//BaseFieldType;XSDComplexTypeDefinition/XSDAttributeUse=4"/>
+    </nested>
+    <nested inputs="Template.ecore#//BaseFieldType" outputs="TemplateXML.xsd#//BaseFieldType;XSDElementDeclaration"/>
+    <nested inputs="Template.ecore#//DocumentRoot" outputs="TemplateXML.xsd#//DocumentRoot;XSDComplexTypeDefinition=1"/>
+    <nested inputs="Template.ecore#//DocumentRoot" outputs="TemplateXML.xsd#//DocumentRoot;XSDElementDeclaration=1"/>
+    <nested inputs="Template.ecore#//FilenameFieldType" outputs="TemplateXML.xsd#//FilenameFieldType;XSDComplexTypeDefinition=2">
+      <nested inputs="Template.ecore#//FilenameFieldType/default" outputs="TemplateXML.xsd#//FilenameFieldType;XSDComplexTypeDefinition=2/XSDAttributeUse"/>
+    </nested>
+    <nested inputs="Template.ecore#//FilenameFieldType" outputs="TemplateXML.xsd#//FilenameFieldType;XSDElementDeclaration=2"/>
+    <nested inputs="Template.ecore#//MetadataType" outputs="TemplateXML.xsd#//MetadataType;XSDComplexTypeDefinition=3">
+      <nested inputs="Template.ecore#//MetadataType/value" outputs="TemplateXML.xsd#//MetadataType;XSDComplexTypeDefinition=3/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//MetadataType/name" outputs="TemplateXML.xsd#//MetadataType;XSDComplexTypeDefinition=3/XSDAttributeUse=1"/>
+      <nested inputs="Template.ecore#//MetadataType/value1" outputs="TemplateXML.xsd#//MetadataType;XSDComplexTypeDefinition=3/XSDAttributeUse=2"/>
+    </nested>
+    <nested inputs="Template.ecore#//MetadataType" outputs="TemplateXML.xsd#//MetadataType;XSDElementDeclaration=3"/>
+    <nested inputs="Template.ecore#//ParameterType" outputs="TemplateXML.xsd#//ParameterType;XSDComplexTypeDefinition=4">
+      <nested inputs="Template.ecore#//ParameterType/name" outputs="TemplateXML.xsd#//ParameterType;XSDComplexTypeDefinition=4/XSDAttributeUse"/>
+    </nested>
+    <nested inputs="Template.ecore#//ParameterType" outputs="TemplateXML.xsd#//ParameterType;XSDElementDeclaration=4"/>
+    <nested inputs="Template.ecore#//ProcessType" outputs="TemplateXML.xsd#//ProcessType;XSDComplexTypeDefinition=5">
+      <nested inputs="Template.ecore#//ProcessType/bundle" outputs="TemplateXML.xsd#//ProcessType;XSDComplexTypeDefinition=5/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//ProcessType/class" outputs="TemplateXML.xsd#//ProcessType;XSDComplexTypeDefinition=5/XSDAttributeUse=1"/>
+      <nested inputs="Template.ecore#//ProcessType/name" outputs="TemplateXML.xsd#//ProcessType;XSDComplexTypeDefinition=5/XSDAttributeUse=2"/>
+      <nested inputs="Template.ecore#//ProcessType/parameter" outputs="TemplateXML.xsd#//ProcessType;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle"/>
+    </nested>
+    <nested inputs="Template.ecore#//ProcessType" outputs="TemplateXML.xsd#//ProcessType;XSDElementDeclaration=5"/>
+    <nested inputs="Template.ecore#//TemplateType" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6">
+      <nested inputs="Template.ecore#//TemplateType/description" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//TemplateType/author" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDAttributeUse=1"/>
+      <nested inputs="Template.ecore#//TemplateType/copyright" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDAttributeUse=2"/>
+      <nested inputs="Template.ecore#//TemplateType/help" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDAttributeUse=3"/>
+      <nested inputs="Template.ecore#//TemplateType/label" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDAttributeUse=4"/>
+      <nested inputs="Template.ecore#//TemplateType/version" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDAttributeUse=5"/>
+      <nested inputs="Template.ecore#//TemplateType/wizardPage" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle"/>
+      <nested inputs="Template.ecore#//TemplateType/process" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=1"/>
+      <nested inputs="Template.ecore#//TemplateType/metadata" outputs="TemplateXML.xsd#//TemplateType;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=2"/>
+    </nested>
+    <nested inputs="Template.ecore#//TemplateType" outputs="TemplateXML.xsd#//TemplateType;XSDElementDeclaration=6"/>
+    <nested inputs="Template.ecore#//TextFieldType" outputs="TemplateXML.xsd#//TextFieldType;XSDComplexTypeDefinition=7">
+      <nested inputs="Template.ecore#//TextFieldType/default" outputs="TemplateXML.xsd#//TextFieldType;XSDComplexTypeDefinition=7/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//TextFieldType/multiline" outputs="TemplateXML.xsd#//TextFieldType;XSDComplexTypeDefinition=7/XSDAttributeUse=1"/>
+      <nested inputs="Template.ecore#//TextFieldType/pattern" outputs="TemplateXML.xsd#//TextFieldType;XSDComplexTypeDefinition=7/XSDAttributeUse=2"/>
+    </nested>
+    <nested inputs="Template.ecore#//TextFieldType" outputs="TemplateXML.xsd#//TextFieldType;XSDElementDeclaration=7"/>
+    <nested inputs="Template.ecore#//UidFieldType" outputs="TemplateXML.xsd#//UidFieldType;XSDComplexTypeDefinition=8">
+      <nested inputs="Template.ecore#//UidFieldType/max" outputs="TemplateXML.xsd#//UidFieldType;XSDComplexTypeDefinition=8/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//UidFieldType/min" outputs="TemplateXML.xsd#//UidFieldType;XSDComplexTypeDefinition=8/XSDAttributeUse=1"/>
+    </nested>
+    <nested inputs="Template.ecore#//UidFieldType" outputs="TemplateXML.xsd#//UidFieldType;XSDElementDeclaration=8"/>
+    <nested inputs="Template.ecore#//WizardPageType" outputs="TemplateXML.xsd#//WizardPageType;XSDComplexTypeDefinition=9">
+      <nested inputs="Template.ecore#//WizardPageType/description" outputs="TemplateXML.xsd#//WizardPageType;XSDComplexTypeDefinition=9/XSDAttributeUse"/>
+      <nested inputs="Template.ecore#//WizardPageType/help" outputs="TemplateXML.xsd#//WizardPageType;XSDComplexTypeDefinition=9/XSDAttributeUse=1"/>
+      <nested inputs="Template.ecore#//WizardPageType/id" outputs="TemplateXML.xsd#//WizardPageType;XSDComplexTypeDefinition=9/XSDAttributeUse=2"/>
+      <nested inputs="Template.ecore#//WizardPageType/label" outputs="TemplateXML.xsd#//WizardPageType;XSDComplexTypeDefinition=9/XSDAttributeUse=3"/>
+    </nested>
+    <nested inputs="Template.ecore#//WizardPageType" outputs="TemplateXML.xsd#//WizardPageType;XSDElementDeclaration=9"/>
+  </nested>
+</xsd2ecore:XSD2EcoreMappingRoot>

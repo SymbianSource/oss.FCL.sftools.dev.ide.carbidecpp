@@ -1,0 +1,22 @@
+/*
+============================================================================
+ Name		: $(baseName).mmp
+ Author	  : $(author)
+ Copyright   : $(copyright)
+ Description : This is the project specification file for $(baseName).
+============================================================================
+*/
+
+TARGET		  $(baseName).lib
+TARGETTYPE	  lib
+UID			 0
+
+USERINCLUDE	 ..\$(incDir)
+SYSTEMINCLUDE   \epoc32\include
+
+SOURCEPATH	  ..\$(sourceDir)
+SOURCE		  $(baseName).cpp
+
+#ifdef ENABLE_ABIV2_MODE
+  DEBUGGABLE_UDEBONLY
+#endif

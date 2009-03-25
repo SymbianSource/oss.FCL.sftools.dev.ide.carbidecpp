@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>errno_name</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>errno_name</h3>
+<p>  Tells the optimizer how to find the <span class="code">errno</span> identifier.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma errno_name id | ...
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>When this pragma is used, the optimizer can use the identifier <span class="code">errno</span> (either a macro or a function call) to optimize standard C library functions better. If not used, the optimizer makes worst-case assumptions about the effects of calls to the standard C library.</p>
+  <p class="note"><strong>NOTE</strong> The MSL C library already includes a use of this pragma, so you would only need to use it for third-party C libraries.</p>
+  <p class="code">If errno resolves to a variable name, specify it like this:</p>
+  <p class="listing"> #pragma errno_name _Errno</p>
+  <p>If errno is a function call accessing ordinarily inaccessible globals, use this form:</p>
+  <p class="listing"> #pragma errno_name ...</p>
+  <p> Otherwise, do not use this pragma as it can result in incorrect optimizations in your code.</p>
+  <p>    This pragma does not correspond to any panel setting. By default, this pragma is unspecified (worst case assumption). </p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

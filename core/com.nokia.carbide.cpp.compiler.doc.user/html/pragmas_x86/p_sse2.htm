@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>sse2</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>sse2</h3>
+<p>  Controls the generation of SSE-2 instructions for single and double-precision floating point and 16-byte integer vector operations.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma sse2 on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p class="note"><strong>NOTE</strong> When enabled, the autovectorize loops option (<span class="code">#pragma opt_vectorize_loops on</span>) will use these instructions if possible.</p>
+  <p>This pragma corresponds to the Use extended instructions setting in the x86 CodeGen panel setting or <span class="code">#pragma use_extinst on</span>. The default settings is off.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

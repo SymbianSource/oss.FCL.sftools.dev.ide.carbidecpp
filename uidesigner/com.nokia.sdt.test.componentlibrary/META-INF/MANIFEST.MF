@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Componentlibrary Plug-in
+Bundle-SymbolicName: com.nokia.sdt.test.componentlibrary; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: Nokia
+Bundle-Localization: plugin
+Require-Bundle: com.nokia.sdt.component.symbian,
+ com.nokia.sdt.series60.componentlibrary,
+ com.nokia.sdt.uimodel,
+ org.eclipse.ui.views,
+ org.eclipse.jface,
+ org.eclipse.emf.edit,
+ com.nokia.sdt.uidesigner,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.forms,
+ org.eclipse.gef,
+ com.nokia.cpp.utils.core,
+ com.nokia.sdt.utils
+Bundle-ClassPath: TestComponentLibrary.jar

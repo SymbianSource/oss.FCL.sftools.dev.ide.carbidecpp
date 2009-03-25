@@ -1,0 +1,431 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*	JavaCC input file for preprocessor #if/#elif expression parsing.
+*
+*/
+
+
+
+options {
+	STATIC=false;
+	USER_TOKEN_MANAGER=true;
+}
+
+PARSER_BEGIN(ASTParserCore)
+
+package com.nokia.carbide.internal.cpp.epoc.engine.parser.generated;
+
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.*;
+
+public class ASTParserCore extends ParserBase {
+    public IASTPreprocessorExpression parse() {
+		IASTPreprocessorExpression expr = null;
+		try {
+			expr = ppExpression();
+		} catch (ParseException e) {
+			//e.printStackTrace();
+			// expr remains null
+		}
+		return expr;
+    }
+    
+}
+
+PARSER_END(ASTParserCore)
+
+IASTPreprocessorExpression ppExpression() :
+{
+	IASTPreprocessorExpression expr;
+}
+{
+	expr=ppTrinaryExpression()
+	{ 
+		//setExtendedSourceRangeFromComments(expr, false, false);
+		return expr; 
+	}
+}
+
+
+IASTPreprocessorExpression ppTrinaryExpression() :
+{
+	IASTPreprocessorExpression cond, lhs = null, rhs = null;
+	IASTPreprocessorExpression ret;
+}
+{
+	cond=ppLogOrExpression() 
+	[ <QUESTION> lhs=ppTrinaryExpression() <COLON> rhs=ppTrinaryExpression() ]
+	{
+		if (lhs != null) {
+			ret = ASTFactory.createPreprocessorTrinaryExpression(cond, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { cond, rhs });
+		} else {
+			ret = cond;
+		}
+		return ret;
+	}
+}
+IASTPreprocessorExpression ppLogOrExpression() :
+{
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppLogAndExpression() [ <LOGOR> rhs=ppLogOrExpression() ]
+	{
+		if (rhs != null) {
+			int oper = IASTPreprocessorBinaryExpression.K_LOG_OR;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppLogAndExpression() :
+{
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppBitOrExpression() [ <LOGAND> rhs=ppLogAndExpression() ]
+	{
+		if (rhs != null) {
+			int oper = IASTPreprocessorBinaryExpression.K_LOG_AND;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppBitOrExpression() :
+{
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppBitXorExpression() [ <OR> rhs=ppBitOrExpression() ]
+	{
+		if (rhs != null) {
+			int oper = IASTPreprocessorBinaryExpression.K_OR;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppBitXorExpression() :
+{
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppBitAndExpression() [ <XOR> rhs=ppBitXorExpression() ]
+	{
+		if (rhs != null) {
+			int oper = IASTPreprocessorBinaryExpression.K_XOR;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppBitAndExpression() :
+{
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppEqualExpression() [ <AND> rhs=ppBitAndExpression() ]
+	{
+		if (rhs != null) {
+			int oper = IASTPreprocessorBinaryExpression.K_AND;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+
+IASTPreprocessorExpression ppEqualExpression() :
+{
+	Token t = null;
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppRelationalExpression() [ ( t=<EQ> | t=<NE> ) rhs=ppEqualExpression() ]
+	{
+		if (rhs != null) {
+			int oper = 0;
+			if (t.kind == EQ)
+				oper = IASTPreprocessorBinaryExpression.K_EQUALS;
+			else
+				oper = IASTPreprocessorBinaryExpression.K_NOT_EQUALS;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppRelationalExpression() :
+{
+	Token t = null;
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppShiftExpression() [ ( t=<LT> | t=<GT> | t=<LTE> | t=<GTE> ) rhs=ppRelationalExpression() ]
+	{
+		if (rhs != null) {
+			int oper = 0;
+			switch (t.kind) {
+			case LT:
+				oper = IASTPreprocessorBinaryExpression.K_LESS_THAN;
+				break;
+			case GT:
+				oper = IASTPreprocessorBinaryExpression.K_GREATER_THAN;
+				break;
+			case LTE:
+				oper = IASTPreprocessorBinaryExpression.K_LESS_THAN_OR_EQUALS;
+				break;
+			case GTE:
+				oper = IASTPreprocessorBinaryExpression.K_GREATER_THAN_OR_EQUALS;
+				break;
+			}
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppShiftExpression() :
+{
+	Token t = null;
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppAddExpression() [ ( t=<SHL> | t=<SHR> ) rhs=ppShiftExpression() ]
+	{
+		if (rhs != null) {
+			int oper;
+			if (t.kind == SHL)
+				oper = IASTPreprocessorBinaryExpression.K_SHL;
+			else
+				oper = IASTPreprocessorBinaryExpression.K_SHR;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppAddExpression() :
+{
+	Token t = null;
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppMulExpression() [ ( t=<PLUS> | t=<MINUS> ) rhs=ppAddExpression() ]
+	{
+		if (rhs != null) {
+			int oper;
+			if (t.kind == PLUS)
+				oper = IASTPreprocessorBinaryExpression.K_ADD;
+			else
+				oper = IASTPreprocessorBinaryExpression.K_SUB;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppMulExpression() :
+{
+	Token t = null;
+	IASTPreprocessorExpression lhs, rhs=null;
+	IASTPreprocessorExpression ret;
+}
+{
+	lhs=ppUnaryExpression() [ ( t=<TIMES> | t=<DIV> | t=<MOD> ) rhs=ppMulExpression() ]
+	{
+		if (rhs != null) {
+			int oper;
+			if (t.kind == TIMES)
+				oper = IASTPreprocessorBinaryExpression.K_MUL;
+			else if (t.kind == DIV)
+				oper = IASTPreprocessorBinaryExpression.K_DIV;
+			else
+				oper = IASTPreprocessorBinaryExpression.K_MOD;
+			ret = ASTFactory.createPreprocessorBinaryExpression(oper, lhs, rhs);
+			//setSourceRangeSpanning(ret, new IASTNode[] { lhs, rhs });
+		} else
+			ret = lhs;
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppUnaryExpression() :
+{
+	Token t;
+	IASTPreprocessorExpression expr = null;
+}
+{
+	( expr=ppPrimaryExpression() )
+	{
+		return expr;
+	}
+	| ( 
+		( t=<MINUS> | t=<NOT> | t=<INVERT> | t=<PLUS>  ) 
+		expr=ppPrimaryExpression() 
+	)
+	{
+		int oper = 0;
+		switch (t.kind)
+		{
+		case MINUS:
+			oper = IASTPreprocessorUnaryExpression.K_NEGATE;
+			break;
+		case NOT:
+			oper = IASTPreprocessorUnaryExpression.K_NOT;
+			break;
+		case INVERT:
+			oper = IASTPreprocessorUnaryExpression.K_INVERT;
+			break;
+		case PLUS:
+			oper = IASTPreprocessorUnaryExpression.K_PLUS;
+			break;
+		}
+		IASTPreprocessorExpression ret = ASTFactory.createPreprocessorUnaryExpression(
+			oper, expr);
+		//setSourceRangeContaining(ret, t, expr, null);
+		return ret;
+	}
+}
+
+IASTPreprocessorExpression ppPrimaryExpression() :
+{
+	IASTPreprocessorExpression expr = null;
+	Token start;
+}
+{
+	( start=<IDENTIFIER> )
+	{
+		expr = getPreprocessorLiteralExpressionSpanning(start, start);
+		return expr;
+	}
+	| (  start=<LPAREN> expr=ppExpression() /*end=*/<RPAREN> )
+	{
+		expr = ASTFactory.createPreprocessorUnaryExpression(
+			IASTPreprocessorUnaryExpression.K_PARENTHESIS, expr);
+		//setSourceRange(expr, start, end);
+		return expr;
+	}
+	| start=<DEFINED> expr = ppDefinedTail()
+	{
+		// TODO: expand
+		return expr;
+	}
+	| (  expr=ppIntegralExpression() )
+	{
+		return expr;
+	}
+}
+
+IASTPreprocessorExpression ppDefinedTail() :
+{
+	Token id; //, lparen, rparen;
+	IASTPreprocessorExpression expr;
+}
+{
+	( id=<IDENTIFIER>  )
+	{
+		expr = ASTFactory.createPreprocessorUnaryExpression(
+			IASTPreprocessorUnaryExpression.K_DEFINED, 
+			ASTFactory.createPreprocessorLiteralExpression(id.image));
+		//setSourceRange(expr, id, id);
+		return expr;
+	}
+	| ( /*lparen=*/<LPAREN> id=<IDENTIFIER> /*rparen=*/<RPAREN> )
+	{
+		expr = ASTFactory.createPreprocessorUnaryExpression(
+			IASTPreprocessorUnaryExpression.K_DEFINED, 
+			ASTFactory.createPreprocessorLiteralExpression(id.image));
+		//setSourceRange(expr, lparen, rparen);
+		return expr;
+	}
+
+}
+
+IASTPreprocessorLiteralExpression ppIntegralExpression() :
+{
+	Token start;
+	IASTPreprocessorLiteralExpression ret;
+}
+{
+	( start=<INTEGER> )
+	{
+		ret = ASTFactory.createPreprocessorLiteralExpression(start.image);
+		//setSourceRange(ret, start, start);
+		//setExtendedSourceRangeFromComments(ret, false, false);
+		return ret;
+	}
+}
+
+// reference these tokens so they get enums...
+void TOKEN_HOLDER() : { }
+{
+	<EOL>
+}
+
+
+void UNUSED() : { }
+{
+	<ERROR> skip()
+}
+
+JAVACODE
+void skip() {
+	 getToken(1);
+}
+
+

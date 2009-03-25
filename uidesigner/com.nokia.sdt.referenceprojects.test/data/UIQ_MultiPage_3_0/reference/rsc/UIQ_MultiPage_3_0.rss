@@ -1,0 +1,34 @@
+NAME UIQM
+
+#include <qikon.rh>
+#include <eikon.rh>
+#include <appinfo.rh>
+#include <QikCommand.rh>
+#include <QikListBox.rh>
+#include <QikListBoxStandardLayouts.hrh>
+#include "UIQ_MultiPage_3_0.hrh"
+#ifdef LANGUAGE_01
+#include "UIQ_MultiPage_3_0_01.rls"
+#endif
+
+RESOURCE RSS_SIGNATURE
+	{
+	}
+RESOURCE TBUF
+	{
+	buf = "UIQ_MultiPage_3_0";
+	}
+RESOURCE EIK_APP_INFO
+	{
+	}
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = STR_UIQ_MultiPage_3_0Application_1;
+	caption_and_icon = CAPTION_AND_ICON_INFO
+		{
+		caption = STR_UIQ_MultiPage_3_0Application_2;
+		number_of_icons = 0;
+		};
+	}
+
+#include "UIQ_MultiPage_3_0MultiPageView.rssi"

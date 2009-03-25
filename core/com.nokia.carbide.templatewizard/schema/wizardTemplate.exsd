@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="com.nokia.carbide.templatewizard" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="com.nokia.carbide.templatewizard" id="wizardTemplate" name="Wizard Template"/>
+      </appinfo>
+      <documentation>
+         The wizard template extension point registers a template with the Carbide.c++ template wizard. Templates may create projects or classes.
+
+See the the documentation under Tasks &gt; Creating Wizard Templates for more information.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="template" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="template">
+      <annotation>
+         <documentation>
+            The template element registers a single template with the template wizard.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="metadata"/>
+         </sequence>
+         <attribute name="templateId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The unique id for this template
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="displayName" type="string">
+            <annotation>
+               <documentation>
+                  The display name (label) for the template.
+
+This attribute is STRONGLY RECOMMENDED, but not required, in order to avoid API breakage.  If not specified, the template XML is loaded early and causes the wizard to delay at startup.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="location" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The plugin-relative path to the template xml file
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="wizardId" type="string">
+            <annotation>
+               <documentation>
+                  The id of the wizard in which this template is used
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="groupLabel" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The group label under which this template will appear in the template choice page of the appropriate template wizard
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="filterArguments" type="string">
+            <annotation>
+               <documentation>
+                  The optional wizard-specific data available for the IFilter implementing a filter checkbox, optionally shown in some template wizards
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="image" type="string">
+            <annotation>
+               <documentation>
+                  The optional plugin-relative location of a 16x16 pixel image file to use when showing this template in the choose template wizard page
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="extraPagesProvider" type="string">
+            <annotation>
+               <documentation>
+                  An optional provider of extra wizard pages
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="com.nokia.carbide.internal.api.templatewizard.ui.IExtraPagesProvider"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="metadata">
+      <annotation>
+         <documentation>
+            This element allows attaching metadata to templates for use by other wizards.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of a metadata element
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="value" type="string">
+            <annotation>
+               <documentation>
+                  Value of a metadata element.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         Carbide.c++ 1.2
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         &lt;pre&gt;
+&lt;extension point=&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;&gt;
+  &lt;template
+   templateId=&quot;com.nokia.cdt.templates.s60.controlapplication&quot;
+   location=&quot;templates/projecttemplates/S60-ControlApplication/template.xml&quot;
+   wizardId=&quot;com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard&quot; 
+   groupLabel=&quot;S60&quot;
+   filterArguments=&quot;S60:1.2;2.0-2.9&quot;
+   image=&quot;icons/icon_S60.png&quot;
+  /&gt;
+&lt;/extension&gt;
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiInfo"/>
+      </appinfo>
+      <documentation>
+         No API implementation is required to provide a basic template. Templates requiring custom processing in code may implement &lt;code&gt;com.nokia.carbide.templatewizard.process.IProcess&lt;/code&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         This extension point registers an XML template. Implementation is not required.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         (C) Copyright 2007 Nokia Corporation.
+      </documentation>
+   </annotation>
+
+</schema>

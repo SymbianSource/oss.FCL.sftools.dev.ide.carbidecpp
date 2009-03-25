@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.cpp.sdk.core/src"
+    modelPluginID="com.nokia.carbide.cpp.sdk.core" modelName="SymbianMacroStore" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>symbianMacroStore.xsd</foreignModel>
+  <genPackages prefix="SymbianMacroStore" basePackage="com.nokia.carbide.cpp.internal.sdk.core.gen"
+      resource="XML" disposableProviderFactory="true" ecorePackage="SymbianMacroStore.ecore#/">
+    <genDataTypes ecoreDataType="SymbianMacroStore.ecore#//MacroType"/>
+    <genDataTypes ecoreDataType="SymbianMacroStore.ecore#//NameType"/>
+    <genDataTypes ecoreDataType="SymbianMacroStore.ecore#//NameType1"/>
+    <genDataTypes ecoreDataType="SymbianMacroStore.ecore#//VersionType"/>
+    <genDataTypes ecoreDataType="SymbianMacroStore.ecore#//VersionType1"/>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//DocumentRoot/macro"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/osMacros"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/osVersion"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/platform"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/platformMacros"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/sdkVendor"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/symbianMacroStore"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/symbianOSMacros"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//DocumentRoot/vendorMacros"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//OsMacrosType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//OsMacrosType/macro"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//OsVersionType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//OsVersionType/platformMacros"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//OsVersionType/osMacros"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//OsVersionType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//PlatformMacrosType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//PlatformMacrosType/platform"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//PlatformType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//PlatformType/macro"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//PlatformType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//SdkVendorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//SdkVendorType/macro"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//SdkVendorType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SymbianMacroStore.ecore#//SdkVendorType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//SymbianMacroStoreType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//SymbianMacroStoreType/symbianOSMacros"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//SymbianMacroStoreType/vendorMacros"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//SymbianOSMacrosType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//SymbianOSMacrosType/osVersion"/>
+    </genClasses>
+    <genClasses ecoreClass="SymbianMacroStore.ecore#//VendorMacrosType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SymbianMacroStore.ecore#//VendorMacrosType/sdkVendor"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

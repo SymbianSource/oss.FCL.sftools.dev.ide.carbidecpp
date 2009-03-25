@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<component baseComponent="com.nokia.examples.baseComponent"
+	    friendlyName="Static" 
+	    qualifiedName="com.nokia.examples.static" 
+		category="Testing" 
+		version="1.0">
+		<documentation>
+			<information>A component for testing that can't be sized, moved or removed</information>
+			<helpTopic></helpTopic>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" maxSDKVersion="3.0" 
+			className="CStatic" classHelpTopic="org.eclipse.ui.property_sheet_page_help_context" 
+			resourceType="STATIC" />
+	 	<designerImages smallIconFile="test-image.bmp" 
+	  	       largeIconFile="test-image.bmp" layoutImageFile="test-image.bmp"/>
+	  	<attributes>
+	  		<!--<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>-->
+	  		<attribute key="is-non-resizable-layout-object">true</attribute>
+	  		<attribute key="is-not-user-removable">true</attribute>
+	  	</attributes>
+		<properties>
+			<property category="Appearance" displayName="checker size" name="checkSize" type="integer"/>
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IRender"/>
+				<script file="static_visual.js"
+					prototype="Visual"/>
+			</implementation>
+		</implementations>
+	</component>
+</componentDefinition>

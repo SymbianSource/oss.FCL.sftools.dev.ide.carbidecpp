@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>precompile_target</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>precompile_target</h3>
+<p>  Specifies the file name for a precompiled header file.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma precompile_target filename</p>
+  <h5> Parameters</h5>
+  <p class="code"> filename</p>
+  <blockquote>
+    <p>Filename can be a simple filename or an absolute pathname. If filename is a simple filename, the compiler saves the file in the same folder as the source file. If filename is a path name, the compiler saves the file in the specified folder.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>This pragma specifies the filename for a precompiled header file. If you do not specify the filename, the compiler gives the precompiled header file the same base name as its source file minus any extension and prepended with the &ldquo;<span class="code">#</span>&rdquo; character. For example, <span class="code">this_file</span> becomes <span class="code">#this_file</span>.</p>
+  <p>This pragma does not correspond to any panel setting.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

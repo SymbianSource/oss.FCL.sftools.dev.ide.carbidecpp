@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.index"?>
+
+<!-- help data customization XML -->
+<!-- replaces the org.eclipse.help/baseTOCS setting prior to 3.3 -->
+
+<extensions>
+   <tocOrder>
+      <toc id="/com.nokia.carbide.help.common/carbideHelpTOC.xml" />
+      <category id="carbide.reference"/>
+      <toc id="/com.nokia.carbide.cpp.doc.user/debuggerTOC.xml" />
+      <toc id="/com.nokia.carbide.cpp.uidesigner.doc.user/toc.xml" />
+      <toc id="/com.nokia.carbide.cpp.pi.doc.user/tocPI.xml" />	   
+      <category id="carbide.extensions"/>
+      <toc id="/com.nokia.carbide.cpp.doc.user.crashdebugger/helptocCDB.xml" />	   
+      <toc id="/com.nokia.carbide.cpp.codescanner/tocCodeScanner.xml" />	   
+      <toc id="/com.nokia.s60tools.appdep.help/toc.xml" />	   
+      <toc id="/com.nokia.carbide.epocwindDisplay/html/toolTOC.xml" />
+	  <toc id="/com.nokia.carbide.cpp.sdk.doc.user/sdkTOC.xml" />	   
+   </tocOrder>
+   <hidden>
+   </hidden>
+</extensions>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>mmcalls</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>mmcalls</h3>
+<p>  Instructs the compiler to optimize arithmetic and function calling code for use of MMX registers (AMD K6 + 3DNow! instruction set) or SSE registers (Intel SSE or SSE-2 instruction sets) when the related pragmas or options are enabled.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma mmcalls on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>This pragma corresponds to the Use multimedia calling convention setting in the the x86 CodeGen panel. </p>
+  <p class="note"><strong>NOTE</strong> This pragma generates code that is not compatible with the Intel Pentium class of microprocessors.</p>
+  <p>To check this setting, use <span class="code">__option (mmcalls)</span>.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

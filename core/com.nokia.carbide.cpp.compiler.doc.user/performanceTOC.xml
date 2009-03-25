@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Improving Compiler Performance" href="html/performance/performance.htm">
+
+	<topic label="When to Use Precompiled Files" 				href="html/performance/perf_precompiled_files.htm" /> 
+	<topic label="What Can be Precompiled" 						href="html/performance/perf_precompiled_what.htm" /> 
+	<topic label="Using a Precompiled Header File" 				href="html/performance/perf_precompiled_using.htm" /> 
+	<topic label="Preprocessing and Precompiling" 				href="html/performance/perf_preprocessing.htm" /> 
+	<topic label="Pragma Scope in Precompiled Files" 			href="html/performance/perf_pragma_scope.htm" /> 
+	<topic label="Precompiling Files in the Carbide IDE" 		href="html/performance/perf_precompiled_ide.htm" /> 
+	<topic label="Updating a Precompiled File Automatically" 	href="html/performance/perf_precompiled_auto.htm" /> 
+	<topic label="Use Instance Manager" 						href="html/performance/perf_inst_manager.htm" /> 
+       
+</toc>

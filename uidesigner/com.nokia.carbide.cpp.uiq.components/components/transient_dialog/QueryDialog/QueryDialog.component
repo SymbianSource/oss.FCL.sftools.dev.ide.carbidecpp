@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--START_USECASES: CU20 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.QueryWinDialog"
+			baseComponent="com.nokia.carbide.uiq.TransientDialogBase"
+			instanceNameRoot="queryDialog"			
+			version="1.0"
+			category="%category.query.dialog">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+		
+		<designerImages smallIconFile="QueryDialog_sm.png"
+			largeIconFile="QueryDialog.png"/>			
+				
+		<properties>
+			<property name="text" displayName="%text" 
+				category="%category.data" default="Query Dialog" 
+				type="localizedString" descriptionKey="textDescription" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"/>
+			<property name="title" displayName="%title"
+				category="%category.appearance"  
+				type="localizedString" descriptionKey="titleDescription"/>
+			<compoundProperty name="location" displayName="%location" 
+				category="%category.hidden" 
+				type="com.nokia.carbide.uiq.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty name="size" displayName="%size" 
+				category="%category.hidden" type="com.nokia.carbide.uiq.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>						
+															
+		</properties>
+		
+		<implementations>	
+			<implementation>
+				 <interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>			
+				 <interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				 <interface id="com.nokia.sdt.datamodel.adapter.ILayout"/> 
+				 <interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>				 
+				<script file="QueryDialog.js" prototype="QueryDialog"/>
+			</implementation>					
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="TBUF" headers="eikon.rh" id="textQueryDialog">
+				<mapSimpleMember property="text" member="buf"/>			
+			</mapResource>
+			<mapResource struct="TBUF" headers="eikon.rh" id="titleQueryDialog">
+				<mapSimpleMember property="title" member="buf"/>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+					<!-- create Run ${instanceMemberName} method -->
+					<expandMacro name="GenerateMethodWithOwnedBody"
+								DeclPhase="HeaderClassPublic"
+								FunctionName="Run${instanceMemberName}L"
+								FunctionArgs=""
+								ReturnType="TBool"
+								FunctionLocationId="VIEW_CLASS_HANDLECONTROLEVENTL"
+								IsOwned="false"
+								DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+								ClassName="${className}"
+								OwnedRegionLocationId="VIEW_CLASS_HANDLECONTROLEVENTL_BODY">
+								<expandArgument name="FunctionComment">
+/** 
+ * Run Query Dialog
+ */
+								</expandArgument>
+								<expandArgument name="FunctionBody">
+<![CDATA[
+	return iEikonEnv->QueryWinL( ${Engine.getGeneratedResource(instance, "titleQueryDialog").toUpperCase()},
+						 ${Engine.getGeneratedResource(instance, "textQueryDialog").toUpperCase()} );		
+		
+]]>								</expandArgument>
+					</expandMacro>	
+
+		</sourceGen>		
+				
+	</component>
+
+</componentDefinition>

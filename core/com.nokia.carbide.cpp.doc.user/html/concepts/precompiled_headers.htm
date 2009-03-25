@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Precompiled Headers </title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Precompiled Headers </h2>
+<p>Precompiled header support is available for Symbian OS projects that use the Nokia x86
+compiler. Precompiled header files use the <span class="code">.pch++ </span>extension and are only supported by emulator targets. </p>
+<p>By default, the x86 compiler compiles the <span class="code">.pch++</span> file before compiling any <span class="code">.cpp</span> files in a project. </p>
+<p>A precompiled header file (<span class="code">.pch++</span>) outputs to a new identically named file with the <span class="code">.mch</span> extension. For example, <span class="code">HelloWorld.pch++</span> outputs as <span class="code">HelloWorld.mch</span>. C++ source files must use the <span class="code">.pch++</span> extension.</p>
+<p>Listing 1 shows an example of a precompiled header source file called
+<span class="code">pch_test.pch++</span>.</p>
+<div class="listing">
+  <h4>Listing 1 .pch Precompiled Header example</h4>
+  <p class="listing">#include &lt;e32def.h&gt;<br />
+  #pragma precompile_target &quot;pch_test.mch&quot;<br />
+  <br />
+  #define FOO 1<br />
+  #define LATIDA 345</p>
+  <p class="listing">typedef struct foo<br />
+    {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;int i, j, k, l, m;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;char foobar[256];<br />
+} foo;</p>
+</div>
+<p>The resultant output file, <span class="code">pch_test.mch</span> can be included in other source or prefix files as:</p>
+<p class="listing"> #include pch_test.mch</p>
+<p>&nbsp;</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

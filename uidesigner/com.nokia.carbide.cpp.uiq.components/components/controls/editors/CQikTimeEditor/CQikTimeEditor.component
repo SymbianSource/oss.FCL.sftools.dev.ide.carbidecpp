@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikTimeEditor"
+			baseComponent="com.nokia.carbide.uiq.CQikTTimeEditorBase"
+			instanceNameRoot="timeEditor"			
+			version="1.0"
+			category="%category.editors">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CQikTimeEditor" classHelpTopic=""
+			resourceType="QIK_TIME_EDITOR" resourceHelpTopic=""/>				
+		
+		<designerImages smallIconFile="CQikTimeEditor_sm.png"
+			largeIconFile="CQikTimeEditor.png"/>		
+		
+		<attributes>
+			<attribute key="cpp-class-name">CQikTimeEditor</attribute>
+			<attribute key="rss-control-type-enum">EQikCtTimeEditor</attribute>					
+		</attributes>
+				
+		<properties>			
+			<compoundProperty name="minTime" displayName="%minTime" category="%category.data"
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Time"
+				editorClass="com.nokia.sdt.symbian.ui.editors.TimeEditorFactory"
+				descriptionKey="minTimeDescription"
+				default="H00 M00 S00"/>
+			<compoundProperty name="maxTime" displayName="%maxTime" category="%category.data" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Time" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.TimeEditorFactory"
+				descriptionKey="maxTimeDescription"
+				default="H23 M59 S59"/>
+			<compoundProperty name="time" displayName="%time" category="%category.data" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Time" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.TimeEditorFactory"
+				descriptionKey="timeDescription"/>
+			<compoundProperty name="flags" category="%category.behavior" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.TimeFlags"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="flagsDescription" />				
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CQikTimeEditor.js" prototype="CQikTimeEditor"/>
+			</implementation>
+		</implementations>		
+		
+		<sourceMapping>
+			<mapResource struct="QIK_TIME_EDITOR" headers="eikon.rh qikon.rh">
+				<mapResourceMember struct="TIME" property="maxTime" member="maxTime">
+					<mapSimpleMember property="hour" member="hour"/>
+					<mapSimpleMember property="minute" member="minute"/>
+					<mapSimpleMember property="second" member="second"/>
+				</mapResourceMember>
+				<mapResourceMember struct="TIME" property="minTime" member="minTime">
+					<mapSimpleMember property="hour" member="hour"/>
+					<mapSimpleMember property="minute" member="minute"/>
+					<mapSimpleMember property="second" member="second"/>
+				</mapResourceMember>
+				<mapBitmaskMember property="flags" member="flags" >
+					<mapBitmaskValue properties="EWithoutPopoutPicker" value="0x02"/>
+					<mapBitmaskValue properties="EForce24HourFormat" value="0x04"/>
+					<mapBitmaskValue properties="EFiveMinuteSteps" value="0x08"/>
+					<mapBitmaskValue properties="EMirroredLayout" value="0x10"/>
+					<mapBitmaskValue properties="EDisableWrapTime" value="0x20"/>
+				</mapBitmaskMember>
+			</mapResource>
+		</sourceMapping>	
+			
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<templateGroup id="0" form="InstanceGen">			
+				<!-- Common ControlBase sourcegen -->	
+				<expandMacro name="SetupControlInstanceVariable" Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="QikTimeEditor.h"/>						
+				
+				<inline scope="prototype">
+${jsObject}.prototype.formatConstructor = function( properties ) {
+	return "TTime( TDateTime( 0, EJanuary, 0, "
+		+properties.time.hour+", "+properties.time.minute
+		+", "+properties.time.second+", 0 ) )";
+}
+				</inline>
+				
+				<!--Initialize Phase-->	
+				<template id="INITIALIZE_PHASE" phase="InitializeControlHandlers"><![CDATA[
+if ( ${ instanceMemberName } != NULL )
+{
+	${instanceMemberName}->SetTimeL( ${ ( this.formatConstructor( properties ) ) } );
+}
+	]]>		    </template>	
+			</templateGroup>
+											
+		</sourceGen>
+				
+	</component>
+
+</componentDefinition>

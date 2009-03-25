@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Calling an Inherited Member Function</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Calling an Inherited Member Function</h3>
+<p>(ISO C++, &sect;10.3) You can call an inherited virtual member function rather than its local override in two ways. The first method is recommended for referring to member functions defined in a base class or any other parent class. The second method, while more convenient, is not recommended if you are using your source code with other compilers.</p>
+<h4>The standard method of calling inherited member functions</h4>
+<p>This method adheres to the ISO C++ Standard and simply qualifies the member function with its base class.</p>
+<p>Assume you have two classes, <span class="code">MyBaseClass</span> and <span class="code">MySubClass</span>, each implementing a function named <span class="code">MyFunc()</span>.</p>
+<p>From within a function of <span class="code">MySubClass</span>, you can call the base class version of <span class="code">MyFunc()</span> this way:</p>
+<p class="listing">MyBaseClass::MyFunc();</p>
+<p>However, if you change the class hierarchy, this call might break. Assume you introduce an intermediate class, and your hierarchy is now <span class="code">MyBaseClass</span>, <span class="code">MyMiddleClass</span>, and <span class="code">MySubClass</span>. Each has a version of <span class="code">MyFunc()</span>. The code above still calls the original version of <span class="code">MyFunc()</span> in the <span class="code">MyBaseClass</span>, bypassing the additional behavior you implemented in <span class="code">MyMiddleClass</span>. This kind of subtlety in the code can lead to unexpected results or bugs that are difficult to locate.</p>
+<h4>Using inheritance to call inherited member functions</h4>
+<p>The <span class="code">def_inherited</span> pragma defines an implicit inherited member for a base class. Use this directive before using the inherited symbol:</p>
+<p class="listing">#pragma def_inherited on</p>
+<p class="note"><strong>WARNING</strong>! The ISO C++ standard does not support the use of inherited. </p>
+<p>You can call the inherited version of <span class="code">MyFunc()</span> this way:</p>
+<p class="listing">inherited::MyFunc();</p>
+<p>With the inherited symbol, the compiler identifies the base class at compile time. This line of code calls the immediate base class in both cases: where the base class is <span class="code">MyBaseClass</span>, and where the immediate base class is <span class="code">MyMiddleClass</span>.</p>
+<p>If your class hierarchy changes at a later date and your subclass inherits from a different base class, the immediate base class is still called, despite the change in hierarchy.</p>
+<p>The syntax is as follows:</p>
+<p class="listing">inherited::func-name(param-list);</p>
+<p>The statement calls the <span class="code">func-name</span> in the class&rsquo;s immediate base class. If the class has more than one immediate base class (because of multiple inheritance) and the compiler cannot decide which <span class="code">func-name</span> to call, the compiler generates an error.</p>
+<p>This example creates a Q class that draws its objects by adding behavior to the O class.</p>
+<div class="listing">
+  <h5>Listing 1. Using inherited to Call an Inherited Member Function</h5>
+  <p>#pragma def_inherited on<br />
+    struct O { virtual void draw(int,int); };<br />
+  struct Q : O { void draw(int,int); };</p>
+  <p>void Q::draw (int x,int y)<br />
+    {<br />
+    inherited::draw(x,y); // Perform behavior of base class<br />
+    ... // Perform added behavior<br />
+  }</p>
+</div>
+<p>For related information on this pragma see &ldquo;def_inherited&rdquo;.
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

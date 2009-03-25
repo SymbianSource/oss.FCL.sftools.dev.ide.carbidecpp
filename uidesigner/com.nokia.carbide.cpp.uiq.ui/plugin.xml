@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="com.nokia.carbide.cpp.project.ui.newWizards.symbianos"
+            class="com.nokia.carbide.cpp.uiq.ui.viewwizard.ViewWizard"
+            icon="icons/uiq_UI_designerWiz.png"
+            id="com.nokia.carbide.cpp.uiq.ui.viewwizard.ViewWizard"
+            name="%UIQView.name">
+      </wizard>
+      <category
+            id="com.nokia.carbide.cpp.uiq.ui.newWizards.symbianos"
+            name="Symbian OS"/>
+    </extension>
+    
+    <extension point="com.nokia.carbide.templatewizard.wizardTemplate">
+      <template
+      		displayName="%uiq3.label"
+            filterArguments="UIQ:3.0-3.9"
+            groupLabel="%UIQ.label"
+            image="icons/uiq_UI_designerWiz.png"
+            location="templates/UIQ v3.0/template.xml"
+            extraPagesProvider="com.nokia.carbide.cpp.uiq.ui.viewwizard.PagesProvider"
+            templateId="com.nokia.cdt.templates.uiq.3x.uidesigner"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+      <template
+      		displayName="%uiq3.add.label"
+            filterArguments="UIQ:3.0-3.9"
+            groupLabel="%UIQ.label"
+            image="icons/uiq_UI_designerWiz.png"
+            location="templates/UIQ v3.0/template_add.xml"
+            templateId="com.nokia.cdt.templates.uiq.3x.add.uidesigner"
+            wizardId="com.nokia.carbide.cpp.uiq.ui.viewwizard.ViewWizard"/>
+	</extension>
+	
+	<extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="com.nokia.carbide.cpp.CarbideCppPerspective">
+         <newWizardShortcut id="com.nokia.carbide.cpp.uiq.ui.viewwizard.ViewWizard"/>
+      </perspectiveExtension>
+   </extension>
+   
+      <extension
+         point="com.nokia.sdt.uidesigner.editorExtender">
+      <extender
+            class="com.nokia.carbide.cpp.uiq.ui.vieweditor.UIQViewEditorExtender"
+            editorIdFilter="com.nokia.sdt.uidesigner.viewEditor">
+      </extender>
+   </extension>
+</plugin>

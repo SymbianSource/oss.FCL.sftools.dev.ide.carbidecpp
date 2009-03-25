@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>scheduling</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>scheduling</h3>
+<p>  Specifies the use of instruction scheduling optimization.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma scheduling on | off</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>This pragma lets you choose how the compiler rearranges instructions to increase speed. Some instructions, such as a memory load, take more than one processor cycle. By moving an unrelated instruction between the load and the instruction that uses the loaded item, the compiler saves a cycle when executing the program. </p>
+  <p class="note"><strong>NOTE</strong> When enabled, the relationship between the source and object code is not guaranteed to be one-to-one. This may cause the &ldquo;current source line&rdquo; cursor to jump around unpredictably in editor windows showing the scheduled code. The worst of this can be avoided by enabling the Disable opimizations for debug setting in the x86 CodeGen panel. </p>
+  <p>This pragma correspondes to the x86 CodeGen panel setting. <br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

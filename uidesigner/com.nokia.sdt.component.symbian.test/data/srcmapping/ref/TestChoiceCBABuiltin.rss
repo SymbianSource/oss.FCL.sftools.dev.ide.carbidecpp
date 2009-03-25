@@ -1,0 +1,6 @@
+#include <cba.rh>
+
+RESOURCE CBA r_test_choice_cbabuiltin
+	{
+	buttons = { r_avkon_softkeys_options_back };
+	}

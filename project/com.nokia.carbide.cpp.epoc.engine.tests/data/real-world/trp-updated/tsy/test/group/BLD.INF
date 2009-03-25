@@ -1,0 +1,235 @@
+/*
+* Copyright (c) 2006-2007 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+
+
+/** @file
+ *
+ * Build information for Testexecute TRP TSY test code
+ */
+
+//RPS master and slave builds
+#include "../RPS/group/Bld.inf"
+
+PRJ_EXPORTS
+
+PRJ_TESTEXPORTS
+
+./te_trp.iby    /epoc32/rom/include/te_trp.iby
+
+
+PRJ_TESTMMPFILES
+
+../TE_TrpPhone/te_trpphone.mmp
+../TE_TrpNetworkHandling/TE_TrpNetworkHandling.mmp
+../TE_TrpPhonebook/TE_TrpPhonebook.mmp
+../TE_TrpSecurity/TE_TrpSecurity.mmp
+../TE_TrpSms/TE_TrpSms.mmp
+../TE_TrpSs/TE_TrpSs.mmp
+../TE_TrpBasicCall/TE_TrpBasicCall.mmp
+../TE_TrpAdvCall/TE_TrpAdvCall.mmp
+../TE_TrpMultiCall/TE_TrpMultiCall.mmp
+../TE_TrpSat/TE_TrpSat.mmp
+../TE_TrpConference/TE_TrpConference.mmp
+../TE_TrpCphs/TE_TrpCphs.mmp
+../TE_TrpCellBroadcast/TE_TrpCellBroadcast.mmp
+../TE_TrpUSSD/TE_TrpUSSD.mmp
+../TE_TrpPacketData/TE_TrpPacketData.mmp
+../TE_Trp100PcCoverage/TE_Trp100PcCoverage.mmp
+../TE_TrpCsdData/TE_TrpCsdData.mmp
+../TE_TrpCsdMultimedia/TE_TrpCsdMultimedia.mmp
+../TE_TrpSmartCard/te_trpsmartcard.mmp
+../TE_TrpEtelISV/TE_TrpEtelISV.mmp
+
+PRJ_TESTEXPORTS
+
+//data///////////////////
+
+../data/te_trpsetup_stubbed_sharedsess.ini z:/testdata/trp/te_trpsetup_stubbed_sharedsess.ini
+../data/te_trpsetup_at_sharedsess.ini z:/testdata/trp/te_trpsetup_at_sharedsess.ini
+
+// Allow the exporting of this file to be skipped if already done by another bld.inf.
+#ifndef BTTTEST_INI_EXPORT
+#define BTTTEST_INI_EXPORT
+#endif
+
+//commdbs///////////////////
+../../../exampleCommDBs/ced_trp_orange_com0.cfg z:/testdata/trp/ced_trp_orange_com0.cfg
+../../../exampleCommDBs/ced_trp_orange_com1.cfg z:/testdata/trp/ced_trp_orange_com1.cfg
+../../../exampleCommDBs/ced_trp_vodafone_com0.cfg z:/testdata/trp/ced_trp_vodafone_com0.cfg
+../../../exampleCommDBs/ced_trp_vodafone_com1.cfg z:/testdata/trp/ced_trp_vodafone_com1.cfg
+../../../exampleCommDBs/ced_trp_tmobile_com0.cfg z:/testdata/trp/ced_trp_tmobile_com0.cfg
+../../../exampleCommDBs/ced_trp_tmobile_com1.cfg z:/testdata/trp/ced_trp_tmobile_com1.cfg
+../../../exampleCommDBs/ced_stubbedtest.cfg z:/testdata/trp/ced_stubbedtest.cfg
+../../../exampleCommDBs/ced_livetest_com1.cfg z:/testdata/trp/ced_livetest_com1.cfg
+../../../exampleCommDBs/ced_livetest_com0.cfg z:/testdata/trp/ced_livetest_com0.cfg
+../../../exampleCommDBs/ced_rpsslave_com0_usbEther_172_16_2_1.cfg z:/testdata/trp/ced_rpsslave_com0_usbether_172_16_2_1.cfg
+../../../exampleCommDBs/ced_rpsslave_com0_wintap_172_16_2_1.cfg z:/testdata/trp/ced_rpsslave_com0_wintap_172_16_2_1.cfg
+
+// commdb file for RPSSlave on H2
+../../../exampleCommDBs/ced_slave_com1.cfg  z:/ced_slave_com1.cfg
+
+
+//scripts////////////////
+
+//setup scripts
+../scripts/setupscripts/te_trp_test_setup.script z:/testdata/scripts/te_trp_test_setup.script
+../scripts/setupscripts/te_trp_stubbed_setup.script z:/testdata/scripts/te_trp_stubbed_setup.script
+../scripts/setupscripts/te_trp_at_setup.script z:/testdata/scripts/te_trp_at_setup.script
+ 
+//runnable scripts
+
+//for te_trpphone
+../scripts/runnablescripts/te_at_automatic_phone.script z:/testdata/scripts/te_at_automatic_phone.script
+../scripts/runnablescripts/te_at_manual_phone.script z:/testdata/scripts/te_at_manual_phone.script
+../scripts/runnablescripts/te_stubbed_automatic_phone.script z:/testdata/scripts/te_stubbed_automatic_phone.script
+../scripts/runnablescripts/te_stubbed_manual_phone.script z:/testdata/scripts/te_stubbed_manual_phone.script
+//for TE_Trp100PcCoverage
+../scripts/runnablescripts/te_at_automatic_100pccoverage.script z:/testdata/scripts/te_at_automatic_100pccoverage.script
+../scripts/runnablescripts/te_at_manual_100pccoverage.script z:/testdata/scripts/te_at_manual_100pccoverage.script
+../scripts/runnablescripts/te_stubbed_automatic_100pccoverage.script z:/testdata/scripts/te_stubbed_automatic_100pccoverage.script
+../scripts/runnablescripts/te_stubbed_manual_100pccoverage.script z:/testdata/scripts/te_stubbed_manual_100pccoverage.script
+//for TE_TrpAdvCall
+../scripts/runnablescripts/te_at_automatic_advcall.script z:/testdata/scripts/te_at_automatic_advcall.script
+../scripts/runnablescripts/te_at_manual_advcall.script z:/testdata/scripts/te_at_manual_advcall.script
+../scripts/runnablescripts/te_stubbed_automatic_advcall.script z:/testdata/scripts/te_stubbed_automatic_advcall.script
+../scripts/runnablescripts/te_stubbed_manual_advcall.script z:/testdata/scripts/te_stubbed_manual_advcall.script
+//for TE_TrpBasicCall
+../scripts/runnablescripts/te_at_automatic_basiccall.script z:/testdata/scripts/te_at_automatic_basiccall.script
+../scripts/runnablescripts/te_at_manual_basiccall.script z:/testdata/scripts/te_at_manual_basiccall.script
+../scripts/runnablescripts/te_stubbed_automatic_basiccall.script z:/testdata/scripts/te_stubbed_automatic_basiccall.script
+../scripts/runnablescripts/te_stubbed_manual_basiccall.script z:/testdata/scripts/te_stubbed_manual_basiccall.script
+//for TE_TrpCellBroadcast
+../scripts/runnablescripts/te_at_automatic_cellbroadcast.script z:/testdata/scripts/te_at_automatic_cellbroadcast.script
+../scripts/runnablescripts/te_at_manual_cellbroadcast.script z:/testdata/scripts/te_at_manual_cellbroadcast.script
+../scripts/runnablescripts/te_stubbed_automatic_cellbroadcast.script z:/testdata/scripts/te_stubbed_automatic_cellbroadcast.script
+../scripts/runnablescripts/te_stubbed_manual_cellbroadcast.script z:/testdata/scripts/te_stubbed_manual_cellbroadcast.script
+//for TE_TrpConference
+../scripts/runnablescripts/te_at_automatic_conference.script z:/testdata/scripts/te_at_automatic_conference.script
+../scripts/runnablescripts/te_at_manual_conference.script z:/testdata/scripts/te_at_manual_conference.script
+../scripts/runnablescripts/te_stubbed_automatic_conference.script z:/testdata/scripts/te_stubbed_automatic_conference.script
+../scripts/runnablescripts/te_stubbed_manual_conference.script z:/testdata/scripts/te_stubbed_manual_conference.script
+//for TE_TrpCphs
+../scripts/runnablescripts/te_at_automatic_cphs.script z:/testdata/scripts/te_at_automatic_cphs.script
+../scripts/runnablescripts/te_at_manual_cphs.script z:/testdata/scripts/te_at_manual_cphs.script
+../scripts/runnablescripts/te_stubbed_automatic_cphs.script z:/testdata/scripts/te_stubbed_automatic_cphs.script
+../scripts/runnablescripts/te_stubbed_manual_cphs.script z:/testdata/scripts/te_stubbed_manual_cphs.script
+//for TE_TrpMultiCall
+../scripts/runnablescripts/te_at_automatic_multicall.script z:/testdata/scripts/te_at_automatic_multicall.script
+//..\scripts\runnablescripts\te_at_manual_multicall.script Z:\TestData\Scripts\te_at_manual_multicall.script - do not exist
+../scripts/runnablescripts/te_stubbed_automatic_multicall.script z:/testdata/scripts/te_stubbed_automatic_multicall.script
+//..\scripts\runnablescripts\te_stubbed_manual_multicall.script Z:\TestData\Scripts\te_stubbed_manual_multicall.script - do not exist
+//for TE_TrpNetworkHandling
+../scripts/runnablescripts/te_at_automatic_networkhandling.script z:/testdata/scripts/te_at_automatic_networkhandling.script
+../scripts/runnablescripts/te_at_manual_networkhandling.script z:/testdata/scripts/te_at_manual_networkhandling.script
+../scripts/runnablescripts/te_stubbed_automatic_networkhandling.script z:/testdata/scripts/te_stubbed_automatic_networkhandling.script
+../scripts/runnablescripts/te_stubbed_manual_networkhandling.script z:/testdata/scripts/te_stubbed_manual_networkhandling.script
+//for TE_TrpPacketData
+../scripts/runnablescripts/te_at_automatic_packetdata.script z:/testdata/scripts/te_at_automatic_packetdata.script
+../scripts/runnablescripts/te_at_manual_packetdata.script z:/testdata/scripts/te_at_manual_packetdata.script
+../scripts/runnablescripts/te_stubbed_automatic_packetdata.script z:/testdata/scripts/te_stubbed_automatic_packetdata.script
+../scripts/runnablescripts/te_stubbed_manual_packetdata.script z:/testdata/scripts/te_stubbed_manual_packetdata.script
+//for TE_TrpPhonebook
+../scripts/runnablescripts/te_at_automatic_phonebook.script z:/testdata/scripts/te_at_automatic_phonebook.script
+../scripts/runnablescripts/te_at_manual_phonebook.script z:/testdata/scripts/te_at_manual_phonebook.script
+../scripts/runnablescripts/te_stubbed_automatic_phonebook.script z:/testdata/scripts/te_stubbed_automatic_phonebook.script
+../scripts/runnablescripts/te_stubbed_manual_phonebook.script z:/testdata/scripts/te_stubbed_manual_phonebook.script
+//for TE_TrpSat
+../scripts/runnablescripts/te_at_automatic_sat.script z:/testdata/scripts/te_at_automatic_sat.script
+../scripts/runnablescripts/te_stubbed_automatic_sat.script z:/testdata/scripts/te_stubbed_automatic_sat.script
+//for TE_TrpSecurity
+../scripts/runnablescripts/te_at_automatic_security.script z:/testdata/scripts/te_at_automatic_security.script
+../scripts/runnablescripts/te_at_manual_security.script z:/testdata/scripts/te_at_manual_security.script
+../scripts/runnablescripts/te_stubbed_automatic_security.script z:/testdata/scripts/te_stubbed_automatic_security.script
+../scripts/runnablescripts/te_stubbed_manual_security.script z:/testdata/scripts/te_stubbed_manual_security.script
+//for TE_TrpSms
+../scripts/runnablescripts/te_at_automatic_sms.script z:/testdata/scripts/te_at_automatic_sms.script
+//..\scripts\runnablescripts\te_at_manual_sms.script Z:\TestData\Scripts\te_at_manual_sms.script - do not exist
+../scripts/runnablescripts/te_stubbed_automatic_sms.script z:/testdata/scripts/te_stubbed_automatic_sms.script
+//..\scripts\runnablescripts\te_stubbed_manual_sms.script Z:\TestData\Scripts\te_stubbed_manual_sms.script - do not exist
+//for TE_TrpSs
+../scripts/runnablescripts/te_at_automatic_ss.script z:/testdata/scripts/te_at_automatic_ss.script
+../scripts/runnablescripts/te_at_manual_ss.script z:/testdata/scripts/te_at_manual_ss.script
+../scripts/runnablescripts/te_stubbed_automatic_ss.script z:/testdata/scripts/te_stubbed_automatic_ss.script
+../scripts/runnablescripts/te_stubbed_manual_ss.script z:/testdata/scripts/te_stubbed_manual_ss.script
+//for TE_TrpUSSD
+../scripts/runnablescripts/te_at_automatic_ussd.script z:/testdata/scripts/te_at_automatic_ussd.script
+../scripts/runnablescripts/te_at_manual_ussd.script z:/testdata/scripts/te_at_manual_ussd.script
+../scripts/runnablescripts/te_stubbed_automatic_ussd.script z:/testdata/scripts/te_stubbed_automatic_ussd.script
+../scripts/runnablescripts/te_stubbed_manual_ussd.script z:/testdata/scripts/te_stubbed_manual_ussd.script
+//for TE_Trpcsdmultimedia
+../scripts/runnablescripts/te_at_automatic_csdmultimedia.script z:/testdata/scripts/te_at_automatic_csdmultimedia.script
+../scripts/runnablescripts/te_at_manual_csdmultimedia.script z:/testdata/scripts/te_at_manual_csdmultimedia.script
+../scripts/runnablescripts/te_stubbed_automatic_csdmultimedia.script z:/testdata/scripts/te_stubbed_automatic_csdmultimedia.script
+../scripts/runnablescripts/te_stubbed_manual_csdmultimedia.script z:/testdata/scripts/te_stubbed_manual_csdmultimedia.script
+//for TE_Trpcsddata
+../scripts/runnablescripts/te_at_automatic_csddata.script z:/testdata/scripts/te_at_automatic_csddata.script
+../scripts/runnablescripts/te_at_manual_csddata.script z:/testdata/scripts/te_at_manual_csddata.script
+../scripts/runnablescripts/te_stubbed_automatic_csddata.script z:/testdata/scripts/te_stubbed_automatic_csddata.script
+../scripts/runnablescripts/te_stubbed_manual_csddata.script z:/testdata/scripts/te_stubbed_manual_csddata.script
+//for TE_Trpsmartcard
+../scripts/runnablescripts/te_at_automatic_smartcard.script z:/testdata/scripts/te_at_automatic_smartcard.script
+../scripts/runnablescripts/te_stubbed_automatic_smartcard.script z:/testdata/scripts/te_stubbed_automatic_smartcard.script
+// for TE_TrpEtelISV
+../scripts/runnablescripts/te_at_automatic_etelisv.script z:/testdata/scripts/te_at_automatic_etelisv.script
+../scripts/runnablescripts/te_stubbed_automatic_etelisv.script z:/testdata/scripts/te_stubbed_automatic_etelisv.script
+
+
+
+//The following scripts are not executed directly.  They are executed via the runnable scripts.
+//manual test scripts
+../scripts/mantestscripts/TE_TrpNetworkHandling_mantests.script z:/testdata/scripts/te_trpnetworkhandling_mantests.script
+../scripts/mantestscripts/te_trpphone_mantests.script z:/testdata/scripts/te_trpphone_mantests.script
+../scripts/mantestscripts/te_trpphonebook_mantests.script z:/testdata/scripts/te_trpphonebook_mantests.script
+../scripts/mantestscripts/TE_TrpSecurity_mantests.script z:/testdata/scripts/te_trpsecurity_mantests.script
+../scripts/mantestscripts/TE_TrpBasicCall_mantests.script z:/testdata/scripts/te_trpbasiccall_mantests.script
+// no TE_TrpSms_mantests.script
+../scripts/mantestscripts/TE_TrpSs_mantests.script z:/testdata/scripts/te_trpss_mantests.script
+../scripts/mantestscripts/TE_TrpAdvCall_mantests.script z:/testdata/scripts/te_trpadvcall_mantests.script
+// no TE_TrpSat_mantests.script
+// no TE_TrpMultiCall_mantests.script
+../scripts/mantestscripts/TE_TrpConference_mantests.script z:/testdata/scripts/te_trpconference_mantests.script
+../scripts/mantestscripts/TE_TrpCphs_mantests.script z:/testdata/scripts/te_trpcphs_mantests.script
+../scripts/mantestscripts/TE_TrpCellBroadcast_mantests.script z:/testdata/scripts/te_trpcellbroadcast_mantests.script
+../scripts/mantestscripts/TE_TrpUSSD_mantests.script z:/testdata/scripts/te_trpussd_mantests.script
+../scripts/mantestscripts/TE_TrpPacketData_mantests.script z:/testdata/scripts/te_trppacketdata_mantests.script
+../scripts/mantestscripts/TE_Trp100PcCoverage_mantests.script z:/testdata/scripts/te_trp100pccoverage_mantests.script
+../scripts/mantestscripts/TE_TrpCsdData_mantests.script z:/testdata/scripts/te_trpcsddata_mantests.script
+../scripts/mantestscripts/TE_TrpCsdMultimedia_mantests.script z:/testdata/scripts/te_trpcsdmultimedia_mantests.script
+// no TE_TrpEtelISV_mantests.script
+
+//auto test scripts
+../scripts/autotestscripts/TE_TrpNetworkHandling_autotests.script z:/testdata/scripts/te_trpnetworkhandling_autotests.script
+../scripts/autotestscripts/te_trpphone_autotests.script z:/testdata/scripts/te_trpphone_autotests.script
+../scripts/autotestscripts/te_trpphonebook_autotests.script z:/testdata/scripts/te_trpphonebook_autotests.script
+../scripts/autotestscripts/TE_TrpSecurity_autotests.script z:/testdata/scripts/te_trpsecurity_autotests.script
+../scripts/autotestscripts/TE_TrpBasicCall_autotests.script z:/testdata/scripts/te_trpbasiccall_autotests.script
+../scripts/autotestscripts/TE_TrpSms_autotests.script z:/testdata/scripts/te_trpsms_autotests.script
+../scripts/autotestscripts/TE_TrpSs_autotests.script z:/testdata/scripts/te_trpss_autotests.script
+../scripts/autotestscripts/TE_TrpAdvCall_autotests.script z:/testdata/scripts/te_trpadvcall_autotests.script
+../scripts/autotestscripts/TE_TrpMultiCall_autotests.script z:/testdata/scripts/te_trpmulticall_autotests.script
+../scripts/autotestscripts/TE_TrpSat_autotests.script z:/testdata/scripts/te_trpsat_autotests.script
+../scripts/autotestscripts/TE_TrpConference_autotests.script z:/testdata/scripts/te_trpconference_autotests.script
+../scripts/autotestscripts/TE_TrpCphs_autotests.script z:/testdata/scripts/te_trpcphs_autotests.script
+../scripts/autotestscripts/TE_TrpCellBroadcast_autotests.script z:/testdata/scripts/te_trpcellbroadcast_autotests.script
+../scripts/autotestscripts/TE_TrpUSSD_autotests.script z:/testdata/scripts/te_trpussd_autotests.script
+../scripts/autotestscripts/TE_TrpPacketData_autotests.script z:/testdata/scripts/te_trppacketdata_autotests.script
+../scripts/autotestscripts/TE_Trp100PcCoverage_autotests.script z:/testdata/scripts/te_trp100pccoverage_autotests.script
+../scripts/autotestscripts/TE_TrpCsdData_autotests.script z:/testdata/scripts/te_trpcsddata_autotests.script
+../scripts/autotestscripts/TE_TrpCsdMultimedia_autotests.script z:/testdata/scripts/te_trpcsdmultimedia_autotests.script
+../scripts/autotestscripts/TE_TrpSmartCard_autotests.script z:/testdata/scripts/te_trpsmartcard_autotests.script
+../scripts/autotestscripts/TE_TrpEtelISV_autotests.script z:/testdata/scripts/te_trpetelisv_autotests.script
+

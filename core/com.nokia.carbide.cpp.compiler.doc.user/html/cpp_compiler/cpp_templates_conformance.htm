@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Better Template Conformance</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3> Better Template Conformance</h3>
+<p>Versions 2.5 and later of Carbide.c++ enforces the ISO C++ standard more closely when translating templates than previous versions of Carbide.c++. By default this new template translation is off. To ensure that template source code follows the ISO C++ standard more closely, turn on the ISO C++ Template Parser option .</p>
+<p>The compiler provides pragmas to help update your source code to the more conformant template features. The <a href="../pragmas/p_parse_func_templ.htm">parse_func_templ</a> pragma controls the new template features. The <a href="../pragmas/p_parse_mfunc_templ.htm">parse_mfunc_templ</a> pragma controls the new template features for class member functions only. The pragma <a href="../pragmas/p_warn_no_typename.htm">warn_no_typename</a>  warns for the missing use of the typename keyword required by the ISO C++ standard.</p>
+<p>When using the new template parsing features, the compiler enforces more careful use of the typename and template keywords, and follows different rules for resolving names during declaration and instantiation than before.</p>
+<p>A qualified name that refers to a type and that depends on a template parameter must begin with typename (ISO C++, &sect;14.6). An example using the typename Keyword:</p>
+<p class="listing">template &lt;typename T&gt; void f()<br />
+  {<br />
+  T::name *ptr; // ERROR: an attempt to multiply T::name by ptr<br />
+  typename T::name *ptr; // OK<br />
+  }</p>
+<p>The compiler requires the template keyword at the end of &ldquo;.&rdquo; and &ldquo;-&gt;&rdquo; operators, and for qualified identifiers that depend on a template parameter. An example using the template Keyword:</p>
+<p class="listing">template &lt;typename T&gt; void f(T* ptr)<br />
+  {<br />
+  ptr-&gt;f&lt;int&gt;(); // ERROR: f is less than int<br />
+  ptr-&gt;template f&lt;int&gt;(); // OK<br />
+  }</p>
+<p>Names referred to inside a template declaration that are not dependent on the template declaration (that do not rely on template arguments) must be declared before the template&rsquo;s declaration. These names are bound to the template declaration at the point where the template is defined. Bindings are not affected by definitions that are in scope at the point of instantiation. Listing 1 shows an example.</p>
+<div class="listing">
+  <h4>Listing 1. Binding Non-dependent Identifiers</h4>
+  <p>void f(char);</p>
+  <p>template &lt;typename T&gt; void tmpl_func()<br />
+    {<br />
+    f(1); // Uses f(char); f(int) is not defined yet.<br />
+    g(); // ERROR: g() is not defined yet.<br />
+    }<br />
+    void g();<br />
+    void f(int);</p>
+</div>
+<p>Names of template arguments that are dependent in base classes must be explicitly qualified (ISO C++, &sect;14.6.2). See Listing 2.</p>
+<div class="listing">
+  <h4>Listing 2. Qualifying Template Arguments in Base Classes</h4>
+  <p>template &lt;typename T&gt; struct Base<br />
+    {<br />
+    void f();<br />
+    }<br />
+    template &lt;typename T&gt; struct Derive: Base&lt;T&gt;<br />
+    {<br />
+    void g()<br />
+    {<br />
+    f(); // ERROR: Base&lt;T&gt;::f() is not visible.<br />
+    Base&lt;T&gt;::f(); // OK<br />
+    }<br />
+    }</p>
+</div>
+<p>When a template contains a function call in which at least one of the function&rsquo;s arguments is type-dependent, the compiler uses the name of the function in the context of the template definition (ISO C++, &sect;14.6.2.2) and the context of its instantiation (ISO C++, &sect;14.6.4.2). Listing 3 shows an example.</p>
+<div class="listing">
+  <h4>Listing 3. Function Call with Type-dependent Argument</h4>
+  <p>void f(char);</p>
+  <p>template &lt;typename T&gt; void type_dep_func()<br />
+    {<br />
+    f(1); // Uses f(char), above; f(int) is not declared yet.<br />
+    f(T()); // f() called with a type-dependent argument.<br />
+    }</p>
+  <p>void f(int);<br />
+    struct A{};<br />
+    void f(A);</p>
+  <p>int main()<br />
+    {<br />
+    type_dep_func&lt;int&gt;(); // Calls f(char) twice.<br />
+    type_dep_func&lt;A&gt;(); // Calls f(char) and f(A);<br />
+    return 0;<br />
+    }</p>
+</div>
+<p>The compiler only uses external names to look up type-dependent arguments in function calls. </p>
+<p class="listing">static void f(int); // f() is internal.<br />
+  template &lt;typename T&gt; void type_dep_fun_ext()<br />
+  {<br />
+  f(T()); // f() called with a type-dependent argument.<br />
+}<br />
+<br />
+int main()<br />
+  {<br />
+  type_dep_fun_ext&lt;int&gt;(); // ERROR: f(int) must be external.<br />
+}</p>
+<p>The compiler does not allow expressions in inline assembly statements that depend on template parameters.</p>
+<p class="listing">template &lt;typename T&gt; void asm_tmpl()<br />
+  {<br />
+  asm { move #sizeof(T), D0 ); // ERROR: Not yet supported.<br />
+  }</p>
+<p>The compiler also supports the address of template-id rules.</p>
+<p class="listing">template &lt;typename T&gt; void foo(T) {}<br />
+  template &lt;typename T&gt; void bar(T) {}<br />
+  ...<br />
+  foo{ &amp;bar&lt;int&gt; ); // now accepted<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

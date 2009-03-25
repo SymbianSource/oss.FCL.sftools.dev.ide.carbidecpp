@@ -1,0 +1,20 @@
+#include <arrayheader.rh>
+#include "output.loc"
+/* where is this used? */
+#define MACRO_1 "A macro value"
+#define MACRO_2 "Not another \"macro\""
+
+RESOURCE STRING_LIST r_test_array_of_strings
+	{
+	strings =
+		{
+		LBUF
+			{
+			txt = STR_1;
+			},
+		LBUF
+			{
+			txt = STR_10;
+			}
+		};
+	}

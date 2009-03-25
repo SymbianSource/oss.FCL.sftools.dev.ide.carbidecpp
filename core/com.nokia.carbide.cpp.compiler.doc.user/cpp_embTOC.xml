@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C++ and Embedded Compilers" href="html/emb_systems/emb_systems.htm">
+
+	<topic label="Activating EC++" 						href="html/emb_systems/emb_activating.htm" /> 
+	<topic label="Differences Between ISO C++ and EC++" href="html/emb_systems/emb_differences.htm" /> 
+	<topic label="EC++ Specifications" 					href="html/emb_systems/emb_specifications.htm" /> 
+
+	<topic label="Obtaining Smaller Code Size in C++" href="html/emb_systems/emb_smaller_code.htm" > 
+		<topic label="Compiler-related Strategies" 			href="html/emb_systems/emb_code_compiler.htm" /> 
+		<topic label="Language-related Strategies" 			href="html/emb_systems/emb_code_language.htm" /> 
+		<topic label="Library-related Strategies" 			href="html/emb_systems/emb_code_library.htm" /> 
+    </topic>
+</toc>

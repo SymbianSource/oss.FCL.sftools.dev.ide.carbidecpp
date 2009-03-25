@@ -1,0 +1,6 @@
+#include <cba.rh>
+#include "output.hrh"
+
+RESOURCE EIK_APP_INFO r_testcbaholder_custom
+	{
+	}

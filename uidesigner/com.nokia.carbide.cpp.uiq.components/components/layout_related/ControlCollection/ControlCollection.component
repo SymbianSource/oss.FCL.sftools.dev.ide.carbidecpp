@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+<!-- TQikCtrlItemFlags is formed by enumerators.(Qikon.hrh) i.e.
+		enum TQikCtrlItemFlags
+			{
+			EQikCtrlFlagIsFocusing =		0x01,
+			EQikCtrlFlagIsNonFocusing =		0x02,
+			EQikCtrlFlagIsEditInPlace =		0x04,
+			EQikCtrlFlagIsNonEditInPlace =	0x08
+			};
+resource compiler wasn’t able to compile OR-ed sentences when they are formed by enumerators-->					
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.ControlCollection.TQikCtrlItemFlags">
+		<enumElement value="ControlDefault" displayValue="%ControlDefault"/>
+		<enumElement value="Focusing" displayValue="%Focusing"/>
+		<enumElement value="NonFocusing" displayValue="%NonFocusing"/>
+		<enumElement value="EditInPlace" displayValue="%EditInPlace"/>
+		<enumElement value="NonEditInPlace" displayValue="%NonEditInPlace"/>
+		<enumElement value="FocusingAndEditInPlace" displayValue="%FocusingAndEditInPlace"/>
+		<enumElement value="FocusingAndNonEditInPlace" displayValue="%FocusingAndNonEditInPlace"/>
+		<enumElement value="NonFocusingAndEditInPlace" displayValue="%NonFocusingAndEditInPlace"/>
+		<enumElement value="NonFocusingAndNonEditInPlace" displayValue="%NonFocusingAndNonEditInPlace"/>
+		<sourceTypeMapping>
+			<mapEnumType validate="false">
+				<mapEnum value="ControlDefault" enumerator="0"/>
+				<mapEnum value="Focusing" enumerator="EQikCtrlFlagIsFocusing"/>
+				<mapEnum value="NonFocusing" enumerator="EQikCtrlFlagIsNonFocusing"/>
+				<mapEnum value="EditInPlace" enumerator="EQikCtrlFlagIsEditInPlace"/>
+				<mapEnum value="NonEditInPlace" enumerator="EQikCtrlFlagIsNonEditInPlace"/>
+				<mapEnum value="FocusingAndEditInPlace" enumerator="0x5"/>
+				<mapEnum value="FocusingAndNonEditInPlace" enumerator="0x9"/>
+				<mapEnum value="NonFocusingAndEditInPlace" enumerator="0x6"/>
+				<mapEnum value="NonFocusingAndNonEditInPlace" enumerator="0xa"/>
+			</mapEnumType>
+		</sourceTypeMapping>				
+	</enumPropertyDeclaration>
+	  
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.ControlCollection"
+			baseComponent="com.nokia.carbide.uiq.ModelGroupBase"
+			instanceNameRoot="controlCollection"			
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="ControlCollection" classHelpTopic=""
+			resourceType="QIK_CONTROL_COLLECTION" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="ControlCollection_sm.png"
+			largeIconFile="ControlCollection.png"/>
+
+		<attributes>
+			<attribute key ="group-child-type">com.nokia.carbide.uiq.ControlCollectionItemBase</attribute>
+			   <attribute key="allow-empty-group">true</attribute>
+		</attributes>
+		
+		<extensionProperties name="default">
+			<enumProperty name="itemFlags"
+						  type="com.nokia.carbide.uiq.ControlCollection.TQikCtrlItemFlags"
+						  category="%category.appearance"
+						  displayName="%itemFlags"
+						  descriptionKey="itemFlagsDescription"
+						  default="ControlDefault" />				
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="ControlCollection_propertyExtenders.js" prototype="ControlCollectionPropertyExtenders"/>
+			</implementation>    
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="ControlCollectionQueryContainment.js" prototype="ControlCollectionQueryContainment"/>
+			</implementation>   
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ICreationToolProvider"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.controlCollection.ControlCollectionAdapterFactory"/>
+			</implementation>			
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IChildCommandExtender"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.controlCollection.ChildCommandExtenderFactory"/>
+			</implementation>
+		</implementations>					
+
+		<sourceMapping>
+			<mapResource struct="QIK_CONTROL_COLLECTION"
+						headers="Qikon.rh"
+						id="controlCollection">
+				<mapArrayMember property="." member="items">				
+					<mapResourceElement struct="QIK_CONTROL" headers="qikon.rh">
+						<mapEnumMember property="."
+							   member="unique_handle"
+							   nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID"
+							   uniqueValue="*"/>
+						<!-- we can't validate the rss-control-type-enum if we are going to support custom controls
+							since the hrh file containing the enum is unknown to this component -->
+						<mapEnumMember validate="false" property="@rss-control-type-enum" member="type"/>
+						<mapMemberFromType property="itemFlags" member="itemflags"/>
+						<mapResourceMember property="." member="control"/>
+					</mapResourceElement>
+				</mapArrayMember>
+			</mapResource>						
+		</sourceMapping>	
+
+		<sourceGen>
+			<!-- Inhibit child contribution recursion -->
+		</sourceGen>
+		
+	</component>
+	
+</componentDefinition>

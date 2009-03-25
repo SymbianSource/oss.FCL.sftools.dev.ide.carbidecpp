@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.test.srcmapArrayEnd.Type">
+		<enumElement value="EElement1__"/>
+		<enumElement value="EElement1_1"/>
+		<enumElement value="EElement11_"/>
+		<enumElement value="EElement_11"/>
+		<enumElement value="EElement__1"/>
+		<enumElement value="EElement111"/>
+	</enumPropertyDeclaration>
+
+
+	<component qualifiedName="com.nokia.examples.srcmapTestMapArrayEnd"	>
+
+		<properties>
+			<property name="name" type="uniqueName"/>
+			<enumProperty name="type" type="com.nokia.sdt.series60.test.srcmapArrayEnd.Type" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="srcmapArrayEnd.js" prototype="PropertyExtenders"/>
+			</implementation>
+		</implementations>
+
+	
+		<sourceMapping>
+  		  <mapResource struct="ARRAY_EMBEDDED" headers="arrayheader.rh">
+			   <select propertyExists="element1">
+				   <choice value="true">
+					   <mapResourceMember property="." member="items[]"  
+							   struct="LBUF" headers="arrayheader.rh"
+							   id="element1">
+						   <mapSimpleMember property="element1" member="txt"/>
+						</mapResourceMember>
+				   </choice>
+				   <choice/>
+			  </select>
+			   <select propertyExists="element2">
+				   <choice value="true">
+					   <mapResourceMember property="." member="items[]"  
+							   struct="LBUF" headers="arrayheader.rh"
+							   id="element2">
+						   <mapSimpleMember property="element2" member="txt"/>
+						</mapResourceMember>
+				   </choice>
+				   <choice/>
+			  </select>
+			   <select propertyExists="element3">
+				   <choice value="true">
+					   <mapResourceMember property="." member="items[]" 
+							   struct="LBUF" headers="arrayheader.rh"
+							   id="element3">
+						   <mapSimpleMember property="element3" member="txt"/>
+						</mapResourceMember>
+				   </choice>
+				   <choice/>
+			  </select>
+  		  </mapResource>
+	</sourceMapping>			
+</component>
+</componentDefinition>

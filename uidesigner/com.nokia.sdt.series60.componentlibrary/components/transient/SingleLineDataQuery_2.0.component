@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgen SYSTEM "SingleLineDataQuery.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.SingleLineDataQuery20.type">
+		<!-- includes EIpLayout and EFixedPointLayout -->
+		<enumElement value="EDataLayout"/>
+		<enumElement value="EPhoneLayout"/>
+		<enumElement value="EPinLayout"/>
+		<enumElement value="ECodeLayout"/>
+		<enumElement value="EDateLayout"/>
+		<enumElement value="ETimeLayout"/>
+		<enumElement value="EDurationLayout"/>
+		<enumElement value="EFloatingPointLayout"/>
+		<enumElement value="ENumberLayout"/>
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.SingleLineDataQueryBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.SingleLineDataQuery" 
+		category="NotesDialogs"
+		instanceNameRoot="dataQuery"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" maxSDKVersion="2.0.9"
+			className="CAknQueryDialog" classHelpTopic=""
+			resourceType="AVKON_DATA_QUERY" resourceHelpTopic="" />
+		<designerImages smallIconFile="SingleLineDataQuery_sm.png" 
+			largeIconFile="SingleLineDataQuery.png"/>
+		<properties>
+			<enumProperty category="Behavior" name="type" type="com.nokia.sdt.series60.SingleLineDataQuery20.type" 
+				default="EDataLayout"
+				descriptionKey="typeDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="SingleLineDataQuery_2.0.js" prototype="SingleLineDataQuery20Validator"/>
+			</implementation>
+		</implementations>
+
+		<sourceGen>
+			&common_srcgen;
+		</sourceGen>		
+
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Stepping Over, Into, and Out of Routines</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Stepping Over, Into, and Out of Routines</h2>
+<p>Once you've <a href="../../tasks/debugger/work_debug_act_resume.htm">suspended</a> a program debug session, the <a href="viewing_debug.htm">Debug</a> view provides controls to walk through program code, including commands for:</p>
+<ul>
+  <li><a href="#STEP_OVER">Stepping over a routine</a></li>
+  <li><a href="#STEP_INTO">Stepping into a routine</a></li>
+  <li><a href="#STEP_OUT">Stepping out of a routine</a><a href="#RESUME_PGM"></a></li>
+</ul>
+<h4><a name="STEP_OVER" id="STEP_OVER"></a>Stepping over a routine</h4>
+<p>Use the <b>Step Over</b> command  (<img src="../../images/icons/btn_stepover.png" width="19" height="14" />) to execute the current statement and advance to the next statement in the source code. If the current statement is a routine call, program execution continues until reaching one of these points:</p>
+<ul>
+  <li>the end of the called routine</li>
+  <li>a breakpoint</li>
+  <li>a watchpoint</li>
+  <li>an eventpoint that stops execution</li>
+</ul>
+<p>To step over a routine:</p>
+  <ul>
+    <li>Click the <b>Step Over</b> button (<img src="../../images/icons/btn_stepover.png" width="19" height="14" />) in the <b>Debug</b> view </li>
+    <li>Right-click the thread in the Debug view and select <b>Step Over</b> from the <b>Debug</b> contextual menu</li>
+    <li>Select <b>Run &gt; Step Over</b> from the  menu bar </li>
+  </ul>
+  <ul>
+    <p>The current statement or routine executes, then program execution stops.</p>
+  </ul>
+<h4><a name="STEP_INTO" id="STEP_OVER2"></a>Stepping into a routine</h4>
+<p>Use the <b>Step Into</b> command (<img src="../../images/icons/btn_stepinto.png" width="18" height="14" />) to execute one source-code statement at a time and follow execution into a routine call.</p>
+<p>When stepping through a program in a debug session the IDE attempts to match the program counter (PC) location in the executable with a known project source file. If there is no source file associated with the PC the debugger displays in the Debug view the current PC address of the thread (e.g. <span class="code">0x6002CC11(EUSER.DLL)()</span>) instead of the function name. At this point you can open the Disassembly view to step through the assembler code. This most commonly happens when trying to step into Symbian OS code. We recommend that you <a href="../../tasks/debugger/work_debug_act_stepover.htm">Step Return</a> out of the OS code and back into your project to continue debugging.</p>
+<ul>
+  <li>Click the <b>Step Into</b> button (<img src="../../images/icons/btn_stepinto.png" width="18" height="14" />) in the <a href="../../reference/view_debug.htm">Debug</a> view </li>
+  <li>Right-click the thread in the <b>Debug</b> view and select <b>Step Into</b> from the  context menu</li>
+  <li>Select <b>Run &gt; Step Into</b> from the  menu bar </li>
+</ul>
+<ul>
+  <p>After the debugger executes the source-code statement, the current-statement arrow moves to the next statement determined by these rules:</p>
+  <ul>
+    <li>If the executed statement did not call a routine, the current-statement arrow moves to the next statement in the source code.</li>
+    <li>If the executed statement called a routine, the current-statement arrow moves to the first statement in the called routine.</li>
+    <li>If the executed statement is the last statement in a called routine, the current-statement arrow moves to the statement that follows the calling routine.</li>
+  </ul>
+</ul>
+<h4><a name="STEP_OUT" id="STEP_OVER3"></a>Stepping out of a routine</h4>
+<p>Use the <b>Step Return</b> command (<img src="../../images/icons/btn_stepreturn.png" width="17" height="14" />) to execute the rest of the current routine and stop program execution after the routine returns to its caller. This command causes execution to return up the calling chain.</p>
+<p>To step out of a  routine:</p>
+  <ul>
+    <li>Click the <b>Step Return</b> button (<img src="../../images/icons/btn_stepreturn.png" width="17" height="14" />) in the <a href="../../reference/view_debug.htm">Debug</a> view </li>
+    <li>Right-click the thread in the <b>Debug</b> view, then select <b>Step Return</b> from the  context menu</li>
+    <li>Select <b>Run &gt; Step Return</b> from the  menu bar </li>
+</ul>
+<ul>
+  <p>The current routine executes and returns to its caller, then program execution stops</p>
+</ul>
+<h4>Other references</h4>
+<ul>
+<li><a href="debug.htm">Debugging overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

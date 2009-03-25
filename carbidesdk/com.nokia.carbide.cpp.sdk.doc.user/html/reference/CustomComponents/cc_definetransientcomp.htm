@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Defining Transient Component</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Defining a Transient Component</h2>
+<p>The following information describes how to define a transient component by using a simple transient S60 component as an example. For example, the Note component. When requested, a note appears briefly to provide a message. Notes come in four basic types: confirmation, information, warning and error. They differ by icon and the message displayed. Each is implemented as a different c++ class.</p>
+<p>However, since they all have basically the same properties, they are good candidates for implementation as a single component, with an additional selector property to determine which one the developer wants. Since the developer will probably want to activate the note dynamically given the right conditions (for example, if a requested action succeeds or fails), the source code output of a note component should probably be a routine that can be called when the condition warrants displaying the note.</p>
+<h3>Component Implementation</h3>
+<p>First, the selector property type should be declared. Since  this property is not a basic type, and very much specific to this component, its  type should be declared with the component. This property will be able to take one of the four possible note types (confirmation,  information, warning and error). Therefore, this should be declared as an  enumeration property.</p>
+<p>Following is an example of the selector property type declaration:</p>
+<pre class="listing">&lt;enumPropertyDeclaration  qualifiedName=&quot;com.nokia.sdt.series60.StandardNote.type&quot;&gt; 
+ &nbsp;&nbsp; &lt;enumElement  value=&quot;CAknConfirmationNote&quot;/&gt; 
+ &nbsp;&nbsp; &lt;enumElement  value=&quot;CAknInformationNote&quot;/&gt; 
+ &nbsp;&nbsp; &lt;enumElement  value=&quot;CAknWarningNote&quot;/&gt; 
+ &nbsp;&nbsp; &lt;enumElement  value=&quot;CAknErrorNote&quot;/&gt;
+&lt;/enumPropertyDeclaration&gt; </pre>
+<p>The display name for an enum element may be specified two ways.  In the fully-specified form, the displayValue attribute is a literal string or a percent-prefixed key (%<em>name</em>) to look up in the .properties file.  In the form used here, the displayValue is not specified and the value itself is used as the key for the .properties file.</p>
+<h4>Attributes and properties</h4>
+<p>To have transient component behavior (icon in the non-layout area and transient appearance in the layout area), the component must declare itself to be a non-layout component as well as a transient component. These declarations are achieved by attributes. Since attributes are inherited, the StandardNote component can inherit from the NonLayoutBase component to get its non-layout behavior as well as its required unique &ldquo;name&rdquo; property.</p>
+<pre class="listing">&lt;attributes&gt; 
+ &nbsp;&nbsp; &lt;attribute  key=&quot;is-layout-object&quot;&gt;false&lt;/attribute&gt; 
+ &nbsp;&nbsp; &lt;attribute  key=&quot;is-non-layout-object&quot;&gt;true&lt;/attribute&gt; 
+&lt;/attributes&gt;
+<br />&lt;properties&gt; 
+ &nbsp;&nbsp; &lt;property  category=&quot;Design&quot; name=&quot;name&quot;  type=&quot;uniqueName&quot;/&gt;
+&lt;/properties&gt; </pre>
+<p>Specific transient attributes can be declared directly.  It declares itself to be a transient object as well as one that can&rsquo;t be resized or moved.</p>
+<pre class="listing">&lt;attributes&gt;
+ &nbsp;&nbsp; &lt;attribute  key=&quot;is-non-resizable-or-moveable-layout-object&quot;&gt;true&lt;/attribute&gt;
+ &nbsp;&nbsp; &lt;attribute  key=&quot;is-transient-object&quot;&gt;true&lt;/attribute&gt;
+&lt;/attributes&gt; </pre>
+<p>Finally, its own specific properties can be declared. Standard location and size properties are set in order to behave correctly in the editor. Developers do not need to see these properties because they do not represent anything in the source code. These properties can be hidden from developers by declaring the special category &ldquo;Hidden.&rdquo;  A text property is declared to hold the message of the note, and the selector property, &ldquo;type&rdquo; is declared with the enumeration type declared previously.</p>
+<pre class="listing">&lt;properties&gt;
+  &lt;compoundProperty category=&quot;Hidden&quot;  name=&quot;location&quot;
+ &nbsp;&nbsp; type=&quot;com.nokia.sdt.series60.locationProperty&quot;
+ &nbsp;&nbsp; editorClass=&quot;com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory&quot;/&gt;
+  &lt;compoundProperty category=&quot;Hidden&quot;  name=&quot;size&quot;
+ &nbsp;&nbsp; type=&quot;com.nokia.sdt.series60.sizeProperty&quot;
+ &nbsp;&nbsp; editorClass=&quot;com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory&quot;/&gt;
+ &nbsp;&lt;property  category=&quot;Data&quot; name=&quot;text&quot;  type=&quot;localizedString&quot; default=&quot;Note&quot; /&gt;
+  &lt;enumProperty  category=&quot;Appearance&quot; name=&quot;type&quot;
+    type=&quot;com.nokia.sdt.series60.StandardNote.type&quot;
+    default=&quot;CAknConfirmationNote&quot;/&gt;
+&lt;/properties&gt;</pre>
+<h4>JavaScript implementations</h4>
+<p>After adding all the static features to the component, some dynamic features can be added to provide design time rendering, layout, and other behavior. This is done by writing JavaScript code that implements specific interfaces that are known to the editor.  The StandardNote component will implement various interfaces. It will implement IVisualAppearance to allow it to render itself in the editor and change the rendering when its properties change. It implements ILayout to allow it to exist in various layout sizes. IDirectLabelEdit allows developers to enter label text directly on the editor rather than through the properties view and IComponentPropertyListener allows it to resize if necessary as its text grows.</p>
+<pre class="listing">&lt;implementations&gt;
+ &nbsp;&nbsp; &lt;implementation&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interface  id=&quot;com.nokia.sdt.datamodel.adapter.IVisualAppearance&quot;/&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interface  id=&quot;com.nokia.sdt.datamodel.adapter.IDirectLabelEdit&quot;/&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script  file=&quot;StandardNote_visual.js&quot;  prototype=&quot;StandardNoteVisual&quot;/&gt;
+ &nbsp;&nbsp; &lt;/implementation&gt;
+ &nbsp;&nbsp; &lt;implementation&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interface  id=&quot;com.nokia.sdt.datamodel.adapter.ILayout&quot;/&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interface&nbsp; id=&quot;com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener&quot;/&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script  file=&quot;StandardNote_layout.js&quot;  prototype=&quot;StandardNoteLayout&quot;/&gt;
+ &nbsp;&nbsp; &lt;/implementation&gt;
+&lt;/implementations&gt;</pre>
+<p>In the StandardNote component, two prototypes are used, each one in its own JavaScript file. StandardNoteVisual implements IVisualAppearance and IDirectLabelEdit since these implementations are related. One is drawing the text while the other allows the text to be edited in place.</p>
+<p>StandardNoteLayout implements ILayout and IComponentInstancePropertyListener since these implementations are also related. One gives the instance its size and location, while the other forces it to layout when the text property changes.</p>
+<h4>Source generation</h4>
+<p>The output of any component is the source code it  generates into the developer&rsquo;s project. As mentioned earlier, the StandardNote component generates  a routine into the owning class that can be called to display the note at  runtime.</p>
+<p>Because its text  property should be localizable, it is placed in a TBUF resource, so the  component needs to map the text  property to the resource. The sourceMapping element describes this mapping,  while the sourceGen element encapsulates the template for generating source  code into the owning class.</p>
+<h5>Related Reference</h5>
+<ul>
+  <li><a href="cc_source_mapping.htm">Source Mapping</a></li>
+  <li><a href="cc_source_generation.htm">Source Generation</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

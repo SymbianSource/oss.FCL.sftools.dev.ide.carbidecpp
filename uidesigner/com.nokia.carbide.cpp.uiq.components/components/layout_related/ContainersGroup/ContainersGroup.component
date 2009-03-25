@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	  
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.ContainersGroup"
+			baseComponent="com.nokia.carbide.uiq.ModelGroupBase"
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+		
+		<designerImages smallIconFile="ContainersGroup_sm.png"
+			largeIconFile="ContainersGroup.png"/>					
+
+<!-- 	Definition Established	
+		<attributes>
+			   <attribute key="group-child-type">com.nokia.carbide.uiq.CQikContainer</attribute>		
+			   <attribute key="allow-empty-group">false</attribute>
+		</attributes>		
+-->	
+		<attributes>
+			   <attribute key="group-child-type">com.nokia.carbide.uiq.CQikContainer</attribute>		
+			   <attribute key="allow-empty-group">false</attribute>
+			   <attribute key ="is-layout-container">true</attribute>
+			   <attribute key ="is-layout-object">true</attribute>
+			   <attribute key ="switchable-child-container">true</attribute>
+		</attributes>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>				
+				<script file="ContainersGroup.js" prototype="ContainersGroup"/>										
+			</implementation>			
+		</implementations>			
+		
+		<sourceGen>
+			<inline scope="file"><![CDATA[
+function getCurrentConfig(instance) {
+	// find dialog instance
+	var dlg = instance.parent;
+	while (!dlg.isInstanceOf("com.nokia.carbide.uiq.CQikSimpleDialog"))
+		dlg = dlg.parent;
+	// find dialog configurations group
+	var dlgConfigsGroup = dlg.findChildOfType("com.nokia.carbide.uiq.DialogConfigurationsGroup");
+	for (var i in dlgConfigsGroup.children) {
+		var dlgConfig = dlgConfigsGroup.children[i];
+		if (dlgConfig.properties.viewOrContainer == instance.name)
+			return dlgConfig.properties.uiconfig;
+	}
+	return null;
+}
+function printList(name, list) {
+	println(name + ".size()" + list.size());
+	for (var iterator = list.iterator(); iterator.hasNext();) {
+		var myContrib = iterator.next();
+		println("     " + myContrib);
+	}
+}
+]]></inline>
+<inline><![CDATA[
+	for (var i in instance.children) {
+		var child = instance.children[i];
+		var childContribs = Engine.generateChildContributions(child, form);
+		println(child);
+		printList("childContribs", childContribs);
+		var initPropertiesContribs = Engine.getContributionsForPhase(childContribs, "InitializeControlHandlers");
+		childContribs.removeAll(initPropertiesContribs);
+	
+	
+		var curConfig = getCurrentConfig(child);
+		var contrib;
+		
+		
+		if (curConfig != null) {
+				
+			println("initPropertiesContribs.size()=" + initPropertiesContribs.size());
+			for (var iterator = initPropertiesContribs.iterator(); iterator.hasNext();) {
+				contrib = iterator.next();
+				if (curConfig != null)
+					contrib.indentAdjust(1);
+				contribs.add(contrib);
+			}
+			
+			
+		}
+		contribs.addAll(childContribs);	
+		
+	}
+]]></inline>
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

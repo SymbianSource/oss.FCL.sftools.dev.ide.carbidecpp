@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Setting Breakpoints</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Setting Breakpoints</h2>
+<p>Use the <b>Set Breakpoint</b> command (<span class="code">Ctrl+Shift+B</span>) to set a breakpoint. A regular breakpoint suspends program execution. The debugger executes the line of source code that contains the regular breakpoint.</p>
+<p class="note"><strong>TIP</strong> If you find that a breakpoint is not being hit, verify that the EXE or DLL is listed in the <a href="../../reference/view_executables.htm">Executables</a> view. </p>
+<p class="note"><strong>TIP</strong> If debugging a server launched by a client, you must attach to the server  process using the <a href="../../reference/view_symbian_kernel.htm">Symbian OS Data</a> view in order to hit the breakpoints in the server. Alternately, you can launch the server and  client as two independent EXEs using the same COM port and debug them that way. </p>
+<p>Figure 1 shows some source code and the marker bar to the left of the source code. The selected line shows the breakpoint dot that appears in the marker bar when a breakpoint is set.</p>
+<p align="center"><img src="images/breakpoints_marker_bar.png" width="582" height="230" /></p>
+<p class="figure">Figure 1 - Setting Breakpoints in an editor view </p>
+<div class="step">
+  <h4>Setting a Breakpoint in Editor or Disassembly Views</h4>
+  <ul>
+    <li>Double-click the marker bar to the left of the line of code where you want to place a breakpoint </li>
+  </ul>
+  <blockquote>
+    <p>or</p>
+  </blockquote>
+  <ul>
+    <li>Right-click in the marker bar and select Toggle  Breakpoint</li>
+  </ul>
+  <blockquote>
+    <p>or</p>
+  </blockquote>
+  <ul>
+    <li>Click on the line of code and select Run &gt;  Toggle   Breakpoint from the program menu bar </li>
+  </ul>
+  <blockquote>
+    <p>or</p>
+  </blockquote>
+  <ul>
+    <li>While selecting a line, press Ctrl+Shift+B  </li>
+    <p>The active breakpoint dot appears (<img src="images/breakpoints_enabled_icon.png" width="9" height="10" />) in the marker bar. If the breakpoint is  <a href="../../concepts/breakpoints.htm">resolved</a> during the debug session,  the debugger halts program execution at the line with the resolved breakpoint (<img src="../../images/icons/breakpoints_enabled_icon.png" width="15" height="12" />).</p>
+<p class="note"><span class="note"><b>NOTE</b> Setting a breakpoint in a file affects execution of all build targets that include that file.</span></p>
+  </ul>
+</div>
+<p>For more information on breakpoints, see <b>C/C++ Development User Guide &gt; Concepts &gt; Debug &gt; Breakpoints</b>.</p>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/breakpoints.htm">Breakpoints</a></li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="pgm_bp_enable.htm">Enabling Breakpoints</a></li>
+  <li><a href="pgm_bp_disable.htm">Disabling Breakpoints</a></li>
+  <li><a href="pgm_bp_clearing.htm">Removing Breakpoints</a></li>
+</ul>
+<h5>Related references </h5>
+<ul>
+  <li><a href="../../reference/view_breakpoints.htm">Breakpoints view</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+#include <basicheader.rh>
+
+RESOURCE TWO_REFS r_test_multi_ref
+	{
+	link1 = r_test_multi2;
+	link2 = r_test_multi2_2;
+	}
+RESOURCE ONE_STRING r_test_multi2
+	{
+	text = "text";
+	}
+RESOURCE SIMPLE_TYPES r_test_multi2_2
+	{
+	buf = "alternate";
+	}

@@ -1,0 +1,7 @@
+#include <bitmasks.rh>
+
+RESOURCE BITMASK r_test_bitmasks_partial_type_mapped
+	{
+	numbers = 0;
+	colors = EAknBlack;
+	}

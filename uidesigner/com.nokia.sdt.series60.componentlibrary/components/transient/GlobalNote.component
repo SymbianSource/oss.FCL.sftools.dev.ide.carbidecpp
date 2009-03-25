@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.GlobalNote.type">
+		<enumElement value="EAknGlobalConfirmationNote"/>
+		<enumElement value="EAknGlobalInformationNote"/>
+		<enumElement value="EAknGlobalWarningNote"/>
+		<enumElement value="EAknGlobalErrorNote"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.GlobalNote.tone">
+		<enumElement value="" displayValue="none"/>
+		<enumElement value="EAknNoteDialogConfirmationTone"/>
+		<enumElement value="EAknNoteDialogWarningTone"/>
+		<enumElement value="EAknNoteDialogErrorTone"/>
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.GlobalNote" 
+		category="NotesDialogs"
+		instanceNameRoot="globalNote"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknGlobalNote" classHelpTopic="" />
+		<designerImages smallIconFile="GlobalNote_sm.png" 
+			largeIconFile="GlobalNote.png"/>
+		<attributes>
+			<attribute key="is-non-layout-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="is-transient-object">true</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<enumProperty category="Appearance" name="type" type="com.nokia.sdt.series60.GlobalNote.type" 
+				default="EAknGlobalErrorNote"
+				descriptionKey="typeDescription" />
+			<property category="Appearance" name="textProcessing" type="boolean" default="true" 
+				descriptionKey="textProcessingDescription" />
+			<property category="Data" name="text" type="localizedString" 
+				default="Error!" 
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Data" name="priority" type="integer"  
+				descriptionKey="priorityDescription" />
+			<enumProperty category="Data" name="tone" 
+				type="com.nokia.sdt.series60.GlobalNote.tone"
+				descriptionKey="toneDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="GlobalNote_visual.js" prototype="GlobalNoteVisual"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+				<script file="GlobalNote_layout.js" prototype="GlobalNoteLayout"/>
+			</implementation>
+		</implementations>
+		<sourceMapping>
+			<mapResource struct="TBUF" headers="eikon.rh">
+				<mapSimpleMember property="text" member="buf"/>
+			</mapResource>
+		</sourceMapping>
+		<sourceGen>
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <avkon.rsg>
+]]>			</template>
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <aknglobalnote.h>
+]]>			</template>
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <stringloader.h>
+]]>			</template>
+			<template phase="ClassMethods">
+static void Run${instanceName$title}L( const TDesC* aOverrideText = NULL );
+			</template>
+			<defineLocation id="MethodLocation" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Run${instanceName$title}L(const TDesC*))">
+				<template>
+/**
+ * Show the popup note for ${instanceName}
+ * @param aOverrideText optional override text
+ */
+void ${className}::Run${instanceName$title}L( const TDesC* aOverrideText )
+	{
+	}
+				</template>
+			</defineLocation>
+			<template location="MethodLocation"><![CDATA[
+CAknGlobalNote* globalNote = CAknGlobalNote::NewLC();
+if ( aOverrideText == NULL )
+	{
+	HBufC* noteText = StringLoader::LoadLC( ${resourceName$upper} );
+	<% if (properties.textProcessing != true) { %>globalNote->SetTextProcessing( ${properties.textProcessing} );
+	<%} %><% if (properties.priority != 0) { %>globalNote->SetPriority( ${properties.priority} );
+	<% } %><% if (properties.tone != "") { %>globalNote->SetTone( ${properties.tone} );
+	<% } %>globalNote->ShowNoteL( ${properties.type}, *noteText );
+	CleanupStack::PopAndDestroy( noteText );
+	}
+else
+	{
+	globalNote->ShowNoteL( ${properties.type}, *aOverrideText );
+	}
+CleanupStack::PopAndDestroy( globalNote );
+]]>			</template>
+
+			
+		</sourceGen>
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Examining the call stack in Debugging information</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" >
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" >
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>General Points</h2>
+</div>
+<div>
+<p>Tracing the call stack is an advanced use of the
+<a href="CrashDebugger_cmd_m.guide.html" title="The debug monitor and command syntax / m - do a memory dump">m</a> command that
+allows you to <a href="CrashDebuggerExaminingMemory.guide.html" title="Examining memory">examine memory</a>.</p>
+<p>Every time a function is called, the return address is
+automatically saved into register R14 (Link Register). In addition
+to this the return address is generally pushed onto the call stack; it is
+always pushed in debug builds but the push operation is sometimes optimised out
+in release builds. This allows you to trace back through the value of
+R14 and these saved addresses to see the sequence of function
+calls. Unfortunately this is quite tedious to do because the stack is also used
+for automatic variables and other data. You need to work out which values on
+the stack refer to return addresses. </p>
+<p>When you are debugging only ROM-based code, it is relatively easy
+to identify the pushed return addresses because all code addresses will be in
+the ROM range: 0xF800000 to 0xFFEFFFFF for the
+<a href="CrashDebuggerMemoryMap.guide.html" title="Symbian OS memory map / Moving model">moving model</a>. However,
+there is also data in the ROM, which means that an address on the stack which
+is in the ROM range could point to data instead of code. If you want to trace
+applications loaded into RAM, i.e. anything not run from drive Z:, then stack
+tracing is more difficult because the code can move about and RAM-loaded code
+is given an address assigned at load time.</p>
+<p>Note that <a href="CrashDebuggerUsingMAKSYM-Ref.guide.html">using the MAKSYM tool</a> is essential for tracing back through the stack.</p>
+</div>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="CrashDebuggerCallStack.guide03.html">Finding the Stack</a></li>
+  <li><a href="CrashDebuggerCallStack.guide04.html">Tracing through the Call Stack Heuristically</a></li>
+  <li><a href="CrashDebuggerCallStack.guide05.html">Walking through the Call Stack</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

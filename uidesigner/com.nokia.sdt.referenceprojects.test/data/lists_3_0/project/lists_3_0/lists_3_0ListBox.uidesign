@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknView" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitle" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBA" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControl" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknListBox" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ListBoxItem" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuBar" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknListQueryDialog" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.NonLayoutBase" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.sdt.series60.CAknView">
+    <property id="className">Clists_3_0ListBoxView</property>
+    <compoundProperty id="location">
+      <property id="x">38</property>
+      <property id="y">10</property>
+    </compoundProperty>
+    <property id="optionsMenu" type="componentRef">optionsMenu</property>
+    <property id="name">lists_3_0ListBoxView</property>
+    <compoundProperty id="size">
+      <property id="width">176</property>
+      <property id="height">208</property>
+    </compoundProperty>
+    <component id="com.nokia.sdt.series60.StatusPane">
+      <compoundProperty id="location">
+        <property id="x">16</property>
+        <property id="y">1</property>
+      </compoundProperty>
+      <property id="name">statusPane</property>
+      <compoundProperty id="size">
+        <property id="width">152</property>
+        <property id="height">43</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.StatusPaneTitle">
+        <compoundProperty id="location">
+          <property id="x">48</property>
+        </compoundProperty>
+        <property id="name">title</property>
+        <property id="titleText" type="i18n">STR_lists_3_0ListBoxView_3</property>
+        <compoundProperty id="size">
+          <property id="width">104</property>
+          <property id="height">28</property>
+        </compoundProperty>
+        <compoundProperty id="image"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.CBA">
+      <compoundProperty id="location">
+        <property id="y">184</property>
+      </compoundProperty>
+      <compoundProperty id="info">
+        <property id="leftText" type="i18n">STR_lists_3_0ListBoxView_1</property>
+        <property id="rightText" type="i18n">STR_lists_3_0ListBoxView_2</property>
+      </compoundProperty>
+      <property id="name">controlPane</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">24</property>
+      </compoundProperty>
+    </component>
+    <component id="com.nokia.sdt.series60.CCoeControl">
+      <property id="initialFocus" type="componentRef">listBox</property>
+      <compoundProperty id="location">
+        <property id="y">44</property>
+      </compoundProperty>
+      <property id="className">CLists_3_0ListBox</property>
+      <property id="name">lists_3_0ListBox</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">140</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CAknListBox">
+        <property id="style">CAknDoubleLargeStyleListBox</property>
+        <sequenceProperty id="alignmentInfo">
+          <element>Default</element>
+          <element>Default</element>
+          <element>Default</element>
+        </sequenceProperty>
+        <compoundProperty id="size">
+          <property id="width">176</property>
+          <property id="height">140</property>
+        </compoundProperty>
+        <compoundProperty id="location"/>
+        <compoundProperty id="markIcon"/>
+        <sequenceProperty id="extraImages"/>
+        <property id="name">listBox</property>
+        <component id="com.nokia.sdt.series60.ListBoxItem">
+          <compoundProperty id="location">
+            <property id="y">3</property>
+          </compoundProperty>
+          <property id="name">listboxItem1</property>
+          <property id="text" type="i18n">STR_lists_3_0ListBoxView_4</property>
+          <property id="secondaryText" type="i18n">STR_lists_3_0ListBoxView_5</property>
+          <compoundProperty id="image">
+            <property id="bmpid">EMbmLists_3_0List_icon</property>
+            <property id="bmpfile">\resource\apps\lists_3_0.mbm</property>
+            <property id="bmpmask">EMbmLists_3_0List_icon_mask</property>
+          </compoundProperty>
+          <compoundProperty id="size">
+            <property id="height">44</property>
+            <property id="width">176</property>
+          </compoundProperty>
+        </component>
+        <component id="com.nokia.sdt.series60.ListBoxItem">
+          <compoundProperty id="location">
+            <property id="y">47</property>
+          </compoundProperty>
+          <property id="name">listboxItem2</property>
+          <property id="text" type="i18n">STR_lists_3_0ListBoxView_6</property>
+          <property id="secondaryText" type="i18n">STR_lists_3_0ListBoxView_7</property>
+          <compoundProperty id="image">
+            <property id="bmpid">EMbmLists_3_0List_icon</property>
+            <property id="bmpfile">\resource\apps\lists_3_0.mbm</property>
+            <property id="bmpmask">EMbmLists_3_0List_icon_mask</property>
+          </compoundProperty>
+          <compoundProperty id="size">
+            <property id="height">44</property>
+            <property id="width">176</property>
+          </compoundProperty>
+        </component>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.MenuBar">
+      <compoundProperty id="location">
+        <property id="x">88</property>
+        <property id="y">184</property>
+      </compoundProperty>
+      <property id="name">optionsMenu</property>
+      <compoundProperty id="size"/>
+    </component>
+    <component id="com.nokia.sdt.series60.CAknListQueryDialog">
+      <sequenceProperty id="extraImages"/>
+      <compoundProperty id="location">
+        <property id="y">70</property>
+      </compoundProperty>
+      <property id="name">listQuery1</property>
+      <property id="text" type="i18n">STR_lists_3_0ListBoxView_8</property>
+      <property id="style">CAknDoubleLargeGraphicPopupMenuStyleListBox</property>
+      <compoundProperty id="size">
+        <property id="height">138</property>
+        <property id="width">176</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.ListBoxItem">
+        <compoundProperty id="location"/>
+        <property id="name">listboxItem3</property>
+        <property id="text" type="i18n">STR_lists_3_0ListBoxView_9</property>
+        <property id="secondaryText" type="i18n">STR_lists_3_0ListBoxView_10</property>
+        <compoundProperty id="image">
+          <property id="bmpid">EMbmLists_3_0List_icon</property>
+          <property id="bmpfile">\resource\apps\lists_3_0.mbm</property>
+          <property id="bmpmask">EMbmLists_3_0List_icon_mask</property>
+        </compoundProperty>
+        <compoundProperty id="size">
+          <property id="height">44</property>
+          <property id="width">164</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.ListBoxItem">
+        <compoundProperty id="location">
+          <property id="y">44</property>
+        </compoundProperty>
+        <property id="name">listboxItem4</property>
+        <property id="text" type="i18n">STR_lists_3_0ListBoxView_11</property>
+        <property id="secondaryText" type="i18n">STR_lists_3_0ListBoxView_12</property>
+        <compoundProperty id="image">
+          <property id="bmpid">EMbmLists_3_0List_icon</property>
+          <property id="bmpfile">\resource\apps\lists_3_0.mbm</property>
+          <property id="bmpmask">EMbmLists_3_0List_icon_mask</property>
+        </compoundProperty>
+        <compoundProperty id="size">
+          <property id="height">44</property>
+          <property id="width">164</property>
+        </compoundProperty>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_lists_3_0ListBoxView_1"/>
+      <string id="STR_lists_3_0ListBoxView_2"/>
+      <string id="STR_lists_3_0ListBoxView_3">lists_3_0ListBox</string>
+      <string id="STR_lists_3_0ListBoxView_4">item 1</string>
+      <string id="STR_lists_3_0ListBoxView_5">secondary 1</string>
+      <string id="STR_lists_3_0ListBoxView_6">item 2</string>
+      <string id="STR_lists_3_0ListBoxView_7">secondary 2</string>
+      <string id="STR_lists_3_0ListBoxView_8">Question 1</string>
+      <string id="STR_lists_3_0ListBoxView_9">item 3</string>
+      <string id="STR_lists_3_0ListBoxView_10">secondary 3</string>
+      <string id="STR_lists_3_0ListBoxView_11">item 4</string>
+      <string id="STR_lists_3_0ListBoxView_12">secondary 4</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="listQuery1">r_lists_3_0_list_box_list_query1</resourceMapping>
+      <resourceMapping instanceName="listboxItem2">r_lists_3_0_list_box_listbox_item2</resourceMapping>
+      <resourceMapping instanceName="listboxItem3">r_lists_3_0_list_box_listbox_item3</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_lists_3_0_list_box_status_pane</resourceMapping>
+      <resourceMapping instanceName="title">r_lists_3_0_list_box_title_resource</resourceMapping>
+      <resourceMapping instanceName="listboxItem4">r_lists_3_0_list_box_listbox_item4</resourceMapping>
+      <resourceMapping instanceName="lists_3_0ListBoxView">r_lists_3_0_list_box_lists_3_0_list_box_view</resourceMapping>
+      <resourceMapping instanceName="listBox">r_lists_3_0_list_box_list_box</resourceMapping>
+      <resourceMapping instanceName="optionsMenu">r_lists_3_0_list_box_options_menu</resourceMapping>
+      <resourceMapping instanceName="listboxItem1">r_lists_3_0_list_box_listbox_item1</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
+      <enumMapping instanceName="lists_3_0ListBoxView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">ELists_3_0ListBoxViewId</enumMapping>
+      <enumMapping instanceName="listBox" propertyId="type">EAknListBoxSelectionList</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
+      <enumMapping instanceName="listQuery1" propertyId="style">EAknCtDoubleLargeGraphicPopupMenuListBox</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+  <generatedFiles>
+    <file>inc/lists_3_0listbox.h</file>
+    <file>src/lists_3_0listbox.cpp</file>
+    <file>inc/lists_3_0listboxview.h</file>
+    <file>src/lists_3_0listboxview.cpp</file>
+    <file>data/lists_3_0.rss</file>
+    <file>data/lists_3_0listbox.rssi</file>
+    <file>inc/lists_3_0.hrh</file>
+    <file>data/lists_3_0.loc</file>
+    <file>data/lists_3_0.l01</file>
+    <file>data/lists_3_0listbox.l01</file>
+    <file>data/lists_3_0listbox.loc</file>
+  </generatedFiles>
+</designerData>

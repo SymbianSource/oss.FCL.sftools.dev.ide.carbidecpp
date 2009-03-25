@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Properties</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Properties Element</h2>
+<p>The Properties element can include a list of Property elements that define miscellaneous values for a component, such as default text related to a component that will appear in the UI design. Property element definitions are represented in the editable properties that appear in the UI Designer. For example, the following definitions in a .properties file will appear in the Properties tab of the UI Designer when declared in the component definition file. For the VerticalLabel example, the friendlyName definition is declared in the &lt;component&gt; element to display the component name in the palette and outline view.</p>
+<p>Definitions in .properties file:</p>
+<pre>
+text=label text
+lineWidth=line width</pre>
+<p>Declarations in component definition file:</p>
+<pre class="listing">&lt;properties&gt;
+  &lt;property name=&quot;text&quot; type=&quot;localizedString&quot; default=&quot;Vertigo&quot;/&gt;
+  &lt;property name=&quot;lineWidth&quot; type=&quot;integer&quot; default=&quot;1&quot; minValue=&quot;0&quot; maxValue=&quot;5&quot;/&gt;
+&lt;/properties&gt;</pre>
+<p>Represented in UI Designer as shown in Figure 1:</p>
+<p align="center"><img src="images/properties.png" alt="Component Properties" width="684" height="567" /></p>
+<p align="center"><strong>Figure 1. Component Properties</strong></p>
+<p align="left">Components also inherit the properties of their base components, and can have properties added dynamically at runtime by using the &lt;extensionProperties&gt; element.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

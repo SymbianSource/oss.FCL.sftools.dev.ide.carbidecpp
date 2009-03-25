@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>pop, push</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+    </head>
+
+<body>
+<h3>pop, push</h3>
+<p>  Save and restore pragma settings.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma push<br />
+  #pragma pop</p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>The pragma push saves all the current pragma settings. The pragma pop restores all the pragma settings that resulted from the last push pragma. For example, see Listing 10.29.</p>
+  <div class="listing">
+      <h4>Listing 10.29 push and pop Example</h4>
+      <p>#pragma far_data on<br />
+      #pragma pointers_in_A0<br />
+      #pragma push // push all compiler settings<br />
+      #pragma far_data off<br />
+      #pragma pointers_in_D0<br />
+      // pop restores &quot;far_data&quot; and &quot;pointers_in_A0&quot;<br />
+    #pragma pop</p>
+  </div>
+  <p class="note"><strong>NOTE</strong> This example uses some platform-specific pragmas for illustrative purposes only. See the Targeting manual for your platform to determine which pragmas are supported.</p>
+  <p>This pragma does not correspond to any panel setting.</p>
+  <p class="note"><strong>TIP</strong> Pragmas that allow on | off | reset already form a stack of previous option values. It is not necessary to use <span class="code">#pragma pop/push</span> with such pragmas.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

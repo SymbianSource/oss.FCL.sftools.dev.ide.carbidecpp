@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>disableopts</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>disableopts</h3>
+<p>  Use to make the debugging of optimized code easier while having no effect on non-optimized code.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma disableopts on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+<p>To make debugging opimized code easier <span class="code">disableopts</span> on:</p>
+  <ul>
+    <li> forces use of a stack frame so that the call stack is always available</li>
+    <li>disables local stack variable overlapping</li>
+    <li>disables automatic stack alignment, which may result in the odd use of EBX, EBP, and ESP</li>
+    <li>disables allocation of long long to pairs of integer registers</li>
+    <li>prevents the scheduler from moving code in front of the epilog or past the prolog, preventing local variables from appearing mangled when the program counter is within this range</li>
+  </ul>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use the <span class="code">__option (disableopts)</span>. The default setting is off.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.DefaultAppUi" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBARestricted" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknForm" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DialogBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwin" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwinBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.EditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikDateEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikMfneBase" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.sdt.series60.DefaultAppUi">
+    <property id="className">CBirthdaysAppUi</property>
+    <compoundProperty id="location">
+      <property id="x">38</property>
+      <property id="y">10</property>
+    </compoundProperty>
+    <property id="name">BirthdaysAppUi</property>
+    <compoundProperty id="size">
+      <property id="width">176</property>
+      <property id="height">208</property>
+    </compoundProperty>
+    <component id="com.nokia.sdt.series60.CBARestricted">
+      <compoundProperty id="location">
+        <property id="y">184</property>
+      </compoundProperty>
+      <property id="name">controlPane</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">24</property>
+      </compoundProperty>
+    </component>
+    <component id="com.nokia.sdt.series60.CAknForm">
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">140</property>
+      </compoundProperty>
+      <property id="className">CBirthdayForm</property>
+      <compoundProperty id="location">
+        <property id="y">44</property>
+      </compoundProperty>
+      <property id="wait">true</property>
+      <property id="EEikFormUseDoubleSpacedFormat">true</property>
+      <property id="name">BirthdayForm</property>
+      <property id="exitsApp">false</property>
+      <property id="modeless">false</property>
+      <property id="EEikFormEditModeOnly">true</property>
+      <component id="com.nokia.sdt.series60.CEikEdwin">
+        <compoundProperty id="size">
+          <property id="width">176</property>
+          <property id="height">35</property>
+        </compoundProperty>
+        <compoundProperty id="avkonFlags"/>
+        <property id="prompt" type="i18n">STR_BirthdaysAppUi_2</property>
+        <compoundProperty id="location">
+          <property id="y">10</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="allowedCaseModes"/>
+        <property id="maxLength">80</property>
+        <property id="name">name</property>
+        <property id="text" type="i18n">STR_BirthdaysAppUi_1</property>
+        <compoundProperty id="allowedInputModes"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikDateEditor">
+        <compoundProperty id="minDate">
+          <property id="year">1</property>
+        </compoundProperty>
+        <compoundProperty id="size">
+          <property id="width">176</property>
+          <property id="height">35</property>
+        </compoundProperty>
+        <compoundProperty id="maxDate">
+          <property id="month">11</property>
+          <property id="day">30</property>
+          <property id="year">2099</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_BirthdaysAppUi_5</property>
+        <compoundProperty id="location">
+          <property id="y">45</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">date</property>
+        <compoundProperty id="date">
+          <property id="year">1980</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikEdwin">
+        <compoundProperty id="size">
+          <property id="width">176</property>
+          <property id="height">35</property>
+        </compoundProperty>
+        <compoundProperty id="avkonFlags"/>
+        <property id="prompt" type="i18n">STR_BirthdaysAppUi_4</property>
+        <compoundProperty id="location">
+          <property id="y">80</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="allowedCaseModes"/>
+        <property id="maxLength">500</property>
+        <property id="name">todo</property>
+        <property id="text" type="i18n">STR_BirthdaysAppUi_3</property>
+        <compoundProperty id="allowedInputModes"/>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_BirthdaysAppUi_1">J. Doe</string>
+      <string id="STR_BirthdaysAppUi_2">Name</string>
+      <string id="STR_BirthdaysAppUi_5">Birthday</string>
+      <string id="STR_BirthdaysAppUi_3">Send thoughtful card</string>
+      <string id="STR_BirthdaysAppUi_4">To-do</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="todo" rsrcId="text">r_birthday_form_todo</resourceMapping>
+      <resourceMapping instanceName="BirthdayForm">r_birthday_form_birthday_form</resourceMapping>
+      <resourceMapping instanceName="BirthdayForm" rsrcId="member$form">r_birthday_form_birthday_form_form</resourceMapping>
+      <resourceMapping instanceName="name" rsrcId="text">r_birthday_form_name</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="edit2" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="date" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EBirthdaysAppUiDate</enumMapping>
+      <enumMapping instanceName="name" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="edit2" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EBirthdaysAppUiEdit1</enumMapping>
+      <enumMapping instanceName="name" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="todo" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="edit2" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="name" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+      <enumMapping instanceName="name" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="name" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EBirthdaysAppUiName</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtDateEditor</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="edit2" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="todo" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EBirthdaysAppUiTodo</enumMapping>
+      <enumMapping instanceName="todo" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+      <enumMapping instanceName="todo" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+      <enumMapping instanceName="edit2" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EBirthdaysAppUiEdit2</enumMapping>
+      <enumMapping instanceName="date" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtDateEditor</enumMapping>
+      <enumMapping instanceName="todo" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EBirthdaysAppUiDateEditor1</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+</designerData>

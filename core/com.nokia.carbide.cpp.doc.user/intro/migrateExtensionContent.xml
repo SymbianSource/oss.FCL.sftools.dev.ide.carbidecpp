@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<introContent>
+
+	<extensionContent 
+		id="com.nokia.carbide.cpp.doc.user-migrate" 
+		name="Carbide.c+ Development" 
+		alt-style="carbide.properties" 
+		style="carbide.css" 
+		path="migrate/@">
+		
+		<!-- MOVED TO PRODUCT PLUGIN 20071109
+		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
+		
+			<link 
+				label="Carbide.c++ Shortcuts" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp/html/help_keys_Toc.htm"  
+				id="carbide-keys" 
+				style-id="content-link">
+				<text>Carbide.c++ shortcuts include support for Microsoft Visual Studio as well as Nokia CodeWarrior.</text>
+			</link>
+			-->
+		
+		</group>
+	</extensionContent>
+		
+</introContent>

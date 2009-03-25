@@ -1,0 +1,16 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_test5_de
+	{
+	ints = { 2, 0, 5 };
+	structs =
+		{
+		SUBTYPE
+			{
+			number = 23;
+			},
+		SUBTYPE
+			{
+			}
+		};
+	}

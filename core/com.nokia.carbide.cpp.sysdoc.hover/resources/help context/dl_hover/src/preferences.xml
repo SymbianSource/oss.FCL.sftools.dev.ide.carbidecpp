@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!DOCTYPE general-guide-doc SYSTEM "guide.dtd">
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. License: http://www.eclipse.org/legal/epl-v10.html. -->
+<general-guide-doc> 
+
+  <section>
+	 <heading>Hover Help Preferences</heading>
+	 <anchor name="hover.prefs."/> 
+	 <para>
+		This section describes the preferences panel that you can use to configure
+		and change the Developer Library plug-ins used by Hover Help.
+	 </para> 
+	 <para>
+		With the preferences panel, you can: 
+	 </para> 
+
+	 <list> 
+		<ls.item> 
+		  <para>
+			 Let Hover Help automatically choose the right Developer Library. 
+		  </para> 
+		</ls.item> 
+		<ls.item> 
+		  <para>
+			 Select a Developer Library using the drop-down box. 
+		  </para> 
+		</ls.item> 
+		<ls.item> 
+		  <para>
+			 Deactivate Hover Help. 
+		  </para> 
+		</ls.item> 
+		<ls.item> 
+		  <para>
+			 Restore the default Hover Help configuration.
+		  </para> 
+		</ls.item> 
+		<ls.item> 
+		  <para>
+			 Apply, confirm or cancel the changes. 
+		  </para> 
+		</ls.item> 
+	 </list>
+
+	 <section>
+		<heading><emph>Automatically select latest Developer Library</emph> Checkbox</heading>
+		<anchor name="hover.prefs.automatic"/> 
+		<para>
+		  When you check the "Automatically select latest Developer
+		  Library" checkbox, the Developer Library is automatically selected for you.
+		  The name of the selected library is displayed in the greyed field.
+		  If you want to select a particular Developer Library, follow these
+		  <xref target="hover.prefs.select_DL">steps</xref>.
+		</para> 
+		<para>
+		  The right Developer Library is chosen using these heuristics: 
+		</para> 
+
+		<list ordered="true"> 
+		  <ls.item> 
+			 <para>
+				Choose by audience and license of the Developer Library.
+				<emph>Platform</emph> development has precedence over <emph>public</emph> development. 
+			 </para> 
+			 <para>
+				For example: "Developer Library <emph>rel1</emph> (Platform) (<emph>date1</emph>)" will be chosen rather
+				than "Developer Library <emph>rel2</emph> (Public) (<emph>date2</emph>)" 
+			 </para> 
+		  </ls.item> 
+		  <ls.item> 
+			 <para>
+				Then choose by latest publication date of the Developer Library.
+			 </para> 
+			 <para>
+				For example: ""Developer Library <emph>rel1</emph> (Platform) (<emph>21/03/2009</emph>)" will be chosen
+				rather than ""Developer Library <emph>rel1</emph> (Platform) (<emph>21/03/2009</emph>)". 
+			 </para> 
+		  </ls.item> 		  
+		</list>
+
+	 </section> 
+
+	 <section>
+		<heading><emph>Developer Libraries</emph> Drop-Down</heading>
+		<anchor name="hover.prefs.select_DL"/> 
+		<para>
+		  The selected Developer Library is shown in the drop-down box. 
+		</para> 
+		<para>
+		  To change the Developer Library, first uncheck the <xref target="hover.prefs.automatic">"Automatically select latest Developer Library"</xref> checkbox.
+		  Then select a Developer Library from the drop-down box list. 
+		  To add a new Developer Library, follow these <xref target="hover.add_DL.">steps</xref>.
+		</para> 
+	 </section> 
+
+	 <section>
+		<heading><emph>Deactivate Hovering</emph> Checkbox</heading>
+		<anchor name="hover.prefs.deactivate"/> 
+		<para>
+		  Checking the <output>Deactivate Hovering</output> checkbox disables Hover Help,
+		  and unchecking the checkbox reactivates Hover Help.
+		</para> 
+		<para>
+		  When you reactivate Hover Help, the
+		  <xref target="hover.prefs.automatic">"Automatically select latest Developer Library"</xref>
+		  checkbox is checked. 
+		</para> 
+	 </section> 
+
+	 <section>
+		<heading><emph>Restore Defaults</emph> Button</heading>
+		<anchor name="hover.prefs.default"/> 
+		<para>
+		  If the “Restore Defaults” button is clicked, 
+		  the <xref target="hover.prefs.automatic">"Automatically select latest Developer Library"</xref>
+		  checkbox is checked, and the <xref target="hover.prefs.deactivate">"Deactivate Hovering"</xref>
+		  checkbox is unchecked.
+		</para> 
+	 </section> 
+
+	 <section>
+		<heading>Apply, OK, Cancel Buttons</heading>
+		<anchor name="hover.prefs.ApplyConfirmCancel"/> 
+		<para>
+		  These buttons have the common Carbide behaviours. 
+		</para> 
+	 </section> 
+  </section> 
+
+</general-guide-doc> 

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>USB Connectivity Setup</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>USB Connection Setup</h2>
+<p>On-device debugging  supports the use of USB to debug programs running on a target device. To enable communication with a USB device, a connection must be established between the PC and the device. Doing that requires one of the following USB connectivity cables to physically connect the PC to the device:</p>
+<ul>
+  <li>DKU-2</li>
+  <li>CA-53 </li>
+</ul>
+<div class="step">
+  <h4>Setting up a USB Connection for On-device Debugging </h4>
+  <ol>
+    <li>Install the latest USB connectivity software, for example, S60 devices use Nokia PC Suite</li>
+    <li>Connect the USB connectivity cable  to your PC and then the target device</li>
+    <li>For S60 devices, select PC-Suite from the USB Mode list when the target device is connected</li>
+    <li>Download the Application TRK or System TRK SISX file to the device</li>
+    <li>On the PC 
+    (optional)</li>
+  </ol>
+  <ol>
+    <ol type="a">
+      <li>Open the Window's Computer Management (Windows XP) </li>
+      <p>Right-click <b>My Computer</b> and select <b>Manage</b> from the context menu to open the <b>Computer Management</b> window. Select <b>System Tools &gt; Device Manager &gt; Ports (COM &amp; LPT)</b> to display all active ports. </p>
+      <li>Locate the S60 Phone USB (COMx) item in the list (Figure 2) </li>
+      <p align="center"><img src="../../reference/images/wnd_win_device_mgr.png" width="502" height="339" /></p>
+      <p class="figure">Figure 2. Device Manager showing Ports (COM &amp; LPT) section</p>
+      <li>The USB COM Port number should match the COM port used in the <a href="../../reference/launch_configs/page_connection.htm">Connections</a> tab of the TRK launch
+      configuration.</li>
+      <li>Close the Device Manager window</li>
+    </ol>
+  </ol>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/trk.htm">On-device Debugging </a></li>
+</ul>
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/launch_configs/run_mode_overview.htm">Debug Window (On-device Debugging) Overview</a></li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="trk_install_usb.htm">Installing On-device Debug Agents using USB</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

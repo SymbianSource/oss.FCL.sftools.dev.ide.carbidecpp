@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>XML-Based Component File</title>
+<link rel="StyleSheet" href="../../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Tutorial: Vertical Label Component - XML Details</h2>
+<p>The tutorial consists of two versions of the VerticalLabel  component. VerticalLabel1 is the bare minimum needed to make a  functioning component. VerticalLabel2 uses JavaScript to display the component in the UI Designer when designing your user interface.</p>
+The  following information explains what is relevant to the tutorial. Refer to the XML component schema documentation for all the details.
+<h3>Component Definition</h3>
+<p>The root element for defining a custom component begins with the &lt;componentDefinition&gt; element as shown in the VerticalLabel1.component and VerticalLabel2.component files. It contains the necessary name space attributes,  making the component schema namespace the default.</p>
+<h3>Component</h3>
+<p>The component element defines the majority of the component properties, attributes, source mapping and souce generation declarations. The following snippet is from the example .component files:</p>
+<pre>&lt;component friendlyName=&quot;%friendlyName&quot; 
+   &nbsp;&nbsp;&nbsp;  qualifiedName=&quot;com.example.uiq.VerticalLabel1&quot;
+   &nbsp;&nbsp;&nbsp;  baseComponent=&quot;com.nokia.carbide.uiq.ControlCollectionItemBase&quot;
+   &nbsp;&nbsp;&nbsp;  category=&quot;Custom Controls&quot; version=&quot;1.0&quot;
+   &nbsp;&nbsp;&nbsp;  instanceNameRoot=&quot;vlabel&quot;&gt;
+   &nbsp;&nbsp;&nbsp;  &lt;symbian 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  sdkName=&quot;com.uiq&quot; minSDKVersion=&quot;3.0&quot;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  className=&quot;CVerticalLabel&quot;/&gt;</pre>
+<p>Strings prefixed with % are localized strings that are  automatically looked up in the accompanying properties files, such as VerticalLabel1.properties.</p>
+<p>Note  that this component derives from ControlCollectionItemBase, which is a component included  with Carbide.c++. It provides some of the source code generation, as well as allowing it to behave like the other UIQ controls in the UI designer in that they are used in a design's different layout configurations as references in the control collection.</p>
+<h3>Symbian Element</h3>
+<p>The &lt;symbian&gt; element specifies that this component is compatible with all SDKs from 3.0 forward and the class name in the VerticalLabel.cpp file used to draw the component at run time is CVerticalLabel.</p>
+<pre>&lt;symbian sdkName=&quot;com.uiq&quot; minSDKVersion=&quot;3.0&quot;  className=&quot;CVerticalLabel&quot;/&gt;</pre>
+<p>The sdkName property identifies the Symbian OS variant with which the component is compatible. Currently the only recognized SDK name for UIQ is &quot;com.uiq&quot;.</p>
+<p class="note"><strong>TIP</strong> Enter <strong>devices</strong> at a command prompt (C:\&gt;devices) to display a list of installed and properly configured SDKs.</p>
+<h3>Designer Images</h3>
+<p>In the VerticalLabel1 example, the &lt;designerImages&gt; element uses one image. This is the static layout image visible in the UI design. This is used in place of writing rendering script in a JavaScript file. You will only see a static graphic in the UI designer and its sizing by the current layout manager will not be defined by the component. Since icon images have also been omitted, default images are displayed in the palette and in the outline view. For example:</p>
+<pre>&lt;designerImages layoutImageFile=&quot;layoutImage.png&quot;/&gt;</pre>
+<p>In the VerticalLabel2 example, the &lt;designerImages&gt; element uses custom icon images (.png files) to represent the component in the palette and outline views. The static layout image file can be removed since JavaScript rendering code has been added to display the component in the UI design. For example:</p>
+<pre>&lt;designerImages smallIconFile=&quot;VerticalLabel_sm.png&quot; 
+ largeIconFile=&quot;VerticalLabel.png&quot;/&gt;</pre>
+<h4>Image Support</h4>
+<p>Images are validated and rendered on a per-component basis.  Each component may have different restrictions or guidelines for the type or size of images that appear. Images appearing in forms and lists will be automatically scaled by the platform. This requires a reference to another interface the component system understands (IImagePropertyRenderingInfo); and can be declared as shown in the following code fragment.</p>
+<pre>&lt;implementations&gt;
+ &lt;implementation&gt;
+  &lt;interface id=&quot;com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo&quot;/&gt;
+  &lt;script file=&quot;MyComponent.js&quot; prototype=&quot;MyComponent&quot;/&gt;
+ &lt;/implementation&gt;
+&lt;/implementations&gt;</pre>
+<h3>Attributes Element</h3>
+<p>The Attributes element allows you to declare miscellaneous characteristics about your component. For example, the following snippet is from the example Vertical Label .component files.</p>
+<pre>&lt;attributes&gt;
+ &lt;attribute key=&quot;cpp-class-name&quot;&gt;CVerticalLabel&lt;/attribute&gt;
+ &lt;attribute key=&quot;rss-control-type-enum&quot;&gt;EVerticalLabel&lt;/attribute&gt;
+&lt;/attributes&gt;</pre>
+<p>The <span class="code">cpp-class-name</span> attribute is used by  the source generation element (&lt;sourceGen&gt;) that is inherited from ControlCollectionItemBase. This allows you to specify the  name of the C++ class to use in the generated source. The <span class="code">rss-control-type-enum</span> attribute specifies the type identifier used in the QIK_CONTROL resource generated for the control in the control collection resource.</p>
+<h3>Properties Element</h3>
+<p>Properties are the data values you can define for a component instance.  The text property is the default text drawn by the vertical label component. Note that it is a localized string, so you may provide different values for each language added to the application. The lineWidth property determines the thickness of the border rectangle drawn around the component. A value of zero (0) indicates  no border will be drawn. Note that default, minimum, and maximum values are specified. The <span class="code">default</span> attribute  is optional and provides an initial value. The optional <span class="code">minimum</span> and <span class="code">maximum</span> attributes provide range checking for integer properties.</p>
+<pre>&lt;properties&gt;
+ &lt;property name=&quot;text&quot; type=&quot;localizedString&quot; default=&quot;label&quot;/&gt;
+ &lt;property name=&quot;lineWidth&quot; type=&quot;integer&quot; default=&quot;1&quot; minValue=&quot;0&quot; maxValue=&quot;5&quot;/&gt;
+&lt;/properties&gt;</pre>
+<h3>Implementations Element</h3>
+<p>The &lt;implementations&gt; element is used in the VerticalLabel2.component example in order to render the component in the UI designer and provide its preferred size to be used by the layout manager. The &lt;implementations&gt; element informs the UI designer that the custom component has code. Implementations can be provided in either JavaScript or Java.</p>
+<p>Each implementation declaration has a list of one or more interfaces it fulfills. In this case the IVisualAppearance interface is implemented. This allows us to render an image corresponding to the current property values and provide feedback on the appropriate sizing for the component.  The &lt;script&gt; element informs the UI designer which file has the script and the name of the JavaScript prototype object to instantiate, as shown in the following snippet.</p>
+<pre>&lt;implementations&gt; 
+ &nbsp; &lt;implementation&gt; 
+ &nbsp;&nbsp;&nbsp; &lt;interface  id=&quot;com.nokia.sdt.datamodel.adapter.IVisualAppearance&quot;/&gt; 
+ &nbsp;&nbsp;&nbsp;&nbsp;&lt;script file=&quot;VerticalLabel.js&quot;  prototype=&quot;VerticalLabel&quot;/&gt;
+ &nbsp; &lt;/implementation&gt;
+&lt;/implementations&gt;</pre>
+<h4>JavaScript</h4>
+<p>The example JavaScript file (VerticalLabel.js) contains an empty function to instantiate the JavaScript prototype. Note that the JavaScript file needs to be located as a sibling to the component file that references it.</p>
+<pre>function VerticalLabel() {
+ }</pre>
+<p>The following code in the JavaScript file declares the draw method. It takes three parameters:</p>
+<ul>
+  <li>instance &ndash; the current component instance used to retrieve property values and other state data.</li>
+  <li>laf &ndash;  the look and feel object. This has objects and values that vary with the SDK and screen configuration. See the XML documentation on ILookAndFeel for more information.</li>
+  <li>graphics &ndash; the graphics used for drawing. This is a wrapper around an SWT GC object.</li>
+</ul>
+<pre>VerticalLabel.prototype.draw  = function(instance, laf, graphics) {</pre>
+<p>The font object is obtained from the look and feel  object. Since this is a  simple example the font is hard-coded to a standard Symbian font.</p>
+<pre>var font = laf.getFont(&quot;NormalFont&quot;);
+ graphics.setFont(font);</pre>
+<p>The background color needs to be set since anti-aliased text with a  transparent background is drawn. In the UI Designer, each component is rendered into a bitmap with 'transparent pixel' support.  The bitmap does not have an alpha channel.  Thus, if the background color is not set, the 'transparent pixel' would be blended with the antialiased text, resulting in an orange border.</p>
+<pre>graphics.setBackground(laf.getColor(&quot;EEikColorControlBackground&quot;));</pre>
+<p>Next a rectangular border and the text within the border is drawn. The bounds and position of the text are calculated accordingly.</p>
+<pre> var properties = instance.properties;
+ var lineWidth = properties.lineWidth;
+ var halfLineWidth = lineWidth/2;
+ var textBounds = new Rectangle(halfLineWidth, halfLineWidth, 
+ properties.size.width - halfLineWidth, 
+ properties.size.height - halfLineWidth);
+ var x = lineWidth + 1;
+ var y = properties.size.height - lineWidth - 1;</pre>
+<p>The rotated text is then drawn.</p>
+<pre>graphics.drawRotatedString(properties.text, textBounds, x, y, -1.57, true);</pre>
+<p>If requested, the border is drawn.</p>
+<pre>if (lineWidth &gt; 0) {
+ graphics.setLineWidth(lineWidth);
+ x = y = halfLineWidth;
+ 
+ graphics.drawRectangle(x, y, 
+ properties.size.width-lineWidth, 
+ properties.size.height-lineWidth);
+ }</pre>
+<p>The getPreferredSize method is called by the layout manager to get the size of the component instance. If its text property is null, it will return an empty size, otherwise it will calculate the width of the text to use as its height, and return its parent's width as its width.</p>
+<pre>VerticalLabel.prototype.getPreferredSize = function(instance, laf, wHint, hHint) {
+	var text = instance.properties.text;
+	if (text == null)
+		return new Point(0, 0);
+		
+	var font = laf.getFont("NormalFont");
+	var extent = TextRendering.formattedStringExtent(font, text, new Point(1000, 1000), 0, 0);
+	var lineWidth = instance.properties.lineWidth;
+	var parentBounds = instance.parent.getLayoutBounds();
+	
+	return new Point(parentBounds.width, extent.x + lineWidth + 1);
+}
+</pre>
+<h3>Source Mapping Element</h3>
+<p>The Vertical Label component uses an RSS include file (example_verticallabel.rh). This file defines a custom resource used to initialize the component. Since our component uses a localized string it is especially important to use a resource. The &lt;sourceMapping&gt; element contains information on how to convert from property values to RSS statements, and from RSS statements back to property values.</p>
+<p>The &lt;mapResource&gt; element tells the RSS generator to create a resource of type <span class="code">EXAMPLE_VERTICAL_LABEL</span>, and that the <span class="code">example_verticallabel.rh</span> file is needed to create compilable source code. The RSS generator has flexible support for mapping properties to resources. Only simple conversions are needed, which can be done with the &lt;mapSimpleMember&gt; element. This has attributes that indicate a given property should be used to initialize a specific resource member. Refer to the &quot;source mapping&quot; XML schema documentation for details on all available mappings. Detailed documentation on the schema can be  found in the plugins folder of your Carbide.c++ installation, for example, the default location at C:\Program Files\Nokia\Carbide.c++ v1.3\plugins\com.nokia.sdt.component.symbian_1.3.0.3. Also examine the UIQ components included with the UI designer for lots of examples; located at &lt;<em>Carbide installation path</em>&gt;/plugins/com.nokia.carbide.cpp.uiq.components/components.</p>
+<pre>&lt;sourceMapping&gt;
+ &lt;mapResource struct=&quot;EXAMPLE_VERTICAL_LABEL&quot; headers=&quot;example_verticallabel.rh&quot;&gt;
+ &lt;mapSimpleMember property=&quot;text&quot; member=&quot;txt&quot;/&gt;
+ &lt;mapSimpleMember property=&quot;lineWidth&quot; member=&quot;line_size&quot;/&gt;
+ &lt;/mapResource&gt;
+&lt;/sourceMapping&gt;</pre>
+<h3>Source  Generation Element
+</h3>
+<p>The &lt;sourceGen&gt; element contains all the information needed to generate C++ code. Because this example is deriving from ControlCollectionItemBase, there is a lot of existing infrastructure to leverage. Source code generation is performed by executing JavaScript scripts. There is a layer above raw JavaScript that creates scripts by way of template expansion, like with PHP, JPS, ASP, etc. With templates you can define variables, or escape out to arbitrary script code. The following code snippet is from the Vertical Label .component files.</p>
+<pre>
+&lt;sourceGen&gt;
+	&lt;useTemplateGroup ids="makeVisible"/&gt;		
+	&lt;templateGroup id="0" form="InstanceGen"&gt;
+	&lt;expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+		InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+		Headers="barsread.h eikenv.h"/&gt;		
+	&lt;/templateGroup&gt;
+	&lt;inline&gt;
+if (Engine.formMatches(form, [""])) {
+	// create files if missing
+	Engine.createFromStockFile("inc", "VerticalLabel.h", "VerticalLabel.h");
+	Engine.createFromStockFile("src", "VerticalLabel.cpp", "VerticalLabel.cpp");
+}
+	&lt;/inline&gt;
+	&lt;template phase="MainUserIncludes"&gt;&lt;![CDATA[
+#include "VerticalLabel.h"
+#include "example_verticallabel.hrh"
+]]&gt;&lt;/template&gt;
+	&lt;template location="VIEWDIALOGBASE_HEADER_OWNED_SYSTEM_INCLUDES"&gt;&lt;![CDATA[
+#include &lt;QikControlProvider.h&gt;
+]]&gt;&lt;/template&gt;
+	&lt;templateGroup id="ControlFactory"&gt;
+	&lt;template id="VerticalLabelControlFactory" phase="ClassPrivateOwnedMethods"&gt;&lt;![CDATA[
+class TVerticalLabelControlFactory : public MQikControlFactory
+	{
+public:
+	CCoeControl* CreateByTypeL( 
+		TInt aType,
+		TInt& aDefaultFlags )
+	{
+	if ( aType == EVerticalLabel )
+		{
+		aDefaultFlags = EQikCtrlFlagIsNonFocusing;
+		return new(ELeave) CVerticalLabel;
+		}
+	return NULL;
+	}
+	CCoeControl* ConstructCustomControlL( 
+		TInt aUniqueHandle,
+		TInt aType,
+		TInt aResourceId,
+		TInt aItemFlags,
+		const CCoeControl& aParent )
+	{
+	return NULL;
+	}
+	};
+TVerticalLabelControlFactory iVerticalLabelControlFactory;
+]]&gt;&lt;/template&gt;
+	&lt;template id="InstallControlFactory" phase="PreConstructFromResourceL"&gt;&lt;![CDATA[
+// Install this factory in the control providers list
+ControlProvider()-&gt;AddControlFactoryL( iVerticalLabelControlFactory );	
+]]&gt;&lt;/template&gt;
+	&lt;template id="RemoveControlFactory" phase="Destroy"&gt;&lt;![CDATA[
+// Remove this factory from the control providers list
+ControlProvider()-&gt;RemoveControlFactory( iVerticalLabelControlFactory );	
+]]&gt;&lt;/template&gt;
+	&lt;/templateGroup&gt;
+&lt;/sourceGen&gt;
+</pre>
+<p>Since source code generation is very detailed  and specific, deriving from a component does not automatically enable source code generation. The derived component must specify what to generate, either completely  or by referencing existing templates. Templates defined in ControlCollectionItemBase can be reused.</p>
+<p>The <code>makeVisible</code> template group does some standard initialization. Macros are groups of parametrized templates. The <code>SetupControlInstanceVariable</code> macro generates code to setup a member variable for the vertical label control's instance.</p>
+<p>The &lt;inline&gt; element inserts  JavaScript code. This example calls a predefined function to copy the stock versions of VerticalLabel.cpp and VerticalLabel.h that contain the runtime code implementing the vertical label control.</p>
+<p>There is a &lt;template&gt; element in this snippet that is used to define a new template in order to insert the  <span class="code">#include &quot;VerticalLabel.h&quot;</span> and <span class="code">#include &quot;example_verticallabel.hrh&quot;</span> statements for the required header files.</p>
+<p>The final &lt;templateGroup&gt; element embodies a set of templates used to generate and install a custom control factory to translate the custom control type identifier, <code>EVerticalLabel</code> used in the control collection resource into a CVerticalLabel object.</p>
+<p><img src="../../../img/nokia_copyright.png" alt="copyright" width="280" height="21"></img></p>
+
+</body>
+</html>

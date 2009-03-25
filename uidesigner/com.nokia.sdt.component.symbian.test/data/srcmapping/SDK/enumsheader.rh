@@ -1,0 +1,39 @@
+
+ENUM ColorList {
+	CAknColorRed = 1,
+	CAknColorGreen = 2,
+	CAknColorBlue = 3,
+	CAknColorNone = 0,
+	CAknColorNew
+}
+
+ENUM ColorList2 {
+	CAknColorCyan,
+	CAknColorYellow,
+	CAknColorMagenta
+}
+
+STRUCT COLORS {
+	WORD aknFgColor;
+	WORD aknBgColor;
+}
+
+STRUCT COLORS_DEFAULTS {
+	WORD aknFgColor = CAknColorGreen;
+	WORD aknBgColor = CAknColorCyan;
+}
+
+ENUM Commands {
+	CommandAccept,
+	CommandCancel
+}
+
+STRUCT COMMAND {
+	WORD command;
+}
+
+ENUM NumberFlags {
+	EFlagFirst,
+	EFlagSecond,
+	EFlagThird
+};

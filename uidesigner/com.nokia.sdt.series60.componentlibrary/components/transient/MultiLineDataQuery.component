@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.MultiLineDataQuery.type1">
+		<enumElement value="EMultiDataFirstEdwin"/>
+		<enumElement value="EMultiDataFirstSecEd"/>
+		<enumElement value="EMultiDataFirstTimeEd"/>
+		<enumElement value="EMultiDataFirstDateEd"/>
+		<!-- <enumElement value="EMultiDataFirstDurEd"/> 
+			Duration can't be used as the first type due to restrictions in C++ class -->
+		<enumElement value="EMultiDataFirstPhoneEd"/>
+		<enumElement value="EMultiDataFirstNumEd"/>
+		<enumElement value="EMultiDataFirstPinEd"/>
+		<enumElement value="EMultiDataFirstIpEd"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.MultiLineDataQuery.type2">
+		<enumElement value="EMultiDataSecondEdwin"/>
+		<enumElement value="EMultiDataSecondSecEd"/>
+		<enumElement value="EMultiDataSecondTimeEd"/>
+		<enumElement value="EMultiDataSecondDateEd"/>
+		<enumElement value="EMultiDataSecondDurEd"/>
+		<enumElement value="EMultiDataSecondPhoneEd"/>
+		<enumElement value="EMultiDataSecondNumEd"/>
+		<enumElement value="EMultiDataSecondPinEd"/>
+		<enumElement value="EMultiDataSecondIpEd"/>
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.MultiLineDataQuery" 
+		category="NotesDialogs"
+		instanceNameRoot="multiQuery"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknMultiLineDataQueryDialog" classHelpTopic=""
+			resourceType="AVKON_DATA_QUERY" resourceHelpTopic="" />
+		<designerImages smallIconFile="MultiLineDataQuery_sm.png" 
+			largeIconFile="MultiLineDataQuery.png"/>
+		<attributes>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<property category="Data" name="text" type="localizedString" default="Enter data:"
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Data" name="text2" type="localizedString" default="Enter data:"
+				descriptionKey="text2Description"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<enumProperty category="Behavior" name="type" type="com.nokia.sdt.series60.MultiLineDataQuery.type1" 
+				default="EMultiDataFirstEdwin"
+				editorClass="com.nokia.sdt.series60.component.MultiLineQueryTypeEditorFactory" 
+				descriptionKey="typeDescription" />
+			<enumProperty category="Behavior" name="type2" type="com.nokia.sdt.series60.MultiLineDataQuery.type2" 
+				default="EMultiDataSecondEdwin"
+				editorClass="com.nokia.sdt.series60.component.MultiLineQueryTypeEditorFactory" 
+				descriptionKey="type2Description" />
+			<enumProperty category="Data" name="tone" type="com.nokia.sdt.series60.Query.tone" 
+				descriptionKey="toneDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<code class="com.nokia.sdt.series60.component.DataQueryVisualAndLayoutImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="MultiLineDataQuery.js" prototype="MultiLineDataQueryContainment"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.sdt.series60.component.MultiLineDataQueryCodeImplFactory"/>
+			</implementation>
+		</implementations>
+		
+	<sourceMapping>
+		<mapResource struct="DIALOG" headers="avkon.rh avkon.rsg eikon.rh">
+			<mapBitmaskMember property="." member="flags" includedProperties="" >
+				<!-- initial blank entry forces bits on -->
+				<mapBitmaskValue properties="" value="EAknGeneralQueryFlags" />
+			</mapBitmaskMember>
+			<mapFixedMember member="buttons" value="R_AVKON_SOFTKEYS_OK_CANCEL" />			
+	        <mapArrayMember property="." member="items">
+				<mapResourceElement struct="DLG_LINE" headers="avkon.rh" instanceIdentifyingMember="id">
+					<select property="#(arrayIndex)">
+						<choice value="0">
+							<select property="[parent].type">
+								<choice value="EMultiDataFirstIpEd">
+									<mapFixedMember member="type" value="EAknExtCtMultilineQuery" />
+								</choice>
+								<choice>
+									<mapFixedMember member="type" value="EAknCtMultilineQuery" />
+								</choice>
+							</select>
+						</choice>
+						<choice value="1">
+							<select property="[parent].type2">
+								<choice value="EMultiDataSecondIpEd">
+									<mapFixedMember member="type" value="EAknExtCtMultilineQuery" />
+								</choice>
+								<choice>
+									<mapFixedMember member="type" value="EAknCtMultilineQuery" />
+								</choice>
+							</select>
+						</choice>
+					</select>
+					<mapEnumMember property="." member="id" uniqueValue="*"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID" />
+		        	<mapResourceMember property="." member="control" id="queryControl" 
+		        									struct="AVKON_DATA_QUERY" headers="avkon.rh">
+						<select property="#(arrayIndex)">
+							<choice value="0">
+								<mapEnumMember property="[parent].type" member="layout"/>
+								<mapSimpleMember property="[parent].text" member="label"/>
+							</choice>
+							<choice value="1">
+								<mapEnumMember property="[parent].type2" member="layout"/>
+								<mapSimpleMember property="[parent].text2" member="label"/>
+							</choice>
+						</select>
+						<mapResourceMember property="." member="control" id="control" />
+			        </mapResourceMember>
+		        </mapResourceElement>
+	        </mapArrayMember>
+		</mapResource>
+	</sourceMapping>
+		
+		<sourceGen>
+
+			<inline scope="prototype">
+include("popupDialogLibrary.js");
+${jsObject}.prototype.getStrings = function(instance) {
+	if (instance.componentId == "com.nokia.sdt.series60.MultiIpDataQuery")
+		this.dialogClassName = "CAknMultiLineIpQueryDialog"; 
+	else
+		this.dialogClassName = "CAknMultiLineDataQueryDialog"; 
+	this.methodType1 = getChildAttribute(instance, 0, "data-model-cpp-type");
+	this.methodType2 = getChildAttribute(instance, 1, "data-model-cpp-type");
+}
+			</inline>
+			
+			<inline>
+this.getStrings(instance);			
+			</inline>
+			
+		<templateGroup id="MULTI_LINE_QUERY">
+
+			<template id="DeclareMethod" phase="ClassMethods"><![CDATA[
+static TInt Run${instanceName$title}L( 
+		${this.methodType1}& aData1, 
+		${this.methodType2}& aData2, 
+		TBool aUseDefaults = ETrue, 
+		const TDesC* aOverridePrompt1 = NULL, 
+		const TDesC* aOverridePrompt2 = NULL );
+]]>			</template>
+
+			<defineLocation id="METHOD_LOCATION" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Run${instanceName$title}L(...))">
+				<template><![CDATA[
+/**
+ * Show the popup dialog for ${instanceName}
+ * @param aData1 in-out ${this.methodType1} data for first editor
+ * @param aData2 in-out ${this.methodType2} data for second editor
+ * @param aUseDefaults TBool uses designer default editor data if ETrue
+ * @param aOverridePrompt1 optional override first prompt text
+ * @param aOverridePrompt2 optional override second prompt text
+ * @return EAknSoftkeyOk (left soft key id) or 0
+ */
+TInt ${className}::Run${instanceName$title}L( 
+		${this.methodType1}& aData1, 
+		${this.methodType2}& aData2, 
+		TBool aUseDefaults, 
+		const TDesC* aOverridePrompt1, 
+		const TDesC* aOverridePrompt2 )
+	{
+	}
+]]>				</template>
+			</defineLocation>
+			
+			<template id="DefineMethod" location="METHOD_LOCATION"><![CDATA[
+if ( aUseDefaults )
+	{
+<%	if (children.length < 2) {
+		error(formatString(lookupString("invalidChildrenState"), instanceName, children.length));
+	}
+	else {
+		var setDataContribs = Engine.generateChildContributions(instance.children[0], "AknDataQuerySetData1");
+		// resolve the contents to this method
+		Engine.assignLocationsForPhase(setDataContribs, "SetData", "METHOD_LOCATION")
+		contribs.addAll(setDataContribs);
+		setDataContribs = Engine.generateChildContributions(instance.children[1], "AknDataQuerySetData2");
+		// resolve the contents to this method
+		Engine.assignLocationsForPhase(setDataContribs, "SetData", "METHOD_LOCATION")
+		contribs.addAll(setDataContribs);
+	}
+%>	}
+<% // EFixedPointLayout case added because CAknFixedPointQueryDialog::NewL does not have default argument
+if (properties.tone != "ENoTone") { %>
+${this.dialogClassName}* queryDialog = ${this.dialogClassName}::NewL( 
+		aData1, 
+		aData2, 
+		CAknQueryDialog::${properties.tone} );	
+<% } else { %>			
+${this.dialogClassName}* queryDialog = ${this.dialogClassName}::NewL( 
+		aData1, 
+		aData2 );
+<% } %>
+// To override the prompts, both must be non-NULL
+if ( aOverridePrompt1 != NULL && aOverridePrompt2 != NULL )
+	{
+	CleanupStack::PushL( queryDialog );
+	queryDialog->SetPromptL( *aOverridePrompt1, *aOverridePrompt2 );
+	CleanupStack::Pop(); // queryDialog
+	}
+
+return queryDialog->ExecuteLD( ${resourceName$upper} );
+]]>			</template>
+
+			<template id="AddIncludes" phase="MainSystemIncludes"><![CDATA[
+#include <aknquerydialog.h>
+]]>			</template>
+	
+		</templateGroup>
+	
+	<inline>
+		if (Engine.formMatches(form, [""]))
+			contribs.addAll(Engine.generateChildContributions("AknDataQuery"))
+	</inline>	
+	
+		</sourceGen>
+	</component>
+	
+</componentDefinition>

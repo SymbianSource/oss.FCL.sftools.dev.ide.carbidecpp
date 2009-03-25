@@ -1,0 +1,191 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+package com.nokia.carbide.cpp.internal.project.ui.importWizards;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ui.IImportWizard;
+import org.eclipse.ui.IWorkbench;
+
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
+import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+
+public class BldInfImportWizard extends Wizard implements IImportWizard {
+	
+	private BldInfSelectionPage bldInfSelectionPage;
+	private ImporterBuildTargetsPage buildTargetsPage;
+	private MMPSelectionPage mmpSelectionPage;
+	private ProjectPropertiesPage projectPropertiesPage;
+
+
+	public BldInfImportWizard() {
+		super();
+		IDialogSettings workbenchSettings = ProjectUIPlugin.getDefault().getDialogSettings();
+		IDialogSettings section = workbenchSettings.getSection("BldInfImportWizard"); //$NON-NLS-1$
+		if (section == null)
+			section = workbenchSettings.addNewSection("BldInfImportWizard"); //$NON-NLS-1$
+		setDialogSettings(section);
+		setNeedsProgressMonitor(true);
+		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_IMPORT_BLDINF_WIZARD_BANNER));
+		
+		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+		if (!sdkMgr.checkDevicesXMLSynchronized()){
+			if (sdkMgr instanceof ISDKManagerInternal){
+				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+				sdkMgrInternal.fireDevicesXMLChanged();
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
+	 */
+	public boolean performFinish() {
+    	bldInfSelectionPage.saveDialogSettings();
+    	buildTargetsPage.saveDialogSettings();
+    	
+		final String projectName = projectPropertiesPage.getProjectName();
+		final IPath rootDirectory = projectPropertiesPage.getRootDirectory();
+		
+		// calculate the project relative path to the bld.inf file.
+		IPath absoluteBldInfPath = new Path(getBldInfFile());
+		assert(rootDirectory.isPrefixOf(absoluteBldInfPath));
+		final String projectRelativePath = absoluteBldInfPath.removeFirstSegments(rootDirectory.segmentCount()).setDevice(null).toOSString();
+		
+		// if all mmps are checked then don't pass any to createProject.  that
+		// way the project setting will be set to build bld.inf.
+		final List<String> components = mmpSelectionPage.areAllMakMakeReferencesChecked() ? new ArrayList<String>(0) : mmpSelectionPage.getSelectedMakMakeReferences();
+
+		final List<String> refs = getSelectedMakMakeReferences();
+		
+		final List<ISymbianBuildContext> selectedConfigs = getSelectedConfigs();
+
+		// run this in a workspace job
+		WorkspaceJob job = new WorkspaceJob(Messages.BldInfImportWizard_CreatingProjectJobName) {
+			@Override
+			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
+				monitor.beginTask(Messages.BldInfImportWizard_CreatingProjectJobName, IProgressMonitor.UNKNOWN);
+
+				// write the debug target mmp setting - use the last mmp in
+				// the list of selected mak make files.
+				// We also need to check for project test mmpfiles and add that only if the project is only comprised of test mmp files
+				String debugMMP = ""; //$NON-NLS-1$
+				boolean hasOneNormalMMP = false; // Don't add test mmp if there's a regular MMP
+				for (String ref : refs) {
+					if (ref.toLowerCase().endsWith(".mmp")){
+						hasOneNormalMMP = true;
+						debugMMP = ref;
+					}
+					
+					if (hasOneNormalMMP == false){
+						if (ref.toLowerCase().endsWith(".mmp " + ICarbideProjectInfo.TEST_COMPONENT_LABEL)) { //$NON-NLS-1$
+			    			debugMMP = ref;
+		    				debugMMP = debugMMP.substring(0, debugMMP.indexOf( " " + ICarbideProjectInfo.TEST_COMPONENT_LABEL));
+			    		}
+					}
+				} // for
+
+				IProject newProject = null;
+        		newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
+        		monitor.worked(1);
+
+    			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(bldInfSelectionPage.useSBSv2Builder()));
+
+    			// TODO pass PKG file path to postProjectCreatedActions, currently passing null
+        		ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
+        		
+        		if (monitor.isCanceled()) {
+	    			// the user canceled the import so delete the project
+	    			newProject.delete(false, true, null);
+	        		monitor.done();
+					return Status.CANCEL_STATUS;
+	    		}
+        		monitor.worked(1);
+        		ProjectUIPlugin.projectCreated(newProject);
+        		monitor.done();
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+		job.schedule();
+
+		return true;
+	}
+	 
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
+	 */
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		setWindowTitle(Messages.BldInfImportWizard_title);
+		setNeedsProgressMonitor(true);
+		bldInfSelectionPage = new BldInfSelectionPage(this);
+		buildTargetsPage = new ImporterBuildTargetsPage(this);
+		mmpSelectionPage = new MMPSelectionPage(this);
+		projectPropertiesPage = new ProjectPropertiesPage(this);
+	}
+	
+	/* (non-Javadoc)
+     * @see org.eclipse.jface.wizard.IWizard#addPages()
+     */
+    public void addPages() {
+        super.addPages(); 
+        addPage(bldInfSelectionPage);
+        addPage(buildTargetsPage);
+        addPage(mmpSelectionPage);
+        addPage(projectPropertiesPage);
+    }
+    
+    public String getBldInfFile() {
+    	if (bldInfSelectionPage != null) {
+    		return bldInfSelectionPage.getInfFilePath();
+    	}
+    	return ""; //$NON-NLS-1$
+    }
+    
+    public List<ISymbianBuildContext> getSelectedConfigs() {
+    	return buildTargetsPage.getSelectedBuildConfigs();
+    }
+    
+    public List<String> getSelectedMakMakeReferences() {
+    	return mmpSelectionPage.getSelectedMakMakeReferences();
+    }
+    
+    public void setWizardIncomplete() {
+    	// setting the last page is good enough
+    	projectPropertiesPage.setPageComplete(false);
+    }
+}

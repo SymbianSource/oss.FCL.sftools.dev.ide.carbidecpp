@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>ANSI Keywords Only</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>ANSI Keywords Only</h3>
+<p>(ISO C, &sect;6.4.1) The Carbide compiler can recognize several additional reserved keywords. If you enable this setting, the compiler generates an error if it encounters any of the additional keywords that it recognizes. If you must write source code that strictly adheres to the ISO standard, enable the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting.</p>
+<p>If you disable this setting, the compiler recognizes the following non-standard keywords:</p>
+<ul>
+  <li><span class="code">far</span>&mdash;Specifies how the compiler generates addressing modes and operations. It is not available for every target platform.</li>
+  <li><span class="code">inline</span>&mdash;Lets you declare a C function to be inline. For more information, see <a href="c_inlining.htm">Inlining</a>.</li>
+  <li><span class="code">pascal</span>&mdash;No longer used.</li>
+</ul>
+<p>The ANSI Keywords Only setting corresponds to the pragma only_std_keywords. To check this setting, use <span class="code">__option (only_std_keywords)</span>. By default, this setting is disabled.</p>
+<p>See also &ldquo;only_std_keywords&rdquo; and <a href="../symbols/sym_settings.htm">Checking Settings</a>.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

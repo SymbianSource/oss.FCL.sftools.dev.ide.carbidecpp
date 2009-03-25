@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Multibyte and Unicode Support</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Multibyte and Unicode Support</h3>
+<p>  The Carbide preprocessor fully supports the use of multibyte and Unicode-formatted source files.</p>
+<p>Source and header files may be encoded in any text encoding the operating system recognizes. (Unicode text decoding support is implemented using native OS services in Win32 and <span class="code">conv()</span> on UNIX systems.)</p>
+<p>As per ISO C++98 and C99, universal characters may be used in any string or character literal, identifiers (macros, variables, functions, methods, etc.), and comments. These characters are derived either from multibyte sequences in the source text, by virtue of the source file being encoded in UCS-2 or UCS-4, or by use of the <span class="code">\uXXXX</span> or <span class="code">\UXXXXXXXX</span> escape sequences.</p>
+<h4>Wide String Literals</h4>
+<p> Wide string literals in the form L&quot;xxx&quot; and wide characters in the form L&rsquo;xxx&rsquo; are interpreted in the context of the source text encoding.</p>
+<p class="listing">const wchar_t *str = L&quot;Meine Katze i&szlig;t M&auml;use nachts.&quot;;</p>
+<p>Multibyte character sequences that appear in strings are internally converted to their Unicode equivalents until the C/C++ token for the string is generated. At that time, if the string literal is a narrow string (i.e. using char), the original multibyte character sequence are emitted. If the string is a wide string (using <span class="code">wchar_t</span>), the Unicode characters translated from the multibyte sequence are emitted. If <span class="code">wchar_t</span> is 16 bits and a character is truncated to 16 bits, a warning is reported. (See ISO C99, &sect;6.4.5.5 for the specification of this behavior.)</p>
+<p>In the event that you want translated &ndash; and usually truncated &ndash; Unicode characters in narrow string literals, enable <span class="code">#pragma multibyteaware_preserve_ literals off</span>.</p>
+<h4>Source Encoding</h4>
+<p>The compiler uses the <a href="../pragmas/p_text_encoding.htm">Source encoding</a> option in to control how it detects the source file encoding. The compiler recognizes the following source encoding options:</p>
+<ul>
+  <li>ASCII&ndash;no detection is done, the high-ASCII characters are not interpreted, and wide character strings are merely zero-extensions of the individual bytes in the string. </li>
+  <li>Autodetect&ndash;the compiler attempts to tell whether byte-encoded source is encoded in UTF-8, Shift-JIS, EUC-JP, ISO-2022-JP, or whichever encoding format the operating system considers the default. This option degrades compile speeds slightly due to the extra scanning. </li>
+  <li>System&ndash;the compiler uses the system locale without scanning the source.</li>
+  <li>UTF-8, Shift-JIS, EUC-JP, ISO-2022-JP&ndash; self-explanatory. </li>
+</ul>
+<p class="note"><strong>NOTE</strong> Currently, the compiler ignores the mapping in some Japanese character sets of <span class="code">0x5c</span> (ASCII &lsquo;<span class="code">\</span>&rsquo;) to Yen (<span class="code">\u00A5</span>) because the C++98 and C99 standards say that the ASCII character set must be mapped one-to-one with any multibyte encoding. <span class="code">0x5C</span> is always interpreted as &lsquo;<span class="code">\</span>&rsquo; (except inside multibyte character sequences).</p>
+<p class="note"><strong>NOTE</strong> The ISO-2022-JP and EUC-JP encoding currently only recognize characters defined by JIS X 0208-1990 (i.e., the escapes ESC $ @, ESC $ B for ISO-2022-JP and two-byte sequences in EUC-JP). The additional characters in JIS X 0212-1990 are not yet recognized. </p>
+<p>No matter what the Source encoding setting, the compiler always detects <span class="code">UTF-16{BE,LE}</span> or <span class="code">UCS-4{BE,LE}</span> source through a statistical character scan for NULs. </p>
+<p class="note"><strong>NOTE</strong> Currently, only the command-line tools, not the IDE, can properly handle sources in Unicode format (UTF-16, UCS-2, UCS-4).</p>
+<p>Alternately, individual source files can identify which source text encoding is present using #pragma text_encoding. The format is:<br />
+  #pragma text_encoding(&quot;name&quot; | unknown | reset [, global])</p>
+<p>Where name is an IANA or MIME encoding name or an OS-specific string. </p>
+<p>The compiler recognizes these names and maps them to its internal decoders:</p>
+<p class="listing">system US-ASCII ASCII ANSI_X3.4-1968 ANSI_X3.4-1968<br />
+  ANSI_X3.4 UTF-8 UTF8 ISO-2022-JP CSISO2022JP ISO2022JP<br />
+  CSSHIFTJIS SHIFT-JIS SJIS EUC-JP EUCJP <br />
+  UCS-2 UCS-2BE UCS-2LE UCS2 UCS2BE UCS2LE UTF-16 U<br />
+  TF-16BE UTF-16LE UTF16 UTF16BE UTF16LE UCS-4 UCS-4BE <br />
+  UCS-4LE UCS4 UCS4BE UCS4LE 10646-1:1993 ISO-10646-1 <br />
+  ISO-10646 unicode</p>
+<p class="note"><strong>NOTE</strong> UCS-2 is always interpreted as UTF-16; i.e. surrogate character pairs are used to select characters through plane 16.</p>
+<p>This #pragma may be used several times in one file (probably unlikely usage). The compiler expects the pragma to be encoded in the &ldquo;current&rdquo; text encoding, through the end of line. </p>
+<p>By default, #pragma text_encoding is only effective through the end of file. To affect the default text encoding assumed for the current and all subsequent files, supply the &ldquo;global&rdquo; modifier.<br />
+</p>
+<h4>Other Support</h4>
+<p>In addition, note the following:</p>
+<ul>
+  <li>Specify Universal character names (i.e. Unicode code points) with the<span class="code"> \uXXXX</span> or <span class="code">\UXXXXXXXX</span> escape sequences:</li>
+</ul>
+<blockquote>
+  <p class="listing">wchar_t florette = L&rsquo;\u273f&rsquo;;<br />
+    int \u30AD\u30B3\u30DE\u30A6 = soy_sauce();</p>
+</blockquote>
+<ul>
+  <li>You can use \uXXXX or \UXXXXXXXX regardless of the actual size of <span class="code">wchar_t</span> (use of the escape does not impose a character width on the literal).</li>
+  <li>Preprocessed text is always emitted in ASCII. Wide characters are emitted in the <span class="code">\uXXXX</span> or <span class="code">\UXXXXXXXX</span> format.</li>
+</ul>
+<blockquote>
+  <p class="listing"> extern string *W&ouml;rter[]; <br />
+    --&gt;<br />
+    extern string *W\u00F6rter[];</p>
+</blockquote>
+<ul>
+  <li>Identifiers using characters not representable in ASCII are emitted in object code with the <span class="code">\uXXXX</span> or <span class="code">\UXXXXXXXX</span> escape sequences. If an object format does not support the &lsquo;<span class="code">\\</span>&rsquo; character, the encoding may be modified on a target-specific basis.</li>
+</ul>
+<p>Also see &ldquo;Character Constants as Integer Values&rdquo; for information on creating a character constant consisting of more than one character (not to be confused with this topic). </p>
+<p>For more information on Unicode, see <a href="http://www.unicode.org">www.unicode.org</a>. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

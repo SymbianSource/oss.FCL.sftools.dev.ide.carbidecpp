@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lookAndFeel [
+<!ENTITY common_laf SYSTEM "common.inc">
+<!ENTITY landscape_laf SYSTEM "landscape.inc">
+<!ENTITY qvga_laf SYSTEM "qvga_laf.inc">
+]>
+
+<lookAndFeel xmlns="http://www.nokia.com/sdt/lookAndFeel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- the data/s60/images relative directory -->
+<string key="image.dir" value="dblres/"/>
+
+<!-- include common definitions -->
+&common_laf;
+&landscape_laf;
+&qvga_laf;
+
+<boolean key="decorations" value="false"/>	
+	
+<color key="status.bar.gradient.start" r="8" g="52" b="140"/>
+<color key="status.bar.gradient.end" r="123" g="170" b="214"/>
+<color key="control.pane.gradient.start.color" r="131" g="170" b="214"/>
+<color key="control.pane.gradient.end.color" r="246" g="251" b="247"/>
+<colorAlias key="control.pane.gradient.start" ref="control.pane.gradient.start.color"/>
+<colorAlias key="control.pane.gradient.end" ref="control.pane.gradient.end.color"/>
+<color key="CAknSettingItemList.ContentBackground" r="24" g="69" b="156" />
+
+		
+<!-- fonts are found relative to data/s60/fonts -->
+
+<font key="AnnotationFont" initData="s60ssb.ttf" size="10" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="14" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="11" />
+<font key="EditorFont" initData="s60snrc.ttf" size="10" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="16" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
+<font key="MessageFont" initData="s60ssb.ttf" size="12" />
+<font key="NormalFont" initData="s60ssb.ttf" size="13" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="11" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="14" />
+<font key="TitleFont" initData="s60tsb.ttf" size="16" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="11" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="13" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="11" />
+<font key="message.font" initData="s60ssb.ttf" size="12" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="10" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="10" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="11" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="11" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="16" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="12" />
+	
+<rectangle key="control.pane.bounds" x="216" y="0" width="104" height="240"/>
+<rectangle key="status.pane.bounds" x="30" y="0" width="186" height="240"/>
+<rectangle key="status.pane.title.bounds" x="0" y="0" width="186" height="20"/>
+<rectangle key="content.pane.bounds" x="0" y="24" width="320" height="192"/> 
+<rectangle key="status.bar1.bounds" x="0" y="0" width="320" height="20"/>
+<rectangle key="status.bar2.bounds" x="0" y="220" width="320" height="20"/>
+<rectangle key="navi.content.bounds" x="0" y="220" width="186" height="20"/>
+
+<dimension key="screen.size" width="320" height="240"/>
+
+<integer key="list.row.height.single" value="30" />
+<integer key="list.row.height.single.large" value="45" />
+<integer key="list.row.height.double" value="60" />
+<integer key="list.query.row.height.single" value="30" />
+<integer key="list.query.row.height.single.large" value="45" />
+<integer key="list.query.row.height.double" value="60" />
+<integer key="progress.bar.height" value="12"/>
+<integer key="note.progress.offsetFromBottom" value="28"/>
+<integer key="settingitemlist.content.x" value="135"/>
+<integer key="settingitemlist.content.height" value="22"/>
+<integer key="extra.padding" value="4"/>
+<integer key="form.single.extra.padding" value="0"/>
+<integer key="form.double.extra.padding" value="4"/>
+
+<integer key="control.toolbar.margin" value="7"/>
+<integer key="control.toolbar.height" value="44"/>
+	
+<!-- These dimensions are used in every layout. 
+
+The pattern is, x and y are absolute.
+If width is negative, the right side is calculated as the RHS of the parent
+plus this negative d_width.  Same goes for e_height.  
+Otherwise (non-negative), the width and height are absolute.
+-->
+
+<rectangle key="listitem.CAknSingleStyleListBox.text" x="17" y="4" width="-5" height="24"/>
+
+<rectangle key="listitem.CAknSinglePopupMenuStyleListBox.text" x="10" y="3" width="-5" height="24"/>
+
+<rectangle key="listitem.CAknSingleGraphicStyleListBox.text" x="35" y="4" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleGraphicStyleListBox.image" x="2" y="4" width="21" height="24"/>
+
+<rectangle key="listitem.CAknSingleGraphicPopupMenuStyleListBox.text" x="32" y="3" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleGraphicPopupMenuStyleListBox.image" x="2" y="1" width="21" height="24"/>
+
+<rectangle key="listitem.CAknSingleGraphicPopupMenuStyleListBoxMulti.text" x="32" y="3" width="-5" height="24"/>
+
+<rectangle key="listitem.CAknSingleNumberStyleListBox.number" x="2" y="4" width="23" height="24"/> 
+<rectangle key="listitem.CAknSingleNumberStyleListBox.text" x="35" y="4" width="-5" height="18"/>
+
+<rectangle key="listitem.CAknSingleHeadingStyleListBox.text" x="90" y="3" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleHeadingStyleListBox.headingText" x="5" y="6" width="67" height="24"/> 
+
+<rectangle key="listitem.CAknSingleHeadingPopupMenuStyleListBox.text" x="90" y="3" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleHeadingPopupMenuStyleListBox.headingText" x="5" y="6" width="67" height="24"/> 
+
+<rectangle key="listitem.CAknSingleGraphicHeadingStyleListBox.text" x="90" y="3" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleGraphicHeadingStyleListBox.headingText" x="27" y="6" width="45" height="24"/> 
+<rectangle key="listitem.CAknSingleGraphicHeadingStyleListBox.image" x="2" y="3" width="21" height="24"/>
+
+<rectangle key="listitem.CAknSingleGraphicHeadingPopupMenuStyleListBox.text" x="80" y="3" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleGraphicHeadingPopupMenuStyleListBox.headingText" x="27" y="6" width="35" height="24"/> 
+<rectangle key="listitem.CAknSingleGraphicHeadingPopupMenuStyleListBox.image" x="2" y="3" width="21" height="24"/>
+
+<rectangle key="listitem.CAknSingleGraphicHeadingPopupMenuStyleListBoxMulti.text" x="90" y="3" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleGraphicHeadingPopupMenuStyleListBoxMulti.headingText" x="27" y="6" width="45" height="24"/> 
+
+<rectangle key="listitem.CAknSingleLargeStyleListBox.text" x="92" y="13" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleLargeStyleListBox.image" x="9" y="3" width="67" height="36"/>
+
+<rectangle key="listitem.CAknSingleNumberHeadingStyleListBox.text" x="92" y="4" width="-5" height="24"/>
+<rectangle key="listitem.CAknSingleNumberHeadingStyleListBox.headingText" x="24" y="7" width="48" height="24"/> 
+<rectangle key="listitem.CAknSingleNumberHeadingStyleListBox.number" x="2" y="5" width="19" height="18"/>
+
+<rectangle key="listitem.CAknDoubleStyleListBox.text" x="17" y="7" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoubleStyleListBox.secondaryText" x="24" y="36" width="-5" height="18"/>
+
+<rectangle key="listitem.CAknDoublePopupMenuStyleListBox.text" x="10" y="9" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoublePopupMenuStyleListBox.secondaryText" x="19" y="37" width="-5" height="18"/>
+
+<rectangle key="listitem.CAknDoubleStyle2ListBox.text" x="17" y="6" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoubleStyle2ListBox.secondaryText" x="17" y="33" width="-5" height="24"/>
+
+<rectangle key="listitem.CAknDouble2PopupMenuStyleListBox.text" x="10" y="7" width="-5" height="28"/>
+<rectangle key="listitem.CAknDouble2PopupMenuStyleListBox.secondaryText" x="10" y="30" width="-5" height="28"/>
+
+<rectangle key="listitem.CAknDoubleNumberStyleListBox.number" x="2" y="7" width="25" height="18"/> 
+<rectangle key="listitem.CAknDoubleNumberStyleListBox.text" x="35" y="7" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoubleNumberStyleListBox.secondaryText" x="42" y="36" width="-5" height="18"/>
+
+<rectangle key="listitem.CAknDoubleTimeStyleListBox.text" x="92" y="7" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoubleTimeStyleListBox.secondaryText" x="99" y="36" width="-5" height="18"/>
+<rectangle key="listitem.CAknDoubleTimeStyleListBox.time1Text" x="12" y="7" width="66" height="24"/> 
+<rectangle key="listitem.CAknDoubleTimeStyleListBox.time2Text" x="12" y="36" width="66" height="18"/> 
+
+<rectangle key="listitem.CAknDoubleLargeStyleListBox.text" x="92" y="6" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoubleLargeStyleListBox.secondaryText" x="99" y="33" width="-5" height="24"/> 
+<rectangle key="listitem.CAknDoubleLargeStyleListBox.image" x="9" y="6" width="67" height="36"/>
+
+<rectangle key="listitem.CAknDoubleLargeGraphicPopupMenuStyleListBox.text" x="77" y="6" width="-5" height="24"/>
+<rectangle key="listitem.CAknDoubleLargeGraphicPopupMenuStyleListBox.secondaryText" x="84" y="33" width="-5" height="24"/> 
+<rectangle key="listitem.CAknDoubleLargeGraphicPopupMenuStyleListBox.image" x="9" y="6" width="67" height="36"/>
+
+<rectangle key="listitem.any.markIcon" x="296" y="4" width="16" height="18"/>
+
+<rectangle key="listbox.searchfield.bounds.popup" x="4" y="0" width="-1" height="46"/>
+<rectangle key="listbox.searchfield.bounds.search" x="0" y="0" width="0" height="42"/>
+<rectangle key="listbox.searchfield.icon" x="0" y="10" width="34" height="30"/>
+<rectangle key="listbox.searchfield.input" x="25" y="12" width="-2" height="30"/>
+
+</lookAndFeel>

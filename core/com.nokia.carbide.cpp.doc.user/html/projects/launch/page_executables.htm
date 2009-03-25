@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Carbide Executables page</title>
+<link href="../../../book.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2>Executables page </h2>
+<p>The <b>Executables</b> page specifies the executables   available to debug with your project based on the chosen rule. The Executables page gives you project level control over the executables associated with it. The page shows all the executables in the workspace or those imported into the Executables view from outside the workspace that can be debugged by this project. See the <a href="../../reference/view_executables.htm">Executables</a> view for information on controlling  executables from the workspace. </p>
+<p align="center"><img src="images/page_executables.png" width="598" height="224"></p>
+<p class="figure">Figure 1 - Executables page (System TRK example) </p>
+<h5>Table 1.  Executable page &mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="32%" scope="col">Item</th>
+    <th width="68%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Load symbols for these executables and target them for debugging </b></td>
+    <td><p>Select the rule which governs the executable support used by this project for debugging. The options include: </p>
+        <ul>
+          <li><b>Executables in the workspace  from this SDK</b> &#8212; shows all executables in the workspace built using the specified SDK. This is the default setting. </li>
+          <li><b>Executables built by this project</b> &#8212; shows only the executables built by this project  using the specified SDK</li>
+          <li><b>Executables selected below</b> &#8212; shows only the executables chosen by the user. Initial list display uses the All Executables listing. </li>
+          <li><b>All executables (slows launch)</b> &#8212; shows all the executables in the workspace regardless of which SDK created them. Selecting this option will slow down Carbide launches as the list is populated. </li>
+        </ul></td>
+  </tr>
+  <tr>
+    <td><b>Executables list </b></td>
+    <td>Shows all the executables associated with this project. </td>
+  </tr>
+  <tr>
+    <td><b>Add...</b></td>
+    <td>Opens the <b>Select an executable file</b> dialog which can locate and select  executable files and add them to the project's executables list. </td>
+  </tr>
+  <tr>
+    <td><b>Select All </b></td>
+    <td>Enables  all the executables in the list for debugging. </td>
+  </tr>
+  <tr>
+    <td><b>Unselect All </b></td>
+    <td>Disables  all the executables in the list from debugging. </td>
+  </tr>
+</table>
+<h4>Other references</h4>
+<ul>
+  <li><a href="launch_configs_overview.htm">Launch Configuration Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

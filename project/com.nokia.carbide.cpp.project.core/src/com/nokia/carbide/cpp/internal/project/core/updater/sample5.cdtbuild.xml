@@ -1,0 +1,1962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+	<project id="Dialogs.com.symbian.cdt.build.projectType.pdll.1155864873"
+		name="Symbian Polymorphic DLL Project"
+		projectType="com.symbian.cdt.build.projectType.pdll">
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279"
+			name="S60 2.1 Emulator Debug"
+			parent="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_21.build.winscw.toolChain.winscwUdebPdll.1281964853"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_21.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_21.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.1222691101"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_21.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.781388152"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType.1851781903"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb.570513698"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.503109688"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb.1566111248"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb.1298468406"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.200216207"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll.1266452610"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.28519244"
+						superClass="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.344952869"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.aif.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.1258976490"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb.580042617"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb"/>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll.543328798"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.1501015110"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.1186418903"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.2085678778"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_21.build.winscw.compiler.udebPDll.1212185558"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.837258639"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.571790910"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.1881333583"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.869741629"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.1720274817"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.901657374"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.1507731065"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.692782633"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_v21_CW.30589279.280212936"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.344952869./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.344952869./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.344952869">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.110093086"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791"
+			name="S60 2.6 Phone (ARMI) Release"
+			parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_26.build.toolChain.gcc98.armiUrelPdll.300869828"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_26.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.78443339"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1633240672"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType.1406783740"
+					superClass="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.1799444755"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.820610323"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.1746330067"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.125224109"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.704230471"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.1006539078"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1267441092"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.802845851"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.390223662"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.606660778"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1733133958"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.2043157661"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.2119374852"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.1849063623"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.671144069"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.1596661801"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.1639629993"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.867712549"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.2097383856"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.armiUrelPdll.367649772"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.767802798"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.1795834134"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.431003083"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.435039036"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.116514948"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.2043801222"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1737011026"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.301743360"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1637458970"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_S60_2nd_FP2_CW.378950791.184773041"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1733133958./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1733133958./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1733133958">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.74549988"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543"
+			name="S60 2.0 Phone (ARMI) Release"
+			parent="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_20.build.toolChain.gcc98.armiUrelPdll.83987929"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_20.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.2143553634"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.514191609"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.61765887"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.890233883"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.295298776"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.765984197"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.509052455"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.1640687580"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.1885047193"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1635207718"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.288649690"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.843259913"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.813452621"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.50895065"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.880811417"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.193787973"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.1413985500"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.52337538"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.476733013"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.1885314199"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.888678821"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.775638227"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.armiUrelPdll.1467655143"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.622758542"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.927163903"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.2122484976"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.512135510"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.867426446"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.1874625179"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1638744205"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.1082294953"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1551091712"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_2_0_CW.596337543.11759830"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.50895065./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.50895065./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.50895065">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1984869199"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011"
+			name="S60 2.0 Emulator Debug"
+			parent="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_20.build.winscw.toolChain.winscwUdebPdll.1048036756"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_20.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_20.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.594903761"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_20.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.559965913"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType.1000135259"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb.348415276"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.124912746"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb.1763931906"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb.1776652244"
+					superClass="com.symbian.cdt.build.70s.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.1768415511"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll.1519226090"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.70s.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.1061209416"
+						superClass="com.symbian.cdt.build.70s.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.832949879"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.aif.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.1197307754"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb.1418425101"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.mbm.udeb"/>
+				<tool
+					id="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll.497805567"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.70s.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.2012739392"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.2141710143"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.1947407580"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_20.build.winscw.compiler.udebPDll.108253967"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.24860298"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.1605551139"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.291210310"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.2069644924"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.1333484008"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1315112098"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.1796562357"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.rcomp.udeb.1105348528"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_Series60_2_0_CW.1388431011.1782608618"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.832949879./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.832949879./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.70s.tool.winscw.aif.udeb.832949879">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.465304934"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300"
+			name="S60 2.6 Phone (Thumb) Release"
+			parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_26.build.toolChain.gcc98.thumbUrelPdll.541976296"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_26.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.551140268"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_26.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.2057021578"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType.795010573"
+					superClass="com.symbian.cdt.sdk.80a.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.76145238"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.829124710"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.588163478"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1200175011"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.50960539"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.328343030"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1389258315"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.1800801322"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.731137184"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.283441172"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.1677844542"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.99678250"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.532676077"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.120671"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.477519603"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.1958621942"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.1299494809"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.1517026607"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.1145699653"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_26.build.gcc98.compiler.thumbUrelPdll.1978075822"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.942286758"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.306353774"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.1045224889"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.357391344"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.170529849"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.1166875810"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.2134235817"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.752379337"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.2078363064"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_S60_2nd_FP2_CW.1363513300.1344580578"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.1677844542./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.1677844542./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.1677844542">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.52978372"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;;com.symbian.cdt.build.MakeDefErrorParser"
+			id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408"
+			name="S60 2.6 Emulator Debug"
+			parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_26.build.winscw.toolChain.winscwUdebPdll.1851301183"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_26.build.winscw.toolChain.winscwUdebPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_26.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.915389837"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_26.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.404216931"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.80a.build.winscw.polymorphicDllUdeb.targetType.1592741987"
+					superClass="com.symbian.cdt.sdk.80a.build.winscw.polymorphicDllUdeb.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid2.udeb.87922683"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports.1750764967"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.exports"
+					value="?NewApplication@@YAPAVCApaApplication@@XZ"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.targetPath.udeb.983704856"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.targetPath.udeb"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid3.udeb.1798012306"
+					superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.1968222939"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.80a.build.winscw.linker.udebPDll.1015810122"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.80a.build.winscw.linker.udebPDll">
+					<option
+						id="com.symbian.cdt.build.80a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.1284104639"
+						superClass="com.symbian.cdt.build.80a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.aif.udeb.604835360"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.aif.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.1442460640"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.mbm.udeb.259590943"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.mbm.udeb"/>
+				<tool
+					id="com.symbian.cdt.sdk.80a.build.buildDefinitions.winscw.defFileManager.udebPDll.1439722502"
+					name="Def file Manager"
+					superClass="com.symbian.cdt.sdk.80a.build.buildDefinitions.winscw.defFileManager.udebPDll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.1022596897"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.814390422"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.1226674116"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.599044538"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.20765602"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.93540841"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.1883070003"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.746515466"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.1586129549"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1678258595"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.221655065"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1939243599"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.874220408.1764648412"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.80a.tool.winscw.aif.udeb.604835360./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.80a.tool.winscw.aif.udeb.604835360./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.80a.tool.winscw.aif.udeb.604835360">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.416575148"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875"
+			name="S60 2.0 Phone (Thumb) Release"
+			parent="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_20.build.toolChain.gcc98.thumbUrelPdll.105358709"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_20.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.537821768"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_20.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.407344446"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.436451039"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.613548077"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.1515459875"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.104558012"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1787568432"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.2000474308"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.2024713273"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1533926071"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.1131803518"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.347867785"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.47813685"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.993662990"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.1082886520"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.1521425035"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.230149578"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.1047537969"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.541656427"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.1128180729"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.1449620712"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.189725488"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_20.build.gcc98.compiler.thumbUrelPdll.475973389"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.2111571693"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.2082367354"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.1172698085"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.910357380"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1342998983"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.2043749435"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.315909947"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.1869287217"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1157183103"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_2_0_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_2_0_CW.349688875.1398022892"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.993662990./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.993662990./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.993662990">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.814282718"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975"
+			name="S60 2.1 Phone (ARMI) Release"
+			parent="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_21.build.toolChain.gcc98.armiUrelPdll.561932922"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_21.build.toolChain.gcc98.armiUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll.28539980"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.armiUrelPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.791419734"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.1825829414"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.1456144325"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.982458399"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.1539273796"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll.1933571358"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.armiUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll.194245093"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.armiUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll.1004119994"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1255629029"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.1524702688"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll.659521086"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll.22073764"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1261292332"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll.1485138096"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll.353885116"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll.1033927514"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll.1623490429"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.armiUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll.1732716595"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.armiUrelPdll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.883953505"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.836933185"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.228596321"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.armiUrelPdll.135157702"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.1092727867"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.30616115"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.1203788325"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.1855488054"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.239352193"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.199936442"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1607747150"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.1539504581"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.armiUrelPdll.1068134627"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_armi.urel_Series60_v21_CW.1617573975.1136781795"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1261292332./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1261292332./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.armiUrelPdll.1261292332">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.356863479"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="app" artifactName="Dialogs"
+			cleanCommand="del /s/q" description=""
+			id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905"
+			name="S60 2.1 Phone (Thumb) Release"
+			parent="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW">
+			<toolChain
+				id="com.nokia.sdk.S60_21.build.toolChain.gcc98.thumbUrelPdll.594574285"
+				name="GCC98 Polymorphic DLL Defaults"
+				superClass="com.nokia.sdk.S60_21.build.toolChain.gcc98.thumbUrelPdll">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll.245952489"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_21.gcc98.GlobalOptions.systemIncludePaths.thumbUrelPdll"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths.1207753993"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\group&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\USERS\Test\Dialogs\inc&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType.59622087"
+					superClass="com.symbian.cdt.sdk.70s.build.gcc98.pdll.targetType"
+					value="app" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll.1773298738"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid2.pdll"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath.448977075"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.targetPath"
+					value="\system\apps\Dialogs" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll.654097773"
+					superClass="com.symbian.cdt.build.toolChain.gcc98.GlobalOptions.uid3.pdll"
+					value="0x0165146e" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll.1061855767"
+					name="GCC98 Linker first stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.first.thumbUrelPdll">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll.848890885"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcc98.linker.first.libraries.libraries.thumbUrelPdll"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikdlg.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll.1180004950"
+					name="GCC98 Linker second stage"
+					superClass="com.symbian.cdt.build.tool.gcc98.linker.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.archiver.Default.1947835749"
+					name="GCC98 Archiver"
+					superClass="com.symbian.cdt.build.tool.gcc98.archiver.Default"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol.292716882"
+						superClass="com.symbian.cdt.build.buildDefinitions.makeDef.gcc98.firstSymbol"
+						value="NewApplication__Fv" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll.29206892"
+					name="Petran"
+					superClass="com.symbian.cdt.build.tool.gcc98.petran.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll.978024968"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.mbm.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.891090837"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll.1540258313"
+					name="GCC98 Dlltool import library generation stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.nullth.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll.2003478030"
+					name="GCC98 Dlltool first stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.first.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll.30677111"
+					name="GCC98 Dlltool second stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.second.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll.613006357"
+					name="GCC98 Dlltool third stage"
+					superClass="com.symbian.cdt.build.buildDefinitions.gcc98.dlltool.third.thumbUrelPdll"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll.2054224216"
+					name="MakeSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcc98.makesis.thumbUrelPdll"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.215948288"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435./Dialogs/group/Dialogs_Data/WINSCW_UREL/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.243076179"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011./Dialogs/group/Dialogs_Data/WINSCW_UREL/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.100289606"
+				name="uid.cpp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+				toolsToInvoke="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp">
+				<tool
+					id="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435./Dialogs/group/Dialogs_Data/WINSCW_UDEB/uid.cpp"
+					name="GCC98 Compiler"
+					superClass="com.nokia.sdk.S60_21.build.gcc98.compiler.thumbUrelPdll.726138435"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.32984067"
+				name="DIALOGS.def" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+				toolsToInvoke="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def">
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011./Dialogs/group/Dialogs_Data/WINSCW_UDEB/DIALOGS.def"
+					name="Def File Creator"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.gcc98.default.69436011"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.105907725"
+				name="Dialogs.mmp" rcbsApplicability="disable"
+				resourcePath="/Dialogs/group/Dialogs.mmp" toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.1401315098"
+				name="Dialogs_caption.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs_caption.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583./Dialogs/data/Dialogs_caption.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583./Dialogs/data/Dialogs_caption.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1216009170"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.220584836"
+				name="Dialogs.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/data/Dialogs.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583./Dialogs/data/Dialogs.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583./Dialogs/data/Dialogs.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.564717648"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="true"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.2037193603"
+				name="Dialogsaif.rss" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogsaif.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583./Dialogs/aif/Dialogsaif.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583./Dialogs/aif/Dialogsaif.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.rcomp.thumbUrelPdll.1452029583"/>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="Series60_v21_CW_com.symbian.cdt.build.projectType.pdll_thumb.urel_Series60_v21_CW.1879865905.1614707805"
+				name="Dialogs.aifdef" rcbsApplicability="disable"
+				resourcePath="/Dialogs/aif/Dialogs.aifdef"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.891090837./Dialogs/aif/Dialogs.aifdef">
+				<tool
+					id="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.891090837./Dialogs/aif/Dialogs.aifdef"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcc98.aif.thumbUrelPdll.891090837">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.924270267"
+						superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath"
+						value="\system\apps\Dialogs" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+	</project>
+</ManagedProjectBuildInfo>

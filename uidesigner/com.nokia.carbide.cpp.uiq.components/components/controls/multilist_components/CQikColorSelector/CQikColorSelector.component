@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU12 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TRgbComponents"
+		converterClass="com.nokia.carbide.cpp.uiq.components.RGBConverter">
+		<property name="red" type="integer" maxValue="255" minValue="0"  default="0"/> 
+		<property name="green" type="integer" maxValue="255" minValue="0"  default="0"/> 
+		<property name="blue" type="integer" maxValue="255" minValue="0"  default="0"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikColorSelector.PaletteEntry">
+		<property name="label" type="string" default="color"/>
+		<compoundProperty name="rgb" type="com.nokia.carbide.uiq.TRgbComponents" descriptionKey="rgbDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactory"/>
+	</compoundPropertyDeclaration>
+
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.command.CQikColorSelectorPalette">
+		<enumElement value="Color4" displayValue="%4colors"/>
+		<enumElement value="Color16" displayValue="%16colors"/>
+		<enumElement value="Gray4" displayValue="%4grays"/>
+		<enumElement value="Gray16" displayValue="%16grays"/>
+		<enumElement value="Custom" displayValue="%CustomPalette"/>
+	</enumPropertyDeclaration>
+
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikColorSelector"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase" 
+			instanceNameRoot="colorSelector"		
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CQikColorSelector" classHelpTopic=""
+			resourceType="QIK_COLOR_SEL" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CQikColorSelector_sm.png"
+			largeIconFile="CQikColorSelector.png"/>	
+
+		<attributes>
+			<attribute key="rss-control-type-enum">EQikCtColorSelector</attribute>		
+			<attribute key ="cpp-class-name">CQikColorSelector</attribute>
+			<attribute key ="editable-array-property">palette</attribute>			 
+			<attribute key="TQikLayoutHorizontalAlignment-default">EQikLayoutHAlignLeft</attribute>
+		</attributes>
+
+		<properties>
+			<property  name="showText" type="boolean" 
+				default="true"
+				descriptionKey="showTextDescription"
+				category="%category.appearance"/>
+			<enumProperty name="paletteEnum"
+				type="com.nokia.carbide.uiq.command.CQikColorSelectorPalette"
+				descriptionKey="paletteEnumDescription"
+				default="Color16"
+				category="%category.behavior"/>	
+			<arrayProperty name="palette" type="com.nokia.carbide.uiq.CQikColorSelector.PaletteEntry" 
+				descriptionKey = "paletteDescription"	
+				editorClass="com.nokia.sdt.symbian.ui.editors.PaletteEntryArrayEditorFactory"
+				category="%category.data"/> 
+			<property  name="rgbChanged" type="string" category="Hidden"/>
+			<property  name="labelChanged" type="string" category="Hidden"/>
+			<property  name="largestLabelChanged" type="string" category="Hidden"/>
+		</properties>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/> 
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="CQikColorSelector.js" prototype="CQikColorSelector"/>
+			</implementation>
+		</implementations>	
+
+		<sourceMapping>
+			<mapResource struct="QIK_COLOR_SEL" headers="qikon.rh">
+					<select property="showText">
+						<choice value="true">						
+							<mapEnumMember property="paletteEnum" member="flags" validate="false">
+								<mapEnum value="Color4" enumerator="EQikColorSelStandardColor"/>
+								<mapEnum value="Color16" enumerator="EQikColorSelStandardColor | EQikColorSelStandard16"/>
+								<mapEnum value="Gray4" enumerator="0"/>
+								<mapEnum value="Gray16" enumerator="EQikColorSelStandard16"/>
+								<mapEnum value="Custom" enumerator="EQikColorSelCustomPalette"/>
+							</mapEnumMember>	
+						</choice>
+						<choice>
+							<mapEnumMember property="paletteEnum" member="flags" validate="false">
+								<mapEnum value="Color4" enumerator="EQikColorSelStandardColor | EQikColorSelDisplayNoText"/>
+								<mapEnum value="Color16" enumerator="EQikColorSelStandardColor | EQikColorSelStandard16 | EQikColorSelDisplayNoText"/>
+								<mapEnum value="Gray4" enumerator="EQikColorSelDisplayNoText"/>
+								<mapEnum value="Gray16" enumerator="EQikColorSelStandard16 | EQikColorSelDisplayNoText"/>
+								<mapEnum value="Custom" enumerator="EQikColorSelCustomPalette | EQikColorSelDisplayNoText"/>
+							</mapEnumMember>	
+						</choice>
+					</select>
+					<select property="paletteEnum">
+						<choice value="Custom">
+								<mapResourceMember struct="ARRAY" property="." member="palette_colors" headers="badef.rh">
+									<mapArrayMember property="palette" member="items">
+										<mapResourceElement struct="COLOR" headers="uikon.rh">
+											<mapSimpleMember property="rgb.red" member="red"/>
+											<mapSimpleMember property="rgb.green" member="green"/>
+											<mapSimpleMember property="rgb.blue" member="blue"/>				
+										</mapResourceElement>
+									</mapArrayMember>
+								</mapResourceMember>
+								<mapResourceMember struct="ARRAY" property="." member="palette_names" headers="badef.rh">
+									<mapArrayMember property="palette" member="items">
+										<mapResourceElement struct="LBUF" headers="badef.rh">
+											<mapSimpleMember property="label" member="txt"/>
+										</mapResourceElement>
+									</mapArrayMember>
+								</mapResourceMember>
+						</choice>
+						<choice>
+								<mapFixedMember member="palette_colors" value="0" />
+								<mapFixedMember member="palette_names" value="0" />
+						</choice>					
+					</select>					
+			</mapResource>
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<templateGroup id="8" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable" Type="${this.getCppClassName(instance)}" 
+					InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}" 
+					Headers="QikColorSelector.h"></expandMacro>			
+			</templateGroup>
+		</sourceGen>
+		
+	</component>
+	
+</componentDefinition>

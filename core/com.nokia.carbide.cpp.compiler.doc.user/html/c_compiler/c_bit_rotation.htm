@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Intrinsic Functions for Bit Rotation</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Intrinsic Functions for Bit Rotation</h3>
+<p>The Carbide C language has functions</p>
+<p class="listing">__rol(op, n)<br />
+  __ror(op, n)</p>
+<p>that do left- or right-bit rotation, respectively.</p>
+<p>The <span class="code">op</span> argument represents the item with the rotated bits. The <span class="code">n</span> argument represents the number of times to rotate the op bits.</p>
+<p>The <span class="code">op</span> argument is not promoted to a larger data type and can be of type <span class="code">char</span>, <span class="code">short</span>, <span class="code">int</span>, <span class="code">long</span>, or <span class="code">long long</span>.</p>
+<p>These functions are intrinsic (&ldquo;built-in&rdquo;). That is, you do not have to provide function prototypes or link with special libraries to use these functions.</p>
+<p class="note"><strong>NOTE</strong> Currently, these functions are limited to the Motorola 68K and Intel x86 versions of the Carbide C/C++ compiler.
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

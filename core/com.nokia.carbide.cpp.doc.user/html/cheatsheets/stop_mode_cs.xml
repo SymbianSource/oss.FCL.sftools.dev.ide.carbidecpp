@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="On-device Stop Mode Debugging Setup">
+	<intro>
+		<description>
+		Follow these steps to install on-device stop mode debug software and compilers, create ROM images, and define launch configurations.
+		</description> 
+	</intro> 
+	
+	<item title="Install necessary compilers, SDKs, and create ROM image files" href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/stop_mode_debug_precond.htm" >
+		<description>
+		Before you begin stop mode debugging, make sure all preconditions are met.
+		</description>
+	</item>
+	
+	<item title="Define a Trace32 or Sophia Launch Configuration" href="/com.nokia.carbide.cpp.doc.user/html/reference/wnd_Trace32_config.htm" >
+		<description>
+		Define debug launch configurations for the selected project.
+		</description>
+	</item>
+	
+</cheatsheet>

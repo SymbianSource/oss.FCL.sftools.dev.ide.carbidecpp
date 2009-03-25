@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Installing On-device Debug Agents using USB</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Installing On-device Debug Agents using USB</h2>
+<p> An USB connection can be used to install the on-device debug agent, either Application TRK or System TRK, (SISX file), to enable on-target debugging. The installation location of the  on-device debug agent will vary based on the phone. On some phones  it will be the Installed folder, on others it may be in My Own folder. Refer to the documentation that came with the phone to learn where installed programs are stored.</p>
+<p class="note"><b>NOTE</b> You can  use the connection software that came with your device to install the on-device debug agent SISX file. For example, all Nokia phones ship with the PC Suite software for installing programs. See your phone's operating manual for assistance on using it's software. </p>
+<div class="step">
+  <h4>Installing an On-device Debug Agent using USB</h4>
+  <ol>
+    <li>Connect the PC and the target device using a USB connectivity cable</li>
+	<p>Physically connect the USB cable to the PC, then to the target device.</p>
+    <li>Setup the target device to accept file transfers from the PC</li>
+	<p>The target device recognizes the USB cable connection.</p>
+      <ol type="a">
+        <li>Select USB Mode &gt; File Transfer, then press OK soft key </li>
+          <p>A notification message appears warning you the phone will be offline. </p>
+          <li>Press OK soft key to accept notification</li>
+          <p>The message &quot;USB file transfer connection active&quot; appears on the phone. On the PC, a folder appears showing the memory cards folders and files.</p>
+      </ol>
+	<li>Copy the SISX file to phone memory or  MMC card</li>
+	<p>Locate the SISX file on the PC, then select and copy it into the target device's memory card. </p>
+    <li>Install the SISX file </li>
+	<p>The final step is to install the SISX program on the target device. </p>
+      <ol type="a">
+        <li>Locate and launch the SISX file to install </li>
+          <li>Follow the instructions on the screen to finish installing the TRK debug agent</li>
+      </ol>
+  </ol>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/trk.htm">On-device Debugging </a></li>
+</ul>
+<h5>Related reference</h5>
+<ul>
+  <li><a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Setup </a></li>
+  <li><a href="../../reference/launch_configs/run_mode_overview.htm">Debug Window (On-device Debugging) Overview</a></li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="trk_install_bluetooth.htm">Installing On-device Debug Agents using Bluetooth</a></li>
+  <li><a href="trk_connection_bluetooth.htm">Connecting via Bluetooth</a></li>
+  <li><a href="trk_connection_usb.htm">Connecting via USB </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Tracing through the Stack Heuristically</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" >
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" >
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head2">
+<h2>Tracing through the Stack Heuristically</h2>
+</div>
+<div>
+One way of tracing through the call stack is to assume that every word on the stack which looks like a ROM code address is a saved return
+address. We say that this heuristic because:
+<ul>
+<li>
+<p>some data words may look like code addresses in ROM.</p>
+</li>
+<li>
+<p>there may be saved return addresses left over from previous
+function calls. For example, suppose that F() calls
+A() and then B() in sequence. A() itself
+calls X(), which calls Y(). If a crash occurs in
+B(), the saved return addresses from the calls to X()
+and Y() are still present on the stack and may be mistaken for
+function calls occuring while B() is active.</p>
+<p>This scenario happens frequently when B()
+allocates a buffer (e.g. TBuf) on the stack which overlaps
+old stack frames.</p>
+<div class="Figure">
+<p class="Image"><a name=""><img src="CrashDebuggerCallStackHeuristic-01.gif" alt=""  border="0"></a></p>
+</div>
+</li>
+</ul>
+<p>If you want to trace applications loaded into RAM, then stack
+tracing is more difficult because RAM-loaded DLLs are given addresses assigned
+at load time.</p>
+<p>On ARM, the stack pointer starts at the higher address end and
+moves 'down' towards the lower address end. This means that values at the top
+of the memory dump are more recent. You need to look back through this for code
+addresses. For ROM code this will be words with most significant byte in the
+range 0xF8 to 0xFF, remembering that they are
+little-endian. This can either be done manually, or automatically using the
+printsym.pl perl script, which can be found in
+...\epoc32\tools.</p>
+<p>Let's follow this in an example session:</p>
+<ul>
+<li>
+<p>Decide whether the crash has been caused by a panic or an
+exception using the <a href="CrashDebugger_cmd_f.guide.html" title="The debug monitor and command syntax / f - display kernel fault information">f</a> command:</p>
+<p class="CodeBlock">.f<br>Fault Category: EXAMPLE  Fault Reason: 0000002a<br>ExcId 00000000 CodeAddr 00000000 DataAddr 00000000 Extra 00000000</p>
+</li>
+<li>
+<p>This shows that the crash was caused by a panic, so now use the
+<a href="CrashDebugger_cmd_r.guide.html" title="The debug monitor and command syntax / r - dump register contents">r</a> command to find
+the CPU mode and the stack pointer:</p>
+<p class="CodeBlock">.r<br>MODE_USR:<br>&nbsp;R0=6571de54  R1=0000002a  R2=00000002  R3=ffffffff<br>&nbsp;R4=0000002a  R5=f8170414  R6=6571df14  R7=6403cba8<br>&nbsp;R8=00000001  R9=6403c41c R10=640002f8 R11=6571de70<br>R12=00000020 R13=00404e00 R14=f80818c0 R15=f800bfa8<br>CPSR=60000013<br>MODE_FIQ:<br>&nbsp;R8=00000000  R9=ffffffff R10=ffffffff R11=00000000<br>R12=00000000 R13=64000d0c R14=c080079c SPSR=e00000dc<br>MODE_IRQ:<br>R13=6400110c R14=00000013 SPSR=20000013<br>MODE_SVC:<br>R13=6571de54 R14=f80328bc SPSR=60000010<br>MODE_ABT:<br>R13=6400090c R14=ffff0010 SPSR=400000d7<br>MODE_UND:<br>R13=6400090c R14=95221110 SPSR=f000009d</p>
+<p>The panic happened in supervisor mode, because CPSR &amp;
+0x1F == 0x13, so R13Svc, i.e. the value of R13
+shown under MODE_SVC: in the above display, is the stack pointer
+to look at; this has the value 0x6571DE54.</p>
+</li>
+<li>
+<p>Using the
+<a href="CrashDebugger_cmd_m.guide.html" title="The debug monitor and command syntax / m - do a memory dump">m</a> command to look
+at memory starting at location 0x6571DE54 gives:</p>
+<p class="CodeBlock">.m6571de54+200<br>6571de54: 07 00 00 10 14 04 17 f8 00 00 00 00 d4 4e 40 00 .............N@.<br>6571de64: e8 de 71 65 74 de 71 65 74 fb 16 f8 88 28 03 f8 ..qet.qet....(..<br>6571de74: 0c d4 03 f8 64 35 03 f8 00 00 00 00 00 00 00 00 ....d5..........<br>6571de84: d0 00 00 00 14 df 71 65 a8 cb 03 64 a8 cb 03 64 ......qe...d...d<br>6571de94: d0 00 00 00 14 df 71 65 1c df 71 65 ec 4e 40 00 ......qe..qe.N@.<br>6571dea4: 1c c4 03 64 b4 2a 03 f8 00 00 00 00 14 df 71 65 ...d.*........qe<br>6571deb4: d0 de 71 65 c4 de 71 65 b0 ab 03 f8 00 00 00 00 ..qe..qe........<br>6571dec4: e0 ba 03 64 14 df 71 65 1c df 71 65 01 00 00 00 ...d..qe..qe....<br>6571ded4: 1c c4 03 64 f8 02 00 64 10 df 71 65 ec de 71 65 ...d...d..qe..qe<br>6571dee4: 84 da 01 f8 5c fb 16 f8 00 4e 40 00 00 00 00 00 ....\....N@.....<br>6571def4: 00 4e 40 00 00 00 00 00 d3 00 00 00 ec 4e 40 00 .N@..........N@.<br>6571df04: d4 df 71 65 14 df 71 65 e0 db 01 f8 c0 d9 01 f8 ..qe..qe........<br>6571df14: a8 cb 03 64 e0 ba 03 64 01 00 01 00 00 00 00 00 ...d...d........<br>6571df24: 00 00 00 00 d4 4e 40 00 00 00 00 30 40 00 00 00 .....N@....0@...<br>6571df34: 13 00 00 60 98 df 71 65 48 df 71 65 f4 81 00 f8 ...`..qeH.qe....<br>6571df44: 8c 7a 00 f8 68 df 71 65 58 df 71 65 6c df 71 65 .z..h.qeX.qel.qe<br>6571df54: 60 df 71 65 0c 2b 00 f8 bc 2a 00 f8 84 df 71 65 `.qe.+...*....qe<br>6571df64: 70 df 71 65 e4 7d 04 f8 08 2b 00 f8 0d 00 00 00 p.qe.}...+......<br>6571df74: 0a 00 00 30 40 00 00 00 54 65 73 74 44 6d 61 53 ...0@...TestDmaS<br>6571df84: 69 6d 04 f8 a9 4b 40 00 b8 df 71 65 9c df 71 65 im...K@...qe..qe<br>6571df94: 2c be 00 f8 2c bd 00 f8 38 4c 40 0d 01 00 00 00 ,...,...8L@.....<br>6571dfa4: 00 00 00 00 84 2d 02 f8 d4 df 71 65 bc df 71 65 .....-....qe..qe<br>6571dfb4: b8 2d 02 f8 dc bd 00 f8 54 a4 00 f8 00 00 00 00 .-......T.......<br>6571dfc4: ac da 01 f8 10 00 00 60 d8 df 71 65 70 74 00 f8 .......`..qept..<br>6571dfd4: b8 da 01 f8 d4 4e 40 00 20 f7 16 f8 d0 4e 40 00 .....N@. ....N@.<br>6571dfe4: 00 00 00 00 00 00 00 00 ec 4e 40 00 40 00 00 00 .........N@.@...</p>
+<p>We can look for potential ROM addresses by scanning the log and
+look up the corresponding function name in the symbol file generated
+<a href="CrashDebuggerUsingMAKSYM-Ref.guide.html">using the MAKSYM tool</a> . The first
+one is 0xF8170414 at offset 4 in the memory dump.
+</p>
+</li>
+<li>
+<p>Alternatively, we can use the printsym.pl perl
+script, passing it the dump output. The following is part of the output:</p>
+<p class="CodeBlock">R:\base\e32\rombuild&gt;perl -S printsym.pl ASSABETARM4D.symbol<br>ROM Symbols from ASSABETARM4D.symbol<br>Please enter data to be decoded<br>6571de54: 07 00 00 10 14 04 17 f8 00 00 00 00 d4 4e 40 00 .............N@.<br>= 10000007 ....&nbsp;<br>= f8170414 ....  etext=. + 0x0<br>= 00000000 ....<br>= 00404ed4 .N@.<br>6571de64: e8 de 71 65 74 de 71 65 74 fb 16 f8 88 28 03 f8 ..qet.qet....(..<br>= 6571dee8 ..qe<br>= 6571de74 t.qe<br>= f816fb74 t...  DDmaTestChannel::DoCreate(int, TDesC8 const *, TVersion const &amp;<br>) + 0x24<br>= f8032888 .(..  Kern::Fault(char const *, int) + 0xc<br>6571de74: 0c d4 03 f8 64 35 03 f8 00 00 00 00 00 00 00 00 ....d5..........<br>= f803d40c ....  RHeap::Alloc(int) + 0xf4<br>= f8033564 d5..  Kern::MutexSignal(DMutex &amp;) + 0xc<br>= 00000000 ....<br>= 00000000 ....<br><br>[............ truncated ...............]<br><br>= f801da84 ....  DLogicalDevice::ChannelCreate(DLogicalChannelBase *&amp;, TChannelC<br>reateInfo &amp;) + 0xd0<br>= f816fb5c \...  DDmaTestChannel::DoCreate(int, TDesC8 const *, TVersion const &amp;<br>) + 0xc<br>= 00404e00 .N@.<br>= 00000000 ....<br>6571def4: 00 4e 40 00 00 00 00 00 d3 00 00 00 ec 4e 40 00 .N@..........N@.<br>= 00404e00 .N@.<br>= 00000000 ....<br>= 000000d3 ....<br>= 00404eec .N@.<br>6571df04: d4 df 71 65 14 df 71 65 e0 db 01 f8 c0 d9 01 f8 ..qe..qe........<br>= 6571dfd4 ..qe<br>= 6571df14 ..qe<br>= f801dbe0 ....  ExecHandler::ChannelCreate(TDesC8 const &amp;, TChannelCreateInfo &amp;<br>, int) + 0x134<br>= f801d9c0 ....  DLogicalDevice::ChannelCreate(DLogicalChannelBase *&amp;, TChannelC<br>reateInfo &amp;) + 0xc<br><br>[.......................... truncated .........................]<br><br>= f8022db8 .-..  ExecHandler::DebugPrint(void *, int) + 0x34<br>= f800bddc ....  A::UserDebugPrint(unsigned char const *, int, int) + 0xc<br>= f800a454 T...  EpocSlowExecTable + 0xc<br>= 00000000 ....<br>6571dfc4: ac da 01 f8 10 00 00 60 d8 df 71 65 70 74 00 f8 .......`..qept..<br>= f801daac ....  ExecHandler::ChannelCreate(TDesC8 const &amp;, TChannelCreateInfo &amp;<br>, int) + 0x0<br>= 60000010 ...`<br>= 6571dfd8 ..qe<br>= f8007470 pt..  __ArmVectorSwi + 0xd8<br>6571dfd4: b8 da 01 f8 d4 4e 40 00 20 f7 16 f8 d0 4e 40 00 .....N@. ....N@.<br>= f801dab8 ....  ExecHandler::ChannelCreate(TDesC8 const &amp;, TChannelCreateInfo &amp;<br>, int) + 0xc<br>= 00404ed4 .N@.<br>= f816f720  ...  etext=. + 0x560<br>= 00404ed0 .N@.<br>6571dfe4: 00 00 00 00 00 00 00 00 ec 4e 40 00 40 00 00 00 .........N@.@...<br>= 00000000 ....<br>= 00000000 ....<br>= 00404eec .N@.<br>= 00000040 @...<br>^C<br>R:\base\e32\rombuild&gt;</p>
+<p>There are several false positives in this output (and even more
+in the truncated parts). So some study of the source code is needed to discard
+the noise and find the actual call stack. Here it is (innermost frame
+first):</p>
+<ul>
+<li>
+<p>Kern::Fault</p>
+</li>
+<li>
+<p>DDmaTestChannel::DoCreate</p>
+</li>
+<li>
+<p>ExecHandler::ChannelCreate</p>
+</li>
+<li>
+<p> __ArmVectorSwi</p>
+</li>
+</ul>
+<p>Note that for the sake of the example, a call to Kern::Fault() was deliberately inserted into
+DDmaTestChannel::DoCreate().</p>
+<p>All other function names are false positives and should be
+ignored</p>
+</li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="CrashDebuggerCallStack.guide02.html">General Points</a></li>
+  <li><a href="CrashDebuggerCallStack.guide03.html">Finding the Stack</a></li>
+  <li><a href="CrashDebuggerCallStack.guide05.html">Walking through the Call Stack</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </div>

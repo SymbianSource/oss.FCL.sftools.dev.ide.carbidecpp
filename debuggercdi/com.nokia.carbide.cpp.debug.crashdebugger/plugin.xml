@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+  <extension
+         point="org.eclipse.cdt.debug.core.CDebugger">
+      <debugger
+            platform="*"
+            name="Symbian Crash Debugger"
+            modes="run"
+            cpu="*"
+            class="com.nokia.carbide.cpp.debug.crashdebugger.CrashDebugger"
+            id="com.nokia.carbide.cpp.debug.crashdebugger.CrashDebugger">
+      </debugger>
+   </extension>
+
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            name="Symbian OS Crash Debugger"
+            delegate="com.nokia.carbide.cpp.debug.crashdebugger.CrashDebuggerLaunchDelegate"
+            modes="run,debug"
+            public="true"
+            id="com.nokia.carbide.cpp.debug.crashdebugger.crashDebugLaunch"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchConfigurationType>
+   </extension>
+
+  <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+       <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.carbide.cpp.debug.crashdebugger.crashDebugLaunch"
+            id="com.nokia.carbide.cpp.debug.crashdebugger.crashDebugLaunchImage">
+      </launchConfigurationTypeImage>
+    </extension>
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.carbide.cpp.debug.crashdebugger.crashDebugLaunch"
+            class="com.nokia.carbide.cpp.debug.crashdebugger.ui.CrashDebugConfigurationTabGroup"
+            id="com.nokia.carbide.cpp.debug.crashdebugger.crashDebugLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="com.nokia.carbide.cpp"
+            class="com.nokia.carbide.cpp.debug.crashdebugger.ui.CrashDebuggerView"
+            icon="icons/cd.png"
+            id="com.nokia.carbide.cpp.debug.crashdebugger.ui.CrashDebuggerView"
+            name="Crash Debugger Console">
+      </view>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="com.nokia.carbide.cpp.debug.crashdebugger.CrashDebuggerPerspectiveFactory"
+            icon="icons/cd.png"
+            id="com.nokia.carbide.cpp.debug.crashdebugger.CrashDebuggerPerspective"
+            name="Crash Debugger"/>
+   </extension>
+
+	<extension point="org.eclipse.help.contexts">
+       <contexts file="html/context_help/crash_debugger.xml"/>
+   </extension>
+
+	
+	<!-- TOC extension point adds help contents to Carbide Help section -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="html/tocCDB.xml"
+            primary="true" />      
+      <toc
+            file="html/tocCDB_Concepts.xml"
+            primary="false" />      
+      <toc
+            file="html/tocCDB_Tasks.xml"
+            primary="false" />      
+      <toc
+            file="html/tocCDB_References.xml"
+            primary="false" />     
+	    
+		<index path="index" />
+   </extension>
+
+	<!-- KEYWORD INDEX ADDITION -->
+	
+	 <extension point="org.eclipse.help.index">
+	    <index file="html/index.xml" />
+	 </extension>
+
+	<extension point="org.eclipse.help.contexts" >
+
+       <!-- CARBIDE DEBUG UI HELP  (BRKPT, VAR, EXPR, etc) -->
+       <contexts file="html/context_help/org_eclipse_debug_ui.xml"
+       		plugin="org.eclipse.debug.ui" />
+
+	</extension>
+</plugin>

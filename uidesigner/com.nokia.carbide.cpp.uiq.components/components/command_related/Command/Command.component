@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU11 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY command_flags_srcmapping SYSTEM "../command_flags_srcmapping.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.Command"
+			baseComponent="com.nokia.carbide.uiq.CommandBase"
+			instanceNameRoot="command"			
+			category="%commands.category"			
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="Command" classHelpTopic=""
+			resourceType="QIK_COMMAND" resourceHelpTopic=""/>	
+
+		<designerImages smallIconFile="Command_sm.png"
+			largeIconFile="Command.png"/>
+			
+		<attributes>
+			<attribute key ="cpp-class-name">Command</attribute>
+		</attributes>
+
+		<properties>
+		    <componentReferenceProperty name="commandId" 
+				constraint="com.nokia.carbide.uiq.CommandId" 
+				scope="model" descriptionKey="commandIdDescription"
+				category="%category.design"/>                                                                                       			
+		</properties>
+
+		<implementations>	
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="Command.js" prototype="Command"/>
+			</implementation>					
+		</implementations>
+				
+		<sourceMapping>
+			<mapResource struct="QIK_COMMAND" headers="QikCommand.rh">
+				<select property="commandId">
+                   <choice value="">
+				   </choice>
+				   <choice>					
+						<select property="commandId->commandId">
+							<choice value="">
+									<select property="commandId->systemCommandId">
+											<choice value="">
+											</choice>
+											<choice>
+												<mapEnumMember property="commandId->systemCommandId" member="id" validate="false"/>
+											</choice>
+									</select>
+							</choice>
+							<choice>
+								<mapEnumMember property="commandId->"
+									member="id"
+									nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_COMMAND_ID"
+									uniqueValue="*"/>
+							</choice>
+						</select>					
+					</choice>
+                </select>							
+				&command_flags_srcmapping;																
+			</mapResource>
+		</sourceMapping>
+		
+		
+	</component>
+	
+</componentDefinition>

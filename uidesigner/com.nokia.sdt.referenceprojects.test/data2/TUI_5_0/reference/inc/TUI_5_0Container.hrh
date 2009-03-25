@@ -1,0 +1,5 @@
+enum TTUI_5_0ContainerViewCommands
+	{
+	ETUI_5_0ContainerViewButton1Command = 0x6000,
+	ETUI_5_0ContainerViewButton2Command
+	};

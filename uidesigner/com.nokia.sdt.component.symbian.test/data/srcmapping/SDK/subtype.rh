@@ -1,0 +1,9 @@
+STRUCT SUBTYPE {
+	BYTE flag;
+	LONG number;
+}
+
+STRUCT SUBTYPE_DEFAULTS {
+	BYTE flag = 1;
+	LONG number = 1;
+}

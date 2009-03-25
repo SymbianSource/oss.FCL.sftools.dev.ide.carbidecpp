@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Scheduler State</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Scheduler State</h2>
+</div>
+<div>
+<p>The first three lines and the fifth line of the output show the
+state of the kernel scheduler. This information is mainly of interest to kernel
+engineers, although the state of the kernel and the system locks can be useful
+when debugging device driver crashes.</p>
+<p class="listing">SCHEDULER @64000348: CurrentThread 640396b0<br>
+  RescheduleNeeded=00 DfcPending=00 KernCSLocked=00000001<br>DFCS: next 64000458 prev 64000458<br>...<br>SYSLOCK: HoldingThread 00000000 iWaiting 00000000</p>
+<p>The values are interpreted as follows:</p><table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0"><tr valign="top"><td class="Cell">
+<p>SCHEDULER @</p></td><td class="Cell">
+<p>This is the address of the kernel&#8217;s scheduler instance; this
+is not very useful.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>CurrentThread</p></td><td class="Cell">
+<p>The address of the kernel object for the current kernel
+thread.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>RescheduleNeeded</p></td><td class="Cell">
+<p>This is set to non-zero by the kernel to force a reschedule,
+for example if a thread has been signalled</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>DfcPending</p></td><td class="Cell">
+<p>This is non-zero when there are DFCs queued.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KernCSLocked</p></td><td class="Cell">
+<p>This is incremented each time the kernel is locked by a call
+to NKern::Lock(), and decremented by calls to NKern::Unlock(). A value of zero means that the kernel is
+not locked.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>DFCS:</p></td><td class="Cell">
+<p>The addresses of the next and the previous items on the DFC
+queue</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>HoldingThread</p></td><td class="Cell">
+<p>The address of the thread holding the system lock mutex. The
+system lock is set by call to NKern::LockSystem() and
+unset by call to NKern::UnlockSystem()</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>iWaiting</p></td><td class="Cell">
+<p>Non-zero, if any thread is waiting for the system lock
+mutex.</p></td></tr>
+</table></td></tr></table>
+<p>&nbsp;</p>
+</div>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide.html">Extracting Kernel Information</a> </li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide03.html">Current Thread State</a></li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide04.html">Current Process State</a></li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide05.html">Current Data Section Process</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Compiler-related strategies</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Compiler-related Strategies</h3>
+<p>Compiler-related strategies rely on compiler features to reduce object code size.</p>
+<ul>
+  <li>Size Optimizations&mdash;use the compiler size optimization settings</li>
+  <li>Inlining&mdash;control and limit effectiveness of inline directive</li>
+</ul>
+<h4>Size Optimizations</h4>
+<p>Carbide compilers include optimization settings for size or speed and various levels of optimization. Choose size as your desired outcome and the level of optimization to apply.</p>
+<p>Optimization settings for your target are controlled by settings in the Processor panel.</p>
+<p>When debugging, compile your code without any optimizations. Some optimizations disrupt the relationship between the source and object code required by the debugger. Optimize your code after you have finished debugging.</p>
+<p>See also C/C++ Language Panel.</p>
+<h4>Inlining</h4>
+<p>With Carbide, you can disable inlining, allow normal inlining, auto-inline, or set the maximum depth of inlining.</p>
+<p>Inlining can reduce or increase code size. There is no definite answer for this question. Inlining small functions can make a program smaller, especially if you have a class library with a lot of getter/setter member functions.</p>
+<p>However, MSL C++ defines many functions as inline, which is not good if you want minimal code size. For optimal code size when using MSL C++, disable inlining when building the library. If you are not using MSL C++, normal inlining and a common-sense use of the keyword inline might improve your code size.</p>
+<p>In Carbide, you control inlining as a language setting .</p>
+<p>When debugging your code, disable inlining to maintain a clear correspondence between source and object code. After debugging, set the inlining level that has the best effect on your object code.</p>
+<p>See also <a href="../c_compiler/c_inlining.htm">Inlining</a>.
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

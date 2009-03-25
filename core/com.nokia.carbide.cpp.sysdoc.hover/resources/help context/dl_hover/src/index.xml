@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE index-page SYSTEM "index.dtd">
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. License: http://www.eclipse.org/legal/epl-v10.html. -->
+<index-page>
+
+  <index-name>Hover Help Guide</index-name>
+  <heading>Hover Help Guide</heading> 
+  <anchor name="hover.index"/>
+
+  <para>
+	 Hover Help lets developers who work with
+	 Symbian OS C++ in the Carbide IDE access documentation of the Symbian OS
+	 APIs in a pop-up window when hovering over an API, such as a class name. 
+  </para>
+  <para>
+	 This guide describes how to set up and configure Hover Help. 
+  </para>
+  <contents summary="yes">
+	 <xref target="hover.gs.">Overview</xref>
+	 <xref target="hover.components.">Set Up</xref><xref
+	 target="hover.prefs.">Preferences</xref>
+  </contents>
+
+</index-page>

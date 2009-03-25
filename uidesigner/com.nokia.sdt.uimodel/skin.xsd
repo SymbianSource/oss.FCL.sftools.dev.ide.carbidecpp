@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.nokia.com/sdt/ui/skin" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.nokia.com/sdt/ui/skin">
+	<xsd:element name="skin">
+		<xsd:annotation>
+			<xsd:documentation>Skin used to define the appearance and layout of the UI design surface</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="editorArea"/>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="hotZone"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="backgroundColor"/>
+            </xsd:sequence>
+			<xsd:attribute name="name" type="xsd:string" use="required"/>
+			<xsd:attribute name="width" type="xsd:short" use="required"/>
+			<xsd:attribute name="height" type="xsd:short" use="required"/>
+			<xsd:attribute name="imageFilePath" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="backgroundColor">
+		<xsd:annotation>
+			<xsd:documentation>Defines the background color the editor should take to match the skin</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="red" type="xsd:short" use="required"/>
+			<xsd:attribute name="green" type="xsd:short" use="required"/>
+			<xsd:attribute name="blue" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="editorArea">
+		<xsd:annotation>
+			<xsd:documentation>Defines the size and location of the visual layout area</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="x" type="xsd:short" use="required"/>
+			<xsd:attribute name="y" type="xsd:short" use="required"/>
+			<xsd:attribute name="width" type="xsd:short" use="required"/>
+			<xsd:attribute name="height" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="hotZone">
+		<xsd:annotation>
+			<xsd:documentation>Rectangular region of the skin that can have different visual states and receive mouse events</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="event">
+					<xsd:complexType>
+						<xsd:attribute name="id" type="xsd:string" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="state">
+					<xsd:complexType>
+						<xsd:attribute name="name" type="xsd:string" use="required"/>
+						<xsd:attribute name="imageFilePath" type="xsd:string" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="x" type="xsd:short" use="required"/>
+			<xsd:attribute name="y" type="xsd:short" use="required"/>
+			<xsd:attribute name="width" type="xsd:short" use="required"/>
+			<xsd:attribute name="height" type="xsd:short" use="required"/>
+			<xsd:attribute default="false" name="sticky" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

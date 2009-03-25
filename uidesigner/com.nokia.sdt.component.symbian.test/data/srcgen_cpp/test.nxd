@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+    <component id="com.nokia.examples.srcgenTest">
+      <property id="name">srcgenTest1</property>
+      <compoundProperty id="location">
+        <property id="x">35</property>
+        <property id="y">46</property>
+      </compoundProperty>
+      <compoundProperty id="size">
+        <property id="width">97</property>
+        <property id="height">111</property>
+      </compoundProperty>
+    </component>
+</designerData>

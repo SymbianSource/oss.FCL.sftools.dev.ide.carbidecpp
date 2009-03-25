@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+	<component baseComponent="com.nokia.examples.baseComponent"
+	friendlyName="SourceGen Test" qualifiedName="com.nokia.examples.srcgen3" 
+	category="Testing" version="1.0">
+		<sourceGen>
+			<!-- create the main file -->
+			<defineLocation domain="cpp" dir="src" file="main.cpp"
+				id="srcgen3.FILE"
+				location=""/>
+			<!-- create the #includes block -->
+			<defineLocation 
+				baseLocation="srcgen3.FILE"
+				id="srcgen3.INCLUDES"
+				location="region(Designer Includes)"/>
+			<!-- create MyClass -->
+			<defineLocation 
+				baseLocation="srcgen3.FILE"
+				id="srcgen3.CLASS"
+				location="class(MyClass)">
+				<!-- this needs to define code in another block -->
+				<template location="srcgen3.INCLUDES">
+#include "baseclass.h"
+				</template>
+				<template>
+class MyClass : public BaseClass
+	{
+	}
+				</template>
+			</defineLocation>
+
+			<!-- create MyClass::InitComponents -->
+			<defineLocation
+				baseLocation="srcgen3.CLASS"
+				id="srcgen3.INIT_COMPONENTS"
+				location="function(InitComponents())">
+				<template>
+void MyClass::InitComponents()
+	{
+	}
+				</template>				
+			</defineLocation>
+			
+<!-- now use the locations to do stuff (a container really does this) -->
+		   <template location="srcgen3.INCLUDES">
+#include &lt;myclass.h;&gt;
+		   </template>
+
+		   <template location="srcgen3.CLASS">
+int iMyField;
+		   </template>
+		   
+		   <templateGroup phase="initcomponents" 
+			   	location="srcgen3.INIT_COMPONENTS">
+				<template>
+iMyField = 23;				
+				</template>
+		   </templateGroup>
+		</sourceGen>
+	</component>
+</componentDefinition>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- No longer used
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikDateEditor.Day">
+		<enumElement value="0" displayValue="%day.1" />
+		<enumElement value="1" displayValue="%day.2" />
+		<enumElement value="2" displayValue="%day.3" />
+		<enumElement value="3" displayValue="%day.4" />
+		<enumElement value="4" displayValue="%day.5" />
+		<enumElement value="5" displayValue="%day.6" />
+		<enumElement value="6" displayValue="%day.7" />
+		<enumElement value="7" displayValue="%day.8" />
+		<enumElement value="8" displayValue="%day.9" />
+		<enumElement value="9" displayValue="%day.10" />
+		<enumElement value="10" displayValue="%day.11" />
+		<enumElement value="11" displayValue="%day.12" />
+		<enumElement value="12" displayValue="%day.13" />
+		<enumElement value="13" displayValue="%day.14" />
+		<enumElement value="14" displayValue="%day.15" />
+		<enumElement value="15" displayValue="%day.16" />
+		<enumElement value="16" displayValue="%day.17" />
+		<enumElement value="17" displayValue="%day.18" />
+		<enumElement value="18" displayValue="%day.19" />
+		<enumElement value="19" displayValue="%day.20" />
+		<enumElement value="20" displayValue="%day.21" />
+		<enumElement value="21" displayValue="%day.22" />
+		<enumElement value="22" displayValue="%day.23" />
+		<enumElement value="23" displayValue="%day.24" />
+		<enumElement value="24" displayValue="%day.25" />
+		<enumElement value="25" displayValue="%day.26" />
+		<enumElement value="26" displayValue="%day.27" />
+		<enumElement value="27" displayValue="%day.28" />
+		<enumElement value="28" displayValue="%day.29" />
+		<enumElement value="29" displayValue="%day.30" />
+		<enumElement value="30" displayValue="%day.31" />
+	</enumPropertyDeclaration>
+	-->
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikDateEditor.Month">
+		<enumElement value="0" displayValue="January" />
+		<enumElement value="1" displayValue="February" />
+		<enumElement value="2" displayValue="March" />
+		<enumElement value="3" displayValue="April" />
+		<enumElement value="4" displayValue="May" />
+		<enumElement value="5" displayValue="June" />
+		<enumElement value="6" displayValue="July" />
+		<enumElement value="7" displayValue="August" />
+		<enumElement value="8" displayValue="September" />
+		<enumElement value="9" displayValue="October" />
+		<enumElement value="10" displayValue="November" />
+		<enumElement value="11" displayValue="December" />
+	</enumPropertyDeclaration>
+
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.sdt.series60.CEikDateEditor.Date"
+			converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.DateValueConverter">
+		<enumProperty name="month" type="com.nokia.sdt.series60.CEikDateEditor.Month"
+			descriptionKey="monthDescription" />
+		<property name="day" type="integer" default="0"
+			editorClass="com.nokia.sdt.symbian.ui.editors.MinusOneIntEditorFactory"
+			descriptionKey="dayDescription" />
+		<property name="year" type="integer" default="2000" 
+			descriptionKey="yearDescription" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.sdt.series60.CEikTimeEditor.Time"
+			converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.TimeValueConverter">
+		<property name="hour" type="integer" descriptionKey="hourDescription" />
+		<property name="minute" type="integer" descriptionKey="minuteDescription" />
+		<property name="second" type="integer" descriptionKey="secondDescription" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.sdt.series60.CEikTimeAndDateEditor.TimeAndDate"
+			converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.TimeAndDateValueConverter">
+		<property name="second" type="integer" descriptionKey="secondDescription" />
+		<property name="minute" type="integer" descriptionKey="minuteDescription" />
+		<property name="hour" type="integer" descriptionKey="hourDescription" />
+		<property name="day" type="integer" default="0"
+			editorClass="com.nokia.sdt.symbian.ui.editors.MinusOneIntEditorFactory"
+			descriptionKey="dayDescription" />
+		<enumProperty name="month" type="com.nokia.sdt.series60.CEikDateEditor.Month"
+			descriptionKey="monthDescription" />
+		<property name="year" type="integer" default="2000" 
+			descriptionKey="yearDescription" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikTimeEditor.Flags">
+		<property name="EEikTimeWithoutSecondsField" type="boolean"
+			descriptionKey="EEikTimeWithoutSecondsFieldDescription" />
+		<property name="EEikTimeWithoutHoursField" type="boolean"
+			descriptionKey="EEikTimeWithoutHoursFieldDescription" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikTimeAndDateEditor.Flags">
+		<property name="EEikTimeWithoutSecondsField" type="boolean"
+			descriptionKey="EEikTimeWithoutSecondsFieldDescription" />
+		<property name="EEikTimeWithoutHoursField" type="boolean"
+			descriptionKey="EEikTimeWithoutHoursFieldDescription" />
+		<!-- have no idea how this is triggered 
+		<property name="EEikDateWithoutPopoutCalendar" type="boolean"/>
+		-->
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikMfneBase" 
+		baseComponent="com.nokia.sdt.series60.EditorBase"
+		abstract="true"
+		version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		
+		<extensionProperties name="container">
+			<enumProperty name="font" category="Appearance" 
+				type="com.nokia.sdt.series60.CEikonEnv.SystemFont"
+				descriptionKey="fontDescription" />
+			<enumProperty name="alignment" category="Appearance" 
+				type="com.nokia.sdt.series60.AknEditorAlign"
+				descriptionKey="alignmentDescription" />
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="onlyContainerParent_propertyExtenders.js" prototype="OnlyContainerParentPropertyExtenders"/>
+			</implementation>
+		</implementations>
+		
+		<sourceGen forms="Container Dialog">
+
+			<templateGroup id="SET_FONT">
+		
+				<template phase="Initialize" id="SetFont" form="Container"><![CDATA[<% 
+if (properties.font != "NormalFont") {
+%>${instanceMemberName}->SetFont( iEikonEnv->${instance.properties.font}() );
+<%}%>]]>		</template>
+
+			</templateGroup>
+			
+			<templateGroup id="SET_ALIGN">
+
+				<template phase="MainSystemIncludes" id="GetHeader"><![CDATA[
+#include <avkon.hrh>
+]]>				</template>
+		
+				<template phase="Initialize" id="SetAlignment" form="Container"><![CDATA[<%
+if (properties.alignment != "EAknEditorAlignLeft") {
+%>${instanceMemberName}->SetMfneAlignment( ${instance.properties.alignment} );
+<% } %>]]>		</template>
+
+			</templateGroup>
+			
+		</sourceGen>
+	</component>
+</componentDefinition>
+	

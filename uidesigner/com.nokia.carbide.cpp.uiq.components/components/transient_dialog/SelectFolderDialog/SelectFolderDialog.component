@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--START_USECASES: CU20 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikMediaFileHandlingDefaultFolders">
+		<enumElement value="EQikFileHandlingDefaultFolderNotSelected" displayValue="%notSelected"/>
+		<enumElement value="EQikFileHandlingDefaultFolderImage" displayValue="%image"/>
+		<enumElement value="EQikFileHandlingDefaultFolderAudio" displayValue="%audio"/>
+		<enumElement value="EQikFileHandlingDefaultFolderVideo" displayValue="%video"/>
+		<enumElement value="EQikFileHandlingDefaultFolderDocument" displayValue="%document"/>
+		<enumElement value="EQikFileHandlingDefaultFolderOther" displayValue="%other"/>
+	</enumPropertyDeclaration>
+			
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikDefaultFolderDescription">
+		<enumProperty name="defaultFolder" type="com.nokia.carbide.uiq.TQikMediaFileHandlingDefaultFolders"
+			default="EQikFileHandlingDefaultFolderNotSelected"
+			descriptionKey="defaultFolderDescription"/>
+		<property type="string" name="relativePath" default="" descriptionKey="relativePathDescription"/>
+		<property  type="string" name="driveLetter" default="C"
+			 descriptionKey="driveLetterDescription"/>		 
+	</compoundPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.SelectFolderDialogLockToDefaultFolder">
+		<enumElement value="EQikSelectFolderLockToDefaultFolder" displayValue="%SelectFolderLockToDefaultFolder"/>
+		<enumElement value="0" displayValue="%DontSelectFolderLockToDefaultFolder"/>
+	</enumPropertyDeclaration>
+			
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikSelectFolderDlg"
+			baseComponent="com.nokia.carbide.uiq.TransientDialogBase"
+			instanceNameRoot="selectFolderDialog"			
+			version="1.0"
+			category="%category.dialog">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq"
+			minSDKVersion="3.0"
+			className="CQikSelectFolderDlg"/>
+
+		<designerImages smallIconFile="SelectFolderDialog_sm.png"
+			largeIconFile="SelectFolderDialog.png"/>
+				
+		<properties>
+			<enumProperty  type="com.nokia.carbide.uiq.SelectFolderDialogLockToDefaultFolder" name="lockToDefaultFolder" 
+				default="EQikSelectFolderLockToDefaultFolder" 
+				descriptionKey="lockToDefaultFolderDescription"
+				category="%category.behavior"/>
+			<compoundProperty  name="defaultFolderDescription" 
+				type="com.nokia.carbide.uiq.TQikDefaultFolderDescription" 
+				descriptionKey="defaultFolderDescriptionDescription"
+				category="%category.data"/>																				
+
+			<compoundProperty category="Hidden" name="location" 
+				type="com.nokia.carbide.uiq.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" 
+				type="com.nokia.carbide.uiq.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>						
+		</properties>
+
+		<implementations>	
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>			
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/> 
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="SelectFolderDialog.js" prototype="SelectFolderDialog"/>
+			</implementation>					
+		</implementations>
+
+		<sourceMapping>
+			<mapResource struct="TBUF1" headers="uikon.rh" id="driveLetter">
+				<mapSimpleMember property="defaultFolderDescription.driveLetter" member="buf"/>
+			</mapResource>
+			<mapResource struct="TBUF" headers="badef.rh" id="relativePath">
+				<mapSimpleMember property="defaultFolderDescription.relativePath" member="buf"/>
+			</mapResource>			
+		</sourceMapping>
+
+		<sourceGen>
+			<template id="selectFolderDlg" phase="MainSystemIncludes">
+<![CDATA[#include <QikSelectFolderDlg.h>]]>
+			</template>			
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				DeclPhase="HeaderClassPublic"
+				FunctionName="Run${instanceMemberName}L"
+				FunctionArgs="TFileName&amp; aFolderName"
+				ReturnType="TBool"
+				FunctionLocationId="RUNSELECTFOLDERDLG"
+				IsOwned="false"
+				DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+				ClassName="${className}"
+				OwnedRegionLocationId="RUNSELECTFOLDERDLG_BODY">
+				<expandArgument name="FunctionComment">
+/**
+ * Run Select Folder Dialog 1
+ * 
+ * @param aFolderName The selected folder name (if selection was done), otherwise empty.
+ * @return EFalse if dialog was canceled (no selection), otherwise a value different from EFalse.
+ */				
+				</expandArgument>
+				<expandArgument name="FunctionBody">
+<![CDATA[
+TQikDefaultFolderDescription defaultfolderdesc;
+defaultfolderdesc.SetDefaultFolder( ${properties.defaultFolderDescription.defaultFolder} );
+HBufC* driveletter = iEikonEnv->AllocReadResourceLC( ${Engine.getGeneratedResource(instance, "driveLetter").toUpperCase()} );
+HBufC* relativepath = iEikonEnv->AllocReadResourceLC( ${Engine.getGeneratedResource(instance, "relativePath").toUpperCase()} );
+defaultfolderdesc.SetDriveLetter( driveletter->Des()[ 0 ] );
+defaultfolderdesc.SetRelativePath( relativepath->Des() );
+
+TBool response = CQikSelectFolderDlg::RunDlgLD( aFolderName,
+	defaultfolderdesc,
+	${properties.lockToDefaultFolder});
+
+CleanupStack::PopAndDestroy( 2, driveletter );
+return response;
+
+]]>				</expandArgument>
+			</expandMacro>	
+		</sourceGen>				
+	</component>
+
+</componentDefinition>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">root</property>
+  </component>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MbmMaskedImage</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">\system\apps\image-tests\Foo.mbm</property>
+   	  	<property id="bmpid">EMbmFooQgn_note_ok</property>
+   	  	<property id="bmpmask">EMbmFooQgn_note_ok_mask_soft</property>
+   	  </compoundProperty>
+  </component>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MissingMultiImageFile</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">Unknown.mbm</property>
+   	  	<property id="bmpid">EMbmUnknownQgn_note_ok</property>
+   	  	<property id="bmpmask">EMbmUnknownQgn_note_ok_mask_soft</property>
+   	  </compoundProperty>
+  </component>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MbmMaskedImage</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">\system\apps\image-tests\Foo.mbm</property>
+   	  	<property id="bmpid">EMbmFooQgn_note_ok</property>
+   	  	<property id="bmpmask">EMbmFooQgn_note_ok_mask_soft</property>
+   	  </compoundProperty>
+  </component>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MbmUnmaskedFromMaskedImage</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">\system\apps\image-tests\Foo.mbm</property>
+   	  	<property id="bmpid">EMbmFooQgn_note_ok</property>
+   	  </compoundProperty>
+  </component>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MbmUnmaskedImage</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">\system\apps\image-tests\Foo.mbm</property>
+   	  	<property id="bmpid">EMbmFooNote</property>
+   	  </compoundProperty>
+  </component>
+
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MifSvgImage</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">\system\resources\Svgs.mif</property>
+   	  	<property id="bmpid">EMbmSvgsAppicon</property>
+   	  	<property id="bmpmask">EMbmSvgsAppicon_mask</property>
+   	  </compoundProperty>
+  </component>
+  <component id="com.nokia.sdt.test.testStatusPaneContext">
+      <property id="name">MifMaskedImage</property>
+   	  <compoundProperty id="image">
+   	  	<property id="bmpfile">\system\resources\Svgs.mif</property>
+   	  	<property id="bmpid">EMbmSvgsQgn_note_ok</property>
+   	  	<property id="bmpmask">EMbmSvgsQgn_note_ok_mask</property>
+   	  </compoundProperty>
+  </component>
+
+
+  <component id="com.nokia.examples.testUIQImages">
+			<property id="name">UriImage</property>
+			<compoundProperty id="image">
+				<property id="uri">z:\path\filename.ext</property>
+			</compoundProperty>
+  </component>
+	  <component id="com.nokia.examples.testUIQImages">
+			<property id="name">UriImage2</property>
+			<compoundProperty id="image">
+				<property id="uri">\path\filename2.mbm?idx=0&amp;mask=1</property>
+			</compoundProperty>
+  </component>
+	
+	  <component id="com.nokia.examples.testUIQImages">
+			<property id="name">UriImage3</property>
+			<compoundProperty id="image">
+				<property id="uri">uiq_icon:00000000?size=small</property>
+			</compoundProperty>
+  </component>
+
+  <component id="com.nokia.examples.testUIQImages">
+			<property id="name">UriImage4</property>
+			<compoundProperty id="image">
+	  	  	<property id="bmpfile">\system\resources\Svgs.mif</property>
+   	  	<property id="bmpid">EMbmSvgsQgn_note_ok</property>
+   	  	<property id="bmpmask">EMbmSvgsQgn_note_ok_mask</property>
+ 			
+				<property id="uri">filename.svg</property>
+			</compoundProperty>
+  </component>
+	
+ <component id="com.nokia.examples.testUIQImages">
+			<property id="name">UriImage5</property>
+			<compoundProperty id="image">
+				<property id="uri">file:///z:\foo\bar\filename.svg</property>
+			</compoundProperty>
+  </component>
+
+	<!-- ======================================== -->
+
+	  <component id="com.nokia.examples.srcmapImage">
+			<property id="name">test_image</property>
+			<compoundProperty id="image">
+				<property id="bmpfile">test.mbm</property>
+				<property id="bmpid">ETestPic1</property>
+			</compoundProperty>
+	  </component>  
+	<!-- ======================================== -->
+	
+	  <component id="com.nokia.examples.multiImageControl">
+			<property id="name">test_multi_image</property>
+			<compoundProperty id="images">
+				<property id="bmpfile">testMulti.mbm</property>
+				<property id="bmpid1">EMbmTestmultiPic1</property>
+				<property id="bmpid2">EMbmTestmultiPic2</property>
+				<property id="bmpmask2">EMbmTestmultiPic2_mask</property>
+			</compoundProperty>
+	  </component>  
+	
+	  <component id="com.nokia.examples.multiImageControl">
+     	 <property id="name">test_multi_image_missing</property>
+			 <compoundProperty id="images">
+				 <property id="bmpfile">Unknown.mbm</property>
+				 <property id="bmpid1">EMbmUnknownQgn_note_ok</property>
+				 <property id="bmpmask1">EMbmUnknownQgn_note_ok_mask_soft</property>
+			 </compoundProperty>
+	  </component>
+
+</designerData>
+
+

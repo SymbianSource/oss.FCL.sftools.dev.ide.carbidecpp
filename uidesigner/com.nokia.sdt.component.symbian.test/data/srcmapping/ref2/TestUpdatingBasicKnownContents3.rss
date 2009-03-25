@@ -1,0 +1,8 @@
+#include <basicheader.rh>
+
+RESOURCE ONE_STRING r_test0 
+	{
+	stag=23; // what?
+	text = "check this textual data";
+	flags=42; // yeah!
+	}

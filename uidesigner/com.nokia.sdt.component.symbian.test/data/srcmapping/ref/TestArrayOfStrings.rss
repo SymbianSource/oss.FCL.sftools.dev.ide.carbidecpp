@@ -1,0 +1,16 @@
+#include <arrayheader.rh>
+
+RESOURCE STRING_LIST r_test_array_of_strings
+	{
+	strings =
+		{
+		LBUF
+			{
+			txt = STR_1;
+			},
+		LBUF
+			{
+			txt = STR_10;
+			}
+		};
+	}

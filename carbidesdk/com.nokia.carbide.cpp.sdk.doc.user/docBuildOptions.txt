@@ -1,0 +1,44 @@
+-charset "iso-8859-1"
+-sourcepath "../com.nokia.carbide.cdt.builder/src/;../com.nokia.carbide.cpp.sdk.core/src;../com.nokia.carbide.cpp.sdk.ui/src;../com.nokia.carbide.cpp.epoc.engine/src;../com.nokia.carbide.templatewizard/src;../com.nokia.carbide.cpp.ui/src;../com.nokia.carbide.cpp.project.core/src;../com.nokia.carbide.cpp.project.ui/src"
+-d reference/api
+-classpath  ${bootclasspath};../org.apache.ant/lib/ant.jar;../org.eclipse.debug.core/dtcore.jar;../org.eclipse.compare/compare.jar;../org.eclipse.help/help.jar;../org.eclipse.help.ui/helpworkbench.jar;../org.eclipse.core.resources/resources.jar;../org.eclipse.core.runtime/runtime.jar;../org.eclipse.core.filebuffers/filebuffers.jar;../org.eclipse.core.expressions/expressions.jar;../org.eclipse.swt.win32/ws/win32/swt.jar;../org.eclipse.swt.motif/ws/motif/swt.jar;../org.eclipse.ui/ui.jar;../org.eclipse.jdt.debug/jdi.jar;../org.eclipse.debug.ui/dtui.jar;../org.eclipse.search/search.jar;../org.eclipse.jface/jface.jar;../org.eclipse.jface.text/jfacetext.jar;../org.eclipse.text/text.jar;../org.eclipse.ui.editors/editors.jar;../org.eclipse.ui.views/views.jar;../org.eclipse.ui.workbench/workbench.jar;../org.eclipse.ui.workbench.texteditor/texteditor.jar;../org.eclipse.core.variables/variables.jar;../org.eclipse.ui.ide/ide.jar;../org.eclipse.jdt.junit/junitsupport.jar;../org.eclipse.osgi/osgi.jar;../org.eclipse.osgi/core.jar;../org.eclipse.osgi/eclipseAdaptor.jar;../org.eclipse.osgi.services/services.jar;../org.eclipse.osgi.util/util.jar
+-breakiterator
+-use
+-splitIndex
+-windowtitle "Carbide.c++ SDK API Reference"
+-doctitle "Carbide.c++ SDK API Reference"
+-header "<b>Carbide.c++</b>"
+-bottom "<div id=\"footer\">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href=\"http://www.eclipse.org/legal/epl-v10.html\">http://www.eclipse.org/legal/epl-v10.html</a></div>"
+-group "Carbide.c++ Builder API" "com.nokia.carbide.cdt.builder*"
+-group "Carbide.c++ SDK Core API" "com.nokia.carbide.cpp.sdk.core*"
+-group "Carbide.c++ SDK UI API" "com.nokia.carbide.cpp.sdk.ui*"
+-group "Carbide.c++ Project API" "com.nokia.carbide.cpp.project.core*"
+-group "Carbide.c++ Project UI API" "com.nokia.carbide.cpp.project.ui*"
+-group "Carbide.c++ EPOC Engine API" "com.nokia.carbide.cpp.epoc.engine*"
+-group "Carbide.c++ General User Interface API" "com.nokia.carbide.cpp.ui*"
+-group "Carbide.c++ Template Wizard API" "com.nokia.carbide.template*:com.nokia.carbide.templatewizard*"
+-link http://java.sun.com/j2se/1.5/docs/api
+
+com.nokia.carbide.cdt.builder
+com.nokia.carbide.cdt.builder.builder
+com.nokia.carbide.cdt.builder.project
+com.nokia.carbide.cpp.sdk.core
+com.nokia.carbide.cpp.sdk.ui
+com.nokia.carbide.cpp.sdk.ui.shared
+com.nokia.carbide.cpp.epoc.engine
+com.nokia.carbide.cpp.epoc.engine.image
+com.nokia.carbide.cpp.epoc.engine.model
+com.nokia.carbide.cpp.epoc.engine.model.bldinf
+com.nokia.carbide.cpp.epoc.engine.model.makefile
+com.nokia.carbide.cpp.epoc.engine.model.makefile.image
+com.nokia.carbide.cpp.epoc.engine.model.mmp
+com.nokia.carbide.cpp.epoc.engine.preprocessor
+com.nokia.carbide.cpp.project.core
+com.nokia.carbide.cpp.project.core.processes
+com.nokia.carbide.cpp.project.ui.processes
+com.nokia.carbide.cpp.project.ui.utils
+com.nokia.carbide.cpp.ui
+com.nokia.carbide.template.engine
+com.nokia.carbide.templatewizard.process
+com.nokia.carbide.templatewizard.processes
+

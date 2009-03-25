@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-Name: User Component Library Plug-in
+Bundle-SymbolicName: com.mycompany.components
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Eclipse-AutoStart: false

@@ -1,0 +1,45 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+#include <basicheader.rh>
+#include "TestArrayWithUniqueInstances.hrh"
+
+RESOURCE DIALOG r_test_dialog_sub
+	{
+	lines =
+		{
+		DIALOG_LINE
+			{
+			id = EMyContainerTestDialogWidgetSub2;
+			type = EEikCtWidget;
+			field = RECT
+				{
+				x = 5;
+				y = 50;
+				};
+			},
+		DIALOG_LINE
+			{
+			// the first line
+			id = EMyContainerTestDialogCheckboxSub;
+			type = EEikCtCheckbox;
+			field = CHECKBOX { defaultChecked = 1; };
+			},
+		DIALOG_LINE
+			{
+			// the second line
+			id = EMyContainerTestDialogLabelSub;
+			type = EEikCtLabel;
+			field = LABEL {	text = "literal string"; };
+			},
+		DIALOG_LINE
+			{
+			id = EMyContainerTestDialogWidgetSub;
+			type = EEikCtWidget;
+			field = RECT
+				{
+				x = 1;
+				y = 10;
+				};
+			}
+		};
+	}

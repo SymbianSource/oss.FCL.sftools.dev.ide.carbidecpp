@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Redundant Statements</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Redundant Statements</h3>
+<p>  If you enable the pragma <a href="../pragmas/p_warn_no_side_effect.htm">warn_no_side_effect</a>, the compiler issues a warning when it encounters a statement that produces no side effect. To prevent a statement with no side effects from signalling this warning, cast the statement with (void). See Listing 6.12 for an example.</p>
+<div class="listing">
+  <h5>Listing 6.12 Example of Pragma warn_no_side_effect</h5>
+  <p>#pragma warn_no_side_effect on<br />
+    void foo(int a,int b)<br />
+    {<br />
+    a+b; // warning: expression has no side effect<br />
+    (void)(a+b); // void cast suppresses warning<br />
+    }<br />
+  </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

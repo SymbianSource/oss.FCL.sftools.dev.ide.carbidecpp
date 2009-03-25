@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%AppEditorName"
+            default="true"
+            icon="icons/UI_designer.png"
+            contributorClass="com.nokia.sdt.symbian.ui.appeditor.ApplicationEditorContributor"
+            class="com.nokia.sdt.symbian.ui.appeditor.ApplicationEditor"
+            id="com.nokia.sdt.symbian.ui.appeditor.ApplicationEditor">
+          <contentTypeBinding contentTypeId="com.nokia.sdt.uimodel.carbideAppModel"/>
+       </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+         id="com.nokia.sdt.symbian.ui.avkonViewDecorator"
+         label="%AvkonViewDecorator"
+         lightweight="true"
+         icon="icons/avkonViewDecorator.gif"
+         location="BOTTOM_LEFT"
+         state="true">
+         <description>%AvkonDecoratorDescription</description>
+         <enablement>
+         	<and>
+	         	<objectClass name="com.nokia.sdt.symbian.ui.appeditor.ViewModelEntry"/>
+         		<objectState name="isAvkonView" value="true"/>
+         	</and>
+         </enablement>
+       </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="com.nokia.sdt.symbian.ui.editApplication">
+         <action
+               class="com.nokia.sdt.symbian.ui.appeditor.EditApplicationAction"
+               enablesFor="1"
+               icon="icons/UI_designer.png"
+               id="com.nokia.sdt.symbian.ui.editApplicationAction"
+               label="%editApplication"
+               menubarPath="additions">
+         </action>
+        <filter
+               name="projectSessionProperty"
+               value="com.nokia.sdt.symbian.IS_UIDESIGNER_PROJECT"/>
+       </objectContribution>
+  	</extension>
+   <extension
+         point="com.nokia.sdt.uidesigner.editorExtender">
+      <extender
+            class="com.nokia.sdt.symbian.ui.appeditor.S60ApplicationEditorExtender"
+            editorIdFilter="com.nokia.sdt.symbian.ui.appeditor.ApplicationEditor">
+      </extender>
+   </extension>
+   <extension
+         point="com.nokia.sdt.uidesigner.editorExtender">
+      <extender
+            class="com.nokia.sdt.symbian.ui.appeditor.UIQApplicationEditorExtender"
+            editorIdFilter="com.nokia.sdt.symbian.ui.appeditor.ApplicationEditor">
+      </extender>
+   </extension>
+</plugin>

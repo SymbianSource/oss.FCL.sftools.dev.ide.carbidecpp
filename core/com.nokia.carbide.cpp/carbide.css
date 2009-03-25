@@ -1,0 +1,105 @@
+/*	
+	Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+	All rights reserved. 
+	License: http://www.eclipse.org/legal/epl-v10.html
+*/
+
+body {
+	font-family: Helvetica, sans-serif;
+	color: #000000;
+	margin:20px;
+	}
+
+.intro-header h1 {
+	font-family: Helvetica, sans-serif;
+	font-size: 20px;
+	color: #00A1D0;
+	}
+
+.bgbox {  background-image: url(images/whitebg.gif); background-repeat: repeat}
+
+.copytext {  font-family: Helvetica, sans-serif; 
+	font-size: x-small; 
+	color: #666666;
+	font-weight: 500; 
+	padding-top: 1px; 
+	padding-right: 1px; 
+	padding-left: 2px
+	}
+
+h2, h4 {
+	font-family: Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	}
+
+h4 {
+	font-size: 12px;
+	}
+	
+.box { width: 200px;
+        height: 200px;
+        margin-right: 10px;
+        float: left; 
+		margin: 10px;
+		} 
+		
+.box2 { width: 640px;
+        height: 200px;
+        margin-right: 10px;
+        float: left; 
+		margin: 10px;} 
+		
+.box3 { width: 200px;
+        height: 640px;
+        margin-right: 10px;
+        float: left; 
+		margin: 10px;} 
+		
+.box4 { width: 200px;
+        height: 420px;
+        margin-right: 10px;
+        float: left; 
+		margin: 10px;} 
+	
+.box, .box2, .box3, .box4 {
+	background-color: #FFF;
+	background-image: url(intro/css/graphics/icons/carbide_bullet_blue.png);
+	background-repeat: no-repeat;
+	background-position: 5 5; 
+	}
+	
+h3 {  font-family: Helvetica, sans-serif; 
+	font-size: 12px; 
+	font-weight: 500; 
+	color: #333333
+	}
+	
+.text, p, li, td {
+	font-family: Georgia, serif;
+	font-size: 13px;
+	margin-top: 2px;
+	margin-left: 20px;
+	}
+	
+.titleSmall {
+	font-family: Helvetica, sans-serif;
+	font-size: 10px;}
+	}
+
+
+/* Carbide home page adjustments */
+table	{
+	border: 0px solid #999;
+	table-layout: auto;
+	}
+
+td, th	{
+	border: 0px solid #999;
+	padding: 5px;
+	vertical-align:top;
+	}
+	
+table tr td h2 {
+	margin-left: 0px;
+	}

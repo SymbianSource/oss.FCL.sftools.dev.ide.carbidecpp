@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Tutorial: Equal Container</title>
+<link rel="StyleSheet" href="../../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Tutorial: EqualContainer - Change  CCoeControl&rsquo;s Layout Behavior to be Dynamic</h2>
+<h3>Overriding Layout</h3>
+
+<p>So far, a clone of the CCoeControl  sourcegen has been generated. Now we want the  runtime behavior to match the design time layout behavior. Currently, the CCoeControl component constructs a  LayoutControls() method into which children provide hardcoded <span class="code">child-&gt;SetExtent()</span> calls to place themselves at absolute coordinates. Now you will preprocess the contributions and toss  away all  contributions to this function and use your own.</p>
+First, break  up the &lt;inline&gt; block to do work before <strong>this.finishSourceGen()</strong>.
+<pre>&lt;inline&gt;
+ this.initSourceGen(contribs,  instance, form);
+ this.getChildSourceGen(contribs,  instance, form);
+<strong><br />   // delete all the existing  layout code, since it reflects
+</strong><strong>   // the design state, not the runtime state
+</strong> Engine.removeContributionsForPhase(contribs,  &quot;LayoutControls&quot;);
+&lt;/inline&gt;</pre>
+<p>Inject our call to  have the container lay out children.</p>
+<pre>&lt;template phase=&quot;LayoutControls&quot;&gt;<br /> PackControls( ${instance.properties.padding}, ${(instance.properties.direction == &quot;horizontal&quot; ? &quot;ETrue&quot; : &quot;EFalse&quot;)} );<br />&lt;/template&gt;</pre>
+<pre>&lt;inline&gt;
+ this.finishSourceGen(contribs,  instance, form);
+&lt;/inline&gt;</pre>
+<p>A routine is used to delete contributions for the &ldquo;LayoutControls&rdquo; phase. Phases are converted to locations in <span class="code">finishSourceGen()</span> and would have to be handled differently after that. Then, the &lt;template&gt; injects a call, showing again how properties for our container can be read inside the text using the <span class="code">${&hellip;}</span> escape syntax.</p>
+<p class="note"><strong>NOTE</strong> Complex expressions in ${...} escape sequences should be enclosed in parentheses, because the result is added to a string using the &quot;+&quot; operator.</p>
+<h4>Defining custom layout</h4>
+<p>Finally, account for the new method  mentioned above, <span class="code">PackControls()</span>. Define a method declaration into the class and provide the function body.&nbsp; The elements that provide this behavior  should come after the &lt;templateGroups&gt; that define the header and main  file, and precede the &lt;inline&gt; script code which gathers and finalizes  child contributions.</p>
+<p>You need to define the method containing this  code:</p>
+<pre>&lt;!-- add a method declaration --&gt;
+&lt;template  location=&quot;CLASS_METHODS&quot;&gt;
+   /* Pack  the controls into equal-sized regions.&nbsp;*/
+   void PackControls( TInt aPadding, TBool aIsHorizontal );
+&lt;/template&gt;</pre>
+<p>Then, define the body. This could be written directly to the  MAIN_FILE as a template, but here we choose to make it into a location. By being a location, you can toggle the <strong>owned </strong>attribute to <strong>true </strong>and have the UI Designer rewrite the function each time it is  saved. This may be useful either to test  changes to the templates interactively or to inject new property values into the  generated source. If not owned, the  function will be written only once, and regenerated if deleted. The function must be placed inside its own location for the UI Designer to rewrite it; unless the whole file is deleted.</p>
+<p>Define the function as a location, which can be owned, thus 		rewritten every time the design is saved. This is useful for testing, 		though not very efficient.</p>
+<pre>&lt;defineLocation id=&quot;PACK_CONTROLS&quot; baseLocation=&quot;MAIN_FILE&quot; owned=&quot;false&quot; location=&quot;function(${className}::PackControls(TInt, TBool))&quot;&gt;
+  &lt;template&gt;
+   /** Pack the controls into equal-sized vertical regions. */
+   void ${className}::PackControls( TInt aPadding, TBool aIsHorizontal ) 	{ 	}
+  &lt;/template&gt;
+&lt;/defineLocation&gt; </pre>
+<p>The &lt;templates&gt;  inside &lt;defineLocation&gt; usually describe only the skeleton of the  function, with the body defined elsewhere, but this is based on personal preference. Note that the <span class="code">location=&rdquo;&hellip;&rdquo;</span> line must match  the signature of the function declared inside, otherwise you will get strange errors about &ldquo;C++ parser could not find location &hellip; &ldquo;.</p>
+<p>Following is the body of the function. Refer to the EqualContainer.component file for the full text.</p>
+<pre>&lt;template location=&quot;PACK_CONTROLSL&quot;&gt;&lt;![CDATA[
+   TRect rect( Rect() );
+   TInt count = CountComponentControls();
+   &hellip;
+&lt;/template&gt; </pre>
+<p>It is worth mentioning that the  <span class="code">&lt;![CDATA[ &hellip; ]]&gt;</span> block is used to allow free use of C++ syntax inside the  block without worrying about escaping XML-sensitive characters. The text  placed inside the location should be flush against the left-hand margin. The location itself defines the indentation.</p>
+<p class="note"><strong>NOTE</strong> For new components, it is advised to use macros to define functions.  This will encapsulate the &lt;defineLocation&gt; and &lt;template&gt; elements as well as handling some of the gotchas mentioned here.  See the reference for &lt;expandMacro&gt; and the CommonMacros.inc file in the com.nokia.series60.componentlibrary plugin for details and <a href="../../../reference/CustomComponents/cc_source_generation.htm#macros">Macro information located here</a>.</p>
+<h5>Step 4 of 5</h5>
+<p><a href="equalcontainer_tutorial_04.htm">Expose the New Container in the Design Wizard</a></p>
+<div id="footer">><img src="../../../img/nokia_copyright.png" alt="copyright" width="280" height="21"></div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.StatusPaneCaption" 
+		baseComponent="com.nokia.sdt.series60.StatusPaneTitleBase"
+		category="System"
+		instanceNameRoot="caption"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" 
+			minSDKVersion="2.0" maxSDKVersion="2.9.9"
+			className="" classHelpTopic=""
+			resourceType="CAPTION_DATA" resourceHelpTopic="" 
+		/>
+		<attributes>
+			<attribute key="model-type-disposition">root</attribute>
+			<attribute key="is-not-user-removable">true</attribute>
+		</attributes>
+		<designerImages smallIconFile="StatusPaneCaption_sm.png" 
+			largeIconFile="StatusPaneCaption.png"/>
+		<properties>
+			<property name="longCaption" displayName="%longCaption" 
+				category="Data" type="localizedString" default="Application" 
+				descriptionKey="longCaptionKey" />
+			<property name="shortCaption" displayName="%shortCaption" 
+				category="Data" type="localizedString" default="Application"
+				descriptionKey="shortCaptionKey"  />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="StatusPaneCaption_visual.js" prototype="StatusPaneCaptionVisual"/>
+			</implementation>
+		</implementations>
+		<sourceMapping>
+			<mapResource 
+				rssFile="${projectName}_caption.rss"
+				struct="CAPTION_DATA" headers="apcaptionfile.rh">
+				<mapSimpleMember property="longCaption" member="caption"/>
+				<mapSimpleMember property="shortCaption" member="shortcaption"/>
+			</mapResource>
+		</sourceMapping>
+	</component>
+</componentDefinition>

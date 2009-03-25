@@ -1,0 +1,4 @@
+// localized strings for language: French (02)
+#define STR_1 "??Hello"
+#define STR_5 "??TODO"
+#define STR_10 "quatorze"

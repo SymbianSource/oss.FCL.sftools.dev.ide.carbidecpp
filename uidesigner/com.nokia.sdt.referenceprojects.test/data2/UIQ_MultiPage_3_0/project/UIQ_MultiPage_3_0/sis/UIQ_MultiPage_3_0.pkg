@@ -1,0 +1,40 @@
+; UIQ_MultiPage_3_0.pkg
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+; Also, the resource file entries should be changed to match the language
+; used in the build. For example, if building for LANGUAGE_01, change the file
+; extensions .rsc to .r01.
+;
+;Language - standard language definitions
+&EN
+
+; standard SIS file header
+#{"UIQ_MultiPage_3_0"},(0xEFA1BB5E),1,0,0
+
+;Localised Vendor name
+%{"Vendor-EN"}
+
+;Unique Vendor name
+:"Vendor"
+
+;Supports Series UIQ v 3.0
+[0x101F6300], 3, 0, 0, {"UIQ30ProductID"}
+
+;Files to install
+;You should change the source paths to match that of your environment
+;<source> <destination>
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\UIQ_MultiPage_3_0.exe"        -"!:\sys\bin\UIQ_MultiPage_3_0.exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\UIQ_MultiPage_3_0.r01"        -"!:\resource\apps\UIQ_MultiPage_3_0.r01"
+;"$(EPOCROOT)Epoc32\data\z\resource\apps\UIQ_MultiPage_3_0_loc.rsc"        -"!:\resource\apps\UIQ_MultiPage_3_0_loc.rsc"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\UIQ_MultiPage_3_0_reg.rsc"    -"!:\private\10003a3f\import\apps\UIQ_MultiPage_3_0_reg.rsc"
+"$(EPOCROOT)epoc32\data\z\resource\apps\UIQ_MultiPage_3_0.mbm" -"!:\resource\apps\UIQ_MultiPage_3_0.mbm"
+; Add any installation notes if applicable
+;"UIQ_MultiPage_3_0.txt"        		      -"!:\private\0xEFA1BB5E\UIQ_MultiPage_3_0.txt"
+
+
+;"$(EPOCROOT)Epoc32\data\z\resource\apps\UIQ_MultiPage_3_0.r01"        -"!:\resource\apps\UIQ_MultiPage_3_0.r01"
+;"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\UIQ_MultiPage_3_0_reg.r01"    -"!:\private\10003a3f\import\apps\UIQ_MultiPage_3_0_reg.r01"
+;"$(EPOCROOT)epoc32\data\z\resource\apps\UIQ_MultiPage_3_0_aif.mif" -"!:\resource\apps\UIQ_MultiPage_3_0_aif.mif"

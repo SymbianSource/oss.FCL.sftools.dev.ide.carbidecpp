@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+	<component baseComponent="com.nokia.examples.baseComponent"
+	friendlyName="Source Mapping Test" qualifiedName="com.nokia.examples.srcmapSimple" 
+	category="Testing" version="1.0">
+		<sourceMapping>
+			<mapResource struct="SIMPLE_TYPES" headers="basicheader.rh">
+				<mapSimpleMember property="bytedata" member="byte" />
+				<mapSimpleMember property="worddata" member="word" />
+				<mapSimpleMember property="longdata" member="long" />
+				<mapSimpleMember property="textdata" member="text" />
+				<mapSimpleMember property="doubledata" member="double" />
+				<mapSimpleMember property="ltextdata" member="ltext" />
+				<mapSimpleMember property="bufdata" member="buf" />
+				<mapSimpleMember property="buf8data" member="buf8" />
+			</mapResource>
+		</sourceMapping>
+		
+		<properties>
+			<property name="bytedata" displayName="Byte data" type="integer"/>
+			<property name="worddata" displayName="Word data" type="integer"/>
+			<property name="longdata" displayName="Long data" type="integer"/>
+			<property name="textdata" displayName="Text data" type="string"/>
+			<property name="doubledata" displayName="Double data" type="float"/>
+			<property name="ltextdata" displayName="Long Textual data" type="string"/>
+			<property name="bufdata" displayName="Buf data" type="string"/>
+			<property name="buf8data" displayName="Buf8 data" type="string"/>
+		</properties>
+	</component>
+</componentDefinition>

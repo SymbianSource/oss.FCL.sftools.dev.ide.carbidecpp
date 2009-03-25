@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<component baseComponent="com.nokia.sdt.series60.ContainerBase" 
+			friendlyName=""
+			qualifiedName="com.nokia.sdt.series60.DialogBase" 
+			abstract="true"
+			version="1.0">
+			
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		
+		<attributes>
+			<attribute key="is-top-level-content-container">true</attribute>
+			<attribute key="vertical-scrollable-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="allow-cba-in-parent">true</attribute>
+			<attribute key="container-background-color-property-name">backColor</attribute>
+		</attributes>
+	
+		<properties>
+			<property category="Hidden" name="notifyEsc" type="boolean" default="false"/>
+			<property category="Behavior" name="modeless" type="boolean" default="true"
+				descriptionKey="EEikDialogFlagModelessDescription" />
+			<property category="Behavior" name="wait" type="boolean" default="false"
+				descriptionKey="EEikDialogFlagWaitDescription" />
+				<!-- corresponds to flag EEikDialogFlagWait 0x001 -->
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<script file="DialogBase.js" prototype="DialogBase" />
+			</implementation>
+		</implementations>
+		
+		<events>
+		<event name="prepareForFocusTransition" category="Dialog" 
+		    handlerNameTemplate="Handle{title(name)}PrepareForFocusTransitionL"
+		    descriptionKey="prepareForFocusTransitionDescription"
+		/>
+		<event name="pageChanged" category="Dialog" 
+		    handlerNameTemplate="Handle{title(name)}PageChangedL"
+		    descriptionKey="pageChangedDescription"
+		/>		
+		<event name="lineChanged" category="Dialog" 
+		    handlerNameTemplate="Handle{title(name)}LineChangedL"
+		    descriptionKey="lineChangedDescription"
+		/>
+		<event name="processCommand" category="Command" 
+		    handlerNameTemplate="Handle{title(name)}ProcessCommandL"
+		    descriptionKey="processCommandDescription"
+		/>
+		<event name="dynInitMenuPane" category="Menu" 
+		    handlerNameTemplate="Handle{title(name)}DynInitMenuPaneL"
+		    descriptionKey="dynInitMenuPaneDescription"
+		/>
+		<event name="offerKeyToApp" category="Menu" 
+		    handlerNameTemplate="Handle{title(name)}OfferKeyToAppL"
+		    descriptionKey="offerKeyToAppDescription"
+		/>
+		</events>
+		
+	<sourceGen>
+		
+<!-- BEGIN EVENT prepareForFocusTransition -->
+			<templateGroup id="GeneratePrepareForFocusTransition" ifEvents="prepareForFocusTransition">
+				<template id="DeclarePrepareForFocusTransitionOverride" phase="OverriddenMethods"><![CDATA[
+void PrepareForFocusTransitionL();
+]]>				</template>
+
+				<defineLocation id="PrepareForFocusTransitionOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::PrepareForFocusTransitionL())">
+					<template><![CDATA[
+/** 
+ * Handle focus transition this dialog (override)
+ */
+void ${handlerClassName}::PrepareForFocusTransitionL()
+	{
+	${instance.attributes["base-container-class"]}::PrepareForFocusTransitionL();
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="PrepareForFocusTransitionMethodBody" baseLocation="PrepareForFocusTransitionOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokePrepareForFocusTransitionHandler" location="PrepareForFocusTransitionMethodBody">
+${event.handlerName}();
+			</template>
+
+			<template id="DeclarePrepareForFocusTransitionHandler" phase="UserHandlers">
+void ${event.handlerName}();
+			</template>
+
+			<defineLocation id="PrepareForFocusTransitionHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}())">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}()
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizePrepareForFocusTransitionHandler" location="PrepareForFocusTransitionHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT prepareForFocusTransition -->
+
+<!-- BEGIN EVENT pageChanged -->
+			<templateGroup id="GeneratePageChanged" ifEvents="pageChanged">
+				<template id="DeclarePageChangedOverride" phase="OverriddenMethods"><![CDATA[
+void PageChangedL( TInt aPageId );
+]]>				</template>
+
+				<defineLocation id="PageChangedOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::PageChangedL(TInt))">
+					<template><![CDATA[
+/** 
+ * Handle page changed notifications this dialog (override)
+ */
+void ${handlerClassName}::PageChangedL( TInt aPageId )
+	{
+	${instance.attributes["base-container-class"]}::PageChangedL( aPageId );
+	}
+]]>				
+					</template>
+				</defineLocation>
+
+			<defineLocation id="PageChangedMethodBody" baseLocation="PageChangedOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokePageChangedHandler" location="PageChangedMethodBody">
+${event.handlerName}( aPageId );
+			</template>
+
+			<template id="DeclarePageChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aPageId );
+			</template>
+
+			<defineLocation id="PageChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aPageId )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizePageChangedHandler" location="PageChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT pageChanged -->
+
+<!-- BEGIN EVENT lineChanged -->
+			<templateGroup id="GenerateLineChanged" ifEvents="lineChanged">
+				<template id="DeclareLineChangedOverride" phase="OverriddenMethods"><![CDATA[
+void LineChangedL( TInt aPageId );
+]]>				</template>
+
+				<defineLocation id="LineChangedOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::LineChangedL(TInt))">
+					<template><![CDATA[
+/** 
+ * Handle line change notifications for this dialog (override)
+ */
+void ${handlerClassName}::LineChangedL( TInt aControlId )
+	{
+	${instance.attributes["base-container-class"]}::LineChangedL( aControlId );
+	}
+]]>				
+					</template>
+				</defineLocation>
+		
+			<defineLocation id="LineChangedMethodBody" baseLocation="LineChangedOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeLineChangedHandler" location="LineChangedMethodBody">
+${event.handlerName}( aControlId );
+			</template>
+
+			<template id="DeclareLineChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aControlId );
+			</template>
+
+			<defineLocation id="LineChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aControlId )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeLineChangedHandlerMethod" location="LineChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT lineChanged -->
+
+<!-- BEGIN EVENT processCommand -->
+			<templateGroup id="GenerateProcessCommand" ifEvents="processCommand">
+				<template id="DeclareProcessCommandOverride" phase="OverriddenMethods"><![CDATA[
+void ProcessCommandL( TInt aCommandId );
+]]>				</template>
+
+				<defineLocation id="ProcessCommandOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::ProcessCommandL(TInt))">
+					<template><![CDATA[
+/** 
+ * Handle commands for this dialog. (override)
+ */
+void ${handlerClassName}::ProcessCommandL( TInt aCommandId )
+	{
+	${instance.attributes["base-container-class"]}::ProcessCommandL( aCommandId );
+	}
+]]>				
+					</template>
+				</defineLocation>
+		
+			<defineLocation id="ProcessCommandMethodBody" baseLocation="ProcessCommandOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeProcessCommandHandler" location="ProcessCommandMethodBody">
+${event.handlerName}( aCommandId );
+			</template>
+
+			<template id="DeclareProcessCommandHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aCommandId );
+			</template>
+
+			<defineLocation id="ProcessCommandHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aCommandId )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeProcessCommandHandler" location="ProcessCommandHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT processCommand -->
+
+<!-- BEGIN EVENT dynInitMenuPane -->
+			<templateGroup id="GenerateDynInitMenuPane" ifEvents="dynInitMenuPane">
+				<template id="DeclareDynInitMenuPaneOverride" phase="OverriddenMethods"><![CDATA[
+void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
+]]>				</template>
+				<template id="CEikMenuPaneForwardDecl" phase="ForwardDeclarations">
+class CEikMenuPane;
+				</template>
+
+				<defineLocation id="DYNINITMENUPANEL" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::DynInitMenuPaneL(TInt, CEikMenuPane*))">
+					<template><![CDATA[
+/** 
+ * Handle menu enablement for this dialog. (override)
+ */
+void ${handlerClassName}::DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane )
+	{
+	${instance.attributes["base-container-class"]}::DynInitMenuPaneL( aResourceId, aMenuPane );
+	}
+]]>				
+					</template>
+				</defineLocation>
+		
+			<defineLocation id="DynInitMenuPaneMethodBody" baseLocation="DYNINITMENUPANEL"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeDynInitMenuPaneHandler" location="DynInitMenuPaneMethodBody">
+${event.handlerName}( aResourceId, aMenuPane );
+			</template>
+
+			<template id="DeclareDynInitMenuPaneHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aResourceId, CEikMenuPane* aMenuPane );
+			</template>
+
+			<defineLocation id="DynInitMenuPaneHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt, CEikMenuPane*))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aResourceId, CEikMenuPane* aMenuPane )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeDynInitMenuPaneHandler" location="DynInitMenuPaneHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT dynInitMenuPane -->
+
+<!-- BEGIN EVENT offerKeyToApp -->
+			<templateGroup id="GenerateOfferKeyToApp" ifEvents="offerKeyToApp">
+				<template id="DeclareOfferKeyToAppOverride" phase="OverriddenMethods"><![CDATA[
+void OfferKeyToAppL( const TKeyEvent& aKeyEvent, TEventCode aType );
+]]>				</template>
+
+				<defineLocation id="OfferKeyToAppOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::OfferKeyToAppL(const TKeyEvent&amp;,TEventCode))">
+					<template><![CDATA[
+/** 
+ * Handle special keys during menu selection for this dialog. (override)
+ */
+void ${handlerClassName}::OfferKeyToAppL( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	${instance.attributes["base-container-class"]}::OfferKeyToAppL( aKeyEvent, aType );
+	}
+]]>				
+					</template>
+				</defineLocation>
+		
+			<defineLocation id="OfferKeyToAppMethodBody" baseLocation="OfferKeyToAppOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeOfferKeyToAppHandler" location="OfferKeyToAppMethodBody">
+${event.handlerName}( aKeyEvent, aType );
+			</template>
+
+			<template id="DeclareOfferKeyToAppHandler" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType );
+]]>			</template>
+
+			<defineLocation id="OfferKeyToAppHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(const TKeyEvent&amp;, TEventCode))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeOfferKeyToAppHandler" location="OfferKeyToAppHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT offerKeyToApp -->
+
+	</sourceGen>
+
+	</component>
+</componentDefinition>
+	

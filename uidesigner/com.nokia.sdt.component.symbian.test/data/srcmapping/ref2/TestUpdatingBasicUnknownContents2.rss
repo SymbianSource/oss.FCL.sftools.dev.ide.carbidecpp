@@ -1,0 +1,10 @@
+#include <basicheader.rh>
+
+RESOURCE ONE_STRING r_test0 
+	{
+text   ="blargh";
+	}
+RESOURCE ONE_STRING r_test0_2
+	{
+	text = "check this textual data";
+	}

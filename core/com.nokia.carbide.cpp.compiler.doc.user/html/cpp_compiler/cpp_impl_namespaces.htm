@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Namespaces</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Namespaces</h3>
+<p>Carbide supports <span class="code">namespaces</span>, which provide the scope for identifiers. Listing 3.1 provides an example of how you define items in a namespace.</p>
+<p class="listing">namespace NS<br />
+  {<br />
+  int foo();<br />
+  void bar();<br />
+  }</p>
+<p>The above example defines an int variable named <span class="code">NS::foo</span> and a function named <span class="code">NS::bar</span>.</p>
+<p>You can nest namespaces. For example, you can define an identifier as <span class="code">A::B::C::D::E</span> where <span class="code">A</span>, <span class="code">B</span>, and <span class="code">C</span> are nested namespaces and D is either another namespace or a class. You cannot use namespaces within class definitions.</p>
+<p>You can rename namespaces for a module. For example:</p>
+<p class="listing">namespace ENA = ExampleNamespaceAlpha;</p>
+<p>creates a namespace alias called <span class="code">ENA</span> for the original namespace <span class="code">ExampleNamespaceAlpha</span>.</p>
+<p>You can import items from a namespace. For example:</p>
+<p class="listing">using namespace NS;</p>
+<p>makes anything in NS visible in the current namespace without a qualifier. To limit the scope of an import, specify a single identifier. For example:</p>
+<p class="listing">using NS::bar;</p>
+<p>only exposes <span class="code">NS::bar</span> as <span class="code">bar</span> in the current space. This form of using is considered a declaration. So, the following statements:</p>
+<p class="listing">using NS::foo;<br />
+  int foo;</p>
+<p>are not allowed because <span class="code">foo</span> is being redeclared in the current namespace, thereby masking the <span class="code">foo</span> imported from <span class="code">NS</span>. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+  <extension
+         point="org.eclipse.ui.editors.templates">
+       <include
+      		file="templates/carbide-templates.xml"
+      		translations="$nl$/templates/carbide-templates.properties">
+      </include>
+   </extension>
+  <extension
+        id="AAA_projectUIActionSet"
+        name="Project UI"
+        point="org.eclipse.ui.actionSets">
+     <actionSet
+           description="Declaration of the Carbide menu"
+           id="AAA.com.nokia.carbide.cpp.ui.CarbideMenu"
+           label="%carbideExtensions"
+           visible="true">
+        <menu
+              id="com.nokia.carbide.cpp.ui.CarbideMenu"
+              label="&amp;Carbide"
+              path="additions">
+           <separator name="CarbideStart"/>
+           <separator name="CarbideEnd"/>
+           <separator name="CarbideExtensions"/>
+        </menu>
+     </actionSet>
+  </extension>
+
+</plugin>

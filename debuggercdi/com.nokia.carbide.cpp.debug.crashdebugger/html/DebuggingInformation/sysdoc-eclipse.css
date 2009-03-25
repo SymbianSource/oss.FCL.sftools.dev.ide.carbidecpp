@@ -1,0 +1,102 @@
+/*	Add whitespace around entire display to avoid crowding edges of view 	*/
+html {
+	margin: 10px;
+	}
+
+/* 	Set default font to serif style, 12-pt and plain	*/
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-weight: plain;
+}
+
+/*	Use sans-serif fonts for all title styles and Nokia blue	*/
+h1, h2, h3, h4, h5, h6, strong, em {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333;	
+	}
+
+/*	For headlines at the top of a view, add space and a gray line underneath	*/
+h2, h3	{
+	padding:10px 0px;	
+	}
+	
+li	{
+	margin-bottom:8px;	
+	margin-top:8px;	
+	}
+
+/* p.listing in Nile.css */
+.CodeBlock	{
+	font-family: "Courier New", Courier, mono;
+	color: #009;
+	background-color: #EEE; 
+	padding: 10px 0px;
+	margin: 10px 0px;
+	}
+
+pre	{
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+	color: #333;
+	}
+
+/* Tables. */
+	
+table	{
+	border: 1px solid #5990D0;
+	table-layout: auto;
+	}
+
+td, th	{
+	border: 1px solid #5990D0;
+	padding: 5px;
+	vertical-align:top;
+	}
+	
+th	{
+	background-color:#5990D0;
+	color:#FFF;
+	}
+
+/* Lists from nile.css */
+div.ol.p	{
+	margin-left: 3em;
+	}
+
+div ol > li	{
+	font-weight:bold;
+	}
+
+/* Figures */
+
+.Figure .Caption, .Figure .Image, .RelatedItems .Image {
+  text-align: center;
+}
+
+/* p.figure in Nile.css*/
+.Caption {
+	color: #5990D0;
+	text-align: center;
+	font-weight: bold;
+}
+
+/* Other */
+
+.Prototype {
+  border: solid white 1px;
+  background-color: #dddddd;
+}
+
+.copyrightStatement {
+  font-size: 12px;
+  color:			#006699;             /* Symbian blue */
+}
+
+.unresolvedLink {
+  color: #ff0000;
+  background-color: #ffddbb;
+}
+
+/* Glossary */
+.Glossary dt { margin-top: 1.5em; }

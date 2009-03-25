@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>pool_strings</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+    </head>
+
+<body>
+<h3>pool_strings</h3>
+<p>  Controls how string literals are stored.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma pool_strings on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler collects all string constants into a single data object so your program needs one data section for all of them. If you disable this pragma, the compiler creates a unique data object and TOC entry for each string constant. While this decreases the number of data sections in your program, on some processors, like the PowerPC, it also makes your program bigger because it uses a less efficient method to store the address of the string. </p>
+  <p>This pragma is especially useful if your program is large and has many string constants or uses the Metrowerks Profiler.</p>
+  <p class="note"><strong>NOTE</strong> If you enable this pragma, the compiler ignores the setting of the pragma pcrelstrings.</p>
+  <p>This pragma corresponds to the Pool Strings setting .</p>
+  <p class="note"><strong>NOTE</strong> A compiler may override this panel setting in a processor-specific code generation panel.</p>
+  <p>To check this setting, use <span class="code">__option (pool_strings)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

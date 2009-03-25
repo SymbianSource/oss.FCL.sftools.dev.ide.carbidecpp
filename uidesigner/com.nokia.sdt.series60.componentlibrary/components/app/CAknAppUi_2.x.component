@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgen SYSTEM "CAknAppUi_common.inc">
+<!ENTITY common_srcmapping SYSTEM "CAknAppUi_common_srcmapping.inc">
+<!ENTITY common_events SYSTEM "CAknAppUi_events.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.CAknAppUiBase" 
+			friendlyName="Avkon Application UI" 
+			qualifiedName="com.nokia.sdt.series60.CAknAppUi" 
+			instanceNameRoot="appUi"
+			version="1.0">
+		<documentation>
+			<information>The Series 60 top-level Avkon view application UI class.  
+			This is a non-visual class which holds a reference to
+			a visual component (such as CAknDialog or CCoeControl).</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" 
+				minSDKVersion="2.0" maxSDKVersion="2.7.9"
+			className="CAknAppUi"/>
+		
+		<events>
+			&common_events;
+		</events>
+		
+		<designerImages smallIconFile="CAknAppUi_sm.png" 
+			largeIconFile="CAknAppUi.png"/>
+
+		<sourceMapping>
+			&common_srcmapping;
+		</sourceMapping>		
+
+		<sourceGen>
+			&common_srcgen;
+		</sourceGen>		
+	</component>
+</componentDefinition>

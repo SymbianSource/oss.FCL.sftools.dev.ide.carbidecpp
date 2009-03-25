@@ -1,0 +1,25 @@
+#include <refheader.rh>
+#include <basicheader.rh>
+#include <arraydialog.rh>
+
+RESOURCE OWNER r_test_refs_multi_export_referrer
+	{
+	theLink = r_test_refs_multi_export_child;
+	}
+RESOURCE ONE_STRING r_test_refs_multi_export_child
+	{
+	text = "check this textual data";
+	}
+RESOURCE DIALOG r_test_refs_multi_export
+	{
+	lines =
+		{
+		DIALOG_LINE
+			{
+			field = ONE_STRING
+				{
+				text = "check this textual data";
+				};
+			}
+		};
+	}

@@ -1,0 +1,1341 @@
+/*
+* Copyright (c) 2002-2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+
+#ifndef FEATURES_HRH
+#define FEATURES_HRH
+
+#include "defaultcaps.hrh"
+
+#define KCommonFeatureFirst  1
+#define KCommonFeatureLast  999
+
+//-----------------------------------
+//RnD flags
+//-----------------------------------
+/*
+* This flag is needed for safely (without creating bottle neck)
+* incorporating DOS Client/Plug-in/SAE API changes into Series 60 releases.
+*/
+#define RD_DOS_API_CHANGE
+
+/*
+*/
+#define RD_SD_TO_CENREP_CHANGE
+
+/*
+* Because 2.8 feature (scalable UI) is implemented in 2.common CCB,
+* we need a temporary feature flag that can be used where needed in code to
+* flag scalable UI implementation out of 2.6 builds.
+* -> to avoid ROM hit in 2.6 and regression in code maturity.
+*/
+#define RD_SCALABLE_UI
+
+/*
+* To incorporate "System Agent migration to Publish and Subscribe"
+*/
+#define RD_SA_TO_PUBSUB_CHANGE
+
+/*
+* RD Feature flag for implementing "enhanced skinning" in 2.x CCB. That
+* feature is not wanted in 2.6 but after 2.8 it will be permanently
+* supported i.e. not optional feature.
+*/
+#define RD_ENHANCED_SKINNING
+
+/*
+* A R&D flag for integrating SimChanged DLL into SysAp in release 3.0. Flag
+* will be removed when 2.8 branches
+*/
+#define RD_SIMCHANGED_REMOVED
+
+/*
+* Turning the the flag on enables special UID that can be used by a RAM
+* testing tool. A tool using the UID is not closed by out-of-memory
+* watchdog. Flag should not be turned on in any end product as it exposes a
+* potential security risk. Instead the flag could be used at R&D time, or in
+* any custom builds.
+*/
+#define RD_RAM_TEST_UID
+
+/*
+* Flag is used variate the Increment 9 changes: i.e. relocation of binaries
+* and resource files. We need these for 3.0 PF- security implementation.
+* They are temporary R&D flags that can be removed once 2.8 is branched
+* away.
+*/
+#define RD_SECURE_BIN_RES
+
+/*
+* Flag is in charge of variating the Increment 10 tasks: i.e. moving files
+* to private directories. We need these for 3.0 PF- security implementation.
+* They are temporary R&D flags that can be removed once 2.8 is branched
+* away.
+*/
+#define RD_SECURE_PRIV_DATA
+
+/*
+*/
+#define RD_MDF_DEVVIDEO
+
+/*
+*/
+#define RD_PF_SEC_APPARC
+
+/*
+* This R&D flag is needed for incorporating apps to exes changes controlled
+* way into Series 60 releases.
+*/
+#define RD_APPS_TO_EXES
+
+/*
+* If this feature flag is on then the JSR-226 functionality is available.
+* Otherwise it is not.
+*/
+#define RD_SVGT_JSR_226_API
+
+/*
+* This R&D flag is needed for variating PoC (Push-to-talk over Cellular) and
+* it's UI integration to other applications / functionality.
+*/
+#define RD_POCUIAPI
+
+/*
+* This R&D flag defines data caging changes to components that use messaging
+* API.
+*/
+#define RD_MESSAGING_API_V2
+
+/*
+* This R&D flag defines data caging changes to components that are used by
+* messaging API components.
+*/
+#define RD_FILE_HANDLE_SUPPORT
+
+/*
+* This R&D flag defines changes related to accessory framework.
+*/
+#define RD_ACCESSORY_FW
+
+/*
+* This R&D flag defines changes related to start-up.
+*/
+#define RD_STARTUP_CHANGE
+
+/*
+* This R&D flag defines changes related to vibra and backlight.
+*/
+#define RD_VIBRA_AND_LIGHT_CHANGE
+
+/*
+* Enables USB Configuration Management.
+*/
+#define RD_USB_WATCHER_CONFIGURATION_MGMT
+
+/*
+* This R&D flag is needed to safely integrate changes to the Common Engine
+* APIs into Series 60 releases.
+*/
+#define RD_COMMON_ENGINE_API_CHANGE
+
+/*
+* R&D flag for managing the DOS Server and DOS APIs removal.
+*/
+#define RD_DOS_SERVER_REMOVE
+
+/*
+* R&D flag for managing the Progressive Download feature implementation.
+*/
+#define RD_PROGDOWNLOAD
+
+//-----------------------------------
+//Misc. HW related
+//-----------------------------------
+/*
+* Device supports Multimedia Card (MMC).
+*/
+#define __MMC
+#define KFeatureIdMmc KCommonFeatureFirst
+
+/*
+* Device has Camera Application.
+*/
+#define __CAMERA
+#define KFeatureIdCamera KCommonFeatureFirst+1
+
+/*
+* Device has also separate cover display in addition to the main display.
+*/
+#define __COVER_DISPLAY
+#define KFeatureIdCoverDisplay KCommonFeatureFirst+2
+
+/*
+* Device supports Image enhancement for transflective display. If this
+* feature is on,  the Display Enhancements Adaptation API has to be
+* implemented.
+*/
+#define __IETD
+#define KFeatureIdIetd KCommonFeatureFirst+3
+
+/*
+* Device contains support for FM radio (TunerUtility and RadioServer
+* components).
+*/
+#define __FM_RADIO
+#define KFeatureIdFmRadio KCommonFeatureFirst+4
+
+/*
+* Device supports automatic accessory identification.
+*/
+#define __AUTO_ACCESSORY_IDENTIFICATION
+#define KFeatureIdAutoAccessoryIdentification KCommonFeatureFirst+ 205
+
+/*
+* Device supports side volume keys.
+*/
+#define __SIDE_VOLUME_KEYS
+#define KFeatureIdSideVolumeKeys KCommonFeatureFirst+ 206
+
+/*
+* Device has Video Recorder (CamCorder) application available.
+*/
+#define __VIDEO_RECORDER
+#define KFeatureIdVideoRecorder KCommonFeatureFirst+ 207
+
+/*
+* The flag defines is the camera lens cover is supported by the HW.
+*/
+#define __CAMERA_LENS_COVER
+#define KFeatureIdCameraLensCover KCommonFeatureFirst+ 208
+
+/*
+* Indicates whether a device has qwerty keyboard or not.
+*/
+#define __QWERTY_INPUT
+#define KFeatureIdQwertyInput KCommonFeatureFirst+408
+
+//-----------------------------------
+//Misc. SW related
+//-----------------------------------
+/*
+* Device suppors flight mode. Device can be used off-line. RF and Bluetooth
+* transmitters are inactive and emergency call is not possible.
+*/
+#define __FLIGHT_MODE
+#define KFeatureIdFlightMode KCommonFeatureFirst+5
+
+/*
+* Device suppors off-line mode. Device can be used off-line and Bluetooth
+* transmitter can be enabled.  RF transmitter can be activated only for
+* emergency calls.
+*/
+#define __OFFLINE_MODE
+#define KFeatureIdOfflineMode KCommonFeatureFirst+6
+
+/*
+* An application UI can control audio routing in addition to adaption layer.
+* If  this feature is off, only the adaptation layer controls the audio
+* routing and the corresponding DOS Plug-in API has to be implemented.
+*/
+#define __APPLICATION_CONTROLLABLE_AUDIO_ROUTING
+#define KFeatureIdApplicationControllableAudioRouting KCommonFeatureFirst+7
+
+/*
+* AHL implementation may support only one single client (browser) or
+* multiple clients. This flag tells which implementation is used.
+*/
+#define __AHLE_MULTIPLE_CLIENTS
+#define KFeatureIdAhleMultipleClients KCommonFeatureFirst+8
+
+/*
+* Device supports OpenGL ES and EGL versions 1.0. This feature enables 3D
+* graphics rendering
+*/
+#define __OPENGL_ES_3DAPI
+#define KFeatureIdOpenGLES3DApi KCommonFeatureFirst+9
+
+/*
+* Device has a software implementation of OpenGL ES and EGL. No hardware
+* support. If __OPENGL_ES_3DAPI is enabled, either HW or SW implementation
+* should exist. If HW is not present, this flag should be enabled.
+*/
+#define __OPENGL_ES_SW_IMPLEMENTATION
+#define KFeatureIdOpenGLESSWImplementation KCommonFeatureFirst+209
+
+/*
+* Accessory framework is a Series 60 subsystem that enables adding various
+* accessory types to the platform by licensees.
+*/
+#define __ACCESSORY_FW
+#define KFeatureIdAccessoryFw KOtherFeatureFirst+150
+
+//-----------------------------------
+//PAN related
+//-----------------------------------
+/*
+* Device supports Infrared.
+*/
+#define __IRDA
+#define KFeatureIdIrda KCommonFeatureFirst+10
+
+/*
+* Device supports Bluetooth.
+*/
+#define __BT
+#define KFeatureIdBt KCommonFeatureFirst+11
+
+/*
+* Device supports Universal Serial Bus (USB).
+*/
+#define __USB
+#define KFeatureIdUsb KCommonFeatureFirst+12
+
+/*
+* Device uses Symbian MRrouter technology for PC connectivity.  If this
+* feature is on the alternative feature __SRCS shall be off.
+*/
+#define __MROUTER
+#define KFeatureIdMRouter KCommonFeatureFirst+13
+
+/*
+* Device supports BT handsfree and headset profiles.
+*/
+#define __BT_AUDIO
+#define KFeatureIdBtAudio KCommonFeatureFirst+14
+
+/*
+* Device support BT PAN profile
+*/
+#define __BT_PAN_PROFILE
+#define KFeatureIdBtPanProfile KCommonFeatureFirst+15
+
+/*
+* Devices uses Short Range Connectivity Server technology for PC
+* connectivity.  If this feature is on the alternative feature __MROUTER
+* shall be off
+*/
+#define __SRCS
+#define KFeatureIdSrcs KCommonFeatureFirst+16
+
+/*
+* Device supports Bluetooth fax profile.
+*/
+#define __BT_FAX_PROFILE
+#define KFeatureIdBtFaxProfile KCommonFeatureFirst+17
+
+/*
+* Device supports bluetooth imaging profile.
+*/
+#define __BT_IMAGING_PROFILE
+#define KFeatureIdBtImagingProfile KCommonFeatureFirst+18
+
+/*
+* Device supports bluetooth printing profile.
+*/
+#define __BT_PRINTING_PROFILE
+#define KFeatureIdBtPrintingProfile KCommonFeatureFirst+19
+
+/*
+* Video telephony requires USB camera connection. USB streaming interface
+* provides fast USB data transfer and control interface for imaging componet
+* using the camera.
+*/
+#define __USB_STREAMING
+#define KFeatureIdUsbStreaming KCommonFeatureFirst+220
+
+/*
+* Bluetooth SIM Access Profile (SAP) allows another device to access the SIM
+* over Bluetooth.
+*/
+#define __BT_SAP
+#define KFeatureIdBtSap KCommonFeatureFirst+221
+
+/*
+* Symbian OS side AT Handler is used with Bluetooth Hands Free profile to
+* process and communicate with DOS.
+*/
+#define __AT_HANDLER
+#define KFeatureIdAtHandler KCommonFeatureFirst+222
+
+/*
+* When this flag is enabled, the device can be put in the BT test mode.
+*/
+#define __BT_TEST_MODE
+#define KFeatureIdBtTestMode KCommonFeatureFirst+223
+
+/*
+* Device supports external data connectivity using infrared.
+*/
+#define __IRDA_MODEM
+#define KFeatureIdIrdaModem KCommonFeatureFirst+224
+
+/*
+* Device supports external data connectivity using BT.
+*/
+#define __BT_MODEM
+#define KFeatureIdBtModem KCommonFeatureFirst+225
+
+/*
+* Device supports USB mass storage configuration and USB configuration
+* management.
+*/
+#define __USB_PERSONALITY_AND_MSDC
+#define KFeatureIdUsbPersonalityAndMsdc KCommonFeatureFirst+497
+
+/*
+* Enables MetroTRK debugging over USB.
+*/
+#define __USB_DEBUG_PERSONALITY
+#define KFeatureIdUsbDebugPersonality KCommonFeatureFirst+501
+
+//-----------------------------------
+//Mobile Wallet related
+//-----------------------------------
+/*
+* Device supports Wallet core functionality (Generic ECML Cards, Personal
+* Notes and Access code)
+*/
+#define __WALLET
+#define KFeatureIdWallet KCommonFeatureFirst+20
+
+/*
+* Device supports Radio Frequency Identification (RFID) ticket information
+* in Wallet settings.
+*/
+#define __RFID
+#define KFeatureIdRfid KCommonFeatureFirst+21
+
+/*
+* Device supports Single-Sign-On (SSO) feature (alias name is Mobile
+* Personality identify). The feature is used to make user authentication
+* easier to end user who is using e-commerce service via Wallet.
+*/
+#define __SSO
+#define KFeatureIdSSO KCommonFeatureFirst+27
+
+//-----------------------------------
+//WIM related
+//-----------------------------------
+/*
+* Device supports WAP Wireless Identification Module (WIM).
+*/
+#define __WIM
+#define KFeatureIdWim KCommonFeatureFirst+23
+
+/*
+* Device supports reading certificates from SIM.
+*/
+#define __SIM_CERTIFICATES
+#define KFeatureIdSimCertificates KCommonFeatureFirst+24
+
+/*
+* Device supports reading OMA Provisioning files from SIM/WIM.
+*/
+#define __SMART_CARD_PROV
+#define KFeatureIdSmartCardProv KCommonFeatureFirst+26
+
+/*
+* Existing component OMA Provisioning needs to be variated because not all
+* platforms are intended to be used in GSM/UMTS networks, that support the
+* protocol well. For example CDMA network operators use different methods
+* for delivering phone settings. Especially from the 2.7 platform side, this
+* kind of variability has been requested.
+*/
+#define __OMA_PROV
+#define KFeatureIdOmaProv KCommonFeatureFirst+227
+
+//-----------------------------------
+//WAP related
+//-----------------------------------
+/*
+* Device uses WAP WSP protocol for browsing instead of the default HTTP
+* protocol.
+*/
+#define __WSP
+#define KFeatureIdWsp KCommonFeatureFirst+25
+
+/*
+* Device supports authentication based on whitelist
+*/
+#define __PUSH_WHITELIST
+#define KFeatureIdPushWhiteList KCommonFeatureFirst+226
+
+//-----------------------------------
+//IMPS related
+//-----------------------------------
+/*
+* Device supports also WAP binary XML for Wireless Village.
+*/
+#define __WV_WBXML
+#define KFeatureIdWvWbxml KCommonFeatureFirst+30
+
+/*
+* Device has Presence Enhanced Contacts application
+*/
+#define __DPB
+#define KFeatureIdDpb KCommonFeatureFirst+31
+
+/*
+* Device supports Instant Messaging feature of the Wireless Village
+* initiative
+*/
+#define __IM
+#define KFeatureIdIm KCommonFeatureFirst+32
+
+/*
+* Wireless Village features (__IM & __DPB) support standalone TCP/IP binding
+* for Communication Initiation Request (CIR).  The TCP/IP binding uses
+* persistent connection from the client to WV server to provide
+* low-latency always-on CIR channel.
+*/
+#define __IMPS_STANDALONE_IP_CIR
+#define KFeatureIdImpsStandaloneIpCir KCommonFeatureFirst+33
+
+/*
+* Device supports Presence feature of the Wireless Village initiative.
+*/
+#define __PRESENCE
+#define KFeatureIdPresence KCommonFeatureFirst+35
+
+//-----------------------------------
+//MMS related
+//-----------------------------------
+/*
+* Device supports importing and exporting MMS messages. This feature can be
+* used to synchronise MMS between device and PC.
+*/
+#define __MMS_IMPORT_EXPORT
+#define KFeatureIdMmsImportExport KCommonFeatureFirst+37
+
+/*
+* Controls the behaviour of the MMS application and message forwarding the
+* message without retrieval. If the feature is on, the application allows
+* the user to retrieve and re-forward it. If the feature is off, it is
+* assumed that the message is not available any more in the MMSC after the
+* forwarding.
+*/
+#define __MMS_NONDESTRUCTIVE_FORWARD
+#define KFeatureIdMmsNonDestructiveForward KCommonFeatureFirst+241
+
+/*
+* Flag is used to incorporate the LightSurf Picture Messaging transport
+* engine into the release.
+*/
+#define __LIGHTSURF
+#define KFeatureIdLightSurf KCommonFeatureFirst+242
+
+/*
+* Flag is used for inclusion or exclusion of components from the MMS UIs and
+* MMS Engine subsystems.
+*/
+#define __MMS
+#define KFeatureIdMMS KCommonFeatureFirst+243
+
+//-----------------------------------
+//SyncML related
+//-----------------------------------
+/*
+* Device supports SyncML device management standard. This feature enables
+* Over The Air (OTA) administration of the device settings.
+*/
+#define __SYNCML_DM
+#define KFeatureIdSyncMlDm KCommonFeatureFirst+40
+
+/*
+* Device supports SyncML data synchronization standard. This feature enables
+* Over The Air (OTA) synchronisation of device data.
+*/
+#define __SYNCML_DS
+#define KFeatureIdSyncMlDs KCommonFeatureFirst+41
+
+/*
+* Device supports MMS data synchronisation using the SyncML.
+*/
+#define __SYNCML_DS_MMS
+#define KFeatureIdSyncMlDsMMS KCommonFeatureFirst+42
+
+/*
+* Device supports Email data synchronization using the SyncML.
+*/
+#define __SYNCML_DS_EMAIL
+#define KFeatureIdSyncMlDsEmail KCommonFeatureFirst+43
+
+/*
+* Device supports filtering of Email data in  SyncML synchronization.
+*/
+#define __SYNCML_DS_EMAIL_FILTERING
+#define KFeatureIdSyncMlDsEmailFiltering KCommonFeatureFirst+112
+
+/*
+* Device supports contacts data synchronization using the SyncML.
+*/
+#define __SYNCML_DS_CON
+#define KFeatureIdSyncMlDsCon KCommonFeatureFirst+44
+
+/*
+* Device supports calendar data synchronization using the SyncML.
+*/
+#define __SYNCML_DS_CAL
+#define KFeatureIdSyncMlDsCal KCommonFeatureFirst+45
+
+/*
+* Device supports configuring data synchronisation settings using the
+* SyncML.
+*/
+#define __SYNCML_DM_DS
+#define KFeatureIdSyncMlDmDs KCommonFeatureFirst+46
+
+/*
+* Device supports configuring Internet Access Points (IAP) using the SyncML.
+*/
+#define __SYNCML_DM_IAP
+#define KFeatureIdSyncMlDmIAP KCommonFeatureFirst+47
+
+/*
+* Device supports configuring Email settings using the SyncML.
+*/
+#define __SYNCML_DM_EMAIL
+#define KFeatureIdSyncMlDmEmail KCommonFeatureFirst+48
+
+/*
+* Device supports configuring MMS settings using the SyncML.
+*/
+#define __SYNCML_DM_MMS
+#define KFeatureIdSyncMlDmMMS KCommonFeatureFirst+49
+
+/*
+* Device supports SyncML over OBEX. This feature enables device management
+* and data synchronisation over local connectivity.
+*/
+#define __SYNCML_OBEX
+#define KFeatureIdSyncMlObex KCommonFeatureFirst+50
+
+/*
+* Device supports SyncML data synchronisation alert. This feature enables
+* triggering data synchronisation via the alert sent by SyncML server.
+*/
+#define __SYNCML_DS_ALERT
+#define KFeatureIdSyncMlDsAlert KCommonFeatureFirst+51
+
+/*
+* Device supports short memos (notes) data synchronisation using the SyncML.
+*/
+#define __SYNCML_DS_NOTEPAD
+#define KFeatureIdSyncMlDsNotepad KCommonFeatureFirst+52
+
+/*
+* Device supports device management over OBEX.
+*/
+#define __SYNCML_DM_OBEX
+#define KFeatureIdSyncMlDmObex KCommonFeatureFirst+53
+
+/*
+* Device management WLAN settings supported.
+*/
+#define __SYNCML_DM_WLAN
+#define KFeatureIdSyncMlDmWlan KCommonFeatureFirst+54
+
+/*
+* Device supports configuring Streaming using SyncML.
+*/
+#define __SYNCML_DM_STREAMING
+#define KFeatureIdSyncMlDmStreaming KCommonFeatureFirst+55
+
+/*
+* Device supports configuring IMPS using SyncML.
+*/
+#define __SYNCML_DM_IMPS
+#define KFeatureIdSyncMlDmImps KCommonFeatureFirst+56
+
+/*
+* Device supports OTA firmware update.
+*/
+#define __SYNCML_DM_FOTA
+#define KFeatureIdSyncMlDmFota KCommonFeatureFirst+57
+
+//-----------------------------------
+//Multimedia
+//-----------------------------------
+/*
+* Device supports MP3 audio codec.
+*/
+#define __MP3
+#define KFeatureIdMp3 KCommonFeatureFirst+70
+
+/*
+* Device supports Speaker Independent Name Dialling (SIND). That is an
+* ability to voice-dial to any contact in the phone book without first
+* training a voice tag.
+*/
+#define __SIND
+#define KFeatureIdSind KCommonFeatureFirst+71
+
+/*
+* Device supports Adaptive Multi-Rate (AMR) narrowband codec.
+*/
+#define __AMR_NB
+#define KFeatureIdAmrNb KCommonFeatureFirst+72
+
+/*
+* Device supports Adaptive Multi-Rate (AMR) wideband codec.
+*/
+#define __AMR_WB
+#define KFeatureIdAmrWb KCommonFeatureFirst+73
+
+/*
+* Device supports Advanced Audio Coding (AAC) codec.
+*/
+#define __AAC
+#define KFeatureIdAac KCommonFeatureFirst+74
+
+/*
+* Device supports Scalable Vector Graphics - Tiny (SVGT) file format. The
+* feature enables viewing 2D vector graphics animations specified by the
+* W3C.
+*/
+#define __SVGT
+#define KFeatureIdSvgt KCommonFeatureFirst+76
+
+/*
+* Device supports streaming in SMIL content
+*/
+#define __SMIL_STREAMING
+#define KFeatureIdSmilStreaming KCommonFeatureFirst+77
+
+/*
+* Device supports macrodia flash 6.
+*/
+#define __MACROMEDIA_FLASH_6
+#define KFeatureIdMacromediaFlash6 KCommonFeatureFirst+78
+
+/*
+* Device supports MPEG4 encoding.
+*/
+#define __MPEG4_VIDEO_ENCODING
+#define KFeatureIdMpeg4VideoEncoding KCommonFeatureFirst+79
+
+/*
+* Device supports QCELP
+*/
+#define __QCELP
+#define KFeatureIdQcelp KCommonFeatureFirst+280
+
+/*
+* Device supports MPEG-4 AAC encoding. Together with feature flag
+* __MPEG4_VIDEO_ENCODING this flag can also enable enconding for MP4 file
+* format.
+*/
+#define __MPEG4_AAC_ENCODING
+#define KFeatureIdMpegAacEncoding KCommonFeatureFirst+281
+
+/*
+* Device supports Speaker Dependent Name Dialling (SIND). That is an ability
+* to voice-dial to a contact in the phone book by training a voice tag for
+* the contact.
+*/
+#define __SDND
+#define KFeatureIdSdnd KCommonFeatureFirst+282
+
+/*
+* AMR NB codec controller plug-in uses CMMFCodec (all-ARM software
+* implementation) instead of using the codec through HWDevice.
+*/
+#define __USE_AMR_NB_CMMFCODEC
+#define KFeatureIdUseAmrNbCMMFCodec KCommonFeatureFirst+283
+
+/*
+* AMR WB codec controller plug-in uses CMMFCodec (all-ARM software
+* implementation) instead of using the codec through HWDevice.
+*/
+#define __USE_AMR_WB_CMMFCODEC
+#define KFeatureIdUseAmrWbCMMFCodec KCommonFeatureFirst+284
+
+/*
+* AAC codec controller plug-in uses CMMFCodec (all-ARM software
+* implementation) instead of using the codec through HWDevice.
+*/
+#define __USE_AAC_CMMFCODEC
+#define KFeatureIdUseAacCMMFCodec KCommonFeatureFirst+285
+
+/*
+* MP3 codec controller plug-in uses CMMFCodec (all-ARM software
+* implementation) instead of using the codec through HWDevice.
+*/
+#define __USE_MP3_CMMFCODEC
+#define KFeatureIdUseMp3CMMFCodec KCommonFeatureFirst+286
+
+/*
+* QCELP codec controller plug-in uses CMMFCodec (all-ARM software
+* implementation) instead of using the codec through HWDevice.
+*/
+#define __USE_QCELP_CMMFCODEC
+#define KFeatureIdUseQcelpCMMFCodec KCommonFeatureFirst+287
+
+/*
+* AMR NB CMMFCodec (all-ARM software implementation) is included in build to
+* be used by some other client  than controller plug-in component.
+*/
+#define __INCLUDE_AMR_NB_CMMFCODEC
+#define KFeatureIdIncludeAmrNbCMMFCodec KCommonFeatureFirst+288
+
+/*
+* AMR WB CMMFCodec (all-ARM software implementation) is included in build 
+* to be used by some other client than controller plug-in component.
+*/
+#define __INCLUDE_AMR_WB_CMMFCODEC
+#define KFeatureIdIncludeAmrWbCMMFCodec KCommonFeatureFirst+490
+
+/*
+* AAC CMMFCodec (all-ARM software implementation) is included in build  to
+* be used by some other client than controller plug-in component.
+*/
+#define __INCLUDE_AAC_CMMFCODEC
+#define KFeatureIdIncludeAacCMMFCodec KCommonFeatureFirst+491
+
+/*
+* MP3 CMMFCodec (all-ARM software implementation) is included in build  to
+* be used by some other client than controller plug-in component.
+*/
+#define __INCLUDE_MP3_CMMFCODEC
+#define KFeatureIdIncludeMp3CMMFCodec KCommonFeatureFirst+492
+
+/*
+* QCELP CMMFCodec (all-ARM software implementation) is included in build  to
+* be used by some other client  than controller plug-in component.
+*/
+#define __INCLUDE_QCELP_CMMFCODEC
+#define KFeatureIdIncludeQcelpCMMFCodec KCommonFeatureFirst+493
+
+/*
+* The component provides metadata information for music clients based on the
+* 2.2,2.3,and 2.4 standards of ID3V2.
+*/
+#define __ID3V2_METADATA
+#define KFeatureIdId3V2Metadata KCommonFeatureFirst+494
+
+/*
+* Enables a utility for 3rd party applications to play DRM encrypted audio.
+*/
+#define __MMF_DRM_UTILITY
+#define KFeatureIdMmfDrmUtility KCommonFeatureFirst+495
+
+/*
+* Device supports utility APIs and framework for Series 60 Audio
+* applications to enable predefined audio effects with audio play/record
+* utilities. Features lilke Volume, Graphical Equalizer, Reverb are
+* possible.
+*/
+#define __AUDIO_EFFECTS_API
+#define KFeatureIdAudioEffectsApi KCommonFeatureFirst+496
+
+/*
+* Device supports Audio Resource Indications Utility. Applications can use
+* the Audio Resource Indications Utility to request feedack when they can
+* submit a play request.
+*/
+#define __AUDIO_RESOURCE_INDICATIONS
+#define KFeatureIdAudioResourceIndications KCommonFeatureFirst+498
+
+/*
+* Device supports Multimedia Comms Controller for VoIP.
+*/
+#define __MMCOMMSCONTROLLER
+#define KFeatureIdMmCommsController KCommonFeatureFirst+499
+
+/*
+* Device supports Multimedia Comms Controller for OMA PoC.
+*/
+#define __MMCOMMSAVCONTROLLER
+#define KFeatureIdMmCommsAvController KCommonFeatureFirst+504
+
+/*
+* Device supports Multimedia Comms Engine for OMA PoC.
+*/
+#define __MMCOMMSENGINE
+#define KFeatureIdMmCommsEngine KCommonFeatureFirst+500
+
+/*
+* Device supports playback of WMA audio files.
+*/
+#define __WMA
+#define KFeatureIdWma KCommonFeatureFirst+502
+
+//-----------------------------------
+//Telephony
+//-----------------------------------
+/*
+* Device supports GSM cellular stack.
+*/
+#define __PROTOCOL_GSM
+#define KFeatureIdProtocolGsm KCommonFeatureFirst+80
+
+/*
+* Device supports WCDMA cellular stack
+*/
+#define __PROTOCOL_WCDMA
+#define KFeatureIdProtocolWcdma KCommonFeatureFirst+81
+
+/*
+* Device supports CDMA cellular stack.
+*/
+#define __PROTOCOL_CDMA
+#define KFeatureIdProtocolCdma KCommonFeatureFirst+82
+
+/*
+* Device supports TDMA cellular stack.
+*/
+#define __PROTOCOL_TDMA
+#define KFeatureIdProtocolTdma KCommonFeatureFirst+83
+
+/*
+* Devices uses the last 11 digits of the calling line to find a matching
+* phonebook entry. Normally needed only in China. Could be needed elsewhere
+* also, if very long numbers are possible.
+*/
+#define __LONG_NUMBER_MATCHING
+#define KFeatureIdLongNumberMatching KCommonFeatureFirst+84
+
+/*
+* Device supports Internet Over The Air (IOTA), applicable only to CDMA
+* devices. This feature enables over the air provisioning of mobile devices
+* using HTTP.
+*/
+#define __CDMA_IOTA
+#define KFeatureIdCdmaIota KCommonFeatureFirst+85
+
+/*
+*/
+#define __CDMA_EXTENDED_AMS
+#define KFeatureIdCdmaExtendedAms KCommonFeatureFirst+86
+
+/*
+*/
+#define __SIMCARD
+#define KFeatureIdSimCard KCommonFeatureFirst+87
+
+/*
+* Device supports circuit switched video telephony
+*/
+#define __CS_VIDEO_TELEPHONY
+#define KFeatureIdCsVideoTelephony KCommonFeatureFirst+88
+
+/*
+* Phone application supports hiding CSD dial-up number. Applicable to
+* devices targeted to United States (US) markets
+*/
+#define __PHONE_HIDE_MO_DATACALL_NUMBER
+#define KFeatureIdPhoneHideDataCallNbr KCommonFeatureFirst+89
+
+/*
+* This is used to add the Fast Dormant daemon to the image at creation time
+* and could also be used in the custom TSY to add the additional calls.
+*/
+#define __CDMA_FAST_DORMANT
+#define KFeatureIdCdmaFastDormant KCommonFeatureFirst+289
+
+/*
+* Device supports phone number grouping. Numbers shown in the display
+* (incoming/outgoing call, phone book, recent call lists) and in number
+* editing are grouped for easier readability (format: 1 234 567 8900).
+* Applicable to devices targeted to United States (US) markets.
+*/
+#define __PHONE_NUMBER_GROUPING
+#define KFeatureIdPhoneNumberGrouping KCommonFeatureFirst+290
+
+/*
+* Number matching from SIM. Feature enables the usage of SIM phonebook in
+* addition to Symbian Contacts database.
+*/
+#define __SIM_PHONEBOOK_MATCH
+#define KFeatureIdSimPhonebookMatch KCommonFeatureFirst+291
+
+/*
+* When this flag is enabled it Common TSY component is included.
+*/
+#define __COMMON_TSY
+#define KFeatureIdCommonTsy KCommonFeatureFirst+292
+
+/*
+* When this flag is enabled it is possible to dial an emergency call even
+* when the off-line mode is on.
+*/
+#define __COMMON_TSY__EMERGENCY_CALLS_ENABLED_IN_OFFLINE_MODE
+#define KFeatureIdCommonTsyEmergencyCallsEnabledInOfflineMode KCommonFeatureFirst+293
+
+/*
+* When this flag is enabled it Common DSY component is included.
+*/
+#define __COMMON_DSY
+#define KFeatureIdCommonDsy KCommonFeatureFirst+296
+
+/*
+* VoIP is enabled in terminal when this flag is enabled.
+*/
+#define __VOIP
+#define KFeatureIdCommonVoip KCommonFeatureFirst+297
+
+//-----------------------------------
+//Security
+//-----------------------------------
+/*
+* Device supports OMA Digital Rights Management (DRM) partially, only
+* forward lock is supported
+*/
+#define __DRM
+#define KFeatureIdDrm KCommonFeatureFirst+90
+
+/*
+* Device uses DRM in closed content policy which prevents sending that
+* content out of device which has the configured MIME type.
+*/
+#define __USE_DRMENGINE_IN_CCP
+#define KFeatureIdUseDrmEngineInCcp KCommonFeatureFirst+91
+
+/*
+* Device supports OMA Digital Rights Management (DRM) fully. Includes
+* forward lock, combined delivery, separate delivery and super-distribution
+*/
+#define __DRM_FULL
+#define KFeatureIdDrmFull KCommonFeatureFirst+92
+
+/*
+* Device supports secure HW that can be used through the Secure Environment
+* API.
+*/
+#define __SECURE_HW
+#define KFeatureIdSecureHW KCommonFeatureFirst+93
+
+/*
+* This feature flag is used with OMA DRM standard version 2 (Phase2)
+* features.
+*/
+#define __DRM_PHASE2
+#define KFeatureIdDrmPhase2 KCommonFeatureFirst+94
+
+/*
+* DRM clock is a new clock type that is used with DRM interval and datetime
+* based constraints. It uses NITZ (other solutions can be studied) to get
+* the network time and uses that to determine if the time constrained
+* content can be rendered or not. This enables the content providers to sell
+* content “twice” e.g. first for a short period of time and after that
+* (assumed user lock in) for 2nd time with full usage rights.
+* The user shall still have control over the normal clock of the device, but
+* setting of that clock shall not have effect to the DRM clock.
+*
+* If NITZ is not available, user defined clock is used.
+*/
+#define __DRM_CLOCK
+#define KFeatureIdDrmClock KCommonFeatureFirst+95
+
+/*
+* There must be possibility to transfer downloaded applications and other
+* DRM content to the swap phone in a service point through service software.
+* UDT makes it possible to transfer user's valuable content and Rights DB
+* containig Rights objects for DRM content to another phone (containing same
+* functionality) e.g. in warranty cases.
+*/
+#define __DRM_USER_DATA_TRANSFER
+#define KFeatureIdDrmUserDataTransfer KCommonFeatureFirst+96
+
+/*
+* This feature flag is used to indicate whether OMA DRM standard version 2
+* is enabled.
+*/
+#define __DRM_OMA2
+#define KFeatureIdDrmOma2 KCommonFeatureFirst+97
+
+//-----------------------------------
+//Networking
+//-----------------------------------
+/*
+* Device supports Quality of Service (QOS). The QoS is capability of a
+* network to provide better service to selected network traffic.
+*/
+#define __QOS
+#define KFeatureIdQos KCommonFeatureFirst+100
+
+/*
+* Device supports IP Security (IPSec). The IPSec is a set of protocols
+* developed by the IETF to support secure exchange of packets at the IP
+* layer. IPsec has been deployed widely to implement Virtual Private
+* Networks (VPNs).
+*/
+#define __IPSEC
+#define KFeatureIdIpsec KCommonFeatureFirst+101
+
+/*
+* This flag defines whether Data Connection Logger component sets Attach
+* Mode and Default APN parameters to TSY at system boot.
+*/
+#define __LOGGER_GPRS
+#define KFeatureIdLoggerGprs KCommonFeatureFirst+102
+
+/*
+* This flag defines whether the information of current radio link using EDGE
+* is available through Connection Monitor component.
+*/
+#define __EDGE_KNOWLEDGE
+#define KFeatureIdEdgeKnowledge KCommonFeatureFirst+103
+
+/*
+* This flag defines whether network registration status including roaming
+* information is available from Connection Monitor server component.
+*/
+#define __NETWORK_REGISTRATION
+#define KFeatureIdNetworkRegistration KCommonFeatureFirst+104
+
+/*
+* Devices supports Mobile IPv6.
+*/
+#define __MIPV6
+#define KFeatureIdMIPv6 KCommonFeatureFirst+105
+
+/*
+* Device supports Dynamic Host Configuration Protocol (DHCP).
+*/
+#define __DHCP
+#define KFeatureIdDHCP KCommonFeatureFirst+106
+
+/*
+* Defines whether the Connection Monitor Extension API is used.
+*/
+#define __CONNMON_EXTENSION
+#define KFeatureIdConnMonExtension KCommonFeatureFirst+107
+
+/*
+* Device supports WLAN protocol.
+*/
+#define __PROTOCOL_WLAN
+#define KFeatureIdProtocolWlan KCommonFeatureFirst+108
+
+/*
+* Device supports internal (HS)CSD in application UIs.
+*/
+#define __APP_CSD_SUPPORT
+#define KFeatureIdAppCsdSupport KCommonFeatureFirst+109
+
+/*
+* Device supports SIP protocol.
+*/
+#define __SIP_STACK
+#define KFeatureIdSipStack KCommonFeatureFirst+110
+
+/*
+* Device has SIP Profile Agent component.
+*/
+#define __SIP_PROFILE_AGENT
+#define KFeatureIdSipProfileAgent KCommonFeatureFirst+310
+
+/*
+* Devices supports Mobile IPv4
+*/
+#define __MIPV4
+#define KFeatureIdMIPv4 KCommonFeatureFirst+311
+
+/*
+* Device supports network address translation of IP (version 4) connections.
+*/
+#define __IPV4_NAT
+#define KFeatureIdIPv4Nat KCommonFeatureFirst+312
+
+//-----------------------------------
+//Location
+//-----------------------------------
+/*
+* Defines whether location landmarks API is included in device. Must always
+* be supported due SDK APIs.
+*/
+#define __LANDMARKS
+#define KFeatureIdLandmarks KCommonFeatureFirst+111
+
+/*
+* Device supports location basic services.    Must always be supported due
+* SDK APIs.
+*/
+#define __LOCATIONFRAMEWORKCORE
+#define KFeatureIdLocationFrameworkCore KCommonFeatureFirst+113
+
+/*
+* Device supports location privacy. It enables controlling end user privacy.
+*  Must always be supported due SDK APIs.
+*/
+#define __PRIVACYFRAMEWORK
+#define KFeatureIdPrivacyFramework KCommonFeatureFirst+114
+
+/*
+* Devices supports Bluetooth based GPS positining. It utilizes bluetooth
+* connection to retrieve location information from wireless GPS device,
+* which supports required Bluethooth profile.  Must always be supported due
+* SDK APIs.
+*/
+#define __BLUETOOTHGPSPSY
+#define KFeatureIdBluetoothGpsPsy KCommonFeatureFirst+121
+
+/*
+* This feature provides functionality for reading from and writing to the
+* XML-based landmarks content format.
+* Must always be supported due SDK APIs. There are two components with this
+* feature:
+* - Ecom plug-in under Landmarks API that converts from the landmarks
+* content format to native landmark objects and vise versa.
+* - Recognizer Plug-in to recognizer FW for detecting landmarks content
+* format.
+*/
+#define __LANDMARKS_CONVERTER
+#define KFeatureIdLandmarksConverter KCommonFeatureFirst+122
+
+/*
+* Device has Location system application.  Must always be supported due SDK
+* APIs.
+*/
+#define __LOCATIONSYSUI
+#define KFeatureIdLocationSysUi KCommonFeatureFirst+123
+
+//-----------------------------------
+//Imaging
+//-----------------------------------
+/*
+* Optimisation flag of the CamCorder for cases where device replaces the
+* default Camcorder plugin. Then this flag must be turned off (#undef) due
+* to performance reasons.
+*/
+#define __CAE_VR_CUSTOM_COMMANDS
+#define KFeatureIdCaeVrCustomCommands KCommonFeatureFirst+130
+
+/*
+* Camera application supports burst mode. It enables taking several
+* snapshots with one command.
+*/
+#define __CAMERA_BURST_MODE
+#define KFeatureIdCameraBurstMode KCommonFeatureFirst+131
+
+//-----------------------------------
+//JAVA  platform related
+//-----------------------------------
+/*
+* Java implementation supports Operator Domain security (root certificates)
+*/
+#define __JAVA_OPER_DOMAIN
+#define KFeatureIdJavaOperDomain KCommonFeatureFirst+140
+
+/*
+* Java implementation supports Java Technology for the Wireless Industry
+* (JTWI) specification
+*/
+#define __JAVA_JTWI
+#define KFeatureIdJavaJTWI KCommonFeatureFirst+141
+
+/*
+* Java implementation supports Java Mobile Media API (JSR135) version 1.1
+*/
+#define __JAVA_MMAPI11
+#define KFeatureIdJavaMMAPI11 KCommonFeatureFirst+142
+
+/*
+* Java implementation supports Java File API (JSR75)
+*/
+#define __JAVA_FILEAPI
+#define KFeatureIdJavaFileAPI KCommonFeatureFirst+143
+
+/*
+* Java implementation supports Java PIM API (JSR75)
+*/
+#define __JAVA_PIMAPI
+#define KFeatureIdJavaPIMAPI KCommonFeatureFirst+144
+
+/*
+* Java implementation supports 3D API  (JSR184)
+*/
+#define __JAVA_3DAPI
+#define KFeatureIdJava3DAPI KCommonFeatureFirst+145
+
+/*
+* Java implementation supports Java Location API (JSR-179)
+*/
+#define __JAVA_LOCATIONAPI
+#define KFeatureIdJavaLocationAPI KCommonFeatureFirst+146
+
+/*
+* Java implementation supports CLDC 1.1 (JSR-139) Java virtual machine
+*/
+#define __JAVA_CLDC11
+#define KFeatureIdJavaCLDC11 KCommonFeatureFirst+147
+
+/*
+* Device supports Online Certificate Status Protocol (OCSP). The protocol
+* specifies the syntax for communication between the server (which contains
+* the certificate status) and the client application (which is informed of
+* that status).
+*/
+#define __OCSP
+#define KFeatureIdOCSP KCommonFeatureFirst+148
+
+/*
+* Java J2ME Web Services API (JSR-172) compliancy.
+* Provides two new capabilities to the J2ME platform:
+* (1) access to remote SOAP / XML based web services
+* (2) parsing XML data
+*/
+#define __JAVA_J2MEWEBSERVICESAPI
+#define KFeatureIdJ2MEWebServicesAPI KCommonFeatureFirst+149
+
+//-----------------------------------
+//Browser
+//-----------------------------------
+/*
+* Purpose is to variate IMEI notification setting in Browser. In case when
+* feature is on ,  user can see new
+* setting item in Browser setting "IMEI notification" . If user enables the
+* setting on browser,  UA prof filter will send phone's IMEI code within
+* User-Agent field.
+*/
+#define __BROWSER_IMEI_NOTIFICATION
+#define KFeatureIdBrowserIMEINotification KCommonFeatureFirst+160
+
+/*
+* The PluginAdapterUtil is a variant DLL that guarantees a common interface
+* for plugins when interfacing with the Browser (PluginAdapter Interface).
+* Proxy interface is used and flag is enabled with Opera browser.
+*/
+#define __BROWSER_PLUGIN_INTERFACE_PROXY
+#define KFeatureIdBrowserPluginInterfaceProxy KCommonFeatureFirst+161
+
+/*
+* Browser application supports additional list of bookmarks that gets
+* generated automatically from visited links.  List is sorted by automatic
+* algorithm which ranks according to combination of most-recently and
+* most-often visited pages.
+*/
+#define __BROWSER_ADAPTIVE_BOOKMARKS
+#define KFeatureIdBrowserAdaptiveBookm KCommonFeatureFirst+162
+
+/*
+* Browser application supports URL completion. When user manually enters "go
+* to" URL, list of previously-visited links will appear for selection based
+* on matching entered characters.
+*/
+#define __BROWSER_URL_COMPLETION
+#define KFeatureIdBrowserUrlCompletion KCommonFeatureFirst+164
+
+/*
+* This feature displays a 'CNN type' ticker of text pushed via cell
+* broadcast, onto the idle screen of the phone.
+*/
+#define __NEWSTICKER
+#define KFeatureIdNewsticker KCommonFeatureFirst+165
+
+
+#endif

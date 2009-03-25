@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component baseComponent="com.nokia.sdt.series60.NaviBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.NaviImage" 
+		category="System"
+		instanceNameRoot="naviImage"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknNavigationControlContainer" classHelpTopic=""
+			resourceType="NAVI_DECORATOR, NAVI_IMAGE" resourceHelpTopic="" />
+		<designerImages smallIconFile="NaviImage_sm.png" 
+			largeIconFile="NaviImage.png"/>
+		<attributes>
+			<attribute key="rss-control-type-enum">EAknCtNaviPane</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Appearance" name="image"
+				type="com.nokia.sdt.symbian.imageProperty"
+				descriptionKey="imageDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<script file="NaviImage_visual.js" prototype="NaviImageVisual"/>
+			</implementation>
+		</implementations>
+		
+		<!-- note: this generates both the navi pane status pane AND the singular item content -->
+
+		<sourceMapping>
+			<mapResource struct="NAVI_DECORATOR" headers="avkon.rh">
+				<mapFixedMember value="ENaviDecoratorImage" member="type"/>
+				<mapResourceMember property="." member="control" struct="NAVI_IMAGE" headers="avkon.rh">
+					<mapSimpleMember property="image.bmpfile" member="bmpfile"/>
+					<mapIdentifierMember property="image.bmpid" member="bmpid"/>
+					<mapIdentifierMember property="image.bmpmask" member="bmpmask"/>
+				</mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+	
+		<sourceGen>
+			<inline>
+include("../srcgenLibrary.js")
+			</inline>
+			
+			<useTemplateGroup ids="NaviBaseSetup"/>
+			<useTemplate ids="SetupPrelude"/>
+
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <barsread.h>
+]]>			</template>
+
+			<template phase="SetupStatusPane"><![CDATA[
+		{
+		TResourceReader reader;
+		iEikonEnv->CreateResourceReaderLC( reader, ${resourceName$upper} );
+		iNaviDecorator_ = naviPane->ConstructNavigationDecoratorFromResourceL( reader );
+		CleanupStack::PopAndDestroy(); // reader internal state
+		}
+]]>			
+			</template>
+
+<!--
+			<inline>
+if (formrx.test("")) {
+	// dynamically resize the image
+	setupImageFromPropertyViaCFbsBitmap(contribs, instance, "SetupStatusPane", null, 1,
+			instance.properties["image"], "EAspectRatioPreserved",
+			"iNaviDecorator_ = naviPane->CreateNavigationImageL( {0} );\n",
+			"iNaviDecorator_ = naviPane->CreateNavigationImageL( {0}, {1} );\n",
+			"naviPane->Size()"
+			);
+}
+			</inline>
+-->
+	
+			<useTemplate ids="SetupPostlude CleanupPostlude"/>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>multibyteaware</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>multibyteaware</h3>
+<p>  Controls how the Source encoding option is treated  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma multibyteaware on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>This pragma has been deprecated. See the section &ldquo;Multibyte and Unicode Support&rdquo; and the <span class="code">#pragma <a href="p_text_encoding.htm">text_encoding</a></span> for more details.</p>
+  <p>When on, this pragma treats the Source encoding of &ldquo;ASCII&rdquo; like &ldquo;Autodetect&rdquo;. When off, this pragma treats a Source encoding of &ldquo;Autodetect&rdquo; like &ldquo;ASCII&rdquo; setting. </p>
+  <p class="note"><strong>NOTE</strong> Previously, this pragma told the compiler to &ldquo;look twice&rdquo; at the &ldquo;\&rdquo; character to avoid misinterpreting the character in a multibyte character sequence.</p>
+  <p>This pragma does not correspond to any panel setting, but the replacement option Source encoding appears . To check this setting, use <span class="code">__option (multibyteaware)</span><span class="code"></span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is off.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

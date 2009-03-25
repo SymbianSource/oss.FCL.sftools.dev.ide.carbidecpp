@@ -1,0 +1,7 @@
+#include "TestUpdatingLocFiles2.loc"
+
+/* where is this used? */
+#define MACRO_1 "A macro value"
+
+#define MACRO_2 "Not another \"macro\""
+

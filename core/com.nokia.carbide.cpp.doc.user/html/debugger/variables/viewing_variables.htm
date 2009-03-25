@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Viewing Variables</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Viewing Variables </h2>
+<p>The <b>Variables</b> view allows manipulation of project  variables and the variable hierarchy used in the source code. For example, you can change the variable format, change a variable value, add watch expressions, or add global variables. </p>
+<p>Figure 1 shows the Variables view with <b>Show Type Names</b> option enabled. The default view shows the variables list and include the Name and Value for all the variables within scope. In addition, when you select a variable its value is also shown in a different pane within the view.</p>
+<p align="center"><img src="../images/view_variables.png" width="583" height="262"></p>
+<p class="figure">Figure 1 - Variables view </p>
+<h3>Variables view toolbar icons</h3>
+<p>The following commands appear on the Variables view toolbar: </p>
+<table width="88%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="34%" scope="col">Item</th>
+    <th width="14%" scope="col">Icons</th>
+    <th width="52%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Show Type Names </b></td>
+    <td><div align="center"><img src="../images/var_toggle_type_names_icon.png" width="19" height="19" /></div></td>
+    <td>Toggles the display of type names in the <b>Variables</b> view. </td>
+  </tr>
+  <tr>
+    <td><b>Show Logical Structure </b></td>
+    <td><div align="center"><img src="../images/var_show_logical_struct_icon.png" width="19" height="19" /></div></td>
+    <td>Not available in C/C++ yet. </td>
+  </tr>
+  <tr>
+    <td><b>Collapse All </b></td>
+    <td><div align="center"><img src="../images/var_collapse_all_icon.png" width="17" height="18" /></div></td>
+    <td>Collapses all expanded variables into the top level. </td>
+  </tr>
+  <tr>
+    <td><b>Add Global Variables </b></td>
+    <td><div align="center"><img src="../images/var_add_global_vars_icon.png" width="19" height="19" /></div></td>
+    <td>Click to open the <a href="adding_variables.htm">Global Variables</a> dialog where you can select one or more global variables to display in the Variables view. Global variables appear at the top of the variables list. </td>
+  </tr>
+  <tr>
+    <td><b>Remove Selected Global Variables </b></td>
+    <td><div align="center"><img src="../images/var_remove_selected_globals_icon.png" width="18" height="16" /></div></td>
+    <td>Click to remove all currently selected global variables from the variables list. </td>
+  </tr>
+  <tr>
+    <td><b>Remove All Global Variables </b></td>
+    <td><div align="center"><img src="../images/var_remove_all_globals_icon.png" width="19" height="19" /></div></td>
+    <td>Click to remove all global variables from the variables list. </td>
+  </tr>
+  <tr>
+    <td><b>Menu</b></td>
+    <td><div align="center"><img src="../images/icon_menu_white.png" width="12" height="12"></div></td>
+    <td><p>Enables you to modifiy the <b>Layout</b> to change the view orientation between: horizontal, vertical, or variables pane only.</p>
+        <p>In addition, use <b>Show All Variables</b> to toggle between showing only those variables that are in scope and live or   show all local variables, even if redundant. With this option on you will see all of the variables including the multiple defined variables like &ldquo;i&rdquo; for your loops  and ones that may no longer have accurate values.</p></td>
+  </tr>
+</table>
+<h3>Variables view context menu options</h3>
+<p>Right-click in the <b>Variables</b> view to access the commands on the Variables view context menu.</p>
+<p align="center"><img src="../images/view_variables_menu_cmds.png" width="236" height="334"></p>
+<p class="figure">Figure 2. Variables view context menu commands</p>
+<p>The  commands include: </p>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="27%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Select All</b></td>
+    <td>Selects all the variables shown in the <b>Variables</b> view.</td>
+  </tr>
+  <tr>
+    <td><b>Copy Variables</b></td>
+    <td>Copies the selected variables to the clipboard.</td>
+  </tr>
+  <tr>
+    <td><b>Enable</b></td>
+    <td>Enables the selected variable.</td>
+  </tr>
+  <tr>
+    <td><b>Disable</b></td>
+    <td>Disables the selected variable.</td>
+  </tr>
+  <tr>
+    <td><b>Display as Array...</b></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><b>Cast To Type...</b></td>
+    <td>Opens the <b>Cast to Type</b> dialog where you can assign a new type to the variable.</td>
+  </tr>
+  <tr>
+    <td><p><b>Restore Original Type</b></p>    </td>
+    <td>Resets the selected variable to the original type assigned by the program.</td>
+  </tr>
+  <tr>
+    <td><b>View Memory</b></td>
+    <td>Opens a <b>Memory</b> view on the selected variable so you can examine it.</td>
+  </tr>
+  <tr>
+    <td><b>Find...</b></td>
+    <td>Opens a <b>Find</b> dialog to search for variables.</td>
+  </tr>
+  <tr>
+    <td><b>Change Value...</b></td>
+    <td><p>Opens the <b>Set Value</b> dialog where you can modify the value assigned to the selected variable. Change the value and click <b>OK</b>.</p>
+    <p align="center"><img src="../images/wnd_set_value.png" width="401" height="214"></p></td>
+  </tr>
+  <tr>
+    <td><b>Add Watchpoint (C/C++)...</b></td>
+    <td>Opens the <a href="../watchpoints/setting_watchpoints.htm">Add Watchpoint</a> dialog enabling you to define a watchpoint on the variable.</td>
+  </tr>
+  <tr>
+    <td><b>Add Global Variables...</b></td>
+    <td>Select  to open the <a href="adding_variables.htm">Global Variables</a> dialog where you can select one or more global variables to display in the Variables view. Global variables appear at the top of the variables list. </td>
+  </tr>
+  <tr>
+    <td><b>Remove Global Variables</b></td>
+    <td>Remove the selected global variables from the Variables view.</td>
+  </tr>
+  <tr>
+    <td><b>Remove All Global Variables</b></td>
+    <td>Remove all  global variables from the Variables view.</td>
+  </tr>
+  <tr>
+    <td><b>Create Watch Expression</b></td>
+    <td>Creates a watchpoint on the selected variable and displays it in the <a href="../watchpoints/watchpoints.htm">Watchpoint</a> view. </td>
+  </tr>
+  <tr>
+    <td><b>Format</b></td>
+    <td><p>Change the selected variable's  display format. The default setting is Natural, or the format assigned when the variable is defined. For example, the decimal value of 256 would appear as:</p>
+      <ul>
+        <li>Binary (<span class="code">0b100000</span>)</li>
+        <li>Natural (<span class="code">256</span>)</li>
+        <li>Decimal (<span class="code">256</span>)</li>
+        <li>Hexadecimal (<span class="code">0x100</span>)</li>
+    </ul>      </td>
+  </tr>
+</table>
+<h5>Other references</h5>
+<ul>
+  <li><a href="variables.htm">Variables and Expressions Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

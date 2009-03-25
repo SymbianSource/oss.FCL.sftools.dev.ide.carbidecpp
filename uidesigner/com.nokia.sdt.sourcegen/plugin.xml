@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="nameAlgorithm" name="nameAlgorithm" schema="schema/nameAlgorithm.exsd"/>
+   <extension
+         id="com.nokia.sdt.sourcegen.provider"
+         name="Symbian Source Generation Provider"
+         point="com.nokia.sdt.uimodel.sourceGenProvider">
+      <provider
+            class="com.nokia.sdt.sourcegen.provider.SourceGenProvider"
+            name="com.nokia.sdt.sourcegen.Symbian-Provider"/>
+   </extension>
+
+    
+</plugin>

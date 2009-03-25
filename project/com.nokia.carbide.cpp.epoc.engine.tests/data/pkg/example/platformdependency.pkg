@@ -1,0 +1,36 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description: 
+;
+; Example package file showing a dependency on "Platform1"
+
+; Languages supported
+&EN
+
+; Localised vendor name
+%{"Symbian Software Ltd."}
+
+; Global vendor name 
+:"Symbian Software Ltd."
+
+; Standard PKG file header
+#{"ExampleForPlatform1"}, (0x12345678), 1, 2, 3
+
+; Can only be installed on a Platform1 device, any version. 
+; The UID, (0x00001000) identifies the target hardware/UI platform. 
+; Refer to the phone manufacturer's or UI platform's website for real values.
+[0x00001000], *, *, *, {"Platform1ProductID"}
+
+; File to install
+"ExampleForPlatform1.txt"-"!:\private\12345679\import\ExampleForPlatform1.txt"

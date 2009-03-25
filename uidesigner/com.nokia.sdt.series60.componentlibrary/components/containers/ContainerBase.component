@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<!DOCTYPE componentDefinition [
+<!ENTITY CommonMacros SYSTEM "../CommonMacros.inc">
+]>
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- This component is the abstract base component for
+	     all Series 60 container components
+	 -->
+
+	<component 
+			friendlyName="" 
+			qualifiedName="com.nokia.sdt.series60.ContainerBase"
+			baseComponent="com.nokia.sdt.series60.CommonBase" 
+			abstract="true"
+			version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+	  		<attribute key="display-model-class">com.nokia.sdt.component.symbian/com.nokia.sdt.component.symbian.displaymodel.DisplayModelS60</attribute>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="container-background-color">EEikColorWindowBackground</attribute>
+		</attributes>
+		<properties>
+			<property category="Design" name="className" type="string" readOnly="true"
+				descriptionKey="classDescription"/>
+			<compoundProperty category="Layout" name="location" type="com.nokia.sdt.series60.locationProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory" readOnly="true"
+				descriptionKey="locationDescription"/>
+			<compoundProperty category="Layout" name="size" type="com.nokia.sdt.series60.sizeProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory" readOnly="true"
+				descriptionKey="sizeDescription"/>
+		</properties>
+		<propertyOverrides>
+			<propertyOverride name="name" readOnly="true" />
+		</propertyOverrides>
+		
+	<events>
+	<!-- CCoeControl virtual function events -->
+	<!-- Event groups:
+			CCoeControl: anything in CCoeControl which is normally overridable
+			CustomCCoeControl: anything in CCoeControl intended for direct
+				CCoeControl customization; such events may not be overridable 
+				in CCoeControl-derived classes due to changes in method access 
+	-->
+	<event name="resourceChanged" category="Container" 
+			group="CCoeControl"
+		    handlerNameTemplate="Handle{title(name)}ResourceChanged"
+		    descriptionKey="resourceChangedDescription"
+		/>
+	<event name="focusChanged" category="Container" 
+			group="CCoeControl"
+		    handlerNameTemplate="Handle{title(name)}FocusChanged"
+		    descriptionKey="focusChangedDescription"
+		/>
+	<event name="sizeChanged" category="Container" 
+			group="CCoeControl"
+			descriptionKey="sizeChangedDescription"
+		    handlerNameTemplate="Handle{title(name)}SizeChanged"
+		/>
+	<event name="draw" category="Container" 
+			group="CustomCCoeControl"
+		    handlerNameTemplate="Handle{title(name)}Draw"
+			descriptionKey="drawDescription"
+		/>
+	<event name="positionChanged" category="Container" 
+			group="CCoeControl"
+		    handlerNameTemplate="Handle{title(name)}PositionChanged"
+			descriptionKey="positionChangedDescription"
+		/>
+	<event name="offerKeyEvent" category="Container" 
+			group="CCoeControl"
+		    handlerNameTemplate="Handle{title(name)}OfferKeyEventL"
+			descriptionKey="offerKeyEventDescription"
+		/>
+	<event name="prepareForFocusLoss" category="Container" 
+			group="CCoeControl"
+		    handlerNameTemplate="Handle{title(name)}PrepareForFocusLossL"
+			descriptionKey="prepareForFocusLossDescription"
+		/>
+	<event name="prepareForFocusGain" category="Container" 
+			group="CCoeControl"
+		    handlerNameTemplate="Handle{title(name)}PrepareForFocusGainL"
+			descriptionKey="prepareForFocusGainDescription"
+		/>
+	<event name="handlePointerEvent" category="Container" 
+			group="TouchUIEvent"
+		    handlerNameTemplate="Handle{title(name)}PointerEventL"
+		    descriptionKey="handlePointerEventDescription"
+		/>
+	<event name="handleLongTapEvent" category="Container" 
+			group="TouchUIEvent"
+		    handlerNameTemplate="Handle{title(name)}LongTapEventL"
+		    descriptionKey="handleLongTapEventDescription"
+		/>
+	</events>
+	<sourceGen>
+			&CommonMacros;
+			
+			<inline scope="prototype">
+// utility
+${jsObject}.prototype.getBackgroundColorRgb = function(properties) {
+	if (properties.backColor.indexOf(',') > 0)
+		return "( " + properties.backColor + " )";
+	else
+		return " = iEikonEnv->Color( ( TLogicalColor ) " + properties.backColor + " )";
+}	
+			</inline>
+			
+			<template id="DrawBodyBgColor" location="DRAW_BODY"><![CDATA[
+CWindowGc& gc = SystemGc();
+<%if (properties.backColor == "") {%>gc.Clear( aRect );
+<%} else {%>gc.SetPenStyle( CGraphicsContext::ENullPen );
+TRgb backColor${this.getBackgroundColorRgb(properties)};
+gc.SetBrushColor( backColor );
+gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
+gc.DrawRect( aRect );
+<%}%>
+]]>				</template>
+
+			<inline scope="prototype"><![CDATA[
+${jsObject}.prototype.getHrhFiles = function(contribs) {
+			// get the generated files matching this pattern and include them
+			var files = Engine.findGeneratedRssFiles(".*\\.hrh");
+			for (idx in files) {
+				var file = files[idx];
+				var mycontrib = Engine.createContributionForLocation("MAIN_USER_INCLUDES")
+				mycontrib.setText("#include \"" + file + "\"\n");
+				contribs.add(mycontrib);
+			}
+}
+]]>			</inline>
+
+<!-- BEGIN EVENT focusChanged -->
+			<templateGroup id="GenerateFocusChanged" ifEvents="focusChanged">
+				<template id="DeclareFocusChangedOverride" phase="OverriddenMethods"><![CDATA[
+void FocusChanged( TDrawNow aDrawNow );
+]]>				</template>
+
+				<defineLocation id="FocusChangedOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::FocusChanged(TDrawNow))">
+					<template><![CDATA[
+/** 
+ * Handle focus change (override)
+ */
+void ${handlerClassName}::FocusChanged( TDrawNow aDrawNow )
+	{
+	${instance.attributes["base-container-class"]}::FocusChanged( aDrawNow );
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="FocusChangedBody" baseLocation="FocusChangedOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeFocusChangedHandler" location="FocusChangedBody">
+${event.handlerName}( aDrawNow );
+			</template>
+
+			<template id="DeclareFocusChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TDrawNow aDrawNow );
+			</template>
+
+			<defineLocation id="FocusChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TDrawNow))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TDrawNow aDrawNow )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeFocusChangedHandler" location="FocusChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT focusChanged -->	
+
+<!-- ****************************** -->
+<!-- BEGIN EVENT handlePointerEvent -->
+	<templateGroup id="HandlePointerEvent" ifEvents="handlePointerEvent handleLongTapEvent">
+
+		<expandMacro name="GenerateMethodWithOwnedBody"
+			IsOwned="false"
+			FunctionLocationId="HANDLEPOINTEREVENTL_METHOD"
+			FunctionArgs="const TPointerEvent&amp; aPointerEvent"
+			FunctionName="HandlePointerEventL"
+			DeclPhase="OverriddenMethods"
+			DefnLocation="MAIN_FILE">
+			<expandArgument name="FunctionComment">
+/** 
+ * Handle pointer events (override)
+ */
+			</expandArgument>
+			<expandArgument name="StartFunctionBody">
+CCoeControl::HandlePointerEventL( aPointerEvent );
+			</expandArgument>
+		</expandMacro>
+
+	</templateGroup>
+
+	<templateGroup id="HandlePointerEventHandler" ifEvents="handlePointerEvent">
+		
+		<template id="InvokeHandlePointerEventHandler" location="HANDLEPOINTEREVENTL_METHOD_BODY">
+${event.handlerName}( aPointerEvent );
+		</template>
+				
+		<expandMacro name="GenerateUserEventHandlerFunction"
+			FunctionLocationId="HANDLEPOINTEREVENTL_EVENTHANDLER"
+			FunctionArgs="const TPointerEvent&amp; aPointerEvent"
+			DeclPhase="UserHandlers"
+			DefnLocation="MAIN_FILE">
+		</expandMacro>
+
+	</templateGroup>
+<!-- END EVENT handlePointerEvent -->
+<!-- **************************** -->
+
+
+<!-- BEGIN EVENT sizeChanged -->
+			<templateGroup id="GenerateSizeChanged" ifEvents="sizeChanged">
+				<template id="DeclareSizeChangedOverride" phase="OverriddenMethods"><![CDATA[
+void SizeChanged();
+]]>				</template>
+
+				<defineLocation id="SIZECHANGED" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::SizeChanged())">
+					<template><![CDATA[
+/** 
+ * Handle size change (override)
+ */
+void ${handlerClassName}::SizeChanged()
+	{
+	${instance.attributes["base-container-class"]}::SizeChanged();
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="SIZECHANGED_BODY" baseLocation="SIZECHANGED"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeSizeChangedHandler" location="SIZECHANGED_BODY">
+${event.handlerName}();
+			</template>
+
+			<template id="DeclareSizeChangedHandler" phase="UserHandlers">
+void ${event.handlerName}();
+			</template>
+
+			<defineLocation id="SizeChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}())">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}()
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeSizeChangedHandler" location="SizeChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT sizeChanged -->	
+
+<!-- BEGIN EVENT positionChanged -->
+			<templateGroup id="GeneratePositionChanged" ifEvents="positionChanged">
+				<template id="DeclarePositionChangedOverride" phase="OverriddenMethods"><![CDATA[
+void PositionChanged();
+]]>				</template>
+
+				<defineLocation id="PositionChangedOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::PositionChanged())">
+					<template><![CDATA[
+/** 
+ * Handle position change (override)
+ */
+void ${handlerClassName}::PositionChanged()
+	{
+	${instance.attributes["base-container-class"]}::PositionChanged();
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="PositionChangedBody" baseLocation="PositionChangedOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokePositionChangedHandler" location="PositionChangedBody">
+${event.handlerName}();
+			</template>
+
+			<template id="DeclarePositionChangedHandler" phase="UserHandlers">
+void ${event.handlerName}();
+			</template>
+
+			<defineLocation id="PositionChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}())">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}()
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizePositionChangedHandler" location="PositionChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT positionChanged -->	
+
+<!-- BEGIN EVENT draw -->
+			<templateGroup id="GenerateDraw" ifEvents="draw">
+				<template id="DeclareDrawOverride" phase="OverriddenMethods"><![CDATA[
+void Draw( const TRect& aRect ) const;
+]]>				</template>
+
+				<defineLocation id="DRAW" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::Draw(const TRect&amp;))">
+					<template><![CDATA[
+/** 
+ * Draw container contents (override)
+ */
+void ${handlerClassName}::Draw( const TRect& aRect ) const
+	{
+	${instance.attributes["base-container-class"]}::Draw( aRect );
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="DRAW_BODY" baseLocation="DRAW"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeDrawHandler" location="DRAW_BODY">
+${event.handlerName}( aRect );
+			</template>
+
+			<template id="DeclareDrawHandler" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( const TRect& aRect ) const;
+]]>			</template>
+
+			<defineLocation id="DrawHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(const TRect&amp;))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( const TRect& aRect ) const
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeDrawHandler" location="DrawHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT draw -->	
+
+<!-- BEGIN EVENT offerKeyEvent -->
+			<templateGroup id="GenerateOfferKeyEvent" ifEvents="offerKeyEvent">
+				<template id="DeclareOfferKeyEventOverride" phase="OverriddenMethods"><![CDATA[
+TKeyResponse OfferKeyEventL( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType );
+]]>				</template>
+
+				<defineLocation id="OFFER_KEYEVENTL" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::OfferKeyEventL(const TKeyEvent&amp;,TEventCode))">
+					<template><![CDATA[
+/** 
+ * Handle key event (override)
+ */
+TKeyResponse ${handlerClassName}::OfferKeyEventL( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="OFFER_KEYEVENTL_BODY" baseLocation="OFFER_KEYEVENTL"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeOfferKeyEventHandler" location="OFFER_KEYEVENTL_BODY"><![CDATA[
+if ( ${event.handlerName}( aKeyEvent, aType ) == EKeyWasConsumed )
+	{
+	return EKeyWasConsumed;
+	}
+]]>			</template>
+
+			<template id="OfferKeyEventOverrideContents" location="OFFER_KEYEVENTL"><![CDATA[
+return ${instance.attributes["base-container-class"]}::OfferKeyEventL( aKeyEvent, aType );
+]]>			</template>
+			
+			<template id="DeclareOfferKeyEventHandler" phase="UserHandlers"><![CDATA[
+TKeyResponse ${event.handlerName}( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType );
+]]>			</template>
+
+			<defineLocation id="OfferKeyEventHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(const TKeyEvent&amp;, TEventCode))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+TKeyResponse ${handlerClassName}::${event.handlerName}( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return EKeyWasNotConsumed;
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeOfferKeyEventHandler" location="OfferKeyEventHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT offerKeyEvent -->	
+
+<!-- BEGIN EVENT prepareForFocusLoss -->
+			<templateGroup id="GeneratePrepareForFocusLoss" ifEvents="prepareForFocusLoss">
+				<template id="DeclarePrepareForFocusLossOverride" phase="OverriddenMethods"><![CDATA[
+void PrepareForFocusLossL();
+]]>				</template>
+
+				<defineLocation id="PrepareForFocusLossOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::PrepareForFocusLossL())">
+					<template><![CDATA[
+/** 
+ * Handle focus change (override)
+ */
+void ${handlerClassName}::PrepareForFocusLossL()
+	{
+	${instance.attributes["base-container-class"]}::PrepareForFocusLossL();
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="PrepareForFocusLossBody" baseLocation="PrepareForFocusLossOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokePrepareForFocusLossHandler" location="PrepareForFocusLossBody">
+${event.handlerName}();
+			</template>
+
+			<template id="DeclarePrepareForFocusLossHandler" phase="UserHandlers">
+void ${event.handlerName}();
+			</template>
+
+			<defineLocation id="PrepareForFocusLossHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}())">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}()
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizePrepareForFocusLossHandler" location="PrepareForFocusLossHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT prepareForFocusLoss -->	
+
+<!-- BEGIN EVENT prepareForFocusGain -->
+			<templateGroup id="GeneratePrepareForFocusGain" ifEvents="prepareForFocusGain">
+				<template id="DeclarePrepareForFocusGainOverride" phase="OverriddenMethods"><![CDATA[
+void PrepareForFocusGainL();
+]]>				</template>
+
+				<defineLocation id="PrepareForFocusGainOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::PrepareForFocusGainL())">
+					<template><![CDATA[
+/** 
+ * Handle focus change (override)
+ */
+void ${handlerClassName}::PrepareForFocusGainL()
+	{
+	${instance.attributes["base-container-class"]}::PrepareForFocusGainL();
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="PrepareForFocusGainBody" baseLocation="PrepareForFocusGainOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokePrepareForFocusGainHandler" location="PrepareForFocusGainBody">
+${event.handlerName}();
+			</template>
+
+			<template id="DeclarePrepareForFocusGainHandler" phase="UserHandlers">
+void ${event.handlerName}();
+			</template>
+
+			<defineLocation id="PrepareForFocusGainHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}())">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}()
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizePrepareForFocusGainHandler" location="PrepareForFocusGainHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT prepareForFocusGain -->	
+		
+<!-- BEGIN EVENT resourceChanged -->
+		<templateGroup id="GenerateResourceChanged" ifEvents="resourceChanged">
+				<template id="DeclareResourceChangedOverride" phase="OverriddenMethods"><![CDATA[
+void HandleResourceChange( TInt aType );
+]]>				</template>
+
+				<defineLocation id="ResourceChangedOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::HandleResourceChange(TInt))">
+					<template><![CDATA[
+/** 
+ * Handle global resource changes, such as scalable UI or skin events (override)
+ */
+void ${handlerClassName}::HandleResourceChange( TInt aType )
+	{
+	${instance.attributes["base-container-class"]}::HandleResourceChange( aType );
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="ResourceChangedBody" baseLocation="ResourceChangedOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeResourceChangedHandler" location="ResourceChangedBody">
+${event.handlerName}( aType );
+			</template>
+
+			<template id="DeclareResourceChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aType );
+			</template>
+
+			<defineLocation id="ResourceChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeResourceChangedHandler" location="ResourceChangedHandlerMethod" />
+		</templateGroup>
+<!-- END EVENT resourceChanged -->		
+
+<!-- BEGIN EVENT handleLongTapEvent -->
+	<templateGroup id="HandleLongTapEvent" ifEvents="handleLongTapEvent">
+			
+		<template id="EventIncludes" phase="EventIncludes"><![CDATA[
+#include <AknLongTapDetector.h>
+]]>		</template>
+		
+		<template id="EventInterface" phase="BaseClassList">, MAknLongTapDetectorCallBack</template>			
+			
+		<template id="CallDetectorWithPointerEvent" location="HANDLEPOINTEREVENTL_METHOD_BODY"><![CDATA[
+iLongTapDetector->PointerEventL( aPointerEvent );
+	]]> </template>
+		
+		<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+			IsOwned="false"
+			FunctionLocationId="HANDLELONGTAPEVENTL_METHOD"
+			FunctionArgs="const TPoint&amp; aPenEventLocation, const TPoint&amp; aPenEventScreenLocation"
+			FunctionName="HandleLongTapEventL"
+			DeclPhase="OverriddenMethods"
+			DefnLocation="MAIN_FILE">
+			<expandArgument name="FunctionComment">
+/** 
+ * Implement the HandleLongTapEventL method of MAknLongTapDetectorCallBack 
+ */
+			</expandArgument>
+		</expandMacro>
+		
+		<expandMacro name="GenerateUserEventHandlerFunction"
+			FunctionLocationId="HANDLELONGTAP_EVENTHANDLER"
+			FunctionArgs="const TPoint&amp; aPenEventLocation, const TPoint&amp; aPenEventScreenLocation"
+			DeclPhase="UserHandlers"
+			DefnLocation="MAIN_FILE">
+		</expandMacro>
+		
+		<template id="DeclareDetectorMember" phase="InstanceVariables">
+CAknLongTapDetector* iLongTapDetector;			
+		</template>
+
+		<template id="MainSystemIncludes" phase="MainSystemIncludes"><![CDATA[
+#include <AknLongTapDetector.h>
+]]>		</template>
+
+		<template id="ClearDetectorMember" phase="Construct">
+iLongTapDetector = NULL;		
+		</template>
+
+		<template id="DestroyDetectorMember" phase="Destroy">
+delete iLongTapDetector;		
+iLongTapDetector = NULL;		
+		</template>
+
+		<template id="ConstructDetectorMember" phase="PostActivateL">
+iLongTapDetector = CAknLongTapDetector::NewL( this );			
+		</template>
+
+	</templateGroup>
+<!-- END EVENT handleLongTapEvent -->		
+
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

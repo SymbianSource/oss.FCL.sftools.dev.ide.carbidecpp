@@ -1,0 +1,36 @@
+
+STRUCT DIALOG {
+	WORD flags;
+	STRUCT lines[];	// of DIALOG_LINE
+}
+
+
+STRUCT DIALOG_LINKS {
+	WORD flags;
+	LLINK lines[];	// of DIALOG_LINE
+}
+
+STRUCT LABEL {
+	LTEXT text;
+}
+
+STRUCT CHECKBOX {
+	BYTE defaultChecked;
+}
+
+STRUCT DIALOG_LINE {
+	WORD id;
+	WORD type;
+	STRUCT field;  // LABEL or CHECKBOX
+}
+
+STRUCT DIALOG_LINE_REF {
+	WORD id;
+	WORD type;
+	LINK ref;  // LABEL or CHECKBOX
+}
+
+STRUCT FORM {
+	WORD flags;
+	STRUCT dialog;	// DIALOG
+}

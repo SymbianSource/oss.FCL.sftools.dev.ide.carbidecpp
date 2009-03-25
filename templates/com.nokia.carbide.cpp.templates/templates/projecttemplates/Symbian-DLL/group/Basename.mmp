@@ -1,0 +1,49 @@
+/*
+============================================================================
+ Name		: $(baseName).mmp
+ Author	  : $(author)
+ Copyright   : $(copyright)
+ Description : This is the project specification file for $(baseName).
+============================================================================
+*/
+
+TARGET		  $(baseName).dll
+TARGETTYPE	  dll
+UID			 $(uid2) $(uid3)
+
+USERINCLUDE	 ..\$(incDir)
+SYSTEMINCLUDE   \epoc32\include
+
+SOURCEPATH	  ..\$(sourceDir)
+
+SOURCE		  $(baseName).cpp
+SOURCE		  $(baseName)DllMain.cpp
+
+// In order to use .def files to freeze code you must use one or more DEFFILE lines;
+// see the ones commented out below for examples.
+// By default, the build tools look for the WINSCW def file in a BWINS directory
+// (at the same level as the directory containing the mmp file), 
+// the GCC ARM def file in a BMARM directory, and the ARMV5 def file in a EABI directory. 
+// If your .def files are stored in these default locations, you can simply specify the
+// .def filename(s) with no path. If you want to store .def files in non-default 
+// locations, you will need to specify the paths in the DEFFILE statement(s).
+
+//The following commented out code shows how the build system uses the implicit
+// location for defiles. To create the DEF files Choose Project > Freeze Exports from Carbide
+// or run 'abld freeze' from the command-line
+//#if defined (WINS)
+//  DEFFILE ..\bwins\$(baseName).def
+//#elif defined (GCC32)
+//  DEFFILE ..\bmarm\$(baseName).def
+//#else 
+//  DEFFILE ..\eabi\$(baseName).def
+//#endif
+
+nostrictdef
+
+LIBRARY		 euser.lib
+
+#ifdef ENABLE_ABIV2_MODE
+  DEBUGGABLE_UDEBONLY
+#endif
+

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Command-Line Settings Conventions</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Command-Line Settings Conventions</h3>
+<p>  In all cases, text in brackets (<span class="code">[]</span>) is optional, although the brackets themselves never appear in the actual command. For example, the command <span class="code">-str[ings]</span> pool can mean either:</p>
+<p class="code">-strings pool</p>
+<p>or </p>
+<p class="code">-str pool</p>
+<p>Where an option has several possible permutations, the possibilities are separated by the pipe (<span class="code">|</span>) character. For example:</p>
+<p class="listing">-sym on|off|full|fullpath</p>
+<p>means the <span class="code">-sym</span> command can be followed by one or more of the following options: on, off, full, or fullpath. If you have more than one option, separate each option with a comma. So you might have<span class="code"> -sym on</span>, <span class="code">-sym off</span>, <span class="code">-sym full</span>, or <span class="code">-sym on, fullpath</span>.</p>
+<p>The plus sign (<span class="code">+</span>) means that the parameter to an option must not be separated from the option name by a space. For example, </p>
+<p class="listing">-D+name[=value]</p>
+<p>means that you can have <span class="code">-DVAR</span> or <span class="code">-DVAR=3</span>, but not <span class="code">-D VAR</span>.</p>
+<p>In cases where you provide a variable parameter such as a file name, that item is in italic text. For example,<span class="code"> -precompile filename</span> means you must provide a file name. The help text that corresponds to the compiler option explains what you must provide.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

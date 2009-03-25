@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.StatusPane" 
+		baseComponent="com.nokia.sdt.series60.ControlBase"
+		category="System"
+		instanceNameRoot="statusPane"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"
+			className="CEikStatusPane" classHelpTopic=""
+			resourceType="STATUS_PANE_APP_INFO" resourceHelpTopic="" 
+			/>
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="is-system-component">true</attribute>
+			<attribute key="is-not-user-removable">true</attribute>
+			<attribute key="never-add-component">true</attribute>
+	  		<attribute key="display-model-class">com.nokia.sdt.component.symbian.displaymodel.DisplayModelS60</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+		</attributes>
+		<propertyOverrides>
+			<propertyOverride name="location" category="Hidden"/>
+			<propertyOverride name="size" category="Hidden"/>
+		</propertyOverrides>
+		
+		<designerImages smallIconFile="StatusPane_sm.png" 
+			largeIconFile="StatusPane.png"/>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<code class="com.nokia.sdt.series60.component.StatusPaneVisualImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<code class="com.nokia.sdt.series60.component.StatusPaneLayoutImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="StatusPane_queryContainment.js" prototype="StatusPaneQueryContainment"/>
+			</implementation>
+		</implementations>
+		<sourceMapping>
+			<mapResource struct="STATUS_PANE_APP_MODEL" headers="uikon.rh">
+				<mapArrayMember property="." member="panes">
+					<select attribute="status-pane-id">
+						<choice value="">
+						</choice>
+						<choice>
+							<mapResourceElement struct="SPANE_PANE"
+								instanceIdentifyingMember="id" >
+								<!-- looking at the current array element, get the
+									enumerator for the status pane id -->
+								<mapEnumMember property="." member="id"
+									nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID"
+									headers="avkon.hrh"
+								/>
+								<!-- looking at the current array element, get the
+									enumerator for the instance's control type -->
+								<mapEnumMember property="." member="type"
+									nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE"
+									headers="eikon.hrh"
+								/>
+								<mapResourceMember property="." member="resource"/>
+							</mapResourceElement>
+						</choice>
+					</select>
+				</mapArrayMember>
+			</mapResource>
+		</sourceMapping>
+		<sourceGen>
+			<inline>
+include("../containers/containerLibrary.js")
+			</inline>			
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <akncontext.h>
+]]>			</template>
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <akntitle.h>
+]]>			</template>
+			<template phase="SetupStatusPane"><![CDATA[
+<% if (!findImmediateChildByComponentID(instance.children, 
+			"com.nokia.sdt.series60.StatusPaneTitle")) {
+%>// reset the title pane
+TUid titlePaneUid = TUid::Uid( EEikStatusPaneUidTitle );
+CEikStatusPaneBase::TPaneCapabilities subPaneTitle = 
+	StatusPane()->PaneCapabilities( titlePaneUid );
+if ( subPaneTitle.IsPresent() && subPaneTitle.IsAppOwned() )
+	{
+	CAknTitlePane* title = static_cast< CAknTitlePane* >( 
+		StatusPane()->ControlL( titlePaneUid ) );
+	title->SetTextToDefaultL();
+	}
+<% } 
+ if (!findImmediateChildByComponentID(instance.children, 
+			"com.nokia.sdt.series60.StatusPaneContext")) {
+%>// reset the context pane
+TUid contextPaneUid = TUid::Uid( EEikStatusPaneUidContext );
+CEikStatusPaneBase::TPaneCapabilities subPaneContext = 
+	StatusPane()->PaneCapabilities( contextPaneUid );
+if ( subPaneContext.IsPresent() && subPaneContext.IsAppOwned() )
+	{
+	CAknContextPane* context = static_cast< CAknContextPane* > ( 
+		StatusPane()->ControlL( contextPaneUid ) );
+	context->SetPictureToDefaultL();
+	}
+<% } %>
+]]>			</template>
+
+			<template phase="CleanupStatusPane"/>
+
+			<inline><![CDATA[
+			if (!Engine.formMatches(form, ["RootAppUi"])) {
+				contribs.addAll(Engine.generateChildContributions(form))
+			}
+			]]></inline>
+		
+		</sourceGen>
+	</component>
+</componentDefinition>

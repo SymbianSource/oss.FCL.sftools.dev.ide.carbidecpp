@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyname"
+		baseComponent="com.nokia.carbide.uiq.ClassBase"
+		qualifiedName="com.nokia.carbide.uiq.ViewDialogBase"
+		abstract="true"
+		version="1.0">
+	
+		<symbian minSDKVersion="3.0"
+			sdkName="com.uiq"/>
+			
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key="is-not-user-removable">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="event-handler-target">true</attribute>
+			<attribute key="display-model-class">com.nokia.sdt.component.symbian.displaymodel.DisplayModelUIQ</attribute>
+			<attribute key="is-initial-content">true</attribute>
+			<attribute key="layout-group-component-id"></attribute>
+			<attribute key="ui-configuration-group-component-id"></attribute>
+			<attribute key="is-appui-container">false</attribute>
+		</attributes>
+		
+		<properties>
+			<!--TODO: temporary until the layout manager is implemented and integrated :
+				see DisplayModelUIQ#createLayoutObject and Container -->
+			<compoundProperty category="Hidden" name="location" displayName="%location" 
+				type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="locationDescription" />
+			<compoundProperty category="Hidden" name="size" displayName="%size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="sizeDescription"/>
+			<enumProperty category="Hidden"
+				name="isAppUIContainer"
+				type="boolean"
+				default="false"/>
+		</properties>
+
+		<events><!-- TODO: not sure if group must be "CCoeControl" or another value -->
+			<event category="%event.category.container"
+				descriptionKey="draw.event.description"
+				displayName="%draw.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}Draw"
+				name="draw"/>
+			<event category="%event.category.container"
+				descriptionKey="offerkeyevent.event.description"
+				displayName="%offerkeyevent.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}OfferKeyEventL"
+				name="offerKeyEvent"/>
+			<event category="%event.category.container"
+				descriptionKey="handlepointerevent.event.description"
+				displayName="%handlepointerevent.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}PointerEventL"
+				name="handlePointerEvent"/>
+			<event category="%event.category.container"
+				descriptionKey="prepareforfocusloss.event.description"
+				displayName="%prepareforfocusloss.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}PrepareForFocusLossL"
+				name="prepareForFocusLoss"/>
+			<event category="%event.category.container"
+				descriptionKey="prepareforfocusgain.event.description"
+				displayName="%prepareforfocusgain.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}PrepareForFocusGainL"
+				name="prepareForFocusGain"/>
+			<event category="%event.category.container"
+				descriptionKey="handleresourcechange.event.description"
+				displayName="%handleresourcechange.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}ResourceChange"
+				name="handleResourceChange"/>
+			<event category="%event.category.container"
+				descriptionKey="focuschanged.event.description"
+				displayName="%focuschanged.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}FocusChanged"
+				name="focusChanged"/>
+			<event category="%event.category.container"
+				descriptionKey="sizechanged.event.description"
+				displayName="%sizechanged.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}SizeChanged"
+				name="sizeChanged"/>
+			<event category="%event.category.container"
+				descriptionKey="handlepointerbufferready.event.description"
+				displayName="%handlepointerbufferready.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}PointerBufferReadyL"
+				name="handlePointerBufferReady"/>
+			<event category="%event.category.container"
+				descriptionKey="positionchanged.event.description"
+				displayName="%positionchanged.event.displayname"
+				group="CCoeControl"
+				handlerNameTemplate="Handle{title(name)}PositionChanged"
+				name="positionChanged"/>
+		</events>
+		
+		<sourceGen>
+			
+			<!--<useTemplateGroup ids="*"/>-->
+		
+			<templateGroup id="ContributionsToHeaderFile">
+				<expandMacro name="HeaderFileTemplate"
+					LocationPrefix="VIEWDIALOGBASE_HEADER">
+				</expandMacro>
+				<template id="BaseClassHeaderAddition" location="VIEWDIALOGBASE_HEADER_OWNED_SYSTEM_INCLUDES">
+#include &lt;${properties.baseClassInfo.baseClassHeader}&gt;
+				</template>
+				<template id="BaseClassTypedefAddition" location="VIEWDIALOGBASE_HEADER_OWNED_TYPEDEFS">
+typedef ${properties.baseClassInfo.baseClassName} ${className}Base;
+				</template>
+				<expandMacro name="ClassTemplate"
+					LocationPrefix="VIEWDIALOGBASE_"
+					BaseClassName="${className}Base">
+					<expandArgument name="ClassComment">
+/**
+ * Class for ${instanceName}.
+ * @class	${className} ${instanceName}.h
+ */
+					</expandArgument>
+					
+					<expandArgument name="InitialPrivateOwnedMethodsContent">
+<![CDATA[
+
+	typedef void ( ${className}::*ControlEventHandler )( 
+				CCoeControl* aControl, TCoeEvent aEvent );
+	class TControlEventDispatch 
+		{
+	public: 
+		CCoeControl* src; 
+		TCoeEvent event; 
+		ControlEventHandler handler;
+		};
+		
+	RArray< TControlEventDispatch > iControlEventDispatch;
+
+	typedef void ( ${className}::*CommandEventHandler )( 
+					CQikCommand& aCommand  );
+	class TCommandEventDispatch 
+		{
+	public: 
+		TInt id; 
+		CommandEventHandler handler;
+		};
+			
+	RArray< TCommandEventDispatch > iCommandEventDispatch;
+]]>						
+					</expandArgument>
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="ContributionsToSourceFile">
+				<expandMacro name="SourceFileTemplate"
+					LocationPrefix="VIEWDIALOGBASE_SOURCE"/>
+				<template id="AdditionalSystemIncludes1" location="VIEWDIALOGBASE_SOURCE_OWNED_SYSTEM_INCLUDES">
+#include &lt;QikCommand.h&gt;
+				</template>
+				<template id="AdditionalSystemIncludes2" location="VIEWDIALOGBASE_SOURCE_OWNED_SYSTEM_INCLUDES">
+#include &lt;${resourceFileNameBase}.rsg&gt;
+				</template>
+				<template id="AdditionalSystemIncludes3" location="VIEWDIALOGBASE_SOURCE_OWNED_SYSTEM_INCLUDES">
+#include &lt;eikenv.h&gt;
+				</template>
+				<template id="AdditionalUserIncludes1" location="VIEWDIALOGBASE_SOURCE_OWNED_USER_INCLUDES"><![CDATA[
+<% var rootAppUi = getRootModelInstanceOfType("com.nokia.carbide.uiq.ApplicationUI");
+
+if (rootAppUi) { 
+
+%>#include "${rootAppUi.name}.h"<% } %> 
+				]]></template>
+				<template id="AdditionalUserIncludes2" location="VIEWDIALOGBASE_SOURCE_OWNED_USER_INCLUDES"><![CDATA[
+<% var rootApp = getRootModelInstanceOfType("com.nokia.carbide.uiq.Application");
+
+if (rootApp) { 
+
+%>#include "${rootApp.name}ExternalInterface.h"<% } %> 
+				]]></template>
+<!--				<template id="AdditionalUserIncludes3" location="VIEWDIALOGBASE_SOURCE_OWNED_USER_INCLUDES">
+#include "${instanceName}.hrh"
+				</template>-->
+			</templateGroup>
+			
+			<templateGroup id="GenerateOfferKeyEvent" ifEvents="offerKeyEvent">
+				<expandMacro name="GenerateMethodWithOwnedBody"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_OFFERKEYEVENT"
+					ReturnType="TKeyResponse"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="OfferKeyEventL"
+					FunctionArgs="const TKeyEvent&amp; aKeyEvent, TEventCode aType"
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_OFFERKEYEVENT_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Offers aKeyEvent to the control with the current focus.
+ * 
+ * @param aKeyEvent The key event
+ * @param aType The type of key event
+ * @return Whether or not a key event was processed by the control.
+ */
+					</expandArgument>
+					<expandArgument name="FunctionBody">
+if ( ${event.handlerName}($(FunctionArgs::as-function-call-args::add-spaces-unless-empty)) == EKeyWasConsumed )
+	{
+	return EKeyWasConsumed;
+	}
+					</expandArgument>
+					<expandArgument name="EndFunctionBody">
+return CCoeControl::OfferKeyEventL( aKeyEvent, aType );
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs="const TKeyEvent&amp; aKeyEvent, TEventCode aType"
+					ReturnType="TKeyResponse"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_OFFERKEYEVENT_EVENTHANDLER">
+					<expandArgument name="FunctionBody">
+// TODO: implement offerKeyEvent event handler
+return EKeyWasNotConsumed;
+					</expandArgument>
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GeneratePrepareForFocusLoss" ifEvents="prepareForFocusLoss">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_PREPAREFORFOCUSLOSS"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="PrepareForFocusLossL"
+					FunctionArgs=""
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_PREPAREFORFOCUSLOSS_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle focus change (override)
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::PrepareForFocusLossL();
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs=""
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_PREPAREFORFOCUSLOSS_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GeneratePrepareForFocusGain" ifEvents="prepareForFocusGain">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_PREPAREFORFOCUSGAIN"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="PrepareForFocusGainL"
+					FunctionArgs=""
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_PREPAREFORFOCUSGAIN_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle focus change (override)
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::PrepareForFocusGainL();
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs=""
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_PREPAREFORFOCUSGAIN_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateHandleResourceChange" ifEvents="handleResourceChange">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_HANDLERESOURCECHANGE"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="HandleResourceChange"
+					FunctionArgs="TInt aType"
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_HANDLERESOURCECHANGE_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle global resource changes (override)
+ * 
+ * @param aType 
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::HandleResourceChange( aType );
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs="TInt aType"
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_HANDLERESOURCECHANGE_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateDrawEvent" ifEvents="draw">
+				<expandMacro name="GenerateMethodWithOwnedBody"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_DRAW"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="Draw"
+					FunctionArgs="const TRect&amp; aRect"
+					IsConst="true"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_DRAW_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Draw view contents.
+ */
+					</expandArgument>
+					<expandArgument name="FunctionBody">
+
+${event.handlerName}($(FunctionArgs::as-function-call-args::add-spaces-unless-empty));
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs="const TRect&amp; aRect"
+					ReturnType="void"
+					IsConst="true"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_DRAW_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateHandlePointerEvent" ifEvents="handlePointerEvent">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_HANDLEPOINTEREVENT"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="HandlePointerEventL"
+					FunctionArgs="const TPointerEvent&amp; aPointerEvent"
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_HANDLEPOINTEREVENT_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handles pointer events
+ * 
+ * @param aPointerEvent Pointer event details.
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::HandlePointerEventL( aPointerEvent );
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs="const TPointerEvent&amp; aPointerEvent"
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_HANDLEPOINTEREVENT_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateFocusChangedEvent" ifEvents="focusChanged">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_FOCUSCHANGED"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="FocusChanged"
+					FunctionArgs="TDrawNow aDrawNow"
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_FOCUSCHANGED_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle focus change (override)
+ * 
+ * @param aDrawNow Control redraw flags.
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::FocusChanged( aDrawNow );
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs="TDrawNow aDrawNow"
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_FOCUSCHANGED_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateSizeChangedEvent" ifEvents="sizeChanged">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_SIZECHANGED"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="SizeChanged"
+					FunctionArgs=""
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_SIZECHANGED_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle resizing of the container.
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CQikViewBase::SizeChanged();
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs=""
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_SIZECHANGED_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateHandlePointerBufferReadyEvent" ifEvents="handlePointerBufferReady">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_HANDLEPOINTERBUFFERREADY"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="HandlePointerBufferReadyL"
+					FunctionArgs=""
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_HANDLEPOINTERBUFFERREADY_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle Pointer Buffer Ready
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CQikViewBase::HandlePointerBufferReadyL();
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs=""
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_HANDLEPOINTERBUFFERREADY_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GeneratePositionChangedEvent" ifEvents="positionChanged">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_POSITIONCHANGED"
+					ReturnType="void"
+					IsOwned="false"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionName="PositionChanged"
+					FunctionArgs=""
+					IsConst="false"
+					OwnedRegionLocationId="VIEWDIALOGBASE_CLASS_POSITIONCHANGED_BODY"
+					ClassName="${className}">
+					<expandArgument name="FunctionComment">
+/**
+ * Handle position change (override)
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CQikViewBase::PositionChanged();
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					DeclLocation="VIEWDIALOGBASE_CLASS_PROTECTED_USER_HANDLERS"
+					FunctionArgs=""
+					ReturnType="void"
+					DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+					FunctionLocationId="VIEWDIALOGBASE_CLASS_POSITIONCHANGED_EVENTHANDLER">
+				</expandMacro>
+			</templateGroup>
+			
+		</sourceGen>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="ViewDialogBase.js" prototype="ViewDialogBase"/>										
+			</implementation>
+		</implementations>
+	
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,10 @@
+START BITMAP test.mbm
+TARGETPATH \system\apps\image-tests
+SOURCE c12 ./Pic1.bmp
+END
+
+START BITMAP testMulti.mbm
+TARGETPATH \system\apps\image-tests
+SOURCE c12 Pic1.bmp
+SOURCE c8,1 Pic2.bmp Pic2_mask.bmp
+END

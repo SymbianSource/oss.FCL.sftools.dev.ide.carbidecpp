@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>mpwc_newline</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>mpwc_newline</h3>
+<p>  Controls the newline character convention.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma mpwc_newline on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler uses the MPW conventions for the '\n' and '\r' characters. Otherwise, the compiler uses the ANSI C/C++ conventions for these characters.</p>
+  <p>In MPW, '\n' is a Carriage Return (0x0D) and '\r' is a Line Feed (0x0A). In ANSI C/C++, they are reversed: '\n' is a Line Feed and '\r' is a Carriage Return.</p>
+  <p>If you enable this pragma, use ANSI C/C++ libraries that were compiled when this pragma was enabled. The file names of the 68K versions of these libraries include the letters NL (for example, MSL C.68K (NL_2i).Lib). The PowerPC versions of these libraries are marked with NL; for example, MSL C.PPC (NL).Lib.</p>
+  <p>If you enable this pragma and use the standard ANSI C/C++ libraries, you cannot read and write '\n' and '\r' properly. For example, printing '\n' brings you to the beginning of the current line instead of inserting a newline.</p>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (mpwc_newline)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

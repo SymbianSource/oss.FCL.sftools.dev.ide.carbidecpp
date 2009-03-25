@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Commands Page</title>
+<link href ="../../../book.css" rel="stylesheet" type="text/css"/>
+<style>
+<!--
+table.MsoTableGrid
+	{border:1.0pt solid windowtext;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Commands Page</h2>
+<p class="Indent1" style="text-align:justify">The main objective of this page
+<span style="font-style: normal; font-variant: normal; font-weight: normal">is
+</span>to provide a way to manage the Commands of a UI Design, including Command 
+Groups, Command Ids and event binding. </p>
+<p>&nbsp;</p>
+
+ <p align="center">
+	<img border="0" src="../../images/command_page-01.PNG" width="785" height="601"/></p>
+<p class="figure">Figure 1 - The &quot;Commands&quot; page </p>
+<p>&nbsp;</p>
+<div class="step">
+  <h4 align="left">Command Page Sections</h4>
+	<ul>
+		<li>
+		<p align="left"><b>Command Lists: </b>This section is composed of 
+		two sections: the tree command and the action buttons. The tree shows 
+		the commands structure. Also, buttons allow to add 
+		new lists, commands, create nameGroups and anonymousGroups, duplicate 
+		commands, edit images (for command and namedGroup) and remove components<b>. </b> </p>
+		</li>
+	<li>
+	<p align="left"><b>Command List Details:</b> This section allows you to edit the 
+	properties of each element selected from the tree. The properties are 
+	enabled or disabled depending on the selected component.</p>
+	</li>
+	<li>
+	<p align="left"><b>Command IDs:</b> This section allows you to edit some 
+	properties of the component Command IDs; the functions of this section 
+	are: <br>
+	- Renaming the Command ID component <br>
+	- Changing the property CommandID (by typing in a new value)&nbsp; or selecting a CommandID from system <br>
+	- Adding&nbsp; code for a CommandId event&nbsp; <br>
+	- Removing a CommandID</p></li>
+</ul>
+</div>
+
+<p>The command properties include:</p>
+<ul>
+  <li><b>Anonymous Group</b> - The AnonymousGroup component is referenced by
+    Commands and Named Groups. Commands and Named Groups that reference the same
+    Anonymous Group will be displayed together. It is allowed to exist as a
+    child of a CommandList component because of its inheritance from
+    CommandListChildBase.</li>
+  <li><b>Command </b>- The Command component is allowed to exist as a child of
+    a CommandList component because of its inheritance from CommandListChildBase.
+    It also inherits functionality from the CommandBase component.</li>
+  <li><b>Command Id</b>- The CommandId component is referenced by Commands
+    from different CommandLists. It exists as a child of the CommandLists
+    component.</li>
+  <li><b>Command List</b> - A set of Commands that can be referenced by a View/Dialog
+    or Layout.</li>
+  <li><b>Named Group</b> - The NamedGroup component is referenced by Commands,
+    AnonymousGroups and other NamedGroups instances. Commands, AnonymousGroups
+    and NamedGroups that reference the same NamedGroup will be displayed as sub-items. It is allowed to exist as a child of a CommandList component because
+    of its inheritance from CommandListChildBase. It also inherits functionality from the CommandBase component. </li>
+</ul>
+<h5>Related references</h5>
+<ul>
+ <li><b>Commands Page</b></li>
+	<li><a href="task_commands_lists.htm">Command Lists</a></li>
+	<li><a href="task_commands_details.htm">Command Details</a></li>
+	<li><a href="task_commands_ids.htm">Command IDs</a></li>
+	<li><a href="../ui_configuration/task_uiconfig.htm">UI Configurations</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

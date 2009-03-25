@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in
+Bundle-SymbolicName: com.nokia.sdt.referenceprojects.test
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.sdt.referenceprojects.test.TestPlugin
+Bundle-Vendor: NOKIA
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ com.nokia.sdt.uimodel,
+ com.nokia.sdt.utils,
+ org.eclipse.core.resources,
+ org.eclipse.emf.edit,
+ org.junit,
+ org.eclipse.ui.views,
+ org.eclipse.ui,
+ com.nokia.sdt.testsupport,
+ com.nokia.carbide.cdt.builder,
+ org.eclipse.cdt.core
+Eclipse-AutoStart: true
+Export-Package: com.nokia.sdt.referenceprojects.test
+Bundle-ClassPath: library.jar

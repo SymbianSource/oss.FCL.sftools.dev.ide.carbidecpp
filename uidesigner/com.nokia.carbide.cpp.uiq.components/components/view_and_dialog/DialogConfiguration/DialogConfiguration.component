@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		
+	<component friendlyName="%friendlyName"
+			   qualifiedName="com.nokia.carbide.uiq.DialogConfiguration"
+			   baseComponent="com.nokia.carbide.uiq.UIConfiguration"			   
+			   instanceNameRoot="dialogConfiguration"
+			   version="1.0">	
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="DialogConfiguration" classHelpTopic=""
+			resourceType="QIK_DIALOG_CONFIGURATION" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="DialogConfiguration_sm.png"
+			largeIconFile="DialogConfiguration.png"/>
+		
+		<properties>
+			<componentReferenceProperty name="viewOrContainer"
+				displayName="%viewOrContainer"
+				category="%category.data"
+				descriptionKey="viewOrContainerDescription"
+				constraint="com.nokia.carbide.uiq.CQikContainer"
+			/>
+		</properties>
+
+<!-- 	None attribute was specified in use case 
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key ="is-qikcontainer-content">true</attribute>
+		</attributes>
+-->	
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+		</attributes>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_DIALOG_CONFIGURATION"
+						headers="qikon.rh">
+				<mapEnumMember property="uiconfig"
+							member="ui_config_mode"
+							validate="false">
+				</mapEnumMember>
+				<mapReferenceMember property="commandList"
+									member="command_list">
+				</mapReferenceMember>
+				<mapReferenceMember property="viewOrContainer"
+									member="container"
+									rsrcId="containerSettings">
+				</mapReferenceMember>								
+			</mapResource>		
+		</sourceMapping>	
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="DialogConfiguration.js" prototype="DialogConfiguration"/>										
+			</implementation>			
+		</implementations>	
+					
+
+	</component>
+	
+</componentDefinition>

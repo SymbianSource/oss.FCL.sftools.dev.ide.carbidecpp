@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	  
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.ViewLayout"
+			baseComponent="com.nokia.carbide.uiq.CommonBase"
+			instanceNameRoot="viewLayout"			
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="ViewLayout" classHelpTopic=""
+			resourceType="QIK_VIEW" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="ViewLayout_sm.png"
+			largeIconFile="ViewLayout.png"/>		
+
+		<attributes>
+			<attribute key ="is-layout-object">true</attribute>
+			<attribute key ="is-layout-container">true</attribute>
+			<attribute key ="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key ="switchable-child-container">true</attribute>	
+			<!--<attribute key ="not-in-toolbox">true</attribute>-->					
+		</attributes>
+		
+		<properties>			
+			<componentReferenceProperty name="commandList" displayName="%commandList"
+				category="%category.data"
+				descriptionKey="commandListDescription"	scope= "model" 
+				constraint="com.nokia.carbide.uiq.CommandList"
+			/>
+			<!--TODO: temporary until the layout manager is implemented and integrated :
+				see DisplayModelUIQ#createLayoutObject and Container -->
+			<compoundProperty name="location" displayName="%location"
+				category="%category.hidden"
+				type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="locationDescription" />
+			<compoundProperty name="size" displayName="%size"
+				category="%category.hidden"
+				type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="sizeDescription"/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<script file="ViewLayout.js" prototype="ViewLayout"/>										
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>	
+				<code class="com.nokia.carbide.cpp.uiq.components.ViewLayoutInitializerFactory"/>	
+			</implementation>
+		</implementations>				
+		
+		<sourceMapping>
+			<mapResource struct="QIK_VIEW"
+						headers="Qikon.rh">
+				<mapReferenceMember property="commandList"
+									member="command_list">
+				</mapReferenceMember>
+				<mapResourceMember property="." member="pages" struct="QIK_VIEW_PAGES" headers="Qikon.rh" id="pages">
+					<mapArrayMember property="." member="pages"/>								
+				</mapResourceMember>		
+			</mapResource>		
+		</sourceMapping>	
+
+		<sourceGen>
+			<inline scope="file"><![CDATA[
+function getCurrentConfigs(instance) {
+	// find the view instance
+	var view = instance.parent;
+	var uiConfigs = new java.util.ArrayList();
+	while (!view.isInstanceOf("com.nokia.carbide.uiq.ViewDialogBase"))
+		view = view.parent;
+	// find the first view configuration referencing this view layout
+	var configsGroup = view.findChildOfType("com.nokia.carbide.uiq.ViewConfigurationsGroup");
+	for (var i in configsGroup.children) {
+		var viewConfig = configsGroup.children[i];
+		if (viewConfig.properties.viewOrContainer == instance.name) {
+			uiConfigs.add(viewConfig.properties.uiconfig);
+			//println("**" + viewConfig.properties.uiconfig);
+		}
+	}
+	return uiConfigs;
+}
+			]]></inline>
+			<inline><![CDATA[
+		var childContribs = Engine.generateChildContributions(form);
+		var initContribs = Engine.getContributionsForPhase(childContribs, "InitializeControlHandlers");
+		childContribs.removeAll(initContribs);
+		var curConfigs = getCurrentConfigs(instance);
+		var contrib;
+//poc 091107 uncomment ini..
+		//println("*curConfigs.size()*" + curConfigs.size());
+		if (curConfigs.size() > 0) {
+			for (var iterator = initContribs.iterator(); iterator.hasNext();) {
+				contrib = iterator.next();
+				if (curConfigs.size() > 0)
+					contrib.indentAdjust(1);
+				contribs.add(contrib);
+			}
+		}
+		contribs.addAll(childContribs);
+			]]></inline>
+			
+		</sourceGen>
+		
+	</component>
+	
+</componentDefinition>

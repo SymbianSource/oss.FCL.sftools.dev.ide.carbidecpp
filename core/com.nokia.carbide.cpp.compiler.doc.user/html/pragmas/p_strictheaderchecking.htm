@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>strictheaderchecking</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>strictheaderchecking</h3>
+<p>Controls how strictly the compiler checks headers for standard C library functions.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma strictheaderchecking on | off | reset</p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>The 3.2 version compiler recognizes standard C library functions. If the correct prototype is used, and, in C++, if the function appears in the &ldquo;std&rdquo; or root namespace, the compiler recognizes the function, and is able to optimize calls to it based on its documented effects.</p>
+  <p>When this pragma is on, in addition to having the correct prototype, the declaration must also appear in the proper standard header file (and not in a user header or source file).</p>
+  <p>This pragma does not correspond to any panel setting. The default setting is <span class="code">on</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

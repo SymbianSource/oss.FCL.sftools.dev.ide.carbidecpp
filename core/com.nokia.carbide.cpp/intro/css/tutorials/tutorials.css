@@ -1,0 +1,97 @@
+/* --------------------------------- */
+/* intro/css/tutorials/tutorials.css */
+/* --------------------------------- */
+
+body {
+	/* Carbide branding mod */
+	/* hide normal eclipse background image */
+	/* background-image : url(../graphics/contentpage/tutorials_wtr.jpg); */
+	background-image : url(../graphics/rootpage/background_carbide.jpg); */
+}
+
+/* show the "selected" image for this page */
+#navigation-links a#tutorials img, #navigation-links a#tutorials:hover img { background-image : url(../graphics/icons/ctool/tutorials48sel.gif); }
+
+/* 
+ * Set up the content of the tutorials page into two
+ * columns that are centered in the page
+ */
+
+
+/* a group of tutorial links */
+.tutorials-group {
+	/* To center in Moz (have to use text-align for IE) */
+	margin-left : auto;
+	margin-right : auto;
+	width : 760px;
+	margin-bottom : 30px;
+	float : none;
+	clear : both;
+	text-align : left;
+}
+
+.tutorials-link { 
+	width : 360px;
+	text-align : left;
+	margin-left : 5px;
+	margin-right : 5px;
+	margin-top : 10px;
+	margin-bottom : -30px;
+	vertical-align : top;
+	/* Carbide branding mod */
+	margin-bottom : 0px;
+	background-image : url(../graphics/carbide/page-link-wide.gif);
+	background-repeat:no-repeat;
+	background-position : top left;
+}
+
+.tutorials-group > .tutorials-link {
+	float : left;
+	height : 150px;
+	vertical-align : middle;
+}
+
+
+.tutorials-link img  {
+	height : 57px;
+	width : 57px;
+	vertical-align : middle;
+}
+
+.tutorials-group h4 {
+	float : none;
+	clear : both;
+}
+
+p #group-description {
+	padding-bottom : 10px;
+	float : none;
+	clear : both;
+}
+
+.tutorials-link .link-label {
+	display : block;
+	width : 300px;
+	position : relative;
+	top : -50px;
+	left : 60px;
+}
+
+
+.tutorials-link p .text {
+	display : block;
+	width : 300px;
+	position : relative;
+	top : -45px;
+	left : 53px;
+}
+
+.tutorials-link:hover { border-right : 0px; }
+
+/* added Carbide bullet icons here for topic */
+a#carbide img { background-image : url(../graphics/icons/carbide_bullet_blue.png); }
+a#carbide:hover img { background-image : url(../graphics/icons/carbide_bullet_turq.png); }
+
+/* added Carbide application icon here for tutorials */
+a#carbideapp img { background-image : url(../graphics/icons/obj48/carbideapp_obj.gif); }
+a#carbideapp:hover img { background-image : url(../graphics/icons/obj48/carbideapphov_obj.gif); }

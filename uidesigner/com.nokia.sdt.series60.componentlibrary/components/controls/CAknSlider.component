@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.slider.formLayout">
+		<enumElement value="EAknFormSliderLayout1"/>
+		<enumElement value="EAknFormSliderLayout2"/>
+		<enumElement value="EAknFormSliderLayout3"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.slider.settingsLayout">
+		<enumElement value="EAknSettingsItemSliderLayout"/>
+		<enumElement value="EAknSettingsItemSliderLayoutWithGraphics"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.slider.layout">
+		<enumElement value="EAknFormSliderLayout1"/>
+		<enumElement value="EAknFormSliderLayout2"/>
+		<enumElement value="EAknFormSliderLayout3"/>
+		<enumElement value="EAknSettingsItemSliderLayout"/>
+		<enumElement value="EAknSettingsItemSliderLayoutWithGraphics"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.slide.valueType"
+		defaultValue="EAknSliderValueBareFigure">
+		<enumElement value="EAknSliderValueNone"/>
+    	<enumElement value="EAknSliderValueBareFigure"/>
+    	<enumElement value="EAknSliderValuePercentage"/>
+    	<enumElement value="EAknSliderValueFraction"/>
+    	<enumElement value="EAknSliderValueDecimal"/>
+	</enumPropertyDeclaration>
+
+<component friendlyName="%friendlyName"
+	qualifiedName="com.nokia.sdt.series60.CAknSlider"
+	baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+	category="Controls"
+	instanceNameRoot="slider" version="1.0">
+	<documentation>
+		<information>%information</information>
+		<helpTopic></helpTopic>
+		<wizardDescription></wizardDescription>
+	</documentation>
+	<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+		resourceType="SLIDER" className="CAknSlider" />
+	<designerImages 
+		smallIconFile="CAknSlider_sm.png" 
+		largeIconFile="CAknSlider.png"/>
+			
+<attributes>
+	<attribute key="cpp-class-name">CAknSlider</attribute>
+	<attribute key="is-dialog-content">true</attribute>
+	<attribute key="is-setting-item-list-content">true</attribute>
+	<attribute key="data-model-cpp-type">TInt</attribute>
+	<attribute key="setting-item-class-name">CAknSliderSettingItem</attribute>
+	<attribute key="setting-item-class-name">CAknSliderSettingItem</attribute>
+	<attribute key="rss-control-type-enum">EAknCtSlider</attribute>
+	<attribute key="is-non-resizable-layout-object">true</attribute>
+</attributes>
+
+<properties>
+	<property name="minValue" type="integer" category="Data" default="0"
+		descriptionKey="minValueDescription" />
+	<property name="maxValue" type="integer" category="Data" default="100"
+		descriptionKey="maxValueDescription" />
+	<property name="value" type="integer" category="Data"
+		descriptionKey="valueDescription" />
+	<property name="step" type="integer" category="Data" default="1" minValue="1" 
+		descriptionKey="stepDescription" />
+	<enumProperty name="valueType" type="com.nokia.sdt.slide.valueType" category="Appearance"
+		descriptionKey="valueTypeDescription" />
+	<property name="decimalPlaces" type="integer" category="Data" minValue="0"
+		descriptionKey="decimalPlacesDescription" />
+	<property name="singularValueLabel" type="localizedString" category="Appearance"
+		descriptionKey="singularValueLabelDescription"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+	<property name="minLabel" type="localizedString" category="Appearance" default="min"
+		descriptionKey="minLabelDescription"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+	<property name="maxLabel" type="localizedString" category="Appearance" default="max"
+		descriptionKey="maxLabelDescription"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+</properties>
+		
+<extensionProperties name="form">
+	<enumProperty name="layout" type="com.nokia.sdt.slider.formLayout" category="Appearance"
+		descriptionKey="layoutDescription" />
+</extensionProperties>
+		
+<extensionProperties name="settings">
+	<enumProperty name="layout" type="com.nokia.sdt.slider.settingsLayout" category="Appearance"
+		descriptionKey="layoutDescription" />
+	<compoundProperty category="Appearance" name="graphicalImage"
+		type="com.nokia.sdt.symbian.imageProperty"
+		descriptionKey="graphicalImageDescription" />
+</extensionProperties>
+		
+<extensionProperties name="default">
+	<enumProperty name="layout" type="com.nokia.sdt.slider.formLayout" category="Appearance"
+		descriptionKey="layoutDescription" />
+</extensionProperties>
+
+<implementations>
+	<implementation>
+		<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+		<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+		<!-- for form -->
+		<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+		<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+		<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+		<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+		<script file="CAknSlider_visual.js" prototype="CAknSliderVisual"/>
+	</implementation>
+	<implementation>
+		<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+		<script file="CAknSlider_propertyExtenders.js" prototype="CAknSliderPropertyExtenders"/>
+	</implementation>
+</implementations>
+
+<sourceMapping>
+	<mapResource struct="SLIDER" headers="avkon.rh">
+		<!-- TODO: value label -->
+		<mapEnumMember property="layout" member="layout"/>
+		<mapSimpleMember property="minValue" member="minvalue"/>
+		<mapSimpleMember property="maxValue" member="maxvalue"/>
+		<mapSimpleMember property="step" member="step"  />
+		<mapEnumMember property="valueType" member="valuetype"/>
+		<mapSimpleMember property="decimalPlaces" member="decimalplaces" />
+		<mapSimpleMember property="singularValueLabel" member="singular_valuelabel"/>
+		<mapSimpleMember property="minLabel" member="minlabel"/>
+		<mapSimpleMember property="maxLabel" member = "maxlabel"/>
+		
+		<select property="graphicalImage.bmpfile">
+			<choice value="" />
+			<choice>
+				<mapResourceMember property="graphicalImage" member="graphical_image" 
+					struct="IMAGE" headers="uikon.rh eikon.rh">
+					<mapSimpleMember property="bmpfile" member="bmpfile"/>
+					<mapIdentifierMember property="bmpid" member="bmpid"/>
+					<!-- TODO: until we get "isSvg" subprop, this may fail
+					<mapIdentifierMember property="bmpmask" member="bmpmask"/>
+				-->
+				</mapResourceMember>		
+			</choice>
+		</select>
+	</mapResource>
+</sourceMapping>
+
+<sourceGen forms="Dialog Container">
+
+			<inline>
+include("../srcgenLibrary.js")
+			</inline>
+			
+		<template phase="MainSystemIncludes"><![CDATA[
+#ifdef __SERIES60_3X__
+#include <akndef.h>
+#endif
+]]>		</template>
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_DIALOG" />
+
+		<template id="INIT_FROM_CONTAINER_CAKNSLIDER" form="Container" phase="Initialize"><![CDATA[
+${instanceMemberName} = new ( ELeave ) ${this.getCppClassName(instance)};
+${instanceMemberName}->SetContainerWindowL( *this );
+	{
+	TResourceReader reader;
+	iEikonEnv->CreateResourceReaderLC( reader, ${resourceName$upper} );
+	${instanceMemberName}->HandleResourceChange( 
+			KEikMessageCaptionedControlEditableStateChange );
+	${instanceMemberName}->ConstructFromResourceL( reader );
+	CleanupStack::PopAndDestroy(); // reader internal state
+	}
+]]>			</template>
+
+		<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+			<template form="Container" phase="LayoutControls" id="LAYOUT_SLIDER"><![CDATA[
+<% var isSettingsLayout = instance.properties.layout.toString().indexOf("SettingsItem") > 0;
+   if (isSettingsLayout) { %>
+${instanceMemberName}->SetExtent( TPoint( ${properties.location.x}, ${properties.location.y} ), TSize( ${properties.size.width}, ${properties.size.height} ) );
+<% } else { %>
+${instanceMemberName}->SetExtent( TPoint( ${properties.location.x}, ${properties.location.y} ), ${instanceMemberName}->MinimumSize() );
+<% } %>
+]]>			</template>
+
+
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"aknslider.h", "eikenv.h" ]);
+		</inline>
+
+		<template form="SettingsList" phase="Initialize"><![CDATA[
+<%		this.setupSettingItem(contribs, 0, instance, ""+properties.value); 
+%>]]>	</template>
+
+		<inline scope="prototype">
+include("../srcgenLibrary.js")
+		</inline>
+		
+		<inline><![CDATA[
+if (Engine.formMatches(form, ["", "Dialog", "Container", "SettingsList"])) {
+	if (properties.maxValue < properties.minValue)
+		error(formatString(lookupString("invalidRange"), instanceName, properties.minValue, properties.maxValue));
+	else if (properties.value < properties.minValue || properties.value > properties.maxValue)
+		error(formatString(lookupString("valueExceedsRange"), instanceName, properties.minValue, properties.value, properties.maxValue));
+	if (properties.step == 0 || ((properties.maxValue - properties.minValue) % properties.step) != 0)
+		error(formatString(lookupString("stepNotValid"), instanceName, properties.maxValue, properties.minValue, properties.step));
+	if (properties.step == 0 || ((properties.value - properties.minValue) % properties.step) != 0)
+		error(formatString(lookupString("valueNotValid"), instanceName, properties.value, properties.minValue, properties.step));
+		
+	if (!Engine.formMatches(form, ["SettingsList"])) {
+		setPropertiesForPhase(contribs, "Initialize", 0, instanceMemberName, false,
+			properties.value, 0, "{0}->SetValueL( {1} );\n");
+	}
+} ]]>		</inline>
+
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent" />
+
+</sourceGen>
+
+</component>
+</componentDefinition>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="tocReference.xml"
+            primary="true"/>
+      <!--<toc
+            file="tocTasks.xml"
+            primary="false"/>-->
+            
+		<index path="index" />
+
+   </extension>
+
+<!-- =================================================================================== -->
+<!-- CONTEXT IDs for CONTEXTUAL HELP in windows, dialogs, and views                      -->
+<!-- =================================================================================== -->
+	
+	<extension point="org.eclipse.help.contexts" >
+
+       <contexts file="html/uiq_context_help.xml"
+       		plugin="com.nokia.carbide.cpp.uiq.components" />
+
+       <contexts file="html/uiq_context_help.xml"
+       		plugin="com.nokia.carbide.cpp.uiq.ui" />
+
+       <contexts file="html/uiq_context_help.xml"
+       		plugin="org.eclipse.ui.ide" />
+
+   </extension>
+
+</plugin>

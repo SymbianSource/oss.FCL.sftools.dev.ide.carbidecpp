@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	<property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+	<property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+	<property id="com.nokia.sdt.component.symbian.version">2.0</property>
+	<component id="com.nokia.examples.container">
+	<compoundProperty id="location">
+		<property id="x">5</property>
+		<property id="y">5</property>
+	</compoundProperty>
+	<property id="name">RootComponent</property>
+	</component>
+</designerData>

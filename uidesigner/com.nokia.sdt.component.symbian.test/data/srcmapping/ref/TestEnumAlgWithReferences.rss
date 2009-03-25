@@ -1,0 +1,15 @@
+#include <basicheader.rh>
+#include "output.hrh"
+
+RESOURCE TWO_REFS r_test_enum_dialog_referencer1
+	{
+	link1 = EMyContainerId;
+	}
+RESOURCE TWO_REFS r_test_enum_dialog_referencer2
+	{
+	link1 = EMyContainerId;
+	}
+RESOURCE TWO_REFS r_test_enum_dialog_referencer3
+	{
+	link1 = EMyContainerId2;
+	}

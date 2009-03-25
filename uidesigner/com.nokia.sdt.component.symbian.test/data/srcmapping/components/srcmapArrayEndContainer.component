@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.test.srcmapArrayEnd.Type">
+		<enumElement value="EElement1__"/>
+		<enumElement value="EElement1_1"/>
+		<enumElement value="EElement11_"/>
+		<enumElement value="EElement_11"/>
+		<enumElement value="EElement__1"/>
+		<enumElement value="EElement111"/>
+	</enumPropertyDeclaration>
+
+		
+	<component qualifiedName="com.nokia.examples.srcmapTestMapArrayEndContainer"	>
+
+		<properties>
+			<property name="name" type="uniqueName"/>
+			<enumProperty name="type" type="com.nokia.sdt.series60.test.srcmapArrayEnd.Type" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="srcmapArrayEndContainer.js" prototype="PropertyExtenders"/>
+			</implementation>
+		</implementations>
+
+		<extensionProperties name="element1">
+			<property name="element1" type="string" />
+		</extensionProperties>
+		<extensionProperties name="element2">
+			<property name="element2" type="string" />
+		</extensionProperties>
+		<extensionProperties name="element3">
+			<property name="element3" type="string" />
+		</extensionProperties>
+		
+		<sourceMapping>
+  		  <mapResource struct="ARRAY" headers="arrayheader.rh">
+			<mapArrayMember property="." member="items" />
+			</mapResource>
+		</sourceMapping>
+		
+		
+	</component>
+</componentDefinition>

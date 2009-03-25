@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lookAndFeel [
+<!ENTITY common_laf SYSTEM "common.inc">
+<!ENTITY portrait_laf SYSTEM "portrait.inc">
+<!ENTITY classic_laf SYSTEM "classic_laf.inc">
+]>
+<lookAndFeel xmlns="http://www.nokia.com/sdt/lookAndFeel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- the data/s60/images relative directory -->
+<string key="image.dir" value="classic_2_x/"/>
+
+<!-- include common definitions -->
+&common_laf;
+&portrait_laf;
+&classic_laf;
+
+<boolean key="is.scalable.ui" value="false" />
+
+<!-- fonts are found relative to data/s60/fonts -->
+
+<font key="AnnotationFont" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="Alp13.10.ttf" size="10" />
+<font key="EditorFont" initData="Alb13.10.ttf" size="10" />
+<font key="HalfTitleFont" initData="Alb13.10.ttf" size="10" />
+<font key="MessageFont" initData="Alb13.10.ttf" size="10" />
+<font key="NormalFont" initData="Alb13.10.ttf" size="10" />
+<font key="SymbolFont" initData="Alb12.9.ttf" size="9" />
+<font key="TimeFont" initData="Acb14.11.ttf" size="11" />
+<font key="TitleFont" initData="Alb19.15.ttf" size="15" />
+<font key="control.pane.font" initData="Alb17.14.ttf" size="14" />
+<font key="menuitem.font" initData="Alb13.10.ttf" size="10" />
+<font key="menuitem.submenu.font" initData="Alb12.9.ttf" size="9" />
+<font key="message.font" initData="Alb13.10.ttf" size="10" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="8" />
+<font key="navi.text.font" initData="Alp13.10.ttf" size="10" />
+<font key="standard.AnnotationFont" initData="Alb12.9.ttf" size="9" />
+<font key="standard.LegendFont" initData="Alb12.9.ttf" size="9" />
+<font key="standard.NormalFont" initData="Alb13.10.ttf" size="10" />
+<font key="status.TitleFont" initData="Alb19.15.ttf" size="15" />
+	
+	
+<color key="status.bar.color" r="0" g="0" b="150"/>
+<color key="status.bar.gradient.start" r="0" g="0" b="150"/>
+<color key="status.bar.gradient.end" r="255" g="255" b="255"/>
+
+<color key="navi.tab.back" r="90" g="109" b="255"/>
+<color key="navi.tab.backText" r="0" g="0" b="0"/>
+
+<!-- indicators take 8 pixels -->
+
+<rectangle key="status.pane.bounds" x="16" y="1" width="152" height="43"/>
+<rectangle key="status.pane.title.bounds" x="48" y="0" width="104" height="28"/>
+<rectangle key="control.pane.bounds" x="0" y="184" width="176" height="24"/>
+<rectangle key="content.pane.bounds" x="0" y="44" width="176" height="140"/>
+<rectangle key="status.bar1.bounds" x="0" y="29" width="176" height="15"/>
+<rectangle key="navi.content.bounds" x="54" y="28" width="98" height="15"/>
+<rectangle key="listitem.any.markIcon" x="160" y="3" width="12" height="12" />
+ 	
+
+<dimension key="screen.size" width="176" height="208"/>
+
+</lookAndFeel>

@@ -1,0 +1,7 @@
+#include <arraydialog.rh>
+#include "output.hrh"
+
+RESOURCE DIALOG_LINE r_test_enum_dialog_line_id
+	{
+	id = EMyContainerTestEnumDialogLineId;
+	}

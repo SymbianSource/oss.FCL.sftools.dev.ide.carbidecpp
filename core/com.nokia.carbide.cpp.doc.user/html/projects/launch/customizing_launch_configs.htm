@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+  <title>Customizing Launch Configurations</title>
+  <link rel="StyleSheet" href="../../../book.css" type="text/css" />
+</head>
+<body bgcolor="#ffffff">
+<h2>Customizing Launch Configurations</h2>
+<p>Use the <a href="wnd_debug_configuration.htm">Debug</a> dialog to customize launch configurations previously created in a project, or to create new launch configurations. Ideally, you should create new launch configurations using the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a>. Doing this will ensure that the project's default launch configuration is valid and can successfully launch a  debug session. However, not all default launch configurations satisfy all the needs of a project, so being able to modify a launch configuration's options can allow you to customize how the project is launched and debugged based on the needs of that project. </p>
+<p>There are two methods for setting up a launch configuration, including:</p>
+<ul>
+  <li><b>Default launch configuration</b> (recommended) &#8212;  the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a> automatically sets up a default launch configuration to run or debug the project on the first <b>Run</b> or <b>Debug</b> execution. This provides a quick and easy method to start running or debugging a  project without the inconvenience of setting a lot of options. The default launch configuration can always be edited later as the project launch requirements change.</li>
+  <li><b>Custom launch configuration</b>&#8212; enables you to create or modify a  launch configuration to suit the needs of the project. To modify a launch configuration, create one using the <b>New Launch Configuration Wizard</b>, then enable the <b>Advanced Options</b> option on the <b>New Launch Configuration</b> page before you click <b>Finish</b>. This  opens the <b>Debug</b> dialog so  you can immediately customize the new launch configuration's options. </li>
+</ul>
+<p class="note"><b>NOTE</b> To see if a project already has a launch configuration, open a Run or Debug window using the <b>Run &gt; Open Run Dialog...</b> or <b>Run &gt; Open Debug Dialog...</b> menu items. 
+    </blockquote>
+</p>
+  <p>In the event that the default launch configuration settings need to be changed, it is possible to edit them in the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window, or create a new launch configuration for the project that deviates from the default settings.</p>
+<div class="step">
+<h4>Creating a Custom Launch Configuration </h4>
+<ol>
+  <li>Open the Run or Debug launch configuration window
+    <ul>
+      <li>Select the Run> <b>Open Run Dialog</b>... or <b>Run &gt; Open Debug Dialog... </b> menu item
+        <p>The appropriate Run or <a href="../../reference/wnd_debug_configuration.htm">Debug</a> launch configuration window appears (Figure 1).</p>
+      </li>
+   </ul>
+  <p align="center"><img src="images/wnd_launch_config_blank.png" width="709" height="455" alt="Undefined launch configuration"/> </p>
+  <p class="figure">Figure 1 - Initial blank Debug launch configuration window</p>
+  </li>
+  <li>Select a type of launch configuration (for example, Symbian OS Emulation), then click the New launch configuration icon to create a new
+    configuration of that type.
+    <p>A new configuration appears in the Configuration list under the
+      appropriate section  using the project name and target to create the configuration name.</p>
+  <p class="note"><b>NOTE</b> By default, when you click New, the project information is used to fill in the Project and Process to launch text boxes. You normally should not have to edit these for a run/debug a project. If a bld.inf has multiple MMPS then the first executable named in the list of MMP files is used to fill in the executable field.  Therefore, for projects with multiple MMPs you may need to change the executable field.    </p>
+  <p align="center"><img src="images/wnd_launch_config_new.png" width="787" height="489" alt="New launch configuration" /></p>
+  <p class="figure">Figure 2 - New launch configuration with name and settings filled in (emulator)</p>
+  </li>
+  <li>View the information to define the project and executable
+  <p>Modify or fill in the following fields in the Main tab so the IDE
+    can setup the configuration properly each time. Typically when creating
+    a new executable from a project that has successfully linked, the
+    fields will be auto-populated and do not need to be modified. The important fields here are:</p>
+  <ul>
+      <li>Name - <span style="font-weight: normal;">This is a unique name to identify this  launch configuration. It can be any name.</span> </li>
+      <li>Project - <span style="font-weight: normal;">The project  to associate with this  launch configuration. Click Browse to select a different project.</span></li>
+      <li>Process to launch  - <span style="font-weight: normal;">This is the name of the executable that is linked to the project.</span></li>
+      </ul>
+  </li>
+  
+  <li>Modify settings in the other  tabs to customize the launch configuration
+    for the project
+    <ul>
+      <li>Environment (<i>Eclipse</i>) </li>
+      <li><a href="../../reference/launch_configs/emulator_debugger.htm">Debugger</a></li>
+      <li><a href="../../reference/launch_configs/page_executables.htm">Executables</a></li>
+      <li><a href="../../reference/wnd_carbide_pref_x86.htm">x86 Exceptions</a> </li>
+      <li>Arguments (<i>Eclipse</i>) </li>
+      <li>Source (<i>Eclipse</i>) </li>
+      <li>Common (<i>Eclipse</i>) </li>
+    </ul>
+    <p>To debug something outside of the workspace, be sure to import the binary into the <a href="../../reference/view_executables.htm">Executables</a> view. </p>
+  </li>
+  <li>Click Debug
+    <p>The IDE launches the executable. If the launch configuration is set to change perspective, it  switches to the specified perspective. </p>
+  </li>
+</ol>
+</div>
+<h4>Other references</h4>
+<ul>
+    <li></li>
+</ul>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

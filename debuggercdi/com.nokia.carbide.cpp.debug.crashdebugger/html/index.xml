@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.index"?>
+
+	<!-- INDEX INSTRUCTIONS
+	
+	Use the index.xml file to define the index entries for the plugin's 
+	help contents. In Eclipse 3.2 and beyond an Inex tab appears in the Help
+	viewer making it possible for user to more easily locate subjects of
+	interest to them.
+		
+	In brief, every file used in the help documentation should have at least one
+	associated index entry for it. Ideally, it's simple to make two entries per
+	page by simply re-wording the subject slightly. For example, a view could
+	be indexed twice like this, 1) Breakpoint view, and 2) Views, Breakpoint.
+	
+	See ??? for details on creating indexes.
+	
+	-->
+
+
+<index>
+
+	<!-- AAAAAAAA -->
+	<entry keyword="ARM"	>
+		<entry keyword="exception types"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide.html" />
+		</entry>
+		<entry keyword="fault register values"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide02.html" />
+		</entry>
+		<entry keyword="processor modes"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide03.html" />
+		</entry>
+	</entry>
+
+	<!-- BBBBBBBB -->
+	<!-- CCCCCCCC -->	
+
+	<entry keyword="c/C - Display contents of object container"	>
+		<topic title="c"		href="html/DebuggingInformation/CrashDebugger_cmd_c.guide.html" />
+		<topic title="C"		href="html/DebuggingInformation/CrashDebugger_cmd_CC.guide.html" />
+	</entry>
+
+	<entry keyword="call stack"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide.html" />
+		<entry keyword="finding the stack"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide03.html" />
+		</entry>
+		<entry keyword="general points"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide02.html" />
+		</entry>
+		<entry keyword="tracing"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide04.html" />
+		</entry>
+		<entry keyword="walking"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide05.html" />
+		</entry>
+	</entry>
+
+    <entry keyword="commands, Crash Debugger">
+        <topic href="html/DebuggingInformation/CrashDebugger_cmd.guide.html"/>
+        
+		<entry keyword="Display contents of object container - c/C"	>
+			<topic title="c"		href="html/DebuggingInformation/CrashDebugger_cmd_c.guide.html" />
+			<topic title="C"		href="html/DebuggingInformation/CrashDebugger_cmd_CC.guide.html" />
+		</entry>
+		
+		<entry keyword="Display current thread and process information - i"	>
+			<topic title="i"		href="html/DebuggingInformation/CrashDebugger_cmd_i.guide.html" />
+		</entry>
+		
+		<entry keyword="Display DObject information (brief) - o/q"	>
+			<topic title="o"		href="html/DebuggingInformation/CrashDebugger_cmd_o.guide.html" />
+			<topic title="q"		href="html/DebuggingInformation/CrashDebugger_cmd_q.guide.html" />
+		</entry>
+		
+		<entry keyword="Display kernel fault information - f"	>
+			<topic title="f"		href="html/DebuggingInformation/CrashDebugger_cmd_f.guide.html" />
+		</entry>
+		
+		<entry keyword="Dump register contents - r"	>
+			<topic title="r"		href="html/DebuggingInformation/CrashDebugger_cmd_r.guide.html" />
+		</entry>
+		
+		<entry keyword="Exit debugger - x/X"	>
+			<topic title="x"		href="html/DebuggingInformation/CrashDebugger_cmd_x.guide.html" />
+			<topic title="X"		href="html/DebuggingInformation/CrashDebugger_cmd_XX.guide.html" />
+		</entry>
+
+		<entry keyword="Memory dump - m/z"	>
+			<topic title="m"		href="html/DebuggingInformation/CrashDebugger_cmd_m.guide.html" />
+			<topic title="z"		href="html/DebuggingInformation/CrashDebugger_cmd_z.guide.html" />
+		</entry>
+		
+		<entry keyword="Show all commands - h"	>
+			<topic title="h"		href="html/DebuggingInformation/CrashDebugger_cmd.guide.html" />
+		</entry>
+		
+    </entry>
+
+	<entry keyword="CPSR register, ARM"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide03.html" />
+	</entry>
+
+	<!-- DDDDDDDD -->	
+
+	<entry keyword="data section process"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide05.html" />
+	</entry>
+
+	<entry keyword="Debug Monitor"	>
+		<topic title="Debug Monitor"	href="html/DebuggingInformation/CrashDebuggerUsingCommandSyntax.guide.html" />
+		<topic title="setup"			href="html/DebuggingInformation/CrashDebugger_Setup.html" />
+	</entry>
+
+	<entry keyword="Display contents of object container - c/C"	>
+		<topic title="c"		href="html/DebuggingInformation/CrashDebugger_cmd_c.guide.html" />
+		<topic title="C"		href="html/DebuggingInformation/CrashDebugger_cmd_CC.guide.html" />
+	</entry>
+	
+	<entry keyword="Display current thread and process information - i"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_i.guide.html" />
+	</entry>
+	
+	<entry keyword="Display DObject information (brief) - o/q"	>
+		<topic title="o"		href="html/DebuggingInformation/CrashDebugger_cmd_o.guide.html" />
+		<topic title="q"		href="html/DebuggingInformation/CrashDebugger_cmd_q.guide.html" />
+	</entry>
+	
+	<entry keyword="Display kernel fault information - f"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_f.guide.html" />
+	</entry>
+
+	<entry keyword="DObject"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerObjectsContainers.guide.html" />
+	</entry>
+	
+	<entry keyword="DObjectCon"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerObjectsContainers.guide02.html" />
+	</entry>
+
+	<entry keyword="Dump register contents - r"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_r.guide.html" />
+	</entry>
+
+
+	<!-- EEEEEEEE -->	
+	
+	<entry keyword="exception types, ARM"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide.html" />
+	</entry>
+
+	<entry keyword="Exit debugger - x/X"	>
+		<topic title="x"		href="html/DebuggingInformation/CrashDebugger_cmd_x.guide.html" />
+		<topic title="X"		href="html/DebuggingInformation/CrashDebugger_cmd_XX.guide.html" />
+	</entry>
+
+
+	<!-- FFFFFFFF -->
+	
+	<entry keyword="f - Display kernel fault information"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_f.guide.html" />
+	</entry>
+	
+	<entry keyword="fault types, finding"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerFindingFault.guide.html" />
+		<entry keyword="unhandled exceptions"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerFindingFault.guide02.html" />
+		</entry>
+		<entry keyword="panics"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerFindingFault.guide03.html" />
+		</entry>
+	</entry>
+
+	<entry keyword="fault register values, ARM"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide02.html" />
+	</entry>
+
+	<entry keyword="finding, call stack"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide03.html" />
+	</entry>
+
+	<entry keyword="FSR register"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide02.html" />
+	</entry>
+
+	<!-- GGGGGGGG -->	
+	<!-- HHHHHHHH -->	
+	
+	<entry keyword="h - Show all commands"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd.guide.html" />
+	</entry>
+
+	<!-- IIIIIIII -->
+	
+	<entry keyword="i - Display current thread and process information"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_i.guide.html" />
+	</entry>
+
+	<!-- JJJJJJJJ -->
+	<!-- KKKKKKKK -->
+
+	<entry keyword="kernel"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide.html" />
+		<entry keyword="data section process"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide05.html" />
+		</entry>
+		<entry keyword="process state"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide04.html" />
+		</entry>
+		<entry keyword="scheduler state"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide02.html" />
+		</entry>
+		<entry keyword="thread state"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide03.html" />
+		</entry>
+	</entry>
+
+	<entry keyword="kernel calls"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide06.html" />
+	</entry>
+
+	<entry keyword="kernel containers"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerObjectsContainers.guide02.html" />
+	</entry>
+
+	<entry keyword="kernel objects"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerObjectsContainers.guide.html" />
+	</entry>
+
+
+	<!-- LLLLLLLL -->
+	<!-- MMMMMMMM -->
+
+	<entry keyword="m - Memory dump"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_m.guide.html" />
+	</entry>
+
+	<entry keyword="MAKSYS tool"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerUsingMAKSYM-Ref.guide.html" />
+	</entry>
+
+	<entry keyword="memory, dumping"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerExaminingMemory.guide02.html" />
+	</entry>
+
+	<entry keyword="Memory dump - m/z"	>
+		<topic title="m"		href="html/DebuggingInformation/CrashDebugger_cmd_m.guide.html" />
+		<topic title="z"		href="html/DebuggingInformation/CrashDebugger_cmd_z.guide.html" />
+		<entry keyword="memory, examining"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerExaminingMemory.guide.html" />
+		</entry>
+		<entry keyword="memory, dumping"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerExaminingMemory.guide02.html" />
+		</entry>
+	</entry>
+
+	<entry keyword="memory, examining"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerExaminingMemory.guide.html" />
+	</entry>
+
+	<entry keyword="memory map, Symbian OS"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerMemoryMap.guide.html" />
+	</entry>
+
+	<entry keyword="memory stack"	>
+		<entry keyword="kernel calls"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide06.html" />
+		</entry>
+		<entry keyword="processor and thread exit information"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide04.html" />
+		</entry>
+		<entry keyword="processor and thread priorities"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide02.html" />
+		</entry>
+		<entry keyword="processor and thread system critical"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide05.html" />
+		</entry>
+		<entry keyword="run addresses"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide08.html" />
+		</entry>
+		<entry keyword="stacks"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide07.html" />
+		</entry>
+		<entry keyword="thread state"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide03.html" />
+		</entry>
+		<entry keyword="virtual memory"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide08.html" />
+		</entry>
+	</entry>
+
+	<!-- NNNNNNNN -->
+	<!-- OOOOOOOO -->
+	
+	<entry keyword="o - Display DObject information (brief)"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_o.guide.html" />
+	</entry>
+	
+
+	<!-- PPPPPPPP -->
+
+	<entry keyword="panics"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerFindingFault.guide03.html" />
+	</entry>
+
+	<entry keyword="process state, current"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide04.html" />
+	</entry>
+
+	<entry keyword="processor and thread"	>
+		<entry keyword="exit information"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide04.html" />
+		</entry>
+		<entry keyword="priorities"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide02.html" />
+		</entry>
+		<entry keyword="system critical"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide05.html" />
+		</entry>
+	</entry>
+
+	<entry keyword="processor modes, ARM"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide03.html" />
+	</entry>
+
+	
+	<!-- QQQQQQQQ -->
+
+	<entry keyword="q - Display DObject information (full)"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_q.guide.html" />
+	</entry>
+	
+
+	<!-- RRRRRRRR -->
+	
+	<entry keyword="r - Dump register contents"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_r.guide.html" />
+	</entry>
+
+	<entry keyword="registers, ARM"	>
+		<entry keyword="CPSR register"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide03.html" />
+		</entry>
+		<entry keyword="FSR register"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerARMexceptionsProcessorModes.guide02.html" />
+		</entry>
+	</entry>
+
+	<entry keyword="run addresses"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide08.html" />
+	</entry>
+
+	<!-- SSSSSSSS -->
+
+	<entry keyword="scheduler state"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide02.html" />
+	</entry>
+
+	<entry keyword="Show all commands - h"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd.guide.html" />
+	</entry>
+
+	<entry keyword="stacks"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide07.html" />
+	</entry>
+
+	<entry keyword="Symbian OS memory map"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerMemoryMap.guide.html" />
+	</entry>
+
+	<entry keyword="system critical, processor and threads"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide05.html" />
+	</entry>
+
+	<!-- TTTTTTTT -->
+	
+	<entry keyword="thread context"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide06.html" />
+	</entry>
+
+	<entry keyword="thread state"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide03.html" />
+	</entry>
+
+	<entry keyword="thread state, current"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerInfoAboutKernel.guide03.html" />
+	</entry>
+
+	<entry keyword="tools"	>
+		<entry keyword="MAKSYS"	>
+			<topic href="html/DebuggingInformation/CrashDebuggerUsingMAKSYM-Ref.guide.html" />
+		</entry>
+	</entry>
+
+	<entry keyword="tracing, call stack"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide04.html" />
+	</entry>
+
+	<!-- UUUUUUUU -->
+	
+	<entry keyword="unhandled exceptions"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerFindingFault.guide02.html" />
+	</entry>
+
+	<!-- VVVVVVVV -->
+
+	<entry keyword="virtual memory"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerThreadProcessMemoryStackUseful.guide08.html" />
+	</entry>
+
+	<!-- WWWWWWWW -->
+	
+	<entry keyword="walking, call stack"	>
+		<topic href="html/DebuggingInformation/CrashDebuggerCallStack.guide05.html" />
+	</entry>
+
+	<!-- XXXXXXXX -->
+
+	<entry keyword="x/X - Exit debugger"	>
+		<topic title="x"		href="html/DebuggingInformation/CrashDebugger_cmd_x.guide.html" />
+		<topic title="X"		href="html/DebuggingInformation/CrashDebugger_cmd_XX.guide.html" />
+	</entry>
+
+
+	<!-- YYYYYYYY -->
+	
+	
+	<!-- ZZZZZZZZ -->
+	
+	<entry keyword="z - Memory dump"	>
+		<topic href="html/DebuggingInformation/CrashDebugger_cmd_z.guide.html" />
+	</entry>
+
+</index>
+

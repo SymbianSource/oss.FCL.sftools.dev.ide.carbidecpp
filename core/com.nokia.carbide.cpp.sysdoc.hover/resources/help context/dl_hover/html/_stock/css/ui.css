@@ -1,0 +1,243 @@
+/*	
+	Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+	All rights reserved. 
+	License: http://www.eclipse.org/legal/epl-v10.html
+*/
+
+body {
+	font-family: "tahoma", sans-serif;
+	font-size: 11px;
+	background-color: #888888;
+	margin: 0px;
+	padding: 0px;
+}
+
+h1 {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin: 0px;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+h2 {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin: 0px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+h3 {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin: 0px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#index_table a {
+	font-weight: normal;
+	background-color: #ffffff;
+}
+
+#index_table a:hover {
+	font-weight: normal;
+	background-color: #cccccc;
+}
+
+#content_footer {
+	font-family: "verdana", sans-serif;
+}
+
+#content_footer a {
+	text-decoration: none;
+	color: #ffffff;
+}
+
+#content_footer a:hover {
+	text-decoration: underline;
+}
+
+#content_footer_links {
+	background-color: #333333;
+	color: #ffffff;
+	font-size: 13px;
+	height: 42px;
+}
+
+#content_footer_links_padding {
+	padding-top: 16px;
+	padding-left: 32px;
+}
+
+#index_table a {
+	font-weight: normal;
+	background-color: #ffffff;
+}
+
+#main_content {
+	background-color: #ffffff;
+	font-size: 11px;
+	padding: 13px;
+	padding-left: 13px;
+	padding-top: 13px;
+	font-size: 12px;
+}
+
+#main_content a {
+	color: #222222;
+	background-color: #ffffff;
+	font-weight: normal;
+}
+
+#main_content a:hover {
+	background-color: #fee126;
+	text-decoration: underline;
+}
+
+#main_content table {
+	font-family: "verdana", sans-serif;
+	color: #222222;
+	font-size: 12px;
+}
+
+#main_content_toc {
+	/** border-right: 1px solid #b2b2b2; **/
+	text-decoration: underline;
+	overflow: auto;
+}
+
+#main_content_toc a {
+	text-decoration: none;
+	font-weight: normal;
+	color: #222222;
+	background-color: #ffffff;
+}
+
+#main_content_sizer {
+	width: 5px;
+	background-color: #cccccc;
+	cursor: w-resize;
+}
+
+#main_content_toc a:hover {
+	background-color: #fee126;
+	text-decoration: none;
+	border: 0px;
+}
+
+#main_content_txt {
+	padding-left: 13px;
+	padding-top: 1px;
+	font-size: 12px;
+}
+
+#mast {
+	font-family: "verdana", sans-serif;
+	background-color: #ffffff;
+	background: url(../images/css/ui_mast_doodles.gif) top right no-repeat;
+}
+
+#mast a {
+	text-decoration: none;
+	color: #222222;
+}
+
+#mast a:hover {
+	text-decoration: underline;
+}
+
+#mast_content {
+	background: url(../images/css/ui_logo.gif) top left no-repeat;
+	height: 60px; /** defaut: 80px **/
+}
+
+#mast_links {
+	background-color: #d1d1d1;
+	font-size: 14px;
+	height: 28px;
+}
+
+#mast_links_padding {
+	padding-top: 4px;
+	padding-left: 32px;
+}
+
+#mast_padding {
+	padding-top: 8px;
+	padding-left: 32px;
+}
+
+#mast_spacer {
+	height: 0px; /** defaut: 20px **/
+}
+
+#mast_top {
+	height: 20px;
+}
+
+#navigator {
+	border-top: 1px dotted #b2b2b2;
+	border-bottom: 1px dotted #b2b2b2;
+}
+
+#navigator a {
+	background-color: #e5e5e5;
+}
+
+#navigator a:hover {
+	background-color: #fee126;
+	text-decoration: underline;
+	border: 0px;
+}
+
+#navigator_padding {
+	padding: 5px;
+	background-color: #e5e5e5;
+}
+
+.main_content_label {
+	padding-bottom: 2px;
+}
+
+.main_content_padding {
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+.main_content_title {
+	padding-bottom: 10px;
+}
+
+.table_border {
+	width: 384px;
+	padding-bottom: 13px;
+}
+
+.table_border_top {
+	width: 384px;
+	height: 8px;
+	font-size: 0px;
+	background: url(../images/css/table_top.gif) top left no-repeat;
+}
+
+.table_border_middle {
+	width: 384px;
+	background: url(../images/css/table_middle.gif) top left repeat-y;
+}
+
+.table_border_bottom {
+	font-size: 0px
+	width: 384px;
+	height: 8px;
+	background: url(../images/css/table_bottom.gif) bottom left no-repeat;
+}
+
+.table_border_padding {
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-bottom: 10px;
+}

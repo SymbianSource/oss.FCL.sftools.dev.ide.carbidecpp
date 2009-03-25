@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_edwin_srcmapping SYSTEM "../CEikEdwin_common_srcmapping.inc">
+]>
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.eikedwin.flags">
+		<property name="EEikEdwinAllowPictures" type="boolean"
+			descriptionKey="EEikEdwinAllowPicturesKey" />
+		<property name="EEikEdwinAllowUndo" type="boolean"
+			descriptionKey="EEikEdwinAllowUndoKey" />	
+		<property name="EEikEdwinAlwaysShowSelection" type="boolean"
+			descriptionKey="EEikEdwinAlwaysShowSelectionKey" />
+		<property name="EEikEdwinCustomWrap" type="boolean"
+			descriptionKey="EEikEdwinCustomWrapKey" 
+			category="Hidden"/>	<!-- for internal use only -->	
+		<property name="EEikEdwinDisableAutoCurEnd" type="boolean"
+			descriptionKey="EEikEdwinDisableAutoCurEndKey" />
+		<property name="EEikEdwinDisplayOnly" type="boolean"
+			descriptionKey="EEikEdwinDisplayOnlyKey" />		
+		<property name="EEikEdwinEnableAutoSelection" type="boolean"
+			descriptionKey="EEikEdwinEnableAutoSelectionKey" />			
+		<property name="EEikEdwinFindStringMaxLen" type="boolean"
+			descriptionKey="EEikEdwinFindStringMaxLenKey" />
+		<property name="EEikEdwinIgnoreVirtualCursor" type="boolean"
+			descriptionKey="EEikEdwinIgnoreVirtualCursorKey" />	
+		<property name="EEikEdwinInclusiveSizeFixed" type="boolean"
+			descriptionKey="EEikEdwinInclusiveSizeFixedKey" />	
+		<property name="EEikEdwinJustAutoCurEnd" type="boolean"
+			descriptionKey="EEikEdwinJustAutoCurEndKey" />		
+		<property name="EEikEdwinKeepDocument" type="boolean"
+			descriptionKey="EEikEdwinKeepDocumentKey" />
+		<property name="EEikEdwinLineCursor" type="boolean"
+			descriptionKey="EEikEdwinLineCursorKey" />	
+		<property name="EEikEdwinNoAutoSelection" type="boolean"
+			descriptionKey="EEikEdwinNoAutoSelectionKey" />													
+		<property name="EEikEdwinNoCursorWrap" type="boolean"
+			descriptionKey="EEikEdwinNoCursorWrapKey" />													 
+		<property name="EEikEdwinNoCursorWrapUp" type="boolean"
+			descriptionKey="EEikEdwinNoCursorWrapUpKey" />	
+		<property name="EEikEdwinNoCustomDraw" type="boolean"
+			descriptionKey="EEikEdwinNoCustomDrawKey" 
+			category="Hidden"/>	<!-- for internal use only -->
+		<property name="EEikEdwinNoHorizScrolling" type="boolean"
+			descriptionKey="EEikEdwinNoHorizScrollingKey" />
+		<property name="EEikEdwinNoLineOrParaBreaks" type="boolean"
+			descriptionKey="EEikEdwinNoLineOrParaBreaksKey" />									
+		<property name="EEikEdwinNoTextParsers" type="boolean"
+			descriptionKey="EEikEdwinNoTextParsersKey" />	
+		<property name="EEikEdwinNoWrap" type="boolean"
+			descriptionKey="EEikEdwinNoWrapKey" />
+		<property name="EEikEdwinOnlyASCIIChars" type="boolean"
+			descriptionKey="EEikEdwinOnlyASCIICharsKey" />	
+		<property name="EEikEdwinOwnsWindow" type="boolean"
+			descriptionKey="EEikEdwinOwnsWindowKey" />
+		<property name="EEikEdwinReadOnly" type="boolean"
+			descriptionKey="EEikEdwinReadOnlyKey" />
+		<property name="EEikEdwinResizable" type="boolean"
+			descriptionKey="EEikEdwinResizableKey" />
+		<property name="EEikEdwinSegmentedStorage" type="boolean"
+			descriptionKey="EEikEdwinSegmentedStorageKey" />
+		<property name="EEikEdwinUserSuppliedText" type="boolean"
+			descriptionKey="EEikEdwinUserSuppliedTextKey" />			
+		<property name="EEikEdwinWidthInPixels" type="boolean"
+			descriptionKey="EEikEdwinWidthInPixelsKey" />	
+	</compoundPropertyDeclaration>					
+					
+<!-- Background color and border properties were commented due to the follow comment: 
+	 The background color is handled by the theme server and the margins are handled by the system 
+	 and should be the same for all controls. So, unless there is a specific reason for you to change
+	 the background color and/or margins e.g. showing users how to actually change background color 
+	 and margins, it’s probably best not to change them. 
+-->					
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TMargins8">
+		<property name="iTop" type="integer" descriptionKey="iTopKey" />
+		<property name="iBottom" type="integer" descriptionKey="iBottomKey" />
+		<property name="iLeft" type="integer" descriptionKey="iLeftKey" />
+		<property name="iRight" type="integer" descriptionKey="iRightKey" />
+	</compoundPropertyDeclaration>
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikEdwin"
+			baseComponent="com.nokia.carbide.uiq.CEikEdwinBase"
+			instanceNameRoot="plainTextEditor"			
+			version="1.0"
+			category="%category.editors">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikEdwin" classHelpTopic=""
+			resourceType="EDWIN" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikEdwin_sm.png"
+			largeIconFile="CEikEdwin.png"/>
+  		
+		<attributes>
+			<attribute key="cpp-class-name">CEikEdwin</attribute>
+			<attribute key="rss-control-type-enum">EEikCtEdwin</attribute>
+		</attributes>
+
+		<properties>
+			<compoundProperty name="flags"
+				category="%category.behavior" 
+				type="com.nokia.carbide.uiq.eikedwin.flags" descriptionKey="flagsDescription"/>	
+			<property name="width" 
+				category="%category.layout"
+				type="integer" descriptionKey="widthDescription"/>
+			<property name="lines"
+				category="%category.appearance" 
+				type="integer" default="1" descriptionKey="linesDescription"/>			
+			<property name="maxLength"
+				category="%category.data" default="255"
+				type="integer" descriptionKey="maxLengthDescription" />
+<!--			<property name="backgroundColor" category="%category.appearance" type="string"
+					  default="EEikColorControlText"
+					  descriptionKey="backgroundColorDescription"
+					  editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactory" />		
+			<enumProperty name="border" displayName="%border" 
+						  type="com.nokia.carbide.uiq.TGulBorder.TBorderType"
+						  category="%category.appearance"
+						  descriptionKey="borderDescription"
+						  default="ENone" 
+			/>
+			
+			<compoundProperty name="borderViewMargins" category="%category.appearance" 
+							  type="com.nokia.carbide.uiq.TMargins8"
+							  descriptionKey="borderViewMarginsDescription"/>
+-->							  
+			<property name="text" 
+				category="%category.data" default="Edit text" 
+				type="localizedString" descriptionKey="textDescription" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.MultilineTextEditorFactory" />			
+		</properties>
+		
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true" category="Hidden"/>
+			<propertyOverride name="dimmed" readOnly="true" category="Hidden"/>
+		</propertyOverrides>			
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>				
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 				
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikEdwin.js" prototype="CEikEdwin"/>
+			</implementation>
+		</implementations>			
+		
+		<sourceMapping>
+			<mapResource struct="EDWIN" headers="uikon.rh">
+				&common_edwin_srcmapping;
+				<mapSimpleMember property="width" member="width"/>
+				<mapSimpleMember property="lines" member="lines"/>
+				<mapSimpleMember property="maxLength" member="maxlength"/>
+			</mapResource>
+			<mapResource struct="TBUF" headers="eikon.rh" id="text">
+				<mapSimpleMember property="text" member="buf" />
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+			
+			<!--Initialize Phase-->	
+			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="eikedwin.h eikenv.h"/>			
+
+
+			<inline scope="prototype">
+include("../../../srcgenLibrary.js")
+			</inline>
+
+				<!--BackGroundColor property initialization-->	
+<!--			<inline scope="prototype">
+// utility
+${jsObject}.prototype.getBackgroundColorRgb = function(properties) {
+	if (properties.backgroundColor.indexOf(',') > 0)
+		return "( " + properties.backgroundColor + " )";
+	else {
+		if (properties.backgroundColor != "")
+			return " = iEikonEnv->Color( ( TLogicalColor ) " + properties.backgroundColor + " )";
+		else
+			return "( 0, 0, 0 )";	
+	}	
+}	
+			</inline>
+
+			<template id="EdwinBackGroundColorProperty" phase="Initialize"><![CDATA[
+TRgb backColor_i${instance.name}${this.getBackgroundColorRgb(properties)};	
+]]>		    </template>
+-->	
+				<!--Margins property initialization-->	
+<!--			<template id="MarginsProperty" phase="Initialize"><![CDATA[
+TMargins8 margins;
+margins.iLeft=${properties.borderViewMargins.iLeft};
+margins.iRight=${properties.borderViewMargins.iRight};
+margins.iTop=${properties.borderViewMargins.iTop};
+margins.iBottom=${properties.borderViewMargins.iBottom};
+${instanceMemberName}->SetBorderViewMargins( margins );
+]]>		    </template>	
+-->
+				<!--Text property initialization-->	
+			<template id="EdwinTextPropertyConstruction" phase="InitializeControlHandlers"><![CDATA[
+if ( ${instanceMemberName} != NULL ) {		
+HBufC* text = iEikonEnv->AllocReadResourceLC( ${Engine.getGeneratedResource(instance, "text").toUpperCase()} );
+${instanceMemberName}->SetTextL( text );
+CleanupStack::PopAndDestroy( text );
+}
+]]>		    </template>
+	
+				<!--Border,BackGroundColor,Margins and Text properties initialization-->	
+<!--			<inline>
+				<![CDATA[
+	setPropertiesForPhase(contribs, "Initialize", 0, instanceMemberName, true,
+		properties.border,"ENone", "{0}->SetBorder(TGulBorder::{1} );\n",
+		properties.backgroundColor,0,"{0}->SetBackgroundColorL( backColor_{0});\n",
+		properties.borderViewMargins,0,"{0}->SetBorderViewMargins(margins_{0});\n",
+		properties.text,0,"{0}->SetTextL( text_{0} );\n");
+				]]>			
+			</inline>
+-->			
+			<!--everything inherited from CEikEdwinBase-->	
+			<useTemplateGroup ids="GenerateCommonEdwinEvents"/>
+		</sourceGen>		
+		
+	</component>
+
+</componentDefinition>

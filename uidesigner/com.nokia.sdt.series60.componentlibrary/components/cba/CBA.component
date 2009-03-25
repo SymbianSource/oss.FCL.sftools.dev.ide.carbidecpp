@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_implementations SYSTEM "CBA_commonImpl.inc">
+<!ENTITY common_source SYSTEM "CBA_commonSrc.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CBA.Type">
+		<enumElement value="R_AVKON_SOFTKEYS_EMPTY"/>
+		<enumElement value="R_AVKON_SOFTKEYS_EMPTY_WITH_IDS"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_EMPTY"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SELECT_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_DETAILS"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CALL_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_DONE"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CLOSE"/>
+		<enumElement value="R_AVKON_SOFTKEYS_DONE_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_DONE_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_MARK_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_UNMARK_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_YES_NO"/>
+		<enumElement value="R_AVKON_SOFTKEYS_UNLOCK_EMPTY"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SAVE_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SHOW_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SHOW_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_READ_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_LISTEN_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SEARCH_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_AGAIN_QUIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_QUIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_INSERT_BACK"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CBA.Id">
+		<enumElement value="" displayValue="None"/>
+		<enumElement value="UNIQUE"/>
+		<enumElement value="EAknSoftkeyOk"/>
+		<enumElement value="EAknSoftkeyCancel"/>
+		<enumElement value="EAknSoftkeySelect"/>
+		<enumElement value="EAknSoftkeyOptions"/>
+		<enumElement value="EAknSoftkeyBack"/>
+		<enumElement value="EAknSoftkeyMark"/>
+		<enumElement value="EAknSoftkeyUnmark"/>
+		<enumElement value="EAknSoftkeyInsert"/>
+		<enumElement value="EAknSoftkeyYes"/>
+		<enumElement value="EAknSoftkeyNo"/>
+		<enumElement value="EAknSoftkeyDone"/>
+		<enumElement value="EAknSoftkeyClose"/>
+		<enumElement value="EAknSoftkeyExit"/>
+		<enumElement value="EAknSoftkeyClear"/>
+		<enumElement value="EAknSoftkeyUnlock"/>
+		<enumElement value="EAknSoftkeySave"/>
+		<enumElement value="EAknSoftkeyShow"/>
+		<enumElement value="EAknSoftkeyListen"/>
+		<enumElement value="EAknSoftkeyRead"/>
+		<enumElement value="EAknSoftkeySearch"/>
+		<enumElement value="EAknSoftkeyEmpty"/>
+		<enumElement value="EAknSoftkeyLock"/>
+		<enumElement value="EAknSoftkeyCall"/>
+		<enumElement value="EAknSoftkeyAgain"/>
+		<enumElement value="EAknSoftkeyQuit"/>
+		<enumElement value="EAknSoftkeyDetails"/>
+		<enumElement value="EAknSoftkeyNext"/>
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration editableType="com.nokia.sdt.series60.CBA.Type"
+									qualifiedName="com.nokia.sdt.series60.CBAProperty">
+		<property name="leftText" type="localizedString" default="" 
+			descriptionKey="leftTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<enumProperty name="leftId" type="com.nokia.sdt.series60.CBA.Id" default="EAknSoftkeyOptions"
+			descriptionKey="leftIdDescription" />
+		<property name="rightText" type="localizedString" default="" 
+			descriptionKey="rightTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<enumProperty name="rightId" type="com.nokia.sdt.series60.CBA.Id" default="EAknSoftkeyExit"
+			descriptionKey="rightIdDescription" />
+		<enumProperty name="type" type="string" category="Hidden" />
+	</compoundPropertyDeclaration>
+		
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CBA" 
+		baseComponent="com.nokia.sdt.series60.CBABase"
+		category="System"
+		instanceNameRoot="controlPane"
+		version="1.0">
+
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" maxSDKVersion="3.1.9"
+			className="CEikButtonGroupContainer" classHelpTopic=""
+			resourceType="CBA" resourceHelpTopic="" />
+
+		<documentation>
+			<information>%information</information>
+		</documentation>
+
+		<designerImages smallIconFile="CBA_sm.png" 
+			largeIconFile="CBA.png"/>
+
+		<properties>
+			<compoundProperty category="Behavior" name="info" type="com.nokia.sdt.series60.CBAProperty"
+				descriptionKey="infoKey" />
+		</properties>
+		
+		<implementations>
+			&common_implementations;
+		</implementations>
+			
+	<events>
+		<event name="leftSoftKeyPressed" category="ControlPane" 
+	    	handlerNameTemplate="Handle{title(name)}LeftSoftKeyPressedL"
+	    	descriptionKey="leftSoftKeyPressedDescription"
+		/>
+		<event name="rightSoftKeyPressed" category="ControlPane" 
+	    	handlerNameTemplate="Handle{title(name)}RightSoftKeyPressedL"
+	    	descriptionKey="rightSoftKeyPressedDescription"
+		/>
+	</events>
+		
+		<sourceMapping>
+ 		  <select property="info">
+ 		  	<!-- only emit something for custom CBAs -->
+		    <choice value="com.nokia.sdt.series60.CBA.Type.CUSTOM">
+		    	<!-- this struct MOVES between uikon.rh and eikon.rh with each release! -->
+		    	<mapResource struct="CBA" headers="uikon.rh eikon.rh">
+			        <mapResourceMember property="info" member="buttons[0]"  struct="CBA_BUTTON" headers="uikon.rh eikon.rh">
+			           <mapEnumMember property="leftId" member="id" 
+			           headers="avkon.rsg"
+						uniqueValue="UNIQUE"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"
+			           />
+			           <mapSimpleMember property="leftText" member="txt"/>
+			        </mapResourceMember>
+			        <mapResourceMember property="info" member="buttons[1]"  struct="CBA_BUTTON" headers="uikon.rh eikon.rh">
+			           <mapEnumMember property="rightId" member="id" 
+			           headers="avkon.rsg"
+						uniqueValue="UNIQUE"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"
+			           />
+			           <mapSimpleMember property="rightText" member="txt"/>
+			        </mapResourceMember>
+		        </mapResource>
+		    </choice>
+		    <choice/>
+		    
+		  </select>
+		</sourceMapping>
+		
+		<sourceGen forms="AppUi AknView HandleCommandSwitchDispatch">
+			<inline scope="prototype">
+include("cbaLibrary.js")
+			</inline>
+
+			<template form="AknView" phase="MainSystemIncludes"><![CDATA[
+#include <eikbtgpc.h>
+]]>			</template>
+
+		&common_source;
+
+		</sourceGen>	
+		
+	</component>
+</componentDefinition>

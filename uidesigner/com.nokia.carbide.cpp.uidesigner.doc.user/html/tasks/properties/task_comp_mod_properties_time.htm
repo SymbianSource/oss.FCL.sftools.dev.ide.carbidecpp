@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Editing Time Data</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Editing Time Data</h2>
+
+<p>Time data is defined by specifying complete time values in the form of <em>HR:MN:SC xM</em>, or by entering hour, minute, and/or second data individually.</p>
+<p>You may provide  maximum and minimum times which the user may enter, as well as specifying the starting value for the field.</p>
+<p>You may set flags which specify whether the field should display its hour and/or second data. </p>
+<div class="step">
+  <h4 align="left">Editing Time Data</h4>
+  <ol>
+    <li>Select an object in a UI Design which contains time data. </li>
+	<p>The object will display a bounding rectangle with squares at its corners and midpoints. </p>
+	<li>Display the Properties view. </li>
+	<p>The properties of the selected object will be displayed.</p>
+	<li>Optional: Click on the [+] tree control to the left of the name of any time field which you wish to modify (if the field is not already disclosed).</li>
+	<p>The flags, maximum time, minimum time, and time subfields will be displayed.</p>
+	<li>Optional: Click on the [+] tree control to the left of the name of any flags, maximum time, minimum time, and time subfields subfields which you wish to modify (if the field is not already disclosed).</li>
+	<p>The hide hours field, hide seconds field, hour, minute, and seconds subfields will be displayed, as shown in Figure 1.</p>
+    <p align="center"><img src="../../images/comp_properties_time.png" alt="time properties data" width="564" height="243" /></p>
+<p class="figure">Figure 1 - A time field with all of its subfields disclosed for editing. </p>
+	<p class="note"><b>NOTE</b> Some fields will display descriptive text in the Carbide.c++ status pane when they are selected.</p>
+	<li>Edit the value of any  <span class="note">hide hours field*, hide seconds field*</span>, maximum time, minimum time, time, hide hours field, hide seconds field, hour, minute, and seconds subfields using standard edit field operations.</li>
+	<p>You may cut, copy and paste any values which are legal for the field.</p>
+	<p class="note"><b>NOTE</b> *The hide hours field and hide seconds field subfields provide an <a href="task_comp_mod_properties_date.htm">enumerated type editor</a>. You cannot type or paste data into those subfields. </p>
+	<p class="note"><b>NOTE</b> The maximum time, minimum time, and time subfields require you to enter time data using AM/PM notation. The hour subfiled requires you to enter data using 24-hour-clock notation. </p>
+	<p class="note"><b>NOTE</b> Monitor the Carbide.c++ status pane as you enter data for any reported errors.</p>
+	<li>Press the <b>Tab</b> key, click the mouse in another area of the Properties view to select a different field for editing, or click in any other view.</li>
+	<p>If the value you entered is legal for this field, it will be accepted.</p>
+  </ol>
+</div>
+<h5>Related tasks</h5>
+<ul>
+			  <li><a href="../components/task_comp_prop_eap.htm">Editing Array Properties</a></li>
+			  <li><a href="task_comp_mod_properties_color_data.htm">Editing Color Data</a></li>
+			  <li><a href="task_comp_mod_properties_cba.htm">Editing Control Button Arrays</a></li>
+			  <li><a href="task_comp_mod_properties_date.htm">Editing Date Data</a></li>
+			  <li><a href="task_comp_mod_properties_enumerated.htm">Editing Enumerated Data</a></li>
+			  <li><a href="task_comp_mod_properties_image.htm">Editing Image Property Data</a></li>
+			  <li><a href="task_comp_mod_properties_loc_size.htm">Editing Location/Size Data</a></li>
+			  <li><a href="task_comp_mod_properties_numeric.htm">Editing Numeric Data</a></li>
+			  <li><a href="task_comp_mod_properties_string.htm">Editing String List Data</a></li>
+			  <li><a href="task_comp_mod_properties_text.htm">Editing Text Data</a></li>
+			  <li><a href="task_comp_mod_properties_restore.htm">Restoring Default Values</a></li>
+			  </ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/views/ref_properties_view.htm">Properties View</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

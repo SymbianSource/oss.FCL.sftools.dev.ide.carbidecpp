@@ -1,0 +1,4 @@
+enum Tform_3_0ViewUids
+	{
+	EForm_3_0FormViewId = 1
+	};

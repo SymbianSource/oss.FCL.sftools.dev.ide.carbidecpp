@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Events Element</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Events Element</h2>
+<p>Events can be associated with a component.  Components inherit the events of their base components. Events are named notifications or hooks to which code can be attached. Events are propagated through code, so  a class must be implemented in order to handle an event.  Because there are always classes associated with the application and with each UI design, these are good candidates. Also inner classes or other standalone classes can be added where needed.</p>
+<p>The Events element defines related events via the &lt;event&gt; element. A list of events can be defined for a component.  The set of available events, and default event, may be overridden by code or a script. See the com.nokia.sdt.datamodel.adapter.IComponentEventInfo interface for more information.</p>
+<p>The Event element defines characteristics of the event and primarily the pattern used for the default event handler function name. The source generated for events involves implementing integration with the API and creating a user handler.  All of these are conditionally generated only when the event is bound.  When the event is unbound, however, any code that may have been edited by the user (read: non-owned methods) are not deleted.</p>
+<h3>Implementing API Hooks for Events</h3>
+<p>At the API  level, events may be propagated several ways:</p>
+<ul type="disc">
+  <li>Calls to existing virtual functions&nbsp; (e.g. HandleEventL, SizeChanged, etc.);       where a subclass must override the function in order to see the event.</li>
+  <li>Calls to &ldquo;M&rdquo; classes, interfaces implemented on other       classes, whose instances are passed to registration functions (for example, the       SetCallback() function of a progress note).</li>
+  <li>Calls through a container&rsquo;s command handler, which       dispatches events to components</li>
+  <li>Calls to abstract functions on helper classes, which  must be implemented (for example, CCoeScreenDeviceChangeDefaultHandler or the active  object used by progress note dialogs).</li>
+</ul>
+<p>Code having to do with API-level event handling  is added to owned regions of classes and the main source file.&nbsp; Thus, when an event is unbound, all this code  disappears. See the CommonMacros.inc file for helpful <a href="cc_source_generation.htm#macros">macros</a>. For example, &quot;GenerateVirtualMethodOverrideForEventHandler&quot;.</p>
+<h3>Generating User Handler Methods</h3>
+<p>At the user handler level:</p>
+<ul>
+  <li>Each event handler has a user-editable method associated with it.  This allows user code to be isolated syntactically from generated code so it can be edited.  The event binding&rsquo;s display value is used as the pattern for the method name, which sourcegen associates with a given class and type to provide an actual signature.</li>
+  <li>By default, this display value is generated to be relatively unique.  The user can choose the display value and may elect to choose the same display value for multiple event handlers in multiple components, although this will likely resolve to the same method if the event type and the event-handling component are the same.</li>
+  <li>Each event handler must be declared (in terms of arguments, leaving behavior, and return value) so that the handler method can communicate with generated code.  Since handler sharing is allowed, then arguments must specify which component (instance variable) is the target of the event, if it is integral to handling the event properly.</li>
+</ul>
+<p>Code having to do with user-level event handlers  are not owned. They are stranded when an event binding changes or is deleted. See the CommonMacros.inc file and the &quot;GenerateUserEventHandlerFunction&quot; macro to assist in creating user handlers.</p>
+<h3>Handling Event Dispatch</h3>
+<p>An event handler component must define the attribute <strong>event-handler-target</strong> in the attributes element. Such a component is usually a container and defines a class.  However, a component may choose to handle its own events without specifying this attribute.</p>
+<p>A component specifying the <strong>event-handler-target</strong> attribute must define a &ldquo;className&rdquo; property.  It must also handle various phases, as described below.  These are already in common use:</p>
+<ul>
+  <li>BaseClasses</li>
+  <li>ClassMethods</li>
+  <li>Initialize</li>
+  <li>Destroy</li>
+  <li>MainSystemIncludes</li>
+  <li>MainUserIncludes</li>
+  <li>HeaderIncludes</li>
+  <li>ForwardDeclarations</li>
+</ul>
+<p>Additionally, for event-specific code,  use:</p>
+<ul>
+  <li>OverriddenMethods</li>
+  <li>UserHandlers</li>
+  <li>BaseClassList</li>
+  <li>EventIncludes</li>
+  <li>EventDocs </li>
+</ul>
+<p>In a script, the event handler component&rsquo;s className property is exposed to script and sourcegen as <span class="code">handlerClassName</span>.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

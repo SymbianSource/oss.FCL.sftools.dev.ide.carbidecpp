@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Viewing Breakpoints and Watchpoints</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Viewing Breakpoints and Watchpoints </h2>
+<p>Use the <b>Breakpoints</b> view (Figure 1) to <a href="properties_breakpoints.htm">examine</a> a project's breakpoints and watchpoints, <a href="toggling_breakpoints.htm">toggle</a> individual breakpoints  between enabled and disabled, set <a href="conditional_breakpoints.htm">conditional</a> breakpoints, <a href="exporting_breakpoints.htm">export</a> and <a href="importing_breakpoints.htm">import</a> breakpoints, or remove them from one or more build configurations. </p>
+<p>The <b>Breakpoints</b> view is available in the <a href="../../reference/perspective_debug.htm">Debug</a> perspective by default. To open it in another perspective, use the <b>Window &gt; Show View &gt; Breakpoints</b> menu option. Once open you have  control over breakpoint states and how they are shown. For example: </p>
+<ul>
+  <li>Click a  check box next to a breakpoint to toggle its state between enabled (checked) and disabled (no checkmark) </li>
+  <li>Double-click a breakpoint to open the associated source file at the breakpoint line number  in an editor view</li>
+  <li>Use the <b>Menu &gt; Group By</b> command to control how the breakpoints are shown in the view. For example, by file, by breakpoints, etc. </li>
+  <li>Use the <b>Menu &gt; Working Sets... </b> command to create working sets of breakpoints to quickly switch between different breakpoint settings or groups </li>
+  <li>Right-click to open the Breakpoints view's context menu for additional command options </li>
+</ul>
+<p align="center"><img src="../images/view_breakpoints.png" width="594" height="322"></p>
+<p class="figure">Figure 1 - Breakpoints view showing context menu </p>
+<h3>Breakpoints view toolbar icons</h3>
+<p>The following commands appear on the toolbar within the Breakpoints view: </p>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="27%" scope="col">Item</th>
+    <th width="11%" scope="col">Icon</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Remove Selected Breakpoint </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_remove_one_icon.png" width="19" height="19" /></div></td>
+    <td>Removes the selected breakpoint from the breakpoints list. </td>
+  </tr>
+  <tr>
+    <td><b>Remove All Breakpoints </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_remove_all_icon.png" width="21" height="19" /></div></td>
+    <td>Removes all breakpoints from the breakpoints list. </td>
+  </tr>
+  <tr>
+    <td><b>Show Breakpoints Supported by Selected Target </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_show_icon.png" width="20" height="19" /></div></td>
+    <td>Limits the breakpoints shown to only those supported in the current target. </td>
+  </tr>
+  <tr>
+    <td><b>Go to File for Breakpoint </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_goto_icon.png" width="20" height="19" /></div></td>
+    <td>Displays the breakpoint in an editor view, opening the source file if required. </td>
+  </tr>
+  <tr>
+    <td><b>Skip All Breakpoints </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_skip_all_icon.png" width="19" height="19" /></div></td>
+    <td>Toggles  the debugger to skip all  breakpoints regardless of their current enabled or disabled state, or hit all breakpoints.</td>
+  </tr>
+  <tr>
+    <td><b>Expand All </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_collapse_icon.png" width="19" height="18" /></div></td>
+    <td>Expand all matches in the hierarchical view.</td>
+  </tr>
+  <tr>
+    <td><b>Collapse All </b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_expand_icon.png" width="19" height="18" /></div></td>
+    <td>Collapse all matches in the hierarchical view.</td>
+  </tr>
+  <tr>
+    <td><b>Link with Debug View</b></td>
+    <td><div align="center"><img src="../../images/icons/breakpoints_linkto_debug_icon.png" width="20" height="19" /></div></td>
+    <td>When enabled, the breakpoint shown in the editor view is also highlighted in the Breakpoints view. When disabled, the breakpoint selected in the Breakpoints view does not change. </td>
+  </tr>
+  <tr>
+    <td><b>Menu</b></td>
+    <td><div align="center"><img src="../../reference/images/icon_breakpoint_menu.png" width="16" height="9"></div></td>
+    <td><p>Click to display additional Breakpoints view options for paths, grouping choices, and working sets as shown below. </p>
+      <p align="center"><img src="../images/view_breakpoints_menu_cmds.png" width="284" height="150"> </p></td>
+  </tr>
+</table>
+<h3>Breakpoints view context menu options</h3>
+<p>The following commands appear on the context menu when you right-click within the Breakpoints view: </p>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="27%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Go to File </b></td>
+    <td>Opens the associated file  for the breakpoint in an editor, make it active and highlight the breakpoint location. If the file is already open, make it active and the highlight the breakpoint location.</td>
+  </tr>
+  <tr>
+    <td><b>Enable</b></td>
+    <td>Enables the selected breakpoints.</td>
+  </tr>
+  <tr>
+    <td><b>Disable</b></td>
+    <td>Disables the selected breakpoints. </td>
+  </tr>
+  <tr>
+    <td><b>Remove</b></td>
+    <td>Removes the selected breakpoints from the project and Breakpoints view. </td>
+  </tr>
+  <tr>
+    <td><b>Remove All </b></td>
+    <td>Removes all  breakpoints from the  project and Breakpoints view. </td>
+  </tr>
+  <tr>
+    <td><b>Select All </b></td>
+    <td>Selects all the breakpoints shown in the Breakpoints view. </td>
+  </tr>
+  <tr>
+    <td><b>Copy</b></td>
+    <td>Copies the selected breakpoint to the clipboard. </td>
+  </tr>
+  <tr>
+    <td><b>Paste</b></td>
+    <td>Always disabled. </td>
+  </tr>
+  <tr>
+    <td><b>Export Breakpoints </b></td>
+    <td>Opens the <a href="exporting_breakpoints.htm">Export Breakpoints</a> wizard to store the project's breakpoint data. </td>
+  </tr>
+  <tr>
+    <td><b>Import Breakpoints </b></td>
+    <td>Opens the <a href="importing_breakpoints.htm">Import Breakpoints</a> wizard to import stored breakpoint data (.bkpt). </td>
+  </tr>
+  <tr>
+    <td><b>Add Watchpoint (C/C++)... </b></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><b>Properties</b></td>
+    <td>Opens the <a href="properties_breakpoints.htm">Properties for Breakpoint</a> dialog. </td>
+  </tr>
+</table>
+<h4>Other references</h4>
+<ul>
+  <li><a href="breakpoints.htm">Breakpoints overview  </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

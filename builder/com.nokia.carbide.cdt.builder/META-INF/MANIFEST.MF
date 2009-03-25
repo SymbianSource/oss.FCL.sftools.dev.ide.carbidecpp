@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Builder Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cdt.builder; singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: com.nokia.carbide.cdt.builder.CarbideBuilderPlugin
+Bundle-Vendor: Nokia
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.cdt.core,
+ org.eclipse.cdt.ui,
+ com.nokia.cpp.utils.core,
+ com.nokia.cpp.utils.ui,
+ com.nokia.sdt.utils,
+ com.nokia.carbide.cpp.sdk.core,
+ com.nokia.carbide.cpp.epoc.engine,
+ org.eclipse.emf.edit,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.ui.ide,
+ com.nokia.carbide.cpp.sdk.ui,
+ com.nokia.carbide.cpp.x86build,
+ org.eclipse.ui.navigator.resources,
+ com.nokia.carbide.cpp.qt.core
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.carbide.cdt.builder,
+ com.nokia.carbide.cdt.builder.builder,
+ com.nokia.carbide.cdt.builder.project,
+ com.nokia.carbide.cdt.internal.api.builder,
+ com.nokia.carbide.cdt.internal.api.builder.ui,
+ com.nokia.carbide.cdt.builder.extension
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

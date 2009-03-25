@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcmapping SYSTEM "CEikGlobalText_common_srcmapping.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<enumPropertyDeclaration qualifiedName="com.nokia.sdt.charFormat.fonthighlightstyle"  defaultValue="EFontHighlightNone">
+	<enumElement value="EFontHighlightNone"/> <!-- default -->
+	<enumElement value="EFontHighlightNormal"/>
+	<enumElement value="EFontHighlightRounded"/>
+	<enumElement value="EFontHighlightShadow"/>
+</enumPropertyDeclaration>
+	
+<enumPropertyDeclaration qualifiedName="com.nokia.sdt.charFormat.pictureAlignment"  defaultValue="EAlignBaseLine">
+	<enumElement value="EAlignTop"/>
+	<enumElement value="EAlignBottom"/>
+	<enumElement value="EAlignCentered"/>
+	<enumElement value="EAlignBaseLine"/> <!-- default -->
+</enumPropertyDeclaration>
+	
+<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.globalText.charFormat">
+	<property name="textColor" type="string" 
+		editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"
+		descriptionKey="textColorDescription" />
+	<property name="highlightColor" type="string" 
+		editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"
+		descriptionKey="highlightColorDescription" />
+	<enumProperty name="highlightStyle" type="com.nokia.sdt.charFormat.fonthighlightstyle"
+		descriptionKey="highlightStyleDescription" />
+	<property name="strikethrough" type="boolean" descriptionKey="strikethroughDescription" />
+	<property name="underline" type="boolean" descriptionKey="underlineDescription" />
+	<property name="italics" type="boolean" descriptionKey="italicsDescription" />
+	<property name="bold" type="boolean" descriptionKey="boldDescription" />
+	<property name="hiddenText" type="boolean" descriptionKey="hiddenTextDescription" />
+	<enumProperty name="pictureAlignment" type="com.nokia.sdt.charFormat.pictureAlignment"
+		descriptionKey="pictureAlignmentDescription" />
+</compoundPropertyDeclaration>
+
+<!-- Not available in S60 (font selection dialog)
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.globalText.fontcontrolflags">
+	<property name="EGulFontControlAll" type="boolean" default="true"
+		descriptionKey="EGulFontControlAllKey" /> # default
+	<property name="EGulFontControlName" type="boolean" default="false"
+		descriptionKey="EGulFontControlNameKey" />
+	<property name="EGulFontControlSize" type="boolean" default="false"
+		descriptionKey="EGulFontControlSizeKey" />
+	<property name="EGulFontControlBold" type="boolean" default="false"
+		descriptionKey="EGulFontControlBoldKey" />
+	<property name="EGulFontControlItalic" type="boolean" default="false"
+		descriptionKey="EGulFontControlItalicKey" />
+	<property name="EGulFontControlUnderline" type="boolean" default="false"
+		descriptionKey="EGulFontControlUnderlineKey" />
+	<property name="EGulFontControlStrikethrough" type="boolean" default="false"
+		descriptionKey="EGulFontControlStrikethroughKey" />
+	<property name="EGulFontControlTextColor" type="boolean" default="false"
+		descriptionKey="EGulFontControlTextColorKey" />
+	<property name="EGulFontControlPrintPos" type="boolean" default="false"
+		descriptionKey="EGulFontControlPrintPosKey" />
+</compoundPropertyDeclaration>
+
+ ... still not available ...
+ 
+<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.globalText.fontnameflags">
+	<property name="EGulAllFonts" type="boolean" default="false"/>
+	<property name="EGulMonospaceFontsOnly" type="boolean" default="false"/>
+	<property name="EGulNoMonospaceFonts" type="boolean" default="false"/>
+	<property name="EGulSymbolFontsOnly" type="boolean" default="false"/>
+	<property name="EGulNoSymbolFonts" type="boolean" default="true"/> # default 
+	<property name="EGulNoMonospaceOrSymbolFonts" type="boolean" default="false"/>
+</compoundPropertyDeclaration>
+
+-->
+
+<component friendlyName="%friendlyName"
+	qualifiedName="com.nokia.sdt.series60.CEikGlobalText"
+	baseComponent="com.nokia.sdt.series60.CEikEdwinBase" 
+	category="Editors"
+	instanceNameRoot="globalText" version="1.0">
+	<documentation>
+		<information>%information</information>
+		<helpTopic></helpTopic>
+		<wizardDescription></wizardDescription>
+	</documentation>
+	<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+		resourceType="GTXTED" className="CEikGlobalTextEditor" />
+	<designerImages 
+		smallIconFile="CEikGlobalText_sm.png" 
+		largeIconFile="CEikGlobalText.png"/>
+			
+	<attributes>
+		<attribute key="cpp-class-name">CEikGlobalTextEditor</attribute>
+		<attribute key="is-dialog-content">true</attribute>
+		<attribute key="is-ccoecontrol-content">true</attribute>
+		<attribute key="rss-control-type-enum">EEikCtGlobalTextEditor</attribute>
+	</attributes>
+			
+	<properties>
+		<property name="text" category="Data" type="localizedString" default="Formatted text"
+			descriptionKey="textDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.MultilineTextEditorFactory" />
+		<compoundProperty name="charFormat" category="Data" 
+			type="com.nokia.sdt.globalText.charFormat"
+			descriptionKey="charFormatDescription" />
+		<property name="numlines" category="Edit" type="integer"
+			descriptionKey="numlinesDescription" />
+		<property name="textlimit" category="Edit" type="integer"
+			descriptionKey="textlimitDescription" />
+		<compoundProperty name="flags" category="Edit" type="com.nokia.sdt.eikedwin.flags"
+			descriptionKey="flagsDescription" />
+		<!-- not available in S60 (a font selection dialog!)
+		<compoundProperty name="fontControlFlags" category="Edit" type="com.nokia.sdt.globalText.fontcontrolflags"/>
+		<compoundProperty name="fontNameFlags" category="Edit" type="com.nokia.sdt.globalText.fontnameflags"/>
+		-->
+		<enumProperty name="defaultCase" category="Edit" 
+			type="com.nokia.sdt.eikedwin.enumTextCase"
+			descriptionKey="defaultCaseDescription" />
+		<compoundProperty name="allowedCaseModes" category="Edit" 
+			type="com.nokia.sdt.eikedwin.allowedCaseModes"
+			descriptionKey="allowedCaseModesDescription" />
+		<enumProperty name="numericKeymap" category="Edit" 
+			type="com.nokia.sdt.eikedwin.enumKeymap" 
+			descriptionKey="numericKeymapDescription" />
+		<enumProperty name="defaultInputMode" category="Edit" 
+			type="com.nokia.sdt.eikedwin.enumInputMode"
+			descriptionKey="defaultInputModeDescription" />
+		<compoundProperty name="allowedInputModes" category="Edit" 
+			type="com.nokia.sdt.eikedwin.allowInputModes"
+			descriptionKey="allowedInputModesDescription" />
+		<compoundProperty name="avkonFlags" category="Edit" 
+			type="com.nokia.sdt.eikedwin.avkonFlags"
+			descriptionKey="avkonFlagsDescription" />
+		<property name="maxViewHeightInLines" category="Edit" 
+			type="integer" minValue="0"
+			descriptionKey="maxViewHeightInLinesDescription" />
+		<enumProperty name="specialCharacterTable" category="Edit" 
+			type="com.nokia.sdt.eikedwin.enumSpecialCharTableDialog"
+			descriptionKey="specialCharacterTableDescription" />
+	</properties>
+
+	<implementations>
+		<implementation>
+			<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+			<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+			<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+			<script file="CEikGlobalText_visual.js" prototype="CEikGlobalTextVisual"/>
+		</implementation>
+		<implementation>
+			<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+			<script file="globalText_propertyExtenders.js" prototype="GlobalTextPropertyExtenders"/>
+		</implementation>
+	</implementations>
+
+<sourceMapping>
+	<mapResource struct="GTXTED" headers="eikon.rh eikon.hrh uikon.rh uikon.hrh avkon.hrh gulftflg.hrh">
+	&common_srcmapping;
+	</mapResource>
+	<mapResource struct="TBUF" headers="eikon.rh" id="text">
+		<mapSimpleMember property="text" member="buf" />
+	</mapResource>
+</sourceMapping>
+
+<sourceGen forms="Dialog Container">
+
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<template phase="Initialize">
+	{
+	HBufC* text = StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "text").toUpperCase() } );
+	${instanceMemberName}->SetTextL( text );
+	CleanupStack::PopAndDestroy( text );
+	}
+		</template>
+
+			<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikgted.h", "eikenv.h" ]);
+			</inline>
+			
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+			<useTemplate ids="LAYOUT_CONTROLS" />
+			
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <txtfrmat.h>
+]]>		</template>
+
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <eikgted.h>
+]]>		</template>
+
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <gulcolor.h>
+]]>		</template>
+		
+		<inline scope="prototype"><![CDATA[
+include("../../textFormattingSrcgenLibrary.js");
+]]>		</inline>
+
+	<template location="CLASS_USERHANDLERS"><![CDATA[
+void Set${instanceName$title}FormattingL();
+]]>	</template>
+
+	<defineLocation id="SETFORMATTINGFUNCTION" baseLocation="MAIN_FILE" 
+		owned="false" 
+		location="function(${className}::Set${instanceName$title}FormattingL())">
+		<template><![CDATA[
+void ${className}::Set${instanceName$title}FormattingL()
+	{
+	}
+]]>		</template>
+	</defineLocation>
+	
+	<template location="SETFORMATTINGFUNCTION"/>
+	
+	<defineLocation id="SETFORMATTINGFUNCTION_BODY" 
+		baseLocation="SETFORMATTINGFUNCTION"
+		owned="true" location="region(Generated GlobalText formatting)">
+	</defineLocation>
+	
+	<template location="SETFORMATTINGFUNCTION_BODY"><![CDATA[
+<% var generated = createCharFormatStructs(contribs, instance, "SETFORMATTINGFUNCTION_BODY");
+if (generated) { %>
+${instanceMemberName}->ApplyCharFormatL( charFormat, charFormatMask );
+<% } %>
+]]>	</template>
+
+	<template phase="PostActivateL">
+Set${instanceName$title}FormattingL();	
+	</template>
+			
+	<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+	<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+	<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+	<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	<useTemplateGroup ids="GenerateCommonEdwinEvents GenerateFormatChangedEvent"/>
+	<useTemplateGroup ids="GenerateNavigationEvent GenerateTextUpdatedEvent"/>
+	
+	</sourceGen>
+
+</component>
+</componentDefinition>

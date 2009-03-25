@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikTimeAndDateEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="timeAndDateEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="TIME_EDITOR" className="CEikTimeAndDateEditor" />
+		<designerImages 
+			smallIconFile="CEikTimeAndDateEditor_sm.png" 
+			largeIconFile="CEikTimeAndDateEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikTimeAndDateEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="rss-control-type-enum">EEikCtTimeAndDateEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<!-- TODO: validate range -->
+			<compoundProperty category="Data" name="minTimeAndDate" type="com.nokia.sdt.series60.CEikTimeAndDateEditor.TimeAndDate" 
+			editorClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.editors.TimeAndDateEditorFactory"
+			default="Y2000 M1 D1 H0 M0 S0"
+			descriptionKey="minTimeAndDateDescription"
+			/>
+			<compoundProperty category="Data" name="maxTimeAndDate" type="com.nokia.sdt.series60.CEikTimeAndDateEditor.TimeAndDate" 
+			editorClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.editors.TimeAndDateEditorFactory"
+			default="Y2099 M12 D31 H23 M59 S59"
+			descriptionKey="maxTimeAndDateDescription"
+			/>
+			<compoundProperty category="Data" name="timeAndDate" type="com.nokia.sdt.series60.CEikTimeAndDateEditor.TimeAndDate" 
+			editorClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.editors.TimeAndDateEditorFactory"
+			descriptionKey="timeAndDateDescription"
+			/>
+			<compoundProperty category="Data" name="flags" type="com.nokia.sdt.series60.CEikTimeAndDateEditor.Flags" 
+			editorClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+			descriptionKey="flagsDescription"
+			/>
+			<property category="Data" name="interveningText" type="localizedString" default=" "
+			descriptionKey="interveningTextDescription"
+			/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/> 
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikTimeAndDateEditor_visual.js" prototype="CEikTimeAndDateEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="TIME_AND_DATE_EDITOR" headers="eikon.rh">
+			<mapResourceMember struct="TIME_AND_DATE" property="minTimeAndDate" member="minTimeAndDate">
+				<mapSimpleMember property="second" member="second"/>
+				<mapSimpleMember property="minute" member="minute"/>
+				<mapSimpleMember property="hour" member="hour"/>
+				<mapSimpleMember property="day" member="day"/>
+				<mapSimpleMember property="month" member="month"/>
+				<mapSimpleMember property="year" member="year"/>
+			</mapResourceMember>
+			<mapResourceMember struct="TIME_AND_DATE" property="maxTimeAndDate" member="maxTimeAndDate">
+				<mapSimpleMember property="second" member="second"/>
+				<mapSimpleMember property="minute" member="minute"/>
+				<mapSimpleMember property="hour" member="hour"/>
+				<mapSimpleMember property="day" member="day"/>
+				<mapSimpleMember property="month" member="month"/>
+				<mapSimpleMember property="year" member="year"/>
+			</mapResourceMember>
+			<mapBitmaskMember property="flags" member="flags">
+				<mapBitmaskValue properties="EEikTimeWithoutSecondsField" value="EEikTimeWithoutSecondsField" />
+				<mapBitmaskValue properties="EEikTimeWithoutHoursField" value="EEikTimeWithoutHoursField" />
+				<!-- have no idea how this is triggered
+				<mapBitmaskValue properties="EEikDateWithoutPopoutCalendar" value="EEikDateWithoutPopoutCalendar" />
+				-->
+			</mapBitmaskMember>
+			<mapSimpleMember property="interveningText" member="interveningtext"/>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container">
+	
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+
+		<inline scope="prototype"><![CDATA[
+var monthNames = [ "January", "February", "March", "April", 
+	"May", "June", "July", "August", 
+	"September", "October", "November", "December" ]; 
+
+${jsObject}.prototype.timeAndDateToInteger = function(t) {
+	// ROUGH estimate, just for range checking
+	// the -0 is needed to convert text to integer
+	var v = ((t.hour - 0) * 3600) + ((t.minute - 0) * 60) + (t.second - 0) + 
+					(((t.year - 0) * 366) + ((t.month - 0) * 31) + (t.day - 0)) * (24 * 3600);
+	return v;
+}
+]]>		</inline>
+
+		<inline><![CDATA[
+if (this.timeAndDateToInteger(properties.timeAndDate) < this.timeAndDateToInteger(properties.minTimeAndDate)) {
+	error(formatString(lookupString("numberExceedsRangeSG"), instance.name));
+} else
+if (this.timeAndDateToInteger(properties.timeAndDate) > this.timeAndDateToInteger(properties.maxTimeAndDate)) {
+	error(formatString(lookupString("numberExceedsRangeSG"), instance.name));
+}
+]]>		</inline>
+
+		<template phase="Initialize">
+${instanceMemberName}->SetTimeAndDate( TTime( TDateTime( 
+		${properties.timeAndDate.year}, E${monthNames[properties.timeAndDate.month]}, ${properties.timeAndDate.day}, 
+		${properties.timeAndDate.hour}, ${properties.timeAndDate.minute}, ${properties.timeAndDate.second}, 0 ) ) );
+ 		</template>
+		
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

@@ -1,0 +1,9 @@
+#include <basicheader.rh>
+
+RESOURCE RECT r_test_rect
+	{
+	x = 15;
+	y = 10;
+	width = 45;
+	height = 50;
+	}

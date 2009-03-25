@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.MenuItemCommands">
+		<enumElement value="UNIQUE"/>
+		<enumElement value="NONE"/>
+
+	    <enumElement value="EAknFormCmdEdit" />
+	    <enumElement value="EAknFormCmdAdd" />
+	    <enumElement value="EAknFormCmdSave" />
+	    <enumElement value="EAknFormCmdLabel" />
+	    <enumElement value="EAknFormCmdDelete" />
+
+	    <enumElement value="EAknCmdMark" />
+	    <enumElement value="EAknCmdUnmark" />
+		<enumElement value="EAknMarkAll" />
+		<enumElement value="EAknUnmarkAll" />
+
+	    <enumElement value="EAknCmdExit" />
+		<enumElement value="EEikCmdExit" />
+		
+	    <enumElement value="EAknCmdHelp" />
+	    
+	    <enumElement value="EAknCmdAddToPinboard" />
+	    <enumElement value="EAknCmdFindPopupActivated" />
+	    <enumElement value="EAknCmdEditModeT9" />
+	    <enumElement value="EAknCmdEditModeMultitap" />
+	    <enumElement value="EAknCmdEditModeNumber" />
+	    <enumElement value="EAknCmdEditInsertNumber" />
+	    <enumElement value="EAknCmdEditInsertSymbol" />
+	    <enumElement value="EAknCmdInputLanguage" />
+	    <enumElement value="EAknCmdPredictiveTextCascade" />
+	    <enumElement value="EAknCmdT9PredictiveMatches" />
+	    <enumElement value="EAknCmdT9PredictiveInsertWord" />
+	    <enumElement value="EAknCmdT9PredictiveEditWord" />
+	    <enumElement value="EAknCmdT9PredictiveT9Off" />
+	    <enumElement value="EAknCmdMultitapPredictiveT9On" />
+	    <enumElement value="EAknCmdEditTextMenu" />
+	    <enumElement value="EAknCmdEditListMenu" />
+	    <enumElement value="EAknCmdOpen" />
+
+		<enumElement value="EEikCmdFileOpen" />
+		<enumElement value="EEikCmdFileOpenAnother" />
+		<enumElement value="EEikCmdFileSaveAs" />
+		<enumElement value="EEikCmdFileNew" />
+		<enumElement value="EEikCmdFileSave" />
+		<enumElement value="EEikCmdFileImport" />
+		<enumElement value="EEikCmdFileExport" />
+		<enumElement value="EEikCmdFileRevert" />
+		<enumElement value="EEikCmdFileMerge" />
+		
+		<enumElement value="EEikCmdHelpContents" />
+		<enumElement value="EEikCmdHelpSearch" />
+		<enumElement value="EEikCmdHelpAbout" />
+		
+		<enumElement value="EEikCmdEditCut" />
+		<enumElement value="EEikCmdEditCopy" />
+		<enumElement value="EEikCmdEditPaste" />
+		<enumElement value="EEikCmdEditUndo" />
+		<enumElement value="EEikCmdEditRedo" />
+		<enumElement value="EEikCmdEditSelectAll" />
+		<enumElement value="EEikCmdEditPicture" />
+		<enumElement value="EEikCmdEditPictureFormat" />
+		<enumElement value="EEikCmdEditUpdateCurrentField" />
+		<enumElement value="EEikCmdEditUpdateAllFields" />
+		
+		<enumElement value="EEikCmdIrdaSend" />
+		<enumElement value="EEikCmdIrdaReceive" />
+		
+		<enumElement value="EEikCmdZoomNormal" />
+		<enumElement value="EEikCmdZoomIn" />
+		<enumElement value="EEikCmdZoomOut" />
+		
+		<enumElement value="EEikCmdInsertSymbol" />
+		<enumElement value="EEikCmdInsertField" />
+		<enumElement value="EEikCmdInsertPicture" />
+		
+		<enumElement value="EEikCmdSearchFind" />
+		<enumElement value="EEikCmdSearchFindAgain" />
+		<enumElement value="EEikCmdSearchReplace" />
+		
+		<enumElement value="EEikCmdPrintSetup" />
+		<enumElement value="EEikCmdPrintPreview" />
+		<enumElement value="EEikCmdPrintPrint" />
+		<enumElement value="EEikCmdPrintPaginate" />
+		
+		<enumElement value="EEikCmdFontChange" />
+		<enumElement value="EEikCmdFontBold" />
+		<enumElement value="EEikCmdFontItalic" />
+		<enumElement value="EEikCmdFontUnderline" />
+		
+		<enumElement value="EEikCmdParaAlign" />
+		<enumElement value="EEikCmdParaBorder" />
+		<enumElement value="EEikCmdParaSpacing" />
+		<enumElement value="EEikCmdParaIndent" />
+		<enumElement value="EEikCmdParaTabs" />
+		<enumElement value="EEikCmdFormatObject" />
+		
+		<enumElement value="EEikCmdFieldFileName" />
+		<enumElement value="EEikCmdFieldPageNumber" />
+		<enumElement value="EEikCmdFieldCurrentTime" />
+		<enumElement value="EEikCmdFieldCurrentDate" />
+		<enumElement value="EEikCmdFieldNumberOfPages" />
+		<enumElement value="EEikCmdFieldInsertObject" />
+		
+		<enumElement value="EEikBidYes" />
+
+		<!-- ...................... -->	
+		
+	    <enumElement value="EChinFepCmdInstructions" />
+	    <enumElement value="EChinFepCmdModePinyin" />
+	    <enumElement value="EChinFepCmdModeZhuyin" />
+	    <enumElement value="EChinFepCmdModeStroke" />
+	    <enumElement value="EChinFepCmdModeLatinUpper" />
+	    <enumElement value="EChinFepCmdModeLatinLower" />
+	    <enumElement value="EChinFepCmdModeNumber" />
+	    <enumElement value="EChinFepCmdModeZhuyinFind" />
+	    <enumElement value="EChinFepCmdModeStrokeFind" />
+	
+	    <enumElement value="EAknCmdEditModeArabicIndicNumber" />
+	    <enumElement value="EAknCmdEditModeAlpha" />
+	    <enumElement value="EAknCmdEditModeLatinText" />
+	
+	    <enumElement value="EJapanFepCmdModeHiragana" />
+	    <enumElement value="EJapanFepCmdModeKatakana" />
+	    <enumElement value="EJapanFepCmdModePictographs" />
+	    <enumElement value="EJapanFepCmdModeFullWidth" />
+	    <enumElement value="EJapanFepCmdModeHalfWidth" />
+	    <enumElement value="EJapanFepCmdModePredictiveOn" />
+	    <enumElement value="EJapanFepCmdModePredictiveOff" />
+	    <enumElement value="EJapanFepCmdModeUserDic" />
+	    <enumElement value="EJapanFepCmdModeKutenCodeInput" />
+	    <enumElement value="EAknCmdEditInsertPictograph" />
+	    <enumElement value="EJapanFepCmdPredictiveTextCascade" />
+	    <enumElement value="EJapanFepCmdMultitapPredictiveT9On" />
+	    <enumElement value="EJapanFepCmdEditModeAlpha" />
+	    <enumElement value="EJapanFepCmdEditModeNumber" />
+
+		<!-- 3.0 -->	
+	
+	    <enumElement value="EAknCmdInputMethod" />
+	    <enumElement value="EChinFepCmdModeCangJie" />
+	    <enumElement value="EChinFepCmdModeCangJieOption" />
+	    
+	    <enumElement value="EAknCmdEditMenuSctSelected" />
+
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.MenuBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.MenuItemBase" 
+		category="Menu"
+		abstract="true"
+		instanceNameRoot="menuItem"
+		version="1.0">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikMenuPaneItem" classHelpTopic=""
+			resourceType="MENU_ITEM" resourceHelpTopic="" />
+			
+		<attributes>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="never-add-component">true</attribute>
+		</attributes>
+
+		<designerImages smallIconFile="MenuItem_sm.png" largeIconFile="MenuItem.png"/>
+
+		<properties>
+			<!-- no text property -->
+			<enumProperty category="Behavior" name="command" 
+				type="com.nokia.sdt.series60.MenuItemCommands" 
+				descriptionKey="commandDescription" />
+		</properties>
+		
+		<events defaultEventName="selected">
+		<event name="selected" displayName="%selected" category="Menu" 
+		    handlerNameTemplate="Handle{title(name)}SelectedL"
+		    descriptionKey="selectedDescription"
+		/>
+		</events>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.editor.IComponentEditor"/>
+				<code class="com.nokia.sdt.series60.component.menu.MenuItemImplFactory"/>
+			</implementation>
+			<implementation>
+				<!-- broken out to allow independent overriding -->
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<code class="com.nokia.sdt.series60.component.menu.MenuItemImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="MenuItemBase.js" prototype="MenuItemBase" />
+			</implementation>
+		</implementations>
+
+		<sourceMapping>
+			<mapResource struct="MENU_ITEM" headers="uikon.rh eikon.rh">
+				<select property="[com.nokia.sdt.series60.SystemMenuPane]">
+					<choice value="">
+						<!-- no system menu -->
+						<select property="[com.nokia.sdt.series60.MenuPane]">
+							<choice value="">
+								<!-- No sub-MenuPane -->
+								<select property="command">
+									<choice value="NONE" />
+									<choice>
+										<mapEnumMember property="command" member="command" uniqueValue="UNIQUE"
+											nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"/>
+									</choice>
+								</select>
+							</choice>
+							<choice>
+								<!-- Existing sub-MenuPane -->
+								<mapReferenceMember property="[com.nokia.sdt.series60.MenuPane]" member="cascade"/>
+							</choice>
+						</select>
+					</choice>
+					
+					<!-- else, not a submenu with resources -->
+					<choice>
+						<select property="[com.nokia.sdt.series60.SystemMenuPane].systemResourceName">
+							<choice value="">
+								<!-- nothing -->
+							</choice>
+							<choice>
+								<!-- pane refers to existing resource -->
+								<mapIdentifierMember property="[com.nokia.sdt.series60.SystemMenuPane].systemResourceName" member="cascade"/>
+							</choice>
+						</select>
+					</choice>
+				</select>
+				<mapSimpleMember property="text" member="txt" />
+			</mapResource>
+		</sourceMapping>
+		
+	<sourceGen forms="RootAppUi AknView Container HandleCommandSwitchDispatch">
+		
+		<templateGroup id="HandleSelectedEvent" ifEvents="selected">
+			<template id="0" phase="UserHandlers">
+TBool ${event.handlerName}( TInt aCommand );
+			</template>
+
+			<defineLocation id="SelectedMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(TInt))">
+					<template id="2"><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ * @param aCommand the command id invoked
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool ${handlerClassName}::${event.handlerName}( TInt aCommand )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return ETrue;
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="3" location="SelectedMethod" />
+	
+			<template id="4" form="HandleCommandSwitchDispatch" phase="SwitchContents" ifEvents="selected"><![CDATA[
+<% var commandId = Engine.findBuiltinOrGeneratedEnumeratorForAlgorithm(instance, "command", "com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS");
+	if (commandId != null) { 
+%>	case ${commandId}:
+		commandHandled = ${event.handlerName}( aCommand );
+		break;
+<% } %> ]]>	</template>
+		</templateGroup>
+	
+		
+	</sourceGen>
+		
+	</component>
+</componentDefinition>

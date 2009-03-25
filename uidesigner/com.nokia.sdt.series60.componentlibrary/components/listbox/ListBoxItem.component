@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<!DOCTYPE componentDefinition [
+	<!ENTITY TextProperty '<property 
+		name="text" 
+		category="Data" 
+		type="localizedString" 
+		descriptionKey="textDescription"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+		default="item"/>' 
+	>
+
+	<!ENTITY SecondaryTextProperty '<property 
+		name="secondaryText" 
+		category="Data" 
+		type="localizedString" 
+		descriptionKey="secondaryTextDescription"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+		default="secondary"/>'
+	>
+
+	<!ENTITY HeadingTextProperty '<property 
+		name="headingText" 
+		category="Data" 
+		type="localizedString" 
+		descriptionKey="headingTextDescription"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+		default="heading"/>'
+	>
+
+	<!ENTITY ImageProperty '<compoundProperty 
+		category="Appearance" name="image"  
+		descriptionKey="imageDescription"
+		type="com.nokia.sdt.symbian.imageProperty"/>'
+	>
+
+	<!ENTITY NumberProperty '<property 
+		name="number" 
+		category="Data" 
+		descriptionKey="numberDescription"
+		type="integer" />'
+	>
+
+	<!-- not really time, but something printed in a clock font -->
+	<!ENTITY Time1Property '<property 
+		name="time1Text" 
+		category="Data" 
+		descriptionKey="time1TextDescription"
+		type="localizedString" 
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+		default="12:00"/>'
+	>
+
+	<!-- not really time, but something printed in a clock font -->
+	<!ENTITY Time2Property '<property 
+		name="time2Text" 
+		category="Data" 
+		descriptionKey="time2TextDescription"
+		type="localizedString" 
+		editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+		default="AM"/>'
+	>
+
+]>
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.ControlBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.ListBoxItem" 
+		category="Controls"
+		instanceNameRoot="listboxItem"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<designerImages 
+			smallIconFile="ListBoxItem_sm.png" 
+			largeIconFile="ListBoxItem.png"/>
+		<attributes>
+			<attribute key="never-add-component">true</attribute>
+		</attributes>
+	
+		<properties>
+			
+		</properties>
+
+		<!-- these are the properties added to list items based on the type -->
+				
+		<extensionProperties name="CAknSingleStyleListBox">
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknSingleGraphicStyleListBox">
+			&ImageProperty;
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknSingleNumberStyleListBox">
+			&NumberProperty;
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknSingleHeadingStyleListBox">
+			&HeadingTextProperty;
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknSingleGraphicHeadingStyleListBox">
+			&ImageProperty;
+			&HeadingTextProperty;
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknSingleLargeStyleListBox">
+			&ImageProperty;
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknSingleNumberHeadingStyleListBox">
+			&NumberProperty;
+			&HeadingTextProperty;
+			&TextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknDoubleStyleListBox">
+			&TextProperty;
+			&SecondaryTextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknDoubleStyle2ListBox">
+			&TextProperty;
+			&SecondaryTextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknDoubleNumberStyleListBox">
+			&NumberProperty;
+			&TextProperty;
+			&SecondaryTextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknDoubleTimeStyleListBox">
+			&Time1Property;
+			&Time2Property;
+			&TextProperty;
+			&SecondaryTextProperty;
+		</extensionProperties>
+
+		<extensionProperties name="CAknDoubleLargeStyleListBox">
+			&ImageProperty;
+			&TextProperty;
+			&SecondaryTextProperty;
+		</extensionProperties>
+		
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="ListBoxItem.js" prototype="ListBoxItem"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<code class="com.nokia.sdt.series60.component.ListBoxItemInitializerFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="ARRAY" headers="badef.rh">
+				<select property="[parent].style">
+					<choice value="CAknSingleStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="a0">
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSinglePopupMenuStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="a0p">
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleGraphicStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="b1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleGraphicPopupMenuStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="b1p" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleGraphicPopupMenuStyleListBoxMulti">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="b1pb" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleNumberStyleListBox">
+						<!-- number handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="c0" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleHeadingStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="d0" >
+							<mapSimpleMember property="headingText" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="d1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleHeadingPopupMenuStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="d0p" >
+							<mapSimpleMember property="headingText" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="d1p" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleGraphicHeadingStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="e0" >
+							<mapSimpleMember property="headingText" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="e1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleGraphicHeadingStyleListBoxMulti">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="e0b" >
+							<mapSimpleMember property="headingText" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="e1b" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleGraphicHeadingPopupMenuStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="e0p" >
+							<mapSimpleMember property="headingText" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="e1p" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleLargeStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="f1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknSingleNumberHeadingStyleListBox">
+						<!-- number handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="g0" >
+							<mapSimpleMember property="headingText" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="g1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoubleStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="i0" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="i1" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoublePopupMenuStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="i0p" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="i1p" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoubleStyle2ListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="i0_2" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="i1_2" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDouble2PopupMenuStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="i0_2p" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="i1_2p" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoubleNumberStyleListBox">
+						<!-- number handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="j1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="j2" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoubleTimeStyleListBox">
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="k0" >
+							<mapSimpleMember property="time1Text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="k1" >
+							<mapSimpleMember property="time2Text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[2]" struct="LBUF" id="k2" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[3]" struct="LBUF" id="k3" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoubleLargeStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="l1" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="l2" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+					<choice value="CAknDoubleLargeGraphicPopupMenuStyleListBox">
+						<!-- bitmap handled in code -->
+						<mapResourceMember property="." member="items[0]" struct="LBUF" id="l1p" >
+							<mapSimpleMember property="text" member="txt" />
+						</mapResourceMember>
+						<mapResourceMember property="." member="items[1]" struct="LBUF" id="l2p" >
+							<mapSimpleMember property="secondaryText" member="txt" />
+						</mapResourceMember>
+					</choice>
+				</select>
+			</mapResource>
+			
+		</sourceMapping>
+
+		<sourceGen>
+			<inline scope="prototype">
+include("listboxLibrary.js")
+			</inline>
+			
+			<template phase="Initialize"><![CDATA[
+<% var prop = getParameterizedItemLNumericColumnProperty(instance.parent);
+var secondArg = null;
+if (prop == "number") { 
+	secondArg = instance.properties[prop];
+} else if (prop == "image") { 
+	secondArg = getImageList(instance.parent).getListIconEnumForProperty(instance.properties[prop]);
+}
+%>Add${titleCase(instance.parent.name)}ResourceArrayItemL( ${resourceName$upper}${(secondArg != null ? ",\\n\\t\\t" + secondArg : "")} );
+]]>			</template>
+
+			<template form="AknListQueryDialog" phase="AddItems"><![CDATA[
+<% var prop = getParameterizedItemLNumericColumnProperty(instance.parent);
+var secondArg = null;
+var selectedArg = (instance.parent.componentId 
+	== "com.nokia.sdt.series60.CAknListMultiQueryDialog") ? "EFalse, " : "";
+if (prop == "number") { 
+	secondArg = instance.properties[prop];
+} else if (prop == "image") { 
+	secondArg = getImageList(instance.parent).getListIconEnumForProperty(instance.properties[prop]);
+	if (secondArg == -1) {
+		error("Source generation problem locating image for "+instance.name+", property " + prop);
+		getImageList(instance.parent).dump();
+		secondArg = null;
+	}
+}
+%>Create${titleCase(instance.parent.name)}ResourceArrayItemL(
+		des, ${selectedArg}${resourceName$upper}${(secondArg != null ? ",\\n\\t\\t" + secondArg : "")} );
+itemArray->AppendL( des );
+]]>			</template>
+
+		</sourceGen>
+
+	</component>
+</componentDefinition>

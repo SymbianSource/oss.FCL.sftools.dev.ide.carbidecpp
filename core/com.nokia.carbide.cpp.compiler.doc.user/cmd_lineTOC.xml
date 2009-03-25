@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Command-Line Tools" href="html/cmd_line/cmd_line.htm">
+
+	<topic label="Tool Naming Conventions" 				href="html/cmd_line/cmd_naming.htm" /> 
+	<topic label="Working with Environment Variables" 	href="html/cmd_line/cmd_env_vars.htm" /> 
+	<topic label="Invoking Command-Line Tools" 			href="html/cmd_line/cmd_invoking.htm" /> 
+	<topic label="File Extensions" 						href="html/cmd_line/cmd_extensions.htm" /> 
+	<topic label="Help and Administrative Options" 		href="html/cmd_line/cmd_admin_options.htm" /> 
+	<topic label="Command-line Settings Conventions" 	href="html/cmd_line/cmd_conventions.htm" /> 
+       
+</toc>

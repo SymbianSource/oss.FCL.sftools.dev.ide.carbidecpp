@@ -1,0 +1,14 @@
+#include <basicheader.rh>
+#ifdef LANGUAGE_16
+#include "output_16.rls"
+#endif
+#ifdef LANGUAGE_10
+#include "output_10.rls"
+#endif
+#define MACRO_1 "A macro value"
+#define MACRO_2 "Not another \"macro\""
+
+RESOURCE ONE_STRING r_test_multifile1b
+	{
+	text = STR_1;
+	}

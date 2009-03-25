@@ -1,0 +1,4 @@
+enum TUIQ_MultiPage_3_0ViewUids
+	{
+	EUIQ_MultiPage_3_0MultiPageViewId = 1
+	};

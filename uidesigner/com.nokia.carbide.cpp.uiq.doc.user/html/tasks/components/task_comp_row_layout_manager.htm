@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Reordering Objects</title>
+<link href ="../../../book.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Row Layout Manager</h2>
+<div class="step">
+  <h4 align="left">Ordering Objects</h4>
+	<ul>
+		<li>
+		<p align="left"><a href="#C1">Control order</a></li>
+		<li>
+		<p align="left"><a href="#C2">Size of control</a></li>
+		<li>
+		<p align="left"><a href="#C3">New control added</a></li>
+		<li>
+		<p align="left"><a href="#C4">Control deleted</a></ul>
+	<p>
+</div>
+<p align="left"><b><a name = "C1">Control order </a></b></p>
+<p align="left">The row layout manager orders the controls in lines or rows.</p>
+<p align="left"><a name = "C2"><b>Size of control</b></a></p>
+<p align="left">The row layout manager calculates the necessary space for the different controls, and establishes the amount of 
+rows that will be occupied according to the size. The calculated size is on the basis of complete 
+rows, in other words, if a control occupies 1.5 rows, then the row layout 
+manager will assign 2 complete lines to it. (Figure 1)</p>
+<p align="center">
+				<img border="0" src="../../images/task_comp_row_layout_manager-00.png"/></p>
+<p align="center"><b>Figure 1 - Big component added</b></p>
+<p align="left"><b><a name = "C3">New control added</a></b></p>
+<p align="left">The row layout manager orders the controls sequentially as they 
+are added, thus the first element will occupy row one.</p>
+<p align="center">
+<img border="0" src="../../images/task_comp_row_layout_manager-01.PNG"/></p>
+<p align="center">
+				<b>Figure 2 - Control added</b></p>
+<p align="left"><b><a name = "C4">Control deleted</a></b></p>
+<p align="left">When a 
+				control is eliminated, the lines occupied by the control are 
+				crossed, and the controls are ordered on the basis of their 
+				previous position. (Figure 3)</p>
+				<p align="center">
+				&nbsp;<img border="0" src="../../images/task_comp_row_layout_manager.png"/></p>
+<p align="center">
+				<b>Figure 3 - Control from figure 1 deleted</b></p>
+
+<h5>&nbsp;</h5>
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/app_editor/ref_app_editor.htm">Application Editor</a></li>
+  <li>
+	<a href="../../../../com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/views/ref_outline_view.htm">Outline View</a></li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="task_comp_new_obj.htm">Adding Objects</a></li>
+  <li>
+	<a href="task_comp_delete_obj.htm">Deleting Objects 
+	</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

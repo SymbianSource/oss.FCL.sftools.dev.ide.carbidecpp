@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>instmgr_file</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>instmgr_file</h3>
+<p>  Controls where the instance manager database is written, to the target data directory or to a separate file.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma instmgr_file &quot;name&quot;
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>When the Use Instance Manager option is on, the IDE writes the instance manager database to the project&rsquo;s data directory. If the <span class="code">#pragma instmgr_file</span> is used, the database is written to a separate file. </p>
+  <p>Also, a separate instance file is always written when the command-line tools are used.</p>
+  <p class="note"><strong>NOTE</strong> Should you need to report a bug, use this option to create a separate instance manager database, which can then be sent to technical support with your bug report.</p>
+  <p>This pragma corresponds to the Use Instance Manager setting . The default setting is <span class="code">off</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

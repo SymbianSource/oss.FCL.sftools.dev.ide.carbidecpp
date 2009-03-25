@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU17 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					 
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.EikButtonBehavior">
+		<property name="EEikButStaysClear" type="boolean"
+			displayName="%StaysClear" descriptionKey="StaysClear.description"/>
+		<property name="EEikButStaysSet" type="boolean"
+			displayName="%StaysSet" descriptionKey="StaysSet.description"/>
+		<property name="EEikButLatches" type="boolean"
+			displayName="%Latches" descriptionKey="Latches.description"/>
+		<property name="EEikButReportOnPointerDown" type="boolean"
+			displayName="%ReportsOnPointerDown" descriptionKey="ReportsOnPointerDown.description"/>
+	</compoundPropertyDeclaration>					 
+		
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikCommandButton.TLayout">
+		<enumElement value="EEikCmdButTextRightPictureLeft" displayValue="%EEikCmdButTextRightPictureLeft"/>
+		<enumElement value="EEikCmdButTextBottomPictureTop" displayValue="%EEikCmdButTextBottomPictureTop"/>
+		<enumElement value="EEikCmdButTextTopPictureBottom" displayValue="%EEikCmdButTextTopPictureBottom"/>
+		<enumElement value="EEikCmdButTextLeftPictureRight" displayValue="%EEikCmdButTextLeftPictureRight"/>
+		<sourceTypeMapping>
+			<mapEnumType validate="false">
+				<mapEnum value="EEikCmdButTextRightPictureLeft" enumerator="EEikCmdButTextRightPictureLeft"/>
+				<mapEnum value="EEikCmdButTextBottomPictureTop" enumerator="EEikCmdButTextBottomPictureTop"/>
+				<mapEnum value="EEikCmdButTextTopPictureBottom" enumerator="EEikCmdButTextTopPictureBottom"/>
+				<mapEnum value="EEikCmdButTextLeftPictureRight" enumerator="EEikCmdButTextLeftPictureRight"/>
+			</mapEnumType>
+		</sourceTypeMapping>		
+	</enumPropertyDeclaration>
+			
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikCommandButtonBase.TLayout">
+		<enumElement value="EEikCmdButFirstRightSecondLeft" displayValue="%EEikCmdButFirstRightSecondLeft"/>
+		<enumElement value="EEikCmdButFirstBottomSecondTop" displayValue="%EEikCmdButFirstBottomSecondTop"/>
+		<enumElement value="EEikCmdButFirstTopSecondBottom" displayValue="%EEikCmdButFirstTopSecondBottom"/>
+		<enumElement value="EEikCmdButFirstLeftSecondRight" displayValue="%EEikCmdButFirstLeftSecondRight"/>
+		<!-- <enumElement value="EEikCmdButDenseFont" displayValue="%EEikCmdButDenseFont"/> -->
+		<sourceTypeMapping>
+			<mapEnumType validate="false">
+				<mapEnum value="EEikCmdButFirstRightSecondLeft" enumerator="EEikCmdButFirstRightSecondLeft"/>
+				<mapEnum value="EEikCmdButFirstBottomSecondTop" enumerator="EEikCmdButFirstBottomSecondTop"/>
+				<mapEnum value="EEikCmdButFirstTopSecondBottom" enumerator="EEikCmdButFirstTopSecondBottom"/>
+				<mapEnum value="EEikCmdButFirstLeftSecondRight" enumerator="EEikCmdButFirstLeftSecondRight"/>
+				<!-- <mapEnum value="EEikCmdButDenseFont" enumerator="EEikCmdButDenseFont"/> -->
+			</mapEnumType>
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+		
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikButtonBase.TState">
+		<enumElement value="EClear" displayValue="%EClear"/>
+		<enumElement value="ESet" displayValue="%ESet"/>
+		<enumElement value="EIndeterminate" displayValue="%EIndeterminate"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TGulAdjacent">
+		<enumElement value="EGulAdjNone" displayValue="%EGulAdjNone"/>
+		<enumElement value="EGulAdjTop" displayValue="%EGulAdjTop"/>
+		<enumElement value="EGulAdjBottom" displayValue="%EGulAdjBottom"/>
+		<enumElement value="EGulAdjLeft" displayValue="%EGulAdjLeft"/>
+		<enumElement value="EGulAdjRight" displayValue="%EGulAdjRight"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TGulBorder">
+		<enumElement value="ENone" displayValue="%ENone"/>
+		<enumElement value="ESingleGray" displayValue="%ESingleGray"/>
+		<enumElement value="ESingleBlack" displayValue="%ESingleBlack"/>
+		<enumElement value="ESingleDotted" displayValue="%ESingleDotted"/>
+		<enumElement value="EShallowRaised" displayValue="%EShallowRaised"/>
+		<enumElement value="EShallowSunken" displayValue="%EShallowSunken"/>
+		<enumElement value="EDeepRaised" displayValue="%EDeepRaised"/>
+		<enumElement value="EDeepRaisedWithOutline" displayValue="%EDeepRaisedWithOutline"/>
+		<enumElement value="EDeepSunken" displayValue="%EDeepSunken"/>
+		<enumElement value="EDeepSunkenWithOutline" displayValue="%EDeepSunkenWithOutline"/>
+		<enumElement value="EThickDeepRaisedWithOutline" displayValue="%EThickDeepRaisedWithOutline"/>
+		<enumElement value="EVerticalBar" displayValue="%EVerticalBar"/>
+		<enumElement value="EHorizontalBar" displayValue="%EHorizontalBar"/>		
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikCommandButton.TExcess">
+		<enumElement value="EShare" displayValue="%EShare"/>
+		<enumElement value="EToFirst" displayValue="%EToFirst"/>
+		<enumElement value="EToSecond" displayValue="%EToSecond"/>
+	</enumPropertyDeclaration>
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikCommandButtonBase"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"
+			abstract="true"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0">
+		</symbian>	
+				
+		<attributes>
+			<attribute key ="cpp-class-name">CEikCommandButtonBase</attribute>		
+		</attributes>
+		
+		<properties>
+			<compoundProperty  name="behavior" 
+				displayName="%behavior"				
+				type="com.nokia.carbide.uiq.EikButtonBehavior"
+				descriptionKey="behaviorDescription" 
+				category="%category.behavior"/>
+			<property  name="helpText" 
+				type="localizedString" 
+				default="help"
+				descriptionKey="helpTextDescription" 
+				category="%category.data"/>		
+			<enumProperty name="state" 
+				type="com.nokia.carbide.uiq.CEikButtonBase.TState" 
+				default="EClear"
+				descriptionKey="stateDescription" 
+				category="%category.behavior"/>							
+			<property name="displayPictureOnly" 
+				type="boolean"
+				default="false"
+				descriptionKey="displayPictureOnlyDescription" 
+				category="%category.appearance"/>
+			<property name="defaultb" 
+				type="boolean"
+				default="true"
+				descriptionKey="defaultbDescription" 
+				category="%category.behavior"/>				
+			<enumProperty name="excessSpace" 
+				type="com.nokia.carbide.uiq.CEikCommandButton.TExcess"
+				default="EShare"
+				descriptionKey="excessSpaceDescription" 
+				category="%category.appearance"/>
+		</properties>
+				
+				
+		<sourceGen>
+			<templateGroup id="CommonSourceGenCommandButtons" form="InstanceGen">
+			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="uikon.hrh eikcmbut.h eikbutb.h guldef.h gulbordr.h"/>			
+			<inline scope="prototype">
+include("../../../srcgenLibrary.js")
+			</inline>
+			
+			<inline id="2">
+				<![CDATA[
+	setPropertiesForPhase(contribs, "InitializeControlHandlers", 0, instanceMemberName, true,
+		properties.state, "EClear", "{0}->SetState( CEikButtonBase::{1} );\n",
+		properties.excessSpace, "EShare", "{0}->CEikCommandButtonBase::SetExcessSpace( CEikCommandButtonBase::{1} );\n",
+		properties.defaultb,1,"{0}->SetDefault( {1} );\n");
+	if(instance.isInstanceOf("com.nokia.carbide.uiq.CEikCommandButton"))
+		{
+		setPropertiesForPhase(contribs, "InitializeControlHandlers", 0, instanceMemberName, true,
+			properties.displayPictureOnly,0,"{0}->SetDisplayPictureOnly( {1} );\n");
+		}
+				]]>			
+			</inline>
+			</templateGroup>
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

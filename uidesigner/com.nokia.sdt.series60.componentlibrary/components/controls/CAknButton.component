@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.ButtonToolbarItemCommands">
+		<enumElement value="UNIQUE"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknButton.HorizTextAlign" defaultValue="CGraphicsContext::ECenter">
+		<enumElement value="CGraphicsContext::ECenter" displayValue="center" />
+		<enumElement value="CGraphicsContext::ELeft" displayValue="left" />
+		<enumElement value="CGraphicsContext::ERight" displayValue="right" />
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknButton.ToolTipPosition" defaultValue="CAknButton::EPositionTop">
+		<enumElement value="CAknButton::EPositionTop" displayValue="top" />
+		<enumElement value="CAknButton::EPositionBottom" displayValue="bottom" />
+		<enumElement value="CAknButton::EPositionLeft" displayValue="left" />
+		<enumElement value="CAknButton::EPositionRight" displayValue="right" />
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknButton.TextAndIconAlignment" defaultValue="CAknButton::EIconBeforeText">
+		<enumElement value="CAknButton::EIconBeforeText" displayValue="icon before text" />
+		<enumElement value="CAknButton::EIconAfterText" displayValue="icon after text" />
+		<enumElement value="CAknButton::EIconUnderText" displayValue="icon under text" />
+		<enumElement value="CAknButton::EIconOverText" displayValue="icon over text" />
+		<enumElement value="CAknButton::EOverlay" displayValue="overlay" />
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknButton.VertTextAlign" defaultValue="CAknButton::ECenter">
+		<enumElement value="CAknButton::ECenter" displayValue="center" />
+		<enumElement value="CAknButton::ETop" displayValue="top" />
+		<enumElement value="CAknButton::EBottom" displayValue="bottom" />
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknButton.Font" defaultValue="normal">
+		<enumElement value="normal" displayValue="normal" />
+		<enumElement value="CEikonEnv::Static()-&gt;LegendFont()" displayValue="legend" />
+		<enumElement value="CEikonEnv::Static()-&gt;DenseFont()" displayValue="dense" />
+		<enumElement value="CEikonEnv::Static()-&gt;SymbolFont()" displayValue="symbol" />
+		<enumElement value="CEikonEnv::Static()-&gt;TitleFont()" displayValue="title" />
+		<enumElement value="CEikonEnv::Static()-&gt;AnnotationFont()" displayValue="annotation" />
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration 
+		qualifiedName="com.nokia.sdt.series60.CAknButtonMultiImageProperty"
+		editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+		converterClass="com.nokia.sdt.series60.component.CAknButtonMultiImagePropertyConverter">
+		<property name="bmpfile" descriptionKey="bmpfileDescription" type="string"/>
+		<property name="bmpid" descriptionKey="bmpidDescription" type="string"/>
+		<property name="bmpmask" descriptionKey="bmpmaskDescription" type="string"/>
+		<property name="bmpidDimmed" descriptionKey="bmpidDimmedDescription" type="string"/>
+		<property name="bmpmaskDimmed" descriptionKey="bmpmaskDimmedDescription" type="string"/>
+		<property name="bmpidPressed" descriptionKey="bmpidPressedDescription" type="string"/>
+		<property name="bmpmaskPressed" descriptionKey="bmpmaskPressedDescription" type="string"/>
+		<property name="bmpidHover" descriptionKey="bmpidHoverDescription" type="string"/>
+		<property name="bmpmaskHover" descriptionKey="bmpmaskHoverDescription" type="string"/>
+	</compoundPropertyDeclaration>
+	
+	
+	<component baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CAknButton"
+		category="Controls"
+		instanceNameRoot="button"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="5.0" 
+			className="CAknButton" classHelpTopic=""
+			resourceType="" resourceHelpTopic="" />
+		<designerImages smallIconFile="CAknButton_sm.png" 
+			largeIconFile="CAknButton.png" />
+			
+		<attributes>
+			<attribute key="cpp-class-name">CAknButton</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="editable-array-property">items</attribute>
+		</attributes>
+		
+		<properties>
+			
+			<property category="Text" name="buttonText" type="localizedString" default="Button"
+				 editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+			     descriptionKey="buttonTextDescription" displayName="%buttonTextDisplay"/>
+			 <property category="Text" name="buttonHelpText" type="localizedString" default="Button Hover Text"
+				 editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+			     descriptionKey="buttonHelpTextDescription" displayName="%buttonHelpTextDisplay"/>
+			 <enumProperty category="Text" name="horizTextAlign" type="com.nokia.sdt.series60.CAknButton.HorizTextAlign"
+				descriptionKey="horizTextAlignDescr" displayName="%horizTextAlign" />
+			<enumProperty category="Text" name="vertTextAlign" type="com.nokia.sdt.series60.CAknButton.VertTextAlign"
+				descriptionKey="vertTextAlignDescr" displayName="%vertTextAlign" />
+			<enumProperty category="Text" name="toolTipPosition" type="com.nokia.sdt.series60.CAknButton.ToolTipPosition"
+				descriptionKey="toolTipPositionDescr" displayName="%toolTipPosition" />
+			<enumProperty category="Text" name="textAndIconAlignment" type="com.nokia.sdt.series60.CAknButton.TextAndIconAlignment"
+				descriptionKey="textAndIconAlignmentDescr" displayName="%textAndIconAlignment" />
+			<enumProperty category="Text" name="textFont" type="com.nokia.sdt.series60.CAknButton.Font"
+				descriptionKey="textFontDescr" displayName="%textFont" />
+			<compoundProperty category="Image" name="images"  
+				type="com.nokia.sdt.series60.CAknButtonMultiImageProperty"
+				descriptionKey="imagesDescription" />
+			
+			<property category="Flags" name="buttonTextLeft" type="boolean" descriptionKey="buttonTextLeftDescr" />
+			<property category="Flags" name="buttonSizeFitText" type="boolean" descriptionKey="buttonSizeFitTextDescr" />
+			<property category="Flags" name="buttonNoFrame" type="boolean" descriptionKey="buttonNoFrameDescr" />
+			<property category="Flags" name="buttonKeyRepeat" type="boolean" descriptionKey="buttonKeyRepeatDescr" />
+			<property category="Flags" name="buttonReportOnKeyDown" type="boolean" descriptionKey="buttonReportOnKeyDownDescr" />
+			<property category="Flags" name="buttonNoFramePressEvent" type="boolean" descriptionKey="buttonNoFramePressEventDescr" />
+			<property category="Flags" name="buttonRequestExitOnButtonUpEvent" type="boolean" descriptionKey="buttonRequestExitOnButtonUpEventDescr" />
+			<property category="Flags" name="buttonReportOnLongPress" type="boolean" descriptionKey="buttonReportOnLongPressDescr" />
+			
+			<!-- Hidden commands used to fill out the TBAR_CTRL 'type' and 'id' members -->
+			<property category="Hidden" name="toolBarType" type="string" default="EAknCtButton"/>
+			<enumProperty category="Hidden" name="command" 
+				type="com.nokia.sdt.series60.ButtonToolbarItemCommands" 
+				descriptionKey="commandDescription" />
+							
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<script file="CAknButton.js" prototype="CAknButton"/>
+			</implementation>
+		</implementations>
+		
+		<events defaultEventName="selected">
+			<event name="selected" displayName="%selected" category="ToolbarEvent"
+				group="ToolbarEvent" 
+			    handlerNameTemplate="Handle{title(name)}SelectedL"
+			    descriptionKey="selectedDescription"
+			/>
+		</events>
+		
+		<sourceMapping>
+		
+			<mapResource struct="AVKON_BUTTON" headers="eikon.rh">
+				
+				<mapBitmaskMember property="." member="flags"
+				  includedProperties="buttonTextLeft buttonSizeFitText buttonNoFrame buttonKeyRepeat buttonReportOnKeyDown buttonNoFramePressEvent buttonRequestExitOnButtonUpEvent buttonReportOnLongPress">
+					<mapBitmaskValue properties="buttonTextLeft" value="KAknButtonTextLeft" />
+					<mapBitmaskValue properties="buttonSizeFitText" value="KAknButtonSizeFitText" />
+					<mapBitmaskValue properties="buttonNoFrame" value="KAknButtonNoFrame" />
+					<mapBitmaskValue properties="buttonKeyRepeat" value="KAknButtonKeyRepeat" />
+					<mapBitmaskValue properties="buttonReportOnKeyDown" value="KAknButtonReportOnKeyDown" />
+					<mapBitmaskValue properties="buttonNoFramePressEvent" value="KAknButtonNoFramePressEvent" />
+					<mapBitmaskValue properties="buttonRequestExitOnButtonUpEvent" value="KAknButtonRequestExitOnButtonUpEvent" />
+					<mapBitmaskValue properties="buttonReportOnLongPress" value="KAknButtonReportOnLongPress" />
+				</mapBitmaskMember>
+				
+				 <mapResourceMember property="." member="states[0]" 
+		        		struct="AVKON_BUTTON_STATE" headers="eikon.rh" id="multi$states[0]" >
+		        		
+		        		<mapSimpleMember property="buttonText" member="txt"/>
+						<mapSimpleMember property="buttonHelpText" member="helptxt"/>
+						<mapSimpleMember property="images.bmpfile" member="bmpfile"/>
+						
+						<mapIdentifierMember property="images.bmpid" member="bmpid"/>
+						<mapIdentifierMember property="images.bmpmask" member="bmpmask"/>
+    					
+    					// stupid header doesn't initialize bmpmask to -1
+						<select property="images.bmpmask">
+							<choice value="">
+								<mapFixedMember member="bmpmask" value="-1"/>
+							</choice>
+							<choice>
+								<mapIdentifierMember property="images.bmpmask" member="bmpmask"/>
+							</choice>
+						</select>
+    				
+					 	<select property="images.bmpmaskDimmed">
+							<choice value="">
+								<mapFixedMember member="dim_bmpmask" value="-1"/>
+							</choice>
+							<choice>
+								<mapIdentifierMember property="images.bmpmaskDimmed" member="dim_bmpmask"/>
+							</choice>
+						</select>
+					 
+					 	<select property="images.bmpmaskPressed">
+							<choice value="">
+								<mapFixedMember member="press_bmpmask" value="-1"/>
+							</choice>
+							<choice>
+								<mapIdentifierMember property="images.bmpmaskPressed" member="press_bmpmask"/>
+							</choice>
+						</select>
+					 
+					 	<select property="images.bmpmaskHover">
+							<choice value="">
+								<mapFixedMember member="hover_bmpmask" value="-1"/>
+							</choice>
+							<choice>
+								<mapIdentifierMember property="images.bmpmaskHover" member="hover_bmpmask"/>
+							</choice>
+						</select>
+
+				</mapResourceMember>
+				
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+			<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+			
+			<inline scope="prototype">
+include("../containers/containerLibrary.js")
+			</inline>
+			
+			<template form="Container" phase="HeaderIncludes"><![CDATA[
+#include <aknbutton.h>
+#include <stringloader.h>
+]]>			</template>
+			
+			<template form="Container" phase="ForwardDeclarations">
+class CAknButton;
+			</template>
+
+			<template form="Container" phase="Destroy"><![CDATA[
+delete ${instanceMemberName};
+${instanceMemberName} = NULL;
+]]>			</template>
+		
+<template id="INIT_FROM_CONTAINER" form="Container" phase="Initialize"><![CDATA[
+
+${instanceMemberName} = static_cast< CAknButton* >
+				( EikControlFactory::CreateByTypeL( EAknCtButton ).iControl );
+${instanceMemberName}->ConstructFromResourceL ( ${resourceName$upper} );
+
+${instanceMemberName}->SetContainerWindowL ( *this );
+${instanceMemberName}->SetRect ( TRect ( 
+							TPoint ( ${properties.location.x}, ${properties.location.y} ) , 
+							TSize ( ${properties.size.width}, ${properties.size.height} ) )  
+							 ) ; 
+${instanceMemberName}->SetObserver( ( MCoeControlObserver* ) iCommandObserver ); 
+<% if (properties.horizTextAlign != "CGraphicsContext::ECenter") { %>${instanceMemberName}->SetTextHorizontalAlignment( ${properties.horizTextAlign} );<% } %>
+<% if (properties.vertTextAlign != "CAknButton::ECenter") { %> ${instanceMemberName}->SetTextVerticalAlignment( ${properties.vertTextAlign} );<% } %>
+<% if (properties.textAndIconAlignment != "CAknButton::EIconBeforeText") { %> ${instanceMemberName}->SetTextAndIconAlignment( ${properties.textAndIconAlignment} );<% } %>
+<% if (properties.toolTipPosition != "CAknButton::EPositionTop") { %>${instanceMemberName}->SetTooltipPosition( ${properties.toolTipPosition} );<% } %>
+<% if (properties.textFont != "normal") { %>${instanceMemberName}->SetTextFont( ${properties.textFont} );<% } %>
+
+]]>			</template>
+
+		<templateGroup id="HandleSelectedEvent" ifEvents="selected">
+			<template id="0" phase="UserHandlers">
+TBool ${event.handlerName}( TInt aCommand );
+			</template>
+
+			<defineLocation id="SelectedMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(TInt))">
+					<template id="2"><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ * @param aCommand the command id invoked
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool ${handlerClassName}::${event.handlerName}( TInt aCommand )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return ETrue;
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+			<template id="3" location="SelectedMethod" />
+	
+			<template id="4" form="HandleCommandSwitchDispatch" phase="SwitchContents" ifEvents="selected"><![CDATA[
+<% var commandId =  Engine.findOrCreateEnumeratorForAlgorithm(instance, "command", 
+		"com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS");
+	//println("commandId = " + commandId);
+	if (commandId != null) { 
+%>	case ${commandId}:
+		commandHandled = ${event.handlerName}( aCommand );
+		break;
+<% } %> ]]>	</template>
+		</templateGroup>
+		
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+		
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

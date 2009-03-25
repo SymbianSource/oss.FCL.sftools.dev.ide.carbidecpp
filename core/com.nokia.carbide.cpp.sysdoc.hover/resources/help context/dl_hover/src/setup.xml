@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE general-guide-doc SYSTEM "guide.dtd">
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. License: http://www.eclipse.org/legal/epl-v10.html. -->
+<general-guide-doc> 
+
+  <section>
+	 <heading>Hover Help Set Up</heading>
+	 <anchor name="hover.components."/> 
+	 <para>
+		This section describes the initial set up of Hover Help and how
+		to add a Developer Library plug-in. 
+	 </para> 
+
+	 <section>
+		<heading>Developer Library Indexing</heading>
+		<para>
+		  When the Carbide IDE starts, Hover Help automatically
+		    prepares for its first use by indexing its Developer Library. 
+		</para> 
+		<para>
+		  This process takes a few seconds, and progress is displayed in the Progress view. 
+		</para> 
+		<para>
+		  If you cancel indexing from the Progress view, Hover Help will be
+		  deactivated. You can reactivate Hover Help using
+		  <xref target="hover.prefs.">the preferences panel</xref>,
+		  and the indexing will start again. 
+		</para> 
+	 </section> 
+
+	 <section>
+		<anchor name="hover.add_DL."/> 
+		<heading>Adding a New Developer Library Plug-in</heading>
+		<para>
+		  New versions of the Developer Library plug-in are published regularly.
+		  You can configure Hover Help to use a new version as follows: 
+		</para> 
+
+		<list ordered="true"> 
+		  <ls.item> 
+			 <para>
+				Obtain the latest Developer Library plug-in from the
+				<uri target="http://symbianfoundation.org/">Symbian Foundation</uri> website,
+				and copy the new plug-in into Carbide’s <file>plugins</file> directory. 
+			 </para>
+		  </ls.item> 
+		  <ls.item> 
+			 <para>
+				Restart Carbide. 
+			 </para> 
+		  </ls.item> 
+	  	<ls.item> 
+			 <para>
+				From the Window > Preferences > Carbide.c++ > Hover Help preferences panel, make sure the new added Developer Library 
+				is selected. If not, select it from the Developer Libraries drop-down box. 
+			 </para> 
+		  </ls.item> 		  
+		</list>
+
+	 </section> 
+
+	 <section>
+		<anchor name="hover.activate_HH."/> 
+		<heading>Activating Hover Help</heading>
+		<para>
+		  If Hover Help is deactivated, you can activate it from the
+		  Window > Preferences > Carbide.c++ > Hover Help preferences panel by
+		  unchecking the checkbox "Deactivate Hovering".
+		</para> 
+		<para>
+		When you activate Hover Help, the checkbox
+		<xref target="hover.prefs.automatic">"Automatically select latest Developer Library"</xref>  is automatically checked.
+		</para> 
+		<para>
+		If you need a particular Developer Library, uncheck the checkbox
+		<xref target="hover.prefs.automatic">"Automatically select latest Developer Library"</xref>.
+		Then select a Developer Library from the Developer Libraries drop-down box.
+    	 </para> 
+	 </section> 
+  </section> 
+
+
+
+</general-guide-doc> 

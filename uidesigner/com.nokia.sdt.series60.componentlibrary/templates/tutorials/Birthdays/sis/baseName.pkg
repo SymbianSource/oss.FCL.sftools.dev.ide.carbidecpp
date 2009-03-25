@@ -1,0 +1,25 @@
+; $(baseName).pkg
+;
+;Language - standard language definitions
+&EN
+
+; standard SIS file header
+#{"$(baseName)"},($(uid3)),1,0,0
+
+;Localised Vendor name
+%{"Vendor-EN"}
+
+;Unique Vendor name
+:"Vendor"
+
+;Supports Series 60 v 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID"}
+
+;Files to install
+;You should change the source paths to match that of your environment
+;<source> <destination>
+"$(EPOCROOT)\Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		-"!:\sys\bin\$(baseName).exe"
+"$(EPOCROOT)\Epoc32\data\z\resource\apps\$(baseName).r01"		-"!:\resource\apps\$(baseName).r01"
+"$(EPOCROOT)\Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.r01"	-"!:\private\10003a3f\import\apps\$(baseName)_reg.r01"
+"$(EPOCROOT)\epoc32\data\z\resource\apps\$(baseName)_aif.mif" -"!:\resource\apps\$(baseName)_aif.mif"
+

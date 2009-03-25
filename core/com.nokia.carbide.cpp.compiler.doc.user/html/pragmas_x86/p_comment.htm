@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>comment</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>comment</h3>
+<p>  Embeds information into the object code for the linker.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma comment(type [ &ldquo;value&rdquo;])</p>
+  <h5>Parameters</h5>
+  <p class="code">type</p>
+  <blockquote>
+    <p>Set type to: lib, exestr, linker, user, or compiler.</p>
+  </blockquote>
+  <p class="code">value</p>
+  <blockquote>
+    <p> Name of file without extension to embed into the object code.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+<p>Embeds information into the object code. The linker searches for the library file using the access paths in the IDE or the MWLibraries environment variable in the command line tool and include it after any explicitly-specified files on the command line. See Table 11.1 for a list of comment usage examples.</p>
+  <table width="100%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+      <th width="32%" scope="col">Example</th>
+      <th width="68%" scope="col">Description</th>
+    </tr>
+    <tr>
+      <td class="code">comment(lib, &ldquo;library&rdquo;)</td>
+      <td>Instructs the linker to automatically link against library[.lib] file when the Link with default libraries setting is enabled.</td>
+    </tr>
+    <tr>
+      <td class="code">comment(linker, &ldquo;directive&rdquo;) </td>
+      <td>Embed a linker directive using the Linker Command File (.cmd) syntax.</td>
+    </tr>
+    <tr>
+      <td class="code">comment(user, &ldquo;string&rdquo;)</td>
+      <td>Embed a comment into the object file.</td>
+    </tr>
+    <tr>
+      <td class="code">comment(exestr, &ldquo;string&rdquo;)</td>
+      <td>Embed a string into the executable.</td>
+    </tr>
+    <tr>
+      <td class="code">comment(compiler)</td>
+      <td>Embed compiler version into object file. Normally ignored for compatability.</td>
+    </tr>
+  </table>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use the <span class="code">__option (comment)</span>.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

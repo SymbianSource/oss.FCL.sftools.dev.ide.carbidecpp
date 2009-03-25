@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>Adding Classes in Tasks</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+   <body>
+   <h2>Adding Classes</h2>
+   
+   <p>Use the <b>New Class</b> wizard to add a new C++ class to a project.   </p>
+
+   <div class="step">
+     <h4>To add a new C++ class</h4>
+
+   <ol><li>
+     <p>
+	   Click <b>File &gt; New &gt; Class</b> from the menu bar, 
+		  or select <b>New &gt; Class</b> from the project&prime;s pop-up
+	    menu where you want the new class to reside. </p> 
+     <p>
+	    The New C++ Class wizard then appears. 
+     </p> 
+	  </li> 
+	  <li> 
+	    <p>
+		   Specify the folder when the class should be created by typing the		    <b>Source Folder</b> name or by clicking <b>Browse</b> and
+	    selecting the source folder. </p> 
+		  
+	     <p align="center" class="Image"><img src="../images/newclasswiz.gif" alt="" width="500" height="568"  border="0" /></p>
+	  </li> 
+	  <li> 
+	    <p>
+		   Select the <b>Namespace</b> checkbox, if you want to add
+			 the class to a namespace. Click <b>Browse</b> to select an existing
+	    namespace, or type the name of the new namespace. </p> 
+	  </li> 
+	  <li> 
+	    <p>
+	    In the <b>Class Name</b> field, type the name of the class. </p> 
+	  </li> 
+	  <li> 
+	    <p>
+		   Click <b>Add</b> to choose the <b>Base Classes</b> from which the class has to be derived</p> 
+		  
+	     <p align="center" class="Image"><img src="../images/choosebaseclass.gif" alt="" width="306" height="565"  border="0" /></p>
+       <p>To select a base type you are looking for, do the following: </p>
+      <ol type="a">
+      <li>Type the search string to locate the class, struct and other low-level types you are looking for</li>
+
+         <li>Select a Visible Type to narrow your search. <br />
+		 <p>For example, if you are for looking for only classes then select the Class checkbox, etc. The Matching Types lists all the types matching the visible type and search string. The Qualifier lists the header file which contain the type
+            declaration of all the type listed.</p>
+         </li>
+         <li>Click Add to add the selected type to the Base Classes list. <br />
+		 <p>By default, the types are added with Public access and without Virtual inheritance, although these settings can be changed. </p>
+         </li>
+         <li>Click OK when you have completed adding base classes, or click Cancel to cancel the action.</li>
+      </ol>
+	  </li>
+     <li>Once the Base Classes are added, you can click Remove to remove a selected class from the list. You can also click Up and Down after selecting a class  from the list to change the order in which the base classes are inherited. </p> 
+        <p>Select the Method Stubs you want the wizard to generate by selecting the appropriate checkbox. By default, both Constructor and Destructor are selected. By
+			   default, the constructor is added with public access, and as non-virtual and non-inline, and the destructor is added as public, virtual, and not inline. </p> 
+        <p>
+	       Select the Use Default checkbox to create the C++
+			   class in new header and source files with default names. Otherwise, deselect
+			   the Use Default checkbox, and enter the Header and Source file names. Click Browse to select the Header and Source files, if you want to
+        add the class declaration and definition to existing files. </p> 
+
+     <li>
+	       Click Finish to create a C++ class according to the
+        specification, or click Cancel to cancel the task.</li> 
+</ol>
+   </div>
+   <h5>Related concepts</h5>
+	   <ul>
+         <li><a href="../concepts/SDKSupport.html">SDK Support</a></li>
+       </ul>
+	   <h5>Related tasks</h5>
+	   <ul>
+         <li><a href="../reference/NewClassWizard.html">New C++ Classs Wizard</a></li>
+   </ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+   </html>
+   

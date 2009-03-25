@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<!DOCTYPE componentDefinition [
+<!ENTITY LoadAndScaleIconL SYSTEM "../LoadAndScaleIconL.inc">
+]>
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListBox.Element">
+		<property name="text" type="localizedString"/>
+		<property name="secondaryText" type="localizedString"/>
+		<property name="icon" type="integer"/>
+	</compoundPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListBoxScrolling">
+		<enumElement value="0" displayValue="off"/>
+		<enumElement value="1" displayValue="on (no looping)"/>
+		<enumElement value="2" displayValue="on (looparound)"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListBoxStyle"
+			defaultValue="CAknSingleStyleListBox">
+		<enumElement value="CAknSingleStyleListBox"/>
+		<enumElement value="CAknSingleGraphicStyleListBox"/>
+		<enumElement value="CAknSingleNumberStyleListBox"/>
+		<enumElement value="CAknSingleHeadingStyleListBox"/>
+		<enumElement value="CAknSingleGraphicHeadingStyleListBox"/>
+		<enumElement value="CAknSingleLargeStyleListBox"/>
+		<enumElement value="CAknSingleNumberHeadingStyleListBox"/>
+		<enumElement value="CAknDoubleStyleListBox"/>
+		<enumElement value="CAknDoubleStyle2ListBox"/>
+		<enumElement value="CAknDoubleNumberStyleListBox"/>
+		<enumElement value="CAknDoubleTimeStyleListBox"/>
+		<enumElement value="CAknDoubleLargeStyleListBox"/>
+	
+	</enumPropertyDeclaration>	
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.ListItemAlign"  
+			defaultValue="Default">
+		<enumElement value="Default"/>
+		<enumElement value="ELeft"/>
+		<enumElement value="ECenter"/>
+		<enumElement value="ERight"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListBoxType"  
+			defaultValue="EAknListBoxSelectionList">
+		<enumElement value="EAknListBoxSelectionList"/>
+		<enumElement value="EAknListBoxMarkableList"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListBoxStretching"
+			defaultValue="default">
+		<enumElement value="default"/>
+		<enumElement value="enabled"/>
+		<enumElement value="disabled"/>
+	</enumPropertyDeclaration>
+
+	<!--
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListBox.Column">
+		<enumProperty name="alignment" type="com.nokia.sdt.series60.ListItemAlign"/>
+	</compoundPropertyDeclaration>
+	-->
+	
+	<component baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CAknListBox" 
+		category="Controls"
+		instanceNameRoot="listBox"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+			<wizardDescription>%wizardDescription</wizardDescription>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikTextListBox" classHelpTopic=""
+			resourceType="LISTBOX" resourceHelpTopic="" />
+		<designerImages 
+			smallIconFile="CAknListBox_sm.png" 
+			largeIconFile="CAknListBox.png" 
+			thumbnailFile="listbox_tn.png"/>
+		<attributes>
+			<attribute key="is-top-level-only-layout-object">true</attribute>
+			<attribute key="is-exclusive-child-layout-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="not-in-toolbox">false</attribute>
+			<attribute key="is-initial-content">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="wants-initial-focus">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="vertical-scrollable-container">true</attribute>
+			<attribute key="container-background-color">EEikColorWindowBackground</attribute>
+			<attribute key="list-style-enum-property">com.nokia.sdt.series60.CAknListBoxStyle</attribute>
+		</attributes>
+		<properties>
+			<!--
+				These classes will use these enum masks (avkon.hrh);
+				thus the stuff they represent do not need to be properties
+				   EAknListBoxSelectionList
+				   EAknListBoxMenuList
+				   EAknListBoxMarkableList
+				   EAknListBoxMultiselectionList
+				   EAknListBoxViewerFlags
+			-->
+			<enumProperty category="Appearance" name="style" 
+				type="com.nokia.sdt.series60.CAknListBoxStyle"
+			 	editorClass="com.nokia.sdt.series60.component.listCustomizer.ListLayoutEditorFactory"
+			 	descriptionKey="styleKey"
+			 	/>
+			<!-- yuck: loop scrolling is always forced on, unless
+				"page-at-once" scrolling is enabled.
+			<enumProperty category="Behavior" displayName="scrolling" name="scrolling" type="com.nokia.sdt.series60.CAknListBoxScrolling"
+			/>
+			-->
+
+			<enumProperty category="Behavior" name="type"
+				descriptionKey="typeDescription"
+				type="com.nokia.sdt.series60.CAknListBoxType" />
+
+			<arrayProperty name="alignmentInfo" category="Appearance"
+				descriptionKey="alignmentInfoKey"
+				type="com.nokia.sdt.series60.ListItemAlign" />
+
+			<compoundProperty category="Appearance" name="markIcon"
+				descriptionKey="markIconDescription"
+				type="com.nokia.sdt.symbian.imageProperty"
+				 />
+		
+			<property category="Behavior" name="hasSearchField"
+				descriptionKey="hasSearchFieldDescription"
+				type="boolean"
+				default="false" />
+
+			<arrayProperty name="extraImages" category="Appearance"
+				descriptionKey="extraImagesKey"
+				type="com.nokia.sdt.symbian.imageProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ImageArrayEditorFactory"
+				/>
+
+		</properties>
+		
+		<extensionProperties name="touchUI">
+			<enumProperty category="Appearance" name="stretching"
+				descriptionKey="stretchingDescription"
+				type="com.nokia.sdt.series60.CAknListBoxStretching" />
+				
+			<property category="Appearance" name="hideSecondRow"
+				descriptionKey="hideSecondRowDescription"
+				type="boolean"
+				default="false" />
+				
+		</extensionProperties>
+		
+		<events defaultEventName="enterKeyPressed">
+		<event name="enterKeyPressed" category="List" 
+		    handlerNameTemplate="Handle{title(name)}EnterKeyPressedL"
+		    group="CCoeControl"
+		    descriptionKey="enterKeyPressedDescription"
+		/>
+		<event name="itemClicked" category="List" 
+		    handlerNameTemplate="Handle{title(name)}ItemClickedL"
+		    group="CCoeControl"
+		    descriptionKey="itemClickedDescription"
+		/>
+		<event name="itemDoubleClicked" category="List" 
+		    handlerNameTemplate="Handle{title(name)}ItemDoubleClickedL"
+		    group="CCoeControl"
+		    descriptionKey="itemDoubleClickedDescription"
+		/>
+		<event name="listEditingStarted" category="List" 
+		    handlerNameTemplate="Handle{title(name)}EditingStartedL"
+		    group="CCoeControl"
+		    descriptionKey="listEditingStartedDescription"
+		/>
+		<event name="listEditingStopped" category="List" 
+		    handlerNameTemplate="Handle{title(name)}EditingStoppedL"
+		    group="CCoeControl"
+		    descriptionKey="listEditingStoppedDescription"
+		/>
+		<event name="penDownOnItem" category="List" 
+		    handlerNameTemplate="Handle{title(name)}PenDownOnItemL"
+		    group="CCoeControlTouch"
+		    descriptionKey="penDownOnItemDescription"
+		/>
+		<event name="itemDraggingAction" category="List" 
+		    handlerNameTemplate="Handle{title(name)}ItemDraggingActionL"
+		    group="CCoeControlTouch"
+		    descriptionKey="itemDraggingActionDescription"
+		/>
+		</events>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentCustomizerUI"/>
+				<code class="com.nokia.sdt.series60.component.listCustomizer.ListCustomizerUIImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IScrollBoundsProvider"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CAknListBox.js" prototype="CAknListBox"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.sdt.series60.component.ListBoxSetValueCommandExtenderFactory"/>
+			</implementation>
+		</implementations>
+
+		<sourceMapping>
+			<mapResource struct="LISTBOX" headers="eikon.rh uikon.rh">
+				<mapEnumMember property="type" member="flags" validate="false" />
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen forms="Container Dialog">
+			
+			<inline scope="prototype">
+${jsObject}.prototype.getCppClassName = function(instance) {
+	return instance.properties.style;
+}
+
+// utility
+${jsObject}.prototype.getScrollingValue = function(properties) {
+	if (properties.scrolling == 0) {
+		return "EOff";
+	} else if (properties.scrolling == 1) {
+		return "EOn";
+	} else {
+		return "EAuto";
+	}
+}	
+
+include("listboxLibrary.js");
+			</inline>
+			
+			<useTemplate ids="INIT_FROM_CONTAINER" />
+
+			<!-- override of CONTAINER_CHILD_CONTRIBS -->			
+				<template id="0" form="HandleComponentSwitchDispatch" phase="ComponentControlBody"><![CDATA[
+case E${instanceName$title}:
+	return ${instanceMemberName};
+<% if (listBoxHasSearchField(instance)) { 
+%>case E${instanceName$title}SearchField:
+	return ${getListBoxSearchFieldName(instance)};
+<%}%>]]>		</template>
+
+				<template id="1" form="HandleCCoeControlEnums" phase="ChildEnumsContents"><![CDATA[
+E${instanceName$title},
+<% if (listBoxHasSearchField(instance)) { 
+%>E${instanceName$title}SearchField,
+<%}%>]]>		</template>
+			
+			
+			<useTemplate ids="INIT_FROM_DIALOG" />
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+			
+			<template phase="ForwardDeclarations">
+class CEikTextListBox;
+			</template>
+
+			<template form="Container" phase="LayoutControls" id="LAYOUT_LISTBOX"><![CDATA[
+${instanceMemberName}->SetExtent( TPoint( 0, 0 ), ${instanceMemberName}->MinimumSize() );
+]]>			</template>
+
+			<template form="Container" phase="SizeChanged" id="LAYOUT_LISTBOX_2"><![CDATA[
+<% if (listBoxHasSearchField(instance)) { 
+%><% if (isFormattedCellListBox(instance)) { 
+%>AknFind::HandlePopupFindSizeChanged( this, ${instanceMemberName}, ${getListBoxSearchFieldName(instance)} );
+<% } else {
+%>AknFind::HandleFixedFindSizeChanged( this, ${instanceMemberName}, ${getListBoxSearchFieldName(instance)} );
+<% } %><% } %>]]>	</template>
+
+			<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"aknlists.h", "eikenv.h",
+									"akniconarray.h", "eikclbd.h" ]);
+if (listBoxHasSearchField(instance))
+	this.getCppSystemIncludes(contribs, [ "aknsfld.h", "aknutils.h" ]);
+			</inline>
+	
+			<inline>
+// gather all the images/icons used in list items for later emission
+if (Engine.formMatches(form, [""])) {
+	var listBoxImageInfo = getImageList(instance);
+	setupListItemImageInfo(instance, listBoxImageInfo);
+	setupExtraListImages(instance, listBoxImageInfo);
+}
+			</inline>
+			
+			<template phase="Initialize"><![CDATA[
+// the listbox owns the items in the list and will free them
+${instanceMemberName}->Model()->SetOwnershipType( ELbmOwnsItemArray );
+
+// setup the icon array so graphics-style boxes work
+Setup${instanceName$title}IconsL();
+
+]]>		</template>	
+
+			<inline>
+function isTouchUI() {
+	version = getComponentVersions();
+	return version.major >= 5;
+}
+			</inline>
+
+			<template phase="Initialize"><![CDATA[
+<%if (isTouchUI()) {
+if (properties.stretching == "enabled") {
+%>${instanceMemberName}->EnableStretching( ETrue );
+<%}else if (properties.stretching == "disabled") {
+%>${instanceMemberName}->EnableStretching( EFalse );
+<%}
+if (properties.hideSecondRow) {
+%>${instanceMemberName}->HideSecondRow( ETrue );
+<%}}%>]]>		</template>	
+
+			<inline>
+if (Engine.formMatches(form, [""])) {
+	generateColumnSetup(contribs, "SizeChanged", instance);
+}
+			</inline>
+		
+		<template form="HandleOfferKeyEventL" phase="OfferKeyEventContents"><![CDATA[
+<% if (instance.rootContainer.isInstanceOf("com.nokia.sdt.series60.CAknView")) { 
+%>if ( aKeyEvent.iCode == EKeyLeftArrow 
+	|| aKeyEvent.iCode == EKeyRightArrow )
+	{
+	// Listbox takes all events even if it doesn't use them
+	return EKeyWasNotConsumed;
+	}<% } %>
+]]>		</template>	
+
+			<!-- general-purpose routines -->
+			
+			<expandMacro name="GenerateMethod"
+					IsOwned="true"
+					FunctionLocationId="ADDLISTBOXITEML_METHOD"
+					FunctionName="AddListBoxItemL"
+					FunctionArgs="CEikTextListBox* aListBox, const TDesC&amp; aString"
+					IsStatic="true"
+					DeclPhase="ClassMethods"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ *	Add a list box item to a list.
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+CTextListBoxModel* model = aListBox->Model();
+CDesCArray* itemArray = static_cast< CDesCArray* > ( model->ItemTextArray() );
+itemArray->AppendL( aString );
+aListBox->HandleItemAdditionL();
+			]]>	</expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethod"
+					IsOwned="true"
+					FunctionLocationId="GETSELECTEDLISTBOXITEMSLC_METHOD"
+					FunctionName="GetSelectedListBoxItemsLC"
+					FunctionArgs="CEikTextListBox* aListBox"
+					ReturnType="RArray&lt; TInt &gt;*"
+					IsStatic="true"
+					DeclPhase="ClassMethods"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Get the array of selected item indices, with respect to the list model.
+ * The array is sorted in ascending order.
+ * The array should be destroyed with two calls to CleanupStack::PopAndDestroy(),
+ * the first with no argument (referring to the internal resource) and the
+ * second with the array pointer.
+ * @return newly allocated array, which is left on the cleanup stack;
+ *	or NULL for empty list. 
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+CAknFilteredTextListBoxModel* model = 
+	static_cast< CAknFilteredTextListBoxModel *> ( aListBox->Model() );
+if ( model->NumberOfItems() == 0 )
+	return NULL;
+	
+// get currently selected indices
+const CListBoxView::CSelectionIndexArray* selectionIndexes =
+	aListBox->SelectionIndexes();
+TInt selectedIndexesCount = selectionIndexes->Count();
+if ( selectedIndexesCount == 0 )
+	return NULL;
+	
+// copy the indices and sort numerically
+RArray<TInt>* orderedSelectedIndices = 
+	new (ELeave) RArray< TInt >( selectedIndexesCount );
+
+// push the allocated array
+CleanupStack::PushL( orderedSelectedIndices );
+
+// dispose the array resource
+CleanupClosePushL( *orderedSelectedIndices );
+
+// see if the search field is enabled
+CAknListBoxFilterItems* filter = model->Filter();
+if ( filter != NULL )
+	{
+	// when filtering enabled, translate indices back to underlying model
+	for ( TInt idx = 0; idx < selectedIndexesCount; idx++ )
+		{
+		TInt filteredItem = ( *selectionIndexes ) [ idx ];
+		TInt actualItem = filter->FilteredItemIndex ( filteredItem );
+		orderedSelectedIndices->InsertInOrder( actualItem );
+		}
+	}
+else
+	{
+	// the selection indices refer directly to the model
+	for ( TInt idx = 0; idx < selectedIndexesCount; idx++ )
+		orderedSelectedIndices->InsertInOrder( ( *selectionIndexes ) [ idx ] );
+	}	
+	
+return orderedSelectedIndices;
+]]>				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod"
+					IsOwned="true"
+					FunctionLocationId="DELETESELECTEDLISTBOXITEMSL_METHOD"
+					FunctionName="DeleteSelectedListBoxItemsL"
+					FunctionArgs="CEikTextListBox* aListBox"
+					IsStatic="true"
+					DeclPhase="ClassMethods"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Delete the selected item or items from the list box.
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+CAknFilteredTextListBoxModel* model = 
+	static_cast< CAknFilteredTextListBoxModel *> ( aListBox->Model() );
+if ( model->NumberOfItems() == 0 )
+	return;
+
+RArray< TInt >* orderedSelectedIndices = GetSelectedListBoxItemsLC( aListBox );		
+if ( !orderedSelectedIndices )
+	return;
+	
+// Delete selected items from bottom up so indices don't change on us
+CDesCArray* itemArray = static_cast< CDesCArray* > ( model->ItemTextArray() );
+TInt currentItem = 0;
+
+for ( TInt idx = orderedSelectedIndices->Count(); idx-- > 0; ) 
+	{
+	currentItem = ( *orderedSelectedIndices )[ idx ];
+	itemArray->Delete ( currentItem );
+	}
+
+// dispose the array resources
+CleanupStack::PopAndDestroy();
+
+// dispose the array pointer
+CleanupStack::PopAndDestroy( orderedSelectedIndices );
+
+// refresh listbox's cursor now that items are deleted
+AknListBoxUtils::HandleItemRemovalAndPositionHighlightL(
+	aListBox, currentItem, ETrue );
+]]>				</expandArgument>
+			</expandMacro>
+
+			<!-- specific-to-instance routines -->
+
+			<expandMacro name="GenerateMethod"
+					IsOwned="true"
+					FunctionLocationId="GETLISTBOX_METHOD"
+					FunctionName="${instanceName$title}"
+					FunctionArgs=""
+					ReturnType="${this.getCppClassName(instance)}*"
+					DefaultReturn="${instanceMemberName}"
+					DeclPhase="ClassMethods"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ *	Get the listbox.
+ */
+				</expandArgument>		
+			</expandMacro>
+
+			<expandMacro name="GenerateMethodWithVariantArguments"
+					FunctionLocationId="CREATEITEML_METHOD"
+					FunctionName="Create${instanceName$title}ItemL"
+					FunctionArgs="TDes&amp; aBuffer"
+					FunctionVarArgsAllowEmpty="false"
+					FunctionVarArgsDeclExpr="createParameterizedItemLSignature(instance, &quot;\\t\\t&quot;)"
+					FunctionVarArgsDefnExpr="createParameterizedItemLSignature(instance, &quot;\\t\\t&quot;)"
+					IsStatic="true"
+					DeclPhase="ClassMethods"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ *	Create a list box item with the given column values.
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+_LIT ( KStringHeader, "${getListItemStringFormat(instance)}" );
+
+aBuffer.Format( KStringHeader(), ${getParameterizedItemLFormatArguments(instance)} );
+]]>				</expandArgument>
+			</expandMacro>
+			
+			
+			<expandMacro name="GenerateMethodWithVariantArguments"
+					FunctionLocationId="ADDRESOURCEARRAYITEML_METHOD"
+					FunctionName="Add${instanceName$title}ResourceArrayItemL"
+					FunctionArgs="TInt aResourceId"
+					FunctionVarArgsAllowEmpty="true"
+					FunctionVarArgsDeclExpr="getParameterizedItemLNumericColumnParameter(instance, false)"
+					FunctionVarArgsDefnExpr="getParameterizedItemLNumericColumnParameter(instance, false)"
+					DeclPhase="ClassMethods"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ *	Add an item to the list by reading the text items from the array resource
+ *	and setting a single image property (if available) from an index
+ *	in the list box's icon array.
+ *	@param aResourceId id of an ARRAY resource containing the textual
+ *	items in the columns
+ *	${getParameterizedItemLNumericColumnComment(instance)}
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+CDesCArray* array = iCoeEnv->ReadDesCArrayResourceL( aResourceId );
+CleanupStack::PushL( array );
+<% var args = getParameterizedItemLArguments(instance, "array", getParameterizedItemLNumericColumnParameterName(instance) );
+%>// This is intended to be large enough, but if you get 
+// a USER 11 panic, consider reducing string sizes.
+TBuf<512> listString; 
+Create${instanceName$title}ItemL( listString, ${args} );
+AddListBoxItemL( ${instanceMemberName}, listString );
+CleanupStack::PopAndDestroy( array );
+]]>				</expandArgument>
+			</expandMacro>
+
+			<template form="Container" phase="ClassMethods"><![CDATA[
+void Setup${instanceName$title}IconsL();
+]]>			</template>
+
+		<!-- icon loading -->
+
+		&LoadAndScaleIconL;
+
+		<expandMacro name="GenerateMethod"
+			FunctionLocationId="SETUPLISTICONSL_METHOD"
+			FunctionName="Setup${instanceName$title}IconsL"
+			FunctionArgs=""
+			IsOwned="true"
+			DeclPhase="ClassMethods"
+			DefnLocation="MAIN_FILE">
+			<expandArgument name="FunctionComment">
+/**
+ *	Set up the list's icon array.
+ */
+			</expandArgument>
+		</expandMacro>
+		
+		<template location="SETUPLISTICONSL_METHOD" ><![CDATA[
+CArrayPtr< CGulIcon >* icons = NULL;		
+<% // this sets up an icon array and possibly adds a helper method to ADD_METHOD
+var any = getImageList(instance).generateSetupIconArrayL(
+		contribs, "icons", "SETUPLISTICONSL_METHOD", "LOADANDSCALEICONL_METHOD", 
+		instance, isScalingIcons());
+if (any) {
+%>CleanupStack::Pop( icons );
+<% } %>
+if ( icons != NULL )
+	{
+	${instanceMemberName}->ItemDrawer()->ColumnData()->SetIconArray( icons );
+	}
+]]>		</template>
+
+		<defineLocation id="IMAGE_ENUMS"
+			baseLocation="CLASS"
+			owned="false"
+			location="enum(T${instanceName$title}Images)">
+			<template>
+enum T${instanceName$title}Images
+	{
+	};
+			</template>
+		</defineLocation>
+		
+		<template location="IMAGE_ENUMS" />
+		
+		<defineLocation id="IMAGE_ENUMS_BODY"
+			baseLocation="IMAGE_ENUMS"
+			owned="true"
+			location="region(Generated Enums)" />
+			
+		<template location="IMAGE_ENUMS_BODY"><![CDATA[
+${getImageList(instance).generateImageListEnums()}
+]]>		</template>
+		
+			
+		
+		<!-- END icon loading -->
+
+
+		<!-- markable list stuff -->
+
+		<inline scope="prototype">
+function isMarkableList(instance) {
+	return instance.properties.type == "EAknListBoxMarkableList";
+}
+		</inline>
+
+		<template phase="MainSystemIncludes" ifExpr="isMarkableList(instance)"><![CDATA[
+#include <aknutils.h>
+]]></template>
+
+		<!-- NOTE: we make one function, assuming we'll never have two listboxes -->
+
+		<expandMacro name="GenerateMethod"
+			FunctionLocationId="HANDLEMARKCOMMANDL_METHOD"
+			FunctionName="HandleMarkableListCommandL"
+			FunctionArgs="TInt aCommand"
+			ReturnType="TBool"
+			IsOwned="true"
+			DeclPhase="ClassMethods"
+			DefnLocation="MAIN_FILE">
+			<expandArgument name="FunctionComment">
+/** 
+ *	Handle commands relating to markable lists.
+ */
+ 			</expandArgument>
+			<expandArgument name="FunctionBody"><![CDATA[<% if (isMarkableList(instance)) { %>
+switch ( aCommand ) 
+	{
+	case EAknCmdMark:
+	case EAknCmdUnmark:
+	case EAknMarkAll:
+	case EAknUnmarkAll:
+		AknSelectionService::HandleMarkableListProcessCommandL(
+			aCommand, ${instanceMemberName} );
+		return ETrue;
+	}<% } 
+%>return EFalse;
+]]>				</expandArgument>
+			</expandMacro>
+
+		<template form="HandleCommandSwitchDispatch" 
+			phase="PostSwitchContents"
+			ifExpr="isMarkableList(instance)"><![CDATA[
+// markable list command handling
+if ( !commandHandled ) 
+	{
+	commandHandled = ${instance.parent.memberName}->HandleMarkableListCommandL( aCommand );
+	}
+]]></template>
+
+	<template form="HandleOfferKeyEventL" phase="OfferKeyEventContents"
+			ifExpr="listBoxHasSearchField(instance)"><![CDATA[
+if ( ${getListBoxSearchFieldName(instance)} != NULL
+	&& ${getListBoxSearchFieldName(instance)}->OfferKeyEventL( aKeyEvent, aType ) 
+		== EKeyWasConsumed )
+	{
+	return EKeyWasConsumed;
+	}
+]]></template>
+
+		<!-- END markable list stuff -->
+
+<!-- common sourcegen to MEikListBoxObserver events -->
+	<templateGroup id="GenerateCommonListBoxEvents" 
+		ifEvents="enterKeyPressed itemClicked itemDoubleClicked listEditingStarted listEditingStopped penDownOnItem itemDraggingAction">
+	
+		<template id="EventIncludes" phase="EventIncludes"><![CDATA[
+#include <eiklbo.h>
+]]>		</template>
+		
+		<template id="BaseClass" phase="BaseClassList">,MEikListBoxObserver</template>
+	
+		<defineLocation id="ListBoxEventClassDecls" baseLocation="CLASS"
+				owned="false" 
+				realize="true"
+				location="region(MEikListBoxObserver support)">
+			<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+typedef void ( ${handlerClassName}::*ListBoxEventHandler )( 
+		CEikListBox* aListBox, 
+		TListBoxEvent anEvent );
+
+void AddListBoxEventHandlerL( 
+		CEikListBox* aListBox, 
+		TListBoxEvent anEvent, 
+		ListBoxEventHandler aHandler );
+
+struct TListBoxEventDispatch 
+	{ 
+	CEikListBox* src; 
+	TListBoxEvent event; 
+	ListBoxEventHandler handler;
+	};
+	
+RArray< TListBoxEventDispatch > iListBoxEventDispatch;
+]]>			</template>
+		</defineLocation>
+		
+		<expandMacro name="GenerateMethod"
+				DeclPhase="OverriddenMethods"
+				DefnLocation="MAIN_FILE"
+				IsOwned="false"
+				FunctionLocationId="HANDLELISTBOXEVENTL_METHOD"
+				FunctionName="HandleListBoxEventL"
+				FunctionArgs="CEikListBox* aListBox, TListBoxEvent anEventType">
+			<expandArgument name="FunctionComment">
+/** 
+ * Override of the HandleListBoxEventL virtual function
+ */
+			</expandArgument>
+			<expandArgument name="FunctionBody"><![CDATA[
+for (int i = 0; i < iListBoxEventDispatch.Count(); i++)
+	{
+	const TListBoxEventDispatch& currEntry = iListBoxEventDispatch[i];
+	if ( currEntry.src == aListBox && currEntry.event == anEventType )
+		{
+		( this->*currEntry.handler )( aListBox, anEventType );
+		break;
+		}
+	}
+]]>			</expandArgument>
+		</expandMacro>
+
+		<!-- only define; declared above -->
+		<expandMacro name="DefineMethod"
+			DefnLocation="MAIN_FILE"
+			IsOwned="false"
+			FunctionLocationId="ADDLISTBOXEVENTHANDLERL_METHOD"
+			FunctionName="AddListBoxEventHandlerL"
+			FunctionArgs="CEikListBox* aListBox, TListBoxEvent anEvent, ListBoxEventHandler aHandler">
+			<expandArgument name="FunctionComment">
+/** 
+ * Helper function to register MEikListBoxObserver event handlers
+ */
+ 			</expandArgument>
+ 			<expandArgument name="FunctionBody">
+TListBoxEventDispatch entry;
+entry.src = aListBox;
+entry.event = anEvent;
+entry.handler = aHandler;
+TInt err = iListBoxEventDispatch.Append( entry );
+User::LeaveIfError( err );
+			</expandArgument>
+		</expandMacro>
+			
+		<template id="DispatchArrayDestroy" phase="Destroy"><![CDATA[
+iListBoxEventDispatch.Close();		
+]]>		</template>
+
+		<template id="SetObserver" phase="Initialize"><![CDATA[
+${instanceMemberName}->SetListBoxObserver( this );
+]]>		</template>	
+
+	</templateGroup>	
+
+	<!-- This macro is used to generate a list box event handler, using the
+		MEikListBoxObserver interface -->
+	<defineMacro id="GenerateListboxEventHandler">
+		<importArguments macroName="GenerateUserEventHandlerFunction"
+			arguments=" DeclLocation
+			ReturnType DefaultReturn ClassName FunctionName
+			FunctionComment FunctionBody" />
+		
+		<!-- the enum used to identify a particular list event -->
+		<macroArgument name="ListEventId" />
+		
+		<expandMacro name="GenerateUserEventHandlerFunction"
+			passArguments="DeclLocation 
+				ReturnType DefaultReturn ClassName FunctionName
+				FunctionComment FunctionBody"
+			DefnLocation="MAIN_FILE"
+			DeclPhase="UserHandlers"
+			FunctionLocationId="ListBox$(ListEventId)Handler"
+			FunctionArgs="CEikListBox* aListBox, TListBoxEvent anEventType" />
+		
+		<template phase="Initialize"><![CDATA[
+AddListBoxEventHandlerL( 
+		${instanceMemberName}, 
+		$(ListEventId), 
+		&${handlerClassName}::${event.handlerName} );
+]]>			</template>
+
+	</defineMacro>
+
+	<!-- use a templateGroup to pass the 'ifEvents' flag down to all the
+	generated locations and templates.  Using the template group
+	also allows for easier inheritance. -->
+	
+	<templateGroup id="EnterKeyPressed" ifEvents="enterKeyPressed" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventEnterKeyPressed" />
+	</templateGroup>
+
+	<templateGroup id="ItemClicked" ifEvents="itemClicked" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventItemClicked" />
+	</templateGroup>
+		
+	<templateGroup id="ItemDoubleClicked" ifEvents="itemDoubleClicked" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventItemDoubleClicked" />
+	</templateGroup>
+
+	<templateGroup id="ItemEditingStarted" ifEvents="listEditingStarted" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventEditingStarted" />
+	</templateGroup>
+
+	<templateGroup id="ItemEditingStopped" ifEvents="listEditingStopped" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventEditingStopped" />
+	</templateGroup>
+	
+	<templateGroup id="PenDownOnItem" ifEvents="penDownOnItem" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventPenDownOnItem" />
+	</templateGroup>
+	
+	<templateGroup id="ItemDraggingAction" ifEvents="itemDraggingAction" >
+		<expandMacro name="GenerateListboxEventHandler"
+			ListEventId="EEventItemDraggingActioned" />
+	</templateGroup>
+
+	<!-- generate the list items -->
+	<templateGroup id="GenerateListItems">			
+		<template phase="Initialize">
+
+// add list items
+		</template>
+	
+		<inline>
+			// get list item contributions
+			contribs.addAll(Engine.generateChildContributions(form))
+		</inline>
+	</templateGroup>
+
+	<!-- remaining search field stuff -->
+
+	<templateGroup id="SearchFieldStuff" form="Container" 
+		ifExpr="listBoxHasSearchField(instance)">
+		<template phase="Construct">
+${getListBoxSearchFieldName(instance)} = NULL;
+		</template>
+
+		<template phase="Initialize"><![CDATA[
+
+// set up the Search Field
+<% if (isFormattedCellListBox(instance)) { %>
+CAknSearchField* searchField = 
+		CAknSearchField::NewL( *this, CAknSearchField::EPopup, 0, 40 );
+<% } else { %>
+CAknSearchField* searchField = 
+		CAknSearchField::NewL( *this, CAknSearchField::ESearch, 0, 40 );
+<% } %>
+CleanupStack::PushL ( searchField );
+CAknFilteredTextListBoxModel* filteredModel = 
+	static_cast< CAknFilteredTextListBoxModel* >( ${instanceMemberName}->Model() );
+filteredModel->CreateFilterL( ${instanceMemberName}, searchField );
+CleanupStack::Pop( searchField );
+searchField->MakeVisible( ETrue );
+${getListBoxSearchFieldName(instance)} = searchField;
+]]>		</template>
+
+		<template phase="Destroy">
+delete ${getListBoxSearchFieldName(instance)};
+${getListBoxSearchFieldName(instance)} = NULL;
+		</template>
+
+		<template phase="ForwardDeclarations">
+class CAknSearchField;
+		</template>
+
+		<template phase="InstanceVariables">
+CAknSearchField* ${getListBoxSearchFieldName(instance)};
+		</template>
+
+	</templateGroup>
+	<!-- END remaining search field stuff -->
+	
+	
+	<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+	<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+	<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+	<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	</sourceGen>
+
+	</component>
+</componentDefinition>

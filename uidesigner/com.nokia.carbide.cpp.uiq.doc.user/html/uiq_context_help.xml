@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- =============================================================================== -->
+<!-- CONTEXT HELP FOR UIQ DIALOGS AND PLUGINS USED BY CARBIDE                        -->
+<!-- Includes context help references for:                                           -->
+<!--    plugin="com.nokia.carbide.cpp.uiq.ui"                                        -->
+<!--    plugin="com.nokia.carbide.cpp.uiq.components"                                -->
+<!-- =============================================================================== -->
+
+<contexts>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cpp.uiq.ui                                            -->
+<!-- =============================================================================== -->
+
+	<!-- EXECUTABLES VIEW -->
+	<context id="application_properties_page">
+		<topic label="Application Properties - UIQ" 	href="html/reference/projects/ref_new_proj_04.htm" />
+	</context>
+
+	<context id="design_selection_page">
+		<topic label="UIQ UI Design Selection" 			href="html/reference/projects/ref_new_proj_05.htm" />
+	</context>
+
+	<context id="content_variants_page">
+		<topic label="UIQ UI Design Selection" 			href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+	</context>
+
+	<context id="container_page">
+		<topic label="UIQ UI Design Selection" 			href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+	</context>
+
+
+<!-- =============================================================================== -->
+<!--    plugin="com.nokia.carbide.cpp.uiq.components"                                -->
+<!-- =============================================================================== -->
+	
+<!-- =============================================================================== -->
+<!--    plugin="org.eclipse.ui.ide"                                                  -->
+<!-- =============================================================================== -->
+
+	<context id="new_project_wizard_page_context">
+		<topic label="Type of Project - UIQ" 			href="html/reference/projects/ref_new_proj_02.htm" />
+		<topic label="Symbian OS SDKs - UIQ" 			href="html/reference/projects/ref_new_proj_03.htm" />
+	</context>
+
+
+</contexts>

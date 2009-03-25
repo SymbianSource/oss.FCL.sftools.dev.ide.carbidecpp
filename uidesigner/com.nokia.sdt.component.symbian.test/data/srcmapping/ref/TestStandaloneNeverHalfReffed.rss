@@ -1,0 +1,19 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+#include "output.hrh"
+
+RESOURCE DIALOG r_test_standalone_never
+	{
+	lines =
+		{
+		DIALOG_LINE
+			{
+			id = EMyContainerTestStandaloneNeverLabel1;
+			type = EEikCtLabel;
+			field = LABEL
+				{
+				text = "literal string 1";
+				};
+			}
+		};
+	}

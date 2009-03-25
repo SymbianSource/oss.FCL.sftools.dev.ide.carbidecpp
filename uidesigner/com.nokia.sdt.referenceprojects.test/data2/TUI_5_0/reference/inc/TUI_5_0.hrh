@@ -1,0 +1,6 @@
+enum TTUI_5_0ViewUids
+	{
+	ETUI_5_0ContainerViewId = 1,
+	EButton1Id,
+	EButton2Id
+	};

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Debugging DLLs, Applications, and Executables">
+	<intro>
+		<description>
+		Read the following information to Debug DLLs, Applications, and Executables.
+		</description> 
+	</intro> 
+	
+	<item title="Debugging DLLs" href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_debug_dlls.htm" >
+		<description>
+		Click question mark on right side for instructions to debug DLLs.
+		</description>
+	</item>
+
+	<item title="Debugging Applications" href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_debug_console.htm" >
+		<description>
+		Click question mark on right side for instructions to debug applications.
+		</description>
+	</item>
+
+	<item title="Importing and Debugging a Symbian Executable" href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_import_exe.htm" >
+		<description>
+		Click question mark on right side for instructions to import and debug a Symbian executable.
+		</description>
+	</item>
+
+	<item title="Attaching to a Symbian OS Process" href="/com.nokia.carbide.cpp.doc.user/html/tasks/processes/attach_debugger_to_process.htm" >
+		<description>
+		Click question mark on right side for instructions to attach to a Symbian OS Process.
+		</description>
+	</item>
+
+	<item title="Debugging a Symbian OS Program" href="/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_debugging.htm" >
+		<description>
+		Click question mark on right side for instructions to debug a compiled Symbian OS program.
+		</description>
+	</item>
+
+</cheatsheet>

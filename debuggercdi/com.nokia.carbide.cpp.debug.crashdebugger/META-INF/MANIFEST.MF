@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Crash Debugger Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.debug.crashdebugger;singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: com.nokia.carbide.cpp.debug.crashdebugger.CrashDebuggerPlugin
+Bundle-Vendor: Nokia
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui.console,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.cdt.debug.core,
+ org.eclipse.cdt.launch,
+ org.eclipse.core.resources,
+ org.eclipse.cdt.core,
+ com.freescale.cdt.debug.cw.core,
+ com.nokia.cdt.debug.launch,
+ com.nokia.cdt.debug.cw.symbian,
+ org.eclipse.cdt.ui,
+ com.nokia.carbide.cpp.featureTracker;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy

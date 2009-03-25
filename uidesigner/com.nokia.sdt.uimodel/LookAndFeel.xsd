@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.nokia.com/sdt/lookAndFeel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nokia.com/sdt/lookAndFeel" elementFormDefault="qualified">
+	<xsd:element name="lookAndFeel">
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element ref="color"/>
+				<xsd:element name="colorAlias" type="aliasType"/>
+				<xsd:element ref="font"/>
+				<xsd:element name="fontAlias" type="aliasType"/>
+				<xsd:element ref="image"/>
+				<xsd:element ref="maskedImage"/>
+				<xsd:element ref="position"/>
+				<xsd:element name="positionAlias" type="aliasType"/>
+				<xsd:element ref="dimension"/>
+				<xsd:element name="dimensionAlias" type="aliasType"/>
+				<xsd:element ref="rectangle"/>
+				<xsd:element name="rectangleAlias"  type="aliasType"/>
+				<xsd:element ref="integer"/>
+				<xsd:element name="integerAlias" type="aliasType"/>
+				<xsd:element ref="boolean"/>
+				<xsd:element name="booleanAlias" type="aliasType"/>
+				<xsd:element ref="string"/>
+				<xsd:element name="stringAlias" type="aliasType"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="aliasType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="ref" type="xsd:string" use="required"/>
+				<xsd:attribute name="key" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="color">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="r" type="xsd:short" use="required"/>
+			<xsd:attribute name="g" type="xsd:short" use="required"/>
+			<xsd:attribute name="b" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="font">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="initData" type="xsd:string" use="required"/>
+			<xsd:attribute name="size" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="image">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="imageFile" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="maskedImage">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="imageFile" type="xsd:string" use="required"/>
+			<xsd:attribute name="maskFile" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="position">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="x" type="xsd:short" use="required"/>
+			<xsd:attribute name="y" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="dimension">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="width" type="xsd:short" use="required"/>
+			<xsd:attribute name="height" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="rectangle">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="x" type="xsd:short" use="required"/>
+			<xsd:attribute name="y" type="xsd:short" use="required"/>
+			<xsd:attribute name="width" type="xsd:short" use="required"/>
+			<xsd:attribute name="height" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="integer">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="value" type="xsd:short" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="boolean">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="value" type="xsd:boolean" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="string">
+		<xsd:complexType>
+			<xsd:attribute name="key" type="xsd:string" use="required"/>
+			<xsd:attribute name="value" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

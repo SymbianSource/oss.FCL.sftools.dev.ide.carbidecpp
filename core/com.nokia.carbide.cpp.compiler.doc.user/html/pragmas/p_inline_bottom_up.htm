@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>inline_bottom_up</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>inline_bottom_up</h3>
+<p>  Controls the bottom-up function inlining method.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma inline_bottom_up on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>Bottom-up function inlining tries to expand up to eight levels of inline leaf functions. The maximum size of an expanded inline function and the caller of an inline function can be controlled by the pragmas shown in Listing 10.23 and Listing 10.24.</p>
+  <div class="listing">
+      <h4>Listing 10.23 Maximum Complexity of an Inlined Function</h4>
+      <p>// maximum complexity of an inlined function<br />
+    #pragma inline_max_size( max ) // default max == 256</p>
+  </div>
+  <div class="listing">
+      <h4>Listing 10.24 Maximum Complexity of a Function that Calls Inlined Functions</h4>
+      <p>// maximum complexity of a function that calls inlined functions<br />
+    #pragma inline_max_total_size( max ) // default max == 10000</p>
+  </div>
+  <p>where <span class="code">max</span> loosely corresponds to the number of instructions in a function.</p>
+  <p>If you enable this pragma, the compiler calculates inline depth from the last function in the call chain up to the first function that starts the call chain. The number of functions the compiler inlines from the bottom depends on the values of <span class="code">inline_depth</span>, <span class="code">inline_max_size</span>, and <span class="code">inline_max_total_size</span>. This method generates faster and smaller source code for some (but not all) programs with many nested inline function calls.</p>
+  <p>If you disable this pragma, top-down inlining is selected, and the inline_depth setting determines the limits for top-down inlining.</p>
+  <p>The pragmas <a href="p_inline_max_size.htm">inline_max_size</a> and <a href="p_inline_max_total_size.htm">inline_max_total_size</a>  do not affect the compiler in top-down mode.</p>
+  <p>This pragma corresponds to the Bottom-up Inline setting . To check this setting, use <span class="code">__option (inline_bottom_up)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

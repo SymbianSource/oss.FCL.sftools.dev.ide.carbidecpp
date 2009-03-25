@@ -1,0 +1,39 @@
+TARGET			UIQ_MultiPage_3_0.exe
+TARGETTYPE		EXE
+UID               		0x100039CE 0xEFA1BB5E
+VENDORID		0
+EPOCSTACKSIZE		0x5000
+
+SYSTEMINCLUDE		\epoc32\include \epoc32\include\variant \epoc32\include\ecom
+USERINCLUDE		..\inc
+
+SOURCEPATH		..\rsc
+START RESOURCE 	UIQ_MultiPage_3_0.rss
+HEADER
+TARGETPATH 		\resource\apps
+LANG			01
+END
+
+SOURCEPATH		..\reg
+START RESOURCE	UIQ_MultiPage_3_0_reg.rss
+TARGETPATH		\private\10003a3f\apps
+END
+
+LIBRARY			euser.lib apparc.lib cone.lib eikcore.lib qikcore.lib 
+LIBRARY			qikallocdll.lib eikcoctl.lib egul.lib quiconfigclient.lib
+LIBRARY			qikctl.lib eikctl.lib qikdlg.lib gdi.lib etext.lib
+LIBRARY			qikutils.lib bafl.lib qiklbx.lib
+
+STATICLIBRARY		qikalloc.lib
+
+START BITMAP		UIQ_MultiPage_3_0.mbm
+HEADER
+TARGETPATH		\resource\apps
+SOURCEPATH		..\data\appicons
+SOURCE	c24,8		UIQ_MultiPage_3_0_Small.bmp UIQ_MultiPage_3_0_Small_mask.bmp
+SOURCE	c24,8		UIQ_MultiPage_3_0_Large.bmp UIQ_MultiPage_3_0_Large_mask.bmp
+SOURCE	c24,8		UIQ_MultiPage_3_0_xLarge.bmp UIQ_MultiPage_3_0_xLarge_mask.bmp
+END
+
+SOURCEPATH		..\src
+SOURCE UIQ_MultiPage_3_0MultiPageView.cpp UIQ_MultiPage_3_0AppUi.cpp UIQ_MultiPage_3_0Application.cpp UIQ_MultiPage_3_0Document.cpp

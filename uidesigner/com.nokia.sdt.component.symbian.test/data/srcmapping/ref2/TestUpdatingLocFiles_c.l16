@@ -1,0 +1,9 @@
+CHARACTER_SET UTF8 // really
+
+// greeting
+#define STR_1 "Здравствулте, dude"
+#define STR_2 "До свидания" /* later */
+#define STR_5 ""
+#define STR_10 "вторник"
+#define STR_999 ""
+// localized strings for language: Russian (16)

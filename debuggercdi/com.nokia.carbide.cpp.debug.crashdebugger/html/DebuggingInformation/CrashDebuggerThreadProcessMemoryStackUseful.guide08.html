@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Virtual Memory and Run Addresses</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Virtual Memory and Run Addresses</h2>
+</div>
+<div>
+<p>
+Symbian OS devices have an MMU which is used to map the addresses seen
+by running code to real addresses of memory and I/O. The MMU in effect creates
+a virtual memory map, allowing scattered blocks of RAM to appear contiguous, or
+for a section of memory to appear at different addresses in different
+processes, or not at all. 
+</p>
+<p>
+Symbian OS uses the MMU to provide memory protection between processes,
+to allow sharing of memory, efficient allocation of RAM and to make all
+processes &#8220;see&#8221; the same memory layout. Three different memory models are
+supported by Symbian OS on ARM CPUs: 
+</p>
+<ul>
+<li>
+<p>
+moving model: this is the model familiar from EKA1 where processes
+are moved to a run-address in low memory when executing and moved back to a
+home-address in high memory when not running. 
+</p>
+</li>
+<li>
+<p>
+direct model: this is used when the CPU does not have an MMU, or is
+emulating a system without an MMU. Not normally used, but occasionally useful
+for development boards 
+</p>
+</li>
+<li>
+<p>
+multiple model: only supported in ARM architecture V6 and above,
+each process has its own set of MMU tables. A context switch changes the
+current MMU table to the new thread&#8217;s table, instead of moving memory about in
+a single table as with moving model. 
+</p>
+</li>
+</ul>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.10.6"></a></span>Fixed processes</h3>
+</div><div>
+<p>
+For ARM architectures with a virtually-tagged cache, fixed processes
+avoid the need to flush the cache on context switches by keeping all the code
+and data at a fixed address. This implies that there can only ever be one
+instance of each fixed process because the data chunk address cannot be
+changed. 
+</p>
+<p>
+Important servers such as the file server and window server are
+fixed. 
+</p>
+<p>
+There is no limit to the number of fixed processes that can be
+supported. The kernel will attempt to use ARM domains for fixed process
+protection, but there are a limited number of domains so when they are
+exhausted normal MMU techniques will be used. Domains are slightly faster in a
+context switch but this is negligible compared to the real purpose of the fixed
+process in avoiding the cache flush. 
+</p> 
+
+	   </div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

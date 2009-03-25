@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.symbian.CEikAligned.HorizontalAlignment">
+
+		<enumElement value="EHLeft" displayValue="left"/>
+		<enumElement value="EHCenter" displayValue="center"/>
+		<enumElement value="EHRight" displayValue="right"/>
+	</enumPropertyDeclaration>
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.symbian.CEikAligned.VerticalAlignment">
+		<enumElement value="EVTop" displayValue="top"/>
+		<enumElement value="EVCenter" displayValue="center"/>
+		<enumElement value="EVBottom" displayValue="bottom"/>
+	</enumPropertyDeclaration>
+	
+	<component baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		qualifiedName="com.nokia.sdt.symbian.CEikAlignedBase"
+		abstract="true"
+		version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"  />
+		<properties>
+			<enumProperty category="Appearance" name="horiz_align" 
+					type="com.nokia.sdt.symbian.CEikAligned.HorizontalAlignment"
+					default="EHCenter"
+					descriptionKey="horiz_alignDescription" />
+			<enumProperty category="Appearance" name="vert_align" 
+					type="com.nokia.sdt.symbian.CEikAligned.VerticalAlignment"
+					default="EVTop"
+					descriptionKey="vert_alignDescription" />
+		</properties>
+	</component>
+</componentDefinition>

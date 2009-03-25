@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true"/>
+      <toc
+            file="tocconcepts.xml"
+            primary="false"/>
+      <toc
+            file="tocgettingstarted.xml"
+            primary="false"/>
+      <toc
+            file="tocreference.xml"
+            primary="false"/>
+      <toc
+            file="toctasks.xml"
+            primary="false"/>
+	   
+	  <!-- Moved release notice to manual (20080517)
+      <toc
+            file="tocRelease.xml"
+            primary="false"/>
+	  -->
+
+		<index path="index" />
+    </extension>
+
+	<!-- UI Designer cheatsheets extension  -->
+	<!--	
+	<extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+         
+      <category
+            id="com.nokia.carbide.cpp.uidesigner.cheatsheets"
+            name="UI Designer Development" />
+            
+      <cheatsheet
+            category="com.nokia.carbide.cpp.uidesigner.cheatsheets"
+            contentFile="html/cheatsheets/uid_getStarted_cs.xml"
+            id="com.nokia.carbide.cpp.uidesigner.doc.user.uid_GetStarted"
+            name="Getting Started with UI Designer" /> 
+            
+      <cheatsheet
+            category="com.nokia.carbide.cpp.uidesigner.cheatsheets"
+            contentFile="html/cheatsheets/uid_custom_components_cs.xml"
+            id="com.nokia.carbide.cpp.uidesigner.doc.user.uid_CustComponents"
+            name="Creating Custom Components" />
+            
+   </extension>
+	-->
+	
+	<!-- Add UI Designer info to Welcome pages to extend content -->
+	
+	<extension
+		point="org.eclipse.ui.intro.configExtension">
+		
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="intro/overviewUIDesignerExtContent.xml" /> 
+		
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="intro/tutorialsUIDesignerExtContent.xml" /> 
+
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="intro/newsUIDesignerExtContent.xml" /> 
+		 
+		<!--
+		<configExtension
+			configId="com.nokia.carbide.cpp.introConfig"
+			content="intro/samplesUIDesignerExtContent.xml" /> 
+		-->
+		
+	</extension>
+
+	<!-- CONTEXT IDs for extending CONTEXTUAL HELP in windows, dialogs, and views -->
+	
+	<extension point="org.eclipse.help.contexts" >
+
+		<contexts
+             file="html/context_help/com_nokia_sdt_symbian_ui.xml"
+             plugin="com.nokia.carbide.cpp.symbian.ui" />
+
+		<contexts
+             file="html/context_help/com_nokia_sdt_uidesigner.xml"
+             plugin="com.nokia.carbide.cpp.uidesigner" />
+
+		<contexts
+             file="html/context_help/org_eclipse_ui.xml"
+             plugin="org.eclipse.ui" />
+
+		<contexts
+             file="html/context_help/com_nokia_sdt_uimodel.xml"
+             plugin="com.nokia.carbide.cpp.uimodel" />
+
+	   <!-- ADD UID INFO TO CARBIDE.C++ PREF PANEL -->
+       <contexts file="html/context_help/com_symbian_cdt_sdk.xml" 
+       		plugin="com.symbian.cdt.sdk" />
+
+	   <!-- UID WIZARDS F1 HELP  -->
+		<contexts
+             file="html/context_help/carbide_wizards_uid.xml"
+             plugin="com.nokia.carbide.cpp.series60.componentlibrary" /> 
+             
+		<contexts
+             file="html/context_help/com_nokia_carbide_templatewizard.xml"
+             plugin="com.nokia.carbide.templatewizard" /> 
+             
+    </extension>
+
+ 	<extension point="org.eclipse.help.index">
+		<index file="html/index.xml"/>
+	</extension>
+
+</plugin>

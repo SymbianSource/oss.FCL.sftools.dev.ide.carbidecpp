@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Birthdays</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Ed Swartz">
+	<META NAME="CREATED" CONTENT="20060612;8290139">
+	<META NAME="CHANGEDBY" CONTENT="Ed Swartz">
+	<META NAME="CHANGED" CONTENT="20060619;11023072">
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h2>Tutorial: Birthdays - Using the S60 UI Designer</h2>
+<P>This example shows how to use the Carbide.c++ UI Designer for S60 to define the UI of an application and to implement the "real work" in the generated code. </P>
+<P>The goals of the application are to:</P>
+<UL>
+  <LI>
+    <P><a href="BirthdaysTutorial_02.html">Maintain data and UI separation</a></P>
+  <LI>
+    <P><b>Use the S60 UI Designer to create the UI</b></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_04.html">Editing generated source to provide application logic</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_05.html">Save and restore birthdays from persistent storage</a></P>
+  <LI><a href="BirthdaysTutorial_06.html">Summary </a>
+  </UL>
+<h3><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Using the S60 UI
+Designer</FONT></FONT></h3>
+<P>We want the UI to mirror the birthday information, in this case. 
+</P>
+<P>A list box shows the birthdays, with name and date/age fields and
+an icon on each line. The person's name and birthday are always
+displayed. If a birthday is coming up in the next week, the icon
+indicates this, and the lucky person's age is displayed next to the
+date. This list will always be present, so it will be the primary
+Avkon view for the application.</P>
+<P>A birthday is edited with a form, where a to-do note can be
+edited. Since this will come up at various times throughout the
+application lifecycle and needs to pass data back and forth with the
+list, we will make this a dialog rather than an Avkon view.</P>
+<H4>Project creation</H4>
+<P STYLE="font-weight: medium">The initial project was created using
+the "C++ Application for S60" wizard with the "S60
+3rd. Ed. GUI Application with UI Designer" template.
+The initial view we created was the list box, though it could have
+been the form.</P>
+<H4>Application Design</H4>
+<P>Open the Application Editor by opening <span class="code">"application.uidesign"</span>
+or selecting the "Open Carbide.c++ Application Design"
+item from the project's context menu. Select the "UI Designs"
+tab. This shows the designs used for this project. 
+</P>
+<UL>
+	<LI><P><span class="code">BirthdaysList.uidesign</span>: a list box showing all the birthdays.
+	This is the initial view, and is an Avkon view.</P>
+	<LI><P><span class="code">BirthdayForm.uidesign</span>: a form for editing one birthday. This
+	is a dialog, constructed at runtime.</P>
+</UL>
+<H3>Birthdays List Design</H3>
+<P>Open "<span class="code">BirthdaysList.uidesign</span>." This is a list box
+showing the birthdays.</P>
+<H4>List box characteristics</H4>
+<P>The list is configured for "Double Large" style. This
+allows us to show the person's name in large print with the date in
+small type underneath. An icon is shown on the left.</P>
+<P>The list box has the "markable" list type. This allows
+you to select one or more items at runtime and act on them in a
+group. In this mode, the designer shows the mark icon on each item
+(this has no relation to whether an item is marked initially &ndash;
+no items are marked by default at runtime).</P>
+<P>The list box will have no static data, so it is drawn with the "No
+data" label. No List Box Items are present.</P>
+<H4>Non-layout components</H4>
+<P>There are two components in the lower half of the view editor: the
+<b>Options</b> menu and the "remove" confirmation query. You can
+select these to see and edit the UI they will present when popped up.
+</P>
+<P>The <b>Options</b> menu contains the commands we will publish:</P>
+<UL>
+	<LI><P><B>Add</B>: open a form used to add a new birthday.</P>
+	<LI><P><B>Edit</B>: modify the content of a birthday.</P>
+	<LI><P><B>Mark/unmark</B>: show submenu for item selection. The UI
+	Designer automatically provides this system menu pane (submenu) when
+	you change the type to "markable." (You may also add
+	this via the "System Markable List Menu Pane"
+	component.) 
+	</P>
+	<LI><P><B>Delete</B>: delete marked birthdays from the list (when
+	these people no longer want your novelty ties), asking first for
+	confirmation with the "remove" confirmation query.</P>
+</UL>
+<H3>Birthday Form Design</H3>
+<P>Open "<span class="code">BirthdayForm.uidesign</span>." This form is used to
+edit a single birthday entry. 
+</P>
+<P>This is a dialog, created and displayed on demand. We specified
+this by unchecking the "Support view switching" checkbox
+on the last page of the "S60 UI Design" wizard when
+creating the form. In the S60 UI Designer, there is no explicit
+mention of a dialog, but a form is a dialog. If a form is contained
+in a view, it does not pop up like a dialog, and is visible as long
+as the view is showing.</P>
+<H4>Form characteristics</H4>
+<P>The "waiting" option is enabled, so we can run the
+dialog and get a response from the <span class="code">RunLD()</span> 
+call. In an Avkon view,
+this flag is unset. If the dialog does not wait, <span class="code">RunLD()</span> returns
+immediately and extra code is required to asynchronously notify the
+application it is closed; in an Avkon view, the form is destroyed
+when the view is deactivated.</P>
+<P>The "double spaced format" option is enabled, since
+the form has so few lines and space is not a premium.</P>
+<P>The "edit mode only" option is enabled, so editing is
+immediately possible. 
+</P>
+<H4>Form editors</H4>
+<P>The form has two text editors (<span class="code">CEikEdwin</span>) for the name and to-do
+fields, and a date editor (<span class="code">CEikDateEditor</span>) for the birth date. These
+are not changed from the defaults, except for the default text and
+prompt.</P>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</BODY>
+</HTML>

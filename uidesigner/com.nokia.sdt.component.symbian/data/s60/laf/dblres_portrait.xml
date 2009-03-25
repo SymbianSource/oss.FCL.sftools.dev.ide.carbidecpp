@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lookAndFeel [
+<!ENTITY common_laf SYSTEM "common.inc">
+<!ENTITY portrait_laf SYSTEM "portrait.inc">
+<!ENTITY dblres_laf SYSTEM "dblres_laf.inc">
+]>
+
+<lookAndFeel xmlns="http://www.nokia.com/sdt/lookAndFeel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- the data/s60/images relative directory -->
+<string key="image.dir" value="dblres/"/>
+
+<!-- include common definitions -->
+&common_laf;
+&portrait_laf;
+&dblres_laf;
+
+<!-- fonts are found relative to data/s60/fonts -->
+
+<font key="AnnotationFont" initData="s60ssb.ttf" size="16" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="16" />
+<font key="EditorFont" initData="s60ssb.ttf" size="20" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="18" />
+<font key="MessageFont" initData="s60ssb.ttf" size="20" />
+<font key="NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="16" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="20" />
+<font key="TitleFont" initData="s60tsb.ttf" size="22" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="20" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="20" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="14" />
+<font key="message.font" initData="s60ssb.ttf" size="20" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="15" />
+<font key="navi.text.font" initData="s60snr.ttf" size="15" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="16" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="16" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="22" />
+
+
+<!-- indicators take up 16 pixels -->
+
+<rectangle key="status.pane.bounds" x="32" y="0" width="304" height="88"/>
+<rectangle key="status.pane.title.bounds" x="92" y="0" width="216" height="58"/>
+<rectangle key="control.pane.bounds" x="0" y="375" width="352" height="40"/>
+<rectangle key="content.pane.bounds" x="0" y="88" width="352" height="288"/>
+<rectangle key="status.bar1.bounds" x="0" y="58" width="352" height="30"/>
+<rectangle key="navi.content.bounds" x="92" y="58" width="212" height="30"/>
+<rectangle key="listitem.any.markIcon" x="316" y="6" width="24" height="24" />
+ 	
+<position key="context.icon.position" x="0" y="0"/>
+
+<dimension key="screen.size" width="352" height="416"/>
+
+</lookAndFeel>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- =============================================================================== -->
+<!-- CONTEXT HELP FOR BUGREPORT PLUGIN                                               -->
+<!-- =============================================================================== -->
+
+<contexts>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.bugreport                                                -->
+<!-- =============================================================================== -->
+
+	<!-- BUGREPORT PRODUCT SELECTION PAGE -->
+	<context id="ProductSelectionPageContext">
+		<description>Submit Carbide bug reports or enhancement requests</description>
+	</context>
+
+	<!-- BUGREPORT BUG DESCRIPTION PAGE -->
+	<context id="BugDescriptionPageContext">
+		<description>Provide enough information to help us reproduce the bug</description>
+		<topic label="New Bug Report or Suggestion" 	 href="html/wnd_new_bug_report.htm" />
+	</context>
+
+	<!-- BUGREPORT SUMMARY PAGE -->
+	<context id="SummaryPageContext">
+		<description>Review report prior to sending it in</description>
+		<topic label="Report Summary" 	 href="html/wnd_summary_page.htm" />
+	</context>
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.bugdatacollector                                      -->
+<!-- =============================================================================== -->
+
+	<!-- BUGREPORT PREFERENCE PANEL -->
+	<context id="PageContext">
+		<description>Provide user name and password to submit Carbide bug reports</description>
+		<topic label="Bug Reports preference panel" 	 href="html/prefs_bug_reporter.htm" />
+	</context>
+	
+
+</contexts>

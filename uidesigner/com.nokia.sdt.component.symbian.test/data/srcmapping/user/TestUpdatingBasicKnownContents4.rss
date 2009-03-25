@@ -1,0 +1,9 @@
+// this is so cool
+#include <basicheader.rh>
+
+// was this generated?
+RESOURCE ONE_STRING r_test0 
+	{
+	stag=23; // what?
+	flags=42; // yeah!
+	}

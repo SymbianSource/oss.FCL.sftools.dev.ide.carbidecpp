@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	<component id="com.nokia.examples.codeLayoutContainer">
+		<property id="name">root</property>
+		<compoundProperty id="location">
+			<property id="x">0</property>
+			<property id="y">0</property>
+		</compoundProperty>
+		<compoundProperty id="size">
+			<property id="width">176</property>
+			<property id="height">208</property>
+		</compoundProperty>
+		<component id="com.nokia.examples.layoutable">
+			<property id="name">child</property>
+			<compoundProperty id="location">
+				<property id="x">0</property>
+				<property id="y">0</property>
+			</compoundProperty>
+			<compoundProperty id="size">
+				<property id="width">0</property>
+				<property id="height">0</property>
+			</compoundProperty>
+		</component>
+	</component>  
+</designerData>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id: plugin.xml,v 1.3 2009/02/17 20:23:17 tkelly Exp $
+-->
+
+<plugin>
+   <extension-point id="wizardTemplate" name="WizardTemplate" schema="schema/wizardTemplate.exsd"/>
+   <extension-point id="templateProcesses" name="Template Processes" schema="schema/templateProcesses.exsd"/>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "platform:/resource/com.nokia.carbide.templatewizard/schema/template.xsd" 
+       class = "com.nokia.carbide.internal.template.gen.Template.TemplatePackage"
+       genModel = "schema/template.genmodel" /> 
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+    <parser 
+       type="template" 
+       class="com.nokia.carbide.internal.template.gen.Template.util.TemplateResourceFactoryImpl" />
+  </extension>
+  <extension
+        point="com.nokia.carbide.templatewizard.templateProcesses">
+     <templateProcess
+           class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+           id="com.nokia.carbide.templatewizard.CopyFiles">
+        <description>
+Copies files from the template to the project, optionally template-expanding contents.
+Parameters:
+
+parameter project (required): name of the project to copy into
+* attribute projectName (required): project name
+
+parameter tree (sequence, 0+): a tree of files to copy
+* attribute sourcePath (required): template.xml-relative folder for source content
+* attribute targetPath (required): project-relative folder for target content (does NOT use basename of sourcePath)
+* attribute subsitute (optional, default true): whether this file is parameterized and needs to be variable-substituted from variables in the template&apos;s value map.  
+When substituting, unrecognized variables are left intact.
+Optionally, any of three operators can be used to automatically uppercase, lowercase and titlecase (uppercase only the first character) the value prior to substitution. The syntax for using the operators is $(id$upper), $(id$lower) or $(id$title).
+* attribute overwrite (optional, default false): if true, allows overwriting existing files without error.
+        </description>
+     </templateProcess>
+     <templateProcess
+           class="com.nokia.carbide.templatewizard.processes.CopyFileTree"
+           id="com.nokia.carbide.templatewizard.CopyFileTree">
+        <description>
+Copies a tree of files from one location to another, optionally template-expanding contents along the way. The leaf of
+source is NOT placed into the target, so repeat the leaf directory in
+targetPath if required.
+
+Syntax:
+
+parameter project (required): name of the project to copy into
+* attribute projectName (required): project name
+
+parameter tree (sequence, 0+): a tree of files to copy
+* attribute sourcePath (required): template.xml-relative folder for source content
+* attribute targetPath (required): project-relative folder for target content (does NOT use basename of sourcePath)
+* attribute subsitute (optional): whether this file is parameterized and needs to be variable-substituted from variables in the template&apos;s value map (defaults to false, unlike CopyFiles).  
+When substituting, unrecognized variables are left intact.
+Optionally, any of three operators can be used to automatically uppercase, lowercase and titlecase (uppercase only the first character) the value prior to substitution. The syntax for using the operators is $(id$upper), $(id$lower) or $(id$title).
+
+* attribute excludedFileOrDirectoryPattern (optional):  a regular expression used to filter out files or directories (leaf name only).  If not specified, CVS and .svn directories are the default filter.
+
+* attribute noSubstituteFileOrDirectoryPattern (optional): a regular expression used to exclude files or directories from variable substitution (leaf name only).  If a directory matches, all its files and subdirectories are excluded from substitution.  If not specified, all files are substituted if &apos;substitute=true&apos;.
+        </description>
+     </templateProcess>
+     
+	<templateProcess
+           class="com.nokia.carbide.templatewizard.processes.CreateFolders"
+           id="com.nokia.carbide.templatewizard.CreateFolders">
+        <description>
+Creates folders in the project.
+
+Syntax:
+
+parameter project (required): name of the project to copy into
+* attribute projectName (required): project name
+
+parameter folder (sequence, 0+): folder to create
+* attribute path (required): project-relative folder to create.  This can create multiple levels of folders in one shot (e.g. src/my/folder).
+        </description>
+     </templateProcess>    
+      
+	<templateProcess
+           class="com.nokia.carbide.templatewizard.processes.CreateTemplateVariable"
+           id="com.nokia.carbide.templatewizard.DefineTemplateVariable">
+        <description>
+Defines template variables for use by other processes.  This augments the template's variable map for use by other processes
+(such as template substitution by CopyFiles).
+
+Syntax:
+
+parameter variable (sequence, 0+): a variable to define
+* attribute variableName (required): variable name
+* attribute value (required): variable value
+        </description>
+     </templateProcess>     
+     
+	<templateProcess
+           class="com.nokia.carbide.templatewizard.processes.OpenFileInEditor"
+           id="com.nokia.carbide.templatewizard.OpenFileInEditor">
+        <description>
+Opens the specified file in an editor.
+ 
+Syntax:
+
+parameter project (required): the project and file information
+* attribute projectName (required): project in which to find the file
+* attribute fileName (required): path in project to the file to open
+* attribute editorId (optional): the specific Eclipse editor used to open the file; if the id is not specified or
+the editor is not registered, a default editor is used
+        </description>
+     </templateProcess>     
+  </extension>
+
+</plugin>
+

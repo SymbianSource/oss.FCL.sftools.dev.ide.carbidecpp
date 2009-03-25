@@ -1,0 +1,11 @@
+#include <cba.rh>
+
+RESOURCE CBA r_test_choice_cbacustom
+	{
+	buttons = { r_test_choice_cbacustom_buttons_0 };
+	}
+RESOURCE CBA_BUTTON r_test_choice_cbacustom_buttons_0
+	{
+	id = EAknSoftkeyPanic;
+	txt = "Panic";
+	}

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugging Multiple Projects</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Debugging Multiple Projects</h2>
+<p>Use the <a href="prj_import_exe.htm">import Symbian executable</a> feature to import another project's executable into a main project to debug them both in a single debugging session. This works very well when every executable you import uses the same debug <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a>, enabling you to switch between the various executables as necessary to debug each in turn or together. For example, you could debug an application project as well as the two DLL projects that it uses, in a single debug session.</p>
+<p class="note"><b>NOTE</b> You must have the executable's project  in order to embed that executable into the main project for debugging. </p>
+<div class="step">
+  <h4>Configuring to Debug Multiple Projects </h4>
+  <ol>
+    <li><a href="prj_import_exe.htm">Import</a> one or more project executables into the current project</li>
+  <p>The debugger loads the executable into the project.</p>
+    <li> Debug the project using the same debug launch configuration </li>
+     <p>The debugger loads the project and all embedded executables for debugging.</p>
+  </ol>
+</div>
+<h5>Related Concepts</h5>
+<ul>
+  <li><a href="../../concepts/SDKSupport.html">SDK Support</a></li>
+</ul>
+<h5>Related Tasks</h5>
+<ul>
+  <li><a href="prj_import_exe.htm">Importing Executables for Debugging</a></li>
+  <li><a href="../WorkingwithSDKs.html">Working with SDKs</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

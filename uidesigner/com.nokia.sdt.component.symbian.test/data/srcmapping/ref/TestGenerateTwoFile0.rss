@@ -1,0 +1,6 @@
+#include <basicheader.rh>
+
+RESOURCE ONE_STRING r_test_multifile0
+	{
+	text = "text";
+	}

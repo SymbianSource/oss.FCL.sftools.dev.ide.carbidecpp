@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- no component definition here, just common compound property and enum types -->
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.locationProperty">
+	<property name="x" type="integer" minValue="-1000" maxValue="1000"
+		descriptionKey="xDescription" />
+	<property name="y" type="integer" minValue="-1000" maxValue="1000"
+		descriptionKey="yDescription" />
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.sizeProperty">
+	<property name="width" type="integer" minValue="0" maxValue="1000"
+		descriptionKey="widthDescription" />
+	<property name="height" type="integer" minValue="0" maxValue="1000"
+		descriptionKey="heightDescription" />
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.MbmImageProperty"
+	editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+	converterClass="com.nokia.sdt.symbian.images.SymbianImageValueConverter">
+	<property name="bmpfile" type="string" descriptionKey="bmpfileDescription"></property>
+	<property name="bmpid" type="string" descriptionKey="bmpidDescription"></property>
+	<property name="bmpmask" type="string" descriptionKey="bmpmaskDescription"></property>
+	<sourceTypeMapping>
+		<mapResourceType struct="QIK_CONTENT_MBM" headers="qikon.rh">
+			<select property="bmpfile">
+				<choice value="">
+				</choice>
+				<choice>
+					<mapSimpleMember property="bmpfile" member="bmpfile"/>
+					<select property="bmpid">
+						<choice value="">
+						</choice>
+						<choice>
+							<mapIdentifierMember property="bmpid" member="bmpid"/>
+						</choice>
+					</select>
+					<select property="bmpmask">
+						<choice value="">
+						</choice>
+						<choice>
+							<mapIdentifierMember property="bmpmask" member="bmpmask"/>
+						</choice>
+					</select>
+				</choice>
+			</select>						
+		</mapResourceType>
+	</sourceTypeMapping>
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.ImageProperty" editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory" converterClass="com.nokia.sdt.symbian.images.UIQImageValueConverter">
+	<property name="bmpfile" type="string" descriptionKey="bmpfileDescription"></property>
+	<property name="bmpid" type="string" descriptionKey="bmpidDescription"></property>
+	<property name="bmpmask" type="string" descriptionKey="bmpmaskDescription"></property>
+	<property name="uri" descriptionKey="uriDescription" type="string"></property>
+	<sourceTypeMapping>
+		<select property="uri">
+			<choice value="">
+				<mapResourceType struct="QIK_CONTENT_MBM" headers="qikon.rh">
+					<select property="bmpfile">
+						<choice value="">
+						</choice>
+						<choice>
+							<mapSimpleMember property="bmpfile" member="bmpfile"/>
+							<select property="bmpid">
+								<choice value="">
+								</choice>
+								<choice>
+									<mapIdentifierMember property="bmpid" member="bmpid"/>
+								</choice>
+							</select>
+							<select property="bmpmask">
+								<choice value="">
+								</choice>
+								<choice>
+									<mapIdentifierMember property="bmpmask" member="bmpmask"/>
+								</choice>
+							</select>
+						</choice>
+					</select>						
+				</mapResourceType>
+			</choice>
+			<choice>
+				<mapResourceType struct="QIK_CONTENT" headers="qikon.rh">
+					<mapSimpleMember property="uri" member="uri"/>
+				</mapResourceType>
+			</choice>
+		</select>
+		
+	</sourceTypeMapping>
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.URIImageProperty" 
+	editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory" 
+	converterClass="com.nokia.sdt.symbian.images.UIQURIImageValueConverter">
+	<property name="uri" descriptionKey="uriDescription" type="string"></property>
+	<sourceTypeMapping>
+		<mapResourceType struct="QIK_CONTENT" headers="qikon.rh">
+			<mapSimpleMember property="uri" member="uri"/>
+		</mapResourceType>
+	</sourceTypeMapping>
+</compoundPropertyDeclaration>
+	
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.BaseClassInfo">
+	<property name="baseClassName" type="string" descriptionKey="baseclassname.description"></property>
+	<property name="baseClassHeader" type="string" descriptionKey="baseclassheader.description"></property>
+	<property name="baseClassLibrary" type="string" descriptionKey="baseclasslibrary.description"></property>
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.ClassInfo">
+	<property name="ClassName" type="string"></property>
+	<property name="ClassHeader" type="string"></property>
+	<property name="ClassLibrary" type="string"></property>
+</compoundPropertyDeclaration>
+
+<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.UIConfigurationMode">
+		<enumElement value="KQikSoftkeyStylePortrait" displayValue="%KQikSoftkeyStylePortrait"></enumElement>
+		<!--<enumElement value="KQikSoftkeyStyleLandscape" displayValue="Softkey landscape style"></enumElement>-->
+		<!--<enumElement value="KQikSoftkeyStyleLandscape180" displayValue="Softkey inverted landscape style"></enumElement>-->
+		<!--<enumElement value="KQikSoftkeyStyleSmallPortrait" displayValue="Softkey small portrait style"></enumElement>-->
+		<!--<enumElement value="KQikSoftkeyStyleSmallLandscape" displayValue="Softkey small landscape style"></enumElement>-->
+		<!--<enumElement value="KQikSoftkeyStyleSmallLandscape180" displayValue="Softkey small inverted landscape style"></enumElement>-->
+		<enumElement value="KQikSoftkeyStyleTouchPortrait" displayValue="%KQikSoftkeyStyleTouchPortrait"></enumElement>
+		<!--<enumElement value="KQikSoftkeyStyleTouchLandscape" displayValue="Softkey touch landscape style"></enumElement>-->
+		<!--<enumElement value="KQikSoftkeyStyleTouchLandscape180" displayValue="Softkey touch inverted landscape style"></enumElement>-->
+ 		<enumElement value="KQikPenStyleTouchPortrait" displayValue="%KQikPenStyleTouchPortrait"></enumElement>
+ 		<!--<enumElement value="KQikPenStyleTouchLanscape" displayValue="Pen touch landscape style"></enumElement>-->
+ 		<!--<enumElement value="KQikPenStyleTouchLanscape180" displayValue="Pen touch inverted landscape style"></enumElement>-->
+</enumPropertyDeclaration>
+
+</componentDefinition>

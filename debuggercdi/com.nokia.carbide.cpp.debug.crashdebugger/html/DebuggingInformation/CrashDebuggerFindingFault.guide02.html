@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Unhandled Exceptions</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Unhandled Exceptions</h2>
+</div>
+<div>
+<p>If the <em>Fault Category</em> is <em>Exception</em>, then
+the fault is caused by an unhandled processor exception. You can get further
+information on the type of exception by looking at the first three lines of the
+generated output:</p>
+<p class="listing">Fault Category: Exception  Fault Reason: 10000000<br>
+  ExcId 00000001 CodeAddr f800415c DataAddr 00000000 Extra 00000005<br>Exc 1 Cpsr=60000013 FAR=00000000 FSR=00000005</p>
+<p> The CodeAddr and DataAddr fields show
+the address of the instruction that caused the exception and, depending on the
+type of exception and instruction, the address of the data the instruction was
+trying to access. You can use the CodeAddr value to find the
+function which was being executed by <a href="CrashDebuggerUsingMAKSYM-Ref.guide.html">using the MAKSYM tool</a>.</p>
+<p>The number after ExcId is the type of exception, in
+hexadecimal, and is one of the
+<a href="CrashDebuggerARMexceptionsProcessorModes.guide.html#debugging%2earm%2dexceptions%2dprocessormodes%2eexceptions" title="ARM Exception types, fault status register values, processor modes / ARM exception types">ARM exception types</a>. The meaning of the numbers depends on the type of
+processor.</p>
+<ul>
+<li>
+<p>If the exception is a prefetch abort, then the code address is
+invalid.</p>
+</li>
+<li>
+<p>A data abort means that the code address is invalid.</p>
+</li>
+</ul>
+<p>The number after FAR is the fault address register;
+this is the address that caused the fault.</p>
+<p>The number after FSR is the
+<a href="CrashDebuggerARMexceptionsProcessorModes.guide.html#debugging%2earm%2dexceptions%2dprocessormodes%2efsr" title="ARM Exception types, fault status register values, processor modes / Fault status register values (FSR register)">fault status register value</a> and shows why the MMU raised an exception.</p>
+<p>The number after CPSR is the value of the CPU's CPSR register when
+the exception occurred. The 5 least-significant bits of the CPSR register
+indicate the <a href="CrashDebuggerARMexceptionsProcessorModes.guide.html#debugging%2earm%2dexceptions%2dprocessormodes%2ecpsr" title="ARM Exception types, fault status register values, processor modes / ARM processor modes (CPSR register)">ARM processor mode</a>.</p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

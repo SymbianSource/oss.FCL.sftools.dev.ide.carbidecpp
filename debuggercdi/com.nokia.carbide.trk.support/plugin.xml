@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="com.nokia.carbide.remoteConnections.service">
+      <service
+            class="com.nokia.carbide.trk.support.service.TRKService">
+      </service>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectionType">
+      <connectionType
+            class="com.nokia.carbide.trk.support.connection.SerialConnectionType">
+      </connectionType>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectionType">
+      <connectionType
+            class="com.nokia.carbide.trk.support.connection.SerialBTConnectionType">
+      </connectionType>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectionType">
+      <connectionType
+            class="com.nokia.carbide.trk.support.connection.USBConnectionType">
+      </connectionType>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.service">
+      <service
+            class="com.nokia.carbide.trk.support.service.TracingService">
+      </service>
+   </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.connectedServiceFactory">
+      <connectedServiceFactory
+            class="com.nokia.carbide.trk.support.service.ConnectedServiceFactory">
+      </connectedServiceFactory>
+   </extension>
+ 	
+</plugin>

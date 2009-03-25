@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<compoundPropertyDeclaration qualifiedName="com.nokia.examples.locationProperty">
+		<property name="x" type="integer"/>
+		<property name="y" type="integer"/>
+	</compoundPropertyDeclaration>
+	<compoundPropertyDeclaration qualifiedName="com.nokia.examples.sizeProperty">
+		<property name="width" type="integer"/>
+		<property name="height" type="integer"/>
+	</compoundPropertyDeclaration>
+	<component friendlyName="Base" qualifiedName="com.nokia.examples.baseComponent" 
+		category="Testing" version="1.0">
+		<documentation>
+			<information>Base component information</information>
+			<helpTopic>Base component help topic</helpTopic>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" />
+		<designerImages smallIconFile="test-image.bmp" largeIconFile="test-image.bmp" layoutImageFile="test-image.bmp"/>
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+		</attributes>
+		<properties>
+			<property category="Basic" displayName="name" name="name" type="uniqueName"/>
+			<property category="Bizarre" displayName="flag" name="flag" type="boolean"/>
+			<compoundProperty category="Layout" displayName="location" name="location" type="com.nokia.examples.locationProperty"/>
+			<compoundProperty category="Layout" displayName="size" name="size" type="com.nokia.examples.sizeProperty"/>
+			<property name="text" type="localizedString"/>
+			<componentReferenceProperty scope="siblings" name="siblingRef"/>
+		</properties>
+		<events>
+			<event name="com.nokia.examples.baseComponent.somethingHappened" category="example" 
+			    handlerNameTemplate="{title(name)}_SomethingHappened" 
+			    />
+		</events>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<code class="com.nokia.sdt.series60.component.DefaultPropertyExtenderFactory"/>
+			</implementation>
+		</implementations>
+	</component>
+</componentDefinition>

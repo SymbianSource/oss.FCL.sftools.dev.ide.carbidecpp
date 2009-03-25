@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Capabilities Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.debug.capabilities;singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.ui
+Bundle-ActivationPolicy: lazy

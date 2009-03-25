@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.sdt.uimodel/src"
+    editDirectory="/com.nokia.uidesigner.edit/src" editorDirectory="/com.nokia.uidesigner.editor/src"
+    modelPluginID="com.nokia.uidesigner" runtimeJar="true" modelName="Skin" editPluginClass="com.nokia.sdt.ui.skin.provider.SkinEditPlugin"
+    editorPluginClass="com.nokia.sdt.ui.skin.presentation.SkinEditorPlugin" testsDirectory="/com.nokia.uidesigner.tests/src"
+    testSuiteClass="com.nokia.sdt.ui.skin.tests.SkinAllTests" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>skin.xsd</foreignModel>
+  <genPackages prefix="Skin" basePackage="com.nokia.sdt.ui" resource="XML" disposableProviderFactory="true"
+      ecorePackage="com.nokia.sdt.ui.skin.ecore#/">
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//BackgroundColorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//BackgroundColorType/blue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//BackgroundColorType/green"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//BackgroundColorType/red"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//DocumentRoot/backgroundColor"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//DocumentRoot/editorArea"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//DocumentRoot/hotZone"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//DocumentRoot/skin"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//EditorAreaType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//EditorAreaType/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//EditorAreaType/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//EditorAreaType/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//EditorAreaType/y"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//EventType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//EventType/id"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//HotZoneType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//HotZoneType/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//HotZoneType/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//HotZoneType/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//HotZoneType/sticky"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//HotZoneType/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//HotZoneType/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//HotZoneType/y"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//SkinType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//SkinType/editorArea"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//SkinType/hotZone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.ui.skin.ecore#//SkinType/backgroundColor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//SkinType/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//SkinType/imageFilePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//SkinType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//SkinType/width"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.ui.skin.ecore#//StateType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//StateType/imageFilePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.ui.skin.ecore#//StateType/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

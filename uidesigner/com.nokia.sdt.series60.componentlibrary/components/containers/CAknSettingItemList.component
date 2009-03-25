@@ -1,0 +1,1100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY DataModelHeaderName "${instanceName$title}Settings.h">
+<!ENTITY DataModelFileName "${instanceName$title}Settings.cpp">
+<!ENTITY DataModelClassName "T${instanceName$title}Settings">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.SettingItemListDontShowEnum">
+		<enumElement value="-16380" displayValue="%DontShow" />
+	</enumPropertyDeclaration>
+	
+	<component baseComponent="com.nokia.sdt.series60.ContainerBase" 
+			friendlyName="%friendlyName" 
+			qualifiedName="com.nokia.sdt.series60.CAknSettingItemList" 
+			category="Basic"
+			instanceNameRoot="settingItemList"
+			version="1.1">
+		<documentation>
+			<information>%information</information>
+			<wizardDescription>%information</wizardDescription>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknSettingItemList" classHelpTopic="" />
+		<designerImages 
+			smallIconFile="CAknSettingItemList_sm.png" 
+			largeIconFile="CAknSettingItemList.png" 
+			thumbnailFile="settinglist_tn.png"/>
+		<attributes>
+			<attribute key="cpp-class-name">CAknSettingItemList</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="never-in-toolbox">true</attribute>
+			
+			<attribute key="is-initial-content">true</attribute>
+			<attribute key="is-top-level-content-container">true</attribute>
+			<attribute key="vertical-scrollable-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+
+			<attribute key="event-handler-target">true</attribute>
+			<attribute key="base-container-class">CAknSettingItemList</attribute>
+			<attribute key="base-control-observer-class">CAknSettingItemList</attribute>
+			<attribute key="associated-palette-drawer">Editors</attribute>
+		</attributes>
+		<properties>
+			<property category="Appearance" name="EAknSettingItemNumberedStyle" 
+				type="boolean" default="true"
+				descriptionKey="EAknSettingItemNumberedStyleDescription" />
+			<property category="Appearance" name="EAknSettingItemIncludeHiddenInOrdinal" 
+				type="boolean" default="false"
+				descriptionKey="EAknSettingItemIncludeHiddenInOrdinal" />
+			<property category="Appearance" name="title" 
+				type="localizedString" default="Settings"
+				descriptionKey="titleDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Appearance" name="initialNumber" 
+				type="integer" default="1"
+				descriptionKey="initialNumberDescription" />
+			<property category="Behavior" name="exitsApp" 
+				type="boolean" default="true"
+				descriptionKey="exitsAppDescription" />
+		</properties>
+		
+		<extensionProperties name="default">
+			<property category="Item" name="itemNumber" 
+				type="integer" default="-16380"
+				descriptionKey="itemNumberDescription"
+				extendWithEnum="com.nokia.sdt.series60.SettingItemListDontShowEnum" />
+			<property category="Item" name="itemTitle" 
+				type="localizedString" default="Item"
+				descriptionKey="itemTitleDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Item" name="itemPageTitle" 
+				type="localizedString"
+				descriptionKey="itemPageTitleDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Item" name="compulsoryLabel" 
+				type="localizedString" 
+				descriptionKey="compulsoryLabelDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Item" name="itemHint" 
+				type="localizedString" 
+				descriptionKey="itemHintDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Item" name="itemHidden" 
+				type="boolean" default="false"
+				descriptionKey="itemHiddenDescription" />
+			<property category="Item" name="itemEmptyText" 
+				type="localizedString" 
+				descriptionKey="itemEmptyTextDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IScrollBoundsProvider"/>
+				<script file="CAknSettingItemList_visual.js" prototype="CAknSettingItemListVisual"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="CAknSettingItemList_queryContainment.js" prototype="CAknSettingItemListQueryContainment"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CAknSettingItemList_propertyExtenders.js" prototype="CAknSettingItemListPropertyExtenders"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo" />
+				<script file="CAknSettingItemList_events.js" prototype="CAknSettingItemListEventInfo" />
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="AVKON_SETTING_ITEM_LIST" headers="avkon.rsg avkon.rh eikon.rh">
+				<mapBitmaskMember property="." member="flags"
+					includedProperties="EAknSettingItemNumberedStyle EAknSettingItemIncludeHiddenInOrdinal">
+					<mapBitmaskValue properties="EAknSettingItemNumberedStyle" value="EAknSettingItemNumberedStyle" />
+					<mapBitmaskValue properties="EAknSettingItemIncludeHiddenInOrdinal" value="EAknSettingItemIncludeHiddenInOrdinal" />
+				</mapBitmaskMember>
+				<mapArrayMember property="." member="items">
+					<select attribute="is-setting-item-list-content">
+						<!-- only map visible items, not menu bars, etc. -->
+						<choice value="true">
+							<mapResourceElement struct="AVKON_SETTING_ITEM" headers="avkon.rh"
+								instanceIdentifyingMember="identifier">
+								<mapSimpleMember property="itemTitle" member="name"/>
+								<mapSimpleMember property="compulsoryLabel" member="compulsory_ind_string"/>
+								<mapEnumMember property="." member="identifier"
+									uniqueValue="*"
+									nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_SETTING_ITEM_ID"
+								/>
+								<mapSimpleMember property="itemEmptyText" member="empty_item_text"/>
+								<mapResourceMember property="." member="setting_page_resource"
+									struct="AVKON_SETTING_PAGE" headers="avkon.rh">
+									<mapSimpleMember property="itemNumber" member="number" />
+									<mapSimpleMember property="itemHint" member="hint_text" />
+									<select property="itemPageTitle">
+										<choice value="">
+											<!-- use the item title for the page if not otherwise specified -->
+											<mapSimpleMember property="itemTitle" member="label" />
+										</choice>
+										<choice>
+											<mapSimpleMember property="itemPageTitle" member="label" />
+										</choice>
+									</select>
+
+									<!-- looking at the current array element, always
+										create a unique value from the dialog and instance name -->
+									<mapEnumMember property="." member="type"
+										nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE"
+									/>
+									
+									<!-- invoke the component's own resource mapping -->
+									<mapResourceMember property="." member="editor_resource_id" />
+									
+								</mapResourceMember>
+								<select attribute="setting-item-has-associated-resource">
+									<choice value="true">
+										<mapReferenceMember property="." member="associated_resource"
+											rsrcId="associated"/>
+									</choice>
+									<choice>
+										<!-- else nothing -->
+									</choice>
+								</select>	
+							</mapResourceElement>
+						</choice>
+						<!-- default case does nothing -->
+						<choice/>
+					</select>						
+				</mapArrayMember>
+			</mapResource>
+		</sourceMapping>
+
+		<sourceGen forms="AppUi AknView RootAppUi">
+		
+			<inline scope="prototype">
+include("containerLibrary.js");
+			</inline>
+
+			<!-- contributions as Settings List -->
+
+			<defineLocation id="DATA_HEADER_FILE" domain="cpp" dir="${inc}" 
+				file="&DataModelHeaderName;"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<template location="DATA_HEADER_FILE"><![CDATA[
+#ifndef ${instanceName.toUpperCase()}SETTINGS_H
+#define ${instanceName.toUpperCase()}SETTINGS_H
+]]>			
+			</template>
+
+			<defineLocation id="DATA_HEADER_INCLUDES" 
+				baseLocation="DATA_HEADER_FILE"
+				owned="true"
+				filter="unique-includes"
+				location="region(Generated Includes)">
+			</defineLocation>
+			
+			<template location="DATA_HEADER_INCLUDES"><![CDATA[
+#include <e32std.h>
+]]>			</template>
+
+			<defineLocation id="DATA_CONSTANTS" baseLocation="DATA_HEADER_FILE"
+				owned="true"
+				location="region(Generated Constants)">
+			</defineLocation>
+			
+			<template location="DATA_CONSTANTS"/>
+			
+			<defineLocation id="DATA_CLASS" baseLocation="DATA_HEADER_FILE"
+				owned="false"
+				location="class(&DataModelClassName;)">
+				<template>
+/**
+ * @class	&DataModelClassName; &DataModelHeaderName;
+ */
+class &DataModelClassName;
+	{
+public:
+	// construct and destroy
+	static &DataModelClassName;* NewL();
+	void ConstructL();
+		
+private:
+	// constructor
+	&DataModelClassName;();
+	};
+				</template>
+			</defineLocation>
+			
+			<template location="DATA_CLASS"/>
+
+			<defineLocation id="DATA_METHODS" baseLocation="DATA_CLASS"
+				owned="true"
+				location="region(Generated Accessors)">
+				<template><![CDATA[
+public:<% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+			
+			<template location="DATA_METHODS"/>
+
+			<defineLocation id="DATA_MEMBERS" baseLocation="DATA_CLASS"
+				owned="true"
+				location="region(Generated Members)">
+				<template><![CDATA[
+protected:<% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+			
+			<template location="DATA_MEMBERS"/>
+
+			<defineLocation id="DATA_MODEL_FILE" domain="cpp" dir="${src}" 
+				file="&DataModelFileName;"
+				owned="false"
+				location="">
+			</defineLocation>
+
+			<template location="DATA_MODEL_FILE">
+/**
+ *	Generated helper class which manages the settings contained 
+ *	in '${instanceName}'.  Each CAknSettingItem maintains
+ *	a reference to data in this class so that changes in the setting
+ *	item list can be synchronized with this storage.
+ */
+ 
+			</template>
+			
+			<defineLocation id="DATA_MODEL_FILE_INCLUDES" 
+				baseLocation="DATA_MODEL_FILE"
+				owned="true"
+				filter="unique-includes"
+				location="region(Generated Includes)">
+			</defineLocation>
+			
+			<template location="DATA_MODEL_FILE_INCLUDES"><![CDATA[
+#include <e32base.h>
+]]>			</template>
+			<template location="DATA_MODEL_FILE_INCLUDES"><![CDATA[
+#include <stringloader.h>
+]]>			</template>
+			<template location="DATA_MODEL_FILE_INCLUDES"><![CDATA[
+#include <barsread.h>
+]]>			</template>
+			<template location="DATA_MODEL_FILE_INCLUDES"><![CDATA[
+#include <${resourceFileNameBase}.rsg>
+]]>			</template>
+			
+			<template location="DATA_MODEL_FILE_INCLUDES">
+#include "&DataModelHeaderName;"
+			</template>
+
+			<template location="DATA_MODEL_FILE">
+/**
+ * C/C++ constructor for settings data, cannot throw
+ */
+&DataModelClassName;::&DataModelClassName;()
+	{
+	}
+
+/**
+ * Two-phase constructor for settings data
+ */
+&DataModelClassName;* &DataModelClassName;::NewL()
+	{
+	&DataModelClassName;* data = new( ELeave ) &DataModelClassName;;
+	CleanupStack::PushL( data );
+	data-&gt;ConstructL();
+	CleanupStack::Pop( data );
+	return data;
+	}
+	
+			</template>
+			
+			<defineLocation id="DATA_MODEL_CONSTRUCTL"
+			baseLocation="DATA_MODEL_FILE"
+			owned="false"
+			location="function(&DataModelClassName;::ConstructL())">
+				<template>
+/**
+ *	Second phase for initializing settings data
+ */
+void &DataModelClassName;::ConstructL()
+	{
+	}
+	
+				</template>
+			</defineLocation>
+
+			<template location="DATA_MODEL_CONSTRUCTL" />
+			
+			<defineLocation id="DATA_MODEL_CONSTRUCTL_BODY"
+			baseLocation="DATA_MODEL_CONSTRUCTL"
+			owned="true"			
+			location="region(Generated Initializers)"/>
+
+			<template location="DATA_MODEL_CONSTRUCTL_BODY" />
+			
+			<defineLocation 
+			id="DATA_MODEL_FILE_CONTENTS"
+			baseLocation="DATA_MODEL_FILE"
+			owned="true"
+			location="region(Generated Contents)"/>
+			
+			<template location="DATA_MODEL_FILE_CONTENTS" />
+			
+
+			<inline scope="prototype">
+include("../dataModelGenLibrary.js");
+include("../srcgenLibrary.js");
+			</inline>
+			
+			<inline><![CDATA[
+if (Engine.formMatches(form, [""])) {
+	for (var c in instance.children) {
+		var item = instance.children[c];
+		setupDataModelAccessors(contribs, item, 
+			"T"+instanceName$title+"Settings",
+			"DataModelMethods",
+			"DataModelMembers",
+			"DataModelConstants",
+			"DataModelMainFile");
+	}
+}
+]]>			</inline>
+
+			
+			<template location="DATA_HEADER_FILE">
+#endif // ${instanceName.toUpperCase()}SETTINGS_H
+			</template>
+
+	<!--============================================-->
+
+			<defineLocation id="HEADER_FILE" domain="cpp" dir="${inc}" 
+				file="${instanceName}.h"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<template location="HEADER_FILE">
+#ifndef ${instanceName.toUpperCase()}_H
+#define ${instanceName.toUpperCase()}_H
+
+			</template>
+			
+			<defineLocation id="HEADER_INCLUDES" baseLocation="HEADER_FILE"
+				location="region(Generated Includes)"
+				filter="unique-includes">
+			</defineLocation>
+			
+			<template location="HEADER_INCLUDES"><![CDATA[
+#include <aknsettingitemlist.h>
+]]>			</template>
+
+			<defineLocation id="EVENT_INCLUDES" baseLocation="HEADER_FILE"
+				owned="false"
+				filter="unique-includes"
+				location="region(Event Handler Includes)">
+			</defineLocation>
+			
+			<template location="EVENT_INCLUDES" />
+		
+			<defineLocation id="HEADER_FORWARD_DECLARATIONS" baseLocation="HEADER_FILE"
+				location="region(Generated Forward Declarations)">
+				<template><![CDATA[
+class MEikCommandObserver;
+]]>				</template>
+			</defineLocation>	
+				
+			<template location="HEADER_FORWARD_DECLARATIONS">
+class &DataModelClassName;;
+			</template>
+			
+	
+			<defineLocation id="CLASS" baseLocation="HEADER_FILE"
+				owned="false"
+				location="class(${className})">
+				<template>
+/**
+ * @class	${className} ${instanceName}.h
+ */
+class ${className} : public CAknSettingItemList
+	{
+public: // constructors and destructor
+
+	${className}( 
+			&DataModelClassName;&amp; settings, 
+			MEikCommandObserver* aCommandObserver );
+	virtual ~${className}();
+
+public:
+
+	// from CCoeControl
+	void HandleResourceChange( TInt aType );
+
+	// overrides of CAknSettingItemList
+	CAknSettingItem* CreateSettingItemL( TInt id );
+	void EditItemL( TInt aIndex, TBool aCalledFromMenu );
+	TKeyResponse OfferKeyEventL( 
+			const TKeyEvent&amp; aKeyEvent, 
+			TEventCode aType );
+
+public:
+	// utility function for menu
+	void ChangeSelectedItemL();
+
+	void LoadSettingValuesL();
+	void SaveSettingValuesL();
+		
+private:
+	// override of CAknSettingItemList
+	void SizeChanged();
+
+private:
+	// current settings values
+	&DataModelClassName;&amp; iSettings;
+	MEikCommandObserver* iCommandObserver;
+	};
+				</template>
+			</defineLocation>
+			
+			<template location="CLASS"/>
+
+			<defineLocation id="CLASS_METHODS" baseLocation="CLASS"
+				filter="unique-prototypes"
+				location="region(Generated Methods)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+			
+			<template location="CLASS_METHODS"/>
+
+		<defineLocation id="CLASS_TYPES" baseLocation="CLASS"
+			location="region(Generated Type Declarations)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template location="CLASS_TYPES"/>
+
+			<defineLocation id="CLASS_IVARS" baseLocation="CLASS"
+			location="region(Generated Instance Variables)">
+				<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template location="CLASS_IVARS"/>
+
+			<defineLocation id="BASE_CLASS_LIST" baseLocation="CLASS"
+				owned="false"
+				filter="unique-bases"
+				location="bases()">
+			</defineLocation>
+			
+			<template location="BASE_CLASS_LIST" />
+			
+			<defineLocation id="CLASS_OVERRIDES" baseLocation="CLASS"
+				owned="false"
+				filter="unique-prototypes"
+				location="region(Overridden Methods)">
+				<template><![CDATA[
+protected: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+				
+			</defineLocation>			
+				
+			<template location="CLASS_OVERRIDES"/>
+			
+			<defineLocation id="CLASS_USERHANDLERS" baseLocation="CLASS"
+				owned="false"
+				filter="unique-prototypes"
+				location="region(User Handlers)">
+				<template><![CDATA[
+protected: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+				
+			</defineLocation>				
+			
+			<template location="CLASS_USERHANDLERS"/>
+
+			<template location="HEADER_FILE">
+#endif // ${instanceName.toUpperCase()}_H
+			</template>
+							
+			<defineLocation id="MAIN_FILE" domain="cpp" dir="${src}" 
+				file="${instanceName}.cpp"
+				owned="false"
+				location="">
+			</defineLocation>
+
+			<template location="MAIN_FILE"/>
+			
+			<defineLocation id="MAIN_SYSTEM_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated System Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include <avkon.hrh>
+]]>				</template>
+				<template><![CDATA[
+#include <avkon.rsg>
+]]>				</template>
+				<template><![CDATA[
+#include <eikmenup.h>
+]]>				</template>
+				<template><![CDATA[
+#include <aknappui.h>
+]]>				</template>
+				<template><![CDATA[
+#include <eikcmobs.h>
+]]>				</template>
+			</defineLocation>
+
+			<template location="MAIN_SYSTEM_INCLUDES"/>
+	
+			<defineLocation id="MAIN_USER_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated User Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include "${instanceName}.h"
+]]>				</template>
+				<template>
+#include "&DataModelHeaderName;"
+				</template>
+			</defineLocation>		
+
+			<template location="MAIN_USER_INCLUDES"/>
+			
+			<inline>
+if (Engine.formMatches(form, [""])) {
+	this.getHrhFiles(contribs);
+}
+			</inline>
+			
+			<defineLocation id="CONSTANTS" baseLocation="MAIN_FILE"
+				location="region(Generated Constants)">
+			</defineLocation>
+
+			<template location="CONSTANTS" />
+
+			<defineLocation id="CONSTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::${className}(&DataModelClassName;&amp;, MEikCommandObserver*))">
+				<template>
+/**
+ * Construct the ${className} instance
+ * @param aCommandObserver command observer
+ */ 
+${className}::${className}( 
+		&DataModelClassName;&amp; aSettings, 
+		MEikCommandObserver* aCommandObserver )
+	: iSettings( aSettings ), iCommandObserver( aCommandObserver )
+	{
+	}
+				</template>			
+			</defineLocation>
+			
+			<template location="CONSTRUCTOR"/>
+
+			<defineLocation id="CONSTRUCTOR_BODY" baseLocation="CONSTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template location="CONSTRUCTOR_BODY"/>
+			
+			<defineLocation id="DESTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::~${className}())">
+				<template><![CDATA[
+/** 
+ * Destroy any instance variables
+ */
+${className}::~${className}()
+	{
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="DESTRUCTOR"/>
+
+			<defineLocation id="DESTRUCTOR_BODY" baseLocation="DESTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+			
+			<template location="DESTRUCTOR_BODY"/>
+			
+			<template location="MAIN_FILE"><![CDATA[
+/**
+ * Handle system notification that the container's size has changed.
+ */
+void ${className}::SizeChanged()
+	{
+	if ( ListBox() ) 
+		{
+		ListBox()->SetRect( Rect() );
+		}
+	}
+]]>
+			</template>			
+
+			<defineLocation id="CREATESETTINGITEML_METHOD" 
+				baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::CreateSettingItemL(TInt))">
+				<template>
+/**
+ * Create one setting item at a time, identified by id.
+ * CAknSettingItemList calls this method and takes ownership
+ * of the returned value.  The CAknSettingItem object owns
+ * a reference to the underlying data, which EditItemL() uses
+ * to edit and store the value.
+ */
+CAknSettingItem* ${className}::CreateSettingItemL( TInt aId )
+	{
+	}
+	
+				</template>
+			</defineLocation>
+
+			<template location="CREATESETTINGITEML_METHOD">
+switch ( aId )
+	{
+			</template>
+
+			<defineLocation id="CREATESETTINGITEML_BODY_SWITCH"
+				baseLocation="CREATESETTINGITEML_METHOD"
+				owned="true"
+				location="region(Initializers)" />
+					
+			<template location="CREATESETTINGITEML_BODY_SWITCH" />
+
+			<template location="CREATESETTINGITEML_METHOD">
+	}
+	
+return NULL;
+			</template>
+
+			<defineLocation id="EDITITEML_METHOD" 
+				baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::EditItemL(TInt,TBool))">
+				<template>
+/**
+ * Edit the setting item identified by the given id and store
+ * the changes into the store.
+ * @param aIndex the index of the setting item in SettingItemArray()
+ * @param aCalledFromMenu true: a menu item invoked editing, thus
+ *	always show the edit page and interactively edit the item;
+ *	false: change the item in place if possible, else show the edit page
+ */
+void ${className}::EditItemL ( TInt aIndex, TBool aCalledFromMenu )
+	{
+	}
+				</template>			
+			</defineLocation>
+
+			<template location="EDITITEML_METHOD">
+CAknSettingItem* item = ( *SettingItemArray() )[aIndex];
+switch ( item->Identifier() )
+	{
+			</template>
+			
+			<defineLocation id="EDITITEML_STARTED_STUB" 
+				baseLocation="EDITITEML_METHOD"
+				owned="true"
+				location="region(Editing Started Invoker)">
+				<template>
+				</template>
+			</defineLocation>
+			
+			<template location="EDITITEML_STARTED_STUB" />
+
+			<template location="EDITITEML_METHOD">
+	}
+
+CAknSettingItemList::EditItemL( aIndex, aCalledFromMenu );
+
+TBool storeValue = ETrue;
+switch ( item->Identifier() )
+	{
+			</template>
+			
+			<defineLocation id="EDITITEML_STOPPED_STUB" 
+				baseLocation="EDITITEML_METHOD"
+				owned="true"
+				location="region(Editing Stopped Invoker)" />
+			
+			<template location="EDITITEML_STOPPED_STUB" />
+			
+			<template location="EDITITEML_METHOD">
+	}
+	
+if ( storeValue )
+	{
+	item->StoreL();
+	SaveSettingValuesL();
+	}	
+			</template>
+			
+			<template location="MAIN_FILE"><![CDATA[
+/**
+ *	Handle the "Change" option on the Options menu.  This is an
+ *	alternative to the Selection key that forces the settings page
+ *	to come up rather than changing the value in place (if possible).
+ */
+void ${className}::ChangeSelectedItemL()
+	{
+	if ( ListBox()->CurrentItemIndex() >= 0 )
+		{
+		EditItemL( ListBox()->CurrentItemIndex(), ETrue );
+		}
+	}
+
+/**
+ *	Load the initial contents of the setting items.  By default,
+ *	the setting items are populated with the default values from
+ * 	the design.  You can override those values here.
+ *	<p>
+ *	Note: this call alone does not update the UI.  
+ *	LoadSettingsL() must be called afterwards.
+ */
+void ${className}::LoadSettingValuesL()
+	{
+	// load values into iSettings
+	}
+	
+/**
+ *	Save the contents of the setting items.  Note, this is called
+ *	whenever an item is changed and stored to the model, so it
+ *	may be called multiple times or not at all.
+ */
+void ${className}::SaveSettingValuesL()
+	{
+	// store values from iSettings
+	}
+
+]]>
+				</template>			
+
+<!-- BEGIN EVENT resourceChanged : special case same as CCoeControl -->
+			<templateGroup id="GenerateResourceChanged" ifEvents="resourceChanged">
+
+			<template id="InvokeResourceChangedHandler" location="ResourceChangedBody">
+${event.handlerName}( aType );
+			</template>
+
+			<template id="DeclareResourceChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aType );
+			</template>
+
+			<defineLocation id="ResourceChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeResourceChangedHandler" location="ResourceChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT resourceChanged -->		
+		
+			<defineLocation id="ResourceChangedOverride" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${handlerClassName}::HandleResourceChange(TInt))">
+				<template><![CDATA[
+/** 
+ * Handle global resource changes, such as scalable UI or skin events (override)
+ */
+void ${handlerClassName}::HandleResourceChange( TInt aType )
+	{
+	${instance.attributes["base-container-class"]}::HandleResourceChange( aType );
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+			<template id="RealizeResourceChangedOverride" location="ResourceChangedOverride" />
+				
+			<template id="AddEikappuiInclude" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <eikappui.h>
+]]>			</template>
+
+			<template id="ViewAppUiHeaderIncl" form="AknView" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <aknviewappui.h>
+]]>			</template>
+
+			<!-- n.b.: ids can be shared for different forms -->
+			<template id="SetupResourceChangedOverride" 
+				form="AppUi" location="ResourceChangedOverride"><![CDATA[
+SetRect( static_cast< CEikAppUi* >( iCoeEnv->AppUi() )->ClientRect() );
+]]>				</template>
+		
+			<template id="SetupResourceChangedOverride" 
+				form="AknView" location="ResourceChangedOverride"><![CDATA[
+<% 	includeProjectHrhFile(contribs);
+%>SetRect( iAvkonViewAppUi->View( TUid::Uid( ${getViewUidConstant(instance.parent, contribs)} ) )->ClientRect() );
+]]>				</template>
+		
+			<defineLocation id="ResourceChangedBody" baseLocation="ResourceChangedOverride"
+				location="region(Generated Contents)">
+			</defineLocation>
+			
+			<template id="RealizeResourceChangedBody" location="ResourceChangedBody"/>
+
+				<defineLocation id="OFFER_KEYEVENTL" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${className}::OfferKeyEventL(TKeyEvent,TEventCode))">
+					<template><![CDATA[
+/** 
+ * Handle key event (override)
+ * @param aKeyEvent key event
+ * @param aType event code
+ * @return EKeyWasConsumed if the event was handled, else EKeyWasNotConsumed
+ */
+TKeyResponse ${className}::OfferKeyEventL( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="OFFER_KEYEVENTL_BODY" baseLocation="OFFER_KEYEVENTL"
+				location="region(Generated Contents)"/>
+
+		<template location="OFFER_KEYEVENTL_BODY"/>
+			
+		<template location="OFFER_KEYEVENTL"><![CDATA[
+<% if (instance.rootContainer.isInstanceOf("com.nokia.sdt.series60.CAknView")) { 
+%>if ( aKeyEvent.iCode == EKeyLeftArrow 
+	|| aKeyEvent.iCode == EKeyRightArrow )
+	{
+	// allow the tab control to get the arrow keys
+	return EKeyWasNotConsumed;
+	}
+<% } %>
+]]>		</template>
+
+			<!-- this is the same template emitted as an event include
+			from ContainerBase; we need to omit to reduce duplicates -->
+			<template id="OfferKeyEventOverrideContents" location="OFFER_KEYEVENTL"><![CDATA[
+<% if (!instance.events["offerKeyEvent"]) {
+%>return ${instance.attributes["base-container-class"]}::OfferKeyEventL( aKeyEvent, aType );
+<%}%> ]]>	</template>
+
+			<useTemplateGroup ids="GenerateFocusChanged"/>
+			<useTemplateGroup ids="GenerateSizeChanged GeneratePositionChanged"/>
+			<useTemplateGroup ids="GenerateOfferKeyEvent"/>
+			<useTemplateGroup ids="GeneratePrepareForFocusLoss GeneratePrepareForFocusGain"/>
+
+			<!-- gather child contributions -->
+
+			<inline>
+
+			if (form != 'RootAppUi') {
+				
+				if (Engine.formMatches(form, [ "AknView", "AppUi" ])) {
+					// clear out any image stuff
+					resetImagePropertyState(instance);
+
+					// get default and setting item list-specific contributions
+					contribs.addAll(Engine.generateChildContributions(form+"|SettingsList"))
+			
+				} else {
+					// get specific desired contributions
+					contribs.addAll(Engine.generateChildContributions(form))
+				}
+				
+				
+				/*
+				// adjust all the indentation for initializers which
+				// aren't aware of settings list,
+				// since they are embedded inside two groups
+				for (var iter = contribs.iterator(); iter.hasNext(); ) {
+					var contrib = iter.next();
+					if (contrib.getPhase() == "Initialize"
+					&amp;&amp; contrib.getForm() != "SettingsList") {
+						contrib.indentAdjust(2);
+					}
+				}
+				*/
+				
+				Engine.collateContributionsByPhase(contribs, ["Initialize", "PostInitialize"]);
+				
+				// fix up the phases so they point to real locations
+				Engine.assignLocationsForPhase(contribs, "ClassSource", "MAIN_FILE");
+				Engine.assignLocationsForPhase(contribs, "ClassHeader", "HEADER_FILE");
+
+				Engine.assignLocationsForPhase(contribs, "MainConstants", "CONSTANTS");
+				Engine.assignLocationsForPhase(contribs, "MainSystemIncludes", "MAIN_SYSTEM_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "MAIN_USER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "Construct", "CONSTRUCTOR_BODY");
+				Engine.assignLocationsForPhase(contribs, "Initialize", "DATA_MODEL_CONSTRUCTL_BODY");
+//			Engine.assignLocationsForPhase(contribs, "PostInitialize", "PRELAYOUTDYNINITL_BODY");
+				Engine.assignLocationsForPhase(contribs, "Destroy", "DESTRUCTOR_BODY");
+				Engine.assignLocationsForPhase(contribs, "ClassTypeDeclarations", "CLASS_TYPES");
+				Engine.assignLocationsForPhase(contribs, "BaseClassList", "BASE_CLASS_LIST");
+				Engine.assignLocationsForPhase(contribs, "OverriddenMethods", "CLASS_OVERRIDES");
+				Engine.assignLocationsForPhase(contribs, "UserHandlers", "CLASS_USERHANDLERS");
+				Engine.assignLocationsForPhase(contribs, "EventIncludes", "EVENT_INCLUDES");
+				
+				Engine.assignLocationsForPhase(contribs, "HeaderIncludes", "HEADER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "ForwardDeclarations", "HEADER_FORWARD_DECLARATIONS");
+				Engine.assignLocationsForPhase(contribs, "InstanceVariables", "CLASS_IVARS");
+				Engine.assignLocationsForPhase(contribs, "ClassMethods", "CLASS_METHODS");
+
+				Engine.assignLocationsForPhase(contribs, "DataModelIncludes", "DATA_HEADER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "DataModelMethods", "DATA_METHODS");
+				Engine.assignLocationsForPhase(contribs, "DataModelMembers", "DATA_MEMBERS");
+				Engine.assignLocationsForPhase(contribs, "DataModelConstants", "DATA_CONSTANTS");
+				Engine.assignLocationsForPhase(contribs, "DataModelMainFile", "DATA_MODEL_FILE_CONTENTS");
+				Engine.assignLocationsForPhase(contribs, "DataModelMainFileIncludes", "DATA_MODEL_FILE_INCLUDES");
+	
+				Engine.removeDuplicateContributionsForLocation(contribs, "HEADER_FORWARD_DECLARATIONS");
+				Engine.removeDuplicateContributionsForLocation(contribs, "DESTRUCTOR_BODY");
+			}
+						
+			</inline>
+
+			<template id="IncludeRsgFile" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <${resourceFileNameBase}.rsg>
+]]>			</template>
+
+			<!-- contributions as child  -->
+
+			<template forms="AknView RootAppUi" phase="MainUserIncludes">
+#include "${instanceName}.h"
+			</template>
+
+			<template id="IncludeParentHeaderFile" location="MAIN_USER_INCLUDES"><![CDATA[
+#include "${instance.parent.name}.h"
+]]></template>
+
+			<template forms="AknView RootAppUi" phase="HeaderIncludes">
+#include "&DataModelHeaderName;"
+			</template>
+
+			<template forms="AknView RootAppUi" phase="ForwardDeclarations">
+class ${className};
+			</template>
+
+			<template forms="AknView RootAppUi" phase="InstanceVariables">
+${className}* ${instanceMemberName};
+			</template>
+
+			<template forms="AknView RootAppUi" phase="InstanceVariables">
+&DataModelClassName;* iSettings;
+			</template>
+
+			<template form="AknView" phase="DoActivateL"><![CDATA[
+if ( ${instanceMemberName} == NULL )
+	{
+	iSettings = ]]>&DataModelClassName;<![CDATA[::NewL();
+	${instanceMemberName} = new ( ELeave ) ${className}( *iSettings, this );
+	${instanceMemberName}->SetMopParent( this );
+	${instanceMemberName}->ConstructFromResourceL( ${resourceName$upper} );
+	${instanceMemberName}->ActivateL();
+	${instanceMemberName}->LoadSettingValuesL();
+	${instanceMemberName}->LoadSettingsL();
+	AppUi()->AddToStackL( *this, ${instanceMemberName} );
+	} 
+]]>			</template>
+			
+			<template form="AknView" phase="DoDeactivate"><![CDATA[
+if ( ${instanceMemberName} != NULL )
+	{
+	AppUi()->RemoveFromStack( ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	delete iSettings;
+	iSettings = NULL;
+	}
+]]>			</template>
+
+			<template form="RootAppUi" phase="Initialize"><![CDATA[
+<% if (resourceName != null) { 
+%>iSettings = ]]>&DataModelClassName;<![CDATA[::NewL();
+${instanceMemberName} = new ( ELeave ) ${className}( *iSettings, this );
+${instanceMemberName}->SetMopParent( this );
+${instanceMemberName}->ConstructFromResourceL( ${resourceName$upper} );
+${instanceMemberName}->ActivateL();
+${instanceMemberName}->LoadSettingValuesL();
+${instanceMemberName}->LoadSettingsL();
+AddToStackL( ${instanceMemberName} );
+<% } 
+%>]]>		</template>
+
+			<template form="RootAppUi" phase="Destroy">
+if ( ${instanceMemberName} != NULL )
+	{
+	RemoveFromStack( ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	delete iSettings;
+	iSettings = NULL;
+	}
+			</template>
+
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ Add HandleResourceChange method declaration
+  virtual ~${className}();
+  public:
++ // from CCoeControl
++ void HandleResourceChange( TInt aType );
+]]>			</template>
+	
+			<template mode="upgrade(1.0,1.1)" location="CLASS_METHODS" 
+				ifEvents="resourceChanged"><![CDATA[
+@@@ Remove event-provided HandleResourceChange method declaration
+- virtual void HandleResourceChange( TInt aType );
+]]>			</template>
+	
+			<template mode="upgrade(1.0,1.1)" form="AppUi"
+				location="ResourceChangedOverride" ifEvents="resourceChanged"><![CDATA[
+@@@ Add SetRect() call to HandleResourceChange method
+  ${instance.attributes["base-container-class"]}::HandleResourceChange( aType );
++ SetRect( static_cast< CEikAppUi* >( iCoeEnv->AppUi() )->ClientRect() );
+]]>			</template>
+	
+			<template mode="upgrade(1.0,1.1)" form="AknView"
+				location="ResourceChangedOverride" ifEvents="resourceChanged"><![CDATA[
+@@@ Add SetRect() call to HandleResourceChange method
+  ${instance.attributes["base-container-class"]}::HandleResourceChange( aType );
++ SetRect( iAvkonViewAppUi->View( TUid::Uid( ${getViewUidConstant(instance.parent, contribs)} ) )->ClientRect() );
+]]>			</template>
+	
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

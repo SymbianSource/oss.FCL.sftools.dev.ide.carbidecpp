@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for UID wizards -->
+
+<contexts>
+	
+	<!-- NEW UI DESIGN WIZARD -->
+	<!-- plugin="com.nokia.sdt.series60.componentlibrary" -->
+	
+	<context id="application_properties_page" >
+		<description>Select the application in the current workspace to add the new UI Design.</description>
+		<topic label="Application Properties"		href="html/reference/uidesign/ref_ui_design_wizard_01.htm" />
+		<topic label="UI Design Wizard"				href="html/reference/uidesign/ref_ui_design_wizard.htm" />
+	</context>
+
+	<context id="design_selection_page" >
+		<description>Select the top level container type for your new UI Design.</description>
+		<topic label="S60 UI Design Selection"		href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+		<topic label="UI Design Wizard"				href="html/reference/uidesign/ref_ui_design_wizard.htm" />
+	</context>
+
+	<context id="content_variants_page" >
+		<description>Provide additional information if required by the chosen base container.</description>
+		<topic label="Content Variants"				href="html/reference/uidesign/ref_ui_design_wizard_03.htm" />
+		<topic label="UI Design Wizard"				href="html/reference/uidesign/ref_ui_design_wizard.htm" />
+	</context>
+
+	<context id="container_page" >
+		<description>Specify a name and container type for your UI Design.</description>
+		<topic label="Container Name and Type"		href="html/reference/uidesign/ref_ui_design_wizard_04.htm" />
+		<topic label="UI Design Wizard"				href="html/reference/uidesign/ref_ui_design_wizard.htm" />
+	</context>
+
+</contexts>

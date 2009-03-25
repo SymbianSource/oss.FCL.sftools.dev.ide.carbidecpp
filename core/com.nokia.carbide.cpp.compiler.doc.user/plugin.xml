@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension
+         point="org.eclipse.help.toc">
+
+      <toc
+            file="compilerTOC.xml"
+            primary="true"/>
+            
+      <toc file="introductionTOC.xml" />
+      <toc file="c_compilerTOC.xml" />
+      <toc file="c_behaviorTOC.xml" />
+      <toc file="cpp_compilerTOC.xml" />
+      <toc file="cpp_behaviorTOC.xml" />
+      <toc file="cpp_embTOC.xml" />
+      <toc file="performanceTOC.xml" />
+      <toc file="errorsTOC.xml" />
+      <toc file="symbolsTOC.xml" />
+      <toc file="pragmasTOC.xml" />
+      <toc file="pragmas_x86TOC.xml" />
+      <toc file="cmd_lineTOC.xml" />
+      
+		<index path="index" />
+   </extension>
+
+	
+	<!-- KEYWORD INDEX ADDITION
+	
+	 <extension
+	       point="org.eclipse.help.index" >
+	    <index file="html/index.xml"/>
+	 </extension>
+	-->
+	
+</plugin>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Tasks" link_to="toc.xml#uid_tasks"> 
+
+	<topic label="Applications" 									href="html/tasks/app_edit/task_app.htm" >
+		<topic label="Opening the Application Editor"				href="html/tasks/app_edit/task_open.htm" />
+		<topic label="Changing the Baseline SDK"					href="html/tasks/app_edit/task_overview_baseline_sdk.htm" />
+
+		<topic label="Application UI Designs" 								href="html/tasks/app_edit/task_uidesign.htm" >
+			<topic label="Selecting the Initial View"						href="html/tasks/app_edit/task_uidesign_initial_view.htm" />
+			<topic label="Adding a UI Design"								href="html/tasks/app_edit/task_uidesign_add.htm" />
+			<topic label="Removing a UI Design"								href="html/tasks/app_edit/task_uidesign_remove.htm" />
+			<topic label="Importing a Removed UI Design"					href="html/tasks/app_edit/task_uidesign_import.htm" />
+
+			<topic label="Application UI Design Pane Tabbing" 				href="html/tasks/app_edit/task_uidesign_nav_tab.htm" >
+				<topic label="Enabling Navigation Pane Tabbing"				href="html/tasks/app_edit/task_uidesign_nav_tab_enable.htm" />
+				<topic label="Adding a UI Design to the Tab Group"			href="html/tasks/app_edit/task_uidesign_nav_tab_add_design.htm" />
+				<topic label="Removing a UI Design from the Tab Group"		href="html/tasks/app_edit/task_uidesign_nav_tab_remove_design.htm" />
+				<topic label="Reordering UI Designs"						href="html/tasks/app_edit/task_uidesign_nav_tab_reorder.htm" />
+				<topic label="Setting the Tab Text"							href="html/tasks/app_edit/task_uidesign_nav_tab_set_text.htm" />
+				<topic label="Setting the Tab Image"						href="html/tasks/app_edit/task_uidesign_nav_tab_set_image.htm" />
+			</topic>
+
+		</topic>
+
+		<topic label="Application Languages" 							href="html/tasks/app_edit/task_lang.htm" >
+			<topic label="Adding a Language"							href="html/tasks/app_edit/task_lang_add.htm" />
+			<topic label="Removing a Language"							href="html/tasks/app_edit/task_lang_remove.htm" />
+			<topic label="Selecting the Display Language"				href="html/tasks/app_edit/task_lang_display.htm" />
+			<topic label="Selecting the Localization Format"			href="html/tasks/app_edit/task_lang_format.htm" />
+			<topic label="Translating Text for Added Languages"			href="html/tasks/app_edit/task_lang_translate.htm" />
+		</topic>
+
+		<topic label="Application AppUi" 								href="html/tasks/app_edit/task_appui.htm" >
+			<topic label="Editing the AppUi Title Pane Text"			href="html/tasks/app_edit/task_appui_title_pane.htm" />
+			<topic label="Adding an AppUi Context Icon"					href="html/tasks/app_edit/task_appui_icon_add.htm" />
+			<topic label="Overriding the AppUi Context Icon"			href="html/tasks/app_edit/task_appui_icon_override.htm" />
+		</topic>
+
+	</topic>
+
+	<topic label="Creating GUI Projects" 								href="html/tasks/projects/task_proj_new.htm" >
+		<topic label="Starting the New Project Wizard"					href="html/tasks/projects/task_proj_new-00.htm" />
+		<topic label="Setting the Project Name"							href="html/tasks/projects/task_proj_new-01.htm" />
+		<topic label="Selecting a Template"								href="html/tasks/projects/task_proj_new-02.htm" />
+		<topic label="Selecting Project SDKs"							href="html/tasks/projects/task_proj_new-03.htm" />
+		<topic label="Setting Basic Application Properties"				href="html/tasks/projects/task_proj_new-04.htm" />
+		<topic label="Selecting Initial Content"						href="html/tasks/projects/task_proj_new-05.htm" />
+		<topic label="Selecting the Content Variant"					href="html/tasks/projects/task_proj_new-06.htm" />
+		<topic label="Setting Base Name and Container Type"				href="html/tasks/projects/task_proj_new-07.htm" />
+		<topic label="Entering the Application Basic Settings"			href="html/tasks/projects/task_proj_new-08.htm" />
+		<topic label="Assigning Project Directories" 					href="html/tasks/projects/task_proj_new-09.htm" />
+	</topic>
+		
+	<topic label="Creating New UI Designs" 		href="html/tasks/uidesign/task_uid_new.htm" />
+	<topic label="Adding Tabs to a UI Design" 		href="html/tasks/uidesign/task_uid_add_tabs.htm" />	
+
+	<topic label="Event Handlers" 									href="html/tasks/prop_events/task_comp_mod_events.htm" >
+		<topic label="Adding a New Event Handler" 					href="html/tasks/prop_events/task_comp_mod_events_add.htm" />
+		<topic label="Handling the Default Event" 					href="html/tasks/prop_events/task_comp_mod_events_handle_default.htm" />
+		<topic label="Implementing an Event Handler" 				href="html/tasks/prop_events/task_comp_mod_events_implement.htm" />
+		<topic label="Renaming an Event Handler" 					href="html/tasks/prop_events/task_comp_mod_events_rename.htm" />
+		<topic label="Showing/Hiding Event Categories" 				href="html/tasks/prop_events/task_comp_mod_events_categories.htm" />
+	</topic>
+
+	<topic label="Generated Files" 							href="html/tasks/generate/task_gen.htm" >
+		<topic label="Examining Generated Files" 			href="html/tasks/generate/task_gen_examine.htm" />
+		<topic label="Inspecting Header/Source Files" 		href="html/tasks/generate/task_comp_header_source.htm" />
+		<topic label="Modifying Generated Files" 			href="html/tasks/generate/task_gen_mod.htm" />
+	</topic>
+
+	<topic label="Menus" 											href="html/tasks/prop_menu/task_comp_mod_menu.htm" >
+		<topic label="Adding Menus" 								href="html/tasks/prop_menu/task_comp_mod_menu_add.htm" />
+		<topic label="Adding Menu Items" 							href="html/tasks/prop_menu/task_comp_mod_menu_add_item.htm" />
+		<topic label="Adding Submenus" 								href="html/tasks/prop_menu/task_comp_mod_menu_add_submenu.htm" />
+		<topic label="Deleting Menus" 								href="html/tasks/prop_menu/task_comp_mod_menu_del_menu.htm" />
+		<topic label="Deleting Menu Items" 							href="html/tasks/prop_menu/task_comp_mod_menu_del_item.htm" />
+		<topic label="Renaming Menu Items" 							href="html/tasks/prop_menu/task_comp_mod_menu_rename_item.htm" />
+		<topic label="Reordering Menu Items" 						href="html/tasks/prop_menu/task_comp_mod_menu_reorder.htm" />
+		<topic label="Handling Menu Selection Events" 				href="html/tasks/prop_menu/task_comp_mod_menu_handle_selection.htm" />
+	</topic>
+
+	<topic label="Objects" 										href="html/tasks/components/task_comp_working_with_obj.htm" >
+		<topic label="Adding New Objects" 							href="html/tasks/components/task_comp_new_obj.htm" />
+		<topic label="Aligning Objects" 							href="html/tasks/components/task_comp_align_objs.htm" />
+		<topic label="Deleting Objects" 							href="html/tasks/components/task_comp_delete_obj.htm" />
+		<topic label="Matching Objects' Height or Width" 			href="html/tasks/components/task_comp_match_objs.htm" />
+		<topic label="Moving Objects" 								href="html/tasks/components/task_comp_move_obj.htm" />
+		<topic label="Resizing Objects" 							href="html/tasks/components/task_comp_resize_obj.htm" />
+		<topic label="Reordering Objects" 							href="html/tasks/components/task_comp_reorder_obj.htm" />
+		<topic label="Selecting Objects" 							href="html/tasks/components/task_comp_sel_obj.htm" />
+	</topic>
+
+	<topic label="Object Properties" 								href="html/tasks/properties/task_comp_mod_properties.htm" >
+		<topic label="Editing Array Properties" 					href="html/tasks/components/task_comp_prop_eap.htm" />
+		<topic label="Editing Color Data" 							href="html/tasks/properties/task_comp_mod_properties_color_data.htm" />
+		<topic label="Editing Control Button Arrays" 				href="html/tasks/properties/task_comp_mod_properties_cba.htm" />
+		<topic label="Editing Date Data" 							href="html/tasks/properties/task_comp_mod_properties_date.htm" />
+		<topic label="Editing Enumerated Data" 						href="html/tasks/properties/task_comp_mod_properties_enumerated.htm" />
+
+		<topic label="Editing Image Property Data" 				href="html/tasks/properties/task_comp_mod_properties_image.htm" >
+			<topic label="Adding Images" 						href="html/tasks/properties/task_comp_mod_properties_image_add.htm" />
+			<topic label="Selecting Images" 					href="html/tasks/properties/task_comp_mod_properties_image_select.htm" />
+		</topic>
+
+		<topic label="Editing Location/Size Data" 					href="html/tasks/properties/task_comp_mod_properties_loc_size.htm" />
+		<topic label="Editing Numeric Data" 						href="html/tasks/properties/task_comp_mod_properties_numeric.htm" />
+		<topic label="Editing String List Data" 					href="html/tasks/properties/task_comp_mod_properties_string.htm" />
+		<topic label="Editing Text Data" 							href="html/tasks/properties/task_comp_mod_properties_text.htm" />
+		<topic label="Editing Time Data" 							href="html/tasks/properties/task_comp_mod_properties_time.htm" />
+		<topic label="Restoring Default Values" 					href="html/tasks/properties/task_comp_mod_properties_restore.htm" />
+	</topic>
+		
+	<topic label="Palettes" 											href="html/tasks/palette/task_palette.htm" >
+		<topic label="Showing/Hiding the Palette Drawer Components" 	href="html/tasks/palette/task_palette_show_hide_drawer_components.htm" />
+
+		<topic label="Palette Options" 									href="html/tasks/palette/task_palette_options.htm" >
+			<topic label="Docking the Palette" 							href="html/tasks/palette/task_palette_dock_loc.htm" />
+			<topic label="Hiding and Showing  the Palette" 				href="html/tasks/palette/task_palette_show_hide.htm" />
+			<topic label="Resizing the Palette" 						href="html/tasks/palette/task_palette_resize.htm" />
+			<topic label="Setting the Palette Layout Options" 			href="html/tasks/palette/task_palette_options_layout.htm" />
+			<topic label="Setting the Palette Icon Size" 				href="html/tasks/palette/task_palette_options_icon.htm" />
+			<topic label="Showing the Palette as a View" 				href="html/tasks/palette/task_palette_show_in_view.htm" />
+		</topic>
+
+		<topic label="Palette Settings" 						href="html/tasks/palette/task_palette_settings.htm" >
+			<topic label="Palette Display Font" 				href="html/tasks/palette/task_palette_settings_font.htm" />
+			<topic label="Palette Layout Options" 				href="html/tasks/palette/task_palette_settings_layout.htm" />
+			<topic label="Palette Icon Size" 					href="html/tasks/palette/task_palette_settings_icon.htm" />
+			<topic label="Component Drawer Options" 			href="html/tasks/palette/task_palette_settings_drawer.htm" />
+		</topic>
+	</topic>
+		
+	<topic label="UI Designs" 										href="html/tasks/uidesign/task_ui_design.htm" >
+	
+		<topic label="Adding a New UI Design to a Project" 			href="html/tasks/uidesign/task_uid_new_with_designer.htm" >
+			<topic label="Starting the S60 UI Design Wizard"		href="html/tasks/uidesign/task_uid_new-00.htm" />
+			<topic label="Selecting the Project"					href="html/tasks/uidesign/task_uid_new-01.htm" />
+			<topic label="Selecting Initial Content"				href="html/tasks/uidesign/task_uid_new-02.htm" />
+			<topic label="Selecting The Content Variant"			href="html/tasks/uidesign/task_uid_new-03.htm" />
+			<topic label="Setting Base Name and Container Type"		href="html/tasks/uidesign/task_uid_new-04.htm" />
+			<topic label="Assigning Directories" 					href="html/tasks/uidesign/task_uid_new-05-legacy.htm" />
+			<topic label="Resolving Name Collisions"				href="html/tasks/uidesign/task_uid_new-06.htm" />
+		</topic>
+
+		<topic label="Copying/Moving a UI Design into a Project" 		href="html/tasks/uidesign/task_uid_copy_in.htm" />
+		<topic label="Displaying All UI Designs" 						href="html/tasks/uidesign/task_uid_display_all.htm" />
+		<topic label="Setting Gallery View Magnification" 				href="html/tasks/uidesign/task_uid_display_all_mag.htm" />
+
+		<topic label="Opening UI Designs" 								href="html/tasks/uidesign/task_uid_open.htm" />
+		<topic label="Selecting UI Designs" 							href="html/tasks/uidesign/task_uid_select.htm" />
+		<topic label="Renaming a UI Design" 							href="html/tasks/uidesign/task_uid_rename.htm" />
+		<topic label="Selecting the Editor for a UI Design" 			href="html/tasks/uidesign/task_uid_select_editor.htm" />
+		<topic label="Deleting UI Designs" 								href="html/tasks/uidesign/task_uid_delete.htm" />
+		<topic label="Setting UI Designs Magnifications" 				href="html/tasks/uidesign/task_uid_magnification.htm" />
+		<topic label="Setting Screen Layout Configurations" 			href="html/tasks/uidesign/task_uid_layout_configuration.htm" />
+		<topic label="Setting UI Designer Preferences" 					href="html/tasks/uidesign/task_uid_prefs.htm" />
+
+	</topic>
+
+	<topic label="Viewing Class/Resource Documentation" 			href="html/tasks/components/task_comp_external_class_dox.htm" />
+
+</toc>

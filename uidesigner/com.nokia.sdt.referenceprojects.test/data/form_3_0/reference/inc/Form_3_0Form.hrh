@@ -1,0 +1,7 @@
+enum TForm_3_0FormViewControls
+	{
+	EForm_3_0FormViewNumEditor1 = 1,
+	EForm_3_0FormViewDurationEditor1,
+	EForm_3_0FormViewEdit1,
+	EForm_3_0FormViewPopupFieldText1
+	};

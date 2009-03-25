@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.cpp.sdk.core/src"
+    modelPluginID="com.nokia.carbide.cpp.sdk.core" modelName="Devices" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>devices.xsd</foreignModel>
+  <genPackages prefix="Devices" basePackage="com.nokia.carbide.cpp.internal.sdk.core.gen"
+      resource="XML" disposableProviderFactory="true" ecorePackage="Devices.ecore#/">
+    <genEnums ecoreEnum="Devices.ecore#//DefaultType">
+      <genEnumLiterals ecoreEnumLiteral="Devices.ecore#//DefaultType/no"/>
+      <genEnumLiterals ecoreEnumLiteral="Devices.ecore#//DefaultType/yes"/>
+    </genEnums>
+    <genEnums ecoreEnum="Devices.ecore#//VersionType">
+      <genEnumLiterals ecoreEnumLiteral="Devices.ecore#//VersionType/_10"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="Devices.ecore#//AliasType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//DefaultTypeObject"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//EpocrootType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//IdType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//NameType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//ToolsrootType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//UserdeletableType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//UserdeletetableType"/>
+    <genDataTypes ecoreDataType="Devices.ecore#//VersionTypeObject"/>
+    <genClasses ecoreClass="Devices.ecore#//DevicesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Devices.ecore#//DevicesType/device"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DevicesType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="Devices.ecore#//DeviceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/epocroot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/toolsroot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/alias"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/userdeletable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DeviceType/userdeletetable"/>
+    </genClasses>
+    <genClasses ecoreClass="Devices.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Devices.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Devices.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Devices.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Devices.ecore#//DocumentRoot/device"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Devices.ecore#//DocumentRoot/devices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DocumentRoot/epocroot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Devices.ecore#//DocumentRoot/toolsroot"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

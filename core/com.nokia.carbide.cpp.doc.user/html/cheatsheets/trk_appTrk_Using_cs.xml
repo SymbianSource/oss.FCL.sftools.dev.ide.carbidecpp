@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<compositeCheatsheet name="Run Mode Debugging">
+    <taskGroup name= "On-Device Debugging with TRK">
+         <intro> This is a <b>Run Mode Debug</b> example.
+                 <br/><br/>You can select a task to work on either by following the hyperlinks or by
+                 selecting a task in the tree. 
+         </intro>  
+         <onCompletion>Congratulations you have completed all the tasks.</onCompletion>             
+         <task kind="cheatsheet" name= "Introduction to On-Device Debugging" skip="true">
+              <param name = "id" value = "com.nokia.carbide.cpp.doc.user.trk_appTrk_intro" />
+              <intro>This cheat sheet provides an introduction to run mode debugging.</intro>
+               <onCompletion>Congratulations you should now have a better understanding of run mode debugging.</onCompletion>                  
+         </task>
+         <taskGroup name= "Tasks to perform for establishing a run mode debug session" kind = "set">
+             <intro> First you will learn how to transfer the TRK debug agent to your phone or target device. 
+             <br/><br/>This task group is a set which means that you can select any subtask to start that task.
+             </intro>
+              <onCompletion>Congratulations you now know how to transfer TRK to your device.</onCompletion>
+             <task kind="cheatsheet" name= "Transfer TRK to Device">
+                 <param name="id" value = "com.nokia.carbide.cpp.doc.user.trk_appTrk_transfer"/>
+                 <param name="showIntro" value = "false"/>
+                 <intro>This cheat sheet walks through the process of transferring the TRK debug agent to your phone or target device. 
+                 </intro>
+                 <onCompletion>Congratulations you have succeeded in transferring TRK to a device.</onCompletion>
+             </task>
+             <task kind="cheatsheet" name= "Create .pkg and .sis files">
+                 <intro>This task explains how to create a project's package file used for creating the application installation (.sis) file.
+                 </intro>
+                 <param name = "id" value = "com.nokia.carbide.cpp.doc.user.trk_appTrk_pkgsis" />
+                  <onCompletion>Congratulations you have completed information for creating .pkg and .sis files.</onCompletion>           
+             </task>      
+             <task kind="cheatsheet" name= "Define a Launch Configuration">
+                 <intro>This task explains how to define a launch configuration for on-device run mode debugging.
+                 </intro>
+                 <param name = "id" value = "com.nokia.carbide.cpp.doc.user.trk_appTrk_launch" />
+                  <onCompletion>Congratulations you have completed information for defining a launch configuration.</onCompletion>           
+             </task>      
+             <task kind="cheatsheet" name= "Debugging DLLs, Applications, and Executables">
+                 <intro>This task explains how to debug DLLs, Applications, and Executables.
+                 </intro>
+                 <param name = "id" value = "com.nokia.carbide.cpp.doc.user.trk_appTrk_debugapps" />
+                  <onCompletion>Congratulations you have completed information for debugging.</onCompletion>           
+             </task>
+             <task kind="cheatsheet" name= "Viewing Registers and Symbian OS Data">
+                 <intro>This task explains how to view registers and Symbian OS Data during a run mode debug session.
+                 </intro>
+                 <param name = "id" value = "com.nokia.carbide.cpp.doc.user.trk_appTrk_viewdata" />
+                  <onCompletion>Congratulations you have completed information for viewing registers and OS data.</onCompletion>           
+             </task>      
+         </taskGroup>
+    </taskGroup>
+</compositeCheatsheet>

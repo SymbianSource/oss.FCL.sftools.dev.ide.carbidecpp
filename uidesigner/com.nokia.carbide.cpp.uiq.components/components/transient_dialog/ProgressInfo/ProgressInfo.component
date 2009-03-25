@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--START_USECASES: CU18 END_USECASES-->
+
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikProgressInfo.TEikProgressTextType">
+		<enumElement value="EEikProgressTextNone" displayValue="%noText"/>
+		<enumElement value="EEikProgressTextPercentage" displayValue="%percentageText"/>
+		<enumElement value="EEikProgressTextFraction" displayValue="%fractionText"/>
+	</enumPropertyDeclaration>
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikProgressInfo"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"
+			instanceNameRoot="progressInfo"			
+			version="1.0"
+			category="%category.controls">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikProgressInfo" classHelpTopic=""
+			resourceType="PROGRESSINFO" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="ProgressInfo_sm.png"
+			largeIconFile="ProgressInfo.png"/>
+					
+		<attributes>
+			<attribute key ="cpp-class-name">CEikProgressInfo</attribute>
+			<attribute key ="rss-control-type-enum">EEikCtProgInfo</attribute>		
+		</attributes>
+		
+		<properties>
+			<enumProperty name="textType" 
+				type="com.nokia.carbide.uiq.CEikProgressInfo.TEikProgressTextType" 
+				descriptionKey="textTypeDescription"
+				default="EEikProgressTextNone"
+				category="%category.appearance"/>
+			<property  name="splitsInBlock" 
+				type="integer" default="0" 
+				descriptionKey="splitsInBlockDescription"
+				category="%category.appearance"/>																				
+			<property  name="finalval" 
+				type="integer" default="10" 
+				descriptionKey="finalvalDescription"
+				category="%category.appearance"/>																				
+			<property  name="width" 
+				type="integer" default="206" 
+				descriptionKey="widthDescription"
+				category="%category.appearance"/>																				
+			<property  name="height" 
+				type="integer" default="16" 
+				descriptionKey="heightDescription"
+				category="%category.appearance"/>																				
+			<property  name="value" 
+				type="integer" default="0" 
+				descriptionKey="valueDescription"
+				category="%category.appearance"/>																				
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<script file="ProgressInfo.js" prototype="ProgressInfo"/>
+			</implementation>
+		</implementations>
+
+		<sourceMapping>
+			<mapResource struct="PROGRESSINFO" headers="eikon.rh">
+				<mapEnumMember property="textType" member="text_type"
+						validate="false" headers="eikon.hrh"/>
+				<mapSimpleMember property="splitsInBlock" member="splits_in_block"/>
+				<mapSimpleMember property="finalval" member="finalval"/>
+				<mapSimpleMember property="width" member="width"/>
+				<mapSimpleMember property="height" member="height"/>
+			</mapResource>			
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<templateGroup id="9" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="eikprogi.h"/>	
+				<template form="InstanceGen" phase="Initialize">
+	<![CDATA[
+	i${TextUtils.titleCase( instance.name )} -> SetAndDraw( ${instance.properties.value} );
+	]]>
+				</template>			
+									
+			</templateGroup>						
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,115 @@
+
+***Printing environment variables modified from default:
+EPOCROOT=\Symbian\9.3\S60_3rd_FP2_Beta\
+PATH=C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools;C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\gcc\bin;c:\APPS\Nokia\DDB21Nightly\jre\bin\client;c:\APPS\Nokia\DDB21Nightly\jre\bin;c:\APPS\Nokia\DDB17Nightly\x86Build\Symbian_Tools\Command_Line_Tools;c:\apps\rvct22_616\bin;\epoc32\tools;\epoc32\gcc\bin;c:\apps\ue;C:\Symbian\SITK\aura\;C:\Symbian\SITK\EDGd\bin\;C:\Symbian\SITK\cbr;C:\Symbian\SITK\ucc\bin;C:\Symbian\SITK\ucc\SyncService\bin;C:\Symbian\SITK\ucc\TestDriverService\bin;C:\Symbian\SITK\sqlite-db-creator;C:\Symbian\SITK;C:\Symbian\SITK\testdriver;;c:\apps\PHP\;C:\Program Files\Common Files\Symbian\Tools;C:\Program Files\PC Connectivity Solution\;c:\APPS\Java\jdk1.5.0_10\bin\;C:\Perl\bin\;C:\Program Files\ThinkPad\Utilities;C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;c:\Program Files\ATI Technologies\ATI.ACE\;C:\PROGRA~1\PuTTY;c:\program files\Intel\wireless\bin;C:\Apps\CSL Arm Toolchain\bin;C:\Program Files\Common Files\Adobe\AGL;C:\Program Files\QuickTime\QTSystem\;C:\APPS\bc;C:\apps\OpenSSH\bin;C:\APPS\codescanner
+NO_DEPENDENCIES=-nd
+MAKE=make -j 4
+
+Working Directory: C:/APPS/Nokia/DDB21Nightly/workspace/ListBox/group
+
+perl.exe -S bldmake.pl bldfiles armv5  
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ export  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\EXPORT.make" EXPORT VERBOSE=-s
+Nothing to do
+
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ makefile armv5 Icons_aif_scalable_dc  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ARMV5.make" MAKEFILEICONS_AIF_SCALABLE_DC VERBOSE=-s
+make -j 4 -s  -C \APPS\Nokia\DDB21Nightly\workspace\ListBox\group -f "ICONS_AIF_SCALABLE_DC.MK" TO_ROOT=..\..\..\..\..\.. EPOCBLD=..\..\..\..\..\..\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ICONS_AIF_SCALABLE_DC\ARMV5 TO_BLDINF=..\..\..\..\..\..\APPS\Nokia\DDB21Nightly\workspace\ListBox\group PLATFORM=ARMV5 MAKMAKE
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ makefile armv5 ListBox  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ARMV5.make" MAKEFILELISTBOX VERBOSE=-s
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+	perl -S ecopyfile.pl "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\ListBox.rsg" "\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include\ListBox.rsg"
+
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ library armv5  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ARMV5.make" LIBRARY VERBOSE=-s
+make -s  -C \APPS\Nokia\DDB21Nightly\workspace\ListBox\group -f "ICONS_AIF_SCALABLE_DC.MK" TO_ROOT=..\..\..\..\..\.. EPOCBLD=..\..\..\..\..\..\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ICONS_AIF_SCALABLE_DC\ARMV5 TO_BLDINF=..\..\..\..\..\..\APPS\Nokia\DDB21Nightly\workspace\ListBox\group PLATFORM=ARMV5 LIB
+make -s  -r -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\LISTBOX.ARMV5" LIBRARY
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ resource armv5 urel  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ARMV5.make" RESOURCE CFG=UREL VERBOSE=-s
+make -s  -C \APPS\Nokia\DDB21Nightly\workspace\ListBox\group -f "ICONS_AIF_SCALABLE_DC.MK" TO_ROOT=..\..\..\..\..\.. EPOCBLD=..\..\..\..\..\..\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ICONS_AIF_SCALABLE_DC\ARMV5 TO_BLDINF=..\..\..\..\..\..\APPS\Nokia\DDB21Nightly\workspace\ListBox\group PLATFORM=ARMV5 CFG=UREL RESOURCE
+make -s  -r -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\LISTBOX.ARMV5" RESOURCEUREL
+
+
+Creating \symbian\9.3\s60_3rd_fp2_beta\epoc32\build\apps\nokia\ddb21nightly\workspace\listbox\group\listbox\armv5\urel
+
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ target armv5 urel  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ARMV5.make" TARGET CFG=UREL VERBOSE=-s
+"\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp", line 19: Error:  #493: no instance of overloaded function "CListBoxDocument::CListBoxDocument" matches the specified type
+  CListBoxDocument::CListBoxDocument( CEikApplication anApplication )
+                    ^
+"\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp", line 19: Error:  #70: incomplete type is not allowed
+  CListBoxDocument::CListBoxDocument( CEikApplication anApplication )
+                                      ^
+"\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp", line 20: Error:  #130: expected a "{"
+  	: CAknDocument( anApplication )
+  	^
+\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp: 0 warnings, 3 errors
+make[1]: *** [\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\urel\ListBoxDocument.o] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** Waiting for unfinished jobs....
+Created \Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\urel\ListBoxListBoxView.d
+make[1]: *** Waiting for unfinished jobs....
+Created \Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\urel\ListBoxAppUi.d
+make[1]: *** Waiting for unfinished jobs....
+Created \Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\urel\ListBoxListBox.d
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** Waiting for unfinished jobs....
+make: *** [TARGETLISTBOX] Error 2
+make -j 4 -s  -C \APPS\Nokia\DDB21Nightly\workspace\ListBox\group -f "ICONS_AIF_SCALABLE_DC.MK" TO_ROOT=..\..\..\..\..\.. EPOCBLD=..\..\..\..\..\..\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ICONS_AIF_SCALABLE_DC\ARMV5 TO_BLDINF=..\..\..\..\..\..\APPS\Nokia\DDB21Nightly\workspace\ListBox\group PLATFORM=ARMV5 CFG=UREL BLD
+make -j 4 -s  -r -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\LISTBOX.ARMV5" UREL
+listboxlistbox.cpp
+listboxlistboxview.cpp
+listboxdocument.cpp
+listboxappui.cpp
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ final armv5 urel  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ARMV5.make" FINAL CFG=UREL VERBOSE=-s
+make -j 4 -s  -C \APPS\Nokia\DDB21Nightly\workspace\ListBox\group -f "ICONS_AIF_SCALABLE_DC.MK" TO_ROOT=..\..\..\..\..\.. EPOCBLD=..\..\..\..\..\..\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ICONS_AIF_SCALABLE_DC\ARMV5 TO_BLDINF=..\..\..\..\..\..\APPS\Nokia\DDB21Nightly\workspace\ListBox\group PLATFORM=ARMV5 CFG=UREL FINAL
+
+Total Time: 26 sec
+
+perl.exe -S ABLD.PL \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\ test export  
+  make -r  -f "\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\EXPORTtest.make" EXPORT VERBOSE=-s
+Nothing to do
+
+
+
+***Compiling file "C:\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\ListBoxDocument.cpp" for configuration "Phone Release (ARMV5) [S60_3rd_FP2_Beta]"
+***Makefile structures up to date. Skipping 'bldmake bldfiles'
+make.exe -f C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\build\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\LISTBOX.ARMV5 \Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\UREL\ListBoxDocument.o 
+listboxdocument.cpp
+armcc -O2 --diag_suppress 66,161,611,654,997,1152,1300,1464,1488,6318,6331  --diag_error 1267 --thumb  --fpu softvfp --exceptions --exceptions_unwind -D__MARM_THUMB__ -D__MARM_INTERWORK__ --cpu 5T --enum_is_int -Ono_known_library --fpmode ieee_no_fenv --export_all_vtbl --no_vfe --apcs /inter --dllimport_runtime   -c --md -DNDEBUG -D_UNICODE -D__SYMBIAN32__ -D__S60_32__ -D__S60_3X__ -D__SERIES60_3X__ -D__ARMCC__ -D__EPOC32__ -D__MARM__ -D__EABI__ -D__ARMCC_2__ -D__ARMCC_2_2__ -D__MARM_ARMV5__ -D__EXE__ -D__SUPPORT_CPP_EXCEPTIONS__ -D__PRODUCT_INCLUDE__=\"\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include\variant\Symbian_OS_v9.3.hrh\"  --cpp --preinclude \Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include\RVCT2_2\RVCT2_2.h  -J \APPS\Nokia\DDB21Nightly\workspace\ListBox\src -J \APPS\Nokia\DDB21Nightly\workspace\ListBox\inc -J \APPS\Nokia\DDB21Nightly\workspace\ListBox\data -J \Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include -J \Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include\variant -J \Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include\ecom -J \Symbian\9.3\S60_3rd_FP2_Beta\epoc32\include\variant -o \Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\UREL\ListBoxDocument.o \APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp
+"\APPS\Nokia\DDB21Nightly\workspace\ListBox\inc\ListBoxAppUi.h", line 25: Error:  #84: invalid combination of type specifiers
+  class CListBoxAppUi : public CAknViewAppUi
+  ^
+\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp: 0 warnings, 1 error
+make.exe: *** [\Symbian\9.3\S60_3rd_FP2_Beta\EPOC32\BUILD\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX\ARMV5\UREL\ListBoxDocument.o] Error 1
+
+
+linker problems......
+
+ERROR: Unresolved symbol: _ZN4User9InvariantEv
+ERROR: Unresolved symbol: _ZN4User15HandleExceptionEPv
+ERROR: Unresolved symbol: _ZN11CCoeControlC1Ev
+ERROR: Unresolved symbol: _ZN10RArrayBaseC1Ei
+ERROR: Unresolved symbol: _ZNK15CEikTextListBox5ModelEv
+ERROR: Unresolved symbol: _ZNK17CTextListBoxModel13ItemTextArrayEv
+ERROR: Unresolved symbol: _ZN12CDesC16Array7AppendLERK7TDesC16
+ERROR: Unresolved symbol: _ZN11CEikListBox19HandleItemAdditionLEv
+ERROR: Unresolved symbol: _ZN6TDes166FormatE11TRefByValueIK7TDesC16Ez
+ERROR: Unresolved symbol: _ZN7CCoeEnv24ReadDesC16ArrayResourceLEi
+ERROR: Unresolved symbol: _ZN12CleanupStack5PushLEP5CBase
+ERROR: Unresolved symbol: _ZN10TBufBase16C1Ei
+ERROR: Unresolved symbol: _ZN12CleanupStack13PopAndDestroyEv
+ERROR: Unresolved symbol: _ZN10RArrayBase6AppendEPKv
+ERROR: Unresolved symbol: _ZN4User12LeaveIfErrorEi
+ERROR: Unresolved symbol: _ZN12AknIconUtils11CreateIconLERP10CFbsBitmapS2_RK7TDesC16ii
+ERROR: Unresolved symbol: _ZN12AknIconUtils16PreserveIconDataEP10CFbsBitmap
+ERROR: Unresolved symbol: _ZN12AknIconUtils20GetContentDimensionsEP10CFbsBitmapR5TSize

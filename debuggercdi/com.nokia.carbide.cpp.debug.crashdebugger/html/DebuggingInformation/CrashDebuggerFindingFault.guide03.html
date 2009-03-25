@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Panics</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Panics</h2>
+</div>
+<div>
+<p>If the <em>Fault Category</em> is not <em>Exception</em>,
+then the fault is due to a panic. In this case the only other valid field is
+the <em>Fault reason</em>; the values of all other fields are
+meaningless.</p>
+<p> The panic number is the low 16-bits of the fault reason, shown in
+hexadecimal.</p>
+<p>For example, a KERN 27 panic would generate:</p>
+<p class="listing">Fault Category: KERN  Fault Reason: 0000001b<br>
+  ExcId ffffee5e CodeAddr ffff99a9 DataAddr bfff3e54 Extra fffec4cd</p>
+<p>If the panic is KERN 4, then a thread or process marked as
+protected has panicked. For other panics, kernel side code has panicked; this
+code is either in the kernel itself or in a device driver.</p>
+<p>See <a href="CrashDebuggerInfoAboutKernel.guide.html">Extracting information about the kernel</a> to find out which process and thread were
+running at the time of the panic.</p> 
+
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

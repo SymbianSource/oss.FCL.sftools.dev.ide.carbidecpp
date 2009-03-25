@@ -1,0 +1,44 @@
+/*
+* Copyright (c) 2002 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*		This is the main build-time configuration file of Phonebook application and
+*		its components.
+*
+*/
+
+
+#ifndef __PbkConfig_HRH__
+#define __PbkConfig_HRH__
+
+//  INCLUDES
+
+// Series60 configuration flags
+#include <bldvariant.hrh>
+#include <defaultcaps.hrh>
+
+#ifndef __cplusplus
+  // Include this only in mmp-file and resource contexts
+  #include <domain\osextensions\data_caging_paths.hrh>
+#endif // __cplusplus
+
+// Put flags you want to enable or disable for testing here.
+// In order for this to work all Phonebook source files that need the platform
+// flags should not include <bldvariant.hrh> directly but this file.
+// DO NOT check this file out from version control if you modify it only for
+// testing. Modify only your local copy.
+
+#endif // __PbkConfig_HRH__
+
+// End of File
+

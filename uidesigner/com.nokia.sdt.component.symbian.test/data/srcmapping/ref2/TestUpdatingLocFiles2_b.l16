@@ -1,0 +1,7 @@
+CHARACTER_SET UTF8 // really
+
+// greeting
+#define STR_1 "Здравствулте, dude"
+#define STR_2 "Ð”Ð¾ Ñ�Ð²Ð¸Ð´Ð°Ð½Ð¸Ñ�" /* later */
+#define STR_5 ""
+#define STR_10 "вторник"

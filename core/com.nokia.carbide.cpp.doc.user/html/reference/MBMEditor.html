@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>MBM Editor</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+   <body>
+   <h2>MBM Editor</h2>
+	  
+	 <p>
+		The MBM Editor allows you to specify the bitmaps that
+		should be included in a Symbian OS multi-bitmap (MBM) file. Use of MBM files for general purpose graphics is restricted to using <span class="filename">.bmp</span> files and works for versions 2.x and later releases of the Symbian OS SDKs. For more
+		information, see<a href="../concepts/MBMDefWizard.html"> MBM File</a> and <a href="../tasks/Multi-BitmapFile.html">Creating a MBM File</a>.
+   </p>
+	 <p>
+		The MBM Editor is shown when an MBM file is
+	 opened for editing:</p>
+     <p class="Image"><img src="../tasks/projects/images/MBM_editor.png" width="900" height="600" /></p>
+    <p class="figure">Figure 1 - MBM Editor</p>
+    <h5>Table 1. MBM Editor &mdash;Items</h5>
+    <table width="94%"  border="0" cellpadding="2" cellspacing="0">
+      <tr>
+        <th width="32%" scope="col">Item</th>
+        <th width="68%" scope="col">Explanation</th>
+      </tr>
+      <tr>
+        <td><b>Target File </b></td>
+        <td><p>Specifies the EPOCROOT relative path for the compiled images. Click the Default button to set the target file based on the SDK and project name. </p></td>
+      </tr>
+      <tr>
+        <td><b>Header File </b></td>
+        <td>Shows the generated header file. Select the Header option in the Header Generation group to create a default .mbg file. The path cannot be edited in this field. </td>
+      </tr>
+      <tr>
+        <td><b>Header Generation</b></td>
+        <td><p>Options include:</p>
+            <ul>
+              <li>No header - If selected, no .mbg header will be generated. </li>
+              <li>Header - If selected, a .mbg header will be generated.</li>
+          </ul></td>
+      </tr>
+      <tr>
+        <td><b>Up</b></td>
+        <td>Select an image in the list and click Up to move the selection one position up in the list.</td>
+      </tr>
+      <tr>
+        <td><b>Down</b></td>
+        <td><p>Select an image in the list and click Down to move the selection one position down in the list. </p></td>
+      </tr>
+      <tr>
+        <td><b>Pair Image and Mask </b></td>
+        <td>Select two adjacent unpaired BMP image entries in the list and click this button to combine the images together into image/mask pairs.</td>
+      </tr>
+      <tr>
+        <td><b>Split Image and Mask </b></td>
+        <td>Select a paired BMP image in the list and click this button to split the image into image and mask entries. </td>
+      </tr>
+      <tr>
+        <td><b>Swap Image and Mask </b></td>
+        <td>Select a paired BMP image in the list and click this button to swap the image and mask files and format information in paired image entries. </td>
+      </tr>
+      <tr>
+        <td><b><a href="add_from_project.htm">Add From Project</a> </b></td>
+        <td>Click this button to open an Add Images from Project dialog to reference available images in the project.</td>
+      </tr>
+      <tr>
+        <td><b><a href="add_from_filesys.htm">Add From Filesystem</a></b></td>
+        <td>Click this button to open an Add Images From Filesystem dialog to locate and reference existing images in the filesystem or copy images to the project.</td>
+      </tr>
+      <tr>
+        <td><b>Remove</b></td>
+        <td>Select an image and click Remove to remove image entry from the list. This does not delete file from directory.</td>
+      </tr>
+      <tr>
+        <td><b>Color depth </b></td>
+        <td>Select the bit depth used to encode the image at build time.</td>
+      </tr>
+      <tr>
+        <td><b>Mask depth </b></td>
+        <td><p>Select the bit depth used to encode the mask at build time. Options include:</p>
+            <ul>
+              <li>n/a - Do not apply mask depth to images </li>
+              <li>1 - A 1-bit mask treats pixels as &quot;on/off&quot; bits, where black is opaque and white is transparent. </li>
+              <li>8 - An 8-bit mask is treated as alpha values, where black is transparent and white is opaque.</li>
+          </ul></td>
+      </tr>
+      <tr>
+        <td><b>Color format </b></td>
+        <td>Select Color to encode the image(s) as color or select Grayscale to encode the image(s) as grayscale.</td>
+      </tr>
+      <tr>
+        <td><b>Set from image </b></td>
+        <td>Click this button to auto-detect the image depth, mask depth, and color/grayscale setting from the image contents.</td>
+      </tr>
+      <tr>
+        <td><b>Preview</b></td>
+        <td>A preview of the image as it will appear at runtime. </td>
+      </tr>
+    </table>
+    <p class="Image">&nbsp;</p>
+    <h5>Related  concepts</h5>
+
+   <ul>
+     <li><a href="../concepts/MBMDefWizard.html">MBM File</a></li>
+   </ul>
+   <h5>Related tasks</h5>
+   <ul>
+     <li><a href="../tasks/Multi-BitmapFile.html">Creating an MBM File</a></li>
+   </ul>
+   <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+   </html>
+   

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikTimeEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="timeEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="TIME_EDITOR" className="CEikTimeEditor" />
+		<designerImages 
+			smallIconFile="CEikTimeEditor_sm.png" 
+			largeIconFile="CEikTimeEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikTimeEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-setting-item-list-content">true</attribute>
+			<attribute key="data-model-cpp-type">TTime</attribute>
+			<attribute key="setting-item-class-name">CAknTimeOrDateSettingItem</attribute>
+			<attribute key="setting-item-constructor-pattern">{0},\nCAknTimeOrDateSettingItem::ETime,\n{1}</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="dataquery-className">CAknTimeQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EEikCtTimeEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<!-- TODO: validate range -->
+			<compoundProperty category="Data" name="minTime" type="com.nokia.sdt.series60.CEikTimeEditor.Time" 
+			editorClass="com.nokia.sdt.symbian.ui.editors.TimeEditorFactory"
+			default="H00 M00 S00"
+			descriptionKey="minTimeDescription"
+			/>
+			<compoundProperty category="Data" name="maxTime" type="com.nokia.sdt.series60.CEikTimeEditor.Time" 
+			editorClass="com.nokia.sdt.symbian.ui.editors.TimeEditorFactory"
+			default="H23 M59 S59"
+			descriptionKey="maxTimeDescription"
+			/>
+			<compoundProperty category="Data" name="time" type="com.nokia.sdt.series60.CEikTimeEditor.Time" 
+			editorClass="com.nokia.sdt.symbian.ui.editors.TimeEditorFactory"
+			descriptionKey="timeDescription"
+			/>
+			<compoundProperty category="Data" name="flags" type="com.nokia.sdt.series60.CEikTimeEditor.Flags" 
+			editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+			descriptionKey="flagsDescription"
+			/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/> 
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikTimeEditor_visual.js" prototype="CEikTimeEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="TIME_EDITOR" headers="eikon.rh">
+			<mapResourceMember struct="TIME" property="minTime" member="minTime">
+				<mapSimpleMember property="hour" member="hour"/>
+				<mapSimpleMember property="minute" member="minute"/>
+				<mapSimpleMember property="second" member="second"/>
+			</mapResourceMember>
+			<mapResourceMember struct="TIME" property="maxTime" member="maxTime">
+				<mapSimpleMember property="hour" member="hour"/>
+				<mapSimpleMember property="minute" member="minute"/>
+				<mapSimpleMember property="second" member="second"/>
+			</mapResourceMember>
+			<mapBitmaskMember property="flags" member="flags">
+				<mapBitmaskValue properties="EEikTimeWithoutSecondsField" value="EEikTimeWithoutSecondsField" />
+				<mapBitmaskValue properties="EEikTimeWithoutHoursField" value="EEikTimeWithoutHoursField" />
+			</mapBitmaskMember>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuerySetData AknDataQuerySetData1 AknDataQuerySetData2">
+	
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+
+		<inline scope="prototype"><![CDATA[
+${jsObject}.prototype.timeToInteger = function(t) {
+	// ROUGH estimate, just for range checking
+	var v = (t.hour * 3600) + (t.minute * 60) + t.second;
+	return v;
+}	
+]]>		</inline>
+
+		<inline scope="prototype">
+${jsObject}.prototype.formatConstructor = function(properties) {
+	return "TTime( TDateTime( 0, EJanuary, 0, "
+		+properties.time.hour+", "+properties.time.minute
+		+", "+properties.time.second+", 0 ) )";
+}
+		</inline>
+		
+
+		<inline><![CDATA[
+if (this.timeToInteger(properties.time) < this.timeToInteger(properties.minTime)) {
+	error(formatString(lookupString("timeExceedsRangeSG"), instance.name));
+} else
+if (this.timeToInteger(properties.time) > this.timeToInteger(properties.maxTime)) {
+	error(formatString(lookupString("timeExceedsRangeSG"), instance.name));
+}
+]]>		</inline>
+
+		<template phase="Initialize" forms="Container Dialog Form">
+${instanceMemberName}->SetTime( ${this.formatConstructor(properties)} );
+		</template>
+		
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	TTime time = ${this.formatConstructor(properties)};
+	aData = time.DateTime();
+]]>		</template>
+
+		<template form="AknDataQuerySetData1" phase="SetData"><![CDATA[
+	TTime time1 = ${this.formatConstructor(properties)};
+	aData1 = time1.DateTime();
+]]>		</template>
+
+		<template form="AknDataQuerySetData2" phase="SetData"><![CDATA[
+	TTime time2 = ${this.formatConstructor(properties)};
+	aData2 = time2.DateTime();
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+		<template phase="Initialize" forms="SettingsList"><![CDATA[
+<% 		var init = this.formatConstructor(properties);
+		this.setupSettingItem(contribs, 0, instance, init); 
+%>]]>	</template>
+		
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent" />
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

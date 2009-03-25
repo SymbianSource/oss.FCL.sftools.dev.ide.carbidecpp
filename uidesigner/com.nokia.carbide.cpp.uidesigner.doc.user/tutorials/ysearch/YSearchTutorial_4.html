@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Yahoo! Image Search</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</head>
+<body LANG="en-US" DIR="LTR">
+<h2>Tutorial: Yahoo! Image Search</h2>
+<p>This example shows how to use the Carbide.c++ UI Designer for S60 to 
+define the UI of an application and to implement the "real work" in the 
+generated code. </p>
+<p>The application consists of two screens. The main screen prompts the user to to initiate a search and 
+displays the list of search results. The second screen displays the Yahoo! provided thumbnail image of
+the selected result.
+</p>
+<p>Choose a link to read the following topics:</p>
+<ul>
+  <li><a href="YSearchTutorial_1.html">Getting the Yahoo! Image Search project</a>
+  </li>
+  <li><a href="YSearchTutorial_2.html">Application overview</a>
+  </li>
+  <li><a href="YSearchTutorial_3.html">Using the S60 UI Designer to create the UI</a>
+  </li>
+  <li>Using the WebClient component to retrieve XML data
+  </li>
+  <li><a href="YSearchTutorial_5.html">Adding application logic part 1: perform search query and populate results</a>
+  </li>
+  <li><a href="YSearchTutorial_6.html">Adding application logic part 2: download and display selected image</a>
+  </li>
+</ul>
+<h3><font size="4">Using the WebClient component to retrieve XML data</font></h3>
+
+<p>The WebClient component is a non-UI object that implements HTTP GET requests.
+</p>
+<p>Since web requests can take a bit of time to complete, they are not handled
+synchronously, i.e. as simple function calls. Rather, a function call is made to
+initiate a request. That function call returns immediately. Callbacks are made to 
+notify the caller of the ongoing progress of the request and to signal completion.
+</p>
+<p>The web client component uses the MWebClientObserver callback interface to make
+callbacks to the client. The UI Designer then layers a set of component events on 
+top of that interface, delivering notifications to application-defined handler functions
+for selected events.
+</p>
+<p align="center"><img src="webclient_events_select.jpg" width="575" height="255"> </p>
+<p class="figure">Figure 2 - Events view showing event handlers </p>
+<p>Because this application is handling HTTP in a very simple way, we only respond to events
+in order to collect the incoming HTTP data, and to receive notification when the request
+is complete. You can view the event information by selecting the webClient instance  (Figure 1) , right-clicking
+and choosing "Show Events View".  The handled events have handler function names in the right-hand
+column (Figure 2).
+</p>
+<div align="center">
+  <p><img src="webclient_events.jpg" width="575" height="237"/>
+</p>
+  <p class="figure">Figure 2 - Events view showing event handlers </p>
+</div>
+<p>Details of the Yahoo! Image Search API may be found at 
+<a href="http://developer.yahoo.com/search/image/V1/imageSearch.html">http://developer.yahoo.com/search/image/V1/imageSearch.html.</a>
+In brief, it uses a REST-style query API and returns results as XML. In this example, we use the
+CYahooSearchModel class to encapsulate XML parsing logic and maintaining the list of results.
+This class has no user interface and was manually written. It provides an example of separating application
+specific data handling, showing how it may be kept separate from the user interface portion of the application.</p>
+<p>On the next page, we will show how all these components are put together to create the application.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

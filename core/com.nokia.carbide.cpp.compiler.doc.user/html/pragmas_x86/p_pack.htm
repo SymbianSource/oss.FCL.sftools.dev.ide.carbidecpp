@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>pack</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>pack</h3>
+<p>  Controls the alignment of data structures.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma pack( [n | push, n | pop] )</p>
+  <h5>Targets</h5>
+  Intel x86, MIPS<br />
+  <h5>Remarks</h5>
+  <p>Sets the packing alignment for data structures. It affects all data structures declared after this pragma until you change it again with another pack pragma.</p>
+  <table width="100%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+      <th width="28%" scope="col">This pragma&hellip;</th>
+      <th width="72%" scope="col">Does this&hellip;</th>
+    </tr>
+    <tr>
+      <td class="code">#pragma pack(n)</td>
+      <td>Sets the alignment modulus to n, where n can be 1, 2, 4, 8, or 16. For MIPS compilers, if n is 0, structure alignment is reset to the default setting.</td>
+    </tr>
+    <tr>
+      <td class="code">#pragma pack(push, n)</td>
+      <td>Pushes the current alignment modulus on a stack, then sets it to n, where n can be 1, 2, 4, 8, or 16. Use push and pop when you need a specific modulus for some declaration or set of declarations, but do not want to disturb the default setting. MIPS compilers do not support this form.</td>
+    </tr>
+    <tr>
+      <td class="code">#pragma pack(pop)</td>
+      <td>Pops a previously pushed alignment modulus from the stack. MIPS compilers do not support this form.</td>
+    </tr>
+    <tr>
+      <td class="code">#pragma pack()</td>
+      <td>For x86 compilers, resets alignment modulus to the value specified in the x86 CodeGen panel. For MIPS compilers, resets structure alignment to the default setting.</td>
+    </tr>
+  </table>
+  <p>This pragma corresponds to the Byte Alignment setting in the x86 CodeGen panel. <br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

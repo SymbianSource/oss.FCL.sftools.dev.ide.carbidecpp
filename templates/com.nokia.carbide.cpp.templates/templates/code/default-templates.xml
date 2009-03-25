@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- NOTE TO TRANSLATOR:
+* This file should remain English as it produces compilable code. 
+-->
+
+<templates>
+<template name="NewL" description="NewL" context="org.eclipse.cdt.ui.text.templates.c" id="com.nokia.carbide.cpp.templates.core.newl" enabled="true">${classname}* ${classname}::NewL ()
+        {
+        ${classname}* self=${classname}::NewLC ();
+        CleanupStack::Pop (); // self;
+        return self;
+        }
+</template>
+<template name="NewLC" description="NewLC" context="org.eclipse.cdt.ui.text.templates.c" id="com.nokia.carbide.cpp.templates.core.newlc" enabled="true">${classname}* ${classname}::NewLC ()
+        {
+        ${classname}* self = new (ELeave)${classname}();
+        CleanupStack::PushL (self);
+        self->ConstructL ();
+        return self;
+        }
+</template>
+<template name="%AODeclaration" description="%AODeclaration" context="org.eclipse.cdt.ui.text.templates.c" id="com.nokia.carbide.cpp.templates.core.aodec" enabled="true">class ${classname} : public CActive
+        {
+public:
+
+        ~${classname} ();
+        static ${classname}* NewL ();
+        static ${classname}* NewLC ();
+
+private:
+
+        ${classname} ();
+        void ConstructL ();
+
+private:
+
+        void RunL ();
+        void DoCancel ();
+        TInt RunError (TInt aError);
+
+private:
+        };
+</template>
+<template name="%AODefinition" description="%AODefinition" context="org.eclipse.cdt.ui.text.templates.c" id="com.nokia.carbide.cpp.templates.core.aodef" enabled="true">
+${classname}::${classname}() :
+        CActive(EPriorityStandard) 
+        {
+        }
+
+${classname}* ${classname}::NewLC ()
+        {
+        ${classname}* self = new ( ELeave ) ${classname}();
+        CleanupStack::PushL (self);
+        self->ConstructL ();
+        return self;
+        }
+
+${classname}* ${classname}::NewL ()
+        {
+        ${classname}* self = ${classname}::NewLC ();
+        CleanupStack::Pop (); // self;
+        return self;
+        }
+
+void ${classname}::ConstructL ()
+        {
+        CActiveScheduler::Add ( this);
+        }
+
+${classname}::~${classname} ()
+        {
+        Cancel (); 
+        }
+
+void ${classname}::DoCancel ()
+        {
+        // TODO: Implement ${classname}::DoCancel
+        }
+
+void ${classname}::RunL ()
+        {
+        // TODO: Implement ${classname}::RunL
+        }
+
+TInt ${classname}::RunError (TInt aError)
+        {
+        return aError;
+        }
+</template>
+</templates>

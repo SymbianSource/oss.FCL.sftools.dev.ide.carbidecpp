@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>New Features</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>New Features</h2>
+<p>This reference has new and updated topics:</p>
+<ul>
+  <li>See pragma <a href="../pragmas/p_gcc_extensions.htm">gcc_extensions </a>for GCC improvements</li>
+  <li>See pragma <a href="../pragmas/p_c99.htm">c99</a> for C99 improvements</li>
+  <li>C++ improvements include:
+    <ul>
+      <li>Forward Declarations of Arrays of Incomplete Type now supported</li>
+      <li>Vendor Independent C++ ABI support for specific compiler target</li>
+    </ul>
+  </li>
+  <li>C++ template improvements include:
+    <ul>
+      <li>Instantiating a Template now supports the explicit instantiation of non-template members</li>
+      <li>Better Template Conformance support for address of template-id rules</li>
+      <li>The pragma <a href="../pragmas/p_defer_defarg_parsing.htm">defer_defarg_parsing</a> supports deferred parsing of member functions by default</li>
+    </ul>
+  </li>
+  <li> &ldquo;Multibyte and Unicode Support&rdquo;</li>
+  <li>&ldquo;Getting Environmental Variables&rdquo; provides support for determining host-specific environmental variables</li>
+  <li>If you use a  function or type that is marked with a GCC style deprecated  attribute,  a warning message with line number where the statement occurs will appear.
+    <pre>int old_fn () __attribute__ ((deprecated));</pre>
+    <pre>int (*fn_ptr)() = old_fn;</pre>
+
+  <pre>foo.cpp:2:  warning: `old_fn' is deprecated (declared at foo.cpp:1)</pre></li>
+  <li>New and newly documented #pragmas include:</li>
+        <table width="100%"  border="0" cellpadding="2" cellspacing="0">
+          <tr class="code">
+            <td><a href="../pragmas/p_array_new_delete.htm">array_new_delete</a></td>
+              <td><a href="../pragmas/p_inline_max_size.htm">inline_max_size</a></td>
+              <td><a href="../pragmas/p_options.htm">options</a></td>
+              <td><a href="../pragmas/p_warning.htm">warning</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_asmpoundcomment.htm">asmpoundcomment</a></td>
+              <td><a href="../pragmas/p_inline_max_total_size.htm">inline_max_total_size</a></td>
+              <td><a href="../pragmas/p_pragma_prepdump.htm">pragma_prepdump</a></td>
+              <td><a href="../pragmas/p_warn_any_ptr_int_conv.htm">warn_any_ptr_int_conv</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_asmsemicolcomment.htm">asmsemicolcomment</a></td>
+              <td><a href="../pragmas/p_instmgr_file.htm">instmgr_file</a></td>
+              <td><a href="../pragmas/p_showmessagenumber.htm">showmessagenumber</a></td>
+              <td><a href="../pragmas/p_warn_hiddenlocals.htm">warn_hiddenlocals</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_debug_inline.htm">debuginline</a></td>
+              <td><a href="../pragmas/p_keepcomments.htm">keepcomments</a></td>
+              <td><a href="../pragmas/p_show_error_filestack.htm">show_error_filestack</a></td>
+              <td><a href="../pragmas/p_warn_illtokenpasting.htm">warn_illtokenpasting</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_defer_defarg_parsing.htm">defer_defarg_parsing</a></td>
+              <td><a href="../pragmas/p_macro_prepdump.htm">macro_prepdump</a></td>
+              <td> <a href="../pragmas/p_space_prepdump.htm">space_prepdump</a></td>
+              <td><a href="../pragmas/p_warn_illunionmembers.htm">warn_illunionmembers</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_errno_name.htm">errno_name</a></td>
+              <td><a href="../pragmas/p_maxerrorcount.htm">maxerrorcount</a></td>
+              <td><a href="../pragmas/p_srcrelincludes.htm">srcrelincludes</a></td>
+              <td><a href="../pragmas/p_warn_missingreturn.htm">warn_missingreturn</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_flat_include.htm">flat_include</a></td>
+              <td><a href="../pragmas/p_msg_show_lineref.htm">msg_show_lineref</a></td>
+              <td><a href="../pragmas/p_strictheaderchecking.htm">strictheaderchecking</a></td>
+              <td><a href="../pragmas/p_warn_no_explicit_virtual.htm">warn_no_explicit_virtual</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_fullpath_file.htm">fullpath_file</a></td>
+              <td><a href="../pragmas/p_msg_show_realref.htm">msg_show_realref</a></td>
+              <td><a href="../pragmas/p_store_object_files.htm">store_object_files</a></td>
+              <td><a href="../pragmas/p_warn_undefmacro.htm">warn_undefmacro</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_inline_bottom_up_once.htm">inline_bottom_up_once</a></td>
+              <td><a href="../pragmas/p_new_mangler.htm">new_mangler</a></td>
+              <td><a href="../pragmas/p_text_encoding.htm">text_encoding</a></td>
+              <td><a href="../pragmas/p_no_conststringconv.htm">no_conststringconv</a></td>
+          </tr>
+          <tr class="code">
+            <td><a href="../pragmas/p_inline_max_auto_size.htm">inline_max_auto_size</a></td>
+              <td><a href="../pragmas/p_nosyminline.htm">nosyminline</a></td>
+              <td><a href="../pragmas/p_thread_safe_int.htm">thread_safe_init</a></td>
+              <td>&nbsp;</td>
+          </tr>
+  </table>
+<li>New and newly documented x86 #pragmas include:</li>
+  <table width="50%"  border="0" cellpadding="2" cellspacing="0">
+    <tr class="code">
+      <td width="45%"><a href="../pragmas_x86/p_asm_fixup_dllimports.htm">asm_fixup_dllimports</a></td>
+      <td width="55%"><a href="../pragmas_x86/p_disableopts.htm">disableopts</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_disable_stackalloc.htm">disable_stackalloc</a></td>
+      <td><a href="../pragmas_x86/p_emit_local_scopes.htm">emit_local_scopes</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_fill_stack.htm">fill_stack</a></td>
+      <td><a href="../pragmas_x86/p_line_trace.htm">line_trace</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_mmcalls.htm">mmcalls</a></td>
+      <td><a href="../pragmas_x86/p_overlap_locals.htm">overlap_locals</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_sse.htm">sse</a></td>
+      <td><a href="../pragmas_x86/p_sse2.htm">sse2</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_struct_reg_return.htm">struct_reg_return</a></td>
+      <td><a href="../pragmas_x86/p_ten_byte_long_double.htm">ten_byte_long_double</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_use_cmov.htm">use_cmov</a></td>
+      <td><a href="../pragmas_x86/p_use_fcmov.htm">use_fcmov</a></td>
+    </tr>
+    <tr class="code">
+      <td><a href="../pragmas_x86/p_volatile_asm.htm">volatile_asm</a></td>
+      <td><a href="../pragmas_x86/p_x86_processor.htm">x86_processor</a></td>
+    </tr>
+  </table>
+  <li>Information in this manual now uses references to the ISO C and C++ standards instead of Ellis and Stroustrup&rsquo;s The Annotated C++ Reference Manual (ARM) and Kernighan and Richie&rsquo;s The C Programming Language (K&amp;R).<br />
+</li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

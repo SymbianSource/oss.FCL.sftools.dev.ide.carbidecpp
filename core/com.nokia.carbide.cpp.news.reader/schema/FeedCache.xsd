@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="entries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="entry" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title" />
+        <xs:element ref="link" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="pubDate" />
+        <xs:element ref="read" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="feed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title" />
+        <xs:element ref="link" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="pubDate" />
+        <xs:element ref="type" />
+        <xs:element ref="subscribed" />
+        <xs:element ref="entries" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="feedCache">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="feeds" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="feeds">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="feed" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="link" type="xs:string"/>
+  <xs:element name="pubDate" type="xs:string"/>
+  <xs:element name="read" type="xs:boolean"/>
+  <xs:element name="subscribed" type="xs:boolean"/>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="type" type="xs:string"/>
+</xs:schema>

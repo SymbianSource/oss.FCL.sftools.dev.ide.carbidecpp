@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Creating Custom Components</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {font-size: 12px}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h1>Creating Custom Components</h1>
+<p>The following section provides information on creating your own custom components that appear in the UI Designer and can be used when creating a UI design for your application. First some background information is provided about the basic design of components and how they interact with the UI Designer.</p>
+<h2>Overview</h2>
+<p>A UI designer project contains a set of .uidesign files. There is one for each design &quot;view&quot;, for example the top-level visual container. There is also a .uidesign file (application.uidesign) for the application as a whole, which includes the AppUi.</p>
+<p>A .uidesign  file represents a data model and contains the configuration of a single container or form. The contents of each data model are the persistent state of a set of component instances. Each component instance can have properties, event bindings, and localized strings. Component instances come from the set of available components for a project; based on the selected SDK. Components are listed in the Palette of the UI Designer. Additional component instances are added as the user edits a UI design. Custom components created by a user will also appear in the UI Designer Palette.</p>
+<p>Much of the functionality of the UI Designer is built on components, including determining compatibility across containers, rendering the simulated UI appearance, and generating source code.  At the very least, components can be defined by property values, a source code template, and  containment rules. Code may also be provided, either in JavaScript or Java, to implement user-defined behavior. However, more complex designs can be implemented into the creation of components.</p>
+<h5>Related Topics</h5>
+<ul>
+  <li><a href="cc_architecture.htm">Custom Component Architecture</a></li>
+  <li><a href="cc_new_components.htm">Developing New Components</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div></div>
+
+</body>
+</html>

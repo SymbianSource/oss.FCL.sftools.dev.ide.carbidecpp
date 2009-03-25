@@ -1,0 +1,10 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES r_test0
+	{
+	}
+
+RESOURCE LBUF r_test0_1
+	{
+	txt = "foo";
+	} 

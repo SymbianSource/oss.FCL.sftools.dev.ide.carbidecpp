@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	<component id="com.nokia.examples.codeComp">
+		<property id="name">root</property>
+			<component id="com.nokia.examples.delCodeComp">
+				<property id="name">code</property>
+			</component>  
+			<component id="com.nokia.examples.delScriptComp">
+				<property id="name">script</property>
+			</component>  
+			<component id="com.nokia.examples.delegate">
+				<property id="name">delegate</property>
+			</component>  
+	</component>  
+</designerData>

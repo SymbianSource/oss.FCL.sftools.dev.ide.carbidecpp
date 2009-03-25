@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikDateEditor"
+			baseComponent="com.nokia.carbide.uiq.CQikTTimeEditorBase"
+			instanceNameRoot="dateEditor"			
+			version="1.0"
+			category="%category.editors">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CQikDateEditor" classHelpTopic=""
+			resourceType="QIK_DATE_EDITOR" resourceHelpTopic=""/>	
+						
+		<designerImages smallIconFile="CQikDateEditor_sm.png" 
+			largeIconFile="CQikDateEditor.png"/>	
+		
+		<attributes>
+			<attribute key="cpp-class-name">CQikDateEditor</attribute>
+			<attribute key="rss-control-type-enum">EQikCtDateEditor</attribute>					
+		</attributes>
+				
+		<properties>			
+			<compoundProperty name="minDate" 
+				category="%category.data" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Date"
+				editorClass="com.nokia.sdt.symbian.ui.editors.DateEditorFactory"
+				default="Y2000 M1 D1" descriptionKey="minDateDescription" />
+			<compoundProperty name="maxDate" 
+				category="%category.data" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Date" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.DateEditorFactory"
+				default="Y2099 M12 D31" descriptionKey="maxDateDescription" />
+			<compoundProperty name="date" 
+				category="%category.data" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Date" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.DateEditorFactory"
+				descriptionKey="dateDescription" />
+			<compoundProperty name="flags" 
+				category="%category.behavior" 
+				type="com.nokia.carbide.uiq.CQikTTimeEditorBase.DateFlags" 
+				descriptionKey="flagsDescription" />				
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CQikDateEditor.js" prototype="CQikDateEditor"/>
+			</implementation>
+		</implementations>		
+		
+		<sourceMapping>
+			<mapResource struct="QIK_DATE_EDITOR" headers="eikon.rh qikon.rh">
+				<mapResourceMember struct="DATE" property="maxDate" member="maxDate">
+					<mapSimpleMember property="month" member="month"/>
+					<mapSimpleMember property="day" member="day"/>
+					<mapSimpleMember property="year" member="year"/>
+				</mapResourceMember>
+				<mapResourceMember struct="DATE" property="minDate" member="minDate">
+					<mapSimpleMember property="month" member="month"/>
+					<mapSimpleMember property="day" member="day"/>
+					<mapSimpleMember property="year" member="year"/>
+				</mapResourceMember>
+				<mapBitmaskMember property="flags" member="flags" >
+					<mapBitmaskValue properties="EWithoutPopoutCalendar" value="0x01"/>
+					<mapBitmaskValue properties="EMirroredLayout" value="0x10"/>
+				</mapBitmaskMember>
+			</mapResource>
+		</sourceMapping>	
+			
+		<sourceGen>
+			
+			<useTemplateGroup ids="makeVisible"/>	
+						
+			<templateGroup id="0" form="InstanceGen">			
+				<!-- Common ControlBase sourcegen -->	
+				<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+								InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+								Headers="QikDateEditor.h"/>	
+								
+				<inline scope="prototype"><![CDATA[
+		var monthNames = [ "January", "February", "March", "April", 
+			"May", "June", "July", "August", 
+			"September", "October", "November", "December" ]; 
+		
+		]]>		</inline>
+								
+				
+				<inline scope="prototype">
+	${jsObject}.prototype.formatConstructor = function(properties) {
+		return "TTime( TDateTime( "+properties.date.year+", E"
+			+monthNames[properties.date.month]+", "+properties.date.day
+			+", 0, 0, 0, 0 ) )";
+	}
+				</inline>
+				
+				<!--Initialize Phase-->	
+				<template id="INITIALIZE_PHASE" phase="InitializeControlHandlers"><![CDATA[
+if ( ${ instanceMemberName } != NULL )
+{
+	${instanceMemberName}->SetTimeL( ${ ( this.formatConstructor( properties ) ) } );
+}
+	]]>		    </template>	
+			</templateGroup>
+											
+		</sourceGen>
+				
+	</component>
+
+</componentDefinition>

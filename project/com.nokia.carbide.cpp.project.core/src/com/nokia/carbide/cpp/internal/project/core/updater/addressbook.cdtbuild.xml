@@ -1,0 +1,1326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+	<project id="AddressBook.com.symbian.cdt.build.projectType.exe.117935602"
+		name="Symbian Executable Project"
+		projectType="com.symbian.cdt.build.projectType.exe">
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.urel_S60_3rd.416247069"
+			name="S60 3.0 Phone (ARMV5) Release"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.urel_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.toolChain.armv5.armv5UrelExe.1360075565"
+				name="ARMV5 EXE Defaults"
+				superClass="com.nokia.sdk.S60_30.build.toolChain.armv5.armv5UrelExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.armv5.GlobalOptions.systemIncludePaths.armv5UrelExe.915328884"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.armv5.GlobalOptions.systemIncludePaths.armv5UrelExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.userIncludePaths.1363874533"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.armv5.targetType.exe.219740661"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.targetType.exe"
+					value="exe" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid2.1931821902"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid2"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid3.1076958981"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid3"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.capability.1385941559"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.capability"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.vendorid.2038001196"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.vendorid"
+					value="0x00000000" valueType="string"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5.precompiler.exeUrel.48599922"
+					name="RVCT Pre-compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5.precompiler.exeUrel">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5.precompiler.prefixFile.exe.793565137"
+						superClass="com.symbian.cdt.sdk.91.build.armv5.precompiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5.compiler.exeUrel.28664201"
+					name="RVCT Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5.compiler.exeUrel">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5.compiler.prefixFile.exe.277493559"
+						superClass="com.symbian.cdt.sdk.91.build.armv5.compiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.tranasm.Default.1251439340"
+					name="TRANASM"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.tranasm.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.mbm.Default.1097916255"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.mbm.Default"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.partialLinker.exe.853046797"
+					name="RVCT Partial Linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.partialLinker.exe"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.linker.armv5UrelExe.180214195"
+					name="RVCT Linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.linker.armv5UrelExe">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5.linker.libraries.libraries.exe.324555999"
+						superClass="com.symbian.cdt.sdk.91.build.armv5.linker.libraries.libraries.exe"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;SenServMgr.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenServConn.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenXml.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenServDesc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;PBKENG.LIB&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.elftran.exe.123676872"
+					name="ELFTRAN"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.elftran.exe">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.elftran.stack.1768431209"
+						superClass="com.symbian.cdt.build.buildDefinitions.elftran.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.createsis.exe.214431922"
+					name="CreateSis (Installation File Generator)"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.createsis.exe"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5.mif.exeUrel.1561419173"
+					name="MIF Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5.mif.exeUrel"/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.urel_S60_3rd.416247069.342729032"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.urel_S60_3rd.416247069.1169156231"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.889520370"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\import\apps"
+						valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.urel_S60_3rd.416247069.690777890"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.629883012">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1852913132"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.udeb_S60_3rd.1321171471"
+			name="S60 3.0 Phone (ARMV5_ABIV2) Debug"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.udeb_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.toolChain.armv5_abiv2.armv5_abiv2UdebExe.2022518433"
+				name="ARMV5_ABIV2 EXE Defaults"
+				superClass="com.nokia.sdk.S60_30.build.toolChain.armv5_abiv2.armv5_abiv2UdebExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.armv5_abiv2.GlobalOptions.systemIncludePaths.armv5UdebExe.524168998"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.armv5_abiv2.GlobalOptions.systemIncludePaths.armv5UdebExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.userIncludePaths.1448400120"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.targetType.exe.842167731"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.targetType.exe"
+					value="exe" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid2.1070693644"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid2"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid3.206293474"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid3"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.capability.601239890"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.capability"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.vendorid.287170691"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.vendorid"
+					value="0x00000000" valueType="string"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.precompiler.exeUdeb.594985268"
+					name="RVCT Pre-compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.precompiler.exeUdeb">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5_abiv2.precompiler.prefixFile.exe.1596626532"
+						superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.precompiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.compiler.exeUdeb.383212981"
+					name="RVCT Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.compiler.exeUdeb">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5_abiv2.compiler.prefixFile.exe.1499388847"
+						superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.compiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.tranasm.Default.1346285845"
+					name="TRANASM"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.tranasm.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.mbm.Default.1335711851"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.mbm.Default"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.armv5_abiv2UdebExe.1453778196"
+					name="RVCT Linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.armv5_abiv2UdebExe">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.libraries.libraries.exe.1083805426"
+						superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.libraries.libraries.exe"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;senservmgr.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservconn.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senxml.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservdesc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;pbkeng.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.dso&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.postLinker.exe.1448692593"
+					name="Post linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.postLinker.exe">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.postLinker.stack.24790952"
+						superClass="com.symbian.cdt.build.buildDefinitions.postLinker.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.createsis.exe.860033541"
+					name="CreateSis (Installation File Generator)"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.createsis.exe"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.mif.exeUdeb.2085113304"
+					name="MIF Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.mif.exeUdeb"/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.udeb_S60_3rd.1321171471.958604481"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.udeb_S60_3rd.1321171471.1437445787"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.440354122"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\import\apps"
+						valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.udeb_S60_3rd.1321171471.1313110002"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.568076165">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1038091818"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.urel_S60_3rd.713449063"
+			name="S60 3.0 Phone (GCCE) Release"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.urel_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.toolChain.gcce.gcceUrelExe.1615318300"
+				name="GCCE EXE Defaults"
+				superClass="com.nokia.sdk.S60_30.build.toolChain.gcce.gcceUrelExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.gcce.GlobalOptions.systemIncludePaths.gcceUrelExe.93216354"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.gcce.GlobalOptions.systemIncludePaths.gcceUrelExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.userIncludePaths.2098037449"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.gcce.targetType.exe.1874769484"
+					superClass="com.symbian.cdt.sdk.91.build.gcce.targetType.exe"
+					value="exe" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid2.exe.1591071410"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid2.exe"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid3.exe.775648669"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid3.exe"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.capability.exe.1411152327"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.capability.exe"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.vendorid.exe.1310335388"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.vendorid.exe"
+					value="0x00000000" valueType="string"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.gcce.compiler.exeUrel.1629370130"
+					name="GCCE Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.gcce.compiler.exeUrel">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcce.compiler.preIncludeFile.exe.1566609070"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcce.compiler.preIncludeFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool id="com.symbian.cdt.build.tool.gcce.aif.exe.963784817"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.aif.exe"/>
+				<tool id="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.rcomp.exe"/>
+				<tool id="com.symbian.cdt.build.tool.gcce.mbm.exe.15767310"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.mbm.exe"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.createsis.exe.959480420"
+					name="CreateSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcce.createsis.exe"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.linker.exeUrel.821200923"
+					name="GCCE Linker"
+					superClass="com.symbian.cdt.build.tool.gcce.linker.exeUrel">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcce.linker.libraries.libraries.exeUrel.1749831371"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcce.linker.libraries.libraries.exeUrel"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;senservmgr.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservconn.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senxml.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservdesc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;pbkeng.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.dso&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.postLinker.exeUrel.2004192651"
+					name="Post linker"
+					superClass="com.symbian.cdt.build.tool.postLinker.exeUrel">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.postLinker.stack.215978444"
+						superClass="com.symbian.cdt.build.buildDefinitions.postLinker.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.gcce.mif.exeUrel.1087601999"
+					name="MIF Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.gcce.mif.exeUrel"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.urel_S60_3rd.713449063.1462961876"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.urel_S60_3rd.713449063.2023929665"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1565813700"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\import\apps"
+						valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.urel_S60_3rd.713449063.560929833"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.rcomp.exe.740295530">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1024444835"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.urel_S60_3rd.1167167617"
+			name="S60 3.0 Phone (ARMV5_ABIV2) Release"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.urel_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.toolChain.armv5_abiv2.armv5_abiv2UrelExe.1112081570"
+				name="ARMV5_ABIV2 EXE Defaults"
+				superClass="com.nokia.sdk.S60_30.build.toolChain.armv5_abiv2.armv5_abiv2UrelExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.armv5_abiv2.GlobalOptions.systemIncludePaths.armv5UrelExe.209523435"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.armv5_abiv2.GlobalOptions.systemIncludePaths.armv5UrelExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.userIncludePaths.1921844670"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.targetType.exe.1291178085"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.targetType.exe"
+					value="exe" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid2.914413265"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid2"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid3.905688980"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.uid3"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.capability.1099153906"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.capability"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.vendorid.324074991"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.GlobalOptions.vendorid"
+					value="0x00000000" valueType="string"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.precompiler.exeUrel.788883444"
+					name="RVCT Pre-compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.precompiler.exeUrel">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5_abiv2.precompiler.prefixFile.exe.548182455"
+						superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.precompiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.compiler.exeUrel.928856769"
+					name="RVCT Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.compiler.exeUrel">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5_abiv2.compiler.prefixFile.exe.436292061"
+						superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.compiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.tranasm.Default.1488478548"
+					name="TRANASM"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.tranasm.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.mbm.Default.1715751636"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.mbm.Default"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.armv5_abiv2UrelExe.42914807"
+					name="RVCT Linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.armv5_abiv2UrelExe">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.libraries.libraries.exe.1914767152"
+						superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.linker.libraries.libraries.exe"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;senservmgr.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservconn.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senxml.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservdesc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;pbkeng.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.dso&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.postLinker.exe.763326518"
+					name="Post linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.postLinker.exe">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.postLinker.stack.2030309800"
+						superClass="com.symbian.cdt.build.buildDefinitions.postLinker.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5_abiv2.createsis.exe.1898862987"
+					name="CreateSis (Installation File Generator)"
+					superClass="com.symbian.cdt.sdk.91.build.armv5_abiv2.createsis.exe"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.mif.exeUrel.1088986082"
+					name="MIF Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5_abiv2.mif.exeUrel"/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.urel_S60_3rd.1167167617.490982960"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.urel_S60_3rd.1167167617.276651439"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.880995083"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\import\apps"
+						valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5_abiv2.urel_S60_3rd.1167167617.1766068630"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv2.rcomp.Default.1643538856">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.527810652"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.udeb_S60_3rd.1338088494"
+			name="S60 3.0 Phone (ARMV5) Debug"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.udeb_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.toolChain.armv5.armv5UdebExe.1750734417"
+				name="ARMV5 EXE Defaults"
+				superClass="com.nokia.sdk.S60_30.build.toolChain.armv5.armv5UdebExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.armv5.GlobalOptions.systemIncludePaths.armv5UdebExe.1882992691"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.armv5.GlobalOptions.systemIncludePaths.armv5UdebExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.userIncludePaths.1608119364"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.armv5.targetType.exe.252878358"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.targetType.exe"
+					value="exe" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid2.1315954175"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid2"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid3.1645501098"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.uid3"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.capability.650204220"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.capability"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.vendorid.1685509518"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.GlobalOptions.vendorid"
+					value="0x00000000" valueType="string"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5.precompiler.exeUdeb.1686965551"
+					name="RVCT Pre-compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5.precompiler.exeUdeb">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5.precompiler.prefixFile.exe.1775740399"
+						superClass="com.symbian.cdt.sdk.91.build.armv5.precompiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5.compiler.exeUdeb.897022911"
+					name="RVCT Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5.compiler.exeUdeb">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5.compiler.prefixFile.exe.443554175"
+						superClass="com.symbian.cdt.sdk.91.build.armv5.compiler.prefixFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.tranasm.Default.533455483"
+					name="TRANASM"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.tranasm.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default"/>
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.mbm.Default.1314601320"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.mbm.Default"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.partialLinker.armv5UdebExe.1637008908"
+					name="RVCT Partial Linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.partialLinker.armv5UdebExe"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.linker.armv5UdebExe.1044565783"
+					name="RVCT Linker"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.linker.armv5UdebExe">
+					<option
+						id="com.symbian.cdt.sdk.91.build.armv5.linker.libraries.libraries.exe.760151907"
+						superClass="com.symbian.cdt.sdk.91.build.armv5.linker.libraries.libraries.exe"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;SenServMgr.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenServConn.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenXml.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenServDesc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;PBKENG.LIB&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.elftran.exe.804787008"
+					name="ELFTRAN"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.elftran.exe">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.elftran.stack.253532111"
+						superClass="com.symbian.cdt.build.buildDefinitions.elftran.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.armv5.createsis.exe.1253952473"
+					name="CreateSis (Installation File Generator)"
+					superClass="com.symbian.cdt.sdk.91.build.armv5.createsis.exe"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.armv5.mif.exeUdeb.647082299"
+					name="MIF Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.armv5.mif.exeUdeb"/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.udeb_S60_3rd.1338088494.1031590727"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.udeb_S60_3rd.1338088494.1484576860"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1148003864"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\import\apps"
+						valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_armv5.udeb_S60_3rd.1338088494.573430886"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.toolChain.rvct.abiv1.rcomp.Default.1557500213">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1010730523"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			errorParsers="com.symbian.cdt.build.WinscwErrorParser;org.eclipse.cdt.core.MakeErrorParser;;com.symbian.cdt.build.RCOMPErrorParser;"
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_winscw.udeb_S60_3rd.167846427"
+			name="S60 3.0 Emulator Debug"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_winscw.udeb_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.winscw.winscwUdebExe.822378366"
+				name="WINSCW UDEB Defaults"
+				superClass="com.nokia.sdk.S60_30.build.winscw.winscwUdebExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.winscw.GlobalOptions.systemIncludePaths.winscwUdebExe.584558224"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.winscw.GlobalOptions.systemIncludePaths.winscwUdebExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.497143137"
+					superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.winscw.exeUdeb.targetType.1795169529"
+					superClass="com.symbian.cdt.sdk.91.build.winscw.exeUdeb.targetType"
+					value="com.symbian.cdt.sdk.91.build.winscw.exeUdeb.exe"
+					valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.uid2.udeb.907013970"
+					superClass="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.uid2.udeb"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.uid3.udeb.1270753645"
+					superClass="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.uid3.udeb"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.capability.udeb.2032683410"
+					superClass="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.capability.udeb"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.vendorid.udeb.186886973"
+					superClass="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.vendorid.udeb"
+					value="0x00000000" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.secureid.udeb.1569540921"
+					superClass="com.symbian.cdt.build.91.toolChain.winscw.GlobalOptions.secureid.udeb"
+					value="0x12345678" valueType="string"/>
+				<tool
+					id="com.nokia.sdk.S60_30.build.winscw.compiler.udebExe.553487991"
+					name="WINSCW C/C++ Compiler"
+					superClass="com.nokia.sdk.S60_30.build.winscw.compiler.udebExe">
+					<option
+						id="com.nokia.build.buildDefinitions.S60_30.winscw.compiler.definedSymbols.udebExe.2000842581"
+						superClass="com.nokia.build.buildDefinitions.S60_30.winscw.compiler.definedSymbols.udebExe"
+						valueType="definedSymbols">
+						<listOptionValue builtIn="false" value="FOO"/>
+						<listOptionValue builtIn="false" value="BAR"/>
+						<listOptionValue builtIn="false" value="_UNICODE"/>
+						<listOptionValue builtIn="false" value="__SYMBIAN32__"/>
+						<listOptionValue builtIn="false" value="__CW32__"/>
+						<listOptionValue builtIn="false" value="CW32"/>
+						<listOptionValue builtIn="false" value="__WINS__"/>
+						<listOptionValue builtIn="false" value="__EXE__"/>
+						<listOptionValue builtIn="false" value="__WINSCW__"/>
+						<listOptionValue builtIn="false" value="_DEBUG"/>
+						<listOptionValue builtIn="false"
+							value="__SUPPORT_CPP_EXCEPTIONS__"/>
+						<listOptionValue builtIn="false" value="__SERIES60_30__"/>
+						<listOptionValue builtIn="false" value="__SERIES60_3X__"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default.1536864477"
+					name="WINSCW C/C++ Precompiled Header Gen"
+					superClass="com.symbian.cdt.build.tool.winscw.preCompiledHeader.default"/>
+				<tool
+					id="com.symbian.cdt.sdk.91.build.winscw.linker.udebExe.1147524262"
+					name="WINSCW C/C++ Linker"
+					superClass="com.symbian.cdt.sdk.91.build.winscw.linker.udebExe">
+					<option
+						id="com.symbian.cdt.build.91.buildDefinitions.winscw.linker.libraries.libraries.udebExe.1470976293"
+						superClass="com.symbian.cdt.build.91.buildDefinitions.winscw.linker.libraries.libraries.udebExe"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;SenServMgr.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenServConn.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenXml.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;SenServDesc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;PBKENG.LIB&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.lib&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.lib&quot;"/>
+					</option>
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.winscw.linker.intelOptions.stack.1135004788"
+						superClass="com.symbian.cdt.build.buildDefinitions.winscw.linker.intelOptions.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.91.tool.winscw.aif.udeb.1423545487"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.91.tool.winscw.aif.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb"/>
+				<tool
+					id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.2141381409"
+					name="Def File Creator for WINSCW"
+					superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+				<tool
+					id="com.symbian.cdt.build.91.tool.winscw.mbm.udeb.767274540"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.91.tool.winscw.mbm.udeb"/>
+				<tool
+					id="com.nokia.sdk.S60_30.build.winscw.mif.udebExe.1004162591"
+					name="MIF Compiler"
+					superClass="com.nokia.sdk.S60_30.build.winscw.mif.udebExe"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_winscw.udeb_S60_3rd.167846427.634945092"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_winscw.udeb_S60_3rd.167846427.81805705"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.718118797"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_winscw.udeb_S60_3rd.167846427.2054524138"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.91.tool.winscw.rcomp.udeb.1799093757">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.2035054459"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<configuration artifactExtension="exe" artifactName="AddressBook"
+			cleanCommand="del /s/q" description=""
+			id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.udeb_S60_3rd.1309279966"
+			name="S60 3.0 Phone (GCCE) Debug"
+			parent="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.udeb_S60_3rd">
+			<toolChain
+				id="com.nokia.sdk.S60_30.build.toolChain.gcce.gcceUdebExe.1298891974"
+				name="GCCE EXE Defaults"
+				superClass="com.nokia.sdk.S60_30.build.toolChain.gcce.gcceUdebExe">
+				<option
+					id="com.nokia.cdt.build.toolChain.S60_30.gcce.GlobalOptions.systemIncludePaths.gcceUdebExe.765707871"
+					name="System Include Paths"
+					superClass="com.nokia.cdt.build.toolChain.S60_30.gcce.GlobalOptions.systemIncludePaths.gcceUdebExe"
+					valueType="includePath">
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\variant&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;${EPOCROOT}epoc32\include\Xml&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.userIncludePaths.1832853804"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.userIncludePaths"
+					valueType="includePath">
+					<listOptionValue builtIn="false" value="."/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\inc&quot;"/>
+					<listOptionValue builtIn="false"
+						value="&quot;C:\Symbian\9.1\S60_3rd\S60Ex\AddressBook\group&quot;"/>
+				</option>
+				<option
+					id="com.symbian.cdt.sdk.91.build.gcce.targetType.exe.1751219842"
+					superClass="com.symbian.cdt.sdk.91.build.gcce.targetType.exe"
+					value="exe" valueType="enumerated"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid2.exe.1487970325"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid2.exe"
+					value="0x100039ce" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid3.exe.878606996"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.uid3.exe"
+					value="0xa0000180" valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.capability.exe.1197549555"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.capability.exe"
+					value="NETWORKSERVICES READUSERDATA WRITEUSERDATA WRITEDEVICEDATA READDEVICEDATA"
+					valueType="string"/>
+				<option
+					id="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.vendorid.exe.1948802512"
+					superClass="com.symbian.cdt.build.toolChain.gcce.GlobalOptions.vendorid.exe"
+					value="0x00000000" valueType="string"/>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.gcce.compiler.exeUdeb.1842233192"
+					name="GCCE Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.gcce.compiler.exeUdeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcce.compiler.preIncludeFile.exe.340953953"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcce.compiler.preIncludeFile.exe"
+						value="&quot;${EPOCROOT}epoc32\include\variant\Symbian_OS_v9.1.hrh&quot;"
+						valueType="string"/>
+				</tool>
+				<tool id="com.symbian.cdt.build.tool.gcce.aif.exe.1523161610"
+					name="AIF Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.aif.exe"/>
+				<tool id="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.rcomp.exe"/>
+				<tool id="com.symbian.cdt.build.tool.gcce.mbm.exe.1950667279"
+					name="MBM Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.mbm.exe"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.createsis.exe.750811379"
+					name="CreateSis (Installation File Generator)"
+					superClass="com.symbian.cdt.build.tool.gcce.createsis.exe"/>
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.linker.exeUdeb.1370066286"
+					name="GCCE Linker"
+					superClass="com.symbian.cdt.build.tool.gcce.linker.exeUdeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.gcce.linker.libraries.libraries.exeUdeb.2115453702"
+						superClass="com.symbian.cdt.build.buildDefinitions.gcce.linker.libraries.libraries.exeUdeb"
+						valueType="stringList">
+						<listOptionValue builtIn="false"
+							value="&quot;senservmgr.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservconn.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senxml.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;senservdesc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;gdi.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;aknskins.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cntmodel.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;pbkeng.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;fbscli.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;egul.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;flogger.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;bafl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;avkon.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcoctl.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;eikcore.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;cone.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;apparc.dso&quot;"/>
+						<listOptionValue builtIn="false"
+							value="&quot;euser.dso&quot;"/>
+					</option>
+				</tool>
+				<tool
+					id="com.symbian.cdt.build.tool.postLinker.exeUdeb.535578498"
+					name="Post linker"
+					superClass="com.symbian.cdt.build.tool.postLinker.exeUdeb">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.postLinker.stack.2004457016"
+						superClass="com.symbian.cdt.build.buildDefinitions.postLinker.stack"
+						value="0x00005000" valueType="string"/>
+				</tool>
+				<tool
+					id="com.nokia.cdt.build.tool.S60_30.gcce.mif.exeUdeb.1478586100"
+					name="MIF Compiler"
+					superClass="com.nokia.cdt.build.tool.S60_30.gcce.mif.exeUdeb"/>
+				<macros/>
+			</toolChain>
+			<resourceConfiguration exclude="true"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.udeb_S60_3rd.1309279966.571823735"
+				name="AddressBook.mmp" rcbsApplicability="disable"
+				resourcePath="/AddressBook/group/AddressBook.mmp"
+				toolsToInvoke=""/>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.udeb_S60_3rd.1309279966.354378687"
+				name="AddressBook_reg.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook_reg.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247./AddressBook/data/AddressBook_reg.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247./AddressBook/data/AddressBook_reg.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.266718812"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="\private\10003a3f\import\apps"
+						valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+			<resourceConfiguration exclude="false"
+				id="S60_3rd_com.symbian.cdt.build.projectType.exe_gcce.udeb_S60_3rd.1309279966.2061957759"
+				name="AddressBook.rss" rcbsApplicability="disable"
+				resourcePath="/AddressBook/data/AddressBook.rss"
+				toolsToInvoke="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247./AddressBook/data/AddressBook.rss">
+				<tool
+					id="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247./AddressBook/data/AddressBook.rss"
+					name="Resource Compiler"
+					superClass="com.symbian.cdt.build.tool.gcce.rcomp.exe.494993247">
+					<option
+						id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1369115776"
+						superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath"
+						value="resource\apps" valueType="string"/>
+				</tool>
+			</resourceConfiguration>
+		</configuration>
+		<macros/>
+	</project>
+</ManagedProjectBuildInfo>

@@ -1,0 +1,1043 @@
+/*
+ *	(c) 2006 Nokia
+ *
+ *	JavaCC input file for RSS parsing.
+ *
+ *	This handles the parse step.  CDT's scanner handles the preprocessing step.
+ *	As such, if #ifdefs are used, we see only a portion of the parsed RSS text.  
+ *
+ *	TODO:
+ *		
+ *		
+ *
+ *	
+ */
+
+
+options {
+	STATIC=false;
+	USER_TOKEN_MANAGER=true;
+}
+
+PARSER_BEGIN(SymbianRssParser)
+
+package com.nokia.sdt.sourcegen.doms.rss.parser.gen;
+
+import com.nokia.sdt.sourcegen.core.Messages;
+
+import com.nokia.sdt.sourcegen.doms.rss.dom.*;
+import com.nokia.sdt.sourcegen.doms.rss.dom.impl.*;
+import com.nokia.sdt.sourcegen.doms.rss.parser.*;
+import com.nokia.sdt.utils.*;
+
+public class SymbianRssParser extends ParserBase {
+    public SymbianRssParser(RssParser parser, TokenManager tokenMgr) {
+        this(tokenMgr);
+        this.parser = parser;
+    }
+}
+
+PARSER_END(SymbianRssParser)
+
+JAVACODE
+   void errorToken(Token tok) {
+      Messages.emit(
+              IMessage.ERROR,
+              makeSourceRef(tok),
+              "SymbianRssParser.ParseErrorUnexpectedToken",
+              new String[] { tok.image });
+    }
+
+
+JAVACODE
+    void error(ParseException e) {
+    	Messages.emit(
+    		IMessage.ERROR,
+    		makeSourceRef(token), 
+    		"SymbianRssParser.ParseError",
+    		new String[] { e.getMessage() });
+    }
+
+
+void SourceFile(IAstRssSourceFile file) : 
+{ }
+{
+	( SafeTopLevelNode(file) )
+	{
+	}
+}
+
+
+JAVACODE
+void SafeTopLevelNode(IAstRssSourceFile rssFile) {
+	while (((jj_ntk==-1)?jj_ntk():jj_ntk) != EOF) {
+		try {
+			TopLevelNode(rssFile);
+		} catch (ParseException e) {
+			error(e);
+			getNextToken();
+		}
+	}
+}
+
+void TopLevelNode(IAstRssSourceFile rssFile) : 
+{
+	IAstTopLevelNode node=null; 
+}
+{
+	try {
+	    ( node=ENUM() 
+	    | node=STRUCT() 
+	    | node=RESOURCE() 
+	    | node=NAME() 
+	    | node=CHARACTER_SET()
+	    | node=UID()
+	    | node=RLS_STRING()
+	    | IGNORE() )
+	    {
+	    	if (node != null) {
+	    		parser.addTopLevelNode(node);
+		    }
+		    
+	    }
+	} catch (ParseException e) {
+		error(e);
+		getNextToken();
+	}
+	
+}
+
+
+IAstEnumDeclaration ENUM() : 
+{
+    IAstName name = null;
+    IAstEnumDeclaration decl;
+ 	Token start, end, lbrace, rbrace;
+}
+{
+    start=<ENUM> ( [ name=id() ] 
+    {
+        decl = new AstEnumDeclaration(name);
+    }
+    lbrace=<LBRACE> [ enumerator_list(decl) ] end=<RBRACE> { rbrace=end; } [ end=<SEMICOLON> ] )
+    {
+    	setSourceRangePlusNewLine(decl, start, end);
+		setListSourceRange(decl.getEnumeratorList(), lbrace, rbrace);
+    	decl.setDirtyTree(false); // special comma placement makes dirty flags appear
+		    	
+		setExtendedSourceRangeFromComments(decl, true, false);
+    	
+    	return decl; 
+    }
+}
+
+
+void enumerator_list(IAstEnumDeclaration decl) : 
+{
+	Token comma;
+}
+{
+	enumerator(decl) 
+	( 
+		comma=<COMMA> {
+			// add the comma to the enumerator's extended range (so we can include comments)
+			setSourceRangeContaining(decl.getLastEnumerator(), null, decl.getLastEnumerator(), comma);
+			includeNewLineInSourceRange(decl.getLastEnumerator());
+			setExtendedSourceRangeFromComments(decl.getLastEnumerator(), false, false);
+		}
+		
+		[ enumerator(decl) ] 
+	) *
+}
+
+void enumerator(IAstEnumDeclaration decl) :
+{ 
+	Token t;
+	IAstName name;
+	IAstInitializerExpression init = null;
+}
+{
+	t=<IDENTIFIER> { name=make_id(t); } [ init=init_expression(t) ]
+	{
+		IAstEnumerator enm = new AstEnumerator(name, init);
+		decl.addEnumerator(enm);
+		setSourceRangeSpanning(enm, new IAstNode[] { name, init });
+		includeNewLineInSourceRange(enm);
+		setExtendedSourceRangeFromComments(enm, false, false);
+	}
+}
+
+IAstStructDeclaration STRUCT() : 
+{
+	IAstName name;
+	IAstStructDeclaration decl;
+   	IAstLengthPrefixDeclarator lp = null;
+ 	Token start, end;
+ 	Token lbrace;
+}
+{
+    start=<STRUCT> name=id() [ lp=length_prefix() ]
+    {
+	    decl = new AstStructDeclaration(lp, name);
+    }
+    lbrace=<LBRACE> [ struct_member_list(decl) ] end=<RBRACE>
+    {
+    	setSourceRangePlusNewLine(decl, start, end);
+    	setListSourceRange(decl.getMemberList(), lbrace, end);
+    	decl.getMemberList().setDirty(false);
+		setExtendedSourceRangeFromComments(decl, true, false);
+
+		parser.getCurrentTranslationUnit().markDirty();	// when it gets added next time
+    	return decl;
+    }
+}
+
+IAstLengthPrefixDeclarator length_prefix() :
+{
+	Token t;
+	IAstLengthPrefixDeclarator decl;
+}
+{
+	( t=<BYTE>  )
+    {
+   		decl = new AstLengthPrefixDeclarator(IAstLengthPrefixDeclarator.K_BYTE_PREFIXED);
+   		setSourceRange(decl, t, t);
+   		return decl;
+    }
+	| ( t=<WORD> )
+    {
+   		decl = new AstLengthPrefixDeclarator(IAstLengthPrefixDeclarator.K_WORD_PREFIXED);
+   		setSourceRange(decl, t, t);
+   		return decl;
+    }
+
+}
+
+
+void struct_member_list(IAstStructDeclaration decl) :
+{
+}
+{
+	( struct_member(decl) ) +
+}
+
+void struct_member(IAstStructDeclaration decl) :
+{
+	Token t;
+	IAstSimpleDeclaration type;
+	IAstExpression lengthLimit = null;
+	IAstName name;
+	IAstInitializerExpression init = null;
+	IAstArrayDeclarator array = null;
+	IAstLengthPrefixDeclarator lengthPrefix = null;
+	boolean templateStyle = false;
+	Token lenStart = null, end;
+}
+{
+	[ lenStart=<LEN> lengthPrefix=length_prefix() ]
+	type=type_name()
+	[ <LT> lengthLimit=expression() { templateStyle=true; } <GT> ]	/* for BUF */
+	t=<IDENTIFIER> { name=make_id(t); }
+	[ <LPAREN> lengthLimit=expression() <RPAREN> ]	/* for other text */
+	[ array=array_declarator() ]
+	[ init=init_or_array_expression(type, t) ]
+	( end=<SEMICOLON> ) +
+	{
+		IAstMemberDeclaration mem = 
+			new AstMemberDeclaration(lengthPrefix, type, array, name, 
+				lengthLimit, templateStyle, init);
+		decl.addMember(mem);
+		setSourceRangeSpanning(mem, new IAstNode[] { lengthPrefix, type, name, lengthLimit, array, init });
+		setSourceRangeContaining(mem, lenStart, mem, end);
+		includeNewLineInSourceRange(mem);
+		setExtendedSourceRangeFromComments(mem, false, false);
+	}
+}
+
+IAstArrayDeclarator array_declarator() :
+{
+	IAstExpression expr = null;
+	Token start, end;
+}
+{
+	start=<LBRACKET> [ expr=expression() ] end=<RBRACKET> 
+	{
+		IAstArrayDeclarator decl = new AstArrayDeclarator(expr);
+		setSourceRange(decl, start, end);
+		return decl;
+	}
+}
+
+IAstResourceDefinition RESOURCE() : 
+{
+	IAstStructDeclaration decl;
+	IAstName name = null;
+	IAstResourceDefinition def = null;
+ 	Token start, end, lbrace;
+}
+{
+    start=<RESOURCE> decl=struct_type() [ name=id() ]
+    {
+	    if (decl != null) {
+			def = new AstResourceDefinition(decl, name);
+		}
+    }
+    lbrace=<LBRACE> resource_initializer_list(def) end=<RBRACE>
+    {
+    	if (def != null) {
+    		setSourceRangePlusNewLine(def, start, end);
+	    	setListSourceRange(def.getInitializerList(), lbrace, end);
+	    	def.getInitializerList().setDirty(false);
+			setExtendedSourceRangeFromComments(def, true, false);
+		}
+
+    	return def;
+    }
+}
+
+IAstStructDeclaration struct_type() :
+{
+	Token t;
+}
+{
+	t=<IDENTIFIER>
+    {
+	    IAstStructDeclaration decl = parser.findStructDeclaration(t.image);
+	    if (decl == null) {
+	    	Messages.emit(
+				IMessage.ERROR, 
+				makeSourceRef(t), 
+				"SymbianRssParser.UndefinedStruct",
+				new String[] { t.image } );
+		}
+		return decl;
+    }
+
+}
+
+void resource_initializer_list(IAstResource def) :
+{
+}
+{
+	[ resource_member_initializer(def) resource_initializer_list(def) ]
+}
+
+void resource_member_initializer(IAstResource def) :
+{
+	Token start, end = null;
+	IAstExpression memberExpr = null;
+	IAstExpression lengthLimit = null;
+	IAstMemberDeclaration member = null;
+	IAstInitializerExpression init = null;
+	IAstExpression arrayIndex = null;
+	Token rbracket = null;
+	Token name;
+}
+{
+	{
+		start = token;
+	}
+	name = <IDENTIFIER>
+	{
+		member = member_lookup(def != null ? def.getStructType() : null, name);
+	}
+	[ <LBRACKET> arrayIndex=expression() rbracket=<RBRACKET> ]
+	{
+		if (member != null) {
+			if (arrayIndex != null) {
+				memberExpr = new AstBinaryExpression(
+					IAstBinaryExpression.K_SUBSCRIPT,
+					new AstIdExpression(member.getMemberName()),
+					arrayIndex);
+				setSourceRange(memberExpr, name, rbracket);
+			} else {
+				memberExpr = new AstIdExpression(member.getMemberName());
+				setSourceRange(memberExpr, name, name);
+			}
+			//setExtendedSourceRangeFromComments(memberExpr, false, false);
+		}
+	}
+	[ <LPAREN> lengthLimit=integralExpression() <RPAREN> ]
+	{ if (member != null) {
+			if (member.getMemberType().getKind() == IAstSimpleDeclaration.K_STRUCT) {
+				if (member.getArrayDeclarator() != null) 
+					init = init_resource_array_expression(member.getMemberType(), member.getArrayDeclarator(), name);
+				else
+					init = init_resource_expression(name);
+			} else
+				init = init_or_array_expression(member.getMemberType(), name);
+		}
+	}
+	[ end=<SEMICOLON> ]
+	{
+		if (def != null && memberExpr != null) {
+			// TODO: validate expression type without implicit IllegalArgumentException
+
+			IAstMemberInitializer memberInit = new AstMemberInitializer(
+				memberExpr, lengthLimit, init);
+			def.addInitializer(memberInit);
+			
+			setSourceRangeSpanning(memberInit, new IAstNode[] { arrayIndex, lengthLimit, init });
+			setSourceRangeContaining(memberInit, start.next, memberInit, end);
+			includeNewLineInSourceRange(memberInit);
+			setExtendedSourceRangeFromComments(memberInit, false, false);
+		}
+	}
+}
+
+IAstName id() :
+{
+	Token t;
+}
+{
+	t = <IDENTIFIER>
+	{ 
+		IAstName name = new AstName(t.image, null); 
+		setSourceRange(name, t, t);
+		return name;
+	}
+}
+
+JAVACODE
+	IAstName make_id(Token t)
+{
+	IAstName name = new AstName(t.image, null); 
+	setSourceRange(name, t, t);
+	return name;
+}
+
+JAVACODE
+	IAstMemberDeclaration member_lookup(IAstStructDeclaration decl, Token t)
+	{
+		// get the member
+		if (decl == null)
+			return null;
+		IAstMemberDeclaration memberDecl = decl.findMember(t.image);
+		if (memberDecl == null) {
+			Messages.emit(
+				IMessage.ERROR, 
+				makeSourceRef(t), 
+				"SymbianRssParser.UndefinedMember",
+				new String[] { t.image, decl.getStructName().getName() } );
+			return null;
+		} else {
+			return memberDecl;
+		}
+	}
+
+IAstSimpleDeclaration type_name() :
+{
+	Token t;
+	IAstSimpleDeclaration decl;
+}
+{
+	( t=<BYTE> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_BYTE);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<WORD> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_WORD);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<LONG> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_LONG);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<TEXT> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_TEXT);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<DOUBLE> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_DOUBLE);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<LTEXT> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_LTEXT);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<LTEXT8> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_LTEXT8);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<TEXT16> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_TEXT16);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<LTEXT16> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_LTEXT16);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<BUF> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_BUF);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<BUF8> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_BUF8);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<LINK> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_LINK);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<LLINK> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_LLINK);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<SRLINK> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_SRLINK);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	| ( t=<STRUCT> )
+	{
+		decl = new AstSimpleDeclaration(IAstSimpleDeclaration.K_STRUCT);
+		setSourceRange(decl, t, t);
+		return decl;
+	}
+	
+}
+
+IAstInitializerExpression init_expression(Token limit) :
+{
+	IAstExpression expr;
+	Token t;
+}
+{
+	t=<EQUALS> expr=expression()
+	{
+		IAstInitializerExpression init = new AstInitializerExpression(expr);
+		setSourceRangeContaining(init, t, expr, null);
+		setExtendedSourceRangeFromComments(init, false, false);
+		//extendSourceRangeWithLeadingWhitespace(limit, init);
+		return init;
+	}
+}
+
+IAstInitializerExpression init_or_array_expression(IAstSimpleDeclaration memberType, Token start) :
+{
+	IAstExpression expr;
+	Token t;
+	Token rbrace = null;
+}
+{
+	t=<EQUALS> 
+		( 
+			expr=expression() 
+			| <LBRACE> expr=array_expression(memberType) rbrace=<RBRACE> 
+		)
+	{
+		IAstInitializerExpression init = new AstInitializerExpression(expr);
+		if (rbrace != null) {
+			//extendSourceRangeWithLeadingWhitespace(lbrace, expr);
+			//extendSourceRangeWithTrailingWhitespace(expr, rbrace);
+			setSourceRangeContaining(init, t, expr, rbrace);
+		}
+		else
+			setSourceRangeContaining(init, t, expr, null);
+		setExtendedSourceRangeFromComments(init, false, false);
+		//extendSourceRangeWithLeadingWhitespace(start, init);
+		return init;
+	}
+}
+
+IAstExpression array_expression(IAstSimpleDeclaration elementType) :
+{
+	IAstExpressionList el;
+	Token start;
+}
+{
+	{
+		start = token;
+	}
+	array_elements(el = new AstExpressionList(), elementType)
+	{
+		setSourceRange(el, start.next, token);
+		//if (elementType.getKind() == IAstSimpleDeclaration.K_STRUCT)
+		//	setExtendedSourceRangeFromComments(el, false, true);
+		//else
+			setExtendedSourceRangeFromComments(el, false, false);
+		return el;
+	}
+}
+
+void array_elements(IAstExpressionList el, IAstSimpleDeclaration elementType) :
+{
+	IAstExpression expr;
+	//Token comma;
+}
+{
+	{
+	expr=(elementType.getKind() == IAstSimpleDeclaration.K_STRUCT ?
+		resource_expression() : expression());
+	}
+	{
+		el.addExpression(expr);
+	}
+	[ 
+		<COMMA>
+		
+		/*
+		comma=<COMMA> {
+			// add the comma to the element's extended range (so we can include comments)
+			setSourceRangeContaining(el.getLastExpression(), null, el.getLastExpression(), comma);
+			setExtendedSourceRangeFromComments(el.getLastExpression(), false, false);
+		}
+		*/
+	
+		array_elements(el, elementType)
+	]
+}
+
+IAstInitializerExpression init_resource_array_expression(IAstSimpleDeclaration elementType, IAstArrayDeclarator array, Token limit) :
+{
+	IAstExpression expr;
+	Token start, end;
+}
+{
+	start=<EQUALS> <LBRACE> expr=array_expression(elementType) end=<RBRACE>
+	{
+		IAstInitializerExpression init = new AstInitializerExpression(expr);
+		setSourceRangeContaining(init, start, expr, end);
+		setExtendedSourceRangeFromComments(init, false, false);
+		//extendSourceRangeWithLeadingWhitespace(limit, init);
+		return init;
+	}
+}
+
+IAstInitializerExpression init_resource_expression(Token limit) :
+{
+	IAstExpression expr;
+	Token start;
+}
+{
+	start=<EQUALS> ( expr=resource_expression()
+				| expr=resource_expression_braced() 
+			)
+	{
+		IAstInitializerExpression init = new AstInitializerExpression(expr);
+		setSourceRangeContaining(init, start, expr, null);
+		setExtendedSourceRangeFromComments(init, false, false);
+		//extendSourceRangeWithLeadingWhitespace(limit, init);
+		return init;
+	}
+}
+
+IAstExpression resource_expression() :
+{
+	IAstStructDeclaration decl = null;
+	IAstResourceExpression def = null;
+	Token start, end, lbrace;
+}
+{
+	{
+		start = token;
+	}
+	decl=struct_type()
+	{
+		if (decl != null)
+			def = new AstResourceExpression(decl);
+	}
+	lbrace=<LBRACE> resource_initializer_list(def) end=<RBRACE>
+	{
+		if (def != null) {
+			setSourceRange(def, start.next, end);
+	    	setListSourceRange(def.getInitializerList(), lbrace, end);
+	    	def.getInitializerList().setDirty(false);
+			setExtendedSourceRangeFromComments(def, false, false);
+		}
+		return def;
+	}
+}
+
+IAstExpression resource_expression_braced() :
+{
+	Token start, end;
+	IAstExpression expr;
+}
+{
+	// some patterns redundantly use { } outside
+	start=<LBRACE> expr=resource_expression() end=<RBRACE>
+	{
+		setSourceRange(expr, start, end);
+		setExtendedSourceRangeFromComments(expr, false, false);
+		return expr;
+	}
+}
+
+IAstExpression expression() :
+{
+	IAstExpression expr;
+}
+{
+	expr=addExpression()
+	{ 
+		setExtendedSourceRangeFromComments(expr, false, false);
+		return expr; 
+	}
+}
+
+IAstExpression addExpression() :
+{
+	Token t = null;
+	IAstExpression lhs, rhs=null;
+	IAstExpression ret;
+}
+{
+	lhs=mulExpression() [ ( t=<PLUS> | t=<MINUS> | t=<OR> ) rhs=addExpression() ]
+	{
+		if (rhs != null) {
+			int oper;
+			if (t.kind == PLUS)
+				oper = IAstBinaryExpression.K_ADD;
+			else if (t.kind == MINUS)
+				oper = IAstBinaryExpression.K_SUB;
+			else
+				oper = IAstBinaryExpression.K_OR;
+			ret = new AstBinaryExpression(oper, lhs, rhs);
+			setSourceRangeSpanning(ret, new IAstNode[] { lhs, rhs });
+		} else {
+			ret = lhs;
+		}
+		return ret;
+	}
+}
+
+IAstExpression mulExpression() :
+{
+	Token t = null;
+	IAstExpression lhs, rhs=null;
+	IAstExpression ret;
+}
+{
+	lhs=unaryExpression() [ ( t=<TIMES> | t=<DIV> | t=<MOD> ) rhs=mulExpression() ]
+	{
+		if (rhs != null) {
+			int oper;
+			if (t.kind == TIMES)
+				oper = IAstBinaryExpression.K_MUL;
+			else if (t.kind == DIV)
+				oper = IAstBinaryExpression.K_DIV;
+			else
+				oper = IAstBinaryExpression.K_MOD;
+			ret = new AstBinaryExpression(oper, lhs, rhs);
+			setSourceRangeSpanning(ret, new IAstNode[] { lhs, rhs });
+		} else
+			ret = lhs;
+		return ret;
+	}
+}
+
+IAstExpression unaryExpression() :
+{
+	Token t;
+	IAstExpression expr = null;
+}
+{
+	( expr=postfixExpression() )
+	{
+		return expr;
+	}
+	| ( t=<MINUS> expr=primaryExpression() )
+	{
+		IAstExpression ret = new AstUnaryExpression(IAstUnaryExpression.K_NEGATE, expr);
+		setSourceRangeContaining(ret, t, expr, null);
+		return ret;
+	}
+}
+
+IAstExpression postfixExpression() :
+{
+	IAstExpression expr, after=null;
+	Token start = null, end = null;
+}
+{
+	expr=primaryExpression() [ start=<LBRACKET> after=expression() end=<RBRACKET> ]
+	{
+		if (after != null) {
+			IAstExpression ret = new AstBinaryExpression(IAstBinaryExpression.K_SUBSCRIPT, expr, after);
+			setSourceRange(ret, start, end);
+			return ret;
+		} else
+			return expr;
+	}
+}
+
+IAstExpression primaryExpression() :
+{
+	IAstExpression expr = null;
+	Token start, end;
+}
+{
+	( start=<IDENTIFIER> )
+	{
+		expr = new AstIdExpression(new AstName(token.image, null));
+		setSourceRange(expr, start, start);
+		return expr;
+	}
+	| (  start=<LPAREN> expr=expression() end=<RPAREN> )
+	{
+		expr = new AstUnaryExpression(IAstUnaryExpression.K_PARENTHESIS, expr);
+		setSourceRange(expr, start, end);
+		return expr;
+	}
+	| (  expr=constantExpression() )
+	{
+		return expr;
+	}
+}
+
+IAstExpression constantExpression() :
+{
+	IAstLiteralExpression string;
+	Token start;
+	IAstExpression ret;
+}
+{
+	( start=<INTEGER> )
+	{
+		ret = new AstLiteralExpression(IAstLiteralExpression.K_INTEGER, token.image);
+		setSourceRange(ret, start, start);
+		return ret;
+	}
+	| ( start=<FLOAT> )
+	{
+		ret = new AstLiteralExpression(IAstLiteralExpression.K_FLOAT, token.image);
+		setSourceRange(ret, start, start);
+		return ret;
+	}
+	| ( start=<CHAR> )
+	{
+		ret = new AstLiteralExpression(IAstLiteralExpression.K_CHAR, token.image.substring(1,2));
+		setSourceRange(ret, start, start);
+		return ret;
+	}
+	| ( string=string_literal() )
+	{
+		return string;
+	}
+}
+
+IAstLiteralExpression string_literal() :
+{
+	StringBuffer buf;
+	Token start = null, end;
+}
+{
+	{
+		start = token;
+		buf = new StringBuffer();
+	}
+	
+	( end=stringLiteralPart(buf) )+
+	
+	{
+		IAstLiteralExpression expr = new AstLiteralExpression(IAstLiteralExpression.K_STRING, buf.toString());
+		
+		// don't trust CDT -- when catenating strings it loses track
+		// of the first token range
+		setSourceRangeAfterStart(expr, start, end);
+		return expr;
+	}
+	
+}
+
+Token stringLiteralPart(StringBuffer buf) :
+{
+	Token start;
+	String string;
+}
+{
+	( start=<STRING> ) 
+	{
+		buf.append(TextUtils.unescape(TextUtils.unquote(start.image, '"')));
+		return start;
+	}
+	| ( {start=token.next;} string=escapedCharacter() ) 
+	{
+		buf.append(string);
+		return start;
+	}
+}
+
+String escapedCharacter() :
+{
+	Token t;
+}
+{
+	( <LT> t=<INTEGER> <GT> )
+	{
+		try {
+			return new String(new char[] { 
+				(char)AstLiteralExpression.parseIntValue(t.image) } );
+		} catch (NumberFormatException e) {
+			Messages.emit(
+				IMessage.ERROR, 
+				makeSourceRef(t), 
+				"SymbianRssParser.IllegalCharacter",
+				new String[] { t.image } );
+			return "<" + t.image + ">";
+		}
+	}
+}
+
+IAstLiteralExpression integralExpression() :
+{
+	Token start;
+	IAstLiteralExpression ret;
+}
+{
+	( start=<INTEGER> )
+	{
+		ret = new AstLiteralExpression(IAstLiteralExpression.K_INTEGER, token.image);
+		setSourceRange(ret, start, start);
+		setExtendedSourceRangeFromComments(ret, false, false);
+		return ret;
+	}
+}
+
+IAstNameStatement NAME() : 
+{
+	Token start, end;
+}
+{
+	start=<NAME> end=<IDENTIFIER>
+	{
+		try {
+			IAstNameStatement name = new AstNameStatement(end.image);
+			setSourceRangePlusNewLine(name, start, end);
+			setExtendedSourceRangeFromComments(name, true, false);
+			return name;
+		} catch (IllegalArgumentException e) {
+			Messages.emit(
+				IMessage.ERROR, 
+				makeSourceRef(end), 
+				"SymbianRssParser.IllegalNameStatement",
+				new String[] { end.image } );
+			return null;
+		}
+	}
+}
+
+IAstCharacterSetStatement CHARACTER_SET() :
+{
+	Token start, end;
+}
+{
+	start=<CHARACTER_SET> end=<IDENTIFIER>
+	{
+		IAstCharacterSetStatement cset = new AstCharacterSetStatement(end.image);
+		setSourceRangePlusNewLine(cset, start, end);
+		setExtendedSourceRangeFromComments(cset, true, false);
+		return cset;
+	}
+}
+
+IAstUidStatement UID() : 
+{
+	Token start;
+	IAstLiteralExpression expr;
+	IAstUidStatement uid;
+}
+{
+	( start=<UID2> expr=integralExpression() )
+	{
+		uid = new AstUidStatement(2, expr);
+		setSourceRangeContaining(uid, start, expr, null);
+		includeNewLineInSourceRange(uid);
+		setExtendedSourceRangeFromComments(uid, true, false);
+		return uid;
+	}
+	| ( start=<UID3> expr=integralExpression() )
+	{
+		uid = new AstUidStatement(3, expr);
+		setSourceRangeContaining(uid, start, expr, null);
+		includeNewLineInSourceRange(uid);
+		setExtendedSourceRangeFromComments(uid, true, false);
+		return uid;
+	}
+}
+
+IAstRlsString RLS_STRING() :
+{
+	Token start;
+    IAstName name = null;
+    IAstLiteralExpression string = null;
+}
+{
+	start=<RLS_STRING> name=id() string=string_literal()
+	{
+		IAstRlsString rlsString = new AstRlsString(name, string);
+		setSourceRangeSpanning(rlsString, new IAstNode[] { name, string });
+		setSourceRangeContaining(rlsString, start, rlsString, null);
+		includeNewLineInSourceRange(rlsString);
+		setExtendedSourceRangeFromComments(rlsString, true, false);
+		return rlsString;
+	}
+}
+
+void IGNORE() : {}
+{
+    // catch stray tokens
+   ( <INTEGER> | <STRING> | <CHAR> | <ERROR> | <LPAREN> | <RPAREN>
+	    | <LBRACKET> | <RBRACKET> | <PLUS> | <MINUS> | <TIMES> | <MOD>
+	    | <OR> | <EQUALS> | <DIV> 
+	    | <BYTE> | <WORD> | <LONG> | <TEXT> | <DOUBLE> | <LTEXT> | <LTEXT8> | <BUF>
+	    | <BUF8> | <LINK> | <LT> | <GT> | <SRLINK> 
+	    | <IDENTIFIER>
+	    | <LBRACE> | <RBRACE> 
+	    ) 
+	{ errorToken(token); }
+}
+
+void UNUSED() : { }
+{
+	<ERROR> skip()
+}
+
+JAVACODE
+void skip() {
+	 getToken(1);
+}
+
+JAVACODE
+void skip_to_matching_brace() {
+	Token tok;
+  int nesting = 1;
+  while (true) {
+    tok = getToken(1);
+    if (tok.kind == LBRACE) nesting++;
+    if (tok.kind == RBRACE) {
+      nesting--;
+      if (nesting == 0) break;
+    }
+    tok = getNextToken();
+  }
+}
+

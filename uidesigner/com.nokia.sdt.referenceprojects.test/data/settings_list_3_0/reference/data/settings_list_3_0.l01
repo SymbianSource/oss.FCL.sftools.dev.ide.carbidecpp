@@ -1,0 +1,5 @@
+// localized strings for language: UK English (01)
+#define STR_settings_list_3_0Application_1 ""
+#define STR_settings_list_3_0Application_2 ""
+#define STR_settings_list_3_0Application_3 "settings_list_3_0"
+#define STR_settings_list_3_0Application_4 "settings_list_3_0"

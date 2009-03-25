@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Launch Configuration Setup</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Launch Configuration Setup</h2>
+<p>To communicate between the Carbide.c++ debugger and the <a href="../../concepts/trk.htm">on-device debug agent</a>, using either Application TRK or System TRK, you must <a href="../projects/prj_debug_config.htm">define</a> a debug <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a> that matches the installed debug agent. The two configurations available include:</p>
+<ul>
+  <li><b>Symbian OS Appication TRK</b>&#8212; used to run or debug applications on a target device using the Application TRK on-device debug agent. Application TRK is an application that runs on released phones and allows you to debug your executables. The debugger will download a Symbian OS installation file to the phone and install it prior to launching.</li>
+  <li><b>Symbian OS System TRK</b> (<i>not available in the Developer Edition</i>) &#8212;used to run or debug applications or ROM code on a target device using the System TRK on-device debug agent. System TRK is an application that runs on reference boards and prototype phones and allows you to debug your executables. The debugger will download files to the phone prior to launching.</li>
+</ul>
+<p>By default, you can click the <b>Debug</b> icon (<img src="../../images/icons/btn_debug.png" width="17" height="16" align="absmiddle">) in the toolbar to launch the <a href="../projects/wiz_new_launch_config.htm">New Launch Configuration Wizard</a>. This   creates a launch configuration for the project based on project information and any additional input required, like COM port selection. It is the recommended method for creating new launch configurations. Or, use the <a href="../../reference/launch_configs/page_trk_main.htm">Debug</a> window to create a customized  launch configuration. </p>
+<p align="center"><img src="../../reference/images/wnd_trk_debug_config.png" width="859" height="629" /></p>
+<p class="figure">Figure 1. Debug launch configuration for on-device debugging   (<i>Application TRK shown</i>)</p>
+<div class="step">
+  <h4>Defining a Customized  Launch Configuration </h4>
+  <ol>
+    <li>Choose the Run &gt; Open Debug Dialog... menu item </li>
+    <p>The <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window appears.</p>
+    <li>Select a Configuration type for on-device debugging and click New</li>
+    <p>Choose the <b>Symbian OS Application TRK </b> or <b>System TRK</b> configuration based on which debug agent is installed on the device, then click <b>New</b>. A new debug launch configuration appears in the Configuration list and the Main tab appears. </p>
+    <li>Enter the required information</li>
+    <p>For  debug launch configurations using the TRK debug agent, the following   pages require review and possible option settings:</p>
+    <ul>
+      <li><a href="../../reference/launch_configs/page_trk_main.htm">Main</a>&#8212; defines the project to be launched on the target device</li>
+      <li>Arguments &#8212; enter command line build system arguments </li>
+      <li><a href="../../reference/launch_configs/page_trk_debugger.htm">Debugger</a>&#8212; provides control over entry points, message handling, and instruction set default settings</li>
+      <li><a href="../../reference/launch_configs/page_connection.htm">Connection</a>&#8212;   specifies the method used to transfer files to the target device</li>
+      <li><a href="../../reference/launch_configs/page_file_transfer.htm">File Transfer</a> &#8212; the files  transfered to the target device at the start of each launch</li>
+      <li><a href="../../reference/launch_configs/app_trk_installation.htm">Installation</a>   (<i>Application TRK onl</i>y)&#8212;  specifies the .sis or .pkg file to install on the target device</li>
+      <li><a href="../../reference/launch_configs/page_executables.htm">Executables</a> &#8212; specifies the executables to be debugged</li>
+      <li><a href="../../reference/launch_configs/sys_trk_rom_log.htm">ROM Log</a>  (<i>System TRK only</i>) &#8212; specifies the executables to be debugged</li>
+    </ul>
+    <li>Click Debug </li>
+    <p>The Debug window closes and the Carbide.c++ debugger begins a debugging session using the new configuration. The next time you click the <b>Debug</b> icon, this debug launch configuration is used to start a debug session.</p>
+  </ol>
+</div>
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../projects/launch/launch_configs_overview.htm">Launch Configurations</a></li>
+  <li><a href="../../concepts/trk.htm">On-device Debugging</a></li>
+  <li><a href="../../reference/launch_configs/run_mode_overview.htm">Debug Window (On-device Debugging) Overview</a></li>
+  <li><a href="../../tasks/projects/prj_debug_config.htm">Creating a Launch Configuration</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

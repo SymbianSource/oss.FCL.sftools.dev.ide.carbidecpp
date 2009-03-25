@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="editorExtender" name="Data Model Editor Extender" schema="schema/editorExtender.exsd"/>
+
+     <extension point="org.eclipse.ui.editors">
+      <editor name="Carbide.c++ UI Design Editor"
+              icon="icons/s60_UI_designer.png"
+              class="com.nokia.sdt.uidesigner.ui.DesignerEditor"
+              contributorClass="com.nokia.sdt.uidesigner.ui.ViewEditorActionBarContributor"
+              id="com.nokia.sdt.uidesigner.viewEditor">
+          <contentTypeBinding contentTypeId="com.nokia.sdt.uimodel.carbideModel"/>
+      </editor>
+   </extension>
+
+   <extension
+        point="org.eclipse.ui.views">
+     <category
+           id="com.nokia.carbide.cpp"
+           name="%carbideCPPCategory"/>
+     <view
+           name="Gallery"
+           allowMultiple="false"
+           category="com.nokia.carbide.cpp"
+           class="com.nokia.sdt.uidesigner.gallery.GalleryView"
+           icon="icons/gallery.png"
+           id="com.nokia.sdt.uidesigner.gallery.GalleryView"/>
+     <view
+           allowMultiple="false"
+           category="com.nokia.carbide.cpp"
+           class="com.nokia.sdt.uidesigner.events.EventView"
+           icon="icons/events_16.png"
+           id="com.nokia.sdt.uidesigner.events.EventView"
+           name="Events"/>
+  </extension>
+
+  <extension
+        point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension targetID="com.symbian.cdt.SymbianPerspective">
+        <view
+              id="com.nokia.sdt.uidesigner.gallery.GalleryView"
+              relationship="stack"
+              relative="org.eclipse.cdt.ui.CView"/>
+        <viewShortcut id="com.nokia.sdt.uidesigner.gallery.GalleryView"/>
+        <view
+              id="com.nokia.sdt.uidesigner.events.EventView"
+              relationship="stack"
+              relative="org.eclipse.ui.views.PropertySheet"/>
+        <viewShortcut id="com.nokia.sdt.uidesigner.events.EventView"/>
+     </perspectiveExtension>
+  </extension>
+  <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+           class="com.nokia.sdt.uidesigner.preferences.UIDesignerPreferences"
+           id="com.nokia.sdt.uidesigner.preferences.UIDesignerPreferences"
+           name="UI Designer"/>
+  </extension>
+</plugin>

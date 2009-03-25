@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU11 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY command_flags_srcmapping SYSTEM "../command_flags_srcmapping.inc">
+<!ENTITY CommonMacros SYSTEM "../../CommonMacros.inc">
+<!ENTITY FileAndClassMacros SYSTEM "../../FileAndClassMacros.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CommandId.SystemCommandIds">
+		<enumElement value="" />
+		<enumElement value="EEikCmdButDenseFont" />
+		<enumElement value="EEikCmdButExcessToFirst"/>
+		<enumElement value="EEikCmdButExcessToPicture"/>
+		<enumElement value="EEikCmdButExcessToSecond"/>
+		<enumElement value="EEikCmdButExcessToText"/>
+		<enumElement value="EEikCmdButFirstBottomSecondTop"/>
+		<enumElement value="EEikCmdButFirstLeftSecondRight"/>
+		<enumElement value="EEikCmdButFirstRightSecondLeft"/>
+		<enumElement value="EEikCmdButFirstTopSecondBottom"/>
+		<enumElement value="EEikCmdButShareExcess"/>
+		<enumElement value="EEikCmdButTextBottomPictureTop"/>
+		<enumElement value="EEikCmdButTextLeftPictureRight"/>
+		<enumElement value="EEikCmdButTextRightPictureLeft"/>
+		<enumElement value="EEikCmdButTextTopPictureBottom"/>
+		<enumElement value="EEikCmdCanceled"/>
+		<enumElement value="EEikCmdEditCopy"/>
+		<enumElement value="EEikCmdEditCut"/>
+		<enumElement value="EEikCmdEditPaste"/>
+		<enumElement value="EEikCmdEditPicture"/>
+		<enumElement value="EEikCmdEditPictureFormat"/>
+		<enumElement value="EEikCmdEditRedo"/>
+		<enumElement value="EEikCmdEditSelectAll"/>
+		<enumElement value="EEikCmdEditUndo"/>
+		<enumElement value="EEikCmdEditUpdateAllFields"/>
+		<enumElement value="EEikCmdEditUpdateCurrentField"/>
+		<enumElement value="EEikCmdExit"/>
+		<enumElement value="EEikCmdFieldCurrentDate"/>
+		<enumElement value="EEikCmdFieldCurrentTime"/>
+		<enumElement value="EEikCmdFieldFileName"/>
+		<enumElement value="EEikCmdFieldInsertObject"/>
+		<enumElement value="EEikCmdFieldNumberOfPages"/>
+		<enumElement value="EEikCmdFieldPageNumber"/>
+		<enumElement value="EEikCmdFileExport"/>
+		<enumElement value="EEikCmdFileImport"/>
+		<enumElement value="EEikCmdFileMerge"/>
+		<enumElement value="EEikCmdFileNew"/>
+		<enumElement value="EEikCmdFileOpen"/>
+		<enumElement value="EEikCmdFileOpenAnother"/>
+		<enumElement value="EEikCmdFileRevert"/>
+		<enumElement value="EEikCmdFileSave"/>
+		<enumElement value="EEikCmdFileSaveAs"/>
+		<enumElement value="EEikCmdFontBold"/>
+		<enumElement value="EEikCmdFontChange"/>
+		<enumElement value="EEikCmdFontItalic"/>
+		<enumElement value="EEikCmdFontUnderline"/>
+		<enumElement value="EEikCmdFormatObject"/>
+		<enumElement value="EEikCmdHelpAbout"/>
+		<enumElement value="EEikCmdHelpContents"/>
+		<enumElement value="EEikCmdHelpSearch"/>
+		<enumElement value="EEikCmdInsertField"/>
+		<enumElement value="EEikCmdInsertPicture"/>
+		<enumElement value="EEikCmdInsertSymbol"/>
+		<enumElement value="EEikCmdIrdaReceive"/>
+		<enumElement value="EEikCmdIrdaSend"/>
+		<enumElement value="EEikCmdPageSetup"/>
+		<enumElement value="EEikCmdParaAlign"/>
+		<enumElement value="EEikCmdParaBorder"/>
+		<enumElement value="EEikCmdParaIndent"/>
+		<enumElement value="EEikCmdParaSpacing"/>
+		<enumElement value="EEikCmdParaTabs"/>
+		<enumElement value="EEikCmdPreviewSetup"/>
+		<enumElement value="EEikCmdPrintPaginate"/>
+		<enumElement value="EEikCmdPrintPreview"/>
+		<enumElement value="EEikCmdPrintPrint"/>
+		<enumElement value="EEikCmdPrintSetup"/>
+		<enumElement value="EEikCmdPrinterSetup"/>
+		<enumElement value="EEikCmdRangeSetup"/>
+		<enumElement value="EEikCmdSearchFind"/>
+		<enumElement value="EEikCmdSearchFindAgain"/>
+		<enumElement value="EEikCmdSearchReplace"/>
+		<enumElement value="EEikCmdZoomIn"/>
+		<enumElement value="EEikCmdZoomNormal"/>
+		<enumElement value="EEikCmdZoomOut"/>
+	</enumPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CommandId"
+			baseComponent="com.nokia.carbide.uiq.CommandListsChildBase"
+			instanceNameRoot="newCommandId"
+			category="%commands.category"
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>			
+
+		<designerImages smallIconFile="CommandId_sm.png"
+			largeIconFile="CommandId.png"/>
+				
+		<attributes>
+			<attribute key="is-outline-container">false</attribute>
+			<attribute key ="is-layout-container">false</attribute>
+			<attribute key ="cpp-class-name">CommandId</attribute>
+			<attribute key ="is-layout-object">false</attribute>
+		</attributes>
+
+		<properties>
+			<property name="name" type="uniqueName"
+				descriptionKey="nameDescription"
+				displayName="%name"
+				category="%category.design" />	
+			<property  name="commandId" type="string" 
+				default="commandId"
+				descriptionKey="commandIdDescription" 
+				category="%category.data"/>					
+			<property  name="handlerNameTemplate" type="string" 
+				category="Hidden"
+				descriptionKey="handlerNameTemplateDescription" />					
+			<enumProperty name="systemCommandId" 
+				type="com.nokia.carbide.uiq.CommandId.SystemCommandIds" 
+				default=""
+				descriptionKey="systemCommandIdDescription" 
+				category="%category.data"/>
+		</properties>
+
+		<events>
+			<event name="commandEvent" category="%category.command" 
+				group="Command"
+			    handlerNameTemplate="Handle{title(handlerNameTemplate)}L"
+				descriptionKey="commandEventDescription"/>
+		</events>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"></interface>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"></interface> 				
+				<script file="CommandId.js" prototype="CommandId"></script>
+			</implementation>
+		</implementations>
+
+
+		<sourceGen>
+			&CommonMacros;
+			&FileAndClassMacros;
+			<inline scope="file">
+				include("../../srcgenLibrary.js")
+	
+				function isNotView(instance){
+					if(instance.properties.commandId != ""){
+						return !instance.parent.parent.isInstanceOf("com.nokia.carbide.uiq.CQikView");
+					}else {
+						return false;
+					}								
+				}
+				function isThereCommandId(instance){
+					return instance.properties.commandId!="";
+				}				
+			</inline>
+			<inline scope="prototype"><![CDATA[
+				${jsObject}.prototype.findOrCreateCommandId = function(instance) {
+					if(instance.properties.commandId!=""){
+						return Engine.findOrCreateEnumeratorForAlgorithm(instance, ".", 
+								"com.nokia.carbide.uiq.NAME_ALG_COMMAND_ID");
+					}else{
+						if(instance.properties.systemCommandId!=""){
+							return instance.properties.systemCommandId;
+						}
+					}
+				}
+			]]>	
+			</inline>
+			<template id="AdditionalUserIncludes3" phase="Hrhinclude" ifExpr="isNotView(instance)">
+<![CDATA[#include "${instance.parent.parent.name}.hrh"]]>
+			</template>			
+			<templateGroup id="GenerateCommandEvent" ifEvents="commandEvent" form="EventGen">
+					<template id="CommandEvent" phase="InitializeControlHandlers" ifExpr="isThereCommandId(instance)">
+	<![CDATA[
+	AddCommandEventHandlerL( 
+				${this.findOrCreateCommandId(instance)},
+				&${className}::${event.handlerName} );
+	]]>
+					</template>
+					<expandMacro name="GenerateUserEventHandlerFunction"
+						FunctionLocationId="CommandHandlerrrr" 
+						FunctionArgs="CQikCommand&amp; aCommand"
+						DeclPhase="UserHandlers"
+						DefnLocation="SOURCE_FILE" />					
+			</templateGroup>	
+		</sourceGen>
+
+						
+	</component>
+	
+</componentDefinition>

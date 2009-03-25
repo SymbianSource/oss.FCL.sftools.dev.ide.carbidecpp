@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>options</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>options</h3>
+<p>  Specifies how to align struct and class data.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma options align= alignment</p>
+  <h5>Parameter</h5>
+  <p class="code">alignment</p>
+  <blockquote>
+    <p>Specifies the boundary on which struct and class data is aligned in memory. Values for alignment range from 1 to 16, or use one of the following preset values:</p>
+    <table width="75%"  border="0" cellpadding="2" cellspacing="0">
+      <tr>
+        <th width="25%" scope="col">If alignment is &hellip;</th>
+        <th width="75%" scope="col">The compiler &hellip;</th>
+      </tr>
+      <tr>
+        <td class="code">mac68k</td>
+        <td>Aligns every field on a 2-byte boundaries, unless a field is only 1 byte long. This is the standard alignment for 68K Macintoshes.</td>
+      </tr>
+      <tr>
+        <td class="code">mac68k4byte</td>
+        <td>Aligns every field on 4-byte boundaries.</td>
+      </tr>
+      <tr>
+        <td class="code">power</td>
+        <td>Aligns every field on its natural boundary. This is the standard alignment for Power Macintoshes. For example, it aligns a character on a 1-byte boundary and a 16-bit integer on a 2-byte boundary. The compiler applies this alignment recursively to structured data and arrays containing structured data. So, for example, it aligns an array of structured types containing an 4-byte floating point member on an 4-byte boundary.</td>
+      </tr>
+      <tr>
+        <td class="code">native</td>
+        <td>Aligns every field using the standard alignment. It is equivalent to using mac68k for 68K Macintoshes and power for Power Macintoshes.</td>
+      </tr>
+      <tr>
+        <td class="code">packed</td>
+        <td>Aligns every field on a 1-byte boundary. It is not available in any panel. This alignment causes your code to crash or run slowly on many platforms. Use it with caution.</td>
+      </tr>
+      <tr>
+        <td class="code">reset</td>
+        <td>Resets to the value in the previous <span class="code">#pragma options align</span> statement.
+          <p class="note"><strong>NOTE</strong> There is a space between <span class="code">options</span> and <span class="code">align</span></p>          
+        </td>
+      </tr>
+    </table>
+    </blockquote>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  This pragma corresponds to the Struct Alignment setting in the &lt;Target&gt; Processor or &lt;Target&gt; CodeGen panel. 
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

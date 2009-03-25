@@ -1,0 +1,6 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES_DEFAULTS r_test_id_0
+	{
+	word = EMbmImagePicture;
+	}

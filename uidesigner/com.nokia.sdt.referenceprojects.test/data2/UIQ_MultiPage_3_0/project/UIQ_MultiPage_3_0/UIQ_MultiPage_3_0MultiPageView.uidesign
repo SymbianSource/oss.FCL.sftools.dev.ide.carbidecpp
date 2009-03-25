@@ -1,0 +1,1042 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikView" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ViewDialogBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ClassBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ViewConfigurationsGroup" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ModelGroupBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ViewConfiguration" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.UIConfiguration" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.LayoutsGroup" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ViewLayout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ViewPage" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.RowLayoutManager" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.LayoutManager" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikBitmapButton_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.LayoutControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikChoiceList_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikColorSelector_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikComboBox_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikCommandButton_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikImage_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikLabel_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikLabeledCheckBox_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikListBox_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikProgressInfo_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikTextButton_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikVertOptionButtonList_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikDateEditor_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikFloatingPointEditor_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikNumberEditor_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikEdwin_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikRichText_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikTimeEditor_Layout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.SystemBuildingBlock" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ItemSlot" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.Slot" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.IconSlot" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ControlCollection" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikBitmapButton" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikCommandButtonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ControlCollectionItemBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikChoiceList" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ChoiceListItem" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikColorSelector" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikComboBox" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikCommandButton" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikImage" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikLabel" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikLabeledCheckBox" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikListBox" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ListBoxLayoutGroup" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ListBoxLayout" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ListBoxItem" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikProgressInfo" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikTextButton" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikVertOptionButtonList" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikDateEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikTTimeEditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.EditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikFloatingPointEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikNumericEditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikNumberEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikEdwin" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikEdwinBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikRichText" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CEikGlobalText" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CQikTimeEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommandListsGroup" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommandList" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommandListsChildBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.Command" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommandBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommandListChildBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommandId" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">rsc</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.uiq</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.carbide.uiq.CQikView">
+    <compoundProperty id="size">
+      <property id="width">240</property>
+      <property id="height">320</property>
+    </compoundProperty>
+    <property id="className">CUIQ_MultiPage_3_0MultiPageView</property>
+    <compoundProperty id="overriddenAppTitleIcon"/>
+    <compoundProperty id="location">
+      <property id="x">52</property>
+      <property id="y">45</property>
+    </compoundProperty>
+    <compoundProperty id="baseClassInfo">
+      <property id="baseClassLibrary">QikCore.lib</property>
+      <property id="baseClassHeader">QikMultiPageViewBase.h</property>
+      <property id="baseClassName">CQikMultiPageViewBase</property>
+    </compoundProperty>
+    <property id="isAppUIContainer">true</property>
+    <compoundProperty id="viewMode"/>
+    <property id="type">multiPage</property>
+    <property id="name">UIQ_MultiPage_3_0MultiPageView</property>
+    <component id="com.nokia.carbide.uiq.ViewConfigurationsGroup">
+      <compoundProperty id="location"/>
+      <property id="name">viewConfigurations</property>
+      <compoundProperty id="size"/>
+      <component id="com.nokia.carbide.uiq.ViewConfiguration">
+        <property id="name">viewConfiguration1</property>
+        <property id="viewOrContainer" type="componentRef">viewLayout1</property>
+        <property id="commandList" type="componentRef">commandList1</property>
+      </component>
+    </component>
+    <component id="com.nokia.carbide.uiq.LayoutsGroup">
+      <compoundProperty id="location">
+        <property id="y">45</property>
+      </compoundProperty>
+      <property id="name">viewLayouts</property>
+      <compoundProperty id="size">
+        <property id="width">239</property>
+        <property id="height">248</property>
+      </compoundProperty>
+      <component id="com.nokia.carbide.uiq.ViewLayout">
+        <compoundProperty id="location"/>
+        <property id="name">viewLayout1</property>
+        <compoundProperty id="size">
+          <property id="width">239</property>
+          <property id="height">248</property>
+        </compoundProperty>
+        <component id="com.nokia.carbide.uiq.ViewPage">
+          <compoundProperty id="location"/>
+          <compoundProperty id="tabImage"/>
+          <property id="name">viewPage1</property>
+          <property id="tabCaption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_3</property>
+          <compoundProperty id="size">
+            <property id="width">239</property>
+            <property id="height">248</property>
+          </compoundProperty>
+          <component id="com.nokia.carbide.uiq.CQikContainer">
+            <compoundProperty id="location">
+              <property id="y">26</property>
+            </compoundProperty>
+            <property id="name">container1</property>
+            <compoundProperty id="flags"/>
+            <compoundProperty id="layoutManager">
+              <property id="referenceLayoutManager" type="componentRef">rowLayoutManager1</property>
+            </compoundProperty>
+            <compoundProperty id="size">
+              <property id="width">239</property>
+              <property id="height">222</property>
+            </compoundProperty>
+            <component id="com.nokia.carbide.uiq.RowLayoutManager">
+              <property id="name">rowLayoutManager1</property>
+              <compoundProperty id="defaultLayoutData"/>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikBitmapButton_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">2</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">bitmapButton1</property>
+              <property id="name">bitmapButton1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">26</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikChoiceList_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">29</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">choiceList1</property>
+              <property id="name">choiceList1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">27</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikColorSelector_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">56</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">colorSelector1</property>
+              <property id="name">colorSelector1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">27</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikComboBox_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">87</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">comboBox1</property>
+              <property id="name">comboBox1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">43</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikCommandButton_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">110</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">commandButton1</property>
+              <property id="name">commandButton1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">27</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikImage_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">137</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">image1</property>
+              <property id="name">image1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">27</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikLabel_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="x">103</property>
+                <property id="y">168</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">label1</property>
+              <property id="name">label1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">33</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikLabeledCheckBox_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">191</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">labeledCheckBox1</property>
+              <property id="name">labeledCheckBox1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">27</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikListBox_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">218</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">listBox1</property>
+              <property id="name">listBox1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">54</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikProgressInfo_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">276</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">progressInfo1</property>
+              <property id="name">progressInfo1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">19</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikTextButton_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">299</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">textButton1</property>
+              <property id="name">textButton1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">26</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikVertOptionButtonList_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">326</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">vertOptionButtonList1</property>
+              <property id="name">vertOptionButtonList1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">27</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikDateEditor_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">357</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">dateEditor1</property>
+              <property id="name">dateEditor1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">76</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikFloatingPointEditor_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">384</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">floatingPointEditor1</property>
+              <property id="name">floatingPointEditor1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">8</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikNumberEditor_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">411</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">numberEditor1</property>
+              <property id="name">numberEditor1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">8</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikEdwin_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">438</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">plainTextEditor1</property>
+              <property id="name">plainTextEditor1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">58</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CEikRichText_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">465</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">richTextEditor1</property>
+              <property id="name">richTextEditor1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">105</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+            <component id="com.nokia.carbide.uiq.CQikTimeEditor_Layout">
+              <compoundProperty id="layoutData"/>
+              <compoundProperty id="location">
+                <property id="y">492</property>
+              </compoundProperty>
+              <property id="control" type="componentRef">timeEditor1</property>
+              <property id="name">timeEditor1Ref1</property>
+              <compoundProperty id="size">
+                <property id="width">60</property>
+                <property id="height">18</property>
+              </compoundProperty>
+            </component>
+          </component>
+        </component>
+        <component id="com.nokia.carbide.uiq.ViewPage">
+          <compoundProperty id="location"/>
+          <compoundProperty id="tabImage"/>
+          <property id="name">viewPage2</property>
+          <property id="tabCaption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_19</property>
+          <compoundProperty id="size">
+            <property id="width">239</property>
+            <property id="height">248</property>
+          </compoundProperty>
+          <component id="com.nokia.carbide.uiq.CQikContainer">
+            <compoundProperty id="location">
+              <property id="y">26</property>
+            </compoundProperty>
+            <property id="name">container2</property>
+            <compoundProperty id="flags"/>
+            <compoundProperty id="layoutManager">
+              <property id="referenceLayoutManager" type="componentRef">rowLayoutManager2</property>
+              <property id="type">com.nokia.carbide.uiq.RowLayoutManager</property>
+            </compoundProperty>
+            <compoundProperty id="size">
+              <property id="width">239</property>
+              <property id="height">222</property>
+            </compoundProperty>
+            <component id="com.nokia.carbide.uiq.RowLayoutManager">
+              <property id="name">rowLayoutManager2</property>
+              <compoundProperty id="defaultLayoutData"/>
+            </component>
+            <component id="com.nokia.carbide.uiq.SystemBuildingBlock">
+              <compoundProperty id="layoutData"/>
+              <property id="type">EQikCtIconCaptionedTwolineBuildingBlock</property>
+              <compoundProperty id="location">
+                <property id="y">2</property>
+              </compoundProperty>
+              <property id="name">buildingBlock1</property>
+              <compoundProperty id="flags"/>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">54</property>
+              </compoundProperty>
+              <component id="com.nokia.carbide.uiq.ItemSlot">
+                <property id="caption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_21</property>
+                <compoundProperty id="location">
+                  <property id="x">26</property>
+                </compoundProperty>
+                <property id="name">itemSlot1</property>
+                <compoundProperty id="size">
+                  <property id="width">209</property>
+                  <property id="height">27</property>
+                </compoundProperty>
+                <component id="com.nokia.carbide.uiq.CQikColorSelector_Layout">
+                  <compoundProperty id="location"/>
+                  <property id="control" type="componentRef">colorSelector2</property>
+                  <property id="name">colorSelector2Ref1</property>
+                  <compoundProperty id="size">
+                    <property id="width">209</property>
+                    <property id="height">27</property>
+                  </compoundProperty>
+                </component>
+              </component>
+              <component id="com.nokia.carbide.uiq.ItemSlot">
+                <property id="caption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_22</property>
+                <compoundProperty id="location">
+                  <property id="x">26</property>
+                  <property id="y">31</property>
+                </compoundProperty>
+                <property id="name">itemSlot2</property>
+                <property id="slotId">EQikItemSlot2</property>
+                <compoundProperty id="size">
+                  <property id="width">209</property>
+                  <property id="height">18</property>
+                </compoundProperty>
+                <component id="com.nokia.carbide.uiq.CEikLabel_Layout">
+                  <compoundProperty id="location"/>
+                  <property id="control" type="componentRef">label2</property>
+                  <property id="name">label2Ref1</property>
+                  <compoundProperty id="size">
+                    <property id="width">209</property>
+                    <property id="height">18</property>
+                  </compoundProperty>
+                </component>
+              </component>
+              <component id="com.nokia.carbide.uiq.IconSlot">
+                <property id="caption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_23</property>
+                <compoundProperty id="location">
+                  <property id="x">4</property>
+                  <property id="y">4</property>
+                </compoundProperty>
+                <property id="name">iconSlot1</property>
+                <property id="slotId">EQikIconSlot1</property>
+                <compoundProperty id="size">
+                  <property id="width">18</property>
+                  <property id="height">18</property>
+                </compoundProperty>
+                <component id="com.nokia.carbide.uiq.CEikImage_Layout">
+                  <compoundProperty id="location"/>
+                  <property id="control" type="componentRef">image2</property>
+                  <property id="name">image2Ref1</property>
+                  <compoundProperty id="size">
+                    <property id="width">18</property>
+                    <property id="height">18</property>
+                  </compoundProperty>
+                </component>
+              </component>
+            </component>
+            <component id="com.nokia.carbide.uiq.SystemBuildingBlock">
+              <compoundProperty id="layoutData"/>
+              <property id="type">EQikCtCaptionedTwolineBuildingBlock</property>
+              <compoundProperty id="location">
+                <property id="y">56</property>
+              </compoundProperty>
+              <property id="name">buildingBlock2</property>
+              <compoundProperty id="flags"/>
+              <compoundProperty id="size">
+                <property id="width">239</property>
+                <property id="height">54</property>
+              </compoundProperty>
+              <component id="com.nokia.carbide.uiq.ItemSlot">
+                <property id="caption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_25</property>
+                <compoundProperty id="location">
+                  <property id="x">4</property>
+                  <property id="y">4</property>
+                </compoundProperty>
+                <property id="name">itemSlot3</property>
+                <compoundProperty id="size">
+                  <property id="width">231</property>
+                  <property id="height">18</property>
+                </compoundProperty>
+                <component id="com.nokia.carbide.uiq.CQikNumberEditor_Layout">
+                  <compoundProperty id="location"/>
+                  <property id="control" type="componentRef">numberEditor2</property>
+                  <property id="name">numberEditor2Ref1</property>
+                  <compoundProperty id="size">
+                    <property id="width">231</property>
+                    <property id="height">18</property>
+                  </compoundProperty>
+                </component>
+              </component>
+              <component id="com.nokia.carbide.uiq.ItemSlot">
+                <property id="caption" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_28</property>
+                <compoundProperty id="location">
+                  <property id="x">4</property>
+                  <property id="y">31</property>
+                </compoundProperty>
+                <property id="name">itemSlot4</property>
+                <property id="slotId">EQikItemSlot2</property>
+                <compoundProperty id="size">
+                  <property id="width">231</property>
+                  <property id="height">18</property>
+                </compoundProperty>
+                <component id="com.nokia.carbide.uiq.CQikFloatingPointEditor_Layout">
+                  <compoundProperty id="location"/>
+                  <property id="control" type="componentRef">floatingPointEditor2</property>
+                  <property id="name">floatingPointEditor2Ref1</property>
+                  <compoundProperty id="size">
+                    <property id="width">231</property>
+                    <property id="height">18</property>
+                  </compoundProperty>
+                </component>
+              </component>
+            </component>
+          </component>
+        </component>
+      </component>
+    </component>
+    <component id="com.nokia.carbide.uiq.ControlCollection">
+      <compoundProperty id="location"/>
+      <property id="name">controlCollection</property>
+      <compoundProperty id="size"/>
+      <component id="com.nokia.carbide.uiq.CEikBitmapButton">
+        <property id="name">bitmapButton1</property>
+        <compoundProperty id="image1">
+          <property id="bmpfile">\resource\apps\UIQ_MultiPage_3_0.mbm</property>
+          <property id="bmpid">EMbmUiq_multipage_3_0Uiq_multipage_3_0_small</property>
+          <property id="bmpmask">EMbmUiq_multipage_3_0Uiq_multipage_3_0_small_mask</property>
+        </compoundProperty>
+        <compoundProperty id="behavior"/>
+        <property id="helpText" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_4</property>
+        <compoundProperty id="image2"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikChoiceList">
+        <property id="activeItem" type="componentRef">choiceListItem1</property>
+        <property id="name">choiceList1</property>
+        <component id="com.nokia.carbide.uiq.ChoiceListItem">
+          <compoundProperty id="location"/>
+          <property id="label" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_5</property>
+          <property id="name">choiceListItem1</property>
+          <compoundProperty id="size"/>
+        </component>
+        <component id="com.nokia.carbide.uiq.ChoiceListItem">
+          <compoundProperty id="location"/>
+          <property id="label" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_6</property>
+          <property id="name">choiceListItem2</property>
+          <compoundProperty id="size"/>
+        </component>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikColorSelector">
+        <property id="name">colorSelector1</property>
+        <sequenceProperty id="palette"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikComboBox">
+        <sequenceProperty id="items">
+          <element type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_33</element>
+        </sequenceProperty>
+        <property id="name">comboBox1</property>
+        <property id="activeText" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_7</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikCommandButton">
+        <property id="name">commandButton1</property>
+        <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_9</property>
+        <compoundProperty id="behavior"/>
+        <property id="helpText" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_8</property>
+        <compoundProperty id="image"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikImage">
+        <property id="name">image1</property>
+        <compoundProperty id="image"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikLabel">
+        <property id="name">label1</property>
+        <compoundProperty id="flags"/>
+        <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_10</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikLabeledCheckBox">
+        <property id="name">labeledCheckBox1</property>
+        <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_11</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikListBox">
+        <compoundProperty id="margins"/>
+        <property id="name">listBox1</property>
+        <component id="com.nokia.carbide.uiq.ListBoxLayoutGroup">
+          <compoundProperty id="location"/>
+          <property id="name">listBoxLayouts1</property>
+          <compoundProperty id="size"/>
+          <component id="com.nokia.carbide.uiq.ListBoxLayout">
+            <property id="name">listBoxLayout1</property>
+          </component>
+        </component>
+        <component id="com.nokia.carbide.uiq.ListBoxItem">
+          <compoundProperty id="location"/>
+          <property id="EQikListBoxSlotText1" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_13</property>
+          <property id="name">listBoxItem2</property>
+          <compoundProperty id="flags"/>
+          <compoundProperty id="size">
+            <property id="width">239</property>
+            <property id="height">27</property>
+          </compoundProperty>
+        </component>
+        <component id="com.nokia.carbide.uiq.ListBoxItem">
+          <compoundProperty id="location">
+            <property id="y">27</property>
+          </compoundProperty>
+          <property id="EQikListBoxSlotText1" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_12</property>
+          <property id="name">listBoxItem1</property>
+          <compoundProperty id="flags"/>
+          <compoundProperty id="size">
+            <property id="width">239</property>
+            <property id="height">27</property>
+          </compoundProperty>
+        </component>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikProgressInfo">
+        <property id="name">progressInfo1</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikTextButton">
+        <property id="name">textButton1</property>
+        <compoundProperty id="behavior"/>
+        <property id="helpText" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_14</property>
+        <property id="text1" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_15</property>
+        <property id="text2" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_16</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikVertOptionButtonList">
+        <sequenceProperty id="labeledOptions"/>
+        <property id="name">vertOptionButtonList1</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikDateEditor">
+        <compoundProperty id="date"/>
+        <compoundProperty id="minDate"/>
+        <property id="name">dateEditor1</property>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="maxDate">
+          <property id="month">11</property>
+          <property id="day">30</property>
+          <property id="year">2099</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikFloatingPointEditor">
+        <property id="name">floatingPointEditor1</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikNumberEditor">
+        <property id="name">numberEditor1</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikEdwin">
+        <property id="name">plainTextEditor1</property>
+        <compoundProperty id="flags"/>
+        <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_17</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikRichText">
+        <property id="name">richTextEditor1</property>
+        <compoundProperty id="flags"/>
+        <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_18</property>
+        <compoundProperty id="charFormat"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikTimeEditor">
+        <compoundProperty id="minTime"/>
+        <property id="name">timeEditor1</property>
+        <compoundProperty id="maxTime">
+          <property id="hour">23</property>
+          <property id="minute">59</property>
+          <property id="second">59</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="time"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikImage">
+        <property id="name">image2</property>
+        <compoundProperty id="image"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikColorSelector">
+        <property id="name">colorSelector2</property>
+        <sequenceProperty id="palette"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikLabel">
+        <property id="name">label2</property>
+        <compoundProperty id="flags"/>
+        <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_24</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikImage">
+        <property id="name">image3</property>
+        <compoundProperty id="image"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CEikImage">
+        <property id="name">image4</property>
+        <compoundProperty id="image"/>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikNumberEditor">
+        <property id="name">numberEditor2</property>
+      </component>
+      <component id="com.nokia.carbide.uiq.CQikFloatingPointEditor">
+        <property id="name">floatingPointEditor2</property>
+      </component>
+    </component>
+    <component id="com.nokia.carbide.uiq.CommandListsGroup">
+      <compoundProperty id="location"/>
+      <property id="name">commandLists</property>
+      <compoundProperty id="size"/>
+      <component id="com.nokia.carbide.uiq.CommandList">
+        <property id="name">commandList1</property>
+        <component id="com.nokia.carbide.uiq.Command">
+          <compoundProperty id="stateFlags">
+            <property id="EQikCmdFlagDebugOnly">true</property>
+          </compoundProperty>
+          <property id="commandId" type="componentRef">exitCommandId</property>
+          <property id="shortText" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_2</property>
+          <compoundProperty id="icon"/>
+          <property id="type">Screen</property>
+          <property id="name">exitCommand</property>
+          <property id="text" type="i18n">STR_UIQ_MultiPage_3_0MultiPageView_1</property>
+          <compoundProperty id="cpfFlags"/>
+        </component>
+      </component>
+      <component id="com.nokia.carbide.uiq.CommandId">
+        <property id="name">exitCommandId</property>
+        <property id="commandId"></property>
+        <property id="handlerNameTemplate">EEikCmdExit</property>
+        <property id="systemCommandId">EEikCmdExit</property>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_1">Exit</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_2">Exit</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_3">ViewPage</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_4">help</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_5">label</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_6">label</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_7">text</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_8">help</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_9">button</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_10">label</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_11">text</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_12">text</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_13">text</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_14">help</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_15">text 1</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_16"/>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_17">Edit text</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_18">Formatted text</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_33">Item 1</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_19">ViewPage2</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_21">caption</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_22">caption</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_23">caption</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_24">label</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_25">caption</string>
+      <string id="STR_UIQ_MultiPage_3_0MultiPageView_28">caption</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="textButton1">r_uiq_multi_page_3_0_multi_page_view_text_button1_control</resourceMapping>
+      <resourceMapping instanceName="buildingBlock1">r_uiq_multi_page_3_0_multi_page_view_building_block1</resourceMapping>
+      <resourceMapping instanceName="numberEditor2">r_uiq_multi_page_3_0_multi_page_view_number_editor2_control</resourceMapping>
+      <resourceMapping instanceName="commandButton1">r_uiq_multi_page_3_0_multi_page_view_command_button1_control</resourceMapping>
+      <resourceMapping instanceName="container2" rsrcId="containerSettings">r_uiq_multi_page_3_0_multi_page_view_container2</resourceMapping>
+      <resourceMapping instanceName="UIQ_MultiPage_3_0MultiPageView">r_uiq_multi_page_3_0_multi_page_view_uiq_multi_page_3_0_multi_page_view</resourceMapping>
+      <resourceMapping instanceName="container1" rsrcId="containerSettings">r_uiq_multi_page_3_0_multi_page_view_container1</resourceMapping>
+      <resourceMapping instanceName="dateEditor1">r_uiq_multi_page_3_0_multi_page_view_date_editor1_control</resourceMapping>
+      <resourceMapping instanceName="floatingPointEditor1">r_uiq_multi_page_3_0_multi_page_view_floating_point_editor1_control</resourceMapping>
+      <resourceMapping instanceName="buildingBlock2">r_uiq_multi_page_3_0_multi_page_view_building_block2</resourceMapping>
+      <resourceMapping instanceName="buildingBlock2" rsrcId="$com.nokia.carbide.uiq.RowLayoutManager.LayoutData">r_uiq_multi_page_3_0_multi_page_view_building_block2_layout_data</resourceMapping>
+      <resourceMapping instanceName="floatingPointEditor2">r_uiq_multi_page_3_0_multi_page_view_floating_point_editor2_control</resourceMapping>
+      <resourceMapping instanceName="vertOptionButtonList1" rsrcId="member$array_id">r_uiq_multi_page_3_0_multi_page_view_vert_option_button_list1_array_id</resourceMapping>
+      <resourceMapping instanceName="listBox1">r_uiq_multi_page_3_0_multi_page_view_list_box1_control</resourceMapping>
+      <resourceMapping instanceName="plainTextEditor1">r_uiq_multi_page_3_0_multi_page_view_plain_text_editor1_control</resourceMapping>
+      <resourceMapping instanceName="UIQ_MultiPage_3_0MultiPageView" rsrcId="view_title">r_uiq_multi_page_3_0_multi_page_view_uiq_multi_page_3_0_multi_page_view_2</resourceMapping>
+      <resourceMapping instanceName="vertOptionButtonList1">r_uiq_multi_page_3_0_multi_page_view_vert_option_button_list1_control</resourceMapping>
+      <resourceMapping instanceName="choiceList1" rsrcId="member$array_id">r_uiq_multi_page_3_0_multi_page_view_choice_list1_array_id</resourceMapping>
+      <resourceMapping instanceName="commandList1" rsrcId="commandList">r_uiq_multi_page_3_0_multi_page_view_command_list1</resourceMapping>
+      <resourceMapping instanceName="choiceList1">r_uiq_multi_page_3_0_multi_page_view_choice_list1_control</resourceMapping>
+      <resourceMapping instanceName="richTextEditor1">r_uiq_multi_page_3_0_multi_page_view_rich_text_editor1_control</resourceMapping>
+      <resourceMapping instanceName="image4">r_uiq_multi_page_3_0_multi_page_view_image4_control</resourceMapping>
+      <resourceMapping instanceName="timeEditor1">r_uiq_multi_page_3_0_multi_page_view_time_editor1_control</resourceMapping>
+      <resourceMapping instanceName="labeledCheckBox1">r_uiq_multi_page_3_0_multi_page_view_labeled_check_box1_control</resourceMapping>
+      <resourceMapping instanceName="viewLayout1">r_uiq_multi_page_3_0_multi_page_view_view_layout1</resourceMapping>
+      <resourceMapping instanceName="image1">r_uiq_multi_page_3_0_multi_page_view_image1_control</resourceMapping>
+      <resourceMapping instanceName="viewLayout1" rsrcId="pages">r_uiq_multi_page_3_0_multi_page_view_view_layout1_pages</resourceMapping>
+      <resourceMapping instanceName="image2">r_uiq_multi_page_3_0_multi_page_view_image2_control</resourceMapping>
+      <resourceMapping instanceName="progressInfo1">r_uiq_multi_page_3_0_multi_page_view_progress_info1_control</resourceMapping>
+      <resourceMapping instanceName="bitmapButton1">r_uiq_multi_page_3_0_multi_page_view_bitmap_button1_control</resourceMapping>
+      <resourceMapping instanceName="label2">r_uiq_multi_page_3_0_multi_page_view_label2_control</resourceMapping>
+      <resourceMapping instanceName="controlCollection" rsrcId="controlCollection">r_uiq_multi_page_3_0_multi_page_view_control_collection</resourceMapping>
+      <resourceMapping instanceName="container1" rsrcId="container">r_uiq_multi_page_3_0_multi_page_view_container1_2</resourceMapping>
+      <resourceMapping instanceName="label1">r_uiq_multi_page_3_0_multi_page_view_label1_control</resourceMapping>
+      <resourceMapping instanceName="plainTextEditor1" rsrcId="text">r_uiq_multi_page_3_0_multi_page_view_plain_text_editor1</resourceMapping>
+      <resourceMapping instanceName="richTextEditor1" rsrcId="text">r_uiq_multi_page_3_0_multi_page_view_rich_text_editor1</resourceMapping>
+      <resourceMapping instanceName="image3">r_uiq_multi_page_3_0_multi_page_view_image3_control</resourceMapping>
+      <resourceMapping instanceName="buildingBlock1" rsrcId="$com.nokia.carbide.uiq.RowLayoutManager.LayoutData">r_uiq_multi_page_3_0_multi_page_view_building_block1_layout_data</resourceMapping>
+      <resourceMapping instanceName="listBoxLayout1">r_uiq_multi_page_3_0_multi_page_view_list_box_layout1</resourceMapping>
+      <resourceMapping instanceName="comboBox1" rsrcId="activeText">r_uiq_multi_page_3_0_multi_page_view_combo_box1</resourceMapping>
+      <resourceMapping instanceName="rowLayoutManager2" rsrcId="layoutManager">r_uiq_multi_page_3_0_multi_page_view_row_layout_manager2</resourceMapping>
+      <resourceMapping instanceName="listBox1" rsrcId="listBoxView">r_uiq_multi_page_3_0_multi_page_view_list_box1_view</resourceMapping>
+      <resourceMapping instanceName="numberEditor1">r_uiq_multi_page_3_0_multi_page_view_number_editor1_control</resourceMapping>
+      <resourceMapping instanceName="comboBox1">r_uiq_multi_page_3_0_multi_page_view_combo_box1_control</resourceMapping>
+      <resourceMapping instanceName="comboBox1" rsrcId="member$array_id">r_uiq_multi_page_3_0_multi_page_view_combo_box1_array_id</resourceMapping>
+      <resourceMapping instanceName="container2" rsrcId="container">r_uiq_multi_page_3_0_multi_page_view_container2_2</resourceMapping>
+      <resourceMapping instanceName="colorSelector1">r_uiq_multi_page_3_0_multi_page_view_color_selector1_control</resourceMapping>
+      <resourceMapping instanceName="rowLayoutManager1" rsrcId="layoutManager">r_uiq_multi_page_3_0_multi_page_view_row_layout_manager1</resourceMapping>
+      <resourceMapping instanceName="colorSelector2">r_uiq_multi_page_3_0_multi_page_view_color_selector2_control</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="label1" propertyId="verticalAlignment">EEikLabelAlignVTop</enumMapping>
+      <enumMapping instanceName="image2" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl21</enumMapping>
+      <enumMapping instanceName="buildingBlock1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="commandButton1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl5</enumMapping>
+      <enumMapping instanceName="image1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl6</enumMapping>
+      <enumMapping instanceName="textButton1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl11</enumMapping>
+      <enumMapping instanceName="choiceList1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="image3" propertyId="verticalAlignment">EEikLabelAlignVTop</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="@rss-control-type-enum">EQikCtListBox</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="partially_visible_items">EQikListBoxSystem</enumMapping>
+      <enumMapping instanceName="timeEditor1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="bitmapButton1" propertyId="@rss-control-type-enum">EEikCtBitmapButton</enumMapping>
+      <enumMapping instanceName="floatingPointEditor2" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl23</enumMapping>
+      <enumMapping instanceName="progressInfo1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="image3" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl24</enumMapping>
+      <enumMapping instanceName="commandButton1" propertyId="@rss-control-type-enum">EEikCtCommandButton</enumMapping>
+      <enumMapping instanceName="vertOptionButtonList1" propertyId="@rss-control-type-enum">EQikCtVertOptionButtonList</enumMapping>
+      <enumMapping instanceName="rowLayoutManager2" propertyId="[com.nokia.carbide.uiq.LayoutManager]@layout-manager-enum">EQikRowLayoutManager</enumMapping>
+      <enumMapping instanceName="image1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="numberEditor1" propertyId="flags">EQikNone</enumMapping>
+      <enumMapping instanceName="labeledCheckBox1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="bitmapButton1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="numberEditor1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="viewPage1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_PAGE_ID">EUIQ_MultiPage_3_0MultiPageViewPage</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl14</enumMapping>
+      <enumMapping instanceName="comboBox1" propertyId="@rss-control-type-enum">EEikCtComboBox</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl13</enumMapping>
+      <enumMapping instanceName="colorSelector1" propertyId="@rss-control-type-enum">EQikCtColorSelector</enumMapping>
+      <enumMapping instanceName="image4" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="rowLayoutManager2" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="exitCommand" propertyId="type">EQikCommandTypeScreen</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="centered_scrolling">EQikListBoxSystem</enumMapping>
+      <enumMapping instanceName="label2" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl20</enumMapping>
+      <enumMapping instanceName="comboBox1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="rowLayoutManager1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="numberEditor1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="numberEditor2" propertyId="flags">EQikNone</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="incremental_match_slot">EQikListBoxDefault</enumMapping>
+      <enumMapping instanceName="label1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl7</enumMapping>
+      <enumMapping instanceName="colorSelector1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="mirroring">EAutoMirror</enumMapping>
+      <enumMapping instanceName="richTextEditor1" propertyId="displayMode">0x00000001</enumMapping>
+      <enumMapping instanceName="labeledCheckBox1" propertyId="@rss-control-type-enum">EEikCtLabeledCheckBox</enumMapping>
+      <enumMapping instanceName="image2" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="rowLayoutManager2" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="choiceList1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="colorSelector2" propertyId="@rss-control-type-enum">EQikCtColorSelector</enumMapping>
+      <enumMapping instanceName="progressInfo1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="textButton1" propertyId="layout">EEikCmdButFirstRightSecondLeft</enumMapping>
+      <enumMapping instanceName="numberEditor1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl15</enumMapping>
+      <enumMapping instanceName="buildingBlock1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="image2" propertyId="horizontalAlignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="timeEditor1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="colorSelector1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="buildingBlock2" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="colorSelector1" propertyId="paletteEnum">EQikColorSelStandardColor | EQikColorSelStandard16</enumMapping>
+      <enumMapping instanceName="richTextEditor1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl17</enumMapping>
+      <enumMapping instanceName="vertOptionButtonList1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl12</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="highlight_type">EQikListBoxHighlightFrame</enumMapping>
+      <enumMapping instanceName="exitCommandId" propertyId="commandId->systemCommandId">EEikCmdExit</enumMapping>
+      <enumMapping instanceName="textButton1" propertyId="@rss-control-type-enum">EEikCtTextButton</enumMapping>
+      <enumMapping instanceName="image4" propertyId="verticalAlignment">EEikLabelAlignVTop</enumMapping>
+      <enumMapping instanceName="buildingBlock2" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="textButton1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="bitmapButton1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="iconSlot1" propertyId="slotId">EQikIconSlot1</enumMapping>
+      <enumMapping instanceName="container2" propertyId="[com.nokia.carbide.uiq.CQikContainer].scrollable">EQikCtScrollableContainer</enumMapping>
+      <enumMapping instanceName="image3" propertyId="horizontalAlignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="plainTextEditor1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="progressInfo1" propertyId="textType">EEikProgressTextNone</enumMapping>
+      <enumMapping instanceName="commandButton1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="progressInfo1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="itemSlot2" propertyId="slotId">EQikItemSlot2</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="textButton1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="v_scrollbar">EQikScrollBarAuto</enumMapping>
+      <enumMapping instanceName="container1" propertyId="[com.nokia.carbide.uiq.CQikContainer].scrollable">EQikCtScrollableContainer</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="comboBox1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="commandButton1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="progressInfo1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl10</enumMapping>
+      <enumMapping instanceName="choiceList1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="richTextEditor1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="listBox1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="progressInfo1" propertyId="@rss-control-type-enum">EEikCtProgInfo</enumMapping>
+      <enumMapping instanceName="plainTextEditor1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="plainTextEditor1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="numberEditor2" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl22</enumMapping>
+      <enumMapping instanceName="choiceList1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl2</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1" propertyId="@rss-control-type-enum">EQikCtFloatingPointEditor</enumMapping>
+      <enumMapping instanceName="richTextEditor1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="floatingPointEditor2" propertyId="@rss-control-type-enum">EQikCtFloatingPointEditor</enumMapping>
+      <enumMapping instanceName="colorSelector1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="image4" propertyId="horizontalAlignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="type">EQikRowListBox</enumMapping>
+      <enumMapping instanceName="numberEditor1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="image1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="buildingBlock2" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="dateEditor1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="vertOptionButtonList1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="h_scrollbar">EQikScrollBarAuto</enumMapping>
+      <enumMapping instanceName="bitmapButton1" propertyId="image1.bmpmask">EMbmUiq_multipage_3_0Uiq_multipage_3_0_small_mask</enumMapping>
+      <enumMapping instanceName="richTextEditor1" propertyId="@rss-control-type-enum">EEikCtRichTextEditor</enumMapping>
+      <enumMapping instanceName="vertOptionButtonList1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="label1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="image1" propertyId="@rss-control-type-enum">EEikCtImage</enumMapping>
+      <enumMapping instanceName="colorSelector1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl3</enumMapping>
+      <enumMapping instanceName="listBoxLayout1" propertyId="standard_normal_layout">EQikListBoxLine</enumMapping>
+      <enumMapping instanceName="listBox1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="image4" propertyId="@rss-control-type-enum">EEikCtImage</enumMapping>
+      <enumMapping instanceName="buildingBlock1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="dateEditor1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="numberEditor2" propertyId="@rss-control-type-enum">EQikCtNumberEditor</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="image3" propertyId="@rss-control-type-enum">EEikCtImage</enumMapping>
+      <enumMapping instanceName="label1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="timeEditor1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl18</enumMapping>
+      <enumMapping instanceName="commandButton1" propertyId="layout">EEikCmdButTextRightPictureLeft</enumMapping>
+      <enumMapping instanceName="label2" propertyId="@rss-control-type-enum">EEikCtLabel</enumMapping>
+      <enumMapping instanceName="image4" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl25</enumMapping>
+      <enumMapping instanceName="colorSelector1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="listBoxLayout1" propertyId="standard_highlight_layout">EQikListBoxNoLayout</enumMapping>
+      <enumMapping instanceName="timeEditor1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="dateEditor1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="bitmapButton1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="buildingBlock2" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="numberEditor1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="rowLayoutManager1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="comboBox1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="label2" propertyId="verticalAlignment">EEikLabelAlignVTop</enumMapping>
+      <enumMapping instanceName="bitmapButton1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl</enumMapping>
+      <enumMapping instanceName="image2" propertyId="@rss-control-type-enum">EEikCtImage</enumMapping>
+      <enumMapping instanceName="richTextEditor1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="floatingPointEditor2" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="timeEditor1" propertyId="@rss-control-type-enum">EQikCtTimeEditor</enumMapping>
+      <enumMapping instanceName="vertOptionButtonList1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="comboBox1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl4</enumMapping>
+      <enumMapping instanceName="rowLayoutManager2" propertyId="mirrored">EQikLayoutAutoMirror</enumMapping>
+      <enumMapping instanceName="labeledCheckBox1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="label2" propertyId="horizontalAlignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="rowLayoutManager1" propertyId="[com.nokia.carbide.uiq.LayoutManager]@layout-manager-enum">EQikRowLayoutManager</enumMapping>
+      <enumMapping instanceName="bitmapButton1" propertyId="layout">EEikCmdButFirstRightSecondLeft</enumMapping>
+      <enumMapping instanceName="textButton1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="image1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="bitmapButton1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="@rss-control-type-enum">EQikCtDateEditor</enumMapping>
+      <enumMapping instanceName="timeEditor1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="progressInfo1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="rowLayoutManager1" propertyId="mirrored">EQikLayoutAutoMirror</enumMapping>
+      <enumMapping instanceName="commandButton1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="vertOptionButtonList1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="label1" propertyId="@rss-control-type-enum">EEikCtLabel</enumMapping>
+      <enumMapping instanceName="richTextEditor1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="label1" propertyId="horizontalAlignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="numberEditor1" propertyId="@rss-control-type-enum">EQikCtNumberEditor</enumMapping>
+      <enumMapping instanceName="plainTextEditor1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl16</enumMapping>
+      <enumMapping instanceName="labeledCheckBox1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl9</enumMapping>
+      <enumMapping instanceName="colorSelector2" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="choiceList1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="textButton1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="listBox1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="image3" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="buildingBlock2" propertyId="type">EQikCtCaptionedTwolineBuildingBlock</enumMapping>
+      <enumMapping instanceName="itemSlot4" propertyId="slotId">EQikItemSlot2</enumMapping>
+      <enumMapping instanceName="image1" propertyId="horizontalAlignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="commandButton1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="itemSlot3" propertyId="slotId">EQikItemSlot1</enumMapping>
+      <enumMapping instanceName="plainTextEditor1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="colorSelector2" propertyId="paletteEnum">EQikColorSelStandardColor | EQikColorSelStandard16</enumMapping>
+      <enumMapping instanceName="rowLayoutManager2" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="viewPage2" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_PAGE_ID">EUIQ_MultiPage_3_0MultiPageViewPage2</enumMapping>
+      <enumMapping instanceName="label1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="choiceList1" propertyId="@rss-control-type-enum">EEikCtChoiceList</enumMapping>
+      <enumMapping instanceName="labeledCheckBox1Ref1" propertyId="horizontalAlignment">EQikLayoutHAlignInherit</enumMapping>
+      <enumMapping instanceName="label2" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="listBox1" propertyId="looping">EQikListBoxSystem</enumMapping>
+      <enumMapping instanceName="buildingBlock1" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="bitmapButton1" propertyId="image1.bmpid">EMbmUiq_multipage_3_0Uiq_multipage_3_0_small</enumMapping>
+      <enumMapping instanceName="plainTextEditor1" propertyId="@rss-control-type-enum">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="labeledCheckBox1" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl8</enumMapping>
+      <enumMapping instanceName="label1Ref1" propertyId="layoutWhenInvisible">EQikLayoutInheritBoolValue</enumMapping>
+      <enumMapping instanceName="itemSlot1" propertyId="slotId">EQikItemSlot1</enumMapping>
+      <enumMapping instanceName="label2" propertyId="standardFont">EEikLabelFontNormal</enumMapping>
+      <enumMapping instanceName="viewConfiguration1" propertyId="uiconfig">KQikSoftkeyStylePortrait</enumMapping>
+      <enumMapping instanceName="image1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="image2" propertyId="verticalAlignment">EEikLabelAlignVTop</enumMapping>
+      <enumMapping instanceName="buildingBlock1" propertyId="type">EQikCtIconCaptionedTwolineBuildingBlock</enumMapping>
+      <enumMapping instanceName="numberEditor2" propertyId="itemFlags">0</enumMapping>
+      <enumMapping instanceName="label1" propertyId="standardFont">EEikLabelFontNormal</enumMapping>
+      <enumMapping instanceName="colorSelector2" propertyId="" nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">EUIQ_MultiPage_3_0MultiPageViewControl19</enumMapping>
+      <enumMapping instanceName="rowLayoutManager1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="comboBox1Ref1" propertyId="verticalAlignment">EQikLayoutVAlignInherit</enumMapping>
+      <enumMapping instanceName="image1" propertyId="verticalAlignment">EEikLabelAlignVTop</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+  <generatedFiles>
+    <file>src/uiq_multipage_3_0multipageview.cpp</file>
+    <file>inc/uiq_multipage_3_0multipageview.h</file>
+    <file>rsc/uiq_multipage_3_0.rss</file>
+    <file>rsc/uiq_multipage_3_0_01.rls</file>
+    <file>inc/uiq_multipage_3_0.hrh</file>
+    <file>rsc/uiq_multipage_3_0multipageview.rssi</file>
+    <file>rsc/uiq_multipage_3_0multipageview_01.rls</file>
+    <file>inc/uiq_multipage_3_0multipageview.hrh</file>
+  </generatedFiles>
+</designerData>

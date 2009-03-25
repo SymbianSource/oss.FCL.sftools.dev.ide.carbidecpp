@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgen SYSTEM "CAknAppUi_common.inc">
+<!ENTITY common_srcmapping SYSTEM "CAknAppUi_common_srcmapping.inc">
+<!ENTITY common_events SYSTEM "CAknAppUi_events.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.CAknAppUiBase" 
+			qualifiedName="com.nokia.sdt.series60.CAknAppUi" 
+			friendlyName="Avkon Application UI" 
+			instanceNameRoot="appUi"
+			version="1.0">
+		<documentation>
+			<information>The Series 60 top-level Avkon view application UI class.  
+			This is a non-visual class which holds a reference to
+			a visual component (such as CAknDialog or CCoeControl).</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" 
+				minSDKVersion="3.0"
+			className="CAknAppUi"/>
+	
+		<extensionProperties name="default">
+			<property category="Appearance" name="enableMSK" type="boolean" 
+				descriptionKey="enableMSKDescription" default="true" />
+		</extensionProperties>	
+	
+		<properties>
+			<enumProperty category="Appearance" name="orientation" 
+				type="com.nokia.sdt.series60.CAknAppUi.Orientation"
+				descriptionKey="orientationDescription" />	
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CAknAppUI_PropertyExtender_3.0.js" prototype="CAknAppUIpropertyExtender"/>
+			</implementation>
+		</implementations>
+		
+		<events>
+			&common_events;
+		</events>
+		
+		<designerImages smallIconFile="CAknAppUi_sm.png" 
+			largeIconFile="CAknAppUi.png"/>
+
+		<sourceMapping>
+			&common_srcmapping;
+
+			<!-- this reads the data from the context icon and title pane
+				components in the status pane -->
+			<mapResource struct="LOCALISABLE_APP_INFO" headers="appinfo.rh" baseName="r_localisable_app_info"
+				id="localisable_app_info">
+					
+				<mapSimpleMember property="[com.nokia.sdt.series60.StatusPane][com.nokia.sdt.series60.StatusPaneCaption].shortCaption" member="short_caption"/>
+				<mapResourceMember property="." member="caption_and_icon"
+						struct="CAPTION_AND_ICON_INFO">
+					<mapSimpleMember property="[com.nokia.sdt.series60.StatusPane][com.nokia.sdt.series60.StatusPaneCaption].longCaption" member="caption"/>
+					<select property="[com.nokia.sdt.series60.StatusPane][com.nokia.sdt.series60.StatusPaneContextAppIcon].image.bmpfile">
+						<choice value="">
+							<!-- either no icon or no image set -->
+							<mapFixedMember member="number_of_icons" value="0" />
+						</choice>
+						<choice>
+							<mapFixedMember member="number_of_icons" value="1" />
+							<mapSimpleMember property="[com.nokia.sdt.series60.StatusPane][com.nokia.sdt.series60.StatusPaneContextAppIcon].image.bmpfile" member="icon_file" />
+						</choice>
+					</select>
+				</mapResourceMember>
+		  </mapResource>
+			
+		</sourceMapping>
+		
+		<sourceGen>
+			&common_srcgen;
+		</sourceGen>		
+	</component>
+</componentDefinition>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Instantiating a Template: Implicit</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3> Explicit instantiation</h3>
+<p>To instantiate templates explicitly, include the template definition file in a source file, and write a template instantiation statement for every instantiation. The syntax for a class template instantiation is as follows:</p>
+<p class="listing"> template class class-name&lt;templ-specs&gt;;</p>
+<p>The syntax for a function template instantiation is as follows:</p>
+<p class="listing"> template return-type func-name&lt;templ-specs&gt;(arg-specs);</p>
+<p>Listing 1 shows how to explicitly instantiate the templates in Listing 3.9 and Listing 3.10.</p>
+<div class="listing">
+  <p>Listing 1. myinst.cp: Explicitly Instantiating Templates</p>
+  <p>#include &quot;templ.cp&quot;</p>
+  <p>template class Templ&lt;long&gt;; // class instantiation<br />
+    template long Max&lt;long&gt;(long,long); // function instantiation</p>
+</div>
+<p>When you explicitly instantiate a function, you do not need to include in templ-specs any arguments that the compiler can deduce from arg-specs. For example, in Listing 1 you can instantiate <span class="code">Max&lt;long&gt;()</span> like this:</p>
+<p class="listing">template long Max&lt;&gt;(long, long);<br />
+  // The compiler can tell from the arguments<br />
+// that you are instantiating Max&lt;long&gt;()</p>
+<p>Use explicit instantiation to make your program compile faster. Because the instantiations can be in one file with no other code, you can even put them in a separate library. </p>
+<p>The compiler also supports the explicit instantiation of non-template members. Listing 2 shows an example.</p>
+<div class="listing">
+  <h5>Listing 2. Explicit Instantiation of Non-Template Members</h5>
+  <p>template &lt;class T&gt; struct X { <br />
+    static T i;<br />
+    };</p>
+  <p>template &lt;class T&gt; T X&lt;T&gt;::i = 1;<br />
+    template char X&lt;char&gt;::i;</p>
+</div>
+<p class="note"><strong>NOTE</strong> Explicit instantiation is not in the ARM but is part of the ISO C++ standard.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

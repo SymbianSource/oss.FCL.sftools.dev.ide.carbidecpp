@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feedInfo>
+	<feeds>
+		<!-- forum nokia feeds -->
+		<feed>
+			<url>http://www.forum.nokia.com/feeds.html?file=recently_published.rss&amp;title=Forum+Nokia+-+Recent+Updates</url>
+			<type>news</type>
+			<subscribed>true</subscribed>
+		</feed>
+		<feed>
+			<url>http://www.forum.nokia.com/feeds.html?file=event_feed.rss&amp;title=Forum+Nokia+-+Upcoming+Events</url>
+			<type>news</type>
+			<subscribed>true</subscribed>
+		</feed>
+		<feed>
+			<url>http://blogs.forum.nokia.com/rss.php?summary=1&amp;profile=rss10</url>
+			<type>news</type>
+			<subscribed>true</subscribed>
+		</feed>
+	</feeds>
+</feedInfo>

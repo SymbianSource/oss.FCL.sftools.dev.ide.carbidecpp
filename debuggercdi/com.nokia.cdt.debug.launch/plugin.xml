@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+
+     <launchConfigurationType
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
+            name="Symbian OS Application"
+            delegate="com.nokia.cdt.internal.debug.launch.ContextLaunchDelegate"
+            modes="run,debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.contextLaunch">
+      </launchConfigurationType>
+
+      <launchConfigurationType
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
+            name="Symbian OS Emulation"
+            delegate="com.nokia.cdt.internal.debug.launch.EmulationLaunchDelegate"
+            modes="run,debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.emulationLaunch">
+      </launchConfigurationType>
+
+      <launchConfigurationType
+            name="Symbian OS Application TRK"
+            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
+            modes="run,debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.appTRKLaunch"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchConfigurationType>
+ 
+      <launchConfigurationType
+            name="Symbian OS System TRK"
+            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
+            modes="run,debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.systemTRKLaunch"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchConfigurationType>
+ 
+      <launchConfigurationType
+            name="Symbian OS Attach to Process"
+            delegate="com.nokia.cdt.internal.debug.launch.AttachLaunchDelegate"
+            modes="debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.attachLaunch"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchConfigurationType>
+    
+      <launchConfigurationType
+            name="Symbian OS Trace32"
+            delegate="com.nokia.cdt.internal.debug.launch.Trace32LaunchDelegate"
+            modes="debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.t32Launch"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchConfigurationType>
+      
+      <launchConfigurationType
+            name="Symbian OS Sophia"
+            delegate="com.nokia.cdt.internal.debug.launch.SophiaSTILaunchDelegate"
+            modes="debug"
+            public="true"
+            id="com.nokia.cdt.debug.launch.stiLaunch"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchConfigurationType>
+  
+   </extension>
+  <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.contextLaunch"
+            id="com.nokia.cdt.debug.launch.contextLaunchImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.emulationLaunch"
+            id="com.nokia.cdt.debug.launch.emulationLaunchImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.appTRKLaunch"
+            id="com.nokia.cdt.debug.launch.appTRKLaunchImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.systemTRKLaunch"
+            id="com.nokia.cdt.debug.launch.systemTRKLaunchImage">
+      </launchConfigurationTypeImage>
+
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.attachLaunch"
+            id="com.nokia.cdt.debug.launch.attachLaunchImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.t32Launch"
+            id="com.nokia.cdt.debug.launch.t32LaunchImage">
+      </launchConfigurationTypeImage>
+      
+      <launchConfigurationTypeImage
+            icon="icons/launch_config_file_16x16.png"
+            configTypeID="com.nokia.cdt.debug.launch.stiLaunch"
+            id="com.nokia.cdt.debug.launch.stiLaunchImage">
+      </launchConfigurationTypeImage>
+    </extension>
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.contextLaunch"
+            class="com.nokia.cdt.internal.debug.launch.ui.ContextConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.contextLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.emulationLaunch"
+            class="com.nokia.cdt.internal.debug.launch.ui.EmulationConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.emulationLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+ 
+    <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.appTRKLaunch"
+            class="com.nokia.cdt.internal.debug.launch.ui.AppTRKConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.appTRKLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+
+    <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.systemTRKLaunch"
+            class="com.nokia.cdt.internal.debug.launch.ui.SystemTRKConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.systemTRKLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+    
+    <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.attachLaunch"
+            class="com.nokia.cdt.internal.debug.launch.ui.AttachConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.attachLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+
+	<extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.t32Launch"
+            class="com.nokia.cdt.internal.debug.launch.ui.T32StopModeConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.t32LaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+    
+    <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.nokia.cdt.debug.launch.stiLaunch"
+            class="com.nokia.cdt.internal.debug.launch.ui.SophiaConfigurationTabGroup"
+            id="com.nokia.cdt.debug.launch.SophiaLaunchTabGroup">
+      </launchConfigurationTabGroup>
+    </extension>
+
+ 
+    <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="Symbian OS Application"
+            icon="icons/launch_config_file_16x16.png"
+            modes="run, debug"
+            class="com.nokia.cdt.internal.debug.launch.SymbianLaunchShortcut"
+            id="com.nokia.cdt.debug.launch.symbianCPPShortcut">
+         <contextualLaunch>
+           <enablement>
+             <with variable="selection">
+               <count value="1"/>
+               <iterate>
+				<and>
+                   <or>
+                     <instanceof value="org.eclipse.cdt.core.model.IBinary"/>
+                     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
+                     <instanceof value="com.nokia.cdt.debug.cw.symbian.ui.executables.Executable"/>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.cdt.launch.isExecutable"/>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.cdt.launch.isCProject"/>
+                     <and>
+                       <instanceof value="org.eclipse.ui.IFileEditorInput"/>
+                       <adapt type="org.eclipse.core.resources.IResource">
+                         <adapt type="org.eclipse.cdt.core.model.ICElement"/>
+                       </adapt>
+                     </and>
+                    <test
+                           forcePluginActivation="true"
+                           property="com.nokia.cdt.debug.launch.isCarbideProject"/>
+                   <test
+                           forcePluginActivation="true"
+                           property="com.nokia.cdt.debug.launch.isExecutable"/>
+                   </or>
+ 				</and>
+               </iterate>
+             </with>
+           </enablement>
+           <contextLabel
+         	  mode="run"
+         	  label="Run Symbian OS Application"/>
+  		   <contextLabel
+  		 	  mode="debug"
+  		 	  label="Debug Symbian OS Application"/>
+  		 </contextualLaunch>
+         <description
+             mode="run"
+             description="Runs a Symbian OS executable on either the emulator or a phone"/>
+          <description
+             mode="debug"
+             description="Debugs a Symbian OS executable on either the emulator or a phone"/>
+         <perspective
+               id="com.nokia.carbide.cpp.CarbideCppPerspective">
+         </perspective>
+         <perspective
+               id="org.eclipse.debug.ui.DebugPerspective">
+         </perspective>
+         <configurationType
+               id="com.nokia.cdt.debug.launch.contextLaunch">
+         </configurationType>
+      </shortcut>
+     </extension>
+   
+ <!-- Property testers -->
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+      		namespace="com.nokia.cdt.debug.launch"
+            properties="isExecutable, isCarbideProject"
+            type="org.eclipse.core.runtime.IAdaptable"
+            class="com.nokia.cdt.internal.debug.launch.SymbianProjectPropertyTester"
+            id="com.nokia.cdt.debug.launch.SymbianProjectPropertyTester">
+      </propertyTester>
+   </extension>
+ 
+	<!-- Adapters for contextual launch -->
+	<extension point="org.eclipse.core.runtime.adapters">
+          <factory 
+            class="" 
+            adaptableType="org.eclipse.cdt.core.model.ICProject">
+            <adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
+         </factory>
+    </extension>
+ 
+ 	<!-- Adapters for contextual launch -->
+	<extension point="org.eclipse.core.runtime.adapters">
+         <factory 
+            class="" 
+            adaptableType="com.nokia.cdt.debug.cw.symbian.ui.executables.Executable">
+            <adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
+         </factory>
+    </extension>
+ 
+   <!-- hack to make the traditional memory rendering the default.  we probaly
+   		need to keep it this way until CDT adopts this rendering as the default.
+   		see Eclipse bugzilla #146667 for more information. -->
+   <extension
+         point="org.eclipse.debug.ui.memoryRenderings">
+      <renderingBindings
+            defaultIds="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering"
+            primaryId="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering"
+            renderingIds="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering">
+         <enablement>
+            <instanceof value="org.eclipse.cdt.debug.internal.core.model.CMemoryBlockExtension"/>
+         </enablement>
+      </renderingBindings>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.startup">
+   </extension>
+
+   <extension-point id="launchWizardExtension" name="Launch Wizard Page" schema="schema/launchWizardExtension"/>
+
+</plugin>

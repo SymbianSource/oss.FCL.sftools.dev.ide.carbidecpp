@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Hover Help"
+	link_to="../com.nokia.carbide.cpp.doc.user/debuggerTOC.xml#anchorCarbideCPPMisc" >
+
+	<topic label="Hover Help Guide"  href="resources/help context/dl_hover/html/index.html" >
+        <topic href="resources/help context/dl_hover/html/getting_started.html"		label="Overview" /> 
+        <topic href="resources/help context/dl_hover/html/setup.html"  				label="Set Up" />
+        <topic href="resources/help context/dl_hover/html/preferences.html"  		label="Preferences" />
+	</topic>
+           
+</toc>

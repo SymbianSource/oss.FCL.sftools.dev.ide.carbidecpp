@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--START_USECASES: CU19 END_USECASES-->
+
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikFloatingPointEditor"
+			baseComponent="com.nokia.carbide.uiq.CQikNumericEditorBase"
+			instanceNameRoot="floatingPointEditor"
+			version="1.0"
+			category="%category.editors">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CQikFloatingPointEditor" classHelpTopic=""
+			resourceType="QIK_FLOATING_POINT_EDITOR" resourceHelpTopic=""/>				
+
+		<designerImages smallIconFile="CQikFloatingPointEditor_sm.png" 
+			largeIconFile="CQikFloatingPointEditor.png"/>		
+		
+		<attributes>
+			<attribute key="cpp-class-name">CQikFloatingPointEditor</attribute>
+			<attribute key="rss-control-type-enum">EQikCtFloatingPointEditor</attribute>					
+		</attributes>
+		
+		<properties>
+			<property name="maxlength" displayName="%maxlength" 
+				category="%category.data" 
+				type="integer" descriptionKey="maxLengthDescription"
+				default="18" minValue="3" maxValue="32" />
+			<property name="minimum" displayName="%minimum"
+				category="%category.data" 
+				type="float" descriptionKey="minimumDescription"
+				default="-9.9e99" minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"/>
+			<property name="maximum" displayName="%maximum"
+				category="%category.data" 
+				type="float" descriptionKey="maximumDescription"
+				default="9.9e99" minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"/>
+			<property name="value" displayName="%value" 
+				category="%category.data" 
+				type="float" descriptionKey="valueDescription"
+				default="0" minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"/>
+		</properties>
+
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true" category="Hidden"/>
+			<propertyOverride name="dimmed" readOnly="true" category="Hidden"/>
+		</propertyOverrides>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>				
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>				
+				<script file="CQikFloatingPointEditor.js" prototype="CQikFloatingPointEditor"/>
+			</implementation>
+		</implementations>	
+
+		<sourceMapping>
+			<mapResource struct="QIK_FLOATING_POINT_EDITOR" headers="qikon.rh">
+				<mapSimpleMember property="maxlength" member="maxlength" />
+				<mapSimpleMember property="minimum" member="min" />
+				<mapSimpleMember property="maximum" member="max" />			
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>		
+			
+			<!--Initialization-->				
+			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+								InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+								Headers="QikFloatingPointEditor.h"/>	
+								
+			<!--Initialize Phase-->	
+				<template id="INITIALIZE_PHASE" phase="InitializeControlHandlers"><![CDATA[
+if ( ${ instanceMemberName } != NULL )
+{
+	${instanceMemberName}->SetValueL( ${ instance.properties.value } );
+}
+]]>		        </template>	
+		</sourceGen>		
+			
+	</component>
+
+</componentDefinition>

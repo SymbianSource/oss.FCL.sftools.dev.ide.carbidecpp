@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Getting Alignment and Type Information at Compile Time</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Getting Alignment and Type Information at Compile Time</h3>
+<p>The C compiler has two built-in functions that return information about a data type&rsquo;s byte alignment and its data type.</p>
+<ul>
+  <li>The function call <span class="code">__builtin_align(typeID)</span> returns the byte alignment used for the data type <span class="code">typeID</span>. This value depends on the target platform for which the compiler is generating object code.</li>
+  <li> The function <span class="code">call __builtin_type(typeID)</span> returns an integral value that describes the data type <span class="code">typeID</span>. This value depends on the target platform for which the compiler is generating object code.<br />
+  </li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

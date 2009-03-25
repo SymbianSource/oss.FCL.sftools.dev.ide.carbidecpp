@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<!-- This component is the abstract base component for
+	     all Series 60 control components
+	 -->
+
+	<component 
+			qualifiedName="com.nokia.sdt.series60.CCoeControlBase" 
+			baseComponent="com.nokia.sdt.series60.ControlBase"
+			abstract="true"
+			version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<attributes>
+			<!-- redefine in actual control as name of C++ class to instantiate -->
+			<attribute key="cpp-class-name">CBase</attribute>
+		</attributes>
+		<events defaultEventName="stateChanged">
+		<!-- MCoeControlObserver events -->
+		<event name="prepareFocusTransition" category="Control" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}PrepareFocusTransitionL"
+			    descriptionKey="prepareFocusTransitionDescription"
+			/>
+		<event name="stateChanged" category="Control" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}StateChangedL"
+			    descriptionKey="stateChangedDescription"
+			/>
+		<event name="requestingExit" category="Control" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}RequestingExitL"
+			    descriptionKey="requestingExitDescription"
+			/>
+		<event name="requestingCancel" category="Control" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}RequestingCancelL"
+			    descriptionKey="requestingCancelDescription"
+			/>
+		<event name="requestingFocus" category="Control" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}RequestingFocusL"
+			    descriptionKey="requestingFocusDescription"
+			/>
+		<event name="interactionRefused" category="Control" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}InteractionRefusedL"
+			    descriptionKey="interactionRefusedDescription"
+			/>
+
+		<event name="editingStarted" category="Setting Item"
+				group="SettingsList"
+		 	   handlerNameTemplate="Handle{title(name)}EditingStartedL" 
+			    descriptionKey="editingStartedDescription"
+		    />
+		<event name="editingStopped"  category="Setting Item"
+				group="SettingsList"
+		  	  handlerNameTemplate="Handle{title(name)}EditingStoppedL" 
+			    descriptionKey="editingStoppedDescription"
+		    />
+
+		</events>
+
+		<implementations>		
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<script file="CCoeControlBase.js" prototype="CCoeControlBaseEventInfo"/>
+			</implementation>
+		</implementations>		
+		
+		
+		<sourceGen forms="Container Dialog Form SettingsList">
+			<template form="Container" phase="LayoutControls" id="LAYOUT_CONTROLS"><![CDATA[
+${instanceMemberName}->SetExtent( TPoint( ${properties.location.x}, ${properties.location.y} ), TSize( ${properties.size.width}, ${properties.size.height} ) );
+]]>			</template>
+
+			<inline scope="prototype"><![CDATA[
+include("../dataModelGenLibrary.js")
+
+${jsObject}.prototype.getCppSystemIncludes = function(contribs, headers) {
+	for (var h in headers) {
+		var contrib = Engine.createContributionForPhase("MainSystemIncludes");
+		contrib.setText("#include <" + headers[h] + ">\n");
+		contribs.add(contrib);
+	}
+}
+
+// override if necessary to provide a more dynamic idea of the class
+${jsObject}.prototype.getCppClassName = function(instance) {
+	return instance.component.attributes["cpp-class-name"];
+}
+]]>			</inline>
+
+			
+			<templateGroup id="CLASS_CONTRIBS" forms="Container Dialog Form">
+				<template id="0" phase="ForwardDeclarations">
+class ${this.getCppClassName(instance)};
+				</template>
+		
+				<template id="2" phase="InstanceVariables">
+${this.getCppClassName(instance)}* ${instanceMemberName};
+				</template>	
+
+				<template id="3" phase="Construct">
+${instanceMemberName} = NULL;
+				</template>
+				
+				<template id="1" form="Container" phase="Destroy">
+delete ${instanceMemberName};
+${instanceMemberName} = NULL;
+				</template>
+			
+			</templateGroup>
+
+			<template id="INIT_FROM_DIALOG" form="Dialog" phase="Initialize"><![CDATA[
+${instanceMemberName} = static_cast< ${this.getCppClassName(instance)}* >( 
+	ControlOrNull( ${Engine.findBuiltinOrGeneratedEnumeratorForAlgorithm(instance, ".", "com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID")} ) );
+]]>			</template>
+
+			<template id="INIT_FROM_CONTAINER" form="Container" phase="Initialize"><![CDATA[
+${instanceMemberName} = new ( ELeave ) ${this.getCppClassName(instance)};
+${instanceMemberName}->SetContainerWindowL( *this );
+	{
+	TResourceReader reader;
+	iEikonEnv->CreateResourceReaderLC( reader, ${resourceName$upper} );
+	${instanceMemberName}->ConstructFromResourceL( reader );
+	CleanupStack::PopAndDestroy(); // reader internal state
+	}
+]]>			</template>
+
+			<templateGroup id="CONTAINER_CHILD_CONTRIBS">
+			
+				<template id="0" form="HandleComponentSwitchDispatch" phase="ComponentControlBody">
+	case E${instanceName$title}:
+		return ${instanceMemberName};
+				</template>
+
+				<template id="1" form="HandleCCoeControlEnums" phase="ChildEnumsContents">
+E${instanceName$title},
+				</template>
+			
+			</templateGroup>
+
+			<inline scope="prototype"><![CDATA[
+/** Call this to initialize the setting item to its default value */
+${jsObject}.prototype.setupSettingItem = function(contribs, indent, instance, value) {
+	generateDataModelItemInitializer(contribs, indent, "Initialize", "SettingsList",
+			null, instance, value);
+}
+
+]]>			</inline>
+
+			<template id="INIT_FROM_SETTINGS_LIST" form="SettingsList" location="CREATESETTINGITEML_BODY_SWITCH"><![CDATA[
+<%			var enumName = Engine.findBuiltinOrGeneratedEnumeratorForAlgorithm(
+				instance, ".", "com.nokia.sdt.component.symbian.NAME_ALG_SETTING_ITEM_ID"); 
+			var getterName = getDataModelGetterMethodName(instance); 
+			var constructorPattern = instance.component.attributes["setting-item-constructor-pattern"];
+			if (!constructorPattern)
+				constructorPattern = "{0},\\\\n{1}";
+			constructorPattern = "\\\\n" + constructorPattern;
+			// replace any newlines with 4 indents (note: not using escapes since it's goofy)
+			r = new RegExp(String.fromCharCode(0x5c)+String.fromCharCode(0x5c)+"n", "g");
+			constructorPattern = constructorPattern.replace(r,
+				String.fromCharCode(10)+"				");
+			//println("constructorPattern="+constructorPattern);
+			var constructorArgs = formatString(constructorPattern, "aId", "iSettings." + getterName + "()");
+			var settingClassName = instance.component.attributes["setting-item-class-name"];
+%>	case ${enumName}:
+		{			
+		${settingClassName}* item = new ( ELeave ) 
+			${settingClassName}( ${constructorArgs} );
+<% if (properties.itemHidden) {  
+%>		item->SetHidden( ETrue ); 
+<% } %>		return item;
+		}
+]]>			</template>
+
+
+<!-- sourcegen common to MCoeControlObserver events -->
+	<templateGroup id="GenerateCommonControlEvents" 
+			ifEvents="stateChanged requestingExit requestingFocus requestingCancel interactionRefused">
+	
+		<template id="EventIncludes" form="Container" phase="HeaderIncludes"><![CDATA[
+#include <coecobs.h>
+]]>		</template>
+		
+		<template id="BaseClass" form="Container" phase="BaseClassList">,MCoeControlObserver</template>
+	
+		<defineLocation id="ControlEventClassDecls" baseLocation="CLASS"
+				owned="false" 
+				location="region(MCoeControlObserver support)">
+			<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+typedef void ( ${handlerClassName}::*ControlEventHandler )( 
+		CCoeControl* aControl, TCoeEvent anEvent );
+
+void AddControlEventHandlerL( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent, 
+		ControlEventHandler aHandler );
+
+class TControlEventDispatch 
+	{
+public: 
+	CCoeControl* src; 
+	TCoeEvent event; 
+	ControlEventHandler handler;
+	};
+	
+RArray< TControlEventDispatch > iControlEventDispatch;
+]]>			</template>
+		</defineLocation>
+
+		<template id="RealizeControlEventClassDecls" location="ControlEventClassDecls"/>
+						
+		<template id="HandleControlEventOverride" phase="OverriddenMethods"><![CDATA[
+void HandleControlEventL( 
+		CCoeControl* aControl, 
+		TCoeEvent anEventType );
+]]>		</template>
+
+		<defineLocation id="HandleControlEventOverride_Method" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::HandleControlEventL(CCoeControl*, TCoeEvent))">
+				<template><![CDATA[
+/** 
+ * Override of the HandleControlEventL virtual function
+ */
+void ${handlerClassName}::HandleControlEventL( 
+		CCoeControl* aControl, 
+		TCoeEvent anEventType )
+	{<%  var handlerInstance = lookupInstanceByName(handlerInstanceName);
+	     var handlerBase = handlerInstance.attributes["base-control-observer-class"];
+	     if (handlerBase) { %>
+	${handlerBase}::HandleControlEventL( aControl, anEventType );
+<% } %>
+	for (int i = 0; i < iControlEventDispatch.Count(); i++)
+		{
+		const TControlEventDispatch& currEntry = iControlEventDispatch[i];
+		if ( currEntry.src == aControl && currEntry.event == anEventType )
+			{
+			( this->*currEntry.handler )( aControl, anEventType );
+			break;
+			}
+		}
+	}
+]]>				</template>
+		</defineLocation>
+			
+		<template id="RealizeControlEventOverride_Method" location="HandleControlEventOverride_Method"/>
+				
+		<defineLocation id="RegisterControlHelperMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::AddControlEventHandlerL(CCoeControl*, TCoeEvent, ControlEventHandler))">
+				<template><![CDATA[
+/** 
+ * Helper function to register MCoeControlObserver event handlers
+ */
+void ${handlerClassName}::AddControlEventHandlerL( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent, 
+		ControlEventHandler aHandler )
+	{
+	TControlEventDispatch entry;
+	entry.src = aControl;
+	entry.event = anEvent;
+	entry.handler = aHandler;
+	TInt err = iControlEventDispatch.Append( entry );
+	User::LeaveIfError( err );
+	}
+]]>			
+			</template>
+		</defineLocation>
+		
+		<template id="RealizeRegisterHelperMethod" location="RegisterControlHelperMethod"/>
+			
+		<template id="DispatchArrayDestroy" phase="Destroy"><![CDATA[
+iControlEventDispatch.Close();		
+]]>		</template>
+
+		<template id="SetObserver" form="Container" phase="Initialize"><![CDATA[
+${instanceMemberName}->SetObserver( this );
+]]>		</template>
+	</templateGroup>
+
+<!-- BEGIN EVENT stateChanged -->
+			<templateGroup id="GenerateStateChangedEvent" ifEvents="stateChanged">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddControlEventHandlerL( 
+		${instanceMemberName}, 
+		EEventStateChanged, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="StateChangedHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CCoeControl*,TCoeEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventStateChanged event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CCoeControl* /* aControl */, 
+		TCoeEvent /* anEvent */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="StateChangedHandler"/>
+			</templateGroup>
+<!-- END EVENT stateChanged -->
+
+<!-- BEGIN EVENT prepareFocusTransition -->
+			<templateGroup id="GeneratePrepareFocusTransitionEvent" ifEvents="prepareFocusTransition">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddControlEventHandlerL( 
+		${instanceMemberName}, 
+		EEventPrepareFocusTransition, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="PrepareFocusTransitionHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CCoeControl*,TCoeEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventPrepareFocusTransition event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CCoeControl* /* aControl */, 
+		TCoeEvent /* anEvent */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="PrepareFocusTransitionHandler"/>
+			</templateGroup>
+<!-- END EVENT prepareFocusTransition -->
+
+<!-- BEGIN EVENT requestingExit -->
+			<templateGroup id="GenerateRequestingExitEvent" ifEvents="requestingExit">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddControlEventHandlerL( 
+		${instanceMemberName}, 
+		EEventRequestExit, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="RequestingExitHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CCoeControl*,TCoeEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventRequestExit event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CCoeControl* /* aControl */, 
+		TCoeEvent /* anEvent */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="RequestingExitHandler"/>
+			</templateGroup>
+<!-- END EVENT requestingExit -->
+
+<!-- BEGIN EVENT requestingFocus -->
+			<templateGroup id="GenerateRequestingFocusEvent" ifEvents="requestingFocus">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddControlEventHandlerL( 
+		${instanceMemberName}, 
+		EEventRequestFocus, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="RequestingFocusHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CCoeControl*,TCoeEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventRequestFocus event.
+ */
+void ${handlerClassName}::${event.handlerName}( CCoeControl* /* aControl */, TCoeEvent /* anEvent */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="RequestingFocusHandler"/>
+			</templateGroup>
+<!-- END EVENT requestingFocus -->
+
+<!-- BEGIN EVENT requestingCancel -->
+			<templateGroup id="GenerateRequestingCancelEvent" ifEvents="requestingCancel">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddControlEventHandlerL( 
+		${instanceMemberName}, 
+		EEventRequestCancel, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="RequestingCancelHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CCoeControl*,TCoeEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventRequestCancel event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CCoeControl* /* aControl */, 
+		TCoeEvent /* anEvent */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="RequestingCancelHandler"/>
+			</templateGroup>
+<!-- END EVENT requestingCancel -->
+
+<!-- BEGIN EVENT interactionRefused -->
+			<templateGroup id="GenerateInteractionRefusedEvent" ifEvents="interactionRefused">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CCoeControl* aControl, 
+		TCoeEvent anEvent );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddControlEventHandlerL( 
+		${instanceMemberName}, 
+		EEventInteractionRefused, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="InteractionRefusedHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CCoeControl*,TCoeEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventInteractionRefused event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CCoeControl* /* aControl */, 
+		TCoeEvent /* anEvent */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="InteractionRefusedHandler"/>
+			</templateGroup>
+<!-- END EVENT interactionRefused -->
+
+<!-- BEGIN EVENT editingStarted (Settings Item List only) -->
+			<templateGroup id="GenerateEditingStartedEvent" ifEvents="editingStarted">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CAknSettingItem* /*aIndex*/, 
+		TBool /*aCalledFromMenu*/ );
+]]>				</template>
+
+				<template id="InvokeHandler" location="EDITITEML_STARTED_STUB">
+	case ${Engine.findBuiltinOrGeneratedEnumeratorForAlgorithm(instance, ".", "com.nokia.sdt.component.symbian.NAME_ALG_SETTING_ITEM_ID")}:
+		${event.handlerName}( 
+			item, 
+			aCalledFromMenu );
+		break;
+				</template>
+				
+				<defineLocation id="EditingStartedHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CAknSettingItem*,TBool))">
+					<template><![CDATA[
+/** 
+ * Handle the Editing Started event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CAknSettingItem* /*aItem*/, 
+		TBool /*aCalledFromMenu*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="EditingStartedHandler"/>
+			</templateGroup>
+<!-- END EVENT editingStarted -->
+
+<!-- BEGIN EVENT editingStopped (Settings Item List only) -->
+			<templateGroup id="GenerateEditingStoppedEvent" ifEvents="editingStopped">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+TBool ${event.handlerName}( 
+		CAknSettingItem* /*aIndex*/, 
+		TBool /*aCalledFromMenu*/ );
+]]>				</template>
+
+				<template id="InvokeHandler" location="EDITITEML_STOPPED_STUB">
+	case ${Engine.findBuiltinOrGeneratedEnumeratorForAlgorithm(instance, ".", "com.nokia.sdt.component.symbian.NAME_ALG_SETTING_ITEM_ID")}:
+		storeValue = ${event.handlerName}( 
+			item, 
+			aCalledFromMenu );
+		break;
+				</template>
+				
+				<defineLocation id="EditingStoppedHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CAknSettingItem*,TBool))">
+					<template><![CDATA[
+/** 
+ * Handle the Editing Stopped event.
+ *
+ * The embedded editor contains the updated setting value.  If this routine
+ * returns ETrue, that value will be committed via aItem->StoreL().
+ * <p>
+ * Note that returning EFalse has no effect on the editor control, only 
+ * on the iSettings store.  It is not possible to revert the editor's 
+ * value automatically here (use editingStarted and editingStopped together 
+ * to coordinate storing/restoring if necessary).
+ * @return ETrue to store the value to the settings store
+ */
+TBool ${handlerClassName}::${event.handlerName}( 
+		CAknSettingItem* /*aItem*/, 
+		TBool /*aCalledFromMenu*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return ETrue;
+	}
+]]>
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="EditingStoppedHandler"/>
+			</templateGroup>
+<!-- END EVENT editingStopped -->
+
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

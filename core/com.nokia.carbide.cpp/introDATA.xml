@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extensions>
+   <page id="migrate">
+      <group path="page-content/bottom-left" default="true">
+      </group>
+      <group path="page-content/bottom-right" default="true">
+      </group>
+      <group path="page-content/top-left">
+         <extension id="com.nokia.carbide.cpp-migrate" importance="low"/>
+      </group>
+      <group path="page-content/top-right">
+         <extension id="com.nokia.carbide.cpp.doc.user-migrate" importance="low"/>
+      </group>
+   </page>
+   <page id="webresources">
+      <group path="page-content/bottom-left" default="true">
+      </group>
+      <group path="page-content/bottom-right" default="true">
+      </group>
+      <group path="page-content/top-left">
+         <extension id="com.nokia.carbide.cpp-webresources" importance="low"/>
+      </group>
+      <group path="page-content/top-right">
+         <extension id="com.nokia.carbide.cpp-partners" importance="low"/>
+      </group>
+   </page>
+   <page id="tutorials">
+      <group path="page-content/bottom-left" default="true">
+      </group>
+      <group path="page-content/bottom-right" default="true">
+      </group>
+      <group path="page-content/top-left">
+         <extension id="com.nokia.carbide.cpp.doc.user-tutorials" importance="low"/>
+      </group>
+      <group path="page-content/top-right">
+         <extension id="com.nokia.carbide.cpp.uidesigner.doc.user-tutorials" importance="low"/>
+         <extension id="com.nokia.carbide.cpp.doc.user-ngage" importance="low"/>
+      </group>
+      <hidden>         
+		 <extension id="orgeclipsecdtdocuserwelcome-introExtension" importance="low"/>
+         <extension id="org.eclipse.pde" importance="low"/>
+         <extension id="org.eclipse.jdt" importance="low"/>
+         <extension id="org.eclipse.team" importance="low"/>
+      </hidden>
+   </page>
+   <page id="whatsnew">
+      <group path="page-content/bottom-left" default="true">
+      </group>
+      <group path="page-content/bottom-right" default="true">
+      </group>
+      <group path="page-content/top-left">
+         <extension id="com.nokia.carbide.cpp.doc.user-whatsnew" importance="low"/>
+         <extension id="com.nokia.carbide.cpp.uidesigner.doc.user-whatsnew" importance="low"/>
+         <extension id="com.nokia.carbide.cpp.pi.doc.user-whatsnew" importance="low"/>
+      </group>
+      <group path="page-content/top-right">
+         <extension id="com.nokia.carbide.cpp.codescanner-whatsnew" importance="low"/>
+         <extension id="com.nokia.s60tools.appdep.help-whatsnew" importance="low"/>
+         <extension id="com.nokia.carbide.epocwindDisplay-whatsnew" importance="low"/>
+         <extension id="com.nokia.carbide.CapScanner-whatsnew" importance="low"/>
+      </group>
+      <hidden>         <extension id="orgeclipsecdtdocuserwelcome-introExtension" importance="low"/>
+         <extension id="org.eclipse.ui.workbench.news" importance="low"/>
+         <extension id="org.eclipse.pde.changes" importance="low"/>
+         <extension id="org.eclipse.ui.workbench" importance="low"/>
+         <extension id="org.eclipse.jdt" importance="low"/>
+         <extension id="org.eclipse.ui.workbench.migration" importance="low"/>
+      </hidden>
+   </page>
+   <page id="overview">
+      <group path="page-content/bottom-left" default="true">
+      </group>
+      <group path="page-content/bottom-right" default="true">
+      </group>
+      <group path="page-content/top-left">
+         <extension id="com.nokia.carbide.cpp-overview" importance="low"/>
+         <extension id="com.nokia.carbide.cpp.uidesigner.doc.user-overview" importance="low"/>
+         <extension id="com.nokia.carbide.cpp.pi.doc.user-overview" importance="low"/>
+      </group>
+      <group path="page-content/top-right">
+         <extension id="com.nokia.carbide.cpp.codescanner-overview" importance="low"/>
+         <extension id="com.nokia.s60tools.appdep.help-overview" importance="low"/>
+         <extension id="com.nokia.carbide.epocwindDisplay-overview" importance="low"/>
+         <extension id="com.nokia.carbide.CapScanner-overview" importance="low"/>
+      </group>
+      <hidden>         <extension id="org.eclipse.pde" importance="low"/>
+         <extension id="orgeclipsecdtdocuserwelcome-introExtension" importance="low"/>
+         <extension id="org.eclipse.jdt" importance="low"/>
+         <extension id="org.eclipse.ui.workbench" importance="low"/>
+      </hidden>∑
+   </page>
+</extensions>

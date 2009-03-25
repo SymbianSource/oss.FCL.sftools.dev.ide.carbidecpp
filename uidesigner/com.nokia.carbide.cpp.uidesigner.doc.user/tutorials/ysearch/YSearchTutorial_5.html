@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Yahoo! Image Search</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</head>
+<body LANG="en-US" DIR="LTR">
+<h2>Tutorial: Yahoo! Image Search</h2>
+<p>This example shows how to use the Carbide.c++ UI Designer for S60 to 
+define the UI of an application and to implement the "real work" in the 
+generated code. </p>
+<p>The application consists of two screens. The main screen prompts the user to to initiate a search and 
+displays the list of search results. The second screen displays the Yahoo! provided thumbnail image of
+the selected result.
+</p>
+<p>Choose a link to read the following topics:</p>
+<ul>
+  <li><a href="YSearchTutorial_1.html">Getting the Yahoo! Image Search project</a>
+  </li>
+  <li><a href="YSearchTutorial_2.html">Application overview</a>
+  </li>
+  <li><a href="YSearchTutorial_3.html">Using the S60 UI Designer to create the UI</a>
+  </li>
+  <li><a href="YSearchTutorial_4.html">Using the WebClient component to retrieve XML data</a>
+  </li>
+  <li>Adding application logic part 1: perform search query and populate results
+  </li>
+  <li><a href="YSearchTutorial_6.html">Adding application logic part 2: download and display selected image</a>
+  </li>
+</ul>
+<h3><font size="4">Editing generated source to provide application logic</font></h3>
+So far, we've introduced:
+<ul>
+<li>The search results view that initiates the search process, owns the list box and the
+non-layout components.
+</li>
+<li>The image container view that displays the selected thumbnail image</li>
+<li>The web client object that handles the search request to Yahoo! via HTTP GET
+</li>
+<li>The CYahooSearchModel object that parses the results and builds an array of search results
+</li>
+</ul>
+<p>
+The diagram below shows, in simplified form, the activity involved in performing an image search.
+</p>
+<div align="center">
+  <p><img src="ysearch_activity.jpg">
+</p>
+  <p class="figure">Figure 1 - Activities performe during an image search </p>
+</div>
+<p>Next we'll look at how this behavior is accomplished in Carbide.c++.
+</p>
+<ul>
+<li>The searchPrompt object is the data query object used to prompt the user for the
+search string. The UI Designer generates the RunSearchPromptL() method which invokes the query.
+</li>
+<li>An event handler named HandleNew_searchMenuItemSelectedL() has been bound to the
+"New Search" menu item's event handler. The code in this method invokes the searchPrompt
+query. It invokes the UI Designer-generated method IssueHTTPGetL() method. A dynamic URL
+is used because the search text must be included in the URL.
+</li>
+<li>The wait dialog is handled with the webClient's automatic wait dialog handling.
+When its 'wait dialog' property is set, the wait dialog will be shown and removed automatically. 
+Note that the property editor can create a wait dialog on the fly.
+</li>
+<li>The webClient object will repeatedly send fire the bodyReceived event when text
+is available. The event is handled in the HandleWebClientBodyReceivedL() method. Note that
+this method is set up to handle two cases: a search query, or reading image data. In the case
+of a search query, the data is passed to the CYahooSearchModel object, which accumulates
+incoming data into a buffer.
+</li>
+<li>Upon successful completion the transactionSucceeded event is handled in the
+HandleWebClientTransactionSucceededL() method. This method tells the search model to parse
+the results and invokes the view's PopulateSearchResultsL() method.
+</li>
+<li>The PopulateSearchResultsL() method requests image information from CYahooSearchModel.
+It populates the list box with an entry for each search result, showing the name and URL of each image.
+</li>
+</ul>
+<p>On the next page we will show how the image is downloaded and displayed.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

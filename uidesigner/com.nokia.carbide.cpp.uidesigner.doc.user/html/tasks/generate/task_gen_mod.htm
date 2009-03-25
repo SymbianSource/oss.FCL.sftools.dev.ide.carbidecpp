@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Modifying Generated Files</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Modifying Generated Files</h2>
+
+<p>Generated files may be fully or partially owned by the UI Designer.</p>
+<p>The parts of a generated file which are fully owned by the UI Designer should not be edited as long as you plan to continue performing updates to the UI Design. These sections are  bounded with a &quot;do not modify&quot; label.</p>
+<p>Other parts of the generated files may be partially implemented but require you to add code to complete their function. These sections contain a &quot;TODO&quot; label which describes the functionality which you must provide.</p>
+<div class="step">
+  <h4 align="left">Modifying Generated Files</h4>
+  <ol>
+    <li>Open your project and display its contents in the Project Explorer view </li>
+	<li>Right-click the file you  wish to modify.</li>
+	<p>The C/C++ Projects context menu will appear.</p>
+	<li>Select the Open option from the context menu.</li>
+	<p>The selected file will be opened in the appropriate editor. </p>
+	<p class="note"><b>NOTE</b> In place of steps 2 and 3, you can simply double-click the file to open it. </p>
+	<li>Look for sections of the file which are owned by the UI Designer.</li>
+	<p>These sections are bounded by comments which indicate the beginning and end of the owned code.</p>
+	<p>Example:</p>
+	<p class="code">void CNewTestAppUi::ConstructL()<br />
+{<br />
+// [[[ begin generated region: do not modify [Generated Contents]<br />
+BaseConstructL( EAknEnableSkin );<br />
+InitializeContainersL();<br />
+<br />
+// ]]] end generated region [Generated Contents]<br />
+<br />
+}	</p>
+	<p class="note"><b>NOTE</b> The UI Designer will implement the basic functionality of many of the standard class methods. You may add code to methods either before or after the owned regions to perform additional processing within those methods.</p>
+	<li>Look for sections of the file which you must complete.</li>
+	<p>Sections of code which require you to implement their functionality will contain a "TODO" marker.</p>
+	<p>Example:</p>
+	<p class="code">TBool CNewTestForm::SaveFormDataL()<br />
+{<br />
+// TODO save values<br />
+return ETrue;<br />
+}</p>
+	<li>Implement the code for the TODO sections.</li>
+	<li>Edit other sections of the file which are not owned by the UI Designer.</li>
+	<li>When you have finished modifying the file contents, close the file using the standard method for that file type.</li>
+  </ol>
+</div>
+
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_generated_code.htm">Generated Code</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/views/ref_generated_files.htm">Generated Files</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>thread_safe_init</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+    </head>
+
+<body>
+<h3>thread_safe_init</h3>
+<p>  Controls the addition of extra code in the binary to ensure that multiple threads cannot enter a static local initialization at the same time.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma thread_safe_init on | off | reset</p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+<p>When C++ programs use static local initializations, like this:</p>
+  <p class="listing">int func() {<br />
+    static int countdown = 20;<br />
+    return countdown--;<br />
+    }</p>
+  <p>the static locals are initialized the first time the function is executed. As such, if multiple threads are running at the same time, and two of them happen to enter the function at the same time, there will be contention over which one initializes the variable.</p>
+  <p>When this pragma is on, the compiler inserts a mutex around the initialization to avoid this problem as shown below:</p>
+  <p class="note"><strong>NOTE</strong> This requires runtime support which may not be implemented on all platforms, due to the possible need for operating system support.</p>
+  <p class="listing">#pragma thread_safe_init on<br />
+    void thread_heavy_func()<br />
+    {<br />
+    // multiple routines cannot enter at the same time<br />
+    static std::string localstring = thread_unsafe_func();<br />
+}</p>
+  <p class="note"><strong>NOTE</strong> When an exception is thrown from a static local initializer, the initializer is retried by the next client that enters the scope of the local.</p>
+  <p>This pragma does not correspond to any panel setting. The default setting is <span class="code">off</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

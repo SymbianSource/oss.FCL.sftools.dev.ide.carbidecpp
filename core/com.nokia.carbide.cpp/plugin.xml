@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="diagnosticLogGroup" name="diagnosticLogGroup" schema="schema/diagnosticLogGroup.exsd"/>
+   <extension-point id="diagnosticLog" name="diagnosticLog" schema="schema/diagnosticLog.exsd"/>
+<extension
+      point="org.eclipse.core.runtime.products"
+      id="product">
+      
+	<product 
+		name="Carbide.c++" 
+		application="org.eclipse.ui.ide.workbench" 
+		description="%productBlurb"> 
+		
+		<property 
+			name="windowImages" 
+			value="icons/Carbide_c_icon_16x16.png,icons/Carbide_c_icon_32x32.png,icons/Carbide_c_icon_48x48.png"/> 
+		<property 
+			name="aboutImage" 
+			value="icons/about.png"/> 
+		<property 
+			name="aboutTextImage" 
+			value="icons/aboutTextImage.png"/>       
+		<property 
+			name="aboutText" 
+			value="%productBlurb"/> 
+		<property 
+			name="appName" 
+			value="Carbide.c++"/>
+		<property 
+			name="versionText" 
+			value="Version 2.0.3"/>
+		<property 
+			name="preferenceCustomization" 
+			value="plugin_customization.ini"/>
+		<property
+			  name="featureImage"
+			  value="icons/Carbide_c_icon_32x32.png"/> 
+		
+		<!-- Product attributes that support themes and universal intro -->
+		<property
+			name="introTitle"
+			value="Carbide.c++ v2.0.3 for Symbian"/>
+		<property
+			name="introBrandingImage"
+			value="product:themes/carbide/graphics/root/brandmark.gif"/>
+		<property
+			name="introBrandingImageText"
+			value="Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved."/>
+		<property
+			name="introDescription-overview"
+			value="Carbide.c++ provides C/C++ developer tools for creating programs that operate on the Symbian OS. Carbide.c++ is based on Eclipse - an open extensible IDE for anything and nothing in particular."/>
+		<property
+			name="introDescription-firststeps"
+			value="First steps information available."/>
+		<property
+			name="introDescription-tutorials"
+			value="Tutorials included with this release..."/>
+		<property
+			name="introDescription-samples"
+			value="Sample programs included with this release..."/>
+		<property
+			name="introDescription-whatsnew"
+			value="This release of Carbide.c++ provides a host of new features and bug fixes. Learn more about Carbide.c++ and its many useful developer features using the links below."/>
+		<property
+			name="introDescription-migrate"
+			value="Migration information available."/>
+		<property
+			name="introDescription-webresources"
+			value="The following web resources provide information and guidance on creating Symbian OS progams using Carbide.c++"/>
+		
+		<!-- Splash screen attributes -->
+		<property 
+			name="startupProgressRect" 
+			value="0,244,469,21" /> 
+		<property 
+			name="startupForegroundColor" 
+			value="777777" />
+		<property 
+			name="startupMessageRect" 
+			value="12,180,441,15" /> 
+	</product> 
+
+   </extension>
+
+  <extension  
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            id="com.nokia.carbide.cpp.intro"
+            icon="icons/Carbide_c_icon_16x16.png">
+      </intro>
+      <introProductBinding
+            introId="org.eclipse.ui.intro.universal"
+            productId="com.nokia.carbide.cpp.product">
+      </introProductBinding>
+   </extension>
+
+<extension   
+	id="intro"
+	point="org.eclipse.ui.intro.config">
+	<config
+		introId="com.nokia.carbide.cpp.intro"
+		id="com.nokia.carbide.cpp.introConfig"
+		content="intro/introContent.xml">
+	<presentation
+		home-page-id="root" standby-page-id="standby">
+			<implementation
+ 				ws="win32"
+                style="$theme$/html/shared.css"
+				kind="html"
+				os="win32">
+			</implementation>
+			<implementation
+				kind="swt">
+			</implementation>
+			<launchBar
+               	location="fastview" 
+            	bg="$launchbarBackground$"
+            	computed="true" >
+			</launchBar>
+	</presentation>
+	</config>
+</extension>  
+
+<!-- =================================================================================== -->
+<!-- Universal intro extensions to show content in welcome pages                         -->
+<!-- =================================================================================== -->
+	<extension
+		point="org.eclipse.ui.intro.configExtension">
+		
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="html/intro/overviewExtensionContent.xml" />
+		<!--
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="html/intro/whatsnewExtensionContent.xml" />
+		-->
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="html/intro/webresourcesExtensionContent.xml" />
+
+		<configExtension
+			configId="org.eclipse.ui.intro.universalConfig"
+			content="html/intro/webresourcesExtensionContent2.xml" />
+
+		<configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+			content="html/intro/migrateExtensionContent.xml" /> 
+			
+	</extension>
+
+<!-- =================================================================================== -->
+<!-- Action sets                                 										 -->
+<!-- =================================================================================== -->
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="com.nokia.carbide.cpp.displayReleaseNotes"
+            label="Carbide.c++ Release Notes"
+            visible="true">
+         <action
+               class="com.nokia.carbide.cpp.actions.DisplayReleaseNotesAction"
+               id="com.nokia.carbide.cpp.displayReleaseNotes"
+               label="Carbide.c++ &amp;Release Notes"
+               menubarPath="help/groupHelp"
+               style="push"
+               tooltip="Launches the Help system at the Carbide.c++ Release Notes topic"/>
+      </actionSet>
+   </extension>
+
+<!-- =================================================================================== -->
+<!-- Cheatsheet category that support Carbide Tools                                      -->
+<!-- =================================================================================== -->
+	<extension
+		  point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+	   <category
+			 id="com.nokia.carbide.cpp.tools.cheatsheets"
+			 name="Carbide.c++ Tools">
+	   </category>
+	</extension>
+	
+<!-- =================================================================================== -->
+<!-- NOKIA TOP-LEVEL TOC                                                                 -->
+<!-- =================================================================================== -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="nokiaTOC.xml"
+            primary="true"/>      
+      <toc
+            file="html/tocCarbide.xml"
+            primary="false"/>      
+    </extension>
+	
+<!-- =================================================================================== -->
+<!-- CONTEXT IDs for CONTEXTUAL HELP in windows, dialogs, and views                      -->
+<!-- =================================================================================== -->
+	<extension point="org.eclipse.help.contexts" >
+       <!-- ECLIPSE NEW/IMPORT/EXPORT WIZARDS and PREF PANELS HELP  -->
+       <contexts file="html/context_help/org_eclipse_ui.xml"
+       		plugin="org.eclipse.ui" />
+	</extension>
+	
+<!-- =================================================================================== -->
+<!-- Index extension                                                                     -->
+<!-- =================================================================================== -->
+	<extension point="org.eclipse.help.index">
+		<index file="html/index.xml"/>
+	</extension>
+<!-- =================================================================================== -->
+<!-- CARBIDE KEY SHORTCUT EXTENSIONS                                                     -->
+<!-- win32:  M1=CTRL,    M2=SHIFT, M3=ALT, M4=-                                          -->
+<!-- carbon: M1=COMMAND, M2=SHIFT, M3=ALT, M4=CTRL                                       -->
+<!-- =================================================================================== -->
+   <extension
+         point="org.eclipse.ui.bindings">
+      <scheme
+            id="com.nokia.carbide.cpp.carbidedefault"
+			parentId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            name="Carbide.c++"/>
+      <scheme
+            id="com.nokia.carbide.cpp.codewarrior"
+			parentId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            name="Nokia CodeWarrior"/>
+
+<!-- =================================================================================== -->
+<!-- CARBIDE KEY SHORTCUTS                                                               -->
+<!-- =================================================================================== -->
+		<key
+            sequence="M1+M3+C"
+            contextId="org.eclipse.ui.globalScope"
+            commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
+            schemeId="com.nokia.carbide.cpp.carbidedefault"/>
+		<key
+            commandId="com.nokia.carbide.cpp.buildProject"
+            sequence="M1+B"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+		<key
+            commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTarget"
+            sequence="M1+M3+B"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+        <key
+            commandId="com.nokia.carbide.cpp.builder.utils.commands.buildAllConfigs"
+            sequence="M1+M3+A"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+        <key
+            commandId="org.eclipse.ui.project.cleanAction"
+            sequence="M1+M2+-"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+        <key
+            commandId="com.nokia.carbide.cpp.builder.utils.commands.cleanSymbianComponent"
+            sequence="M1+M3+X"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+
+        <key
+            commandId="com.nokia.carbide.cpp.builder.utils.commands.buildSymbianComponent"
+            sequence="M1+M3+P"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+
+        <key
+            commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeSymbianComponent"
+            sequence="M1+M3+F"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+
+		<!-- Add Bookmark bug#4203  -->
+		<key
+            sequence="M1+F2" 
+            commandId="org.eclipse.ui.edit.addBookmark"
+            schemeId="com.nokia.carbide.cpp.carbidedefault" />
+		
+	   
+<!-- =================================================================================== -->
+<!-- MICROSOFT VISUAL STUDIO KEY SHORTCUTS                                               -->
+<!-- =================================================================================== -->
+<!-- Note : most of the Visual Studio key shortcuts have been integrated into CDT 5.0    -->
+		<!-- Project Keys -->
+		<!-- MSVS BuildSolution -->
+		<key
+			sequence="F7"
+			commandId="com.nokia.carbide.cpp.buildProject"
+			schemeId="org.eclipse.cdt.ui.visualstudio"/>	
+		<key
+			sequence="M1+F7"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
+			schemeId="org.eclipse.cdt.ui.visualstudio"/>
+
+
+<!-- =================================================================================== -->
+<!-- NOKIA CODEWARRIOR KEY SHORTCUTS                                                     -->
+<!-- =================================================================================== -->
+		<!-- C/C++ Source Keys -->
+	    <!-- CW Find Definition -->
+		<key
+			sequence="M1+'"
+			commandId="org.eclipse.cdt.ui.edit.opendef"
+			contextId="org.eclipse.cdt.ui.cEditorScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- Edit Keys -->
+
+	   	<!-- CW Replace -->
+		<key
+			sequence="M1+H"
+			commandId="org.eclipse.ui.edit.findReplace"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+	   	<!-- CW Undo -->
+		<key
+			commandId="org.eclipse.ui.edit.undo"
+			sequence="M1+BS"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+	   	<!-- File Keys -->
+		<!-- Help Keys -->
+		<!-- MakeFile Source Keys -->
+		<!-- Navigate Keys -->
+	   
+		<!-- Project Keys -->
+		<!-- CW Make -->
+ 		<key
+			sequence="F7"
+			commandId="com.nokia.carbide.cpp.buildProject"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+		<!-- CW Remove Object Code (Clean) -->	
+		<key
+			sequence="M1+-"
+			commandId="org.eclipse.ui.project.cleanAction"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>	
+		<!-- CW Compile -->
+ 		<key
+			sequence="M1+F7"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>		   
+		<!-- CW New -->
+		<key
+			sequence="M1+M2+N"
+			commandId="org.eclipse.ui.newWizard"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- Run/Debug Keys -->
+	   
+		<!-- CW Start -->
+		<key
+			sequence="M1+F5"
+			commandId="org.eclipse.debug.ui.commands.RunLast"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- CW StartWithoutDebugging -->
+		<key
+			sequence="F5"
+			commandId="org.eclipse.debug.ui.commands.DebugLast"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- CW Resume -->
+		<key
+            sequence="F5"
+            commandId="org.eclipse.debug.ui.commands.Resume"
+            contextId="org.eclipse.debug.ui.debugging"
+            schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<!-- CW StepInto -->
+		<key
+			sequence="F11"
+			commandId="org.eclipse.debug.ui.commands.StepInto"
+			contextId="org.eclipse.debug.ui.debugging"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- CW StepOver -->
+		<key
+			sequence="F10"
+			commandId="org.eclipse.debug.ui.commands.StepOver"
+			contextId="org.eclipse.debug.ui.debugging"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- MSVS StepReturn -->
+		<key
+			sequence="M2+F11"
+			commandId="org.eclipse.debug.ui.commands.StepReturn"
+			contextId="org.eclipse.debug.ui.debugging"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- CW ToggleBreakpoint -->
+		<key
+			sequence="F9"
+			commandId="org.eclipse.debug.ui.commands.ToggleBreakpoint"
+            contextId="org.eclipse.ui.globalScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<!-- Search Keys -->
+		<key
+			sequence="Ctrl+Shift+M"
+			commandId="com.nokia.carbide.search.system.ui.openSystemSearchPage"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+			
+		<!-- CW Word searching -->
+		<key
+			sequence="M1+F3"
+			commandId="org.eclipse.search.ui.performTextSearchWorkspace"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<!-- CW Find Next -->
+		<key
+			sequence="F3"
+	        commandId="org.eclipse.ui.edit.findNext"
+	        contextId="org.eclipse.ui.textEditorScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<!-- CW Find Previous -->
+		<key
+			sequence="M2+F3"
+	        commandId="org.eclipse.ui.edit.findPrevious"
+	        contextId="org.eclipse.ui.textEditorScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<!-- Text Editing Keys -->
+
+	   	<!-- CW Goto Line -->
+		<key
+			sequence="M1+G"
+			commandId="org.eclipse.ui.edit.text.goto.line"
+			contextId="org.eclipse.ui.textEditorScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<key	
+			sequence="M1+M2+ARROW_LEFT"
+			commandId="org.eclipse.ui.edit.text.select.wordPrevious"
+			contextId="org.eclipse.ui.textEditorScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+	   
+		<key
+			sequence="M1+M2+ARROW_RIGHT"
+			commandId="org.eclipse.ui.edit.text.select.wordNext"
+			contextId="org.eclipse.ui.textEditorScope"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<key
+            sequence="M1+F2" 
+            commandId="org.eclipse.ui.edit.addBookmark"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+	    <!-- View Keys -->
+		<!-- Views Keys -->
+		<!-- Window Keys -->
+		
+		<key
+			sequence="M1+TAB"
+            commandId="org.eclipse.ui.window.nextEditor"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+		<key
+			sequence="M1+M2+TAB"
+            commandId="org.eclipse.ui.window.previousEditor"
+			schemeId="com.nokia.carbide.cpp.codewarrior"/>
+
+	  
+   </extension>
+   
+<!-- =================================================================================== -->
+<!-- Product startup extension                                                           -->
+<!-- =================================================================================== -->
+	<extension point="org.eclipse.ui.startup">
+		  <startup class="com.nokia.carbide.cpp.ProductStartup"/>
+	</extension>
+	
+<!-- =================================================================================== -->
+<!-- Carbide welcome page theme                                                          -->
+<!-- =================================================================================== -->
+	<extension
+		  point="org.eclipse.ui.intro.configExtension">
+		
+	   <theme
+			 default="true"
+			 id="com.nokia.carbide.cpp.carbide"
+			 name="%theme.name.carbide"
+			 path="$nl$/themes/carbide"
+			 previewImage="$nl$/themes/carbide/preview.png">
+
+		   	<property
+				name="launchbarBackground"
+				value="#a1c2cb"/>
+		   
+            <property name="capitalizeTitles"
+            		value="true"/>
+		   
+            <property name="launchbarOverviewIcon"
+            		  value="$theme$graphics/launchbar/overview.gif"/>
+            <property name="launchbarFirststepsIcon"
+            		  value="$theme$graphics/launchbar/firststeps16.png"/>
+            <property name="launchbarTutorialsIcon"
+            		  value="$theme$graphics/launchbar/tutorials.gif"/>
+            <property name="launchbarSamplesIcon"
+            		  value="$theme$graphics/launchbar/samples.gif"/>
+            <property name="launchbarWhatsnewIcon"
+            		  value="$theme$graphics/launchbar/whatsnew.gif"/>
+            <property name="launchbarMigrateIcon"
+            		  value="$theme$graphics/launchbar/migrate16.png"/>
+            <property name="launchbarWebresourcesIcon"
+            		  value="$theme$graphics/launchbar/webresources16.png"/>
+            		  
+            <property name="highContrast-overview"
+            		  value="$theme$graphics/icons/etool/overview72.gif"/>
+            <property name="highContrast-firststeps"
+            		  value="$theme$graphics/icons/etool/firsteps72.gif"/>
+            <property name="highContrast-tutorials"
+            		  value="$theme$graphics/icons/etool/tutorials72.gif"/>
+            <property name="highContrast-samples"
+            		  value="$theme$graphics/icons/etool/samples72.gif"/>
+            <property name="highContrast-whatsnew"
+            		  value="$theme$graphics/icons/etool/whatsnew72.gif"/>
+            <property name="highContrast-webresources"
+            		  value="$theme$graphics/icons/etool/webrsrc72.gif"/>
+            <property name="highContrast-migrate"
+            		  value="$theme$graphics/icons/etool/migrate72.gif"/>
+		   
+		</theme>
+	</extension>
+ <extension point="com.nokia.carbide.cpp.diagnosticLogGroup">
+   <diagnosticLogGroup
+           id="com.nokia.carbide.cpp.diagnosticLogs"
+           name="Carbide.c++ Diagnostic Logs">
+   </diagnosticLogGroup>
+       
+ </extension>
+ <extension
+       point="org.eclipse.ui.preferencePages">
+    <page
+          category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+          class="com.nokia.carbide.cpp.logging.LoggingPreferencesPage"
+          id="com.nokia.carbide.cpp.LoggingPreferencesPage"
+          name="Diagnostic Logs">
+    </page>
+ </extension>
+
+	<extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+           name="Carbide Extensions"
+           class="com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage"
+           id="com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage"/>         
+   </extension>
+
+</plugin>

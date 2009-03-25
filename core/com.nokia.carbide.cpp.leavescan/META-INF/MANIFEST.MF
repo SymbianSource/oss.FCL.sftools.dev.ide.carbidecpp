@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Leavescan Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.leavescan; singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: com.nokia.carbide.cpp.internal.leavescan.LeavescanPlugin
+Bundle-Vendor: Nokia
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.cdt.core,
+ com.nokia.carbide.cdt.builder,
+ com.nokia.carbide.cpp.sdk.core
+Bundle-ActivationPolicy: lazy

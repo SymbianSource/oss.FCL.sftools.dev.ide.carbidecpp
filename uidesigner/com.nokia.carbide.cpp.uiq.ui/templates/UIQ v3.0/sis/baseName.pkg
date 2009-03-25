@@ -1,0 +1,40 @@
+; $(baseName).pkg
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+; Also, the resource file entries should be changed to match the language
+; used in the build. For example, if building for LANGUAGE_01, change the file
+; extensions .rsc to .r01.
+;
+;Language - standard language definitions
+&EN
+
+; standard SIS file header
+#{"$(baseName)"},($(uid3)),1,0,0
+
+;Localised Vendor name
+%{"Vendor-EN"}
+
+;Unique Vendor name
+:"Vendor"
+
+;Supports Series UIQ v 3.0
+[0x101F6300], 3, 0, 0, {"UIQ30ProductID"}
+
+;Files to install
+;You should change the source paths to match that of your environment
+;<source> <destination>
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"        -"!:\sys\bin\$(baseName).exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName).r$(LANGUAGE_ID)"        -"!:\resource\apps\$(baseName).r$(LANGUAGE_ID)"
+;"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_loc.rsc"        -"!:\resource\apps\$(baseName)_loc.rsc"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.rsc"    -"!:\private\10003a3f\import\apps\$(baseName)_reg.rsc"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName).mbm" -"!:\resource\apps\$(baseName).mbm"
+; Add any installation notes if applicable
+;"$(baseName).txt"        		      -"!:\private\$(uid3)\$(baseName).txt"
+
+
+;"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName).r$(LANGUAGE_ID)"        -"!:\resource\apps\$(baseName).r$(LANGUAGE_ID)"
+;"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.r$(LANGUAGE_ID)"    -"!:\private\10003a3f\import\apps\$(baseName)_reg.r$(LANGUAGE_ID)"
+;"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName)_aif.mif" -"!:\resource\apps\$(baseName)_aif.mif"

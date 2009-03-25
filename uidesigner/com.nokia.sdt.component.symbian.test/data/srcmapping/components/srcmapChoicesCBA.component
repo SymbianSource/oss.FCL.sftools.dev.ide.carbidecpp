@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- Test a case LIKE that of the CBA but without the 
+	complex compound property behavior. 
+	
+	This does NOT represent the real use or representation of a
+	CBA at all, for simplicity.  See CBA.component for that.
+	-->
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.CBA">
+		<!-- the name of the resource to emit, or CUSTOM -->
+		<property name="type" type="string"/>
+		<property name="leftId" type="string"/>
+		<property name="leftText" type="string"/>
+	</compoundPropertyDeclaration>
+	
+	
+	<component baseComponent="com.nokia.examples.baseComponent"
+	friendlyName="Source Mapping Test" qualifiedName="com.nokia.examples.srcmapChoicesCBA" 
+	category="Testing" version="1.0">
+		
+<sourceMapping>
+ <mapResource struct="CBA" headers="cba.rh">
+  <select property="CBA.type">
+    <choice value="CUSTOM">
+        <mapResourceMember property="CBA" member="buttons[0]"  struct="CBA_BUTTON" headers="cba.rh">
+           <mapIdentifierMember property="leftId" member="id" />
+           <mapSimpleMember property="leftText" member="txt"/>
+        </mapResourceMember>
+    </choice>
+    <choice>
+      <mapIdentifierMember property="CBA.type" member="buttons[0]" />
+    </choice> 
+  </select>
+ </mapResource>
+</sourceMapping>
+		
+		<properties>
+			<compoundProperty name="CBA" type="com.nokia.test.CBA"/>
+		</properties>
+	</component>
+</componentDefinition>

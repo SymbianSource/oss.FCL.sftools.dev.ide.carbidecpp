@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>CodeScanner preferences</title>
+<link rel="StyleSheet" href="../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+   <body>
+   <div class="Head1">
+<h2>CodeScanner preferences </h2>
+</div>
+   <p>Use the <img src="images/command_link.png" width="16" height="12" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.codescanner.ui.CSPreferencePage)")'>
+   CodeScanner</a> <b>General</b> page in the <b>Preferences</b> window (Figure 1) or the project's <a href="pref_codescanner_01.htm#cs_Projects">properties</a> window (Figure 2) to define where CodeScanner should output its generated report files and the format. You can also export and import Codescanner configuration files to enable sharing file types and rule sets across projects and programming teams.</p>
+   <p align="center"><img src="images/pref_cs_output.png" width="705" height="603" alt="" /></p>
+   <p align="center" class="figure">Figure 1. CodeScanner global settings </p>
+   <table width="700"
+border="0" cellpadding="2" cellspacing="0">
+	 <tr valign="top"><th width="198" class="Cell">Name</th>
+	   <th width="492" class="Cell">Description</th>
+	 </tr>
+	 <tr valign="top">
+       <td class="Cell"><b>Configure Project Specific Settings... </b></td>
+	   <td class="Cell"><p>Click to open the project <b>Properties</b> window and configure CodeScanner for that specific project. </p>
+       <p class="note"><b>NOTE</b> Only visible in the global CodeScanner preference panels. This also applies to the File Filters and Rules pages </p></td>
+     </tr>
+         <tr valign="top">
+           <td class="Cell"><b>CodeScanner directory </b></td>
+           <td class="Cell"><p>Type the path, or click <b>Browse</b> to locate  codescanner.exe.</p></td>
+        </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Generate  HTML report </b></td>
+           <td class="Cell">Activate to generate reports in HTML format. Reports are stored in the Reports directory and can be viewed using a browser. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Generate  XML report </b></td>
+           <td class="Cell">Activate to generate reports in XML format. Reports are stored in the Reports directory and can be viewed using a browser. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Reports directory </b></td>
+           <td class="Cell">Type the path, or click Browse to set the location the generated report files are stored. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><strong>Enable Knowledge Base Scanning </strong></td>
+           <td class="Cell"><p>If enabled, CodeScanner will scan code and detect possible  API issues related to a specific SDK, for example when porting to a new Touch UI SDK. For each SDK, specific porting information is defined as a set of rules specified in  XML files. CodeScanner will import the rules and add them to the existing set of CodeScanner rules to be used during  scanning operations. The results will be displayed in the <strong>Console</strong> view and as information markers  in source code.</p>
+             <p>Click on an information marker or right-click on marker and select <strong>Quick Fix</strong> to display more information. Details of a CodeScanner/knowledge base marker are shown in a contextual help dialog when the mouse hovers over a particular marker. Each Quick Fix related information  has an icon image.</p>
+             <p>               A light bulb icon indicates a link to an external reference, which can be accessed by double-clicking.<br />
+               A green dot icon means there is no external reference.<br />
+               <br />
+           To show information markers in the Problems view make sure that <strong>Show &gt; Show All</strong> is selected in the View Menu (upside down triangle icon) in the Problems view. Right-click on a marker and select View More Information or Quick Fix for additional information. Click <strong>Reference&gt;&gt;</strong> link button for additional information.</p></td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Import Settings... </b></td>
+           <td class="Cell">Click to import a CodeScanner settings file.</td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Export Settings... </b></td>
+           <td class="Cell">Click to export a CodeScanner settings file of the current configuration settings in XML format. Export your settings to enable you to add <a href="customizing_cs.htm">custom rules</a> to the file.</td>
+     </tr>
+         <tr valign="top">
+           <td class="Cell"><strong>Restore Defaults </strong></td>
+           <td class="Cell">Click to restore to system defaults. CodeScanner directory setting will be updated to current path of CodeScanner executable. Other settings in the General tab will be cleared, including the Reports directory.</td>
+         </tr>
+   </table>
+   <p align="center"><img src="images/quick_fix.png" alt="quick fix" width="242" height="247" /></p>
+   <p align="center" class="figure">Figure 2. Quick Fix Command for CodeScanner Information Marker </p>
+   <p align="center"><img src="images/info_marker.png" alt="kb marker" width="633" height="456" /></p>
+   <p align="center" class="figure">Figure 3. Information Marker for CodeScanner Result</p>
+   <p>The CodeScanner plug-in  supports a named extension point named &quot;com.carbide.cpp.codescanner.rules&quot;. Other plugins can contribute CodeScanner rules by adding this extension point to the plugin.xml file and specifying the plugin-relative location of the rules xml files in the location element of this extension.</p>
+   <p><br />
+     For example:</p>
+   <p class="listing">&lt;plugin&gt;<br />
+	    &nbsp;&nbsp;&lt;extension
+   point=&quot;com.carbide.cpp.codescanner.rules&quot;&gt;<br />
+   &nbsp;&nbsp;&nbsp;&lt;ruleSet<br /> 
+   &nbsp;&nbsp;&nbsp;&nbsp;name=&quot;Touch SDK&quot;<br />
+   &nbsp;&nbsp;&nbsp;&nbsp;location=&quot;data/rules&quot;<br />
+   &nbsp;&nbsp;&nbsp;/&gt;<br />
+&nbsp;&nbsp;&lt;/extension&gt;<br />
+&lt;/plugin&gt;</p>
+   <p>When the &quot;Enable Knowledge Base Scanning&quot; option is enabled, CodeScanner will locate plugins using this extension point and then read the rules in the xml files. Plugins that contain SDK information can be updated by using the Software Updates feature in the Help menu. </p>
+	 <p>In the Express edition of Carbide.c++, the CodeScanner preference page is diasbled. In the Express version, when you select the <strong>Run CodeScanner</strong> command, CodeScanner will read the rules using the KnowledgeBase extension point and perform scanning ONLY with these rules (existing CodeScanner rules will be exlcuded).</p>
+	 <p class="note"><strong>NOTE</strong> If you install a newer version of Carbide over an existing workspace, you may receive an error that CodeScanner cannot be found when trying to run CodeScanner. If this occurs, ensure that the CodeScanner directory is updated in both the CodeScanner global preference panel and the project specific CodeScanner panel.<br />
+Example directory: C:\Program Files\Nokia\Carbide.c++ v2\plugins\com.nokia.carbide.cpp.codescanner_2.0.0.002_2008<em>xxxxxxxx</em>\Tools</p>
+	 <h3><a name="cs_Projects" id="cs_Projects"></a>CodeScanner for projects </h3>
+	 <p>CodeScanner options can also be set at the project level. Right-click the project and choose <strong>Properties</strong>, then select the <strong>Carbide.c++ &gt; Carbide CodeScanner</strong> element in the properties  list.  Click a tab to view the appropriate page and set its options. </p>
+	 <p align="center"><img src="images/proj_cs_output.png" width="705" height="599" alt="" /></p>
+	 <p align="center" class="figure">Figure 4. CodeScanner project settings </p>
+	 <p align="left">CodeScanner options specific to the project. </p>
+	 <table width="700"
+border="0" cellpadding="2" cellspacing="0">
+       <tr valign="top">
+         <th width="203" class="Cell">Name</th>
+         <th width="487" class="Cell">Description</th>
+       </tr>
+       <tr valign="top">
+         <td class="Cell"><strong>Enable Project Specific Settings </strong></td>
+         <td class="Cell">Activate to set project specific CodeScanner settings. By default a project in the workspace uses the global CodeScanner settings unless this option is activated. </td>
+       </tr>
+       <tr valign="top">
+         <td class="Cell"><b>Configure Workspace Settings... </b></td>
+         <td class="Cell"><p>Click to open the  <b>Preferences</b> window and configure CodeScanner for the workspace. </p>
+             <p class="note"><b>NOTE</b> Only visible in the project CodeScanner property panels. </p></td>
+       </tr>
+       <tr valign="top">
+         <td class="Cell"><strong>Enable Knowledge Base Scanning</strong></td>
+         <td class="Cell">If enabled, CodeScanner will scan code and detect possible porting issues related to a specific SDK. For each SDK, specific porting information is defined as a set of rules specified in  XML files. CodeScanner will import the rules and add them to the existing set of CodeScanner rules to be used during  scanning operations. The results will be displayed in the <strong>Problems</strong> view as information markers  pointing to source code locations. </td>
+       </tr>
+       <tr valign="top">
+         <td class="Cell"><b>Scan project automatically </b></td>
+         <td class="Cell">Activate to automatically run CodeScanner every time you build the project. </td>
+       </tr>
+     </table>
+	 <h5>Other references</h5>
+	 <ul><li><a href="pref_codescanner_02.htm">CodeScanner File Filters</a></li>
+	   <li><a href="pref_codescanner_03.htm">CodeScanner Rules</a></li>
+   </ul>
+	 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+   </body>
+   </html>
+   

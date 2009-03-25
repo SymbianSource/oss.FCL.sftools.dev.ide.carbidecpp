@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Setting and Removing Watchpoints</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Setting and Removing Watchpoints</h2>
+<p>You create a watchpoint to monitor a value in a specified memory location. The debugger halts program execution on the line of source code that triggered the watchpoint. This is different than a breakpoint, which halts program execution prior to executing the line of source code on which the breakpoint is set.</p>
+<h4>Setting watchpoints</h4>
+<p>Right-click in the <a href="../breakpoints/viewing_breakpoints.htm">Breakpoints</a> view and choose the  <b>Add Watchpoint (C/C++)...</b> command to open the <b>Add Watchpoint</b> window. A watchpoint suspends program execution when the memory location that you specify is accessed with a write or read operation and it's based on the access setting. Use the <b>Add Watchpoint</b> window to specify the  memory location, its memory size, unit size, and define whether the watchpoint  triggers on a read, write, or on both operations. Watchpoints can also be added directly in the <a href="../../reference/view_variables.htm">Variables</a>, <a href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_outline_view.htm">Outline</a>, and the <a href="../../reference/view_memory_wnd.htm">Memory Rendering</a> views.</p>
+<p align="center"><img src="../images/wnd_add_watchpoint.png" width="220" height="261"></p>
+<p align="center" class="figure">Figure 1. Add Watchpoint window </p>
+<h5>Table 1. Add Watchpoint options </h5>
+  <table width="88%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+      <th width="32%" scope="col">Name</th>
+      <th width="52%" scope="col">Description</th>
+    </tr>
+    <tr>
+      <td><div align="left"><b>Expression to watch </b></div></td>
+      <td>If not already entered, you can enter any arbitrary memory location for watching. </td>
+    </tr>
+    <tr>
+      <td><b>Memory space</b></td>
+      <td>Not supported.</td>
+    </tr>
+    <tr>
+      <td><b>Units</b></td>
+      <td>Define the size of the units to monitor. This setting defaults to the size of the variable to watch. If an arbitrary memory address is entered, then the default unit size is set to 1 byte. Once you enable the units checkbox, you're must enter a value for it.</td>
+    </tr>
+    <tr>
+      <td><b>Access: Write/Read </b></td>
+      <td><p>Check the appropriate access type to trigger  the watchpoint for the specified memory location. This setting is shown as a unique icon in the Breakpoints view next to the listed watchpoint. The following list shows the resolved version of the icons used to indicate the type of watchpoint set:</p>
+        <ul>
+          <li>Read only (<img src="../images/icon_watchpoint_read_resolved.png" width="18" height="13" align="absmiddle">)</li>
+          <li>Write only (<img src="../../tasks/watchpoints/images/icon_watchpoint_write_resolved.png" width="15" height="16" align="absmiddle">)</li>
+          <li>Read/Write (<img src="../../tasks/watchpoints/images/icon_watchpoint_rw_enabled_resolved.png" width="16" height="16" align="absmiddle">)</li>
+      </ul></td>
+    </tr>
+</table>
+  <h4>Removing Watchpoints</h4>
+  <p>In the <b>Breakpoints</b> view, locate the watchpoint to remove and: </p>
+  <ul>
+    <li>Right-click the watchpoint and choose <b>Remove</b> from the context menu</li>
+  </ul>
+  <h4>Other references</h4>
+<ul>
+  <li><a href="..//watchpoints/watchpoints.htm">Watchpoints overview </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

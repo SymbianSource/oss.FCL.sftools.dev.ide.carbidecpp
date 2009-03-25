@@ -1,0 +1,12 @@
+/*
+============================================================================
+ Name        : bld.inf
+ Author      : $(author)
+ Copyright   : $(copyright)
+ Description : This file provides the information required for building the
+               whole of a $(baseName).
+============================================================================
+*/
+
+PRJ_MMPFILES
+$(baseName).mmp

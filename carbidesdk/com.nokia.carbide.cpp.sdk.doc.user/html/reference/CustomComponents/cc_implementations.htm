@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Implementations Element</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Implementations</h2>
+<p> The preceding sections described  characteristics of components which could be represented statically in XML.  Implementations allow for script or code to dynamically extend a component's behavior in the UI Designer.  Implementation also allows automatic layout, dynamic containment rules, direct label editing, component properties validation and more.</p>
+<p>A component uses the &lt;implementations&gt; XML element to define implementations.  This element contains zero or more &lt;implementation&gt; elements.  A single implementation element contains one or more &lt;interface&gt; elements, telling which interfaces are implemented, and either a &lt;script&gt; or a &lt;class&gt; element which implements those interfaces.  It's up to you how many interfaces to implement with one class or script.   Implementations may be provided in JavaScript or Java code.  For Java implementations, merely implement the interface and ensure its containing package is exported from the plugin.  This document doesn't discuss Java implementations further, since a JavaScript implementation is easier to use in many respects.</p>
+<p>Example implementations declaration:</p>
+<pre class="listing">&lt;implementations&gt;
+ &nbsp;&nbsp; &lt;implementation&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interface  id=&quot;com.nokia.sdt.datamodel.adapter.IVisualAppearance&quot;/&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interface  id=&quot;com.nokia.sdt.datamodel.adapter.IDirectLabelEdit&quot;/&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script  file=&quot;MyComponent.js&quot; prototype=&quot;MyPrototype&quot;/&gt;
+ &nbsp;&nbsp; &lt;/implementation&gt;
+&lt;/implementations&gt;</pre>
+<p>Some of the most common interfaces are:</p>
+<ul>
+  <li>com.nokia.sdt.datamodel.adapter.IVisualAppearance </li>
+  <li>com.nokia.sdt.datamodel.adapter.ILayout</li>
+  <li>com.nokia.sdt.datamodel.adapter.IQueryContainment</li>
+  <li>com.nokia.sdt.datamodel.adapter.IDirectLabelEdit</li>
+  <li>com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener </li>
+</ul>
+<h3><a name="javascript"></a>JavaScript</h3>
+<p>The UI Designer allows the use of JavaScript to customize  components. This allows component development without the need of a JDK and more dynamic  updating of component implementations while the UI Designer is running. The Mozilla Project&rsquo;s Rhino engine is used for  JavaScript interpretation (<a href="http://www.mozilla.org/rhino">http://www.mozilla.org/rhino</a>). This engine allows for JavaScript to call  Java routines, and Java routines to call JavaScript. Other sources of JavaScript information include <a href="http://javascript-reference.info/">http://javascript-reference.info/</a> and <a href="http://www.mozilla.org/js/language/">http://www.mozilla.org/js/language/</a>.</p>
+<h4>Connecting JavaScript to Implementations</h4>
+<p>For component implementations, the &lt;implementation&gt; element can contain a &lt;script&gt; statement that specifies a JavaScript file and prototype that implements an interface. UI Designer instantiates the prototype into an object that is used throughout the lifetime of a component instance. Prototypes can be named and referenced across components.</p>
+<p>Script declaration example:</p>
+<pre class="listing">&lt;implementations&gt;
+  &lt;implementation&gt;
+    &lt;interface id=&quot;com.nokia.sdt.datamodel.adapter.IVisualAppearance&quot;/&gt;
+    &lt;script file=&rdquo;MyComponent_render.js&rdquo; prototype=&rdquo;Render&rdquo; /&gt;
+  &lt;/implementation&gt;
+ &hellip;
+&lt;/implementations&gt; </pre>
+<p>The file MyComponent_render.js should be located relative to the component definition (.component) file, and define a prototype named Render. Most implementations have two variants of the interface.  One is for Java use, and another is for JavaScript.  For example, IVisualAppearance and IScriptVisualAppearance.  The &lt;interface&gt; statement references the non-script interface but the implementation in the script uses the &ldquo;script&rdquo; variant.  Usually the only difference is the addition of a WrappedInstance argument.</p>
+<p>Usually, a set of related implementations  share the same JavaScript prototype, such as rendering, layout, and direct  label editing. The method names used in  interfaces are intended to be specific enough so they won&rsquo;t clash.</p>
+<p>MyComponent_render.js example:</p>
+<pre class="listing">function Render() {
+ }<br /><br />Render.prototype.draw = function(instance, laf, graphics) {
+   var bounds = instance.getRenderingBounds();
+   graphics.drawLine(bounds.x, bounds.y, bounds.w, bounds.h);
+}<br /><br />Render.prototype.getPreferredSize = function(instance, laf, wHint, hHint) {
+   if (wHint &lt; 0) wHint = 32;
+   if (hHint &lt; 0) hHint = 24;
+   return new Point(wHint, hHint);
+}</pre>
+<h4><a name="wrapped"></a>Wrapped Types</h4>
+<p>JavaScript hosted in the UI Designer has access to component instances, properties, and attributes through a script-friendly interface.</p>
+<ul>
+  <li><strong>WrappedInstance</strong> &mdash; This class wraps IComponentInstance.  A variable of this type called &ldquo;instance&rdquo; is usually the first argument to implementation methods, and is the primary point of entry to the other types.</li>
+</ul>
+<table width="645" border="1" align="center">
+<caption>
+    WrappedInstance
+  </caption>
+  <tr>
+    <th width="220" scope="col">Properties</th>
+    <th width="409" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The instance name.</td>
+  </tr>
+  <tr>
+    <td>memberName</td>
+    <td>Name of the member (&ldquo;i&rdquo; + titlecased name)</td>
+  </tr>
+  <tr>
+    <td>className</td>
+    <td>Name of this instance&rsquo;s className property, or null.</td>
+  </tr>
+  <tr>
+    <td>properties</td>
+    <td>Reference to WrappedProperties, where given properties are accessible as members or by dictionary lookup. For example, instance.properties[<em>name</em>] or instance.properties.<em>name</em>.</td>
+  </tr>
+  <tr>
+    <td>attributes</td>
+    <td>Reference to WrappedAttributes, where given attribute values are accessible as members or by dictionary lookup.  Most attributes use dashes in names, so the dictionary lookup is probably mandatory. For example, <span class="code">instance.attributes[is-layout-object]</span>.</td>
+  </tr>
+  <tr>
+    <td>componentId</td>
+    <td>Qualified name of component</td>
+  </tr>
+  <tr>
+    <td>component</td>
+    <td>Reference to WrappedComponent</td>
+  </tr>
+  <tr>
+    <td>events</td>
+    <td>Array of WrappedEventBinding</td>
+  </tr>
+  <tr>
+    <td>children</td>
+    <td>Return array of children as WrappedInstances (0-element array if no children)</td>
+  </tr>
+  <tr>
+    <td>parent</td>
+    <td>Return parent WrappedInstance or null</td>
+  </tr>
+  <tr>
+    <th width="220" scope="col">Function</th>
+    <th width="409" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td>toString()</td>
+    <td>Converts an object to a string and returns the result.</td>
+  </tr>
+  <tr>
+    <td>findChildrenOfType(componentId)</td>
+    <td>Return array of WrappedInstance of children derived from the given component id.  Returns 0-element array if none match.</td>
+  </tr>
+  <tr>
+    <td>findChildOfType(componentId)</td>
+    <td>Like findChildrenOfType but returns single instance</td>
+  </tr>
+  <tr>
+    <td>forceLayout()</td>
+    <td>Forces ILayout#layout() on self and children</td>
+  </tr>
+  <tr>
+    <td>forceRedraw()</td>
+    <td>Forces redraw of self and children</td>
+  </tr>
+  <tr>
+    <td>isInstanceOf(componentId)</td>
+    <td>Returns true if component is instance of given component id or derived component id.</td>
+  </tr>
+  <tr>
+    <td>void updatePropertySource()</td>
+    <td>Force rebuild of property list for extension properties.</td>
+  </tr>
+  <tr>
+    <td>Rectangle getRenderingBounds()</td>
+    <td>Get the bounds for rendering, with x=y=0</td>
+  </tr>
+  <tr>
+    <td>Rectangle getLayoutBounds()</td>
+    <td>Get the layout bounds</td>
+  </tr>
+  <tr>
+    <td>setLayoutBounds(Rectangle)</td>
+    <td>Set the layout bounds</td>
+  </tr>
+  <tr>
+    <td>getPreferredSize()</td>
+    <td>get the preferred size from ILayout or IVisualAppearance</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<ul>
+  <li><strong>WrappedComponent</strong> &mdash; This class wraps IComponent.</li>
+</ul>
+<table width="645" border="1" align="center">
+  <caption>
+    WrappedComponent
+  </caption>
+  <tr>
+    <th width="220" scope="col">Properties</th>
+    <th width="409" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>The qualified component id. For example, com.nokia.sdt.series60.CAknView.</td>
+  </tr>
+  <tr>
+    <td>friendlyName</td>
+    <td>Localized component name, for example &ldquo;Vertical Label&rdquo;.</td>
+  </tr>
+  <tr>
+    <td>attributes</td>
+    <td>The WrappedAttributes for the component.</td>
+  </tr>
+  <tr>
+    <td>minSDKVersion</td>
+    <td>A org.osgi.framework.Version instance reflecting the minimum SDK version from the &lt;symbian&gt; element.</td>
+  </tr>
+  <tr>
+    <td>maxSDKVersion</td>
+    <td>A org.osgi.framework.Version instance reflecting the maximum SDK version from the &lt;symbian&gt; element.</td>
+  </tr>
+  <tr>
+    <th width="220" scope="col">Function</th>
+    <th width="409" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td>toString()</td>
+    <td>Converts an object to a string and returns the result.</td>
+  </tr>
+  <tr>
+    <td>isOfType(componentId)</td>
+    <td>Return true if component matches or is derived from given component id.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<ul>
+  <li><strong>WrappedProperties</strong> &mdash; This is an object with property names as members.  It can also be accessed as a dictionary.  For example, if a component defines a property <span class="code">name</span>, then <span class="code">properties.name</span> or <span class="code">properties[&quot;name&quot;]</span> can be used to access the property.  If no such property exists, the reference is undefined.</li>
+</ul>
+<blockquote>
+  <p>For defined properties, access of a property returns a JavaScript-friendly type.</p>
+  <ul>
+    <li>Booleans, strings, integers act naturally. &nbsp;Localized string properties map to the string entry for the current language.</li>
+    <li>Component references return strings that can be looked up with <span class="code">lookupInstanceByName()</span>.&nbsp; </li>
+    <li>Compound properties are themselves WrappedProperties  (e.g. <span class="code">instance.properties.size.width</span>).  The &ldquo;editableValue&rdquo; property of compound properties resolves to the  value edited in cell editors (through <span class="code">ICompoundPropertyValueConverter#getEditableValue() </span>), or returned by <span class="code">IReconcileProperty#createDisplayValue()</span>. For the com.nokia.sdt.series60.CBA component,  &ldquo;instance.properties.cba&rdquo; is a compound property and a WrappedProperties  reference, but &ldquo;instance.properties.cba.editableValue&rdquo; is a string returned by  reconciling the contained properties to a single string (e.g. <span class="code">OPTIONS_BACK</span> or  <span class="code">&hellip;CUSTOM</span>).</li>
+    <li>Array  properties are modifiable JavaScript arrays.&nbsp;  The length property returns the size of the array. Elements are accessed as in  <span class="code">instance.properties.arrayProperty[0]</span>.</li>
+  </ul>
+</blockquote>
+<ul>
+  <li><strong>WrappedAttributes</strong> &mdash; This is an object of the component attributes for the instance&rsquo;s component, accessible as members or a dictionary.  Since most attributes use dashes, they are illegal as JavaScript members and should be accessed through the dictionary.  An attribute&rsquo;s value is the string placed in the component definition.  Attributes are strings.</li>
+</ul>
+<ul>
+  <li><strong>WrappedEventBindings</strong> &mdash; The <span class="code">instance.events</span> array is a reference to this class, which is a dictionary of events bound to the current instance.  Each entry is a WrappedEventBinding.   For example, <span class="code">instance.events[&ldquo;selected&rdquo;]</span> returns a WrappedEventBinding or null.</li>
+</ul>
+<blockquote>
+  <p class="note"><strong>NOTE</strong> This is not for accessing all possible events supported by a component, which is not supported.  If supported, this would appear on WrappedComponent.</p>
+</blockquote>
+<ul>
+  <li><strong>WrappedEventBinding</strong> &mdash; This wraps IEventBinding.  The names used as properties match the names given to sourcegen globals that can be used to conditionally generate locations and templates based on whether a given event is bound to the current instance.</li>
+</ul>
+<table width="645" border="1" align="center">
+<caption>
+    WrappedEventBinding
+  </caption>
+  <tr>
+    <th width="220" scope="col">Properties</th>
+    <th width="409" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td>eventId</td>
+    <td>Name of event (e.g. &ldquo;selected&rdquo;)</td>
+  </tr>
+  <tr>
+    <td>eventName</td>
+    <td>Friendly name of event (e.g. &ldquo;Focus lost&rdquo;)</td>
+  </tr>
+  <tr>
+    <td>handlerName</td>
+    <td>Base name of function handling the event (e.g. &ldquo;HandleSelectedEvent&rdquo;)</td>
+  </tr>
+  <tr>
+    <td>handlerSymbol</td>
+    <td>Encoded information describing the location of the event in source code.  Not generally useful in script.  The name starts with the domain name and contains domain-specific information to look up the symbol.  In the cpp domain the location path is used. For example &ldquo;cpp@src//MyFile.cpp/function(CContainer::HandleSelectedEvent(CCoeControl*))&quot;.</td>
+  </tr>
+</table>
+<h4><a name="globals"></a>JavaScript Globals</h4>
+<p>Scripts have access to several sets of global routines for use in implementations.  These are the commonly accessible routines.</p>
+<h5>Generic Routines</h5>
+<p>These routines do not depend on the current instance or data model.</p>
+<blockquote>
+  <p><strong>getLocalizedStrings(filebase)</strong> &mdash; Returns a reference to the com.nokia.sdt.component.symbian.ILocalizedStrings  interface for the given base filename.&nbsp;  This is usually used when a library script has *.properties files and is  used as in:</p>
+  <ul>
+    <li>strings = getLocalizedStrings(&ldquo;utils&rdquo;)&nbsp; // look in utils.properties, etc.</li>
+    <li>localized = strings.getString(&ldquo;key&rdquo;)</li>
+  </ul>
+  <p><strong>print(string)  &mdash; </strong>Print  out the string to the console without a newline.</p>
+  <p><strong>println(string)  &mdash; </strong>Print out the string to the console with a newline</p>
+  <p><strong>titleCase(string)  &mdash; </strong>Return the string with all words titlecased (&ldquo;Like This&rdquo;).</p>
+  <p><strong>getPluginClass(pluginId,  className)  &mdash; </strong>Return a JavaScript reference (NativeJavaClass) of the given  class loaded from the given plugin. This  is primarily used to access static functions.</p>
+  <p><strong>formatString(format,  &hellip;)  &mdash; I</strong>nvoke MessageFormat.format() on the given format string and its  arguments.</p>
+  <p><strong>makeValidIdentifier(name)  &mdash; </strong>Return the given name converted to a valid identifier by replacing invalid  characters with &lsquo;_&rsquo; and adding an initial &lsquo;_&rsquo; if necessary.</p>
+  <p><strong>newStatusBuilder()  &mdash; </strong>Return a new com.nokia.sdt.utils.StatusBuilder class.
+  </p>
+</blockquote>
+<h5>Component-specific Routines</h5>
+<p>These routines rely on the current instance and data model to influence their behavior.  As such, they do not take instance arguments.</p>
+<blockquote>
+  <p><strong>include(filename) &mdash; </strong>Include contents of the named file (relative to the current file)  into the current script. This is not  textual inclusion but semantic inclusion. The included file is compiled  separately and reused if the same include() appears in other scripts. Thus, a file can include file1.js which can  include utils.js, and then include file2.js which includes utils.js, and  overall, only one copy of utils.js will exist.</p>
+  <p><strong>lookupString(key) &mdash; </strong>Return the localized entry for &lsquo;key&rsquo; in  the component&rsquo;s *.properties file.</p>
+  <p><strong>lookupInstanceByName(name) &mdash; </strong>Return the WrappedInstance for  the given instance name property in the current data model.</p>
+  <p><strong>getComponentVersions() &mdash; </strong>Return the  org.osgi.framework.Version for the data model&rsquo;s components (e.g. 2.6, 2.8, 3.0).</p>
+  <p><strong>logStatus(IStatus) &mdash; </strong>Log an IStatus to the Error Log (get an  IStatus from StatusBuilder#createStatus).</p>
+  <p><strong>log(string) &mdash; </strong>Log an info message to the Problems view in Carbide.c++;  associated with the *.uidesign file.</p>
+  <p><strong>error(string) &mdash; </strong>Log an error message to the Problems view;  associated with the *.uidesign file.</p>
+  <p><strong>warning(string) &mdash; </strong>Log a warning message to the Problems  view; associated with the *.uidesign file.</p>
+  <p><strong>isInRootModel() &mdash; </strong>Tell whether the current instance is in  the root (application.uidesign) model.</p>
+  <p><strong>getProjectName() &mdash; </strong>Return the name of the current  project.</p>
+  <p><strong>getRootModelInstanceOfType(componentId) &mdash; </strong>Return a WrappedInstance for the first root model instance with the given  component id. </p>
+</blockquote>
+<h4><a name="libraries"></a>JavaScript Libraries</h4>
+<p>The <span class="code">include(<em>filename</em>)</span> function opens the door for using libraries.   The S60 component library plugin uses these to accelerate common tasks.  Unfortunately our libraries are not easily accessible from custom component projects, since you would need to hardcode a path out of your workspace into our plugin.</p>
+<p>You can copy code from the libraries for your own use, but do not directly reference the files since the contents are subject to change from release to release. Most useful are the implLibrary.js and renderLibrary.js files.  The implLibrary.js file makes handy use of JavaScript to dynamically implement interfaces by adding members to a prototype.  Helpers for hooking up common direct label and image editing implementations are provided.   The renderLibrary.js file contains useful routines for finding out the appropriate background color (when rendering text) and rendering images.   The formLibrary.js file helps automate support for hosting a control either in a container or in a form.</p>
+<p>The srcgenLibrary.js file provides helpers for emitting property setting code in C++ for loading bitmap or SVG images, and for generating contributions. If appropriate resources exist, use source mapping instead.</p>
+<h4><a name="rendering"></a>Rendering</h4>
+<p>When implementing IVisualAppearance to render components in the editor, the UI Designer provides easy access to the SWT graphics library.  The org.eclipse.swt.graphics.GC class is wrapped for scripting.  An instance of this class is instantiated to draw onto a bitmap with a size corresponding to the current layout size.  The bitmap supports a transparent pixel model (rather than alpha blending) and is initially fully transparent.</p>
+<h5>Wrapped org.eclipse.swt.graphics.GC Class</h5>
+<p>The SWT GC class is wrapped and extended.  The GC is enhanced with the ability to modify colors that will conflict with the transparent pixel value (which may be retrieved via getTransparentColor() ).</p>
+<p>Scripting Example:</p>
+<p><span class="code">Device getDevice() </span>Returns the Device the GC was created on.</p>
+<p>Draw a string which takes formatting flags.</p>
+<p>string <strong>&mdash; </strong>The string to draw<br />
+bounds <strong>&mdash; </strong>The rectangle in which to draw<br />
+flags <strong>&mdash; </strong>Mask of IFont.xxx flags<br />
+lineGap <strong>&mdash; </strong>Extra pixel gap between  lines </p>
+<pre>public void drawFormattedString(String string, Rectangle bounds, int flags, int lineGap)
+public Device getDevice()          // Get the device the GC was created with.
+public int getOffX()               // Get the X offset all drawing is translated by.
+public void setOffX(int offX)      // Set the X offset. This is separate from gc.setTransform.
+public int getOffY()               // Get the Y offset.
+public void setOffY(int offY)      // Set the Y offset all drawing is translated by. This is separate from gc.setTransform.
+public Color getTransparentColor() // Get the color allocated for the transparent pixel.
+public Color getSubstituteColor()  // Get the color used when drawing operations try to use the transparent pixel.</pre>
+<h5>Font Support</h5>
+<p>In the UI Designer, fonts are expected to be referenced through the ILookAndFeel instance passed to rendering and layout functions (usually called &quot;laf&quot;).  This provides IFont instances that are rendered specially for the UI Designer.   Host fonts may be referenced with the appropriate SWT methods, but if you want to use custom fonts, we recommend making them available to the look and feel system.  For S60, see com.nokia.sdt.component.symbian under /data/s60/fonts/ for the typical font installation directory.  In the same plugin, see  /data/laf/qvga_fonts.inc for an example of how font and sizes are mapped to LAF keys for a QVGA layout.</p>
+<h5>IFontConstants bitmask constants</h5>
+<p>IFontConstants provides constants which are combined with the logical OR operator to control the GC#drawFormattedString() and GC#getFormattedStringTexts() family of methods.</p>
+<pre>/** Ignore overflow (text is clipped) */
+ &nbsp;&nbsp; public static final  int OVERFLOW_IGNORE = (0 &lt;&lt; 0);
+<br />/** Truncate text  before overflow */
+ &nbsp;&nbsp; public static  final int OVERFLOW_TRUNCATE = (1 &lt;&lt; 0);
+<br />/** Use an  ellipsis to indicate truncation */ 
+&nbsp;&nbsp;&nbsp; public static  final int OVERFLOW_ELLIPSIS = (2 &lt;&lt; 0);
+&nbsp;&nbsp;&nbsp; public static  final int OVERFLOW_MASK = (3 &lt;&lt; 0);</pre>
+<pre>&nbsp;&nbsp;&nbsp; public static  final int DIRECTION_LEFT_TO_RIGHT = (0 &lt;&lt; 2); 
+  &nbsp; public static  final int DIRECTION_RIGHT_TO_LEFT = (1 &lt;&lt; 2);
+  &nbsp; public static  final int DIRECTION_DEFAULT_LEFT_TO_RIGHT = (2 &lt;&lt; 2);
+  &nbsp; public static  final int DIRECTION_DEFAULT_RIGHT_TO_LEFT = (3 &lt;&lt; 2);
+  &nbsp; public static  final int DIRECTION_MASK = (3 &lt;&lt; 2); </pre>
+<pre>&nbsp;&nbsp;&nbsp; public static  final int DRAW_TRANSPARENT = (0 &lt;&lt; 4);
+  &nbsp; public static  final int DRAW_OPAQUE = (1 &lt;&lt; 4);
+  &nbsp; public static  final int DRAW_MASK = (3 &lt;&lt; 4);
+   &nbsp;&nbsp;&nbsp; 
+  &nbsp; public static  final int ALIGN_LEFT = (0 &lt;&lt; 6);
+  &nbsp; public static  final int ALIGN_RIGHT = (1 &lt;&lt; 6);
+  &nbsp; public static  final int ALIGN_CENTER = (2 &lt;&lt; 6);
+  &nbsp; public static  final int ALIGN_MASK = (3 &lt;&lt; 6);
+   &nbsp;&nbsp;&nbsp; 
+  &nbsp; public static final  int WRAPPING_NONE = (0 &lt;&lt; 8);
+  &nbsp; public static  final int WRAPPING_ENABLED = (1 &lt;&lt; 8);
+  &nbsp; public static  final int WRAPPING_MASK = (1 &lt;&lt; 8);
+   &nbsp;&nbsp;&nbsp; 
+  &nbsp; public static  final int OPTIONS_NONE = (0 &lt;&lt; 11);
+  &nbsp; public static  final int OPTIONS_UNDERLINE = (1 &lt;&lt; 11);
+  &nbsp; public static  final int OPTIONS_STRIKETHROUGH = (2 &lt;&lt; 11);
+  &nbsp; public static  final int OPTIONS_BOLD = (4 &lt;&lt; 11);
+  &nbsp; public static  final int OPTIONS_EXTRABOLD = (12 &lt;&lt; 11);
+  &nbsp; // next: 16
+  &nbsp; public static  final int OPTIONS_MASK = (15 &lt;&lt; 11);
+   &nbsp;&nbsp;&nbsp; 
+  &nbsp; // note: on by  default
+  &nbsp; public static  final int ANTIALIAS_ON = (0 &lt;&lt; 15);
+  &nbsp; public static  final int ANTIALIAS_OFF = (1 &lt;&lt; 15);
+    public static final int ANTIALIAS_MASK = (1  &lt;&lt; 15);<br /><br />    /** default */<br />    public static final int VERTICAL_ALIGN_TOP = (0 &lt;&lt; 16);<br />    public static final int VERTICAL_ALIGN_BOTTOM =(1 &lt;&lt; 16);<br />    public static final int VERTICAL_ALIGN_CENTER = (2 &lt;&lt; 16);<br />    public static final int VERTICAL_ALIGN_MASK = (3 &lt;&lt; 16);</pre>
+    
+<h5>Rendering Globals</h5>
+<p>Use of the look and feel object (type ILookAndFeel) is recommended for looking up colors, fonts, and images that can vary based on the current layout, but globals are available for other uses as needed.</p>
+<p>Example of Colors object:</p>
+<blockquote>
+  <pre>getColor(int red, int green, int blue)</pre>
+  <p>Returns an SWT Color initialized with the given RGB value.  The color is cached and automatically disposed.  For example, <span class="code">Colors.getColor(128, 128, 255)</span>.</p>
+</blockquote>
+<p>Example of Fonts object:</p>
+<blockquote>
+  <pre>getLocalFont(filename, size)</pre>
+  <p>Returns an IFont instance, which is passed to GC routines ordinarily taking SWT Font.  The filename is a Truetype font file relative to the current script&rsquo;s directory.  The font is cached and automatically disposed.</p>
+  <pre>getGlobalFont(filename, size)</pre>
+  <p>Same as getLocalFont, but finds the file relative to the com.nokia.sdt.component.symbian plugin's /data directory.</p>
+</blockquote>
+<p>Example of Image objects:</p>
+<table width="705" border="1" align="center">
+<caption>
+    Image Objects
+  </caption>
+  <tr>
+    <td width="255" class="code">newImage(Device, width, height)</td>
+    <td width="434">Creates a new SWT Image; device can be graphics.getDevice(). Such images are cached and automatically disposed.</td>
+  </tr>
+  <tr>
+    <td class="code">public Image getImage(Device device, String relPath)</td>
+    <td><p>Get an image, accessed by key (filename).  Such an image will be loaded only once.  Use copyImage() if you want to change a shared image.  The image shouldn't be disposed explicitly when created through this call.
+     </p>
+      <ul>
+        <li> device</li>
+        <li> relPath &#8212; path relative to the current script</li>
+        <li>returns a cached Image</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td class="code">public Image copyImage(Device device, Image image)</td>
+    <td>Copy an image (from anywhere).  The copy needn't be disposed explicitly when created through this call.</td>
+  </tr>
+  <tr>
+    <td class="code">public Image createIcon(Image bitmap, Image bitmapMask)</td>
+    <td>Create an image from a foreground and a mask.</td>
+  </tr>
+  <tr>
+    <td class="code">public Image createAlphaMaskedIcon(Image bitmap, Image alphaMask)</td>
+    <td>Create an image from a foreground and a mask.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h3><a name="issues"></a>Common Issues and Troubleshooting</h3>
+<p>The following limitations should be considered when using JavaScript.</p>
+<ul>
+  <li>JavaScript is a dynamically typed language and  functions are matched based only by name. If a caller calls a routine with too few or  too many arguments, there is no indication of the problem except that arguments  are undefined or ignored.</li>
+  <li>The interface between Java and JavaScript routines  may convert function arguments between Java types and JavaScript types.&nbsp; Component implementations look like  JavaScript and Java, so the type conversion may occasionally yield unexpected  results when making calls between UI Designer prototype methods and other  JavaScript methods in the same script. Most  commonly, numbers may become strings. If  you find odd behavior occurring, explicitly convert a string into a number with <span class="code">var &ndash; 0</span>.<br />
+    Numbers are automatically converted to strings based on  context, but if a number unexpectedly becomes a float before it turns into a  string, use <span class="code">&ldquo;&rdquo; + var</span> when you are sure you have an integer.</li>
+  <li>switch() on strings &mdash; The values returned by <span class="code">WrappedProperties</span> references are not necessarily the same kind of string JavaScript supports with the switch() statement.  Thus, switch() on strings may not work as expected.  Instead, use nested if statements or a lookup table. An example for calling routines using a lookup table:</li>
+</ul>
+<blockquote>
+  <pre class="listing">table = {
+   &ldquo;string1&rdquo; : MyClass.prototype.routine1,
+   &ldquo;string2&rdquo; : MyClass.prototype.routine2
+}
+table[key].apply(this, [ &lt;arguments&gt; ])  // calls this.routine1(arguments) or this.routine2(arguments)
+</pre>
+</blockquote>
+<ul>
+  <li>Stack traces &mdash; When  an exception occurs in JavaScript code, various entries in the stack trace may  resolve to locations in script.&nbsp; Look for  these at the end of lines coming from the class &ldquo;org.mozilla.javascript.gen.*&rdquo;.</li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

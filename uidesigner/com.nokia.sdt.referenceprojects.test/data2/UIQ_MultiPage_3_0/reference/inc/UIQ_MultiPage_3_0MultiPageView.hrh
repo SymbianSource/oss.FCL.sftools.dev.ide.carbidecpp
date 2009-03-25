@@ -1,0 +1,33 @@
+enum TUIQ_MultiPage_3_0MultiPageViewpageIds
+	{
+	EUIQ_MultiPage_3_0MultiPageViewPage = 1,
+	EUIQ_MultiPage_3_0MultiPageViewPage2
+	};
+enum TUIQ_MultiPage_3_0MultiPageViewcontrolIds
+	{
+	EUIQ_MultiPage_3_0MultiPageViewControl = 1,
+	EUIQ_MultiPage_3_0MultiPageViewControl2,
+	EUIQ_MultiPage_3_0MultiPageViewControl3,
+	EUIQ_MultiPage_3_0MultiPageViewControl4,
+	EUIQ_MultiPage_3_0MultiPageViewControl5,
+	EUIQ_MultiPage_3_0MultiPageViewControl6,
+	EUIQ_MultiPage_3_0MultiPageViewControl7,
+	EUIQ_MultiPage_3_0MultiPageViewControl8,
+	EUIQ_MultiPage_3_0MultiPageViewControl9,
+	EUIQ_MultiPage_3_0MultiPageViewControl10,
+	EUIQ_MultiPage_3_0MultiPageViewControl11,
+	EUIQ_MultiPage_3_0MultiPageViewControl12,
+	EUIQ_MultiPage_3_0MultiPageViewControl13,
+	EUIQ_MultiPage_3_0MultiPageViewControl14,
+	EUIQ_MultiPage_3_0MultiPageViewControl15,
+	EUIQ_MultiPage_3_0MultiPageViewControl16,
+	EUIQ_MultiPage_3_0MultiPageViewControl17,
+	EUIQ_MultiPage_3_0MultiPageViewControl18,
+	EUIQ_MultiPage_3_0MultiPageViewControl19,
+	EUIQ_MultiPage_3_0MultiPageViewControl20,
+	EUIQ_MultiPage_3_0MultiPageViewControl21,
+	EUIQ_MultiPage_3_0MultiPageViewControl22,
+	EUIQ_MultiPage_3_0MultiPageViewControl23,
+	EUIQ_MultiPage_3_0MultiPageViewControl24,
+	EUIQ_MultiPage_3_0MultiPageViewControl25
+	};

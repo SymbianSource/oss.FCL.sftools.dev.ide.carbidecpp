@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Adding and Removing Expressions</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Adding and Removing Expressions</h2>
+<p>An <i>expression</i> is a snippet of code that is evaluated to produce a value. In Carbide they are defined using C/C++ expressions. Some expressions may need to be evaluated at a specific location in the program so that its variables can be referenced. Adding more expressions  to the <a href="viewing_expressions.htm">Expressions</a> view list can slow down the automatic display as each must be evaluated to update its value. To manage large lists of expressions, use the <b>Enable</b> and <b>Disable</b> options in the context menu to control which expressions are automatically evaluated.</p>
+<p>You  add  expressions in the <b>Add Watch Expression</b> dialog  using a variety of views, including <a href="../../reference/view_expressions.htm">Expressions</a>, <a href="../../reference/view_variables.htm">Variables</a>, and editor views. Right-click in the view and select the <b>Add Watch Expression...</b> command from the context menu.</p>
+<p align="center"><img src="../images/wnd_add_watch_expr.png"></p>
+<p class="figure">Figure 1. Add Watch Expression dialog</p>
+<p>You can enter any valid C/C++ expression, for example:</p>
+<blockquote>
+  <p class="code">2 + 2<br>
+    myVariable + 8<br>
+    &amp;myVariable<br>
+    myClass.myMemberVar<br>
+    etc.</p>
+</blockquote>
+<p>are all valid expressions that the Expressions view can monitor and display. However, an expression cannot call a function or execute code. The following example will not work:</p>
+<blockquote>
+  <p class="code">std:strlen(&quot;Hello&quot;); </p>
+</blockquote>
+<h4>Removing Expressions</h4>
+<p>Right-click the expression in the Expressions view and select the <b>Remove</b> menu option. This removes the selected expression from the Expression list.</p>
+<h5>Other references</h5>
+<ul>
+  <li><a href="variables.htm">Variables and Expressions Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+#include <basicheader.rh>
+
+RESOURCE RECT r_test0_2
+	{
+	}
+RESOURCE ONE_STRING r_test0_3
+	{
+	text = "check this textual data";
+	}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<compoundPropertyDeclaration qualifiedName="com.nokia.examples.localizedCompound">
+		<property name="abc" displayName="%loc-abc" type="integer"/>
+		<property name="def" displayName="%loc-def" type="integer"/>
+	</compoundPropertyDeclaration>
+	<enumPropertyDeclaration qualifiedName="com.nokia.examples.localizedEnum"
+				defaultValue="blue">
+		<enumElement value="red" displayValue="%loc-red"/>
+		<enumElement value="green" displayValue="%loc-green"/>
+		<enumElement value="blue" displayValue="Blue-color"/>
+	</enumPropertyDeclaration>
+	<component friendlyName="%Localized-friendly" 
+		qualifiedName="com.nokia.examples.localizedComponent" 
+		baseComponent="com.nokia.examples.localizedBaseComponent"
+		category="Testing" version="1.0">
+		<documentation>
+			<information>Base component information</information>
+			<helpTopic>Base component help topic</helpTopic>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" maxSDKVersion="3.0" />
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+		</attributes>
+		<properties>
+			<property displayName="%loc-name" name="name" type="uniqueName"/>
+			<property displayName="%loc-flag" name="flag" type="boolean"/>
+			<compoundProperty displayName="%loc-compound" name="compound1" type="com.nokia.examples.localizedCompound"/>
+			<enumProperty displayName="%loc-enum" name="enum1" type="com.nokia.examples.localizedEnum"/>
+		</properties>
+	</component>
+</componentDefinition>

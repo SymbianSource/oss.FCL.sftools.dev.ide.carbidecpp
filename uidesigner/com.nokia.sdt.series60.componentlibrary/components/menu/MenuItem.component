@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.MenuItemBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.MenuItem" 
+		category="Menu"
+		instanceNameRoot="menuItem"
+		version="1.0">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikMenuPaneItem" classHelpTopic=""
+			resourceType="MENU_ITEM" resourceHelpTopic="" />
+			
+		<designerImages smallIconFile="MenuItem_sm.png" largeIconFile="MenuItem.png"/>
+
+		<attributes>
+			<attribute key="layout-type">absolute</attribute>
+			<attribute key="never-add-component">true</attribute>
+		</attributes>
+
+		<properties>
+			<property category="Appearance" name="text" type="localizedString"
+				descriptionKey="textDescription" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.sdt.series60.component.menu.MenuItemImplFactory"/>
+			</implementation>
+		</implementations>
+		
+	<sourceGen forms="RootAppUi AknView Container HandleCommandSwitchDispatch">
+
+		<useTemplateGroup ids="HandleSelectedEvent" />
+	
+		<inline>
+			if (Engine.formMatches(form, ["", "HandleCommandSwitchDispatch"])) {
+				// gather child contributions
+				contribs.addAll(Engine.generateChildContributions(form))
+			}
+		</inline>
+		
+	</sourceGen>
+		
+	</component>
+</componentDefinition>

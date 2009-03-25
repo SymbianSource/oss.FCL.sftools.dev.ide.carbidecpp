@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>text_encoding</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>text_encoding</h3>
+<p>  Identifies the files source text encoding format to the compiler.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma text_encoding ( &quot;name&quot; | unknown | reset [, global] )</p>
+  <h5>Parameters</h5>
+  <p class="code">name</p>
+  <blockquote>
+    <p>The IANA or MIME encoding name or an OS-specific string that identifies the text encoding. The compiler recognizes these names and maps them to its internal decoders:</p>
+    <p class="code">system US-ASCII ASCII ANSI_X3.4-1968 <br />
+      ANSI_X3.4 UTF-8 UTF8 ISO-2022-JP<br />
+      CSISO2022JP ISO2022JP CSSHIFTJIS SHIFT-JIS<br />
+      SHIFT_JIS SJIS EUC-JP EUCJP UCS-2 UCS-2BE <br />
+      UCS-2LE UCS2 UCS2BE UCS2LE UTF-16 UTF-16BE <br />
+      UTF-16LE UTF16 UTF16BE UTF16LE UCS-4 UCS-4BE <br />
+      UCS-4LE UCS4 UCS4BE UCS4LE 10646-1:1993 <br />
+    ISO-10646-1 ISO-10646 unicode</p>
+  </blockquote>
+  <p class="code">global</p>
+  <blockquote>
+    <p>Tells the compiler that the current and all subsequent files use the same text encoding. By default, text encoding is effective only to the end of the file.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>By default, <span class="code">#pragma text_encoding</span> is only effective through the end of the file. To affect the default text encoding assumed for the current and all subsequent files, supply the &ldquo;global&rdquo; modifier.</p>
+  <p>This pragma corresponds to the Source Encoding option . The default setting is ASCII.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

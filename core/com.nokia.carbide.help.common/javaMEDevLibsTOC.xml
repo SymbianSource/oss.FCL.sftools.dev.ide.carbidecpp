@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Java ME Developer's Libraries" >
+  
+   <anchor id="anchorJavaMEDevLib" /> 	    		<!-- Developer's library documentation -->
+   <anchor id="anchorCarbideExample" />     		<!-- Examples -->
+   <anchor id="anchorLegal" />              <!-- License info, copyright, trademarks, disclaimers, notices -->
+           
+</toc>

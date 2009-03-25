@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				
+	<component friendlyName="%friendlyName"
+		       qualifiedName="com.nokia.carbide.uiq.DialogConfigurationsGroup"
+		       baseComponent="com.nokia.carbide.uiq.ModelGroupBase"
+			   instanceNameRoot="dialogConfigurations"
+			   version="1.0">		 
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+		
+		<designerImages smallIconFile="DialogConfigurations_sm.png"
+			largeIconFile="DialogConfigurations.png"/>		
+		
+		<attributes>
+			<attribute key="group-child-type">com.nokia.carbide.uiq.DialogConfiguration</attribute>
+			<attribute key="allow-empty-group">false</attribute>		
+		</attributes>	
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>	
+				<script file="DialogConfigurations.js" prototype="DialogConfigurations"/>
+			</implementation>
+		</implementations>			
+
+	</component>
+	
+</componentDefinition>

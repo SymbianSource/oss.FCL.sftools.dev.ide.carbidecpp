@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Reference" link_to="toc.xml#uid_reference">
+
+	<topic label="Application Editor" 					href="html/reference/app_editor/ref_app_editor.htm" >
+
+		<topic label="Overview Page" 						href="html/reference/app_editor/ref_overview.htm" />
+		<topic label="UI Designs Page" 						href="html/reference/app_editor/ref_ui_design.htm" />
+		<topic label="Import UI Designs Dialog" 			href="html/reference/app_editor/ref_ui_design_import.htm" />
+		<topic label="Languages Page" 						href="html/reference/app_editor/ref_languages.htm" />
+		<topic label="Add Symbian Languages Dialog" 		href="html/reference/app_editor/ref_language_add.htm" />
+		<topic label="AppUi Page" 							href="html/reference/app_editor/ref_appui.htm" />
+		<topic label="AppUi Key Bindings" 					href="html/reference/app_editor/ref_appui_bindings.htm" />
+
+	</topic> 	<!-- END "Application Editor"  -->
+
+	<topic label="Bitmap Editor" 						href="html/reference/views/ref_bitmap_editor.htm" />
+	
+	<topic label="Events View" 							href="html/reference/views/ref_events_view.htm" />
+	<topic label="Gallery View" 						href="html/reference/views/ref_gallery_view.htm" />
+	<topic label="Generated Files" 						href="html/reference/views/ref_generated_files.htm" />
+	<topic label="Menu Editor" 							href="html/reference/views/ref_menu_editor.htm" />
+
+	<topic label="New Project Wizard" 					href="html/reference/projects/ref_new_proj_wizard.htm" >
+
+		<topic label="New Symbian OS C++ Project Page" 		href="html/reference/projects/ref_new_proj_01.htm" />
+		<topic label="Select a Type of Project Page" 		href="html/reference/projects/ref_new_proj_02.htm" />
+		<topic label="Symbian OS SDKs Page" 				href="html/reference/projects/ref_new_proj_03.htm" />
+		<topic label="Application Properties Page" 			href="html/reference/projects/ref_new_proj_04.htm" />
+		<topic label="S60 UI Design Selection Page" 		href="html/reference/projects/ref_new_proj_05.htm" />
+		<topic label="Content Variants Page" 				href="html/reference/projects/ref_new_proj_06.htm" />
+		<topic label="Container Name and Type Page" 		href="html/reference/projects/ref_new_proj_07.htm" />
+		<topic label="Basic Settings Page" 					href="html/reference/projects/ref_new_proj_08.htm" />
+		<topic label="Project Directories Page" 			href="html/reference/projects/ref_new_proj_09.htm" />
+
+	</topic> 	<!-- END "New Project Wizard"  -->
+
+	<topic label="Outline View" 						href="html/reference/views/ref_outline_view.htm" />
+
+	<topic label="Properties View" 						href="html/reference/views/ref_properties_view.htm" >
+		<topic label="Edit Array Property Dialog" 		href="html/reference/views/ref_properties_eap.htm" />
+		<topic label="Edit Image Property Dialog" 		href="html/reference/views/ref_edit_image_property.htm" />
+		<topic label="Edit Multi-Image Property Dialog" href="html/reference/views/ref_edit_multiimage_property.htm" />
+		<topic label="String List Editor Dialog" 		href="html/reference/views/ref_string_list_editor.htm" />
+	</topic>
+
+
+	<topic label="UI Design Editor" 					href="html/reference/uidesign/ref_ui_design_editor.htm" >
+
+		<topic label="Toolbar" 								href="html/reference/views/ref_tool_bar.htm" />
+		<topic label="Layout Pane" 							href="html/reference/views/ref_layout.htm" />
+		<topic label="Non-layout Pane" 						href="html/reference/views/ref_non-layout.htm" />
+
+		<topic label="Component Palette" 					href="html/reference/components/ref_palette.htm" >	
+			<topic label="Controls Components" 					href="html/reference/components/ref_controls.htm" />	
+			<topic label="Editors Components" 					href="html/reference/components/ref_editors.htm" />	
+			<topic label="Menu Components" 						href="html/reference/components/ref_menu.htm" />
+			<topic label="Misc Components" 						href="html/reference/components/ref_misc.htm" />
+			<topic label="Notes and Dialogs Components" 		href="html/reference/components/ref_notes_dialogs.htm" />
+			<topic label="Status and Control Components" 		href="html/reference/components/ref_status_control.htm" />
+			<topic label="Component Information Pane" 			href="html/reference/components/ref_information.htm" />
+		</topic>
+
+		<topic label="Palette Settings Dialog" 				href="html/reference/views/ref_palette_settings.htm" />
+	
+	</topic> 	<!-- END "UI Design Editor"  -->
+
+	<topic label="UI Design Wizard" 					href="html/reference/uidesign/ref_ui_design_wizard.htm" >
+
+		<topic label="Application Properties Page" 			href="html/reference/uidesign/ref_ui_design_wizard_01.htm" />
+		<topic label="S60 UI Design Selection Page" 		href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+		<topic label="Content Variants Page" 				href="html/reference/uidesign/ref_ui_design_wizard_03.htm" />
+		<topic label="Container Name and Type Page" 		href="html/reference/uidesign/ref_ui_design_wizard_04.htm" />
+
+	</topic> 	<!-- END "UI Design Wizard"  -->
+	
+	<topic label="UI Designer Preferences" 				href="html/reference/uidesign/ref_ui_designer_prefs.htm" />
+
+</toc>

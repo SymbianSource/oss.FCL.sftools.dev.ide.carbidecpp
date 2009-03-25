@@ -1,0 +1,34 @@
+<BldInfImportData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\Temp\BldInfImportData\BldInfImportData.xsd">
+	<!-- Here we specify a list of project we want to import, from one to N bld.inf files -->
+	<bldInfFiles>
+		<!-- Each bld.inf file needs a full path, sdkID with valid SDK defined in devices.xml and an arbitrary (unique) project name -->
+		<bldInfFile path="c:\Symbian\9.1\S60_3rd_MR\S60Ex\WebClient\group\bld.inf" sdkId="S60_3rd_MR" projectName="HelloWorld">
+			<!-- optional definition for the root directory, typically auto-calculated -->
+			<rootDirectory path="c:\Symbian\9.1\S60_3rd_MR\S60Ex\"/>
+			<!-- A list from 1 to N build configurations requiring platform and target -->
+			<buildConfigurations>
+				<buildConfig platform="ARMV5" target="UDEB"/>
+				<buildConfig platform="ARMV5" target="UREL"/>
+				<buildConfig platform="WINSCW" target="UDEB"/>
+				<buildConfig platform="GCCE" target="UDEB"/>
+			</buildConfigurations>
+			<!-- Components to build from bld.inf. Optional, if not present just builds from bld.inf -->
+			<infComponents>
+				<infComponent name="gnumakefile icons.mk"/>
+				<infComponent name="WebClient.mmp"/>
+			</infComponents>
+			<!-- Optional makmake refs. I don't know what this is for just yet -->
+<!--	makmake refs are just used to set the debug MMP, which I think is deprecated?
+        So likely we'll never need to set this.
+			<makMakeRefs>
+				<makMakeRef name="WebClient.mmp"/>
+			</makMakeRefs>
+-->
+		</bldInfFile>
+		<bldInfFile path="c:\Symbian\9.2\S60_3rd_FP1\S60Ex\AddressBook\group\bld.inf" sdkId="S60_3rd_FP1" projectName="AddressBook">
+			<buildConfigurations>
+				<buildConfig platform="ARMV5" target="UDEB"/>
+			</buildConfigurations>
+		</bldInfFile>
+	</bldInfFiles>
+</BldInfImportData>

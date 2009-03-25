@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Suspicious Assignments and Incorrect Function Returns</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Suspicious Assignments and Incorrect Function Returns</h3>
+<p>  If you enable the Extended Error Checking setting, the C compiler generates a warning if it encounters one of the following potential problems:</p>
+<ul>
+  <li>A non-void function that does not contain a return statement. For example, the source code in Listing 1 generates a warning.</li>
+</ul>
+<blockquote>
+  <div class="listing">
+    <p>Listing 1. Non-void Function with no return Statement</p>
+    <p>main() /* assumed to return int */<br />
+      {<br />
+      printf (&quot;hello world\n&quot;);<br />
+      } /* WARNING: no return statement */<br />
+      Listing 6.8 does not generate a warning.<br />
+      Listing 6.8 Explicitly Specifying a Function&rsquo;s void Return Type<br />
+      void main() /* function declared to return void */<br />
+      {<br />
+      printf (&quot;hello world\n&quot;);<br />
+      }<br />
+    </p>
+  </div>
+</blockquote>
+<ul>
+  <li>An integer or floating-point value assigned to an enum type. Listing 2 shows an example.
+  </li>
+</ul>
+<blockquote>
+  <div class="listing">
+    <h5>Listing 2. Assigning to an Enumerated Type</h5>
+    <p>enum Day { Sunday, Monday, Tuesday, Wednesday, <br />
+      Thursday, Friday, Saturday } d;</p>
+    <p>d = 5; /* WARNING */<br />
+      d = Monday; /* OK */<br />
+      d = (Day)3 ; /* OK */<br />
+&bull; An empty return statement in a function that is not declared void. For example, the following code results in a warning:<br />
+      int MyInit(void)<br />
+      {<br />
+      int err = GetMyResources();<br />
+      if (err!=0) return; /* ERROR: Empty return statement */</p>
+    <p> /* ... */<br />
+      This is OK:<br />
+      int MyInit(void)<br />
+      {<br />
+      int err = GetMyResources();<br />
+      if (err!=0) return -1; /* OK */</p>
+    <p> /* ... */</p>
+  </div>
+</blockquote>
+<p> The Extended Error Checking setting corresponds to the pragma <span class="code">extended_errorcheck</span>, described at <a href="../pragmas/p_extended_errorcheck.htm">extended_errorcheck</a>. To check this setting, use <span class="code">__option (extended_errorcheck)</span>.</p>
+<p> See <a href="../symbols/sym_settings.htm">Checking Option Settings</a> for information on how to use this directive.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

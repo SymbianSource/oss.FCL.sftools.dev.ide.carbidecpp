@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<component baseComponent="com.nokia.sdt.series60.ContainerBase" 
+			friendlyName="%friendlyName" 
+			qualifiedName="com.nokia.sdt.series60.CCoeControl" 
+			category="Basic"
+			instanceNameRoot="container"
+			version="1.2">
+		<documentation>
+			<information>%information</information>
+			<wizardDescription>%information</wizardDescription>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CCoeControl" classHelpTopic="" />
+		<designerImages 
+			smallIconFile="CCoeControl_sm.png" 
+			largeIconFile="CCoeControl.png"/>
+		<attributes>
+			<attribute key="is-top-level-content-container">true</attribute>
+			<attribute key="container-background-color-property-name">backColor</attribute>
+			<attribute key="event-handler-target">true</attribute>
+			<attribute key="base-container-class">CCoeControl</attribute>
+			<attribute key="associated-palette-drawer">Controls</attribute>
+		</attributes>
+		<properties>
+			<property category="Appearance" name="backColor" displayName="%backColor" type="string" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"
+				descriptionKey="backColorDescription" />
+			<componentReferenceProperty category="Behavior" scope="children" 
+				constraint="com.nokia.sdt.series60.CCoeControlBase" name="initialFocus"
+				descriptionKey="initialFocusDescription" />
+		</properties>
+
+		<extensionProperties name="default">
+			<componentReferenceProperty category="Behavior" 
+				constraint="com.nokia.sdt.series60.MenuBar" name="contextMenu"
+				descriptionKey="contextMenuDescription" />
+			<property category="Behavior" name="exitsApp" type="boolean" 
+				default="true"
+				descriptionKey="exitsAppDescription" />
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<script file="CCoeControl.js" prototype="CCoeControlVisual"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<script file="CCoeControl.js" prototype="CCoeControlLayout"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CCoeControl.js" prototype="CCoeControlPropertyExtenders"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="CCoeControl.js" prototype="CCoeControlQueryContainment"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="CCoeControl.js" prototype="CCoeControlPropertyListener"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstanceChildListener"/>
+				<script file="CCoeControl.js" prototype="CCoeControlChildListener"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<script file="CCoeControl.js" prototype="CCoeControlEventInfo"/>
+			</implementation>
+			
+		</implementations>
+		
+		<sourceGen forms="AppUi AknView RootAppUi">
+
+			<inline scope="prototype">
+include("containerLibrary.js");
+			</inline>
+
+		<templateGroup id="HeaderFile">
+
+			<!-- contributions as container -->		
+
+			<defineLocation id="HEADER_FILE" domain="cpp" dir="${inc}" 
+				file="${instanceName}.h"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<template id="InclGuard0" location="HEADER_FILE">
+#ifndef ${instanceName.toUpperCase()}_H
+#define ${instanceName.toUpperCase()}_H
+
+			</template>
+			
+			<defineLocation id="HEADER_INCLUDES" baseLocation="HEADER_FILE"
+				location="region(Generated Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include <coecntrl.h>		
+]]>				</template>
+			</defineLocation>
+			
+			<template id="RealizeHeaderIncludes" location="HEADER_INCLUDES"/>
+
+			<defineLocation id="EVENT_INCLUDES" baseLocation="HEADER_FILE"
+				owned="false"
+				filter="unique-includes"
+				location="region(Event Handler Includes)" />
+
+			<template id="RealizeEventIncludes" location="EVENT_INCLUDES" />
+
+			
+			<defineLocation id="HEADER_FORWARD_DECLARATIONS" baseLocation="HEADER_FILE"
+				location="region(Generated Forward Declarations)">
+				<template><![CDATA[
+class MEikCommandObserver;		
+]]>				</template>
+			</defineLocation>	
+				
+			<template id="RealizeHeaderFwdDecls" location="HEADER_FORWARD_DECLARATIONS"/>
+			
+			<defineLocation id="CLASS" baseLocation="HEADER_FILE"
+				owned="false"
+				location="class(${className})">
+				<template><![CDATA[
+/**
+ * Container class for ${instanceName}
+ * 
+ * @class	${className} ${instanceName}.h
+ */
+class ${className} : public CCoeControl
+	{
+public:
+	// constructors and destructor
+	${className}();
+	static ${className}* NewL( 
+		const TRect& aRect, 
+		const CCoeControl* aParent, 
+		MEikCommandObserver* aCommandObserver );
+	static ${className}* NewLC( 
+		const TRect& aRect, 
+		const CCoeControl* aParent, 
+		MEikCommandObserver* aCommandObserver );
+	void ConstructL( 
+		const TRect& aRect, 
+		const CCoeControl* aParent, 
+		MEikCommandObserver* aCommandObserver );
+	virtual ~${className}();
+
+public:
+	// from base class CCoeControl
+	TInt CountComponentControls() const;
+	CCoeControl* ComponentControl( TInt aIndex ) const;
+	TKeyResponse OfferKeyEventL( 
+			const TKeyEvent& aKeyEvent, 
+			TEventCode aType );
+	void HandleResourceChange( TInt aType );
+	
+protected:
+	// from base class CCoeControl
+	void SizeChanged();
+
+private:
+	// from base class CCoeControl
+	void Draw( const TRect& aRect ) const;
+
+private:
+	void InitializeControlsL();
+	void LayoutControls();
+	CCoeControl* iFocusControl;
+	MEikCommandObserver* iCommandObserver;
+	};
+]]>				
+				</template>
+			</defineLocation>
+
+			<template id="RealizeClass" location="CLASS"/>
+			
+			<defineLocation id="CLASS_METHODS" baseLocation="CLASS"
+				filter="unique-prototypes"
+				location="region(Generated Methods)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+			
+			<template id="RealizeClassMethods" location="CLASS_METHODS"/>
+
+		<defineLocation id="CLASS_TYPES" baseLocation="CLASS"
+			location="region(Generated Type Declarations)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template id="RealizeClassTypes" location="CLASS_TYPES"/>
+
+			<defineLocation id="CLASS_IVARS" baseLocation="CLASS"
+			location="region(Generated Instance Variables)">
+				<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template id="RealizeClassIvars" location="CLASS_IVARS"/>
+
+			<defineLocation id="BASE_CLASS_LIST" baseLocation="CLASS"
+				owned="false"
+				filter="unique-bases"
+				location="bases()">
+			</defineLocation>
+			
+			<template id="RealizeBaseClassList" location="BASE_CLASS_LIST" />
+			
+			<defineLocation id="CLASS_OVERRIDES" baseLocation="CLASS"
+				owned="false"
+				filter="unique-prototypes"
+				location="region(Overridden Methods)">
+				<template><![CDATA[
+protected: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+				
+			</defineLocation>			
+				
+			<template id="RealizeClassOverrides" location="CLASS_OVERRIDES"/>
+			
+			<defineLocation id="CLASS_USERHANDLERS" baseLocation="CLASS"
+				owned="false"
+				filter="unique-prototypes"
+				location="region(User Handlers)">
+				<template><![CDATA[
+protected: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+				
+			</defineLocation>				
+			
+			<template id="RealizeClassUserHandlers" location="CLASS_USERHANDLERS"/>
+
+
+			<template id="IncludeGuardEnd" location="HEADER_FILE">
+#endif // ${instanceName.toUpperCase()}_H
+			</template>
+
+			<defineLocation id="CHILD_ENUMS" baseLocation="CLASS"
+				owned="false"
+				location="enum(TControls)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+enum TControls
+	{
+	};
+]]>				</template>
+			</defineLocation>
+
+			<defineLocation id="CHILD_ENUMS_CONTENTS" baseLocation="CHILD_ENUMS"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template id="GetChildEnums" location="CHILD_ENUMS_CONTENTS"><![CDATA[<%
+	// each control must contribute enumerators
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		var enumContribs = Engine.generateChildContributions("HandleCCoeControlEnums");
+		Engine.assignLocationsForPhase(enumContribs, "ChildEnumsContents", "CHILD_ENUMS_CONTENTS");
+		contribs.addAll(enumContribs);
+	}
+%>]]>
+			</template>
+
+			<template id="AddLastChildEnum" location="CHILD_ENUMS">
+// add any user-defined entries here...
+
+ELastControl
+			</template>
+
+		</templateGroup>
+
+		<templateGroup id="SourceFile">
+
+			<defineLocation id="MAIN_FILE" domain="cpp" dir="${src}" 
+				file="${instanceName}.cpp"
+				owned="false"
+				location="">
+			</defineLocation>
+
+			<template id="RealizeMainFile" location="MAIN_FILE"/>
+			
+			<defineLocation id="MAIN_SYSTEM_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated System Includes)"
+				filter="unique-includes">
+			</defineLocation>
+			
+			<template id="RealizeSystemIncludes" location="MAIN_SYSTEM_INCLUDES" />
+
+			<template id="ViewAppUiHeaderIncl" form="AknView" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <aknviewappui.h>
+]]>			</template>
+
+<!-- need to add in two steps to get uniqueness checking -->
+			<template id="ContextMenuEikmenubInclude" 
+				location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+<% if (properties.contextMenu != "") { %>		
+#include <eikmenub.h>
+<% } %>]]></template>
+			<template id="ContextMenuEikcmobsInclude" 
+				location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+<% if (properties.contextMenu != "") { %>		
+#include <eikcmobs.h>
+<% } %>]]></template>
+
+			<defineLocation id="MAIN_USER_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated User Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include "${instanceName}.h"
+]]>				</template>
+			</defineLocation>		
+
+			<template id="RealizeMainUserIncludes" location="MAIN_USER_INCLUDES"/>
+
+			<template id="IncludeParentHeaderFile" location="MAIN_USER_INCLUDES"><![CDATA[
+#include "${instance.parent.name}.h"
+]]></template>
+
+			<defineLocation id="CONSTANTS" baseLocation="MAIN_FILE"
+				location="region(Generated Constants)">
+			</defineLocation>
+
+			<template id="RealizeConstants" location="CONSTANTS" />
+
+			<defineLocation id="CONSTRUCTOR" baseLocation="MAIN_FILE"
+				location="function(${className}::${className}())"
+				owned="false">
+				<template>
+/**
+ * First phase of Symbian two-phase construction. Should not 
+ * contain any code that could leave.
+ */
+${className}::${className}()
+	{
+	}
+				</template>
+			</defineLocation>
+
+			<template id="RealizeConstructor" location="CONSTRUCTOR" />
+
+			<defineLocation id="CONSTRUCTOR_BODY" baseLocation="CONSTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+			
+			<template id="RealizeConstructorBody" location="CONSTRUCTOR_BODY"/>
+
+			
+			<defineLocation id="DESTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::~${className}())">
+				<template><![CDATA[
+/** 
+ * Destroy child controls.
+ */
+${className}::~${className}()
+	{
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template id="RealizeDestructor" location="DESTRUCTOR"/>
+			
+			<defineLocation id="DESTRUCTOR_BODY" baseLocation="DESTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+		
+			<template id="RealizeDestructorBody" location="DESTRUCTOR_BODY"/>
+
+			<template id="GetNewlImpls" location="MAIN_FILE"><![CDATA[
+/**
+ * Construct the control (first phase).
+ *  Creates an instance and initializes it.
+ *  Instance is not left on cleanup stack.
+ * @param aRect bounding rectangle
+ * @param aParent owning parent, or NULL
+ * @param aCommandObserver command observer
+ * @return initialized instance of ${className}
+ */
+${className}* ${className}::NewL( 
+		const TRect& aRect, 
+		const CCoeControl* aParent, 
+		MEikCommandObserver* aCommandObserver )
+	{
+	${className}* self = ${className}::NewLC( 
+			aRect, 
+			aParent, 
+			aCommandObserver );
+	CleanupStack::Pop( self );
+	return self;
+	}
+
+/**
+ * Construct the control (first phase).
+ *  Creates an instance and initializes it.
+ *  Instance is left on cleanup stack.
+ * @param aRect The rectangle for this window
+ * @param aParent owning parent, or NULL
+ * @param aCommandObserver command observer
+ * @return new instance of ${className}
+ */
+${className}* ${className}::NewLC( 
+		const TRect& aRect, 
+		const CCoeControl* aParent, 
+		MEikCommandObserver* aCommandObserver )
+	{
+	${className}* self = new ( ELeave ) ${className}();
+	CleanupStack::PushL( self );
+	self->ConstructL( aRect, aParent, aCommandObserver );
+	return self;
+	}
+]]>			
+			</template>
+
+			<!-- note: this method is declared one-time when the class is created, and the definition
+				is editable by the user.  The user has the freedom to modify the parameter list as well.
+				We add '...' here to the function arguments *in the location only* to allow sourcegen to
+				locate the method with added parameters, without regenerating it. -->
+			<defineLocation id="CONSTRUCTL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::ConstructL(const TRect&amp;, const CCoeControl*, MEikCommandObserver*, ...))">
+				<template><![CDATA[
+/**
+ * Construct the control (second phase).
+ *  Creates a window to contain the controls and activates it.
+ * @param aRect bounding rectangle
+ * @param aCommandObserver command observer
+ * @param aParent owning parent, or NULL
+ */ 
+void ${className}::ConstructL( 
+		const TRect& aRect, 
+		const CCoeControl* aParent, 
+		MEikCommandObserver* aCommandObserver )
+	{
+	if ( aParent == NULL )
+	    {
+		CreateWindowL();
+	    }
+	else
+	    {
+	    SetContainerWindowL( *aParent );
+	    }
+	iFocusControl = NULL;
+	iCommandObserver = aCommandObserver;
+	InitializeControlsL();
+	SetRect( aRect );
+	ActivateL();
+	}
+]]>			
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeConstructL" location="CONSTRUCTL"/>
+						
+			<defineLocation id="CONSTRUCTL_BODY" baseLocation="CONSTRUCTL"
+				location="region(Post-ActivateL initializations)">
+			</defineLocation>
+			
+			<template id="RealizeConstructLBody" location="CONSTRUCTL_BODY" />
+			
+			<defineLocation id="COUNT_COMPONENT_CONTROLS" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::CountComponentControls())">
+				<template><![CDATA[
+/**
+* Return the number of controls in the container (override)
+* @return count
+*/
+TInt ${className}::CountComponentControls() const
+	{
+	return ( int ) ELastControl;
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+			<template id="RealizeCountComponentControls" 
+				location="COUNT_COMPONENT_CONTROLS" />
+			
+			<defineLocation id="COMPONENT_CONTROL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::ComponentControl(TInt))">
+				<template><![CDATA[
+/**
+* Get the control with the given index (override)
+* @param aIndex Control index [0...n) (limited by #CountComponentControls)
+* @return Pointer to control
+*/
+CCoeControl* ${className}::ComponentControl( TInt aIndex ) const
+	{
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeComponentControl" location="COMPONENT_CONTROL"/>
+			
+			<defineLocation id="COMPONENT_CONTROL_BODY" baseLocation="COMPONENT_CONTROL"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template id="ComponentControlSwitch1" location="COMPONENT_CONTROL_BODY"><![CDATA[
+switch ( aIndex )
+	{
+]]>			</template>
+
+			<template id="GetChildSwitchCases" location="COMPONENT_CONTROL_BODY"><![CDATA[<%
+	// each control must contribute switch cases
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		var switchContribs = Engine.generateChildContributions("HandleComponentSwitchDispatch");
+		Engine.assignLocationsForPhase(switchContribs, "ComponentControlBody", "COMPONENT_CONTROL_BODY");
+		contribs.addAll(switchContribs);
+	}
+		%>]]></template>
+
+			<template id="ComponentControlSwitch2" location="COMPONENT_CONTROL_BODY"><![CDATA[
+	}
+]]>			</template>
+
+
+			<template id="ComponentControlFooter" location="COMPONENT_CONTROL">
+// handle any user controls here...
+
+return NULL;
+			</template>
+						
+			<defineLocation id="SIZECHANGED" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::SizeChanged())">
+				<template><![CDATA[
+/**
+ *	Handle resizing of the container. This implementation will lay out
+ *  full-sized controls like list boxes for any screen size, and will layout
+ *  labels, editors, etc. to the size they were given in the UI designer.
+ *  This code will need to be modified to adjust arbitrary controls to
+ *  any screen size.
+ */				
+void ${className}::SizeChanged()
+	{
+	CCoeControl::SizeChanged();
+	LayoutControls();
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+			<template id="RealizeSizeChanged" location="SIZECHANGED" />
+			
+			<defineLocation id="SIZECHANGED_BODY" baseLocation="SIZECHANGED"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template id="RealizeSizeChangedBody" location="SIZECHANGED_BODY"><![CDATA[
+<% var event = instance.events["sizeChanged"];
+   if (event) { %>
+${event.handlerName}();
+<% } %>		
+]]>			</template>
+
+
+			<defineLocation id="LAYOUT_CONTROLS" baseLocation="MAIN_FILE"
+				location="function(${className}::LayoutControls())">
+			<template><![CDATA[
+/**
+ * Layout components as specified in the UI Designer
+ */
+void ${className}::LayoutControls()
+	{
+	}
+]]>			</template>
+			</defineLocation>
+
+			<template id="RealizeLayoutControls" location="LAYOUT_CONTROLS" />
+						
+			<defineLocation id="OFFER_KEYEVENTL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::OfferKeyEventL(const TKeyEvent&amp;, TEventCode))">
+				<template><![CDATA[
+/**
+ *	Handle key events.
+ */				
+TKeyResponse ${className}::OfferKeyEventL( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+			<template id="RealizeOfferKeyEventL" location="OFFER_KEYEVENTL" />
+
+			<defineLocation id="OFFER_KEYEVENTL_BODY" baseLocation="OFFER_KEYEVENTL"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template id="RealizeOfferKeyEventLBody" location="OFFER_KEYEVENTL_BODY"/>
+
+			<template id="GetChildOfferKeySnippets" location="OFFER_KEYEVENTL_BODY"><![CDATA[<%
+	// allow controls to contribute their own key handling snippets
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		var handlerContribs = Engine.generateChildContributions("HandleOfferKeyEventL");
+		Engine.assignLocationsForPhase(handlerContribs, "OfferKeyEventContents", "OFFER_KEYEVENTL_BODY");
+		contribs.addAll(handlerContribs);
+	}
+		%>]]></template>
+
+			
+			<template id="OfferKeyEventLCode"
+				form="AknView" location="OFFER_KEYEVENTL_BODY"><![CDATA[
+<% if (properties.contextMenu != "") {
+	var contextMenuId = Engine.getGeneratedResource(lookupInstanceByName(properties.contextMenu)); 
+	if (contextMenuId != null) {
+		includeProjectHrhFile(contribs);
+		// and continue with contrib code...
+%>		
+TBool selectKeyPressed = ( aType == EEventKey && aKeyEvent.iCode == EKeyOK );
+if ( selectKeyPressed )
+	{
+	CAknView* view = iAvkonViewAppUi->View( TUid::Uid( ${getViewUidConstant(instance.parent)} ) );
+	CEikMenuBar* menuBar = view->MenuBar();
+
+	// try to display the context sensitive menu bar
+	if ( menuBar != NULL )
+		{
+		// set the menu bar to the context-sensitive menu bar
+		menuBar->SetMenuTitleResourceId( ${contextMenuId.toUpperCase()} );
+		
+		// make sure the Options menubar isn't showing
+		menuBar->StopDisplayingMenuBar();
+		
+		// display the menu bar
+		menuBar->TryDisplayMenuBarL();
+<%if (properties.optionsMenu != "") {
+	var optionsMenuId = Engine.getGeneratedResource(lookupInstanceByName(instance.parent.properties.optionsMenu));
+	if (optionsMenuId != null) { 
+%>		
+		// set the menu bar back to the Avkon View's Options menu
+		menuBar->SetMenuTitleResourceId( ${optionsMenuId.toUpperCase()} );
+<% }} %>
+		}
+	return EKeyWasConsumed;
+	}
+<% }} 
+	var event = instance.events["offerKeyEvent"];
+	if (event) { %>
+if ( ${event.handlerName}( aKeyEvent, aType ) == EKeyWasConsumed )
+	{
+	return EKeyWasConsumed;
+	}
+<% } %>
+]]>			</template>
+			
+			<template id="OfferKeyEventLFooter" location="OFFER_KEYEVENTL"><![CDATA[
+if ( iFocusControl != NULL
+	&& iFocusControl->OfferKeyEventL( aKeyEvent, aType ) == EKeyWasConsumed )
+	{
+	return EKeyWasConsumed;
+	}
+return CCoeControl::OfferKeyEventL( aKeyEvent, aType );
+]]>			</template>
+						
+			<defineLocation id="DRAW" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::Draw(const TRect&amp;))">
+				<template><![CDATA[
+/**
+ *	Draw container contents.
+ */				
+void ${className}::Draw( const TRect& aRect ) const
+	{
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+			<defineLocation id="DRAW_BODY" baseLocation="DRAW"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<!-- moved below templateGroup 
+			<useTemplate ids="DrawBodyBgColor"/>
+			-->
+			
+			<defineLocation id="INIT_CONTROLSL" baseLocation="MAIN_FILE"
+				owned="true"
+				location="function(${className}::InitializeControlsL())">
+				<template><![CDATA[
+/**
+ *	Initialize each control upon creation.
+ */				
+void ${className}::InitializeControlsL()
+	{
+	}
+]]>				</template>
+			</defineLocation>
+
+			<template id="RealizeInitControlsL" location="INIT_CONTROLSL"/>
+			
+			<template id="SetupFocusChild" phase="PostInitialize"><![CDATA[
+<%	var initialFocusChild = instance.properties["initialFocus"];
+  	if (initialFocusChild != null && initialFocusChild != "") {%>
+i${titleCase(initialFocusChild)}->SetFocus( ETrue );
+iFocusControl = i${titleCase(initialFocusChild)};
+<%	} %>
+]]>			</template>
+	
+			<defineLocation id="ResourceChangedOverride" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${handlerClassName}::HandleResourceChange(TInt))">
+				<template><![CDATA[
+/** 
+ * Handle global resource changes, such as scalable UI or skin events (override)
+ */
+void ${handlerClassName}::HandleResourceChange( TInt aType )
+	{
+	${instance.attributes["base-container-class"]}::HandleResourceChange( aType );
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+			<template id="RealizeResourceChangedOverride" location="ResourceChangedOverride" />
+				
+			<template id="AddEikappuiInclude" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <eikappui.h>
+]]>			</template>
+
+			<!-- n.b.: ids can be shared for different forms -->
+			<template id="SetupResourceChangedOverride" 
+				form="AppUi" location="ResourceChangedOverride"><![CDATA[
+SetRect( static_cast< CEikAppUi* >( iCoeEnv->AppUi() )->ClientRect() );
+]]>				</template>
+		
+			<template id="SetupResourceChangedOverride" 
+				form="AknView" location="ResourceChangedOverride"><![CDATA[
+<% 	includeProjectHrhFile(contribs);
+%>SetRect( iAvkonViewAppUi->View( TUid::Uid( ${getViewUidConstant(instance.parent, contribs)} ) )->ClientRect() );
+]]>				</template>
+		
+			<defineLocation id="ResourceChangedBody" baseLocation="ResourceChangedOverride"
+				location="region(Generated Contents)">
+			</defineLocation>
+			
+			<template id="RealizeResourceChangedBody" location="ResourceChangedBody"/>
+		
+		</templateGroup>
+		
+			<useTemplate ids="DrawBodyBgColor"/>
+			<useTemplateGroup ids="HandlePointerEvent HandlePointerEventHandler"/>
+			<useTemplateGroup ids="GenerateFocusChanged"/>
+			<useTemplateGroup ids="GeneratePositionChanged GeneratePrepareForFocusLoss GeneratePrepareForFocusGain"/>
+			<useTemplateGroup ids="HandleLongTapEvent"/>
+			
+<!-- BEGIN EVENT sizeChanged -->
+			<templateGroup id="GenerateSizeChangedForCCoeControl" ifEvents="sizeChanged">
+				
+				<template id="DeclareSizeChangedHandler" phase="UserHandlers">
+void ${event.handlerName}();
+				</template>
+
+				<defineLocation id="SizeChangedHandlerMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}())">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}()
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeSizeChangedHandler" location="SizeChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT sizeChanged -->
+<!-- BEGIN EVENT offerKeyEvent -->
+			<templateGroup id="GenerateOfferKeyEventForCCoeControl" ifEvents="offerKeyEvent">
+
+				<template id="DeclareOfferKeyEventHandler" phase="UserHandlers"><![CDATA[
+TKeyResponse ${event.handlerName}( const TKeyEvent& aKeyEvent, TEventCode aType );
+]]>				</template>
+
+				<defineLocation id="OfferKeyEventHandlerMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(const TKeyEvent&amp;, TEventCode))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+TKeyResponse ${handlerClassName}::${event.handlerName}( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return EKeyWasNotConsumed;
+	}
+]]>				
+				</template>
+				</defineLocation>
+			
+				<template id="RealizeOfferKeyEventHandler" location="OfferKeyEventHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT offerKeyEvent -->
+<!-- BEGIN EVENT draw -->
+			<templateGroup id="GenerateDrawForCCoeControl" ifEvents="draw">
+				<template location="DRAW_BODY"><![CDATA[
+${event.handlerName}( aRect );
+]]>				</template>
+
+				<template id="DeclareDrawHandler" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( const TRect& aRect ) const;
+]]>				</template>
+
+				<defineLocation id="DrawHandlerMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(const TRect&amp;))">
+					<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( const TRect& aRect ) const
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeDrawHandler" location="DrawHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT draw -->	
+
+<!-- BEGIN EVENT resourceChanged : special case for CCoeControl -->
+			<templateGroup id="GenerateResourceChanged" ifEvents="resourceChanged">
+
+			<template id="InvokeResourceChangedHandler" location="ResourceChangedBody">
+${event.handlerName}( aType );
+			</template>
+
+			<template id="DeclareResourceChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aType );
+			</template>
+
+			<defineLocation id="ResourceChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeResourceChangedHandler" location="ResourceChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT resourceChanged -->		
+
+			<inline>
+			if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+				// get the generated files matching this pattern and include them
+				var files = Engine.findGeneratedRssFiles(".*\\.hrh");
+				for (idx in files) {
+					var file = files[idx];
+					var mycontrib = Engine.createContributionForLocation("MAIN_USER_INCLUDES")
+					mycontrib.setText("#include \"" + file + "\"\n");
+					contribs.add(mycontrib);
+				}
+			}
+			</inline>
+
+			<!-- child contributions -->						
+			<inline scope="prototype"><![CDATA[
+			include("../srcgenLibrary.js");
+
+/** 
+	Initialize sourcegen, here by removing stored tables used to
+	ensure image-related declarations are only emitted once 
+*/			
+${jsObject}.prototype.initSourceGen = function(contribs, instance, form) {
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		// clear out any image stuff
+		resetImagePropertyState(instance);
+	}
+}
+
+/** 
+	Get child sourcegen, by recursing to children and retrieving
+	contributions for the passed-in form, and optionally any specific
+	to a Container.  
+*/			
+${jsObject}.prototype.getChildSourceGen = function(contribs, instance, form) {
+	if (!Engine.formMatches(form, ["RootAppUi"])) {
+		if (Engine.formMatches(form, [ "AknView", "AppUi" ])) {
+			// get default and container-specific contributions
+			// (the argument is a regular expression)
+			contribs.addAll(Engine.generateChildContributions(form+"|Container"))
+		} else {
+			// unknown form -- likely specific to a parent -- so get 
+			// form-specific contributions
+			contribs.addAll(Engine.generateChildContributions(form))
+		}
+	}
+}
+			
+/**
+	Finish sourcegen for this CCoeControl by organizing contributions
+	and resolving contributions attached to a phase to their actual
+	locations.  All contributions leaving a component should have
+	locations rather than phases unless another parent is known to
+	handle them.
+	
+	Children generate contributions to phases rather than known location
+	ids to add a level of indirection which allows for refactoring in the
+	future.  It is not a required practice (and indeed, event handler
+	sourcegen does need to know about MAIN_FILE) but helps reduce coupling.
+*/
+${jsObject}.prototype.finishSourceGen = function(contribs, instance, form) {
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		Engine.collateContributionsByPhase(contribs, ["Initialize", "PostInitialize"]);
+		
+		// fix up the phases so they point to real locations
+		Engine.assignLocationsForPhase(contribs, "MainConstants", "CONSTANTS");
+		Engine.assignLocationsForPhase(contribs, "MainSystemIncludes", "MAIN_SYSTEM_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "MAIN_USER_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "Destroy", "DESTRUCTOR_BODY");
+		Engine.assignLocationsForPhase(contribs, "Construct", "CONSTRUCTOR_BODY");
+		Engine.assignLocationsForPhase(contribs, "Initialize", "INIT_CONTROLSL");
+		Engine.assignLocationsForPhase(contribs, "PostInitialize", "INIT_CONTROLSL");
+		Engine.assignLocationsForPhase(contribs, "PostActivateL", "CONSTRUCTL_BODY");
+		Engine.assignLocationsForPhase(contribs, "LayoutControls", "LAYOUT_CONTROLS");
+		Engine.assignLocationsForPhase(contribs, "HeaderIncludes", "HEADER_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "ForwardDeclarations", "HEADER_FORWARD_DECLARATIONS");
+		Engine.assignLocationsForPhase(contribs, "ClassTypeDeclarations", "CLASS_TYPES");
+		Engine.assignLocationsForPhase(contribs, "InstanceVariables", "CLASS_IVARS");
+		Engine.assignLocationsForPhase(contribs, "ClassMethods", "CLASS_METHODS");
+		Engine.assignLocationsForPhase(contribs, "ClassSource", "MAIN_FILE");
+		Engine.assignLocationsForPhase(contribs, "ClassHeader", "HEADER_FILE");
+		Engine.assignLocationsForPhase(contribs, "BaseClassList", "BASE_CLASS_LIST");
+		Engine.assignLocationsForPhase(contribs, "OverriddenMethods", "CLASS_OVERRIDES");
+		Engine.assignLocationsForPhase(contribs, "UserHandlers", "CLASS_USERHANDLERS");
+		Engine.assignLocationsForPhase(contribs, "EventIncludes", "EVENT_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "SizeChanged", "SIZECHANGED_BODY");
+								
+		// remove duplicate contributions where the location doesn't already have a filter
+		Engine.removeDuplicateContributionsForLocation(contribs, "HEADER_FORWARD_DECLARATIONS");
+		Engine.removeDuplicateContributionsForLocation(contribs, "DESTRUCTOR_BODY");
+	}
+}
+
+]]>			</inline>
+			
+			<inline><![CDATA[
+
+			if (!Engine.formMatches(form, ["RootAppUi"])) {
+
+				this.initSourceGen(contribs, instance, form);
+	
+				this.getChildSourceGen(contribs, instance, form);
+							
+				this.finishSourceGen(contribs, instance, form);
+
+			}
+						
+]]>			</inline>			
+
+			<template id="IncludeRsgFile" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+<% if (resourceFileNameBase != null) {%>#include <${resourceFileNameBase}.rsg>
+<% } %>]]></template>
+		
+			<!-- contributions as child -->		
+
+			<templateGroup id="ChildDeclContribs" forms="RootAppUi AknView">
+				<template id="Header" phase="MainUserIncludes"><![CDATA[
+#include "${instanceName}.h"
+]]>				</template>
+
+				<template id="FwdClass" phase="ForwardDeclarations">
+class ${className};
+				</template>
+
+				<template id="Var" phase="InstanceVariables">
+${className}* ${instanceMemberName};
+				</template>
+
+				<template id="Init" phase="Construct">
+${instanceMemberName} = NULL;
+				</template>
+				
+				<template id="Delete" form="AknView" phase="Destroy">
+delete ${instanceMemberName};
+${instanceMemberName} = NULL;
+				</template>
+			</templateGroup>
+
+			<templateGroup id="ChildConstructionContribs">			
+				<template id="AddToStack" form="AknView" phase="DoActivateL">
+if ( ${instanceMemberName} == NULL )
+	{
+	${instanceMemberName} = CreateContainerL();
+	${instanceMemberName}->SetMopParent( this );
+	AppUi()->AddToStackL( *this, ${instanceMemberName} );
+	} 
+				</template>
+			
+				<template id="RemoveFromStack" form="AknView" phase="DoDeactivate">
+if ( ${instanceMemberName} != NULL )
+	{
+	AppUi()->RemoveFromViewStack( *this, ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	}
+				</template>
+			
+				<!-- note: RootAppUi form still creates container directly,
+					not using CreateContainerL() -->
+				<template id="AddToStack" form="RootAppUi" phase="Initialize">
+${instanceMemberName} = ${className}::NewL( ClientRect(), NULL, this );
+${instanceMemberName}->SetMopParent( this );
+AddToStackL( ${instanceMemberName} );
+				</template>
+
+				<template id="RemoveFromStack" form="RootAppUi" phase="Destroy">
+if ( ${instanceMemberName} != NULL )
+	{
+	RemoveFromStack( ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	}
+				</template>
+
+				<!-- new for 1.3: allow overriding constructor (NewL) call -->
+				
+				<!-- owned declaration -->
+				<template id="CreateContainerDecl" forms="AknView" phase="ClassMethods"><![CDATA[
+${className}* CreateContainerL();
+]]>				</template>
+				
+				<!-- non-owned definition.  No location is needed since we're just spewing text -->
+				<template id="CreateContainerDefn" forms="AknView" phase="ClassSource"><![CDATA[
+/**
+ *	Creates the top-level container for the view.  You may modify this method's
+ *	contents and the ${className}::NewL() signature as needed to initialize the
+ *	container, but the signature for this method is fixed.
+ *	@return new initialized instance of ${className}
+ */
+${className}* ${instance.parent.properties.className}::CreateContainerL()
+	{
+	return ${className}::NewL( ClientRect(), NULL, this );
+	}
+]]>				</template>
+
+			</templateGroup>		
+
+			<template mode="upgrade(1.0,1.1)" location="HEADER_FILE">
+@@@ Make TControls enum public
+- enum TControls
++ public:				
++ 	enum TControls
+			</template>
+
+			<!-- add function at EOF -->
+			<template mode="upgrade(1.1,1.2)" forms="AknView" phase="ClassSource"><![CDATA[
+@@@ Factor out construction of container to allow user customization
++ 
++ /**
++  *	Creates the top-level container for the view.  You may modify this method's
++  *	contents and the ${className}::NewL() signature as needed to initialize the
++  *	container, but the signature for this method is fixed.
++  *	@return new initialized instance of ${className}
++  */
++ ${className}* ${instance.parent.properties.className}::CreateContainerL()
++ 	{
++ 	return ${className}::NewL( ClientRect(), NULL, this );
++ 	}
++ 			
+]]>			</template>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

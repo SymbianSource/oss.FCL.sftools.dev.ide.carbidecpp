@@ -1,0 +1,7 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+#include "TestArrayWithUniqueInstances.hrh"
+
+RESOURCE DIALOG r_test_dialog_sub
+	{
+	}

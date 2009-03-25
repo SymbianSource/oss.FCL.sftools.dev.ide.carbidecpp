@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component 
+			friendlyName="Avkon Document" 
+			qualifiedName="com.nokia.sdt.series60.CAknDocument" 
+			instanceNameRoot="document"
+			version="1.0">
+		<documentation>
+			<information>The Series 60 top-level Avkon document class.  
+			This is a class which serves to manage data that can be loaded
+			and saved.</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknDocument" classHelpTopic="" />
+		<!-- <designerImages smallIconFile="CAknView_sm.png" largeIconFile="CAknView.png" layoutImageFile="CAknView.png"/> -->
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+		</attributes>
+		<designerImages smallIconFile="CAknDocument_sm.png" 
+			largeIconFile="CAknDocument.png"/>
+		<properties>
+			<property category="Design" name="className" type="string"/>
+		    <property category="Document" name="name" type="string" />
+			<property category="Document" name="fileMode" type="integer"/>
+			 	<!-- TODO: find out what the integer in CEikDocument::SetAppFileModeL() means -->
+		</properties>
+		
+		<sourceGen>
+
+			<defineLocation id="HEADER_FILE" domain="cpp" dir="${inc}" 
+				file="${instanceName}.h"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<template location="HEADER_FILE">
+#ifndef ${instanceName.toUpperCase()}_H
+#define ${instanceName.toUpperCase()}_H
+
+			</template>
+
+			<template location="HEADER_FILE"><![CDATA[
+#include <akndoc.h>
+]]>		
+			</template>				
+			
+			<template location="HEADER_FILE"><![CDATA[
+class CEikAppUi;
+]]>
+			</template>		
+
+			<defineLocation id="CLASS" baseLocation="HEADER_FILE"
+				owned="false"
+				location="class(${className})">
+				<template><![CDATA[
+/**
+* @class	${className} ${instanceName}.h
+* @brief	A CAknDocument-derived class is required by the S60 application 
+*           framework. It is responsible for creating the AppUi object. 
+*/
+class ${className} : public CAknDocument
+	{
+public: 
+	// constructor
+	static ${className}* NewL( CEikApplication& aApp );
+
+private: 
+	// constructors
+	${className}( CEikApplication& aApp );
+	void ConstructL();
+	
+public: 
+	// from base class CEikDocument
+	CEikAppUi* CreateAppUiL();
+	};
+]]>				</template>
+			</defineLocation>
+			
+			<template location="CLASS"/>
+			
+			<template location="HEADER_FILE">
+#endif // ${instanceName.toUpperCase()}_H
+			</template>
+
+			<defineLocation id="MAIN_FILE" domain="cpp" dir="${src}" 
+				file="${instanceName}.cpp"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<defineLocation id="MAIN_USER_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated User Includes)"
+				filter="unique-includes">
+				<template ><![CDATA[
+#include "${instanceName}.h"
+]]>				</template>				
+			</defineLocation>
+			
+			<template location="MAIN_USER_INCLUDES"/>
+			
+			<template location="MAIN_FILE"><![CDATA[
+/**
+ * @brief Constructs the document class for the application.
+ * @param anApplication the application instance
+ */
+${className}::${className}( CEikApplication& anApplication )
+	: CAknDocument( anApplication )
+	{
+	}
+
+/**
+ * @brief Completes the second phase of Symbian object construction. 
+ * Put initialization code that could leave here.  
+ */ 
+void ${className}::ConstructL()
+	{
+	}
+	
+/**
+ * Symbian OS two-phase constructor.
+ *
+ * Creates an instance of ${className}, constructs it, and
+ * returns it.
+ *
+ * @param aApp the application instance
+ * @return the new ${className}
+ */
+${className}* ${className}::NewL( CEikApplication& aApp )
+	{
+	${className}* self = new ( ELeave ) ${className}( aApp );
+	CleanupStack::PushL( self );
+	self->ConstructL();
+	CleanupStack::Pop( self );
+	return self;
+	}
+]]>
+			</template>
+
+			<defineLocation id="CREATE_APPUIL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::CreateAppUiL())">
+				<template><![CDATA[
+/**
+ * @brief Creates the application UI object for this document.
+ * @return the new instance
+ */	
+CEikAppUi* ${className}::CreateAppUiL()
+	{
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template location="CREATE_APPUIL"/>
+			
+			<!-- child contributions -->	
+			<inline>
+			// iterate children
+			contribs.addAll(Engine.generateChildContributions(form))
+			
+			// fix up the phases so they point to real locations
+			Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "MAIN_USER_INCLUDES");
+			Engine.assignLocationsForPhase(contribs, "CreateAppUiL", "CREATE_APPUIL");
+
+			//Engine.removeDuplicateContributionsForLocation(contribs, "MAIN_USER_INCLUDES");
+			</inline>
+
+		</sourceGen>		
+	</component>
+</componentDefinition>

@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.cpp.codescanner/src"
+    modelPluginID="com.nokia.carbide.cpp.codescanner" modelName="CSConfig" editPluginClass="com.nokia.carbide.cpp.codescanner.gen.CSConfig.provider.CSConfigEditPlugin"
+    editorPluginClass="com.nokia.carbide.cpp.codescanner.gen.CSConfig.presentation.CSConfigEditorPlugin"
+    testSuiteClass="com.nokia.carbide.cpp.codescanner.tests.gen.CSConfigAllTests"
+    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="5.0">
+  <foreignModel>CSConfig.xsd</foreignModel>
+  <genPackages prefix="CSConfig" basePackage="com.nokia.carbide.cpp.internal.codescanner.gen"
+      resource="XML" disposableProviderFactory="true" loadInitialization="true" literalsInterface="false"
+      ecorePackage="CSConfig.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSConfig.ecore#//CategoryType">
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/canpanic"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/codereview"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/codingstandards"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/documentation"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/functionality"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/legal"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/localisation"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/other"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/panic"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//CategoryType/performance"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSConfig.ecore#//SeverityType">
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//SeverityType/high"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//SeverityType/low"/>
+      <genEnumLiterals ecoreEnumLiteral="CSConfig.ecore#//SeverityType/medium"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="CSConfig.ecore#//CategoryTypeObject"/>
+    <genDataTypes ecoreDataType="CSConfig.ecore#//SeverityTypeObject"/>
+    <genClasses ecoreClass="CSConfig.ecore#//AccessArrayElementWithoutCheck2Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AccessArrayElementWithoutCheck2Type/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AccessArrayElementWithoutCheck2Type/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AccessArrayElementWithoutCheck2Type/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//AccessArrayElementWithoutCheckType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AccessArrayElementWithoutCheckType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AccessArrayElementWithoutCheckType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AccessArrayElementWithoutCheckType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ActivestartType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ActivestartType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ActivestartType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ActivestartType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ActivestopType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ActivestopType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ActivestopType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ActivestopType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ArgumentsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArgumentsType/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArgumentsType/lxr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArgumentsType/lxrversion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArgumentsType/outputformat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArgumentsType/timestampedoutput"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ArraypassingType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArraypassingType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArraypassingType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArraypassingType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ArrayptrcleanupType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArrayptrcleanupType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArrayptrcleanupType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ArrayptrcleanupType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//AssertdebuginvariantType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AssertdebuginvariantType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AssertdebuginvariantType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//AssertdebuginvariantType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//BaddefinesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//BaddefinesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//BaddefinesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//BaddefinesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//BaseconstructType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//BaseconstructType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//BaseconstructType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//BaseconstructType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CallActiveObjectWithoutCheckingOrStoppingType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CallActiveObjectWithoutCheckingOrStoppingType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CallActiveObjectWithoutCheckingOrStoppingType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CallActiveObjectWithoutCheckingOrStoppingType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CanpanicType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CanpanicType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CategoriesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/canpanic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/codereview"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/codingstandards"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/documentation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/functionality"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/legal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/localisation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/other"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/panic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CategoriesType/performance"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ChangenotificationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ChangenotificationType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ChangenotificationType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ChangenotificationType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CleanupType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CleanupType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CleanupType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CleanupType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CodereviewType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CodereviewType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CodescannerConfigType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CodescannerConfigType/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CodescannerConfigType/customrules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CodescannerConfigType/sources"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CodescannerConfigType/scripts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CodescannerConfigType/severities"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CodescannerConfigType/categories"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CodingstandardsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CodingstandardsType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CommentcodeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CommentcodeType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CommentcodeType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CommentcodeType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ConnectAndDontCloseMemberVariableType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConnectAndDontCloseMemberVariableType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConnectAndDontCloseMemberVariableType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConnectAndDontCloseMemberVariableType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ConnectType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConnectType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConnectType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConnectType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ConstnamesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConstnamesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConstnamesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConstnamesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ConsttdescptrType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConsttdescptrType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConsttdescptrType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ConsttdescptrType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ControlornullType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ControlornullType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ControlornullType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ControlornullType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CtltargettypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CtltargettypeType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CtltargettypeType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CtltargettypeType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CustomrulesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CustomrulesType/customrule"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CustomruleType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomruleType/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CustomruleType/keyword"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomruleType/filetype"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomruleType/severity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomruleType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomruleType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomruleType/link"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DebugromType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DebugromType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DebugromType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DebugromType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DeclarenameType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DeclarenameType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DeclarenameType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DeclarenameType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DeleteMemberVariableType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DeleteMemberVariableType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DeleteMemberVariableType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DeleteMemberVariableType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DestructorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DestructorType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DestructorType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DestructorType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DocumentationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentationType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/accessArrayElementWithoutCheck"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/accessArrayElementWithoutCheck2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/activestart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/activestop"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/arraypassing"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/arrayptrcleanup"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/assertdebuginvariant"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/baddefines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/baseconstruct"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/callActiveObjectWithoutCheckingOrStopping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/canpanic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/categories"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/cclassIgnoreRE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/changenotification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/cleanup"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/codereview"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/codescannerConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/codingstandards"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/commentcode"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/connect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/connectAndDontCloseMemberVariable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/constnames"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/consttdescptr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/controlornull"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/ctltargettype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/customrule"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/customrules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/debugrom"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/declarename"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/deleteMemberVariable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/destructor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/documentation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/doubleSemiColon"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/driveletters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/eikbuttons"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/eikonenvstatic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/enummembers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/enumnames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/exclude"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/exportinline"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/exportpurevirtual"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/externaldriveletters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/filetype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/foff"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/forbiddenwords"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/forgottoputptroncleanupstack"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/friend"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/functionality"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/goto"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/high"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/ifassignments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/ifpreprocessor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/inheritanceorder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/intleaves"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/jmp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/keyword"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/leave"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/leaveNoError"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/leavingoperators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/legal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/lFunctionCantLeave"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/lFunctionIgnoreRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/link"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/localisation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/longlines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/low"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/lxr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/lxrversion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/magicnumbers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/mclassdestructor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/medium"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/memberlc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/membervariablecallld"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/missingcancel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/missingcclass"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/mmpsourcepath"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/multilangrsc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/multipledeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/multipleinheritance"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/mydocs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/namespace"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/newlreferences"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/noleavetrap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/nonconsthbufc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/nonconsttdesc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/nonleavenew"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/nonunicodeskins"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/null"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/open"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/openIgnoreRE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/other"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/outputformat"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/panic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/performance"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/pointertoarrays"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/pragmadisable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/pragmamessage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/pragmaother"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/privateinheritance"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/pushaddrvar"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/pushmember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/readresource"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/resourcenotoncleanupstack"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/resourcesonheap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/returndescriptoroutofscope"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/rfs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/rssnames"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/scripts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/severities"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/severity"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/sources"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/stringliterals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/stringsinresourcefiles"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/struct"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/tcclasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/tclassdestructor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/timestampedoutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/title"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/todocomments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/trapcleanup"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/trapeleave"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/traprunl"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/trspassing"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/uids"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/uncompressedaif"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/uncompressedbmp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/unicodesource"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/userafter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/userfree"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/userWaitForRequest"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/variablenames"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/voidparameter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/wordsRE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/worryingcomments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/worryRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/severity1"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DoubleSemiColonType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DoubleSemiColonType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DoubleSemiColonType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DoubleSemiColonType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//DrivelettersType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DrivelettersType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DrivelettersType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DrivelettersType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//EikbuttonsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EikbuttonsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EikbuttonsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EikbuttonsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//EikonenvstaticType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EikonenvstaticType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EikonenvstaticType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EikonenvstaticType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//EnummembersType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EnummembersType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EnummembersType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EnummembersType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//EnumnamesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EnumnamesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EnumnamesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//EnumnamesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ExportinlineType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExportinlineType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExportinlineType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExportinlineType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ExportpurevirtualType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExportpurevirtualType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExportpurevirtualType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExportpurevirtualType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ExternaldrivelettersType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExternaldrivelettersType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExternaldrivelettersType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExternaldrivelettersType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//FoffType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FoffType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FoffType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FoffType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ForbiddenwordsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForbiddenwordsType/wordsRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForbiddenwordsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForbiddenwordsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForbiddenwordsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ForgottoputptroncleanupstackType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForgottoputptroncleanupstackType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForgottoputptroncleanupstackType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ForgottoputptroncleanupstackType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//FriendType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FriendType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FriendType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FriendType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//FunctionalityType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FunctionalityType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//GotoType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//GotoType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//GotoType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//GotoType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//HighType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//HighType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//IfassignmentsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IfassignmentsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IfassignmentsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IfassignmentsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//IfpreprocessorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IfpreprocessorType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IfpreprocessorType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IfpreprocessorType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//InheritanceorderType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//InheritanceorderType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//InheritanceorderType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//InheritanceorderType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//IntleavesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IntleavesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IntleavesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//IntleavesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//JmpType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//JmpType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//JmpType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//JmpType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//KeywordType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//KeywordType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//KeywordType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LeaveNoErrorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeaveNoErrorType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeaveNoErrorType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeaveNoErrorType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LeaveType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeaveType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeaveType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeaveType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LeavingoperatorsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeavingoperatorsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeavingoperatorsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LeavingoperatorsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LegalType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LegalType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LFunctionCantLeaveType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LFunctionCantLeaveType/lFunctionIgnoreRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LFunctionCantLeaveType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LFunctionCantLeaveType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LFunctionCantLeaveType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LocalisationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LocalisationType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LonglinesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LonglinesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LonglinesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LonglinesType/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LonglinesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//LowType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//LowType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MagicnumbersType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MagicnumbersType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MagicnumbersType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MagicnumbersType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MclassdestructorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MclassdestructorType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MclassdestructorType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MclassdestructorType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MediumType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MediumType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MemberlcType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MemberlcType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MemberlcType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MemberlcType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MembervariablecallldType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MembervariablecallldType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MembervariablecallldType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MembervariablecallldType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MissingcancelType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcancelType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcancelType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcancelType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MissingcclassType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcclassType/cclassIgnoreRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcclassType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcclassType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MissingcclassType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MmpsourcepathType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MmpsourcepathType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MmpsourcepathType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MmpsourcepathType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MultilangrscType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultilangrscType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultilangrscType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultilangrscType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MultipledeclarationsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultipledeclarationsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultipledeclarationsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultipledeclarationsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MultipleinheritanceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultipleinheritanceType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultipleinheritanceType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MultipleinheritanceType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//MydocsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MydocsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MydocsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//MydocsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NamespaceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NamespaceType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NamespaceType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NamespaceType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NewlreferencesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NewlreferencesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NewlreferencesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NewlreferencesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NoleavetrapType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NoleavetrapType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NoleavetrapType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NoleavetrapType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NonconsthbufcType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonconsthbufcType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonconsthbufcType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonconsthbufcType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NonconsttdescType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonconsttdescType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonconsttdescType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonconsttdescType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NonleavenewType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonleavenewType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonleavenewType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonleavenewType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NonunicodeskinsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonunicodeskinsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonunicodeskinsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NonunicodeskinsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//NullType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NullType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NullType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//NullType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//OpenType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//OpenType/openIgnoreRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//OpenType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//OpenType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//OpenType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//OtherType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//OtherType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PanicType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PanicType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PerformanceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PerformanceType/enable"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PointertoarraysType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PointertoarraysType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PointertoarraysType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PointertoarraysType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PragmadisableType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmadisableType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmadisableType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmadisableType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PragmamessageType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmamessageType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmamessageType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmamessageType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PragmaotherType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmaotherType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmaotherType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PragmaotherType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PrivateinheritanceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PrivateinheritanceType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PrivateinheritanceType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PrivateinheritanceType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PushaddrvarType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PushaddrvarType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PushaddrvarType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PushaddrvarType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//PushmemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PushmemberType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PushmemberType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//PushmemberType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ReadresourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ReadresourceType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ReadresourceType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ReadresourceType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ResourcenotoncleanupstackType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ResourcenotoncleanupstackType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ResourcenotoncleanupstackType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ResourcenotoncleanupstackType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ResourcesonheapType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ResourcesonheapType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ResourcesonheapType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ResourcesonheapType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ReturndescriptoroutofscopeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ReturndescriptoroutofscopeType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ReturndescriptoroutofscopeType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ReturndescriptoroutofscopeType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//RfsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//RfsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//RfsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//RfsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//RssnamesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//RssnamesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//RssnamesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//RssnamesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//ScriptsType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ScriptsType/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/accessArrayElementWithoutCheck"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/accessArrayElementWithoutCheck2"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/activestart"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/activestop"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/arraypassing"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/arrayptrcleanup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/assertdebuginvariant"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/baddefines"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/baseconstruct"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/callActiveObjectWithoutCheckingOrStopping"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/changenotification"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/cleanup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/commentcode"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/connect"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/connectAndDontCloseMemberVariable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/constnames"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/consttdescptr"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/controlornull"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/ctltargettype"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/debugrom"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/declarename"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/deleteMemberVariable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/destructor"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/doubleSemiColon"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/driveletters"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/eikbuttons"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/eikonenvstatic"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/enummembers"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/enumnames"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/exportinline"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/exportpurevirtual"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/externaldriveletters"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/foff"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/forbiddenwords"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/forgottoputptroncleanupstack"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/friend"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/goto"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/ifassignments"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/ifpreprocessor"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/inheritanceorder"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/intleaves"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/jmp"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/leave"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/leaveNoError"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/leavingoperators"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/lFunctionCantLeave"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/longlines"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/magicnumbers"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/mclassdestructor"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/memberlc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/membervariablecallld"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/missingcancel"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/missingcclass"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/mmpsourcepath"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/multilangrsc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/multipledeclarations"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/multipleinheritance"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/mydocs"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/namespace"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/newlreferences"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/noleavetrap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/nonconsthbufc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/nonconsttdesc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/nonleavenew"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/nonunicodeskins"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/null"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/open"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/pointertoarrays"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/pragmadisable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/pragmamessage"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/pragmaother"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/privateinheritance"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/pushaddrvar"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/pushmember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/readresource"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/resourcenotoncleanupstack"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/resourcesonheap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/returndescriptoroutofscope"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/rfs"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/rssnames"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/stringliterals"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/stringsinresourcefiles"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/struct"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/tcclasses"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/tclassdestructor"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/todocomments"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/trapcleanup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/trapeleave"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/traprunl"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/trspassing"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/uids"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/uncompressedaif"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/uncompressedbmp"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/unicodesource"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/userafter"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/userfree"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/userWaitForRequest"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/variablenames"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/voidparameter"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/worryingcomments"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//SeveritiesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//SeveritiesType/high"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//SeveritiesType/medium"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//SeveritiesType/low"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//SourcesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//SourcesType/exclude"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//StringliteralsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StringliteralsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StringliteralsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StringliteralsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//StringsinresourcefilesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StringsinresourcefilesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StringsinresourcefilesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StringsinresourcefilesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//StructType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StructType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StructType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//StructType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TcclassesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TcclassesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TcclassesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TcclassesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TclassdestructorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TclassdestructorType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TclassdestructorType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TclassdestructorType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TodocommentsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TodocommentsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TodocommentsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TodocommentsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TrapcleanupType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrapcleanupType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrapcleanupType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrapcleanupType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TrapeleaveType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrapeleaveType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrapeleaveType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrapeleaveType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TraprunlType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TraprunlType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TraprunlType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TraprunlType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//TrspassingType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrspassingType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrspassingType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//TrspassingType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UidsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UidsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UidsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UidsType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UncompressedaifType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UncompressedaifType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UncompressedaifType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UncompressedaifType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UncompressedbmpType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UncompressedbmpType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UncompressedbmpType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UncompressedbmpType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UnicodesourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UnicodesourceType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UnicodesourceType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UnicodesourceType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UserafterType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserafterType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserafterType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserafterType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UserfreeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserfreeType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserfreeType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserfreeType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//UserWaitForRequestType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserWaitForRequestType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserWaitForRequestType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//UserWaitForRequestType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//VariablenamesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//VariablenamesType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//VariablenamesType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//VariablenamesType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//VoidparameterType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//VoidparameterType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//VoidparameterType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//VoidparameterType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//WorryingcommentsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//WorryingcommentsType/worryRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//WorryingcommentsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//WorryingcommentsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//WorryingcommentsType/severity"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,92 @@
+/*
+========================================================================
+ Name		: BirthdayForm.rssi
+
+ Description: 
+
+ Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+ All rights reserved.
+ This component and the accompanying materials are made available
+ under the terms of the License "Eclipse Public License v1.0"
+ which accompanies this distribution, and is available
+ at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+ Contributors:
+ Nokia Corporation - initial contribution.
+========================================================================
+*/
+#include "BirthdayForm.hrh"
+#include "BirthdayForm.loc"
+
+RESOURCE DIALOG r_birthday_form_birthday_form
+	{
+	flags = EEikDialogFlagNoDrag | EEikDialogFlagNoTitleBar | EEikDialogFlagCbaButtons | EEikDialogFlagFillAppClientRect | EEikDialogFlagWait;
+	buttons = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	form = r_birthday_form_birthday_form_form;
+	}
+RESOURCE FORM r_birthday_form_birthday_form_form
+	{items =
+			{
+			DLG_LINE
+				{
+				type = EEikCtEdwin;
+				prompt = STR_BirthdaysAppUi_2;
+				id = EBirthdaysAppUiName;
+				control = EDWIN
+					{
+					maxlength = 80;
+					default_case = EAknEditorTextCase;
+					allowed_case_modes = EAknEditorAllCaseModes;
+					numeric_keymap = EAknEditorStandardNumberModeKeymap;
+					default_input_mode = EAknEditorTextInputMode;
+					allowed_input_modes = EAknEditorTextInputMode | EAknEditorNumericInputMode | EAknEditorSecretAlphaInputMode;
+					special_character_table = 0;
+					};
+				},
+			DLG_LINE
+				{
+				type = EEikCtDateEditor;
+				prompt = STR_BirthdaysAppUi_5;
+				id = EBirthdaysAppUiDate;
+				control = DATE_EDITOR
+					{
+					maxDate = DATE
+						{
+						month = 11;
+						day = 30;
+						year = 2099;
+						};
+					minDate = DATE
+						{
+						year = 1;
+						};
+					};
+				},
+			DLG_LINE
+				{
+				type = EEikCtEdwin;
+				prompt = STR_BirthdaysAppUi_4;
+				id = EBirthdaysAppUiTodo;
+				control = EDWIN
+					{
+					maxlength = 500;
+					default_case = EAknEditorTextCase;
+					allowed_case_modes = EAknEditorAllCaseModes;
+					numeric_keymap = EAknEditorStandardNumberModeKeymap;
+					default_input_mode = EAknEditorTextInputMode;
+					allowed_input_modes = EAknEditorTextInputMode | EAknEditorNumericInputMode | EAknEditorSecretAlphaInputMode;
+					special_character_table = 0;
+					};
+				}
+			};
+		flags = EEikFormEditModeOnly | EEikFormUseDoubleSpacedFormat;
+
+	}
+RESOURCE TBUF r_birthday_form_name
+	{
+	buf = STR_BirthdaysAppUi_1;
+	}
+RESOURCE TBUF r_birthday_form_todo
+	{
+	buf = STR_BirthdaysAppUi_3;
+	}

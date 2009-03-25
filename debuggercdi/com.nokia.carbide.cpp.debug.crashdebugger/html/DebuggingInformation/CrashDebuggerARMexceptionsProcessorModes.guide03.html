@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>ARM Processor Modes</title>
+<link rel="StyleSheet" href="sysdoc-eclipse.css" type="text/css" />
+<link rel="StyleSheet" href="sysdoc-eclipse.css" type="text/css" />
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2><a name="debugging%2earm%2dexceptions%2dprocessormodes%2eexceptions"></a>ARM Processor
+Modes (CPSR register)</h2>
+</div>
+<div class="Head2">
+<p>The 5 least-significant bits of the CPSR register indicate the ARM
+processor mode. The CPSR register value is displayed as a result of entering an
+  <a href="CrashDebugger_cmd_f.guide.html" title="The debug monitor and command syntax / f - display kernel fault information">f</a> command in the
+debug monitor.</p>
+</div><div>
+  <table cellpadding="1" border="0" cellspacing="0"><tr><td width="548"
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0">
+<tr valign="top"><td width="101" class="Cell">
+<p><b>CPSR[4:0]</b></p></td><td width="75" class="Cell">
+<p><b>Mode</b></p></td><td width="293" class="Cell">
+<p><b>Register set</b></p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>10000 </p></td><td class="Cell">
+<p>User</p></td><td class="Cell">
+<p> PC, R14..R0, CPSR</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>10001</p></td><td class="Cell">
+<p>FIQ</p></td><td class="Cell">
+<p>PC, R14_fiq..R8_fiq, R7-R0, CPSR, SPSR_fiq</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>10010</p></td><td class="Cell">
+<p>IRQ </p></td><td class="Cell">
+<p>PC, R14_irq, R13_irq, R12-R0, CPSR, SPSR_irq</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>10011</p></td><td class="Cell">
+<p>SVC</p></td><td class="Cell">
+<p>PC, R14_svc, R13_svc, R12-R0, CPSR, SPSR_sv</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>10111</p></td><td class="Cell">
+<p>Abort</p></td><td class="Cell">
+<p>PC, R14_abt, R13_abt, R12-R0, CPSR, SPSR_abt</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>11011</p></td><td class="Cell">
+<p>Undef </p></td><td class="Cell">
+<p>PC, R14_und, R13_und, R12-R0, CPSR, SPSR_und</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>11111</p></td><td class="Cell">
+<p>System</p></td><td class="Cell">
+<p>PC, R14..R0, CPSR</p></td></tr>
+</table></td></tr></table> 
+</div>
+	   <h5>Related references </h5>
+	   <ul>
+	     <li><a href="CrashDebuggerARMexceptionsProcessorModes.guide.html">ARM Exception Types</a></li>
+         <li><a href="CrashDebuggerARMexceptionsProcessorModes.guide02.html">ARM Fault Status Register Values</a></li>
+         <li><a href="CrashDebuggerARMexceptionsProcessorModes.guide03.html">ARM Processor Modes</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

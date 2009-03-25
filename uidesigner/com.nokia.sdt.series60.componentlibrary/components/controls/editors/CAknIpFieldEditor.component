@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknIpFieldEditor.IPField"
+		converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.IPFieldValueConverter">
+		<property name="firstField" type="integer" minValue="0" maxValue="255"
+			descriptionKey="firstFieldDescription" />
+		<property name="secondField" type="integer" minValue="0" maxValue="255"
+			descriptionKey="secondFieldDescription" />
+		<property name="thirdField" type="integer" minValue="0" maxValue="255"
+			descriptionKey="thirdFieldDescription" />
+		<property name="fourthField" type="integer" minValue="0" maxValue="255"
+			descriptionKey="fourthFieldDescription" />
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CAknIpFieldEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="ipFieldEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="IP_FIELD_EDITOR" className="CAknIpFieldEditor" />
+		<designerImages 
+			smallIconFile="CAknIpFieldEditor_sm.png" 
+			largeIconFile="CAknIpFieldEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CAknIpFieldEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<!-- <attribute key="is-form-content">true</attribute> 
+			Can't use in CAknForm because will panic due to missing enum in 
+			CAknForm control validation -->
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-setting-item-list-content">true</attribute>
+			<attribute key="data-model-cpp-type">TInetAddr</attribute>
+			<attribute key="setting-item-class-name">CAknIpFieldSettingItem</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="dataquery-className">CAknIpAddressQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EAknCtIpFieldEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<compoundProperty category="Data" name="minFieldValues" 
+				type="com.nokia.sdt.series60.CAknIpFieldEditor.IPField"
+				editorClass="com.nokia.sdt.symbian.ui.editors.IPFieldEditorFactory"
+				default="0.0.0.0" descriptionKey="minFieldValuesDescription" />
+			<compoundProperty category="Data" name="maxFieldValues" 
+				type="com.nokia.sdt.series60.CAknIpFieldEditor.IPField"
+				editorClass="com.nokia.sdt.symbian.ui.editors.IPFieldEditorFactory"
+				default="255.255.255.255" descriptionKey="maxFieldValuesDescription" />
+			<compoundProperty category="Data" name="address" 
+				type="com.nokia.sdt.series60.CAknIpFieldEditor.IPField"
+				editorClass="com.nokia.sdt.symbian.ui.editors.IPFieldEditorFactory"
+				default="0.0.0.0" descriptionKey="addressDescription" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CAknIpFieldEditor_visual.js" prototype="CAknIpFieldEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="IP_FIELD_EDITOR" headers="eikon.rh">
+			<mapResourceMember struct="IP_FIELD" property="minFieldValues" member="min_field_values">
+				<mapSimpleMember property="firstField" member="first_field"/>
+				<mapSimpleMember property="secondField" member="second_field"/>
+				<mapSimpleMember property="thirdField" member="third_field"/>
+				<mapSimpleMember property="fourthField" member="fourth_field"/>
+			</mapResourceMember>
+			<mapResourceMember struct="IP_FIELD" property="maxFieldValues" member="max_field_values">
+				<mapSimpleMember property="firstField" member="first_field"/>
+				<mapSimpleMember property="secondField" member="second_field"/>
+				<mapSimpleMember property="thirdField" member="third_field"/>
+				<mapSimpleMember property="fourthField" member="fourth_field"/>
+			</mapResourceMember>
+			<!-- flags member of resource maps to each field 
+				but doesn't seem to make sense for this editor, 
+				nor do any sdk apps seem to set any -->
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuery AknDataQuerySetData AknDataQuerySetData1 AknDataQuerySetData2">
+	
+		<inline scope="prototype"><![CDATA[
+include("../../dataModelGenLibrary.js")
+]]>		</inline>
+
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h", "in_sock.h",
+									"aknipfed.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+		
+		<template phase="ForwardDeclarations" forms="AknDataQuery">
+class TInetAddr;
+		</template>		
+
+		<template phase="Initialize" forms="Container Dialog Form"><![CDATA[
+	{
+	TInetAddr ipAddress = TInetAddr( INET_ADDR( ${properties.address.firstField}, ${properties.address.secondField}, ${properties.address.thirdField}, ${properties.address.fourthField} ), 0 );
+	${instanceMemberName}->SetAddress( ipAddress );
+	}
+]]>		</template>
+		
+		<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+		<template phase="DataModelIncludes" forms="SettingsList"><![CDATA[
+#include <in_sock.h>		
+]]>		</template>
+
+		<template phase="Initialize" forms="SettingsList"><![CDATA[
+	{
+	TInetAddr ipAddress = TInetAddr( INET_ADDR( ${properties.address.firstField}, ${properties.address.secondField}, ${properties.address.thirdField}, ${properties.address.fourthField} ), 0 );
+<% this.setupSettingItem(contribs, 1, instance, "ipAddress"); 
+%>	}
+]]>		</template>
+
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	aData.SetAddress( INET_ADDR( ${properties.address.firstField}, ${properties.address.secondField}, ${properties.address.thirdField}, ${properties.address.fourthField} ) );
+]]>		</template>
+
+		<template form="AknDataQuerySetData1" phase="SetData"><![CDATA[
+	aData1.SetAddress( INET_ADDR( ${properties.address.firstField}, ${properties.address.secondField}, ${properties.address.thirdField}, ${properties.address.fourthField} ) );
+]]>		</template>
+
+		<template form="AknDataQuerySetData2" phase="SetData"><![CDATA[
+	aData2.SetAddress( INET_ADDR( ${properties.address.firstField}, ${properties.address.secondField}, ${properties.address.thirdField}, ${properties.address.fourthField} ) );
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+		
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent" />
+	
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

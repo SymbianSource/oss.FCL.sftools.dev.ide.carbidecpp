@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Component Definition Element</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Component Definition Element</h2>
+<p>The root XML element in a component definition file is the  &lt;componentDefinition&gt; element. This element can contain three types of  items. It includes zero or more compound property declarations, zero or more enum declarations and zero or one component declaration. Displayable strings can either be included literally within the definition file or referenced in the <em>component</em>.properties file by prefixing the string with the percent symbol (%). Generally the initial part of the .component XML file  looks like:<br />
+</p>
+<blockquote>
+  <p class="listing">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; <br />
+&lt;componentDefinition  xmlns=&quot;http://www.nokia.com/sdt/emf/component&quot; <br />
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;</p>
+</blockquote>
+<p>The main item within the &lt;componentDefinition&gt; element is the &lt;component&gt; element. There can be only one of  these per file, and it can be omitted if the file just has type definitions. The other two items that can appear in &lt;componentDefinition&gt;  are type declarations that are referenced from property definitions.</p>
+<p>The &lt;compoundPropertyDeclaration&gt; element is used to declare a structured type used  in properties. One example is a Point structure containing x and y coordinates.  Another example is a Symbian image property, containing the name of a bitmap file  and names of the regular image and mask images.</p>
+<p>The &lt;enumPropertyDeclaration&gt; element declares an enumerated type that may be referenced from one or more enumerated property declarations in this or other component documents. Sets of enumerated values  can be declared and used to define properties.</p>
+<p>  All enum property declarations are in a global namespace and must be declared as global elements.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

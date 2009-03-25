@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define context help for UI Designer pref panel -->
+<!-- plugin="com.symbian.cdt.sdk" -->
+
+<contexts>
+	
+	<!-- UI DESIGNER PREF PANEL -->
+	<context id="carbide_dev_page_help" >
+		<topic label="UI Designer Preferences" 		href="html/reference/uidesign/ref_ui_designer_prefs.htm" />
+	</context>
+	
+</contexts>

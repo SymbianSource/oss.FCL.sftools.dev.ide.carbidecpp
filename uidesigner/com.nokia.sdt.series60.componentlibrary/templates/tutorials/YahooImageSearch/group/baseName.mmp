@@ -1,0 +1,55 @@
+// $(baseName).mmp
+
+$(S60_50_CustomBuildIncludes)
+
+#if defined(MARM)
+CAPABILITY NETWORKSERVICES
+#endif
+TARGET $(baseName).exe
+TARGETTYPE exe
+UID 0x100039ce $(uid3)
+VENDORID 0x00000000
+EPOCSTACKSIZE 0x8000
+
+SYSTEMINCLUDE \epoc32\include \epoc32\include\variant \epoc32\include\ecom
+SYSTEMINCLUDE \epoc32\include\oem
+USERINCLUDE ..\$(incDir) ..\$(dataDir)
+
+SOURCEPATH ..\$(dataDir)
+START RESOURCE $(baseName).rss
+TARGET $(baseName).r01
+TARGETPATH resource\apps
+HEADER
+LANG 01
+END
+START RESOURCE $(baseName)_reg.rss
+TARGET $(baseName)_reg.r01
+TARGETPATH private\10003a3f\apps
+HEADER
+LANG 01
+END
+SOURCEPATH ..\$(sourceDir)
+SOURCE YahooSearchModel.cpp YahooImageSearchDocument.cpp
+SOURCE YahooImageSearchApplication.cpp YahooImageSearchAppUi.cpp
+SOURCE WebClientEngine.cpp SearchResultsView.cpp SearchResults.cpp
+SOURCE ImageDisplayer.cpp ImageContainerView.cpp ImageContainer.cpp
+
+START BITMAP $(baseName)_mbm.mbm
+TARGETPATH resource\apps
+HEADER
+SOURCEPATH ..\$(gfxDir)
+SOURCE c12,1 list_icon.bmp list_icon_mask.bmp
+END
+
+// NOTE: Content in this section is auto-generated, any changes are overwritten in the next update process.
+LIBRARY euser.lib apparc.lib cone.lib eikcore.lib avkon.lib commonengine.lib
+LIBRARY efsrv.lib estor.lib eikcoctl.lib eikdlg.lib bafl.lib eikctl.lib
+LIBRARY fbscli.lib aknicon.lib aknnotify.lib etext.lib gdi.lib egul.lib
+LIBRARY insock.lib ecom.lib InetProtUtil.lib http.lib esock.lib xmlframework.lib
+LIBRARY imageconversion.lib
+
+COMPRESSTARGET
+
+#ifdef ENABLE_ABIV2_MODE
+  DEBUGGABLE_UDEBONLY
+#endif

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Translating Text for Added Languages</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Translating Text for Added Languages</h2>
+
+<p>Once a new language has been added to an application project, the actual translation of the strings can be done within the Carbide.c++ tool using a text editor to edit the language files or directly editing the component in the <a href="../../reference/uidesign/ref_ui_design_editor.htm">UI Design Editor</a>.</p>
+<p>You can identify which language is contained in each localization file by examining it&#8217;s extension. The extension uses the format of <span class="code">.l<i>nn</i></span> where the &#8220;<span class="code">l</span>&#8221; indicates a localization file and the &#8220;<span class="code"><i>nn</i></span>&#8221; is the number that identifies the language. For example, a localization file called <span class="code">HelloUIDesigner.l04</span> is the Spanish localization file, while one called <span class="code">HelloUIDesigner.l74</span> is the Mongolian localization file. </p>
+<p>Once a localization file is open you can quickly locate all the strings that require translation by searching for a text marker consisting of 2 question marks in sequence ( <span class="code">??</span>) and preceding the translatable string. An example string to translate might look like this:</p>
+<p class="listing">#define STR_HelloUIDesignerContainerView_1 &quot;??HelloUIDesignerContainer&quot;</p>
+<p>Note the translation marker before the string.</p>
+<p class="note"><b>NOTE</b> When editing, be sure to remove the translation marker from the string. </p>
+<div class="step">
+  <h4>Translating Application Strings</h4>
+  <ol>
+    <li>Locate and open the language file to translate</li>
+    <p>UI Designer stores the localization files in the project's <span class="code">data</span> folder. Open the data folder and double-click to open a specific localization file for editing. The file opens in an editor view.</p>
+    <li>Translate the text strings into the specific language</li>
+    <p>Look for occurrences of the translation marker of 2 question marks ( <span class="code">??</span>) in the file. Once you've located one, translate the string into the appropriate language, making sure to remove the translation markers. Repeat for all strings that require translation.</p>
+    <li>Save your work</li>
+    <p>Click <b>File &gt; Save</b> to save your newly translated localization file.</p>
+    <li>Repeat for each localization file in the project</li>
+  </ol>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_s60_internationalization.htm">Internationalization</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+ <li><a href="../../reference/app_editor/ref_languages.htm">Languages Page</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component friendlyName="Base" qualifiedName="com.nokia.examples.baseComponent" version="1.0">
+		<symbian sdkName="com.nokia.test" minSDKVersion="2.0" maxSDKVersion="3.0" 
+			className="CBaseComponent" classHelpTopic="org.eclipse.ui.property_sheet_page_help_context" 
+			resourceType="BASE" resourceHelpTopic="org.eclipse.ui.property_sheet_page_help_context" />
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+		</attributes>
+		<properties>
+			<property displayName="name" name="name" type="uniqueName"/>
+			<property displayName="flag" name="flag" type="boolean"/>
+		</properties>
+	</component>
+</componentDefinition>

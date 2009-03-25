@@ -1,0 +1,5 @@
+
+STRUCT OWNER {
+	LINK theLink;
+	LLINK theLlink;
+}

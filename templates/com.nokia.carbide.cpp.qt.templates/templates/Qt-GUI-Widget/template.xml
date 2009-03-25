@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+
+	<wizardPage 
+		id="basics" 
+		label="%basics.label">
+		<description>%basics.desc</description>
+		<textField 
+				id="className"
+				label="%className.label"
+				mandatory="true"
+				default="$(baseName)">
+				<description>%className.desc</description>
+		</textField>
+		<uidField 
+				id="uid3"
+				label="%uid3.label"
+				min="0xe0000000"
+				max="0xefffffff"
+				mandatory="true"
+				persist="true">
+				<description>%uid3.desc</description>
+		</uidField>
+	</wizardPage>
+
+	<process class="com.nokia.carbide.templatewizard.processes.CreateTemplateVariable"
+	 		bundle="com.nokia.carbide.templatewizard">
+		<parameter name="variable" variableName="parentClass" value="QWidget" /> 
+	</process>
+
+	<process class="com.nokia.carbide.cpp.project.core.processes.NewProject"
+	 		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+
+		<parameter name="file"
+			sourcePath="../Qt-GUI-Common/main.cpp"
+			targetPath="main.cpp"
+			/>
+		<parameter name="file"
+			sourcePath="../Qt-GUI-Common/Basename.cpp"
+			targetPath="$(className).cpp"
+			/>
+		<parameter name="file"
+			sourcePath="../Qt-GUI-Common/Basename.h"
+			targetPath="$(className).h"
+			/>
+		<parameter name="file"
+			sourcePath="../Qt-GUI-Common/Basename.pro"
+			targetPath="$(baseName).pro"
+			/>
+		<parameter name="file"
+			sourcePath="../Qt-GUI-Common/Basename_reg.rss"
+			targetPath="$(baseName)_reg.rss"
+			/>
+		<parameter name="file"
+			sourcePath="QWidget.ui"
+			targetPath="$(className).ui"
+			/>
+	</process>
+
+	<process class="com.nokia.carbide.cpp.internal.qt.ui.processes.ProjectCreatedTasksQt"
+	 	bundle="com.nokia.carbide.cpp.qt.ui">
+		<parameter name="project" projectName="$(projectName)"
+			proFilePath="$(baseName).pro"
+			bldInfPath="bld.inf"
+			targetMMPFileName="" /> 
+	</process>
+
+</template>

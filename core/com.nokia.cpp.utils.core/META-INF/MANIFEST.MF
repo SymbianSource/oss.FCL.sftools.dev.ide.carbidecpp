@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-Name: Carbide.c++ Core Utilities
+Bundle-SymbolicName: com.nokia.cpp.utils.core;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.nokia.cpp.utils.core.noexport.UtilsCorePlugin
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources;visibility:=reexport,
+ org.eclipse.core.filebuffers,
+ org.eclipse.jface,
+ org.eclipse.core.filesystem;bundle-version="1.2.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.cpp.internal.api.utils.core
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

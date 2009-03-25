@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU14 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikLabel.Flags">
+		<property name="underline" type="boolean" displayName="%underline" 
+			descriptionKey="underlineDescription"/>
+		<property name="strikethrough" type="boolean" displayName="%strikethrough" 
+			descriptionKey="strikethroughDescription"/>
+		<property name="overrideAutoWrapping" type="boolean" displayName="%overrideAutoWrapping" 
+			descriptionKey="overrideAutoWrappingDescription"/>		
+		<property name="autoWrappingOn" type="boolean" displayName="%autoWrappingOn"
+			descriptionKey="autoWrappingOnDescription"/>		
+	</compoundPropertyDeclaration>
+					
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikLabel.HorizontalAlign">
+		<enumElement value="EEikLabelAlignHLeft" displayValue="%EEikLabelAlignHLeft"/>
+		<enumElement value="EEikLabelAlignHCenter" displayValue="%EEikLabelAlignHCenter"/>
+		<enumElement value="EEikLabelAlignHRight" displayValue="%EEikLabelAlignHRight"/>
+	</enumPropertyDeclaration>
+		
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikLabel.VerticalAlign">
+		<enumElement value="EEikLabelAlignVBottom" displayValue="%EEikLabelAlignVBottom"/>
+		<enumElement value="EEikLabelAlignVCenter" displayValue="%EEikLabelAlignVCenter"/>
+		<enumElement value="EEikLabelAlignVTop" displayValue="%EEikLabelAlignVTop"/>
+	</enumPropertyDeclaration>
+			
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikLabel.EEikLabelStandardFont">
+		<enumElement value="NormalFont" displayValue="%NormalFont"/>
+		<enumElement value="LegendFont" displayValue="%LegendFont"/>
+		<enumElement value="AnnotationFont" displayValue="%AnnotationFont"/>
+	</enumPropertyDeclaration>
+		
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikLabel.TTextEmphasis">
+		<enumElement value="ENoEmphasis" displayValue="%ENoEmphasis"/>
+		<enumElement value="EPartialEmphasis" displayValue="%EPartialEmphasis"/>
+		<enumElement value="EFullEmphasis" displayValue="%EFullEmphasis"/>
+	</enumPropertyDeclaration>
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikLabel"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"
+			instanceNameRoot="label"			
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CEikLabel" classHelpTopic=""
+			resourceType="LABEL" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikLabel_sm.png" 
+			largeIconFile="CEikLabel.png"/>
+			
+		<attributes>
+			<attribute key ="cpp-class-name">CEikLabel</attribute>
+			<attribute key ="rss-control-type-enum">EEikCtLabel</attribute>		
+		</attributes>
+		
+		<properties>
+			<compoundProperty name="flags"
+				category="%category.behavior"
+				type="com.nokia.carbide.uiq.CEikLabel.Flags" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="flagsDescription" />		
+			<enumProperty name="horizontalAlignment"
+				category="%category.layout"
+				type="com.nokia.carbide.uiq.CEikLabel.HorizontalAlign" 
+				default="EEikLabelAlignHCenter"
+				descriptionKey="horizontalAlignmentDescription" />
+			<enumProperty name="verticalAlignment"
+				category="%category.layout"
+				type="com.nokia.carbide.uiq.CEikLabel.VerticalAlign" 
+				default="EEikLabelAlignVTop"
+				descriptionKey="verticalAlignmentDescription" />						
+			<enumProperty name="standardFont"
+				category="%category.appearance" 
+				type="com.nokia.carbide.uiq.CEikLabel.EEikLabelStandardFont"
+				default="NormalFont"
+				descriptionKey="standardFontDescription" />
+			<property name="text" 
+				category="%category.data"
+				type="localizedString" 
+				default="label"
+				descriptionKey="textDescription" />		
+			<property name="reserveLength"
+				category="%category.appearance" 
+				type="integer"
+				minValue="0" maxValue="32767" descriptionKey="reserveLengthDescription" />	
+			<property name="pixelGapBetweenLines"
+				category="%category.data"
+				type="integer" minValue="0" maxValue="2147483647"
+				descriptionKey="pixelGapBetweenLinesDescription"/>				
+			<enumProperty name="emphasis"
+				category="%category.appearance"
+				type="com.nokia.carbide.uiq.CEikLabel.TTextEmphasis"
+				default="ENoEmphasis"
+				descriptionKey="emphasisDescription" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="CEikLabel.js" prototype="CEikLabel"/>
+			</implementation>
+		</implementations>
+
+		<sourceMapping>
+				<mapResource struct="LABEL" headers="uikon.rh">
+					<mapBitmaskMember property="flags" member="flags">
+						<mapBitmaskValue properties="underline" value="EikLabelUnderline" />
+						<mapBitmaskValue properties="strikethrough" value="EikLabelStrikeThrough" />
+						<mapBitmaskValue properties="overrideAutoWrapping" value="EikLabelOverrideAutoWrapping" />
+						<mapBitmaskValue properties="autoWrappingOn" value="EikLabelAutoWrappingOn" />
+					</mapBitmaskMember>
+					<mapSimpleMember property="text" member="txt"/>
+					<mapSimpleMember property="reserveLength" member="reserve_length"/>				
+					<mapEnumMember property="horizontalAlignment" member="horiz_align"
+						validate="false"
+						headers="uikon.hrh"/>
+					<mapEnumMember property="verticalAlignment" member="vert_align"
+						validate="false"
+						headers="uikon.hrh"/>					
+					<mapEnumMember property="standardFont" member="standard_font">
+						<mapEnum value="NormalFont" enumerator="EEikLabelFontNormal"/>
+						<mapEnum value="LegendFont" enumerator="EEikLabelFontLegend"/>
+						<mapEnum value="AnnotationFont" enumerator="EEikLabelFontAnnotation"/>
+					</mapEnumMember>
+				</mapResource>
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<templateGroup id="0" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="barsread.h eiklabel.h eikenv.h"/>			
+			<inline scope="prototype">
+include("../../../srcgenLibrary.js")
+			</inline>
+			
+			<inline id="1">
+				<![CDATA[	
+	setPropertiesForPhase(contribs, "InitializeControlHandlers", 0, instanceMemberName, true,
+		properties.emphasis, "ENoEmphasis", "{0}->SetEmphasis( CEikLabel::{1} );\n",
+		(String)(properties.pixelGapBetweenLines), 0, "{0}->SetPixelGapBetweenLines({1});\n");
+				]]>			
+			</inline>
+				
+			</templateGroup>
+
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Implementation Quantities</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Implementation Quantities</h3>
+<p>  The C/C++ compiler has the implementation quantities listed in Table 1, based on the ISO C++ Standard. Although the values in the right-side column are the recommended minimums for each quantity, they do not determine the compliance of the quantity.</p>
+<p class="note"><strong>NOTE</strong> The right-side column value &ldquo;unlimited&rdquo; means unlimited only up to and including memory and time limitations.</p>
+<h5>Table 1. Implementation Quantities for the C/C++ Compiler</h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="74%" scope="col">Quantity</th>
+    <th width="26%" scope="col">Minimum</th>
+  </tr>
+  <tr>
+    <td>Nesting levels of compound statements, iteration control structures, and selection control structures [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Nesting levels of conditional inclusion [256]</td>
+    <td>32</td>
+  </tr>
+  <tr>
+    <td>Pointer, array, and function declarators (in any combination) modifying an arithmetic, structure, union, or incomplete type in a declaration [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Nesting levels of parenthesized expressions within a full expression [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Number of initial characters in an internal identifier or macro name [1024]</td>
+    <td>Unlimited<br />
+    (255 significant in identifiers)</td>
+  </tr>
+  <tr>
+    <td>Number of initial characters in an external identifier [1024]</td>
+    <td>Unlimited<br />
+    (255 significant in identifiers)</td>
+  </tr>
+  <tr>
+    <td>External identifiers in one translation unit [65536]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Identifiers with block scope declared in one block [1024]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Macro identifiers simultaneously defined in one translation unit [65536]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Parameters in one function definition [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Arguments in one function call [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Parameters in one macro definition [256]</td>
+    <td>128</td>
+  </tr>
+  <tr>
+    <td>Arguments in one macro invocation [256]</td>
+    <td>128</td>
+  </tr>
+  <tr>
+    <td>Characters in one logical source line [65536] </td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Characters in a character string literal or wide string literal (after concatenation) [65536]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Size of an object [262144]</td>
+    <td>2 GB</td>
+  </tr>
+  <tr>
+    <td>Nesting levels for #include files [256]</td>
+    <td>32</td>
+  </tr>
+  <tr>
+    <td>Case labels for a switch statement (excluding those for any nested switch statements) [16384]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Data members in a single class, structure, or union [16384]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Enumeration constants in a single enumeration [4096]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Levels of nested class, structure, or union definitions in a single struct-declaration-list [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Functions registered by atexit()[32]</td>
+    <td>64</td>
+  </tr>
+  <tr>
+    <td>Direct and indirect base classes [16384]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Direct base classes for a single class [1024]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Members declared in a single class [4096]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Final overriding virtual functions in a class, accessible or not [16384]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Direct and indirect virtual bases of a class [1024]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Static members of a class [1024]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Friend declarations in a class [4096]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Access control declarations in a class [4096]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Member initializers in a constructor definition [6144] </td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Scope qualifications of one identifier [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Nested external specifications [1024]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Template arguments in a template declaration [1024] </td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Recursively nested template instantiations [17]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Handlers per try block [256]</td>
+    <td>Unlimited</td>
+  </tr>
+  <tr>
+    <td>Throw specifications on a single function declaration [256]</td>
+    <td>Unlimited</td>
+  </tr>
+</table>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

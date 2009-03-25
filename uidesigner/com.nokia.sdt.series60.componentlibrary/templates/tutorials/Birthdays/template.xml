@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE template [
+<!ENTITY standardDirFields SYSTEM "../../shared/standardDirFields.inc">
+]>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+	<wizardPage 
+		id="basics" 
+		label="%basics.label">
+		<description>%basics.desc</description>
+		<uidField 
+				id="uid3"
+				label="%basics.uid3.label"
+				min="0xe0000000"
+				max="0xefffffff"
+				mandatory="true">
+				<description>%basics.uid3.desc</description>
+		</uidField>
+	</wizardPage>
+
+	<wizardPage 
+		id="directories" 
+		label="%directories.label">
+
+		&standardDirFields;
+
+		<filenameField 
+				id="gfxDir"
+				label="%directories.gfxDir.label"
+				default="gfx"
+				mandatory="true"
+				persist="true">
+				<description>%directories.gfxDir.desc</description>
+		</filenameField>
+	</wizardPage>
+
+	<process class="com.nokia.sdt.series60.processes.AddProjectNameVariantsProcessRunner"
+				bundle="com.nokia.sdt.series60.componentlibrary">
+		<parameter name="project" projectName="$(projectName)" />
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.NewProject"
+	 		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.CreateRezId"
+	 	bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+
+	<process class="com.nokia.carbide.cpp.internal.sdk.core.processes.CheckS60CustKitSupport"
+	 	bundle="com.nokia.carbide.cpp.sdk.core">
+		<parameter name="project" projectName="$(projectName)" />			
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.CreateFolders"
+		 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		<parameter name="folder" path="$(sourceDir)" /> 
+		<parameter name="folder" path="$(incDir)" /> 
+		<parameter name="folder" path="$(dataDir)" /> 
+		<parameter name="folder" path="$(groupDir)" /> 
+		<parameter name="folder" path="$(gfxDir)" /> 
+		<parameter name="folder" path="$(sisDir)" /> 
+	</process>
+	
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="file"
+			sourcePath="README.txt"
+			targetPath="README.txt" 
+			/>
+		<parameter name="file"
+			sourcePath="data/baseName_reg.loc" 
+			targetPath="$(dataDir)/$(baseName)_reg.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/baseName_reg.rss" 
+			targetPath="$(dataDir)/$(baseName)_reg.rss" 
+			/>
+		<parameter name="file"
+			sourcePath="data/baseName.l01" 
+			targetPath="$(dataDir)/$(baseName).l01" 
+			/>
+		<parameter name="file"
+			sourcePath="data/baseName.loc" 
+			targetPath="$(dataDir)/$(baseName).loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/baseName.rss" 
+			targetPath="$(dataDir)/$(baseName).rss" 
+			/>
+		<parameter name="file"
+			sourcePath="data/BirthdayForm.l01" 
+			targetPath="$(dataDir)/BirthdayForm.l01" 
+			/>
+		<parameter name="file"
+			sourcePath="data/BirthdayForm.loc" 
+			targetPath="$(dataDir)/BirthdayForm.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/BirthdayForm.rssi" 
+			targetPath="$(dataDir)/BirthdayForm.rssi" 
+			/>
+		<parameter name="file"
+			sourcePath="data/BirthdaysList.l01" 
+			targetPath="$(dataDir)/BirthdaysList.l01" 
+			/>
+		<parameter name="file"
+			sourcePath="data/BirthdaysList.loc" 
+			targetPath="$(dataDir)/BirthdaysList.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/BirthdaysList.rssi" 
+			targetPath="$(dataDir)/BirthdaysList.rssi" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/present_excl.svg" 
+			targetPath="$(gfxDir)/present_excl.svg" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/present.svg" 
+			targetPath="$(gfxDir)/present.svg" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/qgn_menu_Birthdays.svg" 
+			targetPath="$(gfxDir)/qgn_menu_$(baseName).svg" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="group/baseName.mmp" 
+			targetPath="$(groupDir)/$(baseName).mmp" 
+			/>
+		<parameter name="file"
+			sourcePath="group/bld.inf" 
+			targetPath="$(groupDir)/bld.inf" 
+			/>
+		<parameter name="file"
+			sourcePath="group/Icons_aif_scalable_dc.mk" 
+			targetPath="$(groupDir)/Icons_aif_scalable_dc.mk" 
+			/>
+		<parameter name="file"
+			sourcePath="sis/baseName.pkg" 
+			targetPath="$(sisDir)/$(baseName).pkg" 
+			/>
+		<parameter name="file"
+			sourcePath="sis/backup_registration.xml" 
+			targetPath="$(sisDir)/backup_registration.xml" 
+			/>
+		<parameter name="file"
+			sourcePath="application.uidesign" 
+			targetPath="application.uidesign" 
+			/>
+		<parameter name="file"
+			sourcePath="BirthdaysList.uidesign" 
+			targetPath="BirthdaysList.uidesign" 
+			/>
+		<parameter name="file"
+			sourcePath="BirthdayForm.uidesign" 
+			targetPath="BirthdayForm.uidesign" 
+			/>
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.CopyFilesAndFormatAsCpp"
+		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" />			
+			
+		<parameter name="file"
+			sourcePath="inc/BirthdayForm.h" 
+			targetPath="$(incDir)/BirthdayForm.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdayForm.hrh" 
+			targetPath="$(incDir)/BirthdayForm.hrh" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/baseName.hrh" 
+			targetPath="$(incDir)/$(baseName).hrh" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdaysApplication.h" 
+			targetPath="$(incDir)/BirthdaysApplication.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdaysAppUi.h" 
+			targetPath="$(incDir)/BirthdaysAppUi.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdaysDocument.h" 
+			targetPath="$(incDir)/BirthdaysDocument.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdaysList.h" 
+			targetPath="$(incDir)/BirthdaysList.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdaysList.hrh" 
+			targetPath="$(incDir)/BirthdaysList.hrh" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/BirthdaysListView.h" 
+			targetPath="$(incDir)/BirthdaysListView.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/TBirthday.h" 
+			targetPath="$(incDir)/TBirthday.h" 
+			/>
+		<parameter name="file"
+			sourcePath="src/BirthdayForm.cpp" 
+			targetPath="$(sourceDir)/BirthdayForm.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/BirthdaysApplication.cpp" 
+			targetPath="$(sourceDir)/BirthdaysApplication.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/BirthdaysAppUi.cpp" 
+			targetPath="$(sourceDir)/BirthdaysAppUi.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/BirthdaysDocument.cpp" 
+			targetPath="$(sourceDir)/BirthdaysDocument.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/BirthdaysList.cpp" 
+			targetPath="$(sourceDir)/BirthdaysList.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/BirthdaysListView.cpp" 
+			targetPath="$(sourceDir)/BirthdaysListView.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/TBirthday.cpp" 
+			targetPath="$(sourceDir)/TBirthday.cpp" 
+			/>
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.OpenFileInEditor"
+			 bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" fileName="README.txt" />
+	</process>
+
+	<process class="com.nokia.sdt.symbian.updater.SetIgnoreAutoUpgrade"
+				bundle="com.nokia.sdt.symbian">
+		<parameter name="project" projectName="$(projectName)" />
+	</process>
+
+	<process class="com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks"
+	 	bundle="com.nokia.carbide.cpp.project.ui">
+		<parameter name="project" projectName="$(projectName)"
+			bldInfPath="$(groupDir)/bld.inf"
+			targetMMPFileName="$(baseName).mmp" 
+			pkgFilePath="$(sisDir)/$(baseName).pkg" /> 
+	</process>
+
+</template>
+

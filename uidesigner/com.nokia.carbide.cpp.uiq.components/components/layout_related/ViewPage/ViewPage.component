@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.ViewPage"
+			baseComponent="com.nokia.carbide.uiq.CommonBase"
+			instanceNameRoot="viewPage"
+			version="1.0">
+						
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="ViewPage" classHelpTopic=""
+			resourceType="QIK_VIEW_PAGE" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="ViewPage_sm.png"
+			largeIconFile="ViewPage.png"/>
+				
+		<attributes>
+			<attribute key ="is-layout-object">true</attribute>
+			<attribute key ="is-layout-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>	
+		</attributes>
+		
+		<properties>
+			<property name="tabCaption" displayName="%tabCaption"
+				category="%category.appearance" default = "ViewPage" 
+				type="localizedString" descriptionKey="tabCaptionDescription"/>
+			<compoundProperty name="tabImage" displayName="%tabImage"
+				category="%category.appearance"
+				type="com.nokia.carbide.uiq.MbmImageProperty"
+				descriptionKey="tabImageDescription"/>
+			<componentReferenceProperty name="commandList" displayName="%commandList"
+				category="%category.data"
+				descriptionKey="commandListDescription"
+				scope= "model" constraint="com.nokia.carbide.uiq.CommandList"/>
+			<!--TODO: temporary until the layout manager is implemented and integrated :
+				see DisplayModelUIQ#createLayoutObject and Container -->
+			<compoundProperty name="location" displayName="%location"
+				category="%category.hidden"
+				type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="locationDescription" />
+			<compoundProperty name="size" displayName="%size"
+				category="%category.hidden" 
+				type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="sizeDescription"/>
+		</properties>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_VIEW_PAGE"
+						headers="qikon.rh">
+				<mapEnumMember property="."
+							   member="page_id"
+							   nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_PAGE_ID"
+							   uniqueValue="*"/>
+				<mapSimpleMember property="tabCaption" member="tab_caption"/>
+	            <select property="tabImage.bmpfile">
+					<choice value="">
+					</choice>
+		            <choice>	
+						<mapSimpleMember property="tabImage.bmpfile" member="tab_bmpfile"/>			
+					</choice>
+				</select>	
+	            <select property="tabImage.bmpid">
+					<choice value="">
+					</choice>
+		            <choice>	
+						<mapEnumMember property="tabImage.bmpid" member="tab_bmpid" validate="false"/>				
+					</choice>
+				</select>
+				<select property="tabImage.bmpmask">
+					<choice value="">
+					</choice>
+		            <choice>	
+						<mapEnumMember property="tabImage.bmpmask" member="tab_bmpmaskid" validate="false"/>						
+					</choice>
+				</select>																	   						
+				<mapReferenceMember property="commandList"
+									member="command_list"/>
+				<mapReferenceMember property="[com.nokia.carbide.uiq.CQikContainer]"
+									member="page_content"
+									rsrcId="containerSettings"/>
+				<mapReferenceMember property="[com.nokia.carbide.uiq.CQikContainer]"
+									member="container"
+									rsrcId="container"/>
+				<mapEnumMember property="[com.nokia.carbide.uiq.CQikContainer].scrollable"
+									member="container_type"/>
+			</mapResource>		
+		</sourceMapping>	
+	
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="ViewPage.js" prototype="ViewPage"/>																			
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>	
+				<code class="com.nokia.carbide.cpp.uiq.components.ViewPageInitializerFactory"/>	
+			</implementation>
+		</implementations>				
+
+	</component>
+	
+</componentDefinition>

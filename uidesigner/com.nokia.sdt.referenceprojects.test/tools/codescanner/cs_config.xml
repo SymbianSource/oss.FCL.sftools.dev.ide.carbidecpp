@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ASCII"?>
+<codescannerConfig>
+  <sources>
+    <exclude>.*\.au</exclude>
+    <exclude>.*\.avi</exclude>
+    <exclude>.*\.bat</exclude>
+    <exclude>.*\.bin</exclude>
+    <exclude>.*\.bmp</exclude>
+    <exclude>.*\.cmd</exclude>
+    <exclude>.*\.dll</exclude>
+    <exclude>.*\.doc</exclude>
+    <exclude>.*\.exe</exclude>
+    <exclude>.*\.gif</exclude>
+    <exclude>.*\.jpg</exclude>
+    <exclude>.*\.lib</exclude>
+    <exclude>.*\.log</exclude>
+    <exclude>.*\.mbm</exclude>
+    <exclude>.*\.mp3</exclude>
+    <exclude>.*\.mpg</exclude>
+    <exclude>.*\.png</exclude>
+    <exclude>.*\.raw</exclude>
+    <exclude>.*\.rtf</exclude>
+    <exclude>.*\.tif</exclude>
+    <exclude>.*\.wav</exclude>
+    <exclude>.*\.wbmp</exclude>
+    <exclude>.*\.wmf</exclude>
+    <exclude>.*\.xls</exclude>
+    <exclude>.*\.zip</exclude>
+  </sources>
+  <scripts><accessArrayElementWithoutCheck category="codereview" enable="false" severity="low"/><accessArrayElementWithoutCheck2 category="codereview" enable="false" severity="low"/><activestart category="codereview" enable="false" severity="low"/><activestop category="codereview" enable="false" severity="low"/><arraypassing category="performance" enable="true" severity="medium"/><arrayptrcleanup category="codereview" enable="false" severity="low"/><assertdebuginvariant category="codingstandards" enable="false" severity="low"/><baddefines category="codingstandards" enable="false" severity="low"/><baseconstruct category="codereview" enable="false" severity="low"/><callActiveObjectWithoutCheckingOrStopping category="codereview" enable="false" severity="low"/><changenotification category="codereview" enable="false" severity="low"/><cleanup category="codingstandards" enable="false" severity="low"/><commentcode category="codereview" enable="false" severity="low"/><connect category="canpanic" enable="true" severity="high"/><ConnectAndDontCloseMemberVariable category="functionality" enable="true" severity="medium"/><constnames category="codingstandards" enable="false" severity="low"/><consttdescptr category="codingstandards" enable="false" severity="low"/><controlornull category="canpanic" enable="true" severity="high"/><ctltargettype category="functionality" enable="true" severity="medium"/><debugrom category="performance" enable="true" severity="medium"/><declarename category="codingstandards" enable="false" severity="low"/><deleteMemberVariable category="canpanic" enable="true" severity="high"/><destructor category="canpanic" enable="true" severity="high"/><doubleSemiColon category="codereview" enable="false" severity="low"/><driveletters category="codingstandards" enable="false" severity="low"/><eikbuttons category="localisation" enable="true" severity="medium"/><eikonenvstatic category="performance" enable="true" severity="medium"/><enummembers category="codingstandards" enable="false" severity="low"/><enumnames category="codingstandards" enable="false" severity="low"/><exportinline category="functionality" enable="true" severity="medium"/><exportpurevirtual category="functionality" enable="true" severity="medium"/><externaldriveletters category="canpanic" enable="true" severity="high"/><foff category="codereview" enable="false" severity="low"/><forbiddenwords category="codingstandards" enable="false" severity="low">
+      <wordsRE>Typhoon|Hurricane|Epoc|Nokia Mobile Phones|NMP</wordsRE>
+    </forbiddenwords><forgottoputptroncleanupstack category="codereview" enable="false" severity="low"/><friend category="codereview" enable="false" severity="low"/><goto category="codingstandards" enable="false" severity="low"/><ifassignments category="codingstandards" enable="false" severity="low"/><ifpreprocessor category="codingstandards" enable="false" severity="low"/><intleaves category="codereview" enable="false" severity="low"/><jmp category="codingstandards" enable="false" severity="low"/><leave category="canpanic" enable="true" severity="high"/><LeaveNoError category="functionality" enable="true" severity="medium"/><leavingoperators category="codereview" enable="false" severity="low"/><LFunctionCantLeave category="codereview" enable="false" severity="low"/><longlines category="codingstandards" enable="false" length="160" severity="low"/><magicnumbers category="codingstandards" enable="false" severity="low"/><mclassdestructor category="codingstandards" enable="false" severity="low"/><memberlc category="canpanic" enable="true" severity="high"/><membervariablecallld category="codingstandards" enable="false" severity="low"/><missingcclass category="canpanic" enable="true" severity="high">
+      <cclassIgnoreRE>CBase</cclassIgnoreRE>
+    </missingcclass><mmpsourcepath category="codingstandards" enable="false" severity="low"/><multilangrsc category="codereview" enable="false" severity="low"/><multipledeclarations category="codingstandards" enable="false" severity="low"/><multipleinheritance category="functionality" enable="true" severity="medium"/><mydocs category="functionality" enable="true" severity="medium"/><namespace category="codingstandards" enable="false" severity="low"/><newlreferences category="codingstandards" enable="false" severity="low"/><noleavetrap category="codereview" enable="false" severity="low"/><nonconsthbufc category="codingstandards" enable="false" severity="low"/><nonconsttdesc category="codingstandards" enable="false" severity="low"/><nonleavenew category="codereview" enable="false" severity="low"/><nonunicodeskins category="codereview" enable="false" severity="low"/><null category="codingstandards" enable="false" severity="low"/><open category="canpanic" enable="true" severity="high">
+      <openIgnoreRE>RDesReadStream|RDesWriteStream</openIgnoreRE>
+    </open><pointertoarrays category="performance" enable="true" severity="medium"/><pragmadisable category="codingstandards" enable="false" severity="low"/><pragmamessage category="codingstandards" enable="false" severity="low"/><pragmaother category="codereview" enable="false" severity="low"/><privateinheritance category="codingstandards" enable="false" severity="low"/><pushaddrvar category="canpanic" enable="true" severity="high"/><pushmember category="canpanic" enable="true" severity="high"/><readresource category="canpanic" enable="true" severity="high"/><resourcesonheap category="codingstandards" enable="true" severity="low"/><returndescriptoroutofscope category="canpanic" enable="true" severity="high"/><rfs category="codereview" enable="false" severity="low"/><rssnames category="codereview" enable="false" severity="low"/><stringliterals category="codingstandards" enable="false" severity="low"/><stringsinresourcefiles category="codereview" enable="false" severity="low"/><struct category="codingstandards" enable="false" severity="low"/><tcclasses category="functionality" enable="true" severity="medium"/><tclassdestructor category="codingstandards" enable="false" severity="low"/><todocomments category="codereview" enable="false" severity="low"/><trapcleanup category="panic" enable="true" severity="high"/><trapeleave category="performance" enable="true" severity="medium"/><traprunl category="codingstandards" enable="false" severity="low"/><trspassing category="functionality" enable="true" severity="medium"/><uids category="codereview" enable="false" severity="low"/><uncompressedaif category="performance" enable="true" severity="medium"/><uncompressedbmp category="performance" enable="true" severity="medium"/><unicodesource category="codereview" enable="false" severity="low"/><userafter category="performance" enable="true" severity="medium"/><userfree category="codereview" enable="false" severity="low"/><userWaitForRequest category="codereview" enable="false" severity="low"/><variablenames category="codingstandards" enable="false" severity="low"/><voidparameter category="codingstandards" enable="false" severity="low"/><worryingcomments category="codereview" enable="false" severity="low">
+      <worryRE>kludge|workaround|\scrap|hack</worryRE>
+    </worryingcomments></scripts>
+  <severities>
+    <high enable="true"/>
+    <medium enable="true"/>
+    <low enable="true"/>
+  </severities>
+  <categories>
+    <canpanic enable="true"/>
+    <codereview enable="true"/>
+    <codingstandards enable="true"/>
+    <documentation enable="true"/>
+    <functionality enable="true"/>
+    <legal enable="true"/>
+    <localisation enable="true"/>
+    <other enable="true"/>
+    <panic enable="true"/>
+    <performance enable="true"/>
+  </categories>
+</codescannerConfig>

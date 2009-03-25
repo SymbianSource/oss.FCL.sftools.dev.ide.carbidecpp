@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY ControlEventSourcegen SYSTEM "../../ControlEventSourcegen.inc">
+<!ENTITY CQikSimpleDialog_srcgen SYSTEM "../../CQikSimpleDialogSourceGen.inc">
+] >
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikContainer.Flags">
+		<property name="handleRelayoutRequests" type="boolean"
+			displayName="%handlerelayoutrequests" descriptionKey="handlerelayoutrequests.description"/>
+		<property name="persistsAfterRelayout" type="boolean"
+			displayName="%persistsafterrelayout" descriptionKey="persistsafterrelayout.description"/>
+		<property name="verticalWrappingEnabled" type="boolean"
+			displayName="%verticalwrappingenabled" descriptionKey="verticalwrappingenabled.description"/>
+		<property name="scrollHorizontalOff" type="boolean"
+			displayName="%scrollhorizontaloff" descriptionKey="scrollhorizontaloff.description"/>
+		<property name="scrollHorizontalNormal" type="boolean"
+			displayName="%scrollhorizontalnormal" descriptionKey="scrollhorizontalnormal.description"/>
+		<property name="scrollVerticalAuto" type="boolean"
+			displayName="%scrollverticalauto" descriptionKey="scrollverticalauto.description"/>
+		<property name="scrollVerticalNormal" type="boolean"
+			displayName="%scrollverticalnormal" descriptionKey="scrollverticalnormal.description"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikContainer.LayoutManager"
+		converterClass="com.nokia.carbide.cpp.uiq.component.layoutManager.LayoutManagerConverter">
+		<componentReferenceProperty name="referenceLayoutManager"
+			scope="children"
+			constraint="com.nokia.carbide.uiq.LayoutManager" 
+			category="Hidden"
+			promoteReferenceProperties="true"/>
+		<property name="type" type="string" category="Hidden"/>
+	</compoundPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikContainer.Scrollable">
+		<enumElement value="EQikCtScrollableContainer" displayValue="%EQikCtScrollableContainer"/>
+		<enumElement value="EQikCtContainer" displayValue="%EQikCtContainer"/>
+	</enumPropertyDeclaration>
+
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikContainer"
+			baseComponent="com.nokia.carbide.uiq.ContainerBase"
+			instanceNameRoot="container"
+			version="1.0"
+			category="%layout.category">		
+						
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CQikContainer" classHelpTopic=""
+			resourceType="QIK_CONTAINER" resourceHelpTopic=""/>	
+			
+		<designerImages smallIconFile="CQikContainer_sm.png"
+			largeIconFile="CQikContainer.png"/>			
+	
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="is-qikcontainer-content">true</attribute>
+			<attribute key="is-qikcontainer">true</attribute>
+			<attribute key="is-slot-content">false</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<!--Following two attributes are needed for enabling row layout target feedback-->
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="vertical-scrollable-container">true</attribute>
+			<attribute key="not-in-toolbox">false</attribute>			
+		</attributes>
+		
+		<properties>
+			<compoundProperty  name="flags"
+				type="com.nokia.carbide.uiq.CQikContainer.Flags"
+				displayName="%flags"
+				descriptionKey="flagsDescription" 
+				category="%category.behavior"/>
+			<enumProperty category="%category.behavior" name="scrollable"
+				type="com.nokia.carbide.uiq.CQikContainer.Scrollable"
+				displayName="%scrollable"
+				descriptionKey="scrollableDescription" />
+			<compoundProperty  name="layoutManager" 
+				type="com.nokia.carbide.uiq.CQikContainer.LayoutManager"
+				displayName="%layoutManager" 
+				descriptionKey="layoutManagerDescription" 
+				editorClass="com.nokia.carbide.cpp.uiq.component.layoutManager.LayoutManagerSelectorEditorFactory"
+				category="%category.layout"/>
+		</properties>
+		
+		<extensionProperties name="default">
+			<enumProperty name="itemFlags"
+				type="com.nokia.carbide.uiq.ControlCollection.TQikCtrlItemFlags"
+				category="%category.appearance"
+				displayName="%itemFlags"
+				descriptionKey="itemFlagsDescription"
+				default="ControlDefault"/>
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImplementationDelegate"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.CQikContainerImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IChildCommandExtender"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.layoutComponents.ChildCommandExtenderFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CQikContainer.js" prototype="CQikContainer"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<select property="scrollable">
+				<choice value="EQikCtScrollableContainer">
+					<mapResource struct="QIK_SCROLLABLE_CONTAINER" headers="Qikon.rh" id="container" standalone="never">
+						<!-- empty -->
+					</mapResource>
+					<mapResource struct="QIK_SCROLLABLE_CONTAINER_SETTINGS" headers="Qikon.rh" id="containerSettings">
+						<mapBitmaskMember property="flags" member="flags"
+							includedProperties="handleRelayoutRequests persistsAfterRelayout verticalWrappingEnabled scrollHorizontalOff scrollHorizontalNormal scrollVerticalAuto scrollVerticalNormal">
+							<mapBitmaskValue properties="handleRelayoutRequests" value="EQikContainerHandleRelayoutRequests"/>
+							<mapBitmaskValue properties="persistsAfterRelayout" value="EQikContainerPersistsAfterRelayout"/>
+							<mapBitmaskValue properties="verticalWrappingEnabled" value="EQikContainerVerticalWrappingEnabled"/>
+							<mapBitmaskValue properties="scrollHorizontalOff" value="EQikContainerScrollHorizontalOff"/>
+							<mapBitmaskValue properties="scrollHorizontalNormal" value="EQikContainerScrollHorizontalNormal"/>
+							<mapBitmaskValue properties="scrollVerticalAuto" value="EQikContainerScrollVerticalAuto"/>
+							<mapBitmaskValue properties="scrollVerticalNormal" value="EQikContainerScrollVerticalNormal"/>
+							<!-- TODO: all included - map all flags set to EQikScrollableContainerDefaultFlags -->
+						</mapBitmaskMember>
+						<!-- this will use the layout manager's layout-manager-enum attribute as the value -->
+						<mapEnumMember property="[com.nokia.carbide.uiq.LayoutManager]@layout-manager-enum" member="layout_manager_type"/>
+						<mapReferenceMember property="layoutManager.referenceLayoutManager" member="layout_manager" rsrcId="layoutManager"/>
+						<mapArrayMember property="." member="controls">
+							<select attribute="is-qikcontainer-content">
+								<choice value="true">
+									<select attribute="is-qikcontainer">
+										<choice value="true">
+											<mapResourceElement struct="QIK_CONTAINER_ITEM_NESTED_CONTAINER_CI_LI"
+												headers="Qikon.rh" id="nested_container_scrollable">
+												<mapEnumMember property="scrollable" member="type"/>
+												<mapMemberFromType property="itemFlags" member="itemflags"/>
+												<mapReferenceMember property="[com.nokia.carbide.uiq.CQikContainer]"
+													member="control"
+													rsrcId="container"/>
+												<mapReferenceMember property="[com.nokia.carbide.uiq.CQikContainer]"
+													member="container"
+													rsrcId="containerSettings"/>
+												<mapMemberFromType property="layoutData" member="layout_data"/>
+											</mapResourceElement>
+										</choice>
+										<choice>
+											<select attribute="is-system-building-block">
+												<choice value="true">
+													<mapResourceElement struct="QIK_CONTAINER_ITEM_CI_LI" headers="Qikon.rh"
+														id="system_building_block_scrollable">
+														<mapEnumMember property="type" member="type"/>
+														<mapMemberFromType property="itemFlags" member="itemflags"/>
+														<mapReferenceMember property="."
+															member="control"/>
+														<mapMemberFromType property="layoutData" member="layout_data"/>
+													</mapResourceElement>
+												</choice>
+												<choice>
+													<mapResourceElement struct="QIK_CONTAINER_ITEM_LD" headers="Qikon.rh"
+														id="normal_item_scrollable">
+														<mapEnumMember property="control->"
+															member="unique_handle"
+															nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID"
+															uniqueValue="*"/>
+														<mapMemberFromType property="layoutData" member="layout_data"/>
+													</mapResourceElement>
+												</choice>
+											</select>
+										</choice>
+									</select>
+								</choice>
+								<choice>
+								</choice>
+							</select>
+						</mapArrayMember>
+					</mapResource>
+				</choice>
+				<choice> <!-- else not scrollable -->
+					<mapResource struct="QIK_CONTAINER" headers="Qikon.rh" id="container" standalone="never">
+						<!-- empty -->
+					</mapResource>
+					<mapResource struct="QIK_CONTAINER_SETTINGS" headers="Qikon.rh" id="containerSettings">
+						<mapBitmaskMember property="flags" member="flags"
+							includedProperties="handleRelayoutRequests persistsAfterRelayout verticalWrappingEnabled">
+							<mapBitmaskValue properties="handleRelayoutRequests" value="EQikContainerHandleRelayoutRequests"/>
+							<mapBitmaskValue properties="persistsAfterRelayout" value="EQikContainerPersistsAfterRelayout"/>
+							<mapBitmaskValue properties="verticalWrappingEnabled" value="EQikContainerVerticalWrappingEnabled"/>
+							<!-- TODO: all included - map all flags set to EQikContainerSettingsDefaultFlags -->
+						</mapBitmaskMember>
+						<!-- this will use the layout manager's layout-manager-enum attribute as the value -->
+						<mapEnumMember property="[com.nokia.carbide.uiq.LayoutManager]@layout-manager-enum" member="layout_manager_type"/>
+						<mapReferenceMember property="layoutManager.referenceLayoutManager" member="layout_manager" rsrcId="layoutManager"/>
+						<mapArrayMember property="." member="controls">
+							<select attribute="is-qikcontainer-content">
+								<choice value="true">
+									<select attribute="is-qikcontainer">
+										<choice value="true">
+											<mapResourceElement struct="QIK_CONTAINER_ITEM_NESTED_CONTAINER_CI_LI"
+												id="qikcontainer_item"
+												headers="Qikon.rh">
+												<mapEnumMember property="scrollable" member="type"/>
+												<mapMemberFromType property="itemFlags" member="itemflags"/>
+												<mapReferenceMember property="[com.nokia.carbide.uiq.CQikContainer]"
+													member="control"
+													rsrcId="container"/>
+												<mapReferenceMember property="[com.nokia.carbide.uiq.CQikContainer]"
+													member="container"
+													rsrcId="containerSettings"/>
+												<mapMemberFromType property="layoutData" member="layout_data"/>
+											</mapResourceElement>
+										</choice>
+										<choice>
+											<select attribute="is-system-building-block">
+												<choice value="true">
+													<mapResourceElement struct="QIK_CONTAINER_ITEM_CI_LI" headers="Qikon.rh"
+														id="system_building_block">
+														<mapEnumMember property="type" member="type"/>
+														<mapMemberFromType property="itemFlags" member="itemflags"/>
+														<mapReferenceMember property="."
+															member="control"/>
+														<mapMemberFromType property="layoutData" member="layout_data"/>
+													</mapResourceElement>
+												</choice>
+												<choice>
+													<mapResourceElement struct="QIK_CONTAINER_ITEM_LD" headers="Qikon.rh"
+														id="normal_item">
+														<mapEnumMember property="control->"
+															member="unique_handle"
+															nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID"
+															uniqueValue="*"/>
+														<mapMemberFromType property="layoutData" member="layout_data"/>
+													</mapResourceElement>
+												</choice>
+											</select>
+										</choice>
+									</select>
+								</choice>
+								<choice>
+								</choice>
+							</select>
+						</mapArrayMember>
+					</mapResource>
+				</choice>
+			</select>
+		</sourceMapping>
+		
+		<sourceGen>
+			<inline scope="file">
+				<![CDATA[
+					function isWithinViewOrDialog(instance) {
+						if (instance != null && instance.parent != null)
+							return instance.parent.component.id == "com.nokia.carbide.uiq.ViewPage";
+						else
+							return false;
+					}
+					function isWithinSimpleDialog(instance) {
+						if (instance != null && instance.parent != null)
+							return instance.parent.component.id == "com.nokia.carbide.uiq.ContainersGroup";
+						else
+							return false;
+					}
+				]]>
+			</inline>
+			
+			<inline scope="prototype">
+${jsObject}.prototype.getInstanceMemberName = function(instance) {
+	return instanceMemberName;
+}
+			</inline>
+			
+			&ControlEventSourcegen;
+			
+			<inline><![CDATA[
+			//if (isWithinViewOrDialog(instance)) {
+				for (var i in instance.children) {
+					var child = instance.children[i];
+					var childContribs = Engine.generateChildContributions(child, form);
+					if (Engine.formMatches(form, ["InstanceGen"])) {
+						if (this.isRegistered(child) == true) {
+							var toRemove = Engine.getContributionsForForm(childContribs, "InstanceGen");
+							childContribs.removeAll(toRemove);
+						}
+						else
+							this.register(child);
+					}
+					contribs.addAll(childContribs);
+				}
+			//}
+			]]></inline>
+			
+			<!--&CQikSimpleDialog_srcgen;-->
+
+		</sourceGen>
+		
+	</component>
+	
+</componentDefinition>

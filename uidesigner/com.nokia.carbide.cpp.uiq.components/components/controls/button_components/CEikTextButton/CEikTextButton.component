@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU17 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_commandButton_srcmapping SYSTEM "../CEikCommandButtonBase_common_srcmapping.inc">
+]>
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikTextButton"
+			baseComponent="com.nokia.carbide.uiq.CEikCommandButtonBase"
+			instanceNameRoot="textButton"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikTextButton" classHelpTopic=""
+			resourceType="TXTBUT" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikTextButton_sm.png"
+			largeIconFile="CEikTextButton.png"/>		
+				
+		<attributes>
+			<attribute key ="rss-control-type-enum">EEikCtTextButton</attribute>		
+			<attribute key ="cpp-class-name">CEikTextButton</attribute>		
+		</attributes>
+		
+		<properties>
+			<enumProperty  name="layout" 
+				type="com.nokia.carbide.uiq.CEikCommandButtonBase.TLayout" 
+				default="EEikCmdButFirstRightSecondLeft"
+				descriptionKey="layoutDescription"
+				category="%category.appearance"/>
+			<property  name="text1" type="localizedString" 
+				default="text 1"
+				descriptionKey="text1Description" 
+				category="%category.data"/>				
+			<property  name="text2" type="localizedString" 
+				default=""
+				descriptionKey="text2Description" 
+				category="%category.data"/>				
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>				
+				<script file="CEikTextButton.js" prototype="CEikTextButton"/>
+			</implementation>
+		</implementations>	
+
+		
+		<sourceMapping>
+				<mapResource struct="TXTBUT" headers="uikon.rh">
+					&common_commandButton_srcmapping;
+					<mapMemberFromType property="layout" member="layout"/>				
+					<mapSimpleMember property="text1" member="txt1"/>
+					<mapSimpleMember property="text2" member="txt2"/>
+					<mapSimpleMember property="helpText" member="helptxt"/>
+				</mapResource>
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<useTemplateGroup ids="CommonSourceGenCommandButtons"/>
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

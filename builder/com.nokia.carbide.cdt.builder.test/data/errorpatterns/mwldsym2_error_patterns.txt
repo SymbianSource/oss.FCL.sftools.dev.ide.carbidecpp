@@ -1,0 +1,5 @@
+mwldsym2.exe: Undefined symbol: 'class CS60_FP3_UID_1ContainerView * CS60_FP3_UID_1ContainerView::NewL(void) (?NewL@CS60_FP3_UID_1ContainerView@@SAPAV1@XZ)'
+mwldsym2.exe: referenced from 'void CS60_FP3_UID_1AppUi::InitializeContainersL(void) (?InitializeContainersL@CS60_FP3_UID_1AppUi@@AAEXXZ)' in S60_fp3_uid_1appui.cpp:49
+
+mwldsym2.exe: Undefined symbol: 'class CS60_FP3_UID_1ContainerView * CS60_FP3_UID_1ContainerView::NewL(void) (?NewL@CS60_FP3_UID_1ContainerView@@SAPAV1@XZ)'
+mwldsym2.exe: referenced from 'void CS60_FP3_UID_1AppUi::InitializeContainersL(void) (?InitializeContainersL@CS60_FP3_UID_1AppUi@@AAEXXZ)' in S60_FP3_UID_1APPUI.o

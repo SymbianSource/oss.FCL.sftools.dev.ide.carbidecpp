@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- border property was commented due to the follow comment: 
+	 The background color is handled by the theme server and the margins are handled by the system 
+	 and should be the same for all controls. So, unless there is a specific reason for you to change
+	 the background color and/or margins e.g. showing users how to actually change background color 
+	 and margins, it’s probably best not to change them. 
+-->	
+					
+	<!-- No longer used
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase.Day">
+		<enumElement value="0" displayValue="%day.1" />
+		<enumElement value="1" displayValue="%day.2" />
+		<enumElement value="2" displayValue="%day.3" />
+		<enumElement value="3" displayValue="%day.4" />
+		<enumElement value="4" displayValue="%day.5" />
+		<enumElement value="5" displayValue="%day.6" />
+		<enumElement value="6" displayValue="%day.7" />
+		<enumElement value="7" displayValue="%day.8" />
+		<enumElement value="8" displayValue="%day.9" />
+		<enumElement value="9" displayValue="%day.10" />
+		<enumElement value="10" displayValue="%day.11" />
+		<enumElement value="11" displayValue="%day.12" />
+		<enumElement value="12" displayValue="%day.13" />
+		<enumElement value="13" displayValue="%day.14" />
+		<enumElement value="14" displayValue="%day.15" />
+		<enumElement value="15" displayValue="%day.16" />
+		<enumElement value="16" displayValue="%day.17" />
+		<enumElement value="17" displayValue="%day.18" />
+		<enumElement value="18" displayValue="%day.19" />
+		<enumElement value="19" displayValue="%day.20" />
+		<enumElement value="20" displayValue="%day.21" />
+		<enumElement value="21" displayValue="%day.22" />
+		<enumElement value="22" displayValue="%day.23" />
+		<enumElement value="23" displayValue="%day.24" />
+		<enumElement value="24" displayValue="%day.25" />
+		<enumElement value="25" displayValue="%day.26" />
+		<enumElement value="26" displayValue="%day.27" />
+		<enumElement value="27" displayValue="%day.28" />
+		<enumElement value="28" displayValue="%day.29" />
+		<enumElement value="29" displayValue="%day.30" />
+		<enumElement value="30" displayValue="%day.31" />
+	</enumPropertyDeclaration>
+	-->
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase.Month">
+		<enumElement value="0" displayValue="%month.1" />
+		<enumElement value="1" displayValue="%month.2" />
+		<enumElement value="2" displayValue="%month.3" />
+		<enumElement value="3" displayValue="%month.4" />
+		<enumElement value="4" displayValue="%month.5" />
+		<enumElement value="5" displayValue="%month.6" />
+		<enumElement value="6" displayValue="%month.7" />
+		<enumElement value="7" displayValue="%month.8" />
+		<enumElement value="8" displayValue="%month.9" />
+		<enumElement value="9" displayValue="%month.10" />
+		<enumElement value="10" displayValue="%month.11" />
+		<enumElement value="11" displayValue="%month.12" />
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase.Date"
+			converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.DateValueConverter">
+		<enumProperty name="month" type="com.nokia.carbide.uiq.CQikTTimeEditorBase.Month"
+			descriptionKey="monthDescription" />
+		<property name="day" type="integer" default="0"
+			editorClass="com.nokia.sdt.symbian.ui.editors.MinusOneIntEditorFactory"
+			descriptionKey="dayDescription" />
+		<property name="year" type="integer" default="2000" 
+			descriptionKey="yearDescription" />
+	</compoundPropertyDeclaration>	
+	
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase.Time"
+			converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.TimeValueConverter">
+		<property name="hour" type="integer" descriptionKey="hourDescription" />
+		<property name="minute" type="integer" descriptionKey="minuteDescription" />
+		<property name="second" type="integer" descriptionKey="secondDescription" />
+	</compoundPropertyDeclaration>	
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase.DateFlags">
+		<property name="EWithoutPopoutCalendar" type="boolean" displayName ="%EWithoutPopoutCalendar"
+			descriptionKey="EWithoutPopoutCalendarDescription" />
+		<property name="EMirroredLayout" type="boolean" displayName ="%EMirroredLayout"
+			descriptionKey="EMirroredLayoutDescription" />
+	</compoundPropertyDeclaration>	
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase.TimeFlags">
+		<property name="EWithoutPopoutPicker" type="boolean" displayName ="%EWithoutPopoutPicker"
+			descriptionKey="EWithoutPopoutPickerDescription"/>
+		<property name="EForce24HourFormat" type="boolean" displayName ="%EForce24HourFormat"
+			descriptionKey="EForce24HourFormatDescription"/>
+		<property name="EFiveMinuteSteps" type="boolean" displayName ="%EFiveMinuteSteps"
+			descriptionKey="EFiveMinuteStepsDescription"/>
+		<property name="EMirroredLayout" type="boolean" displayName ="%EMirroredLayout"
+			descriptionKey="EMirroredLayoutDescription"/>
+		<property name="EDisableWrapTime" type="boolean" displayName ="%EDisableWrapTime"
+			descriptionKey="EDisableWrapTimeDescription"/>			
+	</compoundPropertyDeclaration>
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikTTimeEditorBase"
+			baseComponent="com.nokia.carbide.uiq.EditorBase"			
+			version="1.0"
+			abstract="true">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>	
+		
+		<properties>
+<!--	     <enumProperty name="border" displayName="%border" 
+						  type="com.nokia.carbide.uiq.TGulBorder.TBorderType"
+						  category="Appearance"
+						  descriptionKey="borderDescription"
+						  default="ENone" 
+			/>
+-->		
+		</properties>
+		
+		<sourceGen>
+			<!-- Common ControlBase sourcegen -->	
+<!--			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"/>
+-->								
+			<!--Initialize Phase-->	
+<!--			<template id="INITIALIZE_PHASE" phase="InitializeControlHandlers"><![CDATA[
+if (${instanceMemberName}!= NULL)
+{
+	${instanceMemberName}->SetBorder(${instance.properties.border});
+}
+]]>		    </template>	
+-->											
+		</sourceGen>
+				
+	</component>
+
+</componentDefinition>

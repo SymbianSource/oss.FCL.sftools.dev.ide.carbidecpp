@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.SingleLineDataQueryBase" 
+		abstract="true"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<designerImages smallIconFile="SingleLineDataQuery_sm.png" 
+			largeIconFile="SingleLineDataQuery.png"/>
+		<attributes>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<property category="Data" name="text" type="localizedString" default="Enter value:" 
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<enumProperty category="Data" name="tone" type="com.nokia.sdt.series60.Query.tone" 
+				descriptionKey="toneDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<!-- <script file="SingleLineDataQuery.js" prototype="SingleLineDataQueryVisual"/> -->
+				<code class="com.nokia.sdt.series60.component.DataQueryVisualAndLayoutImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="SingleLineDataQuery.js" prototype="SingleLineDataQueryContainment"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.sdt.series60.component.SingleLineDataQueryCodeImplFactory"/>
+			</implementation>
+		</implementations>
+		
+	<sourceMapping>
+		<mapResource struct="DIALOG" headers="avkon.rsg avkon.rh eikon.rh">
+			<mapBitmaskMember property="." member="flags" includedProperties="" >
+				<!-- initial blank entry forces bits on -->
+				<mapBitmaskValue properties="" value="EAknGeneralQueryFlags" />
+			</mapBitmaskMember>
+			<mapFixedMember member="buttons" value="R_AVKON_SOFTKEYS_OK_CANCEL" />			
+	        <mapArrayMember property="." member="items">
+				<mapResourceElement struct="DLG_LINE" headers="avkon.rh" instanceIdentifyingMember="id">
+					<mapEnumMember property="[parent].type" member="type">
+						<mapEnum value="EDataLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="EPhoneLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="EPinLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="ECodeLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="EDateLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="ETimeLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="EDurationLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="EFloatingPointLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="ENumberLayout" enumerator="EAknCtQuery"/>
+						<mapEnum value="EFixedPointLayout" enumerator="EAknExtCtQuery"/>
+						<mapEnum value="EIpLayout" enumerator="EAknExtCtQuery"/>
+					</mapEnumMember>
+					<mapEnumMember property="." member="id" uniqueValue="*"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID" />
+		        	<mapResourceMember property="." member="control" id="queryControl" 
+		        									struct="AVKON_DATA_QUERY" headers="avkon.rh">
+						<mapEnumMember property="[parent].type" member="layout"/>
+						<mapSimpleMember property="[parent].text" member="label"/>
+						<mapResourceMember property="." member="control" id="control" />
+			        </mapResourceMember>
+		        </mapResourceElement>
+	        </mapArrayMember>
+		</mapResource>
+	</sourceMapping>
+		
+	</component>
+	
+</componentDefinition>

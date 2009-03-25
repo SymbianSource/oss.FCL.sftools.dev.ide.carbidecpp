@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2007 Nokia and others. All rights reserved.
+  This program and the accompanying materials are made available under the terms
+  of the Eclipse Public License v1.0 which accompanies this distribution, and is 
+  available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<?eclipse version="3.0"?>
+
+<!-- ======================================================================= -->
+<!-- Search Plugin                                                           -->
+<!-- ======================================================================= -->
+<plugin>
+
+<!-- Search extension point definitions -->
+	<extension-point name="%searchPages" id="searchPages" schema="schema/searchPages.exsd"/>
+	<extension-point name="%searchResultSorters" id="searchResultSorters" schema="schema/searchResultSorters.exsd"/>
+  	<extension-point name="%searchResultViewPages" id="searchResultViewPages" schema="schema/searchResultViewPages.exsd"/>
+    <extension-point name="%textSearchEngine" id="textSearchEngine" schema="schema/textSearchEngine.exsd"/>
+    <extension-point name="%textSearchQueryProvider" id="textSearchQueryProvider" schema="schema/textSearchQueryProvider.exsd"/>
+
+<!-- Preference Page Additions -->
+	<extension
+		point="org.eclipse.ui.preferencePages">
+		<page name="%SearchPreferencePage.label"
+			id="com.nokia.carbide.search.system.preferences.SearchPreferencePage"
+			class="com.nokia.carbide.search.system.internal.ui.SearchPreferencePage">
+		    <keywordReference id="com.nokia.carbide.search.system.ui.systemSearch"/>
+		    <keywordReference id="com.nokia.carbide.search.system.preferences.SearchPreferencePage"/>			
+		</page>
+	</extension>
+<!-- Search Menu Additions -->
+	<extension point="org.eclipse.ui.actionSets">
+		<actionSet
+	        label="%search"
+			id="com.nokia.carbide.search.system.searchActionSet"
+	        description="Action set for system search actions"
+			visible="true">
+	
+			<!-- =================================================================== -->
+			<!-- Search Menu                                                         -->
+			<!-- =================================================================== -->
+			
+	        <menu
+			id="org.eclipse.search.menu"
+	            label="Se&amp;arch"
+	            path="navigate">
+	            <groupMarker name="internalDialogGroup"/>
+	            <groupMarker name="dialogGroup"/>
+	        </menu>
+	      	
+	      	<!-- dialog group  -->
+			<action
+				label="%openFileSearchPageAction.label"
+				id="com.nokia.carbide.search.system.OpenFileSearchPage"
+			    tooltip="Open System Search dialog for text and file searching outside the workspace"
+				icon="$nl$/icons/full/obj16/system_search.gif"
+				helpContextId="system_search_action_context"
+				class="com.nokia.carbide.search.system.internal.ui.OpenSystemSearchPageAction"
+	            menubarPath="org.eclipse.search.menu/dialogGroup"
+				definitionId="com.nokia.carbide.search.system.ui.openSystemSearchPage"/>
+	     </actionSet>
+	</extension>
+<!-- Key binding -->
+	<extension point="org.eclipse.ui.bindings">
+		<key
+			sequence="Alt+Shift+G"
+			commandId="com.nokia.carbide.search.system.ui.openSystemSearchPage"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+		/>
+	</extension>
+<!-- Search Dialog Page -->
+	<extension
+         point="org.eclipse.search.searchPages">
+      <page
+            label="System Search"
+            showScopeSection="false"
+            canSearchEnclosingProjects="false"
+            enabled="true"
+            tabPosition="0"
+            extensions="*:100"
+            icon="$nl$/icons/full/obj16/system_search.gif"
+            class="com.nokia.carbide.search.system.internal.ui.text.TextSearchPage"
+            sizeHint="300,200"
+            id="com.nokia.carbide.search.system.internal.ui.text.TextSearchPage"
+            >
+      </page>
+   </extension>	
+   <!-- class="com.nokia.search.ui.search.OpenPluginSearchPageAction" -->
+<!-- Search View -->
+	<extension
+         point="org.eclipse.ui.views">
+      <category
+            name="System Search"
+            id="com.nokia.search.ui.view">
+      </category>
+      <view
+            name="%newSearchResultViewName"
+            icon="$nl$/icons/full/obj16/system_search.gif"
+            category="com.nokia.search.ui.view"
+            class="com.nokia.carbide.search.system2.internal.ui.SearchView"
+            allowMultiple="true"
+            id="com.nokia.carbide.search.system.ui.views.SearchView">
+      </view>
+	</extension>
+
+	<!-- Extensions -->
+	
+	<extension point="org.eclipse.core.resources.markers" id="searchmarker" name="%searchMarker">
+		<super type="org.eclipse.core.resources.textmarker"/>
+		<attribute name="line"/>
+		<attribute name="potentialMatch"/>
+	</extension>
+	
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+      <type
+        name="com.nokia.carbide.search.system.results"
+		markerType="com.nokia.carbide.search.system.searchmarker">
+      </type>
+	</extension>
+	
+	<extension 
+		point="org.eclipse.ui.ide.markerImageProviders">
+		<imageprovider 
+			id="org.eclipse.ui.searchMarkerProvider"
+			markertype="com.nokia.carbide.search.system.searchmarker"
+			icon="$nl$/icons/full/obj16/searchm_obj.gif">
+		</imageprovider>
+	</extension>
+	
+	<extension point="org.eclipse.core.resources.markers" id="filteredsearchmarker" name="%filteredSearchMarker">
+		<super type="org.eclipse.core.resources.textmarker"/>
+		<attribute name="line"/>
+		<attribute name="potentialMatch"/>
+	</extension>
+	
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+      <type
+        name="com.nokia.carbide.search.system.filteredResults"
+		markerType="com.nokia.carbide.search.system.filteredsearchmarker">
+      </type>
+	</extension>
+	
+	<extension 
+		point="org.eclipse.ui.ide.markerImageProviders">
+		<imageprovider 
+			id="org.eclipse.ui.filteredSearchMarkerProvider"
+			markertype="com.nokia.carbide.search.system.filteredSearchmarker"
+			icon="$nl$/icons/full/obj16/searchm_obj.gif">
+		</imageprovider>
+	</extension>
+	
+	<extension point="org.eclipse.ui.commands">
+		<category
+			name="%searchCategory.name"
+			description="%searchCategory.description"
+			id="com.nokia.carbide.search.system.ui.category.search"
+		/>
+
+		<command
+			categoryId="com.nokia.carbide.search.system.ui.category.search"
+			id="com.nokia.carbide.search.system.ui.openSystemSearchPage"
+			name= "%ActionDefinition.openFileSearchPage.name"
+			description="%ActionDefinition.openFileSearchPage.description"
+		/>
+	</extension>
+   
+<!-- Default search results view -->
+   	<extension
+    	id="SystemSearchPage"
+        point="com.nokia.carbide.search.system.searchResultViewPages">
+		<viewPage
+			id="com.nokia.carbide.search.system.text.FileSearchResultPage"
+			searchResultClass="com.nokia.carbide.search.system.internal.ui.text.FileSearchResult"
+			class="com.nokia.carbide.search.system.internal.ui.text.FileSearchPage">
+		</viewPage>
+	</extension>
+	
+    <extension
+   		point="org.eclipse.ui.keywords">
+      <keyword
+            label="%preferenceKeywords.general"
+            id="com.nokia.carbide.search.system.ui"/>
+	</extension>
+	
+	<extension
+	     point="org.eclipse.ui.editors.markerAnnotationSpecification">
+	     <specification
+	      		annotationType="com.nokia.carbide.search.system.results"
+	            label="%SearchMarkerPreference.label"
+	            icon="$nl$/icons/full/obj16/searchm_obj.gif"
+	            textPreferenceKey="searchResultIndication"
+	            textPreferenceValue="false"
+	            highlightPreferenceKey="searchResultHighlighting"
+	            highlightPreferenceValue="true"
+	            overviewRulerPreferenceKey="searchResultIndicationInOverviewRuler"
+	            overviewRulerPreferenceValue="true"
+	            verticalRulerPreferenceKey="searchResultIndicationInVerticalRuler"
+	            verticalRulerPreferenceValue="true"
+	            colorPreferenceKey="searchResultIndicationColor"
+	            colorPreferenceValue="206,204,247"
+	            presentationLayer="3"
+	            showInNextPrevDropdownToolbarActionKey="showSearchResultInNextPrevDropdownToolbarAction"
+	            showInNextPrevDropdownToolbarAction="true"
+	            isGoToNextNavigationTargetKey="isSearchResultGoToNextNavigationTarget"
+	            isGoToNextNavigationTarget="false"
+	            isGoToPreviousNavigationTargetKey="isSearchResultGoToPreviousNavigationTarget"
+	            isGoToPreviousNavigationTarget="false">
+	     </specification>
+	     <specification
+	      		annotationType="com.nokia.carbide.search.system.filteredResults"
+	            label="%FilteredSearchMarkerPreference.label"
+	            icon="$nl$/icons/full/obj16/searchm_obj.gif"
+	            textPreferenceKey="filteredSearchResultIndication"
+	            textPreferenceValue="false"
+	            highlightPreferenceKey="filteredSearchResultHighlighting"
+	            highlightPreferenceValue="false"
+	            overviewRulerPreferenceKey="filteredSearchResultIndicationInOverviewRuler"
+	            overviewRulerPreferenceValue="false"
+	            verticalRulerPreferenceKey="filteredSearchResultIndicationInVerticalRuler"
+	            verticalRulerPreferenceValue="false"
+	            colorPreferenceKey="filteredSearchResultIndicationColor"
+	            colorPreferenceValue="237,237,252"
+	            presentationLayer="3"
+	            showInNextPrevDropdownToolbarActionKey="showFilteredSearchResultInNextPrevDropdownToolbarAction"
+	            showInNextPrevDropdownToolbarAction="false"
+	            isGoToNextNavigationTargetKey="isFilteredSearchResultGoToNextNavigationTarget"
+	            isGoToNextNavigationTarget="false"
+	            isGoToPreviousNavigationTargetKey="isFilteredSearchResultGoToPreviousNavigationTarget"
+	            isGoToPreviousNavigationTarget="false">
+	     </specification>
+	</extension>
+	
+	<extension point="org.eclipse.core.runtime.adapters">
+		<factory 
+			class="com.nokia.carbide.search.system.internal.ui.SearchResultViewEntryAdapterFactory" 
+			adaptableType="com.nokia.carbide.search.system.ui.ISearchResultViewEntry">
+				<adapter type="org.eclipse.core.resources.IResource"/>
+				<adapter type="org.eclipse.core.resources.IMarker"/>
+		</factory>
+	</extension>
+ <extension
+       point="org.eclipse.core.runtime.preferences">
+    <initializer class="com.nokia.carbide.search.system.internal.ui.SearchPreferenceInitializer"/>
+ </extension>
+</plugin>

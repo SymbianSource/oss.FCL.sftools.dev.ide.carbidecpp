@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>The __declspec Declarator</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>The __declspec Declarator</h3>
+<p>The <span class="code">__declspec(arg)</span> declarator is a convention adopted from Win32 compilers to extend the type system. All Carbide compilers recognize this declarator.</p>
+<p>The <span class="code">__declspec</span> declarator must appear before the name of the object as shown below:</p>
+<p class="listing"> __declspec(arg) int foo();<br />
+  class __declspec(arg) bar { ... };</p>
+<p>The list of valid arguments are grouped by targets:</p>
+<ul>
+  <li>All Targets</li>
+  <li>Non-Win32 Targets Only</li>
+  <li>Win32 Targets Only </li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

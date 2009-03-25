@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+  <title>Building Multiple Projects</title>
+  <link rel="StyleSheet" href="../../../book.css" type="text/css" />
+</head>
+<body bgcolor="#ffffff">
+<h2>Importing Projects With Inter-Dependencies</h2>
+If you are building a project that had external project dependencies,
+such as an import library from a DLL you must make sure the projects
+are built in the correct order to avoid missing dependencies.<br />
+<br />
+The best way to do this is to import projects with a <span class="code">bld.inf</span> file. For
+example, if you are building an executable that relies on a static
+DLL's import library you need to build the project that generates
+the import library first.&nbsp; If a project contains a <span class="code">bld.inf</span> file
+that contains all the required project MMP files you should import via
+the INF file. Building projects after importing with INF files will
+insure that other project dependencies get built properly. <br />
+<h5>Concepts</h5>
+<ul>
+  <li><a href="../../concepts/Projects.html">Projects</a></li>
+</ul>
+<h5>Tasks</h5>
+<ul>
+  <li><a href="../CreatingNewProjects.html">Creating
+Projects</a></li>
+  <li><a href="prj_import_exe.htm">Importing Symbian Executables </a> </li>
+</ul>
+<div class="step"></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

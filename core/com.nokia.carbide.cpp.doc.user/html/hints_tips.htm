@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Carbide.c++ Tips &amp; Hints</title>
+    <link href="../book.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2>Carbide.c++ Tips &amp; Hints</h2>
+<p>Hints and tips are sorted by these categories:</p>
+<ul>
+   <li><a href="#carbide">Carbide.c++</a></li>
+   <li><a href="#projects">Projects</a></li>
+   <li><a href="#debugging">Debugging</a></li>
+   <li><a href="#connectivity">Connectivity</a></li>
+</ul>
+ <h3><a name="carbide"></a>Carbide.c++</h3>
+ <h5 class="note">Is there any help that describes what regular expression syntax support is available? </h5>
+ <blockquote>
+   <p>Yes there is. In dialogs that support regular expression syntax, like the <b>Find/Replace</b> dialog, simply enable the <b>Regular Expressions</b> option, click in any text box that accepts a regular expression, then press <span class="code">CTRL+Space</span>. A pop-up appears showing you the syntax available for using  regular expressions. Holding the pointer over a item in the pop-up opens an additional info dialog of helpful information.</p>
+   <p>Also, note the presence of the lightbulb icon next to the active text box. This indicates specific assistance is available for the text box by pressing <span class="code">CTRL+Space</span>. Note that in  non-English  versions of Microsoft Windows&reg;, the <span class="code">CTRL+Space</span> key binding may be intercepted to open the input method dialog, so try using <span class="code">ALT+/</span> instead.</p>
+</blockquote>
+ <h5 class="note">How can I search for files outside of the workspace? </h5>
+<blockquote>
+   <p>Use the <a href="reference/search/wnd_system_search.htm">System Search</a> feature in Carbide. Click <b>Search &gt; System...</b>, enter the search data, press Search. </p>
+</blockquote>
+ <h5 class="note">How can I quickly open a .h file associated from the source file I am currently editing ? </h5>
+ <blockquote>
+   <p>The CDT editor supports quick opening of associated .h files. To view the .h file, select the name of the .h file in the source you are currently editing and press F3 (Open Declaration). A new editor view will appear and display the .h file. </p>
+</blockquote>
+ <h5 class="note">I can't locate the eclipse.ini file to modify the behavior of Carbide.c++, where can I find it? </h5>
+ <blockquote>
+  <p>The <span class="code">eclipse.ini</span> file was renamed the <span class="code">carbide.c++.1.x.ini</span> file to keep the <span class="code">.exe</span> and <span class="code">.ini</span> files in sync. </p>
+</blockquote>
+ <h5 class="note"><a name="VMissues"></a>I can't launch Carbide.c++ due to &quot;Error occurred in initialization of VM, could not reserve enough space for object heap? </h5>
+ <blockquote>
+   <p>By default, the heap space set aside for Carbide is 1024MB. You can see this setting in the <span class="code">carbide.c++.1.x.ini</span> file as the line &quot;<span class="code">-Xmx1024m</span>&quot;. Some system may have limited VM space available so we suggest you try lowering the default amount to  &quot;<span class="code">-Xmx512m</span>&quot; and  relaunching Carbide. </p>
+</blockquote>
+ <h5 class="note">I want to use CDT for other C/C++ development in Carbide.c++</h5>
+ <blockquote>
+  <p>Carbide.c++ hides some CDT UI elements using capabilities.  We do this to avoid confusion as there are several things labeled C/C++ that don't really apply to Symbian development.  To show these items, you need to add the Eclipse SDK to your Carbide.c++ installation (download link:<span class="code"> www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.2.1-200609210945/eclipse-SDK-3.2.1-win32.zip</span>), and then enable it from the preferences (<b>Window > Preferences > General > Capabilities > Nokia Debug</b>).</p>
+</blockquote>
+ <h5 class="note">When I press F1 in a dialog, the help pane isn't very helpful? </h5>
+ <blockquote>
+   <p>If the Help pane does not display   information specific to the page content, it may be because the page in the dialog doesn't have focus. This often occurs in a wizard page when nothing has been selected on the page. The help system has not  been told which  help content to display in the About section of the help pane. </p>
+   <p class="note"><b>NOTE</b> The Dynamic help section usually displays the proper helpful links, just not as specific as the About section should display. </p>
+   <p>To get the proper content to appear, close the help pane, go to the previous page in the wizard by clicking Previous. Now, click Next to advance, select a field in the page to set the focus, then press F1. The correct help content links should now appear. </p>
+</blockquote>
+ <h3><a name="projects"></a>Projects</h3>
+ <h5>Where are project files created and which ones can I safely delete? </h5>
+ <blockquote>
+   <p>Project files are created in the &quot;Root directory&quot; chosen during bld.inf import on the Project Properties wizard page. If a project has already been created at the same project root you cannot create another project in the same location, you will need to choose another project root. </p>
+   <p>When projects are deleted, the project files are not always deleted. If you want to delete these project files they are:</p>
+   <p>     <span class="code">.project<br>
+    .cproject</span></p>
+   <p>You can delete the <span class="code">.settings</span> folder which contains:</p>
+   <p>     <span class="code">\.settings\.carbide_build_settings<br>
+    \.settings\org.eclipse.cdt.core<br>
+    \.settings\com.nokia.carbide.cpp.project.core.prefs</span></p>
+ </blockquote>
+ <h5>Saving projects in CVS</h5>
+ <blockquote>
+   <p>To put a project under CVS control, the project configuration files that reside under the project directory need to be checked into CVS. These include .cproject, .project, application.uidesign (for UI designer applications) and the .settings folder and files (.carbide_build_settings and org.eclipse.cdt.core.prefs). The workspace .metadata folder does not need to be stored in CVS. The necessary metadata will be reconstructed when you check out projects from version control.</p>
+ </blockquote>
+ <h5>The Default entry in devices.xml must have a valid EPOCROOT</h5>
+ <blockquote>
+   <p>The <span class="code">devices.xml</span> file contains a list of all installed SDKs. There are three things Carbide.c++ requires to successfully build a program. They include:</p>
+   <ul>
+     <li>Perl 5.6.1 must be installed</li>
+     <li>One of the SDKs is set as the &quot;default&quot; SDK</li>
+     <li>The SDK must have  a valid <span class="code">EPOCROOT</span> setting</li>
+   </ul>
+   <p>In any of the above are missing or incorrect, Carbide.c++ can not build a Symbian OS program. </p>
+ </blockquote>
+ <h5 class="note">Adding Program Resources</h5>
+ <blockquote>
+   <p><span class="note">For resources that are included after creating a project, the user should ensure that the output location is set correctly by viewing the file properties. The output location is set to &quot;<span class="code">{EPOCROOT}\epoc32\include</span>&quot; by default, so if an alternate location is required the user can set this in the file properties. </span></p>
+</blockquote>
+<h5>Importing more than one project from the same bld.inf</h5>
+ <blockquote>
+   <p>You cannot import projects that are part of a BLD.INF file seperately. Carbide projects are the equivilent of a BLD.INF file within the workspace, not an MMP file. To work with two or more MMP projects inside a BLD.INF file, simply import the BLD.INF file as a single project, then build it all or select any of its MMP files to build only that subset of the project.</p>
+</blockquote>
+<h3><a name="debugging" id="debugging"></a>Debugging</h3>
+ <h5>My breakpoints are not getting resolved, what could be causing this?</h5>
+ <blockquote>
+   <p>If the file you are trying to debug is outside the project then you should import the binary into the project you are currently trying to debug. </p>
+ </blockquote>
+ <h5>New debug launch configuration fields not filled in correctly upon creation </h5>
+ <blockquote>
+   <p>See &quot;Debug icon not visible on executable in C/C++ Projects view&quot; to correct this issue. Once completed, try to create a debug launch configuration again. Click the New button in the Configuration window to create a new configuration with the correct project information. </p>
+</blockquote>
+ <h5>Debug icon not visible on executable in C/C++ Projects view </h5>
+ <blockquote>
+   <p>This is commonly caused when the binary parser is not set correctly in the project. To correct, open the project properties window (right-click project name in C/C++ Projects view and select Properties), expand the C/C++ Build section and click the Binary Parser tab in the C/C++ Build page. Now look for the PE Windows Parser option. If it's not checkmarked, checkmark it and click Apply. If it is already set then uncheck it and click Apply, then reapply a checkmark and click Apply. The debug icon should now appear.</p>
+ </blockquote>
+<h3><a name="connectivity" id="connectivity"></a>Connectivity</h3>
+ <h5>Unable to connect to device using Bluetooth and debug it using TRK </h5>
+<blockquote>
+   <p>When using Bluetooth to connect to a device there are several things that require correction, including:</p>
+  <ul>
+    <li>If using built-in Bluetooth under WinXP SP2,  ensure the manufacturer&#8217;s device drivers are installed and active. The default Microsoft drivers do not work correctly for debugging devices using TRK. For example, if using IBM Integrated Bluetooth on your computer, make sure you have the IBM drivers for the device. </li>
+    <li>Ensure the COM port used by Bluetooth is not commandeered by another process or device</li>
+  </ul>
+</blockquote>
+ <p>&nbsp;</p>
+ <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>init_seg</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>init_seg</h3>
+<p>  Controls the order in which initialization code is executed.</p>
+<h5>Syntax</h5>
+  <p class="code">pragma init_seg( compiler | lib | user | &quot;name&quot;)</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>This pragma controls the order in which initialization code is executed. The initialization code for a C++ compiled module calls constructors for any statically declared objects. For C, no initialization code is generated. </p>
+  <p>The order of initialization is:</p>
+  <ul>
+    <li>compiler</li>
+    <li>lib</li>
+    <li>user</li>
+  </ul>
+  <p>If you specify the name of a segment, a pointer to the initialization code is placed in the designated segment. In this case, the initialization code is not called automatically; you must call it explicitly.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

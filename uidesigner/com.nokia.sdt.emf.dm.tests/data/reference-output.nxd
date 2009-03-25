@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+  <property id="dd1">100</property>
+  <compoundProperty id="dd2">
+    <property id="dd2.a">abc</property>
+    <property id="dd2.b">def</property>
+  </compoundProperty>
+  <component id="com.nokia.sdt.series60.CCoeControl">
+    <property id="name">CCoeControl1</property>
+    <property id="another" type="i18n">STR_CCoeControl1_1</property>
+    <component id="child-component1">
+      <compoundProperty id="location">
+        <property id="x">100</property>
+        <property id="y">200</property>
+      </compoundProperty>
+      <sequenceProperty id="stringarray">
+        <element>first item</element>
+        <element>second item</element>
+      </sequenceProperty>
+      <property id="name">child1</property>
+    </component>
+    <component id="child-component2">
+      <property id="name">child2</property>
+      <eventBinding id="com.nokia.testevent" handlerDisplay="handlerMethod" handlerSymbol="CMyClass::handlerMethod"/>
+      <eventBinding id="com.nokia.anotherevent" handlerDisplay="anotherHandlerMethod" handlerSymbol="CMyClass::anotherHandlerMethod"/>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_Hebrew">
+      <string id="STR_CCoeControl1_1">??abc def ghi</string>
+      <string id="STR_CCoeControl1_2">??localized string 1</string>
+      <string id="STR_CCoeControl1_3">??this has special chars:&amp;&lt;&gt;;&apos; </string>
+    </stringTable>
+    <stringTable language="LANG_American">
+      <string id="STR_CCoeControl1_1">abc def ghi</string>
+      <string id="STR_CCoeControl1_2">localized string 1</string>
+      <string id="STR_CCoeControl1_3">this has special chars:&amp;&lt;&gt;;&apos; </string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+</designerData>

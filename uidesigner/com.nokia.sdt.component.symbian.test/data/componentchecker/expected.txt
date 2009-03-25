@@ -1,0 +1,51 @@
+# application does not show up and properties cannot be edited
+com.nokia.sdt.series60.CAknApplication:property-info-displayName+className
+com.nokia.sdt.series60.CAknApplication:property-info-displayName+uid
+com.nokia.sdt.series60.CAknApplication:property-info-displayName+documentBase
+com.nokia.sdt.series60.CAknApplication:property-info-displayName+nextViewUid
+com.nokia.sdt.series60.CAknApplication:property-info-descriptionKey+className
+com.nokia.sdt.series60.CAknApplication:property-info-descriptionKey+uid
+com.nokia.sdt.series60.CAknApplication:property-info-descriptionKey+documentBase
+com.nokia.sdt.series60.CAknApplication:property-info-descriptionKey+nextViewUid
+# component not yet enabled
+com.nokia.sdt.series60.CAknDialog:property-info-displayName+backColor
+com.nokia.sdt.series60.CAknDialog:property-info-descriptionKey+backColor
+com.nokia.sdt.series60.CAknDialog:property-info-descriptionKey+fillRect
+com.nokia.sdt.series60.CAknDialog:property-info-descriptionKey+optionsMenu
+# not available for property editing
+com.nokia.sdt.series60.CAknDocument:property-info-displayName+className
+com.nokia.sdt.series60.CAknDocument:property-info-displayName+name
+com.nokia.sdt.series60.CAknDocument:property-info-displayName+fileMode
+com.nokia.sdt.series60.CAknDocument:property-info-descriptionKey+className
+com.nokia.sdt.series60.CAknDocument:property-info-descriptionKey+name
+com.nokia.sdt.series60.CAknDocument:property-info-descriptionKey+fileMode
+# conditional test includes spaces
+com.nokia.sdt.series60.CAknAppUi:sourcegen-paren-expr-spacing+//@componentDefinition/@component/@sourceGen/@template.20
+# not a pointer but a boolean
+com.nokia.sdt.series60.CAknForm:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@template.24
+com.nokia.sdt.series60.CAknSettingItemList:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@template.45
+com.nokia.sdt.series60.CCoeControl:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@templateGroup.1/@template.27
+com.nokia.sdt.series60.MultiLineDataQuery:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@templateGroup.0/@template.1
+com.nokia.sdt.series60.SingleLineDataQuery:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@template.1
+com.nokia.sdt.series60.CAknAppUi:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@template.23
+com.nokia.sdt.series60.CAknListBox:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@template.13
+com.nokia.sdt.series60.CAknView:sourcegen-if-pointer+//@componentDefinition/@component/@sourceGen/@template.3
+# replaced exprs are small numbers
+com.nokia.sdt.series60.CAknIpFieldEditor:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.1
+com.nokia.sdt.series60.CAknIpFieldEditor:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.3
+com.nokia.sdt.series60.CAknIpFieldEditor:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.4
+com.nokia.sdt.series60.CAknIpFieldEditor:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.5
+com.nokia.sdt.series60.CAknIpFieldEditor:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.6
+com.nokia.sdt.series60.CAknSlider:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.2
+com.nokia.sdt.series60.CCoeControlBase:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.0
+# not so long (no extra indents or can't reduce without looking stupid)
+com.nokia.sdt.series60.CAknListMultiQueryDialog:sourcegen-long-line+//@componentDefinition/@component/@sourceGen/@defineLocation.1/@template.0
+com.nokia.sdt.series60.CAknPopupFieldText:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.1
+com.nokia.sdt.series60.CAknListQueryDialog:sourcegen-long-line+//@componentDefinition/@component/@sourceGen/@defineLocation.1/@template.0
+com.nokia.sdt.series60.CAknListQueryDialog:sourcegen-long-line+//@componentDefinition/@component/@sourceGen/@template.5
+com.nokia.sdt.series60.ConfirmationQuery:sourcegen-long-expr-line+//@componentDefinition/@component/@sourceGen/@template.1
+com.nokia.sdt.series60.NaviImage:sourcegen-long-line+//@componentDefinition/@component/@sourceGen/@template.1
+com.nokia.sdt.series60.NaviTabs:sourcegen-long-line+//@componentDefinition/@component/@sourceGen/@template.4
+# virtual is removed from a patch
+com.nokia.sdt.series60.CAknSettingItemList:sourcegen-virtual-keyword+//@componentDefinition/@component/@sourceGen/@template.68
+

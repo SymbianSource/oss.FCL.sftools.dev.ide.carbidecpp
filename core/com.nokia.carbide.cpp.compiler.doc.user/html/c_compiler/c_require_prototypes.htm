@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Require Function Prototypes</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Require Function Prototypes</h3>
+<p>(ISO C, &sect;6.7.5.3, &sect;6.9.1) The C compiler lets you choose how to enforce function prototypes. The <a href="../pragmas/p_require_prototypes.htm">Require Function Prototypes</a> setting controls this behavior.</p>
+<p>If you enable the Require Function Prototypes setting, the compiler generates an error if you define a previously referenced function that does not have a prototype. If you define the function before it is referenced but do not give it a prototype, then enabling the Require Function Prototypes setting causes the compiler to issue a warning.</p>
+<p>This setting helps you prevent errors that happen when you call a function before you declare or define it. For example, without a function prototype, you might pass data of the wrong type. As a result, your code might not work as you expect even though it compiles without error.</p>
+<p>In Listing 1, <span class="code">PrintNum()</span> is called with an integer argument but later defined to take a floating-point argument. </p>
+<div class="listing">
+  <h5>Listing 1. Unnoticed Type-mismatch</h5>
+  <p>#include &lt;stdio.h&gt;<br />
+    void main(void)<br />
+    {<br />
+    PrintNum(1); // PrintNum() tries to interpret the <br />
+    integer as a float. Prints 0.000000.<br />
+  }</p>
+  <p>void PrintNum(float x)<br />
+    {<br />
+    printf(&quot;%f\n&quot;, x);<br />
+    }</p>
+</div>
+<p>When you run this program, you could get this result:</p>
+<p class="listing">0.000000</p>
+<p>Although the compiler does not complain about the type mismatch, the function does not work as you want. Since PrintNum() does not have a prototype, the compiler does not know to convert the integer to a floating-point number before calling the function. Instead, the function interprets the bits it received as a floating-point number and prints nonsense. </p>
+<p>If you prototype <span class="code">PrintNum()</span> first, as in Listing 2, the compiler converts its argument to a floating-point number, and the function prints what you wanted.</p>
+<div class="listing">
+  <h5>Listing 2. Using a Prototype to Avoid Type-mismatch</h5>
+  <p>#include &lt;stdio.h&gt;<br />
+  void PrintNum(float x); // Function prototype.</p>
+  <p>void main(void)<br />
+    {<br />
+    PrintNum(1); // Compiler converts int to float.<br />
+    } // Prints 1.000000.</p>
+  <p>void PrintNum(float x)<br />
+    {<br />
+    printf(&quot;%f\n&quot;, x);<br />
+  }</p>
+</div>
+<p>In the above example, the compiler automatically typecasts the passed value. In other situations where automatic typecasting is not available, the compiler generates an error if an argument does not match the data type required by a function prototype. Such a mismatched data type error is easy to locate at compile time. If you do not use prototypes, you do not get a compiler error.</p>
+<p>However, at runtime the code might produce an unexpected result whose cause can be extremely difficult to find.</p>
+<p>The Require Function Prototypes setting corresponds to the pragma require_prototypes. To check this setting, use <span class="code">__option (require_prototypes)</span>. By default, this setting is enabled.</p>
+<p>See also &ldquo;require_prototypes&rdquo;, and <a href="../symbols/sym_settings.htm">Checking Settings</a>.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

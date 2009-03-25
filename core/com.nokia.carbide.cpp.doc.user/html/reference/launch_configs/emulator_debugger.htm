@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugger Pane</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Debugger Pane</h2>
+<p>The <b>Debug/Run</b> window's <b>Debugger</b> pane provides control entry point breaks and which  consoles are active to show  logs. </p>
+<p align="center"><img src="../images/panel_debug_debugger.png" width="639" height="278" /></p>
+<p class="figure">Figure 1 - Debug window's Debugger tab</p>
+<h5>Table 1. Debugger pane &mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Break at entry point </b></td>
+    <td>Select to halt program execution at a specified
+      function or address. Enter the desired function
+      name or address in the corresponding field. If you
+      enter an address, ensure that it is correct and within
+    your program.</td>
+  </tr>
+  <tr>
+    <td><b>View program output </b></td>
+    <td><p>Enable to direct standard output messages to the   Emulation Program Output Console in the <a href="../view_log.htm">Console</a> view. </p>
+    <p class="note"><b>NOTE</b> In the <span class="code">epoc.ini</span> file the option <span class="code">LogToFile</span> must also be set to <span class="code">1</span>.</p></td>
+  </tr>
+  <tr>
+    <td><b>View emulator output </b></td>
+    <td><p>Enable to  output emulator messages to the   Emulator  Output Console in the Console view. </p>
+    <p class="note"><b>NOTE</b> In the <span class="code">epoc.ini</span> file the option <span class="code">LogToDebugger</span> must also be set to&nbsp;<span class="code">1</span>.</p></td>
+  </tr>
+  <tr>
+    <td><b>View Windows system messages </b></td>
+    <td>Enable to  output Windows system messages to the   Windows System Messages Console in the Console view. </td>
+  </tr>
+</table>
+
+<div class="step">  
+    <h4>To access the Debug window </h4>
+    <ol>
+      <li>Select the  Run &gt; Debug...  menu item</li>
+      <p>The Debug window appears. </p>
+      <li>Select a  Configuration setting</li>
+      <li>Click Debugger tab </li>
+      <p>The Debugger pane appears (Figure 1). </p>
+    </ol>
+</div>
+<h5>Common concepts</h5>
+  <ul>
+    <li><a href="../../concepts/debugger_about.htm">About the Debugger</a></li>
+  </ul>
+<h5 align="left">Common tasks</h5>
+<ul>
+  <li><a href="../../tasks/start/carbide_debugging.htm">Debugging a Program</a> (Example)</li>
+  <li><a href="../../tasks/projects/prj_debug_config.htm">Creating a Launch Configuration</a></li>
+</ul>
+<h5 align="left">Common references </h5>
+<ul>
+  <li><a href="../perspective_debug.htm">Debug Perspective</a></li>
+  <li><a href="../wnd_debug_configuration.htm">Debug Window </a> </li>
+  <li><a href="../view_debug.htm">Debug View</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

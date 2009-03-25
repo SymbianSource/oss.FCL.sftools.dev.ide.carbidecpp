@@ -1,0 +1,408 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Debug Monitor</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Debug Monitor</h2>
+</div><div>
+<p>The debug monitor is entered when the kernel crashes, if a system
+process panics, or an unhandled processor exception occurs. Under normal
+circumstances this ought not to happen, but when the kernel faults, the device
+enters the kernel debug monitor.</p>
+<p>There may be circumstances where you need to force a kernel crash,
+for example, if the system is locking up. Running the test program
+crash.exe forces a crash. This program takes a parameter that
+defines the number of seconds that must elapse before the kernel crash is
+forced.</p>
+<p>For example, when the system locks up under certain conditions, run
+"crash 60", and then recreate the conditions that lead to the lockup. After 60
+seconds, the kernel crash is forced and the debug monitor is entered.</p>
+<p>Notes:</p>
+<ul>
+<li>
+<p>the EKA2 debug monitor is very similar to the EKA1 version,
+although the details displayed may be different.</p>
+</li>
+<li>
+<p>you will occasionally find references to the <em>crash
+debugger</em>; this is the same as the debug monitor.</p>
+</li>
+</ul>
+
+</div>
+<div class="Head2">
+<h2><span class="Bodytext"><a name="1.9"></a></span>Crash debugger commands</h2>
+</div><div>
+<p>Commands consist of a single letter describing the operation to be
+performed, followed by any arguments. Not all commands take arguments. Commands
+are case sensitive; the majority are lower case. Commands should be entered at
+the command prompt, on the PC. The set of supported commands is as
+follows:</p>
+<ul>
+<li>
+<p>x -
+<a href="CrashDebugger_cmd_x.guide.html" title="The debug monitor and command syntax / x - leave debugger, cold restart of ROM image">leaves the debugger, does a cold restart of the same ROM image; (nb lower case)</a></p>
+</li>
+<li>
+<p>X -
+<a href="CrashDebugger_cmd_x.guide.html" title="The debug monitor and command syntax / X - leave debugger, return to bootloader">leaves the debugger, and returns to the bootloader to wait for a new ROM image to be downloaded; (nb upper case)</a></p>
+</li>
+<li>
+<p>f -
+<a href="CrashDebugger_cmd_f.guide.html" title="The debug monitor and command syntax / f - display kernel fault information">displays kernel fault information</a></p>
+</li>
+<li>
+<p>m -
+<a href="CrashDebugger_cmd_m.guide.html" title="The debug monitor and command syntax / m - do a memory dump">does a memory dump</a></p>
+</li>
+<li>
+<p>z -
+<a href="CrashDebugger_cmd_z.guide.html" title="The debug monitor and command syntax / z - do a memory dump, skipping over unmapped memory">does a memory dump, but skips over unmapped memory space</a></p>
+</li>
+<li>
+<p>i -
+<a href="CrashDebugger_cmd_i.guide.html" title="The debug monitor and command syntax / i - display information for the current process and thread">displays information on the current thread and the current process</a></p>
+</li>
+<li>
+<p>o -
+<a href="CrashDebugger_cmd_o.guide.html" title="The debug monitor and command syntax / o - display brief DObject information">displays brief DObject information</a></p>
+</li>
+<li>
+<p>q -
+<a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">displays full DObject information</a></p>
+</li>
+<li>
+<p>c -
+<a href="CrashDebugger_cmd_c.guide.html" title="The debug monitor and command syntax / c - display contents of object container">displays contents of object container; (nb lower case)</a></p>
+</li>
+<li>
+<p>C -
+<a href="CrashDebugger_cmd_CC.guide.html" title="The debug monitor and command syntax / C - display contents of object container">displays contents of object container; (nb upper case)</a></p>
+</li>
+<li>
+<p> r -
+<a href="CrashDebugger_cmd_r.guide.html" title="The debug monitor and command syntax / r - dump register contents">dumps register contents</a>.</p>
+</li>
+</ul>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>x - leave debugger, cold restart of ROM
+image</h2>
+</div><div>
+<p>This command, in lower case, leaves the debugger and does a cold
+restart of the current ROM image.</p>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>X - leave debugger, return to
+bootloader</h2>
+</div><div>
+<p>This command, in upper case, leaves the debugger, and returns to
+the bootloader to wait for a new ROM image to be downloaded.</p>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>f - display kernel fault
+information</h2>
+</div><div>
+<p>This command displays information about the the kernel fault that
+caused the debugger to be entered. The information has the following
+format.</p>
+<p class="listing">Fault Category: Exception  Fault Reason: 10000000<br>
+  ExcId 00000001 CodeAddr ffe0016c DataAddr 80000001 Extra 00000013<br>Exc 1 Cpsr=68000010 FAR=80000001 FSR=00000013<br>&nbsp;R0=00000000  R1=00000000  R2=30000000  R3=80000001<br>&nbsp;R4=00000001  R5=00403d68  R6=00002000  R7=00000000<br>&nbsp;R8=00000000  R9=00000000 R10=00000000 R11=00403fa0<br>R12=00403d34 R13=00403d48 R14=500d41e8 R15=ffe0016c<br>R13Svc=81716000 R14Svc=500480b8 SpsrSvc=20000010</p>
+<p>Notes:</p>
+<ul>
+<li>
+<p>R15 is the program counter</p>
+</li>
+<li>
+<p>R14 is the link register, </p>
+</li>
+<li>
+<p>R13 is the stack pointer</p>
+</li>
+</ul>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>m - do a memory dump</h2>
+</div><div>
+<p>This command dumps memory in both hexadecimal and ASCII format. Use
+one of the following command formats:</p>
+<p class="listing">m start end</p>
+<p class="listing">m start+length</p>
+<p>
+start specifies the start address in hexadecimal, and
+end specifies the end address in hexadecimal. If the second
+parameter starts with a + character, then the following hexadecimal characters
+are interpreted as a length. </p>
+<p>Address parameters are always virtual addresses (the MMU is still
+on).</p>
+<p>The resulting format is similar to the EKA1 format.</p>
+<p>For example:</p>
+<p class="listing">&gt; .m 81c01c60+30</p>
+<p class="listing">81C01C60: 00 00 00 00 15 00 00 10 E0 6A 13 50 01 00 00 80 .........j.P....<br>
+  81C01C70: 30 3B C0 81 34 D9 03 50 00 00 FF FF E8 1C C0 81 0;..4..P........<br>
+  81C01C80: 34 D9 03 50 30 3B C0 81 FC 4A 13 50 E8 1C C0 81 4..P0;...J.P.....</p>
+<p>If an illegal memory access occurs, the debugger traps the
+exception and displays an error message.</p>
+</div>
+<div class="Head2">
+  <hr size="2" noshade>
+<h2>z - do a memory dump, skipping over
+unmapped memory</h2>
+</div><div>
+<p>This command dumps memory in both hexadecimal and ASCII format, but
+excludes any unmapped memory space. If an illegal memory access occurs, it does
+not stop, but skips to the next page instead. This is useful to inspect the
+content of discontiguous chunks.</p>
+<p>The syntax and the display format is the same as for the
+<a href="CrashDebugger_cmd_m.guide.html" title="The debug monitor and command syntax / m - do a memory dump">m</a> command.</p>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>i - display information for the current
+process and thread</h2>
+</div><div>
+<p>This command displays information for the current process and
+thread.</p>
+<p class="listing">SCHEDULER @80000d98: CurrentThread 8070dd28<br>
+  RescheduleNeeded=00 DfcPending=00 KernCSLocked=00000001<br>DFCS: next 80000ea8 prev 80000ea8<br>ProcessHandler=5004b040, AddressSpace=8070d7c8<br>SYSLOCK: HoldingThread 8070dd28 iWaiting 00000000<br>Extras 0: 8070d7c8 1: 8070d7c8 2: 8070d7c8 3: 00000000<br>Extras 4: 00000000 5: 00000000 6: 00000000 7: 00000000<br>Extras 8: 00000000 9: 00000000 A: 00000000 B: 00000000<br>Extras C: 00000000 D: 00000000 E: 00000000 F: 00000000</p>
+<p>The format for the thread is:</p>
+<p class="listing">TheCurrentThread=8070da6c<br>
+  THREAD at 8070da6c VPTR=50052b50 AccessCount=3 Owner=8070d7c8<br>Full name crash::Main<br>Thread MState READY<br>Default priority 28 WaitLink Priority 28<br>ExitInfo 3,0,<br>Flags 80000004, Handles 8070a79c<br>Superviso81715000 size 1000<br>User stack base 00402000 size 2000<br>Id=19, Heap=00600000, Created heap=00600000, Frame=00000000<br>Trap handler=00000000, ActiveScheduler=00000000, Exception<br>handler=00000000<br>TempObj=00000000 TempAlloc=00000000<br>NThread @ 8070dd28 Pri 28 NState READY<br>Next=8070dd28 Prev=8070dd28 Att=03 ExcInUserMode=10<br>HeldFM=80000eb8 WaitFM=00000000 AddrSp=8070d7c8<br>Time=0 Timeslice=20 ReqCount=0<br>SuspendCount=0 CsCount=0 CsFunction=00000000<br>SavedSP=81715d6c<br>CAR 00000001<br>DACR 30315507<br>R13_USR 00000000 R14_USR 81715dc4 SPSR_SVC 81715e10<br>&nbsp;R4 30303031  R5 30303030  R6 81715dc4  R7 81715e14<br>&nbsp;R8 81715dac  R9 81715da0 R10 50055c88 R11 50055c3c<br>&nbsp;PC 81715dc0</p>
+<p>The format for the process is:</p>
+<p class="listing">TheCurrentProcess=8070d7c8<br>
+  PROCESS at 8070d7c8 VPTR=50052bc4 AccessCount=5 Owner=00000000<br>Full name crash<br>ExitInfo 3,0,<br>Flags 00040000, Handles 80709c98, Attributes 60010000<br>DataBssChunk 8070a514, CodeChunk 8070a9a8<br>DllDataChunk 00000000, Process Lock 8070d90c<br>NumChunks=2<br>0: Chunk 8070a514, run 00400000, access count 1<br>1: Chunk 8070a704, run 00600000, access count 1<br>Domain -1, DACR 55555507<br>TheCurrentAddressSpace=8070d7c8<br>TheCurrentVMProcess=8070d7c8<br>PROCESS at 8070d7c8 VPTR=50052bc4 AccessCount=5 Owner=00000000<br>Full name crash<br>ExitInfo 3,0,<br>Flags 00040000, Handles 80709c98, Attributes 60010000<br>DataBssChunk 8070a514, CodeChunk 8070a9a8<br>DllDataChunk 00000000, Process Lock 8070d90c<br>NumChunks=2<br>0: Chunk 8070a514, run 00400000, access count 1<br>1: Chunk 8070a704, run 00600000, access count 1<br>Domain -1, DACR 55555507<br>TheCurrentDataSectionProcess=8070d7c8<br>TheCompleteDataSectionProcess=8070d7c8<br>PROCESS at 8070d7c8 VPTR=50052bc4 AccessCount=5 Owner=00000000<br>Full name crash<br>ExitInfo 3,0,<br>Flags 00040000, Handles 80709c98, Attributes 60010000<br>DataBssChunk 8070a514, CodeChunk 8070a9a8<br>DllDataChunk 00000000, Process Lock 8070d90c<br>NumChunks=2<br>0: Chunk 8070a514, run 00400000, access count 1<br>1: Chunk 8070a704, run 00600000, access count 1<br>Domain -1, DACR 55555507</p>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>o - display brief DObject information</h2>
+</div><div>
+<p>This command displays basic information about the DObject. The command has the following syntax:</p>
+<p class="listing">o address</p>
+<p> where address specifies the address of the DObject.</p>
+<p>For example:</p>
+<p class="listing">&gt; o 6403c170</p>
+<p class="listing">THREAD at 6403c170 VPTR=f8046c18 AccessCount=3 Owner=6403bb4c<br>
+  Full name crash::Main</p>
+</div>
+<div class="Head2">
+  <hr size="2" noshade>
+<h2>q - display full DObject information</h2>
+</div><div>
+<p>This command displays full information about the DObject. The exact format displayed depends on the exact
+type of the DObject being referenced, for example, whether
+it is a thread, process, or a chunk. The command has the following
+syntax:</p>
+<p class="listing">q address</p>
+<p> where address specifies the address of the DObject.</p>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>c - display contents of object
+container</h2>
+</div><div>
+<p>This command displays the contents of one of the kernel's object
+containers, a DObjectCon type. Note that information is dumped
+very quickly without page breaks, which is useful in situations where the
+kernel is likely to become very unstable very shortly after crashing. There is
+an upper case version of this command,
+<a href="CrashDebugger_cmd_CC.guide.html" title="The debug monitor and command syntax / C - display contents of object container">C</a>, which generates
+output with a pause between pages.</p>
+<p>The command has the following syntax:</p>
+<p class="listing">c type</p>
+<p>where type is a single hexadecimal digit between 0 and
+D inclusive that specifies which kernel container is to be dumped. The mapping
+between the hexadecimal digit and the kernel container is:</p>
+<table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0">
+<tr valign="top">
+<td class="Cell">
+<p>0</p></td>
+<td class="Cell">
+<p>Threads</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>1</p></td>
+<td class="Cell">
+<p>Processes</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>2</p></td>
+<td class="Cell">
+<p>Chunks</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>3</p></td>
+<td class="Cell">
+<p>Libraries</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>4</p></td>
+<td class="Cell">
+<p>Semaphores</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>5</p></td>
+<td class="Cell">
+<p>Mutexes</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>6</p></td>
+<td class="Cell">
+<p>Timers</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>7</p></td>
+<td class="Cell">
+<p>Servers</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>8</p></td>
+<td class="Cell">
+<p>Sessions</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>9</p></td>
+<td class="Cell">
+<p>LogicalDevices</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>A</p></td>
+<td class="Cell">
+<p>PhysicalDevices</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>B</p></td>
+<td class="Cell">
+<p>Channels</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>C</p></td>
+<td class="Cell">
+<p>ChangeNotifiers</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>D</p></td>
+<td class="Cell">
+<p>Undertakers</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>E</p></td>
+<td class="Cell">
+<p>Message queues</p></td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>F</p></td>
+<td class="Cell">
+<p>Property references</p></td>
+</tr>
+</table></td></tr></table>
+<p>For example:</p>
+<p class="listing">&gt; c A</p>
+<p class="listing">Container 10 at 640275c4 contains 3 PHYSICAL DEVICES:<br>
+  PHYSICAL DEVICE at 64032dac VPTR=f805d9fc AccessCount=2 Owner=00000000<br>
+  Full name Media.IRam<br>
+  PHYSICAL DEVICE at 640339e8 VPTR=f8067e44 AccessCount=2 Owner=00000000<br>
+  Full name Media.Flash<br>
+  PHYSICAL DEVICE at 64033a64 VPTR=f806b9f8 AccessCount=2 Owner=00000000<br>
+  Full name Media.Ata</p>
+<p class="listing">&gt; c 0</p>
+<p class="listing">Container 0 at 807022b8 contains 12 THREADS:<br>
+  THREAD at 807011c0 VPTR=50052b04 AccessCount=1 Owner=8070107c<br>
+  Full name EKern::Null<br>
+  Thread MState READY<br>
+  Default priority 0 WaitLink Priority 0<br>
+  ExitInfo 3,0,<br>
+  Flags 0000000c, Handles 80701520<br>
+  Supervisor stack base 80700000 size 1000<br>
+  User stack base 00000000 size 0<br>
+  Id=0, Heap=00000000, Created heap=00000000, Frame=00000000<br>
+  Trap handler=00000000, ActiveScheduler=00000000, Exception<br>
+  handler=00000000<br>
+  TempObj=00000000 TempAlloc=00000000<br>
+  NThread @ 8070147c Pri 0 NState READY<br>
+  Next=8070147c Prev=8070147c Att=00 ExcInUserMode=00<br>
+  HeldFM=00000000 WaitFM=00000000 AddrSp=8070107c<br>
+  Time=-1 Timeslice=-1 ReqCount=0<br>
+  SuspendCount=0 CsCount=0 CsFunction=00000000<br>
+  SavedSP=80700f50<br>
+  CAR 00000001<br>
+  DACR 55555547<br>
+  R13_USR 00403ed4 R14_USR 500c88b4 SPSR_SVC 200000d3<br>
+  &nbsp;R4 00000009  R5 5004b7ec  R6 50000000  R7 dc911000<br>
+  &nbsp;R8 00000000  R9 807103c0 R10 50002140 R11 80700fb4<br>
+  &nbsp;PC 500481b4</p>
+<p>The information displayed for each object is the same as that shown
+after using the <a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a>
+command. After displaying the information for each object, the debugger pauses
+until you press a key.</p>
+<p>Notes</p>
+<ul>
+<li>
+<p> the DObjectCon class is internal to Symbian
+OS.</p>
+</li>
+<li>
+<p>the type value passed as an argument to the command is one of
+the enum values of the TObjectType enum; this enum is internal to
+Symbian OS.</p>
+</li>
+</ul>
+</div>
+<div class="Head2">
+  <hr size="2" noshade>
+<h2>C - display contents of object
+container</h2>
+</div><div>
+<p>This is exactly the same as the lower case
+<a href="CrashDebugger_cmd_c.guide.html" title="The debug monitor and command syntax / c - display contents of object container">c</a> command except
+that the display of output pauses between pages. If you need to dump output as
+fast as possible without pauses, use the lower case version.</p>
+</div><div class="Head2">
+  <hr size="2" noshade>
+<h2>r - dump register contents</h2>
+</div>
+<p>This command dumps the full ARM register set.</p>
+<p>On ARM this dumps the full set of user mode registers and all the
+alternate registers for other modes.</p>
+<p>For example:</p>
+<p class="listing">&gt; r</p>
+<p class="listing">MODE_USR:<br>
+  &nbsp;R0=6571de54  R1=0000002a  R2=00000002  R3=ffffffff<br>
+  &nbsp;R4=0000002a  R5=f8170414  R6=6571df14  R7=6403cba8<br>
+  &nbsp;R8=00000001  R9=6403c41c R10=640002f8 R11=6571de70<br>
+  R12=00000020 R13=00404e00 R14=f80818c0 R15=f800bfa8<br>
+  CPSR=60000013<br>
+  MODE_FIQ:<br>
+  &nbsp;R8=00000000  R9=ffffffff R10=ffffffff R11=00000000<br>
+  R12=00000000 R13=64000d0c R14=c080079c SPSR=e00000dc<br>
+  MODE_IRQ:<br>
+  R13=6400110c R14=00000013 SPSR=20000013<br>
+  MODE_SVC:<br>
+  R13=6571de54 R14=f80328bc SPSR=60000010<br>
+  MODE_ABT:<br>
+  R13=6400090c R14=ffff0010 SPSR=400000d7<br>
+  MODE_UND:<br>
+  R13=6400090c R14=95221110 SPSR=f000009d</p> 
+
+	   </div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.toolbar.orientation"  defaultValue="Horizontal ">
+		<enumElement value="Horizontal"/>
+		<enumElement value="Vertical"/>
+	</enumPropertyDeclaration>
+	
+	<component baseComponent="com.nokia.sdt.series60.ControlBase"
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.Toolbar" 
+		category="Controls"
+		instanceNameRoot="toolBar"
+		version="1.0">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.nokia.series60" minSDKVersion="5.0" 
+			className="CAknToolbar" classHelpTopic=""
+			resourceType="AVKON_TOOLBAR" resourceHelpTopic="" />
+		
+		<designerImages smallIconFile="Toolbar_sm.png" 
+			largeIconFile="Toolbar.png" />
+			
+		<attributes>
+			<attribute key="cpp-class-name">CAknToolbar</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+		</attributes>	
+		
+		<properties>		
+			<enumProperty category="Appearance" name="orientation" type="com.nokia.sdt.toolbar.orientation" descriptionKey="orientationDescr" default="Horizontal" />
+			<property category="Appearance" name="smallToolbar" type="boolean" descriptionKey="smallToolbarDescr" />
+			<property category="Appearance" name="transparent" type="boolean" descriptionKey="transparentDescr" />
+			<property category="Appearance" name="flexiblePosition" type="boolean" descriptionKey="flexPosDescr" />
+			<property category="Appearance" name="hasControlPane" type="boolean" descriptionKey="hasControlPaneDescr" default="true" />
+			<property category="Appearance" name="rememberLastSelection" type="boolean" descriptionKey="memLastSelDescr" />
+			<property category="Appearance" name="middleItemFocused" type="boolean" descriptionKey="middleItemFocusDescr" />
+						
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstanceChildListener"/>
+				<script file="Toolbar.js" prototype="CAknToolbar"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.displaymodel.adapter.ITargetFeedbackListener"/>
+				<code class="com.nokia.sdt.series60.component.ToolbarTargetFeedbackListenerImplFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="AVKON_TOOLBAR" headers="eikon.rh">
+				<mapBitmaskMember property="." member="flags"
+				  includedProperties="smallToolbar transparent flexiblePosition hasControlPane middleItemFocused rememberLastSelection">
+					<mapBitmaskValue properties="smallToolbar" value="KAknToolbarSmall" />
+					<mapBitmaskValue properties="transparent" value="KAknToolbarTransparent" />
+					<mapBitmaskValue properties="flexiblePosition" value="KAknToolbarFlexiblePosition" />
+					<mapBitmaskValue properties="hasControlPane" value="KAknToolbarWithoutCba" />
+					<mapBitmaskValue properties="middleItemFocused" value="KAknToolbarMiddleItemFocused" />
+					<mapBitmaskValue properties="rememberLastSelection" value="KAknToolbarLastUsedItemFocused" />
+				</mapBitmaskMember>
+				
+				<!-- Map the toolbar items, if required -->
+				<mapArrayMember property="." member="items">
+  					<select isComponentInstanceOf="com.nokia.sdt.series60.CAknButton">
+      					<choice value="true">
+      						<!-- map the button to the toolbar -->
+	      					<mapResource struct="TBAR_CTRL" id="toolBarButton" headers="eikon.rh">
+	      						<mapSimpleMember property="toolBarType" member="type"/>
+	      						<mapEnumMember property="command" member="id" uniqueValue="UNIQUE"
+											nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"/>
+	      						<mapResourceMember property="." member="control"/>
+	      					</mapResource>
+      					</choice>
+      					<choice>
+      						<!-- else, don't map this resource -->
+      					</choice>
+  					</select>
+				</mapArrayMember>
+
+			</mapResource>
+			
+		</sourceMapping>
+		
+		<sourceGen>
+			
+			<template phase="HeaderIncludes"><![CDATA[
+#include <aknutils.h>
+#include <akntoolbar.h>
+]]>			</template>
+<template phase="EventIncludes"><![CDATA[
+#include <AknToolbarObserver.h>
+]]>			</template>
+		
+			
+			<template phase="Initialize">
+if( AknLayoutUtils::PenEnabled() &amp;&amp; Toolbar() ) 
+	{
+	//By default keep toolbar invisible        
+	ShowToolbarOnViewActivation( ETrue ); 
+	Toolbar()-&gt;SetToolbarObserver( this );
+	}		
+				</template>
+			
+			<template id="BaseClass" phase="BaseClassList">,MAknToolbarObserver</template>
+			
+			<expandMacro name="GenerateMethodWithOwnedBody"
+					IsOwned="false"
+					FunctionLocationId="DYNINITTOOLBARL_METHOD"
+					FunctionName="DynInitToolbarL"
+					FunctionArgs="TInt aResourceId, CAknToolbar* aToolBar"
+					IsStatic="false"
+					DeclPhase="ClassPublic"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Should be used to set the properties of some toolbar components 
+ * before it is drawn.
+ * @param aResourceId The resource ID for particular toolbar
+ * @param aToolbar The toolbar object pointer
+ */
+				</expandArgument>				
+			</expandMacro>
+
+			<template location="DYNINITTOOLBARL_METHOD_BODY"><![CDATA[
+<% if (properties.orientation == "Vertical") { %>Toolbar()->SetOrientation( EAknOrientationVertical );
+<% } %>	
+<%	// generate dynamic initialization for child component
+	var itemContribs = Engine.generateChildContributions("AknToolbar");
+	Engine.assignLocationsForPhase(itemContribs, "InitToolbarItems", "DYNINITTOOLBARL_METHOD_BODY");
+	contribs.addAll(itemContribs);
+%>
+]]>			</template>
+			<expandMacro name="GenerateMethod"
+					IsOwned="false"
+					FunctionLocationId="OFFERTOOLBAREVENTL_METHOD"
+					FunctionName="OfferToolbarEventL"
+					FunctionArgs="TInt aCommandId"
+					IsStatic="false"
+					DeclPhase="ClassPublic"
+					DefnLocation="MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Handles toolbar events for a certain toolbar item.
+ * @param aCommand The command ID of some toolbar item.
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+HandleCommandL( aCommandId );
+			]]>	</expandArgument>
+			</expandMacro>
+
+		
+			<!-- child contributions -->
+			<inline scope="prototype">
+include("../containers/containerLibrary.js")
+			</inline>
+					
+			<inline>
+			
+				// Emit the toolbar item uids.
+				for (i in instance.children) {
+					var view = instance.children[i];
+					//println(view);
+					var theEnum = findOrCreateViewUidConstant(view);
+				}
+				
+				// iterate children
+				contribs.addAll(Engine.generateChildContributions(form))
+				
+			</inline>
+		
+		</sourceGen>
+			
+	</component>
+
+</componentDefinition>

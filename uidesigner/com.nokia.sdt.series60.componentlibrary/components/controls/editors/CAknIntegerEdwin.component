@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CAknIntegerEdwin"
+		baseComponent="com.nokia.sdt.series60.CEikEdwinBase" 
+		category="Editors"
+		instanceNameRoot="integerEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="AVKON_INTEGER_EDWIN" className="CAknIntegerEdwin" />
+		<designerImages 
+			smallIconFile="CAknIntegerEdwin_sm.png" 
+			largeIconFile="CAknIntegerEdwin.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CAknIntegerEdwin</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-setting-item-list-content">true</attribute>
+			<attribute key="setting-item-class-name">CAknIntegerEdwinSettingItem</attribute>
+			<attribute key="data-model-cpp-type">TInt</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="dataquery-className">CAknNumberQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EAknCtIntegerEdwin</attribute>
+		</attributes>
+	
+		<properties>
+			<!-- note: min is not -2147483648 since RCOMP complains -->
+			<property name="value" category="Data" type="integer" minValue="-2147483647" maxValue="2147483647"
+				descriptionKey="valueDescription" />
+			<property name="unset_value" category="Data" type="integer" minValue="-2147483647" maxValue="2147483647"
+				descriptionKey="unset_valueDescription" /> 
+		
+			<property name="minimum" category="Data" type="integer" default="-2147483647" 
+				minValue="-2147483647" maxValue="2147483647"
+				descriptionKey="minimumDescription" />
+			<property name="maximum" category="Data" type="integer" default="2147483647" 
+				minValue="-2147483647" maxValue="2147483647"
+				descriptionKey="maximumDescription" />
+			
+			<property name="maxlength" category="Appearance" type="integer" 
+				descriptionKey="maxlengthDescription" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CAknIntegerEdwin_visual.js" prototype="CAknIntegerEdwinVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="AVKON_INTEGER_EDWIN" headers="avkon.rh">
+			<mapSimpleMember property="unset_value" member="unset_value"/>
+			<mapSimpleMember property="minimum" member="min"/>
+			<mapSimpleMember property="maximum" member="max"/>
+			<mapSimpleMember property="maxlength" member="maxlength"/>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuerySetData AknDataQuerySetData1 AknDataQuerySetData2">
+
+		<inline>
+include("../../dataModelGenLibrary.js")
+		</inline>		
+	
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"aknnumedwin.h", "eikenv.h" ]);
+		</inline>
+
+		<template phase="MainConstants" forms="Container Dialog Form">
+_LIT( K${instanceName$title}TextValue, "${properties.value}" );
+		</template>
+		
+		<!-- do not validate the value, since unset_value will be used -->
+		
+		<!-- note: we have to set the text in addition to the integral value
+			or else the editor shows up BLANK -->
+		<template phase="Initialize" forms="Container Dialog Form"><![CDATA[
+${instanceMemberName}->SetValueL( ${properties.value} );
+${instanceMemberName}->SetTextL( &K${instanceName$title}TextValue );
+]]>		</template>
+
+		<template form="SettingsList" phase="Initialize"><![CDATA[
+<%		this.setupSettingItem(contribs, 0, instance, "" + properties.value); 
+%>]]>	</template>
+
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	aData = ${properties.value};
+]]>		</template>
+
+		<template form="AknDataQuerySetData1" phase="SetData"><![CDATA[
+	aData1 = ${properties.value};
+]]>		</template>
+
+		<template form="AknDataQuerySetData2" phase="SetData"><![CDATA[
+	aData2 = ${properties.value};
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateCommonEdwinEvents GenerateFormatChangedEvent"/>
+		<useTemplateGroup ids="GenerateNavigationEvent GenerateTextUpdatedEvent"/>
+		
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent" />
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

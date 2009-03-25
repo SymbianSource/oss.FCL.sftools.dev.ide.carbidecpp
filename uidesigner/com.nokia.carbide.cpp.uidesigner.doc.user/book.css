@@ -1,0 +1,184 @@
+/*	
+	Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+	All rights reserved. 
+	License: http://www.eclipse.org/legal/epl-v10.html
+*/
+
+/*	Add whitespace around entire display to avoid crowding edges of view 	*/
+/* 	20070523-Removed top margin size to close gap between location breadcrumbs and page title	*/
+html {
+	margin: 2px 10px 10px 10px;
+	}
+
+/* 	Set default font to serif style, 12-pt and plain	*/
+body, p, table {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 13px;
+	font-weight: normal;
+}
+
+/*	Use sans-serif fonts for all title styles	*/
+h1, h2, h3, h4, h5, h6, strong, em {
+	font-family: Helvetica, sans-serif;
+	color: #000000;	
+	}
+
+h1	{ font-size:20px }
+h2	{ font-size:18px }
+h3	{ font-size:16px }
+h4	{ font-size:14px }
+h5	{ font-size:13px }
+h6	{ font-size:12px }
+
+/*	For headlines at the top of a view, add space	*/
+/*	20090224-changed green fade to gold header image	*/
+h1, h2, h3 {
+	background-image: url(html/images/gold_header.png);
+	background-repeat: no-repeat;
+	padding:10px 0px 10px 12px;	
+	}
+
+li	{
+	margin-bottom:8px;	
+	margin-top:8px;
+	}
+
+/*	Footer includes space and a gray line above the company logo	*/
+#footer {
+	padding-top:10px;
+	margin-top:20px;
+	border-top:1px solid #999;
+	font-family: Helvetica, sans-serif;
+	font-size: 11px;
+	color:#333;
+	}
+
+.listing	{
+	font-family: "Courier New", Courier, mono;
+	color: #000000;
+	background-color: #FFFFCC;
+	margin: 5px 0px;
+	}
+		
+.code, pre	{
+	font-family: "Courier New", Courier, mono;
+	font-size: 13px;
+	color: #000000;
+	}
+
+.step	{
+	/* background-color: #EEE; */
+	/* margin: 10px 0px; */
+	color: #111;
+	/* border-bottom:2px solid #EEE; */
+	}
+	
+.substep	{
+	background-color: #EEE;
+	}
+	
+	
+/*	Figure/Listing/Table titles are centered and gray	*/
+p.table {
+	color: #999;
+	font-weight: bold;
+	padding-top: 5px;
+	}
+
+table	{
+	border: solid #999 1px;
+	table-layout: auto;
+	font-size: 13px;
+	}
+
+td, th	{
+	border: solid #999 1px;
+	padding: 5px;
+	vertical-align:top;
+	}
+	
+/*	20070522-replaced gray with green background to match gradiant color for title	*/
+th	{
+	background-color:#FDDD1F;	/* background-color:#acd79b;
+	background-color:#999;
+	color:#FFF; */
+	}
+
+div.ol.p	{
+	margin-left: 3em;
+	}
+
+/* Make all ordered/unordered list items appear in bold gray */
+div ol > li, div ul > li {
+	font-weight:bold;
+	color: #333;
+	}
+
+div ol > p, div ul > p, div li > p {
+	font-weight:normal;
+	}
+	
+/* Make all H4 and H5 items appear in bold gray against a light green background */
+div h5, div h4	{
+	padding:5px 0px 5px 12px;
+	background-color:#FFFF66;
+	/* background-color: #EEE; */
+	font-weight:bold;
+	color: #000000;
+	}
+	
+	
+/*	Notes stand out using a light top & bottom borders with dark gray text	*/
+p.note {
+	/* color: #03C; */
+	/* background-color: #FFFF99; */
+	color: #333;
+	padding: 5px;
+	margin-left: 1em;
+	margin-right: 1em;
+	border-top: solid #BBB thin;
+	border-bottom: solid #BBB thin;
+	}
+
+	
+/*	Figure/Listing/Table titles are centered and gray	*/
+p.figure {
+	color: #333;
+	text-align: center;
+	font-weight: bold;
+	}
+
+/*	highly visible red background and white text for things that need fixing before release	*/
+/*  SHOULD NOT BE PRESENT IN RELEASED PRODUCTS */
+.fix	{
+	background-color: red;
+	font-weight: bold;
+	color: white;
+	}
+
+.question	{
+	font-style:italic;
+	font-weight:bold;
+	color: #555;
+	}
+	
+.titleSmall {
+	font-family: Helvetica, sans-serif;
+	font-size: 11px;
+	}
+
+	
+.plain {
+	font-family: Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	text-decoration: none;
+	}
+
+a:link 		{ color: #0033CC }
+a:visited	{ color: #555555 }
+a:hover 	{ color: #0033CC }

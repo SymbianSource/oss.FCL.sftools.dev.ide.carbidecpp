@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Samples Page. -->
+	<extensionContent alt-style="css/swt.properties" style="css/samples.css" path="samples/page-content/carbideAnchor">
+
+<!--
+		<group label="UI Designer examples" id="swt" style-id="samples-group">
+
+			<link label="UI Designer Birthday example" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.sdt.uidesigner.help/tutorials/birthdays/BirthdaysTutorial.html" id="carbideapp" style-id="sample-link" >
+				<text>Examine a birthday tracking program that demonstrates S60 UI, proper UI and data separation, and simple persistent storage.</text>
+			</link>
+
+	
+			<link label="Yahoo! Image Search example" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.sdt.uidesigner.help/tutorials/ysearch/YSearchTutorial_1.html" id="carbideapp" style-id="sample-link" >
+				<text>Examine a program that accesses Yahoo!'s image search web service. This program demonstrates HTTP access, XML parsing, list boxes, and image handling. </text>
+			</link>
+	
+	
+			<link label="Workbench views and standalone applications" url="http://org.eclipse.ui.intro/runAction?pluginId=org.eclipse.pde.ui&amp;class=org.eclipse.pde.ui.internal.samples.ShowSampleAction&amp;id=org.eclipse.sdk.samples.swt.examples" id="swt-examples" style-id="sample-link">
+				<text>The SWT Example launcher will allow you to launch a collection of SWT examples.  Some of the examples can be run independent of the eclipse platform and others will be available as views inside the workbench.</text>
+			</link>
+
+-->
+		</group>
+
+	</extensionContent>
+	
+</introContent>

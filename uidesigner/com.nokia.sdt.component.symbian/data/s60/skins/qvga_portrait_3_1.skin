@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.nokia.com/sdt/ui/skin" 
+	name="S60 QVGA Portrait 3.1+" width="342" height="420">
+	<editorArea x="51" y="44" width="240" height="320"/>
+</skin>

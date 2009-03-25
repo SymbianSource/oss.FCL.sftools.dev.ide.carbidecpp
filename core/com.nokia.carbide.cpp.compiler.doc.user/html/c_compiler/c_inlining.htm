@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Inlining</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Inlining</h3>
+<p>Carbide supports inlining C/C++ functions that you define with the <span class="code">inline</span>, <span class="code">__inline__</span>, or <span class="code">__inline</span> specifier keywords.</p>
+<p>The following functions are never inlined:</p>
+<ul>
+  <li>Functions that return class objects that need destruction.</li>
+  <li>Functions with class arguments that need destruction.</li>
+  <li>Functions with variable argument lists.</li>
+</ul>
+<p>The compiler determines whether to inline a function based on the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a>, <a href="../pragmas/p_inline_depth.htm">Inline Depth</a>, <a href="../pragmas/p_auto_inline.htm">Auto-inline</a>, and <a href="../pragmas/p_defer_codegen.htm">Deferred Inlining</a> settings.</p>
+<p class="note"><strong>TIP</strong> When you call an inlined function, the compiler inserts the actual instructions of that function rather than a call to that function. Inlining functions makes your programs faster because you execute the function code immediately without the overhead of a function call and return. However, it can also make your program larger because the compiler may have to repeat the function code multiple times throughout your program.</p>
+<p>If you disable the ANSI Keywords Only setting, you can declare C functions to be inline.</p>
+<h5>Table 1: Settings for the Inline Depth</h5>
+<table width="76%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="25%" scope="col">This setting</th>
+    <th width="75%" scope="col">Does this&hellip;</th>
+  </tr>
+  <tr>
+    <td>Don&rsquo;t Inline</td>
+    <td>Inlines no functions, not even C or C++ functions declared inline.</td>
+  </tr>
+  <tr>
+    <td>Smart</td>
+    <td>Inlines small functions to a depth of 2 to 4 inline functions deep.</td>
+  </tr>
+  <tr>
+    <td>1 to 8</td>
+    <td>Inlines to the depth specified by the numerical selection.</td>
+  </tr>
+</table>
+<p>The Smart and 1 to 8 items in the Inline Depth dropdown menu correspond to the pragma <a href="../pragmas/p_inline_depth.htm">inline_depth</a> (inline_depth). To check this setting, use <span class="code">__option(inline_depth)</span>, described at <a href="../symbols/sym_settings.htm">Checking Settings</a>.</p>
+<p>The Don&rsquo;t Inline item  corresponds to the pragma <a href="../pragmas/p_dont_inline.htm">dont_inline</a>. To check this setting, use <span class="code">__option (dont_inline)</span>. By default, this setting is disabled. </p>
+<p>The Auto-Inline setting lets the compiler choose which functions to inline. Also inlines C++ functions declared inline and member functions defined within a class declaration. This setting corresponds to the pragma <a href="../pragmas/p_auto_inline.htm">auto_inline</a>. To check this setting, use <span class="code">__option (auto_inline)</span>. By default, this setting is disabled.</p>
+<p>The Deferred Inlining setting tells the compiler to inline functions that are not yet defined. This setting corresponds to the pragma <a href="../pragmas/p_defer_codegen.htm">defer_codegen</a>. To check this setting, use<span class="code"> <span class="code">__option (defer_codegen)</span></span>. </p>
+<p>The Bottom-up Inlining settings tells the compiler to inline functions starting at the last function to the first function in a chain of function calls. This setting corresponds to the pragma <a href="../pragmas/p_inline_bottom_up.htm">inline_bottom_up</a>. To check this setting, use <span class="code">__option (inline_bottom_up)</span>.</p>
+<p>You can also disable automatic inlining of specific functions within a source file using the <span class="code">__attribute__((never_inline))</span>. </p>
+<div class="listing">
+  <h5>Example __attribute__(never_inline)</h5>
+  <p>inline int f() __attribute__((never_inline))<br />
+    {<br />
+    return 10;<br />
+    }</p>
+  <p>int main()<br />
+    {<br />
+    return f(); // f() is never inlined<br />
+  }</p>
+</div>
+<p class="note"><strong>NOTE</strong> For Intel x86 targets, the <span class="code">__decspec(noinline)</span> is a compatible synonym. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">	
+	
+	<component friendlyName="%friendlyname"
+		qualifiedName="com.nokia.carbide.uiq.dummy.ViewDialog"
+		version="1.0">
+		
+		<documentation>
+			<wizardDescription>%information</wizardDescription>
+		</documentation>
+		
+		<symbian minSDKVersion="3.0" sdkName="com.uiq"/>
+		
+		<designerImages thumbnailFile="viewdialog_tn.png"/>		
+		
+		<attributes>
+		    <attribute key="is-initial-content">true</attribute>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key="is-appui-container">false</attribute>					
+	  	</attributes>
+		
+	</component>
+	
+</componentDefinition>

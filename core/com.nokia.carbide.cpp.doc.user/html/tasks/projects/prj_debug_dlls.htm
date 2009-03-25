@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Importing Executables for Debugging</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Debugging DLLs</h2>
+<p>A binary that you want to debug must be built with symbolic information (a .sym file). You can debug a DLL just as you would any other executable with full support of the Carbide debugger. Basically, the following situations can occur: </p>
+<ul>
+  <li>If the DLL appears in the <a href="../../reference/view_executables.htm">Executables</a> view it can be debugged. Just <a href="../breakpoints/pgm_bp_setting.htm">set</a> breakpoints inside the DLL sources before you start the debug session. The next time  the  project is debugged, the DLL is loaded and made  available for debugging.</li>
+</ul>
+<blockquote>
+  <p class="note"><b class="note">NOTE</b> Breakpoints inside a DLL will not be <a href="../../concepts/breakpoints.htm">resolved</a> until the DLL is loaded into memory by the calling binary. </p>
+</blockquote>
+<ul>
+  <li>If the DLL is not built by the project you can import the DLL by  clicking the<b> Import an executable file</b> icon (<img src="../../images/icons/btn_import_executables.png" width="18" height="15" align="absmiddle">) in the <a href="../../reference/view_executables.htm">Executables</a> view. Then, set your  breakpoints and start the  debug session.</li>
+</ul>
+<p> You can use the <a href="../../reference/view_module_wnd.htm">Modules</a> view to determine if a particular DLL or binary is loaded and available for debugging.</p>
+<h5>Other references</h5>
+<ul>
+  <li><a href="../../reference/view_executables.htm">Executables</a> view  </li>
+  <li><a href="../../concepts/breakpoints.htm">Breakpoints</a> </li>
+  <li><a href="../../concepts/autotargeting.htm">Auto-targeting Executables</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

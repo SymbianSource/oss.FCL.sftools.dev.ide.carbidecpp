@@ -1,0 +1,8 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES r_test
+	{
+	byte = 3;
+	word = 1;
+	word = 23;
+	}

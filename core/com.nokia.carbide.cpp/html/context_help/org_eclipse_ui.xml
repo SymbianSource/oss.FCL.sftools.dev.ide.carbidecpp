@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for Debug Perspective default views -->
+<!-- plugin="org.eclipse.ui" -->
+
+<contexts>
+	<!-- WIZARDs -->
+	
+	<!-- NEW WIZARD
+	<context id="new_wizard_selection_wizard_page_context" >
+		<topic label="Creating New Projects" 					href="html/tasks/CreatingNewProjects.html"/>
+	</context>
+	 -->
+	 
+	<!-- IMPORT WIZARD -->
+	<context id="import_wizard_selection_wizard_page_context" >
+		<topic label="Importing Projects from a BLD.INF File"	href="html/tasks/ImportingProjects.html"/>
+	</context>
+	 -->
+	 
+	<!-- EXPORT WIZARD
+	<context id="export_wizard_selection_wizard_page_context" >
+		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
+		<topic label="Console view"  			href="html/reference/view_log.htm" />
+	</context>
+	-->
+
+	<!-- PREFERENCE PANELS -->
+
+	<!-- KEYS -->
+	<context id="keys_preference_page_context" >
+		<topic label="Microsoft Visual Studio Shortcuts"  	href="html/help_keys_vs.htm" />
+		<topic label="Nokia CodeWarrior Shortcuts"  		href="html/help_keys_cw.htm" />
+	</context>
+
+
+</contexts>

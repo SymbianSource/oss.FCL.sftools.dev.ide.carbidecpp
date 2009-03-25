@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Getting Started">
+   <intro>
+      <description>
+         Follow these steps to create a Symbian OS project and debug it using the S60 EPOC Emulator.
+      </description>
+   </intro>
+   <item title="Verify a Symbian SDK is available" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/reference/SDKPreferences.html">
+      <description>
+         Use the SDK Preferences panel to verify a supported Symbian SDK is installed. If not, you&apos;ll need to download a supported SDK and install it before continuing.
+      </description>
+      <command serialization="org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage)" confirm="false">
+      </command>
+   </item>
+   <item title="Create a Symbian OS project" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/tasks/CreatingNewProjects.html">
+      <description>
+         Use the New Project wizard to create a Symbian OS project. We named our example HelloCarbide.
+      </description>
+      <command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
+      </command>
+   </item>
+   <item title="Build the project" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_build.htm">
+      <description>
+         If you don&apos;t see an EXE file in the C/C++ Projects view, build the project to create one.
+      </description>
+      <command serialization="org.eclipse.ui.project.buildAll" confirm="false">
+      </command>
+   </item>
+   <item title="Set a breakpoint" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/tasks/breakpoints/pgm_bp_setting.htm">
+      <description>
+         Open  the CHelloCarbideAppUI file and set a breakpoint in the HandleCommandL routine.
+      </description>
+   </item>
+   <item title="Launch the debugger" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/work_debug_act_debug.htm">
+      <description>
+         The first time Carbide.c++ launches a project it creates a debug launch configuration using preset project settings. It then switches to the Debug perspective, launches the S60 EPOC Emulator, and waits for a breakpoint to be hit. When it does, control is returned to the Carbide debugger.
+      </description>
+      <command serialization="org.eclipse.debug.ui.commands.DebugLast" confirm="false">
+      </command>
+   </item>
+   <item title="Resume the debugger" dialog="true" skip="false" href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/work_debug_act_resume.htm">
+      <description>
+         Click Resume in the Debug view to pass control back to the emulator.
+      </description>
+      <command serialization="org.eclipse.debug.ui.commands.Resume" confirm="false">
+      </command>
+   </item>
+</cheatsheet>

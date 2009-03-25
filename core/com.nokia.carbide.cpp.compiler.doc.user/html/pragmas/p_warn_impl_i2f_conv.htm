@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>warn_impl_i2f_conv</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>warn_impl_i2f_conv</h3>
+<p>Controls the issuing of warnings for implicit int-to-float conversions.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma warn_impl_i2f_conv on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler issues a warning for implicitly converting integral values to floating-point values. Listing 10.38 provides an example.</p>
+  <div class="listing">
+      <h4>Listing 10.38 Example of Implicit int-to-float Conversion</h4>
+      <p>#pragma warn_implicitconv on // required to enable warnings<br />
+      #pragma warn_impl_i2f_conv on // enable conversion warning </p>
+      <p>float f1, f2;<br />
+    signed int si1, si2;</p>
+    <p>int main()<br />
+    {<br />
+    f1 = si1; // WARNING</p>
+    <p>#pragma warn_impl_i2f_conv off // disable conversion warning<br />
+    f2 = si2; // OK<br />
+    }</p>
+  </div>
+  <p>This pragma corresponds to the Integer to Float setting . To check this setting, use <span class="code"><span class="code">__option (warn_impl_i</span>2f_conv)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+<p class="note"><strong>NOTE</strong> The setting of this pragma is ignored unless <a href="p_warn_implicitconv.htm">warn_implicitconv</a> is on.</p>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

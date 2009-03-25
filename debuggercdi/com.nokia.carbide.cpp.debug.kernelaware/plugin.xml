@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Carbide.c++"
+            id="com.nokia.carbide.cpp">
+      </category>
+      <view
+            name="Symbian OS Data"
+            icon="icons/symbian-120.gif"
+            category="com.nokia.carbide.cpp"
+            class="com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView"
+            id="com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView">
+      </view>
+   </extension>
+
+   <extension point="org.eclipse.ui.perspectiveExtensions">
+          <perspectiveExtension targetID="org.eclipse.debug.ui.DebugPerspective">
+               <view
+               		id="com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView"
+                    relative="org.eclipse.debug.ui.VariableView"
+                    relationship="stack"/>
+               <viewShortcut id="com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView"/>
+          </perspectiveExtension>
+   </extension>
+
+</plugin>

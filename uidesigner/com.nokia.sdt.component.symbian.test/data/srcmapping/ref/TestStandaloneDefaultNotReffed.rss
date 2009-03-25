@@ -1,0 +1,13 @@
+#include <arraydialog.rh>
+
+RESOURCE DIALOG r_test_standalone_default
+	{
+	}
+RESOURCE LABEL r_test_standalone_default_label1
+	{
+	text = "literal string 1";
+	}
+RESOURCE LABEL r_test_standalone_default_label2
+	{
+	text = "literal string 2";
+	}

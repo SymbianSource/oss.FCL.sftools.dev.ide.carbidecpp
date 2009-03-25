@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.SystemBuildingBlock.Flags">
+		<!--Qikon.hrh: building block flags-->
+		<!--EQikBuildingBlockDividerBelow-->
+		<property name="dividerBelow" type="boolean"
+			displayName="%dividerbelow" descriptionKey="dividerbelowdescription"/>
+		<!--EQikBuildingBlockMirror-->
+		<property name="forceMirroring" type="boolean"
+			displayName="%forcemirroring" descriptionKey="forcemirroringdescription"/>
+		<!--EQikBuildingBlockNoMirroring-->
+		<property name="forceNoMirroring" type="boolean"
+			displayName="%forcenomirroring" descriptionKey="forcenomirroringdescription"/>
+		<!--EQikBuildingBlockDebugMode-->
+		<property name="debugMode" type="boolean"
+			displayName="%debugmode" descriptionKey="debugmodedescription"/>
+	</compoundPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.SystemBuildingBlock.Type">
+		<!--QikStockControls.hrh-->
+		<enumElement value="EQikCtOnelineBuildingBlock" displayValue="%oneline"/>
+		<enumElement value="EQikCtCaptionedTwolineBuildingBlock" displayValue="%captionedtwoline"/>
+		<enumElement value="EQikCtTwolineBuildingBlock" displayValue="%twoline"/>
+		<enumElement value="EQikCtManylinesBuildingBlock" displayValue="%manylines"/>
+		<enumElement value="EQikCtIconOnelineBuildingBlock" displayValue="%icononeline"/>
+		<enumElement value="EQikCtIconCaptionedTwolineBuildingBlock" displayValue="%iconcaptionedtwoline"/>
+		<enumElement value="EQikCtIconTwolineBuildingBlock" displayValue="%icontwoline"/>
+		<enumElement value="EQikCtOnelineIconBuildingBlock" displayValue="%onelineicon"/>
+		<enumElement value="EQikCtIconOnelineIconBuildingBlock" displayValue="%icononelineicon"/>
+		<enumElement value="EQikCtIconTwolineIconBuildingBlock" displayValue="%icontwolineicon"/>
+		<enumElement value="EQikCtMediumThumbnailDoubleOnelineBuildingBlock" displayValue="%mediumthumbnaildoubleoneline"/>
+		<enumElement value="EQikCtLargeThumbnailThreelineBuildingBlock" displayValue="%largethumbnailthreeline"/>
+		<enumElement value="EQikCtCaptionedOnelineBuildingBlock" displayValue="%captionedoneline"/>
+		<enumElement value="EQikCtIconCaptionedOnelineBuildingBlock" displayValue="%iconcaptionedoneline"/>
+		<enumElement value="EQikCtTwolineIconBuildingBlock" displayValue="%twolineicon"/>
+		<enumElement value="EQikCtIconIconOnelineBuildingBlock" displayValue="%iconicononeline"/>
+		<enumElement value="EQikCtHalflineHalflineBuildingBlock" displayValue="%halflinehalfline"/>
+		<enumElement value="EQikCtCaptionedHalflineBuildingBlock" displayValue="%captionedhalfline"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.SystemBuildingBlock.TQikBuildingBlockSlots">
+		<!--Qikon.hrh-->
+		<enumElement value="EQikItemSlot1" displayValue="%itemslot1"/>
+		<enumElement value="EQikItemSlot2" displayValue="%itemslot2"/>
+		<enumElement value="EQikIconSlot1" displayValue="%iconslot1"/>
+		<enumElement value="EQikIconSlot2" displayValue="%iconslot2"/>
+	</enumPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.SystemBuildingBlock"
+			baseComponent="com.nokia.carbide.uiq.ContainerBase"
+			instanceNameRoot="buildingBlock"		
+			version="1.0"
+			category="%layout.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="SystemBuildingBlock" classHelpTopic=""
+			resourceType="QIK_SYSTEM_BUILDING_BLOCK" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="SystemBuildingBlock_sm.png"
+			largeIconFile="SystemBuildingBlock.png"/>		
+
+		<attributes>
+			<attribute key ="is-layout-object">true</attribute>
+			<attribute key ="is-layout-container">true</attribute>
+			<attribute key ="is-qikcontainer-content">true</attribute>
+			<attribute key ="is-slot-content">false</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="not-in-toolbox">false</attribute>
+			<attribute key="sbb-type-enum-property">com.nokia.carbide.uiq.SystemBuildingBlock.Type</attribute>
+			<!--Custom attribute-->
+			<attribute key="is-system-building-block">true</attribute>
+		</attributes>
+		
+		<properties>
+			<compoundProperty name="flags"
+				type="com.nokia.carbide.uiq.SystemBuildingBlock.Flags"
+				displayName="%flags"
+				descriptionKey="flagsdescription"
+				category="%category.behavior"/>
+			<property name="defaultCaption"
+				type="localizedString"
+				displayName="%defaultcaption"
+				descriptionKey="defaultcaptiondescription"
+				category="%category.data"/>
+			<enumProperty name="type"
+				type="com.nokia.carbide.uiq.SystemBuildingBlock.Type"
+				default="EQikCtOnelineBuildingBlock"
+				displayName="%type"
+				descriptionKey="typedescription"
+				editorClass="com.nokia.carbide.cpp.uiq.components.sbbCustomizer.SBBLayoutEditorFactory"
+				category="%category.layout"/>
+			<enumProperty name="itemFlags"
+				type="com.nokia.carbide.uiq.ControlCollection.TQikCtrlItemFlags"
+				category="%category.behavior"
+				displayName="%itemFlags"
+				descriptionKey="itemFlagsDescription"
+				default="ControlDefault"/>
+			<property name="collateralLayout"
+				type="boolean"
+				category="Hidden"
+				displayName="%collaterallayout"
+				descriptionKey="collaterallayoutdescription"
+				default="false"/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="SystemBuildingBlock.js" prototype="SystemBuildingBlock"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>	
+				<code class="com.nokia.carbide.cpp.uiq.components.SystemBuildingBlockInitializerFactory"/>	
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstanceChildListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.layoutComponents.SystemBuildingBlockImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentCustomizerUI"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.sbbCustomizer.SBBCustomizerUIImplFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_SYSTEM_BUILDING_BLOCK" headers="Qikon.rh">
+				<mapBitmaskMember property="flags" member="flags"
+					includedProperties="dividerBelow forceMirroring forceNoMirroring debugMode">
+					<mapBitmaskValue properties="dividerBelow" value="EQikBuildingBlockDividerBelow"/>
+					<mapBitmaskValue properties="forceMirroring" value="EQikBuildingBlockMirror"/>
+					<mapBitmaskValue properties="forceNoMirroring" value="EQikBuildingBlockNoMirroring"/>
+					<mapBitmaskValue properties="debugMode" value="EQikBuildingBlockDebugMode"/>
+				</mapBitmaskMember>
+				<mapSimpleMember property="defaultCaption" member="default_caption"/>
+				<mapArrayMember property="." member="content"/>
+			</mapResource>
+		</sourceMapping>
+		
+		<!--TODO: rendering - If EQikBuildingBlockDividerBelow is set, render the divider-->
+
+	</component>
+	
+</componentDefinition>

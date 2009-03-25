@@ -1,0 +1,2006 @@
+Copyright 1995-1996 by Fred L. Drake, Jr., Reston, Virginia, USA, and
+Virginia Polytechnic Institute and State University, Blacksburg,
+Virginia, USA.  Portions of the software copyright 1991-1995 by
+Stichting Mathematisch Centrum, Amsterdam, The Netherlands.  Copying is
+permitted under the terms associated with the main Python distribution,
+with the additional restriction that this additional notice be included
+and maintained on all distributed copies.
+
+                        All Rights Reserved
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation, and that the names of Fred L. Drake, Jr. and
+Virginia Polytechnic Institute and State University not be used in
+advertising or publicity pertaining to distribution of the software
+without specific, written prior permission.
+
+FRED L. DRAKE, JR. AND VIRGINIA POLYTECHNIC INSTITUTE AND STATE
+UNIVERSITY DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+EVENT SHALL FRED L. DRAKE, JR. OR VIRGINIA POLYTECHNIC INSTITUTE AND
+STATE UNIVERSITY BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+--
+
+Copyright notice
+================
+
+The Python source is copyrighted, but you can freely use and copy it
+as long as you don't change or remove the copyright notice:
+
+----------------------------------------------------------------------
+Copyright (c) 2000-2007 Python Software Foundation.
+All rights reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All rights reserved.
+
+Copyright (c) 1995-2000 Corporation for National Research Initiatives.
+All rights reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum.
+All rights reserved.
+
+See the file "commontex/license.tex" for information on usage and
+redistribution of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+----------------------------------------------------------------------
+
+--
+\section{History of the software}
+
+Python was created in the early 1990s by Guido van Rossum at Stichting
+Mathematisch Centrum (CWI, see \url{http://www.cwi.nl/}) in the Netherlands
+as a successor of a language called ABC.  Guido remains Python's
+principal author, although it includes many contributions from others.
+
+In 1995, Guido continued his work on Python at the Corporation for
+National Research Initiatives (CNRI, see \url{http://www.cnri.reston.va.us/})
+in Reston, Virginia where he released several versions of the
+software.
+
+In May 2000, Guido and the Python core development team moved to
+BeOpen.com to form the BeOpen PythonLabs team.  In October of the same
+year, the PythonLabs team moved to Digital Creations (now Zope
+Corporation; see \url{http://www.zope.com/}).  In 2001, the Python
+Software Foundation (PSF, see \url{http://www.python.org/psf/}) was
+formed, a non-profit organization created specifically to own
+Python-related Intellectual Property.  Zope Corporation is a
+sponsoring member of the PSF.
+
+All Python releases are Open Source (see
+\url{http://www.opensource.org/} for the Open Source Definition).
+Historically, most, but not all, Python releases have also been
+GPL-compatible; the table below summarizes the various releases.
+
+\begin{tablev}{c|c|c|c|c}{textrm}%
+  {Release}{Derived from}{Year}{Owner}{GPL compatible?}
+  \linev{0.9.0 thru 1.2}{n/a}{1991-1995}{CWI}{yes}
+  \linev{1.3 thru 1.5.2}{1.2}{1995-1999}{CNRI}{yes}
+  \linev{1.6}{1.5.2}{2000}{CNRI}{no}
+  \linev{2.0}{1.6}{2000}{BeOpen.com}{no}
+  \linev{1.6.1}{1.6}{2001}{CNRI}{no}
+  \linev{2.1}{2.0+1.6.1}{2001}{PSF}{no}
+  \linev{2.0.1}{2.0+1.6.1}{2001}{PSF}{yes}
+  \linev{2.1.1}{2.1+2.0.1}{2001}{PSF}{yes}
+  \linev{2.2}{2.1.1}{2001}{PSF}{yes}
+  \linev{2.1.2}{2.1.1}{2002}{PSF}{yes}
+  \linev{2.1.3}{2.1.2}{2002}{PSF}{yes}
+  \linev{2.2.1}{2.2}{2002}{PSF}{yes}
+  \linev{2.2.2}{2.2.1}{2002}{PSF}{yes}
+  \linev{2.2.3}{2.2.2}{2002-2003}{PSF}{yes}
+  \linev{2.3}{2.2.2}{2002-2003}{PSF}{yes}
+  \linev{2.3.1}{2.3}{2002-2003}{PSF}{yes}
+  \linev{2.3.2}{2.3.1}{2003}{PSF}{yes}
+  \linev{2.3.3}{2.3.2}{2003}{PSF}{yes}
+  \linev{2.3.4}{2.3.3}{2004}{PSF}{yes}
+  \linev{2.3.5}{2.3.4}{2005}{PSF}{yes}
+  \linev{2.4}{2.3}{2004}{PSF}{yes}
+  \linev{2.4.1}{2.4}{2005}{PSF}{yes}
+  \linev{2.4.2}{2.4.1}{2005}{PSF}{yes}
+  \linev{2.4.3}{2.4.2}{2006}{PSF}{yes}
+  \linev{2.5}{2.4}{2006}{PSF}{yes}
+  \linev{2.5.1}{2.5}{2007}{PSF}{yes}
+\end{tablev}
+
+\note{GPL-compatible doesn't mean that we're distributing
+Python under the GPL.  All Python licenses, unlike the GPL, let you
+distribute a modified version without making your changes open source.
+The GPL-compatible licenses make it possible to combine Python with
+other software that is released under the GPL; the others don't.}
+
+Thanks to the many outside volunteers who have worked under Guido's
+direction to make these releases possible.
+
+
+\section{Terms and conditions for accessing or otherwise using Python}
+
+\centerline{\strong{PSF LICENSE AGREEMENT FOR PYTHON \version}}
+
+\begin{enumerate}
+\item
+This LICENSE AGREEMENT is between the Python Software Foundation
+(``PSF''), and the Individual or Organization (``Licensee'') accessing
+and otherwise using Python \version{} software in source or binary
+form and its associated documentation.
+
+\item
+Subject to the terms and conditions of this License Agreement, PSF
+hereby grants Licensee a nonexclusive, royalty-free, world-wide
+license to reproduce, analyze, test, perform and/or display publicly,
+prepare derivative works, distribute, and otherwise use Python
+\version{} alone or in any derivative version, provided, however, that
+PSF's License Agreement and PSF's notice of copyright, i.e.,
+``Copyright \copyright{} 2001-2006 Python Software Foundation; All
+Rights Reserved'' are retained in Python \version{} alone or in any
+derivative version prepared by Licensee.
+
+\item
+In the event Licensee prepares a derivative work that is based on
+or incorporates Python \version{} or any part thereof, and wants to
+make the derivative work available to others as provided herein, then
+Licensee hereby agrees to include in any such work a brief summary of
+the changes made to Python \version.
+
+\item
+PSF is making Python \version{} available to Licensee on an ``AS IS''
+basis.  PSF MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, PSF MAKES NO AND
+DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF PYTHON \version{} WILL
+NOT INFRINGE ANY THIRD PARTY RIGHTS.
+
+\item
+PSF SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF PYTHON
+\version{} FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR
+LOSS AS A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING PYTHON
+\version, OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF THE
+POSSIBILITY THEREOF.
+
+\item
+This License Agreement will automatically terminate upon a material
+breach of its terms and conditions.
+
+\item
+Nothing in this License Agreement shall be deemed to create any
+relationship of agency, partnership, or joint venture between PSF and
+Licensee.  This License Agreement does not grant permission to use PSF
+trademarks or trade name in a trademark sense to endorse or promote
+products or services of Licensee, or any third party.
+
+\item
+By copying, installing or otherwise using Python \version, Licensee
+agrees to be bound by the terms and conditions of this License
+Agreement.
+\end{enumerate}
+
+
+\centerline{\strong{BEOPEN.COM LICENSE AGREEMENT FOR PYTHON 2.0}}
+
+\centerline{\strong{BEOPEN PYTHON OPEN SOURCE LICENSE AGREEMENT VERSION 1}}
+
+\begin{enumerate}
+\item
+This LICENSE AGREEMENT is between BeOpen.com (``BeOpen''), having an
+office at 160 Saratoga Avenue, Santa Clara, CA 95051, and the
+Individual or Organization (``Licensee'') accessing and otherwise
+using this software in source or binary form and its associated
+documentation (``the Software'').
+
+\item
+Subject to the terms and conditions of this BeOpen Python License
+Agreement, BeOpen hereby grants Licensee a non-exclusive,
+royalty-free, world-wide license to reproduce, analyze, test, perform
+and/or display publicly, prepare derivative works, distribute, and
+otherwise use the Software alone or in any derivative version,
+provided, however, that the BeOpen Python License is retained in the
+Software, alone or in any derivative version prepared by Licensee.
+
+\item
+BeOpen is making the Software available to Licensee on an ``AS IS''
+basis.  BEOPEN MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, BEOPEN MAKES NO AND
+DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE WILL NOT
+INFRINGE ANY THIRD PARTY RIGHTS.
+
+\item
+BEOPEN SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF THE
+SOFTWARE FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR LOSS
+AS A RESULT OF USING, MODIFYING OR DISTRIBUTING THE SOFTWARE, OR ANY
+DERIVATIVE THEREOF, EVEN IF ADVISED OF THE POSSIBILITY THEREOF.
+
+\item
+This License Agreement will automatically terminate upon a material
+breach of its terms and conditions.
+
+\item
+This License Agreement shall be governed by and interpreted in all
+respects by the law of the State of California, excluding conflict of
+law provisions.  Nothing in this License Agreement shall be deemed to
+create any relationship of agency, partnership, or joint venture
+between BeOpen and Licensee.  This License Agreement does not grant
+permission to use BeOpen trademarks or trade names in a trademark
+sense to endorse or promote products or services of Licensee, or any
+third party.  As an exception, the ``BeOpen Python'' logos available
+at http://www.pythonlabs.com/logos.html may be used according to the
+permissions granted on that web page.
+
+\item
+By copying, installing or otherwise using the software, Licensee
+agrees to be bound by the terms and conditions of this License
+Agreement.
+\end{enumerate}
+
+
+\centerline{\strong{CNRI LICENSE AGREEMENT FOR PYTHON 1.6.1}}
+
+\begin{enumerate}
+\item
+This LICENSE AGREEMENT is between the Corporation for National
+Research Initiatives, having an office at 1895 Preston White Drive,
+Reston, VA 20191 (``CNRI''), and the Individual or Organization
+(``Licensee'') accessing and otherwise using Python 1.6.1 software in
+source or binary form and its associated documentation.
+
+\item
+Subject to the terms and conditions of this License Agreement, CNRI
+hereby grants Licensee a nonexclusive, royalty-free, world-wide
+license to reproduce, analyze, test, perform and/or display publicly,
+prepare derivative works, distribute, and otherwise use Python 1.6.1
+alone or in any derivative version, provided, however, that CNRI's
+License Agreement and CNRI's notice of copyright, i.e., ``Copyright
+\copyright{} 1995-2001 Corporation for National Research Initiatives;
+All Rights Reserved'' are retained in Python 1.6.1 alone or in any
+derivative version prepared by Licensee.  Alternately, in lieu of
+CNRI's License Agreement, Licensee may substitute the following text
+(omitting the quotes): ``Python 1.6.1 is made available subject to the
+terms and conditions in CNRI's License Agreement.  This Agreement
+together with Python 1.6.1 may be located on the Internet using the
+following unique, persistent identifier (known as a handle):
+1895.22/1013.  This Agreement may also be obtained from a proxy server
+on the Internet using the following URL:
+\url{http://hdl.handle.net/1895.22/1013}.''
+
+\item
+In the event Licensee prepares a derivative work that is based on
+or incorporates Python 1.6.1 or any part thereof, and wants to make
+the derivative work available to others as provided herein, then
+Licensee hereby agrees to include in any such work a brief summary of
+the changes made to Python 1.6.1.
+
+\item
+CNRI is making Python 1.6.1 available to Licensee on an ``AS IS''
+basis.  CNRI MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, CNRI MAKES NO AND
+DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF PYTHON 1.6.1 WILL NOT
+INFRINGE ANY THIRD PARTY RIGHTS.
+
+\item
+CNRI SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF PYTHON
+1.6.1 FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR LOSS AS
+A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING PYTHON 1.6.1,
+OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF THE POSSIBILITY THEREOF.
+
+\item
+This License Agreement will automatically terminate upon a material
+breach of its terms and conditions.
+
+\item
+This License Agreement shall be governed by the federal
+intellectual property law of the United States, including without
+limitation the federal copyright law, and, to the extent such
+U.S. federal law does not apply, by the law of the Commonwealth of
+Virginia, excluding Virginia's conflict of law provisions.
+Notwithstanding the foregoing, with regard to derivative works based
+on Python 1.6.1 that incorporate non-separable material that was
+previously distributed under the GNU General Public License (GPL), the
+law of the Commonwealth of Virginia shall govern this License
+Agreement only as to issues arising under or with respect to
+Paragraphs 4, 5, and 7 of this License Agreement.  Nothing in this
+License Agreement shall be deemed to create any relationship of
+agency, partnership, or joint venture between CNRI and Licensee.  This
+License Agreement does not grant permission to use CNRI trademarks or
+trade name in a trademark sense to endorse or promote products or
+services of Licensee, or any third party.
+
+\item
+By clicking on the ``ACCEPT'' button where indicated, or by copying,
+installing or otherwise using Python 1.6.1, Licensee agrees to be
+bound by the terms and conditions of this License Agreement.
+\end{enumerate}
+
+\centerline{ACCEPT}
+
+
+
+\centerline{\strong{CWI LICENSE AGREEMENT FOR PYTHON 0.9.0 THROUGH 1.2}}
+
+Copyright \copyright{} 1991 - 1995, Stichting Mathematisch Centrum
+Amsterdam, The Netherlands.  All rights reserved.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation, and that the name of Stichting Mathematisch
+Centrum or CWI not be used in advertising or publicity pertaining to
+distribution of the software without specific, written prior
+permission.
+
+STICHTING MATHEMATISCH CENTRUM DISCLAIMS ALL WARRANTIES WITH REGARD TO
+THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS, IN NO EVENT SHALL STICHTING MATHEMATISCH CENTRUM BE LIABLE
+FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+\section{Licenses and Acknowledgements for Incorporated Software}
+
+This section is an incomplete, but growing list of licenses and
+acknowledgements for third-party software incorporated in the
+Python distribution.
+
+
+\subsection{Mersenne Twister}
+
+The \module{_random} module includes code based on a download from
+\url{http://www.math.keio.ac.jp/~matumoto/MT2002/emt19937ar.html}.
+The following are the verbatim comments from the original code:
+
+\begin{verbatim}
+A C-program for MT19937, with initialization improved 2002/1/26.
+Coded by Takuji Nishimura and Makoto Matsumoto.
+
+Before using, initialize the state by using init_genrand(seed)
+or init_by_array(init_key, key_length).
+
+Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+ 3. The names of its contributors may not be used to endorse or promote
+    products derived from this software without specific prior written
+    permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Any feedback is very welcome.
+http://www.math.keio.ac.jp/matumoto/emt.html
+email: matumoto@math.keio.ac.jp
+\end{verbatim}
+
+
+
+\subsection{Sockets}
+
+The \module{socket} module uses the functions, \function{getaddrinfo},
+and \function{getnameinfo}, which are coded in separate source files
+from the WIDE Project, \url{http://www.wide.ad.jp/about/index.html}.
+
+\begin{verbatim}      
+Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
+All rights reserved.
+ 
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the name of the project nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
+GAI_ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE PROJECT OR CONTRIBUTORS BE LIABLE
+FOR GAI_ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON GAI_ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN GAI_ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+\end{verbatim}
+
+
+
+\subsection{Floating point exception control}
+
+The source for the \module{fpectl} module includes the following notice:
+
+\begin{verbatim}
+     ---------------------------------------------------------------------  
+    /                       Copyright (c) 1996.                           \ 
+   |          The Regents of the University of California.                 |
+   |                        All rights reserved.                           |
+   |                                                                       |
+   |   Permission to use, copy, modify, and distribute this software for   |
+   |   any purpose without fee is hereby granted, provided that this en-   |
+   |   tire notice is included in all copies of any software which is or   |
+   |   includes  a  copy  or  modification  of  this software and in all   |
+   |   copies of the supporting documentation for such software.           |
+   |                                                                       |
+   |   This  work was produced at the University of California, Lawrence   |
+   |   Livermore National Laboratory under  contract  no.  W-7405-ENG-48   |
+   |   between  the  U.S.  Department  of  Energy and The Regents of the   |
+   |   University of California for the operation of UC LLNL.              |
+   |                                                                       |
+   |                              DISCLAIMER                               |
+   |                                                                       |
+   |   This  software was prepared as an account of work sponsored by an   |
+   |   agency of the United States Government. Neither the United States   |
+   |   Government  nor the University of California nor any of their em-   |
+   |   ployees, makes any warranty, express or implied, or  assumes  any   |
+   |   liability  or  responsibility  for the accuracy, completeness, or   |
+   |   usefulness of any information,  apparatus,  product,  or  process   |
+   |   disclosed,   or  represents  that  its  use  would  not  infringe   |
+   |   privately-owned rights. Reference herein to any specific  commer-   |
+   |   cial  products,  process,  or  service  by trade name, trademark,   |
+   |   manufacturer, or otherwise, does not  necessarily  constitute  or   |
+   |   imply  its endorsement, recommendation, or favoring by the United   |
+   |   States Government or the University of California. The views  and   |
+   |   opinions  of authors expressed herein do not necessarily state or   |
+   |   reflect those of the United States Government or  the  University   |
+   |   of  California,  and shall not be used for advertising or product   |
+    \  endorsement purposes.                                              / 
+     ---------------------------------------------------------------------
+\end{verbatim}
+
+
+
+\subsection{MD5 message digest algorithm}
+
+The source code for the \module{md5} module contains the following notice:
+
+\begin{verbatim}
+  Copyright (C) 1999, 2002 Aladdin Enterprises.  All rights reserved.
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  L. Peter Deutsch
+  ghost@aladdin.com
+
+  Independent implementation of MD5 (RFC 1321).
+
+  This code implements the MD5 Algorithm defined in RFC 1321, whose
+  text is available at
+http://www.ietf.org/rfc/rfc1321.txt
+  The code is derived from the text of the RFC, including the test suite
+  (section A.5) but excluding the rest of Appendix A.  It does not include
+  any code or documentation that is identified in the RFC as being
+  copyrighted.
+
+  The original and principal author of md5.h is L. Peter Deutsch
+  <ghost@aladdin.com>.  Other authors are noted in the change history
+  that follows (in reverse chronological order):
+
+  2002-04-13 lpd Removed support for non-ANSI compilers; removed
+references to Ghostscript; clarified derivation from RFC 1321;
+now handles byte order either statically or dynamically.
+  1999-11-04 lpd Edited comments slightly for automatic TOC extraction.
+  1999-10-18 lpd Fixed typo in header comment (ansi2knr rather than md5);
+added conditionalization for C++ compilation from Martin
+Purschke <purschke@bnl.gov>.
+  1999-05-03 lpd Original version.
+\end{verbatim}
+
+
+
+\subsection{Asynchronous socket services}
+
+The \module{asynchat} and \module{asyncore} modules contain the
+following notice:
+
+\begin{verbatim}      
+ Copyright 1996 by Sam Rushing
+
+                         All Rights Reserved
+
+ Permission to use, copy, modify, and distribute this software and
+ its documentation for any purpose and without fee is hereby
+ granted, provided that the above copyright notice appear in all
+ copies and that both that copyright notice and this permission
+ notice appear in supporting documentation, and that the name of Sam
+ Rushing not be used in advertising or publicity pertaining to
+ distribution of the software without specific, written prior
+ permission.
+
+ SAM RUSHING DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+ INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN
+ NO EVENT SHALL SAM RUSHING BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+ CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+ OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+ NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+\end{verbatim}
+
+
+\subsection{Cookie management}
+
+The \module{Cookie} module contains the following notice:
+
+\begin{verbatim}
+ Copyright 2000 by Timothy O'Malley <timo@alum.mit.edu>
+
+                All Rights Reserved
+
+ Permission to use, copy, modify, and distribute this software
+ and its documentation for any purpose and without fee is hereby
+ granted, provided that the above copyright notice appear in all
+ copies and that both that copyright notice and this permission
+ notice appear in supporting documentation, and that the name of
+ Timothy O'Malley  not be used in advertising or publicity
+ pertaining to distribution of the software without specific, written
+ prior permission.
+
+ Timothy O'Malley DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+ SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+ AND FITNESS, IN NO EVENT SHALL Timothy O'Malley BE LIABLE FOR
+ ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ PERFORMANCE OF THIS SOFTWARE.
+\end{verbatim}      
+
+
+
+\subsection{Profiling}
+
+The \module{profile} and \module{pstats} modules contain
+the following notice:
+
+\begin{verbatim}
+ Copyright 1994, by InfoSeek Corporation, all rights reserved.
+ Written by James Roskind
+
+ Permission to use, copy, modify, and distribute this Python software
+ and its associated documentation for any purpose (subject to the
+ restriction in the following sentence) without fee is hereby granted,
+ provided that the above copyright notice appears in all copies, and
+ that both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of InfoSeek not be used in
+ advertising or publicity pertaining to distribution of the software
+ without specific, written prior permission.  This permission is
+ explicitly restricted to the copying and modification of the software
+ to remain in Python, compiled Python, or other languages (such as C)
+ wherein the modified or derived code is exclusively imported into a
+ Python module.
+
+ INFOSEEK CORPORATION DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+ SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS. IN NO EVENT SHALL INFOSEEK CORPORATION BE LIABLE FOR ANY
+ SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+ RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+ CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+\end{verbatim}
+
+
+
+\subsection{Execution tracing}
+
+The \module{trace} module contains the following notice:
+
+\begin{verbatim}
+ portions copyright 2001, Autonomous Zones Industries, Inc., all rights...
+ err...  reserved and offered to the public under the terms of the
+ Python 2.2 license.
+ Author: Zooko O'Whielacronx
+ http://zooko.com/
+ mailto:zooko@zooko.com
+
+ Copyright 2000, Mojam Media, Inc., all rights reserved.
+ Author: Skip Montanaro
+
+ Copyright 1999, Bioreason, Inc., all rights reserved.
+ Author: Andrew Dalke
+
+ Copyright 1995-1997, Automatrix, Inc., all rights reserved.
+ Author: Skip Montanaro
+
+ Copyright 1991-1995, Stichting Mathematisch Centrum, all rights reserved.
+
+
+ Permission to use, copy, modify, and distribute this Python software and
+ its associated documentation for any purpose without fee is hereby
+ granted, provided that the above copyright notice appears in all copies,
+ and that both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of neither Automatrix,
+ Bioreason or Mojam Media be used in advertising or publicity pertaining to
+ distribution of the software without specific, written prior permission.
+\end{verbatim} 
+
+
+
+\subsection{UUencode and UUdecode functions}
+
+The \module{uu} module contains the following notice:
+
+\begin{verbatim}
+ Copyright 1994 by Lance Ellinghouse
+ Cathedral City, California Republic, United States of America.
+                        All Rights Reserved
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of Lance Ellinghouse
+ not be used in advertising or publicity pertaining to distribution
+ of the software without specific, written prior permission.
+ LANCE ELLINGHOUSE DISCLAIMS ALL WARRANTIES WITH REGARD TO
+ THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS, IN NO EVENT SHALL LANCE ELLINGHOUSE CENTRUM BE LIABLE
+ FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+ Modified by Jack Jansen, CWI, July 1995:
+ - Use binascii module to do the actual line-by-line conversion
+   between ascii and binary. This results in a 1000-fold speedup. The C
+   version is still 5 times faster, though.
+ - Arguments more compliant with python standard
+\end{verbatim}
+
+
+
+\subsection{XML Remote Procedure Calls}
+
+The \module{xmlrpclib} module contains the following notice:
+
+\begin{verbatim}
+     The XML-RPC client interface is
+
+ Copyright (c) 1999-2002 by Secret Labs AB
+ Copyright (c) 1999-2002 by Fredrik Lundh
+
+ By obtaining, using, and/or copying this software and/or its
+ associated documentation, you agree that you have read, understood,
+ and will comply with the following terms and conditions:
+
+ Permission to use, copy, modify, and distribute this software and
+ its associated documentation for any purpose and without fee is
+ hereby granted, provided that the above copyright notice appears in
+ all copies, and that both that copyright notice and this permission
+ notice appear in supporting documentation, and that the name of
+ Secret Labs AB or the author not be used in advertising or publicity
+ pertaining to distribution of the software without specific, written
+ prior permission.
+
+ SECRET LABS AB AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD
+ TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANT-
+ ABILITY AND FITNESS.  IN NO EVENT SHALL SECRET LABS AB OR THE AUTHOR
+ BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+ DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+ OF THIS SOFTWARE.
+\end{verbatim}
+
+--
+
+python2.5-2.5.1/Doc/html/about.dat
+
+<p> <a
+    href="http://saftsack.fs.uni-bayreuth.de/;SPMtilde;latex2ht/">
+    <strong>LaTeX</strong>2<tt>HTML</tt></a> is Copyright &copy;
+  1993, 1994, 1995, 1996, 1997, <a
+    href="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos
+    Drakos</a>, Computer Based Learning Unit, University of
+  Leeds, and Copyright &copy; 1997, 1998, <a
+    href="http://www.maths.mq.edu.au/;SPMtilde;ross/">Ross
+    Moore</a>, Mathematics Department, Macquarie University,
+  Sydney.
+
+
+python2.5-2.5.1/Doc/html/stdabout.dat
+
+<p> <a
+    href="http://saftsack.fs.uni-bayreuth.de/;SPMtilde;latex2ht/">
+    <strong>LaTeX</strong>2<tt>HTML</tt></a> is Copyright &copy;
+  1993, 1994, 1995, 1996, 1997, <a
+    href="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos
+    Drakos</a>, Computer Based Learning Unit, University of
+  Leeds, and Copyright &copy; 1997, 1998, <a
+    href="http://www.maths.mq.edu.au/;SPMtilde;ross/">Ross
+    Moore</a>, Mathematics Department, Macquarie University,
+  Sydney.
+
+--
+
+% Copyright 1995 Virginia Polytechnic Institute and State University
+% and Fred L. Drake, Jr.  This copyright notice must be distributed on
+% all copies, but this document otherwise may be distributed as part
+% of the Python distribution.  No fee may be charged for this document
+% in any representation, either on paper or electronically.  This
+% restriction does not affect other elements in a distributed package
+% in any way.
+
+--
+
+Written by James Roskind.\footnote{
+  Updated and converted to \LaTeX\ by Guido van Rossum.
+  Further updated by Armin Rigo to integrate the documentation for the new
+  \module{cProfile} module of Python 2.5.}
+
+Permission to use, copy, modify, and distribute this Python software
+and its associated documentation for any purpose (subject to the
+restriction in the following sentence) without fee is hereby granted,
+provided that the above copyright notice appears in all copies, and
+that both that copyright notice and this permission notice appear in
+supporting documentation, and that the name of InfoSeek not be used in
+advertising or publicity pertaining to distribution of the software
+without specific, written prior permission.  This permission is
+explicitly restricted to the copying and modification of the software
+to remain in Python, compiled Python, or other languages (such as C)
+wherein the modified or derived code is exclusively imported into a
+Python module.
+
+INFOSEEK CORPORATION DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL INFOSEEK CORPORATION BE LIABLE FOR ANY
+SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+--
+
+% Piet van Oostrum, Dept of Computer Science, University of Utrecht
+% Padualaan 14, P.O. Box 80.089, 3508 TB Utrecht, The Netherlands
+% Telephone: +31 30 2532180. Email: piet@cs.ruu.nl
+% ========================================================================
+% LICENCE: This is free software. You are allowed to use and distribute
+% this software in any way you like. You are also allowed to make modified
+% versions of it, but you can distribute a modified version only if you
+% clearly indicate that it is a modified version and the person(s) who
+% modified it. This indication should be in a prominent place, e.g. in the
+% top of the file. If possible a contact address, preferably by email,
+% should be given for these persons. If that is feasible the modifications
+% should be indicated in the source code.
+% ========================================================================
+
+--
+
+ Copyright (C) 1997-1998 Greg Stein. All Rights Reserved.
+
+ This module is provided under a BSD-ish license. See
+   http://www.opensource.org/licenses/bsd-license.html
+ and replace OWNER, ORGANIZATION, and YEAR as appropriate.
+
+--
+
+License: Any components of the py2app suite may be distributed under
+the MIT or PSF open source licenses.
+
+--
+
+python2.5-2.5.1/Lib/robotparser.py
+""" robotparser.py
+
+    Copyright (C) 2000  Bastian Kleineidam
+
+    You can choose between two licenses when using this package:
+    1) GNU GPLv2
+    2) PSF license for Python 2.2
+
+    The robots.txt Exclusion Protocol is implemented as specified in
+    http://info.webcrawler.com/mak/projects/robots/norobots-rfc.html
+
+--
+
+ Copyright (C) 1986 Gary S. Brown.  You may use this program, or
+ code or tables extracted from it, as desired without restriction.
+
+--
+
+python2.5-2.5.1/Modules/expat/ascii.h
+/* Copyright (c) 1998, 1999 Thai Open Source Software Center Ltd
+   See the file COPYING for copying permission.
+*/
+
+--
+
+python2.5-2.5.1/Modules/expat/macconfig.h
+/*================================================================
+** Copyright 2000, Clark Cooper
+** All rights reserved.
+**
+** This is free software. You are permitted to copy, distribute, or modify
+** it under the terms of the MIT/X license (contained in the COPYING file
+** with this distribution.)
+**
+*/
+
+--
+
+python2.5-2.5.1/Modules/expat/pyexpatns.h
+/* Copyright (c) 2005-2006 ActiveState Software Inc.
+
+--
+
+python2.5-2.5.1/Modules/zlib/Makefile.in
+ Makefile for zlib
+ Copyright (C) 1995-2005 Jean-loup Gailly.
+ For conditions of distribution and use, see copyright notice in zlib.h
+
+python 2.5.1 - python2.5-2.5.1/Modules/zlib/zlib.h
+
+/* zlib.h -- interface of the 'zlib' general purpose compression library
+  version 1.2.3, July 18th, 2005
+
+  Copyright (C) 1995-2005 Jean-loup Gailly and Mark Adler
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Jean-loup Gailly        Mark Adler
+  jloup@gzip.org          madler@alumni.caltech.edu
+
+
+--
+
+%%% Copyright   Ulf A. Lindgren
+%%%             Department of Applied Electronics
+%%%             Chalmers University of Technology
+%%%             S-412 96 Gothenburg, Sweden
+%%%             E-mail lindgren@ae.chalmers.se
+%%%
+%%% Note        Permission is granted to modify this file under
+%%%             the condition that it is saved using another
+%%%             file and package name.
+
+--
+
+% Copyright 1998,2001 Donald Arseneau;  Distribute freely if unchanged.
+% Instructions follow after the definitions.
+
+--
+
+  Copyright (C) 2000  Luke Kenneth Casson Leighton <lkcl@samba.org>
+
+--
+
+----------------------------------------------------------------------
+  Copyright (c) 1999-2001, Digital Creations, Fredericksburg, VA, USA
+  and Andrew Kuchling. All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+
+    o Redistributions of source code must retain the above copyright
+      notice, this list of conditions, and the disclaimer that follows.
+
+    o Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions, and the following disclaimer in
+      the documentation and/or other materials provided with the
+      distribution.
+
+    o Neither the name of Digital Creations nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY DIGITAL CREATIONS AND CONTRIBUTORS *AS
+  IS* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+  PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL DIGITAL
+  CREATIONS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+  OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+  DAMAGE.
+----------------------------------------------------------------------
+
+--
+
+ (C) Copyright 2001  Autonomous Zone Industries
+
+ License:  This is free software.  You may use this software for any
+           purpose including modification/redistribution, so long as
+           this header remains intact and that you do not claim any
+           rights of ownership or authorship of this software.  This
+           software has been tested, but no warranty is expressed or
+           implied.
+
+--
+
+------------------------------------------------------------------------
+           Copyright (c) 1997-2001 by Total Control Software
+                         All Rights Reserved
+------------------------------------------------------------------------
+
+ Module Name:  dbShelve.py
+
+ Description:  A reimplementation of the standard shelve.py that
+               forces the use of cPickle, and DB.
+
+ Creation Date:    11/3/97 3:39:04PM
+
+ License:      This is free software.  You may use this software for any
+               purpose including modification/redistribution, so long as
+               this header remains intact and that you do not claim any
+               rights of ownership or authorship of this software.  This
+               software has been tested, but no warranty is expressed or
+               implied.
+
+--
+-----------------------------------------------------------------------
+
+ Copyright (C) 2000, 2001 by Autonomous Zone Industries
+ Copyright (C) 2002 Gregory P. Smith
+
+ License:      This is free software.  You may use this software for any
+               purpose including modification/redistribution, so long as
+               this header remains intact and that you do not claim any
+               rights of ownership or authorship of this software.  This
+               software has been tested, but no warranty is expressed or
+               implied.
+
+--
+
+(c) Copyright CNRI, All Rights Reserved. NO WARRANTY.
+(c) Copyright 2000 Guido van Rossum.
+
+--
+
+ Copyright (c) 1997 by Fredrik Lundh
+
+ fredrik@pythonware.com
+ http://www.pythonware.com
+
+
+ --------------------------------------------------------------------
+
+--
+
+ Copyright 2001-2007 by Vinay Sajip. All Rights Reserved.
+
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of Vinay Sajip
+ not be used in advertising or publicity pertaining to distribution
+ of the software without specific, written prior permission.
+ VINAY SAJIP DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
+ VINAY SAJIP BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+ ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+ IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+--
+
+Copyright (c) 2001-2006 Gregory P. Ward.  All rights reserved.
+Copyright (c) 2002-2006 Python Software Foundation.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+  * Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  * Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  * Neither the name of the author nor the names of its
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--
+
+    Copyright (c) 1999-2000, Marc-Andre Lemburg; mailto:mal@lemburg.com
+    Copyright (c) 2000-2003, eGenix.com Software GmbH; mailto:info@egenix.com
+
+    Permission to use, copy, modify, and distribute this software and its
+    documentation for any purpose and without fee or royalty is hereby granted,
+    provided that the above copyright notice appear in all copies and that
+    both that copyright notice and this permission notice appear in
+    supporting documentation or portions thereof, including modifications,
+    that you make.
+
+    EGENIX.COM SOFTWARE GMBH DISCLAIMS ALL WARRANTIES WITH REGARD TO
+    THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+    FITNESS, IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL,
+    INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING
+    FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+    NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+    WITH THE USE OR PERFORMANCE OF THIS SOFTWARE !
+
+--
+
+ Copyright (C) 2002 Lars Gust?bel <lars@gustaebel.de>
+ All rights reserved.
+
+ Permission  is  hereby granted,  free  of charge,  to  any person
+ obtaining a  copy of  this software  and associated documentation
+ files  (the  "Software"),  to   deal  in  the  Software   without
+ restriction,  including  without limitation  the  rights to  use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies  of  the  Software,  and to  permit  persons  to  whom the
+ Software  is  furnished  to  do  so,  subject  to  the  following
+ conditions:
+
+ The above copyright  notice and this  permission notice shall  be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS  IS", WITHOUT WARRANTY OF ANY  KIND,
+ EXPRESS OR IMPLIED, INCLUDING  BUT NOT LIMITED TO  THE WARRANTIES
+ OF  MERCHANTABILITY,  FITNESS   FOR  A  PARTICULAR   PURPOSE  AND
+ NONINFRINGEMENT.  IN  NO  EVENT SHALL  THE  AUTHORS  OR COPYRIGHT
+ HOLDERS  BE LIABLE  FOR ANY  CLAIM, DAMAGES  OR OTHER  LIABILITY,
+ WHETHER  IN AN  ACTION OF  CONTRACT, TORT  OR OTHERWISE,  ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+
+--
+
+ Copyright 1994 by Lance Ellinghouse
+ Cathedral City, California Republic, United States of America.
+                        All Rights Reserved
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of Lance Ellinghouse
+ not be used in advertising or publicity pertaining to distribution
+ of the software without specific, written prior permission.
+ LANCE ELLINGHOUSE DISCLAIMS ALL WARRANTIES WITH REGARD TO
+ THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS, IN NO EVENT SHALL LANCE ELLINGHOUSE CENTRUM BE LIABLE
+ FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+--
+
+Metadata-Version: 1.0
+Name: wsgiref
+Version: 0.1.2
+Summary: WSGI (PEP 333) Reference Library
+Author: Phillip J. Eby
+Author-email: web-sig@python.org
+License: PSF or ZPL
+Platform: UNKNOWN
+
+--
+
+python 2.5.1 - python2.5-2.5.1/Lib/wsgiref/validate.py
+
+ (c) 2005 Ian Bicking and contributors; written for Paste (http://pythonpaste.org)
+ Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+ Also licenced under the Apache License, 2.0: http://opensource.org/licenses/apache2.0.php
+ Licensed to PSF under a Contributor Agreement
+
+--
+
+/******************************************************************
+Copyright 1998 by Just van Rossum, Den Haag, The Netherlands.
+
+                        All Rights Reserved
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation, and that the name of Just van Rossum not be 
+used in advertising or publicity pertaining to distribution of the 
+software without specific, written prior permission.
+
+JUST VAN ROSSUM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, 
+INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO 
+EVENT SHALL JUST VAN ROSSUM BE LIABLE FOR ANY SPECIAL, INDIRECT OR 
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF 
+USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR 
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+******************************************************************/
+
+--
+
+;; Copyright (C) 1992,1993,1994  Tim Peters
+
+;; Author: 1995-2002 Barry A. Warsaw
+;;         1992-1994 Tim Peters
+;; Maintainer: python-mode@python.org
+;; Created:    Feb 1992
+;; Keywords:   python languages oop
+
+(defconst py-version "$Revision: 1.1 $"
+  "`python-mode' version number.")
+
+;; This software is provided as-is, without express or implied
+;; warranty.  Permission to use, copy, modify, distribute or sell this
+;; software, without fee, for any purpose and by any individual or
+;; organization, is hereby granted, provided that the above copyright
+;; notice and this paragraph appear in all copies.
+
+--
+
+/*----------------------------------------------------------------------
+  Copyright (c) 1999-2001, Digital Creations, Fredericksburg, VA, USA
+  and Andrew Kuchling. All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+
+    o Redistributions of source code must retain the above copyright
+      notice, this list of conditions, and the disclaimer that follows.
+
+    o Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions, and the following disclaimer in
+      the documentation and/or other materials provided with the
+      distribution.
+
+    o Neither the name of Digital Creations nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY DIGITAL CREATIONS AND CONTRIBUTORS *AS
+  IS* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+  PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL DIGITAL
+  CREATIONS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+  OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+  DAMAGE.
+------------------------------------------------------------------------*/
+
+--
+
+Copyright (c) 2002 Jorge Acereda  <jacereda@users.sourceforge.net> &
+                   Peter O'Gorman <ogorman@users.sourceforge.net>
+                   
+Portions may be copyright others, see the AUTHORS file included with this
+distribution.
+
+Maintained by Peter O'Gorman <ogorman@users.sourceforge.net>
+
+Bug Reports and other queries should go to <ogorman@users.sourceforge.net>
+
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--
+
+/*
+Copyright (c) 2002 Peter O'Gorman <ogorman@users.sourceforge.net>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+--
+
+libffi - Copyright (c) 1996-2003  Red Hat, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+``Software''), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL CYGNUS SOLUTIONS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 1998 Cygnus Solutions
+           Copyright (c) 2004 Simon Posnjak
+   Copyright (c) 2005 Axis Communications AB
+
+   CRIS Foreign Function Interface
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL SIMON POSNJAK BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   eabi.S - Copyright (c) 2004  Anthony Green
+   
+   FR-V Assembly glue.
+
+   $Id: python\0402_5_1\040licenses.txt,v 1.1 2009/02/05 00:27:50 wpaul Exp $
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 1998 Red Hat, Inc.
+   Copyright (c) 2000 Hewlett Packard Company
+   
+   IA64 Foreign Function Interface 
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL CYGNUS SOLUTIONS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 2004  Renesas Technology
+   
+   M32R Foreign Function Interface 
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL RENESAS TECHNOLOGY BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   asm.h - Copyright (c) 1998 Geoffrey Keating
+
+   PowerPC Assembly glue.
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   darwin.S - Copyright (c) 2000 John Hornkvist
+      Copyright (c) 2004 Free Software Foundation, Inc.
+
+   PowerPC Assembly glue.
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   darwin_closure.S - Copyright (c) 2002, 2003, 2004, Free Software Foundation,
+   Inc. based on ppc_closure.S
+
+   PowerPC Assembly glue.
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 1998 Geoffrey Keating
+
+   PowerPC Foreign Function Interface
+
+   Darwin ABI support (c) 2001 John Hornkvist
+   AIX ABI support (c) 2002 Free Software Foundation, Inc.
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   sysv.h - Copyright (c) 2003 Jakub Jelinek <jakub@redhat.com>
+
+   PowerPC64 Assembly glue.
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 2000 Software AG
+ 
+   S390 Foreign Function Interface
+ 
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+ 
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+ 
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 2002, 2003, 2004, 2005 Kaz Kojima
+   
+   SuperH Foreign Function Interface 
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL CYGNUS SOLUTIONS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/* -----------------------------------------------------------------------
+   ffi.c - Copyright (c) 1996, 1998, 1999, 2001  Red Hat, Inc.
+           Copyright (c) 2002  Ranjit Mathew
+           Copyright (c) 2002  Bo Thorsen
+           Copyright (c) 2002  Roger Sayle
+   
+   x86 Foreign Function Interface 
+
+   Permission is hereby granted, free of charge, to any person obtaining
+   a copy of this software and associated documentation files (the
+   ``Software''), to deal in the Software without restriction, including
+   without limitation the rights to use, copy, modify, merge, publish,
+   distribute, sublicense, and/or sell copies of the Software, and to
+   permit persons to whom the Software is furnished to do so, subject to
+   the following conditions:
+
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL CYGNUS SOLUTIONS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+   ----------------------------------------------------------------------- */
+
+--
+
+/***********************************************************
+Copyright (C) 1997, 2002, 2003 Martin von Loewis
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies.
+
+This software comes with no warranty. Use at your own risk.
+
+******************************************************************/
+
+--
+
+   The code in this module was based on a download from:
+  http://www.math.keio.ac.jp/~matumoto/MT2002/emt19937ar.html
+
+   It was modified in 2002 by Raymond Hettinger as follows:
+
+* the principal computational lines untouched except for tabbing.
+
+* renamed genrand_res53() to random_random() and wrapped
+  in python calling/return code.
+
+* genrand_int32() and the helper functions, init_genrand()
+  and init_by_array(), were declared static, wrapped in
+  Python calling/return code.  also, their global data
+  references were replaced with structure references.
+
+* unused functions from the original were deleted.
+  new, original C python code was added to implement the
+  Random() interface.
+
+   The following are the verbatim comments from the original code:
+
+   A C-program for MT19937, with initialization improved 2002/1/26.
+   Coded by Takuji Nishimura and Makoto Matsumoto.
+
+   Before using, initialize the state by using init_genrand(seed)
+   or init_by_array(init_key, key_length).
+
+   Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+
+     1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+     3. The names of its contributors may not be used to endorse or promote
+products derived from this software without specific prior written
+permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--
+
+ * Copyright (C) 2003-2004 Federico Di Gregorio <fog@debian.org>
+ *
+ * This file is part of psycopg and was adapted for pysqlite. Federico Di
+ * Gregorio gave the permission to use it within pysqlite under the following
+ * license:
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+
+--
+
+/***********************************************************
+Copyright (C) 1994 Steen Lumholt.
+
+                        All Rights Reserved
+
+******************************************************************/
+
+--
+
+/*
+ * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the project nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE PROJECT OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+--
+
+ * Copyright 1992-1994, David Gottner
+ *
+ *                    All Rights Reserved
+ *
+ * Permission to use, copy, modify, and distribute this software and its 
+ * documentation for any purpose and without fee is hereby granted, 
+ * provided that the above copyright notice, this permission notice and
+ * the following disclaimer notice appear unmodified in all copies.
+ *
+ * I DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS.  IN NO EVENT SHALL I
+ * BE LIABLE FOR ANY SPECIAL, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY
+ * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA, OR PROFITS, WHETHER
+ * IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+ * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * Nevertheless, I would like to know about bugs in this library or
+ * suggestions for improvment.  Send bug reports and feedback to
+ * davegottner@delphi.com.
+
+--
+
+Copyright (c), 1997-2006, Marc-Andre Lemburg (mal@lemburg.com)
+Copyright (c), 2000-2006, eGenix.com Software GmbH (info@egenix.com)
+
+                   All Rights Reserved.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee or royalty is hereby
+granted, provided that the above copyright notice appear in all copies
+and that both that copyright notice and this permission notice appear
+in supporting documentation or portions thereof, including
+modifications, that you make.
+
+THE AUTHOR MARC-ANDRE LEMBURG DISCLAIMS ALL WARRANTIES WITH REGARD TO
+THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS, IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL,
+INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING
+FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+WITH THE USE OR PERFORMANCE OF THIS SOFTWARE !
+
+--
+
+/***********************************************************
+Copyright 1994 by Lance Ellinghouse,
+Cathedral City, California Republic, United States of America.
+
+                        All Rights Reserved
+
+Permission to use, copy, modify, and distribute this software and its 
+documentation for any purpose and without fee is hereby granted, 
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in 
+supporting documentation, and that the name of Lance Ellinghouse
+not be used in advertising or publicity pertaining to distribution 
+of the software without specific, written prior permission.
+
+LANCE ELLINGHOUSE DISCLAIMS ALL WARRANTIES WITH REGARD TO
+THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS, IN NO EVENT SHALL LANCE ELLINGHOUSE BE LIABLE FOR ANY SPECIAL, 
+INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING 
+FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, 
+NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION 
+WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+******************************************************************/
+
+--
+
+Copyright:Copyright ? 1999 by Apple Computer, Inc., all rights reserved.
+
+You may incorporate this Apple sample source code into your program(s) without
+restriction. This Apple sample source code has been provided "AS IS" and the
+responsibility for its operation is yours. You are not permitted to redistribute
+this Apple sample source code as "Apple sample source code" after having made
+changes. If you're going to re-distribute the source, we require that you make
+it clear in the source that the code was descended from Apple sample source
+code, but that you've made changes.
+
+--
+
+  Copyright (C) 1999, 2000, 2002 Aladdin Enterprises.  All rights reserved.
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+--
+
+/*
+ * Copyright (c) 1993 George V. Neville-Neil
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *This product includes software developed by George V. Neville-Neil
+ * 4. The name, George Neville-Neil may not be used to endorse or promote 
+ *    products derived from this software without specific prior 
+ *    written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+--
+
+ Copyright 2000, Mojam Media, Inc., all rights reserved.
+ Author: Skip Montanaro
+
+ Copyright 1999, Bioreason, Inc., all rights reserved.
+ Author: Andrew Dalke
+
+ Copyright 1995-1997, Automatrix, Inc., all rights reserved.
+ Author: Skip Montanaro
+
+ Copyright 1991-1995, Stichting Mathematisch Centrum, all rights reserved.
+
+
+ Permission to use, copy, modify, and distribute this Python software and
+ its associated documentation for any purpose without fee is hereby
+ granted, provided that the above copyright notice appears in all copies,
+ and that both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of neither Automatrix,
+ Bioreason or Mojam Media be used in advertising or publicity pertaining to
+ distribution of the software without specific, written prior permission.
+
+--
+/* Author: Toby Dickenson <htrd90@zepler.org>
+ *
+ * Copyright (c) 1999 Toby Dickenson
+ *
+ * Permission to use this software in any way is granted without
+ * fee, provided that the copyright notice above appears in all
+ * copies. This software is provided "as is" without any warranty.
+ */
+
+--
+python2.5-2.5.1/Modules/linuxaudiodev.c
+ ******************************************************************************
+ * linuxaudiodev.c -- Linux audio device for python.
+ * 
+ * Author          : Peter Bosch
+ * Created On      : Thu Mar  2 21:10:33 2000
+ * Status          : Unknown, Use with caution!
+ * 
+linuxaudiodev.c
+ * (C) 2000 Peter Bosch, all rights reserved.
+ ******************************************************************************
+ */
+
+--
+
+
+python2.5-2.5.1/Modules/ossaudiodev.c
+ *                flavours of BSD [XXX which ones?]; it is also available
+ *                for a wide range of commercial Unices.
+ *
+ * Originally written by Peter Bosch, March 2000, as linuxaudiodev.
+ *
+ * Renamed to ossaudiodev and rearranged/revised/hacked up
+ * by Greg Ward <gward@python.net>, November 2002.
+ossaudiodev.c
+ * (c) 2000 Peter Bosch.  All Rights Reserved.
+ * (c) 2002 Gregory P. Ward.  All Rights Reserved.
+ * (c) 2002 Python Software Foundation.  All Rights Reserved.
+  Copyright (c) 1998-2002 John Aycock
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.W s9AL

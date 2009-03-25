@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<introContent>
+
+	<extensionContent 
+		id="com.nokia.carbide.cpp.uidesigner.doc.user-tutorials" 
+		name="UI Designer Development" 
+		alt-style="uidesigner.properties" 
+		style="uidesigner.css" 
+		path="tutorials/@">
+		
+		<group label="UI Designer Development" id="uidesigner" style-id="content-group">
+		
+			<link 
+				label="UI Designer Birthday example" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.uidesigner.doc.user/tutorials/birthdays/BirthdaysTutorial.html"  
+				id="uid-birthday" 
+				style-id="content-link">
+				<text>Examine a birthday tracking program that demonstrates S60 UI, proper UI and data separation, and simple persistent storage.</text>
+			</link>
+			
+			<link 
+				label="Yahoo! Image Search example" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.uidesigner.doc.user/tutorials/ysearch/YSearchTutorial_1.html"  
+				id="uid-yahoo" 
+				style-id="content-link">
+				<text>Examine a program that accesses Yahoo!'s image search web service. This program demonstrates HTTP access, XML parsing, list boxes, and image handling. </text>
+			</link>
+			
+		</group>
+	</extensionContent>
+</introContent>

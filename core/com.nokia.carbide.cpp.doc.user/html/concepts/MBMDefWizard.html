@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>MBM File in Concepts</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+   </head>
+   <body>
+   <h2>MBM File</h2>
+   
+   <p>
+	  MBM, or multi-bitmap, is a Symbian OS-specific bitmap file format. This
+		file contains multiple bitmaps and it can contain both bitmaps with masks and
+		bitmaps without masks. It optimizes the bitmap handling capability of Symbian
+		OS. The MMP editor (in Sources tab &gt; Resources &gt; Bitmaps) and Symbian Project Navigator view provide support for creating and editing mbm
+   files. In the Symbian Project Navigator you can right-click on a scalable icon makefile (for example, Icons_scalable_dc.mk) and select Add MBM/MIF Entry... to open the Edit MBM/MIF Contents window.</p>
+   <p>
+	  The following information is required to add a bitmap without a mask: 
+   </p>
+   <ul> 
+	  <li> 
+	    <p>
+		   <b>Color format </b>: Specifies whether the bitmap is a gray
+			 scale image or a color scale image. 
+	    </p> 
+	  </li> 
+	  <li> 
+	    <p>
+		   <b>Color Depth</b>: Specifies the color depth, if the bitmap is
+			 a color scale image. 
+	    </p> 
+	  </li> 
+	  <li> 
+	    <p>
+		   <b>Bitmap</b>: This is the name of the bitmap file to add to
+			 the MBM file. 
+	    </p> 
+	  </li> 
+   </ul>
+   <p>
+	  To add a bitmap with a mask, you will also need to specify: 
+   </p>
+   <ul> 
+	  <li> 
+	    <p>
+		   <b>Mask Depth</b>: Specifies the depth of the mask being
+			 applied to the bitmap. 
+	    </p> 
+	  </li> 
+	  <li> 
+	    <p>
+		   <b>Mask</b>: The name of the bitmap file that is used to mask
+			 the original bitmap. 
+	    </p> 
+	  </li> 
+   </ul>
+	 <h5>Related tasks</h5>
+	 <ul>
+       <li><a href="../tasks/Multi-BitmapFile.html">Creating an MBM File</a></li>
+   </ul>
+	 <h5>Related references</h5>
+	 <ul>
+       <li><a href="../reference/MBMEditor.html">MBM Editor</a></li>
+   </ul>
+	 <div id="footer"></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+   </html>
+   

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for various Properties/Preference panels and windows -->
+<!-- plugin="com.nokia.sdt.uimodel" -->
+
+<contexts>
+
+	<!-- STRING LIST EDITOR DIALOG -->
+	<context id="stringListEditorDialogContextId" >
+		<description>Use the String List Editor dialog to specify the individual strings in a string list.</description>
+		<topic label="String List Editor" 					href="html/reference/views/ref_string_list_editor.htm" />
+		<topic label="Editing String List Data" 			href="html/tasks/properties/task_comp_mod_properties_string.htm" />
+		<topic label="Inspecting Object Properties" 		href="html/tasks/properties/task_comp_mod_properties.htm" />
+		<topic label="Restoring Default Values" 			href="html/tasks/properties/task_comp_mod_properties_restore.htm" />
+	</context>
+
+</contexts>
+

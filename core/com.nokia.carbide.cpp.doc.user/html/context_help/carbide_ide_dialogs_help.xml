@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- =============================================================================== -->
+<!-- CONTEXT HELP FOR CARBIDE BUILDER/IDE DIALOGS AND PLUGINS                        -->
+<!-- Location for all Carbide context help not related to the debugger.              -->
+<!-- Includes context help references for:                                           -->
+<!--    plugin="com.nokia.carbide.cdt.builder"                                       -->
+<!--    plugin="com.nokia.carbide.cdt.rombuilder"                                    -->
+<!--    plugin="com.nokia.carbide.cpp.leavescan"                                     -->
+<!--    plugin="com.nokia.carbide.cpp.project.ui"                                    -->
+<!--    plugin="com.nokia.carbide.cpp.sdk.ui"                                        -->
+<!--    plugin="com.nokia.carbide.remoteConnections"                                 -->
+<!--    plugin="com.nokia.carbide.templatewizard"                                    -->
+<!--    plugin="com.nokia.carbide.updater"                                           -->
+<!--    plugin="com.nokia.carbide.cpp.builder.utils"                                 -->
+<!--    plugin="com.nokia.carbide.cpp.news.reader"                                   -->
+<!--    plugin="com.nokia.search.system"                                 		 	 -->
+<!-- =============================================================================== -->
+
+<contexts>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cdt.builder                                           -->
+<!-- =============================================================================== -->
+	
+	<!-- Carbide Project Settings page -->
+	<context id="project_properties_page" >
+		<description>Use the Carbide Project Settings window to specify project build options.</description>
+		<topic label="Carbide Project Settings"		              href="html/reference/build_properties/pane_project_settings.htm" />
+		<topic label="Building Projects"			              href="html/tasks/projects/prj_build.htm" />
+		<topic label="Carbide Build Configurations"				  href="html/reference/build_properties/pane_build_config.htm" />
+	</context>
+
+	<!-- Carbide Build Configurations Page -->
+	<context id="project_configurations_page" >
+		<description>The Carbide Build Configurations page allows you to specify SIS file options and environment variable settings for the selected build configuration</description>
+		<topic label="Carbide Build Configurations"					href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Carbide Build Configurations Manage SDK"		href="html/reference/ProjectTypeandSDK.html" />
+		<topic label="Environment Variables"						href="html/reference/build_properties/pane_build_config_env.htm" />
+	</context>
+
+	<!-- Carbide Build Manage Configurations Page -->
+	<context id="manage_configurations_dialog" >
+		<description>Add or Remove build configurations to current project</description>
+		<topic label="Carbide Build Configurations"				   	href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Adding/Removing Build Configurations"	   		href="html/tasks/projects/prj_new_build_config.htm" />
+		<topic label="Carbide Macro Settings"	   					href="html/reference/build_properties/pane_macro_settings.htm" />
+	</context>
+
+	<!-- Carbide Build Preference Page (added v1.3) -->
+	<context id="builder_preference_page" >
+		<description>Set global build options</description>
+		<topic label="Build preferences"	   href="html/reference/wnd_build_prefs.htm" />
+	</context>
+
+	<!-- SIS BUILDER DIALOG (added v1.3)                                -->
+	<!-- DOCS: Verify SIS builder page URL -->
+	<context id="builder_sis_dialog" >
+		<description>builder_sis_dialog</description>
+		<topic label="SIS Builder"         		href="html/reference/wnd_build_prefs.htm" />
+	</context>
+
+	<!-- Carbide MMP Changed dialog (added v1.3) -->
+	<context id="builder_mmp_changed_action_dialog" >
+		<description>Set global build options</description>
+		<topic label="=STUB="	   href="html/reference/wnd_build_prefs.htm" />
+	</context>
+
+	<!-- Carbide Macro Settings panel (added v1.3) -->
+	<context id="macro_settings_page" >
+		<description>Set project macros options</description>
+		<topic label="Carbide Macro Settings"	   		href="html/reference/build_properties/pane_macro_settings.htm" />
+		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/pane_build_config.htm" />
+	</context>
+
+	
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cdt.rombuilder                                        -->
+<!-- =============================================================================== -->
+
+	<!-- ROM Build settings -->
+	<context id="rom_build_settings_page" >
+		<description>Use the ROM Build Settings panel to specify ROM build commands and working directory.</description>
+		<topic label="Carbide ROM Build Settings"		href="html/reference/ROM_build_settings.html" />
+	</context>
+	
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cpp.leavescan                                         -->
+<!-- =============================================================================== -->
+	
+	<!-- LEAVESCAN PREF PANEL -->
+	<context id="leavescan_prefs_page" >
+		<description>Specify the Leavescan directory.</description>
+		<topic label="Leavescan Preferences" 	href="html/reference/leavescan_pref.html"/>
+	</context>
+	
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cpp.project.ui                                        -->
+<!-- =============================================================================== -->
+
+	<!-- ============================================================== -->
+	<!-- FILE: src.com.nokia.carbide.cpp.project.ProjectUIHelpIDs.java  -->
+	<!-- ============================================================== -->
+	
+	<!-- CARBIDE PREF PAGE -->
+	<context id="carbide_prefs_page" >
+		<description>Provides options to monitor project changes, emulator variables, and preprocessor symbols.</description>
+		<topic label="Carbide.c++ preferences"  			href="html/reference/wnd_carbide_pref.htm" />
+	</context>
+
+	<!-- BLD INF PAGE -->
+	<context id="bldinf_selection_page" >
+		<description>Build information file selection page</description>
+		<topic label="Importing Projects"  			href="html/tasks/ImportingProjects.html" />
+		<topic label="Troubleshooting"				href="html/hints_tips.htm#projects" />
+	</context>
+
+	<!-- MMP Selection Page -->
+	<context id="mmp_selection_page" >
+		<description>MMP Selection Page</description>
+		<topic label="MMP Selection Page"  			href="html/concepts/mmpfiles.htm" />
+		<topic label="Importing Projects"  			href="html/tasks/ImportingProjects.html" />
+	</context>
+
+	<!-- Carbide Project Settings Page -->
+	<context id="project_properties_page" >
+		<description>Project Properties page</description>
+		<topic label="Project Properties page"  	href="html/tasks/ImportingProjects.html" />
+		<topic label="Importing Projects"  			href="html/tasks/ImportingProjects.html" />
+	</context>
+
+	<!-- Choose Project Page   -->
+	<context id="choose_project_page" >
+		<description>Select an existing project.</description>
+		<topic label="Adding Symbian OS Classes"			href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html"/>
+		<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html"/>
+	</context>
+
+	<!-- Symbian Project Navigator VIEW -->
+	<context id="spn_view" >
+		<description>Symbian Project Navigator</description>
+		<topic label="Symbian Project Navigator View"  		href="html/reference/view_sym_proj_nav.htm" />
+	</context>
+
+	<!-- MMP SELECTION DIALOG -->
+	<context id="mmp_selection_dialog" >
+		<description>Use the New MMP Wizard to add an MMP file to the project.</description>
+		<topic label="New MMP Wizard"  		href="html/reference/NewMMP_wizard.html" />
+	</context>  
+	
+	<!-- UPDATE FILES QUERY DIALOG -->
+	<context id="update_files_query_dialog" >
+		<description>==STUB==</description>
+		<topic label="==STUB=="  		href="html/reference/NewMMP_wizard.html" />
+	</context>  
+
+	<!-- INDEXER PREFERENCE PANEL -->
+	<context id="indexer_preference_page" >
+		<topic label="C/C++ Indexer" 				href="html/reference/indexer.html" />
+	</context>
+
+	<!-- INDEXER PROPERTY PANEL -->
+	<context id="indexer_properties_page" >
+		<topic label="C/C++ Indexer" 				href="html/reference/indexer.html" />
+	</context>
+
+	<!-- New MMP File wizard -->
+	<context id="mmp_wizard_page" >
+		<description>MMP Selection Page</description>
+		<topic label="MMP Selection Page"  			href="html/concepts/mmpfiles.htm" />
+		<topic label="Importing Projects"  			href="html/tasks/ImportingProjects.html" />
+	</context>
+
+
+	<!-- ============================================================== -->
+	<!-- INF EDITOR HELP IDS                                            -->
+	<!-- ============================================================== -->
+	
+	<!-- INF Editor Overview Page -->
+	<context id="OverviewPage" >
+		<description>View and modify Symbian projects and export files to be included in building your application.</description>
+		<topic label="INF Editor Overview"				href="html/reference/INF_Editor.html" />
+		<topic label="INF Editor Exports" 				href="html/reference/INF_Editor_exports.html" />
+		<topic label="Add/Edit Exports" 				href="html/reference/INF_Editor_exports.html#addexport" />
+		<topic label="Add/Edit MMP file" 				href="html/reference/INF_Editor_addedit_mmp.html" />
+	</context>
+
+	<!-- INF Editor Exports Page -->
+	<context id="ExportsPage" >
+		<description>View and modify the list of files to be part of the normal build process.</description>
+		<topic label="INF Editor Exports" 				href="html/reference/INF_Editor_exports.html" />
+		<topic label="INF Editor Overview"				href="html/reference/INF_Editor.html" />
+	</context>
+
+	<!-- INF Editor Exports Dialog -->
+	<context id="ExportsDialog" >
+		<description>Add and edit paths to exported files.</description>
+		<topic label="Add/Edit Exports" 				href="html/reference/INF_Editor_exports.html#addexport" />
+		<topic label="INF Editor Overview"				href="html/reference/INF_Editor.html" />	
+	</context>
+
+	<!-- INF Editor MMP Dialog -->
+	<context id="MMPDialog" >
+		<description>Add mmp files to the build process.</description>
+		<topic label="Add/Edit MMP file" 				href="html/reference/INF_Editor_addedit_mmp.html" />
+		<topic label="INF Editor Overview"				href="html/reference/INF_Editor.html" />
+	</context>
+
+	<!-- INF Editor Make Dialog -->
+	<context id="MakeDialog" >
+		<description>Add make files to the build process.</description>
+		<topic label="Add/Edit Make file" 				href="html/reference/INF_Editor_addedit_make.html" />
+		<topic label="INF Editor Overview"				href="html/reference/INF_Editor.html" />
+	</context>
+	
+	
+	<!-- ============================================================== -->
+	<!-- MMP EDITOR HELP IDS                                            -->
+	<!-- FILE: src.com.nokia.carbide.cpp.mmpEditor.HelpContexts.java    -->
+	<!-- ============================================================== -->
+	
+	<!-- MMP Editor Overview Page -->
+	<context id="MMPOverviewPage" >
+		<description>Define target information.</description>
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+	
+	<!-- MMP Editor Options Page -->
+	<context id="MMPOptionsPage" >
+		<description>Define runtime, compiler, and linker options.</description>
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+	</context>
+
+	<!-- MMP Editor Sources Page -->
+	<context id="MMPSourcesPage" >
+		<description>Define source files to be included in project build process.</description>
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+
+	<!-- MMP Editor Libraries Page -->
+	<context id="MMPLibrariesPage" >
+		<description>Add libraries to the project.</description>
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+
+	<!-- MMP Editor Resource Block -->
+	<context id="MMPResourceBlockDialog" >
+		<description>Add resource files to the project.</description>
+		<topic label="Edit Resource Block" 				href="html/reference/MMP_Editor_resource_block.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+
+	<!-- MMP Editor Library Dialog -->
+	<context id="MMPAddLibraryDialog" >
+		<description>Add libraries to your project.</description>
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+
+	<!-- MMP Editor Capabilities Dialog -->
+	<context id="MMPCapabilitiesDialog" >
+		<description>Add system resource capabilities to your application.</description>
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+	</context>
+
+	<!-- MMP Editor Library Dialog -->
+	<context id="MMPEditLibraryDialog" >
+		<description>Specify a name for the selected library.</description>
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+
+	<!-- MMP Editor Include Directory -->
+	<context id="MMPIncludeDirectoryDialog" >
+		<description>Specify user or system include paths.</description>
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+	</context>
+
+	<!-- MMP File Path Dialog 
+	<context id="MMPFilePathDialog" >
+		<description>Use the MMP file path dialog to.</description>
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+    -->
+
+	<!-- Tool options Dialog 
+	<context id="MMPToolOptionsDialog" >
+		<description>Use the Tool options dialog to.</description>
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="MMP Editor Overview"				href="html/reference/MMP_Editor.html" />
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+	</context>
+    -->
+
+	<!-- Languages Dialog -->
+	<context id="MMPLanguagesDialog" >
+		<description>Use the Select Languages dialog to add or remove languages from a project.</description>
+		<topic label="Sources" 							href="html/reference/MMP_Editor_sources.html" />
+		<topic label="Overview"							href="html/reference/MMP_Editor.html" />
+		<topic label="Libraries" 						href="html/reference/MMP_Editor_libraries.html" />
+		<topic label="Options" 				            href="html/reference/MMP_Editor_options.html" />
+		<topic label="MMP Editor" 				        href="html/reference/MMP_Editor_mmp_tab.html" />
+	</context>
+	
+
+
+	
+   
+
+    <!-- MBM and MIF editor  -->
+	<context id="multi_image_editor_dialog" >
+		<description>Use the MBM and MIF editor to create multi-bitmap or mif files.</description>
+		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
+        <topic label="Creating MBM File" 				href="html/tasks/Multi-BitmapFile.html" />
+		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
+	</context>
+
+	<!-- AIF Editor  -->
+	<context id="aif_editor_dialog" >
+		<description>Use the AIF editor to specify the Symbian OS resource file and bitmaps that should be included in a Symbian OS application information (AIF) file.</description>
+		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
+		<topic label="AIF File" 						href="html/concepts/AIFDefWizard.html" />
+		<topic label="Creating an AIF File" 			href="html/tasks/AppInfoFile.html" />
+	</context>
+
+	<!-- Image Editor add images from project -->
+	<context id="add_project_images_dialog" >
+		<description>Use the add image from project dialog to search for image files in your project.</description>
+		<topic label="Add Images from Project" 			href="html/reference/add_from_project.htm" />
+		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
+		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
+		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
+	</context>
+
+	<!-- Image Editor add images from file system -->
+	<context id="add_filesystem_images_dialog" >
+		<description>Use the add image from file system dialog to search for image files on your file system.</description>
+		<topic label="Add Images from Filesystem" 		href="html/reference/add_from_filesys.htm" />
+		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
+		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
+		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
+	</context>
+
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cpp.sdk.ui                                            -->
+<!-- FILE: src.com.nokia.carbide.cpp.internal.sdk.ui.SDKUIhelpIDs.java               -->
+<!-- =============================================================================== -->
+
+	<!-- ============================================================== -->
+	<!-- SDK PREFS HELP IDS                                             -->
+	<!-- ============================================================== -->
+	
+	<!-- Carbide.c++ > SDK Preferences panel -->
+	<context id="sdk_prefs_page" >
+		<description>Use the SDK Preferences page to Add or remove SDKs, or edit SDK properties</description>
+		<topic label="SDK Preferences"  					href="html/reference/SDKPreferences.html" />
+		<topic label="Adding SDKs" 							href="html/tasks/sdks/sdk_add.htm" />
+		<topic label="Searching SDKs" 						href="html/tasks/sdks/sdk_search.htm" />
+		<topic label="Viewing SDK Properties" 				href="html/tasks/sdks/sdk_view_properties.htm" />
+		<topic label="Adding Symbian Custom Kits" 			href="html/tasks/sdks/sdk_add_custkits.htm" />
+	</context>
+
+	<!-- SDK Preferences panel: SDK Add dialog -->
+	<context id="sdk_add_dialog" >
+		<description>Use the SDK Add dialog to Add SDKs to current project</description>
+		<topic label="Add SDK"			        href="html/tasks/sdks/sdk_add.htm" />
+		<topic label="SDK Properties"			href="html/tasks/sdks/sdk_view_properties.htm" />
+	</context>
+
+	<!-- SDK Preferences panel: SDK Properties dialog -->
+	<context id="sdk_properties_dialog" >
+		<description>Use the SDK Properties window to examine the properties associated with the currently selected SDK in the SDK Preferences panel.</description>
+		<topic label="SDK Properties"				href="html/tasks/sdks/sdk_view_properties.htm" />
+		<topic label="SDK Preferences"				href="html/reference/SDKPreferences.html" />
+		<topic label="Adding Symbian Custom Kits"	href="html/tasks/sdks/sdk_add_custkits.htm" />
+	</context>
+
+	<!-- Carbide.c++ > Platform Filtering Preferences panel -->
+	<context id="sdk_platform_filter_page" >
+		<description>Use the SDK Platform Filter window to show only platforms related to selected SDK.</description>
+		<topic label="Platform Filtering Preferences"		href="html/tasks/sdks/sdk_platform_filter.htm" />
+		<topic label="SDK Preferences"						href="html/reference/SDKPreferences.html" />
+	</context>
+
+	<!-- New Symbian OS Project wizard > Symbian OS SDKs page -->
+	<context id="build_targets_page" >
+		<description>SDKs and Build Configurations</description>
+		<topic label="SDKs and Build Configurations"  		href="html/reference/ProjectTypeandSDK.html" />
+		<topic label="Creating New Projects"				href="html/tasks/CreatingNewProjects.html" />
+		<topic label="SDK Support"							href="html/concepts/SDKSupport.html" />
+	</context>
+
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.remoteConnections                                     -->
+<!-- Added 2.0 (20080804)															 -->
+<!-- =============================================================================== -->
+
+	<!-- Remote Connections view -->
+	<context id="connections_view" >
+		<description>Use the Remote Connections view to manage your connections.</description>
+		<topic label="Remote Connections view"			  				href="html/reference/trk/view_remote_connection.htm" />
+		<topic label="Adding, editing, or removing connections"			href="html/reference/trk/wnd_new_conn_wiz_edit.htm" />
+	</context>
+
+	<!-- Remote Connections Wizard: Edit connection page -->
+	<context id="connection_type_page" >
+		<description>Use the Edit Connection page to choose a remote connection type.</description>
+		<topic label="Adding, editing, or removing connections"			href="html/reference/trk/wnd_new_conn_wiz_edit.htm#CONN_EDIT" />
+		<topic label="Remote Connections view"			  				href="html/reference/trk/view_remote_connection.htm" />
+	</context>
+
+	<!-- Remote Connections Wizard: Edit connection page -->
+	<context id="connection_settings_page" >
+		<description>Use the Settings page to set connection options.</description>
+		<topic label="Adding, editing, or removing connections"			href="html/reference/trk/wnd_new_conn_wiz_edit.htm#CONN_SET" />
+		<topic label="Remote Connections view"			  				href="html/reference/trk/view_remote_connection.htm" />
+	</context>
+
+	<!-- IMPORT WIZARD                                                  -->
+	<context id="import_wizard_selection_wizard_page_context" >
+		<topic label="Importing Remote Connections"		href="html/reference/trk/importing_remote_conns.htm"/>
+	</context>
+	
+	<!-- EXPORT WIZARD                                                  -->
+	<context id="export_wizard_selection_wizard_page_context" >
+		<topic label="Exporting Remote Connections"		href="html/reference/trk/exporting_remote_conns.htm"/>
+	</context>
+	
+<!-- =============================================================================== -->
+<!-- NEW SYMBIAN OS CLASS WIZARD PAGES                                               -->
+<!-- plugin="com.nokia.carbide.templatewizard"                                       -->
+<!-- FILE = src.com.nokia.carbide.internal.api.template.engine.TemplateEngine.java   -->
+<!-- =============================================================================== -->
+	
+	<context id="location" >
+		<description>Specify source and header file names and location.</description>
+		<topic label="Name and Location"					href="html/reference/wiz_name_and_location_page.htm" />
+		<topic label="Adding Symbian OS Classes"			href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html"/>
+		<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html"/>
+	</context>
+
+	<context id="other" >
+		<description>Enter other properties for generated files.</description>
+		<topic label="Other Settings"						href="html/reference/ProjectOtherSettings.html" />
+		<topic label="Adding Symbian OS Classes"			href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html"/>
+		<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html"/>
+	</context>
+	
+	
+	<!-- ============================================================== -->
+	<!-- NEW SYMBIAN OS PROJECT WIZARD PAGES                            -->
+	<!-- ============================================================== -->
+	<!-- UNVERIFIED HELP IDS -->
+	
+	<context id="directories" >
+		<description>Specify project directories for files.</description>
+		<topic label="Creating New Projects"		href="html/tasks/CreatingNewProjects.html" />
+	</context>
+
+	<context id="basics" >
+		<description>Enter the basic properties for a project.</description>
+		<topic label="Creating New Projects"		href="html/tasks/CreatingNewProjects.html" />
+	</context>
+	
+	<context id="choose_template_page" >
+		<description>Select a template to base the new project on.</description>
+		<topic label="Creating New Projects"		href="html/tasks/CreatingNewProjects.html" />
+	</context>
+	
+	<context id="skeleton" >
+		<description>Specify minimum project properties.</description>
+		<topic label="Creating New Projects"		href="html/tasks/CreatingNewProjects.html" />
+	</context>
+	
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.updater                                               -->
+<!-- =============================================================================== -->
+
+	<!-- Project updater -->
+	<!-- FILE: internal.updater.ui.ProjectUpdateDialog.java -->
+	<context id="projectUpdateDialog" >
+		<description>Update Carbide.c++ version 1.1 projects to version 1.2.</description>
+		<topic label="Carbide.c++ Updater"			href="html/reference/olderproject_updater.html" />
+	</context>
+
+	<!-- Files updater -->
+	<!-- FILE: internal.updater.ui.RefactoringUpdaterWizard.java -->
+	<context id="refactoringUpdaterWizard" >
+		<description>View, accept, or cancel changes to be performed.</description>
+		<topic label="Carbide.c++ Files Updater"	href="html/reference/olderproject_updater.html#uid" />
+	</context>
+	
+	
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cpp.builder.utils                                             -->
+<!-- FILE: CabideBuilerUtilsHelpIds.java                                             -->
+<!-- =============================================================================== -->
+	
+	<!-- PREPROCESS PREFERENCE PANEL (added v1.3) -->
+	<context id="builder_preprocess_page" >
+		<description>Inspect and edit default preprocessor options.</description>
+		<topic label="Preprocess preferences" 				href="html/reference/wnd_preprocess_prefs.htm"/>
+	</context>
+
+	<!-- PREPROCESSOR LANGUAGE DIALOG (added v1.3) -->
+	<context id="builder_preprocess_language_dialog" >
+		<description>Verify which languages should be preprocessed.</description>
+  <topic href="html/tasks/projects/prj_preprocess.htm" label="Preprocessing files"/>
+		<topic label="Preprocess preferences" 				href="html/reference/wnd_preprocess_prefs.htm"/>
+	</context>
+	
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.search.system                                             	 -->
+<!-- =============================================================================== -->
+	
+	<!-- SYSTEM SEARCH PREFERENCE PANEL (added v1.3) -->
+	<context id="search_preference_page_context" >
+		<description>System search preference options</description>
+		<topic label="System Search preferences" 	href="html/reference/search/wnd_system_search_prefs.htm"/>
+		<topic label="System Search page" 			href="html/reference/search/wnd_system_search.htm"/>
+	</context>
+
+	<!-- SYSTEM SEARCH WINDOW (added v1.3) -->
+	<context id="text_search_page_context" >
+		<description>System search page options</description>
+		<topic label="System Search page" 			href="html/reference/search/wnd_system_search.htm"/>
+		<topic label="System Search preferences" 	href="html/reference/search/wnd_system_search_prefs.htm"/>
+	</context>
+
+	<!-- SYSTEM SEARCH VIEW (added v1.3) -->
+	<context id="new_search_view_context" >
+		<description>System Search view options</description>
+		<topic label="System Search view" 			href="html/reference/search/view_system_search.htm"/>
+		<topic label="System Search page" 			href="html/reference/search/wnd_system_search.htm"/>
+	</context>
+
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.cpp.news.reader                                    	 -->
+<!-- =============================================================================== -->
+
+	<!-- NEWS READER PREFERENCE PANEL (added v2.0.3) -->
+	<context id="NewsPreferencePage" >
+		<description>News Reader preference options</description>
+		<topic label="Carbide.c++ News preferences" 	href="html/reference/prefs_carbide_news.htm"/>
+		<topic label="Carbide.c++ News view" 			href="html/reference/view_carbide_news.htm"/>
+	</context>
+	
+	<!-- NEWS READER EDITOR (added v2.0.3) -->
+	<context id="NewsEditor" >
+		<description>News Reader editor options</description>
+		<topic label="Carbide.c++ News view" 			href="html/reference/view_carbide_news.htm"/>
+		<topic label="Carbide.c++ News preferences" 	href="html/reference/prefs_carbide_news.htm"/>
+	</context>
+	
+	<!-- NEWS READER HELP MENU (added v2.0.3) -->
+	<context id="newsCommand" >
+		<topic label="Carbide.c++ News view" 			href="html/reference/view_carbide_news.htm"/>
+		<topic label="Carbide.c++ News preferences" 	href="html/reference/prefs_carbide_news.htm"/>
+	</context>
+	
+	<!-- NEWS READER TRIM AREA (added v2.0.3) -->
+	<context id="newsTrimCommand" >
+		<topic label="Carbide.c++ News view" 			href="html/reference/view_carbide_news.htm"/>
+		<topic label="Carbide.c++ News preferences" 	href="html/reference/prefs_carbide_news.htm"/>
+	</context>
+
+</contexts>

@@ -1,0 +1,4 @@
+enum Tsettings_list_3_0ViewUids
+	{
+	ESettings_list_3_0SettingItemListViewId = 1
+	};

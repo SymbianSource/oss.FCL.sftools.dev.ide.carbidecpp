@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU13 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.carbide.uiq.ListBoxLayout"
+		baseComponent="com.nokia.carbide.uiq.CommonBase"
+		instanceNameRoot="listBoxLayout"		
+		version="1.0"
+		category="%listbox.category">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="ListBoxLayout" classHelpTopic=""
+			resourceType="QIK_LISTBOX_LAYOUT_PAIR" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="ListBoxLayout_sm.png"
+			largeIconFile="ListBoxLayout.png"/>
+		
+		<attributes>
+			<attribute key="is-layout-object">false</attribute>
+			<attribute key="is-layout-container">false</attribute>
+			<attribute key="not-in-toolbox">false</attribute>
+		</attributes>
+		
+		<properties>
+			<enumProperty name="standard_normal_layout"
+				displayName="%standard_normal_layout"
+				category="%category.layout"
+				descriptionKey="standard_normal_layoutDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxStandardLayout"
+				default="EQikListBoxLine"/>
+			<enumProperty name="standard_highlight_layout"
+				displayName="%standard_highlight_layout"
+				category="%category.layout"
+				descriptionKey="standard_highlight_layoutDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxStandardLayout"
+				default="EQikListBoxNoLayout"/>
+		</properties>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_LISTBOX_LAYOUT_PAIR" headers="QikListBox.rh">
+				<mapEnumMember property="standard_normal_layout" member="standard_normal_layout" headers="QikListBoxStandardLayouts.hrh"/>
+				<mapEnumMember property="standard_highlight_layout" member="standard_highlight_layout" headers="QikListBoxStandardLayouts.hrh"/>
+			</mapResource>
+		</sourceMapping>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="ListBoxLayout_impls.js" prototype="ListBoxLayout"/>
+			</implementation>
+		</implementations>
+		
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,8 @@
+#<bsf>#
+
+# This BSF file is to support building for the ARMV6 architecture.
+
+CUSTOMIZES GCCE
+
+INVARIANT_OPTIONS -march=armv6 -mapcs -mthumb-interwork
+

@@ -1,0 +1,35 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+// note - we are intentionally making the case of all file and directory
+// names different than they really are in the file system.
+
+PRJ_EXPORTS
+..\Data\test1.txt e:\Data\test1.txt
+..\data\Test1\Test1.txt e:\Data\test2.txt
+
+
+PRJ_MMPFILES
+TEST1.mmp
+test2.MMP
+makefile Testmk.mk
+
+PRJ_TESTEXPORTS
+..\Test\TestExport.txt e:\Test\testexport.txt
+
+
+PRJ_TESTMMPFILES
+..\test\testmmp.mmp

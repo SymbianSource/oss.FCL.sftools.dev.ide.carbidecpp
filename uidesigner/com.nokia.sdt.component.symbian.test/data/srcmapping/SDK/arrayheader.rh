@@ -1,0 +1,38 @@
+#include "subtype.rh"
+
+STRUCT ARRAY_TYPES {
+	LONG ints[];
+	STRUCT structs[];	// of SUBTYPE
+	LLINK refs[];
+}
+
+STRUCT ARRAY_TYPES_DEFAULTS {
+	LONG ints[] = { 2, 3, 5 };
+	STRUCT structs[]; // cannot be initialized as per RSS
+	LLINK refs[] = { r_test0, r_test4 };
+}
+
+STRUCT STRING_LIST {
+	STRUCT strings[];	// LBUF
+}
+
+STRUCT LBUF
+    {
+    LTEXT txt; // leading-byte counted text string
+    }
+
+STRUCT ARRAY 
+	{
+	LLINK items[];
+	}
+
+STRUCT ARRAY_EMBEDDED
+	{
+	STRUCT items[];
+	}
+
+STRUCT PALETTE
+	{
+	LLINK palette_names; // ARRAY
+	LLINK palette_colors; // ARRAY
+	}

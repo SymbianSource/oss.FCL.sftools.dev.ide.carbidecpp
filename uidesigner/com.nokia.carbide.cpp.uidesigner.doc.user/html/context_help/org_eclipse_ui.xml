@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for Debug Perspective default views -->
+<!-- plugin="org.eclipse.ui" -->
+
+<contexts>
+	
+	<!-- PROPERTIES VIEW -->
+	<context id="property_sheet_view_context" >
+		<description>Use the Properties view examine and modify the parameters of the objects in your UI designs.</description>
+		<topic label="Properties View" 						href="html/reference/views/ref_properties_view.htm" />
+		<topic label="Inspecting and Modifying Properties" 	href="html/tasks/properties/task_comp_mod_properties.htm" />
+		<topic label="Restoring Default Values" 			href="html/tasks/properties/task_comp_mod_properties_restore.htm" />
+	</context>
+
+	<!-- WIZARDs -->
+	
+	<!-- NEW WIZARD -->
+	<context id="new_wizard_selection_wizard_page_context" >
+		<topic label="Adding a UI Design"					href="html/tasks/app_edit/task_uidesign_add.htm" />
+	</context>
+
+	<!-- IMPORT WIZARD -->
+	<context id="import_wizard_selection_wizard_page_context" >
+		<topic label="Importing Projects from a BLD.INF File"	href="html/.."/>
+	</context>
+
+	<!-- EXPORT WIZARD
+	<context id="export_wizard_selection_wizard_page_context" >
+		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
+		<topic label="Console view"  			href="html/..." />
+	</context>
+	-->
+
+	<!-- PREFERENCE PANELS -->
+
+	<!-- KEYS
+	<context id="keys_preference_page_context" >
+		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
+		<topic label="Console view"  			href="html/.." />
+	</context>
+	-->
+
+</contexts>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Repositioning the Program Counter</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Repositioning the Program Counter</h2>
+<p>Once you've <a href="cmds_resuming.htm">suspended</a> a program debug session, the <a href="../../reference/view_disassembly.htm">Disassembly</a> view provides commands for move or reposition the program counter (PC). These command include:</p>
+<ul>
+  
+  <li><a href="#RUN_TO">Run to Line (C/C++)</a></li>
+  <li><a href="#MOVE_TO">Move to Line (C/C++)</a></li>
+  <li><a href="#RESUME_AT">Resume at Line (C/C++)</a></li>
+</ul>
+<p class="note"><span class="style1">WARNING</span> Use of the Move to Line and Resume at Line can leave a program in an unstable state. Use at your own risk.</p>
+<h4><a name="RUN_TO" id="MOVE_TO2"></a>Run to Line (C/C++)</h4>
+<p>Use the <b>Run to Line</b> command (<img src="../../reference/images/icon_dis_run_to_line.png" width="18" height="18" align="absmiddle">) to execute the program from the currently executed line to the selected line.</p>
+<h4><a name="MOVE_TO" id="MOVE_TO"></a>Move to Line (C/C++)</h4>
+<p>Use the  <b>Move to Line (C/C++)</b> command (<img src="../../reference/images/icon_dis_move_to_line.png" width="19" height="15" align="absmiddle">) to move the program counter to the selected line, skipping all intermediate lines but not resume execution. This enables you to skip suspect code and continue stepping through your program.</p>
+<h4><a name="RESUME_AT" id="STEP_OVER2"></a>Resume at Line (C/C++)</h4>
+<p>Use the <b>Resume at Line</b> <b> (C/C++)</b> command (<img src="../../reference/images/icon_dis_resume_at_line.png" width="18" height="14" align="absmiddle">) to begin program execution at the selected line, skipping all lines between it and the currently executed line. </p>
+<h4>Other references</h4>
+<ul>
+<li><a href="debug.htm">Debugging overview</a></li>
+<li><a href="../../reference/images/view_disassembly.png">Disassembly view</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+	<wizardPage 
+		id="basics" 
+		label="%basics2xPage.label">
+		<description>%basics2xPage.desc</description>
+		<uidField 
+				id="uid3"
+				label="%basics2xPage.uid3.label"
+				min="0x01000000"
+				max="0x0fffffff"
+				mandatory="true">
+				<description>%basics2xPage.uid3.desc</description>
+		</uidField>
+		<textField 
+				id="author"
+				label="%basics2xPage.author.label"
+				persist="true">
+				<description>%basics2xPage.author.desc</description>
+		</textField>
+		<textField 
+				id="copyright"
+				label="%basics2xPage.copyright.label"
+				multiline="true"
+				default="Your copyright notice"
+				persist="true">
+				<description>%basics2xPage.copyright.desc</description>
+		</textField>
+	</wizardPage>

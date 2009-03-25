@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Carbide Main page </title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Main page </h2>
+<p>The options shown in the <b>Main</b> page differ based upon the type of launch configuration. Generally, the options fall into these choices: </p>
+<ul>
+  <li><a href="#emulator_mode">Emulation Main page</a> (Emulation) </li>
+  <li><a href="#run_mode">Run-mode Main page</a> (Application TRK) </li>
+  <li><a href="#stop_mode">Stop-Mode Main page</a> (System TRK, Sophia, Trace32) </li>
+</ul>
+<h3><a name="emulator_mode" id="emulator_mode"></a>Emulation Main page </h3>
+<p>The <b>Symbian OS <a href="emulation.htm">Emulation</a></b> launch configuration uses the <b>Main</b> page to define the process to be launched by the emulator. </p>
+<p>The behavior that occurs when launching a debug session varies based upon the <a href="page_main.htm">SDK</a>. Normally, <a href="../../tasks/debugger/work_debug_act_start.htm">starting</a> a debug session launches the emulator (<span class="code">epoc.exe</span>) and you must then navigate to your application and open it. However, starting a debug session for an .exe file will, in most cases, launch the .exe directly. This starts the emulator and then opens your application automatically. Note that some SDKs do not support this behavior. In those cases you must still open your application in the emulator manually.</p>
+<p align="center"><img src="images/page_debug_main.png" width="639" height="278"></p>
+<p class="figure">Figure 1. Main page (Emulation shown) </p>
+<h5>Table 1. Emulator Main page &mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Project</b></td>
+    <td><p>The project to associate with this debug launch configuration. Click <b>Browse</b> to select a different project. </p>    </td>
+  </tr>
+  <tr>
+    <td><b>Process to launch </b></td>
+    <td>The path to the emulator or executable to  launch. For Symbian OS 9.1 the emulator path is required. For Symbian OS 9.2 and later the path to the executable should be used.  Click <b>Browse</b> to select a different emulator. </td>
+  </tr>
+</table>
+
+<h3><a name="run_mode" id="run_mode"></a>Run-mode Main page </h3>
+<p>The <b>Symbian OS <a href="run_mode.htm">Application TRK </a></b> launch configuration uses the <b>Main</b> page to defines the project and the process to launch on the target device. </p>
+<p align="center"><img src="images/page_main_run_mode.png" width="615" height="264"></p>
+<p class="figure">Figure 2 - Main page (Application TRK shown) </p>
+<h5>Table 2.  Run-mode Main page &mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Project</b></td>
+    <td><p>The project to associate with this  launch configuration. Click Browse to select a different project. </p></td>
+  </tr>
+  <tr>
+    <td><b>Remote process to launch </b></td>
+    <td><p>The absolute path of the  remote executable to launch on the target device. The binary to debug may be stored on one of several memory locations, the most common  are:</p>
+        <ul>
+          <li><b>RAM</b> (default) &#8212; programs running in RAM are launched from <span class="code">c:\sys\bin\</span> </li>
+          <li><b>ROM</b> &#8212; programs running in ROM are launched from <span class="code">z:\sys\bin\</span></li>
+          <li><b>Memory cards</b> &#8212; programs running on a memory card  are launched from <span class="code">e:\sys\bin\</span> </li>
+        </ul>
+      <p>In the event a program is not launching, verify that the<b> </b>path is correct for the memory location where the binary resides.</p></td>
+  </tr>
+  <tr>
+    <td><b>Use connection</b></td>
+    <td>Choose the remote connection type to associate with this launch configuration. Click <a href="../../reference/trk/wnd_new_conn_wiz_add.htm">New</a> to add a new connection, or <a href="../../reference/trk/wnd_new_conn_wiz_edit.htm">Edit</a> to modify the current one.</td>
+  </tr>
+</table>
+<h3><a name="stop_mode" id="stop_mode"></a>Stop-mode Main page </h3>
+<p>The <b>Symbian OS <a href="stop_mode.htm">System TRK</a>, <a href="sophia.htm">Sophia</a></b>, and <b><a href="trace32.htm">Trace32</a> </b> launch configurations uses the <b>Main</b> page to defines the project and the executable to launch on the target device. </p>
+<p align="center"><img src="images/page_main_stop_mode.png" width="642" height="264" /></p>
+<p class="figure">Figure 3. Main page </p>
+<h5>Table 3. Stop-mode Main page &mdash; items</h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="32%" scope="col">Item</th>
+    <th width="68%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Project</b></td>
+    <td>The project to associate with this debug launch configuration. Click Browse to select a different project. </td>
+  </tr>
+  <tr>
+    <td><b>Executable</b></td>
+    <td><span
+ style="font-weight: normal;">This is the name of the executable that is linked to the project. </span>Click <b>Browse</b> to select a different executable. </td>
+  </tr>
+  <tr>
+    <td><b>Use connection</b></td>
+    <td>Choose the remote connection type to associate with this launch configuration. Click <a href="../../reference/trk/wnd_new_conn_wiz_add.htm">New</a> to add a new connection, or <a href="../../reference/trk/wnd_new_conn_wiz_edit.htm">Edit</a> to modify the current one.</td>
+  </tr>
+</table>
+<h4>Other references</h4>
+<ul>
+  <li><a href="launch_configs_overview.htm">Launch Configuration Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<h5>&nbsp;</h5>
+</body>
+</html>

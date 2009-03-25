@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+	<component
+		baseComponent="com.nokia.examples.layoutable"
+		friendlyName="CodeContainer" qualifiedName="com.nokia.examples.codeLayoutContainer" 
+		category="Basic" version="1.0">
+		<properties>
+			<property name="foo" type="integer" default="0"/>
+			<property name="test" type="string" default="test"/>
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<code class="com.nokia.sdt.component.symbian.test.LayoutCodeImplFactoryStub"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentCustomizerUI"/>
+				<code class="com.nokia.sdt.component.symbian.test.TestCustomizerCodeImplFactoryStub"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<code class="com.nokia.sdt.component.symbian.test.TestQueryContainmentStub"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.sdt.component.symbian.test.TestSetValueCommandExtenderStub"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<code class="com.nokia.sdt.component.symbian.test.InitializerCodeImplFactoryStub"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstanceChildListener"/>
+				<code class="com.nokia.sdt.component.symbian.test.ChildListenerCodeImplFactoryStub"/>
+			</implementation>
+		</implementations>
+	</component>
+</componentDefinition>

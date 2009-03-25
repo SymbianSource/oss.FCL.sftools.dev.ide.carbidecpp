@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Debug Monitor</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>r - Dump Register Contents</h2>
+</div>
+<div>
+<p>This command dumps the full ARM register set.</p>
+<p>On ARM this dumps the full set of user mode registers and all the
+alternate registers for other modes.</p>
+<p>For example:</p>
+<p class="listing">&gt; r</p>
+<p class="listing">MODE_USR:<br>
+  &nbsp;R0=6571de54  R1=0000002a  R2=00000002  R3=ffffffff<br>
+  &nbsp;R4=0000002a  R5=f8170414  R6=6571df14  R7=6403cba8<br>
+  &nbsp;R8=00000001  R9=6403c41c R10=640002f8 R11=6571de70<br>
+  R12=00000020 R13=00404e00 R14=f80818c0 R15=f800bfa8<br>
+  CPSR=60000013<br>
+  MODE_FIQ:<br>
+  &nbsp;R8=00000000  R9=ffffffff R10=ffffffff R11=00000000<br>
+  R12=00000000 R13=64000d0c R14=c080079c SPSR=e00000dc<br>
+  MODE_IRQ:<br>
+  R13=6400110c R14=00000013 SPSR=20000013<br>
+  MODE_SVC:<br>
+  R13=6571de54 R14=f80328bc SPSR=60000010<br>
+  MODE_ABT:<br>
+  R13=6400090c R14=ffff0010 SPSR=400000d7<br>
+  MODE_UND:<br>
+  R13=6400090c R14=95221110 SPSR=f000009d</p> 
+
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="CrashDebuggerUsingCommandSyntax.guide.html">Debug Monitor</a></li>
+</ul>
+<h5>Related references</h5>
+<ul><li><a href="CrashDebugger_cmd.guide.html">Crash Debugger Commands</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

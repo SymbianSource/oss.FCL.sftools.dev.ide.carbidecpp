@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Ranges in case statements</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Ranges in case statements</h3>
+<p>If you disable the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting, the compiler allows ranges of values in a switch statement by using a special form of <span class="code">case</span> statement. A <span class="code">case</span> statement that uses a range is a shorter way of specifying consecutive case statements that span a range of values.</p>
+<p>The range form of a case statement is</p>
+<p class="listing">case <em>low</em> ... <em>high</em> : // note spaces around ellipsis character </p>
+<p>where low is a valid case expression that is less than high, which is also a valid case expression. A case statement that uses a range is applied when the expression of a switch statement is both greater than or equal to the low expression and less than or equal to the high expression.</p>
+<p class="note"><strong>NOTE</strong> Make sure to separate the ellipsis (<span class="code">...</span>) from the low and high expressions with spaces.</p>
+<div class="listing">
+  <h5>Listing 1. Ranges in case Statements</h5>
+  <p>switch (i)<br />
+    {<br />
+    case 0 ... 2: /* Equivalent to case 0: case 1: case 2: */<br />
+    j = i * 2;<br />
+    break;<br />
+    case 3:<br />
+    j = i;<br />
+    break;<br />
+    default:<br />
+    j = 0;<br />
+    break;<br />
+    } </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

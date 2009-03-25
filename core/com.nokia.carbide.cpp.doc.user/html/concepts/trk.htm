@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>On-device Debugging</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>On-device Debugging</h2>
+<p>The on-device debug agent (Application TRK or System TRK) is a program that enables on-device debugging of  phone prototypes, reference boards, and retail phones. An on-device debug agent is a program that is installed on a phone or reference board. It communicates with the debugger using a serial-over-Bluetooth or serial-over-USB connection. Through this serial communication, the on-device debug agent acts as the interface between the Carbide.c++ debugger and the target device. An on-device debug agent provides: </p>
+<ul>
+  <li>Debug agent running on Symbian OS</li>
+  <li>Provides a stable &amp; integrated interface to Symbian OS</li>
+  <li>Used to debug applications on actual devices</li>
+  <li>Can be built-in to the OS image or installed as a .sis file</li>
+</ul>
+<p>Using the on-device debug agent, one can use the Carbide.c++ IDE to debug programs running on phone hardware, making the debugging process much easier. The on-device debug agent works on all S60 3rd Edition devices, UIQ 3rd Edition devices, and Symbian TechView devkits.</p>
+<p>The Application TRK debug agents are stored online and can be downloaded and installed using the <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</p>
+<p>Some of the key benefits to using an on-device debug agent include:</p>
+<ul>
+  <li>Easy debugging via serial interface (Bluetooth, USB, IrDA, etc)</li>
+  <li>More accurate than emulator debugging</li>
+  <li>Can often avoid using expensive hardware debuggers </li>
+</ul>
+<p>There are two variations of the on-device debug agent, they are:</p>
+<ul>
+  <li><b>Application TRK</b>&#8212;supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines,  system ROM,   other user application code, cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
+  <li><b>System TRK</b>&#8212;
+  supports both application and limited ROM debugging (includes application executables and limited ROM based components (i.e. no device drivers) and available to original equipment manufacturers (OEM) for device creation and customization</li>
+</ul>
+<p class="note"><b>NOTE</b> The type of on-device debug agent you have is based upon which  Carbide.c++ product you have licensed. System TRK is only available with the Professional or OEM version of the product. </p>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="../tasks/trk/trk_overview.htm">On-device Debugging Overview</a> </li>
+</ul>
+<div class="step">
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</div>
+</body>
+</html>

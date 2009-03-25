@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	<component id="com.nokia.examples.extenderContainer">
+		<property id="name">root</property>
+		<component id="com.nokia.examples.extenderContainer">
+			<property id="name">child1</property>
+		</component>  
+		<component id="com.nokia.examples.extenderContainer">
+			<property id="name">child2</property>
+		</component>  
+	</component>  
+</designerData>

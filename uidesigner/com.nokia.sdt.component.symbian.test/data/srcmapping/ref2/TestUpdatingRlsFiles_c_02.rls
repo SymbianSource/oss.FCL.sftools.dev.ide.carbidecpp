@@ -1,0 +1,5 @@
+// localized strings for language: French (02)
+rls_string STR_1 "??Hello"
+rls_string STR_5 "??TODO"
+rls_string STR_10 "quatorze"
+rls_string STR_999 "??"

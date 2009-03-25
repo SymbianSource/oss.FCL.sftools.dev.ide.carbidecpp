@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.sdt.emf.dm/src"
+    editDirectory="/com.nokia.sdt.emf.dm.edit/src" editorDirectory="/com.nokia.sdt.emf.dm.editor/src"
+    modelPluginID="com.nokia.sdt.emf.dm" runtimeJar="true" modelName="datamodel" editPluginClass="com.nokia.sdt.emf.dm.provider.DataModelEditPlugin"
+    editorPluginClass="com.nokia.sdt.emf.dm.presentation.DataModelEditorPlugin" testsDirectory="/com.nokia.sdt.emf.dm.tests/src"
+    importerID="org.eclipse.emf.importer.java">
+  <foreignModel>@model</foreignModel>
+  <genPackages prefix="Dm" basePackage="com.nokia.sdt.emf" disposableProviderFactory="true"
+      generateExampleClass="false" ecorePackage="dm.ecore#/">
+    <genDataTypes ecoreDataType="dm.ecore#//Language"/>
+    <genDataTypes ecoreDataType="dm.ecore#//StringValue"/>
+    <genDataTypes ecoreDataType="dm.ecore#//Version"/>
+    <genClasses ecoreClass="dm.ecore#//IDesignerData">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IDesignerData/version"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/componentManifest"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/properties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/rootContainers"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/stringBundle"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/macroTable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/sourceMappingState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IDesignerData/generatedFiles"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//INode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//INode/componentId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//INode/properties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//INode/children"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//INode/eventBindings"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IPropertyContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IPropertyContainer/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//EStringToIPropertyValueMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//EStringToIPropertyValueMapEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//EStringToIPropertyValueMapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IPropertyValue">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IPropertyValue/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IPropertyValue/stringValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IPropertyValue/compoundValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IPropertyValue/sequenceValue"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//ILocalizedStringBundle">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//ILocalizedStringBundle/localizedStringTables"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//ILocalizedStringTable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//ILocalizedStringTable/strings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//ILocalizedStringTable/language"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IMacroStringTable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IMacroStringTable/stringMacros"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//EStringToStringMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//EStringToStringMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//EStringToStringMapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IEventBinding">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEventBinding/eventID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEventBinding/eventHandlerDisplayText"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEventBinding/eventHandlerInfo"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//ISourceGenMappingState">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//ISourceGenMappingState/resourceMappings"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference dm.ecore#//ISourceGenMappingState/enumMappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//ISourceGenMappingState/arrayMappings"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IResourceMappings">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IResourceMappings/mappings"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IResourceMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IResourceMapping/instanceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IResourceMapping/rsrcFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IResourceMapping/rsrcId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IResourceMapping/value"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IEnumMappings">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IEnumMappings/mappings"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IEnumMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEnumMapping/instanceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEnumMapping/propertyId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEnumMapping/nameAlgorithm"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IEnumMapping/value"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IArrayMappings">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IArrayMappings/mappings"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IArrayMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IArrayMapping/instanceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IArrayMapping/propertyId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IArrayMapping/memberId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IArrayMapping/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IElementMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IElementMapping/uniqueValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IElementMapping/value"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IComponentManifest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dm.ecore#//IComponentManifest/entries"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IComponentManifestEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IComponentManifestEntry/componentID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IComponentManifestEntry/version"/>
+    </genClasses>
+    <genClasses ecoreClass="dm.ecore#//IGeneratedFiles">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dm.ecore#//IGeneratedFiles/files"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

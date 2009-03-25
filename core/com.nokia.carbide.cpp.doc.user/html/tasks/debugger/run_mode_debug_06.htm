@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugger Settings</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Run Mode On-Device Debugging</h2>
+<p>To implement run mode on-device debugging the following tasks need to be completed.</p>
+<ol>
+  <li><a href="run_mode_debug.htm">Install device connection software</a></li>
+  <li><a href="run_mode_debug_01.htm">Install Perl</a></li>
+  <li><a href="run_mode_debug_02.htm">Install an SDK</a></li>
+  <li><a href="run_mode_debug_03.htm">Setup environment variables</a></li>
+  <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
+  <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
+  <li><b>Install the SISX file on the target device</b></li>
+  <li><a href="run_mode_debug_07.htm">Configure TRK connection on the device</a></li>
+  <li><a href="run_mode_debug_08.htm">Create a launch configuration</a></li>
+</ol>
+<div class="step">
+<h4><a name="runSISX" id="runSISX"> </a>Install the SISX File on the Target Device</h4>
+<p>The on-device debug agent is delivered to the target device as a SISX file. There are two versions of TRK: Application TRK and System TRK.</p>
+  <ul>
+    <li>Application TRK&mdash; supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines, system ROM, and other user application code. User cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
+    <li>System TRK&mdash; supports both application and limited ROM debugging; including application executables and limited ROM based components (no device drivers). Also available to original equipment manufacturers (OEMs) for device creation and customization.</li>
+  </ul>
+  <p>The following SISX file is officially signed by Nokia: 
+  <span class="code">s60_3_0_app_trk_2_6_nokia_signed.sisx</span></p>
+  <h5>Installing using Bluetooth</h5>
+  <ol>
+    <li>Right click on the Bluetooth item on the system tray and select Quick Connect &gt; File Transfer &gt; Find Devices</li>
+    <li>Refresh the File Transfer window to allow the device to detect all the Bluetooth devices</li>
+    <li>From the list select your device and click Open</li>
+    <li>You should enable the My Bluetooth Places window popup option that creates a connection shortcut &ldquo;MyDeviceOBEX File Transfer&rdquo; in the My Bluetooth Places folder.</li>
+    <li>The Obex File Transfer window for your devices should open from within the My Bluetooth Folder</li>
+    <li>You will be prompted to enter a Bluetooth PIN code. Enter  any number.</li>
+    <li>On the device you will be prompted  to enter the same PIN code. Enter PIN code. </li>
+    <li>The device will then ask you to accept the connection request from the PC. Press OK.</li>
+    <p>The OBEX folder on the PC should now be available.</p>
+    <li>Drop the TRK SISX file into the folder</li>
+    <li>The device will prompt you to accept the connection request from the PC. Press OK.</li>
+    <li>The SISX file should then transfer from the PC to the device</li>
+    <li>Navigate to where the SISX file was placed</li>
+    <p>If you dropped it into the OBEX folder it will be in <span class="code">Applications &gt; Messages &gt; Inbox</span>. If you dropped it into the C folder it will be in <span class="code">Applications &gt; Utilities &gt;FileBrowse &gt; C</span>.</p>
+    <li>Select the TRK SISX file on the device to install the TRK debug agent.</li>
+  </ol>
+  <h5>Installing using PC Suite</h5>
+  <ol>
+    <li>Place the SISX file on your PC</li>
+    <li>Connect the USB cable to the phone</li>
+    <li>On the device it will display USB mode:<br />
+      PC Suite<br />
+      File transfer</li>
+    <li>Select PC Suite and the device will connect to the PC</li>
+    <li>Open PC suite. In the bottom left a status display should indicate &ldquo;Series 60 Device connected via USB&rdquo;.</li>
+    <li>Double click &ldquo;Install applications&rdquo;. The Nokia Application Installer wizard will appear.</li>
+    <li>On the left you should see My Computer and on the right My Phone</li>
+    <li>From My Computer select the SISX file on your PC</li>
+    <li>From My Phone select the &ldquo;Phone memory&rdquo; drop down list an select where you want to install the file.</li>
+    <li>Select the green arrow pointing from My Computer to My Device. The SISX file should then be transferred to the device and installed.</li>
+  </ol>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

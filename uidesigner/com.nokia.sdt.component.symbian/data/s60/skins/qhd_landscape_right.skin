@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.nokia.com/sdt/ui/skin" 
+	name="S60 QHD Landscape" width="660" height="380">
+	<editorArea x="10" y="10" width="640" height="360"/>
+</skin>

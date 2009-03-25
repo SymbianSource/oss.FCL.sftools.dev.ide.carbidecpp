@@ -1,0 +1,12 @@
+# Microsoft Developer Studio Generated Dependency File, included by GetTRKVersion.mak
+
+.\GetTRKVersion.cpp : \
+	".\com_nokia_carbide_trk_support_onDeviceSetup_ui_CheckExistingTRKPage.h"\
+	".\com_nokia_carbide_trk_support_service_TRKConnectedService.h"\
+	".\GetTRKVersion.h"\
+	".\StdAfx.h"\
+	
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	

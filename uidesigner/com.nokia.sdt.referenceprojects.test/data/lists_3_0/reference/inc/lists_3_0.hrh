@@ -1,0 +1,5 @@
+enum Tlists_3_0ViewUids
+	{
+	ELists_3_0ListBoxViewId = 1,
+	ELists_3_0ListBox2ViewId
+	};

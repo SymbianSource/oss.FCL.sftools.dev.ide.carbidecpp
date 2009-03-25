@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Using Soft Attach for On-Device Debugging</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Using Soft Attach  for On-Device Debugging</h2>
+<p>You can debug hardware via Trace32 using the soft attach option. This enables you to debug an image flashed to ROM or on a memory card. Soft attach includes all the capabilities fo Stop-mode debugging but can't debug any code loaded before the OS is booted. </p>
+<p>There are several components that must be provided to the debugger so that it can communicate with the attached hardware device. They are:</p>
+<ul>
+  <li><b>Config_carbide.t32</b> - a required configuration file used to configure Carbide for soft attach debugging</li>
+  <li><b>.cmm file</b> - you must select the correct .cmm script file for the hardware otherwise it will not initialize properly and the debugger will be unable to communicate. The .cmm script files are located in the <span class="code">&lt;Carbide&gt;\plugins\com.nokia.carbide.cpp.support_2.0.x.xxx\Symbian_Support\Trace32\cmm_scripts</span> directory.<br>
+    <br>
+  Also, if there is a specific .cmm file for the device, like H2 or H4, especially if it includes <span class="code">_attach</span> in the name, choose that version over the others to do soft attach on the hardware. </li>
+  <li><b>.log file</b> - you must have a valid .log file for the ROM image in order to debug the image </li>
+</ul>
+<p>If the  <a href="../projects/wiz_new_launch_config.htm">New Launch Configuration Wizard</a> is used, you will be asked to identify the above files. If you used the <b>New</b> or <b><a href="../../reference/wnd_debug_configuration.htm">Debug</a></b> dialog to create a launch configuration, make sure that the above files are supplied. </p>
+<p>The major steps to perform a soft attach  are: </p>
+<ol>
+  <li><a href="#buildProject">Import and build</a> your project and the ROM image </li>
+  <li><a href="#startHardware">Startup the device</a> using the ROM image </li>
+  <li><a href="#debuggerSetup">Setup the debugger</a> and begin debugging </li>
+</ol>
+<div class="step">
+  <h4><a name="buildProject" id="buildProject"> </a>1. Importing and building the project and ROM image </h4>
+  <ol>
+    <li><a href="../ImportingProjects.html">Import</a> the project</li>
+    <li><a href="../projects/prj_build.htm">Build</a> the project</li>
+    <li><a href="../../reference/ROM_build_settings.html">Create</a> a ROM image 
+      <p>Enter the desired command-line arguments for the ROM image in the ROM Build Command Line text box in the <b>Carbide ROM Build Settings</b> panel of the <b>Properties for &lt;project&gt;</b> dialog. </p>
+    </li>
+  </ol>
+</div>
+<div class="step">
+<h4><a name="startHardware" id="startHardware"> </a>2. Starting up the device with the ROM image </h4>
+<ol>
+    <li>Transfer the ROM image to the hardware via memory card or flash </li>
+    <p class="note"><b>NOTE</b> Ensure that the hardware includes a boot loader program so that it can boot the ROM image from the memory card. </p>
+    <li>Power up the device  
+      <p>Once  the operating system has booted up, it is ready for the debugger to attach </p>
+    </li>
+  </ol>
+  <p>&nbsp;</p>
+</div>
+<div class="step">
+<h4><a name="debuggerSetup" id="debuggerSetup"> </a>3. Setting up the debugger to debug </h4>
+<ol>
+  <li>On the hardware, launch the program to debug</li>
+  <li>Click Run &gt; Debug to launch the <a href="../projects/wiz_new_launch_config.htm">New Launch Configuration Wizard</a></li>
+  <li>In the Launch Types page
+    <ol type="a">
+      <li>Select the Trace32 Launch Configuration</li>
+      <li>Click Next </li>
+    </ol>
+  </li>
+  <li>In the Symbian ROM Image Settings page
+    <ol type="a">
+      <li>Enter the path to the Trace32 Initialization Script .cmm file </li>
+      <li>Select the Target Processor  </li>
+      <li>Click Next </li>
+    </ol>
+    In the Symbian ROM Image Settings page
+    <ol type="a">
+      <li>Enable Soft attach</li>
+      <li>Enter the Symbian ROM Log File </li>
+      <li>Click Next </li>
+    </ol>
+  </li>
+  <li>In the New Launch Configuration page
+    <ol type="a">
+      <li>Enable the &quot;Open launch configuration for additional customization of launch settings&quot; option </li>
+      <li>Click Finish </li>
+    </ol>
+  </li>
+  <li>In the Debug &gt; Symbian OS Trace 32 &gt; <i>New_Configuration</i> &gt; Connection tab 
+    <ol type="a">
+      <li>Enable the &quot;View messages between Carbide and Trace32&quot;</li>
+      <li>Click Debug </li>
+    </ol>
+  </li>
+  <p align="left">If the View messages between Carbide and Trace32 option is enabled, the Console view will show the communications between the debugger and the hardware (Figure 1). If you do not see the messages, verify that the  <b>Trace32 Communications Log</b> is the active log view. </p>
+  <p align="center"><img src="images/soft_attach_cmm_console.png" width="927" height="199" class="figure"></p>
+  <p class="figure">Figure 1. Debugger log showing .cmm file being used to initialize hardware </p>
+  <li>Once the debugger connects to the hardware it will halt the hardware at a random memory address (Figure 2). Press Resume in the Debug view to begin debugging.</li>
+  <p align="center"><img src="images/soft_attach_random_address.png" width="593" height="268" class="figure"></p>
+  <p class="figure">Figure 2. Debugger stopping at a random address using soft attach </p>
+  <li>Debug the program in the Carbide debugger </li>
+  <p>Once the debugger is connected to the hardware you can: </p>
+  <ul>
+    <li>Set breakpoints in the editor view </li>
+  </ul>
+  <blockquote>
+    <p>If breakpoints were already set in the project then an Editor view should display them as <a href="../../concepts/breakpoints.htm">resolved</a>. If no breakpoints have been set, now is the time to add them. </p>
+    <p class="note"><b>NOTE</b> The number of breakpoints you can set is controlled by the hardware. </p>
+  </blockquote>
+  <ul><li>Click Suspend to halt  the processor on the hardware </li>
+    <li>Use Disconnect (<i>preferred</i>) to stop debugging the program. This does not halt the processor.  </li>
+    <li>Use Terminate to end  the debug session</li>
+  </ul>
+</ol>
+</div>
+<h4>Related references</h4>
+<ul>
+  <li><a href="../../reference/panel_debug_exceptions.htm">Debug</a> perspective </li>
+  <li><a href="../../reference/view_executables.htm">Executables</a> view</li>
+  <li><a href="../../reference/view_symbian_kernel.htm">Symbian OS Data</a> view</li>
+  <li><a href="../../reference/view_registers.htm">Registers</a> view</li>
+  <li><a href="../../reference/view_breakpoints.htm">Breakpoint</a> view    </li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

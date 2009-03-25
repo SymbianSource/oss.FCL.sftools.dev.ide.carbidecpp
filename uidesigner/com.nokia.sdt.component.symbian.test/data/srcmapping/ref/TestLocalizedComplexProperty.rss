@@ -1,0 +1,6 @@
+#include <basicheader.rh>
+
+RESOURCE ONE_STRING r_test0_i18n_holder
+	{
+	text = STR_1;
+	}

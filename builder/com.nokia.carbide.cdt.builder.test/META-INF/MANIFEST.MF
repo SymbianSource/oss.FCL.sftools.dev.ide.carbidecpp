@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cdt.builder.test;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.carbide.cdt.builder.test.TestPlugin
+Bundle-Vendor: NOKIA
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit,
+ com.nokia.carbide.cpp.sdk.core,
+ org.eclipse.emf.common,
+ com.nokia.carbide.cpp.project.core,
+ org.eclipse.core.resources,
+ com.nokia.carbide.cdt.builder,
+ com.nokia.carbide.cpp.epoc.engine,
+ com.nokia.cpp.utils.core,
+ org.eclipse.cdt.core
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.carbide.cdt.builder.test

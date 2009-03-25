@@ -1,0 +1,9 @@
+#ifdef LANGUAGE_10
+#include "TestUpdatingLocFiles2.l10"
+#endif
+#ifdef LANGUAGE_16
+#include "TestUpdatingLocFiles2.l16"
+#endif
+#ifdef LANGUAGE_02
+#include "TestUpdatingLocFiles2.l02"
+#endif

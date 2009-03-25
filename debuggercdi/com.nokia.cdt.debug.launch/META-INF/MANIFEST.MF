@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Launch Plug-in
+Bundle-SymbolicName: com.nokia.cdt.debug.launch; singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: com.nokia.cdt.internal.debug.launch.LaunchPlugin
+Bundle-Vendor: Nokia
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.cdt.launch,
+ org.eclipse.cdt.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.cdt.core,
+ org.eclipse.cdt.ui,
+ com.nokia.cdt.debug.cw.symbian,
+ com.freescale.cdt.debug.cw.core,
+ org.eclipse.core.expressions,
+ org.eclipse.ui.console,
+ com.freescale.swt,
+ org.eclipse.ui.forms,
+ com.nokia.carbide.cpp.support,
+ org.eclipse.ui.ide,
+ com.nokia.carbide.cpp.debug.kernelaware,
+ com.nokia.carbide.cdt.builder,
+ com.nokia.carbide.cpp.sdk.core,
+ com.nokia.carbide.cpp.ui,
+ com.nokia.cpp.utils.core,
+ com.freescale.cdt.debug.cw.core.ui,
+ com.nokia.carbide.remoteConnections
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.cdt.internal.debug.launch,
+ com.nokia.cdt.internal.debug.launch.ui,
+ com.nokia.cdt.internal.debug.launch.wizard
+Bundle-ClassPath: lib/JSiMa.jar,
+ .

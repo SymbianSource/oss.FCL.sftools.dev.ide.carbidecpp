@@ -1,0 +1,11 @@
+#include <structheader.rh>
+
+RESOURCE RESOURCE_LLINK r_test_resource_in_link
+	{
+	link = r_test_resource_in_link_link;
+	}
+RESOURCE SUBTYPE r_test_resource_in_link_link
+	{
+	flag = 1;
+	number = 23;
+	}

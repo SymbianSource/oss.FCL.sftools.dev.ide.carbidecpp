@@ -1,0 +1,677 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Source Generation</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Source Generation</h2>
+<p>The UI Designer supports generating C/C++ source code through a contribution-driven model.   A component provides a &lt;sourceGen&gt; element which uses a series of XML elements to define locations, templates, and inline JavaScript code.  These elements contribute, eventually, to an ordered list of &quot;contributions&quot; to source.  Each component passes its contributions up to its parent, which collates them, and recursively passes them to its parent.  The end result is a full set of contributions defining all the generated source.</p>
+<p>A contribution is an association of text and a high-level &quot;location&quot; in the project (for example, the &quot;enum TValues&quot; enumeration inside &quot;class CMyClass&quot; inside the file &quot;inc/MyClass.h&quot;).  The text is generated either by template expansion or by explicit JavaScript code, or both.  A location is defined relative to other locations and may represent either &quot;unowned&quot; code (which is generated once, when it is missed) or &quot;owned&quot; code (which is always regenerated).</p>
+<p>A contribution may have a &quot;phase&quot; instead of a location.  A &quot;phase&quot; is a moniker for a location that will be resolved later, usually by the parent of a component instance.  This may be used  to collate contributons within a location, or for filtering, or other purposes. Using phases allows a component to target different parents which may have different location hierarchies.  In the final list of contributions returned to the source generator, all phases must be resolved to locations.</p>
+<p>The concept of &ldquo;phases&rdquo; is intended to alleviate the need for children to know where they are generating code. Thus, a &lt;template&gt; for a child needn&rsquo;t specify a location if it specifies a phase; the container will supply the location. This implies that the container explicitly &ldquo;fixes up&rdquo; child contributions by finding those with a matching phase and setting their locations. Contributions cannot supply their own locations if contributing to a phase.</p>
+<p>If a child wants to contribute code to other locations, it either defines its own location,  derives from a known one, or contributes to a new phase that the appropriate parent(s) know how to handle.</p>
+<p>Usually,  phases are used to reduce coupling between components that exist in hierarchies  where the specific location ids or specific relations of locations to each  other should not be hardcoded. For  instance, a parent that generates a class may define several phases for  children to use to contribute instance members, initialization statements, and  #includes. The parent must resolve  contribution phases to actual location ids before returning its contributions  to its parent (using Engine.assignLocationsForPhase(List, String, String)).</p>
+<p>The internal format of &lt;sourceGen&gt; is a single JavaScript file, which is maintained in memory.  The &lt;sourceGen debug=&quot;true&quot;&gt; attribute or the <strong>Components &gt; Configure SourceGen Debugging...</strong> dialog may be used to write this content to disk, for debugging.</p>
+<p>The &lt;sourceGen&gt; element may contain the &lt;defineLocation&gt;, &lt;template&gt;, &lt;templateGroup&gt;, &lt;inline&gt;, &lt;useTemplate&gt;, and &lt;useTemplateGroup&gt; elements in any order or number. The strict order of &lt;template&gt;,  &lt;useTemplate&gt;, &lt;inline&gt; elements etc. will determine the ordering of  contributions in files. Thus, the  position of the first template that references the &ldquo;CLASS&rdquo; location determines  where in &ldquo;HEADER_FILE&rdquo; the class will appear.</p>
+<p>The &lt;sourceGen&gt; element&rsquo;s children are interpreted as a linear list of discrete operations, all of which are executed for each instance of an object in the data model. The ordering of these nodes directly corresponds to the order in which text will initially be generated.</p>
+<h3><a name="contrib"></a>Contributions</h3>
+<p>Each component definition file defines data and code which create contributions. A contribution is a piece of formatted text which is placed  into source at a location associated with a domain. Each contribution has a domain and a location describing where to place the text. The complete source generation comes from  an algorithm which places the pieces of text in the right locations. A  contribution is not complete and cannot be processed by the domain until it has  a location. It may exist in a  transient state where only a phase is set.  At some point (usually in a parent component) the phase is converted to  a location. If a location referenced by contributions is missing, then it is created by applying the templates that define the location.</p>
+<p>Source contributions are gathered from the bottom and go up. Parents collate child contributions and the top level (data model) sorts contributions and generates source.  The UI Designer backend engine interprets contributions and is familiar with specific languages. Source  generation is expanded into JavaScript, defining a single JavaScript object that implements the IComponentSourceGen interface that returns a list of  contributions to the parent.</p>
+<p>A contribution consists of:</p>
+<ul>
+  <li>A domain &#8212; the file-format semantic handler for source (currently, &quot;cpp&quot; is the only implemented domain for C/C++ sourcegen)</li>
+  <li>A location &#8212; the domain-specific path specifying where source goes</li>
+  <li>A phase &#8212; a container-specific tag used to collate child contributions</li>
+  <li>A form &#8212; a container-specific tag used to inform children how to generate source</li>
+  <li>A mode &#8212; a hint to the source generator about a way to treat the contribution</li>
+  <li>Content &#8212; the template or text that is inserted</li>
+</ul>
+<h3><a name="locations"></a>Locations</h3>
+<p>Locations are strings that identify a domain-specific location (currently only cpp) where generated source is placed.  In the C/C++ domain, locations are paths that are specified structurally, with reference to easy navigation with the CDT DOM. To reference a location use a statement such as &lt;template location=&ldquo;<em>location-id</em>&rdquo; ... /&gt;. The location must be in the same directory and file it was originally created in for the domain to find it.</p>
+<p>Locations are organized like file paths separated with &lsquo;/&rsquo;, with more encompassing items on the left, and children of those items on the right.</p>
+<p>Each path entry consists of a specifier and arguments:</p>
+<ul>
+  <li>specifier &lsquo;(&lsquo; argument [&lsquo;,&rsquo;argument ...] &lsquo;)&rsquo;</li>
+</ul>
+<p>For example:</p>
+<blockquote>
+  <p> class(MyClass)/region(InstanceVariables) &#8212; A special block named &ldquo;InstanceVariables&rdquo; inside the class declaration &ldquo;MyClass&rdquo;</p>
+  <p>function(MyClass::initComponents()) &#8212; The function <span class="code">MyClass::initComponents() {}</span> in a file. Not <span class="code">class(MyClass)</span> then <span class="code">function(initComponents())</span> unless actually declaring the function inline.</p>
+</blockquote>
+<p>The identifier used in locations is lexically scoped.  It can be resolved either in the current instance&rsquo;s component or in a parent component that directly or indirectly invoked the contribution phase for this component. The location is not global except in the case of a &ldquo;library&rdquo; component. A top-level component can serve as such a library for this case. For example, a common pattern for locations which are intended for use by children could be to name them FILE, CLASS, or METHOD.  Anything else can have a more descriptive name to distinguish it from other locations defined in parents.</p>
+<p>Every &lt;template&gt; element must have a phase or a location, but not both. For a phase, the container supplies the location for all matching phases. For a location, the template supplies the location by reference to &lt;defineLocation&gt; (either global or local).</p>
+<p>A location can be defined by a template that builds a location by drilling into a location passed from the parent, or one can be generated from scratch. A location describes a virtual path to actual  source. A location is based on another location, such as  a class inside a file, or on  a file. A root location has no base and  is defined by a relative directory and a filename within the current  project. A derived location is defined  as being contained within the bounds of its base location.</p>
+<p>For example, a base location may be the file foo.cpp in  the directory &quot;src&quot;. A derived location may  be the CFoo::CFoo() function defined within that source file. Another location derived from this may be a  local enumeration (TChoices) defined within that function. A derived location cannot provide two segments, such as jump  directly from a file to an enum nested within a class. There must be one location defined per  segment.</p>
+<p>A location can be created &ldquo;inside&rdquo; another, as long as that one is also defined. Defined locations have globally unique identifiers which are attached to  contributions to place that contribution at the given location.</p>
+<p>When a parent component asks a child to generate  contributions, the child can reference all its parent&rsquo;s locations. Although, phases can be used instead to reduce coupling. A child may redefine a location that comes  from a parent, but this change only has a local effect on the child&rsquo;s source  generation.</p>
+<p>A location is realized in source code when</p>
+<ul>
+  <li>its &quot;realize&quot; attribute is set to &quot;true&quot; in &lt;defineLocation&gt;,</li>
+  <li>when it is referenced by a &lt;template&gt; with  location=&rdquo;&hellip;&rdquo;,</li>
+  <li>when script creates a contribution using <span class="code">Engine.createContributionForLocation()</span>,</li>
+  <li>or when a phase is resolved to a location with <span class="code">Engine.assignLocationsForPhase</span>.</li>
+</ul>
+<p>The location  and any parent locations are created as needed. If they already exist in  source, they are not regenerated. However, if they are owned by the UI Designer, they will be cleared  out. Note that root locations will create missing  directories and files.</p>
+<p>Locations may have filters that control whether  a contribution is emitted to it. This is  primarily used to check for unique code, for example, to avoid duplicate #includes,  member declarations, and base class entries. Locations  may be conditional if an event binding exists. The location would then only be declared if  one of a given set of events is bound to an instance.</p>
+<p>Locations can be owned by the UI Designer or not owned.   If owned, a &ldquo;do not modify&rdquo; comment is added automatically to the generated source. The location&rsquo;s contents are cleaned out each time the source is generated. For example, source is regenerated for:</p>
+<ul>
+  <li>Instance variables for children of a container</li>
+  <li>Methods used to initialize child components</li>
+</ul>
+<p>If not owned, no comment is added. The location and its contributions are applied only if the location was created in this source generation phase. For example:</p>
+<ul>
+  <li>User-owned stub functions for event handlers, etc.</li>
+  <li>Example code copied from template</li>
+  <li>Initial file contents</li>
+  <li>Top-of-file ownership comments</li>
+</ul>
+<h4><a name="defloc"></a>DefineLocation Element</h4>
+<p>Every location is created in a specific directory and filename. To define a location, create a &lt;defineLocation&gt; element in the &lt;sourceGen&gt; element of a component definition file. All &lt;defineLocation&gt; entries are inherited automatically by derived components. </p>
+<p>The following is an example syntax of defining locations.</p>
+<pre class="listing">&lt;defineLocation [baseLocation=&ldquo;id&rdquo; | domain=&ldquo;...&rdquo; dir=&ldquo;...&rdquo; file=&ldquo;...&rdquo; ] id=&ldquo;...&rdquo; location=&ldquo;...&rdquo; owned=&ldquo;[true|false]&rdquo; [ realize=&quot;true|false&quot;]&gt;
+  &lt;template .... /&gt; / &lt;script ... /&gt; / &lt;inline ... /&gt;
+&lt;/defineLocation&gt;</pre>
+<p>The <strong>dir</strong> and <strong>file</strong> attributes specify the path and filename where the  location is initially created; after that, the CDT DOM is used to find the location. The <strong>dir</strong> attribute tells what project-relative directory to use. The template variable may be used to look up a user-configured directory. For example, ${src}, ${inc}, ${resource}, ${build}, or ${aif}. A path may be applied to enter the directory.</p>
+<p>Examples:</p>
+<ul>
+  <li>${src}  --&gt; &ldquo;&lt;project&gt;/src&rdquo;</li>
+  <li>${build}  --&gt; &ldquo;&lt;project&gt;/group&rdquo;</li>
+  <li>${inc}/subdir  --&gt; &ldquo;&lt;project&gt;/inc/subdir&rdquo;</li>
+  <li>./data or data --&gt; &ldquo;&lt;project&gt;/data&rdquo;</li>
+</ul>
+<p>The filename  is specified with the <strong>file</strong> attribute.</p>
+<p>Examples:</p>
+<ul>
+  <li>dir=&ldquo;${src}&rdquo; file=&ldquo;fixedname.cpp&rdquo; --&gt; &ldquo;&lt;project&gt;/src/fixedname.cpp&rdquo;</li>
+  <li>dir=&ldquo;${inc}/sys&rdquo; file=&ldquo;C${viewName}.h&rdquo; --&gt; &ldquo;&lt;project&gt;/inc/sys/CMyView.h&rdquo;</li>
+</ul>
+<p>The <strong>location</strong> attribute specifies the domain-specific location details. The <strong>owned</strong> attribute defines whether the section of code is owned (rewritten) or not owned by the UI Designer. The &lt;template&gt;, &lt;script&gt;and &lt;inline&gt; nodes provide the code that creates the contents for a referenced location if it is missing.</p>
+<p>The dir, file, and location attributes use a common pattern for handling variable and template-expanded arguments. Arguments are specifed with this syntax: ${variable}.</p>
+<p>Standard variables include:</p>
+<ul>
+  <li>${className} &#8212; name of component class from XML (e.g. CEikSlider)</li>
+  <li>${instanceName} &#8212; name of the component instance</li>
+  <li>${resourceName} &#8212; name of generated resource for instance (e.g. &ldquo;r_test0&rdquo;)</li>
+</ul>
+<p>Variables in locations refer to the current component, however locations can be used in child components or other components.  A location is expanded with respect to the component that generates a contribution using that location. A child component which sets &ldquo;phase&rdquo; does not set location.</p>
+<p>Therefore, the location is expanded relative to the parent which supplied the location to the child. The child can still derive a location from specific location ids in the parent.  In such a case, the parts that the child adds are expanded relative to the child.</p>
+<p>For example, the parent sets dir=&ldquo;${src}&rdquo;, file=&ldquo;C${viewName}.h&rdquo;, and location=&ldquo;class(C${baseComponentId})&rdquo;, and passes this to the children for the addInstanceVariables phase. The child gets the fully specified dir/file/location attributes that reference the parent component, but it can derive a location with a custom use of ${baseComponentId}, which will be expanded to its own component base.</p>
+<p>The &lt;defineLocation&gt; element declares and defines locations which may be  used by contributions. For example:</p>
+<pre class="listing">&lt;defineLocation  id=&quot;HEADER_FILE&quot; domain=&quot;cpp&quot; dir=&quot;${inc}&quot;
+  file=&quot;${instanceName}.h&quot;
+  owned=&quot;false&quot;
+  location=&quot;&quot;&gt;<br />&lt;/defineLocation&gt;</pre>
+<p> This example describes a root location which is a header file. The <strong>domain</strong>, <strong>dir</strong>, and <strong>file</strong> attributes are required for root locations, and the <strong>location </strong>attribute must be empty.&nbsp;The <strong>dir</strong> and <strong>file</strong> attributes are template-expanded by  referencing the instance global variables.  For instance, &ldquo;${inc}&rdquo; defines the directory used for includes, and &ldquo;${instanceName}&rdquo;  is the name of the current instance, so the file will be named after the  instance.</p>
+<p>Following is an example of a derived location where the location is understood as a class definition in the header file.</p>
+<pre class="listing">&lt;defineLocation id=&quot;CLASS&quot;  baseLocation=&quot;HEADER_FILE&quot;
+  owned=&quot;false&quot;
+  location=&quot;class(${className})&quot;&gt;
+  &lt;template&gt;
+ &hellip;
+&lt;/defineLocation&gt;</pre>
+<p>Common to any &lt;defineLocation&gt; element are the following attributes:</p>
+<ul>
+  <li><strong>id=&rdquo;&lt;string&gt;&rdquo;</strong> is used to reference the location. Location ids must be unique in a  component. Locations can be overridden  in derived components by using the same id.</li>
+  <li><strong>location=&rdquo;&lt;string&gt;&rdquo; </strong>is the segment of the location added to a  base (&ldquo;&rdquo; for files). These are  interpreted relative to the domain. All  together, the segments from the root to a location are considered the &ldquo;location path.&rdquo;&nbsp; See <a href="#cpplocseg">cpp location segments</a> for syntax.<br />
+    Note that only  one location may map a given location path.  Otherwise you will get errors to this effect when generating  source. In other words, if you use the  same location path, use the same location id.</li>
+  <li><strong>owned=&rdquo;&lt;<em>boolean</em>&gt;&rdquo; </strong>tells whether the given location will be  regenerated every time (true) or generated only if missing (false).</li>
+</ul>
+<blockquote>
+  <p><span class="note"><strong>NOTE</strong> The user might delete a generated owned location. When it is regenerated, it will <strong>not </strong>go in the original location again,  but to the end of the parent location.  This is a known limitation.</span></p>
+</blockquote>
+<ul>
+  <li><strong>filter=&rdquo;&lt;<em>filter-name</em>&gt;&rdquo; </strong>defines the particular filter to apply  (either &ldquo;unique-includes&rdquo; for regions, &ldquo;unique-prototypes&rdquo; for classes, or  &ldquo;unique-bases&rdquo; for base class lists).</li>
+  <li><strong>ifEvents=&rdquo;&lt;list of events&gt;&rdquo; </strong>defines the space-separated list  of event names; one of which must be defined in order to declare the  location. Such locations are  conditionally available. Their ids are  not available unless a matching event is bound.  Thus, any references to event-derived variables like eventHandlerName or  eventInstanceName will not trigger errors unless the event is bound.</li>
+  <li><strong>isEventHandler=&rdquo;&lt;<em>boolean</em>&gt;&rdquo; </strong>is used to locate a particular method  when adding events in the editor. This method applies to the <em>user-editable function</em> to edit. It is only used if the <strong>ifEvents </strong>attribute is set.</li>
+  <li><strong>realize=&quot;&lt;boolean&gt;&quot;</strong> if set to &quot;true&quot;, forces a location to be realized in source when it is encountered.  Otherwise, the location will not exist in source unless a template contributes to it.  (If a location is defined inside conditional sourcegen,  guarded by ifEvents=&quot;...&quot; or ifExpr=&quot;...&quot;, then the location will only be realized if the expression is true.)</li>
+</ul>
+<p> A &lt;defineLocation&gt; element may include a number of  &lt;template&gt; or &lt;inline&gt; elements.  When a location is realized, the contained templates and inline blocks  are executed to define it. The templates  are responsible for contributing the text that will correctly define the  location, optionally populating it with initial content.</p>
+<p>In the example above, the header file location has no  templates, since an empty file is a valid file.  Although, to define a class, the definition must be provided:</p>
+<pre class="listing">&lt;defineLocation id=&quot;CLASS&quot;  baseLocation=&quot;HEADER_FILE&quot;
+   owned=&quot;false&quot; 
+   location=&quot;class(${className})&quot;&gt; 
+   &lt;template&gt;<br />    &lt;![CDATA[ 
+    /** 
+    &nbsp;* Container class for ${instanceName}
+    &nbsp;*
+    &nbsp;* @class ${className} ${instanceName}.h
+    &nbsp;*/
+     class ${className} : public CCoeControl
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+     public:
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // constructors and destructor
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${className}(); 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; virtual ~${className}(); 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };
+    ]]&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   &lt;/template&gt; 
+&lt;/defineLocation&gt;</pre>
+<p>Note that the variable expansion ${className} is used inside  the <strong>location</strong> attribute. These same variables are available in the  text and substituted using the same syntax, although the semantics are  different. See <a href="#template">&lt;template&gt;</a> element for more details.</p>
+<h5><a name="cpplocseg" id="cpplocseg"></a>Cpp location segments</h5>
+<p>A location segment in the cpp domain is a string  representing a node in a C/C++ parse tree.  Each takes the syntax &ldquo;&lt;name&gt; &lsquo;(&lsquo; &lt;arguments&hellip;&gt;&lsquo;)&rsquo;&rdquo;. Certain nodes may only appear within certain  others. This list defines top-level  nodes:</p>
+<ul>
+  <li><strong>class(&lt;name&gt;)</strong> <strong>&#8212; </strong>references the class declaration for the class  &lsquo;name&rsquo;, which may include namespaces (for example, &ldquo;class(MyClass)&rdquo; or  &ldquo;class(${className})&rdquo;)</li>
+  <li><strong>function(&lt;name&gt;(&lt;arguments&hellip;))</strong> <strong>&#8212; </strong>references a function with  the given signature.&nbsp;A &lsquo;name&rsquo; may include  namespaces or represent a destructor. The &lsquo;arguments&rsquo; are a comma-separated list of types. This list of arguments must specify the correct type information, for example &quot;const TInt&amp;&quot;.  This allows overridden methods to be defined and referenced. The arguments list  may end in ellipsis (&ldquo;&hellip;&rdquo;) to indicate that any zero or more arguments are  matched. Again, the &lt;template&gt;  inside a &lt;defineLocation&gt; really defines the function, which for a class method means that most of the information is repeated a few lines down.  Using macros like GenerateMethod may be more succinct. Examples of function locations are:   &ldquo;<span class="code">function(main(int,char**))</span>&rdquo; or &ldquo;<span class="code">function(${className}::method(void*))</span>&rdquo;.</li>
+  <li><strong>region(&lt;name&gt;)</strong> <strong>&#8212; </strong>a region defines a commented block of text  with no other syntactical clues. The  block comments and the name are used to identify the block. Usually, regions appear at the top level of the file or inside other locations, typically to provided owned sections therein.  These need to be unique in the context of their parent.  (For instance, every non-owned method in a file may reuse the name &quot;Generated Code&quot; for their embedded owned blocks.) For example, &ldquo;region(Generated  Includes)&rdquo;.</li>
+  <li><strong>enum(&lt;name&gt;)</strong> <strong>&#8212; </strong>an enum declaration with the given name. Name must be non-empty. Locations are used to  look up source, so anonymous enums cannot be unambiguously identified. For example, &ldquo;enum(T${className}Ids)&rdquo;.</li>
+  <li><strong>namespace(&lt;name&gt;)</strong> <strong>&#8212; </strong>a namespace declaration with the given  name, which may contain colons.&nbsp; For example, &ldquo;namespace(std::tr1)&rdquo;.</li>
+  <li><strong>to-file()</strong> <strong>&#8212; </strong>resolves to the current file of a location, that is, back  to the root location.</li>
+</ul>
+<blockquote>
+  <p>Inside a class(), namespace() is not allowed, and this  additional segment is allowed.</p>
+</blockquote>
+<ul>
+  <li><strong>bases()</strong> <strong>&#8212; </strong>references the base-class-list within a class  declaration. If the class defining text  already includes a base, then the defining text for the bases() location may be  omitted. If a class defining text does  not include a base, the bases() location must include the leading colon in its defining text. Otherwise, contributions  are individual class references with leading commas.</li>
+</ul>
+<blockquote>
+  <p>In a function(), only class(), region(), enum(), and  to-file() are allowed.</p>
+  <p>In  an enum(), bases() or region(), only region() and to-file() are allowed. </p>
+</blockquote>
+<h3><a name="filterloc"></a>Owned/Non-owned/Filtered Locations</h3>
+<p>The term &quot;owned&quot; refers to a section of code which is always rewritten by the  UI Designer. Such sections are either associated with specific C/C++ syntactic elements, such as classes, functions, and  enums. These sections may also appear as a region within such an element or at the file level. Any user edits within the  comments are lost.&nbsp; These comments look  like:</p>
+<blockquote>
+  <pre>// [[[ begin generated region: do not modify! [Generated User Includes]
+     <strong>#include</strong> &quot;MyForm.h&quot;
+     <strong>#include</strong> &quot;My.rsg&quot;
+// ]]] end generated region [Generated User Includes]</pre>
+</blockquote>
+<p><strong></strong>The term &quot;non-owned&quot; refers to anything outside the &ldquo;owned&rdquo; comments.&nbsp; In this example, the function is non-owned,  since there is no comment around it. The  user is allowed to change anything before or after the owned region inside the  function.<strong></strong></p>
+<blockquote>
+  <pre class="listing">/**
+* Construct  the MyForm instance
+* @param  aCommandObserver command observer
+*/
+MyForm::MyForm( MEikCommandObserver* aCommandObserver )
+  {
+    iCommandObserver  = aCommandObserver;
+    // [[[ begin generated region: do not modify! [Generated Contents]
+    // ]]] end generated region [Generated Contents]
+  }</pre>
+</blockquote>
+<p>&quot;Filtered&quot; refers to non-owned locations which have the &quot;filter&quot; attribute specified.  Even if the location already exists, every contribution will be considered and added if it does not pass the filter.</p>
+<h3>Elements</h3>
+<h4><a name="template" id="template"></a>Template element</h4>
+<p>A &lt;template&gt; element defines text for contributions. Ordering of &lt;template&gt; contributions is retained for the parent. The &lt;template&gt; element attributes include:</p>
+<ul>
+  <li>domain &#8212; name of contribution domain</li>
+  <li>location &#8212; domain-specific syntax, optional if phase is set</li>
+  <li>mode &#8212; optional; used to attach semantics to location</li>
+  <li>phase &#8212; used for ordering, optional if location is set</li>
+  <li>form &#8212; optional; used to adapt to parent requirements</li>
+  <li>ifEvents=&rdquo;&lt;list of events&gt;&rdquo; &#8212; optional; if any one of the space-separated event names is bound on the current instance, then the template is emitted.</li>
+  <li>ifExpr=&quot;&lt;expression&gt;&quot; &#8212; if the JavaScript expression evaluates to true, the template is emitted.</li>
+  <li>id=&quot;&lt;name&gt;&quot; &#8212; optional; the unique identifier of the template, within a component or a template group.  Only templates with ids, even if included in a templateGroup, may be inherited.</li>
+</ul>
+<p> A &lt;templateGroup&gt; element combines several &lt;template&gt; elements into a named group. Grouping is strictly a convenience and has no impact on generated script. Attributes of &lt;templateGroup&gt; are automatically applied to the contained &lt;template&gt; elements. The attribute &ldquo;id&rdquo; may be specified to name the group. Included templates have a unique &ldquo;id&rdquo; namespace.</p>
+<p>Example:</p>
+<pre class="listing">&lt;sourceGen&gt;
+ &lt;templateGroup form=&quot;CAknView&quot;&gt; &lt;!-- group of templates inhheriting form --&gt;
+  &lt;template phase=&ldquo;initcomponents&rdquo; id=&ldquo;foo&rdquo;&gt;
+   ${instanceName}-&gt;SetName(${instanceName.toString()});
+  &lt;/template&gt;
+  &lt;template phase=&ldquo;parenting&rdquo;&gt;
+   ${parent.instanceName}-&gt;Add(${instanceName});
+  &lt;/template&gt;
+ &lt;/templateGroup&gt;
+ &lt;template location=&quot;INCLUDES&quot;&gt; &lt;!-- standalone template --&gt;
+  #include &lt;akndialog.h&gt;&nbsp; &lt;!-- XML  needs to be escaped unless in &lt;![CDATA[...]]&gt; --&gt;
+ &lt;/template&gt;
+&lt;/sourceGen&gt;</pre>
+<p>The lines in text nodes of templates should be flush left on the line, unless multiple lines are defined, where some of the lines have more indentation.  If extra indentation is added, use the tab character only.  The source generator will convert tabs to spaces according to the workspace settings.  The nesting of a particular location defines the indentation level. The indentation for a contribution may be adjusted with a script escape at the start of the node, for example:</p>
+<pre class="listing">&lt;template location=&rdquo;CLASS&rdquo;&gt;&lt;![CDATA[
+  &lt;% contrib.indentAdjust(-1); %&gt;protected: ]]&gt;
+&lt;/template&gt;</pre>
+<p>The object &ldquo;contrib&rdquo; refers to the IContribution instance currently being generated, which is automatically available for any &lt;template&gt;. The argument specifies the number of levels to adjust. This example outdents the &ldquo;protected:&rdquo; line in a class declaration.</p>
+<p>Except for the very beginning and very end, almost every character is used in the template&rsquo;s text.  After the end of the &lt;template&gt; open-element, any spaces and newlines are removed if present before the &lt;/template&gt; close-element.  Any whitespace on any line before the &lt;/template&gt; close-element is also removed.   Such line stripping does not occur when escapes are used.  Thus, script escapes often need to start at the very end of the previous line or end at the very start of the next line in order to avoid spurious newlines in the generated text.</p>
+<h5>Expression Escapes</h5>
+<p>A &lt;template&gt; element is converted into a small JavaScript function that at runtime generates segments of text into source, in a manner similar to JSP. Initially, the text in a template is converted into code that inserts literal text into source. Placeholders in the form ${expression} may appear in literal text.  These resolve to JavaScript expressions whose string representations are inserted into source.   If expressions involve complex expressions, enclose them in parentheses.</p>
+<p>Most attributes in &lt;sourceGen&gt; XML also allows for syntax that resembles expression escapes.  Such attributes, however, are not evaluated in JavaScript.  Such expansions may only reference variable names, not expressions.  A set of predefined variables is a subset of that available to script, with some extensions to account for common operations:</p>
+<p><strong>${src}</strong>: the source directory used when creating the project<br />
+    <strong>${inc}</strong>: the source directory used when creating the project<br />
+    <strong>${build}</strong>: the build directory used when creating the project (e.g. &quot;group&quot;)<br />
+    <strong>${resource}</strong>: the resource directory used when creating the project (e.g. &quot;data&quot;)</p>
+<p><strong>${projectName}</strong>: the name of the generated project<br />
+    <strong>${instanceName}</strong>: the name property of the current instance<br />
+    <strong>${instanceName$title}</strong>: the titlecased version of the instance name, with the first letter capitalized (e.g. &quot;my_var&quot; becomes &quot;My_var&quot;)<br />
+    <strong>${instanceName$upper}</strong>: the uppercase version of the instance name<br />
+    <strong>${instanceName$lower}</strong>: the lowercase version of the instance name<br />
+    <strong>${instanceMemberName}</strong>: the expected name for an instance variable for this component instance: 'i' + the titlecased version of the instance name<br />
+    <strong>${className}</strong>: the value of the 'className' property in the nearest enclosing parent (or the current instance) that defines it.  May be null. <br />
+    <strong>${parentClassName}</strong>: like ${className}, but the className property of the next enclosing instance.  Note that this is not related to nesting of classes.<br />
+    <strong>${handlerClassName}</strong>: this is the value of the 'className' property for the nearest enclosing parent (or the current instance) which defines the attribute 'event-handler-target' to &quot;true&quot;.  May be null.<br />
+    <strong>${handlerInstanceName}</strong>: this is the value of the 'name' property for the nearest enclosing parent (or the current instance) which defines the attribute 'event-handler-target' to &quot;true&quot;.  May be null.<br />
+</p>
+<p>These variables are available if the component generates resources (see <a href="cc_source_mapping.htm">RSS Source Mapping</a>):</p>
+<p><strong>${resourceName}</strong>: the name of the primary generated resource for the instance.  May be null.<br />
+    <strong>${resourceName$upper}</strong>: the uppercase name of the primary generated resource, as used for the macro in the .rsg file.  May be null.<br />
+    <strong>${resourceFileNameBase}</strong>: the filename, without extension, used for the resources this instance generated.  May be null.</p>
+<h5>Script Escapes</h5>
+<p>Script escaped in &lt;%...%&gt; blocks specifies JavaScript code which is inserted directly into the generated function to control the source generation process. This escape usually either surrounds raw text in a condition, adds looping, or creates contributions programmatically. The entire sequence of text, including escapes, is interpreted in order, and expanded into a sequence of script.  Raw text should be understood as script that emits the given raw text.</p>
+<p>For example, a loop that iterates properties may be specified like this:</p>
+<pre class="listing">&lt;template&gt;
+ &lt;% for (var property in properties) { %&gt;
+  ${instanceName}-&gt;Set${titleCase(property.name)}
+   (${property.value});
+  &lt;% } %&gt;
+&lt;/template&gt;</pre>
+<p>This example shows expressions. Here, the instanceName is expanded and  emitted in line with the raw text around it.</p>
+<pre class="listing">&lt;template location=&quot;HEADER_FILE&quot;&gt;&lt;![CDATA[
+   #include &quot;${instanceName}.h&quot;
+ ]]&gt;
+&lt;/template&gt;</pre>
+<p>A more complicated example shows how script interacts with  text.</p>
+<pre class="listing">&lt;template  location=&quot;HEADER_FILE&quot;&gt;&lt;![CDATA[
+  &lt;% if (properties.contextMenu != &quot;&quot;) { %&gt;
+  #include &lt;eikmenub.h&gt;
+  &lt;% } %&gt;<br /> ]]&gt;
+&lt;/template&gt;</pre>
+<p>Here,  the &ldquo;&lt;%&rdquo; escape allows entry of script which tests whether a property is  non-empty. The JavaScript open block &ldquo;{&ldquo; precedes the  close script escape &ldquo;%&gt;&rdquo;.&nbsp; Then, raw  text is emitted inside the <strong>if</strong>, and  then &ldquo;&lt;% } %&gt;&rdquo; closes the JavaScript <strong>if</strong> statement.</p>
+<p class="note"><strong>NOTE</strong> The braces are required when wrapping text inside &quot;if&quot; like this.  The content outside the script escape is not guaranteed to be a single statement.</p>
+<h5><a name="inline"></a>Inline Element</h5>
+<p>The &lt;inline&gt; element may specify a segment of raw JavaScript.</p>
+<p>An &lt;inline&gt; element allows JavaScript to be embedded within a component definition file.  Zero or more &lt;inline&gt; elements can be used to define script snippets. An &lt;inline&gt; element provides  functions and properties used by templates and ordering with regard to &lt;template&gt; elements is preserved. The &lt;inline&gt; element defines code which is added to the current function, for example:</p>
+<pre>&lt;inline&gt;contribs.clear();&lt;/inline&gt;</pre>
+<p>The scope=&rdquo;&hellip;&rdquo; attribute tells whether the script is placed in the current function (&ldquo;function&rdquo;) or at the file level (&ldquo;file&rdquo;). The scope=&ldquo;file&rdquo; attribute redirects content to the file, outside the current function (read: named template). For direct access to the prototype name, use &ldquo;${jsObject}&rdquo;. For example, to define an inheritable method in a current JavaScript object, use:</p>
+<pre>&lt;inline scope=&ldquo;prototype&rdquo;&gt;${jsObject}.prototype.method = function(...) {...}&lt;/inline&gt;</pre>
+<p>Scripting Example:</p>
+<pre class="listing">&lt;sourceGen&gt;
+  &lt;template  domain=&ldquo;cpp&rdquo; phase=&ldquo;initcomponents&rdquo; id=&ldquo;foo&rdquo;&gt;
+    &lt;!-- references function added to prototype  below --&gt;
+    ${id}-&gt;SetName(${specialFormatter(id.toString())});
+  &lt;/template&gt;
+  &lt;inline&gt;
+    &lt;!-- adds  method to prototype, which will be inherited --&gt;
+    ${jsObject}.prototype.specialFormatter =  function(property) { return ... }
+  &lt;/inline&gt;
+  &lt;inline&gt; &lt;!-- standalone function accessible only from this component --&gt;
+    function checkFeatureX() { return  properties[&ldquo;hasFeatureX&rdquo;] == &ldquo;true&rdquo;; }
+  &lt;/inline&gt;
+  &lt;template  domain=&ldquo;cpp&rdquo; location=&ldquo;#includes&rdquo;&gt;
+    #include &amp;lt;BaseHeader.h&amp;gt;
+    &lt;!--  templates can escape to script too --&gt;
+    &lt;% if (checkFeatureX()) { %&gt;
+    #include &amp;lt;SpecialHeader.h&amp;gt;
+    &lt;% } %&gt;
+  &lt;/template&gt;
+&lt;/sourceGen&gt;</pre>
+<h5><a name="cdata"></a>CDATA Tag</h5>
+<p>As with any XML, text nodes must be escaped if it contains XML metacharacters like &lsquo;&lt;&rsquo;, &lsquo;&gt;&rsquo;, or &lsquo;&amp;&rsquo;.  Since C/C++ source code uses these a lot, it may be easiest and most readable to surround text blocks in &ldquo;&lt;!CDATA[&ldquo; &hellip; &ldquo;]]&gt;&rdquo;. Everything inside a CDATA section is ignored by the XML parser. If your text contains a lot of &quot;&lt;&quot; or &quot;&amp;&quot; characters, which is common in  program code, the XML element can be defined as a CDATA section. A CDATA section starts with &quot;&lt;![CDATA[&quot; and ends with &quot;]]&gt;&quot;. For example:</p>
+<pre class="listing">&lt;script&gt;
+&lt;![CDATA[
+ function match(a,b) {
+ if (a &lt; b &amp;&amp; a &lt; 0) then
+   {
+    return 1
+   }
+ else<br />   {
+    return 0
+   }
+ }
+]]&gt;
+&lt;/script&gt;</pre>
+<p>A CDATA section cannot contain the string &quot;]]&gt;&quot;, therefore, nested CDATA sections are not allowed. Also make sure there are no spaces or line breaks inside the &quot;]]&gt;&quot; string.</p>
+<h5><a name="forms"></a>Forms</h5>
+<p>A form is used to filter contributions, for the case where a component may have completely different styles of source generation based on its parent.  A parent passes a regular expression for permissible forms down to its children when asking for their contributions.  Only contributions matching the form's regular expression are generated.</p>
+<p>Therefore, a template&rsquo;s form attribute (if specified) filters the contribution of the parent container, for example a CEikEdwin is defined differently if hosted in a CCoeComponent versus in a CEikDialog.    A form is passed down when a parent generates child contributions. The form may be null if the parent dictates no special child source generation pattern.</p>
+<p>Every template element&rsquo;s form attribute (either explicit or inherited from templateGroup) determines which parents will see it. If no form is defined, then contribution is always used, no matter what form the parent uses. If form is defined, then use it only if parent&rsquo;s form matches. If form is defined as &ldquo;ALL&rdquo;, then always use, regardless of the parent&rsquo;s form. If an element defines a form, different elements may share &ldquo;id&rdquo; (only one instance will be used). This aids inheritance, but the ids of elements sharing a form must not intersect.</p>
+<p>Form Example:</p>
+<pre class="listing">&lt;sourceGen&gt;
+ &lt;templateGroup form=&ldquo;CEikDialog&rdquo;&gt;
+  &lt;template phase=&ldquo;initcomponents&rdquo; id=&ldquo;foo&rdquo;&gt;
+   ${id} =static_cast&amp;lt;CEikEdwin*&amp;gt; (ControlOrNull(${property[&ldquo;dialogId&rdquo;]}));
+  &lt;/template&gt;
+  &lt;template phase=&ldquo;parenting&rdquo;&gt; ... &lt;/template&gt;
+ &lt;/templateGroup&gt;
+ &lt;templateGroup form=&ldquo;default&rdquo;&gt;
+  &lt;template phase=&ldquo;initcomponents&rdquo; id=&ldquo;foo&rdquo;&gt;&nbsp; &lt;!--  note: &ldquo;id&rdquo; can be shared in different forms --&gt;
+   ${id} = new (ELeave) CEikEdwin;
+   ...
+   iCoeEnv-&amp;gt;CreateResourceReaderLC (reader, ${property[&ldquo;rssName&rdquo;]});
+  &lt;/template&gt;
+  &lt;template phase=&ldquo;parenting&rdquo;&gt; ...  &lt;/template&gt;
+ &lt;/templateGroup&gt;
+&lt;/sourceGen&gt;</pre>
+<h3><a name="macros" id="macros"></a>Macros</h3>
+<p>Source generation elements may be packaged in macros and expanded later, allowing for the often complex collection of &lt;defineLocation&gt;, &lt;template&gt; elements to be stored in a pattern once and used multiple times.</p>
+<h4>Defining Macros</h4>
+<p>A macro consists of arguments and common sourcegen elements.  A macro may be built from other macros by importing their arguments and expanding them as part of its definition. Macro arguments are untyped strings, which are referenced by name.  An argument may be marked as optional, required, having a default value, or having no value at all if unspecified.</p>
+<p>Arguments may be referenced anywhere in the XML of the sourcegen elements that define the macro (attributes or text).  They take the form &ldquo;$(&lt;macro name&gt;)&rdquo;.  The use of parentheses instead of curly braces allows templates to use expression escapes without escaping them. Arguments may take modifiers when they are expanded, to perform common functions like testing them for being defined, converting them to strings, converting case, etc.</p>
+<h4>Macro Expansion</h4>
+<p>Macros may be expanded almost anywhere inside the sourcegen XML.  Arguments may be passed as XML attributes named after the argument names, for convenience, or multi-line arguments may be passed as explicit XML sub-elements.  The former syntax allows great brevity when using macros. When defining macros built upon other macros, then a macro expansion implicitly passes any arguments it was passed that match the argument list of the one it is calling.  There are ways to suppress this behavior, as well.  Again, these provisions make for brevity in defining macros as well.</p>
+<h4>XML Syntax</h4>
+<p>Defining macros example:</p>
+<pre class="listing">&lt;defineMacro id=&quot;GenerateAssert&quot; help=&quot;Generate an assertion  call&quot; &gt;
+  &lt;macroArgument name=&quot;LocationId&quot; help=&quot;The location id into which  to place the call&quot; /&gt;
+  &lt;macroArgument name=&quot;Expr&quot; help=&quot;The expression to test&quot; /&gt;
+  &lt;macroArgument name=&quot;Label&quot; optional=&quot;true&quot; default=&quot;Assertion  failed!&quot; help=&quot;The label to emit with an  assertion error&quot; /&gt;
+  &lt;template location=&quot;$(LocationId)&quot;&gt;&lt;![CDATA[
+    if (!($(Expr)))
+     { 
+   &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;%s: %s\\n&quot;,  $(Label::as-string), $(Expr::as-string));
+     }
+   &gt;]]&gt;<br />  &lt;/template&gt;
+&lt;/defineMacro&gt; </pre>
+<p>The  &ldquo;id&rdquo; defines the name of the macro as used in &lt;expandMacro&gt;. The &ldquo;LocationId&rdquo; and &ldquo;Expr&rdquo; arguments are  simple strings which must be provided by the client. The &ldquo;Label&rdquo; argument is optional and has a  default value.</p>
+<p>The  &lt;template&gt; contained in the macro expands the &ldquo;LocationId&rdquo; argument in an  XML attribute and inside the template text itself. &ldquo;Expr&rdquo; is substituted into the template body  twice: once, without translation, into the &ldquo;if&rdquo;, and again, into the printf()  call, after being converted to a literal string (i.e., adding quotes and  escaping embedded quotes). &ldquo;Label&rdquo; is  substituted similarly.</p>
+<h5>Detailed syntax</h5>
+<p>The  &lt;defineMacro&gt; element defines a macro  consisting of a set of templates and inlines which may be variable-substituted.</p>
+<p>The &lt;defineMacro&gt;  element consists of zero or more &lt;importArguments&gt; elements followed by any  number of &lt;macroArgument&gt; elements, and finally followed by any number of  &lt;template&gt;, &lt;inline&gt;, &lt;defineLocation&gt;, and  &lt;expandMacro&gt; elements.<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+  &lt;defineMacro&gt;  takes these attributes:</p>
+<ul>
+  <li><strong>id</strong> (string) &#8212; The  name of the macro</li>
+  <li><strong>help</strong> (string) &#8212; Help text</li>
+</ul>
+<p>&lt;importArguments&gt; brings in argument declarations from another macro, including their default  values and &ldquo;required&rdquo; flag.</p>
+<p>&lt;importArguments&gt; takes these attributes:</p>
+<ul type="disc">
+  <li><strong>macroName</strong> (string) &#8212; The name of the macro to reference.</li>
+  <li><strong>arguments</strong> (list of strings) &#8212; The space-separated list of argument names to import. This is mutually exclusive with       'exceptArguments'.</li>
+  <li><strong>exceptArguments</strong> (list of strings) &#8212; The space-separated list of argument names NOT to import. All arguments are imported except these. This is mutually exclusive with 'arguments'.</li>
+  <li><strong>help</strong> (string) &#8212; Help text</li>
+</ul>
+<p>The &lt;macroArgument&gt;  element defines an argument for use with the macro.&nbsp;The default value may be specified in the 'default' attribute or in the text of the element.&nbsp; The text supercedes the attribute.</p>
+<p>&lt;macroArgument&gt;  takes these attributes:</p>
+<ul type="disc">
+  <li><strong>name</strong> (string) &#8212; The name of the argument. This must be a legal JavaScript identifier and unique within the macro. Typically, macro argument names are title-cased so they will stand out in the macro definition and also so they may be used without conflict in &lt;expandArgument&gt; attributes (see below).</li>
+  <li><strong>optional</strong> (boolean) &#8212; Tells whether the argument may be omitted from an expandMacro use. If true, and no default is provided, the variable's value is null.</li>
+  <li><strong>default</strong> (string) &#8212; The default value of the argument if unspecified.  Alternately, the text of this element may be supplied as the default, if formatting or newlines are used.</li>
+  <li><strong>help</strong> (string) &#8212; Help text</li>
+</ul>
+<p>The  included sourceGen elements, &lt;template&gt;, &lt;inline&gt;, and  &lt;defineLocation&gt;, act as usual.&nbsp;  Note that &lt;templateGroup&gt; is not allowed. Instead, if you need to pass the same  parameters to several templates, then wrap the &lt;expandMacro&gt; call inside  &lt;templateGroup&gt;. This restriction  makes it easier to specify sourcegen inheritance and avoids the disallowed  situation of nested &lt;templateGroups&gt;.</p>
+<p>&lt;expandMacro&gt;  may be used, as well, intermixed with the sourceGen elements mentioned  above. By default, all the relevant  arguments in the current macro will be passed to the macro named in  &lt;expandMacro&gt; (including those taking default values). This allows macros to be safely built from  each other without updating all of them if a common macro&rsquo;s argument list  changes. You may suppress this behavior,  however. See &lt;expandMacro&gt; for  specific details.</p>
+<h4><a name="macarg"></a>Macro argument modifiers</h4>
+<p>When macro arguments are referenced, they may take any  number of modifers, which are in the syntax: &lt;macro argument&gt; { &lsquo;::&rsquo; &lt;modifier&gt; }.<br />
+  For example, &ldquo;$(myName::to-title::as-string)&rdquo;.</p>
+<p>Recognized modifiers are:</p>
+<ul>
+  <li><strong>to-upper</strong>:  convert value to upper case</li>
+  <li><strong>to-lower</strong>: convert  value to lower case</li>
+  <li><strong>to-title</strong>:  convert value to title case</li>
+  <li><strong>as-string</strong>:  convert argument to a string constant by adding double quotes and escaping</li>
+  <li><strong>is-defined</strong>:  resolves to &lsquo;true&rsquo; if the macro is defined (even if empty), else &lsquo;false&rsquo;</li>
+  <li><strong>append-space-unless-empty</strong>:  results in the argument value with a trailing space, unless the argument is  empty</li>
+  <li><strong>add-spaces-unless-empty</strong>:  results in the argument value with leading and trailing space, unless the  argument is empty</li>
+</ul>
+<p>These modifiers work with argument values taking the canonical form of a function declaration&rsquo;s argument  list in C++, for example, with types, argument names, and optional default values:</p>
+<ul>
+  <li><strong>as-function-declaration-args</strong>:  identity</li>
+  <li><strong>as-function-definition-args</strong>:  removes default values</li>
+  <li><strong>as-function-location-args</strong>:  removes argument names and default values</li>
+  <li><strong>as-function-call-args</strong>:  removes types and default values</li>
+  <li><strong>split-and-indent</strong>:  primarily used for formatting argument lists.&nbsp;Converts a multi-item string, separated by commas, into multi-line  format, with each line indented with two tabs.&nbsp;Empty or single-item argument lists are not modified.</li>
+</ul>
+<h4><a name="expmac"></a>Expanding macros</h4>
+<h5>Example:</h5>
+<pre class="listing">&lt;expandMacro name=&quot;GenerateAssert&quot;&nbsp; LocationId=&quot;ID_METHOD&quot;&nbsp; Expr=&quot;6+7+'a'&quot; /&gt;</pre>
+<p>or</p>
+<pre class="listing">&lt;expandMacro name=&quot;GenerateAssert&quot;&gt;
+  &lt;expandArgument name=&quot;LocationId&quot;&gt;ID_METHOD&lt;/expandArgument&gt;
+  &lt;expandArgument name=&quot;Expr&quot;&gt;6+7+'a'&lt;/expandArgument&gt;
+&lt;/expandMacro&gt;</pre>
+<p>Both  of these have the same effect. In the  first form, the argument names are used as XML attributes to  &lt;expandMacro&gt;. Typically, the  macro argument names are capitalized to emphasize the distinction between the  fixed attributes in the XML schema and the dynamic attributes allowed for macro  expansion. The second form explicitly  passes arguments in the text part of the &lt;expandArgument&gt; element. This allows for multi-line arguments to be  passed more clearly.</p>
+<p>&lt;expandMacro&gt;  expands a given macro into the sourceGen of the caller. This has the same effect as inserting the  same templates and inlines from the macro's definition at the point of  call. Variable references from those  templates and inlines are substituted with the values provided in attributes  (e.g. variableName=&quot;value&quot;) or expandArgument child elements. The latter may be preferred for cases where  code is substituted, so the formatting may be retained.</p>
+<p>&lt;expandMacro&gt; takes these arguments:</p>
+<ul>
+  <li><strong>name</strong> (string): the name of the macro (from  &lt;defineMacro id=&rdquo;...&rdquo;&gt;)</li>
+  <li><strong>passArguments</strong> (list of string): A list  of arguments defined in the current calling macro to pass unchanged to the  called macro, excluding any arguments that are not defined in the current call.</li>
+</ul>
+<p>This attribute is only valid in expandMacro called from a  defineMacro. Passing arguments is different from adding attributes  argName=&quot;$(argName)&quot; because it avoids defining otherwise undefined  arguments. A missing optional argument  is null, not the empty string. The  '::is-defined' modifier can be used to check this.</p>
+<p>Elements in the list of strings are names of arguments, or  renames of the form targetArgumentName=hostArgumentName which passes hostArgumentName from the hosting macro with the name targetArgumentName  (again, only if the argument is actually defined in the call).</p>
+<p>If this argument is not specified, all arguments in the  invoked macro are passed (zero or more may have defaults which are overridden  in this macro). </p>
+<ul type="disc">
+  <li><strong>dontPassArguments</strong> (list of string): This is primarily used when passArguments is not specified. It specifies which arguments not to pass to the invoked macro, which become undefined in the expansion of that macro. This is useful when this macro takes over the work of one or more arguments from the invoked macro.</li>
+  <li><strong>help</strong> (string): help text</li>
+</ul>
+<p>The &lt;expandArgument&gt; element may appear any number of times inside &lt;expandMacro&gt; in place of using attributes to pass arguments. It takes these arguments:</p>
+<ul type="disc">
+  <li><strong>name</strong> (string): the argument&rsquo;s name</li>
+  <li><strong>help</strong> (string): help text</li>
+</ul>
+<h3><a name="scriptref"></a>Script Reference</h3>
+<h4>Sourcegen Contribution Variables</h4>
+<p>These variables are available inside functions automatically generated by the &lt;template&gt; element.</p>
+<ul>
+  <li><strong>contribs &#8212; </strong>The java.util.LinkedList of IContributions</li>
+  <li><strong>contribText &#8212; </strong>The string containing the current text for the contribution (this is appended piecemeal by the raw text and ${expressions})</li>
+  <li><strong>contrib &#8212; </strong>The current IContribution created from Engine.createContributionXXX.  The contribText is applied to the contrib at the end of the &lt;template&gt;</li>
+  <li><strong>formrx &#8212; </strong>The regular expression string representing the current form passed down by the parent through Engine.createChildContributions().</li>
+  <li><strong>properties &#8212; </strong>Same as instance.properties, to make property references clearer.</li>
+</ul>
+<h4>Instance Global Variables</h4>
+<p>The following variables are available for use within the sourceGen XML element and scripts. These augment the  JavaScript globals.</p>
+<ul>
+  <li><strong>src</strong> &#8212; the relative path to the primary source directory of  the project</li>
+  <li><strong>inc &#8212; </strong>the relative path to the primary include directory of  the project</li>
+  <li><strong>build &#8212; </strong>the relative path to the primary build directory of  the project (e.g. &ldquo;group&rdquo;)</li>
+  <li><strong>resource &#8212; </strong>the relative path to the primary resource  directory of the project (e.g. &ldquo;data&rdquo;)</li>
+  <li><strong>instanceName &#8212; </strong>the &ldquo;name&rdquo; property of the current instance</li>
+  <li><strong>instanceMemberName &#8212; </strong>the name used for a member in a class  (&ldquo;i&rdquo; + instanceName)</li>
+  <li><strong>instanceName$title &#8212; </strong>title-cased instanceName (e.g.  &ldquo;Listbox&rdquo;)</li>
+  <li><strong>instanceName$upper &#8212; </strong>upper-cased instanceName (e.g.  &ldquo;LISTBOX&rdquo;)</li>
+  <li><strong>instanceName$lower &#8212; </strong>lower-cased instanceName (e.g.  &ldquo;listbox&rdquo;)</li>
+  <li><strong>resourceName &#8212; </strong>If the component defined a resource with  the &lt;sourceMapping&gt; element, this is the primary resource name (e.g.  &ldquo;r_myview_listbox&rdquo;).&nbsp; May be null if no  resource is exported.</li>
+  <li><strong>resourceName$upper &#8212; </strong>upper-cased resourceName (e.g.  &ldquo;R_MYVIEW_LISTBOX&rdquo;)</li>
+  <li><strong>resourceFileNameBase &#8212; </strong>base filename used for  resources. This is the project name for  &ldquo;application.uidesign&rdquo; and the design file&rsquo;s base name otherwise.</li>
+  <li><strong>className &#8212; </strong>name of the current class, if there is one.&nbsp; This is either the instance's own  &quot;className&quot; property or that of the nearest enclosing parent (e.g.  &ldquo;CFoo&rdquo;)</li>
+  <li><strong>parentClassName &#8212; </strong>like &quot;className&quot;, but the name of the nearest enclosing parent of the instance that provided &quot;className&quot;.</li>
+  <li><strong>handlerClassName &#8212; </strong>Name of the class for event handlers,  which is the &ldquo;className&rdquo; property of the nearest enclosing component that  defines the &ldquo;event-handler-target&rdquo; attribute to &ldquo;true&rdquo; (e.g. &ldquo;CContainer&rdquo;).</li>
+  <li><strong>handlerInstanceName &#8212; </strong>The name property of the component instance providing handlerClassName (e.g. &ldquo;container1&rdquo;)</li>
+</ul>
+<p>When an event handler is being handled, triggered by ifEvents=&quot;...&quot; matching a bound event, then the first matching event provides these variables:</p>
+<ul>
+  <li><strong>event.eventId &#8212; </strong>the internal id of the event</li>
+  <li> <strong>event.eventName &#8212; </strong>the display name of the event</li>
+  <li> <strong>event.handlerName &#8212; </strong>the user-provided function name for the user event handler</li>
+  <li> <strong>event.handlerSymbol &#8212; </strong>internal data for the location of the event handler function (this is currently the directory, filename, and location path to the function)<br />
+  </li>
+</ul>
+<h4><a name="coneng"></a>Contribution Engine Routines</h4>
+<p>When generating source inside &lt;sourceGen&gt;, scripts have access to a library of routines related to generating contributions.  All these are prefixed with &ldquo;Engine.&rdquo;, for example: <span class="code">Engine.createContributionForLocation()</span>.</p>
+<table border="1">
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>assignLocationsForPhase</strong>(contributions,                          phase,                          location)</td>
+    <td><p>Assign locations to phased contributions without a location. The contributions with the given phase are assigned the given location. Parameters:</p>
+        <ul>
+          <li>contributions - the list of contributions; modified in place</li>
+          <li>phase - the phase to match (must not be null)</li>
+          <li>location - the location to assign</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>collateContributionsByPhase</strong>(contributions, phases)</td>
+    <td><p>Collate contributions by phase. Takes a list of phase names and orders contributions so that they reflect the ordering of the phases. Note that this will have no effect if a contribution already has a location.     Parameters:</p>
+        <ul>
+          <li>contributions - the list of contributions; modified in place</li>
+          <li>phases - list of phases (null may be used to represent un-phased contributions)</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>createContribution</strong>()</td>
+    <td>Creates a contribution.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>createContributionForLocation</strong>(location)</td>
+    <td><p>Create a contribution at a given location. Parameters:</p>
+        <ul>
+          <li>location - the unique location id, defined either in this location or some calling parent</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>createContributionForPhase</strong>(phase)</td>
+    <td><p>Create a contribution for the given phase. Parameters:</p>
+        <ul>
+          <li>phase - the phase, for parent collation</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>createFromStockFile</strong>(directoryId, filename, stockPath)</td>
+    <td><p>Create a stock file in the project from a file relative to   the current component or an applicable base, if such file    does not already exist.      This is preferred to explicitly defining a location and applying a template when the file must not have any user-specified comment at the top or any variable expansion. Parameters:</p>
+        <ul>
+          <li>directoryId - the directory ID for the target (see INameGenerator#..._DIRECTORY_ID)</li>
+          <li>filename - the filename within the directory for the target file</li>
+          <li>stockPath - component-relative path to stock file</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>findBuiltinOrGeneratedEnumeratorForAlgorithm</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;instance, propertyPath, nameAlg)</td>
+    <td><p>Find the enumerator generated by the given name algorithm with   the given property value.     These match the attributes used in &lt;mapEnumMember&gt;. The difference is, this routine does not generate a new enumerator; it returns null if none was generated.     Parameters:</p>
+        <ul>
+          <li>instance</li>
+          <li>propertyPath - path to the property @param uniqueValue the enumerator value which indicates a unique value was generated, or &quot;*&quot; if a unique value is always generated</li>
+          <li>nameAlg - the unique name algorithm used</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>findDefiningFileForEnumerator</strong>(enumerator)</td>
+    <td>Get the filename where this enumerator is declared.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>findGeneratedRssFiles</strong>(regex)</td>
+    <td>Get the list of RSS generated files matching the given pattern.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>findLocation</strong>(locationId)</td>
+    <td><p>Look up the ILocation for the given location id. Parameter:</p>
+        <ul>
+          <li>locationId - name of the location</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>findOrCreateEnumeratorForAlgorithm</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;instance, propertyPath, nameAlg)</td>
+    <td><p>Find or create the enumerator generated by the given name algorithm with   the given property value.     These match the attributes used in &lt;mapEnumMember&gt;. This routine can create new enumerators. Such enumerators will be created in a globally accessible file (i.e. an HRH file for the application).     If the enumerator was generated before but not visible in the DOM, this recreates it.     Parameters:</p>
+        <ul>
+          <li>instance</li>
+          <li>propertyPath - path to the property</li>
+          <li>nameAlg - the unique name algorithm used</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>formMatches</strong>(form, forms)</td>
+    <td>Tell whether the given form regex matches any of the forms   in the array.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>generateAllViewContributions</strong>(form)</td>
+    <td><p>Generate the &quot;glue&quot; contributions for all the view data models.     These are the contributions that an application needs to get from a view in order to register it.     This automatically filters out contributions not matching the form, with the assumption that the default form templates will never apply to the case of generating from a view.     Parameters:</p>
+        <ul>
+          <li>form - the sourcegen form to pass</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>generateChildContributions</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;child, form)</td>
+    <td><p>Generate child contributions.      Called by parent on each child.     Parameters:</p>
+        <ul>
+          <li>form - a regular expression matching form names (&quot;&quot; = blank/no form)</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>generateChildContributions</strong>(form)</td>
+    <td>Generate all child contributions, in order. 
+      Parameters:
+      <ul>
+          <li>form - a regular expression matching form names (&quot;&quot; = blank/no form)</li>
+      </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>generateRedirectedInstanceContributions</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;instance, form, com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;refInstance)</td>
+    <td><p>Generate child contributions using a referencing instance for context.     This is used when component instance A (refInstance) points to component instance B (instance), and instance B's sourceGen relies on properties and/or events from instance A. This supplies an additional parameter to sourceGen called 'refInstance' that can be queried.     Note that none of the predefined variables are defined for refInstance, as they are for instance (e.g. children, properties, instanceName, or instanceMemberName).     Parameters:</p>
+        <ul>
+          <li>instance - the instance to generate</li>
+          <li>form - a regular expression matching form names (&quot;&quot; = blank/no form)</li>
+          <li>refInstance - the instance holding a reference to this instance</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>generateViewContributions</strong>(viewFilePath, form)</td>
+    <td>Generate the &quot;glue&quot; contributions for a view data model. These are the contributions that an application needs to get from a view in order to register it. This automatically filters out contributions not matching the form, with the assumption that the default form templates will never apply to the case of generating from a view.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getAllProjectViewDesigns</strong>()</td>
+    <td>Get a list of project-relative paths specifying view designs.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getContributionsForForm</strong>(contributions, form)</td>
+    <td><p>Return sublist of contribution matching the given form. Parameters:</p>
+        <ul>
+          <li>contributions - the list of contributions</li>
+          <li>form - regular expression to match form (&quot;&quot; = blank/no form)</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getContributionsForLocation</strong>(contributions, locationId)</td>
+    <td><p>Return sublist of contribution matching the given location Id. Parameters:</p>
+        <ul>
+          <li>contributions - the list of contributions</li>
+          <li>locationId - the location name (or null to match contributions without location)</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getContributionsForPhase</strong>(contributions, phase)</td>
+    <td><p>Return sublist of contribution matching the given phase. Parameters:</p>
+        <ul>
+          <li>contributions - the list of contributions</li>
+          <li>phase - the phase (or null to match contributions without a phase)</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getGeneratedResource</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;instance)</td>
+    <td>Get the unnamed resource generated for the given component.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getGeneratedResource</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;instance, rsrcId)</td>
+    <td><p>Get the unnamed resource generated for the given component.     Parameters:</p>
+        <ul>
+          <li>instance - the component instance</li>
+          <li>rsrcId - the identifier of the generated resource, or null </li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>getGlobalDictionary</strong>()</td>
+    <td>Get global dictionary for one sourcegen pass. This is entirely for the use of sourcegen script. It provides common state which is available to all instances in a design when sources are generated; nothing persists past a save of the data model.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>queryEnumeratorForAlgorithm</strong>(com.nokia.sdt.datamodel.adapter.IComponentInstance&nbsp;instance, propertyPath, nameAlg)</td>
+    <td><p>Query the enumerator generated by the given name algorithm with   the given property value.     These match the attributes used in &lt;mapEnumMember&gt;. This routine does not rely on an enumerator having been created and does not uniquify the value, and can possibly return a misleading result.     Parameters:</p>
+        <ul>
+          <li>instance</li>
+          <li>propertyPath - path to the property</li>
+          <li>nameAlg - the unique name algorithm used</li>
+        </ul></td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>removeContributionsForPhase</strong>(contributions, phase)</td>
+    <td>Remove contributions with the given phase.</td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>removeDuplicateContributionsForLocation</strong>(contributions, location)</td>
+    <td>Remove duplicate contributions based on location.  The list is scanned for contributions matching the given location exactly. If such contributions have the same trimmed text, the duplicates are removed. Note that this doesn't account for any contributions implicitly supplied by the current component's &lt;defineLocation&gt; contributions. Either call this function from a caller or do not define possibly duplicatable content in &lt;defineLocation&gt; (you can supply this as &lt;template&gt; appearing at that location). </td>
+  </tr>
+  <tr bgcolor="white">
+    <td align="left" valign="top" width="1%"><strong>titleCase</strong>(text)</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h4><a name="debugging"></a>Debugging</h4>
+<p>In the &lt;sourceGen&gt; element, set the debug attribute to &ldquo;true&rdquo; to generate a dump of the generated JavaScript that is used to generate contributions. Alternately, the <strong>Components &gt; Enable SourceGen Debugging...</strong> dialog may be used to enable debugging and specify the directory for generated JavaScript files.</p>
+<h3><a name="inheritance"></a>Inheritance</h3>
+<p>Source generation  behavior allows inheritance by derived  components, though it is not automatically  inherited. If no &lt;sourceGen&gt; element appears in a derived  component instance, the UI Designer automatically iterates the instance&rsquo;s children  and gathers contributions for them. If &lt;sourceGen&gt; does appear in a derived component, and left empty, then no source is generated for that component.</p>
+<p>If &lt;sourceGen&gt; appears in a derived component, it may</p>
+<ul>
+  <li>Define entirely new source generation elements and have no interaction with  its base</li>
+  <li>Inherit as much as possible from the base</li>
+  <li>Or mix the  contributions, taking some from the base and providing the rest itself.</li>
+</ul>
+<p>A component can inherit from a base.  For source generation, this implies automatic inheritance of the JavaScript base object, its locations, and its macros, but not of the behavior, which is explicitly inherited to allow selection and reordering.</p>
+<p class="note"><strong>NOTE</strong> Locations defined with realize=&quot;true&quot; are not automatically realized in derived components.</p>
+<p>The &lt;useTemplate&gt; element is used to inherit &lt;template&gt; elements from base.</p>
+<p>The attribute &ldquo;ids&rdquo; lists the named &lt;template&gt; elements from the base component (&ldquo;*&rdquo; indicates all). A &lt;template&gt; element without an &ldquo;id&rdquo; cannot be inherited. This element can be repeated and ordered arbitrarily with other &lt;template&gt; elements. An &ldquo;id&rdquo; can only be referenced or defined once per &lt;sourceGen&gt; element.</p>
+<p>The &lt;useTemplateGroup&gt; element is used to inherit &lt;templateGroup&gt; elements from base. A standalone &lt;useTemplateGroup&gt; element inherits all named &lt;template&gt; elements, or can contain &lt;useTemplate&gt; elements to select specific sub-elements.</p>
+<p class="note"> <strong>NOTE</strong> All templates are implicitly named, or given ids, unless otherwise suppressed by specifying id=&quot;&quot;.</p>
+<p>All &lt;inline&gt; elements may be inherited from the base, if they are given ids.  For inlines, on the other hand, ids are not implicitly defined inside &lt;templateGroup&gt;.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

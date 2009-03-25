@@ -1,0 +1,5 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES r_test_choice_property_exists_with_text_unset
+	{
+	}

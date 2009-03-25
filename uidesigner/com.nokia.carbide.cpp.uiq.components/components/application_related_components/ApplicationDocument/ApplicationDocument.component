@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU8 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.carbide.uiq.ApplicationDocument"
+		baseComponent="com.nokia.carbide.uiq.CommonBase" 
+		instanceNameRoot="applicationDocument"			
+		version="1.0">
+		
+		
+	<symbian sdkName="com.uiq" minSDKVersion="3.0"></symbian>
+
+	<attributes>
+		<attribute key="not-in-toolbox">true</attribute>  
+	</attributes>	
+	
+	<properties>
+		<property name="className" type="string" descriptionKey="classNameDescription" 
+			category="%category.design"/>
+		<property name="fileMode" type="integer" descriptionKey="fileModeDescription"
+			category="%category.design"/>   
+	</properties>
+
+   <sourceGen>
+		<expandMacro name="HeaderFileTemplate" FileName="${instanceName}.h" IncludeGuardMacro="${instanceName$upper}_H">
+			<expandArgument name="InitialOwnedSystemIncludesContent">
+<![CDATA[#include <QikDocument.h>
+#include <QikApplication.h>]]>
+			</expandArgument>
+		</expandMacro>
+
+		<expandMacro name="ClassTemplate" ClassName="${className}" BaseClassName="CQikDocument">
+      <expandArgument name="ClassComment">
+<![CDATA[
+/**
+ * This class represents the document in ${getProjectName()} application,
+ * For an UIQ application to work properly the document class need to be
+ * derived from CQikDocument.
+ */]]>      
+      </expandArgument>           
+<!--			<expandArgument name="InitialPublicOwnedMethodsContent">
+<![CDATA[static ${className}Document* NewL(CQikApplication& aApp);
+~${className}Document();]]>
+			</expandArgument>
+
+			<expandArgument name="InitialPrivateOwnedMethodsContent">
+<![CDATA[		CEikAppUi* CreateAppUiL();
+
+	${className}Document(CQikApplication& aApp);
+	void ConstructL();]]>
+			</expandArgument>-->						
+		</expandMacro>
+   
+		<expandMacro name="SourceFileTemplate" HeaderFileName="${instanceName}.h" LocationPrefix="DOCUMENT_SOURCE" FileName="${instanceName}.cpp">
+			<expandArgument name="InitialSystemIncludesContent">
+<![CDATA[
+#include <s32strm.h>
+#include <QikApplication.h>
+]]>
+			</expandArgument>
+			<expandArgument name="InitialUserIncludesContent">
+<![CDATA[#include "${instance.findChildOfType("com.nokia.carbide.uiq.ApplicationUI").name}.h" ]]>
+			</expandArgument>
+
+		</expandMacro>
+		
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="DOCUMENT_NEWL_METHOD" 
+    			FunctionName="NewL" 
+    			FunctionArgs="CQikApplication&amp; aApp" 
+    			IsStatic="true" 
+    			ReturnType="${className}*" 
+    			DeclPhase="ClassMethods" 
+    			ClassName="${className}" 
+    			DeclLocation="CLASS_PUBLIC" 
+    			DefnLocation="DOCUMENT_SOURCE_FILE">
+
+        <expandArgument name="FunctionComment">
+		<![CDATA[
+/**
+ * Creates and constructs the document. This is called by
+ * ${className}Application::CreateDocumentL() which 
+ * in turn is called by the UI framework.
+ *
+ * @param aApp Reference to the application
+ * @return Instance of the document class.
+ */ ]]>
+        </expandArgument>
+	      <expandArgument name="FunctionBody">
+<![CDATA[${className}* self = new (ELeave) ${className}(aApp);
+CleanupStack::PushL(self);
+self->ConstructL();
+CleanupStack::Pop(self);
+return self;]]>
+        </expandArgument>
+     </expandMacro>
+  
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="DOCUMENT_CONSTRUCTOR_METHOD" 
+    			FunctionName="${className}" 
+    			FunctionArgs="CQikApplication&amp; aApp" 
+    			ReturnType="" DeclPhase="ClassMethods" 
+    			ClassName="${className}" 
+    			Initializers="CQikDocument(aApp)" 
+    			DeclLocation="CLASS_PRIVATE" 
+    			DefnLocation="DOCUMENT_SOURCE_FILE">
+<!--        <expandArgument name="Initializers">
+         CQikDocument(aApp)
+        </expandArgument>  -->
+        <expandArgument name="FunctionComment">
+		<![CDATA[
+/**
+ * The constructor of the document class just passes the
+ * supplied reference to the constructor initialization list.
+ *
+ * @param aApp Reference to the application
+ */ ]]>
+        </expandArgument>
+        <expandArgument name="FunctionBody">
+        
+        </expandArgument>
+     </expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="DOCUMENT_CONSTRUCTL_METHOD" 
+    			FunctionName="ConstructL" 
+    			FunctionArgs="" 
+    			DeclPhase="ClassMethods" 
+    			ClassName="${className}" 
+    			DeclLocation="CLASS_PRIVATE" 
+    			DefnLocation="DOCUMENT_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+		<![CDATA[
+/**
+ * 2nd stage construction of the model.
+ * All code that shall be called in initializing phase and might leave shall be
+ * added here.
+ */ ]]>
+        </expandArgument>
+        <expandArgument name="FunctionBody">
+                
+        </expandArgument>
+     </expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="DOCUMENT_CREATEAPPUIL_METHOD" 
+    			FunctionName="CreateAppUiL" 
+    			FunctionArgs="" 
+    			ReturnType="CEikAppUi*" 
+    			DeclPhase="ClassMethods" 
+    			ClassName="${className}" 
+    			DeclLocation="CLASS_PRIVATE" 
+    			DefnLocation="DOCUMENT_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+		<![CDATA[
+/**
+ * This is called by the UI framework as soon as the document has been created.
+ * It creates an instance of the ApplicationUI. The Application UI class is an
+ * instance of a CEikAppUi derived class.
+ *
+ * @return Instance of CEikAppUi
+ */]]>
+        </expandArgument>
+        <expandArgument name="FunctionBody">
+return new (ELeave) ${instance.findChildOfType("com.nokia.carbide.uiq.ApplicationUI").className};
+        </expandArgument>
+     </expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="DOCUMENT_DESTRUCTOR_METHOD" 
+    			FunctionName="~${className}" 
+    			FunctionArgs="" 
+    			ReturnType="" 
+    			DeclPhase="ClassMethods" 
+    			ClassName="${className}" 
+    			DeclLocation="CLASS_PUBLIC" 
+    			DefnLocation="DOCUMENT_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+		<![CDATA[
+/**
+ * This is the class destructor
+ */]]>
+        </expandArgument>
+        <expandArgument name="FunctionBody">
+
+        </expandArgument>
+     </expandMacro>
+
+    <inline>
+			// iterate children
+			contribs.addAll(Engine.generateChildContributions(form))
+    </inline>
+	
+	<template phase="MainUserIncludes" form="Application">
+#include "${instanceName}.h"
+	</template>
+	
+   </sourceGen>
+		
+  </component>
+</componentDefinition>

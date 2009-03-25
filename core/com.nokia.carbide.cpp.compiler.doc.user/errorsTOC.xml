@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C Errors"  topic="html/errors/errors.htm" >
+
+	<topic label="Warnings as Errors"							href="html/errors/err_as_warnings.htm" /> 
+	<topic label="Illegal Pragmas"								href="html/errors/err_ill_pragmas.htm" /> 
+	<topic label="Empty Declarations"							href="html/errors/err_empty_decl.htm" /> 
+	<topic label="Common Errors"								href="html/errors/err_common.htm" /> 
+	<topic label="Unused Variables"								href="html/errors/err_unused_vars.htm" /> 
+	<topic label="Unused Arguments"								href="html/errors/err_unused_args.htm" /> 
+	<topic label="Extra Commas"									href="html/errors/err_extra_commas.htm" /> 
+	<topic label="Suspicious Assignment and Incorrect Function Returns"		href="html/errors/err_suspicious_assgn.htm" /> 
+	<topic label="Hidden Virtual Functions"						href="html/errors/err_hidden_virtual_fn.htm" /> 
+	<topic label="Implicit Arithmetic Conversions"				href="html/errors/err_implicit_math.htm" /> 
+	<topic label="inline Functions That are Not Inlined"		href="html/errors/err_inline_fn.htm" /> 
+	<topic label="Mixed use of 'class' and 'struct' Keywords"	href="html/errors/err_mixed_use.htm" /> 
+	<topic label="Redundant Statements"							href="html/errors/err_redundent.htm" /> 
+	<topic label="Realigned Data Structures"					href="html/errors/err_realigned_data.htm" /> 
+	<topic label="Ignored Function Results"						href="html/errors/err_ignore_fn.htm" /> 
+	<topic label="Bad Conversion of Pointer Values"				href="html/errors/err_bad_conversions.htm" /> 
+       
+</toc>

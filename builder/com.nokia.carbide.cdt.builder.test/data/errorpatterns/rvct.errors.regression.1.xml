@@ -1,0 +1,47 @@
+<root>
+<!--Error Marker at index 0-->
+<marker_info external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/src/listboxdocument.cpp" file="^EMPTY^" line_number="19" message="#493: no instance of overloaded function &quot;CListBoxDocument::CListBoxDocument&quot; matches the specified type[\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp]" severity="2" variable_name="^EMPTY^"/>
+<!--Error Marker at index 1-->
+<marker_info external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/src/listboxdocument.cpp" file="^EMPTY^" line_number="19" message="#70: incomplete type is not allowed[\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp]" severity="2" variable_name="^EMPTY^"/>
+<!--Error Marker at index 2-->
+<marker_info external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/src/listboxdocument.cpp" file="^EMPTY^" line_number="20" message="#130: expected a &quot;{&quot;[\APPS\Nokia\DDB21Nightly\workspace\ListBox\src\listboxdocument.cpp]" severity="2" variable_name="^EMPTY^"/>
+<!--Error Marker at index 3-->
+<marker_info external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/inc/ListBoxAppUi.h" file="^EMPTY^" line_number="25" message="#84: invalid combination of type specifiers[\APPS\Nokia\DDB21Nightly\workspace\ListBox\inc\ListBoxAppUi.h]" severity="2" variable_name="^EMPTY^"/>
+<!--Error Marker at index 4-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN4User9InvariantEv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 5-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN4User15HandleExceptionEPv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 6-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN11CCoeControlC1Ev" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 7-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN10RArrayBaseC1Ei" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 8-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZNK15CEikTextListBox5ModelEv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 9-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZNK17CTextListBoxModel13ItemTextArrayEv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 10-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN12CDesC16Array7AppendLERK7TDesC16" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 11-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN11CEikListBox19HandleItemAdditionLEv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 12-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN6TDes166FormatE11TRefByValueIK7TDesC16Ez" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 13-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN7CCoeEnv24ReadDesC16ArrayResourceLEi" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 14-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN12CleanupStack5PushLEP5CBase" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 15-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN10TBufBase16C1Ei" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 16-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN12CleanupStack13PopAndDestroyEv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 17-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN10RArrayBase6AppendEPKv" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 18-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN4User12LeaveIfErrorEi" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 19-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN12AknIconUtils11CreateIconLERP10CFbsBitmapS2_RK7TDesC16ii" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 20-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN12AknIconUtils16PreserveIconDataEP10CFbsBitmap" severity="3" variable_name="^EMPTY^"/>
+<!--Error Marker at index 21-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="ERROR: Unresolved symbol: _ZN12AknIconUtils20GetContentDimensionsEP10CFbsBitmapR5TSize" severity="3" variable_name="^EMPTY^"/>
+</root>
+

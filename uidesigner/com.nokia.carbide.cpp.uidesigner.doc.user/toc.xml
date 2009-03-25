@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="UI Designer User Guide"  href="html/toc.html" >
+	
+	   <topic label="Release notes"  href="html/release_notes.htm" />
+	
+	   <topic label="Getting Started"  href = "html/gettingstarted/gettingstarted.htm">
+	      <anchor id="uid_gettingstarted"/>
+	   </topic>
+	
+	   <topic label="Concepts"  href = "html/concepts/concepts.htm">
+	      <anchor id="uid_concepts"/>
+	   </topic>
+	
+	   <topic label="Tasks"  href = "html/tasks/tasks.htm">
+	      <anchor id="uid_tasks"/>
+	   </topic>
+	
+	   <topic label="Reference"  href = "html/reference/reference.htm">
+	      <anchor id="uid_reference"/>
+	   </topic>
+	   
+	  <anchor id="uid_sections"/>
+
+	
+		<topic label="Example Projects" href="tutorials/tutorials.htm" >
+	
+			<topic label="Birthday Project" 					href="tutorials/birthdays/BirthdaysTutorial.html" > 
+				<topic label="Maintain data and UI separation" 	href="tutorials/birthdays/BirthdaysTutorial_02.html" /> 
+				<topic label="Using the S60 UI Designer" 		href="tutorials/birthdays/BirthdaysTutorial_03.html" /> 
+				<topic label="Adding Application Logic" 		href="tutorials/birthdays/BirthdaysTutorial_04.html" /> 
+				<topic label="Using Persistent Storage" 		href="tutorials/birthdays/BirthdaysTutorial_05.html" /> 
+				<topic label="Summary" 							href="tutorials/birthdays/BirthdaysTutorial_06.html" /> 
+			</topic>
+	
+			<topic label="Yahoo! Image Search Project" 								href="tutorials/ysearch/YSearchTutorial.html" > 
+				<topic label="Getting the Yahoo! Image Search project" 				href="tutorials/ysearch/YSearchTutorial_1.html" /> 
+				<topic label="Application Overview" 								href="tutorials/ysearch/YSearchTutorial_2.html" /> 
+				<topic label="Using the S60 UI Designer to create the UI" 			href="tutorials/ysearch/YSearchTutorial_3.html" /> 
+				<topic label="Using the WebClient component to retrieve XML data" 	href="tutorials/ysearch/YSearchTutorial_4.html" /> 
+				<topic label="Perform search query and populate results" 			href="tutorials/ysearch/YSearchTutorial_5.html" /> 
+				<topic label="Download and display selected image" 					href="tutorials/ysearch/YSearchTutorial_6.html" /> 
+			</topic>
+			
+			<anchor id="anchorUIDesigner" />
+		</topic>
+
+	   <topic label="Bugs fixed"  href="html/bugs_fixed.htm" />
+	   <topic label="Legal"  href="html/legal.htm" />
+	
+</toc>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="References" link_to="sdkTOC.xml#sdkReference">
+	<topic label="API Reference" href="reference/api/overview-summary.html">  
+		<topic label="com.nokia.carbide.cdt.builder" href="reference/api/com/nokia/carbide/cdt/builder/package-summary.html"/>
+		<topic label="com.nokia.carbide.cdt.builder.builder" href="reference/api/com/nokia/carbide/cdt/builder/builder/package-summary.html"/>
+		<topic label="com.nokia.carbide.cdt.builder.project" href="reference/api/com/nokia/carbide/cdt/builder/project/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.sdk.core" href="reference/api/com/nokia/carbide/cpp/sdk/core/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.sdk.ui" href="reference/api/com/nokia/carbide/cpp/sdk/ui/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.sdk.ui.shared" href="reference/api/com/nokia/carbide/cpp/sdk/ui/shared/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.project.core" href="reference/api/com/nokia/carbide/cpp/project/core/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.project.core.processes" href="reference/api/com/nokia/carbide/cpp/project/core/processes/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine" href="reference/api/com/nokia/carbide/cpp/epoc/engine/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.image" href="reference/api/com/nokia/carbide/cpp/epoc/engine/image/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.model" href="reference/api/com/nokia/carbide/cpp/epoc/engine/model/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.model.bldinf" href="reference/api/com/nokia/carbide/cpp/epoc/engine/model/bldinf/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.model.makefile" href="reference/api/com/nokia/carbide/cpp/epoc/engine/model/makefile/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.model.makefile.image" href="reference/api/com/nokia/carbide/cpp/epoc/engine/model/makefile/image/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.model.mmp" href="reference/api/com/nokia/carbide/cpp/epoc/engine/model/mmp/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.epoc.engine.preprocessor" href="reference/api/com/nokia/carbide/cpp/epoc/engine/preprocessor/package-summary.html"/>
+		<topic label="com.nokia.carbide.cpp.ui" href="reference/api/com/nokia/carbide/cpp/ui/package-summary.html"/>
+		<topic label="com.nokia.carbide.template.engine " href="reference/api/com/nokia/carbide/template/engine/package-summary.html"/>		
+		<topic label="com.nokia.carbide.templatewizard.process " href="reference/api/com/nokia/carbide/templatewizard/process/package-summary.html"/>
+		<topic label="com.nokia.carbide.templatewizard.processes " href="reference/api/com/nokia/carbide/templatewizard/processes/package-summary.html"/>
+	</topic> 
+	<topic label="Extension Points Reference">
+		<topic label="Wizard Template" href="html/reference/extension-points/templatewizard_wizardTemplate.html"/>
+	</topic>
+	
+	<topic label="Changes to the Carbide API" href="html/reference/api_Change_Notes.htm"/>
+	<topic label="Custom Components" href="html/reference/CustomComponents/cc_refoverview.htm" >
+      <topic label="Component Definition Element"  href="html/reference/CustomComponents/cc_definition.htm" />
+	  <topic label="Component Element"  href="html/reference/CustomComponents/cc_component.htm" />
+	  <topic label="Symbian Element"  href="html/reference/CustomComponents/cc_symbian.htm" />
+	  <topic label="Designer Images Element"  href="html/reference/CustomComponents/cc_designerimages.htm" />
+	  <topic label="Attributes Element"  href="html/reference/CustomComponents/cc_attributes.htm" >
+	     <topic label="Defining a Transient Component"  href="html/reference/CustomComponents/cc_definetransientcomp.htm" />
+	  </topic>
+	  <topic label="Properties Element"  href="html/reference/CustomComponents/cc_properties.htm" />
+	  <topic label="Events Element"  href="html/reference/CustomComponents/cc_events.htm" />
+	  <topic label="Implementations"  href="html/reference/CustomComponents/cc_implementations.htm" >
+	    <topic label="JavaScript"   href="html/reference/CustomComponents/cc_implementations.htm#javascript" />
+		<topic label="Wrapped Types"   href="html/reference/CustomComponents/cc_implementations.htm#wrapped" />
+	    <topic label="JavaScript Globals"   href="html/reference/CustomComponents/cc_implementations.htm#globals" />
+	    <topic label="JavaScript Libraries"   href="html/reference/CustomComponents/cc_implementations.htm#libraries" />
+	    <topic label="Rendering"   href="html/reference/CustomComponents/cc_implementations.htm#rendering" />
+	    <topic label="Common Issues and Troubleshooting"   href="html/reference/CustomComponents/cc_implementations.htm#issues" />
+	  </topic>
+	 <topic label="RSS Source Mapping"  href="html/reference/CustomComponents/cc_source_mapping.htm" >
+	    <topic label="Mappings"   href="html/reference/CustomComponents/cc_source_mapping.htm#mappings" />
+	    <topic label="Resource Member Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#resource" />
+	    <topic label="Simple Member Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#simple" />
+	    <topic label="Enum Member Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#enum" />
+	    <topic label="Identifier Member Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#identifier" />
+	    <topic label="Instance Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#instance" />
+	    <topic label="Reference Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#reference" />
+	    <topic label="Bitmask Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#bitmask" />
+	    <topic label="Array Member Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#array" />
+	    <topic label="Fixed Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#fixed" />
+	    <topic label="Type Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#type" />
+	    <topic label="Conditional Mapping"   href="html/reference/CustomComponents/cc_source_mapping.htm#conditional" />
+     </topic>
+
+	 <topic label="Source Generation"  href="html/reference/CustomComponents/cc_source_generation.htm" >
+	    <topic label="Contributions"   href="html/reference/CustomComponents/cc_source_generation.htm#contrib" />
+	    <topic label="Locations"   href="html/reference/CustomComponents/cc_source_generation.htm#locations" />
+	    <topic label="DefineLocation Element"   href="html/reference/CustomComponents/cc_source_generation.htm#defloc" />
+	    <topic label="Cpp location segments"   href="html/reference/CustomComponents/cc_source_generation.htm#cpplocseg" />
+	    <topic label="Owned/Non-owned/Filtered Locations"   href="html/reference/CustomComponents/cc_source_generation.htm#filterloc" />
+	    <topic label="Template element"   href="html/reference/CustomComponents/cc_source_generation.htm#template" />
+	    <topic label="Inline Element"   href="html/reference/CustomComponents/cc_source_generation.htm#inline" />
+	    <topic label="CDATA Tag"   href="html/reference/CustomComponents/cc_source_generation.htm#cdata" />
+	    <topic label="Forms"   href="html/reference/CustomComponents/cc_source_generation.htm#forms" />
+	    <topic label="Macros"   href="html/reference/CustomComponents/cc_source_generation.htm#macros" />
+	    <topic label="Macro argument modifiers"   href="html/reference/CustomComponents/cc_source_generation.htm#macarg" />
+	    <topic label="Expanding macros"   href="html/reference/CustomComponents/cc_source_generation.htm#expmac" />
+	    <topic label="Script Reference"   href="html/reference/CustomComponents/cc_source_generation.htm#scriptref" />
+	    <topic label="Contribution Engine Routines"   href="html/reference/CustomComponents/cc_source_generation.htm#coneng" />
+	    <topic label="Debugging"   href="html/reference/CustomComponents/cc_source_generation.htm#debugging" />
+	    <topic label="Inheritance"   href="html/reference/CustomComponents/cc_source_generation.htm#inheritance" />
+	 </topic>
+   </topic>
+   <topic label="Component XSD Description"  href="html/reference/component.xsd doc/index.html" >
+
+   </topic>
+</toc>

@@ -1,0 +1,16 @@
+#include <arraydialog.rh>
+
+RESOURCE DIALOG r_test_dialog
+	{
+	lines =
+		{
+		CHECKBOX
+			{
+			defaultChecked = 1;
+			},
+		LABEL
+			{
+			text = "literal string";
+			}
+		};
+	}

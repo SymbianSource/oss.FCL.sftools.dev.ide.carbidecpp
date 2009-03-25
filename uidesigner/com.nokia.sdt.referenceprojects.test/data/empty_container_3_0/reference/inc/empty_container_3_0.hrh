@@ -1,0 +1,4 @@
+enum Tempty_container_3_0ViewUids
+	{
+	EEmptyContainerViewId = 1
+	};

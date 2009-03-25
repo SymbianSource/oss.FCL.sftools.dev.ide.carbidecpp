@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>ANSI_strict</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>ANSI_strict</h3>
+<p>  Controls the use of non-standard language features.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma ANSI_strict on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable the pragma ANSI_strict, the compiler generates an error if it encounters any of the following common ANSI extensions: </p>
+  <ul>
+    <li> C++-style comments</li>
+  </ul>
+  <blockquote>
+    <div class="listing">
+      <p class="code"> a = b; // This is a C++-style comment</p>
+    </div>
+  </blockquote>  
+  <ul>
+    <li>Unnamed arguments in function definitions</li>
+  </ul>
+  <blockquote>
+    <div class="listing">
+      <p class="code">void f(int ) {} /* OK, if ANSI Strict is disabled */<br />
+      void f(int i) {} /* ALWAYS OK */</p>
+    </div>
+  </blockquote>
+  <ul>
+    <li>A # token that does not appear before an argument in a macro definition</li>
+  </ul>
+  <blockquote>
+      <div class="listing">
+        <p class="code"> #define add1(x) #x #1<br />
+        /* OK, if ANSI_strict is disabled,</p>
+      </div>
+    <p>but probably not what you wanted:</p>
+    <div class="listing">
+      <p class="code">add1(abc) creates &quot;abc&quot;#1 */<br />
+        #define add2(x) #x &quot;2&quot;<br />
+    /* ALWAYS OK: add2(abc) creates &quot;abc2&quot; */</p>
+    </div>
+  </blockquote>
+  <ul>
+    <li>An identifier after #endif</li>
+  </ul>
+  <blockquote>
+    <div class="listing">
+      <p> 
+        <span class="code">#ifdef __CARBIDE__<br />
+        /* . . . */<br />
+        #endif __CARBIDE__ /* OK, if ANSI_strict is disabled */</span></p>
+      <p class="code">#ifdef __CARBIDE__<br />
+      /* . . . */<br />
+    #endif /*__CARBIDE__*/ /* ALWAYS OK */</p>
+    </div>
+  </blockquote>
+  <p>This pragma corresponds to the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting . To check this setting, use <span class="code">__option (ANSI_strict)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

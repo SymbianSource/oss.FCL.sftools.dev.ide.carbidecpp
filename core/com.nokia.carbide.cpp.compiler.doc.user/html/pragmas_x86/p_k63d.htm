@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>k63d</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>k63d</h3>
+<p>  Controls special code generation for AMD K6 3D extensions.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma k63d on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>This pragma tells the x86 compiler to generate code specifically for processors that have the circuitry needed to execute specialized 3D instructions, such as AMD K6 3D extensions.</p>
+  <p class="note"><strong>NOTE</strong> When enabled, the autovectorize loops option (#pragma opt_vectorize_loops on) will use these instructions if possible.<br />
+  This pragma corresponds to the K6 3D Favored setting in the Extended Instruction Set menu of the x86 CodeGen panel. </p>
+  <p class="note"><strong>NOTE</strong> This pragma generates code that is not compatible with the Intel Pentium class of microprocessors.</p>
+  <p>To check this setting, use <span class="code"><span class="code">__option (k</span>63d)</span>.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

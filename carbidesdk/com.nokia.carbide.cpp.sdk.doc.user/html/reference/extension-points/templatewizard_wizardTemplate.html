@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Wizard Template</title>
+<!-- <style>@import url("PLUGINS_ROOT/org.eclipse.cdt.doc.isv/book.css");</style>
+<style>@import url("PLUGINS_ROOT/org.eclipse.cdt.doc.isv/schema.css");</style> -->
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</HEAD>
+<BODY>
+<H1>Wizard Template</H1>
+<p></p>
+<h5 class=CaptionFigColumn id=header>Identifier:</h5>
+<p>com.nokia.carbide.templatewizard.wizardTemplate</p>
+<h5 class=CaptionFigColumn id=header>Since: </h5>
+Carbide.c++ 1.2
+
+<h5 class=CaptionFigColumn id=header>Description: </h5>
+The wizard template extension point registers a template with the Carbide.c++ template wizard. Templates may create projects or classes.
+
+Refer to the documentation under Tasks > Creating Wizard Templates for more information.
+<h5 class=CaptionFigColumn id=header>Configuration Markup:</h5>
+<p class=code id=dtd>&lt;!ELEMENT extension (template+)&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST extension</p>
+<p class=code id=dtdAttlist>point&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>name&nbsp;&nbsp;CDATA #IMPLIED&gt;</p>
+<br>
+<p class=code id=dtd>&lt;!ELEMENT template EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST template</p>
+<p class=code id=dtdAttlist>templateId&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>wizardId&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>groupLabel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>filterArguments&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>image&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>extraPagesProvider&nbsp;CDATA #IMPLIED&gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+The template element registers a single template with the template wizard.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>templateId</b> - The unique id for this template</li>
+<li><b>location</b> - The plugin-relative path to the template xml file</li>
+<li><b>wizardId</b> - The id of the wizard in which this template is used</li>
+<li><b>groupLabel</b> - The group label under which this template will appear in the template choice page of the appropriate template wizard</li>
+<li><b>filterArguments</b> - The optional wizard-specific data available for the IFilter implementing a filter checkbox, optionally shown in some template wizards</li>
+<li><b>image</b> - The optional plugin-relative location of a 16x16 pixel image file to use when showing this template in the choose template wizard page</li>
+<li><b>extraPagesProvider</b> - An optional provider of extra wizard pages</li>
+</ul>
+<br>
+<h5 class=CaptionFigColumn id=header>Examples:</h5>
+<pre><p class=code id=tag>&lt;extension point=&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;&gt;<p class=code id=tag>&lt;template
+   templateId=&quot;com.nokia.cdt.templates.s60.controlapplication&quot;<br>   location=&quot;templates/projecttemplates/S60-ControlApplication/template.xml&quot;
+   wizardId=&quot;com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard&quot;
+   groupLabel=&quot;S60&quot;
+   filterArguments=&quot;S60:1.2;2.0-2.9&quot;
+   image=&quot;icons/icon_S60.png&quot;
+  /&gt;
+<p class=code id=tag>&lt;/extension&gt;</p></pre>
+<h5 class=CaptionFigColumn id=header>API Information: </h5>
+No API implementation is required to provide a basic template. Templates requiring custom processing in code may implement <code class="code">com.nokia.carbide.templatewizard.process.IProcess</code>
+<p></p>
+
+<h5 class=CaptionFigColumn id=header>Supplied Implementation:</h5>
+<p>This extension point registers an XML template. Implementation is not required.</p>
+<h5>Related Information</h5>
+<p><a href="../../tasks/CreatingWizardTemplates.htm">Creating Wizard Templates</a><br>
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<p>
+
+</BODY>
+</HTML>

@@ -1,0 +1,25 @@
+#include <arraydialog.rh>
+#include <refheader.rh>
+
+RESOURCE DIALOG r_test_dialog
+	{
+	lines =
+		{
+		CHECKBOX
+			{
+			defaultChecked = 1;
+			},
+		LABEL
+			{
+			text = "literal string";
+			}
+		};
+	}
+RESOURCE OWNER r_test_dialog_ref
+	{
+	theLink = r_test_dialog_checkbox;
+	}
+RESOURCE CHECKBOX r_test_dialog_checkbox
+	{
+	defaultChecked = 1;
+	}

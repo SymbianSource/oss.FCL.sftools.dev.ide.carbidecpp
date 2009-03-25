@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for various Properties/Preference panels and windows -->
+<!-- plugin="com.nokia.sdt.uidesigner" -->
+	
+<contexts>
+	
+	<!-- UIDESIGNER EDITOR -->
+	
+	<!-- APPLICATION EDITOR (APP.UIDESIGN FILE)  -->
+	<context id="viewEditorContext"  >
+		<description>Use the Application Editor to manage UI designs in a project.</description>
+		<topic label="Component Palette" 							href="html/reference/components/ref_palette.htm" />
+		<topic label="Layout Region" 								href="html/reference/views/ref_layout.htm" />
+		<topic label="Non-layout Region" 							href="html/reference/views/ref_non-layout.htm" />
+		<topic label="Outline View" 								href="html/reference/views/ref_outline_view.htm" />
+		<topic label="Properties View" 								href="html/reference/views/ref_properties_view.htm" />
+		<topic label="Toolbar Pane" 								href="html/reference/views/ref_tool_bar.htm" />
+		<topic label="Adding New Objects" 							href="html/tasks/components/task_comp_new_obj.htm" />
+		<topic label="Selecting Objects" 							href="html/tasks/components/task_comp_sel_obj.htm" />
+		<topic label="Menu Editor" 									href="html/reference/views/ref_menu_editor.htm" />
+		<topic label="Edit Image Properties" 						href="html/reference/views/ref_edit_image_property.htm" />
+		<topic label="String List Editor" 							href="html/reference/views/ref_string_list_editor.htm" />
+	</context>
+
+		
+	<!-- GALLERY VIEW  -->
+	<context id="galleryViewContext" >
+		<description>Use the Gallery view to graphically show all UI Designs in the current workspace's projects.</description>
+		<topic label="Gallery View"  						href="html/reference/views/ref_gallery_view.htm" />
+		<topic label="Opening UI Designs" 					href="html/tasks/uidesign/task_uid_open.htm" />
+		<topic label="Setting Magnification" 				href="html/tasks/uidesign/task_uid_display_all_mag.htm" />
+	</context>
+
+	
+	<!-- EVENTS VIEW  -->
+	<context id="eventViewContext" >
+		<description>Use the Events view to specify object events and event handlers.</description>
+		<topic label="Events View"  			 					href="html/reference/views/ref_events_view.htm" />
+		<topic label="Adding a New Event Handler" 					href="html/tasks/prop_events/task_comp_mod_events_add.htm" />
+		<topic label="Handling the Default Event" 					href="html/tasks/prop_events/task_comp_mod_events_handle_default.htm" />
+		<topic label="Implementing an Event Handler" 				href="html/tasks/prop_events/task_comp_mod_events_implement.htm" />
+		<topic label="Inspecting Event Handlers"  					href="html/tasks/prop_events/task_comp_mod_events.htm" />
+		<topic label="Showing/Hiding Event Categories" 				href="html/tasks/prop_events/task_comp_mod_events_categories.htm" />
+		<topic label="Renaming an Event Handler" 					href="html/tasks/prop_events/task_comp_mod_events_rename.htm" />
+	</context>
+
+
+	<!-- UI DESIGNER PREFERENCE PANEL  -->
+	<context id="uiDesignerPreferencesContext" >
+		<description>Use the UI Designer preference panel to set UI Designer behavior options.</description>
+		<topic label="UI Designer Preferences" 						href="html/reference/uidesign/ref_ui_designer_prefs.htm" />
+		<topic label="Setting UI Designer Preferences" 				href="html/tasks/uidesign/task_uid_prefs.htm" />
+	</context>
+
+
+</contexts>
+

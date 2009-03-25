@@ -1,0 +1,42 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description: 
+;
+; A SIS file which embeds another
+
+;Languages
+&EN,GE
+
+;Header
+#{"Embedding-EN", "Embedding-GE"}, (0x10000017), 1, 2, 3
+
+%{"Vendor", "Verkaufer"}
+:"Vendor"
+
+;Embedded component
+IF NOT package(0x80000002)
+@"sub.sis",(0x80000002)
+endif
+
+;Ordinary file to system drive
+{
+"text\englishfile.txt"
+"text\germanfile.txt"
+}-"$:\private\10000018\import\lang.txt"
+
+;Ordinary file to selected drive
+"text\file1.txt"-"!:\private\10000018\import\file1.txt"
+
+;Display a text file
+"text\textfilec.txt"-"", FT, TC

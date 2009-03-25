@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C Predefined Symbols" href="html/symbols/symbols.htm">
+
+	<topic label="ANSI Predefined Symbols" 			href="html/symbols/sym_ansi.htm" /> 
+	<topic label="Carbide Predefined Symbols" 		href="html/symbols/sym_carbide.htm" /> 
+	<topic label="Checking Option Settings" 		href="html/symbols/sym_settings.htm" /> 
+       
+</toc>

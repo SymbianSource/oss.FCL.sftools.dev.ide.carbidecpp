@@ -1,0 +1,17 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_test_array_fixed
+	{
+	ints = { 42, 23 };
+	structs =
+		{
+		SUBTYPE
+			{
+			number = 23;
+			},
+		SUBTYPE
+			{
+			number = 42;
+			}
+		};
+	}

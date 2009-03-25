@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknView" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitle" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBARestricted" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknForm" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DialogBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknIntegerEdwin" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwinBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.EditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikDateEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikMfneBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikDurationEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikFixedPointEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikFloatingPointEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikNumberEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.NumSecretEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.SecretEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikRangeEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwin" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikTimeEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikTimeOffsetEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikTimeAndDateEditor" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.sdt.series60.CAknView">
+    <property id="className">Cform_all_3_0FormView</property>
+    <compoundProperty id="location">
+      <property id="x">38</property>
+      <property id="y">10</property>
+    </compoundProperty>
+    <property id="name">form_all_3_0FormView</property>
+    <compoundProperty id="size">
+      <property id="width">176</property>
+      <property id="height">208</property>
+    </compoundProperty>
+    <component id="com.nokia.sdt.series60.StatusPane">
+      <compoundProperty id="location">
+        <property id="x">16</property>
+        <property id="y">1</property>
+      </compoundProperty>
+      <property id="name">statusPane</property>
+      <compoundProperty id="size">
+        <property id="width">152</property>
+        <property id="height">43</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.StatusPaneTitle">
+        <compoundProperty id="location">
+          <property id="x">48</property>
+        </compoundProperty>
+        <property id="name">title</property>
+        <property id="titleText" type="i18n">STR_form_all_3_0FormView_1</property>
+        <compoundProperty id="size">
+          <property id="width">104</property>
+          <property id="height">28</property>
+        </compoundProperty>
+        <compoundProperty id="image"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.CBARestricted">
+      <compoundProperty id="location">
+        <property id="y">184</property>
+      </compoundProperty>
+      <property id="name">controlPane</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">24</property>
+      </compoundProperty>
+    </component>
+    <component id="com.nokia.sdt.series60.CAknForm">
+      <compoundProperty id="location">
+        <property id="y">44</property>
+      </compoundProperty>
+      <property id="className">CForm_all_3_0Form</property>
+      <property id="notifyEsc">true</property>
+      <property id="name">form_all_3_0Form</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">140</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CAknIntegerEdwin">
+        <property id="value">5</property>
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_2</property>
+        <compoundProperty id="location"/>
+        <compoundProperty id="promptImage"/>
+        <property id="name">integerEditor1</property>
+        <property id="minimum">-1</property>
+        <eventBinding id="formatChanged" handlerDisplay="HandleIntegerEditor1FormatChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1FormatChangedL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleIntegerEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="navigation" handlerDisplay="HandleIntegerEditor1NavigationL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1NavigationL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleIntegerEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleIntegerEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleIntegerEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleIntegerEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleIntegerEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="textUpdated" handlerDisplay="HandleIntegerEditor1TextUpdatedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleIntegerEditor1TextUpdatedL(CEikEdwin*,TEdwinEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikDateEditor">
+        <compoundProperty id="minDate"/>
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <compoundProperty id="maxDate">
+          <property id="day">30</property>
+          <property id="year">2099</property>
+          <property id="month">11</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_3</property>
+        <compoundProperty id="location">
+          <property id="y">23</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">dateEditor1</property>
+        <compoundProperty id="date">
+          <property id="year">2006</property>
+        </compoundProperty>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleDateEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDateEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleDateEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDateEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleDateEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDateEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleDateEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDateEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleDateEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDateEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleDateEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDateEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikDurationEditor">
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_4</property>
+        <compoundProperty id="location">
+          <property id="y">46</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="flags"/>
+        <property id="name">durationEditor1</property>
+        <property id="durationSeconds">361</property>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleDurationEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDurationEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleDurationEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDurationEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleDurationEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDurationEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleDurationEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDurationEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleDurationEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDurationEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleDurationEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleDurationEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikFixedPointEditor">
+        <property id="value">1234</property>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_5</property>
+        <compoundProperty id="location">
+          <property id="y">71</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">fixedPointEditor1</property>
+        <property id="decimalPlaces">3</property>
+        <property id="minimum">-2</property>
+        <eventBinding id="formatChanged" handlerDisplay="HandleFixedPointEditor1FormatChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1FormatChangedL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleFixedPointEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="navigation" handlerDisplay="HandleFixedPointEditor1NavigationL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1NavigationL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleFixedPointEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleFixedPointEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleFixedPointEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleFixedPointEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleFixedPointEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="textUpdated" handlerDisplay="HandleFixedPointEditor1TextUpdatedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFixedPointEditor1TextUpdatedL(CEikEdwin*,TEdwinEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikFloatingPointEditor">
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_6</property>
+        <compoundProperty id="location">
+          <property id="y">96</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="value">2.3</property>
+        <property id="name">floatingPointEditor1</property>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <eventBinding id="formatChanged" handlerDisplay="HandleFloatingPointEditor1FormatChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1FormatChangedL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleFloatingPointEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="navigation" handlerDisplay="HandleFloatingPointEditor1NavigationL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1NavigationL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleFloatingPointEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleFloatingPointEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleFloatingPointEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleFloatingPointEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleFloatingPointEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="textUpdated" handlerDisplay="HandleFloatingPointEditor1TextUpdatedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleFloatingPointEditor1TextUpdatedL(CEikEdwin*,TEdwinEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikNumberEditor">
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_7</property>
+        <compoundProperty id="location">
+          <property id="y">121</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">numEditor1</property>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="number">6</property>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleNumEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleNumEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleNumEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleNumEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleNumEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleNumEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.NumSecretEditor">
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_8</property>
+        <compoundProperty id="location">
+          <property id="y">146</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">numSecret1</property>
+        <property id="text" type="i18n">STR_form_all_3_0FormView_9</property>
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleNumSecret1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumSecret1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleNumSecret1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumSecret1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleNumSecret1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumSecret1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleNumSecret1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumSecret1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleNumSecret1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumSecret1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleNumSecret1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleNumSecret1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikRangeEditor">
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_10</property>
+        <compoundProperty id="value">
+          <property id="minimum">5</property>
+          <property id="maximum">1</property>
+          <property id="separatorText" type="i18n">STR_form_all_3_0FormView_11</property>
+        </compoundProperty>
+        <compoundProperty id="location">
+          <property id="y">169</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">rangeEditor1</property>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleRangeEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleRangeEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleRangeEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleRangeEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleRangeEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleRangeEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleRangeEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleRangeEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleRangeEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleRangeEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleRangeEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleRangeEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.SecretEditor">
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_12</property>
+        <compoundProperty id="location">
+          <property id="y">194</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">secret1</property>
+        <property id="text" type="i18n">STR_form_all_3_0FormView_13</property>
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleSecret1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleSecret1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleSecret1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleSecret1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleSecret1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleSecret1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleSecret1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleSecret1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleSecret1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleSecret1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleSecret1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleSecret1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikEdwin">
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <compoundProperty id="avkonFlags"/>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_14</property>
+        <compoundProperty id="location">
+          <property id="y">217</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="allowedCaseModes"/>
+        <property id="name">edit1</property>
+        <property id="text" type="i18n">STR_form_all_3_0FormView_15</property>
+        <compoundProperty id="allowedInputModes">
+          <property id="EAknEditorFullWidthKatakanaInputMode">true</property>
+          <property id="EAknEditorKatakanaInputMode">true</property>
+          <property id="EAknEditorFullWidthNumericInputMode">true</property>
+          <property id="EAknEditorHiraganaKanjiInputMode">true</property>
+          <property id="EAknEditorHalfWidthTextInputMode">true</property>
+          <property id="EAknEditorFullWidthTextInputMode">true</property>
+        </compoundProperty>
+        <eventBinding id="formatChanged" handlerDisplay="HandleEdit1FormatChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1FormatChangedL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleEdit1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="navigation" handlerDisplay="HandleEdit1NavigationL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1NavigationL(CEikEdwin*,TEdwinEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleEdit1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleEdit1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleEdit1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleEdit1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleEdit1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1StateChangedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="textUpdated" handlerDisplay="HandleEdit1TextUpdatedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleEdit1TextUpdatedL(CEikEdwin*,TEdwinEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikTimeEditor">
+        <compoundProperty id="maxTime">
+          <property id="hour">23</property>
+          <property id="minute">59</property>
+          <property id="second">59</property>
+        </compoundProperty>
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_16</property>
+        <compoundProperty id="location">
+          <property id="y">240</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="promptImage"/>
+        <property id="name">timeEditor1</property>
+        <compoundProperty id="time">
+          <property id="second">1</property>
+        </compoundProperty>
+        <compoundProperty id="minTime"/>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleTimeEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleTimeEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleTimeEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleTimeEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleTimeEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleTimeEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikTimeOffsetEditor">
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_17</property>
+        <compoundProperty id="location">
+          <property id="y">263</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="flags"/>
+        <property id="name">timeOffsetEditor1</property>
+        <property id="timeOffsetSeconds">500</property>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleTimeOffsetEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeOffsetEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleTimeOffsetEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeOffsetEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleTimeOffsetEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeOffsetEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleTimeOffsetEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeOffsetEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleTimeOffsetEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeOffsetEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleTimeOffsetEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeOffsetEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikTimeAndDateEditor">
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <property id="prompt" type="i18n">STR_form_all_3_0FormView_18</property>
+        <compoundProperty id="maxTimeAndDate">
+          <property id="day">30</property>
+          <property id="year">2099</property>
+          <property id="hour">23</property>
+          <property id="minute">59</property>
+          <property id="second">59</property>
+          <property id="month">11</property>
+        </compoundProperty>
+        <compoundProperty id="location">
+          <property id="y">286</property>
+        </compoundProperty>
+        <compoundProperty id="minTimeAndDate"/>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="timeAndDate">
+          <property id="year">2006</property>
+          <property id="second">50</property>
+        </compoundProperty>
+        <property id="name">timeAndDateEditor1</property>
+        <property id="interveningText" type="i18n">STR_form_all_3_0FormView_19</property>
+        <eventBinding id="interactionRefused" handlerDisplay="HandleTimeAndDateEditor1InteractionRefusedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeAndDateEditor1InteractionRefusedL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="prepareFocusTransition" handlerDisplay="HandleTimeAndDateEditor1PrepareFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeAndDateEditor1PrepareFocusTransitionL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingCancel" handlerDisplay="HandleTimeAndDateEditor1RequestingCancelL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeAndDateEditor1RequestingCancelL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingExit" handlerDisplay="HandleTimeAndDateEditor1RequestingExitL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeAndDateEditor1RequestingExitL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="requestingFocus" handlerDisplay="HandleTimeAndDateEditor1RequestingFocusL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeAndDateEditor1RequestingFocusL(CCoeControl*,TCoeEvent))"/>
+        <eventBinding id="stateChanged" handlerDisplay="HandleTimeAndDateEditor1StateChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleTimeAndDateEditor1StateChangedL(CCoeControl*,TCoeEvent))"/>
+      </component>
+      <eventBinding id="draw" handlerDisplay="HandleForm_all_3_0FormDraw" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormDraw(const TRect&amp;))"/>
+      <eventBinding id="dynInitMenuPane" handlerDisplay="HandleForm_all_3_0FormDynInitMenuPaneL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormDynInitMenuPaneL(TInt, CEikMenuPane*))"/>
+      <eventBinding id="focusChanged" handlerDisplay="HandleForm_all_3_0FormFocusChanged" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormFocusChanged(TDrawNow))"/>
+      <eventBinding id="lineChanged" handlerDisplay="HandleForm_all_3_0FormLineChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormLineChangedL(TInt))"/>
+      <eventBinding id="offerKeyEvent" handlerDisplay="HandleForm_all_3_0FormOfferKeyEventL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormOfferKeyEventL(const TKeyEvent&amp;, TEventCode))"/>
+      <eventBinding id="offerKeyToApp" handlerDisplay="HandleForm_all_3_0FormOfferKeyToAppL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormOfferKeyToAppL(const TKeyEvent&amp;, TEventCode))"/>
+      <eventBinding id="pageChanged" handlerDisplay="HandleForm_all_3_0FormPageChangedL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormPageChangedL(TInt))"/>
+      <eventBinding id="positionChanged" handlerDisplay="HandleForm_all_3_0FormPositionChanged" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormPositionChanged())"/>
+      <eventBinding id="prepareForFocusGain" handlerDisplay="HandleForm_all_3_0FormPrepareForFocusGainL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormPrepareForFocusGainL())"/>
+      <eventBinding id="prepareForFocusLoss" handlerDisplay="HandleForm_all_3_0FormPrepareForFocusLossL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormPrepareForFocusLossL())"/>
+      <eventBinding id="prepareForFocusTransition" handlerDisplay="HandleForm_all_3_0FormPrepareForFocusTransitionL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormPrepareForFocusTransitionL())"/>
+      <eventBinding id="processCommand" handlerDisplay="HandleForm_all_3_0FormProcessCommandL" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormProcessCommandL(TInt))"/>
+      <eventBinding id="resourceChanged" handlerDisplay="HandleForm_all_3_0FormResourceChanged" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormResourceChanged(TInt))"/>
+      <eventBinding id="sizeChanged" handlerDisplay="HandleForm_all_3_0FormSizeChanged" handlerSymbol="cpp@src//form_all_3_0Form.cpp/function(CForm_all_3_0Form::HandleForm_all_3_0FormSizeChanged())"/>
+    </component>
+    <eventBinding id="activated" handlerDisplay="HandleForm_all_3_0FormViewActivatedL" handlerSymbol="cpp@src//Form_all_3_0FormView.cpp/function(Cform_all_3_0FormView::HandleForm_all_3_0FormViewActivatedL())"/>
+    <eventBinding id="deactivated" handlerDisplay="HandleForm_all_3_0FormViewDeactivated" handlerSymbol="cpp@src//Form_all_3_0FormView.cpp/function(Cform_all_3_0FormView::HandleForm_all_3_0FormViewDeactivated())"/>
+    <eventBinding id="handleCommand" handlerDisplay="HandleForm_all_3_0FormViewCommandL" handlerSymbol="cpp@src//Form_all_3_0FormView.cpp/function(Cform_all_3_0FormView::HandleForm_all_3_0FormViewCommandL(TInt))"/>
+    <eventBinding id="handleStatusPaneSizeChange" handlerDisplay="HandleForm_all_3_0FormViewStatusPaneSizeChange" handlerSymbol="cpp@src//Form_all_3_0FormView.cpp/function(Cform_all_3_0FormView::HandleForm_all_3_0FormViewStatusPaneSizeChange())"/>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_form_all_3_0FormView_1">form_all_3_0Form</string>
+      <string id="STR_form_all_3_0FormView_2">integer</string>
+      <string id="STR_form_all_3_0FormView_3">date</string>
+      <string id="STR_form_all_3_0FormView_4">duration</string>
+      <string id="STR_form_all_3_0FormView_5">fixed</string>
+      <string id="STR_form_all_3_0FormView_6">floating</string>
+      <string id="STR_form_all_3_0FormView_7">num</string>
+      <string id="STR_form_all_3_0FormView_8">numsecret</string>
+      <string id="STR_form_all_3_0FormView_9">number</string>
+      <string id="STR_form_all_3_0FormView_10">range</string>
+      <string id="STR_form_all_3_0FormView_11">-</string>
+      <string id="STR_form_all_3_0FormView_12">secret</string>
+      <string id="STR_form_all_3_0FormView_13">secret</string>
+      <string id="STR_form_all_3_0FormView_14">edit</string>
+      <string id="STR_form_all_3_0FormView_15">Edit</string>
+      <string id="STR_form_all_3_0FormView_16">time</string>
+      <string id="STR_form_all_3_0FormView_17">time off</string>
+      <string id="STR_form_all_3_0FormView_18">time date</string>
+      <string id="STR_form_all_3_0FormView_19"> </string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="form_all_3_0FormView">r_form_all_3_0_form_form_all_3_0_form_view</resourceMapping>
+      <resourceMapping instanceName="title">r_form_all_3_0_form_title_resource</resourceMapping>
+      <resourceMapping instanceName="form_all_3_0Form">r_form_all_3_0_form_form_all_3_0_form</resourceMapping>
+      <resourceMapping instanceName="numSecret1" rsrcId="text">r_form_all_3_0_form_num_secret1</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_form_all_3_0_form_status_pane</resourceMapping>
+      <resourceMapping instanceName="secret1" rsrcId="text">r_form_all_3_0_form_secret1</resourceMapping>
+      <resourceMapping instanceName="edit1" rsrcId="text">r_form_all_3_0_form_edit1</resourceMapping>
+      <resourceMapping instanceName="form_all_3_0Form" rsrcId="member$form">r_form_all_3_0_form_form_all_3_0_form_form</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="numSecret1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewNumSecret1</enumMapping>
+      <enumMapping instanceName="numEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtNumberEditor</enumMapping>
+      <enumMapping instanceName="timeAndDateEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewTimeAndDateEditor1</enumMapping>
+      <enumMapping instanceName="fixedPointEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewFixedPointEditor1</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewEdit1</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="form_all_3_0FormView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EForm_all_3_0FormViewId</enumMapping>
+      <enumMapping instanceName="rangeEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewRangeEditor1</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
+      <enumMapping instanceName="timeEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtTimeEditor</enumMapping>
+      <enumMapping instanceName="integerEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewIntegerEditor1</enumMapping>
+      <enumMapping instanceName="timeEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewTimeEditor1</enumMapping>
+      <enumMapping instanceName="timeOffsetEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewTimeOffsetEditor1</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewFloatingPointEditor1</enumMapping>
+      <enumMapping instanceName="timeAndDateEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtTimeAndDateEditor</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
+      <enumMapping instanceName="numEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewNumEditor1</enumMapping>
+      <enumMapping instanceName="fixedPointEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtFxPtEd</enumMapping>
+      <enumMapping instanceName="timeOffsetEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtTimeOffsetEditor</enumMapping>
+      <enumMapping instanceName="secret1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtSecretEd</enumMapping>
+      <enumMapping instanceName="durationEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtDurationEditor</enumMapping>
+      <enumMapping instanceName="durationEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewDurationEditor1</enumMapping>
+      <enumMapping instanceName="floatingPointEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtFlPtEd</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtDateEditor</enumMapping>
+      <enumMapping instanceName="secret1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewSecret1</enumMapping>
+      <enumMapping instanceName="numSecret1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtNumericSecretEditor</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="integerEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtIntegerEdwin</enumMapping>
+      <enumMapping instanceName="rangeEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtRangeEditor</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+      <enumMapping instanceName="dateEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_all_3_0FormViewDateEditor1</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+  <generatedFiles>
+    <file>inc/form_all_3_0form.h</file>
+    <file>src/form_all_3_0formview.cpp</file>
+    <file>inc/form_all_3_0formview.h</file>
+    <file>src/form_all_3_0form.cpp</file>
+    <file>data/form_all_3_0.rss</file>
+    <file>data/form_all_3_0form.rssi</file>
+    <file>inc/form_all_3_0.hrh</file>
+    <file>data/form_all_3_0.loc</file>
+    <file>data/form_all_3_0.l01</file>
+    <file>data/form_all_3_0form.l01</file>
+    <file>data/form_all_3_0form.loc</file>
+    <file>inc/form_all_3_0form.hrh</file>
+  </generatedFiles>
+</designerData>

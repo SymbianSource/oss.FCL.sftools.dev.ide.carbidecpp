@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<introContent>
+	<extensionContent 
+		id="com.nokia.carbide.cpp-overview" 
+		alt-style="carbide.properties" 
+		style="carbide.css" 
+		name="Carbide.c++ Welcome" 
+		path="overview/@">
+		
+		<group style-id="content-group" id="carbide-cpp">
+			<link label="Carbide.c++ Welcome message" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp/html/welcome_note.htm"  
+				id="carbide" 
+				style-id="overview-links">
+				<text>Welcome message to Carbide.c++ developers</text>
+			</link>
+		</group>
+	</extensionContent>
+	
+</introContent>

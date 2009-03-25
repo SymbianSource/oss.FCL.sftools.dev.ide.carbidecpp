@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Examining memory in Debugging information</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Examining Memory</h2>
+</div><div>
+<p>The <a href="CrashDebugger_cmd_m.guide.html" title="The debug monitor and command syntax / m - do a memory dump">m</a>
+command allows you to view a dump of memory. </p>
+<p>This command has two formats:</p>
+<p class="listing">m start end</p>
+<p class="listing">m start+length</p>
+<p>Using the first format you provide the start and end addresses that
+you want to inspect; for example:</p>
+<p class="listing">m 81240000 8124003F</p>
+<p>Using the second form you provide the start address and the number of
+bytes to dump (in hex); for example:</p>
+<p class="listing">m 81240000 +40</p>
+<p>Both of the above examples dump 64 bytes from address 0x81240000. The
+output is a standard hex-dump:</p>
+<p class="listing">.m 81240000 +40<br>
+  81240000: 00 00 FF EB 08 01 BF D7 00 04 7D B6 02 00 BF EF ..........}.....<br>81240010: 00 01 DF EE 0A 40 7F F7 00 80 BF FF 20 10 FF EA .....@...... ...<br>81240020: 00 82 FF 77 04 24 FD FF 40 01 FF 7F 00 01 FF FF ...w.$..@.......<br>81240030: 08 10 FF BF 08 00 BF DE 08 00 EF FB 00 00 FF DF ................</p>
+
+</div><div class="Head2">
+</div>
+<div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

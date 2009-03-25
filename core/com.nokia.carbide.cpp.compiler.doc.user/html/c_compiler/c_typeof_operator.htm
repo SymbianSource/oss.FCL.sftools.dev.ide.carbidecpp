@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>The __typeof__() and typeof() operators</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3> The __typeof__() and typeof() operators</h3>
+<p>  With the <span class="code">__typeof__()</span> operator, the compiler lets you specify the data type of an expression. Listing 1 shows an example.</p>
+<p class="listing">__typeof__(<em>expression</em>)</p>
+<p>where expression is any valid C expression or data type. Because the compiler translates a <span class="code">__typeof__()</span> expression into a data type, you can use this expression wherever a normal type would be specified.</p>
+<p>Like the <span class="code">sizeof()</span> operator, <span class="code">__typeof__()</span> is only evaluated at compile time, not at runtime. For related information, see &ldquo;Sizeof() Operator Data Type&rdquo;.</p>
+<p>If you enable the gcc_extensions pragma, the <span class="code">typeof()</span> operator is equivalent to the <span class="code">__typeof__()</span> operator.</p>
+<div class="listing">
+  <h4>Listing 1. Example of __typeof__() and typeof() Operators</h4>
+  <p>char *cp;<br />
+    int *ip;<br />
+    long *lp;</p>
+  <p>__typeof__(*ip) i; /* equivalent to &quot;int i;&quot; */<br />
+    __typeof__(*lp) l; /* equivalent to &quot;long l;&quot; */</p>
+  <p>#pragma gcc_extensions on<br />
+    typeof(*cp) c; /* equivalent to &quot;char c;&quot; */<br />
+  </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

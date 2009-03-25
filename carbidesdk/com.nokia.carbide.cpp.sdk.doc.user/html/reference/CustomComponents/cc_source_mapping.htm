@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Source Mapping</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>RSS Source Mapping</h2>
+<p>The UI Designer supports source generation and updating of Symbian resource (RSS) files, including LOC/Lxx/RLS localized string files and HRH headers shared between a class of C/C++ files.   C++ files are handled by a one-way template expansion process. RSS files are handled by a two-way process using an RSS DOM. The &lt;sourceMapping&gt; element in a component definition file (.component) drives the process.</p>
+<p>The source mapping engine maintains enough information to allow in-place modifications to RSS and related files.  Also, it allows for user edits to be retained, as long as they are not also handled by the component.</p>
+<h3>General Concepts</h3>
+<p>Visualize RSS source mapping as walking down two parallel hierarchies.  One is the hierarchy of component instances, properties, compound properties, arrays, and component reference properties. The other is the hierarchy of RSS RESOURCE definitions, field initializers, nested resource expressions, array initializers, and LLINK field initializers.</p>
+<p>The hierarchies outlined here are not strictly parallel.  For example, you may map something other than a component reference property to an LLINK field.  If you map a compound property or another instance to an LLINK, the source mapping engine will take care of automatically generating a resource to satisfy the link.  Conversely, a component reference property may be mapped to a resource expression; no standalone resource needs to exist in RSS.</p>
+<p>At the leaf of the tree, where properties are mapped to field initializers, types needn't be mapped strictly.  Usually, integer properties are mapped to WORD or BYTE RSS fields, but you may map enumerator properties or even literal text (corresponding to no property) to such fields as well.</p>
+<p>XML elements in the &lt;sourceMapping&gt; element are driven from the RSS side of the picture (e.g. &quot;map a resource&quot;, &quot;map a field&quot;, etc.).  The structure and nesting of these elements drive the structure of the generated RSS.  Generally, a &lt;mapResource...&gt; element creates a new resource or resource expression, and &lt;map...Member&gt; elements map into a member or field initializer named by the &quot;member&quot; attribute.</p>
+<p>The source mapping engine automatically generates names for resources which are guaranteed to be unique within the scope of a project and its designs.  You may influence this only by supplying a fixed name for a resource using &quot;rsrcName&quot; in &lt;mapResource&gt;.</p>
+<p>The &quot;property&quot; attribute inside the &lt;map...Member&gt; elements depicts how to walk the component instance and property hierarchy.  This attribute specifies a &quot;property path&quot;, which is a tiny language for navigating the data model.</p>
+<ul>
+  <li> path := &quot;.&quot; | path-element [ dot-or-arrow-or-at path ]</li>
+  <li>path-element := read-property | find-child | goto-parent</li>
+  <li>read-property := &lt;property name&gt; (find property of the given name)</li>
+  <li>find-child := &quot;[&quot; &lt;component id&gt; &quot;]&quot; (find child component with given id)</li>
+  <li>goto-parent := &quot;[parent]&quot; (find parent)</li>
+  <li>dot-or-arrow-or-at := &quot;.&quot; (enter compound property) | &quot;-&gt;&quot; (dereference reference property) | &quot;@&quot; (attribute)</li>
+</ul>
+<p>For example, property=&quot;location.x&quot; will read the &quot;x&quot; property inside the compound property named &quot;location&quot;.  The statement &quot;holder.reference-&gt;value&quot; will read the &quot;value&quot; property inside the  &quot;reference&quot; component reference property inside the &quot;holder&quot; compound property.  Usually a property attribute is a simple name.  Note that you may target a compound property (e.g. &quot;location&quot;) or a component instance (e.g. &quot;holder.reference-&gt;&quot;) itself with a property path.</p>
+<p>In both cases, the movement is one-way as nesting increases further into the RSS hierarchy or into the component instance hierarchy.  The only way to go up the hierarchy is to map into an RSS LLINK field or read across a component reference property.</p>
+<p> The following table lists supported mappings.  See the following sections for details on the XML elements.</p>
+<table width="378" border="1" align="center">
+  <caption>
+    Supported Mappings
+  </caption>
+  <tr>
+    <th width="169" scope="col">Mapping</th>
+    <th width="193" scope="col">XML Element</th>
+  </tr>
+  <tr>
+    <td>Component instance</td>
+    <td>&lt;mapResource&gt; &lt;mapResourceMember&gt;<br />
+      &lt;mapInstanceMember&gt;</td>
+  </tr>
+  <tr>
+    <td>Compound property</td>
+    <td>&lt;mapResource&gt; &lt;mapResourceMember&gt;</td>
+  </tr>
+  <tr>
+    <td>Simple leaf property</td>
+    <td>&lt;mapSimpleMember&gt; &lt;mapIdentifierMember&gt;<br />
+      &lt;mapEnumMember&gt;</td>
+  </tr>
+  <tr>
+    <td>Component reference property</td>
+    <td>&lt;mapReferenceMember&gt; &lt;mapInstanceMember&gt; <br />
+      &lt;mapResourceMember&gt;</td>
+  </tr>
+  <tr>
+    <td>Set of boolean properties</td>
+    <td>&lt;mapBitmaskMember&gt;</td>
+  </tr>
+  <tr>
+    <td>Constant</td>
+    <td>&lt;mapFixedMember&gt;</td>
+  </tr>
+</table>
+<p><br />
+</p>
+<h3><a name="mappings"></a>Mappings</h3>
+<p>Source mapping elements appear in the &lt;sourceMapping&gt; element of the component definition file.</p>
+<h4>Resource</h4>
+<p>The &lt;mapResource&gt; element defines a mapping from a property source to a resource.  Attributes include:</p>
+<ul>
+  <li><strong>struct</strong> &mdash; the name of the STRUCT defining the resource type</li>
+  <li><strong>headers</strong> &mdash; a space-separated list of *.rh filenames that declare the struct</li>
+</ul>
+<h5>Member Mappings</h5>
+<p>The following elements map individual properties to resource members:</p>
+<ul>
+  <li>mapSimpleMember</li>
+  <li>mapEnumMember</li>
+  <li>mapIdentifierMember</li>
+  <li>mapInstanceMember</li>
+  <li>mapReferenceMember</li>
+  <li>mapBitmaskMember</li>
+  <li>mapArrayMember</li>
+  <li>mapResourceMember</li>
+</ul>
+<p>Each element takes these attributes:</p>
+<ul>
+  <li><strong>property</strong> &mdash; Name of the property to map. The named property is in the scope of the current property source. A dotted syntax may be used to choose subproperties (bounds.width). In the &lt;mapResourceMember&gt; element, use &ldquo;.&rdquo; to stay in the current property source.</li>
+  <li><strong>member</strong> &mdash;  Name of the resource member. This may include an array element dereference (for example, <span class="code">foo[0]</span>) to target a given element.  If used to write into an RSS array initializer, the index must be the terminal index (for example, the current length of the array).  It cannot rewrite an existing element or add past the end of the array. </li>
+</ul>
+<p>Examples of Property and Member mapping:</p>
+<p>Given a current property source PS and a struct declaration STR:</p>
+<ul>
+  <li>    <span class="code">&lt;mapSimpleMember property=&ldquo;text&rdquo; member=&ldquo;buf&rdquo; /&gt;</span><br />
+  Takes the &ldquo;text&rdquo; property of PS and maps it with the &ldquo;buf&rdquo; member of STR.</li>
+  <li><span class="code">&lt;mapSimpleMember property=&ldquo;bounds.width&rdquo; member=&ldquo;width&rdquo; /&gt;</span><br />
+  Takes the &ldquo;width&rdquo; property of the &ldquo;bounds&rdquo; compound property of PS and maps it with the &ldquo;width&rdquo; of STR.</li>
+  <li><span class="code">&lt;mapResourceMember property=&ldquo;data&rdquo; member=&ldquo;embed&rdquo; struct=&ldquo;INNER&rdquo; ...&gt;</span><br />
+  Opens a scope where properties from the compound property &ldquo;data&rdquo; are mapped memberwise with the &ldquo;embed&rdquo; member (which is of type &ldquo;STRUCT INNER&rdquo;) of STR.</li>
+  <li><span class="code">&lt;mapResourceMember property=&ldquo;.&rdquo; member=&ldquo;embed&rdquo; struct=&ldquo;INNER&rdquo; ... &gt;</span><br />
+  Opens a scope where properties from PS are mapped memberwise with the &ldquo;embed&rdquo; member (which is of type &ldquo;STRUCT INNER&rdquo;) of STR.</li>
+  <li><span class="code">&lt;mapResourceMember property=&ldquo;.&rdquo; member=&ldquo;items[0]&rdquo; struct=&ldquo;INNER&rdquo;&gt;</span><br />
+  Opens a scope where properties from PS are mapped memberwise with the first element of the &ldquo;items&rdquo; array member (which is of type &ldquo;STRUCT INNER&rdquo;) of STR.</li>
+</ul>
+<h4><a name="resource"></a>Resource Member Mapping</h4>
+<p>Aside from property and member, the &lt;mapResourceMember&gt; element has the same syntax and semantics as the &lt;mapResource&gt; element. This element maps a compound property to a resource expression or statement. Mappings inside the element use the compound property as the property source. If the member is of STRUCT type, the mapping corresponds to that member. Otherwise, the member must be of LLINK type. In this case a uniquely-named resource holds the mapped data, which is referenced from the LLINK.</p>
+<p>To map properties from the current property source into a STRUCT, use the property=&ldquo;.&rdquo; form and appropriate mapXYZMember. To map a compound property to members of the current resource, use the property=&ldquo;bounds.width&rdquo; form and appropriate mapXYZMember.</p>
+<p>Example syntax:</p>
+<pre>&lt;mapResourceMember property=... member=... struct=&ldquo;...&rdquo; headers=&ldquo;...&rdquo; &gt;</pre>
+<p>Resource Generation Example:</p>
+<blockquote>
+  <p>myheader.rh file:</p>
+  <pre class="listing">STRUCT RSRC {
+ STRUCT  theStruct;
+ WORD ckSum;
+}</pre>
+  <pre class="listing">STRUCT FOO {
+ BUF  buf;
+ WORD  type;
+ LONG count;
+}</pre>
+  <p>Component file:</p>
+  <pre class="listing">&lt;compoundPropertyDeclaration qualifiedName=&ldquo;Foo&quot;&gt;
+  &lt;property name=&ldquo;text&quot; type=&quot;localizedString&quot; /&gt;
+  &lt;enumProperty name=&ldquo;type&quot; type=&ldquo;...&quot;  /&gt;
+  &lt;property name=&ldquo;count&quot; type=&ldquo;integer&ldquo; /&gt;
+&lt;/compoundPropertyDeclaration&gt;</pre>
+  <pre class="listing">&lt;properties&gt;
+  &lt;property name=&quot;name&quot; type=&quot;uniqueName&quot;/&gt;
+  &lt;compoundProperty name=&ldquo;foo&quot; type=&ldquo;Foo&quot;/&gt;
+  &lt;property name=&ldquo;checksum&quot; type=&ldquo;integer&quot;/&gt;
+&lt;/properties&gt;</pre>
+  <pre class="listing">&lt;sourcemapping&gt;
+  &lt;mapResource struct=&ldquo;RSRC&rdquo; headers=&ldquo;myheader.rh&rdquo;&gt;
+    &lt;mapResourceMember property=&ldquo;foo&rdquo; member=&ldquo;theStruct&rdquo; struct=&ldquo;FOO&rdquo; headers=&ldquo;myheader.rh&rdquo; /&gt;
+      &lt;mapSimpleMember property=&ldquo;text&rdquo; member=&ldquo;buf&rdquo;/&gt;
+      &lt;mapEnumMember property=&ldquo;type&rdquo; member=&ldquo;type&rdquo;/&gt;
+      &lt;mapSimpleMember property=&ldquo;count&rdquo; member=&ldquo;count&rdquo;/&gt;
+    &lt;/mapResourceMember&gt;
+    &lt;mapSimpleMember property=&ldquo;checksum&rdquo; member=&ldquo;ckSum&rdquo;/&gt;
+  &lt;/mapResource&gt;
+&lt;/sourcemapping&gt;</pre>
+</blockquote>
+
+<h4><a name="simple"></a>Simple Member Mapping</h4>
+<p>The &lt;mapSimpleMember&gt; element is allowed within the mapResource, mapResourceElement, or mapResourceMember element. It is used to map a value to a struct member by specifying the property path that provides the value. For example:</p>
+<pre class="listing">&lt;mapSimpleMember property=&quot;lineWidth&quot; member=&quot;line_size&quot;/&gt;</pre>
+<p>This element allows you to map an integer, float, string, or reference members. Macros and localized strings are handled automatically. Anything in the data model can be represented in the resource file, and any form of string can be stored in the data model. There is no need for different actions based on the state of a string.</p>
+<p>Component references are handled automatically. The resource for the target component instance is located or a stub resource is created.  An error results under the following conditions:</p>
+<ul>
+  <li>If the instance doesn&rsquo;t exist</li>
+  <li>The instance has a missing component</li>
+  <li>The instance has no source mapping</li>
+  <li>The instance&rsquo;s resource header and struct cannot be found.</li>
+</ul>
+<p>Compound properties are mapped by using IPropertySource#getEditableValue().</p>
+<h4><a name="enum"></a>Enum Member Mapping</h4>
+<p>The &lt;mapEnumMember&gt; element is allowed within the mapResource, mapResourceElement, or mapResourceMember element. It maps a given property with a resource member and converts enumerator names from one representation to another. This element may be used alone if proper style is followed. All the enumerator values in the data model should be the same as the value used in the resource (RSS) file. The  &ldquo;value&rdquo; attributes under enumPropertyDeclaration should match the  RSS enumerators. Otherwise, the enumerator mapping must be spelled out in subelements. Compound properties are mapped using IPropertySource#getEditableValue().</p>
+<p>Attributes:</p>
+<ul>
+  <li><strong>enumeration</strong>  &mdash; If specified, this is the enumeration declaring the enumerators (optional).</li>
+  <li><strong>headers</strong> &mdash; The space-separated list of header files that define the enumeration constants (optional).</li>
+  <li><strong>uniqueValue</strong> &mdash; If set, this denotes an enumerator value whose RSS mapping is a unique identifier.  If &ldquo;*&rdquo; is specified, each mapping is given a unique value (optional).</li>
+  <li><strong>nameAlgorithm</strong> &mdash; This is optional unless uniqueValue is set. If set, it is the symbolic name of the generator. If set to &quot;false&quot;, eliminates warnings that occur if you map an enum for a macro or for a value that does not appear in any included files.</li>
+</ul>
+<p>Example syntax:</p>
+<pre>&lt;mapEnumMember property=... member=... [enumeration=&ldquo;...&rdquo; headers=&ldquo;...&rdquo;] [uniqueValue=&ldquo;...&rdquo; nameAlgorithm=&ldquo;...&rdquo;]&gt; </pre>
+<p>If the data model uses different enumerators than RSS, the &lt;mapEnumMember&gt; element must contain a list of &lt;mapEnum value=... enum=... /&gt; declarations.</p>
+<p>Attributes:</p>
+<ul>
+  <li><strong>value</strong> &mdash; The value from the enumPropertyDeclaration&rsquo;s enumElement.</li>
+  <li><strong>enum</strong> &mdash; The enumerator name used in RSS.</li>
+</ul>
+<p>Note that using the uniqueValue attribute does NOT force the use of this table. All possible enumerator values must be listed in &lt;mapEnum&gt; elements, otherwise a warning is emitted and no mapping is performed. The UI Designer will warn if a mapped enumerator cannot be resolved by means of headers (either those in &lt;enumMemberMapping&gt; or those brought in by surrounding &lt;mapResource&gt; elements).</p>
+<p>Example:</p>
+<pre class="listing">&lt;mapEnumMember property=&ldquo;font&rdquo; member=&ldquo;fontName&rdquo; header=&ldquo;aknfonts.hrh&rdquo;&gt;
+  &lt;mapEnum value=&ldquo;SYSTEM&rdquo; enum=&ldquo;EAknFontSystem&rdquo;/&gt;
+  &lt;mapEnum value=&ldquo;TITLE&rdquo; enum=&ldquo;EAknFontTitle&rdquo;/&gt;
+&lt;/mapEnumMember&gt; </pre>
+<h4><a name="identifier"></a>Identifier Member Mapping</h4>
+<p>The &lt;mapIdentifierMember&gt; element maps a string property to an identifier in RSS.  This places an unquoted string in RSS, as opposed to the &lt;mapSimpleMember&gt; element which always converts strings to literal string constants. Compound properties are mapped using IPropertySource#getEditableValue().</p>
+<p>Example syntax:</p>
+<pre>&lt;mapIdentifierMember property=&ldquo;...&rdquo; member=&ldquo;...&rdquo; /&gt;</pre>
+<h4><a name="instance"></a>Instance Mapping</h4>
+<p>The &lt;mapInstanceMember&gt; element maps an instance to an LLINK member or a STRUCT member of a resource. The &lt;mapInstanceElement&gt; does the same for array elements.  This is rarely used but may be useful in a complex case of mapping selective elements of arrays, as follows:</p>
+<pre class="listing">&lt;mapArrayMember property=&quot;.&quot; member=&quot;structs&quot;&gt;
+  &lt;select attribute=&quot;is-emitted&quot;&gt;
+    &lt;choice value=&quot;true&quot;&gt;
+      &lt;mapInstanceElement /&gt;
+    &lt;/choice&gt;
+    &lt;choice /&gt;
+  &lt;/select&gt;
+&lt;/mapArrayMember&gt;</pre>
+<h4><a name="reference"></a>Reference Mapping</h4>
+<p>The &lt;mapReferenceMember&gt; and &lt;mapReferenceElement&gt; elements map a component reference property to an LLINK field in RSS.  This will place the name of the generated resource for the referenced component instance into the field initializer in RSS.</p>
+<h4><a name="bitmask"></a>Bitmask Mapping</h4>
+<p>The &lt;mapBitmaskMember&gt; and &lt;mapBitmaskElement&gt; elements are used to map a set of boolean properties to a single integer field in RSS.  For example, the component may contain two boolean flags which are expressed as a logical OR of enumerators in RSS.</p>
+<p>This mapping is powerful since it allows not only simple one-to-one mapping of properties to enumerators, but also allows groups of properties to be mapped to a single enumerator (e.g. &quot;EAllFlags&quot;) and also allows a default value when no properties are set (e.g. &quot;ENoFlags&quot; or &quot;EDefaultFlags&quot;).</p>
+<p>First, this element has an &quot;includedProperties&quot; attribute specifying a space-separated list of properties which are involved in the mapping.  This is used for two reasons:<br />
+(1) to allow you to map flags from a larger set of properties and<br />
+(2) to validate that you remembered to account for every combination of flags when mapping.</p>
+<p>Generally, the latter constraint is not difficult to follow if you include one-to-one mappings for every flag property involved.</p>
+<p>This element contains &lt;mapBitmaskValue&gt; elements that describe how a set of &quot;true&quot; properties can be mapped to an enumerator.  For example:  <span class="code">&lt;mapBitmaskValue properties=&quot;myflag&quot; value=&quot;EMyFlag&quot; /&gt;</span><br />
+is a simple one-to-one mapping which maps &quot;EMyFlag&quot; if the &quot;myflag&quot; property is &quot;true&quot;.</p>
+<p>A more complex example is:<br />
+  <span class="code">&lt;mapBitmaskValue properties=&quot;part1Flag part2Flag&quot; value=&quot;EPart1AndPart2Flag&quot; /&gt;</span><br />
+which maps the &quot;EPart1AndPart2Flag&quot; only if both &quot;part1Flag&quot; and &quot;part2Flag&quot; are &quot;true&quot;.</p>
+<p>The &lt;mapBitmaskValue&gt; elements are iterated in order until all the &quot;includedProperties&quot; have been accounted for.  Thus, specify the more complex mappings first, and then the one-to-one mappings, and finally an empty mapping, which is used only if no properties have been found to be &quot;true&quot;.  For example:</p>
+<pre class="listing">&lt;mapBitmaskMember property=&quot;flagSet&quot; member=&quot;flags&quot;
+   includedProperties=&quot;allowEdit allowCursorMovement compatibility&quot;&gt;
+   &lt;mapBitmaskValue properties=&quot;allowEdit allowCursorMovement&quot; value=&quot;EFullEditing&quot; /&gt;
+   &lt;mapBitmaskValue properties=&quot;allowEdit &quot; value=&quot;EAllowEditing&quot; /&gt;
+   &lt;mapBitmaskValue properties=&quot;allowCursorMovement&quot; value=&quot;EAllowCursorMovement&quot; /&gt;
+   &lt;mapBitmaskValue properties=&quot;compatibility&quot; value=&quot;ECompatibilitySetting&quot; /&gt;
+   &lt;mapBitmaskValue properties=&quot;&quot; value=&quot;ENoFlags&quot; /&gt;
+ &lt;/mapBitmaskMember&gt;</pre>
+<p>In a model, if both &quot;allowEdit&quot; and &quot;allowCursorMovement&quot; are &quot;true&quot;, but &quot;compatibility&quot; is false, then the RSS initializer generated would be:</p>
+<pre> flags = EFullEditing;</pre>
+<p>If &quot;allowEdit&quot; is &quot;true&quot; and &quot;compatibility&quot; is true, then the initializer would be:</p>
+<pre> flags = EAllowEditing | ECompatibilitySetting;</pre>
+<p>If none of these properties is true, then the initializer would be:</p>
+<pre> flags = ENoFlags;</pre>
+<h4><a name="array"></a>Array Member Mapping</h4>
+<p>The &lt;mapArrayMember&gt; element maps a sequence to an array-typed member of a struct. It contains one subelement to describe how to map each array element.</p>
+<ul>
+  <li>mapSimpleElement</li>
+  <li>mapEnumElement</li>
+  <li>mapIdentifierElement</li>
+  <li>mapResourceElement</li>
+</ul>
+<p>The &lt; mapArrayElement&gt; is not allowed in RSS. Syntax and semantics mirror those of mapXYZMember, except no member/property attributes are provided.   Element mapping uses the current element as the property source. Do not use this to map non-sequence properties to RSS array elements. Use the <span class="code">member=&ldquo;field[index]&rdquo;</span> syntax and the appropriate mapXYZMember.</p>
+<p>Array Member Mapping Example:</p>
+<blockquote>
+  <p>RSS file:</p>
+  <pre>STRUCT NUMBER_LIST { 	WORD items[]; }</pre>
+<p>Component file:</p>
+  <pre class="listing">&lt;arrayProperty name=&ldquo;itemList&rdquo; type=&ldquo;integer&rdquo;/&gt;</pre>
+<pre class="listing">&lt;sourceMapping&gt;
+  &lt;mapResource struct=&ldquo;NUMBER_LIST&rdquo; header=&ldquo;...&rdquo;&gt;
+    &lt;mapArrayMember property=&ldquo;itemList&rdquo; member=&ldquo;items&rdquo;&gt;
+      &lt;mapSimpleElement/&gt;
+    &lt;/mapArrayMember&gt;
+  &lt;/mapResource&gt;
+&lt;/sourceMapping&gt;</pre>
+</blockquote>
+<h4><a name="fixed"></a>Fixed Mapping</h4>
+<p>This mapping maps a constant value to a member or array element.  It is used strictly to override the default value specified in RSS.</p>
+<p>No &quot;property&quot; attribute is provided.  Instead, set the &quot;value&quot; attribute to the literal text to inject into the initializer.  This is not type-checked in any way.<br />
+</p>
+<h4><a name="type"></a>Type Mapping</h4>
+<p>Some mappings are quite lengthy and completely associated with a given compound type.  Instead of repeatedly specifying the mapping rules for every use of the property (in different components or in different conditions), you may place the type's source mapping inside the &lt;compoundPropertyDeclaration&gt; element and invoke it with the  &lt;mapMemberFromType&gt; and &lt;mapElementFromType&gt; elements.</p>
+<p>Place a &lt;sourceTypeMapping&gt; element in &lt;compoundPropertyDeclaration&gt; to associate mappings with the compound type.  The only difference from normal RSS source mapping is, the top-level element is a &lt;map...Type&gt; element, which is just like &lt;map...Member&gt; or &lt;map...Element&gt; except that no specific member or array element is implied.  For example:</p>
+<pre class="listing">&lt;compoundPropertyDeclaration qualifiedName=&quot;com.nokia.test.TRgb&quot;&gt;
+   &lt;property name=&quot;r&quot; type=&quot;integer&quot;/&gt;
+   &lt;property name=&quot;g&quot; type=&quot;integer&quot;/&gt;
+   &lt;property name=&quot;b&quot; type=&quot;integer&quot;/&gt;
+   &lt;sourceTypeMapping&gt;
+     &lt;mapResourceType struct=&quot;RGB&quot; headers=&quot;basicheader.rh&quot; &gt;
+       &lt;mapSimpleMember property=&quot;r&quot; member=&quot;r&quot; /&gt;
+       &lt;mapSimpleMember property=&quot;g&quot; member=&quot;g&quot; /&gt;
+       &lt;mapSimpleMember property=&quot;b&quot; member=&quot;b&quot; /&gt;
+     &lt;/mapResourceType&gt;
+   &lt;/sourceTypeMapping&gt;
+&lt;/compoundPropertyDeclaration&gt;
+ </pre>
+<p>When mapping this type, simply reference the property that uses the type, in &lt;mapMemberFromType&gt; or &lt;mapElementFromType&gt;. For example, assuming the &quot;colors&quot; property is of type &quot;com.nokia.test.TRgb&quot;, then this will map its elements to a new RGB resource expression in the member &quot;colors&quot;:</p>
+<pre> &lt;mapMemberFromType property=&quot;colors&quot; member=&quot;colors&quot; /&gt;</pre>
+<p>A compound type may map to more than one pattern in RSS.  In such a case, specify multiple &lt;map...Type&gt; elements in the type declaration, and give each a unique &quot;typeId&quot; attribute.  Specify the same &quot;typeId&quot; attribute in the &lt;mapMemberFromType&gt; or &lt;mapElementFromType&gt; mappings. If typeId is missing from both the type declaration or the mapping, this mapping matches.</p>
+<h3><a name="conditional"></a>Conditional Mapping</h3>
+<p>In some cases, property values require a component to be mapped in a different way. An enumeration may indicate use of a built-in resource or a flag may indicate another property is ignored. Such a model makes two-way mapping more difficult. A  point of selection should resolve to mutually exclusive states in the data model and RSS. Thus, conditional generation must work on the basis of equality and simple property values.</p>
+<p>The &lt;select property=&ldquo;...&rdquo;&gt; element encloses a set of alternate mapping groups. The &quot;property&quot; attribute is a path to a property of interest (such as, name or struct.member). The &lt;choice [value=&ldquo;...&rdquo;]&gt; element encloses a set of mapping elements. The &quot;value&quot; attribute is the value to compare with the property value. If unspecified, it acts as the &ldquo;default&rdquo;. The first matching &lt;choice&gt; is applied and all others ignored. The &lt;select&gt; element can appear inside &lt;sourceMapping&gt; and &lt;mapResource*&gt; elements.</p>
+<p>A &lt;select&gt; operation may test whether an instance of a given component type exists in a component.  The value of the match is non-empty if an instance of the type is found, otherwise it is empty, so structure the comparison in a negative fashion where a valueless choice always matches. For example:</p>
+<pre class="listing">&lt;select property=&quot;[com.nokia.sdt.series60.MenuPane]&quot;&gt;
+ &lt;choice value=&ldquo;&rdquo;&gt;
+  &lt;!-- no match --&gt;
+ &lt;/choice&gt;
+ &lt;choice&gt;
+  &lt;!-- default match --&gt;
+ &lt;/choice&gt;</pre>
+<p>General node paths can be used here, including parent navigation. For example:</p>
+<pre class="listing">&lt;select property=&ldquo;[parent].isEnabled&rdquo;&gt;
+ &lt;choice value=&ldquo;true&rdquo;&gt;<br />  ... </pre>
+<p>A &lt;select&gt; operation may be made against attribute values. For example:</p>
+<pre class="listing">&lt;select attribute=&quot;is-dialog-content&quot;&gt;
+ &lt;choice value=&ldquo;true&rdquo;&gt;<br />  ...
+ &lt;/choice&gt;
+ &lt;choice&gt;<br />  ...
+ &lt;/choice&gt;
+&lt;/select&gt; </pre>
+<p>A &lt;select&gt; operation may test the length of an array (empty vs. non-empty) to avoid emitting illegal resources (CAknPopupFieldText.component). For example:</p>
+<pre class="listing">&lt;select property=&quot;items&quot;&gt;
+ &lt;choice value=&quot;0&quot;&gt;
+  &lt;!-- don't emit for 0 items: this causes a panic --&gt;
+ &lt;/choice&gt;
+ &lt;choice&gt;
+  &lt;mapResourceMember ...&gt;
+ &lt;/choice&gt;
+&lt;/select&gt; </pre>
+<p>A &lt;select&gt; operation may also match the existence of a property, which matters, for instance, to tell if a given property extender has supplied it. For example:</p>
+<pre class="listing">&lt;select propertyExists=&quot;foo.bar&quot;&gt;
+   &lt;choice value=&quot;true&quot;&gt;
+   ...
+   &lt;/choice&gt;
+   &lt;choice/&gt;
+&lt;/select&gt;</pre>
+<p>A &lt;select&gt; operation may also check whether the current component instance is derived from a certain type.  Obviously, a component knows its own type, but this is useful for checking component references or children in an array mapping.  For example:</p>
+<pre class="listing">&lt;mapArrayMember&gt;
+   &lt;select isComponentInstanceOf=&quot;com.nokia.test.ArrayChildItem&quot;&gt;
+     &lt;choice value=&quot;true&quot;&gt;
+     ...
+     &lt;/choice&gt;
+     &lt;choice/&gt;
+   &lt;/select&gt;
+&lt;/mapArrayMember&gt;</pre>
+<p>Following is an example of generating a control button in a top level component.</p>
+<blockquote>
+  <p>Section of a component definition file:</p>
+  <pre class="listing">&lt;compoundPropertyDeclaration qualifiedName=&quot;com.nokia.sdt.series60.CBAProperty&quot;&gt;
+ &lt;property name=&quot;leftText&quot; type=&quot;localizedString&quot; /&gt;
+ &lt;enumProperty name=&quot;leftId&quot; type=&ldquo;...&quot; /&gt;
+&lt;/compoundPropertyDeclaration&gt;
+<br />&lt;properties&gt;
+ &lt;property category=&quot;Basic&quot; name=&quot;name&quot; type=&quot;uniqueName&quot;/&gt;
+ &lt;compoundProperty name=&quot;CBA&quot; type=&quot;com.nokia.sdt.series60.CBAProperty&quot;/&gt;
+&lt;/properties&gt; </pre>
+  <p>Section of a resource file:</p>
+  <pre class="listing">STRUCT CBA {
+ STRUCT buttons[];  // of CBA_BUTTON
+}
+<br />STRUCT CBA_BUTTON {
+ WORD id;<br /> BUF txt;
+} </pre>
+  <p>Section of a component definition file:</p>
+  <pre class="listing">&lt;sourcemapping&gt;
+  &lt;select property=&ldquo;CBA&rdquo;&gt;
+    &lt;choice value=&ldquo;CUSTOM&rdquo;&gt;
+      &lt;mapResource struct=&ldquo;CBA&rdquo; headers=&ldquo;...&rdquo;&gt;
+        &lt;mapResourceMember property=&ldquo;CBA&rdquo; member=&ldquo;buttons[0]&rdquo;  struct=&ldquo;CBA_BUTTON&rdquo; headers=&ldquo;...&rdquo;&gt;
+          &lt;mapEnumMember property=&ldquo;leftId&rdquo; member=&ldquo;id&rdquo; uniqueValue=&ldquo;UNIQUE&rdquo; /&gt;
+          &lt;mapSimpleMember property=&ldquo;leftText&rdquo; member=&ldquo;txt&rdquo;/&gt;
+        &lt;/mapResourceMember&gt;
+      &lt;/mapResource&gt;
+    &lt;/choice&gt;
+    &lt;choice&gt;
+      &lt;mapSimpleMember property=&ldquo;CBA&rdquo; member=&ldquo;cba&rdquo; /&gt;
+    &lt;/choice&gt; &lt;!-- here, the value of CBA should be the same as the resource name --&gt;
+  &lt;/select&gt;
+&lt;/sourcemapping&gt; </pre>
+</blockquote>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

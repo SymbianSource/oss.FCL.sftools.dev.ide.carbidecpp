@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<!DOCTYPE componentDefinition [
+<!ENTITY LoadAndScaleIconL SYSTEM "../LoadAndScaleIconL.inc">
+]>
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknListMultiQueryDialogStyle"
+			defaultValue="CAknSinglePopupMenuStyleListBox">
+		<enumElement value="CAknSinglePopupMenuStyleListBox"/>
+		<enumElement value="CAknDoublePopupMenuStyleListBox"/>
+		<enumElement value="CAknDouble2PopupMenuStyleListBox"/>
+		
+		<!-- <enumElement value="CAknSingleGraphicBtPopupMenuStyleListBox"/> -->
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CAknListMultiQueryDialog" 
+		category="NotesDialogs"
+		instanceNameRoot="listMultiQuery"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknListQueryDialog" classHelpTopic=""
+			resourceType="AVKON_MULTISELECTION_LIST_QUERY" resourceHelpTopic="" />
+		<designerImages smallIconFile="CAknListMultiQueryDialog_sm.png" 
+			largeIconFile="CAknListMultiQueryDialog.png"/>
+		<attributes>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="list-style-enum-property">com.nokia.sdt.series60.CAknListMultiQueryDialogStyle</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="vertical-scrollable-container">true</attribute>
+			<attribute key="container-background-color">EEikColorWindowBackground</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+
+			<enumProperty category="Appearance" name="style" 
+				type="com.nokia.sdt.series60.CAknListMultiQueryDialogStyle"
+			 	editorClass="com.nokia.sdt.series60.component.listCustomizer.ListLayoutEditorFactory"
+			 	descriptionKey="styleDescription"
+			 	/>
+				
+			<property category="Data" name="text" type="localizedString" 
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+				default="Question" />
+			<enumProperty category="Data" name="tone" 
+				type="com.nokia.sdt.series60.Query.tone" 
+				descriptionKey="toneDescription" />
+				
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IScrollBoundsProvider"/>
+				<script file="CAknListQueryDialog.js" prototype="CAknListQueryDialog"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+				<script file="CAknListQueryDialog.js" prototype="CAknListQueryDialog"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/> 
+				<script file="CAknListQueryDialog.js" prototype="CAknListQueryDialog"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentCustomizerUI"/>
+				<code class="com.nokia.sdt.series60.component.listCustomizer.ListCustomizerUIImplFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="AVKON_MULTISELECTION_LIST_QUERY" headers="avkon.rh" >
+				<mapBitmaskMember property="." member="flags" includedProperties="" >
+					<!-- initial blank entry forces bits on -->
+					<mapBitmaskValue properties="" value="EGeneralQueryFlags" />
+				</mapBitmaskMember>
+				<mapFixedMember value="R_AVKON_SOFTKEYS_OK_CANCEL" member="softkeys" />
+		        <mapResourceMember property="." member="items[0]" 
+		        		struct="AVKON_MULTISELECTION_LIST_QUERY_DLG_LINE" headers="avkon.rh" id="multi$items[0]" >
+		        	<mapResourceMember property="." member="control" 
+		        			struct="AVKON_LIST_QUERY_CONTROL" headers="avkon.rh" id="multi$control">
+						<mapEnumMember property="style" member="listtype">
+							<mapEnum value="CAknSinglePopupMenuStyleListBox" enumerator="EAknCtSinglePopupMenuListBox" />
+							<mapEnum value="CAknSingleGraphicPopupMenuStyleListBoxMulti" enumerator="EAknCtSingleGraphicPopupMenuListBox"/>
+							<mapEnum value="CAknSingleHeadingPopupMenuStyleListBox" enumerator="EAknCtSingleHeadingPopupMenuListBox"/>
+							<mapEnum value="CAknSingleGraphicHeadingPopupMenuStyleListBoxMulti" enumerator="EAknCtSingleGraphicHeadingPopupMenuListBox"/>
+							<mapEnum value="CAknDoublePopupMenuStyleListBox" enumerator="EAknCtMenuDoublePopupMenuListBox"/>
+							<mapEnum value="CAknDoubleLargeGraphicPopupMenuStyleListBox" enumerator="EAknCtDoubleLargeGraphicPopupMenuListBox"/>
+							<mapEnum value="CAknDouble2PopupMenuStyleListBox" enumerator="EAknCtDouble2PopupMenuListBox"/>
+						</mapEnumMember>
+						<mapSimpleMember property="text" member="heading" />
+						<mapResourceMember property="." member="listbox"
+							struct="AVKON_MULTISELECTION_LIST_QUERY_LIST" id="multi$listbox" />
+			        </mapResourceMember>
+		        </mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+			<inline scope="prototype">
+include("../listbox/listboxLibrary.js")
+			</inline>
+
+			<inline>
+// no image/icon gathering since no image styles
+			</inline>
+
+			
+			<template phase="ClassMethods"><![CDATA[
+static void Create${instanceName$title}ItemL( 
+		TDes& aBuffer, 
+		TBool aSelected, 
+		${createParameterizedItemLSignature(instance, "\\t\\t")} );
+]]>			</template>
+			<template phase="ClassMethods"><![CDATA[
+static void Create${instanceName$title}ResourceArrayItemL( 
+		TDes& aBuffer, 
+		TBool aSelected, 
+		TInt aResourceId${getParameterizedItemLNumericColumnParameter(instance)} );
+]]>			</template>
+
+			<template phase="HeaderIncludes"><![CDATA[
+#include <eiklbv.h>
+]]>			</template>
+
+			<defineLocation id="CREATEITEML_METHOD" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Create${instanceName$title}ItemL(TDes&amp;,TBool,...))">
+				<template><![CDATA[
+/**
+ *	Create a list box item with the given column values.
+ */
+<% 
+	var format = getListItemStringFormat(instance);
+	var args = getParameterizedItemLFormatArguments(instance);
+	var selectedArg = "";
+		format += "\\\\t";
+		selectedArg = "TBool aSelected, ";
+%>void ${className}::Create${instanceName$title}ItemL( 
+		TDes& aBuffer, 
+		TBool aSelected, 
+		${createParameterizedItemLSignature(instance, "\\t\\t")} )
+	{
+	_LIT ( KStringHeader, "${format}" );
+
+	aBuffer.Format( KStringHeader(), ${args} );
+	}
+]]>				</template>
+			</defineLocation>
+			
+			<template location="CREATEITEML_METHOD" />
+
+			<defineLocation id="CREATERESOURCEITEML_METHOD" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Create${instanceName$title}ResourceArrayItemL(TDes&amp;,TBool,TInt,...))">
+				<template><![CDATA[
+/**
+ *	Add an item to the list by reading the text items from resource.
+ *	@param aSelected ETrue if item is initially selected
+ *	@param aResourceId id of an ARRAY resource containing the textual
+ *	items in the columns
+ *	${getParameterizedItemLNumericColumnComment(instance)}
+ */
+void ${className}::Create${instanceName$title}ResourceArrayItemL( 
+		TDes& aBuffer, 
+		TBool aSelected, 
+		TInt aResourceId${getParameterizedItemLNumericColumnParameter(instance)} )
+	{
+	CDesCArray* array = CCoeEnv::Static()->ReadDesCArrayResourceL( aResourceId );
+	CleanupStack::PushL( array );
+<% var args = getParameterizedItemLArguments(instance, "array", getParameterizedItemLNumericColumnParameterName(instance) );
+%>	Create${instanceName$title}ItemL( aBuffer, aSelected, ${args} );
+	CleanupStack::PopAndDestroy( array );
+	}
+]]>				</template>
+			</defineLocation>
+			
+		<template location="CREATERESOURCEITEML_METHOD" />
+
+			<template phase="ClassMethods"><![CDATA[
+static CDesCArray* Initialize${instanceName$title}LC();
+]]>			</template>
+
+			<defineLocation id="INITLISTBOXL_METHOD" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Initialize${instanceName$title}LC())">
+				<template>
+/**
+ * Initialize contents of the popup item list.  This constructs the array
+ *	and pushes it on the cleanup stack.
+ *	@return item array, never null
+ */
+CDesCArray* ${className}::Initialize${instanceName$title}LC()
+	{
+	}
+				</template>
+			</defineLocation>
+			
+			<template location="INITLISTBOXL_METHOD"><![CDATA[
+const int KNumItems = ${instance.children.length};
+CDesCArray* itemArray = NULL;
+itemArray = new ( ELeave ) CDesCArrayFlat( KNumItems ? KNumItems : 1 );
+CleanupStack::PushL( itemArray );
+
+// This is intended to be large enough, but if you get 
+// a USER 11 panic, consider reducing string sizes.
+TBuf< 512 > des;
+<%	// generate list item loading for the dialog
+	var itemContribs = Engine.generateChildContributions("AknListQueryDialog");
+	var addContribs = Engine.getContributionsForPhase(itemContribs, "AddItems");
+	Engine.assignLocationsForPhase(addContribs, "AddItems", "INITLISTBOXL_METHOD");
+	contribs.addAll(addContribs);
+%>return itemArray;
+]]>			</template>
+
+			<template phase="ClassMethods"><![CDATA[
+static CListBoxView::CSelectionIndexArray* Run${instanceName$title}LC(
+		const TDesC* aOverrideText = NULL,
+		CDesCArray* aOverrideItemArray = NULL );
+]]>		</template>
+			
+			<defineLocation id="RUNLC_METHOD" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Run${instanceName$title}LC(const TDesC*, CDesCArray*))">
+				<template><![CDATA[
+/**
+ * Show the popup list query dialog for ${instanceName}, 
+ * allowing zero or more items to be selected.  
+ * <p>
+ * This returns either the list of selected indices (which may be empty)
+ * or NULL if the user canceled.  If non-NULL, you must clean up 
+ * the indices.  For instance:<p>
+ * <pre>
+ *		CListBoxView::CSelectionIndexArray* indices = Run${instanceName$title}LC();
+ *		if ( indices )
+ *			{
+ *			... use indices ...
+ *			CleanupStack::PopAndDestroy( indices );
+ *			}
+ * </pre>
+ *
+ * @param aOverrideText optional override prompt text
+ * @param aOverrideItemArray if not NULL, overridden array of formatted list items (passes ownership)
+ * @return array of selected indices (left on cleanup stack) or NULL if user canceled
+ */
+CListBoxView::CSelectionIndexArray* ${className}::Run${instanceName$title}LC( 
+		const TDesC* aOverrideText,
+		CDesCArray* aOverrideItemArray )
+	{
+	}
+]]>	
+			</template>
+			</defineLocation>
+
+			
+			<template location="RUNLC_METHOD"><![CDATA[
+CListBoxView::CSelectionIndexArray* indexArray = 
+		new ( ELeave ) CArrayFixFlat< TInt >( 1 );
+CleanupStack::PushL( indexArray );
+	
+CAknListQueryDialog* queryDialog = 
+		new ( ELeave ) CAknListQueryDialog( indexArray );
+CleanupStack::PushL( queryDialog );
+
+queryDialog->PrepareLC( ${resourceName$upper} );
+<% if (properties.tone != "ENoTone") { %>
+queryDialog->SetTone( CAknQueryDialog::${properties.tone} );	
+<% } 
+%>if ( aOverrideText != NULL )
+	{
+	queryDialog->SetHeaderTextL( *aOverrideText );
+	}
+	
+// initialize list items
+CDesCArray* itemArray = NULL;
+
+if ( aOverrideItemArray != NULL ) 
+	{
+	CleanupStack::PushL( aOverrideItemArray );
+	itemArray = aOverrideItemArray;
+	}
+else
+	{
+	itemArray = Initialize${instanceName$title}LC();
+	}
+	
+queryDialog->SetItemTextArray( itemArray );
+queryDialog->SetOwnershipType( ELbmOwnsItemArray );
+CleanupStack::Pop( itemArray );
+
+// run dialog
+TInt result = queryDialog->RunLD();
+
+// clean up
+CleanupStack::Pop( queryDialog );
+
+if ( result == 0 )
+	{
+	CleanupStack::PopAndDestroy( indexArray );
+	return NULL;
+	}
+else
+	{
+	return indexArray;
+	}
+]]>			</template>
+
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <aknlistquerydialog.h>
+]]>			</template>
+		</sourceGen>
+	</component>
+	
+</componentDefinition>

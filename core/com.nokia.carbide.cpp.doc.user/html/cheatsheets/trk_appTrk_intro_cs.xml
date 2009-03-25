@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Run Mode On-device Application Debugging using TRK agent">
+	<intro>
+		<description>
+		Read the following information and follow the related steps to debug programs running on a target device running the Symbian OS.
+		</description> 
+	</intro> 
+	
+	<item title="Introduction to On-Device Debugging" href="/com.nokia.carbide.cpp.doc.user/html/concepts/trk.htm" >
+		<description>
+		Click the question mark (right side) to learn about the on-device debug agent Application TRK or System TRK.
+		</description>
+	</item>
+	
+	<item title="Preconditions to On-Device Debugging" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_preconditions.htm" >
+		<description>
+		Read information related to preconditions to verify and perform before debugging.
+		</description>
+	</item>
+
+</cheatsheet>

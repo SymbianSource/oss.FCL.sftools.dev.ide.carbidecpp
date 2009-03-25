@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>enumsalwaysint</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>enumsalwaysint</h3>
+<p>  Specifies the size of enumerated types.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma enumsalwaysint on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+<p>If you enable this pragma, the C/C++ compiler makes an enumerated type the same size as an int. If an enumerated constant is larger than int, the compiler generates an error. If this pragma is not enabled, the compiler makes an enumerated type the size of any integral type. It chooses the integral type with the size that most closely matches the size of the largest enumerated constant.</p>
+  <p>The type could be as small as a char or as large as a long long. Listing 10.15 shows an example.</p>
+  <div class="listing">
+      <h4>Listing 10.15 Example of Enumerations the Same as Size as int</h4>
+      <p>enum SmallNumber { One = 1, Two = 2 };<br />
+    /* If you enable enumsalwaysint, this type is the same size as an int.<br />
+    Otherwise, this type is the same size as a char. */</p>
+      <p>enum BigNumber <br />
+      { ThreeThousandMillion = 3000000000 };<br />
+      /* If you enable enumsalwaysint, the compiler might generate an error. <br />
+      Otherwise, this type is the same size as a long long. */</p>
+  </div>
+      <p>For more information on how the compiler handles enumerated types, see <a href="../c_compiler/c_enum_types.htm">Enumerated Types</a>.</p>
+<p>This pragma corresponds to the Enums Always Int setting . To check this setting, use <span class="code">__option (enumsalwaysint)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Carbide.c++ Predefined Symbols</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style2 {color: #FFFFFF}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Carbide.c++ Predefined Symbols</h3>
+<p>  Table 1 lists additional symbols provided by Carbide C/C++ but not defined as part of the ANSI/ISO C/C++ standards.</p>
+<p class="note"><strong>NOTE</strong> The Carbide C compiler was formerly known as the Metrowerks C compiler. For Symbian development, only the x86 based features are supported. All references to other processor architectures are for historical purposes only. </p>
+<h5>Table 1.  Predefined Symbols for Carbide C/C++ compilers</h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr bgcolor="#CCCCCC">
+    <td width="30%" scope="col"><span class="style2">This symbol&hellip;</span></td>
+    <td width="70%" scope="col"><span class="style2">is&hellip;</span></td>
+  </tr>
+  <tr>
+    <td class="code">__A5__ </td>
+    <td>Defined as 1 if data is A5-relative, 0 if data is A4-relative. This symbol is defined for 68K compilers and undefined for other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__ALTIVEC__</td>
+    <td>Currently defined as 100000000 when you enable PowerPC AltiVec&trade; features using pragma altivec_model.</td>
+  </tr>
+  <tr>
+    <td class="code">__cplusplus</td>
+    <td>Defined as 199711L if you are compiling this file as a C++ file; undefined if you are compiling this file as a C file. The value 199711L indicates conformance with the ANSI/ISO C++ specification.</td>
+  </tr>
+  <tr>
+    <td class="code">__EMU_SYMBIAN_OS__</td>
+    <td>Defined as 1 . </td>
+  </tr>
+  <tr>
+    <td class="code">__embedded_cplusplus </td>
+    <td>Defined as 1 if EC++ is activated; undefined if EC++ is not activated. </td>
+  </tr>
+  <tr>
+    <td class="code">__embedded__</td>
+    <td>Defined as 1 if you are compiling code for an embedded target.</td>
+  </tr>
+  <tr>
+    <td class="code">__FUNCTION__</td>
+    <td>Defined by the compiler as the name of the function currently being compiled. This symbol is a predefined identifier for GCC compatibility.</td>
+  </tr>
+  <tr>
+    <td class="code">__fourbyteints__</td>
+    <td>Defined as 1 if you enable the 4-byte Ints setting in the 68K Processor panel; 0 if you disable that setting. This symbol is defined for 68K compilers and undefined for other platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__ide_target(&quot;target_name&quot;)</td>
+    <td>Returns 1 if target_name is the same as the active build target in the Carbide IDE&rsquo;s active project. Returns 0 otherwise.</td>
+  </tr>
+  <tr>
+    <td class="code">__IEEEdoubles__</td>
+    <td>Defined as 1 if you enable the 8-Byte Doubles setting in the 68K Processor panel; 0 if you disable that setting. This symbol is defined for 68K compilers and undefined for all other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__INTEL__</td>
+    <td>Defined as 1 if you are compiling this code with the x86 compiler; undefined for all other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__MC68K__</td>
+    <td>Defined as 1 if you are compiling this code with the 68K compiler; undefined for all other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__MC68020__</td>
+    <td>Defined as 1 if you enable the 68020 Codegen setting in the Processor panel; 0 if you disable it. This symbol is defined for 68K compilers and undefined for all other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__MC68881__</td>
+    <td>Defined as 1 if you enable the 68881 Codegen setting in the 68K Processor panel; 0 if you disable it. This symbol is defined for 68K compilers and undefined for all other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__MIPS__</td>
+    <td>Defined as 1 for MIPS compilers; undefined for other target platforms. </td>
+  </tr>
+  <tr>
+    <td class="code">__MIPS_ISA2__</td>
+    <td>Defined as 1 if the compiler&rsquo;s target platform is MIPS and you select the ISA II checkbox in the MIPS Processor panel. Undefined if you deselect the ISA II checkbox. It is always undefined for other target platforms. </td>
+  </tr>
+  <tr>
+    <td class="code">__MIPS_ISA3__</td>
+    <td>Defined as 1 if the compiler&rsquo;s target platform is MIPS and you select the ISA III checkbox in the MIPS Processor panel. Undefined if you deselect the ISA III checkbox. It is always undefined for other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__MIPS_ISA4__</td>
+    <td>Defined as 1 if the compiler&rsquo;s target platform is MIPS and you select the ISA IV checkbox in the MIPS Processor panel. Undefined if you deselect the ISA IV checkbox. It is always undefined for other target platforms.</td>
+  </tr>
+  <tr>
+    <td class="code">__MWBROWSER__</td>
+    <td>Defined as 1 if the Carbide browser is parsing your code; 0 if not.</td>
+  </tr>
+  <tr>
+    <td class="code">__MWERKS__</td>
+    <td>Defined as the version number of the Carbide C/C++ compiler. For example, with the Carbide C/C++ compiler version 2.2, the value of <span class="code">__MWERKS__</span> is <span class="code">0x2200</span>. This macro is defined as 1 if the compiler was released in 1995 or earlier.</td>
+  </tr>
+  <tr>
+    <td class="code">__PRETTY_FUNCTION__</td>
+    <td>Defined by the compiler as the name of the qualified (&ldquo;unmangled&rdquo;) C++ function currently being compiled. This predefined identifier is only defined when the C++ compiler is active. See <a href="../cpp_compiler/cpp_compiler.htm">C++ Compiler</a> for related information.</td>
+  </tr>
+  <tr>
+    <td class="code">__profile__</td>
+    <td>Defined as 1 if you enable the Generate Profiler Calls setting in the Processor panel; 0 if you disable it.</td>
+  </tr>
+  <tr>
+    <td class="code">__POWERPC__</td>
+    <td>Defined as 1 if you are compiling this code with the PowerPC compiler; 0 if not.</td>
+  </tr>
+  <tr>
+    <td class="code">__VEC__</td>
+    <td>Defined as the version of Motorola&rsquo;s AltiVec &trade; Technology Programming Interface Manual to which the compiler conforms. This value takes the form <span class="code">vrrnn</span> which corresponds to the version number (<span class="code">v.rr.nn</span>) of the Programming Interface Manual. Otherwise, this macro is undefined.</td>
+  </tr>
+  <tr>
+    <td class="code">macintosh</td>
+    <td>Defined as 1 if you are compiling this code with the 68K or PowerPC compilers for Mac OS; 0 if not.</td>
+  </tr>
+</table>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

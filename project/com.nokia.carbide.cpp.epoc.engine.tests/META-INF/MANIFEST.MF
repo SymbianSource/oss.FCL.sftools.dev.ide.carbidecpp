@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.epoc.engine.tests;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: com.nokia.carbide.cpp.epoc.engine.tests.TestsPlugin
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.core.runtime,
+ com.nokia.carbide.cpp.epoc.engine,
+ com.nokia.cpp.utils.core,
+ com.nokia.sdt.utils,
+ org.eclipse.ltk.core.refactoring,
+ com.nokia.carbide.cdt.builder,
+ com.nokia.carbide.cpp.project.core,
+ com.nokia.carbide.cpp.sdk.core,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.junit,
+ org.eclipse.cdt.core
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.carbide.cpp.epoc.engine.tests

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Tutorial: Equal Container</title>
+<link rel="StyleSheet" href="../../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Tutorial: EqualContainer - Write the Component and Script Code</h2>
+<h3>Overview</h3>
+<p>Start with something like Basic.component, which defines the basic elements any component must have, even when deriving from an existing component.  This new component is called EqualContainer.   See the existing *.component files under the com.nokia.sdt.series60.componentlibrary plugin and review the component.qualifiedName attributes.</p>
+<p>By using a base component, you inherit almost everything from CCoeControl.  The major exceptions are the &lt;designerImages&gt;, &lt;symbian&gt;, &lt;documentation&gt;, and &lt;sourceGen&gt; elements.  Each of these is expected to have a unique definition in any component.</p>
+<h3>Properties</h3>
+<p>An integer property for the padding between equal-sized regions is defined in the EqualContainer.component file:</p>
+<pre>
+   &lt;property name=&quot;padding&quot;  type=&quot;integer&quot; 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; descriptionKey=&quot;paddingDescription&quot; 
+   category=&quot;Appearance&quot;  /&gt;</pre>
+<p>Then a new enumeration type and a property is defined. Note that the enumeration declaration lives  inside &lt;componentDefinition&gt;, not inside &lt;component&gt;. The enumeration values have the same internal and  external names unless a *.properties file redefines them, such as defining a different name for &quot;horizontal&rdquo;.</p>
+<pre>
+   &lt;enumPropertyDeclaration  qualifiedName=&quot;com.example.EqualContainer.Direction&quot;&gt; 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;enumElement  value=&quot;horizontal&quot;/&gt; 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;enumElement  value=&quot;vertical&quot;/&gt; 
+   &lt;/enumPropertyDeclaration&gt; </pre>
+<p>Next the property is defined. Note that the property is declared with  the &lt;enumProperty&gt; element, not &lt;property&gt;.</p>
+<pre>&nbsp;&nbsp; &lt;enumProperty  name=&quot;direction&quot; type=&quot;com.example.EqualContainer.Direction&quot; 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; descriptionKey=&quot;paddingDescription&quot; 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; category=&quot;Appearance&quot;  /&gt; </pre>
+<p>The component will now have all of CCoeControl&rsquo;s properties, plus these two.</p>
+<p class="note"><strong>NOTE </strong>Properties from base components may be overridden using the &lt;propertyOverrides&gt; and &lt;propertyOverride&gt; elements.</p>
+<h3>Attributes</h3>
+<p>For this example, no attributes are needed yet, since they are inherited. This makes EqualContainer a top-level layout container with a background property which accepts events, etc.</p>
+<h3>Implementations</h3>
+<p>Implementations are inherited from CCoeControl, however we will override the  layout behavior. Layout behavior is overridden by implementing the com.nokia.sdt.datamodel.adapter.ILayout implementation, as seen in the &lt;implementations&gt; section of the EqualContainer.component file.  The layout can be defined in a script (EqualContainer.js) using the prototype  EqualContainer. Unless numerous implementations are added, one script file will suffice to hold multiple interfaces.</p>
+<p>In EqualContainer.js,  make the basic prototype:</p>
+<pre>function  EqualContainer() { }</pre>
+<p>Then  add the layout function:</p>
+<pre>/** Lay out children. */
+ &nbsp; 
+ EqualContainer.prototype.layout = function(instance, laf) { 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var properties =  instance.properties; 
+ &hellip;
+}
+</pre>
+<p>Refer to the EqualContainer.js file for the complete function definition. In the <strong>layout</strong> function, the current component is the  parent, and its job is to resize and move its children. Some initial data is calculated, accessing  properties from the passed-in <strong>instance </strong>in the <strong>properties </strong>property.</p>
+<pre>var properties = instance.properties;
+var width = properties.size.width; 
+var height = properties.size.height;
+var padding = properties.padding;</pre>
+<p class="note"><strong>NOTE</strong> A newer method for accessing the bounds of a component instance is accomplished by implementing Rectangle instance.getLayoutBounds() and providing settings to instance.setLayoutBounds(Rectangle).  Direct access to properties is historical and may be more cumbersone.</p>
+<p>The <strong>getLayoutChildren()</strong> utility function in the ComponentUtils.js file is used to get the layout  children from the container. That is, excluding any menus, notes, or other items  that are not actually laid out in the container&rsquo;s bounds.</p>
+<pre>include(&quot;ComponentUtils.js&quot;); //outside function<br />&hellip;<br />var kids =  getLayoutChildren(instance.children);
+</pre>
+<p>Then iterate and modify the childrens&rsquo; <strong>properties.location </strong>and <strong>properties.size </strong>properties to lay them  out horizontally or vertically depending on our instance&rsquo;s <strong>properties.direction</strong> property. Note that in script, enumerators take on the same string value as in the &lt;enumPropertyDeclaration value=&quot;...&quot; /&gt; attribute.</p>
+<pre>if  (properties.direction == &quot;horizontal&quot;) { &hellip; }</pre>
+<p>The layout routine recalculates absolute  positions and sizes and directly changes child properties. The location and size for most components are  recalculated at design time, such as when the Screen Layout changes from  176x208 to 240x320, etc. So, components have the appearance of being dynamic, although at design time, only absolute values for the  current layout are retained.</p>
+<p>Script support is available for getting the child's preferred size.  Layout scripts can query the preferred size of a child's instance object, for example:</p>
+<pre>for (var i in instance.children) {
+  var child = instance.children[i];<br />  preferredSize = child.getPreferredSize(100, 20);
+  // define child layout stuff
+}</pre>
+<p>The getPreferredSize() function defines two integer arguments, wHint and hHint (width and height). It is optional whether or not a component's implementation uses the hints.</p>
+<h3>Source Generation</h3>
+<p>The Equal Container component generates code that derives a class from CCoeControl, just like the CCoeControl component does, but  overrides the generated LayoutControls() method and adds our own method to  dynamically spread out the children.</p>
+Source generation is not inherited by derived components. This  is because source generation for a container encompasses so many disparate  files, locations, bits of code, and templates that it would be more difficult  and error-prone to describe how to leave things <em>out</em> in the derived component than to describe what you want to  bring <em>in</em>.
+<p>The example uses most of what  CCoeControl provides. Fortunately, this  component&rsquo;s sourcegen was declared in such a way as to make it relatively easy  to inherit most of its behavior. The  main categories are template groups and inherited prototypes.</p>
+<p>Open the &lt;sourceGen&gt; element.&nbsp; In this state, a component takes full control  of its sourcegen and invokes sourcegen on its children. Without &lt;sourceGen&gt;, the default  behavior is to gather contributions from children and pass them up. The template groups define the header file and the main  file, which defines the class that derives from CCoeControl.</p>
+<pre>&lt;!-- import the main base component sourcegen --&gt;
+&lt;useTemplateGroup ids=&quot;HeaderFile SourceFile&quot;/&gt;</pre>
+<p>Each &lt;template&gt; inside a  &lt;templateGroup&gt; must have an <strong>id </strong>attribute  to be inherited via &lt;useTemplateGroup&gt;.  If you look at the CCoeControl.component file, you will note that every  &lt;template&gt; has an id for this purpose. There is a straggler template, which CCoeControl itself  inherits from its base.&nbsp; However, presently it is not possible to double-inherit templates.</p>
+<pre>&lt;useTemplate ids=&quot;DrawBodyBgColor&quot;/&gt;</pre>
+<h4>Child Contributions</h4>
+<p>A container must invoke sourcegen on children and pass its  contributions along with its own. This  is done explicitly to allow the component to massage, reorder, and collate such  contributions as needed. A bit of &lt;inline&gt; script code is provided, which  invokes CCoeControl&rsquo;s child contribution gathering.</p>
+<pre>&lt;inline&gt;
+ this.initSourceGen(contribs, instance, form);
+ this.getChildSourceGen(contribs, instance, form);<br /> this.finishSourceGen(contribs,  instance, form);
+&lt;/inline&gt;</pre>
+<p>These routines are added to the CCoeControl component&rsquo;s  sourceGen prototype for use by derived script.&nbsp;  Less helpful components directly invoke the code contained in these  routines.</p>
+For  the most part, the script that is being called (in CCoeControl.component  &lt;inline&gt;s) is the same as any container.  A call to <span class="code">Engine.generateChildContributions()</span> invokes the  &lt;sourceGen&gt; element on all child contributions, with the passed-in form regular  expression used to select particular &lt;templates&gt;. The form is also tested  explicitly in &lt;inline&gt;.&nbsp;CCoeControl augments the incoming form regex to get CCoeControl-specific  contributions from children (if any) along with generic contributions.
+<h4>Contributions as Child</h4>
+<p>Our equal container example is itself a child, and must provide a means  for the parent to access it and control its lifetime. The  container lets the parent gain access by adding contributions that contribute to  phases (same as CCoeControl&rsquo;s children).<br />
+These contributions are packaged in template groups.</p>
+<pre>&lt; useTemplateGroup ids=&quot;ChildDeclContribs  ChildConstructionContribs&quot; /&gt;</pre>
+<h5>Step 3 of 5</h5>
+<p><a href="equalcontainer_tutorial_03.htm">Change  CCoeControl&rsquo;s Layout Behavior to be Dynamic</a></p>
+<div id="footer"><img src="../../../img/nokia_copyright.png" alt="copyright" width="280" height="21"></div>
+</body>
+</html>

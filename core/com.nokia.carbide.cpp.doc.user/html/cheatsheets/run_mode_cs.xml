@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="On-device Run Mode Debugging Setup">
+   <intro href="html/tasks/debugger/run_mode_debug.htm">
+      <description>
+         Follow these steps to install on-device run mode debug software and compilers, create ROM images, and define launch configurations.
+      </description>
+   </intro>
+   <item
+         dialog="true"
+         href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"
+         skip="false"
+         title="Install device connection software">
+      <description>
+         Choose one of the these methods to install device connection software on your PC to interact with the target device.
+      </description>
+      <subitem label="Using Bluetooth" skip="true">
+      </subitem>
+      <subitem label="Using Nokia PC Suite software" skip="true">
+      </subitem>
+   </item>
+   <item title="Install necessary software and configure it" dialog="true" skip="false" href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm">
+      <description>
+         Before you begin stop mode debugging, make sure all preconditions are met.
+      </description>
+      <subitem
+            label="Install Perl">
+      </subitem>
+      <subitem label="Install an SDK" skip="false">
+      </subitem>
+      <subitem label="Setup environment variables" skip="false">
+      </subitem>
+      <subitem label="Setup a virtual drive" skip="false">
+      </subitem>
+   </item>
+   <item
+         dialog="true"
+         href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"
+         skip="false"
+         title="Install the SISX file on the device">
+      <description>
+         Choose one of these methods to install the SISX file on the target device.
+      </description>
+      <subitem label="Use Bluetooth" skip="true">
+      </subitem>
+      <subitem label="Use Nokia PC Suite" skip="true">
+      </subitem>
+   </item>
+   <item
+         dialog="true"
+         href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"
+         skip="false"
+         title="Create a launch configuration">
+      <description>
+         Body
+      </description>
+      <command serialization="org.eclipse.debug.ui.commands.OpenDebugConfigurations" confirm="false">
+      </command>
+   </item>
+</cheatsheet>

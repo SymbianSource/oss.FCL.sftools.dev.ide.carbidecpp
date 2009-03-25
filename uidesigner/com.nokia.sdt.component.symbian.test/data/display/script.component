@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+	<component
+		friendlyName="ScriptComponent" qualifiedName="com.nokia.examples.scriptComp" 
+		category="Basic" version="1.0">
+		<properties>
+			<property displayName="foo" name="foo" type="string"/>
+			<property displayName="bar" name="bar" type="string"/>
+			<property name="test" type="string" default="test"/>
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="script_visual.js"
+					prototype="Visual"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.component.symbian.test.IFoo"/>
+				<interface id="com.nokia.sdt.component.symbian.test.IBar"/>
+				<script file="script_foobar.js"
+					prototype="FooBar"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="script_foobar.js"
+					prototype="FooBar"/>
+			</implementation>
+		</implementations>
+	</component>
+</componentDefinition>

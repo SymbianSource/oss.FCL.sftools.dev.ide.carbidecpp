@@ -1,0 +1,19 @@
+
+ENUM ColorList {
+	CAknColorRed = 1,
+	CAknColorGreen = 2,
+	CAknColorBlue = 3,
+	CAknColorNew
+}
+
+ENUM ColorList2 {
+	CAknColorCyan,
+	CAknColorYellow,
+	CAknColorMagenta
+}
+
+ENUM Commands {
+	CommandAccept,
+	CommandCancel
+}
+

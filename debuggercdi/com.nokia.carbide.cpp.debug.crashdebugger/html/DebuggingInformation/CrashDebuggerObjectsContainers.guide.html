@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Examining kernel objects and containers in Debugging information</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Kernel Objects</h2>
+</div>
+<div>
+<p>Kernel objects such as DProcess, DThread,
+DSemaphore, DChunk are all instances of classes
+derived from DObject.</p>
+<p>To show basic information about a DObject, use
+the <a href="CrashDebugger_cmd_o.guide.html" title="The debug monitor and command syntax / o - display brief DObject information">o</a>
+command.</p>
+<p>To show more detail, use the
+<a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a> command.</p>
+<p>As an example, use these commands to show information about a
+DProcess object whose address is shown using the
+<a href="CrashDebugger_cmd_i.guide.html" title="The debug monitor and command syntax / i - display information for the current process and thread">i</a> command:</p>
+<p class="listing">...<br>
+  TheCurrentDataSectionProcess=6403bb4c<br>
+  ...</p>
+<p class="listing">&gt; o 6403bb4c</p>
+<p>This gives:</p>
+<p class="listing">.o 6403bb4c<br>PROCESS at 6403bb4c VPTR=f8046c78 AccessCount=6 Owner=00000000<br>Full name crash</p>
+<p>All objects derived from DBase have a virtual
+table pointer, access count, owner and name. Using the
+<a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a> command on this
+address would you give you the full process information.</p>
+<p>You can use <a href="CrashDebugger_cmd_o.guide.html" title="The debug monitor and command syntax / o - display brief DObject information">o</a> to examine other
+types of objects, for example chunks. The thread information for the current
+data section process shows two chunks:</p>
+<p class="listing">NumChunks=2<br>0: Chunk 6403c044, run 00400000, access count 1<br>1: Chunk 64039688, run 00600000, access count 1</p>
+<p>Using the <a href="CrashDebugger_cmd_o.guide.html" title="The debug monitor and command syntax / o - display brief DObject information">o</a> command on the first
+of these chunk objects gives you the basic information:</p>
+<p class="listing">.o 6403c044<br>CHUNK at 6403c044 VPTR=f8046b50 AccessCount=1 Owner=6403bb4c<br>Full name crash::$DAT</p>
+<p>Using the <a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a> command gives you
+more detailed information:</p>
+<p class="listing">.q 6403c044<br>CHUNK at 6403c044 VPTR=f8046b50 AccessCount=1 Owner=6403bb4c<br>Full name crash::$DAT<br>Owning Process 6403bb4c<br>Size 2000, MaxSize 200000, Base 00400000<br>Attrib 6, StartPos 0<br>Type 6, State 2, Home Base 68900000<br>Home Region Offset 00000000<br>Home Region Base 68900000<br>Home Region Size 00100000<br>PTE: 0000055e, PDE: 00000021 00000001 00000001<br>NumPdes=1, iPdes=61000010, iHomePdes=61001a24<br>PdeBitMap=00000001, PageBitMap=6403c0c8<br>Domain -1</p>
+<p><em> The information displayed is memory model dependent. It is
+shown here for the moving memory model.</em></p>
+<p>Notes:</p>
+<ul>
+<li>
+<p class="CodeBlock">Size 2000, MaxSize 200000, Base 00400000</p>
+<p>The Size field shows the current size of the
+chunk, in bytes.</p>
+<p>The MaxSize field shows the maximum size of the
+chunk, in bytes.</p>
+<p>The Base field shows the base address in the run
+region.</p>
+</li>
+<li>
+<p class="CodeBlock">Attrib 6, StartPos 0</p>
+<p>The Attrib field shows the attributes of the
+chunk.</p>
+<p>The StartPos field shows the offset, in bytes,
+between the base address and the start of the committed area. This is non-zero
+for double-ended chunks only.</p>
+</li>
+<li>
+<p class="CodeBlock">Type 6, State 2, Home Base 68900000</p>
+<p>The Type field shows the type of chunk. This
+corresponds to a TChunkType enum value.</p>
+<p>The State field shows the current state of the
+chunk. This corresponds to a TChunkState enum value, which is
+itself defined within the scope of the Symbian OS internal class
+DMemModelChunk.</p>
+<p>The Home Base field is the base address of the
+chunk in the home region.</p>
+</li>
+<li>
+<p class="CodeBlock">Home Region Offset 00000000<br>Home Region Base 68900000<br>Home Region Size 00100000</p>
+<p>These three lines show the offset, base address and size (the
+reserved size) of the chunk in the home region.</p>
+</li>
+</ul>
+</div><div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

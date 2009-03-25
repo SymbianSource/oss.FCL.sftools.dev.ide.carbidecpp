@@ -1,0 +1,12 @@
+#include <enumsheader.rh>
+
+RESOURCE COLORS r_test_extended_with_enums
+	{
+	aknFgColor = 2;
+	aknBgColor = 123;
+	}
+RESOURCE COLORS r_test_extended_with_enums_defaults
+	{
+	aknFgColor = 2;
+	aknBgColor = 123;
+	}

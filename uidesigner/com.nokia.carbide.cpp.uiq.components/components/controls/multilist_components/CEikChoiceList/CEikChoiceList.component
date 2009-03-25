@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU12 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.carbide.uiq.CEikChoiceList" 
+		baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase" 
+		instanceNameRoot="choiceList" 
+		version="1.0" 
+		category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikChoiceList" classHelpTopic=""
+			resourceType="CHOICELIST" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikChoiceList_sm.png"
+			largeIconFile="CEikChoiceList.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikChoiceList</attribute>		
+			<attribute key="is-layout-container">true</attribute>
+	  		<attribute key="layout-container-indirection-reference-property">control</attribute>
+			<attribute key="rss-control-type-enum">EEikCtChoiceList</attribute>		
+		</attributes>
+		
+		<properties>
+			<property name="arrowVisible" type="boolean" default="true" descriptionKey="arrowVisibleDescription"
+				category="%category.behavior"/>					
+			<property name="incrementalMatching" type="boolean" default="false" 
+				descriptionKey="incrementalMatchingDescription"
+				category="%category.behavior"/>					
+			<property name="inhibitPopout" type="boolean" default="false" descriptionKey="inhibitPopoutDescription"
+				category="%category.behavior"/>					
+			<property name="maxDisplayedCharacters" type="integer" default="20" descriptionKey="maxDisplayedCharactersDescription"
+				category="%category.appearance"/>					
+		    <property name="label" type="string" category="Hidden" default="label"/>
+			<componentReferenceProperty name="activeItem" constraint="com.nokia.carbide.uiq.ChoiceListItem" 
+				scope="children" descriptionKey="activeItemDescription"
+				category="%category.design"/>                                                                                       
+		</properties>
+
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>	
+				<code class="com.nokia.carbide.cpp.uiq.components.CEikChoiceListInitializerFactory"/>	
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IChildCommandExtender"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.choiceList.ChildCommandExtenderFactory"/>
+			</implementation>			
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 				
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikChoiceList.js" prototype="CEikChoiceList"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="CHOICELIST" headers="eikon.rh">
+				<mapSimpleMember property="maxDisplayedCharacters" member="maxdisplaychar"></mapSimpleMember>
+				<mapBitmaskMember includedProperties="incrementalMatching
+inhibitPopout" property="." member="flags">
+					<mapBitmaskValue properties="incrementalMatching" value="EEikChlistIncrementalMatching"></mapBitmaskValue>
+					<mapBitmaskValue properties="inhibitPopout" value="EEikChlistNoPopout"></mapBitmaskValue>
+				</mapBitmaskMember>
+				<mapResourceMember struct="ARRAY" property="." member="array_id" headers="badef.rh">
+					<mapArrayMember property="." member="items">
+						<mapResourceElement struct="LBUF" headers="badef.rh">
+							<mapSimpleMember property="label" member="txt"></mapSimpleMember>
+						</mapResourceElement>
+					</mapArrayMember>
+				</mapResourceMember>
+			</mapResource>			
+		</sourceMapping>
+		
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<templateGroup id="7" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable" Type="${this.getCppClassName(instance)}" 
+					InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}" 
+					Headers="eikchlst.h"></expandMacro>			
+				<inline scope="prototype">
+include("../../../srcgenLibrary.js")
+				</inline>	
+				<inline id="8">
+				<![CDATA[
+		for (i in instance.children) {
+				if(instance.properties.activeItem == instance.children[i].name)
+				setPropertiesForPhase(contribs, "InitializeControlHandlers", 0, instanceMemberName, true,
+					i,0,"{0}->SetCurrentItem( {1} );\n",
+				properties.arrowVisible,1,"{0}->SetArrowVisible( {1} );\n");
+		}				
+				]]>			
+				</inline>
+			</templateGroup>
+		</sourceGen>
+		
+
+	</component>
+	
+</componentDefinition>
