@@ -346,5 +346,9 @@ three (3) years from the date of the distribution of this product by Nokia.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+         
+ 	<includes
+         id="com.nokia.carbide.cpp.uiq.ui.source"
+         version="0.0.0"/>
 
 </feature>
