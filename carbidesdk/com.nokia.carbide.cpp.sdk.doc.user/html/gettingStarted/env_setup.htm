@@ -16,26 +16,25 @@
 <p>This section will describe how to set up a basic Eclipse development environment 
 to develop a plugin against the Carbide.c++ development environment.</p>
 
-<h3><a name="download" id="download"></a>Download the Eclipse 3.4 SDK</h3>
-<p>Carbide.c++  is developed against the Eclipse 3.4 release build. You can download the build 
-<a href="http://www.eclipse.org/downloads/">here</a>. Carbide.c++ is only tested and supported on the Windows platform.</p>
-<p>You can extract the Eclipse platform anywhere you like.</p>
-<p class="note"><strong>NOTE</strong> When you launch eclipse, choose a workspace location without spaces. This will help to prevent build issues later on with Symbian SDKs.</p>
-<h3><a name="setup" id="setup"></a>Set-up the Target Platform</h3>
+<h3><a name="download" id="download"></a>Download the Carbide.c++ Development Kit (CDK) </h3>
+<p>Carbide.c++  is developed against the Eclipse 3.4 release build which includes the Java Development Tools (JDT) and Plug-in Development Environment (PDE). You will need these items as well as the Carbide.c++/CDT source code to develop Eclipse/Carbide.c++ plug-ins. If you want to install the CDK you will need to run the Software Updates under the Help menu to update your installation to include the CDK. </p>
+<p>For more information on running the Software Updater please see the page <a href="PLUGINS_ROOT/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_updating.htm">Updating Carbide.c++</a>. </p>
+<h3><a name="setup" id="setup"></a>Importing source projects </h3>
 
-<p>Once you have your Eclipse environment extracted and launched, you can set up your <strong>Target Platform</strong> to have your fresh installation reference all the Carbide.c++/CDT/Eclipse plugins.</p>
-<p>The Eclipse Target Platform feature allows you to compile and run against a different Eclipse installation than the
-one you're using for development. In this case you'll be targeting the Carbide.c++ installation. The <b>Target Platform</b> is a workspace-wide setting, so you may want to dedicate a separate workspace for your Carbide.c++ plugin development. </p>
-
+<p>Once you have your Carbide environment updated to include the CDK, you can create new Eclipse plug-in projects and debug the Carbide.c++ sources. How to create eclipse plug-ins is beyond the scope of this demonstration. If you want to debug any of the Carbide.c++ or Ecilpse platform source follow these steps to verify your CDK isntallation: </p>
 <ol>
-  <li>Choose <strong>Window</strong> &gt; <strong>Preferences</strong> &gt; <strong>Plug-in Development</strong> &gt; <strong>Target Platform</strong>.</li>
-  <li>Browse for the <strong>Location</strong> of your Carbide.c++ installation. This is the location that contains the <span class="style1">Carbide.c++.exe</span> and <span class="style1">plugins</span> folder. When you have chosen the new location eclipse will load the plugins found in Carbide.c++ installation you will work against. Your Target Platform preference should look something like this:<br />
-    <br />
-  <img src="../img/target_platform.JPG" width="740" height="584" /></li>
-  <li>Select <strong>OK</strong>.</li>
+  <li>Switch to the <strong>Plug-in Development</strong> perspective. </li>
+  <li>Select the <strong>Plug-ins</strong> view. </li>
+  <li>Select the binary plug-in you want view the source of. Don't select the *source feature.</li>
+  <li>Right-click on the plug-in you want to import and select <strong>Import As &gt; Source Project</strong>. For example, the <span class="style1">com.nokia.carbide.cpp.leavescan</span> plug-in as shown below.<br>
+    <br>
+  <img src="../img/import_source_project.jpg" width="706" height="459">  </li>
+  <li>Now you can return to the <strong>Package Explorer</strong> view and navigate the source files for the imported plug-in. It should look like a normal plug-in project:<br>
+    <br>
+  <img src="../img/source_plugin.jpg" width="361" height="392"><br>
+  <br>
+  You can now <a href="launchconfig.htm">create a launch configuration</a> and debug Carbide. </li>
 </ol>
-<p>You are now ready to import or create new projects into your Eclipse workspace.</p>
- 
 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 </div>
 </body>
