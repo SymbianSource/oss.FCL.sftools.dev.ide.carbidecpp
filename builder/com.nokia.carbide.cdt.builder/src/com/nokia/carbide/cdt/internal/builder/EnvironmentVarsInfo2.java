@@ -300,7 +300,10 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 		if (System.getenv(EPOCROOT) == null) {
 			String epocRootStr = epocRoot.toOSString();
 			if (epocRootStr.indexOf(":") == 1) {
-				epocRootStr = epocRootStr.substring(2);
+				// only strip the drive for SBSv1
+				if (!CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(projectTracker.getProject())) {
+					epocRootStr = epocRootStr.substring(2);
+				}
 			}
 			
 			returnEnvArray = addToArray(returnEnvArray, EPOCROOT + EQUALS + epocRootStr);
