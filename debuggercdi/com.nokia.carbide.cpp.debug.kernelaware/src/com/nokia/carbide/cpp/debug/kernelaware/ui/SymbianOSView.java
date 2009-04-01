@@ -166,6 +166,10 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 	// Make this option static so that it's consistent across view sessions.
 	static boolean m_autoRefresh = true;
 
+	private TabFolder tabFolder;
+	
+	private int refreshCount;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -174,7 +178,7 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 	@Override
 	public void createPartControl(Composite parent) {
 
-		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
+		tabFolder = new TabFolder(parent, SWT.NONE);
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				DoAction_TabSelection(e.item);
@@ -535,6 +539,7 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 				}
 
 				listener.dataUpdated(session, status);
+				refreshCount++;
 
 				monitor.done();
 
@@ -734,7 +739,7 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 						Messages.getString("SymbianOSView.MessageTitle"), Messages.getString("SymbianOSView.MessagePrefix") + message); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	private void DoAction_TabSelection(Widget item) {
+	public void DoAction_TabSelection(Widget item) {
 		if (item == null)
 			return;
 		
@@ -800,7 +805,7 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 	 * device.
 	 * 
 	 */
-	private void DoAction_Refresh() {
+	public void DoAction_Refresh() {
 		if (m_currentSession == null)
 			return;
 
@@ -811,16 +816,20 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 		computeInput(m_currentSession, this, true);
 	}
 
-	private void DoAction_ToggleAutoRefresh() {
-		m_autoRefresh = !m_autoRefresh;
+	public void DoAction_ToggleAutoRefresh() {
+		setAutoRefresh(!m_autoRefresh);
 	}
 
-	private void DoAction_CollapseAll() {
+	public void setAutoRefresh(boolean enabled) {
+		m_autoRefresh = enabled;
+	}
+	
+	public void DoAction_CollapseAll() {
 		if (m_overviewTreeViewer != null)
 			m_overviewTreeViewer.collapseAll();
 	}
 
-	private void DoAction_Debug() {
+	public void DoAction_Debug() {
 		/*
 		 * Attach debugger to a process or thread.
 		 */
@@ -1255,5 +1264,21 @@ public class SymbianOSView extends ViewPart implements ISelectionListener,
 					}
 				}
 		}
+	}
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (adapter.isInstance(this))
+			return this;
+		if (adapter.isInstance(tabFolder))
+			return tabFolder;
+		if (adapter.isInstance(m_currentViewer))
+			return m_currentViewer;
+		
+		return super.getAdapter(adapter);
+	}
+
+	public int getRefreshCount() {
+		return refreshCount;
 	}
 }
