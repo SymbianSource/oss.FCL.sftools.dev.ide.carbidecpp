@@ -171,6 +171,7 @@ public class CSConfigManagerTest extends TestCase {
 		assertTrue(settings.get(CSPreferenceConstants.RULE_SEVERITIES).length() > 0);
 		assertTrue(settings.get(CSPreferenceConstants.RULES_ENABLED).length() > 0);
 		assertTrue(settings.get(CSPreferenceConstants.CCLASSIGNORE).length() > 0);
+		assertTrue(settings.get(CSPreferenceConstants.ICONS).length() == 0);
 		assertTrue(settings.get(CSPreferenceConstants.LFUNCTIONIGNORE).length() > 0);
 		assertTrue(settings.get(CSPreferenceConstants.LONGLINES_LENGTH).length() > 0);
 		assertTrue(settings.get(CSPreferenceConstants.OPENIGNORE).length() > 0);
@@ -194,6 +195,7 @@ public class CSConfigManagerTest extends TestCase {
 		assertTrue(store.getString(CSPreferenceConstants.RULE_SEVERITIES).length() > 0);
 		assertTrue(store.getString(CSPreferenceConstants.RULES_ENABLED).length() > 0);
 		assertTrue(store.getString(CSPreferenceConstants.CCLASSIGNORE).length() > 0);
+		assertTrue(store.getString(CSPreferenceConstants.ICONS).length() >= 0);
 		assertTrue(store.getString(CSPreferenceConstants.LFUNCTIONIGNORE).length() > 0);
 		assertTrue(store.getString(CSPreferenceConstants.LONGLINES_LENGTH).length() > 0);
 		assertTrue(store.getString(CSPreferenceConstants.OPENIGNORE).length() > 0);
