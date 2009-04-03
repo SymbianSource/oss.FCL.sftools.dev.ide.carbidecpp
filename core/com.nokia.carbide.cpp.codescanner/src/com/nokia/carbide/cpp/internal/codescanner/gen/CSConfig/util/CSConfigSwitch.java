@@ -242,9 +242,21 @@ public class CSConfigSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CSConfigPackage.CREPOSITORY_TYPE: {
+				CrepositoryType crepositoryType = (CrepositoryType)theEObject;
+				T result = caseCrepositoryType(crepositoryType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case CSConfigPackage.CTLTARGETTYPE_TYPE: {
 				CtltargettypeType ctltargettypeType = (CtltargettypeType)theEObject;
 				T result = caseCtltargettypeType(ctltargettypeType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSConfigPackage.CUSTOMIZABLEICONS_TYPE: {
+				CustomizableiconsType customizableiconsType = (CustomizableiconsType)theEObject;
+				T result = caseCustomizableiconsType(customizableiconsType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -347,6 +359,12 @@ public class CSConfigSwitch<T> {
 			case CSConfigPackage.EXTERNALDRIVELETTERS_TYPE: {
 				ExternaldrivelettersType externaldrivelettersType = (ExternaldrivelettersType)theEObject;
 				T result = caseExternaldrivelettersType(externaldrivelettersType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSConfigPackage.FLAGS_TYPE: {
+				FlagsType flagsType = (FlagsType)theEObject;
+				T result = caseFlagsType(flagsType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1201,6 +1219,21 @@ public class CSConfigSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Crepository Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Crepository Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCrepositoryType(CrepositoryType object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Ctltargettype Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1212,6 +1245,21 @@ public class CSConfigSwitch<T> {
 	 * @generated
 	 */
 	public T caseCtltargettypeType(CtltargettypeType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Customizableicons Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Customizableicons Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCustomizableiconsType(CustomizableiconsType object) {
 		return null;
 	}
 
@@ -1467,6 +1515,21 @@ public class CSConfigSwitch<T> {
 	 * @generated
 	 */
 	public T caseExternaldrivelettersType(ExternaldrivelettersType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Flags Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Flags Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFlagsType(FlagsType object) {
 		return null;
 	}
 

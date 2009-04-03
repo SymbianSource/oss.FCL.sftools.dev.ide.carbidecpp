@@ -179,8 +179,16 @@ public class CSConfigAdapterFactory extends AdapterFactoryImpl {
 				return createControlornullTypeAdapter();
 			}
 			@Override
+			public Adapter caseCrepositoryType(CrepositoryType object) {
+				return createCrepositoryTypeAdapter();
+			}
+			@Override
 			public Adapter caseCtltargettypeType(CtltargettypeType object) {
 				return createCtltargettypeTypeAdapter();
+			}
+			@Override
+			public Adapter caseCustomizableiconsType(CustomizableiconsType object) {
+				return createCustomizableiconsTypeAdapter();
 			}
 			@Override
 			public Adapter caseCustomrulesType(CustomrulesType object) {
@@ -249,6 +257,10 @@ public class CSConfigAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseExternaldrivelettersType(ExternaldrivelettersType object) {
 				return createExternaldrivelettersTypeAdapter();
+			}
+			@Override
+			public Adapter caseFlagsType(FlagsType object) {
+				return createFlagsTypeAdapter();
 			}
 			@Override
 			public Adapter caseFoffType(FoffType object) {
@@ -931,6 +943,20 @@ public class CSConfigAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType <em>Crepository Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType
+	 * @generated
+	 */
+	public Adapter createCrepositoryTypeAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CtltargettypeType <em>Ctltargettype Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -941,6 +967,20 @@ public class CSConfigAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCtltargettypeTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType <em>Customizableicons Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType
+	 * @generated
+	 */
+	public Adapter createCustomizableiconsTypeAdapter() {
 		return null;
 	}
 
@@ -1179,6 +1219,20 @@ public class CSConfigAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createExternaldrivelettersTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType <em>Flags Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType
+	 * @generated
+	 */
+	public Adapter createFlagsTypeAdapter() {
 		return null;
 	}
 

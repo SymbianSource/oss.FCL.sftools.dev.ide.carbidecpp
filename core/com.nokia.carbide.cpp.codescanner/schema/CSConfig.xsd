@@ -185,7 +185,9 @@
 				<xs:element minOccurs="0" ref="constnames"/>
 				<xs:element minOccurs="0" ref="consttdescptr"/>
 				<xs:element minOccurs="0" ref="controlornull"/>
+				<xs:element minOccurs="0" ref="crepository"/>
 				<xs:element minOccurs="0" ref="ctltargettype"/>
+				<xs:element minOccurs="0" ref="customizableicons"/>
 				<xs:element minOccurs="0" ref="debugrom"/>
 				<xs:element minOccurs="0" ref="declarename"/>
 				<xs:element minOccurs="0" ref="deleteMemberVariable"/>
@@ -199,6 +201,7 @@
 				<xs:element minOccurs="0" ref="exportinline"/>
 				<xs:element minOccurs="0" ref="exportpurevirtual"/>
 				<xs:element minOccurs="0" ref="externaldriveletters"/>
+				<xs:element minOccurs="0" ref="flags"/>
 				<xs:element minOccurs="0" ref="foff"/>
 				<xs:element minOccurs="0" ref="forbiddenwords"/>
 				<xs:element minOccurs="0" ref="forgottoputptroncleanupstack"/>
@@ -633,6 +636,7 @@
 			<xs:attribute ref="category"/>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="iconsRE" type="xs:string"/>
 	<xs:element name="high">
 		<xs:complexType>
 			<xs:attribute name="enable" type="xs:boolean" use="required"/>
@@ -675,6 +679,13 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="foff">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="flags">
 		<xs:complexType>
 			<xs:attribute name="enable" type="xs:boolean" use="required"/>
 			<xs:attribute ref="severity"/>
@@ -800,7 +811,24 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="customizableicons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="iconsRE"/>
+			</xs:sequence>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="ctltargettype">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="crepository">
 		<xs:complexType>
 			<xs:attribute name="enable" type="xs:boolean" use="required"/>
 			<xs:attribute ref="severity"/>

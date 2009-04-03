@@ -1232,6 +1232,52 @@ public interface CSConfigPackage extends EPackage {
 	int CONTROLORNULL_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CrepositoryTypeImpl <em>Crepository Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CrepositoryTypeImpl
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCrepositoryType()
+	 * @generated
+	 */
+	int CREPOSITORY_TYPE = 24;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CREPOSITORY_TYPE__CATEGORY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Enable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CREPOSITORY_TYPE__ENABLE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CREPOSITORY_TYPE__SEVERITY = 2;
+
+	/**
+	 * The number of structural features of the '<em>Crepository Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CREPOSITORY_TYPE_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CtltargettypeTypeImpl <em>Ctltargettype Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1239,7 +1285,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCtltargettypeType()
 	 * @generated
 	 */
-	int CTLTARGETTYPE_TYPE = 24;
+	int CTLTARGETTYPE_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -1278,6 +1324,61 @@ public interface CSConfigPackage extends EPackage {
 	int CTLTARGETTYPE_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CustomizableiconsTypeImpl <em>Customizableicons Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CustomizableiconsTypeImpl
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCustomizableiconsType()
+	 * @generated
+	 */
+	int CUSTOMIZABLEICONS_TYPE = 26;
+
+	/**
+	 * The feature id for the '<em><b>Icons RE</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOMIZABLEICONS_TYPE__ICONS_RE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOMIZABLEICONS_TYPE__CATEGORY = 1;
+
+	/**
+	 * The feature id for the '<em><b>Enable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOMIZABLEICONS_TYPE__ENABLE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOMIZABLEICONS_TYPE__SEVERITY = 3;
+
+	/**
+	 * The number of structural features of the '<em>Customizableicons Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOMIZABLEICONS_TYPE_FEATURE_COUNT = 4;
+
+	/**
 	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CustomrulesTypeImpl <em>Customrules Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1285,7 +1386,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCustomrulesType()
 	 * @generated
 	 */
-	int CUSTOMRULES_TYPE = 25;
+	int CUSTOMRULES_TYPE = 27;
 
 	/**
 	 * The feature id for the '<em><b>Customrule</b></em>' containment reference list.
@@ -1313,7 +1414,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCustomruleType()
 	 * @generated
 	 */
-	int CUSTOMRULE_TYPE = 26;
+	int CUSTOMRULE_TYPE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1395,7 +1496,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDebugromType()
 	 * @generated
 	 */
-	int DEBUGROM_TYPE = 27;
+	int DEBUGROM_TYPE = 29;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -1441,7 +1542,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDeclarenameType()
 	 * @generated
 	 */
-	int DECLARENAME_TYPE = 28;
+	int DECLARENAME_TYPE = 30;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -1487,7 +1588,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDeleteMemberVariableType()
 	 * @generated
 	 */
-	int DELETE_MEMBER_VARIABLE_TYPE = 29;
+	int DELETE_MEMBER_VARIABLE_TYPE = 31;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -1533,7 +1634,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDestructorType()
 	 * @generated
 	 */
-	int DESTRUCTOR_TYPE = 30;
+	int DESTRUCTOR_TYPE = 32;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -1579,7 +1680,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDocumentationType()
 	 * @generated
 	 */
-	int DOCUMENTATION_TYPE = 31;
+	int DOCUMENTATION_TYPE = 33;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -1607,7 +1708,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
-	int DOCUMENT_ROOT = 32;
+	int DOCUMENT_ROOT = 34;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -1862,13 +1963,31 @@ public interface CSConfigPackage extends EPackage {
 	int DOCUMENT_ROOT__CONTROLORNULL = 27;
 
 	/**
+	 * The feature id for the '<em><b>Crepository</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__CREPOSITORY = 28;
+
+	/**
 	 * The feature id for the '<em><b>Ctltargettype</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__CTLTARGETTYPE = 28;
+	int DOCUMENT_ROOT__CTLTARGETTYPE = 29;
+
+	/**
+	 * The feature id for the '<em><b>Customizableicons</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__CUSTOMIZABLEICONS = 30;
 
 	/**
 	 * The feature id for the '<em><b>Customrule</b></em>' containment reference.
@@ -1877,7 +1996,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__CUSTOMRULE = 29;
+	int DOCUMENT_ROOT__CUSTOMRULE = 31;
 
 	/**
 	 * The feature id for the '<em><b>Customrules</b></em>' containment reference.
@@ -1886,7 +2005,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__CUSTOMRULES = 30;
+	int DOCUMENT_ROOT__CUSTOMRULES = 32;
 
 	/**
 	 * The feature id for the '<em><b>Debugrom</b></em>' containment reference.
@@ -1895,7 +2014,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DEBUGROM = 31;
+	int DOCUMENT_ROOT__DEBUGROM = 33;
 
 	/**
 	 * The feature id for the '<em><b>Declarename</b></em>' containment reference.
@@ -1904,7 +2023,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DECLARENAME = 32;
+	int DOCUMENT_ROOT__DECLARENAME = 34;
 
 	/**
 	 * The feature id for the '<em><b>Delete Member Variable</b></em>' containment reference.
@@ -1913,7 +2032,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DELETE_MEMBER_VARIABLE = 33;
+	int DOCUMENT_ROOT__DELETE_MEMBER_VARIABLE = 35;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -1922,7 +2041,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DESCRIPTION = 34;
+	int DOCUMENT_ROOT__DESCRIPTION = 36;
 
 	/**
 	 * The feature id for the '<em><b>Destructor</b></em>' containment reference.
@@ -1931,7 +2050,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DESTRUCTOR = 35;
+	int DOCUMENT_ROOT__DESTRUCTOR = 37;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -1940,7 +2059,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DOCUMENTATION = 36;
+	int DOCUMENT_ROOT__DOCUMENTATION = 38;
 
 	/**
 	 * The feature id for the '<em><b>Double Semi Colon</b></em>' containment reference.
@@ -1949,7 +2068,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DOUBLE_SEMI_COLON = 37;
+	int DOCUMENT_ROOT__DOUBLE_SEMI_COLON = 39;
 
 	/**
 	 * The feature id for the '<em><b>Driveletters</b></em>' containment reference.
@@ -1958,7 +2077,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__DRIVELETTERS = 38;
+	int DOCUMENT_ROOT__DRIVELETTERS = 40;
 
 	/**
 	 * The feature id for the '<em><b>Eikbuttons</b></em>' containment reference.
@@ -1967,7 +2086,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__EIKBUTTONS = 39;
+	int DOCUMENT_ROOT__EIKBUTTONS = 41;
 
 	/**
 	 * The feature id for the '<em><b>Eikonenvstatic</b></em>' containment reference.
@@ -1976,7 +2095,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__EIKONENVSTATIC = 40;
+	int DOCUMENT_ROOT__EIKONENVSTATIC = 42;
 
 	/**
 	 * The feature id for the '<em><b>Enummembers</b></em>' containment reference.
@@ -1985,7 +2104,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__ENUMMEMBERS = 41;
+	int DOCUMENT_ROOT__ENUMMEMBERS = 43;
 
 	/**
 	 * The feature id for the '<em><b>Enumnames</b></em>' containment reference.
@@ -1994,7 +2113,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__ENUMNAMES = 42;
+	int DOCUMENT_ROOT__ENUMNAMES = 44;
 
 	/**
 	 * The feature id for the '<em><b>Exclude</b></em>' attribute.
@@ -2003,7 +2122,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__EXCLUDE = 43;
+	int DOCUMENT_ROOT__EXCLUDE = 45;
 
 	/**
 	 * The feature id for the '<em><b>Exportinline</b></em>' containment reference.
@@ -2012,7 +2131,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__EXPORTINLINE = 44;
+	int DOCUMENT_ROOT__EXPORTINLINE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Exportpurevirtual</b></em>' containment reference.
@@ -2021,7 +2140,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__EXPORTPUREVIRTUAL = 45;
+	int DOCUMENT_ROOT__EXPORTPUREVIRTUAL = 47;
 
 	/**
 	 * The feature id for the '<em><b>Externaldriveletters</b></em>' containment reference.
@@ -2030,7 +2149,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__EXTERNALDRIVELETTERS = 46;
+	int DOCUMENT_ROOT__EXTERNALDRIVELETTERS = 48;
 
 	/**
 	 * The feature id for the '<em><b>Filetype</b></em>' attribute.
@@ -2039,7 +2158,16 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FILETYPE = 47;
+	int DOCUMENT_ROOT__FILETYPE = 49;
+
+	/**
+	 * The feature id for the '<em><b>Flags</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__FLAGS = 50;
 
 	/**
 	 * The feature id for the '<em><b>Foff</b></em>' containment reference.
@@ -2048,7 +2176,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FOFF = 48;
+	int DOCUMENT_ROOT__FOFF = 51;
 
 	/**
 	 * The feature id for the '<em><b>Forbiddenwords</b></em>' containment reference.
@@ -2057,7 +2185,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FORBIDDENWORDS = 49;
+	int DOCUMENT_ROOT__FORBIDDENWORDS = 52;
 
 	/**
 	 * The feature id for the '<em><b>Forgottoputptroncleanupstack</b></em>' containment reference.
@@ -2066,7 +2194,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FORGOTTOPUTPTRONCLEANUPSTACK = 50;
+	int DOCUMENT_ROOT__FORGOTTOPUTPTRONCLEANUPSTACK = 53;
 
 	/**
 	 * The feature id for the '<em><b>Friend</b></em>' containment reference.
@@ -2075,7 +2203,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FRIEND = 51;
+	int DOCUMENT_ROOT__FRIEND = 54;
 
 	/**
 	 * The feature id for the '<em><b>Functionality</b></em>' containment reference.
@@ -2084,7 +2212,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FUNCTIONALITY = 52;
+	int DOCUMENT_ROOT__FUNCTIONALITY = 55;
 
 	/**
 	 * The feature id for the '<em><b>Goto</b></em>' containment reference.
@@ -2093,7 +2221,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__GOTO = 53;
+	int DOCUMENT_ROOT__GOTO = 56;
 
 	/**
 	 * The feature id for the '<em><b>High</b></em>' containment reference.
@@ -2102,7 +2230,16 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__HIGH = 54;
+	int DOCUMENT_ROOT__HIGH = 57;
+
+	/**
+	 * The feature id for the '<em><b>Icons RE</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__ICONS_RE = 58;
 
 	/**
 	 * The feature id for the '<em><b>Ifassignments</b></em>' containment reference.
@@ -2111,7 +2248,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__IFASSIGNMENTS = 55;
+	int DOCUMENT_ROOT__IFASSIGNMENTS = 59;
 
 	/**
 	 * The feature id for the '<em><b>Ifpreprocessor</b></em>' containment reference.
@@ -2120,7 +2257,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__IFPREPROCESSOR = 56;
+	int DOCUMENT_ROOT__IFPREPROCESSOR = 60;
 
 	/**
 	 * The feature id for the '<em><b>Inheritanceorder</b></em>' containment reference.
@@ -2129,7 +2266,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__INHERITANCEORDER = 57;
+	int DOCUMENT_ROOT__INHERITANCEORDER = 61;
 
 	/**
 	 * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -2138,7 +2275,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__INPUT = 58;
+	int DOCUMENT_ROOT__INPUT = 62;
 
 	/**
 	 * The feature id for the '<em><b>Intleaves</b></em>' containment reference.
@@ -2147,7 +2284,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__INTLEAVES = 59;
+	int DOCUMENT_ROOT__INTLEAVES = 63;
 
 	/**
 	 * The feature id for the '<em><b>Jmp</b></em>' containment reference.
@@ -2156,7 +2293,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__JMP = 60;
+	int DOCUMENT_ROOT__JMP = 64;
 
 	/**
 	 * The feature id for the '<em><b>Keyword</b></em>' containment reference.
@@ -2165,7 +2302,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__KEYWORD = 61;
+	int DOCUMENT_ROOT__KEYWORD = 65;
 
 	/**
 	 * The feature id for the '<em><b>Leave</b></em>' containment reference.
@@ -2174,7 +2311,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LEAVE = 62;
+	int DOCUMENT_ROOT__LEAVE = 66;
 
 	/**
 	 * The feature id for the '<em><b>Leave No Error</b></em>' containment reference.
@@ -2183,7 +2320,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LEAVE_NO_ERROR = 63;
+	int DOCUMENT_ROOT__LEAVE_NO_ERROR = 67;
 
 	/**
 	 * The feature id for the '<em><b>Leavingoperators</b></em>' containment reference.
@@ -2192,7 +2329,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LEAVINGOPERATORS = 64;
+	int DOCUMENT_ROOT__LEAVINGOPERATORS = 68;
 
 	/**
 	 * The feature id for the '<em><b>Legal</b></em>' containment reference.
@@ -2201,7 +2338,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LEGAL = 65;
+	int DOCUMENT_ROOT__LEGAL = 69;
 
 	/**
 	 * The feature id for the '<em><b>LFunction Cant Leave</b></em>' containment reference.
@@ -2210,7 +2347,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LFUNCTION_CANT_LEAVE = 66;
+	int DOCUMENT_ROOT__LFUNCTION_CANT_LEAVE = 70;
 
 	/**
 	 * The feature id for the '<em><b>LFunction Ignore RE</b></em>' attribute.
@@ -2219,7 +2356,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LFUNCTION_IGNORE_RE = 67;
+	int DOCUMENT_ROOT__LFUNCTION_IGNORE_RE = 71;
 
 	/**
 	 * The feature id for the '<em><b>Link</b></em>' attribute.
@@ -2228,7 +2365,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LINK = 68;
+	int DOCUMENT_ROOT__LINK = 72;
 
 	/**
 	 * The feature id for the '<em><b>Localisation</b></em>' containment reference.
@@ -2237,7 +2374,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LOCALISATION = 69;
+	int DOCUMENT_ROOT__LOCALISATION = 73;
 
 	/**
 	 * The feature id for the '<em><b>Longlines</b></em>' containment reference.
@@ -2246,7 +2383,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LONGLINES = 70;
+	int DOCUMENT_ROOT__LONGLINES = 74;
 
 	/**
 	 * The feature id for the '<em><b>Low</b></em>' containment reference.
@@ -2255,7 +2392,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LOW = 71;
+	int DOCUMENT_ROOT__LOW = 75;
 
 	/**
 	 * The feature id for the '<em><b>Lxr</b></em>' attribute.
@@ -2264,7 +2401,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LXR = 72;
+	int DOCUMENT_ROOT__LXR = 76;
 
 	/**
 	 * The feature id for the '<em><b>Lxrversion</b></em>' attribute.
@@ -2273,7 +2410,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__LXRVERSION = 73;
+	int DOCUMENT_ROOT__LXRVERSION = 77;
 
 	/**
 	 * The feature id for the '<em><b>Magicnumbers</b></em>' containment reference.
@@ -2282,7 +2419,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MAGICNUMBERS = 74;
+	int DOCUMENT_ROOT__MAGICNUMBERS = 78;
 
 	/**
 	 * The feature id for the '<em><b>Mclassdestructor</b></em>' containment reference.
@@ -2291,7 +2428,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MCLASSDESTRUCTOR = 75;
+	int DOCUMENT_ROOT__MCLASSDESTRUCTOR = 79;
 
 	/**
 	 * The feature id for the '<em><b>Medium</b></em>' containment reference.
@@ -2300,7 +2437,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MEDIUM = 76;
+	int DOCUMENT_ROOT__MEDIUM = 80;
 
 	/**
 	 * The feature id for the '<em><b>Memberlc</b></em>' containment reference.
@@ -2309,7 +2446,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MEMBERLC = 77;
+	int DOCUMENT_ROOT__MEMBERLC = 81;
 
 	/**
 	 * The feature id for the '<em><b>Membervariablecallld</b></em>' containment reference.
@@ -2318,7 +2455,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MEMBERVARIABLECALLLD = 78;
+	int DOCUMENT_ROOT__MEMBERVARIABLECALLLD = 82;
 
 	/**
 	 * The feature id for the '<em><b>Missingcancel</b></em>' containment reference.
@@ -2327,7 +2464,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MISSINGCANCEL = 79;
+	int DOCUMENT_ROOT__MISSINGCANCEL = 83;
 
 	/**
 	 * The feature id for the '<em><b>Missingcclass</b></em>' containment reference.
@@ -2336,7 +2473,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MISSINGCCLASS = 80;
+	int DOCUMENT_ROOT__MISSINGCCLASS = 84;
 
 	/**
 	 * The feature id for the '<em><b>Mmpsourcepath</b></em>' containment reference.
@@ -2345,7 +2482,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MMPSOURCEPATH = 81;
+	int DOCUMENT_ROOT__MMPSOURCEPATH = 85;
 
 	/**
 	 * The feature id for the '<em><b>Multilangrsc</b></em>' containment reference.
@@ -2354,7 +2491,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MULTILANGRSC = 82;
+	int DOCUMENT_ROOT__MULTILANGRSC = 86;
 
 	/**
 	 * The feature id for the '<em><b>Multipledeclarations</b></em>' containment reference.
@@ -2363,7 +2500,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MULTIPLEDECLARATIONS = 83;
+	int DOCUMENT_ROOT__MULTIPLEDECLARATIONS = 87;
 
 	/**
 	 * The feature id for the '<em><b>Multipleinheritance</b></em>' containment reference.
@@ -2372,7 +2509,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MULTIPLEINHERITANCE = 84;
+	int DOCUMENT_ROOT__MULTIPLEINHERITANCE = 88;
 
 	/**
 	 * The feature id for the '<em><b>Mydocs</b></em>' containment reference.
@@ -2381,7 +2518,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MYDOCS = 85;
+	int DOCUMENT_ROOT__MYDOCS = 89;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2390,7 +2527,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NAME = 86;
+	int DOCUMENT_ROOT__NAME = 90;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' containment reference.
@@ -2399,7 +2536,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NAMESPACE = 87;
+	int DOCUMENT_ROOT__NAMESPACE = 91;
 
 	/**
 	 * The feature id for the '<em><b>Newlreferences</b></em>' containment reference.
@@ -2408,7 +2545,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NEWLREFERENCES = 88;
+	int DOCUMENT_ROOT__NEWLREFERENCES = 92;
 
 	/**
 	 * The feature id for the '<em><b>Noleavetrap</b></em>' containment reference.
@@ -2417,7 +2554,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NOLEAVETRAP = 89;
+	int DOCUMENT_ROOT__NOLEAVETRAP = 93;
 
 	/**
 	 * The feature id for the '<em><b>Nonconsthbufc</b></em>' containment reference.
@@ -2426,7 +2563,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NONCONSTHBUFC = 90;
+	int DOCUMENT_ROOT__NONCONSTHBUFC = 94;
 
 	/**
 	 * The feature id for the '<em><b>Nonconsttdesc</b></em>' containment reference.
@@ -2435,7 +2572,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NONCONSTTDESC = 91;
+	int DOCUMENT_ROOT__NONCONSTTDESC = 95;
 
 	/**
 	 * The feature id for the '<em><b>Nonleavenew</b></em>' containment reference.
@@ -2444,7 +2581,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NONLEAVENEW = 92;
+	int DOCUMENT_ROOT__NONLEAVENEW = 96;
 
 	/**
 	 * The feature id for the '<em><b>Nonunicodeskins</b></em>' containment reference.
@@ -2453,7 +2590,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NONUNICODESKINS = 93;
+	int DOCUMENT_ROOT__NONUNICODESKINS = 97;
 
 	/**
 	 * The feature id for the '<em><b>Null</b></em>' containment reference.
@@ -2462,7 +2599,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__NULL = 94;
+	int DOCUMENT_ROOT__NULL = 98;
 
 	/**
 	 * The feature id for the '<em><b>Open</b></em>' containment reference.
@@ -2471,7 +2608,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__OPEN = 95;
+	int DOCUMENT_ROOT__OPEN = 99;
 
 	/**
 	 * The feature id for the '<em><b>Open Ignore RE</b></em>' attribute.
@@ -2480,7 +2617,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__OPEN_IGNORE_RE = 96;
+	int DOCUMENT_ROOT__OPEN_IGNORE_RE = 100;
 
 	/**
 	 * The feature id for the '<em><b>Other</b></em>' containment reference.
@@ -2489,7 +2626,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__OTHER = 97;
+	int DOCUMENT_ROOT__OTHER = 101;
 
 	/**
 	 * The feature id for the '<em><b>Outputformat</b></em>' attribute.
@@ -2498,7 +2635,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__OUTPUTFORMAT = 98;
+	int DOCUMENT_ROOT__OUTPUTFORMAT = 102;
 
 	/**
 	 * The feature id for the '<em><b>Panic</b></em>' containment reference.
@@ -2507,7 +2644,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PANIC = 99;
+	int DOCUMENT_ROOT__PANIC = 103;
 
 	/**
 	 * The feature id for the '<em><b>Performance</b></em>' containment reference.
@@ -2516,7 +2653,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PERFORMANCE = 100;
+	int DOCUMENT_ROOT__PERFORMANCE = 104;
 
 	/**
 	 * The feature id for the '<em><b>Pointertoarrays</b></em>' containment reference.
@@ -2525,7 +2662,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__POINTERTOARRAYS = 101;
+	int DOCUMENT_ROOT__POINTERTOARRAYS = 105;
 
 	/**
 	 * The feature id for the '<em><b>Pragmadisable</b></em>' containment reference.
@@ -2534,7 +2671,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PRAGMADISABLE = 102;
+	int DOCUMENT_ROOT__PRAGMADISABLE = 106;
 
 	/**
 	 * The feature id for the '<em><b>Pragmamessage</b></em>' containment reference.
@@ -2543,7 +2680,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PRAGMAMESSAGE = 103;
+	int DOCUMENT_ROOT__PRAGMAMESSAGE = 107;
 
 	/**
 	 * The feature id for the '<em><b>Pragmaother</b></em>' containment reference.
@@ -2552,7 +2689,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PRAGMAOTHER = 104;
+	int DOCUMENT_ROOT__PRAGMAOTHER = 108;
 
 	/**
 	 * The feature id for the '<em><b>Privateinheritance</b></em>' containment reference.
@@ -2561,7 +2698,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PRIVATEINHERITANCE = 105;
+	int DOCUMENT_ROOT__PRIVATEINHERITANCE = 109;
 
 	/**
 	 * The feature id for the '<em><b>Pushaddrvar</b></em>' containment reference.
@@ -2570,7 +2707,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PUSHADDRVAR = 106;
+	int DOCUMENT_ROOT__PUSHADDRVAR = 110;
 
 	/**
 	 * The feature id for the '<em><b>Pushmember</b></em>' containment reference.
@@ -2579,7 +2716,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PUSHMEMBER = 107;
+	int DOCUMENT_ROOT__PUSHMEMBER = 111;
 
 	/**
 	 * The feature id for the '<em><b>Readresource</b></em>' containment reference.
@@ -2588,7 +2725,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__READRESOURCE = 108;
+	int DOCUMENT_ROOT__READRESOURCE = 112;
 
 	/**
 	 * The feature id for the '<em><b>Resourcenotoncleanupstack</b></em>' containment reference.
@@ -2597,7 +2734,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RESOURCENOTONCLEANUPSTACK = 109;
+	int DOCUMENT_ROOT__RESOURCENOTONCLEANUPSTACK = 113;
 
 	/**
 	 * The feature id for the '<em><b>Resourcesonheap</b></em>' containment reference.
@@ -2606,7 +2743,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RESOURCESONHEAP = 110;
+	int DOCUMENT_ROOT__RESOURCESONHEAP = 114;
 
 	/**
 	 * The feature id for the '<em><b>Returndescriptoroutofscope</b></em>' containment reference.
@@ -2615,7 +2752,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RETURNDESCRIPTOROUTOFSCOPE = 111;
+	int DOCUMENT_ROOT__RETURNDESCRIPTOROUTOFSCOPE = 115;
 
 	/**
 	 * The feature id for the '<em><b>Rfs</b></em>' containment reference.
@@ -2624,7 +2761,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RFS = 112;
+	int DOCUMENT_ROOT__RFS = 116;
 
 	/**
 	 * The feature id for the '<em><b>Rssnames</b></em>' containment reference.
@@ -2633,7 +2770,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RSSNAMES = 113;
+	int DOCUMENT_ROOT__RSSNAMES = 117;
 
 	/**
 	 * The feature id for the '<em><b>Scripts</b></em>' containment reference.
@@ -2642,7 +2779,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SCRIPTS = 114;
+	int DOCUMENT_ROOT__SCRIPTS = 118;
 
 	/**
 	 * The feature id for the '<em><b>Severities</b></em>' containment reference.
@@ -2651,7 +2788,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SEVERITIES = 115;
+	int DOCUMENT_ROOT__SEVERITIES = 119;
 
 	/**
 	 * The feature id for the '<em><b>Severity</b></em>' attribute.
@@ -2660,7 +2797,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SEVERITY = 116;
+	int DOCUMENT_ROOT__SEVERITY = 120;
 
 	/**
 	 * The feature id for the '<em><b>Sources</b></em>' containment reference.
@@ -2669,7 +2806,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SOURCES = 117;
+	int DOCUMENT_ROOT__SOURCES = 121;
 
 	/**
 	 * The feature id for the '<em><b>Stringliterals</b></em>' containment reference.
@@ -2678,7 +2815,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__STRINGLITERALS = 118;
+	int DOCUMENT_ROOT__STRINGLITERALS = 122;
 
 	/**
 	 * The feature id for the '<em><b>Stringsinresourcefiles</b></em>' containment reference.
@@ -2687,7 +2824,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__STRINGSINRESOURCEFILES = 119;
+	int DOCUMENT_ROOT__STRINGSINRESOURCEFILES = 123;
 
 	/**
 	 * The feature id for the '<em><b>Struct</b></em>' containment reference.
@@ -2696,7 +2833,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__STRUCT = 120;
+	int DOCUMENT_ROOT__STRUCT = 124;
 
 	/**
 	 * The feature id for the '<em><b>Tcclasses</b></em>' containment reference.
@@ -2705,7 +2842,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TCCLASSES = 121;
+	int DOCUMENT_ROOT__TCCLASSES = 125;
 
 	/**
 	 * The feature id for the '<em><b>Tclassdestructor</b></em>' containment reference.
@@ -2714,7 +2851,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TCLASSDESTRUCTOR = 122;
+	int DOCUMENT_ROOT__TCLASSDESTRUCTOR = 126;
 
 	/**
 	 * The feature id for the '<em><b>Timestampedoutput</b></em>' attribute.
@@ -2723,7 +2860,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TIMESTAMPEDOUTPUT = 123;
+	int DOCUMENT_ROOT__TIMESTAMPEDOUTPUT = 127;
 
 	/**
 	 * The feature id for the '<em><b>Title</b></em>' attribute.
@@ -2732,7 +2869,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TITLE = 124;
+	int DOCUMENT_ROOT__TITLE = 128;
 
 	/**
 	 * The feature id for the '<em><b>Todocomments</b></em>' containment reference.
@@ -2741,7 +2878,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TODOCOMMENTS = 125;
+	int DOCUMENT_ROOT__TODOCOMMENTS = 129;
 
 	/**
 	 * The feature id for the '<em><b>Trapcleanup</b></em>' containment reference.
@@ -2750,7 +2887,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TRAPCLEANUP = 126;
+	int DOCUMENT_ROOT__TRAPCLEANUP = 130;
 
 	/**
 	 * The feature id for the '<em><b>Trapeleave</b></em>' containment reference.
@@ -2759,7 +2896,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TRAPELEAVE = 127;
+	int DOCUMENT_ROOT__TRAPELEAVE = 131;
 
 	/**
 	 * The feature id for the '<em><b>Traprunl</b></em>' containment reference.
@@ -2768,7 +2905,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TRAPRUNL = 128;
+	int DOCUMENT_ROOT__TRAPRUNL = 132;
 
 	/**
 	 * The feature id for the '<em><b>Trspassing</b></em>' containment reference.
@@ -2777,7 +2914,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TRSPASSING = 129;
+	int DOCUMENT_ROOT__TRSPASSING = 133;
 
 	/**
 	 * The feature id for the '<em><b>Uids</b></em>' containment reference.
@@ -2786,7 +2923,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__UIDS = 130;
+	int DOCUMENT_ROOT__UIDS = 134;
 
 	/**
 	 * The feature id for the '<em><b>Uncompressedaif</b></em>' containment reference.
@@ -2795,7 +2932,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__UNCOMPRESSEDAIF = 131;
+	int DOCUMENT_ROOT__UNCOMPRESSEDAIF = 135;
 
 	/**
 	 * The feature id for the '<em><b>Uncompressedbmp</b></em>' containment reference.
@@ -2804,7 +2941,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__UNCOMPRESSEDBMP = 132;
+	int DOCUMENT_ROOT__UNCOMPRESSEDBMP = 136;
 
 	/**
 	 * The feature id for the '<em><b>Unicodesource</b></em>' containment reference.
@@ -2813,7 +2950,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__UNICODESOURCE = 133;
+	int DOCUMENT_ROOT__UNICODESOURCE = 137;
 
 	/**
 	 * The feature id for the '<em><b>Userafter</b></em>' containment reference.
@@ -2822,7 +2959,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__USERAFTER = 134;
+	int DOCUMENT_ROOT__USERAFTER = 138;
 
 	/**
 	 * The feature id for the '<em><b>Userfree</b></em>' containment reference.
@@ -2831,7 +2968,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__USERFREE = 135;
+	int DOCUMENT_ROOT__USERFREE = 139;
 
 	/**
 	 * The feature id for the '<em><b>User Wait For Request</b></em>' containment reference.
@@ -2840,7 +2977,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__USER_WAIT_FOR_REQUEST = 136;
+	int DOCUMENT_ROOT__USER_WAIT_FOR_REQUEST = 140;
 
 	/**
 	 * The feature id for the '<em><b>Variablenames</b></em>' containment reference.
@@ -2849,7 +2986,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__VARIABLENAMES = 137;
+	int DOCUMENT_ROOT__VARIABLENAMES = 141;
 
 	/**
 	 * The feature id for the '<em><b>Voidparameter</b></em>' containment reference.
@@ -2858,7 +2995,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__VOIDPARAMETER = 138;
+	int DOCUMENT_ROOT__VOIDPARAMETER = 142;
 
 	/**
 	 * The feature id for the '<em><b>Words RE</b></em>' attribute.
@@ -2867,7 +3004,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__WORDS_RE = 139;
+	int DOCUMENT_ROOT__WORDS_RE = 143;
 
 	/**
 	 * The feature id for the '<em><b>Worryingcomments</b></em>' containment reference.
@@ -2876,7 +3013,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__WORRYINGCOMMENTS = 140;
+	int DOCUMENT_ROOT__WORRYINGCOMMENTS = 144;
 
 	/**
 	 * The feature id for the '<em><b>Worry RE</b></em>' attribute.
@@ -2885,7 +3022,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__WORRY_RE = 141;
+	int DOCUMENT_ROOT__WORRY_RE = 145;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -2894,7 +3031,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__CATEGORY = 142;
+	int DOCUMENT_ROOT__CATEGORY = 146;
 
 	/**
 	 * The feature id for the '<em><b>Severity1</b></em>' attribute.
@@ -2903,7 +3040,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SEVERITY1 = 143;
+	int DOCUMENT_ROOT__SEVERITY1 = 147;
 
 	/**
 	 * The number of structural features of the '<em>Document Root</em>' class.
@@ -2912,7 +3049,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 144;
+	int DOCUMENT_ROOT_FEATURE_COUNT = 148;
 
 	/**
 	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DoubleSemiColonTypeImpl <em>Double Semi Colon Type</em>}' class.
@@ -2922,7 +3059,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDoubleSemiColonType()
 	 * @generated
 	 */
-	int DOUBLE_SEMI_COLON_TYPE = 33;
+	int DOUBLE_SEMI_COLON_TYPE = 35;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -2968,7 +3105,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getDrivelettersType()
 	 * @generated
 	 */
-	int DRIVELETTERS_TYPE = 34;
+	int DRIVELETTERS_TYPE = 36;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3014,7 +3151,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getEikbuttonsType()
 	 * @generated
 	 */
-	int EIKBUTTONS_TYPE = 35;
+	int EIKBUTTONS_TYPE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3060,7 +3197,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getEikonenvstaticType()
 	 * @generated
 	 */
-	int EIKONENVSTATIC_TYPE = 36;
+	int EIKONENVSTATIC_TYPE = 38;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3106,7 +3243,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getEnummembersType()
 	 * @generated
 	 */
-	int ENUMMEMBERS_TYPE = 37;
+	int ENUMMEMBERS_TYPE = 39;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3152,7 +3289,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getEnumnamesType()
 	 * @generated
 	 */
-	int ENUMNAMES_TYPE = 38;
+	int ENUMNAMES_TYPE = 40;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3198,7 +3335,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getExportinlineType()
 	 * @generated
 	 */
-	int EXPORTINLINE_TYPE = 39;
+	int EXPORTINLINE_TYPE = 41;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3244,7 +3381,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getExportpurevirtualType()
 	 * @generated
 	 */
-	int EXPORTPUREVIRTUAL_TYPE = 40;
+	int EXPORTPUREVIRTUAL_TYPE = 42;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3290,7 +3427,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getExternaldrivelettersType()
 	 * @generated
 	 */
-	int EXTERNALDRIVELETTERS_TYPE = 41;
+	int EXTERNALDRIVELETTERS_TYPE = 43;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3329,6 +3466,52 @@ public interface CSConfigPackage extends EPackage {
 	int EXTERNALDRIVELETTERS_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.FlagsTypeImpl <em>Flags Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.FlagsTypeImpl
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getFlagsType()
+	 * @generated
+	 */
+	int FLAGS_TYPE = 44;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLAGS_TYPE__CATEGORY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Enable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLAGS_TYPE__ENABLE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLAGS_TYPE__SEVERITY = 2;
+
+	/**
+	 * The number of structural features of the '<em>Flags Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLAGS_TYPE_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.FoffTypeImpl <em>Foff Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3336,7 +3519,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getFoffType()
 	 * @generated
 	 */
-	int FOFF_TYPE = 42;
+	int FOFF_TYPE = 45;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3382,7 +3565,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getForbiddenwordsType()
 	 * @generated
 	 */
-	int FORBIDDENWORDS_TYPE = 43;
+	int FORBIDDENWORDS_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Words RE</b></em>' attribute.
@@ -3437,7 +3620,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getForgottoputptroncleanupstackType()
 	 * @generated
 	 */
-	int FORGOTTOPUTPTRONCLEANUPSTACK_TYPE = 44;
+	int FORGOTTOPUTPTRONCLEANUPSTACK_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3483,7 +3666,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getFriendType()
 	 * @generated
 	 */
-	int FRIEND_TYPE = 45;
+	int FRIEND_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3529,7 +3712,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getFunctionalityType()
 	 * @generated
 	 */
-	int FUNCTIONALITY_TYPE = 46;
+	int FUNCTIONALITY_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -3557,7 +3740,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getGotoType()
 	 * @generated
 	 */
-	int GOTO_TYPE = 47;
+	int GOTO_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3603,7 +3786,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getHighType()
 	 * @generated
 	 */
-	int HIGH_TYPE = 48;
+	int HIGH_TYPE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -3631,7 +3814,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getIfassignmentsType()
 	 * @generated
 	 */
-	int IFASSIGNMENTS_TYPE = 49;
+	int IFASSIGNMENTS_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3677,7 +3860,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getIfpreprocessorType()
 	 * @generated
 	 */
-	int IFPREPROCESSOR_TYPE = 50;
+	int IFPREPROCESSOR_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3723,7 +3906,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getInheritanceorderType()
 	 * @generated
 	 */
-	int INHERITANCEORDER_TYPE = 51;
+	int INHERITANCEORDER_TYPE = 54;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3769,7 +3952,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getIntleavesType()
 	 * @generated
 	 */
-	int INTLEAVES_TYPE = 52;
+	int INTLEAVES_TYPE = 55;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3815,7 +3998,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getJmpType()
 	 * @generated
 	 */
-	int JMP_TYPE = 53;
+	int JMP_TYPE = 56;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3861,7 +4044,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getKeywordType()
 	 * @generated
 	 */
-	int KEYWORD_TYPE = 54;
+	int KEYWORD_TYPE = 57;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -3898,7 +4081,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLeaveNoErrorType()
 	 * @generated
 	 */
-	int LEAVE_NO_ERROR_TYPE = 55;
+	int LEAVE_NO_ERROR_TYPE = 58;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3944,7 +4127,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLeaveType()
 	 * @generated
 	 */
-	int LEAVE_TYPE = 56;
+	int LEAVE_TYPE = 59;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -3990,7 +4173,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLeavingoperatorsType()
 	 * @generated
 	 */
-	int LEAVINGOPERATORS_TYPE = 57;
+	int LEAVINGOPERATORS_TYPE = 60;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4036,7 +4219,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLegalType()
 	 * @generated
 	 */
-	int LEGAL_TYPE = 58;
+	int LEGAL_TYPE = 61;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -4064,7 +4247,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLFunctionCantLeaveType()
 	 * @generated
 	 */
-	int LFUNCTION_CANT_LEAVE_TYPE = 59;
+	int LFUNCTION_CANT_LEAVE_TYPE = 62;
 
 	/**
 	 * The feature id for the '<em><b>LFunction Ignore RE</b></em>' attribute.
@@ -4119,7 +4302,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLocalisationType()
 	 * @generated
 	 */
-	int LOCALISATION_TYPE = 60;
+	int LOCALISATION_TYPE = 63;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -4147,7 +4330,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLonglinesType()
 	 * @generated
 	 */
-	int LONGLINES_TYPE = 61;
+	int LONGLINES_TYPE = 64;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4202,7 +4385,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getLowType()
 	 * @generated
 	 */
-	int LOW_TYPE = 62;
+	int LOW_TYPE = 65;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -4230,7 +4413,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMagicnumbersType()
 	 * @generated
 	 */
-	int MAGICNUMBERS_TYPE = 63;
+	int MAGICNUMBERS_TYPE = 66;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4276,7 +4459,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMclassdestructorType()
 	 * @generated
 	 */
-	int MCLASSDESTRUCTOR_TYPE = 64;
+	int MCLASSDESTRUCTOR_TYPE = 67;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4322,7 +4505,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMediumType()
 	 * @generated
 	 */
-	int MEDIUM_TYPE = 65;
+	int MEDIUM_TYPE = 68;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -4350,7 +4533,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMemberlcType()
 	 * @generated
 	 */
-	int MEMBERLC_TYPE = 66;
+	int MEMBERLC_TYPE = 69;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4396,7 +4579,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMembervariablecallldType()
 	 * @generated
 	 */
-	int MEMBERVARIABLECALLLD_TYPE = 67;
+	int MEMBERVARIABLECALLLD_TYPE = 70;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4442,7 +4625,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMissingcancelType()
 	 * @generated
 	 */
-	int MISSINGCANCEL_TYPE = 68;
+	int MISSINGCANCEL_TYPE = 71;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4488,7 +4671,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMissingcclassType()
 	 * @generated
 	 */
-	int MISSINGCCLASS_TYPE = 69;
+	int MISSINGCCLASS_TYPE = 72;
 
 	/**
 	 * The feature id for the '<em><b>Cclass Ignore RE</b></em>' attribute.
@@ -4543,7 +4726,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMmpsourcepathType()
 	 * @generated
 	 */
-	int MMPSOURCEPATH_TYPE = 70;
+	int MMPSOURCEPATH_TYPE = 73;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4589,7 +4772,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMultilangrscType()
 	 * @generated
 	 */
-	int MULTILANGRSC_TYPE = 71;
+	int MULTILANGRSC_TYPE = 74;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4635,7 +4818,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMultipledeclarationsType()
 	 * @generated
 	 */
-	int MULTIPLEDECLARATIONS_TYPE = 72;
+	int MULTIPLEDECLARATIONS_TYPE = 75;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4681,7 +4864,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMultipleinheritanceType()
 	 * @generated
 	 */
-	int MULTIPLEINHERITANCE_TYPE = 73;
+	int MULTIPLEINHERITANCE_TYPE = 76;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4727,7 +4910,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getMydocsType()
 	 * @generated
 	 */
-	int MYDOCS_TYPE = 74;
+	int MYDOCS_TYPE = 77;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4773,7 +4956,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNamespaceType()
 	 * @generated
 	 */
-	int NAMESPACE_TYPE = 75;
+	int NAMESPACE_TYPE = 78;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4819,7 +5002,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNewlreferencesType()
 	 * @generated
 	 */
-	int NEWLREFERENCES_TYPE = 76;
+	int NEWLREFERENCES_TYPE = 79;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4865,7 +5048,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNoleavetrapType()
 	 * @generated
 	 */
-	int NOLEAVETRAP_TYPE = 77;
+	int NOLEAVETRAP_TYPE = 80;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4911,7 +5094,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNonconsthbufcType()
 	 * @generated
 	 */
-	int NONCONSTHBUFC_TYPE = 78;
+	int NONCONSTHBUFC_TYPE = 81;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -4957,7 +5140,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNonconsttdescType()
 	 * @generated
 	 */
-	int NONCONSTTDESC_TYPE = 79;
+	int NONCONSTTDESC_TYPE = 82;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5003,7 +5186,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNonleavenewType()
 	 * @generated
 	 */
-	int NONLEAVENEW_TYPE = 80;
+	int NONLEAVENEW_TYPE = 83;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5049,7 +5232,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNonunicodeskinsType()
 	 * @generated
 	 */
-	int NONUNICODESKINS_TYPE = 81;
+	int NONUNICODESKINS_TYPE = 84;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5095,7 +5278,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getNullType()
 	 * @generated
 	 */
-	int NULL_TYPE = 82;
+	int NULL_TYPE = 85;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5141,7 +5324,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getOpenType()
 	 * @generated
 	 */
-	int OPEN_TYPE = 83;
+	int OPEN_TYPE = 86;
 
 	/**
 	 * The feature id for the '<em><b>Open Ignore RE</b></em>' attribute.
@@ -5196,7 +5379,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getOtherType()
 	 * @generated
 	 */
-	int OTHER_TYPE = 84;
+	int OTHER_TYPE = 87;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -5224,7 +5407,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPanicType()
 	 * @generated
 	 */
-	int PANIC_TYPE = 85;
+	int PANIC_TYPE = 88;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -5252,7 +5435,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPerformanceType()
 	 * @generated
 	 */
-	int PERFORMANCE_TYPE = 86;
+	int PERFORMANCE_TYPE = 89;
 
 	/**
 	 * The feature id for the '<em><b>Enable</b></em>' attribute.
@@ -5280,7 +5463,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPointertoarraysType()
 	 * @generated
 	 */
-	int POINTERTOARRAYS_TYPE = 87;
+	int POINTERTOARRAYS_TYPE = 90;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5326,7 +5509,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPragmadisableType()
 	 * @generated
 	 */
-	int PRAGMADISABLE_TYPE = 88;
+	int PRAGMADISABLE_TYPE = 91;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5372,7 +5555,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPragmamessageType()
 	 * @generated
 	 */
-	int PRAGMAMESSAGE_TYPE = 89;
+	int PRAGMAMESSAGE_TYPE = 92;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5418,7 +5601,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPragmaotherType()
 	 * @generated
 	 */
-	int PRAGMAOTHER_TYPE = 90;
+	int PRAGMAOTHER_TYPE = 93;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5464,7 +5647,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPrivateinheritanceType()
 	 * @generated
 	 */
-	int PRIVATEINHERITANCE_TYPE = 91;
+	int PRIVATEINHERITANCE_TYPE = 94;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5510,7 +5693,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPushaddrvarType()
 	 * @generated
 	 */
-	int PUSHADDRVAR_TYPE = 92;
+	int PUSHADDRVAR_TYPE = 95;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5556,7 +5739,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getPushmemberType()
 	 * @generated
 	 */
-	int PUSHMEMBER_TYPE = 93;
+	int PUSHMEMBER_TYPE = 96;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5602,7 +5785,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getReadresourceType()
 	 * @generated
 	 */
-	int READRESOURCE_TYPE = 94;
+	int READRESOURCE_TYPE = 97;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5648,7 +5831,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getResourcenotoncleanupstackType()
 	 * @generated
 	 */
-	int RESOURCENOTONCLEANUPSTACK_TYPE = 95;
+	int RESOURCENOTONCLEANUPSTACK_TYPE = 98;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5694,7 +5877,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getResourcesonheapType()
 	 * @generated
 	 */
-	int RESOURCESONHEAP_TYPE = 96;
+	int RESOURCESONHEAP_TYPE = 99;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5740,7 +5923,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getReturndescriptoroutofscopeType()
 	 * @generated
 	 */
-	int RETURNDESCRIPTOROUTOFSCOPE_TYPE = 97;
+	int RETURNDESCRIPTOROUTOFSCOPE_TYPE = 100;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5786,7 +5969,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getRfsType()
 	 * @generated
 	 */
-	int RFS_TYPE = 98;
+	int RFS_TYPE = 101;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5832,7 +6015,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getRssnamesType()
 	 * @generated
 	 */
-	int RSSNAMES_TYPE = 99;
+	int RSSNAMES_TYPE = 102;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -5878,7 +6061,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getScriptsType()
 	 * @generated
 	 */
-	int SCRIPTS_TYPE = 100;
+	int SCRIPTS_TYPE = 103;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -6052,13 +6235,31 @@ public interface CSConfigPackage extends EPackage {
 	int SCRIPTS_TYPE__CONTROLORNULL = 18;
 
 	/**
+	 * The feature id for the '<em><b>Crepository</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPTS_TYPE__CREPOSITORY = 19;
+
+	/**
 	 * The feature id for the '<em><b>Ctltargettype</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__CTLTARGETTYPE = 19;
+	int SCRIPTS_TYPE__CTLTARGETTYPE = 20;
+
+	/**
+	 * The feature id for the '<em><b>Customizableicons</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPTS_TYPE__CUSTOMIZABLEICONS = 21;
 
 	/**
 	 * The feature id for the '<em><b>Debugrom</b></em>' containment reference.
@@ -6067,7 +6268,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__DEBUGROM = 20;
+	int SCRIPTS_TYPE__DEBUGROM = 22;
 
 	/**
 	 * The feature id for the '<em><b>Declarename</b></em>' containment reference.
@@ -6076,7 +6277,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__DECLARENAME = 21;
+	int SCRIPTS_TYPE__DECLARENAME = 23;
 
 	/**
 	 * The feature id for the '<em><b>Delete Member Variable</b></em>' containment reference.
@@ -6085,7 +6286,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__DELETE_MEMBER_VARIABLE = 22;
+	int SCRIPTS_TYPE__DELETE_MEMBER_VARIABLE = 24;
 
 	/**
 	 * The feature id for the '<em><b>Destructor</b></em>' containment reference.
@@ -6094,7 +6295,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__DESTRUCTOR = 23;
+	int SCRIPTS_TYPE__DESTRUCTOR = 25;
 
 	/**
 	 * The feature id for the '<em><b>Double Semi Colon</b></em>' containment reference.
@@ -6103,7 +6304,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__DOUBLE_SEMI_COLON = 24;
+	int SCRIPTS_TYPE__DOUBLE_SEMI_COLON = 26;
 
 	/**
 	 * The feature id for the '<em><b>Driveletters</b></em>' containment reference.
@@ -6112,7 +6313,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__DRIVELETTERS = 25;
+	int SCRIPTS_TYPE__DRIVELETTERS = 27;
 
 	/**
 	 * The feature id for the '<em><b>Eikbuttons</b></em>' containment reference.
@@ -6121,7 +6322,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__EIKBUTTONS = 26;
+	int SCRIPTS_TYPE__EIKBUTTONS = 28;
 
 	/**
 	 * The feature id for the '<em><b>Eikonenvstatic</b></em>' containment reference.
@@ -6130,7 +6331,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__EIKONENVSTATIC = 27;
+	int SCRIPTS_TYPE__EIKONENVSTATIC = 29;
 
 	/**
 	 * The feature id for the '<em><b>Enummembers</b></em>' containment reference.
@@ -6139,7 +6340,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__ENUMMEMBERS = 28;
+	int SCRIPTS_TYPE__ENUMMEMBERS = 30;
 
 	/**
 	 * The feature id for the '<em><b>Enumnames</b></em>' containment reference.
@@ -6148,7 +6349,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__ENUMNAMES = 29;
+	int SCRIPTS_TYPE__ENUMNAMES = 31;
 
 	/**
 	 * The feature id for the '<em><b>Exportinline</b></em>' containment reference.
@@ -6157,7 +6358,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__EXPORTINLINE = 30;
+	int SCRIPTS_TYPE__EXPORTINLINE = 32;
 
 	/**
 	 * The feature id for the '<em><b>Exportpurevirtual</b></em>' containment reference.
@@ -6166,7 +6367,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__EXPORTPUREVIRTUAL = 31;
+	int SCRIPTS_TYPE__EXPORTPUREVIRTUAL = 33;
 
 	/**
 	 * The feature id for the '<em><b>Externaldriveletters</b></em>' containment reference.
@@ -6175,7 +6376,16 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__EXTERNALDRIVELETTERS = 32;
+	int SCRIPTS_TYPE__EXTERNALDRIVELETTERS = 34;
+
+	/**
+	 * The feature id for the '<em><b>Flags</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPTS_TYPE__FLAGS = 35;
 
 	/**
 	 * The feature id for the '<em><b>Foff</b></em>' containment reference.
@@ -6184,7 +6394,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__FOFF = 33;
+	int SCRIPTS_TYPE__FOFF = 36;
 
 	/**
 	 * The feature id for the '<em><b>Forbiddenwords</b></em>' containment reference.
@@ -6193,7 +6403,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__FORBIDDENWORDS = 34;
+	int SCRIPTS_TYPE__FORBIDDENWORDS = 37;
 
 	/**
 	 * The feature id for the '<em><b>Forgottoputptroncleanupstack</b></em>' containment reference.
@@ -6202,7 +6412,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__FORGOTTOPUTPTRONCLEANUPSTACK = 35;
+	int SCRIPTS_TYPE__FORGOTTOPUTPTRONCLEANUPSTACK = 38;
 
 	/**
 	 * The feature id for the '<em><b>Friend</b></em>' containment reference.
@@ -6211,7 +6421,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__FRIEND = 36;
+	int SCRIPTS_TYPE__FRIEND = 39;
 
 	/**
 	 * The feature id for the '<em><b>Goto</b></em>' containment reference.
@@ -6220,7 +6430,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__GOTO = 37;
+	int SCRIPTS_TYPE__GOTO = 40;
 
 	/**
 	 * The feature id for the '<em><b>Ifassignments</b></em>' containment reference.
@@ -6229,7 +6439,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__IFASSIGNMENTS = 38;
+	int SCRIPTS_TYPE__IFASSIGNMENTS = 41;
 
 	/**
 	 * The feature id for the '<em><b>Ifpreprocessor</b></em>' containment reference.
@@ -6238,7 +6448,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__IFPREPROCESSOR = 39;
+	int SCRIPTS_TYPE__IFPREPROCESSOR = 42;
 
 	/**
 	 * The feature id for the '<em><b>Inheritanceorder</b></em>' containment reference.
@@ -6247,7 +6457,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__INHERITANCEORDER = 40;
+	int SCRIPTS_TYPE__INHERITANCEORDER = 43;
 
 	/**
 	 * The feature id for the '<em><b>Intleaves</b></em>' containment reference.
@@ -6256,7 +6466,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__INTLEAVES = 41;
+	int SCRIPTS_TYPE__INTLEAVES = 44;
 
 	/**
 	 * The feature id for the '<em><b>Jmp</b></em>' containment reference.
@@ -6265,7 +6475,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__JMP = 42;
+	int SCRIPTS_TYPE__JMP = 45;
 
 	/**
 	 * The feature id for the '<em><b>Leave</b></em>' containment reference.
@@ -6274,7 +6484,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__LEAVE = 43;
+	int SCRIPTS_TYPE__LEAVE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Leave No Error</b></em>' containment reference.
@@ -6283,7 +6493,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__LEAVE_NO_ERROR = 44;
+	int SCRIPTS_TYPE__LEAVE_NO_ERROR = 47;
 
 	/**
 	 * The feature id for the '<em><b>Leavingoperators</b></em>' containment reference.
@@ -6292,7 +6502,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__LEAVINGOPERATORS = 45;
+	int SCRIPTS_TYPE__LEAVINGOPERATORS = 48;
 
 	/**
 	 * The feature id for the '<em><b>LFunction Cant Leave</b></em>' containment reference.
@@ -6301,7 +6511,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__LFUNCTION_CANT_LEAVE = 46;
+	int SCRIPTS_TYPE__LFUNCTION_CANT_LEAVE = 49;
 
 	/**
 	 * The feature id for the '<em><b>Longlines</b></em>' containment reference.
@@ -6310,7 +6520,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__LONGLINES = 47;
+	int SCRIPTS_TYPE__LONGLINES = 50;
 
 	/**
 	 * The feature id for the '<em><b>Magicnumbers</b></em>' containment reference.
@@ -6319,7 +6529,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MAGICNUMBERS = 48;
+	int SCRIPTS_TYPE__MAGICNUMBERS = 51;
 
 	/**
 	 * The feature id for the '<em><b>Mclassdestructor</b></em>' containment reference.
@@ -6328,7 +6538,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MCLASSDESTRUCTOR = 49;
+	int SCRIPTS_TYPE__MCLASSDESTRUCTOR = 52;
 
 	/**
 	 * The feature id for the '<em><b>Memberlc</b></em>' containment reference.
@@ -6337,7 +6547,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MEMBERLC = 50;
+	int SCRIPTS_TYPE__MEMBERLC = 53;
 
 	/**
 	 * The feature id for the '<em><b>Membervariablecallld</b></em>' containment reference.
@@ -6346,7 +6556,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MEMBERVARIABLECALLLD = 51;
+	int SCRIPTS_TYPE__MEMBERVARIABLECALLLD = 54;
 
 	/**
 	 * The feature id for the '<em><b>Missingcancel</b></em>' containment reference.
@@ -6355,7 +6565,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MISSINGCANCEL = 52;
+	int SCRIPTS_TYPE__MISSINGCANCEL = 55;
 
 	/**
 	 * The feature id for the '<em><b>Missingcclass</b></em>' containment reference.
@@ -6364,7 +6574,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MISSINGCCLASS = 53;
+	int SCRIPTS_TYPE__MISSINGCCLASS = 56;
 
 	/**
 	 * The feature id for the '<em><b>Mmpsourcepath</b></em>' containment reference.
@@ -6373,7 +6583,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MMPSOURCEPATH = 54;
+	int SCRIPTS_TYPE__MMPSOURCEPATH = 57;
 
 	/**
 	 * The feature id for the '<em><b>Multilangrsc</b></em>' containment reference.
@@ -6382,7 +6592,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MULTILANGRSC = 55;
+	int SCRIPTS_TYPE__MULTILANGRSC = 58;
 
 	/**
 	 * The feature id for the '<em><b>Multipledeclarations</b></em>' containment reference.
@@ -6391,7 +6601,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MULTIPLEDECLARATIONS = 56;
+	int SCRIPTS_TYPE__MULTIPLEDECLARATIONS = 59;
 
 	/**
 	 * The feature id for the '<em><b>Multipleinheritance</b></em>' containment reference.
@@ -6400,7 +6610,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MULTIPLEINHERITANCE = 57;
+	int SCRIPTS_TYPE__MULTIPLEINHERITANCE = 60;
 
 	/**
 	 * The feature id for the '<em><b>Mydocs</b></em>' containment reference.
@@ -6409,7 +6619,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__MYDOCS = 58;
+	int SCRIPTS_TYPE__MYDOCS = 61;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' containment reference.
@@ -6418,7 +6628,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NAMESPACE = 59;
+	int SCRIPTS_TYPE__NAMESPACE = 62;
 
 	/**
 	 * The feature id for the '<em><b>Newlreferences</b></em>' containment reference.
@@ -6427,7 +6637,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NEWLREFERENCES = 60;
+	int SCRIPTS_TYPE__NEWLREFERENCES = 63;
 
 	/**
 	 * The feature id for the '<em><b>Noleavetrap</b></em>' containment reference.
@@ -6436,7 +6646,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NOLEAVETRAP = 61;
+	int SCRIPTS_TYPE__NOLEAVETRAP = 64;
 
 	/**
 	 * The feature id for the '<em><b>Nonconsthbufc</b></em>' containment reference.
@@ -6445,7 +6655,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NONCONSTHBUFC = 62;
+	int SCRIPTS_TYPE__NONCONSTHBUFC = 65;
 
 	/**
 	 * The feature id for the '<em><b>Nonconsttdesc</b></em>' containment reference.
@@ -6454,7 +6664,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NONCONSTTDESC = 63;
+	int SCRIPTS_TYPE__NONCONSTTDESC = 66;
 
 	/**
 	 * The feature id for the '<em><b>Nonleavenew</b></em>' containment reference.
@@ -6463,7 +6673,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NONLEAVENEW = 64;
+	int SCRIPTS_TYPE__NONLEAVENEW = 67;
 
 	/**
 	 * The feature id for the '<em><b>Nonunicodeskins</b></em>' containment reference.
@@ -6472,7 +6682,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NONUNICODESKINS = 65;
+	int SCRIPTS_TYPE__NONUNICODESKINS = 68;
 
 	/**
 	 * The feature id for the '<em><b>Null</b></em>' containment reference.
@@ -6481,7 +6691,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__NULL = 66;
+	int SCRIPTS_TYPE__NULL = 69;
 
 	/**
 	 * The feature id for the '<em><b>Open</b></em>' containment reference.
@@ -6490,7 +6700,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__OPEN = 67;
+	int SCRIPTS_TYPE__OPEN = 70;
 
 	/**
 	 * The feature id for the '<em><b>Pointertoarrays</b></em>' containment reference.
@@ -6499,7 +6709,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__POINTERTOARRAYS = 68;
+	int SCRIPTS_TYPE__POINTERTOARRAYS = 71;
 
 	/**
 	 * The feature id for the '<em><b>Pragmadisable</b></em>' containment reference.
@@ -6508,7 +6718,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__PRAGMADISABLE = 69;
+	int SCRIPTS_TYPE__PRAGMADISABLE = 72;
 
 	/**
 	 * The feature id for the '<em><b>Pragmamessage</b></em>' containment reference.
@@ -6517,7 +6727,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__PRAGMAMESSAGE = 70;
+	int SCRIPTS_TYPE__PRAGMAMESSAGE = 73;
 
 	/**
 	 * The feature id for the '<em><b>Pragmaother</b></em>' containment reference.
@@ -6526,7 +6736,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__PRAGMAOTHER = 71;
+	int SCRIPTS_TYPE__PRAGMAOTHER = 74;
 
 	/**
 	 * The feature id for the '<em><b>Privateinheritance</b></em>' containment reference.
@@ -6535,7 +6745,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__PRIVATEINHERITANCE = 72;
+	int SCRIPTS_TYPE__PRIVATEINHERITANCE = 75;
 
 	/**
 	 * The feature id for the '<em><b>Pushaddrvar</b></em>' containment reference.
@@ -6544,7 +6754,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__PUSHADDRVAR = 73;
+	int SCRIPTS_TYPE__PUSHADDRVAR = 76;
 
 	/**
 	 * The feature id for the '<em><b>Pushmember</b></em>' containment reference.
@@ -6553,7 +6763,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__PUSHMEMBER = 74;
+	int SCRIPTS_TYPE__PUSHMEMBER = 77;
 
 	/**
 	 * The feature id for the '<em><b>Readresource</b></em>' containment reference.
@@ -6562,7 +6772,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__READRESOURCE = 75;
+	int SCRIPTS_TYPE__READRESOURCE = 78;
 
 	/**
 	 * The feature id for the '<em><b>Resourcenotoncleanupstack</b></em>' containment reference.
@@ -6571,7 +6781,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__RESOURCENOTONCLEANUPSTACK = 76;
+	int SCRIPTS_TYPE__RESOURCENOTONCLEANUPSTACK = 79;
 
 	/**
 	 * The feature id for the '<em><b>Resourcesonheap</b></em>' containment reference.
@@ -6580,7 +6790,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__RESOURCESONHEAP = 77;
+	int SCRIPTS_TYPE__RESOURCESONHEAP = 80;
 
 	/**
 	 * The feature id for the '<em><b>Returndescriptoroutofscope</b></em>' containment reference.
@@ -6589,7 +6799,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__RETURNDESCRIPTOROUTOFSCOPE = 78;
+	int SCRIPTS_TYPE__RETURNDESCRIPTOROUTOFSCOPE = 81;
 
 	/**
 	 * The feature id for the '<em><b>Rfs</b></em>' containment reference.
@@ -6598,7 +6808,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__RFS = 79;
+	int SCRIPTS_TYPE__RFS = 82;
 
 	/**
 	 * The feature id for the '<em><b>Rssnames</b></em>' containment reference.
@@ -6607,7 +6817,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__RSSNAMES = 80;
+	int SCRIPTS_TYPE__RSSNAMES = 83;
 
 	/**
 	 * The feature id for the '<em><b>Stringliterals</b></em>' containment reference.
@@ -6616,7 +6826,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__STRINGLITERALS = 81;
+	int SCRIPTS_TYPE__STRINGLITERALS = 84;
 
 	/**
 	 * The feature id for the '<em><b>Stringsinresourcefiles</b></em>' containment reference.
@@ -6625,7 +6835,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__STRINGSINRESOURCEFILES = 82;
+	int SCRIPTS_TYPE__STRINGSINRESOURCEFILES = 85;
 
 	/**
 	 * The feature id for the '<em><b>Struct</b></em>' containment reference.
@@ -6634,7 +6844,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__STRUCT = 83;
+	int SCRIPTS_TYPE__STRUCT = 86;
 
 	/**
 	 * The feature id for the '<em><b>Tcclasses</b></em>' containment reference.
@@ -6643,7 +6853,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TCCLASSES = 84;
+	int SCRIPTS_TYPE__TCCLASSES = 87;
 
 	/**
 	 * The feature id for the '<em><b>Tclassdestructor</b></em>' containment reference.
@@ -6652,7 +6862,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TCLASSDESTRUCTOR = 85;
+	int SCRIPTS_TYPE__TCLASSDESTRUCTOR = 88;
 
 	/**
 	 * The feature id for the '<em><b>Todocomments</b></em>' containment reference.
@@ -6661,7 +6871,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TODOCOMMENTS = 86;
+	int SCRIPTS_TYPE__TODOCOMMENTS = 89;
 
 	/**
 	 * The feature id for the '<em><b>Trapcleanup</b></em>' containment reference.
@@ -6670,7 +6880,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TRAPCLEANUP = 87;
+	int SCRIPTS_TYPE__TRAPCLEANUP = 90;
 
 	/**
 	 * The feature id for the '<em><b>Trapeleave</b></em>' containment reference.
@@ -6679,7 +6889,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TRAPELEAVE = 88;
+	int SCRIPTS_TYPE__TRAPELEAVE = 91;
 
 	/**
 	 * The feature id for the '<em><b>Traprunl</b></em>' containment reference.
@@ -6688,7 +6898,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TRAPRUNL = 89;
+	int SCRIPTS_TYPE__TRAPRUNL = 92;
 
 	/**
 	 * The feature id for the '<em><b>Trspassing</b></em>' containment reference.
@@ -6697,7 +6907,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__TRSPASSING = 90;
+	int SCRIPTS_TYPE__TRSPASSING = 93;
 
 	/**
 	 * The feature id for the '<em><b>Uids</b></em>' containment reference.
@@ -6706,7 +6916,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__UIDS = 91;
+	int SCRIPTS_TYPE__UIDS = 94;
 
 	/**
 	 * The feature id for the '<em><b>Uncompressedaif</b></em>' containment reference.
@@ -6715,7 +6925,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__UNCOMPRESSEDAIF = 92;
+	int SCRIPTS_TYPE__UNCOMPRESSEDAIF = 95;
 
 	/**
 	 * The feature id for the '<em><b>Uncompressedbmp</b></em>' containment reference.
@@ -6724,7 +6934,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__UNCOMPRESSEDBMP = 93;
+	int SCRIPTS_TYPE__UNCOMPRESSEDBMP = 96;
 
 	/**
 	 * The feature id for the '<em><b>Unicodesource</b></em>' containment reference.
@@ -6733,7 +6943,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__UNICODESOURCE = 94;
+	int SCRIPTS_TYPE__UNICODESOURCE = 97;
 
 	/**
 	 * The feature id for the '<em><b>Userafter</b></em>' containment reference.
@@ -6742,7 +6952,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__USERAFTER = 95;
+	int SCRIPTS_TYPE__USERAFTER = 98;
 
 	/**
 	 * The feature id for the '<em><b>Userfree</b></em>' containment reference.
@@ -6751,7 +6961,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__USERFREE = 96;
+	int SCRIPTS_TYPE__USERFREE = 99;
 
 	/**
 	 * The feature id for the '<em><b>User Wait For Request</b></em>' containment reference.
@@ -6760,7 +6970,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__USER_WAIT_FOR_REQUEST = 97;
+	int SCRIPTS_TYPE__USER_WAIT_FOR_REQUEST = 100;
 
 	/**
 	 * The feature id for the '<em><b>Variablenames</b></em>' containment reference.
@@ -6769,7 +6979,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__VARIABLENAMES = 98;
+	int SCRIPTS_TYPE__VARIABLENAMES = 101;
 
 	/**
 	 * The feature id for the '<em><b>Voidparameter</b></em>' containment reference.
@@ -6778,7 +6988,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__VOIDPARAMETER = 99;
+	int SCRIPTS_TYPE__VOIDPARAMETER = 102;
 
 	/**
 	 * The feature id for the '<em><b>Worryingcomments</b></em>' containment reference.
@@ -6787,7 +6997,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE__WORRYINGCOMMENTS = 100;
+	int SCRIPTS_TYPE__WORRYINGCOMMENTS = 103;
 
 	/**
 	 * The number of structural features of the '<em>Scripts Type</em>' class.
@@ -6796,7 +7006,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPTS_TYPE_FEATURE_COUNT = 101;
+	int SCRIPTS_TYPE_FEATURE_COUNT = 104;
 
 	/**
 	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.SeveritiesTypeImpl <em>Severities Type</em>}' class.
@@ -6806,7 +7016,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getSeveritiesType()
 	 * @generated
 	 */
-	int SEVERITIES_TYPE = 101;
+	int SEVERITIES_TYPE = 104;
 
 	/**
 	 * The feature id for the '<em><b>High</b></em>' containment reference.
@@ -6852,7 +7062,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getSourcesType()
 	 * @generated
 	 */
-	int SOURCES_TYPE = 102;
+	int SOURCES_TYPE = 105;
 
 	/**
 	 * The feature id for the '<em><b>Exclude</b></em>' attribute list.
@@ -6880,7 +7090,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getStringliteralsType()
 	 * @generated
 	 */
-	int STRINGLITERALS_TYPE = 103;
+	int STRINGLITERALS_TYPE = 106;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -6926,7 +7136,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getStringsinresourcefilesType()
 	 * @generated
 	 */
-	int STRINGSINRESOURCEFILES_TYPE = 104;
+	int STRINGSINRESOURCEFILES_TYPE = 107;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -6972,7 +7182,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getStructType()
 	 * @generated
 	 */
-	int STRUCT_TYPE = 105;
+	int STRUCT_TYPE = 108;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7018,7 +7228,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTcclassesType()
 	 * @generated
 	 */
-	int TCCLASSES_TYPE = 106;
+	int TCCLASSES_TYPE = 109;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7064,7 +7274,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTclassdestructorType()
 	 * @generated
 	 */
-	int TCLASSDESTRUCTOR_TYPE = 107;
+	int TCLASSDESTRUCTOR_TYPE = 110;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7110,7 +7320,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTodocommentsType()
 	 * @generated
 	 */
-	int TODOCOMMENTS_TYPE = 108;
+	int TODOCOMMENTS_TYPE = 111;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7156,7 +7366,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTrapcleanupType()
 	 * @generated
 	 */
-	int TRAPCLEANUP_TYPE = 109;
+	int TRAPCLEANUP_TYPE = 112;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7202,7 +7412,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTrapeleaveType()
 	 * @generated
 	 */
-	int TRAPELEAVE_TYPE = 110;
+	int TRAPELEAVE_TYPE = 113;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7248,7 +7458,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTraprunlType()
 	 * @generated
 	 */
-	int TRAPRUNL_TYPE = 111;
+	int TRAPRUNL_TYPE = 114;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7294,7 +7504,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getTrspassingType()
 	 * @generated
 	 */
-	int TRSPASSING_TYPE = 112;
+	int TRSPASSING_TYPE = 115;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7340,7 +7550,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUidsType()
 	 * @generated
 	 */
-	int UIDS_TYPE = 113;
+	int UIDS_TYPE = 116;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7386,7 +7596,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUncompressedaifType()
 	 * @generated
 	 */
-	int UNCOMPRESSEDAIF_TYPE = 114;
+	int UNCOMPRESSEDAIF_TYPE = 117;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7432,7 +7642,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUncompressedbmpType()
 	 * @generated
 	 */
-	int UNCOMPRESSEDBMP_TYPE = 115;
+	int UNCOMPRESSEDBMP_TYPE = 118;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7478,7 +7688,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUnicodesourceType()
 	 * @generated
 	 */
-	int UNICODESOURCE_TYPE = 116;
+	int UNICODESOURCE_TYPE = 119;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7524,7 +7734,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUserafterType()
 	 * @generated
 	 */
-	int USERAFTER_TYPE = 117;
+	int USERAFTER_TYPE = 120;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7570,7 +7780,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUserfreeType()
 	 * @generated
 	 */
-	int USERFREE_TYPE = 118;
+	int USERFREE_TYPE = 121;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7616,7 +7826,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getUserWaitForRequestType()
 	 * @generated
 	 */
-	int USER_WAIT_FOR_REQUEST_TYPE = 119;
+	int USER_WAIT_FOR_REQUEST_TYPE = 122;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7662,7 +7872,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getVariablenamesType()
 	 * @generated
 	 */
-	int VARIABLENAMES_TYPE = 120;
+	int VARIABLENAMES_TYPE = 123;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7708,7 +7918,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getVoidparameterType()
 	 * @generated
 	 */
-	int VOIDPARAMETER_TYPE = 121;
+	int VOIDPARAMETER_TYPE = 124;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -7754,7 +7964,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getWorryingcommentsType()
 	 * @generated
 	 */
-	int WORRYINGCOMMENTS_TYPE = 122;
+	int WORRYINGCOMMENTS_TYPE = 125;
 
 	/**
 	 * The feature id for the '<em><b>Worry RE</b></em>' attribute.
@@ -7809,7 +8019,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCategoryType()
 	 * @generated
 	 */
-	int CATEGORY_TYPE = 123;
+	int CATEGORY_TYPE = 126;
 
 	/**
 	 * The meta object id for the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.SeverityType <em>Severity Type</em>}' enum.
@@ -7819,7 +8029,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getSeverityType()
 	 * @generated
 	 */
-	int SEVERITY_TYPE = 124;
+	int SEVERITY_TYPE = 127;
 
 	/**
 	 * The meta object id for the '<em>Category Type Object</em>' data type.
@@ -7829,7 +8039,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getCategoryTypeObject()
 	 * @generated
 	 */
-	int CATEGORY_TYPE_OBJECT = 125;
+	int CATEGORY_TYPE_OBJECT = 128;
 
 	/**
 	 * The meta object id for the '<em>Severity Type Object</em>' data type.
@@ -7839,7 +8049,7 @@ public interface CSConfigPackage extends EPackage {
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.CSConfigPackageImpl#getSeverityTypeObject()
 	 * @generated
 	 */
-	int SEVERITY_TYPE_OBJECT = 126;
+	int SEVERITY_TYPE_OBJECT = 129;
 
 
 	/**
@@ -8941,6 +9151,49 @@ public interface CSConfigPackage extends EPackage {
 	EAttribute getControlornullType_Severity();
 
 	/**
+	 * Returns the meta object for class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType <em>Crepository Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Crepository Type</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType
+	 * @generated
+	 */
+	EClass getCrepositoryType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType#getCategory()
+	 * @see #getCrepositoryType()
+	 * @generated
+	 */
+	EAttribute getCrepositoryType_Category();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType#isEnable <em>Enable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enable</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType#isEnable()
+	 * @see #getCrepositoryType()
+	 * @generated
+	 */
+	EAttribute getCrepositoryType_Enable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType#getSeverity()
+	 * @see #getCrepositoryType()
+	 * @generated
+	 */
+	EAttribute getCrepositoryType_Severity();
+
+	/**
 	 * Returns the meta object for class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CtltargettypeType <em>Ctltargettype Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8982,6 +9235,60 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCtltargettypeType_Severity();
+
+	/**
+	 * Returns the meta object for class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType <em>Customizableicons Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Customizableicons Type</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType
+	 * @generated
+	 */
+	EClass getCustomizableiconsType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#getIconsRE <em>Icons RE</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Icons RE</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#getIconsRE()
+	 * @see #getCustomizableiconsType()
+	 * @generated
+	 */
+	EAttribute getCustomizableiconsType_IconsRE();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#getCategory()
+	 * @see #getCustomizableiconsType()
+	 * @generated
+	 */
+	EAttribute getCustomizableiconsType_Category();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#isEnable <em>Enable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enable</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#isEnable()
+	 * @see #getCustomizableiconsType()
+	 * @generated
+	 */
+	EAttribute getCustomizableiconsType_Enable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType#getSeverity()
+	 * @see #getCustomizableiconsType()
+	 * @generated
+	 */
+	EAttribute getCustomizableiconsType_Severity();
 
 	/**
 	 * Returns the meta object for class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomrulesType <em>Customrules Type</em>}'.
@@ -9603,6 +9910,17 @@ public interface CSConfigPackage extends EPackage {
 	EReference getDocumentRoot_Controlornull();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCrepository <em>Crepository</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Crepository</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCrepository()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EReference getDocumentRoot_Crepository();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCtltargettype <em>Ctltargettype</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9612,6 +9930,17 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDocumentRoot_Ctltargettype();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomizableicons <em>Customizableicons</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Customizableicons</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomizableicons()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EReference getDocumentRoot_Customizableicons();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomrule <em>Customrule</em>}'.
@@ -9823,6 +10152,17 @@ public interface CSConfigPackage extends EPackage {
 	EAttribute getDocumentRoot_Filetype();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFlags <em>Flags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Flags</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFlags()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EReference getDocumentRoot_Flags();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFoff <em>Foff</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9898,6 +10238,17 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDocumentRoot_High();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIconsRE <em>Icons RE</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Icons RE</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIconsRE()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EAttribute getDocumentRoot_IconsRE();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIfassignments <em>Ifassignments</em>}'.
@@ -11264,6 +11615,49 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getExternaldrivelettersType_Severity();
+
+	/**
+	 * Returns the meta object for class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType <em>Flags Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Flags Type</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType
+	 * @generated
+	 */
+	EClass getFlagsType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType#getCategory()
+	 * @see #getFlagsType()
+	 * @generated
+	 */
+	EAttribute getFlagsType_Category();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType#isEnable <em>Enable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enable</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType#isEnable()
+	 * @see #getFlagsType()
+	 * @generated
+	 */
+	EAttribute getFlagsType_Enable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType#getSeverity()
+	 * @see #getFlagsType()
+	 * @generated
+	 */
+	EAttribute getFlagsType_Severity();
 
 	/**
 	 * Returns the meta object for class '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FoffType <em>Foff Type</em>}'.
@@ -13825,6 +14219,17 @@ public interface CSConfigPackage extends EPackage {
 	EReference getScriptsType_Controlornull();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCrepository <em>Crepository</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Crepository</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCrepository()
+	 * @see #getScriptsType()
+	 * @generated
+	 */
+	EReference getScriptsType_Crepository();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCtltargettype <em>Ctltargettype</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13834,6 +14239,17 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getScriptsType_Ctltargettype();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCustomizableicons <em>Customizableicons</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Customizableicons</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCustomizableicons()
+	 * @see #getScriptsType()
+	 * @generated
+	 */
+	EReference getScriptsType_Customizableicons();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getDebugrom <em>Debugrom</em>}'.
@@ -13977,6 +14393,17 @@ public interface CSConfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getScriptsType_Externaldriveletters();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getFlags <em>Flags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Flags</em>'.
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getFlags()
+	 * @see #getScriptsType()
+	 * @generated
+	 */
+	EReference getScriptsType_Flags();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getFoff <em>Foff</em>}'.
@@ -15687,7 +16114,7 @@ public interface CSConfigPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Category Type Object</em>'.
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CategoryType
-	 * @model instanceClass="com.nokia.carbide.cpp.codescanner.gen.CSConfig.CategoryType"
+	 * @model instanceClass="com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CategoryType"
 	 *        extendedMetaData="name='category_._type:Object' baseType='category_._type'"
 	 * @generated
 	 */
@@ -15699,7 +16126,7 @@ public interface CSConfigPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Severity Type Object</em>'.
 	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.SeverityType
-	 * @model instanceClass="com.nokia.carbide.cpp.codescanner.gen.CSConfig.SeverityType"
+	 * @model instanceClass="com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.SeverityType"
 	 *        extendedMetaData="name='severity_._type:Object' baseType='severity_._type'"
 	 * @generated
 	 */

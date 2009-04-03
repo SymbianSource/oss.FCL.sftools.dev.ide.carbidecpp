@@ -96,7 +96,9 @@ public class CSConfigFactoryImpl extends EFactoryImpl implements CSConfigFactory
 			case CSConfigPackage.CONSTNAMES_TYPE: return createConstnamesType();
 			case CSConfigPackage.CONSTTDESCPTR_TYPE: return createConsttdescptrType();
 			case CSConfigPackage.CONTROLORNULL_TYPE: return createControlornullType();
+			case CSConfigPackage.CREPOSITORY_TYPE: return createCrepositoryType();
 			case CSConfigPackage.CTLTARGETTYPE_TYPE: return createCtltargettypeType();
+			case CSConfigPackage.CUSTOMIZABLEICONS_TYPE: return createCustomizableiconsType();
 			case CSConfigPackage.CUSTOMRULES_TYPE: return createCustomrulesType();
 			case CSConfigPackage.CUSTOMRULE_TYPE: return createCustomruleType();
 			case CSConfigPackage.DEBUGROM_TYPE: return createDebugromType();
@@ -114,6 +116,7 @@ public class CSConfigFactoryImpl extends EFactoryImpl implements CSConfigFactory
 			case CSConfigPackage.EXPORTINLINE_TYPE: return createExportinlineType();
 			case CSConfigPackage.EXPORTPUREVIRTUAL_TYPE: return createExportpurevirtualType();
 			case CSConfigPackage.EXTERNALDRIVELETTERS_TYPE: return createExternaldrivelettersType();
+			case CSConfigPackage.FLAGS_TYPE: return createFlagsType();
 			case CSConfigPackage.FOFF_TYPE: return createFoffType();
 			case CSConfigPackage.FORBIDDENWORDS_TYPE: return createForbiddenwordsType();
 			case CSConfigPackage.FORGOTTOPUTPTRONCLEANUPSTACK_TYPE: return createForgottoputptroncleanupstackType();
@@ -487,9 +490,29 @@ public class CSConfigFactoryImpl extends EFactoryImpl implements CSConfigFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public CrepositoryType createCrepositoryType() {
+		CrepositoryTypeImpl crepositoryType = new CrepositoryTypeImpl();
+		return crepositoryType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CtltargettypeType createCtltargettypeType() {
 		CtltargettypeTypeImpl ctltargettypeType = new CtltargettypeTypeImpl();
 		return ctltargettypeType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CustomizableiconsType createCustomizableiconsType() {
+		CustomizableiconsTypeImpl customizableiconsType = new CustomizableiconsTypeImpl();
+		return customizableiconsType;
 	}
 
 	/**
@@ -660,6 +683,16 @@ public class CSConfigFactoryImpl extends EFactoryImpl implements CSConfigFactory
 	public ExternaldrivelettersType createExternaldrivelettersType() {
 		ExternaldrivelettersTypeImpl externaldrivelettersType = new ExternaldrivelettersTypeImpl();
 		return externaldrivelettersType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FlagsType createFlagsType() {
+		FlagsTypeImpl flagsType = new FlagsTypeImpl();
+		return flagsType;
 	}
 
 	/**
