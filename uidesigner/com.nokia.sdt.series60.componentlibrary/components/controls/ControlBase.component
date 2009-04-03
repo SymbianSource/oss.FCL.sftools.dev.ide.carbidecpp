@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<!DOCTYPE componentDefinition [
+<!ENTITY CommonMacros SYSTEM "../CommonMacros.inc">
+]>
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<!-- This component is the abstract base component for
+	     all Series 60 layout components
+	 -->
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CGraphicsContext.BrushStyle">
+		<enumElement value="ENullBrush" displayValue="none"/>
+		<enumElement value="ESolidBrush" displayValue="solid"/>
+		<enumElement value="EPatternedBrush" displayValue="patterned"/>
+		<enumElement value="EVerticalHatchBrush" displayValue="vertical hatch"/>
+		<enumElement value="EForwardDiagonalHatchBrush" displayValue="forward diagonal hatch"/>
+		<enumElement value="EHorizontalHatchBrush" displayValue="horizontal hatch"/>
+		<enumElement value="ERearwardDiagonalHatchBrush" displayValue="rearward diagonal hatch"/>
+		<enumElement value="ESquareCrossHatchBrush" displayValue="square cross hatch"/>
+		<enumElement value="EDiamondCrossHatchBrush" displayValue="diamond cross hatch"/>
+	</enumPropertyDeclaration>
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikonEnv.SystemFont">
+		<enumElement value="NormalFont" displayValue="normal"/>
+		<enumElement value="AnnotationFont" displayValue="annotation"/>
+		<enumElement value="TitleFont" displayValue="title"/>
+		<enumElement value="LegendFont" displayValue="legend"/>
+		<enumElement value="SymbolFont" displayValue="symbol"/>
+		<enumElement value="DenseFont" displayValue="dense"/>
+	</enumPropertyDeclaration>
+
+	<component 
+			friendlyName="" 
+			qualifiedName="com.nokia.sdt.series60.ControlBase" 
+			baseComponent="com.nokia.sdt.series60.CommonBase"
+			abstract="true"
+			version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Layout" name="location" displayName="%location" 
+				type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="locationDescription" />
+			<compoundProperty category="Layout" name="size" displayName="%size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="sizeDescription"/>
+		</properties>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<code class="com.nokia.sdt.series60.component.DefaultPropertyExtenderFactory"/>
+			</implementation>
+		</implementations>
+
+	</component>
+</componentDefinition>

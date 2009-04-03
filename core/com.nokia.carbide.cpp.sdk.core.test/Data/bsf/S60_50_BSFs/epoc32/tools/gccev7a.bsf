@@ -1,0 +1,8 @@
+#<bsf>#
+
+# This BSF file is to support building for the ARMV7-A architecture.
+
+CUSTOMIZES GCCE
+
+INVARIANT_OPTIONS -march=armv7-a -mapcs -mthumb-interwork
+

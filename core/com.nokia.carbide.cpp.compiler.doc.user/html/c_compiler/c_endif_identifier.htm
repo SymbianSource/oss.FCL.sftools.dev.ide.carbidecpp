@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Using an Identifier After #endif</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Using an Identifier After #endif</h3>
+<p>(ISO C, &sect;6.10.1) The C compiler can accept identifier tokens after <span class="code">#endif</span> and <span class="code">#else</span>. This extension helps you match an <span class="code">#endif</span> statement with its corresponding <span class="code">#if</span>, <span class="code">#ifdef</span>, or <span class="code">#ifndef</span> statement, as shown here:</p>
+<p class="listing">#ifdef __MWERKS__<br />
+  # ifndef __cplusplus<br />
+  /*<br />
+  * . . . <br />
+  */<br />
+  # endif __cplusplus<br />
+#endif __MWERKS__</p>
+<p>To use this feature, disable the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting.</p>
+<p class="note"><strong>TIP</strong> If you enable the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting (thereby disabling this extension), you can still match your <span class="code">#ifdef</span> and <span class="code">#endif</span> directives. Simply put the identifiers into comments, as sown in following example:<br />
+  <br />
+  <span class="code">#ifdef __MWERKS__<br />
+  # ifndef __cplusplus<br />
+  /*<br />
+  * . . . <br />
+  */<br />
+  # endif /* __cplusplus */<br />
+#endif /* __MWERKS__ */</span></p>
+<p>See also <a href="c_std_conformity.htm">Checking for Standard C and Standard C++ Conformity</a>.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

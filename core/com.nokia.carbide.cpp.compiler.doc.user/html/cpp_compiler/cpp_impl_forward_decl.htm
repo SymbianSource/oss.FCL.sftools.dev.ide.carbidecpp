@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Forward Declarations of Arrays of Incomplete Type</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Forward Declarations of Arrays of Incomplete Type</h3>
+<p>The Carbide.c++ compiler allows the forward declaration of arrays of incomplete type. An example of forward declaration of array of incomplete type:</p>
+<div class="listing">
+  <p>  extern struct incomplete arr[10];</p>
+  <p>struct incomplete {<br />
+    int a, b, c;<br />
+    };</p>
+  <p>struct incomplete arr[10];
+  </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

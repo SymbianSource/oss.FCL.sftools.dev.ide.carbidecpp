@@ -1,0 +1,62 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Symbian Foundation License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*/
+
+
+
+#ifndef __GLOBALS_MACROS_MMH__
+#define __GLOBALS_MACROS_MMH__
+
+macro DISPLAYMODE=all
+#define DISPLAYMODE all
+
+// macro JSR_135_SUPPORT  
+// #define JSR_135_SUPPORT
+
+macro USE_NATIVE_HTTP=yes
+#define USE_NATIVE_HTTP yes
+
+macro SUPPORT_COMMCONNECTION
+#define SUPPORT_COMMCONNECTION
+
+macro SUITE_ATTRIBUTE_ACCESS
+#define SUITE_ATTRIBUTE_ACCESS
+
+macro PRODUCTSDK=true
+#define PRODUCTSDK true
+
+macro MIDP2_SECURITY_RP
+#define MIDP2_SECURITY_RP
+
+// macro JAVA_API_ENHANCEMENTS  
+// #define JAVA_API_ENHANCEMENTS
+
+#if defined(__SECURE_DATA__) && defined(SYMBIAN_SECURE_DBMS) && defined(SYMBIAN_SECURE_MIDLET_INSTALL)
+macro __SECURE_J2ME__
+#define __SECURE_J2ME__
+#endif
+
+#if defined(__SECURE_DATA__) && defined(SYMBIAN_SECURE_DBMS) && defined(SYMBIAN_SECURE_MIDLET_INSTALL)
+macro __SECURE_MIDLET_HASH_INSTALL__
+#define __SECURE_MIDLET_HASH_INSTALL__
+#endif
+
+#if defined(__SECURE_DATA__) && defined(SYMBIAN_SECURE_DBMS) && defined(SYMBIAN_SECURE_MIDLET_INSTALL)
+macro __SECURE_RESIDENT_MIDLET__
+#define __SECURE_RESIDENT_MIDLET__
+#endif
+
+#endif

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>ieeefp</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>ieeefp</h3>
+<p>  Controls whether floating point comparisons and some other optimizations are performed as per the IEEE standard. The default is off.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma ieeefp on | off</p>
+  <p> Parameters</p>
+  <p class="code">on</p>
+  <blockquote>
+    <p> Floating-point comparisons are done using these conditions:</p>
+    <ul>
+      <li>checks for NANs are not performed in comparisons, floating-point conditional moves, or integer conditional moves with floating-point tests in the condition</li>
+      <li>divides of all constants are changed to multiples of 1.0/constant</li>
+      <li>when performing float-&gt;integer conversions, the control word is reset to the assumed default of &ldquo;round to nearest&rdquo; instead of the original value, saving a few read/writes as the operation is performed</li>
+    </ul>
+  </blockquote>
+  <p class="code">off</p>
+  <blockquote>
+    <p>Floating-point comparisons are done using IEEE standards.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>Use <span class="code">#pragma ieeefp</span> on to reduce floating-point accuracy and increase calculation speed. The same effect can be achieved in the command-line using <span class="code">-opt ieeefp</span> or<span class="code"> -fast_math off</span> commands.</p>
+  <p>Use <span class="code">#pragma ieeefp off</span> to maximize floating-point accuracy and decrease calculation speed. The same effect can be achieved in the command-line using <span class="code">-opt noieeefp</span> or <span class="code">-fast_math on</span> commands.</p>
+  <p>This pragma corresponds to the Relax IEEE floating point setting in the processor-specific CodeGen panel. To check this setting, use <span class="code">__option (ieeefp)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. By default, this setting is on.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

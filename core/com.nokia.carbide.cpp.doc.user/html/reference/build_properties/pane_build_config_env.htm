@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<meta name="keywords" content="Environment" >
+<title>Environment Variables</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Environment Variables</h2>
+<p>  The <b>Environment Variables </b> pane allows you to view the current User and System environment variables that will be used  when any abld command is invoked. User variables are modified or added when a process is invoked. Read only system variables  are listed. Variables and values in bold  are items that have been modified from their default values.</p>
+<p>Some variables have special meaning, including:</p>
+<ul>
+  <li><span class="code">PATH</span> &#8212; will always place &quot;<span class="code">${EPOCROOT}\epoc32\tools;${EPOCROOT}\epoc32\gcc\bin;</span>&quot; at the front of the <span class="code">PATH</span> regardless of what it is changed to </li>
+  <li><span class="code">PATH</span>, <span class="code">EPOCROOT</span>, and <span class="code">*MW</span> variables &#8212; <span class="note">cannot be undefined as they are required for system builds</span></li>
+</ul>
+<p align="center"><img src="../images/page_build_config_env.png" width="575" height="473"></p>
+<p class="figure">Figure 1 - Environment Variables</p>
+<h5>Table 1 Environment variable items</h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="29%" scope="col">Item</th>
+    <th width="57%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>New</b></td>
+    <td>Click to add a new environment variable. You must specify a name and a value. </td>
+  </tr>
+  <tr>
+    <td><b>Edit</b></td>
+    <td>Allows you to edit the name and value of an environment variable.</td>
+  </tr>
+  <tr>
+    <td><b>Undefine</b></td>
+    <td><p>Undefines the selected variable so that it is not used during a build.</p>
+      <p class="note"><b>NOTE</b> Some variables, like <span class="code">PATH</span>, <span class="code">EPOCROOT</span>, and those beginning with <span class="code">MW*</span> have special meaning and cannot be undefined. </p></td>
+  </tr>
+  <tr>
+    <td><b>Variable use</b></td>
+    <td><p>Shows the use for the selected variable. Uses include:</p>
+      <ul>
+        <li>Default &ndash; Take the variable as-is from the system, do not modify it.</li>
+        <li>Append &ndash; Add the value displayed to the end of the existing variable (the existing variable name is not displayed.</li>
+        <li>Prepend &ndash; Add the value displayed to the front of the existing variable (the existing variable name is not displayed.</li>
+        <li>Replace &ndash; Replace the value displayed with the existing variable.</li>
+        <li>Undefine &ndash; Not used during a build</li>
+      </ul></td>
+  </tr>
+</table>
+<h5>Other references </h5>
+<ul>
+  <li><a href="pane_build_config.htm">Carbide Build Configurations</a></li>
+  <li><a href="pane_build_config.htm">SIS Builder</a></li>
+  <li><a href="pane_build_config_args.htm">Arguments</a></li>
+  <li><a href="pane_build_config_paths.htm">Paths and Symbols </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

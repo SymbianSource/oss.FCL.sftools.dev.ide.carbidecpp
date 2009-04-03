@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Attach to Process Launch Configuration</title>
+<link href="../../../book.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2>Attach to Process  Launch Configuration</h2>
+<p>Use the <b>Symbian OS Attach to Process</b> launch configuration to attach the debugger to an already running Symbian OS process or thread on a target device from within any project. This is useful for debugging servers running in RAM in a client-server relationship where the client relies on the presence of the server process to operate as one example. </p>
+<p>Attaching to a process requires a both target device running the Symbian OS and the presence of a TRK debug agent on the device. <span class="note">You can also use the <a href="../../reference/view_symbian_kernel.htm">Symbian OS Data</a> view to attach to a process while debugging.</span> However, you can not attach to a process running on an emulator. </p>
+<p>If  the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a> created the Attach to Process launch configuration no changes are usually needed. The Attach to Process options match those of System TRK with one additional step, selection of the process to debug in the <b>Attach to Process</b> dialog. </p>
+<p>To modify the  launch configuration settings, select the <b>Run &gt; Open Debug Dialog...</b> menu option to open the <b>Debug</b> dialog. Select the Attach to Process configuration and click a tab to set specific options. Click <b>Apply</b> to save any option modifications. Click <b>Debug</b> to launch a debugging session using the new settings.</p>
+<p align="center"><img src="../images/wnd_debug_attach_process_launch_config.png" width="800" height="582"></p>
+<p class="figure">Figure 1. Attach to Process launch configuration in the Debug dialog </p>
+<p>The <span class="figure">Attach to Process</span> launch configuration panes include:</p>
+<ul>
+  <li>The <a href="page_main.htm">Main</a> tab defines the project to be launched. Enter the name of the project in the Project field, and the executable name in the Executable field.</li>
+  <li>The <a href="page_debugger.htm">Debugger</a> tab defines debug configurations, such as entry point to begin debugging, target options, and instruction set.</li>
+  <li>The <a href="page_rom_log.htm">ROM Log </a> tab allows you to  specify where the ROM log file is stored and the <span class="code">Epoc32</span> directory.</li>
+  <li>The <a href="page_executables.htm">Executables</a> tab allows you to specify which executables that you want to debug that are part of the project.</li>
+  <li>The <a href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm">Source</a> tab  (<i>standard CDT page</i>) defines the location of source files used to display source when debugging an application. By default, these settings are derived from the associated project's build path. You may override these settings here. </li>
+  <li>The <a href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm">Common</a> tab  (<i>standard CDT page</i>) defines general information about the launch configuration. You may choose to store the launch configuration in a specific file.</li>
+</ul>
+<h4>Other references</h4>
+<ul>
+  <li><a href="launch_configs_overview.htm">Launch Configuration Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

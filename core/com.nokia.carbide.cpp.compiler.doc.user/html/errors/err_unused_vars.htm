@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Unused Variables</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {font-family: "Courier New", Courier, mono}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Unused Variables</h3>
+<p>  If you enable the Unused Variables setting, the compiler generates a warning when it encounters a local variable you declare but do not use. This check helps you find variables that you either misspelled or did not use in your program. Listing 1 shows an example.</p>
+<div class="listing">
+  <h5>Listing 1. Unused Local Variables Example</h5>
+  <p>int error;<br />
+    void foo(void)<br />
+    {<br />
+    int temp, errer; // ERROR: errer is misspelled<br />
+    error = do_something() <br />
+    // WARNING: temp and error are unused.<br />
+    }</p>
+</div>
+  <p>If you want to use this warning but need to declare a variable that you do not use, include the pragma unused, as in Listing 2.</p>
+  <div class="listing">
+    <h5>Listing 2. Suppressing Unused Variable Warnings</h5>
+    <p>void foo(void)<br />
+    {<br />
+    int i, temp, error;</p>
+    <p> #pragma unused (i, temp) /* Do not warn that i and temp */<br />
+    error=do_something(); /* are not used */<br />
+    }</p>
+  </div>
+  <p> The Unused Variables setting corresponds to the pragma <span class="code">warn_unusedvar</span>, described at <span class="code">warn_unusedvar</span>. To check this setting, use <span class="code">__option (warn_unusedvar)</span>.</p>
+  <p> See <a href="../symbols/sym_settings.htm">Checking Option Settings</a> for information on how to use this directive. <br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

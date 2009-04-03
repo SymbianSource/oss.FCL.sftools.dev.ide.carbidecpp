@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>exceptions_synchronous</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>exceptions_synchronous</h3>
+<p>  Set exception handling to use Microsoft-compatible exceptions. The default is off.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma exceptions_synchronous on | off | reset</p>
+  <h5>Parameters</h5>
+  <p class="code">on</p>
+  <blockquote>
+    <p>Ignore C++ <span class="code">catch(...)</span> blocks for Win32 exceptions when using Structured Exception Handling (SEH). For Microsoft-compatible mode only. Equivilent to <span class="code">#pragma exc sync</span>.</p>
+  </blockquote>
+  <p class="code">off</p>
+  <blockquote>
+    <p>Let C++<span class="code"> catch(...)</span> blocks trap Win32 exceptions when using SEH. For Microsoft-compatible mode only. Equivilent to <span class="code">#pragma exc async</span>. This is the default.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  <p>Intel x86</p>
+  <p class="note"><strong>NOTE</strong> To translate Win32 exceptions into C++ exceptions, use the routine <span class="code">set_se_translator()</span> found in the header <span class="code">&lt;eh.h&gt;</span>.</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

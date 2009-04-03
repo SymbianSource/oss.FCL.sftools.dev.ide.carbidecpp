@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<component baseComponent="com.nokia.sdt.series60.DialogBase" 
+			friendlyName="%friendlyName" 
+			qualifiedName="com.nokia.sdt.series60.CAknDialog" 
+			abstract="true"
+			version="1.0">
+		<documentation>
+			<information>%information</information>
+			<wizardDescription>%information</wizardDescription>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknDialog" classHelpTopic="" />
+		<designerImages 
+			smallIconFile="CAknDialog_sm.png" 
+			largeIconFile="CAknDialog.png"/>
+
+		<attributes>
+			<attribute key="options-menu-property-name">optionsMenu</attribute>
+			<attribute key="event-handler-target">true</attribute>
+			<attribute key="base-container-class">CAknDialog</attribute>
+		</attributes>
+		<properties>
+			<property category="Appearance" name="backColor" type="string" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"/>
+			<property category="Appearance" name="fillRect" type="boolean" default="true"/>
+				<!-- corresponds to flag EEikDialogFlagFillAppClientRect 0x1000 -->
+			<componentReferenceProperty category="Dialog" scope="children" constraint="com.nokia.sdt.series60.MenuBar" name="optionsMenu"/>
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<code class="com.nokia.sdt.series60.component.AknDialogVisualAndLayoutImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="CAknDialog_queryContainment.js" prototype="CAknDialogQueryContainment"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="DIALOG" headers="avkon.rsg avkon.rh eikon.rh">
+				<!-- TODO: flags -->
+				<mapBitmaskMember property="." member="flags"
+					includedProperties="fillRect wait notifyEsc modeless">
+					<!-- initial blank entries force bits on -->
+					<mapBitmaskValue properties="" value="EEikDialogFlagNoDrag" />
+					<mapBitmaskValue properties="" value="EEikDialogFlagNoTitleBar" />
+					<mapBitmaskValue properties="" value="EEikDialogFlagCbaButtons" />
+					
+					<mapBitmaskValue properties="notifyEsc" value="EEikDialogFlagNotifyEsc" />
+					<mapBitmaskValue properties="modeless" value="EEikDialogFlagModeless" />
+					<mapBitmaskValue properties="fillRect" value="EEikDialogFlagFillAppClientRect" />
+					<mapBitmaskValue properties="wait" value="EEikDialogFlagWait" />
+				</mapBitmaskMember>
+	  		    <select property="[parent].[com.nokia.sdt.series60.CBA]">
+	   		        <choice value="">
+	  		          <!-- no CBA -->
+	  		        </choice>
+	  		        <choice>
+			 		  <select property="[parent].[com.nokia.sdt.series60.CBA].info">
+					    <choice value="com.nokia.sdt.series60.CBA.Type.CUSTOM">
+					    	<!-- emit a reference to the resource generated -->
+					        <mapReferenceMember property="[parent].[com.nokia.sdt.series60.CBA]" member="buttons"/>
+					    </choice>
+					    <choice>
+							<!-- else, emit the builtin -->
+							<mapIdentifierMember property="[parent].[com.nokia.sdt.series60.CBA].info" member="buttons" />
+					    </choice> 
+					  </select>
+					</choice>
+				</select>
+				<mapArrayMember property="." member="items">
+					<select attribute="is-dialog-content">
+						<!-- only map visible items, not menu bars, etc. -->
+						<choice value="true">
+							<mapResourceElement struct="DLG_LINE" headers="avkon.rh"
+								instanceIdentifyingMember="id" id="dialog_line">
+								<!-- looking at the current array element, always
+									create a unique value from the dialog and instance name -->
+								<mapEnumMember property="." member="id"
+									uniqueValue="*"
+									nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID"
+								/>
+								<!-- looking at the current array element, get the
+									enumerator for the instance's control type -->
+								<mapEnumMember property="." member="type"
+									nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE"
+								/>
+								<mapResourceMember property="." member="control"/>
+							</mapResourceElement>
+						</choice>
+						<!-- default case does nothing -->
+						<choice/>
+					</select>						
+				</mapArrayMember>
+			
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen forms="AppUi AknView RootAppUi">
+		
+			<!-- contributions as dialog -->
+
+			<defineLocation id="HEADER_FILE" domain="cpp" dir="${inc}" 
+				file="${instanceName}.h"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<template location="HEADER_FILE">
+#ifndef ${instanceName.toUpperCase()}_H
+#define ${instanceName.toUpperCase()}_H
+
+			</template>
+			
+			<defineLocation id="HEADER_INCLUDES" baseLocation="HEADER_FILE"
+				location="region(Generated Includes)"
+				filter="unique-includes">
+			</defineLocation>
+			
+			<template location="HEADER_INCLUDES"><![CDATA[
+#include <akndialog.h>
+]]>			</template>
+		
+			<defineLocation id="EVENT_INCLUDES" baseLocation="HEADER_FILE"
+				owned="false"
+				filter="unique-includes"
+				location="region(Event Handler Includes)">
+			</defineLocation>
+			
+			<template location="EVENT_INCLUDES" />
+			
+			<defineLocation id="HEADER_FORWARD_DECLARATIONS" baseLocation="HEADER_FILE"
+				location="region(Generated Forward Declarations)">
+			</defineLocation>	
+				
+			<template location="HEADER_FORWARD_DECLARATIONS"/>
+			
+	
+			<defineLocation id="CLASS" baseLocation="HEADER_FILE"
+				owned="false"
+				location="class(${className})">
+				<template><![CDATA[
+/**
+ * @class	${className} ${instanceName}.h
+ */
+class ${className} : public CAknDialog
+	{
+public:
+	// constructors and destructor
+	${className}();
+	virtual ~${className}();
+	void ConstructL();
+	
+	static TBool RunDlgLD();
+	void LoadFromResourceL();
+
+protected:
+	// from CAknDialog
+	void Draw( const TRect& aRect ) const;
+	TBool OkToExitL( TInt aButtonId );
+	void PreLayoutDynInitL();
+	};
+]]>
+				</template>
+			</defineLocation>
+			
+			<template location="CLASS"/>
+
+			<defineLocation id="CLASS_IVARS" baseLocation="CLASS"
+			location="region(Generated Instance Variables)">
+				<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template location="CLASS_IVARS"/>
+
+			<template location="HEADER_FILE">
+#endif // ${instanceName.toUpperCase()}_H
+			</template>
+							
+			<defineLocation id="MAIN_FILE" domain="cpp" dir="${src}" 
+				file="${instanceName}.cpp"
+				owned="false"
+				location="">
+			</defineLocation>
+
+			<template location="MAIN_FILE"/>
+			
+			<defineLocation id="MAIN_SYSTEM_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated System Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include <aknappui.h>
+]]>				</template>
+				<template><![CDATA[
+#include <avkon.hrh>
+]]>				</template>
+			</defineLocation>
+
+			<template location="MAIN_SYSTEM_INCLUDES"/>
+	
+			<defineLocation id="MAIN_USER_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated User Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include "${instanceName}.h"
+]]>				</template>
+			</defineLocation>		
+
+			<template location="MAIN_USER_INCLUDES"/>
+			
+			<inline>
+if (Engine.formMatches(form, [""])) {
+	this.getHrhFiles(contribs);
+}
+			</inline>
+			
+			<defineLocation id="CONSTANTS" baseLocation="MAIN_FILE"
+				location="region(Generated Constants)">
+			</defineLocation>
+
+			<template location="CONSTANTS" />
+
+			<defineLocation id="CONSTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::${className}())">
+				<template><![CDATA[
+/**
+ * Construct the ${className} instance
+ */ 
+${className}::${className}()
+	{
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="CONSTRUCTOR"/>
+
+			<defineLocation id="CONSTRUCTOR_BODY" baseLocation="CONSTRUCTOR"
+				location="region(Generated Contents)">
+				<template>
+iContextMenuCommandObserver = NULL;
+				</template>
+			</defineLocation>
+					
+			
+			<defineLocation id="CONSTRUCTL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::ConstructL())">
+				<template><![CDATA[
+/**
+ * @brief Completes the second phase of Symbian object construction. 
+ * Put initialization code that could leave here.  
+ */ 
+void ${className}::ConstructL()
+	{
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="CONSTRUCTL"/>
+
+			<defineLocation id="CONSTRUCTL_BODY" baseLocation="CONSTRUCTL"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<inline scope="prototype">
+include("containerLibrary.js")
+			</inline>			
+
+			<template location="CONSTRUCTL_BODY"><![CDATA[
+<% var menuBarId = 
+	Engine.getGeneratedResource(getInstanceFromChildName(children, properties.optionsMenu)); 
+	// TODO children are not yet generated, so can't get the generated resource name for menuBar!
+	if (menuBarId != null) { %>
+CAknDialog::ConstructL( ${menuBarId.toUpperCase()} );
+<%	} %>
+]]>			</template>
+
+
+			<defineLocation id="DESTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::~${className}())">
+				<template><![CDATA[
+/** 
+ * The dialog's destructor removes the container from the control
+ * stack and destroys it.
+ */
+${className}::~${className}()
+	{
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="DESTRUCTOR"/>
+
+			<defineLocation id="DESTRUCTOR_BODY" baseLocation="DESTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+			
+			<defineLocation id="RUNDLGLD" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::RunDlgLD())">
+				<template><![CDATA[
+/**
+* Static construction and execution of the dialog. 
+* @return ETrue if the dialog is accepted, EFalse if canceled
+*/
+TBool ${className}::RunDlgLD()
+	{
+	${className}* ${instanceName} = new ( ELeave ) ${className}();
+	return ${instanceName}->ExecuteLD( ${resourceName$upper} );
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template location="RUNDLGLD"/>
+
+
+			<defineLocation id="DRAW_BODY" baseLocation="DRAW"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<useTemplate ids="DrawBodyBgColor"/>
+			
+			<defineLocation id="OKTOEXITL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::OkToExitL(TInt))">
+				<template><![CDATA[
+/**
+ * Handle a button press and tell whether it closes the dialog.  (override)  
+ * @param aButtonId the identifier for the button (avkon.hrh)
+ */
+TBool ${className}::OkToExitL( TInt aButtonId )
+	{
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template location="OKTOEXITL"/>
+			
+			<defineLocation id="OKTOEXITL_BODY" baseLocation="OKTOEXITL"
+				location="region(Generated Contents)">
+			</defineLocation>
+		
+<!-- TODO: need to check for CBA overrides -->
+			<template location="OKTOEXITL_BODY" form="AppUi"><![CDATA[
+switch ( aButtonId )
+	{
+	case EAknSoftkeyOptions:
+		iAvkonAppUi->ProcessCommandL( EAknSoftkeyOptions );
+		break;
+	case EAknSoftkeyBack:
+		iAvkonAppUi->ProcessCommandL( EEikCmdExit );
+		break;
+	}
+
+// Do not exit the application; this is the main window.  
+// AppUi determines when to exit based on the EEikCmdExit command above.
+return EFalse;
+]]>			</template>			
+		
+			<inline scope="prototype">
+include("../cba/cbaLibrary.js")
+			</inline>			
+
+			<template location="OKTOEXITL_BODY" form="AknView"><![CDATA[
+switch ( aButtonId )
+	{
+<%			// "handle" left command id
+			var id = findCbaLeftId(children);
+			if (id != null && id != "") {
+%>	case ${id}:
+		{
+		// handle left button
+		break;
+		}
+<%	}		// "handle" right command id
+			id = findCbaRightId(children);
+			if (id == null) 
+				id = "EAknSoftkeyExit";
+			var rightShouldExit = (id == null || id == "EAknSoftkeyExit" || id == "EAknSoftkeyBack");
+%>	case ${id}:
+		{
+		// handle right button<% if (rightShouldExit) { %>
+		iAvkonAppUi->ProcessCommandL( EEikCmdExit );<% } %>
+		break;
+		}
+	}	
+return EFalse;
+]]>			</template>			
+		
+			
+	
+	
+			<defineLocation id="PRELAYOUTDYNINITL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::PreLayoutDynInitL())">
+				<template><![CDATA[
+/**
+ * Initialize controls and settings before a dialog is laid out.  (override)
+ */
+void ${className}::PreLayoutDynInitL()
+	{
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template location="PRELAYOUTDYNINITL"/>
+			
+			<defineLocation id="PRELAYOUTDYNINITL_BODY" baseLocation="PRELAYOUTDYNINITL"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template location="PRELAYOUTDYNINITL_BODY"/>
+
+			<defineLocation id="DRAW" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::Draw(const TRect&amp;))">
+				<template><![CDATA[
+void ${className}::Draw( const TRect& aRect ) const
+	{
+	}
+]]>				
+				</template>
+			</defineLocation>
+
+
+			<defineLocation id="LOADFROMRESOURCEL" baseLocation="MAIN_FILE"
+				location="function(${className}::LoadFromResourceL())">
+				<template>
+void ${className}::LoadFromResourceL()
+	{
+	}
+				</template>
+			</defineLocation>
+			
+			<template form="AppUi" location="LOADFROMRESOURCEL">
+ExecuteLD( ${resourceName.toUpperCase()} );
+			</template>
+		
+			<!-- gather child contributions -->
+
+			<inline scope="prototype">
+			include("../srcgenLibrary.js");
+			</inline>
+
+			<inline>
+
+			if (form != 'RootAppUi') {
+				if (Engine.formMatches(form, [ "AknView", "AppUi" ])) {
+					// clear out any image stuff
+					resetImagePropertyState(instance);
+					
+					// get default and dialog-specific contributions
+					contribs.addAll(Engine.generateChildContributions(form+"|Dialog"))
+				} else {
+					// get specific desired contributions
+					contribs.addAll(Engine.generateChildContributions(form))
+				}
+				
+				// fix up the phases so they point to real locations
+				Engine.assignLocationsForPhase(contribs, "ClassSource", "MAIN_FILE");
+				Engine.assignLocationsForPhase(contribs, "ClassHeader", "HEADER_FILE");
+
+				Engine.assignLocationsForPhase(contribs, "MainConstants", "CONSTANTS");
+				Engine.assignLocationsForPhase(contribs, "MainSystemIncludes", "MAIN_SYSTEM_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "MAIN_USER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "Construct", "CONSTRUCTOR_BODY");
+				Engine.assignLocationsForPhase(contribs, "Initialize", "PRELAYOUTDYNINITL_BODY");
+				Engine.assignLocationsForPhase(contribs, "HeaderIncludes", "HEADER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "EventIncludes", "EVENT_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "ForwardDeclarations", "HEADER_FORWARD_DECLARATIONS");
+				Engine.assignLocationsForPhase(contribs, "InstanceVariables", "CLASS_IVARS");
+	
+				//Engine.removeDuplicateContributionsForLocation(contribs, "HEADER_INCLUDES");
+				Engine.removeDuplicateContributionsForLocation(contribs, "HEADER_FORWARD_DECLARATIONS");
+				//Engine.removeDuplicateContributionsForLocation(contribs, "MAIN_SYSTEM_INCLUDES");
+				//Engine.removeDuplicateContributionsForLocation(contribs, "MAIN_USER_INCLUDES");
+			}
+						
+			</inline>
+
+			<template id="IncludeRsgFile" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <${resourceFileNameBase}.rsg>
+]]>			</template>
+
+			<!-- contributions as child  -->
+
+			<template form="AknView" phase="MainUserIncludes">
+#include "${instanceName}.h"
+			</template>
+
+			<template form="AknView" phase="ForwardDeclarations">
+class ${className};
+			</template>
+
+			<template form="AknView" phase="InstanceVariables">
+${className}* ${instanceMemberName};
+			</template>
+
+			<template form="AknView" phase="DoActivateL"><![CDATA[
+if ( ${instanceMemberName} == NULL )
+	{
+	${instanceMemberName} = new ${className}();
+	${instanceMemberName}->SetMopParent( this ); <%
+if ( properties.wait ) {
+	var sb = newStatusBuilder();
+	sb.add(IStatus.ERROR, lookupString("waitPropertySetInView"), [ instanceName ]);
+	logStatus(sb.createStatus("", null));
+	} %>
+	${instanceMemberName}->ExecuteLD( ${resourceName.toUpperCase()} );
+	AppUi()->AddToStackL( *this, ${instanceMemberName} );
+	} 
+]]>			</template>
+			
+			<template form="AknView" phase="DoDeactivate">
+if ( ${instanceMemberName} != NULL )
+	{
+	AppUi()->RemoveFromViewStack( *this, ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	}
+			</template>
+
+
+			<template form="RootAppUi" phase="MainUserIncludes">
+#include "${instanceName}.h"
+			</template>
+
+			<template form="RootAppUi" phase="ForwardDeclarations">
+class ${className};
+			</template>
+
+			<template form="RootAppUi" phase="InstanceVariables">
+${className}* ${instanceMemberName};
+			</template>
+
+
+			<!-- NOTE: this only makes sense when this is the initial view -->
+			<template form="RootAppUi" phase="Initialize">
+${instanceMemberName} = new ( ELeave ) ${className};
+${instanceMemberName}->ConstructL();
+${instanceMemberName}->SetMopParent( this );
+${instanceMemberName}->LoadFromResourceL();
+AddToStackL( ${instanceMemberName} );
+			</template>
+
+			<template form="RootAppUi" phase="Destroy">
+if ( ${instanceMemberName} != NULL )
+	{
+	RemoveFromStack( ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	}
+			</template>
+
+			<useTemplateGroup ids="GeneratePrepareForFocusTransition GeneratePageChanged GenerateLineChanged"/>
+			<useTemplateGroup ids="GenerateProcessCommand GenerateOfferKeyToApp"/>
+			<useTemplateGroup ids="GenerateFocusChanged"/>
+			<useTemplateGroup ids="GenerateSizeChanged GeneratePositionChanged"/>
+			<useTemplateGroup ids="GenerateDraw GenerateOfferKeyEvent"/>
+			<useTemplateGroup ids="GeneratePrepareForFocusLoss GeneratePrepareForFocusGain"/>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

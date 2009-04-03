@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>fill_stack</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>fill_stack</h3>
+<p>  Instructs the compiler to initialize locals to a fixed bit pattern (<span class="code">0xCC</span>) upon entry to a function.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma fill_stack on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>Use of this pragma helps to diagnose program failures or crashes caused by the use of uninitialized variables. I.e., a bit pattern of <span class="code">0xCC</span> is not a normally-encountered integer or floating-point value, and <span class="code">0xCCCCCCCC</span> is almost never a valide pointer value. If the program counter does point to such a variable, it will be &ldquo;executed&rdquo; as an <span class="code">int3</span> breakpoint.</p>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use the <span class="code">__option (fill_stack)</span>. The default setting for is off at optimization level 0.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

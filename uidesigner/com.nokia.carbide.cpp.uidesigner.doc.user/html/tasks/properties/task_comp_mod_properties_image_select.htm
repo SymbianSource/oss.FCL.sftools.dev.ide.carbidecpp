@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Selecting Images</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Selecting Images</h2>
+
+<p>The <a href="../../reference/views/ref_edit_image_property.htm">Edit Image Property</a> or <a href="../../reference/views/ref_edit_multiimage_property.htm">Edit Multi-Image Property</a> dialog allows you to select any multi-image file (MBM or MIF) contained within the project and view the images it contains. It allows you to assign any image contained within the selected multi-image file to any graphic object in your application.</p>
+<div class="step">
+  <h4 align="left">Selecting Image Properties</h4>
+  <ol>
+    <li>Invoke the <b>Edit Image Property</b> dialog. </li>
+	<p class="note"><b>NOTE</b> This dialog will appear from multiple locations within Carbide.c++. It is displayed when you are attempting to set the image properties for icons or images used within your application.</p>
+	<p>The <b>Edit Image Property</b> dialog will appear, as shown in Figure 1. </p>
+<p align="center"><img src="../../images/edit_image_property_dialog.png" alt="edit image property" width="584" height="385" /></p>
+<p class="figure">Figure 1 - The <b>Edit Image Property</b> dialog</p>
+	<p>The <b>Multi-Image File</b> context displays all multi-image files in your project by name.</p>
+	<p>The <b>Image</b> context displays all image files within the selected multi-image file. The selected image is displayed, along with its dimensions and color bit depth. The <b>Appearance</b> region displays the image as it will appear when masked and scaled to the display settings for the screen object. </p>
+	<p>The <b>Mask</b> context displays  all image files  which you may assign as a mask. The selected mask  is displayed, along with its dimensions and  bit depth. </p>
+	<li>[Optional] Select the desired Multi-Image File  from the context.</li>
+	<p class="note"><b>NOTE</b> This step is not needed if the current Multi-Image File contains the desired image.</p>
+	<p class="note"><b>NOTE</b> Bitmaps or Icons added to the project will be assigned to the selected Multi-Image File. </p>
+	<p>The contents of the selected Multi-Image File will be used to populate the Image and Mask context menus.</p>
+	<li>[Optional] Click the Edit MBM/MIF File... button if the desired image is not in any of the available multi-image files.</li>
+	<p class="note"><b>NOTE</b> This step is not necessary if the multi-image file  contains the image you wish to assign.</p>
+	<p>The <b>Edit MBM/MIF Contents</b><b></b> dialog will appear.</p>
+	<p>Use the<b> Edit MBM/MIF Contents</b><b></b> dialog to <a href="task_comp_mod_properties_image_add.htm">add the image to the selected multi-image file</a>. When you return from that dialog the images you added will be added to the Image and Mask dropdown lists.</p>
+	<li>Select the desired image file from the <b>Image</b> dropdown list.</li>
+	<p>The selected image is displayed, along with its dimensions and color bit depth. The <b>Appearance</b> region displays the image as it will appear when masked and scaled to the display settings for the screen object.</p>
+	<li>Select the desired mask file from the <b>Mask</b> dropdown list.</li>
+	<p>The selected mask is displayed, along with its dimensions and color bit depth. The <b>Appearance</b> region displays the image as it will appear when masked and scaled to the display settings for the screen object.</p>
+	<li>Click OK.</li>
+	<p>The dialog will be dismissed. The object will be assigned the selected image (and mask where appropriate).</p>
+</ol>
+</div>
+
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_com_components.htm">Components</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/views/ref_edit_image_property.htm">Edit Image Property Dialog</a></li>
+</ul>
+
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="task_comp_mod_properties_image.htm">Editing Image Property Data</a></li>
+  <li><a href="task_comp_mod_properties_image_add.htm">Adding Images</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

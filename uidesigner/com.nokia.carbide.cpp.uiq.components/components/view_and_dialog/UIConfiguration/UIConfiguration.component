@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.UIConfiguration"
+			baseComponent="com.nokia.carbide.uiq.CommonBase"
+			abstract= "true"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" 
+				minSDKVersion="3.0" >
+		</symbian>
+		
+		<attributes>
+			<attribute key="is-layout-object">false</attribute>
+			<attribute key="not-in-toolbox">false</attribute>
+		</attributes>	
+		
+		<properties>
+			<enumProperty name="uiconfig" displayName="%uiconfig"
+				category="%category.appearance"
+				type= "com.nokia.carbide.uiq.UIConfigurationMode"
+				descriptionKey="uiconfigDescription"/>		
+			<componentReferenceProperty name="commandList" displayName="%commandList"
+				category="%category.data" scope= "model"
+				constraint="com.nokia.carbide.uiq.CommandList"
+				descriptionKey="commandListDescription"
+			/>
+		</properties>		
+
+	</component>
+	
+</componentDefinition>

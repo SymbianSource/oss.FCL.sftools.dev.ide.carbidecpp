@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Installing Your Own Carbide Plug-ins</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+
+<body>
+<h2>Installing Your Own Carbide Plug-ins</h2>
+
+<p>Many people want to create installers that  automatically locate and install custom plug-ins into their Carbide installation. You can now query the Registry to locate Carbide installations and use the information there to correctly install your plug-ins into the Carbide / <span class="code">plugins</span> folder. </p>
+<p>When the Carbide Installer runs, it  creates a Registry key that contains the name and location of the installed product. The Registry key location is: </p>
+<blockquote>
+  <p class="code">	Hkey Local Machine/Software/Nokia/Carbide.c++ v2.x</p>
+</blockquote>
+<p>And it  contains these two key values: </p>
+<ul>
+  <li><b>Name</b> &#8212;  contains the name used to identify the program in the <b>Start &gt; Programs</b> menu as specified during the Carbide installation </li>
+  <li><b>Location</b> &#8212; contains the complete path to the Carbide installation (<span class="code">C:\Program Files\Nokia\Carbide.c++ v2.0</span>) </li>
+</ul>
+<p>For each new release of Carbide, the Carbide folder should not exist, so the installer creates it. Each folder name is unique in that it includes the major version number as part of the folder name. </p>
+<p>For users that have multiple Carbide installations of the same version, the folder name also includes an additional identifier. The &quot;Name&quot; value in the key will reflect the unique name given to the <b>Start &gt; Programs</b> shortcut (ie Carbide.c++ v2.0_[1])  as part of the install location. For example, if you installed three copies of version 2.0, the keys might look like this:</p>
+<blockquote>
+  <p class="code">Hkey Local Machine/Software/Nokia/Carbide.c++ v2.0<br>
+  Hkey Local Machine/Software/Nokia/Carbide.c++ v2.0_[1]<br>
+  Hkey Local Machine/Software/Nokia/Carbide.c++ v2.0_[2]</p>
+</blockquote>
+<p>Where the appended <span class="code">_[1]</span>, <span class="code">_[2]</span> help to identify the different installs. </p>
+<div id="footer"><img src="../img/nokia_copyright.png" alt="copyright" width="280" height="21">
+</div></body>
+</html>

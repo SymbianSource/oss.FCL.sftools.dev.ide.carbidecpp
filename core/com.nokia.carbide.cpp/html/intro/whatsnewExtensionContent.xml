@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<introContent>
+<!-- Extension to the Whats New page. -->
+
+	<extensionContent 
+		id="com.nokia.carbide.cpp-whatsnew" 
+		name="Carbide.c++ Development" 
+		alt-style="carbide.properties" 
+		style="carbide.css" 
+		path="whatsnew/@">
+		
+		<group 
+			label="Carbide.c++ Development"
+			id="content-group" 
+			style-id="content-group">
+			
+			<link 
+				label="Carbide.c++ Release Notes" 
+	       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+				id="carbide">
+				style-id="content-link" 
+          		<text>Learn about what's new in Carbide.c++</text>
+			</link>
+			
+		</group>
+		
+		<group id="rss-news" label="Carbide News" expandable="true" expanded="true">
+			<contentProvider id="rss-viewer" pluginId="org.eclipse.platform" class="org.eclipse.platform.internal.EclipseRSSViewer">
+			</contentProvider>
+		</group>
+		
+	</extensionContent>
+  
+</introContent>

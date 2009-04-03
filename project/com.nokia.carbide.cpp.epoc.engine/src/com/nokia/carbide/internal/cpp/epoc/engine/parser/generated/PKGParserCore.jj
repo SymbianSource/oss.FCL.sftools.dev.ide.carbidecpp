@@ -1,0 +1,1159 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*	JavaCC input file for parsing with preprocessor support.
+*
+*/
+
+ 
+options {
+	STATIC=false;
+	USER_TOKEN_MANAGER=true;
+}
+PARSER_BEGIN(PKGParserCore)
+package com.nokia.carbide.internal.cpp.epoc.engine.parser.generated;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.ASTFactory;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTListNode;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTLiteralTextNode;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTNode;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTPreprocessorTokenStream;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IToken;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.ASTPKGFactory;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGBinaryConditionExpression;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGConditionExpression;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGConditionalContainer;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGElseContainer;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGEmbeddedSisEntry;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGIfElseifContainer;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGOptionsListOption;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGStatement;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGTranslationUnit;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.pkg.IASTPKGUnaryConditionExpressionBase;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.ASTToken;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.ParserBase;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.ParserUtils;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.pkg.PKGTokenManager;
+
+// these must exactly match the leading token used in PKG (minus leading PRJ_)
+enum PKGBlock {
+		NONE,
+        LANGUAGE
+};
+
+enum ARGTYPE {
+	RAW,
+	STRING,
+	PATH_IN_STRING,
+	INT
+}
+
+public class PKGParserCore extends ParserBase {
+	PKGBlock currentBlock;
+	public IASTPKGTranslationUnit parse() {
+		IASTPKGTranslationUnit tu = ASTPKGFactory.createPKGTranslationUnit();
+		try {
+			TranslationUnit(tu);
+		} catch (ParseException e) {
+			hadErrors = true;
+			e.printStackTrace();
+		}
+		com.nokia.cpp.internal.api.utils.core.Check.checkState(tu != null);
+		return tu;
+    }
+}
+PARSER_END(PKGParserCore)
+    
+void TranslationUnit(IASTPKGTranslationUnit tu) : 
+{ 
+	IASTListNode<IASTPKGStatement> statements = null;
+	Token eof;
+}
+{
+	statements = TopLevelStatements()
+	eof=<EOF>
+	{
+		if (statements != null && statements.getChildren().length > 0) {
+			tu.setNodes((IASTListNode)statements);
+			ParserUtils.setSourceRangeForListNode(null, tu.getNodes(), eof);
+			ParserUtils.copySourceInfo(tu, tu.getNodes());
+		} else {
+			ParserUtils.setSourceRangeFromTokenSpan(tu.getNodes(), eof, eof);
+			ParserUtils.setSourceRangeFromTokenSpan(tu, eof, eof);
+		}
+	}
+}
+
+JAVACODE
+// Handy wrapper for current token incase JAVACC changes in the future
+Token CurrentToken()
+{
+	return token;
+}
+
+JAVACODE
+// just to give rule something to do for empty statement
+void DoNothing()
+{
+}
+
+// parse top level statements in a non-recursive way to
+// avoid stack overflow errors in long files
+JAVACODE
+IASTListNode<IASTPKGStatement> TopLevelStatements() {
+	IASTListNode<IASTPKGStatement> stmts = null; 
+	while (((jj_ntk==-1)?jj_ntk():jj_ntk) != EOF) {
+		try {
+			IASTPKGStatement stmt = TopLevelStatementOrProblem();
+			if (stmt != null) {
+				if (stmts == null) {
+					stmts = ASTFactory.createListNode("\n");			
+				}
+				stmts.add(stmt);
+			}
+		} catch (ParseException e) {
+			hadErrors = true;
+			getNextToken();
+		}
+	}
+	return stmts;
+}
+
+// fix to avoid NPEs and infinite loops, following MMP
+JAVACODE
+IASTPKGStatement createProblemStatement(Token start, Token end, ParseException e)
+{
+	IASTPKGStatement stmt;
+
+	if (end == null) {
+		ppRestOfLine(false);
+		end = token;
+	}
+	List<IToken> tokens = new ArrayList<IToken>();
+	start = start.next;
+	Token ptr = start;
+	while (true) {
+		if (ptr == null || ptr.kind == EOF)
+			break;
+		tokens.add(((ASTToken)ptr).iToken);
+		if (ptr == end)
+			break;
+		ptr = ptr.next;
+	}
+	IASTPreprocessorTokenStream stream = ASTFactory.createPreprocessorTokenStream(tokens);
+	ParserUtils.setSourceRangeForTokenStream(stream, stream);
+	stmt = ASTPKGFactory.creatPKGProblemStatement(stream, createMessage(start, e));
+	ParserUtils.copySourceInfo(stmt, stream);
+	ParserUtils.expandSourceRangeToLine(stmt);
+	hadErrors = true;
+	return stmt;
+
+}
+
+// parse to EOL (i.e. next line number)
+IASTLiteralTextNode ppRestOfLine(boolean skip) : 
+{
+        Token start = token, end = start;
+}
+{
+	{
+        if (skip || !(start instanceof ASTToken))
+	        start = end = getNextToken();
+	    int startLine = start.beginLine;
+       	if (end.kind != EOF && end.beginLine == startLine) {
+	        while (true) {
+	        	end = getNextToken();
+	        	if (end.kind == EOF || end.beginLine != startLine)
+	        		break;
+	        }
+	    }
+  		return getLiteralTextNodeSpanningUpTo(start, end);
+   	}
+}
+
+// parse a statement and return either a statement,
+// a problem generated parsing that statement,
+// or null 
+IASTPKGStatement TopLevelStatementOrProblem() :
+{
+	IASTPKGStatement stmt;
+	Token start = token;
+}
+{
+	try {
+		( stmt = TopLevelStatement() )
+		{
+			return stmt;
+		}
+	} catch (ParseException e) {
+		return createProblemStatement(start, null, e);
+	}
+}
+
+// A top level statement can be conditional or others that cannot be within conditonals
+IASTPKGStatement TopLevelStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = token;
+}
+{
+	try {
+		(
+			( node = LanguageStatement() )
+			| ( node = PackageHeaderStatement() )
+			| ( node = VendorStatement() )
+			| ( node = LogoStatement())
+			| LOOKAHEAD(<ASTERISK>) ( node = PackageSignatureStatement()) // is this a bug? I don't see why there is a conflict with install file
+			| ( node = HardwareDependencyStatement())
+			| ( node = SoftwareDependencyOrVersionCompatiblityStatement())
+			| ( node = ConditionalStatement() )	// includes ConditionalBlock()
+		)
+		{
+			return node;
+		}
+	} catch (ParseException e) {
+		return createProblemStatement(start, null, e);
+	}
+}
+
+// block or one or more statement eligible within conditional block
+IASTListNode<IASTPKGStatement>  ConditionalStatements() :
+{
+	IASTPKGStatement stmt = null;
+	IASTListNode<IASTPKGStatement> stmts = null;
+}
+{
+	(stmt = ConditionalStatement() stmts = ConditionalStatements())
+	{
+		if (stmts == null) {
+			stmts = ASTFactory.createListNode("\n");
+		}
+		if (stmt != null)
+			stmts.add(0, stmt);
+		return stmts;
+	}
+	|
+	{
+		if (stmts == null) {
+			stmts = ASTFactory.createListNode("\n");
+		}
+		return stmts;
+	}
+}
+
+// statements eligibile within conditional block
+IASTPKGStatement ConditionalStatement() :
+{
+	IASTPKGStatement node = null;
+}
+{
+	(
+		(node = CommentStatement())
+		| (node = OptionsListStatement())
+		| LOOKAHEAD(<OPEN_CURLY_BRACE> <AMPERSAND> | <AMPERSAND>)(node = EmbeddedSisStatement())
+		| (node = InstallFileStatement())
+		| (node = PropertiesStatement())
+		| (node = ConditionalBlock())
+	)
+	{
+		return node;
+	}
+}
+
+IASTPKGConditionExpression Condition() :
+{
+	IASTLiteralTextNode literalTextNode = null;
+	IASTPKGConditionExpression node = null;
+}
+{
+	(
+		literalTextNode = ConditionPrimitive()
+		{
+			node = ASTPKGFactory.createPKGConditionPrimitiveExpression(literalTextNode);
+			ParserUtils.copySourceInfo(node, literalTextNode);
+		}
+		| 
+		node = UnaryBinaryCondition()
+	)
+	{
+		return node;
+	}
+}
+
+// NOT(), ()AND(), ()OR()
+IASTPKGConditionExpression UnaryBinaryCondition() :
+{
+	Token start = null;
+	Token endParenthesis = null;
+	Token condition = null;
+	IASTPKGConditionExpression leftNode = null;
+	IASTPKGConditionExpression rightNode = null;
+	IASTPKGConditionExpression node = null;
+	boolean isAnd=false;
+}
+{
+	(
+		start=<NOT>
+		// even doc say () is mandaotry, example said other wise, relax this rule
+		//<OPEN_PARENTHESIS>
+		leftNode=Condition()
+		//<CLOSE_PARENTHESIS>
+	)
+	{
+		// for ()
+		//node = ASTPKGFactory.createPKGUnaryConditionExpression(true, leftNode);
+		//return node;
+		if (leftNode instanceof IASTPKGUnaryConditionExpressionBase) {
+			((IASTPKGUnaryConditionExpressionBase)leftNode).setNegation(true);
+			ParserUtils.setSourceRangeFromTokenSpan(leftNode, start, CurrentToken());
+		} else if (leftNode instanceof IASTPKGBinaryConditionExpression) {
+			// () is a unary, so any NOT apply to a binary is to the left child
+			IASTNode leftExpression = ((IASTPKGBinaryConditionExpression)leftNode).getLeftExpression();
+			if (leftExpression instanceof IASTPKGUnaryConditionExpressionBase) {
+				((IASTPKGUnaryConditionExpressionBase)leftExpression).setNegation(true);
+				ParserUtils.extendSourceRangeToInclude(leftExpression, start);
+			}
+			ParserUtils.setSourceRangeFromTokenSpan(leftNode, start, CurrentToken());
+		}
+		return leftNode;
+	}
+	|
+	(
+		start=<OPEN_PARENTHESIS>
+		leftNode=Condition()
+		endParenthesis = <CLOSE_PARENTHESIS>
+		[
+			(
+				condition=<AND>
+				{
+					isAnd=true;
+				}
+				|
+				condition=<OR>
+			)
+			// even doc say (cond) AND (cond) with two operands only, example have more than two
+			// e.g. (cond) AND (cond) AND (cond) AND (cond), relax this rule
+			//<OPEN_PARENTHESIS>
+			rightNode=Condition()
+			//<CLOSE_PARENTHESIS>
+		]
+		{			
+			// take the ()
+			node = leftNode = ASTPKGFactory.createPKGUnaryConditionExpression(false, leftNode);
+			ParserUtils.setSourceRangeFromTokenSpan(node, start, endParenthesis);
+			if (condition != null) {
+				node = ASTPKGFactory.createPKGBinaryConditionExpression(isAnd, leftNode, rightNode);
+			}
+			
+		}
+	)
+	{
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTLiteralTextNode ConditionPrimitive() :
+{
+	Token start = null;
+	IASTLiteralTextNode node = null;
+}
+{
+	(
+		(start=<WORD>[<INT>] [(<EQUAL>|<LESS_GREATER>|<LESS>|<GREATER>|<LESS_EQUAL>|<GREATER_EQUAL>) HexInteger()] )
+		| (start=<COND_EXISTS> <OPEN_PARENTHESIS> <STRING> <CLOSE_PARENTHESIS>)
+		| (start=<COND_APPROP> <OPEN_PARENTHESIS> HexInteger() <COMMA> HexInteger() <CLOSE_PARENTHESIS>)
+		| (start=<COND_PACKAGE> <OPEN_PARENTHESIS> HexInteger() <CLOSE_PARENTHESIS>)
+	)
+	{
+		node = getRawLiteralTextNodeSpanning(start, CurrentToken());
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement ConditionalBlock() :
+{
+	IASTPKGStatement node = null;
+	IASTListNode<IASTPKGConditionalContainer> containers = ASTPKGFactory.createPKGConditionalContainerListNode();
+	Token start = null;
+	IASTPKGConditionExpression conditionNode = null;
+	IASTPKGConditionalContainer block = null;
+}
+{
+	(
+		(
+			start = <IF> conditionNode = Condition()
+//			{
+//				if (token_source instanceof PKGTokenManager) {
+//					conditionToken = ((PKGTokenManager)token_source).getNextAsCommentBodyToken();
+//				} else {
+//					// it should never gets here
+//					throw generateParseException();
+//				}	
+//			}
+			block = IfElseifContainer(conditionNode)
+		)
+		{
+			containers.add(block);
+		}
+		[(
+			(
+				<ELSEIF> conditionNode = Condition()
+//				{
+//					if (token_source instanceof PKGTokenManager) {
+//						conditionToken = ((PKGTokenManager)token_source).getNextAsCommentBodyToken();
+//					} else {
+//						// it should never gets here
+//						throw generateParseException();
+//					}
+//				}
+				block = IfElseifContainer(conditionNode)
+			)
+			{
+				containers.add(block);
+			}
+		)+]
+		[
+			(
+				<ELSE>
+//				{
+//					if (token_source instanceof PKGTokenManager) {
+//						conditionToken = ((PKGTokenManager)token_source).getNextAsCommentBodyToken();
+//					} else {
+//						// it should never gets here
+//						throw generateParseException();
+//					}
+//				}
+				block = ElseContainer()
+			)
+			{
+				containers.add(block);
+			}
+		]
+		<ENDIF>
+	)
+	{
+		ParserUtils.setSourceRangeForListNode(null, containers, null);
+		node = ASTPKGFactory.createPKGConditionalBlock(containers);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+        return node;
+	}
+}
+
+// node of container for statements eligible for conditional
+// top level <-> TU
+// conditional <-> condtional sub choice
+IASTPKGIfElseifContainer IfElseifContainer(IASTPKGConditionExpression conditionNode) :
+{
+	IASTPKGIfElseifContainer node = null;
+//	IASTLiteralTextNode conditionNode = null;
+	IASTListNode<IASTPKGStatement> statements = null;
+	Token start = token;
+}
+{
+	statements = ConditionalStatements()
+	{
+//		if (condition != null) {
+//			conditionNode = getRawLiteralTextNodeSpanning(condition, condition);
+//		} else {
+//			throw generateParseException();
+//		}
+		node = ASTPKGFactory.createPKGIfElseifContainer(conditionNode, statements);
+		if (statements != null && statements.getChildren().length > 0) {
+			ParserUtils.setSourceRangeForListNode(null, statements, null);
+			ParserUtils.copySourceInfo(node, statements);
+		} else {
+			ParserUtils.setSourceRangeFromTokenSpan(statements, start, start);
+			ParserUtils.setSourceRangeFromTokenSpan(node, start, start);
+		}
+		return node;
+	}
+}
+
+// node of container for statements eligible for conditional
+// top level <-> TU
+// conditional <-> condtional sub choice
+IASTPKGElseContainer ElseContainer() :
+{
+	IASTPKGElseContainer node = null;
+	IASTListNode<IASTPKGStatement> statements = null;
+	Token start = token;
+}
+{
+	statements = ConditionalStatements()
+	{
+		node = ASTPKGFactory.createPKGElseContainer(statements);
+		if (statements != null && statements.getChildren().length > 0) {
+			ParserUtils.setSourceRangeForListNode(null, statements, null);
+			ParserUtils.copySourceInfo(node, statements);
+		} else {
+			ParserUtils.setSourceRangeFromTokenSpan(statements, start, start);
+			ParserUtils.setSourceRangeFromTokenSpan(node, start, start);
+		}
+		return node;
+	}
+}
+
+// node represent a single item in arguement list
+IASTLiteralTextNode Argument() :
+{
+	IASTLiteralTextNode node = null;
+	Token lastToken = null;
+	Token equalToken = null;
+	Token firstToken = null;
+}
+{
+	(
+		// int or option
+		(firstToken = <INT>[LOOKAHEAD(<EQUAL>) equalToken = <EQUAL> [<MINUS>] lastToken = <INT>])
+		{
+			if (equalToken == null) {
+				lastToken = firstToken;
+			}
+		}
+		|(
+			(firstToken = <ASTERISK>)		// for version number
+			|(firstToken = <PACKAGE_OPTION>)
+			|(firstToken = <WORD>)
+			|(firstToken = <STRING>)
+		)
+		{
+			lastToken = firstToken;
+		}
+	)
+	{
+		node = getRawLiteralTextNodeSpanning(firstToken, lastToken);
+		return node;
+	}
+}
+
+// comma seperated arguments
+IASTListNode<IASTLiteralTextNode> CommaSeparatedArguments() : 
+{
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	args = CommaSeparatedArgumentList()
+	{
+		if (args == null) {
+			args = ASTFactory.createListNode(",");
+		}
+		ParserUtils.setSourceRangeForListNode(null, args, null);
+	   	return args;
+   	}
+}
+
+// list of arguments
+IASTListNode<IASTLiteralTextNode> CommaSeparatedArgumentList() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	// look ahead covering the whole optional part, so other comma after argumentlist
+	// will not be ambiguous
+	arg = Argument() 
+	(
+		[LOOKAHEAD(<COMMA> CommaSeparatedArgumentList()) <COMMA> args=CommaSeparatedArgumentList()]
+		{
+			if (args == null) {
+				args = ASTFactory.createListNode(",");
+			}
+			if (arg != null)
+				args.add(0, arg);
+		}
+	)
+	{
+		if (args == null) {
+			args = ASTFactory.createListNode(",");
+		}
+	   	return args;
+   	}
+}
+
+// node represent a single quoted string item in arguement list
+IASTLiteralTextNode LanguageVariantsQuotedStringArgument() :
+{
+	IASTLiteralTextNode node = null;
+	Token token = null;
+}
+{
+	[<AMPERSAND>]
+	token = <STRING>
+	{
+		node = getRawLiteralTextNodeSpanning(token, token);
+		return node;
+	}
+}
+
+// comma or nothing(space/eol) seperated arguments of STRING only
+IASTListNode<IASTLiteralTextNode> LanguageVariantsQuotedStringArguments() : 
+{
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	args = LanguageVariantsQuotedStringArgumentList()
+	{
+		if (args == null) {
+			args = ASTFactory.createListNode(",");
+		}
+		ParserUtils.setSourceRangeForListNode(null, args, null);
+	   	return args;
+   	}
+}
+
+IASTListNode<IASTLiteralTextNode> LanguageVariantsQuotedStringArgumentList() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+	Token comma = null;
+}
+{
+	// look ahead covering the whole optional part, so other comma after argumentlist
+	// will not be ambiguous
+	arg = LanguageVariantsQuotedStringArgument() 
+	(
+		[LOOKAHEAD([<COMMA>] LanguageVariantsQuotedStringArgumentList()) [comma=<COMMA>] args=LanguageVariantsQuotedStringArgumentList()]
+		{
+			if (args == null) {
+				args = ASTFactory.createListNode(",");
+			}
+			if (arg != null) {
+				args.add(0, arg);
+				if (comma != null) {
+					args.setSeparator(",");
+				}
+			}
+		}
+	)
+	{
+		if (args == null) {
+			args = ASTFactory.createListNode(",");
+		}
+	   	return args;
+   	}
+}
+
+// node represent a single quoted string item in arguement list
+IASTPKGEmbeddedSisEntry LanguageVariantsEmbeddedSisArgument() :
+{
+	IASTPKGEmbeddedSisEntry node = null;
+	Token start = null;
+	Token token = null;
+}
+{
+	start =<AMPERSAND>
+	token = <STRING>
+	{
+		node = ASTPKGFactory.createEmbeddedSisEntry(ParserUtils.getLiteralTextSpanning(start, token));
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, token);
+		return node;
+	}
+}
+
+// comma or nothing(space/eol) seperated arguments of STRING only
+IASTListNode<IASTLiteralTextNode> LanguageVariantsEmbeddedSisArguments() : 
+{
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	args = LanguageVariantsEmbeddedSisArgumentList()
+	{
+		if (args == null) {
+			args = ASTFactory.createListNode(",");
+		}
+		ParserUtils.setSourceRangeForListNode(null, args, null);
+	   	return args;
+   	}
+}
+
+IASTListNode<IASTLiteralTextNode> LanguageVariantsEmbeddedSisArgumentList() : 
+{
+	IASTPKGEmbeddedSisEntry arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+	Token comma = null;
+}
+{
+	// look ahead covering the whole optional part, so other comma after argumentlist
+	// will not be ambiguous
+	arg = LanguageVariantsEmbeddedSisArgument() 
+	(
+		[LOOKAHEAD([<COMMA>] LanguageVariantsEmbeddedSisArgumentList()) [comma=<COMMA>] args=LanguageVariantsEmbeddedSisArgumentList()]
+		{
+			if (args == null) {
+				args = ASTFactory.createListNode(",");
+			}
+			if (arg != null) {
+				args.add(0, arg);
+				if (comma != null) {
+					args.setSeparator(",");
+				}
+			}
+		}
+	)
+	{
+		if (args == null) {
+			args = ASTFactory.createListNode(",");
+		}
+	   	return args;
+   	}
+}
+
+IASTLiteralTextNode HexInteger() :
+{
+	Token token = null;
+	IASTLiteralTextNode hexInteger = null;
+	Integer hexValue = null;
+}
+{
+	(
+		token = <INT>
+		{
+    		try {
+    			String hexString = "";
+    			hexString += token.image;
+    			if (hexString.startsWith("0x")) {
+    				hexString = hexString.substring(2, hexString.length() - 1);
+    			}
+    			hexValue = Integer.parseInt(hexString, 16);
+    		} catch (NumberFormatException e) {
+    			// nothing is needed
+    		}
+		}
+		
+	)
+	{
+		if (hexValue != null) {
+			hexInteger = getRawLiteralTextNodeSpanning(token, token);
+			if (hexInteger != null) {
+				return hexInteger;
+			}
+		}
+	}
+}
+
+IASTPKGStatement CommentStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	Token commentBody = null;
+}
+{	
+	start = <COMMENT_START>
+	{
+		if (token_source instanceof PKGTokenManager) {
+			commentBody = ((PKGTokenManager)token_source).getNextAsCommentBodyToken();
+		} else {
+			// it should never gets here
+			throw generateParseException();
+		}
+		node = ASTPKGFactory.createPKGCommentStatement(getRawLiteralTextNodeSpanning(commentBody, commentBody));
+        ParserUtils.setSourceRangeFromTokenSpan(node, start, commentBody);	// includes ';' too
+		
+		return node;
+	}
+}
+
+IASTPKGStatement LanguageStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTListNode<IASTLiteralTextNode> languages = null;
+}
+{
+	start=<LANGUAGE_START>
+	languages = CommaSeparatedArguments()
+	{
+		node = ASTPKGFactory.createPKGLanguageStatement(languages);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement PackageHeaderStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTListNode<IASTLiteralTextNode> packageNameLocalizedVariants = null;
+	IASTLiteralTextNode uid = null;
+	IASTListNode<IASTLiteralTextNode> versionAndOptionList = null;
+	IASTListNode<IASTLiteralTextNode> version = null;
+	IASTListNode<IASTLiteralTextNode> optionList = null;
+}
+{
+	start = <PACKAGE_HEADER_START>
+	<OPEN_CURLY_BRACE>
+	packageNameLocalizedVariants = LanguageVariantsQuotedStringArguments()
+	<CLOSE_CURLY_BRACE>
+	<COMMA>
+	<OPEN_PARENTHESIS>
+	uid = HexInteger()
+	<CLOSE_PARENTHESIS>
+	<COMMA>
+	// unfortunately this comma separated list of version and option is hard to parse
+	versionAndOptionList =  CommaSeparatedArguments()
+	{
+		// split the single mixed list into two
+		version = ASTFactory.createListNode(",");
+		optionList = ASTFactory.createListNode(",");
+                
+		Iterator<IASTLiteralTextNode> itr = versionAndOptionList.iterator();
+                
+		int count = 0;
+		while (itr.hasNext()) {
+			IASTLiteralTextNode childnode = itr.next();
+			itr.remove();
+			if (count < 3)
+				version.add((IASTLiteralTextNode) childnode);
+			else
+				optionList.add((IASTLiteralTextNode) childnode);
+                	
+			count++;
+		}
+		ParserUtils.setSourceRangeForListNode(null, version, null);
+		ParserUtils.setSourceRangeForListNode(null, optionList, null);
+		if (optionList.size() == 0) {
+			ParserUtils.setSourceRangeFromTokenAfter(optionList, CurrentToken());
+        }
+		
+		node = ASTPKGFactory.createPKGPackageHeaderStatement(packageNameLocalizedVariants, 
+															uid,
+															version,
+															optionList);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement VendorStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTListNode<IASTLiteralTextNode> vendorStringLocalizedVariants = null;
+}
+{
+	( start = <MULTILINGUAL_VENDOR_START> <OPEN_CURLY_BRACE> vendorStringLocalizedVariants = LanguageVariantsQuotedStringArguments() <CLOSE_CURLY_BRACE>)
+	{
+		node = ASTPKGFactory.createPKGVendorStatement(vendorStringLocalizedVariants, true);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+
+	}
+	| 
+	( start = <UNIQUE_VENDOR_START> vendorStringLocalizedVariants = CommaSeparatedArguments())
+	{
+		if (vendorStringLocalizedVariants.size() > 1) {
+			throw new Error("Multlingual vendor variant should follow %{\"vendor_1\"...\"vendor_n\"}");
+		}
+		node = ASTPKGFactory.createPKGVendorStatement(vendorStringLocalizedVariants, false);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+
+	}
+}
+
+IASTPKGStatement LogoStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	Token sourcePath = null;
+	Token mimeType = null;
+	Token destPath = null;
+}
+{
+	start = <EQUAL>
+	sourcePath = <STRING>
+	<COMMA>
+	mimeType = <STRING>
+	[
+		<COMMA>
+		destPath = <STRING>
+	]
+	{
+		IASTLiteralTextNode sourcePathNode = null;
+		IASTLiteralTextNode mimeTypeNode = null;
+		IASTLiteralTextNode destPathNode = null;
+	
+		sourcePathNode = getRawLiteralTextNodeSpanning(sourcePath, sourcePath);
+		mimeTypeNode = getRawLiteralTextNodeSpanning(mimeType, mimeType);
+		if (destPath != null) {
+			destPathNode = getRawLiteralTextNodeSpanning(destPath, destPath);
+		}
+		node = ASTPKGFactory.createPKGLogoStatement(sourcePathNode, mimeTypeNode, destPathNode);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement PackageSignatureStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	Token key = null;
+	Token cert = null;
+}
+{	
+	start = <ASTERISK>
+	key = <STRING>
+	<COMMA>
+	cert = <STRING>
+	{
+		IASTLiteralTextNode keyNode = null;
+		IASTLiteralTextNode certNode = null;
+	
+		if (key != null) {
+			keyNode = getRawLiteralTextNodeSpanning(key, key);
+		}
+		if (cert != null) {
+			certNode = getRawLiteralTextNodeSpanning(cert, cert);
+		}
+		node = ASTPKGFactory.createPKGPackageSignatureStatement(keyNode, certNode);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement HardwareDependencyStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTLiteralTextNode uid = null;
+	IASTListNode<IASTLiteralTextNode> version = null;
+	IASTListNode<IASTLiteralTextNode> components = null;
+}
+{	
+	start = <OPEN_SQUARE_BRACKET>
+	uid = HexInteger()
+	<CLOSE_SQUARE_BRACKET>
+	<COMMA>
+	version = CommaSeparatedArguments()
+	<COMMA>
+	<OPEN_CURLY_BRACE>
+	components = LanguageVariantsQuotedStringArguments()
+	<CLOSE_CURLY_BRACE>
+	{
+		node = ASTPKGFactory.createPKGHardwareDependencyStatement(uid, version, components);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement SoftwareDependencyOrVersionCompatiblityStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTLiteralTextNode uid = null;
+	IASTListNode<IASTLiteralTextNode> versionLowerBound = null;
+	IASTListNode<IASTLiteralTextNode> versionUpperBound = null;
+	IASTListNode<IASTLiteralTextNode> components = null;
+}
+{	
+	start = <OPEN_PARENTHESIS>
+	uid = HexInteger()
+	<CLOSE_PARENTHESIS>
+	<COMMA>
+	versionLowerBound = CommaSeparatedArguments()
+	[<TIDLE> versionUpperBound = CommaSeparatedArguments()]
+	<COMMA>
+	<OPEN_CURLY_BRACE>
+	components = LanguageVariantsQuotedStringArguments()
+	<CLOSE_CURLY_BRACE>
+	{
+		if (versionUpperBound != null) {
+			node = ASTPKGFactory.createPKGSoftwareDependencyOrVersionCompatibilityStatement(uid, versionLowerBound, versionUpperBound, components);
+		} else {
+			node = ASTPKGFactory.createPKGSoftwareDependencyOrVersionCompatibilityStatement(uid, versionLowerBound, components);
+		}
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGOptionsListOption OptionListOption() :
+{
+	IASTPKGOptionsListOption node = null;
+	Token start = null;
+	Token end = null;
+	IASTListNode<IASTLiteralTextNode> localizedOption = null;
+}
+{
+	start = <OPEN_CURLY_BRACE>
+	localizedOption = LanguageVariantsQuotedStringArguments()
+	end = <CLOSE_CURLY_BRACE>
+	{
+		node = ASTPKGFactory.createPKGOptionsListOption(localizedOption);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, end);
+		return node;
+	}
+}
+
+IASTListNode<IASTPKGOptionsListOption> OptionsList() :
+{
+	IASTPKGOptionsListOption option = null;
+	IASTListNode<IASTPKGOptionsListOption> list = null;
+}
+{
+	// look ahead covering the whole optional part, so other comma after argumentlist
+	// will not be ambiguous
+	option = OptionListOption()
+	(
+		[LOOKAHEAD(<COMMA> OptionsList()) <COMMA> list=OptionsList()]
+		{
+			if (list == null) {
+				list = ASTFactory.createListNode(",");
+			}
+			if (option != null)
+				list.add(0, option);
+		}
+	)
+	{
+		if (list == null) {
+			list = ASTFactory.createListNode(",");
+		}
+		ParserUtils.setSourceRangeForListNode(null, list, null);
+	   	return list;
+   	}
+}
+
+IASTPKGStatement OptionsListStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTListNode<IASTPKGOptionsListOption> optionsList = null;
+	Token end = null;
+}
+{
+	start = <OPTIONSLIST_START>
+	<OPEN_PARENTHESIS>
+	optionsList = OptionsList()
+	end = <CLOSE_PARENTHESIS>
+	{
+		node = ASTPKGFactory.createPKGOptionsListStatement(optionsList);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, end);
+		return node;
+	}
+}
+
+IASTPKGStatement InstallFileStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTListNode<IASTLiteralTextNode> soureFileLocalizedVarients = null;
+	Token targetToken = null;
+	IASTListNode<IASTLiteralTextNode> installOptions = null;
+	boolean languageDependentSyntax = false;
+}
+{
+	(
+		( start = <OPEN_CURLY_BRACE> soureFileLocalizedVarients = LanguageVariantsQuotedStringArguments() <CLOSE_CURLY_BRACE>)
+		| 
+		( start = <STRING> )
+		{
+			soureFileLocalizedVarients = ASTFactory.createLiteralTextNodeList();
+			soureFileLocalizedVarients.setSeparator(",");
+			soureFileLocalizedVarients.add(getRawLiteralTextNodeSpanning(start,start));
+			ParserUtils.setSourceRangeForListNode(null, soureFileLocalizedVarients, null);
+		}
+	)
+	<MINUS>
+	targetToken = <STRING>
+	[<COMMA> installOptions = CommaSeparatedArguments()]
+	{
+		if (installOptions == null) {
+			installOptions = ASTFactory.createListNode(",");
+			ParserUtils.setSourceRangeFromTokenAfter(installOptions, targetToken);
+		}
+		node = ASTPKGFactory.createPKGInstallFileStatement(soureFileLocalizedVarients, 
+													getRawLiteralTextNodeSpanning(targetToken, targetToken),
+													installOptions);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement EmbeddedSisStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	Token sisToken = null;
+	IASTListNode<IASTLiteralTextNode> embeddedSisLocalizedVarients = null;
+	IASTLiteralTextNode uid = null;
+	IASTPKGEmbeddedSisEntry entry = null;
+}
+{
+	
+	(
+		( start = <OPEN_CURLY_BRACE> embeddedSisLocalizedVarients = LanguageVariantsEmbeddedSisArguments() <CLOSE_CURLY_BRACE>)
+		| 
+		(
+			start =<AMPERSAND>
+			token = <STRING>
+		)
+		{
+			embeddedSisLocalizedVarients = ASTFactory.createLiteralTextNodeList();
+			embeddedSisLocalizedVarients.setSeparator(",");
+			entry = ASTPKGFactory.createEmbeddedSisEntry(ParserUtils.getLiteralTextSpanning(start, token));
+			ParserUtils.setSourceRangeFromTokenSpan(entry, start, token);
+			embeddedSisLocalizedVarients.add(entry);
+			ParserUtils.setSourceRangeForListNode(null, embeddedSisLocalizedVarients, null);
+		}
+	)
+	<COMMA>
+	<OPEN_PARENTHESIS>
+	uid = HexInteger()
+	<CLOSE_PARENTHESIS>
+	{
+		node = ASTPKGFactory.createPKGEmbeddedSisStatement(embeddedSisLocalizedVarients, uid);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+}
+
+IASTPKGStatement PropertiesStatement() :
+{
+	IASTPKGStatement node = null;
+	Token start = null;
+	IASTListNode<IASTLiteralTextNode> properties = null;
+}
+{
+	start=<PLUS>
+	<OPEN_PARENTHESIS>
+	properties = CommaSeparatedArguments()
+	<CLOSE_PARENTHESIS>
+	{
+		node = ASTPKGFactory.createPKGPropertiesOrCapabilitiesStatement(properties);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, CurrentToken());
+		return node;
+	}
+} 
+
+void Dummy() :
+{
+}
+{
+		<STRING>
+		<RAW>
+		<WORD>
+		<PACKAGE_OPTION>
+		<LESS>
+		<GREATER>
+		<LESS_EQUAL>
+		<GREATER_EQUAL>
+		<LESS_GREATER>
+}

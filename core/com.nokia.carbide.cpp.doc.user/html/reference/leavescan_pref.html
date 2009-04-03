@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>Leavescan Preferences</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+   <body>
+   <h2>Leavescan Preferences</h2>
+   <p>Use the <img src="../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.leavescan.ui.LeavescanPreferences)")'>
+Leavescan Preferences</a> page in the <b>Preferences</b> window to define the location where the <span class="code">leavescan.exe</span> program exists on the file system. Symbian OS has a standard convention for functions that may Leave. Therefore, any function that Leaves, or calls a function that Leaves (other than in a TRAP harness), must have a name ending in "L". Leavescan verifies that your code satisfies this convention.</p>
+   <p align="center"><img src="images/leavescan_pref.png" width="671" height="359" alt="Leavescan preferences panel" /></p>
+   <p align="center" class="figure">Figure 1. Leavescan preference page </p>
+   <h5>Table 1. Leavescan Preferences &mdash;items</h5>
+   <div class="Figure"></div>
+   <table cellpadding="2" cellspacing="0"
+border="0">
+	 <tr valign="top"><th width="221" class="Cell">Name</th><th width="558" class="Cell">Function</th></tr>
+         <tr valign="top">
+           <td class="Cell"><b>Leavescan Directory </b></td>
+           <td class="Cell"><p>Enter or Browse to the directory where <span class="code">leavescan.exe</span> resides. <span class="code">Leavescan.exe</span> is normally found in the <span class="code">${EPOCROOT}\epoc32\tools</span> directory.</p>
+             <p class="note"><b>NOTE</b> The path to the Leavescan directory should not contain  space characters.</p></td>
+        </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Very noisy output </b></td>
+           <td class="Cell"><p>If enabled, the <span class="code">-N</span> option is passed to <span class="code">leavescan.exe</span> and produces verbose output. If unchecked, minimal output is produced. </p>
+           </td>
+     </tr>
+   </table>
+	 <h5>Related Tasks</h5>
+	 <ul>
+	   <li><a href="menus/run_leavescan.htm">Run Leavescan</a></li>
+   </ul>
+	 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+   </html>
+   

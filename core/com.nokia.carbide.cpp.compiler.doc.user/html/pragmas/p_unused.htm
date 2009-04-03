@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>unused</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>unused</h3>
+<p>  Controls the suppression of warnings for variables and parameters that are not referenced in a function.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma unused ( var_name [, var_name ]... )</p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>This pragma suppresses the compile time warnings for the unused variables and parameters specified in its argument list as shown in Listing 10.32 and Listing 10.33. You can use this pragma only within a function body, and the listed variables must be within the scope of the function. You cannot use this pragma with functions defined within a class definition or with template functions.</p>
+  <div class="listing">
+      <h4>Listing 10.32 Example of Pragma unused() in C</h4>
+      <p>#pragma warn_unusedvar on<br />
+      #pragma warn_unusedarg on</p>
+      <p>static void ff(int a)<br />
+    {<br />
+    int b;<br />
+    #pragma unused(a,b) // Compiler does not warn<br />
+    // that a and b are unused<br />
+    // . . . <br />
+    }</p>
+  </div>
+  <div class="listing">
+      <h4>Listing 10.33 Example of Pragma unused() in C++</h4>
+      <p>#pragma warn_unusedvar on<br />
+      #pragma warn_unusedarg on</p>
+      <p>static void ff(int /* No warning */)<br />
+    {<br />
+    int b;<br />
+    #pragma unused(b) // Compiler does not warn that b is not used.<br />
+    // . . . <br />
+  }</p>
+  </div>
+  <p>This pragma does not correspond to any panel setting.</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

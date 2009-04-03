@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknApplication" version="1.1.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.NonLayoutBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknDocument" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknViewAppUi" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknAppUi" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknAppUiBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneCaption" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBA" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.AvkonViewReference" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignReference" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">$(dataDir)</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">$(incDir)</property>
+  <property id="com.nokia.sdt.symbian.dm.ROOT_CONTAINER">BirthdaysAppUi</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">$(sourceDir)</property>
+  <property id="com.nokia.sdt.symbian.dm.ROOT_APPLICATION_NAME">Birthdays</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">$(groupDir)</property>
+  <component id="com.nokia.sdt.series60.CAknApplication">
+    <property id="className">CBirthdaysApplication</property>
+    <property id="documentBase">$(baseName)</property>
+    <property id="name">BirthdaysApplication</property>
+    <property id="uid">$(uid3)</property>
+    <component id="com.nokia.sdt.series60.CAknDocument">
+      <property id="className">CBirthdaysDocument</property>
+      <property id="name">BirthdaysDocument</property>
+      <component id="com.nokia.sdt.series60.CAknViewAppUi">
+        <property id="initialDesign" type="componentRef">aknViewReference1</property>
+        <property id="className">CBirthdaysAppUi</property>
+        <compoundProperty id="location">
+          <property id="x">38</property>
+          <property id="y">10</property>
+        </compoundProperty>
+        <property id="name">BirthdaysAppUi</property>
+        <compoundProperty id="size">
+          <property id="width">176</property>
+          <property id="height">208</property>
+        </compoundProperty>
+        <component id="com.nokia.sdt.series60.StatusPane">
+          <compoundProperty id="location">
+            <property id="x">16</property>
+            <property id="y">1</property>
+          </compoundProperty>
+          <property id="name">statusPane</property>
+          <compoundProperty id="size">
+            <property id="width">152</property>
+            <property id="height">43</property>
+          </compoundProperty>
+          <component id="com.nokia.sdt.series60.StatusPaneCaption">
+            <property id="shortCaption" type="i18n">STR_BirthdaysApplication_2</property>
+            <compoundProperty id="location">
+              <property id="x">48</property>
+            </compoundProperty>
+            <property id="longCaption" type="i18n">STR_BirthdaysApplication_1</property>
+            <property id="name">caption</property>
+            <compoundProperty id="size">
+              <property id="width">104</property>
+              <property id="height">28</property>
+            </compoundProperty>
+          </component>
+        </component>
+        <component id="com.nokia.sdt.series60.CBA">
+          <compoundProperty id="location">
+            <property id="y">184</property>
+          </compoundProperty>
+          <compoundProperty id="info"/>
+          <property id="name">controlPane</property>
+          <compoundProperty id="size">
+            <property id="width">176</property>
+            <property id="height">24</property>
+          </compoundProperty>
+        </component>
+        <component id="com.nokia.sdt.series60.AvkonViewReference">
+          <property id="filePath">BirthdaysList.uidesign</property>
+          <property id="baseName">BirthdaysList</property>
+          <compoundProperty id="tabImage"/>
+          <property id="name">aknViewReference1</property>
+        </component>
+        <component id="com.nokia.sdt.series60.DesignReference">
+          <property id="filePath">BirthdayForm.uidesign</property>
+          <property id="baseName">BirthdayForm</property>
+          <property id="name">designReference1</property>
+        </component>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_BirthdaysApplication_1">$(baseName)</string>
+      <string id="STR_BirthdaysApplication_2">$(baseName)</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="aknViewReference1" rsrcId="tabText">r_application_akn_view_reference1</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_application_status_pane</resourceMapping>
+      <resourceMapping instanceName="BirthdaysAppUi">r_application_birthdays_app_ui</resourceMapping>
+      <resourceMapping instanceName="BirthdaysAppUi" rsrcId="localisable_app_info">r_localisable_app_info</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="aknViewReference3" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EXXXXViewId</enumMapping>
+      <enumMapping instanceName="aknViewReference2" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EBirthdayFormViewId</enumMapping>
+      <enumMapping instanceName="aknViewReference1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EBirthdaysListViewId</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+</designerData>

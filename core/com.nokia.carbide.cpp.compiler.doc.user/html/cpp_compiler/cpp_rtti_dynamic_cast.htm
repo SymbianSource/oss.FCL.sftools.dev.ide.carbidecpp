@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Using the dynamic_cast Operator</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Using the dynamic_cast Operator</h3>
+<p>  The <span class="code">dynamic_cast</span> operator lets you safely convert a pointer of one type to a pointer of another type. Unlike an ordinary cast, <span class="code">dynamic_cast</span> returns 0 if the conversion is not possible. An ordinary cast returns an unpredictable value that might crash your program if the conversion is not possible.</p>
+<p>The syntax for the <span class="code">dynamic_cast</span> operator is as follows:</p>
+<p class="listing">dynamic_cast&lt;Type*&gt;(expr)</p>
+<p>The Type must be either <span class="code">void</span> or a class with at least one virtual member function. If the object to which <span class="code">expr</span> points <span class="code">(*expr</span>) is of type <span class="code">Type</span> or derived from type <span class="code">Type</span>, this expression converts <span class="code">expr</span> to a pointer of type <span class="code">Type*</span> and returns it. Otherwise, it returns 0, the null pointer.</p>
+<p>For example, take these classes:</p>
+<p class="listing">class Person { virtual void func(void) { ; } };<br />
+  class Athlete : public Person { /* . . . */ };<br />
+class Superman : public Athlete { /* . . . */ };</p>
+<p>And these pointers:</p>
+<p class="listing">Person *lois = new Person;<br />
+  Person *arnold = new Athlete;<br />
+  Person *clark = new Superman;<br />
+Athlete *a;</p>
+<p>This is how <span class="code">dynamic_cast</span> works with each pointer:</p>
+<p class="listing">a = dynamic_cast&lt;Athlete*&gt;(arnold);<br />
+  // a is arnold, since arnold is an Athlete.<br />
+  a = dynamic_cast&lt;Athlete*&gt;(lois);<br />
+  // a is 0, since lois is not an Athelete.<br />
+  a = dynamic_cast&lt;Athlete*&gt;(clark);<br />
+// a is clark, since clark is both a Superman and an Athlete.</p>
+<p>You can also use the <span class="code">dynamic_cast</span> operator with reference types. However, since there is no equivalent to the null pointer for references, <span class="code">dynamic_cast</span> throws an exception of type <span class="code">std::bad_cast</span> if it cannot perform the conversion. </p>
+<p>This is an example of using <span class="code">dynamic_cast</span> with a reference:</p>
+<p class="listing">#include &lt;exception&gt;<br />
+  using namespace std;<br />
+  Person &amp;superref = *clark;<br />
+  try {<br />
+  Person &amp;ref = dynamic_cast&lt;Person&amp;&gt;(superref);<br />
+  }<br />
+  catch(bad_cast) {<br />
+  cout &lt;&lt; &quot;oops!&quot; &lt;&lt; endl;<br />
+  }
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

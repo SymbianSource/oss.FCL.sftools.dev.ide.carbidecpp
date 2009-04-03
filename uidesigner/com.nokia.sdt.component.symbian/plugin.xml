@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="componentLibrary" name="Component Library" schema="schema/componentLibrary.exsd"/>
+   <extension-point id="implementation" name="Implementation" schema="schema/implementation.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Carbide.c++ UI Designer Components"
+            visible="false"
+            id="com.nokia.sdt.component.symbian.componentActionSet">
+         <menu
+               id="componentMenu"
+               label="&amp;Components">
+            <separator name="componentGroup"/>
+         </menu>
+         <action 
+               class="com.nokia.sdt.component.symbian.actions.EnableSourceGenDebugAction"
+               id="com.nokia.sdt.component.symbian.actions.EnableSourceGenDebugAction"
+               label="%_UI_EnableSourceGenDebug"
+               menubarPath="componentMenu/additions"
+               style="push"
+               tooltip="%_UI_EnableSourceGenDebugTooltip"/>
+         <action 
+               class="com.nokia.sdt.component.symbian.actions.SelectCustomComponentProjectsAction"
+               id="com.nokia.sdt.component.symbian.actions.SelectCustomComponentProjectsAction"
+               label="%_UI_SelectCustomComponentProjects"
+               menubarPath="componentMenu/additions"
+               style="push"
+               tooltip="%_UI_SelectCustomComponentProjectsTooltip"/>
+         <action
+               class="com.nokia.sdt.component.symbian.actions.RefreshComponentSystemAction"
+               id="com.nokia.sdt.component.symbian.actions.RefreshComponentSystemAction"
+               label="%_UI_RefreshComponents"
+               menubarPath="componentMenu/additions"
+               style="push"
+               tooltip="%_UI_RefreshComponentsTooltip"/>
+         <action
+               class="com.nokia.sdt.component.symbian.actions.ForceSaveAction"
+               id="com.nokia.sdt.component.symbian.ForceSaveAction"
+               label="%_UI_ForceSave"
+               menubarPath="componentMenu/additions"
+               style="push"
+               tooltip="%_UI_ForceSaveTooltip"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="com.nokia.sdt.uimodel.componentProvider">
+      <provider
+            class="com.nokia.sdt.component.symbian.ComponentProvider"
+            name="com.nokia.sdt.component.symbian.Symbian-Provider"/>
+   </extension>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.nokia.com/sdt/emf/component" 
+       class = "com.nokia.sdt.emf.component.ComponentPackage" />
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+    <parser 
+       type="component" 
+       class="com.nokia.sdt.emf.component.util.ComponentResourceFactoryImpl" />
+  </extension>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="com.nokia.sdt.component.symbian.verticalMove"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <action
+               class="com.nokia.sdt.component.symbian.actions.MoveUpActionDelegate"
+               enablesFor="1"
+               id="com.nokia.sdt.component.symbian.verticalUp"
+               label="%_UI_MoveUp"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+         <action
+               class="com.nokia.sdt.component.symbian.actions.MoveDownActionDelegate"
+               enablesFor="1"
+               id="com.nokia.sdt.component.symbian.verticalDown"
+               label="%_UI_MoveDown"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+         <filter
+               name="attribute-matches:[parent]@ordered-layout-type"
+               value="vertical.*"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="com.nokia.sdt.component.symbian.imagePropertyEdit"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <filter
+               name="action-filter-test-passes:com.nokia.sdt.component.symbian.actions.EditImageActionFilterDelegate"
+               value="true"/>
+         <action
+               class="com.nokia.sdt.component.symbian.actions.EditImageActionFilterDelegate"
+               enablesFor="1"
+               id="com.nokia.sdt.component.symbian.editImage"
+               label="%_UI_EditImage"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="com.nokia.sdt.component.symbian.switchChildMenu"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <filter
+               name="action-filter-test-passes:com.nokia.sdt.component.symbian.actions.SwitchVisibleChildActionDelegate"
+               value="true"/>
+         <action
+               class="com.nokia.sdt.component.symbian.actions.SwitchVisibleChildActionDelegate"
+               enablesFor="1"
+               id="com.nokia.sdt.component.symbian.actions.SwitchVisibleChildActionDelegate"
+               label="%_UI_SwitchView"
+               menubarPath="com.nokia.sdt.uidesigner.component"
+               style="pulldown"/>
+      </objectContribution>
+   </extension>
+   <extension
+         id="xmlProblem"
+         name="XML Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         id="userComponentProjectNature"
+         name="UI Designer User Component Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="com.nokia.sdt.component.symbian.builder.UserComponentProjectNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+   		point="org.eclipse.ui.ide.projectNatureImages">
+   		<image icon="icons/userComponentProject.png"
+   			natureId="com.nokia.sdt.component.symbian.builder.UserComponentProjectNature"
+   			id="com.nokia.sdt.component.symbian.userComponentProjectNatureImage" 
+   		/>
+   	</extension>
+   <extension
+         point="com.nokia.sdt.component.symbian.implementation">
+      <implementation class="com.nokia.sdt.component.symbian.visual.VisualAppearanceImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.layout.LayoutImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.propertyListener.PropertyListenerImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.reconcileProperty.ReconcilePropertyImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.customizerUI.CustomizerUIImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.querycontainment.QueryContainmentImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.directLabelEdit.DirectLabelEditImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.properties.PropertyExtenderImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.editor.ComponentEditorImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.directImageEdit.DirectImageEditImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.imagePropertyRenderingInfo.ImagePropertyRenderingInfoImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.componentValidator.ComponentValidatorImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.events.ComponentEventInfoImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.setPropertyCommand.SetValueCommandExtenderImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.initializer.InitializerImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.childListener.ChildListenerImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.scrolling.ScrollBoundsProviderImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.delegate.ImplementationDelegateFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.childCommand.ChildCommandExtenderImplementationFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.modelUpdater.ModelUpdaterImplementationFactory"/>
+      <implementation
+            class="com.nokia.sdt.component.symbian.creationTool.CreationToolProviderImplementationFactory">
+      </implementation>
+      <implementation
+            class="com.nokia.sdt.component.symbian.targetFeedback.TargetFeedbackListenerImplementationFactory">
+      </implementation>
+      <implementation
+            class="com.nokia.sdt.component.symbian.clipboardCommand.ClipboardCommandExtenderImplementationFactory">
+      </implementation>
+   </extension>
+   <extension
+         point="com.nokia.sdt.sourcegen.nameAlgorithm">
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmCommands"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"/>
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmControlType"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE"/>
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmDialogId"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID"/>
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmStatusPaneId"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID"/>
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmViewUid"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID"/>
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmSettingItemId"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_SETTING_ITEM_ID"/>
+      <algorithm
+            class="com.nokia.sdt.component.symbian.sourcemapping.NameAlgorithmPageId"
+            id="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_PAGE_ID"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="com.nokia.sdt.component.symbian.componentPerspectiveExtension">
+         <actionSet id="com.nokia.sdt.component.symbian.componentActionSet"/>
+      </perspectiveExtension>
+   </extension>
+</plugin>

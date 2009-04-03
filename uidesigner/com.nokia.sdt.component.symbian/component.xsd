@@ -1,0 +1,2277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2006 Nokia Corporation. All rights reserved. -->
+
+<!-- Entities for parts of the definitions we're forced to repeat due to
+the lack of multiple inheritance in EMF -->
+<!DOCTYPE xsd:schema [
+	<!ENTITY MapMemberAttributes '
+			<xsd:attribute name="member" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>
+				The struct member.
+				</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+					
+			<xsd:attribute default="true" name="suppressDefault" type="xsd:boolean" use="optional">
+				<xsd:annotation><xsd:documentation>
+				If true, do not emit the member initializer if the property matches the default
+				specified in the STRUCT.  If may be useful to set this to false if the
+				default changes between SDK releases (to avoid branching components).
+				</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			'
+	>
+	
+	<!ENTITY MapPropertyAttribute '
+					<xsd:attribute name="property" type="xsd:string" use="required">
+						<xsd:annotation><xsd:documentation>
+						The property path providing the value.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+	
+			'
+	>
+	
+	<!ENTITY MapTypeIdAttribute '
+					<xsd:attribute name="typeId" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Identifies the id for this particular kind of type mapping.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+	
+			'
+	>
+]>
+
+<xsd:schema xmlns="http://www.nokia.com/sdt/emf/component" 
+   xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+   elementFormDefault="qualified" 
+   targetNamespace="http://www.nokia.com/sdt/emf/component">
+
+	<xsd:element name="componentDefinition">
+		<xsd:annotation>
+			<xsd:documentation>componentDefinition must be the root element of a component definition document.
+			
+			It includes zero or more compound property declarations, zero or more enum declarations and zero or one
+			component declarations.
+			
+			Displayable strings can either be included literally within the XML or referenced in the 
+			component.properties file by prefixing the string with %. For example, "%foo" references the 
+			value of the "foo" property in component.properties. To obtain the string "%foo" 
+			use a double %, e.g. "%%foo".
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="compoundPropertyDeclaration"/>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="enumPropertyDeclaration"/>
+				<xsd:element minOccurs="0" ref="component"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="component">
+        <xsd:annotation><xsd:documentation>
+        This is the container element for all the information about a single component.
+        </xsd:documentation></xsd:annotation>
+        <xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" ref="documentation"/>
+				<xsd:element minOccurs="0" ref="symbian"/>
+				<xsd:element minOccurs="0" ref="designerImages"/>
+				<xsd:element minOccurs="0" ref="attributes"/>
+				<xsd:element minOccurs="0" ref="properties"/>
+				<xsd:element minOccurs="0" maxOccurs="unbounded" ref="extensionProperties"/>
+				<xsd:element minOccurs="0" ref="propertyOverrides"/>
+				<xsd:element minOccurs="0" ref="events"/>
+				<xsd:element minOccurs="0" ref="sourceGen"/>
+				<xsd:element minOccurs="0" ref="sourceMapping"/>
+				<xsd:element minOccurs="0" ref="implementations"/>
+			</xsd:sequence>
+			<xsd:attribute name="qualifiedName" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>A globally unique name for a component. By convention these use dotted names, such as
+				com.example.MyComponent. Different versions of a component, in different files, can share the same qualified name. These values
+				should not be localized.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="friendlyName" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>A short name displayed in the user interface. These values should be localized.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="instanceNameRoot" type="xsd:string">
+				<xsd:annotation><xsd:documentation>The root part of the name used in assigned unique names to component instances. For example,
+			if the root is "label" then names will be assigned in sequence "label1", "label2", and so forth. These values should not be localized.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="version" type="xsd:string">
+				<xsd:annotation><xsd:documentation>Identifies the version of the component specified by this document. Uses OSGI style version strings, composed
+			of up to 3 integers and a text qualifier, of the form &lt;major version&gt;.&lt;minor version&gt;.&lt;micro version&gt;.&lt;qualifier&gt;.
+			See http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/osgi/org/osgi/framework/Version.html for further information.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="baseComponent" type="xsd:string">
+				<xsd:annotation><xsd:documentation>The fully qualifed name of the base component. The version of the base component
+			cannot be specified, it will be whichever is selected via SDK matching.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="category" type="xsd:string">
+				<xsd:annotation><xsd:documentation>Specifies the grouping for the editor's component palette. If this string matches the key
+				of a known group then the localized name is looked up within the Symbian component provider. Otherwise it is treated like a
+				potentially localized string, i.e. if it is %-prefixed a string is looked up in the properties file.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="abstract" type="xsd:boolean">
+				<xsd:annotation><xsd:documentation>Specify true to define a component intended to be used as a basis for deriving other components.
+				Abstract components are filtered out of the component palette.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="documentation">
+		<xsd:annotation>
+				<xsd:documentation>The optional documentation element provides brief description information about the component and a link to more detailed documentation
+				</xsd:documentation>
+			</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="information" type="xsd:string">
+					<xsd:annotation><xsd:documentation>Brief description of the component, shown in a tooltip. This value should be localized.
+					</xsd:documentation></xsd:annotation>
+				</xsd:element>
+				<xsd:element name="helpTopic" type="xsd:string">
+					<xsd:annotation><xsd:documentation>A link to help information for this component.
+					</xsd:documentation></xsd:annotation>
+				</xsd:element>
+				<xsd:element name="wizardDescription" type="xsd:string">
+					<xsd:annotation><xsd:documentation>Text displayed in the UI design wizard. Applies only to containers and top-level content. This
+					value should be localized.
+					</xsd:documentation></xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="symbian">
+		<xsd:annotation>
+			<xsd:documentation>The optional Symbian element provides SDK compatibility information and information about the related 
+	C++ classes and resource structures. When this element is omitted the component will be considered incompatible
+	with all Symbian SDKs.
+			</xsd:documentation>
+		</xsd:annotation>		
+		<xsd:complexType>
+			<xsd:attribute name="sdkName" use="required">
+				<xsd:annotation><xsd:documentation>This value identifies the Symbian OS variant with which the component is compatible.
+				Currently the only supported value is "com.nokia.serie60".
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="minSDKVersion" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>A version number indicating the lowest SDK version with which the component is
+				compatible. For example, if the value is 2.8 the component will be selected for use with a 2.8 SDK but not 2.6.
+				Uses OSGI style version strings, composed of up to 3 integers and a text qualifier, of the form &lt;major version&gt;.&lt;minor version&gt;.&lt;micro version&gt;.&lt;qualifier&gt;.
+			    See http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/osgi/org/osgi/framework/Version.html for further information.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="maxSDKVersion" type="xsd:string">
+			<xsd:annotation><xsd:documentation>A version number indicating the maximum SDK version with which the component is
+				compatible. For example, if the value is 2.8 the component will be selected for use with a 2.8 SDK but not 3.0.
+				Uses OSGI style version strings, composed of up to 3 integers and a text qualifier, of the form &lt;major version&gt;.&lt;minor version&gt;.&lt;micro version&gt;.&lt;qualifier&gt;.
+			    See http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/osgi/org/osgi/framework/Version.html for further information.
+			</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="className" type="xsd:string">
+				<xsd:annotation><xsd:documentation>The C++ class name corresponding to this component, if any. Not used for source code generation,
+				but is displayed in the component palette.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="classHelpTopic" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A link to help information for this C++ class
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="resourceType" type="xsd:string">
+				<xsd:annotation><xsd:documentation>The Symbian RSS resource type for this component, if any
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="resourceHelpTopic" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A link to help information for the resource
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="designerImages">
+		<xsd:annotation><xsd:documentation>This element is specifies images for use by the UI designer. Only those images that apply need to be defined, e.g.
+		if a component never appears in the UI design wizard or palette then it doesn't need those images.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="smallIconFile" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A relative path to an Eclipse-supported image type, such as PNG, GIF, or BMP. This image is displayed in the outline.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="largeIconFile" type="xsd:string">A relative path to an Eclipse-supported image type, such as PNG, GIF, or BMP. This image is displayed in the component palette.
+				<xsd:annotation><xsd:documentation>
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="layoutImageFile" type="xsd:string">A relative path to an Eclipse-supported image type, such as PNG, GIF, or BMP. This image is displayed in the UI design wizard.
+				<xsd:annotation><xsd:documentation>
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="thumbnailFile" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A relative path to an Eclipse-supported image type, such as PNG, GIF, or BMP. This image is displayed in UI designer's graphical
+				layout area if the component does not provide rendering code.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="attributes">
+		<xsd:annotation>
+			<xsd:documentation>
+Attribute elements can hold any static character data that is common to all instances of a component. Attributes are inherited from their base components.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" ref="attribute"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="attribute">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="key" type="xsd:string" use="required">
+						<xsd:annotation><xsd:documentation>
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="properties">
+		<xsd:annotation><xsd:documentation>The list of properties defined for this component. Components also inherit the properties of their base
+		components, and can have properties added dynamically, see extensionProperties.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="abstractProperty"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="extensionProperties">
+		<xsd:annotation><xsd:documentation>Extension properties may be dynamically added, based on the state of an instance of this
+		component, its container, or other objects. There may be more than one set of extension properties defined in a component.
+		See the com.nokia.sdt.datamodel.adapter.IPropertyExtenders interface.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="abstractProperty"/>
+			</xsd:sequence>
+			<xsd:attribute name="name" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>The unique name of this extension property set. Used to select properties
+				to add at runtime.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:simpleType name="propertyDataType">
+		<xsd:annotation><xsd:documentation>Simple, predefined property types.
+		</xsd:documentation></xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="void">
+				<xsd:annotation><xsd:documentation>The empty type. Do not use for real properties.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="boolean">
+				<xsd:annotation><xsd:documentation>
+				</xsd:documentation></xsd:annotation>True/False values.
+			</xsd:enumeration>
+			<xsd:enumeration value="integer">
+				<xsd:annotation><xsd:documentation>Four byte integer properties. Ranges may be constrained on property declarations.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="float">
+				<xsd:annotation><xsd:documentation>Floating point values. Ranges may be constrained on property declarations.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="string">
+				<xsd:annotation><xsd:documentation>Non-localized string literals
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="localizedString">
+				<xsd:annotation><xsd:documentation>Localized string literals. Users may enter different values for each language.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="uniqueName">
+				<xsd:annotation><xsd:documentation>Unique, non-localized string. Values are forced to be unique across the data model.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:element abstract="true" name="abstractProperty" type="abstractPropertyType"/>
+	<xsd:element name="property" substitutionGroup="abstractProperty" type="simplePropertyType"/>
+	<xsd:element name="compoundProperty" substitutionGroup="abstractProperty" type="compoundPropertyType"/>
+	<xsd:element name="enumProperty" substitutionGroup="abstractProperty" type="enumPropertyType"/>
+	<xsd:element name="arrayProperty" substitutionGroup="abstractProperty" type="arrayPropertyType"/>
+	<xsd:element name="componentReferenceProperty" substitutionGroup="abstractProperty" type="componentReferencePropertyType"/>
+	<xsd:complexType name="abstractPropertyType">
+			<xsd:annotation><xsd:documentation>A base schema type for further property type declarations. Not used directly in components.
+			</xsd:documentation></xsd:annotation>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation><xsd:documentation>The internal name for the property. It must be unique within the component and its base
+			components. Since it may be used as an identifier in scripts it should be a legal JavaScript identifier.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="displayName" type="xsd:string">
+			<xsd:annotation><xsd:documentation>The property name to be display in the user interface. Can contain spaces and other characters.
+			This value should be localized.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="category" type="xsd:string">
+			<xsd:annotation><xsd:documentation>The category grouping to be used in the property sheet. 
+			 If this value matches the key of a known group then the localized name is looked up within the Symbian component provider. Otherwise it is treated like a
+			 potentially localized string, i.e. if it is %-prefixed a string is looked up in the properties file.
+			 The special value of "hidden" will cause the property to be filtered from the property sheet.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute default="false" name="readOnly" type="xsd:boolean">
+			<xsd:annotation><xsd:documentation>If true the property will be read-only in the property sheet.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute default="true" name="resettable" type="xsd:boolean">
+			<xsd:annotation><xsd:documentation>If false the reset button will be disabled, inhibiting the user from reverting to the default value
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="descriptionKey" type="xsd:string">
+			<xsd:annotation><xsd:documentation>A property key to descriptive text for the property to be displayed in the status bar
+			when the property is selected in the property sheet.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="helpKey" type="xsd:string">
+			<xsd:annotation><xsd:documentation>A key to more detailed help for the property.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="editorClass" type="xsd:string">
+			<xsd:annotation><xsd:documentation>The fully qualified name of a class implementing com.nokia.sdt.component.property.IPropertyEditorFactory.
+			This allows Java code to provide a label provider, cell editor, and validator for the property.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="simplePropertyType">
+			<xsd:annotation><xsd:documentation>Concrete type used for basic properties.
+			</xsd:documentation></xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="abstractPropertyType">
+				<xsd:attribute name="type" type="propertyDataType" use="required">
+					<xsd:annotation><xsd:documentation>Selects the data type of the property.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="default" type="xsd:string">
+					<xsd:annotation><xsd:documentation>A default value for the property. Must be a string convertible to the
+					particular property type.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="minValue" type="xsd:string">
+					<xsd:annotation><xsd:documentation>Optional minimum value constraint. Applies only to integers and floats.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="maxValue" type="xsd:string">
+					<xsd:annotation><xsd:documentation>Optional maximum value constraint. Applies only to integers and floats.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="extendWithEnum" type="xsd:string">
+					<xsd:annotation><xsd:documentation>Optional extension of the enum with the enums provided by an enimPropertyDeclaration.
+					If the value of the property matches any in an extension enumProperty's 'value' attribute, the 'displayValue' will be shown
+					as the current value in the property sheet.  Additionally, the editor for the value (if not overridden with
+					a custom editorClass) will be a combo that allows typing in the literal value or selecting one of 
+					the extended enums.
+					<p>
+					The 'value' of each of the extending enums must match the type being extended, or else the attempt to set the value
+					to that enum will fail.  Note that this means that it is useless to extend booleans (since all extensions
+					must map to 'true' or 'false'). 							
+					</p>
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="compoundPropertyType">
+			<xsd:annotation><xsd:documentation>Concrete type used for structured properties.
+			</xsd:documentation></xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="abstractPropertyType">
+				<xsd:attribute name="type" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>The fully qualified name of the compound property type declaration. It can be
+					any type accessible from the current or any other component definitions. See compoundPropertyDeclaration for
+					further information.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="default" type="xsd:string">
+					<xsd:annotation><xsd:documentation>An optional default value for the property. The compoundPropertyDeclaration must
+					have a converterType specified for this default value to be used.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="enumPropertyType">
+		<xsd:annotation><xsd:documentation>Concrete type used for enumerated value properties.
+		</xsd:documentation></xsd:annotation>
+	<xsd:complexContent>
+			<xsd:extension base="abstractPropertyType">
+				<xsd:attribute name="type" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>The fully qualifed name of the enumerated property type. See
+					enumPropertyDeclaration.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="default" type="xsd:string">
+					<xsd:annotation><xsd:documentation>The default enumerated value, in case it needs to be different from 
+					the default declared in the enumeratedPropertyDeclaration.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="extendWithEnum" type="xsd:string">
+					<xsd:annotation><xsd:documentation>Optional extension of the simple values with the enums provided by an enimPropertyDeclaration.
+					If the value of the property matches any in an enumProperty's 'value' attribute, the 'displayValue' will be shown
+					as the current value in the property sheet.  Additionally, the editor for the value (if not overridden with
+					a custom editorClass) will be a combo that allows typing in the literal value or selecting one of the
+					union of base and extended enums.
+					<p> 
+					The extending enum may provide 'value' elements which are different from the base enum (even integers, say),
+					if appropriate.  These values are exposed to script, source mapping, and source gen, so ensure that all
+					those clients are prepared to deal with the extra values.
+					</p>
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="referenceScopeType">
+		<xsd:annotation><xsd:documentation>Enumeration used for scoping references within the model
+		</xsd:documentation></xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="model">
+				<xsd:annotation><xsd:documentation>Property can reference any valid instance in the model
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="children">
+				<xsd:annotation><xsd:documentation>Property can reference any children of the referencing instance
+				</xsd:documentation></xsd:annotation>True/False values.
+			</xsd:enumeration>
+			<xsd:enumeration value="siblings">
+				<xsd:annotation><xsd:documentation>Property can reference any siblings or children of the referencing instance
+				</xsd:documentation></xsd:annotation>True/False values.
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="componentReferencePropertyType">
+			<xsd:annotation><xsd:documentation>A concrete property type that maintains a reference to a component
+			instance in the same model. The reference is kept by name, and is maintained across renames of the target
+			instance. It is cleared automatically if the target instance is removed.
+			</xsd:documentation></xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="abstractPropertyType">
+				<xsd:attribute name="scope" type="referenceScopeType" use="required">
+					<xsd:annotation><xsd:documentation>Enumeration defining the scope for permissable values.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="constraint" type="xsd:string">
+					<xsd:annotation><xsd:documentation>If specified, this must be the fully qualified name of a component type. Values
+					are then constrained to be instances of this type, and the property sheet user interface displays a list of eligible
+					instances.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="creationKeys" type="xsd:string">
+					<xsd:annotation><xsd:documentation>An optional comma-delimited string containing a list of keys. When
+					present these keys are used to add "create new xxx" items to the dropdown menu for the property, in addition to
+					the "None" and existing instances populated into the menu. A component using this feature must also provide
+					an ISetValueCommandExtender implementation to handle the creation of these items.
+					Each key is used for two purposes:
+					- As a resource key for the dropdown menu item. The resource string should be the full command, e.g. "Create new Foo".
+					- When selected, the key is provided as a parameter to a com.nokia.sdt.component.NewComponentReferenceParameter instance. 
+					This instance is then available from the SetValueCommand passed to ISetValueCommandExtender.getExtendedCommand. 
+					The implementation should retrieve the key, and return a Command object that will create the appropriate new instance 
+					and set the target value to the new instance.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="promoteReferenceProperties" type="xsd:boolean">
+					<xsd:annotation><xsd:documentation>If specified, the properties of the instance referenced by this property are promoted
+					into this property source, excluding the 'name' property and other properties that already exist in this component.  
+					This property and the referenced component instance's properties will be at the same level.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="arrayPropertyType">
+			<xsd:annotation><xsd:documentation>A concrete property type that is a dynamic array of property values. All values
+			are of the same type, which can be either a simple or compound property type.
+			</xsd:documentation></xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="abstractPropertyType">
+				<xsd:attribute name="type" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>The element type. It must be either a propertyDataType value, such as "integer" 
+					or "localizedString", or the fully qualified name of a compound property type.
+					</xsd:documentation></xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="compoundPropertyDeclaration">
+		<xsd:annotation><xsd:documentation>
+			Declares a compound type that may be referenced from one or more
+			compound property declarations in this or other component documents. All compound property declarations are in a global 
+			namespace and must be declared as global elements.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="abstractProperty">
+					<xsd:annotation><xsd:documentation>Any property type may be used here, i.e. simple, compound, array, reference.
+					</xsd:documentation></xsd:annotation>
+				</xsd:element>
+
+				<xsd:element maxOccurs="1" minOccurs="0" ref="sourceTypeMapping">
+					<xsd:annotation><xsd:documentation>
+					This element provides source mapping for the type, for use by
+					map*FromType elements.  Added post 1.2.
+					</xsd:documentation></xsd:annotation>
+				</xsd:element>
+				
+			</xsd:sequence>
+			<xsd:attribute name="qualifiedName" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>A globally unique name for the property. By convention this is a dotted name, e.g.
+				com.example.MyPropertyType. This identifier is used in compound property declarations.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute default="" name="editableType" type="xsd:string">
+				<xsd:annotation><xsd:documentation>The property type of the editable value. In addition to editing each
+				child value, the user may be able to edit the property as a whole. For example, an RGB color value may be
+				editable as a string. This value can be a propertyDataType value such as "integer" or "string", or can be
+				the name of an enumPropertyDeclaration.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="converterClass" type="xsd:string">
+				<xsd:annotation><xsd:documentation>If specified, this must be the fully qualified name of an implementation of
+				com.nokia.sdt.component.property.ICompoundPropertyValueConverter. It is used to convert back and forth between
+				the editable value and the compound value. The editable value is a single value, display as the parent value in the
+				property sheet and used with cell editors.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		<xsd:attribute name="editorClass" type="xsd:string">
+			<xsd:annotation><xsd:documentation>The fully qualified name of a class implementing 
+			com.nokia.sdt.component.property.IPropertyEditorFactory.
+			This allows Java code to provide a label provider, cell editor, and validator for the property.
+			Specify a factory class here provides a default for all compound properties of this type. The factory
+			may be overriden by a compound property declaration
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="enumPropertyDeclaration">
+		<xsd:annotation><xsd:documentation>
+			Declares an enumerated type that may be referenced from one or more
+			enumerated property declarations in this or other component documents. All enum property declarations are in a global 
+			namespace and must be declared as global elements.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" name="enumElement">
+						<xsd:annotation><xsd:documentation>This sequence is the list of values comprising the enumerated type. Each
+						value consists of an internal string value and a displayable string value.
+						</xsd:documentation></xsd:annotation>
+						<xsd:complexType>
+						<xsd:attribute name="value" use="required">
+							<xsd:annotation><xsd:documentation>The internal value, which is not localizable.
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>
+						<xsd:attribute name="displayValue" use="optional">
+							<xsd:annotation><xsd:documentation>The displayable value, which should be localized.
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="1" minOccurs="0" ref="sourceTypeMapping">
+					<xsd:annotation><xsd:documentation>
+					This element provides source mapping for the type, for use by
+					map*FromType elements.  Added post 1.2
+					</xsd:documentation></xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="qualifiedName" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>The globally unique name for this type. By convention this is a dotted name, e.g. com.example.MyEnumType.
+				This value is used in enumPropertyDeclaration.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="defaultValue" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A default internal value for the enumeration. It can be overriden in property declarations.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="propertyOverrides">
+		<xsd:annotation><xsd:documentation>A list of property overrides defined for this component. Components also
+		inherit the property overrides of their base components, with changes applied by the most derived component taking
+		precedence. 
+		
+		Property overrides allow certain characteristics of a property to be modified, such as changing a modifiable property
+		to read-only.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="propertyOverride" maxOccurs="unbounded" minOccurs="0">
+					<xsd:complexType>
+						<xsd:attribute name="name" type="xsd:string" use="required">
+							<xsd:annotation><xsd:documentation>The internal name for the property being overriden. It is legal for
+							this to reference a name that does not exist. This allows overrides of extension properties, which are
+							only conditionaly defined.
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>			
+						<xsd:attribute name="category" type="xsd:string">
+							<xsd:annotation><xsd:documentation>Override of the property category. See the description
+							in &lt;abstractPropertyType&gt;
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>			
+						<xsd:attribute name="readOnly" type="xsd:boolean">
+							<xsd:annotation><xsd:documentation>Override of the readOnly state. See the description
+							in &lt;abstractPropertyType&gt;
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>			
+						<xsd:attribute name="default" type="xsd:string">
+							<xsd:annotation><xsd:documentation>Override of the default value. Default values can only
+							be overriden on properties supporting default values, i.e simple properties, enums, and compound 
+							properties. See the description in &lt;abstractPropertyType&gt; for more information.
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>			
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="events">
+			<xsd:annotation><xsd:documentation>The list of events defined for this component. Components also inherit the events of
+			their base components. Events are named notifications or hooks to which code can be attached. The data here is
+			used to drive the user interface. The details of source code generation are part of the source code generation templates.
+			
+			The set of available events, and default event, may be overriden via code or script. See the 
+			com.nokia.sdt.datamodel.adapter.IComponentEventInfo interface for more information.
+			</xsd:documentation></xsd:annotation>
+			<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="event"/>
+			</xsd:sequence>
+			<xsd:attribute name="defaultEventName" type="xsd:string">
+				<xsd:annotation><xsd:documentation>If defined, the default event will be identified in a component instance's context
+				menu. In the case of inheritance the most derived definition of the default event is used.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="event">
+		<xsd:annotation><xsd:documentation>The definition of a single event.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="name" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>The internal name for the event. This does not need to be a dotted name, but it must
+				be unique within the component and its base components.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="displayName" type="xsd:string">
+				<xsd:annotation><xsd:documentation>This displayable name for the event. This value should be localized.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="category" type="xsd:string">
+				<xsd:annotation><xsd:documentation>Categories are used for grouping events in the Events view. As with property categories,
+				this can be a key to a category localized by the component provider, or it can be a pre-localized or literal string.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="descriptionKey" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A key for descriptive information about the event.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="helpKey" type="xsd:string">
+				<xsd:annotation><xsd:documentation>A help topic for online help for the event.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="handlerNameTemplate" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>A template which is expanded to the proposed default name for the
+				event handler function. An example of such a template is "Handle{title(name)}StateChangedL".
+				The {} marks template variables. A variable may contain a simple property value, but generally only the 'name' property
+				should be used. The pseudo-functions "lower", "upper", and "title" may be used to transform the property value.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="group" type="xsd:string">
+				<xsd:annotation><xsd:documentation>This is a grouping, separate from categories, used in event filtering. Events
+				may only make sense for specific containers. The interface com.nokia.sdt.datamodel.adapter.IComponentEventInfo is
+				used to filter applicable events from the complete set of declared events. When deriving from an existing base
+				component it is not generally necessary to implement this interface. Instead, just use the groups defined by
+				the base component in your own events. For example to make events visible in a CCoeControl container, The CCoeControlBase
+				component uses the filter group "Control". 
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="implementations">
+		<xsd:annotation>
+			<xsd:documentation>Implementation elements declare code or script implementations of interfaces by name.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" ref="implementation"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="implementation">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="interface">
+						<xsd:complexType>
+							<xsd:attribute name="id" type="xsd:string" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="code"/>
+					<xsd:element ref="script"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="code">
+		<xsd:annotation><xsd:documentation>
+		Define a reference to an interface implemented in Java.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="plugin" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Plugin id
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			
+			<xsd:attribute name="class" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>
+				Class in plugin.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="script">
+		<xsd:annotation><xsd:documentation>
+		Define a reference to an interface implemented in Javascript.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="file" type="xsd:string" use="required"/>
+			<xsd:attribute name="prototype" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="sourceGen">
+		<xsd:annotation><xsd:documentation>
+		This section controls C/C++ source generation (with the potential to support 
+		other one-way languages).  In a sourceGen element, all the elements in linear 
+		order comprise the component's contributions.  
+		
+		Conditional sourcegen is implemented by using the "form" attribute on 
+		templates or templateGroups, or explicitly checking the regex "form" in inline code.  
+		
+		Another form of conditional sourcegen is event handling code.  The "ifEvents" attribute completely filters out defineLocation/template elements if a given event is not bound to an instance.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="defineLocation"/>
+					<xsd:element ref="template"/>
+					<xsd:element ref="templateGroup"/>
+					<xsd:element ref="useTemplate"/>
+					<xsd:element ref="useTemplateGroup"/>
+					<xsd:element ref="inline"/>
+					<xsd:element ref="script"/>
+					<xsd:element ref="defineMacro"/>
+					<xsd:element ref="expandMacro"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<!-- IGNORED -->
+			<xsd:attribute name="forms" type="xsd:string" use="optional"/>
+			<xsd:attribute default="false" name="debug" type="xsd:boolean" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:simpleType name="listOfStrings">
+		<xsd:list itemType="xsd:string"/>
+	</xsd:simpleType>
+
+	<xsd:attributeGroup name="ConditionalSourceGenAttributes">
+		<xsd:annotation><xsd:documentation>
+		Base for sourcegen elements which may be conditionally skipped.
+		Such skipping applies to the save-time behavior and not
+		the load-time or validation-time behavior.
+		</xsd:documentation></xsd:annotation>
+		<xsd:attribute name="forms" type="listOfStrings" use="optional">
+			<xsd:annotation><xsd:documentation>
+			Added post 1.1 to inline.
+
+			A list of tokens used to select a particular kind of source for a parent.
+			The namespace is determined implicitly by what a parent requests.
+			
+			For instance, a parent may have special sourcegen, and pass
+			the form "SpecialCase" to its children.  Elements specifying
+			form="SpecialCase" will be selected.  Other parents will not see
+			such elements if they do not specify that form.
+			
+			If the form does not match, the element is not invoked.
+			</xsd:documentation></xsd:annotation>	
+		</xsd:attribute>
+		<xsd:attribute name="ifEvents" type="listOfStrings" use="optional">
+			<xsd:annotation><xsd:documentation>
+			Added post 1.1 to inline.
+			If defined, a list of events, any of which must be bound for the
+			element to be invoked.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="ifExpr" type="xsd:string" use="optional">
+			<xsd:annotation><xsd:documentation>
+			Added post 1.1.
+			If defined, a Javascript expression which must evaluate to
+			true (or non-zero) for the element to be invoked.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
+
+	<xsd:complexType name="ConditionalSourceGen" abstract="true">
+			<xsd:attributeGroup ref="ConditionalSourceGenAttributes"/>
+	</xsd:complexType>
+	
+	<!-- I'm really annoyed schema doesn't support multiple inheritance.
+	 ConditionalSourceGenString should be an extension 
+	 of ConditionalSourceGen too. -->
+	<xsd:complexType name="ConditionalSourceGenString" abstract="true">
+		<xsd:annotation><xsd:documentation>
+		Base for sourcegen elements which may be conditionally skipped
+		(and which contain text).
+		Such skipping applies to the save-time behavior and not
+		the load-time or validation-time behavior.
+		</xsd:documentation></xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attributeGroup ref="ConditionalSourceGenAttributes"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:element name="inline">
+		<xsd:annotation><xsd:documentation>
+		Provide Javascript in-line with templates and other sourceGen elements.
+		Be sure to supply a "forms" attribute, otherwise the code may execute multiple times
+		during the source generation contribution-gathering phase.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="ConditionalSourceGenString">
+					<xsd:attribute default="function" name="scope" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Tells where the inline code appears.  By default, it appears
+						in the primary function into which templates are generated, thus is
+						executed in line with them.  
+						
+						Specifying "file" or "prototype" means the content is intended to modify the 
+						Javascript prototype, thus it is placed at the top level of the file.  
+						${jsObject}.prototype may be used to access the prototype.
+						
+						Note: include() and includeFrom() calls should be placed in the prototype scope,
+						or their contents will not be visible to derived components.
+
+						Added post 1.1: "file" is a synonym for "prototype".
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="id" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Added post 1.1: the identifier for the inline section,
+						which makes it inheritable.  Inline sections are inherited as templates,
+						accessible with "useTemplate" of the same id.
+						If unspecified, a default id is assigned.  Use a blank id to avoid inheriting.
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="defineLocation">
+		<xsd:annotation><xsd:documentation>
+		This element defines a location in source, such as a function in the main 
+		file or a region of text in a class declaration.  
+		This is a slight misnomer as this element does not by its presence realize
+		the location.  Only when a contribution references
+		location id (or post 1.1: when realize="true" is used)
+		will the location be added to source.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="template"/>
+					<xsd:element ref="inline"/>
+					<xsd:element ref="script"/>
+					<xsd:element ref="expandMacro"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="baseLocation" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				If defined, the location id this location lives inside.  (E.g. a class inside a file,
+				an enum declaration inside a class, etc.)
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="domain" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				The source domain which controls how locations are interpreted and instantiated.  
+				Only "cpp" is supported currently.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="id" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>
+				The location identifier.  This must be unique in a component.  A derived component
+				may redefine a location.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="dir" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				For a top-level location, where baseLocation is null, this is a
+				template-expanded reference to the project-relative directory to
+				use.  Predefined variables ${src}, ${inc}, ${resource}, ${build}
+				are provided.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="file" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				For a top-level location, where baseLocation is null, this is a
+				template-expanded filename relative to the directory specified by "dir".
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="location" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>
+				This describes the location relative to its base (use "" for a
+				top-level file location).  
+				
+A location segment in the cpp domain is a string
+representing a node in a C/C++ parse tree.  Each takes the syntax “&lt;name&gt;
+‘(‘ &lt;arguments…&gt; ‘)’�?.  Certain nodes may only appear within certain
+others.  This list defines top-level nodes:
+
+class(&lt;name&gt;): 
+reference the class declaration for the class ‘name’, which may include namespaces (e.g.
+“class(MyClass)�? or “class(${className})�?)
+
+function(&lt;name&gt;(&lt;arguments…)):
+reference a function with the given signature.  ‘name’ may include namespaces
+or represent a destructor.  ‘arguments’ is a comma-separated list of types. 
+This list of arguments is currently not parsed and only the number of
+arguments matters.  The arguments list may end in ellipsis (“…�?) to indicate
+that any zero or more arguments are matched.  Again, the &lt;template&gt;
+inside a &lt;defineLocation&gt; really defines the function.  (E.g.
+“function(main(int,char**))�? or “function(${className}::method(void*)�?.)
+
+region(&lt;name&gt;): 
+a region defines a commented block of text with no other syntactical clues.  The
+block comments and the name are used to identify the block.  Thus, names should
+be unique across a component.  (E.g. “region(Generated Includes)�?.)
+
+enum(&lt;name&gt;): 
+a enum declaration with the given name.  Name must be non-empty (locations are
+used to look up source, so anonymous enums cannot be unambiguously
+identified).  (E.g. “enum(T${className}Ids)�?.)
+
+namespace(&lt;name&gt;):
+a namespace declaration with the given name, which may contain colons.  (E.g.
+“namespace(std::tr1)�?)
+
+to-file(): 
+resolve to the current file of a location, i.e. get back to the root location. 
+
+Inside a class(), namespace() is not allowed, and this
+additional segment is allowed:
+
+bases(): 
+references the base-class-list within a class declaration.  If the class’ defining text
+already includes a base, then the defining text for the bases() location may be
+omitted.  If a class’ defining text does not include a base, the bases()
+location must include the leading colon in its defining text.  Otherwise,
+contributions are individual class references with leading commas.
+
+In a function(), only class(), region(), enum(), and to-file() are allowed.
+
+In an enum(), bases() or region(), only region() and to-file() are allowed.
+
+				
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute default="true" name="owned" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Note: a string for macro use only; must resolve to "true" or "false".
+				If true, the location is marked generated in source and will be
+				regenerated from scratch on every save.  Otherwise, the location
+				is generated only when missing.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute default="default" name="filter" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Defines a filter on contributions added to the location.
+				Available filters:
+				* unique-includes (can be applied anywhere, but scans files)
+				* unique-prototypes (can be applied in "class()" or children, but scans the class)
+				* unique-bases (can be applied to "bases()" or children, but scans the base class list)
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="isEventHandler" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Note: a string for macro use only; must resolve to "true" or "false".
+				When "ifEvents" is non-empty, this flag tells the designer which particular
+				function is the user-editable event handler.  So this usually is applied
+				to a function() location.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="realize" type="xsd:string" use="optional" default="false">
+				<xsd:annotation><xsd:documentation>
+				Added post 1.1.  
+				Note: a string for macro use only; must resolve to "true" or "false".
+				If true, a template for this location is automatically added when this location is defined.
+				Otherwise, the location is a placeholder and is not "realized" in actual source unless a template references it.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="ifEvents" type="listOfStrings" use="optional">
+				<xsd:annotation><xsd:documentation>
+				If defined, a list of events, any of which must be bound for the
+				location to be declared.  Otherwise, its id is not available and 
+				the location is undefined.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+		
+	</xsd:element>
+
+
+	<xsd:element name="template">
+		<xsd:annotation><xsd:documentation>
+		This defines a contribution.  The text element is template-expanded 
+		with ${ ... } expression escapes and may contain Javascript in &lt;% ... %&gt; sections.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ConditionalSourceGenString">
+					<xsd:attribute name="location" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						The location id the contribution goes to.  May not be specified when "phase" is set.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					
+					<xsd:attribute name="phase" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						The phase the contribution goes to.  A parent component must realize the
+						phase into an actual location id.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute name="mode" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Unused currently.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<!-- form and forms are the same, semantically -->
+					
+					<!-- form is obsolescent, use forms instead -->
+					<xsd:attribute name="form" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						A token used to select a particular kind of source for a parent.
+						The namespace is determined implicitly by what a parent requests.
+						
+						For instance, a parent may have special sourcegen, and pass
+						the form "SpecialCase" to its children.  Templates specifying
+						form="SpecialCase" will be selected.  Other parents will not see
+						such templates if they do not specify that form.
+						
+						If the form does not match, the template is not instantiated.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					
+					<xsd:attribute name="id" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Unique id for the template within a component or
+						within a templateGroup.  Ids may be shared for different
+						forms.  Derived components may redefine ids or inherit
+						templates by id.
+						Added post 1.1: if the id is unspecified in a templateGroup, 
+						a default id is assigned.  To avoid inheriting, supply an empty id.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="templateGroup">
+		<xsd:annotation><xsd:documentation>
+		A logical grouping of templates and locations.  Attributes
+		present on the group are automatically applied to children.
+		Groups may not be nested.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ConditionalSourceGen">
+					<xsd:sequence>
+						<xsd:choice maxOccurs="unbounded" minOccurs="0">
+							<xsd:element ref="defineLocation"/>
+							<xsd:element ref="template"/>
+							<!-- added post 1.1 -->
+							<xsd:element ref="inline"/>
+							<!-- added post 1.1 -->
+							<xsd:element ref="useTemplate"/>
+							<!-- added post 1.1 -->
+							<xsd:element ref="useTemplateGroup"/>
+							<!-- added post 1.1 -->
+							<xsd:element ref="expandMacro"/>
+						</xsd:choice>
+					</xsd:sequence>
+					<xsd:attribute name="location" type="xsd:string" use="optional"/>
+					<xsd:attribute name="mode" type="xsd:string" use="optional"/>
+					<xsd:attribute name="phase" type="xsd:string" use="optional"/>
+					<xsd:attribute name="id" type="xsd:string" use="optional"/>
+					<!-- form is obsolescent -->
+					<xsd:attribute name="form" type="xsd:string" use="optional"/>
+				</xsd:extension>	
+			</xsd:complexContent>		
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="useTemplate">
+		<xsd:annotation><xsd:documentation>
+		In a derived component, selects a template from the base by id.
+		</xsd:documentation></xsd:annotation>	
+	
+		<xsd:complexType>
+			<xsd:attribute name="ids" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="useTemplateGroup">
+		<xsd:annotation><xsd:documentation>
+		In a derived component, selects a template group from the base by id.
+		If no subelements are specified, all the named templates (those with ids)
+		are inherited.  No templates without ids are inherited.
+		
+		If subelements are specified, these describe the specific templates
+		to inherit from the group.  The id "*" may be used to bring in all
+		named templates.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="useTemplate"/>
+			</xsd:sequence>
+			<xsd:attribute name="ids" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="defineMacro">
+		<xsd:annotation><xsd:documentation>
+		Added post 1.1.  
+		This element defines a macro consisting of a set of templates 
+		and inlines which may be variable-substituted.
+			
+		If a given defineMacro imports multiple arguments
+		of the same name, then they must be explicitly redefined,
+		to resolve any ambiguities about the default value.  
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="importArguments" maxOccurs="unbounded" minOccurs="0"/>
+				<xsd:element ref="macroArgument" maxOccurs="unbounded" minOccurs="0"/>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="template"/>
+					<xsd:element ref="inline"/>
+					<xsd:element ref="defineLocation"/>
+					<xsd:element ref="expandMacro"/>
+				</xsd:choice>
+			</xsd:sequence>
+			
+			<xsd:attribute name="id" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Unique id for the macro within a component.  
+				Ids may be shared for different
+				forms.  Derived components inherit macros automatically
+				but may redefine a macro with the same id.
+				</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+			<xsd:attribute name="help" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Help/usage text for a documentation generating tool.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="macroArgument">
+		<xsd:annotation><xsd:documentation>
+		Added post 1.1.
+		Defines an argument for use with the macro.
+		The default value may be specified in the 'default' attribute or in the text of the element.
+		The text supercedes the attribute.  
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="name" type="xsd:string" use="required">
+						<xsd:annotation><xsd:documentation>
+						The name of the argument.  This must be a legal Javascript identifier
+						and unique within the macro.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute name="optional" type="xsd:boolean" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Tells whether the argument may be omitted from an expandMacro use.
+						If true, and no default is provided, the variable's value is null.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute name="default" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						The default value of the argument if unspecified.  Alternately, the
+						text of this element may be supplied as the default, if formatting
+						or newlines are used.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute name="help" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Help/usage text for a documentation generating tool.
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="importArguments">
+		<xsd:annotation><xsd:documentation>
+		Added post 1.1.  
+		This element specifies that a list of arguments (name, type, defaults,
+		optional flags) will be imported from another macro. 
+		If this element is omitted, then all the arguments from the macro
+		are imported.  
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="macroName" type="xsd:string" use="required">
+				<xsd:annotation><xsd:documentation>
+				The macro whose arguments to import.
+				</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			<xsd:attribute name="arguments" type="listOfStrings" use="required">
+				<xsd:annotation><xsd:documentation>
+				The list of argument names to import.  This is mutually exclusive with 'exceptArguments'.
+				</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			<xsd:attribute name="exceptArguments" type="listOfStrings" use="required">
+				<xsd:annotation><xsd:documentation>
+				The list of argument names NOT to import.  All the arguments are imported
+				except these.  This is mutually exclusive with 'arguments'.
+				</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			<xsd:attribute name="help" type="xsd:string" use="optional">
+				<xsd:annotation><xsd:documentation>
+				Help/usage text for a documentation generating tool.
+				</xsd:documentation></xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+		
+	<xsd:element name="expandMacro">
+		<xsd:annotation><xsd:documentation>
+		<p>
+		Added post 1.1.
+		Expands a given macro into the sourceGen of the caller.  
+		This has the same effect as inserting the same templates and inlines 
+		from the macro's definition at the point of call.  
+		Variable references from those templates and inlines
+		are substituted with the values provided in attributes 
+		(e.g. variableName="value") or expandArgument child elements.  
+		The latter may be preferred for cases where code is substituted,
+		so the formatting may be retained.
+		</p>
+		<p>
+		As a special case, variable references may have modifiers to
+		modify the formatting of a variable when it is expanded.  
+		Modifiers are appended
+		to the variable name as in: $(varName::modifier).  
+		</p>
+		<p>
+		Currently supported modifiers are all for tweaking canonical
+		function argument lists, which match the format of 
+		declaration, with spaces, argument names, default values, etc:
+		</p>
+		<ul>
+			<li>as-function-declaration-args: identity
+			</li>
+			<li>as-function-definition-args: removes default argument values
+			</li>
+			<li>as-function-location-args: removes argument names, default arguments, and spaces
+			</li>
+		</ul>
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ConditionalSourceGen" >
+					<xsd:sequence>
+						<xsd:element ref="expandArgument" maxOccurs="unbounded" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="name" type="xsd:string" use="required">
+						<xsd:annotation><xsd:documentation>
+						The macro to invoke (matching the id from defineMacro).
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="passArguments" type="listOfStrings" use="optional">
+						<xsd:annotation><xsd:documentation>
+						A list of arguments defined in the current calling macro to
+						pass unchanged to the called macro, excluding any arguments
+						that are not defined in the current call.
+						
+						This attribute is only valid in expandMacro called from
+						a defineMacro.  
+						
+						Passing arguments is different from adding attributes
+						argName="$(argName)" because it avoids defining otherwise 
+						undefined arguments.  (A missing optional argument is null,
+						not the empty string.  The '::is-defined' modifier can be
+						used to check this.)
+						
+						Elements in the list of strings are names of arguments, or
+						renames of the form targetArgumentName=hostArgumentName which
+						passes hostArgumentName from the hosting macro with the name
+						targetArgumentName (again, only if the argument is actually
+						defined in the call).
+							
+						If this argument is not specified, all the arguments in the
+						invoked macro are passed (zero or more may have defaults which
+						are overridden in this macro). 
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					
+					<xsd:attribute name="dontPassArguments" type="listOfStrings" use="optional">
+						<xsd:annotation><xsd:documentation>
+						This is primarily used when passArguments is not specified.
+						It specifies which arguments not to pass to the invoked macro,
+						which become undefined in the expansion of that macro.
+						This is useful when this macro takes over the work of one or more
+						arguments from the invoked macro. 
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+
+					<xsd:attribute name="help" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Help/usage text for a documentation generating tool.
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					
+					<xsd:anyAttribute processContents="lax">
+						<xsd:annotation><xsd:documentation>
+						Any attribute matching the variables used in the given named macro may appear here.
+						</xsd:documentation></xsd:annotation>
+					</xsd:anyAttribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="expandArgument">
+		<xsd:annotation><xsd:documentation>
+		Added post 1.1.  
+		Provides multiline text content for an argument.
+		This is semantically identical to setting an attribute of the same
+		name="..." value in the expandMacro element, with any standalone 
+		leading whitespace and standalone trailing whitespace removed
+		(as with &lt;template&gt;).
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="name" type="xsd:string" use="required">
+						<xsd:annotation><xsd:documentation>
+						The variable to define (matching the id from macroArgument).
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="help" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Help/usage text for a documentation generating tool.
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="select">
+		<xsd:annotation><xsd:documentation>
+		This element encapsulates choice elements which allow conditional
+		source mapping.  One choice must match or an error results (you can
+		use an empty choice to match the default case if necessary).  Only
+		the first matching choice is considered.
+			<p>
+				Only use one attribute (property, attribute, propertyExists, isComponentInstanceOf)
+				 for the select statement.
+			</p>
+		</xsd:documentation></xsd:annotation>	
+	
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="choice"/>
+			</xsd:sequence>
+			<!-- only one of these should be set -->
+			<xsd:attribute name="property" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					Specifies the property path to test.  (E.g. "flag", "[parent].flag", ...)
+						Results in an error if the property does not exist, else the string version of the property to test.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+			<xsd:attribute name="attribute" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					Specifies the attribute value to test.  Results in blank ("") or the value of the attribute to test.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+			<xsd:attribute name="propertyExists" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					Specifies the property path to test for existence.  (E.g. "flag", "[parent].flag", ...)
+						Results in a 'true' or 'false' value to test. 
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+
+			<xsd:attribute name="isComponentInstanceOf" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					Specifies the property path to test for existence, e.g., whether the
+						property may be set or queried.  This is independent of whether the
+						property is actually set.  The attribute takes a property path (e.g. "flag", "[parent].flag", ...)
+					Results in a 'true' or 'false' value to test. 
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="choice">
+		<xsd:annotation><xsd:documentation>
+		This defines a decision in the select element.  If the "value" attribute
+		matches the value obtained in the select element, the choice is matched
+		and its mapping elements instantiated.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="twoWayMapping"/>
+					<xsd:element ref="mapResource"/>
+					<xsd:element ref="select"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="value" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					The value to match.  If unspecified, the choice always matches.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="twoWayMappingType">
+		<xsd:annotation><xsd:documentation>
+		Base for two-way mappings.
+		</xsd:documentation></xsd:annotation>	
+	</xsd:complexType>	
+	<xsd:complexType name="mappingFixedType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping a fixed value to RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:attribute name="value" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>
+					The literal string to emit into RSS.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="mappingSimpleType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping simple types (integers, floats, strings, booleans).
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="mappingInstanceType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping resources generated by component instances.
+		Either a reference to the resource is emitted (for LLINK targets)
+		or the resource expression is emitted (for STRUCT targets).
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:attribute name="rsrcId" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					If specified, which particular resource to match.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="mappingReferenceType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping references to resources generated by component instances.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:attribute name="rsrcId" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					If defined, tells which particular generated resource to reference.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="mappingEnumType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping enumerator properties.
+		If any mapEnum elements specified, they completely define the list of mappings 
+		of internal enumerator values  to external RSS values.  Otherwise, internal 
+		values are directly emitted as RSS values.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:sequence maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="mapEnum"/>
+				</xsd:sequence>
+				<xsd:attribute name="enumeration" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					Unused.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				<xsd:attribute name="headers" type="listOfStrings" use="optional">
+					<xsd:annotation><xsd:documentation>
+					List of header files that must be included to provide the RSS enumerator symbols.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				<xsd:attribute default="true" name="validate" type="xsd:boolean" use="optional">
+					<xsd:annotation><xsd:documentation>
+					If true, ensure that mapped enumerators are declared in the RSS context,
+					emitting warnings if not.  Set this to false if mapping #defines or
+					expressions.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				
+				<xsd:attribute name="nameAlgorithm" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					If defined, mapped RSS values may be generated by an algorithm based on
+					the current instance and property.  See the com.nokia.sdt.sourceGen.nameAlgorithm
+					extension point for details.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				<xsd:attribute name="uniqueValue" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					When nameAlgorithm is defined, specifies that some or all mapped values
+					are generated by the name algorithm.  If the value is "*", every value goes
+					through the name algorithm and gets an enumerator in an *.hrh file.
+					Otherwise, only properties matching the value are generated.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="mapEnum">
+		<xsd:annotation><xsd:documentation>
+		This defines the mapping of one particular property value to one
+		particular RSS value.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:attribute name="value" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>
+					The property value.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+			<xsd:attribute name="enumerator" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>
+					The RSS enumerator.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="mappingIdentifierType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping property values to RSS identifiers (rather than
+		strings, for instance, as mappingSimpleType would do).
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="mappingResourceType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping resources in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:sequence>
+					<xsd:choice maxOccurs="unbounded" minOccurs="0">
+						<xsd:element ref="mapSimpleMember"/>
+						<xsd:element ref="mapInstanceMember"/>
+						<xsd:element ref="mapReferenceMember"/>
+						<xsd:element ref="mapFixedMember"/>
+						<xsd:element ref="mapEnumMember"/>
+						<xsd:element ref="mapIdentifierMember"/>
+						<xsd:element ref="mapArrayMember"/>
+						<xsd:element ref="mapResourceMember"/>
+						<xsd:element ref="mapBitmaskMember"/>
+						<xsd:element ref="mapMemberFromType"/>
+						<xsd:element ref="mapIntoProperty"/>
+						<xsd:element ref="select"/>
+					</xsd:choice>
+				</xsd:sequence>
+				<xsd:attribute name="struct" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					The RSS STRUCT name to generate.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				
+				<xsd:attribute name="headers" type="listOfStrings" use="optional">
+					<xsd:annotation><xsd:documentation>
+					The list of headers required to declare the STRUCT.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				
+				<xsd:attribute name="id" type="xsd:string" use="optional">
+					<xsd:annotation><xsd:documentation>
+					The unique identifier for this resource within a component.
+					
+					Every mapResourceXXX must have an identifier, either implicitly
+					or explicitly defined.
+					
+					If unspecified, an identifier is automatically generated for
+					mapResourceMember or mapResourceElement elements.  Otherwise,
+					missing identifiers are reported at errors at source mapping time.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="mappingBitmaskType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping sets of boolean properties to a single bitmask expression in RSS.
+		
+		When mapping this element, a working set of the includedProperties is created.
+		Each mapBitmaskValue element is considered in turn, and if all the properties
+		it references are present in the working set and have the value "true", 
+		the matching value is OR'ed into the target expression, and those properties removed from the working set.
+		Once the working set is empty, the mapping is complete.  If all mapBitmaskValues are
+		exhausted but the working set is non-empty, this is a component error.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:sequence maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="mapBitmaskValue"/>
+				</xsd:sequence>
+				<xsd:attribute name="includedProperties" type="listOfStrings" use="optional">
+					<xsd:annotation><xsd:documentation>
+					The list of properties included in the set.  If undefined, all the
+					sibling properties (within a component or compound property) are included.
+					Every included property must be referenced in a mapBitmaskValue element,
+					or else the mapping is considered invalid, and an error reported.
+					</xsd:documentation></xsd:annotation>	
+				</xsd:attribute>
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="mapBitmaskValue">
+		<xsd:annotation><xsd:documentation>
+		Map a set of properties to a subexpression of the bitmask expression.  If all the given
+		properties are "true", the given value is OR'ed into the target expression.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:attribute name="properties" type="listOfStrings" use="required">
+					<xsd:annotation><xsd:documentation>
+					List of properties to consider.  May be property paths.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+			<xsd:attribute name="value" type="xsd:string" use="required">
+					<xsd:annotation><xsd:documentation>
+					Value to OR into the target expression.
+					</xsd:documentation></xsd:annotation>	
+			</xsd:attribute>
+			
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element abstract="true" name="twoWayMapping" type="twoWayMappingType"/>
+	
+	<xsd:complexType name="mappingArrayType">
+		<xsd:annotation><xsd:documentation>
+		Base for mapping arrays from sequence properties or component instance children.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexContent>
+			<xsd:extension base="twoWayMappingType">
+				<xsd:sequence>
+					<xsd:choice maxOccurs="1" minOccurs="0">
+						<xsd:element ref="twoWayMapping">
+								<xsd:annotation><xsd:documentation>
+								This is restricted to mapXXXElement, mapElementFromType, or mapIntoProperty, but we can't represent this in XSD.
+								</xsd:documentation></xsd:annotation>	
+						</xsd:element>
+						
+						<xsd:element ref="select"/>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:annotation>
+		<xsd:documentation>
+Type mappings are used to store mappings along with a type.  Added post 1.2		
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<!-- added post 1.2 -->
+	<xsd:element name="mapFixedType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a fixed value.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingFixedType" >
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- added post 1.2 -->
+	<xsd:element name="mapSimpleType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a simple value.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingSimpleType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapInstanceType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map resources for an instance.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingInstanceType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapReferenceType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a reference property to resources the instance generates.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingReferenceType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapEnumType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map an enumerator to RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingEnumType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapIdentifierType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a simple property to a literal (identifier) in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingIdentifierType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapResourceType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a property to a RESOURCE expression or statement.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingResourceType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapArrayType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a property or child list to an array in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingArrayType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- added post 1.2 -->
+	<xsd:element name="mapBitmaskType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a set of boolean properties to a bitmask expression in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingBitmaskType">
+					&MapTypeIdAttribute;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>
+Member mappings are used to map a property to a member of a resource.		
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="mapFixedMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a fixed value to an RSS member.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingFixedType">
+					&MapMemberAttributes;				
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="mapSimpleMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a simple value to a member.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingSimpleType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+						
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapInstanceMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map resources for an instance.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingInstanceType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapReferenceMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a reference property to resources the instance generates.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingReferenceType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapEnumMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map an enumerator to RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingEnumType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapIdentifierMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a simple property to a literal (identifier) in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingIdentifierType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapResourceMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a property to a RESOURCE expression or statement.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingResourceType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapArrayMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a property or child list to an array in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingArrayType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapBitmaskMember" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a set of boolean properties to a bitmask expression in RSS.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingBitmaskType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- added post 1.2 -->
+	<xsd:element name="mapMemberFromType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map RSS from the type declaration attached to the given property.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="twoWayMappingType">
+					&MapPropertyAttribute;
+					&MapMemberAttributes;
+					
+					<xsd:attribute name="typeId" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+					This attribute tells which of a set of type mappings to use
+					from the given type (as named in the id="..." attributes on
+					the mapXXXType children of sourceTypeMapping).   
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	
+	
+	<!-- Array element mappings -->
+	<xsd:element name="mapSimpleElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a simple value to an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingSimpleType">
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapFixedElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a fixed value to an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingFixedType">
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapInstanceElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map an instance's resources to an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingInstanceType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapReferenceElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a reference property to an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingReferenceType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapEnumElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map an enumerator to an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingEnumType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapIdentifierElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a simple value to a literal (identifier) in an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingIdentifierType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapResourceElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a compound property or instance to resources in an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingResourceType">
+				
+					<xsd:attribute name="instanceIdentifyingMember" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+					This attribute provides a means to distinguish resource
+					elements that come from different instances.  
+					
+					It tells which resource member to use as a key, so that the 
+					array mapper can match up elements to instances when importing,
+					to allow unknown items to be inserted (or for known items to 
+					be reordered, ideally).
+					
+					If not set, the array is assumed to contain entries whose
+					positions uniquely identify them (as is the case with
+					arrays of integers, references, etc.).
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="mapBitmaskElement" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map a set of boolean properties to an expression in an array element.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingBitmaskType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- no mapArrayElement: no sub-arrays! -->
+	
+	<!-- added post 1.2 -->
+	<xsd:element name="mapElementFromType" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Map RSS from the type declaration attached to the current element.
+		You may need to use &lt;mapProperty&gt; to descend into a child of the current
+		element for this to work.
+		</xsd:documentation></xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="twoWayMappingType">
+					<xsd:attribute name="typeId" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+					This attribute tells which of a set of type mappings to use
+					from the given type (as named in the id="..." attributes on
+					the mapXXXType children of sourceTypeMapping).   
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+			
+	</xsd:element>
+
+	<!-- added post 1.2 -->
+	<xsd:element name="mapIntoProperty" substitutionGroup="twoWayMapping">
+		<xsd:annotation><xsd:documentation>
+		Delve into a property path without generating any resources.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="twoWayMappingType">
+					<xsd:sequence>
+						<xsd:element ref="twoWayMapping"/>
+					</xsd:sequence>
+					&MapPropertyAttribute;
+				</xsd:extension>
+				
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="sourceMapping">
+		<xsd:annotation>
+			<xsd:documentation>
+The sourceMapping element defines a particular style of source generation
+which consists of automatic generation of source by structurally
+mapping a component instance to a source definition.  
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="mapResource"/>
+					<xsd:element ref="select"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:simpleType name="standaloneType">
+		<xsd:annotation><xsd:documentation>
+		The selector for controlling standalone resource mapping.
+		</xsd:documentation></xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="false">
+				<xsd:annotation><xsd:documentation>
+				Deprecated value corresponding to "default".
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="true">
+				<xsd:annotation><xsd:documentation>
+				Depecated value corresponding to "always".
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="never">
+				<xsd:annotation><xsd:documentation>
+				Never emit the resource by itself.  Only emit it if another resource
+				references it.  By using this, a component may generate two forms of
+				resource (with different resource ids) and let a container or reference
+				select which resource it wants, without also generating the unused variant.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="default">
+				<xsd:annotation><xsd:documentation>
+				Emit the resource by itself if it is not generated as an expression or
+				by a LINK or LLINK.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="always">
+				<xsd:annotation><xsd:documentation>
+				Always emit the resource by itself, even if already generated as an expression.
+				</xsd:documentation></xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:element name="mapResource">
+		<xsd:annotation><xsd:documentation>
+		Map an instance to a RESOURCE.
+		</xsd:documentation></xsd:annotation>	
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="mappingResourceType">
+					<xsd:attribute default="false" name="unnamed" type="xsd:boolean" use="optional">
+						<xsd:annotation><xsd:documentation>
+						This tells whether to emit the resource without a name
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute default="default" name="standalone" type="standaloneType" use="optional">
+						<xsd:annotation><xsd:documentation>
+						This tells whether the resource must be emitted as a standalone resource statement (always),
+						regardless of whether it is also generated as a resource expression, or whether it
+						will never be emitted unless referenced by another resource (never).  The default behavior
+						is to emit it if not generated as an expression.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute name="baseName" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Force the base name of the resource.  If unspecified, resources are
+						named after the instance and member or element being mapped.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+					<xsd:attribute name="rssFile" type="xsd:string" use="optional">
+						<xsd:annotation><xsd:documentation>
+						Force the RSS filename (but not directory).  This is used to redirect
+						resources to a top-level RSS file.
+						</xsd:documentation></xsd:annotation>	
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- added post 1.2 -->
+	<xsd:element name="sourceTypeMapping">
+		<xsd:annotation>
+			<xsd:documentation>
+The sourceTypeMapping element mirrors sourceMapping but provides stored source
+mapping data for use by compound or enum types.  
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
+					<xsd:element ref="mapResourceType"/>
+					<xsd:element ref="mapEnumType"/>
+					<xsd:element ref="mapSimpleType"/>
+					<xsd:element ref="mapFixedType"/>
+					<xsd:element ref="mapBitmaskType"/>
+					<xsd:element ref="mapIdentifierType"/>
+					<xsd:element ref="mapReferenceType"/>
+					<xsd:element ref="mapArrayType"/>
+					<xsd:element ref="select"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

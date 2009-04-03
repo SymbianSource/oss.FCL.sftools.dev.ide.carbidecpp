@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.WebClient"
+		baseComponent="com.nokia.sdt.series60.NonLayoutBase"
+		category="Other" version="1.1"
+		instanceNameRoot="webClient">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="3.0"
+		/>
+		<designerImages smallIconFile="WebClient_sm.png" 
+			largeIconFile="WebClient.png"/>
+
+		<properties>
+			<property name="defaultURL" type="string" default="http://www.s60.com" category="Behavior" descriptionKey="defaultURLDescription"/>
+			<componentReferenceProperty name="waitDialog" scope="model" constraint="com.nokia.sdt.series60.WaitDialog"
+					creationKeys="newWaitDialog" category="Behavior" descriptionKey="waitDialogDescription"/>
+			<componentReferenceProperty name="credentialsQuery" scope="model" constraint="com.nokia.sdt.series60.MultiLineDataQuery" 
+					creationKeys="newCredentialsQuery" category="Behavior" descriptionKey="credentialsQueryDescription"/>
+		</properties>
+		
+		<events>
+			<event name="openSessionFailed" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}OpenSessionFailedL"
+				   descriptionKey="openSessionFailedDescription"
+				/>
+			<event name="connecting" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}ConnectingL"
+				   descriptionKey="connectingDescription"
+				/>
+			<event name="headerReceived" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}HeaderReceivedL"
+				   descriptionKey="headerReceivedDescription"
+				/>
+			<event name="bodyReceived" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}BodyReceivedL"
+				   descriptionKey="bodyReceivedDescription"
+				/>
+			<event name="connectionCanceled" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}ConnectionCanceledL"
+				   descriptionKey="connectionCanceledDescription"
+				/>
+			<event name="responseComplete" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}ResponseCompleteL"
+				   descriptionKey="responseCompleteDescription"
+				/>
+			<event name="transactionSucceeded" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}TransactionSucceededL"
+				   descriptionKey="transactionSucceededDescription"
+				/>
+			<event name="transactionFailed" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}TransactionFailedL"
+				   descriptionKey="transactionFailedDescription"
+				/>
+			<event name="unknownEvent" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}UnknownEventL"
+				   descriptionKey="unknownEventDescription"
+				/>
+			<event name="runError" category="Data" 
+				   handlerNameTemplate="Handle{title(name)}RunErrorL"
+				   descriptionKey="runErrorDescription"
+				/>
+		</events>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class="com.nokia.sdt.series60.component.WebClientImplFactory"/>
+			</implementation>
+		</implementations>
+
+		<sourceGen forms="AppUi AknView Container Dialog Form SettingsList">
+		
+			<inline>
+if (Engine.formMatches(form, [""])) {
+	// create files if missing, without adding user's new file template
+	Engine.createFromStockFile("inc", "WebClientEngine.h", "WebClientEngine.h");
+	Engine.createFromStockFile("inc", "WebClientEngine.pan", "WebClientEngine.pan");
+	Engine.createFromStockFile("src", "WebClientEngine.cpp", "WebClientEngine.cpp");
+}
+			</inline>
+		
+			<template phase="EventIncludes"><![CDATA[
+#include "WebClientEngine.h"
+]]>			</template>
+
+			<template id="BaseClass" phase="BaseClassList">,MWebClientObserver</template>
+	
+			<template phase="InstanceVariables">
+CWebClientEngine* ${instanceMemberName};
+			</template>	
+
+			<template phase="Construct">
+${instanceMemberName} = NULL;
+			</template>
+				
+			<template phase="Destroy">
+delete ${instanceMemberName};
+${instanceMemberName} = NULL;
+			</template>
+				
+			<template phase="ClassMethods"><![CDATA[
+void IssueHTTPGetL( const TDesC8* aUrl = NULL );
+]]>			</template>
+				
+			<template phase="ClassProtected"><![CDATA[
+// Implementations of MWebClientObserver methods
+void ClientOpenSessionFailedL( 
+		CWebClientEngine& anEngine, 
+		TInt anError );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientConnectingL( 
+		CWebClientEngine& anEngine );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientHeaderReceivedL( 
+		CWebClientEngine& anEngine, 
+		const TDesC& aHeaderData );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientBodyReceivedL( 
+		CWebClientEngine& anEngine, 
+		const TDesC8& aBodyData );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientConnectionCanceledL( 
+		CWebClientEngine& anEngine );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientResponseCompleteL( 
+		CWebClientEngine& anEngine );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientTransactionSucceededL( 
+		CWebClientEngine& anEngine );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientTransactionFailedL( 
+		CWebClientEngine& anEngine );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientUnknownEventL( 
+		CWebClientEngine& anEngine, 
+		TInt aStatus );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+void ClientRunErrorL( 
+		CWebClientEngine& anEngine, 
+		TInt anError );
+]]>			</template>
+			<template phase="ClassProtected"><![CDATA[
+TBool ClientGetCredentialsL( 
+		CWebClientEngine& anEngine, 
+		const TUriC8& aUri, 
+		const TDesC8& aRealm, 
+		TDes& aUsername, 
+		TDes& aPassword );
+]]>			</template>
+			
+			<template id="INIT_FROM_CONTAINER" phase="Initialize"><![CDATA[
+${instanceMemberName} = CWebClientEngine::NewL( *this );
+]]>			</template>
+
+
+<!-- begin ClientOpenSessionFailed -->
+		<defineLocation id="ClientOpenSessionFailedL" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientOpenSessionFailedL(CWebClientEngine&amp;, TInt))">
+			<template><![CDATA[
+/**
+ * ClientOpenFailedL( CWebClientEngine& anEngine )
+ * An error occurred opening the HTTP session. The calling code
+ * will leave after this method returns.
+ * @param anError: the error code
+ * Most common error; no access point configured, and session creation
+ * leaves with KErrNotFound.
+ */			
+void ${className}::ClientOpenSessionFailedL( 
+		CWebClientEngine& anEngine, 
+		TInt anError )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientOpenSessionFailedL"/>
+		
+		<defineLocation id="ClientOpenSessionFailedBody" baseLocation="ClientOpenSessionFailedL"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientOpenSessionFailedBody" location="ClientOpenSessionFailedBody"/>
+		
+		<templateGroup id="ClientOpenSessionFailedEvent" ifEvents="openSessionFailed">
+		
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CWebClientEngine& anEngine, 
+		TInt anError );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientOpenSessionFailedBody">
+${event.handlerName}( anEngine, anError );
+			</template>
+
+			<defineLocation id="OpenSessionFailedHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;, TInt))">
+				<template><![CDATA[
+/** 
+ * Handle the openSessionFailed event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/, 
+		TInt /*anError*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="OpenSessionFailedHandler"/>
+		</templateGroup>
+<!-- end ClientOpenSessionFailed -->
+
+<!-- begin ClientConnecting -->
+		<defineLocation id="ClientConnecting" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientConnectingL(CWebClientEngine&amp;))">
+			<template><![CDATA[
+/**
+ * ClientConnectingL()
+ * Called to notify that a connection was initiated
+ */			
+void ${className}::ClientConnectingL( 
+		CWebClientEngine& anEngine )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientConnecting"/>
+		
+		<defineLocation id="ClientConnectingBody" baseLocation="ClientConnecting"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientConnectingBody" location="ClientConnectingBody"/>
+
+		<templateGroup id="ClientConnectingEvent" ifEvents="connecting">
+		
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( CWebClientEngine& anEngine );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientConnectingBody">
+${event.handlerName}( anEngine );
+			</template>
+
+			<defineLocation id="ConnectingHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the connecting event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="ConnectingHandler"/>
+		</templateGroup>
+<!-- end ClientConnecting -->
+
+<!-- begin ClientHeaderReceived -->
+		<defineLocation id="ClientHeaderReceived" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientHeaderReceivedL(CWebClientEngine&amp;, const TDesC&amp;))">
+			<template><![CDATA[
+/**
+ * ClientHeaderReceivedL()
+ * Called when HTTP header is received.
+ * @param aHeaderData: Header field name and value
+ */			
+void ${className}::ClientHeaderReceivedL( 
+		CWebClientEngine& anEngine, 
+		const TDesC& aHeaderData )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientHeaderReceived"/>
+ 
+		<defineLocation id="ClientHeaderReceivedBody" baseLocation="ClientHeaderReceived"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientHeaderReceivedBody" location="ClientHeaderReceivedBody"/>
+		
+		<templateGroup id="HeaderReceived" ifEvents="headerReceived">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CWebClientEngine& anEngine, 
+		const TDesC& aHeaderData );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientHeaderReceivedBody">
+${event.handlerName}( anEngine, aHeaderData );
+			</template>
+
+			<defineLocation id="HeaderReceivedHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;, const TDesC&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/, 
+		const TDesC& /*aHeaderData*/)
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="HeaderReceivedHandler"/>
+		</templateGroup>
+<!-- end ClientHeaderReceived -->
+
+<!-- begin ClientBodyReceived -->
+		<defineLocation id="ClientBodyReceived" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientBodyReceivedL(CWebClientEngine&amp;, const TDesC8&amp;))">
+			<template><![CDATA[
+/**
+ * ClientBodyReceivedL()
+ * Called when a part of the HTTP body is received.
+ * @param aBodyData:  Part of the body data received. (e.g. part of
+ *                    the received HTML page)
+ */			
+void ${className}::ClientBodyReceivedL( 
+		CWebClientEngine& anEngine, 
+		const TDesC8& aBodyData )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientBodyReceived"/>
+		
+		<defineLocation id="ClientBodyReceivedBody" baseLocation="ClientBodyReceived"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientBodyReceivedBody" location="ClientBodyReceivedBody"/>
+
+		<templateGroup id="BodyReceived" ifEvents="bodyReceived">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CWebClientEngine& anEngine, 
+		const TDesC8& aBodyData );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientBodyReceivedBody">
+${event.handlerName}( anEngine, aBodyData );
+			</template>
+
+			<defineLocation id="BodyReceivedHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;, TDesC8&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/, 
+		const TDesC8& /*aBodyData*/)
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="BodyReceivedHandler"/>
+		</templateGroup>
+<!-- end ClientBodyReceived -->
+
+<!-- begin ClientConnectionCanceled -->
+		<defineLocation id="ClientConnectionCanceled" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientConnectionCanceledL(CWebClientEngine&amp;))">
+			<template><![CDATA[
+/**
+ * ClientConnectionCanceledL()
+ * Called to notify that a connection attempt has been canceled
+ */			
+void ${className}::ClientConnectionCanceledL( 
+		CWebClientEngine& anEngine )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientConnectionCanceled"/>
+		
+		<defineLocation id="ClientConnectionCanceledBody" baseLocation="ClientConnectionCanceled"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientConnectionCanceledBody" location="ClientConnectionCanceledBody"/>
+
+		<templateGroup id="ConnectionCanceled" ifEvents="connectionCanceled">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( CWebClientEngine& anEngine );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientConnectionCanceledBody">
+${event.handlerName}( anEngine );
+			</template>
+
+			<defineLocation id="ConnectionCanceledHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="ConnectionCanceledHandler"/>
+		</templateGroup>
+<!-- end ClientConnectionCanceled -->
+
+<!-- begin ClientResponseComplete -->
+		<defineLocation id="ClientResponseComplete" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientResponseCompleteL(CWebClientEngine&amp;))">
+			<template><![CDATA[
+/**
+ * ClientResponseCompleteL
+ * Called to notify that a transaction's response is complete.
+ * See TTransactionEvent::EResponseComplete
+ */			
+void ${className}::ClientResponseCompleteL( 
+		CWebClientEngine& anEngine )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientResponseComplete"/>
+		
+		<defineLocation id="ClientResponseCompleteBody" baseLocation="ClientResponseComplete"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientResponseCompleteBody" location="ClientResponseCompleteBody"/>
+
+		<templateGroup id="ResponseComplete" ifEvents="responseComplete">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( CWebClientEngine& anEngine );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientResponseCompleteBody">
+${event.handlerName}( anEngine );
+			</template>
+
+			<defineLocation id="ResponseCompleteHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="ResponseCompleteHandler"/>
+		</templateGroup>
+<!-- end ClientResponseComplete -->
+
+<!-- begin ClientTransactionSucceeded -->
+		<defineLocation id="ClientTransactionSucceeded" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientTransactionSucceededL(CWebClientEngine&amp;))">
+			<template><![CDATA[
+/**
+ * ClientTransactionSucceededL()
+ * Called to notify that a transaction completed successfully
+ * See TTransactionEvent::ESucceeded
+ */			
+void ${className}::ClientTransactionSucceededL( 
+		CWebClientEngine& anEngine )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientTransactionSucceeded"/>
+		
+		<defineLocation id="ClientTransactionSucceededBody" baseLocation="ClientTransactionSucceeded"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientTransactionSucceededBody" location="ClientTransactionSucceededBody"/>
+			
+		<template location="ClientTransactionSucceededBody"><![CDATA[
+<%  var dialogInstance = lookupInstanceByName(instance.properties.waitDialog);
+	if (dialogInstance != null) { %>
+Remove${titleCase(dialogInstance.properties.name)}L();
+<% } %> ]]></template>
+
+		<templateGroup id="TransactionSucceeded" ifEvents="transactionSucceeded">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( CWebClientEngine& anEngine );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientTransactionSucceededBody">
+${event.handlerName}( anEngine );
+			</template>
+
+			<defineLocation id="TransactionSucceededHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="TransactionSucceededHandler"/>
+		</templateGroup>
+<!-- end ClientTransactionSucceeded -->
+
+<!-- begin ClientTransactionFailed -->
+		<defineLocation id="ClientTransactionFailed" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientTransactionFailedL(CWebClientEngine&amp;))">
+			<template><![CDATA[
+/** 
+ * ClientTransactionFailedL()
+ * Catch-all for failure. 
+ * See TTransactionEvent::EFailed
+ */			
+void ${className}::ClientTransactionFailedL( 
+		CWebClientEngine& anEngine )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientTransactionFailed"/>
+		
+		<defineLocation id="ClientTransactionFailedBody" baseLocation="ClientTransactionFailed"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientTransactionFailedBody" location="ClientTransactionFailedBody"/>
+
+		<template location="ClientTransactionFailedBody"><![CDATA[
+<%  var dialogInstance = lookupInstanceByName(instance.properties.waitDialog);
+	if (dialogInstance != null) { %>
+Remove${titleCase(dialogInstance.properties.name)}L();
+<% } %> ]]></template>
+
+		<templateGroup id="TransactionFailed" ifEvents="transactionFailed">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( CWebClientEngine& anEngine );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientTransactionFailedBody">
+${event.handlerName}( anEngine );
+			</template>
+
+			<defineLocation id="TransactionFailedHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="TransactionFailedHandler"/>
+		</templateGroup>
+<!-- end ClientTransactionFailed -->
+
+<!-- begin ClientUnknownEvent -->
+		<defineLocation id="ClientUnknownEvent" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientUnknownEventL(CWebClientEngine&amp;, TInt))">
+			<template><![CDATA[
+/**
+  * ClientUnknownEventL
+  * Called to notify that an unknown HTTP event has
+  * been received.
+  * @param aStatus: the iStatus field of the event
+  * See THTTPEvent::iStatus
+  */			
+void ${className}::ClientUnknownEventL( 
+		CWebClientEngine& anEngine, 
+		TInt aStatus )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientUnknownEvent"/>
+		
+		<defineLocation id="ClientUnknownEventBody" baseLocation="ClientUnknownEvent"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientUnknownEventBody" location="ClientUnknownEventBody"/>
+
+		<templateGroup id="UnknownEvent" ifEvents="unknownEvent">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CWebClientEngine& anEngine, 
+		TInt aStatus );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientUnknownEventBody">
+${event.handlerName}( anEngine, aStatus );
+			</template>
+
+			<defineLocation id="UnknownEventHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;,TInt))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/, 
+		TInt /*aStatus*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="UnknownEventHandler"/>
+		</templateGroup>
+<!-- end ClientUnknownEvent -->
+
+<!-- begin ClientRunError -->
+		<defineLocation id="ClientRunError" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientRunErrorL(CWebClientEngine&amp;, TInt))">
+			<template><![CDATA[
+/**
+ * ClientRunErrorL()
+ * Called when a error occurs in the handling of a transaction event.
+ * @param anError: the error code
+ */			
+void ${className}::ClientRunErrorL( 
+		CWebClientEngine& anEngine,
+		TInt anError )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientRunError"/>
+		
+		<defineLocation id="ClientRunErrorBody" baseLocation="ClientRunError"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientRunErrorBody" location="ClientRunErrorBody"/>
+			
+		<template location="ClientRunErrorBody"><![CDATA[
+<%  var dialogInstance = lookupInstanceByName(instance.properties.waitDialog);
+	if (dialogInstance != null) { %>
+Remove${titleCase(dialogInstance.properties.name)}L();
+<% } %> ]]></template>
+
+		<templateGroup id="RunError" ifEvents="runError">
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CWebClientEngine& anEngine, 
+		TInt anError );
+]]>				</template>
+
+			<template id="InvokeHandler" location="ClientRunErrorBody">
+${event.handlerName}( anEngine, anError );
+			</template>
+
+			<defineLocation id="RunErrorHandler" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(CWebClientEngine&amp;, TInt))">
+				<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CWebClientEngine& /*anEngine*/, 
+		TInt /*anError*/ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+			</defineLocation>
+			<template id="RealizeHandler" location="RunErrorHandler"/>
+		</templateGroup>
+<!-- end ClientRunError -->
+
+<!-- begin ClientGetCredentials -->
+
+		<defineLocation id="ClientGetCredentials" baseLocation="MAIN_FILE"
+						owned="false"
+						location="function(${handlerClassName}::ClientGetCredentialsL(CWebClientEngine&amp;, const TUriC8&amp;, const TDesC8&amp;, TDes&amp;, TDes&amp;))">
+			<template><![CDATA[
+/**
+ * ClientGetCredentialsL()
+ * Called when authentication has been requested by the server.
+ * Return EFalse for no authentication or e.g. the user cancels
+ * an input dialog. Otherwise return the user name and password 
+ * as out parameters along with an ETrue result.
+ * @param aUri: the current URI
+ * @param aRealm: the realm associated with the request
+ * @param aUserName: the returned user name
+ * @param aPassword: the returned password
+ */		
+TBool ${className}::ClientGetCredentialsL( 
+		CWebClientEngine& anEngine, 
+		const TUriC8& aUri, 
+		const TDesC8& aRealm, 
+		TDes& aUsername, 
+		TDes& aPassword )
+	{
+	}
+]]>			</template>
+		</defineLocation>
+		<template location="ClientGetCredentials"/>
+		
+		<defineLocation id="ClientGetCredentialsBody" baseLocation="ClientGetCredentials"
+			owned="true" location="region(Generated Code)"/>
+		<template id="RealizeClientGetCredentialsBody" location="ClientGetCredentialsBody"/>
+			
+		<template location="ClientGetCredentialsBody"><![CDATA[
+<%  var queryInstance = lookupInstanceByName(instance.properties.credentialsQuery);
+	if (queryInstance != null) { %>
+TInt result = Run${titleCase(instance.properties.credentialsQuery)}L( aUsername, aPassword, ETrue );
+return result == EAknSoftkeyOk;
+<% } else {%>return EFalse;
+<% } %>]]> </template>
+
+<!-- end ClientGetCredentials -->
+
+		<defineLocation id="ISSUE_HTTP_GETL_METHOD" baseLocation="MAIN_FILE"
+					owned="true"
+					location="function(${className}::IssueHTTPGetL(const TDesC8*))">
+			<template><![CDATA[
+			
+/**
+ * Initiate the HTTP GET transaction. Progress and data will
+ * be provided through the MWebClientObserver callback methods.
+ * If configured in the UI Designer, the wait dialog is executed
+ * before returning.
+ * @param aUrl: if non-null this is used as the URL to fetch. Otherwise
+ * the URL configured in the UI Designer is used.
+ */	
+void ${className}::IssueHTTPGetL( const TDesC8* aUrl )
+	{
+<%  var dialogInstance = lookupInstanceByName(instance.properties.waitDialog);
+	if (dialogInstance != null) { %>
+	Execute${titleCase(dialogInstance.properties.name)}LD();
+<% } %>
+	if ( aUrl != NULL )
+		{
+		${instanceMemberName}->IssueHTTPGetL( *aUrl );
+		}
+<% if (instance.properties.defaultURL != null) { %>	else 
+		{
+		_LIT8( url, "${instance.properties.defaultURL}" );
+		${instanceMemberName}->IssueHTTPGetL( url );
+		}
+<% } %>
+	}
+]]>				</template>
+		</defineLocation>
+		<template id="RealizeHttpGetLMethod" location="ISSUE_HTTP_GETL_METHOD"/>
+	
+		<template mode="upgrade(1.0,1.1)" location="HEADER_FILE"><![CDATA[
+@@@ add unowned include
+  // ]]] end generated region [Generated Includes]
++ #include "WebClientEngine.h"
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ // Implementations of MWebClientObserver methods
++ void ClientOpenSessionFailedL( 
++ 		CWebClientEngine& anEngine, 
++ 		TInt anError );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientConnectingL( 
++ 		CWebClientEngine& anEngine );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientHeaderReceivedL( 
++ 		CWebClientEngine& anEngine, 
++ 		const TDesC& aHeaderData );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientBodyReceivedL( 
++ 		CWebClientEngine& anEngine, 
++ 		const TDesC8& aBodyData );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientConnectionCanceledL( 
++ 		CWebClientEngine& anEngine );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientResponseCompleteL( 
++ 		CWebClientEngine& anEngine );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientTransactionSucceededL( 
++ 		CWebClientEngine& anEngine );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientTransactionFailedL( 
++ 		CWebClientEngine& anEngine );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientUnknownEventL( 
++ 		CWebClientEngine& anEngine, 
++ 		TInt aStatus );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ void ClientRunErrorL( 
++ 		CWebClientEngine& anEngine, 
++ 		TInt anError );
+]]>			</template>
+			
+			<template mode="upgrade(1.0,1.1)" location="CLASS"><![CDATA[
+@@@ add unowned method declaration
+  protected:
++ TBool ClientGetCredentialsL( 
++ 		CWebClientEngine& anEngine, 
++ 		const TUriC8& aUri, 
++ 		const TDesC8& aRealm, 
++ 		TDes& aUsername, 
++ 		TDes& aPassword );
+]]>			</template>
+			
+
+		</sourceGen>
+	</component>		
+</componentDefinition>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Viewing Registers and Symbian OS Data">
+	<intro>
+		<description>
+		Read the following information to view registers and Symbian OS Data during a run mode debug session.
+		</description> 
+	</intro> 
+	
+	<item title="Viewing Registers" href="/com.nokia.carbide.cpp.doc.user/html/concepts/arm_registers.htm" >
+		<description>
+		Click question mark on right side for information about registers.
+		</description>
+	</item>
+
+	<item title="Viewing Symbian OS Data" href="/com.nokia.carbide.cpp.doc.user/html/reference/view_symbian_kernel.htm" >
+		<description>
+		Click question mark on right side for information about viewing Symbian OS Data such as processes, threads, chunks, and libraries.
+		</description>
+	</item>
+
+	<item title="Troubleshooting On-Device Debugging" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_troubleshooting.htm" >
+		<description>
+		Click question mark on right side for troubleshooting information.
+		</description>
+	</item>
+
+</cheatsheet>

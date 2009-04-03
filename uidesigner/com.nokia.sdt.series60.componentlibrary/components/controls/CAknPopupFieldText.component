@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CAknPopupFieldText"
+		baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		category="Controls"
+		instanceNameRoot="popupFieldText" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="POPUP_FIELD_TEXT" className="CAknPopupFieldText" />
+		<designerImages 
+			smallIconFile="CAknPopupFieldText_sm.png" 
+			largeIconFile="CAknPopupFieldText.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CAknPopupFieldText</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="rss-control-type-enum">EAknCtPopupFieldText</attribute>
+			<attribute key="editable-array-property">items</attribute>
+		</attributes>
+	
+		<properties>
+			<property name="maxLength" category="Data" type="integer" 
+				default="8"
+				descriptionKey="maxLengthDescription" 
+				/>
+			<property name="otherText" category="Data" type="localizedString"
+				descriptionKey="otherTextDescription" 
+			/>
+			<!-- S60 panics if a popup field text list is empty, so this will never be activated...
+			<property name="emptyText" category="Data" type="localizedString"/>
+			<componentReferenceProperty category="Data" scope="model" constraint="com.nokia.sdt.series60.StandardNote" name="emptyNote"/>
+			-->
+			<property name="invalidText" category="Data" type="localizedString"
+				descriptionKey="invalidTextDescription" 
+			/>
+			<enumProperty name="font" category="Appearance" 
+				type="com.nokia.sdt.series60.CEikonEnv.SystemFont"
+				descriptionKey="fontDescription" 
+			/>
+			<!--	breaks if turned off
+			<property name="showIndicators" category="Appearance" 
+				type="boolean" default="true"
+				descriptionKey="showIndicatorsDescription" 
+				/>
+			-->
+			<arrayProperty name="items" category="Data" 
+				type="localizedString" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.StringListEditorFactory"
+				descriptionKey="itemsDescription" 
+				/>
+			<property name="active" category="Data" type="integer"
+				descriptionKey="activeDescription" 
+			/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<!-- for form -->
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<script file="CAknPopupFieldText.js" prototype="CAknPopupFieldText"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="POPUP_FIELD_TEXT" headers="avkon.rh avkon.hrh">
+			<mapResourceMember struct="POPUP_FIELD" property="." member="popupfield">
+				<mapSimpleMember property="maxLength" member="width"/>
+				<mapSimpleMember property="otherText" member="other"/>
+				<!-- S60 panics if a popup field text list is empty, so this will never be activated...
+				<mapReferenceMember property="emptyNote" member="emptynote"/>
+				<mapSimpleMember property="emptyText" member="empty"/>
+				-->
+				<mapSimpleMember property="invalidText" member="invalid"/>
+			</mapResourceMember>
+			<select property="items">
+				<choice value="0">
+				<!-- don't emit for 0 items: this causes a panic -->
+				</choice>
+				<choice>
+					<mapResourceMember struct="ARRAY" property="." member="textarray" headers="badef.rh">
+						<mapArrayMember property="items" member="items">
+							<mapResourceElement struct="LBUF">
+								<mapSimpleMember property="." member="txt"/>
+							</mapResourceElement>
+						</mapArrayMember>
+					</mapResourceMember>
+				</choice>
+			</select>
+			<mapSimpleMember property="active" member="active"/>
+		</mapResource>
+	</sourceMapping>
+
+		<sourceGen forms="Dialog Container">
+	
+			<useTemplate ids="INIT_FROM_CONTAINER" />
+			<useTemplate ids="INIT_FROM_DIALOG" />
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+			<useTemplate ids="LAYOUT_CONTROLS" />
+
+			<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"aknpopupfieldtext.h", "eikenv.h" ]);
+			</inline>
+
+			<template phase="Initialize"><![CDATA[
+${instanceMemberName}->SetFont( iEikonEnv->${properties.font}() );
+]]>			</template>
+
+			<template phase="Initialize" form="Container">
+${instanceMemberName}->SetFormFieldRect( TRect( ${properties.location.x}, ${properties.location.y}, ${properties.size.width}, ${properties.size.height} ) );
+			</template>
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	</sourceGen>
+
+	</component>
+</componentDefinition>
+		

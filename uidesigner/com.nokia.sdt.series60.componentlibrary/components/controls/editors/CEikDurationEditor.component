@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikDurationEditor.Flags">
+		<property name="EEikTimeWithoutSecondsField" type="boolean"
+			descriptionKey="EEikTimeWithoutSecondsFieldDescription" />
+		<property name="EEikTimeWithoutHoursField" type="boolean"
+			descriptionKey="EEikTimeWithoutHoursFieldDescription" />
+	</compoundPropertyDeclaration>
+	
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikDurationEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="durationEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="DURATION_EDITOR" className="CEikDurationEditor" />
+		<designerImages 
+			smallIconFile="CEikDurationEditor_sm.png" 
+			largeIconFile="CEikDurationEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikDurationEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="data-model-cpp-type">TTimeIntervalSeconds</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="dataquery-className">CAknDurationQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EEikCtDurationEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<property category="Data" name="minDurationSeconds" type="integer" 
+				minValue="0" maxValue="86400" descriptionKey="minDurationSecondsDescription" />
+			<property category="Data" name="maxDurationSeconds" type="integer" default="86400" 
+				minValue="0" maxValue="86400" descriptionKey="maxDurationSecondsDescription" />
+			<property category="Data" name="durationSeconds" type="integer" minValue="0" maxValue="86400"
+				descriptionKey="durationSecondsDescription" />
+			<compoundProperty category="Data" name="flags" 
+				type="com.nokia.sdt.series60.CEikDurationEditor.Flags" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="flagsDescription"
+			/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikDurationEditor_visual.js" prototype="CEikDurationEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="DURATION_EDITOR" headers="eikon.rh">
+			<mapResourceMember struct="DURATION" property="." member="minDuration">
+				<mapSimpleMember property="minDurationSeconds" member="seconds"/>
+			</mapResourceMember>
+			<mapResourceMember struct="DURATION" property="." member="maxDuration">
+				<mapSimpleMember property="maxDurationSeconds" member="seconds" />
+			</mapResourceMember>
+			<mapBitmaskMember property="flags" member="flags">
+				<mapBitmaskValue properties="EEikTimeWithoutSecondsField" value="EEikTimeWithoutSecondsField" />
+				<mapBitmaskValue properties="EEikTimeWithoutHoursField" value="EEikTimeWithoutHoursField" />
+			</mapBitmaskMember>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuerySetData AknDataQuerySetData1 AknDataQuerySetData2">
+	
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+
+		<template phase="Initialize"><![CDATA[
+<% if (properties.minDurationSeconds > properties.durationSeconds ||
+	properties.maxDurationSeconds < properties.durationSeconds) {
+		error(formatString(lookupString("valueExceedsRange"), instanceName));
+}%>${instanceMemberName}->SetDuration( TTimeIntervalSeconds( ${properties.durationSeconds} ) );
+]]>		</template>
+		
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	aData = ${properties.durationSeconds};
+]]>		</template>
+
+		<template form="AknDataQuerySetData1" phase="SetData"><![CDATA[
+	aData1 = ${properties.durationSeconds};
+]]>		</template>
+
+		<template form="AknDataQuerySetData2" phase="SetData"><![CDATA[
+	aData2 = ${properties.durationSeconds};
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

@@ -1,0 +1,12 @@
+#include <myfoo.h>
+#define MY_TEST 4
+
+STRUCT FOO {
+	WORD v;
+}
+
+RESOURCE FOO r_test0
+	{
+	v = 42;
+	}
+

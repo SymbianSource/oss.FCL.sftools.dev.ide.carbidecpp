@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<introContent>
+
+	<extensionContent 
+		id="com.nokia.carbide.cpp.doc.user-tutorials" 
+		name="Carbide.c+ Development" 
+		alt-style="carbide.properties" 
+		style="carbide.css" 
+		path="tutorials/@">
+		
+		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
+		
+			<link 
+				label="Create an application emulator debug example" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_example.htm"  
+				id="carbide-sample" 
+				style-id="content-link">
+				<text>Learn how to create, build, and debug a program for the emulator called HelloCarbide using Carbide project templates.</text>
+			</link>
+			
+			<link 
+				label="Create a simple DLL example" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/concepts/SampleExampleProjectCreate.html"  
+				id="carbide-sample" 
+				style-id="content-link">
+				<text>Learn how to create a simple “Test1” DLL project.</text>
+			</link>
+			
+			<link 
+				label="Create a run mode debugging application" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_example_trk.htm"  
+				id="carbide-sample" 
+				style-id="content-link">
+				<text>Learn how create and build an application and debug it on a device using the App TRK on-device debug agent.</text>
+			</link>
+
+			<link 
+				label="Create a stop mode debugging application" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/stop_mode_debug.htm"  
+				id="carbide-sample" 
+				style-id="content-link">
+				<text>Learn how to create and build an application and debug it on a device using JTAG debug software on Lauterbach or Sophia hardware.</text>
+			</link>
+
+			<link 
+				label="Using soft attach for on-device debugging example" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/soft_attach_debug.htm"  
+				id="carbide-sample" 
+				style-id="content-link">
+				<text>Learn how to use soft attach to debug an image flashed to ROM or on a memory card.</text>
+			</link>
+			
+		</group>
+	</extensionContent>
+	
+</introContent>

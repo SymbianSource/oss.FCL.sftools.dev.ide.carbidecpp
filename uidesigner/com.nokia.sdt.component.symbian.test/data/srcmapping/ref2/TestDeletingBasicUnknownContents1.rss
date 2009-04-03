@@ -1,0 +1,13 @@
+#include <myfoo.h>
+#define MY_TEST 4
+
+#include <basicheader.rh>
+
+STRUCT FOO {
+	WORD v;
+}
+RESOURCE FOO r_test0
+	{
+	v = 42;
+	}
+

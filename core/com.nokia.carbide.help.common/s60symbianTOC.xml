@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="S60 SDKs for Symbian OS" >
+
+   <anchor id="anchorS60SDK" /> 	    		    <!-- SDK documentation -->
+   <anchor id="anchorCarbideExample" />     		<!-- Examples -->
+   <anchor id="anchorLegal" />              <!-- License info, copyright, trademarks, disclaimers, notices -->
+           
+</toc>

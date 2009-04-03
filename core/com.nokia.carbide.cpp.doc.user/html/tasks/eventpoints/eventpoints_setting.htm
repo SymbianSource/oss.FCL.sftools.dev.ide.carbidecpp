@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Setting a Conditional Eventpoint</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Setting a Conditional Eventpoint</h2>
+<p>Use the Condition column of the Breakpoints view to set a conditional eventpoint. A conditional eventpoint has an associated conditional expression. The debugger evaluates the expression to determine whether the eventpoint performs its specified action.</p>
+<p>A conditional eventpoint behaves in two different ways:</p>
+<ul>
+  <li>If the expression evaluates to <span class="code">true</span> (a non-zero value), the eventpoint performs its specified action.</li>
+  <li>If the expression evaluates to <span class="code">false</span> (a zero value), the eventpoint does not perform its specified action.</li>
+</ul>
+<div class="step">
+  <h4>To set a conditional eventpoint</h4>
+  <ol>
+    <li>Set an eventpoint that you want to associate with a conditional expression</li>
+    <li>Click Windows &gt; Show View &gt; Breakpoints</li>
+    <p>A Breakpoints view appears.</p>
+    <li>Find the eventpoint that you want to associate with a conditional expression</li>
+    <li>Double-click the Condition column in alignment with the eventpoint</li>
+    <li>Enter an expression in the Condition text box</li>
+    <p>During subsequent debugging sessions, the debugger evaluates the expression to determine whether the eventpoint performs its specified action.</p>
+  </ol>
+</div>
+<p class="note"><b>NOTE</b> Alternatively, drag-and-drop an expression from a source view or from the Expression view into the Breakpoints view.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

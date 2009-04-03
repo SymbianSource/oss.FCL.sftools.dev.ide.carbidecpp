@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>A # Not Followed by a Macro Argument</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>A # Not Followed by a Macro Argument</h3>
+<p>(ISO C, &sect;6.10.3) The C compiler can accept <span class="code">#</span> tokens that do not appear before arguments in macro definitions.</p>
+<div class="listing">
+  <h5>Listing 1. Preprocessor Macros Using # Without an Argument</h5>
+  <p>#define add1(x) #x #1 // OK, but probably not what you wanted:<br />
+    // add1(abc) creates &quot;abc&quot;#1<br />
+    #define add2(x) #x &quot;2&quot; // OK: add2(abc) creates &quot;abc2&quot;</p>
+</div>
+<p>To use this feature, disable the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting.</p>
+<p>See also &ldquo;Checking for Standard C and Standard C++ Conformity&rdquo;.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+#include <basicheader.rh>
+#include <refheader.rh>
+
+RESOURCE ONE_STRING r_test_refs_child
+	{
+	text = "check this textual data";
+	}
+RESOURCE OWNER r_test_refs_parent_child_ordering
+	{
+	theLink = r_test_refs_child;
+	}

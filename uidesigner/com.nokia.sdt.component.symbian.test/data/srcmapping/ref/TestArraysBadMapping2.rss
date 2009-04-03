@@ -1,0 +1,5 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_test5
+	{
+	}

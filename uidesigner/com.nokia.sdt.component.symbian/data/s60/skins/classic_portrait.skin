@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.nokia.com/sdt/ui/skin" 
+	name="S60 Low Resolution Portrait" width="258" height="259">
+	<editorArea x="38" y="10" width="176" height="208"/>
+</skin>

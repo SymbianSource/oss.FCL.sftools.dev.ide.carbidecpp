@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+<!-- no component definition here, just common compound property and enum types -->
+<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.layoutConfig.3.0">
+	<enumElement value="variable"/>
+	<enumElement value="classic_portrait"/>
+	<enumElement value="classic_landscape_right"/>
+	<enumElement value="qvga_portrait"/>
+	<enumElement value="qvga_landscape_right"/>
+	<enumElement value="dblres_portrait"/>
+	<enumElement value="dblres_landscape_right"/>
+</enumPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.locationProperty">
+	<property name="x" type="integer" minValue="-1000" maxValue="1000"
+		descriptionKey="xDescription" />
+	<property name="y" type="integer" minValue="-1000" maxValue="1000"
+		descriptionKey="yDescription" />
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.sizeProperty">
+	<property name="width" type="integer" minValue="0" maxValue="1000"
+		descriptionKey="widthDescription" />
+	<property name="height" type="integer" minValue="0" maxValue="1000"
+		descriptionKey="heightDescription" />
+</compoundPropertyDeclaration>
+
+<!-- note: we have internal dependencies on the name of this property
+	and of its fields -->
+<compoundPropertyDeclaration 
+	qualifiedName="com.nokia.sdt.symbian.imageProperty"
+	editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+	converterClass="com.nokia.sdt.symbian.images.SymbianImageValueConverter">
+	<property name="bmpfile" type="string" descriptionKey="bmpfileDescription" />
+	<property name="bmpid" type="string" descriptionKey="bmpidDescription" />
+	<property name="bmpmask" type="string" descriptionKey="bmpmaskDescription" />
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration 
+	qualifiedName="com.nokia.carbide.uiq.MbmImageProperty"
+	editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+	converterClass="com.nokia.sdt.symbian.images.SymbianImageValueConverter">
+	<property name="bmpfile" type="string" descriptionKey="bmpfileDescription" />
+	<property name="bmpid" type="string" descriptionKey="bmpidDescription" />
+	<property name="bmpmask" type="string" descriptionKey="bmpmaskDescription" />
+</compoundPropertyDeclaration>
+
+<compoundPropertyDeclaration 
+	qualifiedName="com.nokia.carbide.uiq.ImageProperty"
+	editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+	converterClass="com.nokia.sdt.symbian.images.UIQImageValueConverter">
+	<property name="bmpfile" type="string" descriptionKey="bmpfileDescription" />
+	<property name="bmpid" type="string" descriptionKey="bmpidDescription" />
+	<property name="bmpmask" type="string" descriptionKey="bmpmaskDescription" />
+	<property name="uri" type="string" descriptionKey="uriDescription" />
+	
+</compoundPropertyDeclaration>
+
+<!-- shared by all query dialogs -->
+<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.Query.tone">
+	<enumElement value="ENoTone"/>
+	<enumElement value="EConfirmationTone"/>
+	<enumElement value="EWarningTone"/>
+	<enumElement value="EErrorTone"/>
+</enumPropertyDeclaration>
+
+</componentDefinition>

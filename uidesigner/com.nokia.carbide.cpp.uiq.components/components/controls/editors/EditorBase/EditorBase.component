@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TGulBorder.TBorderType">
+		<enumElement value="ENone"/>
+    	<enumElement value="ESingleGray"/>
+    	<enumElement value="ESingleBlack"/>
+    	<enumElement value="ESingleDotted"/>
+    	<enumElement value="EShallowRaised "/>
+		<enumElement value="EShallowSunken"/>
+    	<enumElement value="EDeepRaised"/>
+    	<enumElement value="EDeepRaisedWithOutline"/>
+    	<enumElement value="EDeepSunken"/>
+    	<enumElement value="EDeepSunkenWithOutline"/>
+		<enumElement value="EThickDeepRaisedWithOutline "/>		
+		<enumElement value="EVerticalBar "/>	
+		<enumElement value="EHorizontalBar"/>						
+	</enumPropertyDeclaration>			
+							
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.EditorBase"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"			
+			version="1.0"
+			abstract="true">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0">
+		</symbian>	
+		
+		<!-- TQikLayoutHorizontalAlignment enum are the possible values for 
+			"TQikLayoutHorizontalAlignment-default" attribute -->
+		<attributes>
+			<attribute key="TQikLayoutHorizontalAlignment-default">EQikLayoutHAlignLeft</attribute>
+		</attributes>		
+		
+	</component>
+
+</componentDefinition>

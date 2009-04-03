@@ -1,0 +1,30 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+#include "output.hrh"
+
+RESOURCE DIALOG r_test_standalone
+	{
+	lines =
+		{
+		DIALOG_LINE_REF
+			{
+			id = EMyContainerTestStandaloneLabel1;
+			type = EEikCtLabel;
+			ref = r_test_standalone_label1_ref;
+			},
+		DIALOG_LINE_REF
+			{
+			id = EMyContainerTestStandaloneLabel2;
+			type = EEikCtLabel;
+			ref = r_test_standalone_label2_ref;
+			}
+		};
+	}
+RESOURCE LABEL r_test_standalone_label1_ref
+	{
+	text = "literal string 1";
+	}
+RESOURCE LABEL r_test_standalone_label2_ref
+	{
+	text = "literal string 2";
+	}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Intel x86 Pragmas" topic="html/pragmas_x86/pragmas_x86.htm">
+
+	<topic label="Pragma Syntax" href="html/pragmas/pragma_syntax.htm" /> 
+
+	<topic label="x86 Reference A-M" > 
+		<topic label="asm_fixup_dllimports" 	href="html/pragmas_x86/p_asm_fixup_dllimports.htm" /> 
+		<topic label="avoid_ebp" 				href="html/pragmas_x86/p_avoid_ebp.htm" /> 
+		<topic label="code_seg" 				href="html/pragmas_x86/p_code_seg.htm" /> 
+		<topic label="codeviewpro9compatible" 	href="html/pragmas_x86/p_codeviewpro9compatible.htm" /> 
+		<topic label="comment" 					href="html/pragmas_x86/p_comment.htm" /> 
+		<topic label="disable_stackalloc" 		href="html/pragmas_x86/p_disable_stackalloc.htm" /> 
+		<topic label="disableopts" 				href="html/pragmas_x86/p_disableopts.htm" /> 
+		<topic label="emit_local_scopes" 		href="html/pragmas_x86/p_emit_local_scopes.htm" /> 
+		<topic label="exceptions" 				href="html/pragmas_x86/p_exceptions.htm" /> 
+		<topic label="exceptions_synchronous" 	href="html/pragmas_x86/p_exceptions_synchronous.htm" /> 
+		<topic label="fill_stack" 				href="html/pragmas_x86/p_fill_stack.htm" /> 
+		<topic label="function" 				href="html/pragmas_x86/p_function.htm" /> 
+		<topic label="ieeefp" 					href="html/pragmas_x86/p_ieeefp.htm" /> 
+		<topic label="init_seg" 				href="html/pragmas_x86/p_init_seg.htm" /> 
+		<topic label="intrinsics_regabi" 		href="html/pragmas_x86/p_intrinsics_regabi.htm" /> 
+		<topic label="k63d" 					href="html/pragmas_x86/p_k63d.htm" /> 
+		<topic label="line_trace" 				href="html/pragmas_x86/p_line_trace.htm" /> 
+		<topic label="microsoft_exceptions" 	href="html/pragmas_x86/p_microsoft_exceptions.htm" /> 
+		<topic label="mmcalls" 					href="html/pragmas_x86/p_mmcalls.htm" /> 
+		<topic label="mmx" 						href="html/pragmas_x86/p_mmx.htm" /> 
+    </topic>
+
+	<topic label="x86 Reference O-X" > 
+		<topic label="overlap_locals" 			href="html/pragmas_x86/p_overlap_locals.htm" /> 
+		<topic label="pack" 					href="html/pragmas_x86/p_pack.htm" /> 
+		<topic label="peephole" 				href="html/pragmas_x86/p_peephole.htm" /> 
+		<topic label="register_coloring" 		href="html/pragmas_x86/p_register_coloring.htm" /> 
+		<topic label="scheduling" 				href="html/pragmas_x86/p_scheduling.htm" /> 
+		<topic label="sse" 						href="html/pragmas_x86/p_sse.htm" /> 
+		<topic label="sse2" 					href="html/pragmas_x86/p_sse2.htm" /> 
+		<topic label="stack_alignment" 			href="html/pragmas_x86/p_stack_alignment.htm" /> 
+		<topic label="struct_reg_return" 		href="html/pragmas_x86/p_struct_reg_return.htm" /> 
+		<topic label="symbian" 					href="html/pragmas_x86/p_symbian.htm" /> 
+		<topic label="ten_byte_long_double" 	href="html/pragmas_x86/p_ten_byte_long_double.htm" /> 
+		<topic label="use_cmov" 				href="html/pragmas_x86/p_use_cmov.htm" /> 
+		<topic label="use_extinst" 				href="html/pragmas_x86/p_use_extinst.htm" /> 
+		<topic label="use_fcmov" 				href="html/pragmas_x86/p_use_fcmov.htm" /> 
+		<topic label="use_frame" 				href="html/pragmas_x86/p_use_frame.htm" /> 
+		<topic label="volatile_asm" 			href="html/pragmas_x86/p_volatile_asm.htm" /> 
+		<topic label="warn_illegal_instructions" href="html/pragmas_x86/p_warn_illegal_instructions.htm" /> 
+		<topic label="x86_processor" 			href="html/pragmas_x86/p_x86_processor.htm" /> 
+    </topic>
+	
+</toc>

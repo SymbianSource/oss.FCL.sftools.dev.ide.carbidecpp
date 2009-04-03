@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Copying/Moving a UI Design into a Project</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Copying/Moving a UI Design into a Project</h2>
+
+<p>You can copy or move an existing UI design  into a UI Designer  enabled project. </p>
+<p class="note"><b>NOTE</b> A UI Designer enabled project contains an <span class="code">application.uidesign</span> file. If the project does not have an <span class="code">application.uidesign</span> file, use the<a href="task_uid_new_with_designer.htm"> S60 UI Design Wizard</a> to add one before attempting to copy or move another design into the project.</p>
+<p>Any UI design can be moved or copied between projects. However, simply dragging the <span class="code">.uidesign</span> file is not enough. You must also move or copy any additional files, like generated files and images, used by the UI design into the new project, update file and directory paths, and then inform the new project that the UI design is available. You may also need to manually add support into the project for Avkon View Switching. </p>
+<div class="step">
+<h4>Moving/Copying a UI Design into a Project</h4>
+
+<ol>
+<li>Locate the UI design in the  Project Explorer view to copy or move into another project</li>
+<li>Drag the UI design into the new project to move it, or Control-drag the UI design to copy it</li>
+<li>Locate all associated files (generated files, images, localization files, etc.) in the source project</li>
+  <li>Move or copy the associated files from the source project into the destination project </li>
+  <li>Update directory paths used by the generated files </li>
+  <p>If you are unsure what directories are targeted for the generated files, <a href="task_uid_select_editor.htm">open</a> the <span class="code">application.uidesign</span> file in a text editor and examine its entries. The places indicated in Figure 1 indicate the target directories where you should place the previously generated files.</p>
+<p align="center"><img src="../../images/ui_design_new-directories.png" alt="target directories" width="966" height="239" /></p>
+<p class="figure">Figure 1 -Locating the target directories in the source listing of the &quot;application.uidesign&quot; file </p>
+  <li><a href="../app_edit/task_uidesign_import.htm">Import</a> the UI design into the project</li>
+  <p>Use the Import feature on the <a href="../app_edit/task_uidesign.htm">UI Designs</a> page of the Application Editor to import the UI design into your project.</p>
+  <li>Fix the absolute path name(s) of the  image(s) in your project</li>
+  <p align="center"><img src="../../images/ui_design_copy_in_fix_image.png" alt="fix image" width="840" height="348" /></p>
+<p class="figure">Figure 2 -The &quot;multi-image file&quot; field of the image field of the Appearance property points to the mbmdef file </p>
+  <p>As shown in Figure 2, image properties contain the pathname of their associated mbmdef file. Copying these files into the project will not update this property automatically. Modify this property to point to the associated mbmdef file within the project that contains the image. </p>
+  <li>Add Avkon View Switching support to project (if not already enabled) </li>
+  <p>In addition, if the project was not already UI Designer enabled, you may need to manually edit some files to enable Avkon View Switching support in the project. This option is set automatically when creating a new UI Designer project but must be added manually for non-UI Designer projects.</p>
+  <ol type="a">
+    <li>Add Avkon View initialization code to &lt;ProjectName&gt;AppUi::ConstructL().</li>
+      <p>You must manually instantiate your view, and register it with the View Server.</p>
+      <p>Adopt the following code for your view's name, and add it to the <span class="code">ConstructL()</span> method of your <span class="code">&lt;ProjectName&gt;AppUi</span> class.</p>
+      <p class="listing">iMyView = CMyView::NewL();<br />
+        AddViewL( iMyView );<br />
+      SetDefaultViewL( *iMyView ); // if this view is the default</p>
+      <li>Add an enumerator for your view to the view id enumeration. </li>
+      <p>Open the <span class="code">&lt;ProjectName&gt;.hrh</span> file. It will look something like this:</p>
+      <p class="listing">/*<br />
+        ============================================================================<br />
+        Descriptive Information <br />
+        ============================================================================<br />
+        */<br />
+        #ifndef __UPDATEDPROJ_HRH__<br />
+        #define __UPDATEDPROJ_HRH__</p>
+      <p class="listing">// UpdatedProj enumerate command codes<br />
+        enum TUpdatedProjIds <br />
+        { <br />
+        ECommand1 = 0x6001, // start value must not be 0 <br />
+        ECommand2 <br />
+        } </p>
+      <p class="listing">// UpdatedProj view identifiers <br />
+        enum TUpdatedProjViewUids<br />
+        { <br />
+        EUpdatedViewUid = 1 <br />
+        }; </p>
+      <p class="listing">#endif // __UPDATEDPROJ_HRH__</p>
+      <p>You must manually edit this file to add a Uid for your view to the enumeration. Add your new identifier to the end of the list. After editing the file, it might look like this: </p>
+      <p class="listing">// UpdatedProj view identifiers <br />
+        enum TUpdatedProjViewUids <br />
+        { <br />
+        EUpdatedViewUid = 1, <br />
+        EMyDesignViewUid // UID for new view, named EViewUid<br />
+        };<br />
+        #endif // __UPDATEDPROJ_HRH__      </p>
+    </ol>
+  <blockquote>
+    <p>When you have completed these steps, the view-switching aspects of this design should build and operate successfully.</p>
+  </blockquote>
+</ol>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_s60_ui_designs.htm">UI Designs</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/uidesign/ref_ui_design_wizard.htm">UI Design Wizard</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

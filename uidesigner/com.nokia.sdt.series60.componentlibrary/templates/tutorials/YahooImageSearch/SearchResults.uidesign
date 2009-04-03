@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknView" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitle" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBA" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControl" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknListBox" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuBar" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuItem" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuItemBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.WebClient" version="1.1.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.NonLayoutBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.WaitDialog" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.SingleLineDataQuery" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.SingleLineDataQueryBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwin" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwinBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.EditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StandardNote" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">$(dataDir)</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">$(incDir)</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">$(sourceDir)</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">$(groupDir)</property>
+  <component id="com.nokia.sdt.series60.CAknView">
+    <property id="className">CSearchResultsView</property>
+    <compoundProperty id="location">
+      <property id="x">52</property>
+      <property id="y">45</property>
+    </compoundProperty>
+    <property id="optionsMenu" type="componentRef">optionsMenu</property>
+    <property id="name">SearchResultsView</property>
+    <compoundProperty id="size">
+      <property id="width">240</property>
+      <property id="height">320</property>
+    </compoundProperty>
+    <component id="com.nokia.sdt.series60.StatusPane">
+      <compoundProperty id="location">
+        <property id="x">20</property>
+      </compoundProperty>
+      <property id="name">statusPane</property>
+      <compoundProperty id="size">
+        <property id="width">204</property>
+        <property id="height">66</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.StatusPaneTitle">
+        <compoundProperty id="location">
+          <property id="x">56</property>
+        </compoundProperty>
+        <property id="name">title</property>
+        <property id="titleText" type="i18n">STR_SearchResultsView_1</property>
+        <compoundProperty id="size">
+          <property id="width">148</property>
+          <property id="height">43</property>
+        </compoundProperty>
+        <compoundProperty id="image"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.CBA">
+      <compoundProperty id="location">
+        <property id="y">288</property>
+      </compoundProperty>
+      <compoundProperty id="info"/>
+      <property id="name">controlPane</property>
+      <compoundProperty id="size">
+        <property id="width">240</property>
+        <property id="height">32</property>
+      </compoundProperty>
+    </component>
+    <component id="com.nokia.sdt.series60.CCoeControl">
+      <property id="initialFocus" type="componentRef">listBox</property>
+      <compoundProperty id="location">
+        <property id="y">66</property>
+      </compoundProperty>
+      <property id="className">CSearchResults</property>
+      <property id="name">SearchResults</property>
+      <compoundProperty id="size">
+        <property id="width">240</property>
+        <property id="height">222</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CAknListBox">
+        <property id="style">CAknDoubleStyleListBox</property>
+        <sequenceProperty id="alignmentInfo">
+          <element>Default</element>
+          <element>Default</element>
+        </sequenceProperty>
+        <compoundProperty id="size">
+          <property id="width">240</property>
+          <property id="height">222</property>
+        </compoundProperty>
+        <compoundProperty id="location"/>
+        <compoundProperty id="markIcon"/>
+        <sequenceProperty id="extraImages">
+          <compoundElement>
+            <property id="bmpfile">\resource\apps\$(baseName)_mbm.mbm</property>
+            <property id="bmpid">EMbm$(baseName$titlelower)_mbmList_icon</property>
+            <property id="bmpmask">EMbm$(baseName$titlelower)_mbmList_icon_mask</property>
+          </compoundElement>
+        </sequenceProperty>
+        <property id="name">listBox</property>
+        <eventBinding id="enterKeyPressed" handlerDisplay="HandleListBoxEnterKeyPressedL" handlerSymbol="cpp@$(sourceDir)//SearchResults.cpp/function(CSearchResults::HandleListBoxEnterKeyPressedL(CEikListBox*,TListBoxEvent))"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.MenuBar">
+      <compoundProperty id="location">
+        <property id="x">3</property>
+        <property id="y">248</property>
+      </compoundProperty>
+      <property id="name">optionsMenu</property>
+      <compoundProperty id="size">
+        <property id="height">40</property>
+        <property id="width">237</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.MenuPane">
+        <compoundProperty id="location"/>
+        <property id="name">menuPane1</property>
+        <compoundProperty id="size">
+          <property id="height">40</property>
+          <property id="width">237</property>
+        </compoundProperty>
+        <component id="com.nokia.sdt.series60.MenuItem">
+          <compoundProperty id="location">
+            <property id="x">5</property>
+            <property id="y">2</property>
+          </compoundProperty>
+          <property id="name">new_searchMenuItem</property>
+          <property id="text" type="i18n">STR_SearchResultsView_3</property>
+          <compoundProperty id="size">
+            <property id="width">222</property>
+            <property id="height">33</property>
+          </compoundProperty>
+          <eventBinding id="selected" handlerDisplay="HandleNew_searchMenuItemSelectedL" handlerSymbol="cpp@$(sourceDir)//SearchResultsView.cpp/function(CSearchResultsView::HandleNew_searchMenuItemSelectedL(TInt))"/>
+        </component>
+        <component id="com.nokia.sdt.series60.MenuItem">
+          <compoundProperty id="location">
+            <property id="x">5</property>
+            <property id="y">35</property>
+          </compoundProperty>
+          <property id="name">infoMenuItem</property>
+          <property id="text" type="i18n">STR_SearchResultsView_8</property>
+          <compoundProperty id="size">
+            <property id="width">222</property>
+            <property id="height">33</property>
+          </compoundProperty>
+          <eventBinding id="selected" handlerDisplay="HandleInfoMenuItemSelectedL" handlerSymbol="cpp@$(sourceDir)//SearchResultsView.cpp/function(CSearchResultsView::HandleInfoMenuItemSelectedL(TInt))"/>
+        </component>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.WebClient">
+      <property id="waitDialog" type="componentRef">waitDialog</property>
+      <property id="name">webClient</property>
+      <property id="defaultURL"></property>
+      <eventBinding id="bodyReceived" handlerDisplay="HandleWebClientBodyReceivedL" handlerSymbol="cpp@$(sourceDir)//SearchResultsView.cpp/function(CSearchResultsView::HandleWebClientBodyReceivedL(CWebClientEngine&amp;, TDesC8&amp;))"/>
+      <eventBinding id="transactionFailed" handlerDisplay="HandleWebClientTransactionFailedL" handlerSymbol="cpp@$(sourceDir)//SearchResultsView.cpp/function(CSearchResultsView::HandleWebClientTransactionFailedL(CWebClientEngine&amp;))"/>
+      <eventBinding id="transactionSucceeded" handlerDisplay="HandleWebClientTransactionSucceededL" handlerSymbol="cpp@$(sourceDir)//SearchResultsView.cpp/function(CSearchResultsView::HandleWebClientTransactionSucceededL(CWebClientEngine&amp;))"/>
+    </component>
+    <component id="com.nokia.sdt.series60.WaitDialog">
+      <property id="canceledHandlerCode">iWebClient-&gt;CancelTransactionL();</property>
+      <compoundProperty id="location">
+        <property id="x">0</property>
+        <property id="y">171</property>
+      </compoundProperty>
+      <property id="name">waitDialog</property>
+      <property id="text" type="i18n">STR_SearchResultsView_2</property>
+      <compoundProperty id="size">
+        <property id="width">240</property>
+        <property id="height">149</property>
+      </compoundProperty>
+      <eventBinding id="canceled" handlerDisplay="HandleWaitDialog1CanceledL" handlerSymbol="cpp@$(sourceDir)//SearchResultsView.cpp/function(CSearchResultsView::HandleWaitDialog1CanceledL(CAknProgressDialog*))"/>
+    </component>
+    <component id="com.nokia.sdt.series60.SingleLineDataQuery">
+      <compoundProperty id="location">
+        <property id="y">185</property>
+      </compoundProperty>
+      <property id="name">searchPrompt</property>
+      <property id="text" type="i18n">STR_SearchResultsView_4</property>
+      <compoundProperty id="size">
+        <property id="width">240</property>
+        <property id="height">135</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CEikEdwin">
+        <compoundProperty id="size">
+          <property id="width">200</property>
+          <property id="height">34</property>
+        </compoundProperty>
+        <compoundProperty id="avkonFlags"/>
+        <compoundProperty id="location">
+          <property id="x">15</property>
+          <property id="y">44</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="allowedCaseModes"/>
+        <property id="name">edit1</property>
+        <property id="text" type="i18n">STR_SearchResultsView_5</property>
+        <compoundProperty id="allowedInputModes"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.StandardNote">
+      <compoundProperty id="location">
+        <property id="x">8</property>
+        <property id="y">171</property>
+      </compoundProperty>
+      <property id="name">attribution</property>
+      <property id="text" type="i18n">STR_SearchResultsView_6</property>
+      <compoundProperty id="size">
+        <property id="width">227</property>
+        <property id="height">114</property>
+      </compoundProperty>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_SearchResultsView_1">Yahoo! Images</string>
+      <string id="STR_SearchResultsView_2">Please wait...</string>
+      <string id="STR_SearchResultsView_3">New search</string>
+      <string id="STR_SearchResultsView_4">Search for:</string>
+      <string id="STR_SearchResultsView_5">Nokia</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="edit1" rsrcId="text">r_search_results_edit1</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_search_results_status_pane</resourceMapping>
+      <resourceMapping instanceName="optionsMenu">r_search_results_options_menu</resourceMapping>
+      <resourceMapping instanceName="listBox">r_search_results_list_box</resourceMapping>
+      <resourceMapping instanceName="SearchResultsView">r_search_results_search_results_view</resourceMapping>
+      <resourceMapping instanceName="waitDialog">r_search_results_wait_dialog</resourceMapping>
+      <resourceMapping instanceName="searchPrompt">r_search_results_search_prompt</resourceMapping>
+      <resourceMapping instanceName="title">r_search_results_title_resource</resourceMapping>
+      <resourceMapping instanceName="menuPane1">r_search_results_menu_pane1_menu_pane</resourceMapping>
+      <resourceMapping instanceName="attribution">r_search_results_attribution</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="new_searchMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ESearchResultsViewNew_searchMenuItemCommand</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="waitDialog" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">ESearchResultsViewWaitDialog</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">ESearchResultsViewEdit1</enumMapping>
+      <enumMapping instanceName="infoMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ESearchResultsViewInfoMenuItemCommand</enumMapping>
+      <enumMapping instanceName="SearchResultsView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">ESearchResultsViewId</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+      <enumMapping instanceName="listBox" propertyId="type">EAknListBoxSelectionList</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="[parent].type">EDataLayout</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
+    </enumMappings>
+    <arrayMappings>
+      <arrayMapping instanceName="searchPrompt" propertyId="." memberId="items">
+        <arrayElement uniqueValue="ESearchResultsViewEdit1">edit1</arrayElement>
+      </arrayMapping>
+    </arrayMappings>
+  </sourceMappingState>
+</designerData>

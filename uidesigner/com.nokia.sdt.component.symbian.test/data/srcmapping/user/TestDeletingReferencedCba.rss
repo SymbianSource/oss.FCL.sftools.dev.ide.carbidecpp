@@ -1,0 +1,21 @@
+#include <cba.rh>
+#include "output.hrh"
+
+RESOURCE EIK_APP_INFO r_testcbaholder_custom
+	{
+	cba = r_testcba_custom;
+	}
+RESOURCE CBA r_testcba_custom
+	{
+	buttons = { r_testcba_custom_buttons_0, r_testcba_custom_buttons_1 };
+	}
+RESOURCE CBA_BUTTON r_testcba_custom_buttons_0
+	{
+	id = EAknSoftkeyOptions;
+	txt = "Options";
+	}
+RESOURCE CBA_BUTTON r_testcba_custom_buttons_1
+	{
+	id = EMyContainerTestCBA_CustomRightId;
+	txt = "Snork";
+	}

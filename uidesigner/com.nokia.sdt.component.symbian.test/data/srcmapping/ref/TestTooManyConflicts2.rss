@@ -1,0 +1,302 @@
+#include <basicheader.rh>
+
+RESOURCE RECT r_test0
+	{
+	}
+RESOURCE RECT r_test0_2
+	{
+	}
+RESOURCE RECT r_test0_3
+	{
+	}
+RESOURCE RECT r_test0_4
+	{
+	}
+RESOURCE RECT r_test0_5
+	{
+	}
+RESOURCE RECT r_test0_6
+	{
+	}
+RESOURCE RECT r_test0_7
+	{
+	}
+RESOURCE RECT r_test0_8
+	{
+	}
+RESOURCE RECT r_test0_9
+	{
+	}
+RESOURCE RECT r_test0_10
+	{
+	}
+RESOURCE RECT r_test0_11
+	{
+	}
+RESOURCE RECT r_test0_12
+	{
+	}
+RESOURCE RECT r_test0_13
+	{
+	}
+RESOURCE RECT r_test0_14
+	{
+	}
+RESOURCE RECT r_test0_15
+	{
+	}
+RESOURCE RECT r_test0_16
+	{
+	}
+RESOURCE RECT r_test0_17
+	{
+	}
+RESOURCE RECT r_test0_18
+	{
+	}
+RESOURCE RECT r_test0_19
+	{
+	}
+RESOURCE RECT r_test0_20
+	{
+	}
+RESOURCE RECT r_test0_21
+	{
+	}
+RESOURCE RECT r_test0_22
+	{
+	}
+RESOURCE RECT r_test0_23
+	{
+	}
+RESOURCE RECT r_test0_24
+	{
+	}
+RESOURCE RECT r_test0_25
+	{
+	}
+RESOURCE RECT r_test0_26
+	{
+	}
+RESOURCE RECT r_test0_27
+	{
+	}
+RESOURCE RECT r_test0_28
+	{
+	}
+RESOURCE RECT r_test0_29
+	{
+	}
+RESOURCE RECT r_test0_30
+	{
+	}
+RESOURCE RECT r_test0_31
+	{
+	}
+RESOURCE RECT r_test0_32
+	{
+	}
+RESOURCE RECT r_test0_33
+	{
+	}
+RESOURCE RECT r_test0_34
+	{
+	}
+RESOURCE RECT r_test0_35
+	{
+	}
+RESOURCE RECT r_test0_36
+	{
+	}
+RESOURCE RECT r_test0_37
+	{
+	}
+RESOURCE RECT r_test0_38
+	{
+	}
+RESOURCE RECT r_test0_39
+	{
+	}
+RESOURCE RECT r_test0_40
+	{
+	}
+RESOURCE RECT r_test0_41
+	{
+	}
+RESOURCE RECT r_test0_42
+	{
+	}
+RESOURCE RECT r_test0_43
+	{
+	}
+RESOURCE RECT r_test0_44
+	{
+	}
+RESOURCE RECT r_test0_45
+	{
+	}
+RESOURCE RECT r_test0_46
+	{
+	}
+RESOURCE RECT r_test0_47
+	{
+	}
+RESOURCE RECT r_test0_48
+	{
+	}
+RESOURCE RECT r_test0_49
+	{
+	}
+RESOURCE RECT r_test0_50
+	{
+	}
+RESOURCE RECT r_test0_51
+	{
+	}
+RESOURCE RECT r_test0_52
+	{
+	}
+RESOURCE RECT r_test0_53
+	{
+	}
+RESOURCE RECT r_test0_54
+	{
+	}
+RESOURCE RECT r_test0_55
+	{
+	}
+RESOURCE RECT r_test0_56
+	{
+	}
+RESOURCE RECT r_test0_57
+	{
+	}
+RESOURCE RECT r_test0_58
+	{
+	}
+RESOURCE RECT r_test0_59
+	{
+	}
+RESOURCE RECT r_test0_60
+	{
+	}
+RESOURCE RECT r_test0_61
+	{
+	}
+RESOURCE RECT r_test0_62
+	{
+	}
+RESOURCE RECT r_test0_63
+	{
+	}
+RESOURCE RECT r_test0_64
+	{
+	}
+RESOURCE RECT r_test0_65
+	{
+	}
+RESOURCE RECT r_test0_66
+	{
+	}
+RESOURCE RECT r_test0_67
+	{
+	}
+RESOURCE RECT r_test0_68
+	{
+	}
+RESOURCE RECT r_test0_69
+	{
+	}
+RESOURCE RECT r_test0_70
+	{
+	}
+RESOURCE RECT r_test0_71
+	{
+	}
+RESOURCE RECT r_test0_72
+	{
+	}
+RESOURCE RECT r_test0_73
+	{
+	}
+RESOURCE RECT r_test0_74
+	{
+	}
+RESOURCE RECT r_test0_75
+	{
+	}
+RESOURCE RECT r_test0_76
+	{
+	}
+RESOURCE RECT r_test0_77
+	{
+	}
+RESOURCE RECT r_test0_78
+	{
+	}
+RESOURCE RECT r_test0_79
+	{
+	}
+RESOURCE RECT r_test0_80
+	{
+	}
+RESOURCE RECT r_test0_81
+	{
+	}
+RESOURCE RECT r_test0_82
+	{
+	}
+RESOURCE RECT r_test0_83
+	{
+	}
+RESOURCE RECT r_test0_84
+	{
+	}
+RESOURCE RECT r_test0_85
+	{
+	}
+RESOURCE RECT r_test0_86
+	{
+	}
+RESOURCE RECT r_test0_87
+	{
+	}
+RESOURCE RECT r_test0_88
+	{
+	}
+RESOURCE RECT r_test0_89
+	{
+	}
+RESOURCE RECT r_test0_90
+	{
+	}
+RESOURCE RECT r_test0_91
+	{
+	}
+RESOURCE RECT r_test0_92
+	{
+	}
+RESOURCE RECT r_test0_93
+	{
+	}
+RESOURCE RECT r_test0_94
+	{
+	}
+RESOURCE RECT r_test0_95
+	{
+	}
+RESOURCE RECT r_test0_96
+	{
+	}
+RESOURCE RECT r_test0_97
+	{
+	}
+RESOURCE RECT r_test0_98
+	{
+	}
+RESOURCE RECT r_test0_99
+	{
+	}
+RESOURCE RECT r_test0_100
+	{
+	}

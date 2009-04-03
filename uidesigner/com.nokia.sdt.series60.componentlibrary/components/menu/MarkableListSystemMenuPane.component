@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.SystemMenuPane" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.MarkableListSystemMenuPane" 
+		category="Menu"
+		instanceNameRoot="menuPane"
+		version="1.0">
+
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikMenuPane" classHelpTopic=""
+			resourceType="MENU_PANE" resourceHelpTopic="" />
+
+		<designerImages smallIconFile="SystemMenuPane_sm.png" 
+			largeIconFile="SystemMenuPane.png"/>
+
+		<attributes>
+			<attribute key="not-in-toolbox">false</attribute>
+			<attribute key="fixed-child-order">true</attribute>
+		</attributes>
+		
+		<propertyOverrides>
+			<propertyOverride name="systemMenuResource" readOnly="true" />
+		</propertyOverrides>
+		
+		<implementations>
+			<implementation>
+				<!-- this adds the four menu items and sets the systemResourceName -->
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer" />
+				<code class="com.nokia.sdt.series60.component.MarkableListSystemMenuPaneInitializerFactory"/>
+			</implementation>
+		</implementations>
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Inspecting header/source Files</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Inspecting header/source Files</h2>
+
+<p> The UI Designer stores the information it uses to generate files in the <b>application.uidesign</b> file and an individually named <b>xxx.uidesign</b> file for each UI Design you create.</p>
+<p> As you create objects within your UI Designs and save the associated .uidesign files, the UI Designer generates the code needed to instantiate, display, and respond to events.</p>
+<p>The UI Designer follows a well-defined algorithm for creating the generated file's names. This algorithm uses the name of the UI Design plus additional standard terms and file extensions.</p>
+<p>The UI Designer code generator adheres to best programming practices for creating S60 
+and UIQ code and supporting files. You can expect the generated code to appear in the same place within the generated files that a typical developer would place it if he/she were creating the associated files manually.</p>
+<p><b>Example for S60:</b></p>
+<p>If your application is named <b>MyProgram</b>, the associated application level generated files would be named:</p>
+<ul>
+<li>MyProgramApplication.cpp</li>
+<li>MyProgramAppUI.cpp</li>
+<li>MyProgramDocument.cpp</li>
+<li>MyProgram.hrh</li>
+<li>MyProgram.pan </li>
+<li>MyProgramApplication.h</li>
+<li>MyProgramAppUI.h</li>
+<li>MyProgramDocument.h</li>
+</ul>
+<p>If your application contains a UI Design  named <b>MyDesign</b>, the associated generated files would be named:</p>
+<ul>
+<li>MyDesign.cpp</li>
+<li>MyDesignView.cpp</li>
+<li>MyDesign.h</li>
+<li>MyDesign.hrh</li>
+<li>MyDesignView.h</li>
+</ul>
+<p>In addition, the following resource files may also be generated:</p>
+<ul>
+  <li>MyDesign.loc</li>
+  <li>MyDesign.rls</li>
+  <li>MyDesign.rss</li>
+  <li>MyDesign.rssi</li>
+</ul>
+<p><b>Example for UIQ:</b></p>
+<p>If your application is named <b>MyProject</b> (Multipage type) the associated application level generated files would be named:</p>
+<ul>
+<li>MyProjectApplication.cpp</li>
+<li>MyProjectAppUI.cpp</li>
+<li>MyProjectDocument.cpp</li>
+<li>MyProjectMultiPageView.cpp</li>
+<li>MyProject.hrh</li>
+<li>MyProjectApplication.h</li>
+<li>MyProjectApplicationExternalInterface.h</li>
+<li>MyProjectAppUi.h</li>
+<li>MyProjectDocument.h</li>
+<li>MyProjectMultiPageView.h</li>
+<li>MyProjectMultiPageView.hrh</li>
+</ul>
+<p>If your application contains a UI Design named <b>MyDesign</b>, the 
+associated generated files would be named:</p>
+<ul>
+<li>MyDesign.cpp</li>
+<li>MyDesign.loc</li>
+<li>MyDesign.rss</li>
+<li>MyDesign.h</li>
+<li>MyDesign.hrh</li>
+</ul>
+<p>In addition, the following resource files may also be generated:</p>
+<ul>
+  <li>MyProject.loc</li>
+	<li>MyProjectMultiPageView.loc</li>
+  <li>MyProject.rls</li>
+  <li>MyProject.rss</li>
+  <li>MyProject.rssi</li>
+	<li>MyProject_reg.loc</li>
+	<li>MyProject_reg.rss</li>
+</ul>
+<p>Use the standard Carbide.c++ editing protocols to examine the contents of any of these files. Before editing their content, be aware of the restrictions that apply and possible side-effect that can occur if you <a href="../generate/task_gen_mod.htm">modify</a> any generated files.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

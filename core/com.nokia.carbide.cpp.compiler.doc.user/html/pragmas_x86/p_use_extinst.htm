@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>use_extinst</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>use_extinst</h3>
+<p>  Controls the code generator&rsquo;s use of processor-specific instructions.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma use_extinst on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>When off, all compiler generated code is targeted to run on a 486 processor with the exception of any inline assembly which may explicitly use newer instructions.</p>
+  <p>When on, the compiler uses instructions corresponding to the target processor whenever possible.</p>
+  <p class="note"><strong>NOTE</strong> Some instruction subsets, like AMD 3DNow!, Intel&rsquo;s MMX, and Intel&rsquo;s SSE and SSE-2 instruction sets are generated only when additional options are activated.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

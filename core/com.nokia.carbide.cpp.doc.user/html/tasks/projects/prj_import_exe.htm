@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Importing a Symbian Executable</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Importing a Symbian Executable</h2>
+<p>Use the <b>File &gt; Import &gt; Symbian OS Executable</b> feature to import an executable into the <a href="../../reference/view_executables.htm">Executables</a> view and debug it. This is useful when the binary is not part of any project in the workspace. An example of this may be a library that is called from an mmp file.  The binary must be built with the same build configuration as the current build configuration that is being used (compiler must be the same). </p>
+<p class="note"><b>NOTE</b> You also need the symbolics (.sym) file for debugging  ARM build configurations.</p>
+<p class="note"><b>NOTE</b> Binaries built by the project can be debugged by selecting executables to debug in the Executable tab of the launch configuration Debug window.</p>
+<div class="step">
+  <h4>To import a Symbian Executable </h4>
+  <ol>
+    <li>Select the File &gt; Import... menu item</li>
+   <p>The Import  window appears (Figure 1). </p>
+   <p align="center"><img src="images/wnd_import_executable_01.png" width="403" height="469" /></p>
+   <p class="figure">Figure 1 - Import window</p>
+   <li>Expand Symbian OS and select Symbian OS Executable in the list, then click Next</li>
+   <p>The Import Executable window appears (Figure 2). </p>
+    <li>Enter the executable name in the Select Executable field or click Browse to locate the executable </li>
+    <p>Use the <b>Select executable</b> field to choose a single executable or <b>Search directory</b> field to select one or more Symbian executables to import from the specified directory.</p>
+    <p align="center"><img src="images/wnd_import_executable_02.png" width="473" height="491" /></p>
+   <p class="figure">Figure 2 - Import Executable window</p>
+    <li>Click Finish</li>
+    <p>The IDE imports the Symbian executable and displays it in the Executables view  (figure 3).</p>
+    <p align="center"><img src="images/wnd_import_executable_06.png" width="677" height="164" /></p>
+    <p class="figure">Figure 3 - Executables view showing executable and source files </p>
+    <p>The new project is listed under the <a href="../../reference/view_cpp_projects.htm">Project Explorer</a> view, as shown in Figure 4.</p>
+    <p align="center"><img src="images/wnd_import_executable_05.png" width="252" height="206" /></p>
+    <p class="figure">Figure 4 - New executable listed</p>
+  </ol>
+</div>
+<h5>Related concepts</h5>
+  <ul>
+    <li><a href="../../concepts/Projects.html">Projects</a></li>
+    <li><a href="../../concepts/Modify.html">Project Resources</a> </li>
+  </ul>
+  <h5>Related tasks</h5>
+  <ul><li><a href="../ImportingProjects.html">Importing Projects</a></li>
+    <li><a href="../ImportingProjects.html">Importing BLD.INF Files</a></li>
+    <li><a href="prj_debug_rom.htm">Debugging in ROM</a></li>
+  </ul>
+  <h5>Related references </h5>
+  <ul>
+    <li><a href="../../reference/ProjectDirectories.html">Project Directories</a></li>
+    <li><a href="../../reference/view_executables.htm">Executables view</a> </li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

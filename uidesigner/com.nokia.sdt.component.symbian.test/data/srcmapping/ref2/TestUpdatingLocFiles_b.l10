@@ -1,0 +1,6 @@
+// greeting
+#define STR_1 "Heya"
+#define STR_2 "Goodbye" /* later */
+#define STR_5 "TODO"
+#define STR_10 "fourteen"
+// localized strings for language: American English (10)

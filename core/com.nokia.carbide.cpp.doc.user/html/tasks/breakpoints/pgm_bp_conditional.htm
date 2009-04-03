@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Setting Conditional Breakpoints</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Setting Conditional Breakpoints or Watchpoints </h2>
+<p>You create a conditional (temporary) breakpoint or watchpoint in the<b> Properties for C/C++ breakpoint </b>dialog. Right-click a breakpoint or watchpoint in the <a href="../../reference/view_breakpoints.htm">Breakpoints</a> view, then select <b>Properties</b> from the context menu. A conditional breakpoint or watchpoint has an associated conditional expression.  The debugger evaluates the expression to determine whether to halt program execution at that breakpoint.</p>
+<p>A conditional breakpoint or watchpoint behaves in two different ways:</p>
+<ul>
+  <li>If the expression evaluates to <span class="code">true</span> (a non-zero value), the debugger halts program execution.</li>
+  <li>If the expression evaluates to <span class="code">false</span> (a zero value), program execution continues without stopping.</li>
+</ul>
+<p align="center"><img src="images/wnd_breakpoint_properties.png" width="581" height="540" /></p>
+<p class="figure"><span class="figure">Figure 1 </span><b>Properties for C/C++ - breakpoint</b> window </p>
+<div class="step">
+  <h4>To set a conditional breakpoint</h4>
+  <ol>
+    <li>Find the breakpoint or watchpoint in the Breakpoints view
+      <ul>
+        <li>If the breakpoint is  already set, then continue</li>
+        <li>If the breakpoint is not set, set it in the source code now </li>
+      </ul>
+    </li>
+    <li>Right-click the breakpoint and select Properties on the  context menu </li>
+    <p>The <b>Properties for C/C++ - breakpoint</b> dialog appears (Figure 1). The Common panel is shown by default. </p>
+    <li>Enter an condition in the Condition text box</li>
+    <p>When entering a condition use the format: <span class="code">Variable &lt;operator&gt; value</span>. For example, <span class="code">iCount == 5</span>. </p>
+     <li>Enter an ignore count value in the Ignore count text box (optional) </li>
+     <p>The Ignore count specifies how many times the breakpoint or watchpoint hits the condition before execution stops. The default setting is zero, which means  the first time the breakpoint is hit, execution halts. For example, to stop at the breakpoint on the second time it is hit, enter an Ignore count of 1. </p>
+   <li>Click OK </li>
+    <p>During subsequent debugging sessions, the debugger evaluates the expression to determine whether to halt program execution at the conditional breakpoint.</p>
+  </ol>
+</div>
+<p>For more information on marker bar icons, see <b>C/C++ Development User Guide &gt; Concepts &gt; Debug &gt; Breakpoints</b>.</p>
+<h5>Related concepts</h5>
+  <ul>
+    <li><a href="../../concepts/breakpoints.htm">Breakpoints</a></li>
+  </ul>
+  <h5>Related tasks</h5>
+  <ul>
+    <li><a href="pgm_bp_setting.htm">Setting Breakpoints</a></li>
+    <li><a href="pgm_bp_disable.htm">Disabling Breakpoints</a></li>
+    <li><a href="pgm_bp_clearing.htm">Removing Breakpoints</a></li>
+  </ul>
+  <h5>Related references </h5>
+  <ul>
+    <li><a href="../../reference/view_breakpoints.htm">Breakpoints view</a></li></ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

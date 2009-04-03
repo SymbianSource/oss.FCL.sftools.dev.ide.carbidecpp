@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>f - Display Kernel Fault Information</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head2">
+  <h2>f - Display Kernel Fault
+Information</h2>
+</div><div>
+<p>This command displays information about the the kernel fault that
+caused the debugger to be entered. The information has the following
+format.</p>
+<p class="listing">Fault Category: Exception  Fault Reason: 10000000<br>
+  ExcId 00000001 CodeAddr ffe0016c DataAddr 80000001 Extra 00000013<br>Exc 1 Cpsr=68000010 FAR=80000001 FSR=00000013<br>&nbsp;R0=00000000  R1=00000000  R2=30000000  R3=80000001<br>&nbsp;R4=00000001  R5=00403d68  R6=00002000  R7=00000000<br>&nbsp;R8=00000000  R9=00000000 R10=00000000 R11=00403fa0<br>R12=00403d34 R13=00403d48 R14=500d41e8 R15=ffe0016c<br>R13Svc=81716000 R14Svc=500480b8 SpsrSvc=20000010</p>
+<p>Notes:</p>
+<ul>
+<li>
+<p>R15 is the program counter</p>
+</li>
+<li>
+<p>R14 is the link register, </p>
+</li>
+<li>
+<p>R13 is the stack pointer</p>
+</li>
+</ul>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="CrashDebuggerUsingCommandSyntax.guide.html">Debug Monitor</a></li>
+</ul>
+<h5>Related references</h5>
+<ul><li><a href="CrashDebugger_cmd.guide.html">Crash Debugger Commands</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

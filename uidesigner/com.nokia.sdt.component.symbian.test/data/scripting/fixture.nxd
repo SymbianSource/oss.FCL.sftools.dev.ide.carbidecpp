@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+  <component id="com.nokia.examples.base">
+      <property id="name">obj0</property>
+   	  <compoundProperty id="size">
+   	  	<property id="width">100</property>
+   	  	<property id="height">200</property>
+   	  </compoundProperty>
+
+	  <component id="com.nokia.examples.base">
+	      <property id="name">obj1</property>
+	   	  <compoundProperty id="size">
+	   	  	<property id="width">10</property>
+	   	  	<property id="height">20</property>
+	   	  </compoundProperty>
+
+		  <component id="com.nokia.examples.base">
+		      <property id="name">obj2</property>
+		   	  <compoundProperty id="size">
+		   	  	<property id="width">1</property>
+		   	  	<property id="height">2</property>
+		   	  </compoundProperty>
+		  </component>  
+
+	  </component>  
+
+	  <component id="com.nokia.examples.derived">
+	      <property id="name">objD</property>
+	   	  <compoundProperty id="size">
+	   	  	<property id="width">5</property>
+	   	  	<property id="height">6</property>
+	   	  </compoundProperty>
+	  </component>  
+	
+	  <component id="com.nokia.test.arrayTest">
+	      <property id="name">emptyTest</property>
+	  </component>  
+
+	  <component id="com.nokia.test.arrayTest">
+	      <property id="name">arrayTest</property>
+	      <sequenceProperty id="ints">
+	      	<element>2</element>
+	      	<element>3</element>
+	      	<element>5</element>
+	      </sequenceProperty>
+	      <sequenceProperty id="strs">
+	      	<element>One</element>
+	      	<element>Two</element>
+	      </sequenceProperty>
+	      <sequenceProperty id="foos">
+	      	<compoundElement>
+	      		<property id="f1">456</property>
+	      		<property id="f2">true</property>
+	      	</compoundElement>
+	      </sequenceProperty>
+	      
+	  </component>  
+
+	  <component id="com.nokia.examples.base">
+	      <property id="name">event0</property>
+	      <property id="className">MyClass</property>
+	      <eventBinding id="eventChanged" handlerDisplay="HandleThingyChanged"
+	      	handlerSymbol="MyClass::HandleThingyChanged" />
+	      
+	  </component>
+
+	  <component id="com.nokia.examples.derived">
+	      <property id="name">event1</property>
+	      <property id="className">MyClass</property>
+	      <eventBinding id="eventCreated" handlerDisplay="SuperFunction"
+	      	handlerSymbol="MyClass::SuperFunction" />
+	      <eventBinding id="eventFrobbed" handlerDisplay="HandleThingyFrobbed"
+	      	handlerSymbol="MyClass::HandleThingyFrobbed" />
+	      
+	  </component>
+  
+  </component>  
+</designerData>

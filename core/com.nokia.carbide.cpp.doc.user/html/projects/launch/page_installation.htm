@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Installation page</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Installation page</h2>
+<p>The  <b>Installation</b> page specifies the .sis file to install on the target device when using <a href="run_mode.htm">Application TRK</a>. This is required when using the TRK debug agent with 9.x based SDK&rsquo;s.</p>
+<p align="center"><img src="images/page_installation.png" width="686" height="284" /></p>
+<p class="figure">Figure 1. Installation page</p>
+<h5>Table 1. Installation page &mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><p><b>Installation file </b></p>
+    <p>&nbsp;</p></td>
+    <td><p>Enter the complete path to the .sis or .pkg file to install on the target device or  click Browse to use the standard file selection dialog.</p>    </td>
+  </tr>
+  <tr>
+    <td><b>Download directory </b></td>
+    <td>The directory on the target device to download the file into before installing it. The default directory value is <span class="code">C:\data\</span>. </td>
+  </tr>
+  <tr>
+    <td><b>Install each launch even if installer file has not changed </b></td>
+    <td>Enable this option to force an update of the installed file even if no changes have been detected. This ensures a clean program install for each debug session. </td>
+  </tr>
+  <tr>
+    <td><b>Do not show installer UI on the phone </b></td>
+    <td>Use this option to specify if the installer UI on the target device is shown when installing the file. Disabling this option may require interaction with the installer UI on the target device, slowing down the install process. The default setting is <span class="code">on</span>. </td>
+  </tr>
+  <tr>
+    <td><b>Install to drive </b></td>
+    <td>A list of common drives where files may be installed to. The default drive setting is <span class="code">C</span>. </td>
+  </tr>
+  <tr>
+    <td><b>Partial upgrade sis/sisx path</b></td>
+    <td>Shows the path to the partial upgrade SIS file once it has been created.</td>
+  </tr>
+  <tr>
+    <td><b>Open SIS Builder settings...</b></td>
+    <td>Click to open the <a href="../../reference/build_properties/wnd_sis_properties.htm">SIS Builder</a> page of the Carbide Build Configurations properties panel where you can enable the partial upgrade feature for subsequent builds.</td>
+  </tr>
+</table>
+
+<h4>Other references</h4>
+<ul>
+  <li><a href="launch_configs_overview.htm">Launch Configuration Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<p>&nbsp;</p>
+</body>
+</html>

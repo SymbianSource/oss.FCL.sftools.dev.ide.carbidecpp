@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU17 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_commandButton_srcmapping SYSTEM "../CEikCommandButtonBase_common_srcmapping.inc">
+]>
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikBitmapButton"
+			baseComponent="com.nokia.carbide.uiq.CEikCommandButtonBase"
+			instanceNameRoot="bitmapButton"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikBitmapButton" classHelpTopic=""
+			resourceType="BMPBUT" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikBitmapButton_sm.png"
+			largeIconFile="CEikBitmapButton.png"/>		
+				
+		<attributes>
+			<attribute key ="rss-control-type-enum">EEikCtBitmapButton</attribute>		
+			<attribute key ="cpp-class-name">CEikBitmapButton</attribute>		
+		</attributes>
+		
+		<properties>
+			<enumProperty  name="layout" 
+				type="com.nokia.carbide.uiq.CEikCommandButtonBase.TLayout" 
+				default="EEikCmdButFirstRightSecondLeft"
+				descriptionKey="layoutDescription" 
+				category="%category.appearance"/>
+			<compoundProperty  name="image1" 
+				type="com.nokia.carbide.uiq.MbmImageProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+				descriptionKey="image1Description" 
+				category="%category.appearance"/>		
+			<compoundProperty  name="image2" 
+				type="com.nokia.carbide.uiq.MbmImageProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+				descriptionKey="image2Description" 
+				category="%category.appearance"/>		
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+<!--				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>-->
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikBitmapButton.js" prototype="CEikBitmapButton"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.BitmapInitializerFactory"/>
+			</implementation>			
+		</implementations>	
+		
+		<sourceMapping>
+				<mapResource struct="BMPBUT" headers="uikon.rh">
+					&common_commandButton_srcmapping;
+					<mapMemberFromType property="layout" member="layout"/>				
+					<mapSimpleMember property="helpText" member="helptxt"/>
+					<mapSimpleMember property="image1.bmpfile" member="bmp1file"/>
+					<select property="image1.bmpid">
+						<choice value="">
+							<mapFixedMember member="bmp1id" value="-1" />
+						</choice>
+						<choice>	
+							<mapEnumMember property="image1.bmpid" member="bmp1id" validate="false"/>				
+						</choice>
+					</select>
+					<select property="image1.bmpmask">
+						<choice value="">
+							<mapFixedMember member="bmp1mask" value="-1" />
+						</choice>
+						<choice>	
+							<mapEnumMember property="image1.bmpmask" member="bmp1mask" validate="false"/>						
+						</choice>
+					</select>	
+					<mapSimpleMember property="image2.bmpfile" member="bmp2file"/>			
+					<select property="image2.bmpid">
+						<choice value="">
+							<mapFixedMember member="bmp2id" value="-1" />
+						</choice>
+						<choice>	
+							<mapEnumMember property="image2.bmpid" member="bmp2id" validate="false"/>				
+						</choice>
+					</select>
+					<select property="image2.bmpmask">
+						<choice value="">
+							<mapFixedMember member="bmp2mask" value="-1" />
+						</choice>
+						<choice>	
+							<mapEnumMember property="image2.bmpmask" member="bmp2mask" validate="false"/>						
+						</choice>
+					</select>								
+				</mapResource>
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<useTemplateGroup ids="CommonSourceGenCommandButtons"/>
+		</sourceGen>
+
+	</component>
+	
+</componentDefinition>

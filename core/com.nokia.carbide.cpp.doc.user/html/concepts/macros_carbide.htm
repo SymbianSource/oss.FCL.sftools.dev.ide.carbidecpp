@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Carbide Macros</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Carbide Macros</h2>
+<p> Carbide.c++ supports the macro <span class="code">_CARBIDE_CPP_</span> during the preprocessing of <span class="code">.mmp</span> and <span class="code">.inf</span> files. Use this macro in those files to include Carbide specific files during the preprocessing stage that are never recognized outside of the Carbide.c++ IDE.</p>
+<p>For example within your <span class="code">.mmp</span> or <span class="code">.inf</span> file:</p>
+<p class="listing">#ifdef _CARBIDE_CPP_<br />
+  // Add any makmake statements that you want specific to Carbide.c++ only<br />
+#endif</p>
+<h5>Tasks</h5>
+<ul>
+  <li><a href="../tasks/ImportingProjects.html">Importing a Project from an INF File</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

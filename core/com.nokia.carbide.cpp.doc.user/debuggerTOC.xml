@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Carbide.c++ User Guide" href="html/debugger.htm" >
+   
+	<topic label="Release notes"  href="html/release_notes.htm" />
+	<link toc="tocCarbide.xml" />
+	
+	<anchor id="anchorCarbideCPPMisc" />
+	
+	<topic label="Bugs fixed"  			href="html/bugs_fixed.htm" />
+	<topic label="Legal"  href="html/legal.htm" />
+
+</toc>

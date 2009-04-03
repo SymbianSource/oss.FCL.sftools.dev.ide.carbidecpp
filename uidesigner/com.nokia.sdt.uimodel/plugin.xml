@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="componentProvider" name="Component Provider" schema="schema/com.nokia.sdt.component.provider.exsd"/>
+   <extension-point id="modelLoader" name="Data Model Loader" schema="schema/modelLoader.exsd"/>
+   <extension-point id="sourceGenProvider" name="Source Generation Provider" schema="schema/sourceGenProvider.exsd"/>
+   <extension-point id="projectContextProvider" name="Project context provider" schema="schema/projectContextProvider.exsd"/>
+
+   <extension point="org.eclipse.ui.startup">
+      <startup class="com.nokia.sdt.workspace.Startup"/>
+   </extension>
+ 
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.nokia.com/sdt/ui/skin" 
+       class = "com.nokia.sdt.ui.skin.SkinPackage" />
+    <package
+          class="com.nokia.sdt.looknfeel.feel.LookAndFeelPackage"
+          uri="http://www.nokia.com/sdt/lookAndFeel"/>
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+    <parser 
+       type="skin" 
+       class="com.nokia.sdt.ui.skin.util.SkinResourceFactoryImpl" />
+  </extension>
+
+   <extension point="org.eclipse.core.runtime.contentTypes">
+	  <content-type id="carbideModel" base-type="org.eclipse.core.runtime.xml"
+		name="%carbideModel" file-extensions="uidesign,nxd">
+	  </content-type>
+      <content-type id="carbideAppModel" base-type="org.eclipse.core.runtime.xml"
+		name="%carbideAppModel" priority="high"
+		file-names="application.uidesign">
+	  </content-type>
+   </extension>
+
+  
+  <extension
+        id="messageMarker"
+        name="Carbide.c++ UI Designer Message Marker"
+        point="org.eclipse.core.resources.markers">
+     <super type="org.eclipse.core.resources.problemmarker"/>
+     <persistent value="true"/>
+     <super type="org.eclipse.core.resources.textmarker"/>
+  </extension>
+  <extension
+        id="modelMarker"
+        name="Carbide.c++ UI Designer Marker"
+        point="org.eclipse.core.resources.markers">
+     <super type="org.eclipse.core.resources.problemmarker"/>
+     <persistent value="true"/>
+     <super type="org.eclipse.core.resources.textmarker"/>
+  </extension>
+  <extension
+        point="org.eclipse.core.runtime.preferences">
+     <initializer class="com.nokia.sdt.preferences.PreferenceInitializer"/>
+  </extension>
+  <extension
+        point="org.eclipse.ui.activities">
+     <category
+           id="com.nokia.sdt.uidesigner.category"
+           name="%carbide.category"/>
+     <activity
+           id="com.nokia.sdt.uidesigner.activity"
+           name="%pluginName"/>
+     <categoryActivityBinding
+           activityId="com.nokia.sdt.uidesigner.activity"
+           categoryId="com.nokia.sdt.uidesigner.category"/>
+     <activityPatternBinding
+           activityId="com.nokia.sdt.uidesigner.activity"
+           pattern="com\.nokia\.sdt\..*/.*"/>
+     <defaultEnablement id="com.nokia.sdt.uidesigner.activity"/>
+  </extension>  
+</plugin>

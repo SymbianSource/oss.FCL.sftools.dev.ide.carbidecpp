@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<template version="1.0" label="%template.label">
+	<description>%template.desc</description>
+	
+	<!-- bad arguments -->
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard.processes">
+		<parameter name="foo"/>
+	</process>
+
+</template>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Defining a Symbian OS App TRK Launch Configuration">
+	<intro>
+		<description>
+		Read the following information to create a Launch Configuration for Run Mode Debugging.
+		</description> 
+	</intro> 
+
+	<item title="Defining a Launch Configuration" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_carbide_setup.htm" >
+		<description>
+		Verify that the project's debug configuration is setup for Symbian OS debugging.
+		</description>
+	</item>
+
+	<item title="Launch Configuration Overview for On-device Debugging" href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_trk_overview.htm" >
+		<description>
+		Read additional information about launch configurations and define parameters in Main, Debugger, Connection, File Transfer, and Installation panes.
+		</description>
+	</item>
+
+</cheatsheet>

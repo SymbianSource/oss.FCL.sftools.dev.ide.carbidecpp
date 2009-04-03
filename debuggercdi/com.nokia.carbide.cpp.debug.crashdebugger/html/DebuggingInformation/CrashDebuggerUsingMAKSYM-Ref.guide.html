@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Using the MAKSYM tool in Debugging information</title>
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+<div class="Head1">
+
+<h2>Using the MAKSYM Tool</h2>
+</div><div>
+<p>MAKSYM is a command line tool that processes the log file generated
+when building a ROM image, and creates a text file that lists the address of
+every global and exported function in the ROM.</p>
+<p>Reference: tools: MAKSYM outlines
+the syntax of the command.</p>
+<p>If you know the address of the instruction which caused an exception,
+you can compare this address with the MAKSYM log to see which function this is
+in. You can narrow this down to the exact code within the function by using
+ABLD LISTING to get the assembler output from the compiler.</p>
+<p>The following example MAKSYM log is taken from an EKA1 build;
+however, the principle is the same for EKA2.</p>
+<p class="listing">From    \Epoc32\Release\Misa\UREL\ekern.exe<br>
+  <br>50003040    0094    _E32Startup<br>500030d4    002c    ImpDma::Init1(void)<br>50003100    0004    ImpDma::Init3(void)<br>50003104    0008    ImpDma::MaxBlockSize(void)</p>
+<p>If, for example, the code address of the exception is at
+0x500030dc, then you can see from the log that this is in the
+ImpDma::Init1() function, at offset 8 from the start of the
+function. This function is in the file
+...\e32\ekern\epoc\arm\sa1100\ka_dma.cpp, so use ABLD LISTING to
+obtain the assembler:</p>
+<p class="listing">&gt; cd \e32</p>
+<p class="listing">&gt; abld listing misa urel ekern ka_dma </p>
+<p>Notice that you must specify the component that the file is part of,
+in this case EKERN, and that you do not put the .cpp extension on
+the source file name. If you do not specify a source file ABLD will create an
+assembler listing for every file in component EKERN.</p>
+<p>The listing file will be placed in the same directory as
+ka_dma.cpp, and will be called ka_dma.lis. If you
+look at this file you will see something like this:</p>
+<p class="listing">7              &nbsp;Init1__6ImpDma:<br>&nbsp;&nbsp;&nbsp;8              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ args = 0, pretend = 0, frame = 0<br>&nbsp;&nbsp;&nbsp;9              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ frame_needed = 0, current_function_anonymous_args = 0<br>&nbsp;&nbsp;10              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ I don't think this function clobbers lr<br>&nbsp;&nbsp;11 0000 18209FE5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ldr&nbsp;&nbsp;&nbsp;&nbsp;r2, .L793<br>&nbsp;&nbsp;12 0004 0630A0E3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mov&nbsp;&nbsp;&nbsp;&nbsp;r3, #6<br>&nbsp;&nbsp;13 0008 003082E5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;&nbsp;&nbsp;&nbsp;r3, [r2, #0]<br>&nbsp;&nbsp;14 000c 10309FE5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ldr&nbsp;&nbsp;&nbsp;&nbsp;r3, .L793+4<br>&nbsp;&nbsp;15 0010 10009FE5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ldr&nbsp;&nbsp;&nbsp;&nbsp;r0, .L793+8<br>&nbsp;&nbsp;16 0014 000083E5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;&nbsp;&nbsp;&nbsp;r0, [r3, #0]<br>&nbsp;&nbsp;17 0018 1810A0E3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mov&nbsp;&nbsp;&nbsp;&nbsp;r1, #24<br>&nbsp;&nbsp;18 001c FEFFFFEA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;FillZ__3MemPvi</p>
+<p>Offset 8 is the first STR instruction. Comparing this with the C++
+source:</p>
+<p class="listing">void ImpDma::Init1()<br>//<br>// Phase 1 initialisation of the Dma channels<br>//<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;PP::DmaMaxChannels=KNumberOfDmaChannels;<br>&nbsp;&nbsp;&nbsp;&nbsp;PP::DmaChannelTable=(TDma **)(&amp;DmaChannels[0]);<br>&nbsp;&nbsp;&nbsp;&nbsp;Mem::FillZ(PP::DmaChannelTable,sizeof(TDma *)*KNumberOfDmaChannels);<br>&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+<p>The first store is to PP::DmaMaxChannels, so clearly there is a
+problem writing this memory. </p> 
+
+	   </div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

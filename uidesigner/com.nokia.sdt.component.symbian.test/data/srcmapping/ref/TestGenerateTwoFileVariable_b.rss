@@ -1,0 +1,7 @@
+// generated file: do not modify
+#include <basicheader.rh>
+
+RESOURCE ONE_STRING r_test_multifile1_2
+	{
+	text = "alternate";
+	}

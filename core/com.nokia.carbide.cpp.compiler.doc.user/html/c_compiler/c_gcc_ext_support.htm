@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>GCC Extension Support</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>GCC Extension Support</h3>
+<p>Use the  <a href="../pragmas/p_gcc_extensions.htm">GCC Extensions</a> setting to enable the compiler to accept some GCC syntax and conventions. This option is the same as the previously-supported <span class="code">#pragma gcc_extensions</span>. </p>
+<p>The following GCC compatibility enhancements have been added:</p>
+<ul>
+  <li>Statements in expressions are allowed</li>
+</ul>
+<blockquote>
+  <p class="listing"> ({int a; a=myfunc(); a; })</p>
+</blockquote>
+<ul>
+  <li> GCC-style inline assembly supported on some targets only</li>
+</ul>
+<blockquote>
+  <p class="listing"> int count_leading_zero(int value) <br />
+    {<br />
+    asm ( &quot;cntlzw %0, %1&quot; : &quot;=r&quot; (bits) : &quot;r&quot; (value) ); <br />
+    return bits;<br />
+    }</p>
+</blockquote>
+<ul>
+  <li> GCC-style macro varargs supported</li>
+</ul>
+<blockquote>
+  <p class="listing">#define DEBUG(fmt,args...) printf(fmt, ## args)<br />
+    DEBUG(&quot;test&quot;);<br />
+    DEBUG(&quot;saw %d copies\n&quot;, n_copies);<br />
+&bull; The abbreviated &ldquo;?:&rdquo; operator is allowed<br />
+  x = y ?: z; // --&gt; x = y ? y : z;</p>
+</blockquote>
+<ul>
+  <li>Allow incomplete structs in array declarations</li>
+</ul>
+<blockquote>
+  <p class="listing">struct Incomplete arr[10];</p>
+</blockquote>
+<ul>
+  <li> Allow <span class="code">Class::Member</span> in a class declaration</li>
+</ul>
+<blockquote>
+  <p class="listing">class MyClass {<br />
+    ...<br />
+    int MyClass::getval(); <br />
+    ...<br />
+    };</p>
+</blockquote>
+<ul>
+  <li> Allow empty structs</li>
+</ul>
+<blockquote>
+  <p class="listing">struct empty { } x;</p>
+</blockquote>
+<ul>
+  <li>Allow empty struct initialization</li>
+</ul>
+<blockquote>
+  <p class="listing">struct empty { } x = {};</p>
+</blockquote>
+<ul>
+  <li>Struct initializer typecast support</li>
+</ul>
+<blockquote>
+  <p class="listing">typedef struct { int x, y, z; float q; } mystruct;<br />
+    void foo(mystruct s);<br />
+    foo( (mystruct) { 1,2,3,6e3 } );</p>
+</blockquote>
+<ul>
+  <li>Limited support for &ldquo;<span class="code">void *</span>&rdquo; and function pointer arithmetic</li>
+</ul>
+<blockquote>
+  <p class="listing">void *p;<br />
+    p = &amp;data + 10; // point 10 bytes into &quot;p&quot;<br />
+    void foo();<br />
+    p = foo + 10; // point 10 bytes into &quot;foo&quot;<br />
+    At this time, the increment and decrement operators &ldquo;++&rdquo; don&rsquo;t work with void/function pointers.</p>
+</blockquote>
+<ul>
+  <li><span class="code">sizeof(function)</span> and <span class="code">sizeof(void)</span> is 1</li>
+  <li> Function pointers may be compared to &ldquo;<span class="code">void *</span>&rdquo;</li>
+  <li> Allow null statement (no trailing semicolon) in &ldquo;switch&rdquo;</li>
+</ul>
+<blockquote>
+  <p class="listing">switch(x) {<br />
+    label:<br />
+    }</p>
+</blockquote>
+<ul>
+  <li>Macro redefinitions with different values allowed </li>
+</ul>
+<blockquote>
+  <p class="listing">#define MAC 3<br />
+    #define MAC (3)</p>
+</blockquote>
+<ul>
+  <li>&ldquo;<span class="code">&lt;?</span>&rdquo;, &ldquo;<span class="code">&gt;?</span>&rdquo; <span class="code">MIN</span>/<span class="code">MAX</span> operators supported for some targets</li>
+  <li>Arrays may be assigned</li>
+</ul>
+<blockquote>
+  <p class="listing">int a[10], b[10];<br />
+    a = b;</p>
+</blockquote>
+<ul>
+  <li>Allow trailing comma in enumerations without warning</li>
+</ul>
+<blockquote>
+  <p class="listing"> enum { A, B, C, };</p>
+</blockquote>
+<ul>
+  <li>Allow empty array as final member of struct</li>
+</ul>
+<blockquote>
+  <p class="listing">typedef struct {<br />
+    int type;<br />
+    char data[];<br />
+    } Node;</p>
+</blockquote>
+<ul>
+  <li>Designated initializer support</li>
+</ul>
+<blockquote>
+  <p class="listing">struct { int x, y, z; float q; } x = { q: 3.0, <br />
+    y:1, z:-4, x:-6 };</p>
+</blockquote>
+<p>For related information, see the #pragma gcc_extensions. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

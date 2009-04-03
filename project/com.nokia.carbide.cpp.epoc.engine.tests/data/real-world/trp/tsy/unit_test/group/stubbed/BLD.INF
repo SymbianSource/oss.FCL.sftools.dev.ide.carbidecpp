@@ -1,0 +1,54 @@
+/*
+* Copyright (c) 2001-2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+
+
+/** @file
+ *
+ * Build information for Multimode TSY test code
+ */
+
+PRJ_EXPORTS
+
+PRJ_TESTMMPFILES
+
+//Stubbed unit tests
+//../../generic/calls/basiccall/BasicCallUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpbasiccall
+//../../generic/calls/advcall/AdvCallUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpadvcall
+../../generic/calls/multicall/MulticallUnitTestStubbed.mmp
+../../generic/Conference/ConferenceunittestStubbed.mmp
+//../../generic/Cphs/CphsUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpcphs
+../../generic/data/circuit_switched/DataUnitTestStubbed.mmp
+//../../generic/data/multimedia_csd/MultimediaUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpcsdmultimedia
+//../../generic/data/packet_switched/GprsUnitTestStubbed.mmp  <--- This test is now deprecated.  Use te_trppacketdata
+../../generic/ExtMessaging/CellBroadcast/CellBroadcastUnitTestStubbed.mmp
+//../../generic/ExtMessaging/USSD/USSDUnitTestStubbed.mmp //<--- This test is now deprecated.  Use te_trpussd
+../../generic/func100pc/Func100PcUnitTestStubbed.mmp
+//../../generic/network_handling/NetworkHandlingTestStubbed.mmp <--- This test is now deprecated.  Use te_trpnetworkhandling
+//../../generic/phone/PhoneUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpphone
+//../../generic/phonebook/PhoneBookUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpphonebook
+../../generic/Security/SecurityUnitTestStubbed.mmp
+../../generic/sim/Sat/SatUnitTestStubbed.mmp
+//../../generic/sms/SmsUnitTestStubbed.mmp <--- This test is now deprecated.  Use te_trpsms
+../../generic/ss/SsUnitTestStubbed.mmp
+
+
+PRJ_TESTEXPORTS
+
+// Allow the exporting of this file to be skipped if already done by stubbed.
+#ifndef BTTTEST_INI_EXPORT
+#define BTTTEST_INI_EXPORT
+#endif

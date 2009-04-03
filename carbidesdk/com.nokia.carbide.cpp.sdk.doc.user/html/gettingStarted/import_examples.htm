@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Importing the SDK example and leavescan plug-ins</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {color: #000000}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+
+<h2><a name="import" id="import"></a>Importing the SDK example and leavescan plug-ins</h2>
+<p>There are two example plugins you can import and examine as examples of Carbide.c++ API usage.</p>
+<ul>
+<li>The Examples plugin (<span class="code">com.nokia.carbide.cpp.sdk.examples</span>) is part of the Carbide.c++ Plug-in SDK. It
+provides examples of installing items in the Carbide menu, creating new projects programatically, and accessing
+project and Symbian build information. See <a href="#showExamplesMenu">below</a> for instructions on how to enable the example menu
+commands inside carbide. </li>
+<li>The leavescan plugin (com.nokia.carbide.cpp.leavescan) is part of the Carbide.c++ product installation with source code included.
+The source code can help give you a basic understanding of how to access basic project configuration 
+settings from the Carbide.c++ APIs.</li>
+</ul>
+<p>You can import these plugins into your workspace and view/debug all the source to get a better understanding of the 
+Carbide.c++ APIs in a functional plugin.</p>
+<p class="note"><strong>Note</strong> that the example plugins were built with JRE1.5, you will likely receive errors with JRE1.6. Select Window &gt; Preferences &gt; Java &gt; Installed JREs to add currently installed JREs and select the JRE to use.</p>
+<ol>
+  <li>Choose <b>File &gt; Import</b></li>
+  <li> Choose<strong> Plug-in Development</strong> &gt; <strong>Plug-ins and Fragments</strong> from the <strong>Import</strong> wizard page.<br />
+    <br />
+  <img src="../img/Import_wizard_page.JPG" width="470" height="550"/> <br /> 
+  </li>
+  <li>On the Import Plug-ins and Fragments pages you select  import options. In the <strong>Import As</strong> group, select <strong>Projects with source folders</strong>. 
+  In addition, note that <strong>The target platform (as specified in the Preferences)</strong> 
+  checkbox should be enabled. This should be the path you specified previously in the Target Preferences.<br />
+    <br />
+  <img src="../img/plugins_and_frags_wizard.JPG" width="575" height="525"/> <br /> 
+  </li>
+  <li> Finally, select the plugins you want to import. Here you select the <code class="code">com.nokia.carbide.cpp.leavescan</code> and 
+  <code class="code">com.nokia.carbide.cpp.sdk.examples</code> plugins.<br />
+    <br />
+  <img src="../img/plugin_selection_wizard.JPG" width="663" height="554"/> <br />
+  </li>
+  <li>When you are done importing you should have new plugins in your workspace and be able to view the 
+  sources for both plugin projects. Your workspace should look something like this:<br />
+    <br />
+  <img src="../img/dev_ide_complete.JPG" width="1024" height="757"/></li>
+</ol>
+ <h3>Adding a Carbide menu</h3>
+ <p>The menu items contributed by the Examples plugin are not visible by default in the Carbide.c++ program. To show the missing menu, follow these steps:</p>
+<ol>
+ <li>In Carbide.c++ (not in your Eclipse Java development SDK) choose <b>Window &gt; Customize Perspective...</b></li>
+ <li>Select the <b>Commands</b> tab</li>
+ <li>Select the checkbox for <b>Carbide.c++ Examples Action Set</b><br/>
+   <br/>
+ <img src="../img/show_examples_menu.jpg" width="711" height="501"/></li>
+</ol>
+ <p>Click OK, and you should now see the Carbide menu in the menu bar.</p>
+   <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div></div>
+</body>
+</html>

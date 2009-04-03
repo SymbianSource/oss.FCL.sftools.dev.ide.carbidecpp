@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Current Thread State</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+    <style type="text/css">
+<!--
+.style14 {font-weight: bold}
+-->
+    </style>
+	<div class="Head1">
+
+<h2>Current Thread State</h2>
+</div>
+<div>
+<p>The current thread is the thread that was executing when the fault
+occurred. The 23 lines starting at line 10 of the output gives information
+relating to the current thread:</p>
+<p class="listing">TheCurrentThread=64039408<br>
+  THREAD at 64039408 VPTR=f803423c AccessCount=3 Owner=64038d5c<br>Full name test2.exe::Main<br>Thread MState READY<br>Default priority 16 WaitLink Priority 16<br>ExitInfo 2,100,USER<br>Flags 00000004, Handles 640330bc<br>Supervisor stack base 6571f000 size 1000<br>User stack base 00402000 size 2000<br>Id=26, Alctr=00600000, Created alctr=00600000, Frame=00000000<br>Trap handler=00000000, ActiveScheduler=00000000, Exception handler=00000000<br>TempObj=00000000 TempAlloc=00000000 IpcCount=00000000<br>NThread @ 640396b0 Pri 16 NState READY<br>Next=640396b0 Prev=640396b0 Att=03 iUserContextType=0b<br>HeldFM=00000000 WaitFM=00000000 AddrSp=64038d5c<br>Time=17 Timeslice=20 ReqCount=0<br>SuspendCount=0 CsCount=1 CsFunction=fffffffe<br>SavedSP=6571ff34 ExtraContext=00000000 ExtraContextSize=0000<br>DACR 63990000<br>R13_USR 6571ff88 R14_USR f8025bc0 SPSR_SVC 10000004<br>
+R4 f8033794  R5 64039408  R6 640396b0  R7 f8028518<br>
+R8 640396b0  R9 640396b0 R10 00000000 R11 f80284d8<br>
+PC 00000000</p>
+<ul>
+<li>
+<p><b><a href="CrashDebuggerInfoAboutKernel.guide03.html" title="Extracting information about the kernel / Current thread state / Thread object and access count">Thread object and access count</a></b></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ename" title="Extracting information about the kernel / Current thread state / The thread name">The thread name</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2estate" title="Extracting information about the kernel / Current thread state / The thread state, exit information, priority">The thread state, exit information, priority</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2eflags" title="Extracting information about the kernel / Current thread state / Thread flags">Thread flags</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ehandles" title="Extracting information about the kernel / Current thread state / Handles">Handles</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2estack%2dadrs" title="Extracting information about the kernel / Current thread state / Kernel &amp; user stack addresses">Kernel &amp; user stack addresses</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ethreadid" title="Extracting information about the kernel / Current thread state / Thread id, RAllocator instances, trap frame">Thread id, RAllocator instances, trap frame</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2etrap%2dhandler" title="Extracting information about the kernel / Current thread state / Trap handler, active scheduler, user-side exception handler">Trap handler, active scheduler and user-side exception handler</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2etemp" title="Extracting information about the kernel / Current thread state / Temporary object, temporary allocation, IPC count">Temporary object, temporary allocation, IPC count</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2enthread" title="Extracting information about the kernel / Current thread state / Underlying nanokernel thread">Underlying nanokernel thread</a></p>
+</li>
+<li class="style14">
+<p><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2efast%2dmutexes" title="Extracting information about the kernel / Current thread state / Fast mutexes">Fast mutexes</a></p>
+</li>
+<li>
+<p><b><a href="CrashDebuggerInfoAboutKernel.guide03.html#debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2etiming" title="Extracting information about the kernel / Current thread state / Timing, request semaphore count">Timing, request semaphore count</a></b></p>
+</li>
+</ul>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ethread%2dobject"></a></span>Thread object and access count</h3>
+</div><div>
+<p class="CodeBlock">THREAD at 64039408 VPTR=f803423c AccessCount=3 Owner=64038d5c</p>
+<p>The THread at field contains a pointer to the
+DThread object representing the thread.</p>
+<p>The AccessCount field contains the reference count
+on the thread object.</p>
+<p>The owner field contains a pointer to the object
+that owns this DThread object.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ename"></a></span>The thread name</h3>
+</div><div>
+<p class="CodeBlock">Full name test2.exe::Main</p>
+<p>The thread name is the part after the colons. The part before the
+colons is the process name. This means that the thread is called
+<b>Main</b> inside the process <b>test2.exe</b>.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2estate"></a></span>The thread state, exit information, priority</h3>
+</div><div>
+<p class="CodeBlock">Thread MState READY<br>Default priority 16 WaitLink Priority 16<br>ExitInfo 2,100,USER</p>
+<p>The information that characterises the thread exit is described
+by ExitInfo; this is shown as exit type, exit reason and exit
+category. In this example:</p>
+<ul>
+<li>
+<p>the thread has panicked, as indicated by: <b>exit type
+2</b>; See also TExitType.</p>
+</li>
+<li>
+<p>the panic category was: <b>USER</b></p>
+</li>
+<li>
+<p>the panic number was:<b>100</b></p>
+</li>
+<li>
+<p>the thread was running or it was in a ready-to-run state:
+<b>MState READY</b></p>
+</li>
+</ul>
+<p>The priority shown is for the underlying thread, see also
+<a href="CrashDebugger_cmd_m.guide.html" title="Process, thread, stack and memory useful information / Process and thread priorities">Process and thread priorities</a>.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2eflags"></a></span>Thread flags</h3>
+</div><div>
+<p class="CodeBlock">Flags 00000004, Handles 640330bc</p>
+<p>The Flags field contains information about the state
+of the thread. The possible values in this field are defined by the
+KThread... constants in u32std.h. While the symbols
+are internal to Symbian OS, the following table summarises the values and their
+meaning.</p>
+<table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0"><tr valign="top"><td class="Cell">
+<p><b>Symbol</b></p></td><td class="Cell">
+<p><b>Value</b></p></td><td class="Cell">
+<p><b>Meaning</b></p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KThreadFlagProcessCritical</p></td><td class="Cell">
+<p>0x00000001</p></td><td class="Cell">
+<p>A thread panic causes the process to
+panic.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KThreadFlagProcessPermanent</p></td><td class="Cell">
+<p>0x00000002</p></td><td class="Cell">
+<p>If the thread exits for any reason, then this causes the
+process to exit.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KThreadFlagSystemCritical</p></td><td class="Cell">
+<p>0x00000004</p></td><td class="Cell">
+<p>If the thread panics, then this causes the entire system to
+reboot.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KThreadFlagSystemPermanent</p></td><td class="Cell">
+<p>0x00000008</p></td><td class="Cell">
+<p>If the thread exits for any reason, then this causes the
+entire system to reboot.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KThreadFlagOriginal</p></td><td class="Cell">
+<p>0x00000010</p></td><td class="Cell">
+<p>Reserved for future use.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KThreadFlagLastChance</p></td><td class="Cell">
+<p>0x00000020</p></td><td class="Cell">
+<p>Set if the thread is currently handling an
+exception.</p></td></tr>
+</table></td></tr></table>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ehandles"></a></span>Handles</h3>
+</div><div>
+<p class="CodeBlock">Flags 00000004, Handles 640330bc</p>
+<p>The Handles field contains the address of a
+DObjectIx object that contains the handles owned by the
+thread.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2estack%2dadrs"></a></span>Kernel &amp; user stack addresses</h3>
+</div><div>
+<p class="CodeBlock">Supervisor stack base 6571f000 size 1000<br>User stack base 00402000 size 2000</p>
+<p>These fields give the base address and size, in bytes, of the
+kernel and user stacks respectively.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2ethreadid"></a></span>Thread id, RAllocator instances, trap frame</h3>
+</div><div>
+<p class="CodeBlock">Id=26, Alctr=00600000, Created alctr=00600000, Frame=00000000</p>
+<p>The Id field contains the thread id.</p>
+<p>The Alctr field contains a pointer to the current RAllocator instance used for heap allocation.</p>
+<p>The Created alctr field contains a pointer to the
+original RAllocator instance used for heap allocation.
+This may be different from the current instance if User::SwitchAllocator() has been called.</p>
+<p>The Frame field contains a pointer to the current
+trap frame, an instance of the TTrap class, on the cleanup
+stack.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2etrap%2dhandler"></a></span>Trap handler, active scheduler, user-side exception
+handler</h3>
+</div><div>
+<p class="CodeBlock">Trap handler=00000000, ActiveScheduler=00000000, Exception handler=00000000</p>
+<p>The Trap handler field contains a pointer to the
+current trap handler, an instance of TTrapHandler, for the
+cleanup stack.</p>
+<p>The ActiveScheduler field contains a pointer to the
+current active scheduler.</p>
+<p> The Exception handler field contains a pointer to
+the current user-side exception handler.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2etemp"></a></span>Temporary object, temporary allocation, IPC
+count</h3>
+</div><div>
+<p class="CodeBlock">TempObj=00000000 TempAlloc=00000000 IpcCount=00000000</p>
+<p>The Tempobj field contains a pointer to an instance
+of a DObject derived class that must be closed when the
+thread terminates.</p>
+<p>The TempAlloc field contains a pointer to a kernel
+heap cell that must be freed when the thread terminates. Both this and
+Tempobj are used to avoid leaks if the thread terminates
+unexpectedly.</p>
+<p>The IpcCount field contains the number of messages
+currently queued to this thread.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2enthread"></a></span>Underlying nanokernel thread</h3>
+</div><div>
+<p class="CodeBlock">NThread @ 640396b0 Pri 16 NState READY<br>Next=640396b0 Prev=640396b0 Att=03 iUserContextType=0b</p>
+<p>The NThread field contains a pointer to the
+underlying nanokernel thread object, an instance of the
+NThread class.</p>
+<p>The Pri field contains the current priority of the
+underlying nanokernel thread.</p>
+<p> The NState field shows the current state of the
+underlying nanokernel thread. Note that this state is often referred to as the
+N-state, as compared to the to M-state, the state of a Symbian OS thread. See
+the <a href="CrashDebugger_cmd_m.guide.html" title="Process, thread, stack and memory useful information / Thread state summary">Thread state summary</a>.</p>
+<p>The Next field points to the next nanokernel thread
+object.</p>
+<p>The Prev field points to the previous nanokernel
+thread object.</p>
+<p>The Att field contains the nanokernel thread
+attributes, which is an 8-bit mask that controls how the thread is scheduled in
+certain cases. Two attributes are defined:</p><table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0"><tr valign="top"><td class="Cell">
+<p> KThreadAttImplicitSystemLock</p></td><td class="Cell">
+<p> This attribute signifies that the thread may not be
+scheduled if another thread currently holds the system lock, unless the the
+former thread holds another fast mutex. This attribute is used in implementing
+address space switching in the moving memory model and also in implementing
+change of user context in order to allow exceptions to be raised on other
+threads.</p></td></tr><tr valign="top"><td class="Cell">
+<p>KThreadAttAddressSpace</p></td><td class="Cell">
+<p>This attribute signifies that the thread may require a
+change of address space to schedule it. This attribute is used in conjunction
+with the thread&#8217;s iAddressSpace field; if this does not match the
+scheduler&#8217;s iAddressSpace field at the point where the thread is
+scheduled an address space switch will occur. Note that this is not required if
+the address space change is limited to the ARM domain permissions since these
+are saved and restored as part of the thread context.</p></td></tr></table></td></tr></table>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2efast%2dmutexes"></a></span>Fast mutexes</h3>
+</div><div>
+<p class="CodeBlock">HeldFM=00000000 WaitFM=00000000 AddrSp=64038d5c</p>
+<p>The HeldFM field contains a pointer to the fast
+mutex held by this thread; this is NULL if no fast mutext was held.</p>
+<p>The WaitFM field contains a pointer to the fast
+mutex that this thread was waiting on; this is NULL if this thread was not
+waiting on a fast mutex.</p>
+<p>The AddrSp field is the address space identifier
+used by the scheduler to determine whether an address space change is required
+when scheduling in a new thread.</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2etiming"></a></span>Timing, request semaphore count</h3>
+</div><div>
+<p class="CodeBlock">Time=17 Timeslice=20 ReqCount=0</p>
+<p>The Time field contains the number of nanokernel
+ticks, usually in milliseconds, to go before the thread is preempted.</p>
+<p>The Timeslice field contains the maximum number of
+ticks for which the thread can run before being preempted.</p>
+<p>The ReqCount contains the request semaphore counter.
+If the value is negative, then the thread is blocked waiting for a request to
+complete; if it is positive, then one or more requests have completed.</p>
+
+</div><div class="Head3">
+<h3><span class="Bodytext"><a name="debugging%2einfo%2dabout%2dkernel%2ethread%2dstate%2esuspend"></a></span>Suspend count, critical section counter, register
+values</h3>
+</div>
+<div>
+<p class="CodeBlock">SuspendCount=0 CsCount=1 CsFunction=fffffffe<br>SavedSP=6571ff34 ExtraContext=00000000 ExtraContextSize=0000<br>DACR 63990000<br>R13_USR 6571ff88 R14_USR f8025bc0 SPSR_SVC 10000004<br>&nbsp;R4 f8033794  R5 64039408  R6 640396b0  R7 f8028518<br>&nbsp;R8 640396b0  R9 640396b0 R10 00000000 R11 f80284d8<br>&nbsp;PC 00000000</p>
+<p>The SuspendCount field contains the number of times
+that the thread has been suspended.</p>
+<p>The CsCount field critical section counter. When
+this value is greater than zero, then the thread is in a critical section and
+cannot be suspended or killed.</p>
+<p>The remaining content is a list of register values. <em>Note
+that they are not the register values when the thread panicked.</em> They are
+the values in the registers the last time that this thread was
+pre-empted.</p>
+</div>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide.html">Extracting Kernel Information</a> </li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide02.html">Scheduler State</a></li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide04.html">Current Process State</a></li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide05.html">Current Data Section Process</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

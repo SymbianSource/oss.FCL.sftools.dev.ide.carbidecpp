@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_global_text_srcmapping SYSTEM "../CEikGlobalText_common_srcmapping.inc">
+]>
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CEikRichTextEditor.TDisplayMode">
+		<enumElement displayValue="%EDisplayModeView" value="0x00000001"/>
+		<enumElement displayValue="%EDisplayModeEdit" value="0x00000002"/>			
+	</enumPropertyDeclaration>					
+										
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikRichText"
+			baseComponent="com.nokia.carbide.uiq.CEikGlobalText"
+			instanceNameRoot="richTextEditor"			
+			version="1.0"
+			category="%category.editors">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CEikRichText" classHelpTopic=""
+			resourceType="RTXTED" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikRichText_sm.png" 
+			largeIconFile="CEikRichText.png"/>
+		
+		<attributes>
+			<attribute key="cpp-class-name">CEikRichTextEditor</attribute>
+			<attribute key="rss-control-type-enum">EEikCtRichTextEditor</attribute>
+		</attributes>
+
+		<properties>
+			<enumProperty name="displayMode" displayName="%displayMode" 
+				category="%category.behavior"
+				type="com.nokia.carbide.uiq.CEikRichTextEditor.TDisplayMode"
+				descriptionKey="displayModeDescription"
+			/> 
+		</properties>
+
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true" category="Hidden"/>
+			<propertyOverride name="dimmed" readOnly="true" category="Hidden"/>
+		</propertyOverrides>			
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>				
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikRichText.js" prototype="CEikRichText"/>
+			</implementation>
+		</implementations>			
+		
+		<sourceMapping>
+			<mapResource struct="RTXTED" headers="eikon.rh eikon.hrh uikon.rh uikon.hrh qikon.hrh gulftflg.hrh">
+				<mapBitmaskMember property="flags" member="flags">
+					<mapBitmaskValue properties="EEikEdwinAllowPictures" value="EEikEdwinAllowPictures"/>
+					<mapBitmaskValue properties="EEikEdwinAllowUndo" value="EEikEdwinAllowUndo"/>
+					<mapBitmaskValue properties="EEikEdwinAlwaysShowSelection" value="EEikEdwinAlwaysShowSelection"/>
+					<mapBitmaskValue properties="EEikEdwinCustomWrap" value="EEikEdwinCustomWrap"/> 
+					<mapBitmaskValue properties="EEikEdwinDisableAutoCurEnd" value="EEikEdwinDisableAutoCurEnd"/>
+					<mapBitmaskValue properties="EEikEdwinDisplayOnly" value="EEikEdwinDisplayOnly"/>
+					<mapBitmaskValue properties="EEikEdwinEnableAutoSelection" value="EEikEdwinEnableAutoSelection"/>
+					<mapBitmaskValue properties="EEikEdwinFindStringMaxLen" value="EEikEdwinFindStringMaxLen"/>
+					<mapBitmaskValue properties="EEikEdwinIgnoreVirtualCursor" value="EEikEdwinIgnoreVirtualCursor"/>
+					<mapBitmaskValue properties="EEikEdwinInclusiveSizeFixed" value="EEikEdwinInclusiveSizeFixed"/>
+					<mapBitmaskValue properties="EEikEdwinJustAutoCurEnd" value="EEikEdwinJustAutoCurEnd"/>
+					<mapBitmaskValue properties="EEikEdwinKeepDocument" value="EEikEdwinKeepDocument"/>
+					<mapBitmaskValue properties="EEikEdwinLineCursor" value="EEikEdwinLineCursor"/>
+					<mapBitmaskValue properties="EEikEdwinNoAutoSelection" value="EEikEdwinNoAutoSelection"/>
+					<mapBitmaskValue properties="EEikEdwinNoCursorWrap" value="EEikEdwinNoCursorWrap"/>
+					<mapBitmaskValue properties="EEikEdwinNoCursorWrapUp" value="EEikEdwinNoCursorWrapUp"/>
+					<mapBitmaskValue properties="EEikEdwinNoCustomDraw" value="EEikEdwinNoCustomDraw"/>
+					<mapBitmaskValue properties="EEikEdwinNoHorizScrolling" value="EEikEdwinNoHorizScrolling"/>
+					<mapBitmaskValue properties="EEikEdwinNoLineOrParaBreaks" value="EEikEdwinNoLineOrParaBreaks"/>
+					<mapBitmaskValue properties="EEikEdwinNoTextParsers" value="EEikEdwinNoTextParsers"/>
+					<mapBitmaskValue properties="EEikEdwinNoWrap" value="EEikEdwinNoWrap"/>
+					<mapBitmaskValue properties="EEikEdwinOnlyASCIIChars" value="EEikEdwinOnlyASCIIChars"/>
+					<mapBitmaskValue properties="EEikEdwinOwnsWindow" value="EEikEdwinOwnsWindow"/>
+					<mapBitmaskValue properties="EEikEdwinReadOnly" value="EEikEdwinReadOnly"/>
+					<mapBitmaskValue properties="EEikEdwinResizable" value="EEikEdwinResizable"/>
+					<mapBitmaskValue properties="EEikEdwinSegmentedStorage" value="EEikEdwinSegmentedStorage"/>
+					<mapBitmaskValue properties="EEikEdwinWidthInPixels" value="EEikEdwinWidthInPixels"/>					
+				</mapBitmaskMember>					
+				&common_global_text_srcmapping;	
+				<mapEnumMember property="displayMode" member="displayMode" validate="false"/>
+			</mapResource>				
+			<mapResource struct="TBUF" headers="eikon.rh" id="text">
+				<mapSimpleMember property="text" member="buf" />
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>	
+					
+			<!--Initialize Phase-->				
+			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+								InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+								Headers="txtrich.h eikrted.h eikgted.h eikenv.h"/>
+										
+			<inline scope="prototype"><![CDATA[
+include("../../../textFormattingSrcgenLibrary.js");
+]]>			</inline>
+
+			<inline scope="file"><![CDATA[
+function generateSrc1(instance, theContribs) {
+	createCharFormatStructsForPhase(theContribs, instance, "InitializeControlHandlers");
+}
+]]>			</inline>
+
+			<template id="IF_INSTANCE_BEGIN" phase="InitializeControlHandlers"><![CDATA[
+if ( ${instanceMemberName} != NULL )
+	{
+	HBufC* text = iEikonEnv->AllocReadResourceLC( ${Engine.getGeneratedResource(instance, "text").toUpperCase()} );
+	${instanceMemberName}->SetTextL( text );
+	CleanupStack::PopAndDestroy( text );
+	}
+<%generateSrc1(instance, contribs);%>
+]]>			</template>
+			<expandMacro name="AddCppIncludes" Headers="eikenv.h" Phase="HeaderEventHandlerIncludes"/>			
+									
+			<!--everything inherited from CEikEdwinBase-->						
+			<useTemplateGroup ids="GenerateCommonEdwinEvents"/>					
+
+		</sourceGen>		
+		
+	</component>
+
+</componentDefinition>

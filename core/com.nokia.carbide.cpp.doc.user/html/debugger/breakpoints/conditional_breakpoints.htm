@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Creating Conditional Breakpoints </title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2> Creating Conditional Breakpoints </h2>
+<p>Use the <b>Properties for Breakpoint  &gt; Common &gt; Conditional</b> option to create conditional breakpoints. Where regular breakpoints  suspend execution each time they are hit, a condition breakpoint evaluates an expression to determine if it is true or not. If the expression evaluates true, then program execuation is suspended and the <a href="../../reference/perspective_debug.htm">Debug</a> perpective shown. If the expression evaluates to false, execution continues. </p>
+<p align="center"><img src="../images/option_condition.png" width="434" height="202"></p>
+<p class="figure">Figure 1. Condition field in Properties for Breakpoint window </p>
+<p>You create a conditional breakpoint in the <b>Conditional</b> field by entering a valid expression.  Valid expressions include:</p>
+<ul>
+  <li class="code">meters == 10</li>
+  <li class="code">height &gt;= 5</li>
+  <li class="code">count != 10    </li>
+</ul>
+<p>When creating the expression some things to consider include:</p>
+<ul>
+  <li>expressions must evaluate to true </li>
+  <li>the value being examined must be within the scope of the function</li>
+  <li>normal syntax rules apply when creating the expression</li>
+  <li>only a single expression can be evaluated within the Condition field </li>
+  <li>function and method calls cannot be used as part of the expression  </li>
+</ul>
+<h4>Other references</h4>
+<ul>
+  <li><a href="breakpoints.htm">Breakpoints overview </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

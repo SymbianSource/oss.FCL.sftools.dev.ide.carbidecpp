@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="x86 C/C++ Compiler Reference" href="html/compiler.htm" >
+
+	   <topic label="Introduction" href="html/introduction/intro.htm" >
+	      <link toc="introductionTOC.xml" />
+	   </topic>
+	       
+	   <topic label="C Compiler" href="html/c_compiler/c_compiler.htm" >
+	      <link toc="c_compilerTOC.xml" />
+	   </topic>
+	       
+	   <topic label="C++ Compiler" href="html/cpp_compiler/cpp_compiler.htm" >
+	      <link toc="cpp_compilerTOC.xml" />
+	   </topic>
+	       
+	   <topic label="C++ and Embedded Compiler" href="html/emb_systems/emb_systems.htm" >
+	      <link toc="cpp_embTOC.xml" />
+	   </topic>
+	       
+	   <topic label="C++ Performance" href="html/performance/performance.htm" >
+	      <link toc="performanceTOC.xml" />
+	   </topic>
+	       
+	   <topic label="Preventing Errors and Bugs" href="html/errors/errors.htm">
+	      <link toc="errorsTOC.xml" />
+	   </topic>
+	       
+	   <topic label="C Implementation-defined Behavior" href="html/c_behavior/c_behavior.htm">
+	      <link toc="c_behaviorTOC.xml" />
+	   </topic>
+	       
+	   <topic label="C++ Implementation-defined Behavior" href="html/cpp_behavior/cpp_behavior.htm" >
+	      <link toc="cpp_behaviorTOC.xml" />
+	   </topic>
+	       
+	   <topic label="Predefined Symbols" href="html/symbols/symbols.htm" >
+	      <link toc="symbolsTOC.xml" />
+	   </topic>
+	              
+	   <topic label="Common Pragmas" href="html/pragmas/pragmas.htm" >
+	      <link toc="pragmasTOC.xml" />
+	   </topic>
+	       
+	   <topic label="Intel x86 Pragmas" href="html/pragmas_x86/pragmas_x86.htm" >
+	      <link toc="pragmas_x86TOC.xml" />
+	   </topic>
+	
+	   <topic label="Command-line Tools" href="html/cmd_line/cmd_line.htm" >
+	      <link toc="cmd_lineTOC.xml" />
+	   </topic>
+	
+	   <topic label="Legal" 					href="html/legal.htm" />
+
+</toc>

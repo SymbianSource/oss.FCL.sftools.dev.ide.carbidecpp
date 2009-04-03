@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="projectUpdater" name="Project Updater" schema="schema/projectUpdater.exsd"/>
+   <extension-point id="updateTrigger" name="Update Trigger" schema="schema/updateTrigger.exsd"/>
+   <extension-point id="updateProjectsScanner" name="Update Projects Scanner" schema="schema/updateProjectsScanner.exsd"/>
+   <extension-point id="refactoringUpdater" name="Refactoring Updater" schema="schema/refactoringUpdater.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Updater Actions"
+            visible="true"
+            id="com.nokia.carbide.updater.actionSet">
+         <action
+               class="com.nokia.carbide.internal.updater.UpdateAction"
+               icon="icons/Update_Project.png"
+               id="com.nokia.carbide.updater.update"
+               label="%UpdateProjects.label"
+               menubarPath="project/updaterGroup">
+         </action>
+	</actionSet>
+    </extension>
+    <extension
+          point="org.eclipse.ui.startup">
+       <startup class="com.nokia.carbide.internal.updater.Startup"/>
+    </extension>
+
+</plugin>

@@ -1,0 +1,10 @@
+PRJ_MMPFILES
+foo.mmp
+
+PRJ_EXPORTS
+..\gfx\foo.svg c:\private\12345678\foo.svg
+
+PRJ_TESTEXPORTS
+
+..\doc\README.txt c:\sys\readmes\README.txt
+

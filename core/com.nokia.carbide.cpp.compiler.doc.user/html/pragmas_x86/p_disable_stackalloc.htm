@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>disable_stackalloc</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>disable_stackalloc</h3>
+<p>  Controls the compiler method used to grow the size of the stack.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma disable_stackalloc on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>The compiler controls how stack space is grown as follows:</p>
+  <ul>
+    <li>off &ndash; for each object on the stack larger than 4096 bytes, the compiler calls a runtime routine to touch each new page on the stack to tell the OS to allocate more stack space.</li>
+    <li>on &ndash; the compiler only touches the last (topmost) page of the stack after allocating local space.</li>
+  </ul>
+  <p class="note"><strong class="note">NOTE</strong> Use of this pragma is required for Win32 code.</p>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use the <span class="code">__option (disable_stackalloc)</span>. The default setting for Win32 targets is off.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

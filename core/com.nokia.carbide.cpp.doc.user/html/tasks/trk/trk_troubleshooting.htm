@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>On-device Debugging Troubleshooting</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>On-device Debugging Troubleshooting </h2>
+<p>If you are having problems with  on-device debugging, see if the following solutions can solve the problem.</p>
+<h3><a name="deploy" id="deploy"></a>Deploying SIS Files using Carbide (Application TRK) </h3>
+<h4>Am unable to create my SIS file, what can cause this ?</h4>
+<blockquote>
+  <p>Ensure that you are using symbols in your PKG file to generate the SIS file. See <a href="../projects/working_with_sis_pkg_files.htm">Working with PKG and SIS Files</a> for more details. </p>
+</blockquote>
+<h4>How do I know my SIS file got installed correctly?</h4>
+<blockquote>
+  <p>If you did not receive an error message that Carbide.c++ could not install the SIS file, then  go to the Application Manager on the phone and look for the SIS file. If the SIS file is there it tells you that Carbide.c++ successfully deployed the application to the device. </p>
+  <p>Next, check the target directory on the device for the executable. If the executable is present, attempt to launch the executable. If the executable launches this lets you know the binaries were built correctly for the device. If the executable does not launch, try to build the application again using the command-line version of the tool.</p>
+  <p>To verify the install process, go to the  <a href="../../reference/launch_configs/app_trk_installation.htm">Installation</a> tab of your <a href="../../reference/launch_configs/run_mode_overview.htm">launch configuration</a> and disable the <b>Do not show installer UI on the phone</b> option. The next time Carbide.c++ attempts to deploy the application, prompts will appear on the phone verifying that it is okay to install the application. You can then watch the SIS file being installed on the phone. </p>
+</blockquote>
+<h4>How do I force the install of a SIS file to a device?</h4>
+<blockquote>
+  <p>In Carbide.c++, go to the <a href="../../reference/launch_configs/app_trk_installation.htm">Installation</a> tab of your <a href="../../reference/launch_configs/run_mode_overview.htm">launch configuration</a> and enable the<b> Install each launch even if installer file has not changed</b> option. Once set, just click the <b>Debug</b> control again to deploy the new application binaries to the device. </p>
+</blockquote>
+<h4>Am getting the an error when attempting to install my SIS file, what can I do?</h4>
+<blockquote>
+  <p>To get better error messages about possible install failures, go to the <a href="../../reference/launch_configs/app_trk_installation.htm">Installation</a> tab of your <a href="../../reference/launch_configs/run_mode_overview.htm">launch configuration</a> and disable the <b>Do not show installer UI on the phone</b> option. The next time Carbide.c++ attempts to deploy the application, prompts will appear on the phone verifying that it is okay to install the application. You can then watch the SIS file being installed on the phone. When the SIS file fails to install again, TRK will provide more specific errors on why the installation failed.</p>
+</blockquote>
+<h4>Am getting the error &quot;process fails to launch&quot;, what can I do to correct this?</h4>
+<blockquote>
+  <p>There are several things that can cause this error including:</p>
+</blockquote>
+<ul>
+  <li>Verify deployment of the SIS file, see <b>How do I know my SIS file got installed correctly?</b> above. </li>
+  <li>Verify that the MMP or PKG files does not contain any errors.</li>
+  <li>If the application uses a self-signed SIS, a UID3 is required that is set within the proper address range. See <a href="https://www.symbiansigned.com/app/page/uidfaq">https://www.symbiansigned.com/app/page/uidfaq</a> for more info.</li>
+  <li> Verify that the UID3 address  matches between the MMP and PKG file if using Application TRK. If using Sys TRK, verify the File Transfer tab on the System TRK launch configuration is correct. </li>
+  <li>Verify that  your binaries are built correctly by attempting to launch the executable on the phone from the target directory. If this fails, rebuild the application using the command-line tools, then see <b>How do I force the install of a SIS file to a device</b>? above to redeploys and debug again. </li>
+  <li>If debugging a DLL from an application and using System TRK, ensure that the DLL is included in the <a href="../../reference/launch_configs/page_file_transfer.htm">File Transfer</a> tab of the <a href="../../reference/launch_configs/run_mode_overview.htm">launch configuration</a> so that it is deployed to the device with the application. It is not added by default. </li>
+</ul>
+<h4>Am getting an exception when trying to debug with Application TRK </h4>
+<blockquote>
+  <p>The main reason for this is that you have entered ROM code or another prohibited address space. You can confirm this by checking the Disassembler view. When in a prohibited memory address the view may be blank. To correct, click Step Over or Resume to move to the next breakpoint in your code.</p>
+</blockquote>
+<h4>I'm running out of memory on the device, what can I do?</h4>
+<blockquote>
+  <p>On platforms that include Platform Security there are several directories like <span class="code">c:\sys\bin</span> where you cannot easily delete files that are no longer required. Over time the device's memory becomes full, making it difficult or impossible to install and debug additional programs.</p>
+  <p>If using Application TRK to install and debug programs,  use the Application Manager on the device to remove all the files specified in the program's PKG file, but not the SIS file itself. </p>
+  <p>If you are using System TRK to install and debug programs and additional files, you will need to create a SIS that includes the files listed in the File Transfer pane, <a href="../start/carbide_deploying.htm">deploy</a> it manually to  the device, then run the Application Manager on the device to remove the files.</p>
+</blockquote>
+<h3><a name="connect" id="connect"></a>Connectivity</h3>
+<h4>How can I use USB instead of Bluetooth to debug my application?</h4>
+<blockquote>
+  <p>For USB support in TRK 2.5 or greater, while the TRK application is running on the phone, choose Options &gt; Settings, then set Connection to USB.</p>
+  <p>For USB support in TRK v2.1, include the metrotrk_usb.ini file instead of the metrotrk_bt.ini file in your ROM image. You do this by modifying the metrotrk.iby file like this:</p>
+  <p>Replace the line:</p>
+  <p class="code">data=ZSYSTEM\..\metrotrk\metrotrk_bt.ini \metrotrk.ini</p>
+  <p>With:</p>
+  <p class="code">data=ZSYSTEM\..\metrotrk\metrotrk_usb.ini \metrotrk.ini</p>
+  <p>Then rebuild the ROM image.</p>
+  <p class="note"><b>NOTE</b> With the S60 wk46 release onwards, the port number needs to be set to 1 instead of 0.</p>
+  <h5>Installing Latest USB Drivers </h5>
+  <p>On the host PC, you need to update the USB drivers to work with the latest S60
+    devices. The latest drivers create a virtual com port on the host which you can
+    specify in Carbide. Download and install the latest Nokia Connectivity Cable
+  Drivers from PC Suite Vivaldi web site.</p>
+  <p>When you first connect the USB cable to the phone you'll get a prompt to choose
+    the &quot;PC Suite&quot; or &quot;File Transfer&quot; mode. Choose &quot;PC Suite&quot; mode to use TRK with
+    USB. Also you will get several &ldquo;New Hardware found&rdquo; wizards. You need to go
+    through the installation each time to successfully use the USB connection to
+  access the device.</p>
+  <h5>Connecting to Device using USB </h5>
+  <p>If the current Connection setting on the phone is Bluetooth, when you start
+    the TRK application on the phone you should see a list of Bluetooth devices. 
+    Press Cancel. In the TRK Welcome Screen press Options, then
+    the Settings control. You should see the connection set to Bluetooth. Select
+    the Options &gt; Change option and change the 
+    connection option to USB. Your connection should now show as USB. Press
+    Back to go to the TRK Welcome screen. In the TRK Welcome screen press Select &gt;
+  Connect. The status in the TRK welcome screen should show as connected. </p>
+  <p>The next time you connect the USB cable to the phone you&#8217;ll get a prompt to
+    choose the &quot;PC Suite&quot; or &quot;File Transfer&quot; mode. Choose &quot;PC Suite&quot; mode to use
+    TRK with USB. Then start the TRK application.</p>
+</blockquote>
+<h4>What is the virtual COM port number for my S60 phone on the host PC if I am using USB?</h4>
+<blockquote>
+  <p>Normally, you can determine the COM port ID using the Device Manager if TRK is already connected via USB.
+  </p>
+  <p>To check, choose Start &gt; Settings &gt; Control panel &gt; System &gt; Hardware &gt; Device Manager. In the Device Manager, choose &quot;Ports&quot; to view the active ports (Figure 1).</p>
+  <p align="center"><img src="images/trk_device_manager.gif" width="323" height="210" /></p>
+  <p class="figure">Figure 1. Ports displayed in Ports section of Device Manager.</p>
+  <p>In some situations all USB virtual COM ports are installed under &quot;Modems&quot; in the Device Manager. In the Device Manager dialog, choose &quot;Modems&quot; and see if there are two COM ports listed. One of them will work for debugging. Most of the time, the higher port number works for debugging with TRK.</p>
+</blockquote>
+<h4>I am having difficulty getting a Bluetooth connection to work with AppTRK, any suggestions?</h4>
+<blockquote>
+  <p>The following are known issues when trying to use Bluetooth serial port on the host:</p>
+</blockquote>
+<ul>
+  <li>XP Microsoft Bluetooth stack does not work correctly with bt serial port emulation (on the PC side). For using TRK, you need BT serial port emulation. Some of the BT dongle manufacturers recommend changing to their own drivers to enable Bt stack serial port emulation.
+    <ul>
+      <li> Resolution at the moment: Change the XP drivers to bt dongle manufacturers (IBM, TDK, MSI) own drivers by uninstalling the XP drivers and installing the dongle drivers. After the installation the Microsoft Bluetooth Enumerator and Microsoft Bluetooth Services must be shut down.</li>
+      <li>From Computer Management -&gt; Device Manager uninstall the Microsoft BT Enumerator</li>
+      <li>From Computer Management -&gt; Services and Applications -&gt; Services shutdown the Microsoft Bluetooth Services</li>
+      <li>On the desktops, the Belkin Bluetooth dongle is known to properly provide BT Serial port emulation. Other Bluetooth dongles should work as long as the serial port service is provided by the Bluetooth driver</li>
+    </ul>
+  </li>
+</ul>
+<h4>TRK is launched on the device, but I am getting &ldquo;Can&rsquo;t connect to TRK&rdquo; error message in the Carbide.c++ tools, any suggestions?</h4>
+<blockquote>
+  <p>Check that Carbide.c++ and your USB Virtual COM port or BT Serial Port agree on the port settings.</p>
+</blockquote>
+<ul>
+  <li>Use the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Setup</a> dialog to quickly  determine if you can communicate with the device in the <strong>Check TRK version</strong> pane </li>
+  <li>Open your Bluetooth or USB cable's connection settings: Start -&gt; Settings -&gt; Control panel -&gt; System -&gt; Hardware -&gt; Device Manager. In the Device Manager dialog, click open the Ports directory, then you will see all the com ports available on the machine. Here you will be able to see the COM port for Bluetooth or USB. Sometimes you will have two COM ports for Bluetooth, so you might have to try specifying either of them. </li>
+  <li>In the Carbide tools, <a href="../projects/prj_debug_config.htm">open</a> the launch configuration associated with the target device and verify that you have specified the correct launch configuration for TRK. For example, the launch configuration should be either Symbian OS Application TRK or Symbian OS System TRK configuration. </li>
+  <li>In the Carbide tools, <a href="../projects/prj_debug_config.htm">open</a> the launch configuration associated with the target device. In the Connections tab make sure you specify the same COM port number as in the device manager. For Bluetooth, if two ports are listed in the device manager, then you need to try to both, to see which one works. For USB, don't select the COM port assigned to the serial port. Always select the COM port assigned to the virtual COM port ID for the phone that is specified in the Device Manager. </li>
+  <li>Make sure the settings in these two dialogs are the same and that the launch configuration settings refer to the right COM port. You shouldn't have to touch the other settings, but they're Data Bits: 8; Parity: None; Stop Bits: 1; Flow Control: None. </li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

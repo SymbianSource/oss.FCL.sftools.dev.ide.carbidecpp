@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Qt Test Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.qt.test
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.carbide.cpp.qt.test.Activator
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.ui,
+ abbot.swt,
+ abbot.swt.eclipse,
+ org.junit,
+ com.nokia.carbide.automation.utils,
+ org.eclipse.core.runtime,
+ com.nokia.carbide.cpp.qt.core,
+ org.eclipse.core.resources,
+ com.nokia.carbide.cpp.project.core,
+ org.eclipse.cdt.core,
+ com.trolltech.qtcppproject;bundle-version="1.4.3",
+ com.nokia.carbide.cdt.builder
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.carbide.cpp.qt.test

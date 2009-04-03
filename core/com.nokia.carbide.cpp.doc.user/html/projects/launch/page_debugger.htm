@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Carbide Debugger panes</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Debugger panes</h2>
+<p>The options shown in the <b>Debugger</b> page differ based upon the type of launch configuration. Generally, the options fall into these choices: </p>
+<ul>
+  <li><a href="#emulator_mode">Emulation Debugger page</a> (Emulation) </li>
+  <li><a href="#trk_runmode">Run-mode Debugger page</a> (Application TRK) </li>
+  <li><a href="#trk_stopmode">Stop-mode Debugger page</a> (System TRK, Trace32, Sophia, Attach to Process) </li>
+</ul>
+<h3><a name="emulator_mode" id="emulator_mode"></a>Emulation Debugger page </h3>
+<p>The <b>Symbian OS <a href="emulation.htm">Emulation</a></b> launch configurations the <b>Debugger</b> page to specify  entry point breaks and which  logs to output to the Console view.</p>
+<p align="center"><img src="images/page_debugger_emulation.png" width="638" height="205"></p>
+<p class="figure">Figure 1 - Debugger page showing emulation options </p>
+<h5>Table 1. Debugger page &mdash; emulation options </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Option</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Break at entry point </b></td>
+    <td>Select to halt program execution at a specified
+      function or address. Enter the desired function
+      name or address in the corresponding field. If you
+      enter an address, ensure that it is correct and within
+      your program.</td>
+  </tr>
+  <tr>
+    <td><b>View program output </b></td>
+    <td><p>Enable to direct standard output messages to the   Emulation Program Output Console in the <a href="../../reference/view_log.htm">Console</a> view. </p>
+        <p class="note"><b>NOTE</b> In the <span class="code">epoc.ini</span> file the option <span class="code">LogToFile</span> must also be set to <span class="code">1</span>.</p></td>
+  </tr>
+  <tr>
+    <td><b>View emulator output </b></td>
+    <td><p>Enable to  output emulator messages to the   Emulator  Output Console in the Console view. </p>
+        <p class="note"><b>NOTE</b> In the <span class="code">epoc.ini</span> file the option <span class="code">LogToDebugger</span> must also be set to&nbsp;<span class="code">1</span>.</p></td>
+  </tr>
+  <tr>
+    <td><b>View Windows system messages </b></td>
+    <td>Enable to  output Windows system messages to the   Windows System Messages Console in the Console view. </td>
+  </tr>
+</table>
+<h3><a name="trk_runmode" id="trk_runmode"></a>Run-mode Debugger page </h3>
+<p>In a run-mode launch configuration like <b><a href="run_mode.htm">Application TRK</a></b>, you can specify an entry break point and how messages are handled as well as define the default instruction set. </p>
+<p align="center"><img src="images/page_debugger_run_mode.png" width="686" height="247"></p>
+<p class="figure">Figure 2 - Debugger page showing run-mode options  </p>
+<h5>Table 2. Debugger page &mdash; run-mode  options </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Option</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><p><b>Break at entry point</b></p>    </td>
+    <td><p>When checked, break at the specified entry point entered into the text field. For .EXE targets, the default entry point is set to <span class="code">E32Main</span>. By default, the <b>Break at entry point</b> option is unchecked for all other target types.</p></td>
+  </tr>
+  <tr>
+    <td><b>View program output </b></td>
+    <td><p>Enable to direct standard output messages to the   <b>TRK Program Output Console</b> in the <a href="../../reference/view_log.htm">Console</a> view. </p>
+      <p class="note"><b>NOTE</b> In the <span class="code">epoc.ini</span> file the option <span class="code">LogToFile</span> must also be set to <span class="code">1</span>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>View messages between Carbide and debug agent </b></td>
+    <td><p>When checked, show the communications between Carbide and the target device in  the <b> TRK Communication Log Console</b> of the Console view.  </p>
+      <p class="note"><b>NOTE</b> You can pin the TRK Communication Log view so that it does not lose focus. </p></td>
+  </tr>
+  <tr>
+    <td><b>Message retry delay (ms) </b></td>
+    <td>Enter the delay time in milliseconds (ms) between 100 and 10000 the debugger should wait for a response. The default Message Retry Delay value is 2000. </td>
+  </tr>
+  <tr>
+    <td><p><b>Default Instructon Set </b></p>        </td>
+    <td><p>Specifies the default instruction set to use if the debugger cannot determine the processor mode in order to set breakpoints and to disassemble code. The options are: </p>
+        <ul>
+          <li>Auto (examine code at  current PC location) </li>
+          <li>ARM (32-bit) </li>
+          <li>THUMB (16-bit) </li>
+        </ul>
+      <p>By default the Instruction Set option uses ARM 32-bit.</p></td>
+  </tr>
+</table>
+<h3><a name="trk_stopmode" id="trk_stopmode"></a>Stop-mode Debugger page </h3>
+<p>In  stop-mode launch configurations like <b><a href="stop_mode.htm">System TRK</a></b>, <b><a href="trace32.htm">Trace32</a></b>,  <b><a href="sophia.htm">Sophia</a></b>, and <a href="attach_process.htm"><b>Attach to Process</b></a>, use the <b>Startup Options</b> to  attach to a target and debug or run from the specified start address. Then use <b>Target Options</b> to specify the target's processor type,  and set which initialization and memory configuration files to use in the debug session. </p>
+<p align="center"><img src="images/page_debugger_stop_mode.png" width="642" height="401"></p>
+<p class="figure">Figure 3 - Debugger page showing stop-mode options  </p>
+<h5>Table 3. Debugger page &mdash; stop-mode  options </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="25%" scope="col">Group</th>
+    <th width="38%" scope="col">Option</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><p><b>Break at entry point</b></p></td>
+    <td><p>When checked, break at the specified entry point entered into the text field. For .EXE targets, the default entry point is set to <span class="code">E32Main</span>. By default, the <b>Break at entry point</b> option is unchecked for all other target types.</p></td>
+  </tr>
+  <tr>
+    <td rowspan="5"><b>Startup Options </b></td>
+    <td><b>Soft attach </b></td>
+    <td>Enable the <b>Soft attach</b> option to attach a debug session to a target and debug from the specified start address instead of the target's default start address. When enabled the downloaded image option is ignored. </td>
+  </tr>
+  <tr>
+    <td><b>Debug from start address </b></td>
+    <td>Enable the <b>Debug from start addres</b>s option to debug from the target's default start address. </td>
+  </tr>
+  <tr>
+    <td><b>Run from start address </b></td>
+    <td>Enable the <b>Run from start addres</b>s option to run from the target's default start address. </td>
+  </tr>
+  <tr>
+    <td><b>Start address (hex) </b></td>
+    <td>Enter in hexidecimal format (<span class="code">0x0</span>) the starting address to use during the debug session. </td>
+  </tr>
+  <tr>
+    <td><b>Reset target at the start of each debug session </b></td>
+    <td>Forces the Carbide IDE to reset the target at the start of each debug session. This ensures that the debugging session uses the most up-to-date program code.</td>
+  </tr>
+  
+  <tr>
+    <td><b>Target Options </b></td>
+    <td><b>Target Processor </b></td>
+    <td>A drop down with a list of all supported processors. The process selection should help in determining the memory model. This will in turn help determine the base address and the offsets for the Symbian OS kernel aware information.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>Target initialization file </b></td>
+    <td><p>Check this box to have the debugger run an initialization script when the debug session starts. For example, if a target device requires initialization for the debugger to be able to read and write memory or registers, you can specify an initialization script here.</p>
+    <p> Click Browse to select a script file using a standard file selection dialog box. When using T32, most of the initialization is done in the CMM script file. With other debug protocols like Sophia, you can specify the initialization file, which can be run after connecting to the target. </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>Memory configuration file </b></td>
+    <td>Controls whether the debugger uses a memory configuration file when a debug session starts. The Carbide debugger uses this configuration file to know which memory is accessible, readable, and writable on the target.</td>
+  </tr>
+</table>
+
+<h4>Other references</h4>
+<ul>
+  <li><a href="run_mode.htm">Application TRK  Launch Configuration</a></li>
+  <li><a href="emulation.htm">Emulation  Launch Configuration</a></li>
+  <li><a href="stop_mode.htm">System TRK  Launch Configuration </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+// generated file: do not modify
+#include <basicheader.rh>
+#ifdef LANGUAGE_16
+#include "output_16.rls"
+#endif
+#ifdef LANGUAGE_10
+#include "output_10.rls"
+#endif
+
+RESOURCE ONE_STRING r_test_multifile1b_2
+	{
+	text = STR_10;
+	}

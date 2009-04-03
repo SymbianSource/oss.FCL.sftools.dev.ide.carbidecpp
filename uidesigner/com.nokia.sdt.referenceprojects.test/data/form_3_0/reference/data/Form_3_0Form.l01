@@ -1,0 +1,10 @@
+// localized strings for language: UK English (01)
+#define STR_Form_3_0FormView_3 "prompt"
+#define STR_Form_3_0FormView_4 "prompt"
+#define STR_Form_3_0FormView_5 "Edit text"
+#define STR_Form_3_0FormView_6 "prompt"
+#define STR_Form_3_0FormView_7 "One"
+#define STR_Form_3_0FormView_8 "Two"
+#define STR_Form_3_0FormView_9 "Three"
+#define STR_Form_3_0FormView_1 "Form_3_0Form"
+#define STR_Form_3_0FormView_2 "prompt"

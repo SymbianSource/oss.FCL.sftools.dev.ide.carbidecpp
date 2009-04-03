@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>access_errors</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>gcc_extensions</h3>
+<p>Controls the acceptance of GNU C language extensions.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma gcc_extensions on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler accepts GNU C extensions in C source code. This includes the following non-ANSI C extensions:</p>
+  <ul>
+    <li>Initialization of automatic struct or array variables with non-const values</li>
+  </ul>
+  <blockquote>
+    <p class="listing"> int foo(int arg)<br />
+      {<br />
+      int arr[2] = { arg, arg+1 };<br />
+  }</p>
+  </blockquote>
+  <ul>
+    <li class="code">sizeof( void ) == 1</li>
+    <li class="code">sizeof( function-type ) == 1</li>
+    <li>Limited support for GCC statements and declarations within expressions</li>
+  </ul>
+  <blockquote>
+    <p class="listing">pragma gcc_extensions on<br />
+      #define POW2(n) ({ int i,r; for(r=1,i=n; i&gt;0; --i) r&lt;&lt;=1; r;})</p>
+    <p>This feature only works for expressions in function bodies and does not support code that requires any form of C++ exception handling (for example, throwing or catching exceptions or creating local or temporary class objects that require a destructor call).</p>
+    <p class="listing">int main()<br />
+    {<br />
+    return POW2(4);<br />
+    }</p>
+  </blockquote>
+  <ul>
+    <li>Macro redefinitions without a previous #undef.</li>
+    <li>The GCC keyword <span class="code">typeof</span>. See &ldquo;The __typeof__() and typeof() operators&rdquo;, &ldquo;Initialization of Local Arrays and Structures&rdquo; for a description of these extensions.</li>
+    <li>Function pointer arithmetic supported</li>
+    <li><span class="code">void*</span> arithmetic supported</li>
+    <li><span class="code">__builtin_constant_p (&lt;expr&gt;)</span> supported</li>
+    <li>Forward declarations of arrays of incomplete type supported</li>
+    <li>Pre-C99 designated initializer syntax (deprecated) supported</li>
+  </ul>
+  <blockquote>
+    <p class="listing">#pragma gcc_extensions on<br />
+    struct S { int a, b, b; } s = { c:3, b:2, a:1 };</p>
+  </blockquote>
+  <ul>
+    <li>Conditionals with omitted Operands supported</li>
+  </ul>
+  <blockquote>
+    <p class="listing"> #pragma gcc_extensions on<br />
+      int x, y, z;<br />
+      x = y ?: z;<br />
+      Outputs:<br />
+      x = y ? y ? z;</p>
+  </blockquote>
+  <ul>
+    <li><span class="code">long __builtin_expect (long exp, long c)</span> now accepted</li>
+  </ul>
+  <p>This pragma corresponds to the Enable <a href="../pragmas/p_gcc_extensions.htm">GCC Extensions</a> setting . To check the global optimizer, use <span class="code">__option (gcc_extensions)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.<br />
+                    </p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

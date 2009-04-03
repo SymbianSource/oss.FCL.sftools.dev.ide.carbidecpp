@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikLabel.HAlignment">
+		<enumElement value="EEikLabelAlignHLeft" displayValue="left"/>
+		<enumElement value="EEikLabelAlignHCenter" displayValue="center"/>
+		<enumElement value="EEikLabelAlignHRight" displayValue="right"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikLabel.TextEmphasis">
+		<enumElement value="ENoEmphasis" displayValue="none"/>
+		<enumElement value="EPartialEmphasis" displayValue="partial"/>
+		<enumElement value="EFullEmphasis" displayValue="full"/>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikLabel.StandardFont">
+		<enumElement value="standard.NormalFont" displayValue="normal"/>
+		<enumElement value="standard.LegendFont" displayValue="legend"/>
+		<enumElement value="standard.AnnotationFont" displayValue="annotation"/>
+	</enumPropertyDeclaration>
+	
+	<component baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CEikLabel" 
+		category="Controls"
+		instanceNameRoot="label"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikLabel" classHelpTopic=""
+			resourceType="LABEL" resourceHelpTopic="" />
+		<designerImages smallIconFile="CEikLabel_sm.png" 
+			largeIconFile="CEikLabel.png" 
+			layoutImageFile="static_label.png"/>
+		<attributes>
+			<attribute key="cpp-class-name">CEikLabel</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-caknpreviewpopup-content">true</attribute>
+			<attribute key="rss-control-type-enum">EEikCtLabel</attribute>
+		</attributes>
+		<properties>
+			<enumProperty category="Appearance" name="alignment" 
+				type="com.nokia.sdt.series60.CEikLabel.HAlignment" 
+				default="EEikLabelAlignHCenter"
+				descriptionKey="alignmentDescription" />
+			<enumProperty category="Appearance" name="brushStyle" 
+				type="com.nokia.sdt.series60.CGraphicsContext.BrushStyle"
+				descriptionKey="brushStyleDescription" />
+			<property category="Label" name="text" type="localizedString" 
+				default="label"
+				descriptionKey="textDescription" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<enumProperty category="Appearance" name="font" 
+				type="com.nokia.sdt.series60.CEikLabel.StandardFont"
+				descriptionKey="fontDescription" />
+			<enumProperty category="Appearance" name="emphasis" 
+				type="com.nokia.sdt.series60.CEikLabel.TextEmphasis"
+				descriptionKey="emphasisDescription" />
+			<property category="Appearance" name="pixelGapBetweenLines" 
+				type="integer"
+				descriptionKey="pixelGapBetweenLinesDescription" />
+			<property category="Appearance" name="underline" type="boolean"
+				descriptionKey="underlineDescription" />
+			<property category="Appearance" name="strikethrough" type="boolean"
+				descriptionKey="strikethroughDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="CEikLabel_visual.js" prototype="CEikLabelVisual"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="LABEL" headers="eikon.rh uikon.rh">
+				<mapSimpleMember property="text" member="txt"/>
+				<mapEnumMember property="alignment" member="horiz_align"
+					validate="false"
+					headers="uikon.hrh"/>
+				<mapEnumMember property="font" member="standard_font">
+					<mapEnum value="standard.NormalFont" enumerator="EEikLabelFontNormal"/>
+					<mapEnum value="standard.LegendFont" enumerator="EEikLabelFontLegend"/>
+					<mapEnum value="standard.AnnotationFont" enumerator="EEikLabelFontAnnotation"/>
+				</mapEnumMember>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen forms="Dialog Container">
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+			<useTemplate ids="INIT_FROM_CONTAINER" />
+			<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+			<useTemplate ids="INIT_FROM_DIALOG" />
+			<useTemplate ids="LAYOUT_CONTROLS" />
+
+			<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"eiklabel.h", "eikenv.h" ]);
+			</inline>
+	
+			<inline scope="prototype">
+include("../srcgenLibrary.js")
+			</inline>
+			
+			<inline><![CDATA[
+if (Engine.formMatches(form, ["", "Dialog", "Container"])) {
+	checkNull = (form == "Dialog");
+	setPropertiesForPhase(contribs, "Initialize", 0, instanceMemberName, checkNull,
+		properties.brushStyle, "ENullBrush", "{0}->SetBrushStyle( CWindowGc::{1} );\n",
+		properties.emphasis, "ENoEmphasis", "{0}->SetEmphasis( CEikLabel::{1} );\n",
+		properties.pixelGapBetweenLines, 0, "{0}->SetPixelGapBetweenLines( {1} );\n",
+		properties.underline, 0, "{0}->SetUnderlining( {1} );\n",
+		properties.strikethrough, 0, "{0}->SetStrikethrough( {1} );\n" );
+}
+]]>			</inline>
+
+			<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+			<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+			<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+			<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

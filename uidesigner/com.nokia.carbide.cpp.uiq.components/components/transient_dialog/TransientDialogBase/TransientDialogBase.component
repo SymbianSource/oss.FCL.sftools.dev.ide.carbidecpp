@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--START_USECASES: CU20 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<!DOCTYPE componentDefinition [
+<!ENTITY CommonMacros SYSTEM "../../CommonMacros.inc">
+<!ENTITY FileAndClassMacros SYSTEM "../../FileAndClassMacros.inc">
+] >
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.TransientDialogBase"			
+			version="1.0"
+			abstract="true">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0">
+		</symbian>	
+		
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">false</attribute>
+			<attribute key="is-non-layout-object">true</attribute>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>		
+		</attributes>
+				
+		<properties>
+			<property name="name" displayName="%name" type="uniqueName"	descriptionKey="nameDescription" 
+			category="%category.design"	/>
+		</properties>
+		
+		<sourceGen>
+			&CommonMacros;
+			&FileAndClassMacros;			
+		</sourceGen>
+				
+	</component>
+
+</componentDefinition>

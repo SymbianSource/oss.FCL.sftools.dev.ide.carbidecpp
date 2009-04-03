@@ -1,0 +1,22 @@
+;Languages
+&EN,FR
+
+;Ordinary file to system drive
+{
+"text\englishfile.txt"
+"$(EPOCROOT)epoc32\text\frenchfile.txt"
+}-"$:\private\10000005\import\InstTest\lang.txt"
+
+;Ordinary file to selected drive. 
+"$(EPOCROOT)epoc32\data\c\private\12345678\foo.svg"-"!:\private\10000005\foo.svg", FF
+
+;Display 2 options to the user
+!({"Option1","Option1"},{"Option2","Option2"})
+if option1
+    "$(EPOCROOT)epoc32\release\armv5\udeb\z\sys\readmes\README.txt"-"!:\private\10000005\import\InstTest\README.txt";
+endif
+
+;Some text files to display in dialogs during the installation. These files are not installed.
+;'TC' continues with the installation after displaying the dialog. 
+;'TA' presents the user with an option to abort the installation.
+"$(EPOCROOT)epoc32\text\textfilec.txt"-"", FT, TC

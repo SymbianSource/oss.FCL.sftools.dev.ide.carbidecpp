@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="UIQ" link_to="../com.nokia.carbide.cpp.uidesigner.doc.user/toc.xml#uid_sections">
+<topic label="Working with UIQ" >
+
+    <topic label="UIQ UI" 			href="html/concepts/con_uiq_3x_ui.htm" >
+	  <topic label="Screen Layout Configurations" 	href="html/concepts/con_uiq_layout_configurations.htm" />
+	  <topic label="UI Designs" 		href="html/concepts/con_uiq_ui_designs.htm" />
+	</topic>
+
+	<topic label="UI Design Wizard" 			href="html/reference/uidesign/ref_ui_design_wizard.htm" >
+		<topic label="Application Properties Page" 	href="html/reference/uidesign/ref_ui_design_wizard_01.htm" />
+		<topic label="UIQ UI Design Selection Page" 	href="html/reference/uidesign/ref_ui_design_wizard_02.htm" />
+		<topic label="UIQ UI Design Properties Page" 	href="html/reference/uidesign/ref_ui_design_wizard_04.htm" />
+	</topic>
+	
+	<topic label="New UIQ Project Wizard" 			href="html/reference/projects/ref_new_proj_wizard.htm" >
+		<topic label="New Symbian OS C++ Project Page" 	href="html/reference/projects/ref_new_proj_01.htm" />
+		<topic label="Select a Type of Project Page" 	href="html/reference/projects/ref_new_proj_02.htm" />
+		<topic label="Symbian OS SDKs Page" 		href="html/reference/projects/ref_new_proj_03.htm" />
+		<topic label="Application Properties Page" 	href="html/reference/projects/ref_new_proj_04.htm" />
+		<topic label="UIQ UI Design Selection Page"	href="html/reference/projects/ref_new_proj_05.htm" />
+		<topic label="UIQ UI Design Properties" 	href="html/reference/projects/ref_new_proj_07.htm" />
+		<topic label="Basic Settings Page" 		href="html/reference/projects/ref_new_proj_08.htm" />
+		<topic label="Project Directories Page" 	href="html/reference/projects/ref_new_proj_09.htm" />
+	</topic>
+	
+	<topic label="Application Editor" 			href="html/reference/app_editor/ref_app_editor.htm" >
+		<topic label="Overview Page" 			href="html/reference/app_editor/ref_overview.htm" />
+		<topic label="UI Designs Page" 			href="html/reference/app_editor/ref_ui_design.htm" />
+		<topic label="Import UI Designs Dialog" 	href="html/reference/app_editor/ref_ui_design_import.htm" />
+		<topic label="Languages Page" 			href="html/reference/app_editor/ref_languages.htm" />
+		<topic label="Add Symbian Languages Dialog" 	href="html/reference/app_editor/ref_language_add.htm" />
+        <topic label="Component Palette"                href="html/reference/components/ref_palette.htm" >
+		   <topic label="Controls Components"              href="html/reference/components/ref_controls.htm" />
+		   <topic label="Editors Components"               href="html/reference/components/ref_editors.htm" />
+		   <topic label="Layout Components"                href="html/reference/components/ref_layout.htm" />
+		   <topic label="List Box Components"              href="html/reference/components/ref_list_box.htm" />
+		   <topic label="Messages and Dialogs Components"  href="html/reference/components/ref_message_dialogs.htm" />
+		   <topic label="Component Information Pane"       href="html/reference/components/ref_information.htm" />
+	    </topic>
+      </topic> 	<!-- END "Application Editor"  -->
+
+        <topic label="Creating New GUI Projects"               href="html/tasks/Projects/task_proj_new.htm" >
+		  <topic label="Starting the New Project Wizard" 	href="html/tasks/Projects/task_proj_new-00.htm" />
+		  <topic label="Setting the Project Name" 	href="html/tasks/Projects/task_proj_new-01.htm" />
+		  <topic label="Selecting a Template" 		href="html/tasks/Projects/task_proj_new-02.htm" />
+		  <topic label="Selecting Project SDKs" 		href="html/tasks/Projects/task_proj_new-03.htm" />
+		  <topic label="Setting Basic Application Properties" 	href="html/tasks/Projects/task_proj_new-04.htm" />
+		  <topic label="Selecting Initial Content" 		href="html/tasks/Projects/task_proj_new-05.htm" />
+		  <topic label="Setting Base Name and Container Type" 	href="html/tasks/Projects/task_proj_new-07.htm" />
+		  <topic label="Entering the Application Basic Settings" 	href="html/tasks/Projects/task_proj_new-08.htm" />
+		  <topic label="Assigning Project Directories" 		href="html/tasks/Projects/task_proj_new-09.htm" />
+        </topic>
+
+	<topic label="Application UI Designs" 		href="html/tasks/app_edit/task_uidesign.htm" >
+		<topic label="Selecting the Initial View"	href="html/tasks/app_edit/task_uidesign_initial_view.htm" />
+		<topic label="Adding a UI Design"		href="html/tasks/app_edit/task_uidesign_add.htm" />
+		<topic label="Removing a UI Design"		href="html/tasks/app_edit/task_uidesign_remove.htm" />
+		<topic label="Importing a Removed UI Design"	href="html/tasks/app_edit/task_uidesign_import.htm" />
+	</topic>
+
+        <topic label="UI Configuration" 			href="html/tasks/ui_configuration/task_uiconfig.htm" >
+		<topic label="Layout Configuration" 		href="html/tasks/ui_configuration/task_uiconfig_layout.htm" />
+		<topic label="UI Configuration" 		href="html/tasks/ui_configuration/task_uiconfig_view.htm" />
+	</topic> 	<!-- END "UI Configuration"  -->
+
+        <topic label="Commands" 				href="html/tasks/commands/task_commands.htm" >
+		<topic label="Command Lists" 			href="html/tasks/commands/task_commands_lists.htm" />
+		<topic label="Command Details" 			href="html/tasks/commands/task_commands_details.htm" />
+		<topic label="Commands IDs" 			href="html/tasks/commands/task_commands_ids.htm" />
+	</topic>
+	
+	<topic label="Objects" 		href="html/tasks/components/task_comp_working_with_obj.htm" >
+	        <topic label="Adding New Objects" 	href="html/tasks/components/task_comp_new_obj.htm" />
+	        <topic label="Deleting Objects" 	href="html/tasks/components/task_comp_delete_obj.htm" />
+	        <topic label="Row Layout Manager" 	href="html/tasks/components/task_comp_row_layout_manager.htm" />
+        </topic>
+	
+</topic>
+</toc>

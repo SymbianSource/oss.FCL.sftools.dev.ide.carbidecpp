@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Tool Naming Conventions</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Invoking Command-Line Tools</h3>
+<p>  To compile, assemble, link, or perform some other programming task with the Carbide command-line tools, type a command at the command-line prompt. This command specifies what tool to run, what options to use while the tool runs, and on what files the tool should operate.</p>
+<p>The tool performs the operation on the files you specify. If the tool successfully finishes its operation, a new prompt appears on the command line. Otherwise, it reports any problems as text messages on the command line before a new prompt appears. The tools include:</p>
+<ul>
+  <li><span class="code">mwccsym2</span> &#8212; x86 C/C++ compiler</li>
+  <li><span class="code">mwldsym2</span> &#8212; x86 linker</li>
+  <li><span class="code">mwc++filt</span> &#8212; x86 filter</li>
+</ul>
+<p>All of them can be found in <span class="code">\Nokia\Carbide.c++ &lt;version&gt;\x86Build\Symbian_Tools\Command_Line_Tools.</span></p>
+<p>You can also write scripts that automate the process to build your software. Scripts contain a list of command-line tools to invoke, one after another. For example, the <span class="code">make</span> tool, a common software development tool, uses scripts to manage dependencies among source code files and invoke command-line compilers, assemblers, and linkers as needed, much like the Carbider IDE&rsquo;s project manager.</p>
+<p>Commands follow this convention:</p>
+<blockquote>
+  <p class="code">tool [options] [files] </p>
+</blockquote>
+<p>where tool is the name of the Carbide command-line tool to invoke, options is a list of zero or more options that tell the tool what operation it should perform and how to perform it, and files is a list of zero or more files on which the tool should operate. Which options and files you use depends on what operation you want the tool to perform.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            name="%QtCategoryName"
+            id="com.nokia.carbide.cpp.importWizards.qt">
+      </category>
+      <wizard
+            name="%proImportWizardname"
+            icon="icons/Carbide_Qt_logo.gif"
+            category="com.nokia.carbide.cpp.importWizards.qt"
+            class="com.nokia.carbide.cpp.internal.qt.ui.wizard.QtProFileImportWizard"
+            id="com.nokia.carbide.cpp.qt.ui.wizard.QtProFileImportWizard">
+         <description>
+            %proImportWizardDescription
+         </description>
+      </wizard>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="com.trolltech.qtcppproject.QtCategory"
+            class="com.nokia.carbide.cpp.internal.qt.ui.wizard.NewQtCppProjectWizard"
+            finalPerspective="com.trolltech.qtcppproject.QtCppPerspective"
+            icon="icons/Carbide_Qt_logo.gif"
+            id="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"
+            name="%newProjectWizardName"
+            project="true">
+         <description>
+            %newProjectWizardDescription
+         </description>
+      </wizard>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.nokia.carbide.cpp.CarbideCppPerspective">
+         <perspectiveShortcut
+               id="com.trolltech.qtcppproject.QtCppPerspective">
+         </perspectiveShortcut>
+         <newWizardShortcut id="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
+      </perspectiveExtension>
+
+      <perspectiveExtension
+            targetID="com.trolltech.qtcppproject.QtCppPerspective">
+         <perspectiveShortcut
+               id="com.nokia.carbide.cpp.CarbideCppPerspective">
+         </perspectiveShortcut>
+         <newWizardShortcut id="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewProjectWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewClassWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.mmpWizard"/>
+      </perspectiveExtension>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.activities">
+      <activity
+            description="%activityDescription"
+            id="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
+            name="%activityName"/>
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
+            pattern="com.trolltech.qtcppproject/com.trolltech.qtcppproject.wizards.QtConsoleProjectWizard"/>
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
+            pattern="com.trolltech.qtcppproject/com.trolltech.qtcppproject.wizards.QtGuiProjectWizard"/>
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
+            pattern="com.trolltech.qtcppproject/com.trolltech.qtcppproject.wizards.ImportQtWizard"/>
+      <category
+            description="%categoryDescription"
+            id="com.nokia.carbide.cpp.qt.qtuicategory"
+            name="%categoryName"/>
+      <categoryActivityBinding
+            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
+            categoryId="com.nokia.carbide.cpp.qt.qtuicategory"/>
+   </extension>   
+   
+   <extension
+         point="com.trolltech.qtcppproject.qmakeEnvironmentModifier">
+      <modifier
+            class="com.nokia.carbide.cpp.internal.qt.ui.QMakeEnvironmentModifier">
+      </modifier>
+   </extension>
+
+</plugin>

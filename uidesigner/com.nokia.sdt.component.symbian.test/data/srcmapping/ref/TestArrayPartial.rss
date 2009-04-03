@@ -1,0 +1,17 @@
+#include <arrayheader.rh>
+#include <basicheader.rh>
+
+RESOURCE ARRAY_TYPES_DEFAULTS r_test_array_partial
+	{
+	structs =
+		{
+		ONE_STRING
+			{
+			text = "Hi there";
+			},
+		ONE_STRING
+			{
+			text = "And again";
+			}
+		};
+	}

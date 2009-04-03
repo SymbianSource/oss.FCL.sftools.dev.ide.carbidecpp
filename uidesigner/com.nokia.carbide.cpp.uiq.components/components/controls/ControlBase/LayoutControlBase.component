@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_events SYSTEM "ControlBase_events.inc">
+<!ENTITY ControlEventSourcegen SYSTEM "../../ControlEventSourcegen.inc">
+<!ENTITY ListBoxEventSourcegen SYSTEM "../../ListBoxEventSourcegen.inc">
+] >
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<!-- This component is the abstract base component for
+	     UIQ layout reference components
+	 -->					
+	<component 
+			qualifiedName="com.nokia.carbide.uiq.LayoutControlBase"
+			baseComponent="com.nokia.carbide.uiq.ControlBase"
+			version="1.0"
+			abstract="true">
+									
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+			
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+		</attributes>
+		
+		<properties>
+			<componentReferenceProperty name="control" scope="model" category="%category.design" 
+				constraint="com.nokia.carbide.uiq.ControlCollectionItemBase"
+				readOnly="true" promoteReferenceProperties="true"
+				displayName="%control"
+				descriptionKey="controlDescription"/>
+			<!--TODO: temporary until the layout manager is implemented and integrated :
+				see DisplayModelUIQ#createLayoutObject and Container -->
+			<compoundProperty category="Hidden" name="location" displayName="%location" 
+				type="com.nokia.carbide.uiq.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="locationDescription" />
+			<compoundProperty category="Hidden" name="size" displayName="%size"
+				type="com.nokia.carbide.uiq.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="sizeDescription"/>
+		</properties>
+		
+		<events defaultEventName="EEventStateChanged">
+			&common_events;
+		</events>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="LayoutControlBase_propertyExtenders.js" prototype="LayoutControlBase"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IClipboardCommandExtender"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.layoutComponents.ClipboardCommandExtenderFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceGen>
+			<templateGroup id="GenerateControlSourceGen">
+			<inline scope="prototype">
+${jsObject}.prototype.getInstanceMemberName = function(instance) {
+	return "i" + TextUtils.titleCase(instance.properties.control);
+}			</inline>
+				<inline forms="InstanceGen" id="0">
+		var targetInstance = lookupInstanceByName(instance.properties.control);
+		if (targetInstance) {
+			var targetContribs = Engine.generateRedirectedInstanceContributions(
+					targetInstance,
+					form,
+					instance);		
+			contribs.addAll(targetContribs);		
+		}
+				</inline>
+			</templateGroup>
+			
+			&ControlEventSourcegen;
+			&ListBoxEventSourcegen;
+			
+		</sourceGen>
+
+	</component>
+
+</componentDefinition>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layouts>
+	<!-- classic fonts -->
+	<layout minSDKVersion="2.0" maxSDKVersion="2.7.9">
+		classic_portrait_2_x
+	</layout>
+	<!-- classic fonts in classic res, else scalable -->
+	<layout minSDKVersion="2.8" maxSDKVersion="2.9.9">
+		classic_portrait_2_x;qvga_portrait;dblres_portrait
+	</layout>
+	<!-- all scalable -->
+	<layout minSDKVersion="3.0" maxSDKVersion="3.0.9">
+		classic_portrait;classic_landscape_right;qvga_portrait;qvga_landscape_right;dblres_portrait;dblres_landscape_right
+	</layout>
+	<layout minSDKVersion="3.1" maxSDKVersion="3.9.9">
+		qvga_portrait_3_1;qvga_landscape_right_3_1
+	</layout>
+	<!-- still need to add qhd_landscape;vga_portrait;vga_landscape -->
+	<layout minSDKVersion="5.0">
+		qvga_portrait_3_1;qvga_landscape_right_3_1;qhd_portrait;qhd_landscape_right;vga_portrait;vga_landscape
+	</layout>
+</layouts>

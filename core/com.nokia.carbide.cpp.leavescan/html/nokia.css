@@ -1,0 +1,165 @@
+/*	Nokia DPT Tools CSS
+	Nokia DPT Austin
+	Date: 2006/11/02
+*/
+
+/*	Add whitespace around entire display to avoid crowding edges of view 	*/
+html {
+	margin: 10px;
+	/* fixes gray backgrounds when displayed in external browsers */
+	background-color:#FFFFFF;
+	}
+
+/* 	Set default font to serif style, 12-pt and plain	*/
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-weight: plain;
+}
+
+/*	Use sans-serif fonts for all title styles and Nokia blue	*/
+h1, h2, h3, h4, h5, h6, strong, em {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333;	
+	}
+
+strong{
+	color: #333;	
+	}
+
+/*	For headlines at the top of a view, add space and a gray line underneath	*/
+h2, h3	{
+	padding:10px 0px;	
+	border-bottom:1px solid #BBB;
+	}
+	
+li	{
+	margin-bottom:8px;	
+	margin-top:8px;	
+	}
+
+
+/*	Footer includes space and a gray line above the company logo	*/
+#footer {
+	padding-top:10px;
+	margin-top:20px;
+	border-top:1px solid #999;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333;	
+	}
+
+.listing	{
+	font-family: "Courier New", Courier, mono;
+	color: #009;
+	background-color: #EEE;
+	padding: 10px 0px;
+	margin: 10px 0px;
+	}
+
+.code, pre	{
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+	color: #333;
+	}
+
+.step	{
+	/* background-color: #EEE; */
+	/* margin: 10px 0px; */
+	color: #333;
+	border-bottom:2px solid #EEE;
+	}
+	
+.substep	{
+	background-color: #EEE;
+	}
+	
+	
+/*	Figure/Listing/Table titles are centered and gray	*/
+p.table {
+	color: #999;
+	font-weight: bold;
+	padding-top: 5px;
+	}
+
+table	{
+	border: 1px solid #999;
+	table-layout: auto;
+	}
+
+td, th	{
+	border: 1px solid #999;
+	padding: 5px;
+	vertical-align:top;
+	}
+	
+th	{
+	background-color:#999;
+	color:#FFF;
+	}
+
+div.ol.p	{
+	margin-left: 3em;
+	}
+
+/* Make all ordered/unordered list items appear in bold gray */
+div ol > li, div ul > li {
+	font-weight:bold;
+	color: #333;
+	}
+	
+/* Make all H4 and H5 items appear in bold gray against a light gray background */
+div h5, div h4	{
+	padding: 5px;
+	background-color: #EEE;
+	font-weight:bold;
+	color: #333;
+	}
+	
+	
+/*	Notes stand out using a light top & bottom borders with dark gray text	*/
+p.note {
+	/* color: #03C; */
+	/* background-color: #FFFF99; */
+	color: #333;
+	padding: 5px;
+	margin-left: 1em;
+	margin-right: 1em;
+	border-top:1px solid #BBB;
+	border-bottom:1px solid #BBB;
+}
+
+	
+/*	Figure/Listing/Table titles are centered and gray	*/
+p.figure {
+	color: #333;
+	text-align: center;
+	font-weight: bold;
+}
+
+/*	red background and white text for things that need fixing before release	*/
+.fix	{
+	background-color: red;
+	font-weight: bold;
+	color: white;
+	}
+
+.question	{
+	font-style:italic;
+	font-weight:bold;
+	color: #333;
+	}
+	
+.titleSmall {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	}
+
+.copyrightStatement {
+	font-size: 11px;
+	color:			#006699;             /* Symbian blue */
+	}
+
+div.Footer table, div.Footer td, div.Footer th {
+	border: 0px none #000;
+	}

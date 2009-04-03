@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>Running CodeScanner from the Command-line</title>
+<link rel="StyleSheet" href="../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+   <body>
+   <div class="Head1">
+<h2>Running CodeScanner from the Command-line</h2>
+</div>
+   <p>CodeScanner can be run from a command prompt using the command, <span class="code">codescanner</span>, and appropriate 
+   parameters and options. The output is in the form of  HTML or XML files. </p>
+   <p>When CodeScanner  is invoked from the command line it can scan files within any Symbian OS 
+     project directory structure or within a single source file. </p>
+   <p>The options are: </p>
+   <table width="650"
+border="0" cellpadding="2" cellspacing="0">
+     <tr valign="top">
+       <th width="151" class="Cell">Option</th>
+       <th width="489" class="Cell">Description</th>
+     </tr>
+     <tr valign="top">
+       <td class="code">-c &lt;config file&gt;</td>
+       <td class="Cell">Specify a config file used by CodeScanner. </td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-h</td>
+       <td class="Cell"><p>Display CodeScanner  help. </p>         </td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-i &lt;src dir|file&gt; </td>
+       <td class="Cell"><p>Specify additional directory or file to scan. For example: </p>
+         <p class="listing">codescanner -i c:/myproject/includes c:/myproject/sources c:/myproject/results</p>       </td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-l &lt;path|file&gt; </td>
+       <td class="Cell">Creates debug log file of the specified filename in the same directory as the CodeScanner command-line tool. Include a path to specify another location to store the log file.</td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-o html|xml|std </td>
+       <td class="Cell"><p>Specifies the output report format. Multiple formats can be set at the same time. Default setting is <span class="code">html</span>. For example:</p>
+           <p class="listing">codescanner -o xml,html c:\sources c:\reports</p></td>
+     </tr>
+     <tr valign="top">
+       <td class="code">outputdir </td>
+       <td class="Cell">The directory in which to produce the output HTML files. If omitted from the command-line, CodeScanner will only output the problems list and not generate a report. </td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-r</td>
+       <td class="Cell">Used to specify the LXR version. </td>
+     </tr>
+     <tr valign="top">
+       <td class="code">sourcedir </td>
+       <td class="Cell"><p>The directory containing the source code.</p></td>
+     </tr>
+     <tr valign="top">
+       <td class="code">sourcefile</td>
+       <td class="Cell"> The single source file to scan, and its path.</td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-t on|off </td>
+       <td class="Cell"><p>Creates a time-stamped directory for results. Default setting is on. For example:</p>
+       <p class="listing">codescanner -t off c:/myproject/sources c:/myproject/results</p></td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-v</td>
+       <td class="Cell">Display verbose messages.</td>
+     </tr>
+     <tr valign="top">
+       <td class="code">-x</td>
+       <td class="Cell"><p>Used to specify the LXR site. Once scanning is complete, links in the report will point to the LXR server instead of the local directory (<span class="code">C:\sources</span>). For example:</p>
+       <p class="listing">codescanner -x http://some.lxr.server/sources/ -r S60_3_2_12 c:\sources c:\reports</p>       </td>
+     </tr>
+   </table>
+   <div class="step">
+     <h4>Running CodeScanner on a directory</h4>
+     <ul>
+       <li>At the command prompt for your CodeScanner directory enter: <br />
+	   <p class="listing">codescanner [options] &lt;sourcedir&gt; &lt;outputdir&gt;</p></li>
+     </ul>
+   </div>
+   <p>For example: </p>
+   <p class="listing">codescanner -t C:\Projects\CodeToScan C:\Output </p>
+   <p>This example scans all of the text code files found in <span class="code">C:\Projects\CodeToScan</span> and saves the 
+     HTML output to <span class="code">C:\Output</span>. No extra lines are displayed in the output to provide context for 
+   the line containing each issue.</p>
+   <div class="step">
+     <h4>Running CodeScanner on a single source file</h4>
+     <ul>
+       <li>At the command prompt for your CodeScanner directory enter: <br />
+	   <p class="listing">codescanner [options] &lt;sourcefilewithpath&gt; &lt;outputdir&gt;</p></li>
+     </ul>
+   </div>
+   <p>For example: </p>
+   <p class="listing">codescanner c:\Projects\SingleFiles\Csymbianfile.cpp c:\tmp</p>
+   <p>This example scans the single file, <span class="code">Csymbianfile.cpp</span>, and saves the HTML output to 
+   <span class="code">C:\tmp</span>. 	</p>
+   <b>Related references   </b>
+   <ul>
+     <li><a href="run_cs.htm">Running CodeScanner  </a></li>
+   </ul>
+   <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+   </body>
+   </html>
+   

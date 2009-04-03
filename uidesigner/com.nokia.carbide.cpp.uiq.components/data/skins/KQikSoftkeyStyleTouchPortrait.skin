@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.nokia.com/sdt/ui/skin" 
+	name="UIQ Softkey Touch Portrait" width="342" height="420">
+	<editorArea x="52" y="45" width="240" height="320"/>
+</skin>

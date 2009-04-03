@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Tutorial: Equal Container</title>
+<link rel="StyleSheet" href="../../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Tutorial: Equal Container</h2>
+<p>This tutorial explains how to create a top-level container component based on CCoeControl that consists of a simple layout behavior and shows up in the design wizard. The example files for the Equal Container tutorial are provided in a zip file in the s60 components plugin located at: <span class="code">{Carbide_Installation_Dir}\plugins\com.nokia.sdt.series60.componentlibrary_<i>version</i>\templates\tutorials\example_components\example_components.zip</span>, where <i>version</i> is the current version of UI Designer. Refer to the EqualContainer example files while reading this tutorial.</p>
+<p>Please refer to the component XML schema  documentation for all the XML element details. Detailed documentation on the schema can be  found in the reference section under <a href="../../../reference/component.xsd doc/index.html">Component XSD Description</a>.</p>
+<p>In CCoeControl, children are added at absolute positions and given absolute sizes. These values make it into the generated source.  This does not work well for multiple resolutions or portrait vs. landscape modes.  So you can create a custom container (EqualContainer) that dynamically calculates the coordinates and sizes for components (children) and places them at equal sizes within the container.</p>
+<p>The goal of this tutorial focuses on the following steps:</p>
+<ul>
+  <li>Step 1: <a href="equalcontainer_tutorial_01.htm">Create Project for Equal Container Example</a></li>
+  <li>Step 2: <a href="equalcontainer_tutorial_02.htm">Write the Component and Script Code</a></li>
+  <li>Step 3: <a href="equalcontainer_tutorial_03.htm">Change  CCoeControl&rsquo;s Layout Behavior to be Dynamic</a></li>
+  <li>Step 4: <a href="equalcontainer_tutorial_04.htm">Expose the New Container in the Design Wizard</a></li>
+  <li>Step 5: <a href="equalcontainer_tutorial_05.htm">Create UI Design for UI Designer Project</a></li>
+</ul>
+<p><img src="../../../img/nokia_copyright.png" alt="copyright" width="280" height="21"></img></p>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Working with On-device Debug Agents">
+	<intro>
+		<description>
+			Follow these steps to connect TRK to a target device for on-device debugging support.
+		</description> 
+	</intro> 
+	
+	<item title="Verify a Symbian SDK is available" href="/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_requirements.htm" >
+		<description>
+		You must have a supported SDK installed in order to create a Symbian OS project. If necessary, download and install a supported SDK before continuing.
+		</description>
+	</item>
+
+</cheatsheet>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- testing version, using component reference to find CBA -->
+
+	<component qualifiedName="com.nokia.sdt.series60.test.CBAHolder" 
+		category="Basic"
+		version="0.1">
+
+		<properties>
+			<property name="name" type="uniqueName"/>
+			<componentReferenceProperty scope="model" name="theCBA"/>
+		</properties>
+
+		<sourceMapping>
+  		  <mapResource struct="EIK_APP_INFO" headers="cba.rh">
+ 		  <select property="theCBA->CBA">
+		    <choice value="com.nokia.sdt.series60.test.CBA.Type.CUSTOM">
+		    	<!-- emit a reference to the resource generated -->
+		        <mapReferenceMember property="theCBA" member="cba"/>
+		    </choice>
+		    <choice>
+				<!-- else, emit the builtin -->
+				<mapIdentifierMember property="theCBA->CBA" member="cba" />
+		    </choice> 
+		  </select>
+		 </mapResource>
+		</sourceMapping>
+		
+	</component>
+</componentDefinition>

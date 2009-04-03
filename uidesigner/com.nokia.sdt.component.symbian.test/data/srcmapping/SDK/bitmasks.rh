@@ -1,0 +1,31 @@
+
+#define EAknOneBit 1
+#define EAknTwoBit 0x2
+#define EAknThree (EAknOneBit | EAknTwoBit)
+
+#define EAknRed (0x1)
+#define EAknGreen 0x2
+#define EAknBlue 4
+#define EAknWhite (7)
+#define EAknYellow (EAknRed | EAknGreen)
+#define EAknBlack 0
+
+STRUCT BITMASK {
+	LONG numbers = -1;
+	LONG colors = -1;
+}
+
+enum {
+	EAknRedEnum = 1,
+	EAknGreenEnum = 2,
+	EAknBlueEnum = 4,
+	EAknWhiteEnum = 7,
+	EAknYellowEnum = EAknRedEnum | EAknGreenEnum,
+	EAknBlackEnum = 0
+};
+
+STRUCT BITMASK_DEFAULTS {
+	LONG numbers = 0;
+	LONG colors = EAknGreenEnum;
+}
+

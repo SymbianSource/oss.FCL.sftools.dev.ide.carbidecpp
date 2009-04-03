@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<devices version="1.0">
+  <device default="no" id="UIQ3" name="com.symbian.UIQ" userdeletable="yes">
+    <epocroot>C:\Symbian\UIQ3SDK</epocroot>
+    <toolsroot>C:\Symbian\UIQ3SDK</toolsroot>
+  </device>
+  <device default="no" id="S60_3rd_FP1" name="com.nokia.s60" userdeletable="no">
+    <epocroot>c:\Symbian\9.2\S60_3rd_FP1\</epocroot>
+  </device>
+  <device default="no" id="SymbianOS_95_200750" name="com.Symbian.TechView" userdeletable="yes">
+    <epocroot>N:\</epocroot>
+    <toolsroot>p:</toolsroot>
+  </device>
+  <device default="no" id="S60_3rd_FP2_SDK" name="com.nokia.s60" userdeletable="yes">
+    <epocroot>C:\Symbian\9.3\S60_3rd_FP2\S60_3rd_FP2_SDK</epocroot>
+    <toolsroot>C:\Symbian\9.3\S60_3rd_FP2\S60_3rd_FP2_SDK</toolsroot>
+  </device>
+  <device default="no" id="S60_3_2_200810" name="com.nokia.s60" userdeletable="yes">
+    <epocroot>H:\</epocroot>
+    <toolsroot>r:</toolsroot>
+  </device>
+ 
+</devices>

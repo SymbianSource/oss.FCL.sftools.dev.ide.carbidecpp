@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.qiknumbereditor.Flags">
+		<enumElement displayValue="%EQikNone" value="EQikNone"/>
+		<enumElement displayValue="%EQikDisplayLeadingZeros" value="EQikDisplayLeadingZeros"/>
+		<enumElement displayValue="%EQikUseSpinnerArrows" value="EQikUseSpinnerArrows"/>
+		<enumElement displayValue="%EQikNoSpinnerArrows" value="EQikNoSpinnerArrows"/>		
+	</enumPropertyDeclaration>					
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikNumberEditor"
+			baseComponent="com.nokia.carbide.uiq.CQikNumericEditorBase"
+			instanceNameRoot="numberEditor"			
+			version="1.0"
+			category="%category.editors">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CQikNumberEditor" classHelpTopic=""
+			resourceType="QIK_NUMBER_EDITOR" resourceHelpTopic=""/>				
+		
+		<designerImages smallIconFile="CQikNumberEditor_sm.png" 
+			largeIconFile="CQikNumberEditor.png"/>		
+		
+		<attributes>
+			<attribute key="cpp-class-name">CQikNumberEditor</attribute>
+			<attribute key="rss-control-type-enum">EQikCtNumberEditor</attribute>					
+		</attributes>
+		
+		<properties>
+			<property name="minimum" displayName="%minimum" category="%category.data" type="integer" 
+				 default="-2147483647" minValue="-2147483647" maxValue="2147483646" descriptionKey="minimumDescription"/>
+			<property name="maximum" displayName="%maximum" category="%category.data" type="integer" 
+				 default="2147483647" minValue="-2147483646" maxValue="2147483647" descriptionKey="maximumDescription"/>
+			<property name="value" displayName="%value" category="%category.data" type="integer" 
+				 default="0" descriptionKey="valueDescription"/>
+			<enumProperty name="flags" displayName="%flags" 
+						  type="com.nokia.carbide.uiq.qiknumbereditor.Flags"
+						  category="%category.behavior"
+						  descriptionKey="flagsDescription"
+			/>		
+		</properties>
+		
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true" category="Hidden"/>
+			<propertyOverride name="dimmed" readOnly="true" category="Hidden"/>
+		</propertyOverrides>		
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>				
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>				
+				<script file="CQikNumberEditor.js" prototype="CQikNumberEditor"/>
+			</implementation>		
+		</implementations>	
+
+		<sourceMapping>
+			<mapResource struct="QIK_NUMBER_EDITOR" headers="qikon.rh">
+				<mapEnumMember property="flags" member="flags" validate="false"/>				
+				<mapSimpleMember property="minimum" member="min"/>
+				<mapSimpleMember property="maximum" member="max"/>	
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+					
+			<!--Initialization-->				
+			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+								InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+								Headers="QikNumberEditor.h"/>	
+								
+			<!--Initialize Phase-->	
+				<template id="INITIALIZE_PHASE" phase="InitializeControlHandlers"><![CDATA[
+if ( ${ instanceMemberName } != NULL )
+{
+	${instanceMemberName}->SetValueL( ${ instance.properties.value } );
+}
+]]>		        </template>	
+		</sourceGen>		
+			
+	</component>
+
+</componentDefinition>

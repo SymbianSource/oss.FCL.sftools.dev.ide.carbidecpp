@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="Packages">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="Package">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element maxOccurs="1" minOccurs="0" name="information" type="xsd:string"/>
+						</xsd:sequence>
+						<xsd:attribute name="sdkFamily" type="xsd:string" use="required"/>
+						<xsd:attribute name="sdkVersion" type="xsd:string" use="required"/>
+						<xsd:attribute name="packageVersion" type="xsd:string" use="required"/>
+						<xsd:attribute name="displayName" type="xsd:string" use="required"/>
+						<xsd:attribute name="installFilePath" type="xsd:string" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+        </xsd:complexType>
+	</xsd:element>
+</xsd:schema>

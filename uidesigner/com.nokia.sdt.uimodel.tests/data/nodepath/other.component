@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" >
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.Compound">
+		<property name="text" type="string"/>
+		<componentReferenceProperty scope="model" name="aRef" />
+	</compoundPropertyDeclaration>
+	
+	<component qualifiedName="com.nokia.examples.other" >
+		<properties>
+			<property name="name" type="uniqueName"/>
+			<compoundProperty name="compound" type="com.nokia.test.Compound"/>
+			<property name="text" type="localizedString"/>
+		</properties>
+	</component>
+</componentDefinition>

@@ -1,0 +1,30 @@
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
+make: *** [MAKEFILELISTBOX] Error 255
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+WARNING: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(2) : Unrecognised Keyword "TARGE"
+
+FATAL ERROR: ERROR: No Target specified
+
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+WARNING: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(11) : SOURCEPATH "\APPS\Nokia\DDB21Nightly\workspace\ListBox\datx\" not found
+
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
+make: *** [MAKEFILELISTBOX] Error 255
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+FATAL ERROR: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(6) : Stack size doesn't fit expected number format
+
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
+make: *** [MAKEFILELISTBOX] Error 255
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+FATAL ERROR: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(42) : BITMAP color depth "listboxlistbox.cpp" - unexpected format
+
+FATAL ERROR: ERROR: No Sources specified
+
+FATAL ERROR: ERROR: No Sources specified
+
+X:\SWATI_Symbian_Tools\Trace\TraceCore\group2\BLD.INF:59: #error test
+

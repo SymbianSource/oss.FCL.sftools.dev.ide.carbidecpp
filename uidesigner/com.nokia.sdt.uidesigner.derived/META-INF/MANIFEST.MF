@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Carbide.c++ UI Designer Derived Sources
+Bundle-SymbolicName: com.nokia.sdt.uidesigner.derived; singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: com.nokia.sdt.uidesigner.derived.DerivedPlugin
+Bundle-Vendor: Nokia
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.gef,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.ui.views,
+ org.eclipse.core.resources
+Eclipse-AutoStart: true
+Export-Package: com.nokia.sdt.component.property,
+ com.nokia.sdt.uidesigner.derived,
+ com.nokia.sdt.uidesigner.derived.ui,
+ com.nokia.sdt.uidesigner.ui.command

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Setting Environment for x86 Compiler</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style2 {
+	font-weight: bold;
+	font-style: italic;
+}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Setting Environment for x86 Compiler</h2>
+<p>You can build  files and projects using the Carbide.c++ command-line tools. </p>
+<p>The command-line tools are located in the <span class="code">plugins\x86Build</span> folder and include:</p>
+<ul>
+  <li><span class="code">\env_switch</span> - contains the <span class="code">env_update.exe</span> program which installs the environment variables used by the command-line tools. You must  run  the <span class="code">env_update.exe</span> program before any of the command-line tools can operate. It is not required to run if building from Carbide. </li>
+  <li><span class="code">\Symbian_Support</span> - contains the libraries, headers, and other support files necessary to use the command-line toosl</li>
+  <li><span class="code">\Symbian_Tools</span> - contains the  command-line tools compile (<span class="code">mwccsym2.exe</span>), assembler (<span class="code">mwc++filt.exe</span>), and linker (<span class="code">mwldsym2.exe</span>) project files</li>
+</ul>
+<div class="step">
+  <h4>Running a Command-Line Tool</h4>
+  <ol>
+    <li>Locate and launch env_update.exe to install the environment variables required by the command-line tools</li>
+    <p>Follow the onscreen instructions to install the correct environment variables. </p>
+    <li>In the Command Prompt window, enter the tool name and options to invoke the command-line tool</li>
+  </ol>
+</div>
+<h5>Concepts</h5>
+  <ul>
+    <li><a href="../../concepts/Projects.html">Projects</a></li>
+</ul>
+  <h5>Tasks</h5>
+  <ul>
+    <li><a href="../CreatingNewProjects.html">Creating Projects</a></li>
+    <li><a href="prj_debug_config.htm">Creating a Launch Configuration</a></li>
+    <li><a href="../start/carbide_debugging.htm">Debugging a Symbian OS Program</a> </li>
+  </ul>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

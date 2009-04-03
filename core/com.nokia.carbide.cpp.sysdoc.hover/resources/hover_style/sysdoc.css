@@ -1,0 +1,279 @@
+/*	
+	Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+	All rights reserved. 
+	License: http://www.eclipse.org/legal/epl-v10.html
+*/
+
+img {
+  border: 0;
+}
+
+body {
+  font-family: Trebuchet MS, Verdana, lucida, arial, helvetica, sans-serif;
+  font-size: 12px;
+}
+
+
+a:link    { color: #006699; }
+a:visited { color: #663399; }
+a:active  { color: #ff9900; }
+a:hover   { color: #ff9900; }
+
+/* Ordinary items in the main area */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  font-size: small;
+  padding-left: 0.1em;
+}
+
+h1 {
+  font-size: 14px;
+  color: #FF9900;
+}
+
+.Bodytext p, h1, h2, h3, h4, h5, h6 {
+    margin-top:1px;
+    margin-bottom:1px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    font-size: 12px
+}
+
+h2 {
+  font-size: 6px
+  color: #006699;
+}
+
+h3 {
+  font-size: medium;
+}
+
+h4 {
+  padding-left: 0em;
+}
+
+h5 {
+  padding-left: 0em;
+  color: #7F7F7F;
+}
+
+h6 {
+  padding-left: 0em;
+  color: #C0C0C0;
+}
+
+
+.Title {
+  text-align: left;
+  font-weight: bold;  font-size: 185%;
+}
+
+.Author {
+  text-align: right;
+  font-style: italic;
+}
+
+.Abstract {
+  margin-left: 9%;
+  margin-right: 2%;
+  font-style: italic;
+  font-size: 12pt;
+  font-weight: normal;
+ }
+ 
+.Contents1 {
+  margin-left: 3%;
+  margin-right: 2%;
+}
+
+.Contents2 {
+  margin-left: 9%;
+  margin-right: 2%;
+}
+
+.Head1 {
+  margin-left: 0%;
+}
+
+.Head2 {
+  margin-left: 3%;
+}
+
+.Head3 {
+  margin-left: 6%;
+}
+
+.Bodytext {
+  margin-left: 9%;
+  margin-right: 2%;
+}
+
+code, pre, .CodeBlock, tt, kbd, samp {
+  font-family: courier new, courier, lucida console, lucida typewriter, monospace;
+}
+
+/* Areas in the navigation area */
+.breadcrumbNav, .breadcrumbNav a:link, .breadcrumbNav a:visited {
+  color: #006699;
+}
+.breadcrumbNav a:link, .breadcrumbNav a:visited {
+  text-decoration: underline;
+}
+.breadcrumbNav {
+  margin: 0.0em;
+  padding: 0.0em;
+  text-align: left;
+  font-weight: bold;
+ /* visibility: hidden; */
+}
+.breadcrumbNav .separator {
+  color: #ff9900;
+}
+
+.breadcrumbNavRi{
+	font-size: 8pt;
+}
+
+.breadcrumbNavRi .separator {
+  color: #ff9900;
+}
+
+.LogoBox { border-bottom: solid #ff9900 2px; }
+
+.copyrightStatement {
+  font-size: 12px;
+}
+
+/* Blocks of special information */
+.Structure, .CodeBlock, .Prototype, .Instructions, .Process, .Concept,
+.Guideline, .DataDescription, .Classification, .Example {
+  padding: 0.33em;
+  border: solid white 1px; /* Netscape 4.x workaround. */
+  background-color: #dddddd;
+  display: block;
+  width: 99%;
+  margin-right: 1%;
+}
+
+.CodeBlock, .Prototype {
+  border: solid white 1px;
+  background-color: #f6f6f9;
+}
+
+
+/* CodeBlocks in blue boxes want to be blue too. */
+.Structure       .CodeBlock,
+.Instructions    .CodeBlock,
+.Process         .CodeBlock,
+.Concept         .CodeBlock,
+.Guideline       .CodeBlock,
+.DataDescription .CodeBlock,
+.Classification  .CodeBlock,
+.Example         .CodeBlock
+{
+  background-color: #cccccc;
+  border: solid #dddddd 1px;
+}
+
+
+/* Tables. It would be nice to have the cell and border colours adapt
+to whatever the background colour is rather than just being grey. */
+td.Cell {
+  background-color: white;
+  color: black;
+  /*text-align: left;*/
+}
+
+th.Cell {
+  background-color: #eeeeee;
+  color: black;
+  text-align: left;
+  font-weight: bold;
+}
+
+.TableWrap, .ValueTableWrap {
+  background-color: #aaaaaa;
+  color: white;
+}
+
+/* Figures */
+/* This was messing up IE5's tables...
+.Figure {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+*/
+
+.Figure .Caption, .Figure .Image, .RelatedItems .Image {
+  text-align: center;
+}
+
+.Caption {
+  font-style: italic;
+}
+
+/* Other */
+.unresolvedLink {
+  color: #ff0000;
+  background-color: #ffddbb;
+}
+
+/* Glossary layout */
+.Glossary dt { margin-top: 1.5em; }
+
+.highlight { color: white; background: #006699; font-weight: bold; }
+
+.searchheading { font-weight: bold; }
+
+.summary { color: red; }
+/* Index page */
+.indexlink,.indexsummary,.indextitle
+{
+    padding: 0em;
+/*    margin-left: 3%;*/
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.indextitle
+{
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.indexsummary
+{
+    margin-left: 12px;
+    font-size: 95%;
+}
+
+/* API item */
+.apiAbstract
+{
+    /* padding: 0em; */
+/*    margin-left: 3%;*/
+    margin-top: 3px;
+    /* margin-bottom: 2px; */
+    margin-left: 6px;
+    font-size: 95%;
+}
+
+.ApiItem
+{
+    font-size: 95%;
+}
+
+code {
+    font-size: 90%;
+}
+
+pre code {
+        margin-left: 9%;
+        margin-right: 2%;
+}
+
+/* for partner css */
+#button_box img, td.ButtonBottomBox img {
+height:15px;
+width:16px;
+}

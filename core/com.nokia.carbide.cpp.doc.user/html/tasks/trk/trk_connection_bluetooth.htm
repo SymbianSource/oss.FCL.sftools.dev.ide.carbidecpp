@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Bluetooth Connectivity Setup</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Bluetooth Connection Setup</h2>
+<p>The on-device debug agent software supports the use of Bluetooth to debug programs running on a target device. To enable communication with a Bluetooth device, a connection must be established between the PC and the device. The on-device debug agent requires a dedicated COM port in order to talk with the device. In some cases, other programs that use the same COM port number will interfere with the TRK debug agent, essentially &quot;fighting&quot; over control of the COM port. Follow the steps below to setup a Bluetooth connection with the Bluetooth enabled device. </p>
+<p class="note"><b>NOTE</b> Ensure that no other program has commandeered the Bluetooth connection. For example, some phone connectivity programs will not release a COM port unless specifically told to do so. </p>
+<p class="note"><b>NOTE</b> Most problems with on-target debugging setup occur here, so be careful when performing each of these steps.</p>
+<div class="step">
+  <h4>Setting up a Bluetooth Connection for On-device Debugging </h4>
+  <p class="note"><b>NOTE</b> This example shows how to setup a Bluetooth connection on a PC running Windows XP SP2 with an internal Bluetooth device. The actions to  setup Bluetooth connections may be different on your version of Windows. Refer to the OS documentation for information on configuring Bluetooth connections. Ensure that the correct Bluetooth drivers are installed.</p>
+  <ol>
+    <li>Open the Bluetooth Configuration window (Start &gt; Settings &gt; Control Panel &gt; Bluetooth Configuration)</li>
+    <li>Verify the following settings in the Accessibility tab (Figure 1):
+      <ul>
+        <li>The option &quot;Let other Bluetooth devices discover this computer&quot; is checkmarked</li>
+        <li>The option &quot;Allow&quot; is set to &quot;All Devices&quot; </li>
+      </ul>
+    </li>
+    <p align="center"><img src="images/wnd_bluetooth_config.png" width="462" height="438" /></p>
+    <p class="figure">Figure 1. Bluetooth Configuration window's Accessibility panel </p>
+    <li>Write down the Bluetooth COM Port number from the  Local Services tab (Figure 2) for later use</li>
+	<p>The Bluetooth COM Port number in the Local Services tab
+	  should match the COM port used in the <a href="../../reference/launch_configs/page_connection.htm">Connections</a> tab of the TRK <a href="../../reference/launch_configs/run_mode_overview.htm">launch<br />
+    configuration</a>.</p>
+    <p align="center"><img src="images/wnd_bluetooth_config_services.png" width="460" height="437" /></p>
+    <p class="figure">Figure 2. Bluetooth Configuration window's Local Services panel </p>
+    <li>Click OK to close the Bluetooth Configuration window</li>
+    <li>Download the Application TRK or System TRK SISX file to the device</li>
+  </ol>
+</div>
+  <h5>Related concepts</h5>
+  <ul>
+    <li><a href="../../concepts/trk.htm">On-device Debugging </a></li>
+  </ul>
+  <h5>Related references</h5>
+  <ul>
+    <li><a href="../../reference/launch_configs/run_mode_overview.htm">Debug Window (On-device Debugging) Overview</a></li>
+  </ul>
+  <h5>Related tasks</h5>
+  <ul>
+    <li><a href="trk_install_bluetooth.htm">Installing On-device Debug Agents using Bluetooth </a></li>
+  </ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

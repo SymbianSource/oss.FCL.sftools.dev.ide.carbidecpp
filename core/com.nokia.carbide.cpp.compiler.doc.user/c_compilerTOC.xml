@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C Compiler" >
+  
+	<topic label="Carbide Implementation of C" href="html/c_compiler/c_implementation.htm" > 
+		<topic label="Identifiers" 						href="html/c_compiler/c_indentifiers.htm" /> 
+		<topic label="Header Files" 					href="html/c_compiler/c_header_files.htm" /> 
+		<topic label="Precompiled Header Files" 		href="html/c_compiler/c_pre_header_files.htm" /> 
+		<topic label="Prefix Files" 					href="html/c_compiler/c_prefix_files.htm" /> 
+		<topic label="Sizeof() Operator Data Type" 		href="html/c_compiler/c_sizeof_type.htm" /> 
+		<topic label="Volatile Variables" 				href="html/c_compiler/c_volatile_var.htm" /> 
+		<topic label="Enumerated Types" 				href="html/c_compiler/c_enum_types.htm" /> 
+	</topic>
+       
+	<topic label="Extensions to ISO C" href="html/c_compiler/c_iso_extensions.htm" > 
+		<topic label="Checking for Standard C/C++ Conformity" 		href="html/c_compiler/c_std_conformity.htm" /> 
+
+		<topic label="Using C++ Comments" 							href="html/c_compiler/c_cpp_comments.htm" /> 
+		<topic label="Unnamed Arguments in Function Definitions" 	href="html/c_compiler/c_unnamed_args.htm" /> 
+		<topic label="A # Not Followed by a Macro Argument"			href="html/c_compiler/c_macro_args.htm" /> 
+		<topic label="Using an Identifier after #endif" 			href="html/c_compiler/c_endif_identifier.htm" /> 
+		<topic label="Using Typecast Pointers as lvalues"			href="html/c_compiler/c_typecast_ptrs.htm" /> 
+		<topic label="Declaring Variables by Address" 				href="html/c_compiler/c_declare_var_addr.htm" /> 
+		<topic label="ANSI Keywords Only"		 					href="html/c_compiler/c_ansi_keywords.htm" /> 
+		<topic label="Expanding Trigraphs" 							href="html/c_compiler/c_expand_trigraphs.htm" /> 
+		<topic label="Character Constants as Integer Values"		href="html/c_compiler/c_char_const_as_int.htm" /> 
+		<topic label="Inlining" 									href="html/c_compiler/c_inlining.htm" /> 
+		<topic label="Pool Strings" 								href="html/c_compiler/c_pool_strings.htm" /> 
+		<topic label="Reusing Strings" 								href="html/c_compiler/c_reuse_strings.htm" /> 
+		<topic label="Require Function Prototypes"	 				href="html/c_compiler/c_require_prototypes.htm" /> 
+		<topic label="Map Newlines to CR" 							href="html/c_compiler/c_map_newlines.htm" /> 
+		<topic label="Relaxed Pointer Type Rules"	 				href="html/c_compiler/c_relaxed_ptrs.htm" /> 
+		<topic label="Using Unsigned Chars"			 				href="html/c_compiler/c_unsigned_chars.htm" /> 
+		<topic label="Using long long Pointers"		 				href="html/c_compiler/c_use_longlong.htm" /> 
+		<topic label="Converting Pointers to Types of the Same Size" 	href="html/c_compiler/c_convert_ptrs.htm" /> 
+		<topic label="Getting Alignment and Type Information at Compile Time" href="html/c_compiler/c_get_alignment_info.htm" /> 
+		<topic label="Arrays of Zero Length in Structures"			href="html/c_compiler/c_zero_length_arrays.htm" /> 
+		<topic label="Intrinsic Functions for Bit Rotation"			href="html/c_compiler/c_bit_rotation.htm" /> 
+		<topic label="The 'D' Constant Suffix"		 				href="html/c_compiler/c_d_constant_suffix.htm" /> 
+		<topic label="The short double Data Type"	 				href="html/c_compiler/c_short_dbl_type.htm" /> 
+		<topic label="The ___typeof___() and typeof() Operators" 	href="html/c_compiler/c_typeof_operator.htm" /> 
+		<topic label="Initialization of Local Arrays" 				href="html/c_compiler/c_init_local_arrays.htm" /> 
+		<topic label="Ranges in case Statements"	 				href="html/c_compiler/c_ranged_cases.htm" /> 
+		<topic label="The __FUNCTION__ Predefined Identifier"		href="html/c_compiler/c_function_identifier.htm" /> 
+		<topic label="GCC Extension Support" 						href="html/c_compiler/c_gcc_ext_support.htm" /> 
+		<topic label="Multibyte and Unicode Support" 				href="html/c_compiler/c_multibyte_support.htm" /> 
+		<topic label="The __decspec Declarator"		 				href="html/c_compiler/c_decspec_decl.htm" /> 
+	</topic>
+      
+</toc>

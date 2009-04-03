@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component baseComponent="com.nokia.sdt.symbian.CEikAlignedBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CEikImage" 
+		category="Controls"
+		instanceNameRoot="image"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CEikImage" classHelpTopic=""
+			resourceType="IMAGE" resourceHelpTopic="" />
+		<designerImages smallIconFile="CEikImage_sm.png" 
+			largeIconFile="CEikImage.png"/>
+		<attributes>
+			<attribute key="cpp-class-name">CEikImage</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-caknpreviewpopup-content">true</attribute>
+			<attribute key="rss-control-type-enum">EEikCtImage</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Appearance" name="image"  
+				type="com.nokia.sdt.symbian.imageProperty"
+				descriptionKey="imageDescription" />
+			<property category="Appearance" name="emphasis" type="boolean"
+				descriptionKey="emphasisDescription" />
+			<enumProperty category="Appearance" name="brushStyle" 
+				type="com.nokia.sdt.series60.CGraphicsContext.BrushStyle"
+				descriptionKey="brushStyleDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<script file="CEikImage_visual.js" prototype="CEikImageVisual"/>
+			</implementation>
+		</implementations>
+		
+<!-- resources don't work for SVG, since this is not Avkon 
+
+		<sourceMapping>
+			<mapResource struct="IMAGE" headers="eikon.rh uikon.rh">
+				<mapSimpleMember property="image.bmpfile" member="bmpfile"/>
+				<mapIdentifierMember property="image.bmpid" member="bmpid"/>
+				<mapIdentifierMember property="image.bmpmask" member="bmpmask"/>
+			
+				// code and rss use different enums... 
+				
+				<mapEnumMember property="horiz_align" member="horiz_align"
+					headers="uikon.hrh" validate="false">
+					<mapEnum value="EHLeft" enumerator="EEikLabelAlignHLeft"/>
+					<mapEnum value="EHCenter" enumerator="EEikLabelAlignHCenter"/>
+					<mapEnum value="EHRight" enumerator="EEikLabelAlignHRight"/>
+				</mapEnumMember>
+				<mapEnumMember property="vert_align" member="vert_align"
+					headers="uikon.hrh" validate="false">
+					<mapEnum value="EVTop" enumerator="EEikLabelAlignVTop"/>
+					<mapEnum value="EVCenter" enumerator="EEikLabelAlignVCenter"/>
+					<mapEnum value="EVBottom" enumerator="EEikLabelAlignVBottom"/>
+				</mapEnumMember>
+			</mapResource>
+		</sourceMapping>
+
+-->
+		
+		<sourceGen forms="Dialog Container">
+
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+<!-- rsrcs don't work for SVG images
+			<useTemplate ids="INIT_FROM_CONTAINER" /> 
+-->
+			<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+
+			<useTemplate ids="INIT_FROM_DIALOG" />
+			<useTemplate ids="LAYOUT_CONTROLS" />
+
+			<inline scope="prototype">
+include("../srcgenLibrary.js")
+			</inline>
+
+			<template phase="Initialize">
+${instanceMemberName} = new ( ELeave ) CEikImage;
+			</template>
+
+			<inline><![CDATA[
+if (formrx.test("")) {
+	setupImageFromPropertyViaCFbsBitmap(contribs, instance, "Initialize", null, 0,
+			instance.properties["image"], "EAspectRatioPreserved" /*aspect*/,
+			instanceMemberName + "->SetPicture( {0} );\n",
+			instanceMemberName + "->SetPicture( {0}, {1} );\n",
+			"TSize( " + properties.size.width + ", " + properties.size.height + " )"
+			);
+}
+]]>			</inline>
+
+			<template phase="Initialize"><![CDATA[
+${instanceMemberName}->SetAlignment( ${getTGulAlignmentValue(properties.horiz_align, properties.vert_align)} );
+<% 	setPropertiesForPhase(contribs, "Initialize", 0, instanceMemberName, false,
+		properties.brushStyle, "ENullBrush", "{0}->SetBrushStyle( CWindowGc::{1} );\\n");
+  if(properties.emphasis) {
+%>${instanceMemberName}->SetEmphasis( ETrue );
+<% } %> ]]>	</template>	
+			
+			<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h",
+									"eikimage.h", "eikenv.h" ]);
+			</inline>
+		
+			<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+			<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+			<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+			<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

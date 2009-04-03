@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            name="%symbianOSCategoryName"
+            id="com.nokia.carbide.cpp.importWizards.symbianos">
+      </category>
+      <wizard
+            name="%bldInfImportWizardname"
+            icon="icons/Bld_inf_Definition_file.png"
+            category="com.nokia.carbide.cpp.importWizards.symbianos"
+            class="com.nokia.carbide.cpp.internal.project.ui.importWizards.BldInfImportWizard"
+            id="com.nokia.carbide.cpp.project.ui.importWizards.BldInfImportWizard">
+         <description>
+            %bldInfImportWizardDescription
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%bldInfEditorName"
+            icon="icons/Bld_inf_Definition_file.png"
+            contributorClass="com.nokia.carbide.cpp.internal.project.ui.editors.inf.BldInfEditorContributor"
+            class="com.nokia.carbide.cpp.internal.project.ui.editors.inf.BldInfEditor"
+            default="true"
+            id="com.nokia.carbide.cpp.project.ui.editors.BldInfEditor">
+         <contentTypeBinding contentTypeId="com.nokia.carbide.cpp.project.ui.symbianINF"/>
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%symbianOSCategoryName"
+            id="com.nokia.carbide.cpp.project.ui.newWizards.symbianos">
+      </category>
+      <wizard
+            category="com.nokia.carbide.cpp.project.ui.newWizards.symbianos"
+            class="com.nokia.carbide.cpp.internal.project.ui.wizards.NewSymbianOSCppProjectWizard"
+            finalPerspective="com.nokia.carbide.cpp.CarbideCppPerspective"
+            icon="icons/New_Symbian_OS_C++_Project_16x16.png"
+            id="com.nokia.carbide.cpp.project.ui.wizards.NewProjectWizard"
+            name="%newProjectWizardName"
+            project="true">
+         <description>
+            %newProjectWizardDescription
+         </description>
+      </wizard>
+      <wizard
+            category="com.nokia.carbide.cpp.project.ui.newWizards.symbianos"
+            class="com.nokia.carbide.cpp.internal.project.ui.wizards.NewSymbianOSCppClassWizard"
+            finalPerspective="com.nokia.carbide.cpp.CarbideCppPerspective"
+            icon="icons/_New_Symbian_OS_Class_16x16.png"
+            id="com.nokia.carbide.cpp.project.ui.wizards.NewClassWizard"
+            name="%newClassWizardName"
+            project="false">
+         <description>
+            %newClassWizardDescription
+         </description>
+      </wizard>
+      <wizard
+            name="%newMMPWizardName"
+            icon="icons/Add_MMP_Definition_file.png"
+            category="com.nokia.carbide.cpp.project.ui.newWizards.symbianos"
+            class="com.nokia.carbide.cpp.internal.project.ui.wizards.MMPWizard"
+            id="com.nokia.carbide.cpp.project.ui.mmpWizard">
+         <description>
+            %newMMPWizardDescription
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%carbidePrefPageName"
+            class="com.nokia.carbide.cpp.internal.project.ui.preferences.CarbidePreferencePage"
+            id="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.nokia.carbide.cpp.internal.project.ui.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="com.nokia.carbide.cpp.internal.project.ui.perspective.CarbideCppPerspectiveFactory"
+            icon="icons/Carbide_C_C++_perspective.png"
+            id="com.nokia.carbide.cpp.CarbideCppPerspective"
+            name="%carbidePerspectiveName"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.nokia.carbide.cpp.CarbideCppPerspective">
+         <perspectiveShortcut
+               id="org.eclipse.debug.ui.DebugPerspective">
+         </perspectiveShortcut>
+         <perspectiveShortcut
+               id="org.eclipse.team.ui.TeamSynchronizingPerspective">
+         </perspectiveShortcut>
+         <actionSet id="org.eclipse.cdt.ui.buildConfigActionSet"/>
+         <actionSet id="org.eclipse.cdt.ui.NavigationActionSet"/>
+         <actionSet id="org.eclipse.cdt.ui.OpenActionSet"/>
+         <actionSet
+               id="org.eclipse.debug.ui.breakpointActionSet">
+         </actionSet>
+         <actionSet
+               id="org.eclipse.debug.ui.launchActionSet">
+         </actionSet>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewProjectWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewClassWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.mmpWizard"/>
+      </perspectiveExtension>
+       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <perspectiveShortcut id="com.nokia.carbide.cpp.CarbideCppPerspective"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.debug.ui.DebugPerspective">
+         <perspectiveShortcut id="com.nokia.carbide.cpp.CarbideCppPerspective"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewProjectWizard"/>
+         <newWizardShortcut id="org.eclipse.cdt.ui.wizards.NewSourceFolderCreationWizard"/>
+         <newWizardShortcut id="org.eclipse.cdt.ui.wizards.NewFolderCreationWizard"/>
+         <newWizardShortcut id="org.eclipse.cdt.ui.wizards.NewSourceFileCreationWizard"/>
+         <newWizardShortcut id="org.eclipse.cdt.ui.wizards.NewHeaderFileCreationWizard"/>
+         <newWizardShortcut id="org.eclipse.cdt.ui.wizards.NewFileCreationWizard"/>
+         <newWizardShortcut id="org.eclipse.cdt.ui.wizards.NewClassCreationWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewClassWizard"/>
+         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.mmpWizard"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%symbianOSCategoryName"
+            id="com.nokia.carbide.cpp.project.ui">
+      </category>
+      <view
+			name="%spnViewName"
+            icon="icons/csymbian_nav_view.png"
+            allowMultiple="false"
+            category="com.nokia.carbide.cpp"
+            class="com.nokia.carbide.cpp.internal.project.ui.views.SymbianProjectNavigatorView"
+            id="com.nokia.carbide.cpp.project.ui.views.SymbianProjectNavigatorView">
+      </view>
+
+      <view
+            allowMultiple="true"
+            category="org.eclipse.ui"
+            class="com.nokia.carbide.cpp.internal.project.ui.views.CarbideProblemsView"
+            icon="icons/problems_view.gif"
+            id="org.eclipse.ui.views.ProblemView"
+            name="%problemsViewName">
+      </view>
+   </extension>
+
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+     <factory
+            class="com.nokia.carbide.cpp.internal.project.ui.views.SPNViewContentProvider"
+            adaptableType="com.nokia.carbide.cpp.internal.project.ui.views.SPNViewContentProvider$SPNFileContainer">
+         <adapter type="org.eclipse.core.resources.IResource"/>
+      </factory>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.startup">
+   </extension>
+  <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%mmpEditorName"
+            icon="icons/MMP_Definition_file.png"
+            contributorClass="com.nokia.carbide.cpp.internal.project.ui.mmpEditor.MMPEditorContributor"
+            class="com.nokia.carbide.cpp.internal.project.ui.mmpEditor.MMPEditor"
+            id="com.nokia.carbide.cpp.mmpEditor.MMPEditor">
+         <contentTypeBinding contentTypeId="com.nokia.carbide.cpp.project.ui.symbianMMP"/>
+      </editor>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+         
+         <!-- note: Eclipse adds entries in the reverse order -->
+	  <objectContribution
+            adaptable="false"
+            id="com.nokia.carbide.cpp.project.ui.editors.images.removeMifEntry"
+            objectClass="com.nokia.carbide.cpp.internal.project.ui.views.IMIFFileEntry">
+         <action
+               class="com.nokia.carbide.cpp.internal.project.ui.actions.RemoveMIFFileEntryAction"
+               enablesFor="1"
+               id="com.nokia.carbide.cpp.project.ui.editors.images.removeMifAction"
+               label="%_UI_RemoveMIFFileEntry"
+               menubarPath="additions"/>
+      </objectContribution>
+      
+     <objectContribution
+            adaptable="false"
+            id="com.nokia.carbide.cpp.project.ui.editors.images.removeMbmEntry"
+            objectClass="com.nokia.carbide.cpp.internal.project.ui.views.IMBMFileEntry">
+         <action
+               class="com.nokia.carbide.cpp.internal.project.ui.actions.RemoveMBMFileEntryAction"
+               enablesFor="1"
+               id="com.nokia.carbide.cpp.project.ui.editors.images.removeMbmAction"
+               label="%_UI_RemoveMBMFileEntry"
+               menubarPath="additions"/>
+      </objectContribution>
+
+      <objectContribution
+            adaptable="true"
+            id="com.nokia.carbide.cpp.project.ui.editors.images.addMbmEntry"
+            objectClass="org.eclipse.core.resources.IFile">
+          <visibility>
+               <or>
+                 <objectState
+                       name="extension"
+                       value="mmp"
+                       />
+                  <objectState
+                        name="name" 
+                        value="Images"
+                        />
+               </or>
+            </visibility>    
+        <action
+              class="com.nokia.carbide.cpp.internal.project.ui.actions.AddMBMEntryAction"
+              enablesFor="1"
+              icon="icons/Add_Image_file.png"
+              id="com.nokia.carbide.cpp.project.ui.actions.addMbmEntryAction"
+              label="%_UI_AddMbmEntry"
+              menubarPath="additions">
+            
+        </action>
+      </objectContribution>         
+     <objectContribution
+            adaptable="true"
+            id="com.nokia.carbide.cpp.project.ui.editors.images.addMifEntry"
+            nameFilter="*.mk"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="com.nokia.carbide.cpp.internal.project.ui.actions.AddMIFEntryAction"
+               enablesFor="1"
+               icon="icons/Add_Image_file.png"
+               id="com.nokia.carbide.cpp.project.ui.actions.addMifEntryAction"
+               label="%_UI_AddMifEntry"
+               menubarPath="additions"/>
+      </objectContribution>      
+      
+      <objectContribution
+             adaptable="true"
+            id="com.nokia.carbide.cpp.project.ui.editors.images.editMifEntry"
+            nameFilter="*.mk"
+            objectClass="org.eclipse.core.resources.IFile">
+        <action
+              class="com.nokia.carbide.cpp.internal.project.ui.actions.EditMIFMenuEntryAction"
+              enablesFor="1"
+              icon="icons/MBM_MIF_AIF_Editor.png"
+              id="com.nokia.carbide.cpp.project.ui.actions.editMifEntryAction"
+              label="%_UI_EditMifEntry"
+              menubarPath="additions"
+              style="pulldown">
+            
+        </action>
+      </objectContribution>         
+		
+      <objectContribution
+            adaptable="true"
+            id="com.nokia.carbide.cpp.project.ui.editors.images.editMbmEntry"
+            objectClass="org.eclipse.core.resources.IFile">
+          <visibility>
+               <or>
+                 <objectState
+                       name="extension"
+                       value="mmp"
+                       />
+                  <objectState
+                        name="name" 
+                        value="Images"
+                        />
+               </or>
+            </visibility> 
+        <action
+              class="com.nokia.carbide.cpp.internal.project.ui.actions.EditMBMMenuEntryAction"
+              enablesFor="1"
+              icon="icons/MBM_MIF_AIF_Editor.png"
+              id="com.nokia.carbide.cpp.project.ui.actions.editMbmEntryAction"
+              label="%_UI_EditMbmEntry"
+              menubarPath="additions"
+              style="pulldown">
+            
+        </action>
+      </objectContribution>         
+
+      
+  </extension>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="mmp,mmh"
+            id="symbianMMP"
+            name="%symbianMMP"
+            priority="normal"/>
+      <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="inf"
+            id="symbianINF"
+            name="%symbianINF"
+            priority="normal"/>
+   </extension>
+
+<!-- Common navigator extensions -->
+	<extension
+	  point="org.eclipse.ui.navigator.navigatorContent">
+	 <commonWizard
+		type="new"
+	    wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewProjectWizard">
+		 <enablement>
+			<or>
+				<instanceof value="org.eclipse.cdt.core.model.ICElement" />	
+	            <adapt type="org.eclipse.core.resources.IProject">
+	               <test
+	                     property="org.eclipse.core.resources.projectNature"
+	                     value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature"/>
+	            </adapt>
+			</or>
+         </enablement>
+	 </commonWizard>
+	 <commonWizard
+		type="new"
+	    wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewClassWizard">
+		 <enablement>
+			<or>
+				<instanceof value="org.eclipse.cdt.core.model.ICElement" />	
+	            <adapt type="org.eclipse.core.resources.IProject">
+	               <test
+	                     property="org.eclipse.core.resources.projectNature"
+	                     value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature"/>
+	            </adapt>
+			</or>
+         </enablement>
+	 </commonWizard>
+	 <commonWizard
+		type="new"
+	    wizardId="com.nokia.carbide.cpp.project.ui.mmpWizard">
+		 <enablement>
+			<or>
+				<instanceof value="org.eclipse.cdt.core.model.ICElement" />	
+	            <adapt type="org.eclipse.core.resources.IProject">
+	               <test
+	                     property="org.eclipse.core.resources.projectNature"
+	                     value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature"/>
+	            </adapt>
+			</or>
+         </enablement>
+	 </commonWizard>
+	</extension>
+ <extension
+       point="org.eclipse.ui.commands">
+    <command
+          categoryId="org.eclipse.ui.category.project"
+          defaultHandler="com.nokia.carbide.cpp.internal.project.ui.actions.CarbideBuildAction"
+          id="com.nokia.carbide.cpp.buildProject"
+          name="%buildProject">
+    </command>
+ </extension>
+
+<!-- =================================================================================== -->
+<!-- CarbideFormEditor specific problem marker                                           -->
+<!-- =================================================================================== -->
+	<extension
+		id="CarbideFormEditorMarker"
+		name="%carbideFormEditorMarkerName"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker"/>
+		<super type="org.eclipse.core.resources.textmarker"/>
+		<persistent value="true"/>
+	</extension>
+
+   <extension
+         point="org.eclipse.ui.ide.markerSupport">
+      <markerContentGenerator
+            defaultMarkerGrouping="org.eclipse.ui.ide.allMarkers.severity"
+            id="com.nokia.carbide.cpp.project.ui.problemsGenerator"
+            name="">
+         <markerFieldReference
+               id="org.eclipse.ui.ide.creationTimeField"
+               visible="true">
+         </markerFieldReference>
+         <markerFieldReference
+               id="org.eclipse.ui.ide.severityAndDescriptionField"
+               visible="true">
+         </markerFieldReference>
+         <markerFieldReference
+               id="org.eclipse.ui.ide.resourceField"
+               visible="true">
+         </markerFieldReference>
+         <markerFieldReference
+               id="org.eclipse.ui.ide.pathField"
+               visible="true">
+         </markerFieldReference>
+         <markerFieldReference
+               id="org.eclipse.ui.ide.locationField"
+               visible="true">
+         </markerFieldReference>
+         <markerFieldReference
+               id="org.eclipse.ui.ide.idField"
+               visible="false">
+         </markerFieldReference>
+         <markerFieldReference
+               id="org.eclipse.ui.ide.markerType"
+               visible="true">
+         </markerFieldReference>
+         <markerTypeReference
+               id="org.eclipse.core.resources.problemmarker">
+         </markerTypeReference>
+         <markerFieldConfiguration
+               enabled="true"
+               id="org.eclipse.ui.ide.errorsFilter"
+               name="%markerFieldConfiguration.name"
+               scope="ON_ANY_IN_SAME_CONTAINER"
+               values="com.nokia.carbide.cpp.internal.project.ui.views.AllProblemsParameters">
+         </markerFieldConfiguration>
+         <markerGrouping
+               id="org.eclipse.ui.ide.type"
+               label="%markerGrouping.type">
+         </markerGrouping>
+         <markerGrouping
+               id="org.eclipse.ui.ide.allMarkers.severity"
+               label="%markerGrouping.severity">
+            <markerGroupingEntry
+                  id="org.eclipse.ui.ide.allMarkers.errorSeverity"
+                  label="%markerGrouping.errors"
+                  priority="30">
+            </markerGroupingEntry>
+            <markerGroupingEntry
+                  id="org.eclipse.ui.ide.allMarkers.warningSeverity"
+                  label="%markerGrouping.warnings"
+                  priority="20">
+            </markerGroupingEntry>
+            <markerGroupingEntry
+                  id="org.eclipse.ui.ide.allMarkers.other"
+                  label="%markerGrouping.other"
+                  priority="10">
+            </markerGroupingEntry>
+            <markerAttributeGrouping
+                  attribute="severity"
+                  markerType="org.eclipse.core.resources.marker">
+               <markerAttributeMapping
+                     markerGroupingEntry="org.eclipse.ui.ide.allMarkers.errorSeverity"
+                     value="2">
+               </markerAttributeMapping>
+               <markerAttributeMapping
+                     markerGroupingEntry="org.eclipse.ui.ide.allMarkers.warningSeverity"
+                     value="1">
+               </markerAttributeMapping>
+               <markerAttributeMapping
+                     markerGroupingEntry="org.eclipse.ui.ide.allMarkers.other"
+                     value="0">
+               </markerAttributeMapping>
+               <markerAttributeMapping
+                     markerGroupingEntry="org.eclipse.ui.ide.allMarkers.other"
+                     value="-1">
+               </markerAttributeMapping>
+            </markerAttributeGrouping>
+         </markerGrouping>
+    </markerContentGenerator>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.ui.internal.views.markers.QuickFixHandler"
+            commandId="org.eclipse.jdt.ui.edit.text.java.correction.assist.proposals">
+         <activeWhen>
+             <with
+                       variable="activePart">
+                    <test
+                          args="com.nokia.carbide.cpp.project.ui.problemsGenerator"
+                          property="org.eclipse.ui.ide.contentGenerator">
+                    </test>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <and>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.ui.ide.quickFix">
+                  </test>
+               </iterate>
+               <count
+                     value="?">
+               </count>
+            </and>
+         </enabledWhen>
+      </handler>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.ide.MarkersView?after=org.eclipse.ui.ide.markersSeperator1">
+           <command
+                 commandId="org.eclipse.jdt.ui.edit.text.java.correction.assist.proposals"
+                 mnemonic="Q"
+                 style="push">
+              <visibleWhen
+                    checkEnabled="false">
+              </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+ </plugin>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Yahoo! Image Search</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</head>
+<body LANG="en-US" DIR="LTR">
+<h2>Tutorial: Yahoo! Image Search</h2>
+<p>This example shows how to use the Carbide.c++ UI Designer for S60 to 
+define the UI of an application and to implement the "real work" in the 
+generated code. </p>
+<p>The application consists of two screens. The main screen prompts the user to to initiate a search and 
+displays the list of search results. The second screen displays the Yahoo! provided thumbnail image of
+the selected result.
+</p>
+<p>Choose a link to read the following topics:</p>
+<ul>
+  <li><a href="YSearchTutorial_1.html">Getting the Yahoo! Image Search project</a>
+  </li>
+  <li><a href="YSearchTutorial_2.html">Application overview</a>
+  </li>
+  <li>Using the S60 UI Designer to create the UI
+  </li>
+  <li><a href="YSearchTutorial_4.html">Using the WebClient component to retrieve XML data</a>
+  </li>
+  <li><a href="YSearchTutorial_5.html">Adding application logic part 1: perform search query and populate results</a>
+  </li>
+  <li><a href="YSearchTutorial_6.html">Adding application logic part 2: download and display selected image</a>
+  </li>
+</ul>
+<h3><font size="4">Using the S60 UI Designer to create the UI</font></h3>
+<p>The initial project was created using the "C++ Application for S60" wizard with
+the "S60 3rd Ed. GUI Application with UI Designer" template.
+</p>
+
+<p>Since the main screen for this application is the search results, this was
+the initially created view. Both the results view and the image view were 
+created using the Avkon view switching architecture. Since the UI designer defaults to using the 
+view switching architecture nothing needs to be done to enable it. The view switching architecture was used
+because it simplifies the work our application has to do, and in particular it make it easy to have distinct
+control and status panes for each of our screens.
+</p>
+<p>The user interface definition for the search results view is in SearchResults.uidesign. 
+Open it in the UI Designer.
+</p>
+<p>When the Avkon view switching architecture is used the UI Design creates two separate C++ classes.
+A subclass of CAknView is the controller of the UI. It is referenced by the AppUi and
+is responsible for creating the user interface and handling commands. The other class
+is the actual UI container and varies based on the type of design. In this case it
+derives directly from CCoeControl and contains the CAknDoubleStyleListBox used here.
+</p>
+<p>List boxes may be populated at design time with list item objects. This 
+application does not use them because we populated the list dynamically based
+on the search results. The UI Designer displays the generic "no data" text rather than
+our custom "Start a search..." prompt because this was implemented using custom code
+in the CSearchResultsView::PopulateSearchResultsL() method.
+</p>
+<p>In addition to the status pane, list box, and control pane, this design 
+uses several non-layout objects.</p>
+<div align="center">
+  <p><img src="nonlayout.jpg"/>
+</p>
+  <p class="figure">Figure 1 - Non-layout objects used by example </p>
+</div>
+<ul>
+<li>optionsMenu - this is a menu bar object, and is a container for menu panes
+and menu items. Clicking on it displays the menu editor.
+</li>
+<li>webClient - this is an object implementing HTTP GET. It optionally handles interaction with
+a wait dialog to handle progress display and a query dialog to prompt for user names and passwords. In this 
+example we use the wait dialog but have no need for authentication.
+</li>
+<li>waitDialog - the wait dialog object used with the webClient. Click on it to edit.
+</li>
+<li>searchPrompt - the query dialog used to get a search string from the user. Click on it to edit.
+</li>
+<li>attribution - a note object used to display a credit for Yahoo! web services. Click on it to edit.
+</li>
+</ul>
+<p>The user interface definition for the image display view is in ImageContainer. 
+Open it in the UI Designer.
+</p>
+<p>This is a very simple view, containing only an image object. As with the list box, all
+our data is determined at run time, so we do not define any image information at
+design time. We've configured the control pane with just a Back button. 
+</p>
+<p>The title pane text is just a placeholder. It is populated with the image file
+name at run time, in the CImageContainerView::DoActivateL method.
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

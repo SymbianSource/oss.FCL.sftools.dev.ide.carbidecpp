@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>SIS Properties </title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>SIS Properties </h2>
+<p> Use the<b> SIS Properties</b> dialog to specify SIS file creation and signing options for selected SIS file included in the project. </p>
+<p align="center"><img src="../images/wnd_sis_properties.png" width="455" height="452" /></p>
+<p class="figure">Figure 1 - SIS Properties dialog </p>
+<h5>Table 1 <span class="figure">SIS Properties window</span> items </h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="20%" scope="col">Item</th>
+    <th width="71%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td width="20%"><b>SIS  File Creation Options </b></td>
+    <td><p>Define the SIS file created: </p>
+      <ul>
+        <li><b>PKG File</b> &#8212; name of the PKG file to build. Click Browse to locate or else type in the file path and name. </li>
+        <li><b>Output File Name</b> &#8212; unsigned file name that is generated from the PKG file selected</li>
+        <li><b>Content Search Location</b> &#8212;   root location where PKG files are specified to search </li>
+        <li><b>Generate partial upgrade when appropriate</b> &#8212; enable to create package update files that only contain files changed since the last build</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td><b>Signing Options </b></td>
+    <td><p>Defines the signing options applied to the configuration. The options include: </p>
+      <ul>
+        <li><b>Don't sign sis file</b> &#8212; builds sis file without signing it </li>
+        <li><b>Self sign sis file</b> &#8212; signs the sis file without specifying the certificate/key pair </li>
+        <li><b>Sign sis file with certificate/key pair</b> &#8212; signs the sis file using the specified certificate/key pair </li>
+    </ul>      
+      <p>Enter the required information into the enabled fields based on the signing option selected above: </p>
+      <ul>
+        <li><b>Signed SIS File Name</b> &#8212;Final output signed file name. Default is input PKG name with &lsquo;sisx&rsquo; extension.</li>
+        <li><b>Password</b> &#8212; Optional password</li>
+        <li><b>Additional options</b> &#8212; Enter unfiltered options to be passed to the tool</li>
+        <li><b>Certificate</b> &ndash; Enter or browse to certificate</li>
+        <li><b>Key</b> &#8212; Enter or browse to  key</li>
+      </ul>    
+      <p class="note"><b>NOTE</b> On Symbian OS 9.x builds, if the key/cert pair are not defined, <span class="code">makekeys</span> will be called and temporary ones will be generated for you to      &quot;self-sign&quot; the application. Self-signed applications should be in the
+        0xE0000000-0xEFFFFFFF range.</p>
+      <p class="note"><b>NOTE</b> All Application TRK build configuration require a PKG file. If none is found in the active project then you will be asked to <a href="pane_pkg_config.htm">choose</a> one.</p>      </td>
+  </tr>
+</table>
+<h5>Related reference </h5>
+<ul>
+  <li><a href="pane_build_config.htm">Carbide Build Configurations</a></li>
+  <li><a href="pane_build_config_env.htm">Environment variables</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

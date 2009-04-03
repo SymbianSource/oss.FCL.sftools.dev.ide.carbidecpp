@@ -1,0 +1,11 @@
+#include <enumsheader.rh>
+#include "TestEnumUniqueness3.hrh"
+
+enum 
+	{
+	EMyContainerTestEnumUniqueness1TheCmd = 0x6000
+	};
+RESOURCE COMMAND r_test_enum_uniqueness1
+	{
+	command = EMyContainerTestEnumUniqueness1TheCmd2;
+	}

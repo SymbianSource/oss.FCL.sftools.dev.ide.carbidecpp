@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component baseComponent="com.nokia.sdt.series60.NaviBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.NaviText" 
+		category="System"
+		instanceNameRoot="naviText"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknNavigationControlContainer" classHelpTopic=""
+			resourceType="NAVI_DECORATOR, NAVI_LABEL" resourceHelpTopic="" />
+		<designerImages smallIconFile="NaviText_sm.png" largeIconFile="NaviText.png"/>
+		<attributes>
+			<attribute key="rss-control-type-enum">EAknCtNaviPane</attribute>
+		</attributes>
+		<properties>
+			<property category="Design" name="text" type="localizedString" 
+				default="text" 
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		</properties>
+		<designerImages 
+			smallIconFile="NaviText_sm.png" 
+			largeIconFile="NaviText.png"/>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="NaviText_visual.js" prototype="NaviTextVisual"/>
+			</implementation>
+		</implementations>
+		
+		<!-- note: this generates both the navi pane status pane AND the singular item content -->
+		
+		<sourceMapping>
+			<mapResource struct="NAVI_DECORATOR" headers="avkon.rh">
+				<mapFixedMember value="ENaviDecoratorLabel" member="type"/>
+				<mapResourceMember property="." member="control" struct="NAVI_LABEL" headers="avkon.rh">
+					<mapSimpleMember property="text" member="txt"/>
+				</mapResourceMember>
+			</mapResource>
+			<mapResource struct="TBUF" headers="badef.rh" id="text" standalone="true">
+				<mapSimpleMember property="text" member="buf"/>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+			<useTemplateGroup ids="NaviBaseSetup"/>
+			<useTemplate ids="SetupPrelude"/>
+		
+			<template phase="SetupStatusPane"><![CDATA[
+	HBufC* labelText = StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "text").toUpperCase() } );
+	iNaviDecorator_ = naviPane->CreateNavigationLabelL( *labelText );
+	CleanupStack::PopAndDestroy( labelText );			
+]]>			
+			</template>
+
+			<useTemplate ids="SetupPostlude CleanupPostlude"/>
+
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <stringloader.h>
+]]>			</template>
+
+			
+		</sourceGen>
+	</component>
+</componentDefinition>

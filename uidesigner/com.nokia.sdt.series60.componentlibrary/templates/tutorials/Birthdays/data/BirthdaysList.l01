@@ -1,0 +1,26 @@
+/*
+========================================================================
+ Name		: BirthdaysList.l01
+
+ Description: 
+
+ Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+ All rights reserved.
+ This component and the accompanying materials are made available
+ under the terms of the License "Eclipse Public License v1.0"
+ which accompanies this distribution, and is available
+ at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+ Contributors:
+ Nokia Corporation - initial contribution.
+========================================================================
+*/
+#define STR_BirthdaysListView_1 "Birthdays"
+#define STR_BirthdaysListView_2 "item"
+#define STR_BirthdaysListView_3 "secondary"
+#define STR_BirthdaysListView_4 "Question"
+#define STR_BirthdaysListView_5 "Add"
+#define STR_BirthdaysListView_6 "Mark / Unmark"
+#define STR_BirthdaysListView_9 "Delete"
+#define STR_BirthdaysListView_10 "Really delete these birthdays?"
+#define STR_BirthdaysListView_7 "Edit"

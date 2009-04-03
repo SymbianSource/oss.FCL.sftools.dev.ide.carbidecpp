@@ -1,0 +1,18 @@
+#include <arrayheader.rh>
+#include <basicheader.rh>
+
+RESOURCE ARRAY r_test_choice_is_component_instance_of
+	{
+	items = { SIMPLE_TYPES
+			{
+			long = 0;
+			},
+		SIMPLE_TYPES
+			{
+			long = 1;
+			},
+		SIMPLE_TYPES
+			{
+			long = 0;
+			} };
+	}

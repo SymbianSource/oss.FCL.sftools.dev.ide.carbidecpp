@@ -1,0 +1,22 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description: 
+;
+
+&EN,FR,GE,SP,IT,SW,DA,NO,FI,AM,SF,SG,PO,TU,IC,RU,HU,DU,BL,AU,BF,AS,NZ,CS,SK,PL,SL,TC,HK,ZH,JA,TH,AF,SQ,AH,AR,HY,TL,BE,BN,BG,MY,CA,HR,CE,IE,SA,ET,FA,CF,GD,KA,EL,GU,HE,HI,IN,GA,SZ,KN,KK,KM,KO,LO,LV,LT,MK,MS,ML,MR,MO,MN,NN,BP,PA,RO,SR,SI,SO,OS,LS,SH,FS,TA,TE,BO,TI,CT,TK,UK,UR,VI,CY,ZU
+#{"AGENDA-EN","AGENDA-FR","AGENDA-GE","AGENDA-SP","AGENDA-IT","AGENDA-SW","AGENDA-DA","AGENDA-NO","AGENDA-FI","AGENDA-AM","AGENDA-SF","AGENDA-SG","AGENDA-PO","AGENDA-TU","AGENDA-IC","AGENDA-RU","AGENDA-HU","AGENDA-DU","AGENDA-BL","AGENDA-AU","AGENDA-BF","AGENDA-AS","AGENDA-NZ","AGENDA-CS","AGENDA-SK","AGENDA-PL","AGENDA-SL","AGENDA-TC","AGENDA-HK","AGENDA-ZH","AGENDA-JA","AGENDA-TH","AGENDA-AF","AGENDA-SQ","AGENDA-AH","AGENDA-AR","AGENDA-HY","AGENDA-TL","AGENDA-BE","AGENDA-BN","AGENDA-BG","AGENDA-MY","AGENDA-CA","AGENDA-HR","AGENDA-CE","AGENDA-IE","AGENDA-SA","AGENDA-ET","AGENDA-FA","AGENDA-CF","AGENDA-GD","AGENDA-KA","AGENDA-EL","AGENDA-GU","AGENDA-HE","AGENDA-HI","AGENDA-IN","AGENDA-GA","AGENDA-SZ","AGENDA-KN","AGENDA-KK","AGENDA-KM","AGENDA-KO","AGENDA-LO","AGENDA-LV","AGENDA-LT","AGENDA-MK","AGENDA-MS","AGENDA-ML","AGENDA-MR","AGENDA-MO","AGENDA-MN","AGENDA-NN","AGENDA-BP","AGENDA-PA","AGENDA-RO","AGENDA-SR","AGENDA-SI","AGENDA-SO","AGENDA-OS","AGENDA-LS","AGENDA-SH","AGENDA-FS","AGENDA-TA","AGENDA-TE","AGENDA-BO","AGENDA-TI","AGENDA-CT","AGENDA-TK","AGENDA-UK","AGENDA-UR","AGENDA-VI","AGENDA-CY","AGENDA-ZU"},(0x101F7777),1,1,1,NOCOMPRESS
+%{"Vendor-EN","Vendor-FR","Vendor-GE","Vendor-SP","Vendor-IT","Vendor-SW","Vendor-DA","Vendor-NO","Vendor-FI","Vendor-AM","Vendor-SF","Vendor-SG","Vendor-PO","Vendor-TU","Vendor-IC","Vendor-RU","Vendor-HU","Vendor-DU","Vendor-BL","Vendor-AU","Vendor-BF","Vendor-AS","Vendor-NZ","Vendor-CS","Vendor-SK","Vendor-PL","Vendor-SL","Vendor-TC","Vendor-HK","Vendor-ZH","Vendor-JA","Vendor-TH","Vendor-AF","Vendor-SQ","Vendor-AH","Vendor-AR","Vendor-HY","Vendor-TL","Vendor-BE","Vendor-BN","Vendor-BG","Vendor-MY","Vendor-CA","Vendor-HR","Vendor-CE","Vendor-IE","Vendor-SA","Vendor-ET","Vendor-FA","Vendor-CF","Vendor-GD","Vendor-KA","Vendor-EL","Vendor-GU","Vendor-HE","Vendor-HI","Vendor-IN","Vendor-GA","Vendor-SZ","Vendor-KN","Vendor-KK","Vendor-KM","Vendor-KO","Vendor-LO","Vendor-LV","Vendor-LT","Vendor-MK","Vendor-MS","Vendor-ML","Vendor-MR","Vendor-MO","Vendor-MN","Vendor-NN","Vendor-BP","Vendor-PA","Vendor-RO","Vendor-SR","Vendor-SI","Vendor-SO","Vendor-OS","Vendor-LS","Vendor-SH","Vendor-FS","Vendor-TA","Vendor-TE","Vendor-BO","Vendor-TI","Vendor-CT","Vendor-TK","Vendor-UK","Vendor-UR","Vendor-VI","Vendor-CY","Vendor-ZU"}
+:"Vendor"
+!({"Addon1","Addon2","Addon3","Addon4","Addon5","Addon6","Addon7","Addon8","Addon9","Addon10","Addon11","Addon12","Addon13","Addon14","Addon15","Addon16","Addon17","Addon18","Addon19","Addon20","Addon21","Addon22","Addon23","Addon24","Addon25","Addon26","Addon27","Addon28","Addon29","Addon30","Addon31","Addon32","Addon33","Addon34","Addon35","Addon36","Addon37","Addon38","Addon39","Addon40","Addon41","Addon42","Addon43","Addon44","Addon45","Addon46","Addon47","Addon48","Addon49","Addon50","Addon51","Addon52","Addon53","Addon54","Addon55","Addon56","Addon57","Addon58","Addon59","Addon60","Addon61","Addon62","Addon63","Addon64","Addon65","Addon66","Addon67","Addon68","Addon69","Addon70","Addon71","Addon72","Addon73","Addon74","Addon75","Addon76","Addon77","Addon78","Addon79","Addon80","Addon81","Addon82","Addon83","Addon84","Addon85","Addon86","Addon87","Addon88","Addon89","Addon90","Addon91","Addon92","Addon93","Addon94"})
+"DBMSBasics.exe"-"!:\sys\bin\DBMSBasics.exe"

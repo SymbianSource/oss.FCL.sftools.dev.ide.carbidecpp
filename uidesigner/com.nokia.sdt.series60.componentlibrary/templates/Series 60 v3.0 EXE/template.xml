@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE template [
+<!ENTITY standardDirFields SYSTEM "../shared/standardDirFields.inc">
+]>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+	<wizardPage 
+		id="basics" 
+		label="%basics.label">
+		<description>%basics.desc</description>
+		<uidField 
+				id="uid3"
+				label="%basics.uid3.label"
+				min="0xe0000000"
+				max="0xefffffff"
+				mandatory="true">
+				<description>%basics.uid3.desc</description>
+		</uidField>
+		<textField 
+				id="author"
+				label="%basics.author.label"
+				persist="true">
+				<description>%basics.author.desc</description>
+		</textField>
+		<textField 
+				id="copyright"
+				label="%basics.copyright.label"
+				multiline="true"
+				default="Your copyright notice"
+				persist="true">
+				<description>%basics.copyright.desc</description>
+		</textField>
+	</wizardPage>
+
+	<wizardPage 
+		id="directories" 
+		label="%directories.label">
+
+		&standardDirFields;
+
+		<filenameField 
+				id="gfxDir"
+				label="%directories.gfxDir.label"
+				default="gfx"
+				mandatory="true"
+				persist="true">
+				<description>%directories.gfxDir.desc</description>
+		</filenameField>
+	</wizardPage>
+	
+	<process class="com.nokia.carbide.cpp.internal.sdk.core.processes.CheckS60CustKitSupport"
+	 	bundle="com.nokia.carbide.cpp.sdk.core">
+		<parameter name="project" projectName="$(projectName)" />			
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.NewProject"
+	 		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+
+	<process class="com.nokia.carbide.cpp.project.core.processes.CreateRezId"
+	 	bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.CreateFolders"
+		 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		<parameter name="folder" path="$(sourceDir)" /> 
+		<parameter name="folder" path="$(incDir)" /> 
+		<parameter name="folder" path="$(dataDir)" /> 
+		<parameter name="folder" path="$(groupDir)" /> 
+		<parameter name="folder" path="$(gfxDir)" /> 
+		<parameter name="folder" path="$(sisDir)" /> 
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="file"
+			sourcePath="data/basename_reg.loc" 
+			targetPath="$(dataDir)/$(baseName)_reg.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/basename_reg.rss" 
+			targetPath="$(dataDir)/$(baseName)_reg.rss" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/basename.pan" 
+			targetPath="$(incDir)/$(baseName).pan" 
+			/>
+		<!-- provide some sample BMP images -->
+		<parameter name="file"
+			sourcePath="gfx/list_icon.bmp" 
+			targetPath="$(gfxDir)/list_icon.bmp" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/list_icon_mask.bmp" 
+			targetPath="$(gfxDir)/list_icon_mask.bmp" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/mark_icon.bmp" 
+			targetPath="$(gfxDir)/mark_icon.bmp" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/mark_icon_mask.bmp" 
+			targetPath="$(gfxDir)/mark_icon_mask.bmp" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/qgn_menu_basename.svg" 
+			targetPath="$(gfxDir)/qgn_menu_$(baseName).svg" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="group/basename.mmp" 
+			targetPath="$(groupDir)/$(baseName).mmp" 
+			/>
+		<parameter name="file"
+			sourcePath="group/bld.inf" 
+			targetPath="$(groupDir)/bld.inf" 
+			/>
+		<parameter name="file"
+			sourcePath="group/Icons_aif_scalable_dc.mk" 
+			targetPath="$(groupDir)/Icons_aif_scalable_dc.mk" 
+			/>
+		<parameter name="file"
+			sourcePath="sis/basename.pkg" 
+			targetPath="$(sisDir)/$(baseName).pkg" 
+			/>
+		<parameter name="file"
+			sourcePath="sis/backup_registration.xml" 
+			targetPath="$(sisDir)/backup_registration.xml" 
+			/>
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks"
+	 	bundle="com.nokia.carbide.cpp.project.ui">
+		<parameter name="project" projectName="$(projectName)"
+			bldInfPath="$(groupDir)/bld.inf"
+			targetMMPFileName="$(baseName).mmp" 
+			pkgFilePath="$(sisDir)/$(baseName).pkg" /> 
+	</process>
+
+	<process class="com.nokia.sdt.series60.viewwizard.GenerateModelsProcessRunner"
+				bundle="com.nokia.sdt.series60.componentlibrary">
+		<parameter name="project" projectName="$(projectName)" />
+	</process>
+
+	<process class="com.nokia.sdt.series60.viewwizard.SaveModelsProcessRunner"
+				bundle="com.nokia.sdt.series60.componentlibrary">
+		<parameter name="project" projectName="$(projectName)" sourceGenRootModel="true" />
+	</process>
+	
+	<process class="com.nokia.sdt.series60.viewwizard.DisposeModelsProcessRunner"
+				bundle="com.nokia.sdt.series60.componentlibrary">
+		<parameter name="project" projectName="$(projectName)" />
+	</process>
+	
+</template>
+

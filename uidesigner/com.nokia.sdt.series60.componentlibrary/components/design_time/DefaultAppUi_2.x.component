@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgen SYSTEM "DefaultAppUi_common.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<component 
+			friendlyName="%friendlyName" 
+			qualifiedName="com.nokia.sdt.series60.DefaultAppUi"
+			baseComponent="com.nokia.sdt.series60.DesignTimeContainer"
+			version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" 
+			minSDKVersion="2.0" maxSDKVersion="2.7.9"
+			className="" classHelpTopic="" />
+		<designerImages smallIconFile="../app/CAknAppUi_sm.png" 
+			largeIconFile="../app/CAknAppUi.png"/>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<script file="DefaultAppUi_layout.js"
+					prototype="DefaultAppUiLayout"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<code class="com.nokia.sdt.series60.component.AknViewVisualImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="DefaultAppUi_queryContainment.js" prototype="DefaultAppUiQueryContainment"/>
+			</implementation>
+		</implementations>
+
+		<sourceGen forms="AppUi">
+			&common_srcgen;
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+	<!-- PROJECT WIZARDS -->
+	<extension point="com.nokia.carbide.templatewizard.wizardTemplate">
+
+      <template
+      		displayName="%gui.label"
+            filterArguments="S60:3.0-5.9"
+            groupLabel="%S60.3.label"
+            image="icons/icon_S60.png"
+            location="templates/projecttemplates/S60-TouchUIApplication/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.s60.touchUI"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+
+      <template
+      		displayName="%dll.label"
+            groupLabel="%GenericSymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/projecttemplates/Symbian-DLL/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.symbian.dll"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+      <template
+      		displayName="%exe.label"
+            groupLabel="%GenericSymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/projecttemplates/Symbian-EXE/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.symbian.exe"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+      <template
+      		displayName="%lib.label"
+            groupLabel="%GenericSymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/projecttemplates/Symbian-LIB/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.symbian.lib"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+      <template
+      		displayName="%empty.label"
+            groupLabel="%GenericSymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/projecttemplates/Symbian-Empty/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.symbian.empty"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+
+      <template
+      		displayName="%uiq3.label"
+            filterArguments="UIQ:3.0-3.9"
+            groupLabel="%UIQ.label"
+            image="icons/icon_UIQ.png"
+            location="templates/projecttemplates/UIQ30-HelloWorld/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.uiq30.helloworld"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+      <template
+      		displayName="%openc.label"
+            filterArguments="S60:3.0-5.9"
+            groupLabel="%S60.3.label"
+            image="icons/icon_S60.png"
+            location="templates/projecttemplates/OpenC-HelloWorld/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.openC.helloworld"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
+   </extension>
+
+	<!-- CLASS WIZARDS -->
+	<extension point="com.nokia.carbide.templatewizard.wizardTemplate">
+      <template
+      		displayName="%cclass.label"
+            groupLabel="%SymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/classtemplates/CClass/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.symbian.cclass"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppClassWizard"/>
+      <template
+      		displayName="%activeobject.label"
+            groupLabel="%SymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/classtemplates/ActiveObject/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.symbian.activeobject"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppClassWizard"/>
+   </extension>
+
+<!--- Template extensions for the editor -->
+   <extension
+         point="org.eclipse.ui.editors.templates">
+      <include
+      		file="templates/code/default-templates.xml"
+      		translations="$nl$/templates/code/default-templates.properties">
+      </include>
+   </extension>
+</plugin>

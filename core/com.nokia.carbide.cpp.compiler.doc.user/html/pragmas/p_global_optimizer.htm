@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>global_optimizer</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>global_optimizer</h3>
+<p>  Controls whether the Global Optimizer is invoked by the compiler.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma global_optimizer on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>In most compilers, this pragma determines whether the Global Optimizer is invoked in the Global Optimizations panel. If disabled, only simple optimizations and back-end optimizations are performed.</p>
+  <p class="note"> <strong>NOTE</strong> This is not the same as<span class="code"> #pragma <a href="p_optimization_level.htm">optimization_level</a></span>. The Global Optimizer is invoked even at <span class="code">optimization_level 0</span> if <span class="code">#pragma global_optimizer</span> is enabled.</p>
+  <p>This pragma corresponds to the settings in the Global Optimizations panel. To check this setting, use <span class="code">__option (global_optimizer)</span><span class="code"></span> described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">on</span>.</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

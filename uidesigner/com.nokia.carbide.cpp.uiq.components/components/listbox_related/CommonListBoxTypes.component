@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU13 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.EQikListBoxDefault">
+		<!--QikListBox.hrh-->
+		<enumElement value="-1" displayValue="%default"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxType">
+		<!--QikListBox.hrh-->
+		<enumElement value="EQikRowListBox" displayValue="%rowlistbox"/>
+		<enumElement value="EQikGridListBox" displayValue="%gridlistbox"/>
+		<!--TODO: full support for this will introduce changes in ListBoxLayout and several other places.-->
+		<!--<enumElement value="EQikCustomListBox" displayValue="%customlistbox"/>-->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikScrollBarVisibility">
+		<!--QikListBox.hrh-->
+		<enumElement value="EQikScrollBarOff" displayValue="%scrollbaroff"/>
+		<enumElement value="EQikScrollBarOn" displayValue="%scrollbaron"/>
+		<enumElement value="EQikScrollBarAuto" displayValue="%scrollbarauto"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxStandardLayout">
+		<!--QikListBoxStandardLayouts.hrh-->
+		<!--NOTE: commented elements, if defined, should have
+			supporting rendering and source mapping code added -->
+		<enumElement value="EQikListBoxNoLayout" displayValue="%nolayout"/>
+		<enumElement value="EQikListBoxLine" displayValue="%line"/>
+		<enumElement value="EQikListBoxIconLine" displayValue="%iconline"/>
+		<enumElement value="EQikListBoxLineIcon" displayValue="%lineicon"/>
+		<!--<enumElement value="EQikListBoxIconLineIcon" displayValue="%iconlineicon"/>-->
+		<!--<enumElement value="EQikListBoxIconIconLine" displayValue="%iconiconline"/>-->
+		<!--<enumElement value="EQikListBoxLineIconIcon" displayValue="%lineiconicon"/>-->
+		<!--<enumElement value="EQikListBoxIconLineIconIcon" displayValue="%iconlineiconicon"></enumElement>-->
+		<!--<enumElement value="EQikListBoxIconHalfLineHalfLine" displayValue="%iconhalflinehalfline"></enumElement>-->
+		<!--<enumElement value="EQikListBoxIconHalfLineHalfLineLine" displayValue="%iconhalflinehalflineline"></enumElement>-->
+		<!--<enumElement value="EQikListBoxCheckLineSwappingLine" displayValue="%checklineswappingline"></enumElement>-->
+		<!--<enumElement value="EQikListBoxIconIconTwoLines" displayValue="%iconicontwolines"></enumElement>-->
+		<enumElement value="EQikListBoxTwoLines" displayValue="%twolines"></enumElement>
+		<enumElement value="EQikListBoxIconTwoLines" displayValue="%icontwolines"></enumElement>
+		<!--<enumElement value="EQikListBoxMediumThumbTwoLines" displayValue="%mediumthumbtwolines"></enumElement>-->
+		<enumElement value="EQikListBoxMediumIconTwoLines" displayValue="%mediumicontwolines"></enumElement>
+		<!--<enumElement value="EQikListBoxCheckLineIconLine" displayValue="%checklineiconline"></enumElement>-->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TListBoxStdLayoutTextSlots">
+		<!--QikListBoxStandardLayouts.hrh /** Texts */-->
+		<enumElement value="EQikListBoxDefault" displayValue="%default"/>
+		<enumElement value="EQikListBoxSlotText1" displayValue="%slotText1"/>
+		<enumElement value="EQikListBoxSlotText2" displayValue="%slotText2"/>
+		<!--This release only supports text slots 1 and 2-->
+		<!--<enumElement value="EQikListBoxSlotText3" displayValue="%slotText3"/>
+		<enumElement value="EQikListBoxSlotText4" displayValue="%slotText4"/>
+		<enumElement value="EQikListBoxSlotText5" displayValue="%slotText5"/>-->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxProperty">
+		<!--QikListBox.hrh-->
+		<enumElement value="EQikListBoxSystem" displayValue="%system"/>
+		<enumElement value="EQikListBoxOn" displayValue="%on"/>
+		<enumElement value="EQikListBoxOff" displayValue="%off"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxMirroring">
+		<!--QikListBox.hrh-->
+		<enumElement value="EAutoMirror" displayValue="%automirror"/>
+		<enumElement value="EMirror" displayValue="%mirror"/>
+		<enumElement value="ENoMirroring" displayValue="%nomirroring"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxHighlightStyle">
+		<!--QikListBox.hrh-->
+		<enumElement value="EQikListBoxHighlightSolid" displayValue="%highlightsolid"/>
+		<enumElement value="EQikListBoxHighlightFrame" displayValue="%highlightframe"/>
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxMargins">
+		<!-- default=EQikListBoxDefault -->
+		<property name="left"
+			displayName="%left"
+			descriptionKey="leftDescription"
+			type="integer"
+			minValue="-128"
+			maxValue="255"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"/>
+		<property name="right"
+			displayName="%right"
+			descriptionKey="rightDescription"
+			type="integer"
+			minValue="-128"
+			maxValue="255"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"/>
+		<property name="top"
+			displayName="%top"
+			descriptionKey="topDescription"
+			type="integer"
+			minValue="-128"
+			maxValue="255"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"/>
+		<property name="bottom"
+			displayName="%bottom"
+			descriptionKey="bottomDescription"
+			type="integer"
+			minValue="-128"
+			maxValue="255"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"/>
+	</compoundPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxScrollDirection">
+		<!--QikListBox.hrh-->
+		<enumElement value="EQikVerticalDirection" displayValue="%verticaldirection"/>
+		<enumElement value="EQikHorizontalDirection" displayValue="%horizontaldirection"/>
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikListBoxDataFlags">
+		<!--QikListBox.hrh-->
+		<property name="separator"
+			displayName="%separator"
+			descriptionKey="separatorDescription"
+			type="boolean"/>
+		<property name="disabled"
+			displayName="%disabled"
+			descriptionKey="disabledDescription"
+			type="boolean"/>
+		<property name="emphasis"
+			displayName="%emphasis"
+			descriptionKey="emphasisDescription"
+			type="boolean"/>
+		<property name="dimmed"
+			displayName="%dimmed"
+			descriptionKey="dimmedDescription"
+			type="boolean"/>
+		<property name="unselectable"
+			displayName="%unselectable"
+			descriptionKey="unselectableDescription"
+			type="boolean"/>
+		<sourceTypeMapping>
+			<mapBitmaskType includedProperties="separator disabled emphasis dimmed unselectable">
+				<mapBitmaskValue properties="separator" value="KQikListBoxSeparator"/>
+				<mapBitmaskValue properties="disabled" value="KQikListBoxDisabled"/>
+				<mapBitmaskValue properties="emphasis" value="KQikListBoxEmphasis"/>
+				<mapBitmaskValue properties="dimmed" value="KQikListBoxDimmed"/>
+				<mapBitmaskValue properties="unselectable" value="KQikListUnselectable"/>
+			</mapBitmaskType>
+		</sourceTypeMapping>
+	</compoundPropertyDeclaration>
+	
+</componentDefinition>

@@ -1,0 +1,7 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES r_test0
+	{
+	}
+
+ 

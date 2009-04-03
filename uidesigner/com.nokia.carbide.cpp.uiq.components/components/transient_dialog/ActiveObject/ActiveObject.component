@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU18 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.CActive.TPriority">
+		<enumElement value="EPriorityIdle" displayValue="%idle"/>
+		<enumElement value="EPriorityLow" displayValue="%low"/>
+		<enumElement value="EPriorityStandard" displayValue="%standard"/>
+		<enumElement value="EPriorityUserInput" displayValue="%userInput"/>
+		<enumElement value="EPriorityHigh" displayValue="%high"/>
+		<sourceTypeMapping>
+			<mapEnumType validate="false">
+				<mapEnum value="EPriotityIdle" enumerator="EPriorityIdle"/>
+				<mapEnum value="EPriorityLow" enumerator="EPriorityLow"/>
+				<mapEnum value="EPriorityStandard" enumerator="EPriorityStandard"/>
+				<mapEnum value="EPriorityUserInput" enumerator="EPriorityUserInput"/>
+				<mapEnum value="EPriorityHigh" enumerator="EPriorityHigh"/>
+			</mapEnumType>
+		</sourceTypeMapping>				
+	</enumPropertyDeclaration>
+	  
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.carbide.uiq.CActive" 
+		baseComponent="com.nokia.carbide.uiq.NonLayoutBase" 
+		instanceNameRoot="activeObject"
+		category="%category.other"			
+		version="1.0">
+
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq"
+			minSDKVersion="3.0"
+			className="CActive"/>
+		
+		<designerImages smallIconFile="ActiveObject_sm.png"
+			largeIconFile="ActiveObject.png"/>		
+
+		<attributes>
+			<attribute key ="cpp-class-name">CActive</attribute>		
+			<attribute key="not-in-toolbox">false</attribute>
+		</attributes>
+		
+	    <properties>
+			<enumProperty name="priority" type="com.nokia.carbide.uiq.CActive.TPriority" 
+				descriptionKey="priorityDescription" 
+				default="EPriorityStandard"
+				category="%category.behavior"/>
+		    <componentReferenceProperty name="progressInfo" 
+				constraint="com.nokia.carbide.uiq.CEikProgressInfo" 
+				scope="model" descriptionKey="progressInfoDescription"
+				creationKeys="addNewProgressInfo" 
+				category="%category.design"/>                                                                                       			
+		    <componentReferenceProperty name="progressInfoHidden" 
+				constraint="com.nokia.carbide.uiq.CEikProgressInfo" 
+				descriptionKey="progressInfoDescription"
+				category="Hidden"/>                                                                                       			
+	    </properties>
+
+		<events>
+			<event name="OnJobStartedEvent" category="%category.activeObject" 
+				group="Active object"
+			    handlerNameTemplate="Handle{title(name)}OnJobStartedL"
+				descriptionKey="OnJobStartedEventDescription"/>
+			<event name="OnTaskDoneEvent" category="%category.activeObject" 
+				group="Active object"
+			    handlerNameTemplate="Handle{title(name)}OnTaskDoneL"
+				descriptionKey="OnTaskDoneEventDescription"/>
+			<event name="OnJobCompleteEvent" category="%category.activeObject" 
+				group="Active object"
+			    handlerNameTemplate="Handle{title(name)}OnJobCompleteL"
+				descriptionKey="OnJobCompleteEventDescription"/>
+			<event name="OnCancelEvent" category="%category.activeObject" 
+				group="Active object"
+			    handlerNameTemplate="Handle{title(name)}OnCancelL"
+				descriptionKey="OnCancelEventDescription"/>
+		</events>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ISetValueCommandExtender"/>
+				<code class = "com.nokia.carbide.cpp.uiq.components.ActiveObjectSetValueCommandExtender"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+				<script file="ActiveObject.js" prototype="ActiveObject"/>			
+			</implementation>				
+		</implementations>
+
+	  
+		<sourceGen>
+			<expandMacro name="HeaderFileTemplate" FileName="${instanceName$title}.h" IncludeGuardMacro="${instanceName$upper}_H">
+				<expandArgument name="InitialOwnedSystemIncludesContent">
+<![CDATA[
+#include <e32base.h>
+#include <e32std.h>
+]]>
+				</expandArgument>
+				<expandArgument name="InitialFileHeadContent">
+<![CDATA[
+class M${instanceName$title}ServerObserver
+{
+public:
+	virtual void ${instanceName$title}OnJobStarted(/*additional arguments could be passed here*/) = 0;
+	virtual void ${instanceName$title}OnTaskDone(/*additional arguments could be passed here*/) = 0;
+	virtual void ${instanceName$title}OnJobComplete(/*additional arguments could be passed here*/) = 0;
+	virtual void ${instanceName$title}OnCancel(/*additional arguments could be passed here*/) = 0;
+};
+]]>									
+				</expandArgument>				
+			</expandMacro>
+
+			<expandMacro name="ClassTemplate"
+				LocationPrefix="ACTIVEOBJECT_HEADER_"
+				ClassName="C${instanceName}"
+				BaseClassName="CActive">
+				<expandArgument name="ClassComment">
+/**
+ * C${instanceName} class, inherits from CActive
+ * @class	CMovingBall8ContainerView MovingBall8ContainerView.h
+ */
+				</expandArgument>	
+				<expandArgument name="InitialPrivateOwnedMethodsContent">
+<![CDATA[
+	enum TTimeServerState
+	{
+		EUninitialized,	// Uninitialized
+		EInitialized,	// Initialized
+		EError			// Error condition
+	};
+]]>						
+				</expandArgument>
+				<expandArgument name="InitialPrivateOwnedInstanceVariablesContent">
+<![CDATA[
+	TInt	iState;		// State of the active object
+	RTimer	iTimer;		// Provides async timing service
+	TInt iStepsDone;	// delete this when implementing your own Active Object
+	M${instanceName$title}ServerObserver* iObserver;	// Observer of this AO
+]]>				
+				</expandArgument>								
+			</expandMacro>
+
+			<!-- Auxiliar functions to handle progress info-->
+			<inline scope="file">
+				<![CDATA[
+				include("../../implLibrary.js")								
+				
+				function IsThereProgressInfo(instance){
+					return instance.properties.progressInfoHidden!="";				
+				}
+
+				function validateHasProgressInfoRef(instance) {
+					
+					var childBeingRemoved = lookupInstanceByName(instance.properties.progressInfoHidden); 
+					
+					var SPECIAL_ICONSLOT_VALIDATION = false; // false para carlos
+					
+					//Get root container
+					rootContainer = childBeingRemoved.rootContainer;
+					
+					//Get initial group
+					var initialGroupType = ""; 
+					if(rootContainer.isInstanceOf("com.nokia.carbide.uiq.CQikView")){
+						initialGroupType = "com.nokia.carbide.uiq.LayoutsGroup";		
+					}else{
+						initialGroupType = "com.nokia.carbide.uiq.ContainersGroup"; 		
+					}
+				
+					var initialGroupInstance = rootContainer.findChildOfType(initialGroupType);
+					
+					//start recursive calls
+					return hasLimitatingReferences(initialGroupInstance, childBeingRemoved.name, SPECIAL_ICONSLOT_VALIDATION);	
+				}
+
+				function hasLimitatingReferences(instance, controlCollectionItemInstanceName, specialIconSlotValidation) {
+					if (instance.isInstanceOf("com.nokia.carbide.uiq.LayoutControlBase") && 
+							instance.properties.control == controlCollectionItemInstanceName) { 
+						//validacion de escenario complejo o directo
+						if (specialIconSlotValidation) {
+							if (instance.parent.isInstanceOf("com.nokia.carbide.uiq.IconSlot"))
+								return true;
+						} else {
+							return true;
+						}
+					}
+					
+					for (var i=0; i<instance.children.length; i++) {
+						// para cada hijo..
+						var child = instance.children[i];
+						if(hasLimitatingReferences(child, controlCollectionItemInstanceName, specialIconSlotValidation))
+							return true;
+					}
+					return false;
+				}
+	
+				function getProgressInfoFinalVal(instance){
+					if(instance.properties.progressInfoHidden!=""){
+						var progressinfo = lookupInstanceByName(instance.properties.progressInfoHidden);				
+						return progressinfo.properties.finalval;
+					}
+					else{
+						return 5;
+					}
+				}
+				function getProgressInfoInitialVal(instance){
+					if(instance.properties.progressInfoHidden!=""){
+						var progressinfo = lookupInstanceByName(instance.properties.progressInfoHidden);				
+						if(progressinfo.properties.value <=0){
+							return 0;
+						}
+						else{
+							return 	progressinfo.properties.value;					
+						}
+					}
+					else{
+						return 0;
+					}
+
+				}		
+				]]>		
+			</inline>
+			<!-- Auxiliar functions to handle progress info-->
+
+			<expandMacro name="SourceFileTemplate" FileName="${instanceName$title}.cpp" 
+					HeaderFileName="${instanceName$title}.h" 
+					LocationPrefix="ACTIVEOBJECT_SOURCE">
+				<expandArgument name="InitialSystemIncludesContent">
+<![CDATA[#include <eikprogi.h>]]>			
+				</expandArgument>
+				<expandArgument name="InitialConstantsContent">
+<![CDATA[
+/**
+ * Example final and increment values, used for demostration purposes only
+ */
+const TInt KFinalValue = ${getProgressInfoFinalVal(instance)};
+const TInt KIncrement = 1;
+]]>			
+				</expandArgument>
+
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="true" FunctionLocationId="ACTIVE_OBJECT_CONSTRUCTOR" 
+				FunctionName="C${instanceName}"
+				FunctionArgs="" 
+				ReturnType="" 
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PRIVATE" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE"
+				Initializers="CActive( ${instance.properties.priority} ),iState( EUninitialized ),iStepsDone( ${getProgressInfoInitialVal(instance)} )">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * First phase of Symbian two-phase construction. Should not contain any
+ * code that could leave.
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_NEWLC" 
+				FunctionName="NewLC" 
+				FunctionArgs=""
+				IsStatic="true" 
+				ReturnType="C${instanceName}*" 
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PUBLIC" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * Symbian two-phase constructor.
+ * This creates an instance, pushes it on the cleanup stack, then calls the second-phase constructor.
+ * @return new instance of C${instanceName}
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	C${instanceName}* self = new ( ELeave ) C${instanceName};
+	CleanupStack::PushL( self );
+	self->ConstructL();
+	return self;
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_NEWL" 
+				FunctionName="NewL" 
+				FunctionArgs=""
+				IsStatic="true" 
+				ReturnType="C${instanceName}*" 
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PUBLIC" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * Symbian two-phase constructor.
+ * This creates an instance then calls the second-phase constructor without leaving the instance on the cleanup stack.
+ * @return new instance of CTimeServer
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	C${instanceName}* self = C${instanceName}::NewLC();
+	CleanupStack::Pop(); // self;
+	return self;
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_CONSTRUCTL" 
+				FunctionName="ConstructL" 
+				FunctionArgs=""
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PRIVATE" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * Second-phase constructor for time server.
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	User::LeaveIfError( iTimer.CreateLocal() );	// Initialize timer
+	CActiveScheduler::Add( this );				// Add to scheduler
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_DESTRUCTOR" 
+				FunctionName="~C${instanceName}" 
+				FunctionArgs=""
+				ReturnType="" 
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PUBLIC" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * C${instanceName} destructor
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	Cancel(); // Cancel any request, if outstanding
+	iTimer.Close(); // Destroy the RTimer object
+	// Delete instance variables if any
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_STARTL" 
+				FunctionName="StartL" 
+				FunctionArgs="M${instanceName$title}ServerObserver* aObserver, TTimeIntervalMicroSeconds32 aDelay"
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PUBLIC" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * Perform initial service request
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	Cancel();							// Cancel any request, just to be sure
+	iState = EUninitialized;
+	iTimer.After( iStatus, aDelay );	// Set for later
+	iObserver = aObserver;
+	
+	SetActive();						// Tell scheduler a request is active
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_DOCANCEL" 
+				FunctionName="DoCancel" 
+				FunctionArgs=""
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PRIVATE" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * Called by Cancel
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	iTimer.Cancel();
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_RUNL" 
+				FunctionName="RunL" 
+				FunctionArgs=""
+				DeclPhase="ClassMethods" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PRIVATE" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	switch ( iStatus.Int() )
+	{
+	case KErrNone:
+		{
+		if ( iState == EUninitialized )
+			{
+			// Do something the first time RunL() is called
+			if( iObserver != NULL )
+				{
+				iObserver->${instanceName$title}OnJobStarted();		
+				}
+			iState = EInitialized;
+			} 
+			else if ( iState != EError ) 
+			{
+			// Do something
+			}
+		
+		if( iStepsDone++ < KFinalValue )	
+			{
+			iTimer.After( iStatus, 1000000 );	// Set for 1 sec later
+			if( iObserver != NULL )
+				{
+				iObserver->${instanceName$title}OnTaskDone();		// Notify observer about task done
+				}
+			SetActive();					// Tell scheduler a request is active
+			}
+		else
+			{
+			iState = EUninitialized;
+			iStepsDone = 0;
+			Cancel();
+			if( iObserver != NULL )
+				{
+				iObserver->${instanceName$title}OnJobComplete();		// Notify observer about job complete
+				}
+			}
+		break;
+		}
+	case KErrCancel:
+		{
+		if( iObserver != NULL )
+			{
+			iState = EUninitialized;
+			iStepsDone = 0;
+			iObserver->${instanceName$title}OnCancel();
+			}
+		break;
+		}
+	default:
+		{
+		break;
+		}
+	}
+]]>
+				</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="ACTIVE_OBJECT_RUNERROR" 
+				FunctionName="RunError" 
+				FunctionArgs="TInt aError"
+				DeclPhase="ClassMethods" 
+				ReturnType="TInt" 
+				ClassName="C${instanceName}" 
+				DeclLocation="ACTIVEOBJECT_HEADER_CLASS_PRIVATE" 
+				DefnLocation="ACTIVEOBJECT_SOURCE_FILE">
+				<expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * Handles error
+ */
+]]>
+				</expandArgument>				
+				<expandArgument name="FunctionBody">
+<![CDATA[
+	return aError;
+]]>
+				</expandArgument>
+			</expandMacro>
+
+
+
+			<template id="ObserverBase" phase="OwnedBases" >
+<![CDATA[,public M${instanceName$title}ServerObserver]]>
+			</template>			
+
+			<template id="activeObjectUserInclude" phase="MainUserIncludes" >
+<![CDATA[#include "${instanceName$title}.h"]]>
+			</template>			
+
+				<!-- create OnJobStarted method-->	
+				<expandMacro name="GenerateMethod"
+						FunctionName="${instanceName$title}OnJobStarted"
+						FunctionArgs=""
+						FunctionLocationId="ACTIVEOBJECT_ONJOBSTARTED"
+						IsOwned="true"
+						DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+						DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC_OWNED_METHODS" 
+						ClassName="${className}">
+						<expandArgument name="FunctionComment">
+/** 
+ * Function executed when call to RunL from C${instanceName} class starts
+ */
+						</expandArgument>
+						<expandArgument name="FunctionBody">
+
+						</expandArgument>
+				</expandMacro>
+				<!-- create OnJobStarted method-->	
+
+
+				<!-- create OnTaskDone method-->	
+				<expandMacro name="GenerateMethodWithOwnedBody"
+						FunctionName="${instanceName$title}OnTaskDone"
+						FunctionArgs=""
+						FunctionLocationId="ACTIVEOBJECT_ONTASKDONE"
+						IsOwned="true"
+						DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+						DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC_OWNED_METHODS" 
+						ClassName="${className}">
+						<expandArgument name="FunctionComment">
+/** 
+ * Function executed in every step of  RunL from C${instanceName} class
+ */
+						</expandArgument>
+						<expandArgument name="FunctionBody">
+<![CDATA[
+<% 
+if (IsThereProgressInfo(instance) && validateHasProgressInfoRef(instance)) { 
+%>
+i${instanceName$title}Count--;
+i${instanceName$title}Prog = i${instanceName$title}Max - i${instanceName$title}Count;
+                        
+i${TextUtils.titleCase(lookupInstanceByName(instance.properties.progressInfoHidden).name)}->IncrementAndDraw(i${instanceName$title}Prog);
+<% } 
+%>
+]]>
+
+						</expandArgument>
+				</expandMacro>
+				<!-- create OnTaskDone method-->	
+
+				<!-- create OnJobComplete method-->	
+				<expandMacro name="GenerateMethodWithOwnedBody"
+						FunctionName="${instanceName$title}OnJobComplete"
+						FunctionArgs=""
+						FunctionLocationId="ACTIVEOBJECT_ONJOBCOMPLETE"
+						IsOwned="true"
+						DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+						DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC_OWNED_METHODS" 
+						ClassName="${className}">
+						<expandArgument name="FunctionComment">
+/** 
+ * Function executed when call to RunL from C${instanceName} class finishes
+ */
+						</expandArgument>
+						<expandArgument name="FunctionBody">
+<![CDATA[
+<% 
+if (IsThereProgressInfo(instance)) { 
+%>
+i${instanceName$title}Count =  i${instanceName$title}Max - ${getProgressInfoInitialVal(instance)};
+i${instanceName$title}Prog  = i${instanceName$title}Max - i${instanceName$title}Count;
+<% } 
+%>
+]]>
+						</expandArgument>
+				</expandMacro>
+				<!-- create OnJobComplete method-->	
+
+				<!-- create OnCancel method-->	
+				<expandMacro name="GenerateMethod"
+						FunctionName="${instanceName$title}OnCancel"
+						FunctionArgs=""
+						FunctionLocationId="ACTIVEOBJECT_ONCANCEL"
+						IsOwned="true"
+						DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+						DeclLocation="VIEWDIALOGBASE_CLASS_PUBLIC_OWNED_METHODS" 
+						ClassName="${className}">
+						<expandArgument name="FunctionComment">
+/** 
+ * Function executed when call to RunL from C${instanceName} class fails
+ */
+						</expandArgument>
+						<expandArgument name="FunctionBody">
+
+						</expandArgument>
+				</expandMacro>
+				<!-- create OnCancel method-->	
+
+		    <template form="InstanceGen" phase="ClassPrivateInstanceVariables">
+C${instanceName}* i${instanceName$title}Timer;
+			</template>	
+
+		    <template form="InstanceGen" phase="Initialize">
+<![CDATA[
+i${instanceName$title}Timer = C${instanceName}::NewL();
+]]>
+			</template>
+
+			<template form="InstanceGen" phase="Destroy">
+<![CDATA[
+delete  i${instanceName$title}Timer;
+i${instanceName$title}Timer = NULL;
+]]>
+			</template>
+
+			<!-- Source gen for progress info -->
+		    <template form="InstanceGen" phase="ClassPrivateInstanceVariables" ifExpr="IsThereProgressInfo(instance)">
+<![CDATA[
+TInt i${instanceName$title}Max, i${instanceName$title}Count, i${instanceName$title}Prog;
+]]>
+			</template>
+
+		    <template form="InstanceGen" phase="Initialize" ifExpr="IsThereProgressInfo(instance)">
+<![CDATA[
+i${instanceName$title}Max = ${lookupInstanceByName(instance.properties.progressInfoHidden).properties.finalval};
+i${instanceName$title}Count =  i${instanceName$title}Max - ${getProgressInfoInitialVal(instance)};
+i${instanceName$title}Prog  = i${instanceName$title}Max - i${instanceName$title}Count;
+]]>
+			</template>			
+			<!-- Source gen for progress info -->
+
+
+
+			<templateGroup id="GenerateOnJobStartedEvent" ifEvents="OnJobStartedEvent" form="EventGen">
+					<template id="OnJobStartedEventCall" location="ACTIVEOBJECT_ONJOBSTARTED">
+	<![CDATA[
+	${event.handlerName}();
+	]]>
+					</template>
+					<expandMacro name="GenerateUserEventHandlerFunction"
+						FunctionLocationId="OnJobStartedEvent" 
+						FunctionArgs=""
+						DeclPhase="UserHandlers"
+						DefnLocation="SOURCE_FILE" />					
+			</templateGroup>	
+
+			<templateGroup id="GenerateOnTaskDoneEvent" ifEvents="OnTaskDoneEvent" form="EventGen">
+					<template id="OnTaskDoneEventCall" location="ACTIVEOBJECT_ONTASKDONE">
+	<![CDATA[
+	${event.handlerName}();
+	]]>
+					</template>
+					<expandMacro name="GenerateUserEventHandlerFunction"
+						FunctionLocationId="OnTaskDoneEvent" 
+						FunctionArgs=""
+						DeclPhase="UserHandlers"
+						DefnLocation="SOURCE_FILE" />					
+			</templateGroup>	
+
+			<templateGroup id="GenerateOnJobCompleteEvent" ifEvents="OnJobCompleteEvent" form="EventGen">
+					<template id="OnJobCompleteEventCall" location="ACTIVEOBJECT_ONJOBCOMPLETE">
+	<![CDATA[
+	${event.handlerName}();
+	]]>
+					</template>
+					<expandMacro name="GenerateUserEventHandlerFunction"
+						FunctionLocationId="OnJobCompleteEvent" 
+						FunctionArgs=""
+						DeclPhase="UserHandlers"
+						DefnLocation="SOURCE_FILE" />					
+			</templateGroup>	
+
+			<templateGroup id="GenerateOnCancelEvent" ifEvents="OnCancelEvent" form="EventGen">
+					<template id="OnCancelEventCall" location="ACTIVEOBJECT_ONCANCEL">
+	<![CDATA[
+	${event.handlerName}();
+	]]>
+					</template>
+					<expandMacro name="GenerateUserEventHandlerFunction"
+						FunctionLocationId="OnCancelEvent" 
+						FunctionArgs=""
+						DeclPhase="UserHandlers"
+						DefnLocation="SOURCE_FILE" />					
+			</templateGroup>	
+
+		</sourceGen>
+	</component>
+</componentDefinition>

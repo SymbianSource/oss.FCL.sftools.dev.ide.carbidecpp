@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.flags">
+		<!-- note: these are #defines, remove 'EikEdwin' to find the enum used in CEikEdwin -->
+		<property name="EEikEdwinKeepDocument" type="boolean"
+			descriptionKey="EEikEdwinKeepDocumentKey" />
+		<property name="EEikEdwinSegmentedStorage" type="boolean"
+			descriptionKey="EEikEdwinSegmentedStorageKey" />
+		<property name="EEikEdwinNoAutoSelection" type="boolean"
+			descriptionKey="EEikEdwinNoAutoSelectionKey" />
+		<property name="EEikEdwinJustAutoCurEnd" type="boolean"
+			descriptionKey="EEikEdwinJustAutoCurEndKey" />
+		<property name="EEikEdwinNoWrap" type="boolean"
+			descriptionKey="EEikEdwinNoWrapKey" />
+		<property name="EEikEdwinLineCursor" type="boolean"
+			descriptionKey="EEikEdwinLineCursorKey" />
+		<property name="EEikEdwinNoHorizScrolling" type="boolean"
+			descriptionKey="EEikEdwinNoHorizScrollingKey" />
+		<property name="EEikEdwinInclusiveSizeFixed" type="boolean"
+			descriptionKey="EEikEdwinInclusiveSizeFixedKey" />
+		<property name="EEikEdwinDisplayOnly" type="boolean"
+			descriptionKey="EEikEdwinDisplayOnlyKey" />
+		<property name="EEikEdwinAlwaysShowSelection" type="boolean"
+			descriptionKey="EEikEdwinAlwaysShowSelectionKey" />
+		<property name="EEikEdwinReadOnly" type="boolean"
+			descriptionKey="EEikEdwinReadOnlyKey" />
+		<property name="EEikEdwinAllowPictures" type="boolean"
+			descriptionKey="EEikEdwinAllowPicturesKey" />
+		<property name="EEikEdwinAllowUndo" type="boolean"
+			descriptionKey="EEikEdwinAllowUndoKey" />
+		<property name="EEikEdwinNoLineOrParaBreaks" type="boolean"
+			descriptionKey="EEikEdwinNoLineOrParaBreaksKey" />
+		<property name="EEikEdwinOnlyASCIIChars" type="boolean"
+			descriptionKey="EEikEdwinOnlyASCIICharsKey" />
+		<property name="EEikEdwinIgnoreVirtualCursor" type="boolean"
+			descriptionKey="EEikEdwinIgnoreVirtualCursorKey" />
+		<property name="EEikEdwinAvkonDisableCursor" type="boolean"
+			descriptionKey="EEikEdwinAvkonDisableCursorKey" />
+		<!-- a state flag, not a configuration flag
+		<property name="EEikEdwinAvkonNotEditable" type="boolean"
+			descriptionKey="EEikEdwinAvkonNotEditableKey" />
+		-->
+		<property name="EEikEdwinAlternativeWrapping" type="boolean"
+			descriptionKey="EEikEdwinAlternativeWrappingKey" />
+		<property name="EEikEdwinResizable" type="boolean"
+			descriptionKey="EEikEdwinResizableKey" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.allowedCaseModes">
+		<!-- these must match the values in com.nokia.sdt.eikedwin.enumTextCase -->
+		<property name="EAknEditorUpperCase" type="boolean" default="true"
+			descriptionKey="EAknEditorUpperCaseKey" />
+		<property name="EAknEditorLowerCase" type="boolean" default="true"
+			descriptionKey="EAknEditorLowerCaseKey" />
+		<property name="EAknEditorTextCase" type="boolean" default="true"
+			descriptionKey="EAknEditorTextCaseKey" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.allowInputModes">
+		<property name="EAknEditorTextInputMode" type="boolean" default="true"
+			descriptionKey="EAknEditorTextInputModeKey" />
+		<property name="EAknEditorNumericInputMode" type="boolean" default="true"
+			descriptionKey="EAknEditorNumericInputModeKey" />
+		<property name="EAknEditorSecretAlphaInputMode" type="boolean" default="true"
+			descriptionKey="EAknEditorSecretAlphaInputModeKey" />
+		<!-- the following are only available in the Japanese variant  in S60 2.6+ 
+			so we default these to false (actual only EAknEditorHiraganaInputMode should be false -->
+		<property name="EAknEditorKatakanaInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorKatakanaInputModeKey" />
+		<property name="EAknEditorFullWidthTextInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorFullWidthTextInputModeKey" />
+		<property name="EAknEditorFullWidthNumericInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorFullWidthNumericInputModeKey" />
+		<property name="EAknEditorFullWidthKatakanaInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorFullWidthKatakanaInputModeKey" />
+		<property name="EAknEditorHiraganaKanjiInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorHiraganaKanjiInputModeKey" />
+		<property name="EAknEditorHiraganaInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorHiraganaInputModeKey" />
+		<property name="EAknEditorHalfWidthTextInputMode" type="boolean" default="false"
+			descriptionKey="EAknEditorHalfWidthTextInputModeKey" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.avkonFlags">
+		<property name="EAknEditorFlagFixedCase" type="boolean"
+			descriptionKey="EAknEditorFlagFixedCaseKey" />
+		<property name="EAknEditorFlagNoT9" type="boolean"
+			descriptionKey="EAknEditorFlagNoT9Key" />
+		<property name="EAknEditorFlagNoEditIndicators" type="boolean"
+			descriptionKey="EAknEditorFlagNoEditIndicatorsKey" />
+		<property name="EAknEditorFlagNoLRNavigation" type="boolean"
+			descriptionKey="EAknEditorFlagNoLRNavigationKey" />
+		<property name="EAknEditorFlagSupressShiftMenu" type="boolean"
+			descriptionKey="EAknEditorFlagSupressShiftMenuKey" />
+		<property name="EAknEditorFlagEnableScrollBars" type="boolean"
+			descriptionKey="EAknEditorFlagEnableScrollBarsKey" />
+		<property name="EAknEditorFlagMTAutoOverwrite" type="boolean"
+			descriptionKey="EAknEditorFlagMTAutoOverwriteDescription" />
+		<property name="EAknEditorFlagUseSCTNumericCharmap" type="boolean"
+			descriptionKey="EAknEditorFlagUseSCTNumericCharmapDescription"
+		/>
+		<property name="EAknEditorFlagLatinInputModesOnly" type="boolean"
+			descriptionKey="EAknEditorFlagLatinInputModesOnlyKey" />
+		<property name="EAknEditorFlagForceTransparentFepModes" type="boolean"
+			descriptionKey="EAknEditorFlagForceTransparentFepModesDescription"
+		/>
+		<property name="EAknEditorFlagAllowEntersWithScrollDown" type="boolean"
+			descriptionKey="EAknEditorFlagAllowEntersWithScrollDownDescription" />
+		<property name="EAknEditorFlagEnablePictographInput" type="boolean"
+			descriptionKey="EAknEditorFlagEnablePictographInputKey" />
+		<property name="EAknEditorFlagFindPane" type="boolean"
+			descriptionKey="EAknEditorFlagFindPaneKey" />
+	</compoundPropertyDeclaration>	
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.enumTextCase"  defaultValue="EAknEditorTextCase">
+		<enumElement value="EAknEditorUpperCase"/>
+		<enumElement value="EAknEditorLowerCase"/>
+		<enumElement value="EAknEditorTextCase"/>
+	</enumPropertyDeclaration>
+	
+	<!-- changed default from EAknEditorAlphanumericNumberModeKeymap, which is only available in 2.6+ -->
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.enumKeymap" defaultValue="EAknEditorStandardNumberModeKeymap">
+		<enumElement value="EAknEditorStandardNumberModeKeymap"/>
+		<enumElement value="EAknEditorPlainNumberModeKeymap"/>
+		<enumElement value="EAknEditorCalculatorNumberModeKeymap"/>
+		<enumElement value="EAknEditorConverterNumberModeKeymap"/>
+		<enumElement value="EAknEditorToFieldNumberModeKeymap"/>
+		<enumElement value="EAknEditorFixedDiallingNumberModeKeymap"/>
+		<enumElement value="EAknEditorSATNumberModeKeymap"/>
+		<enumElement value="EAknEditorSATHiddenNumberModeKeymap"/>
+		<enumElement value="EAknEditorAlphanumericNumberModeKeymap"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.enumInputMode" defaultValue="EAknEditorTextInputMode">
+		<!-- these must match the values in com.nokia.sdt.eikedwin.allowInputModes -->
+		<enumElement value="EAknEditorNullInputMode"/>
+		<enumElement value="EAknEditorTextInputMode"/>
+		<enumElement value="EAknEditorNumericInputMode"/>
+		<enumElement value="EAknEditorSecretAlphaInputMode"/>
+		<!-- the following are only available in the Japanese variant -->
+		<enumElement value="EAknEditorKatakanaInputMode"/>
+		<enumElement value="EAknEditorFullWidthTextInputMode"/>
+		<enumElement value="EAknEditorFullWidthNumericInputMode"/>
+		<enumElement value="EAknEditorFullWidthKatakanaInputMode"/>
+		<enumElement value="EAknEditorHiraganaKanjiInputMode"/>
+		<enumElement value="EAknEditorHiraganaInputMode"/>
+		<enumElement value="EAknEditorHalfWidthTextInputMode"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.eikedwin.enumSpecialCharTableDialog" defaultValue="">
+		<enumElement value="0" displayValue="%enumSpecialCharTableDialog.default"/>
+		<enumElement value="R_AVKON_SPECIAL_CHARACTER_TABLE_DIALOG"/>
+		<enumElement value="R_AVKON_URL_SPECIAL_CHARACTER_TABLE_DIALOG"/>
+		<enumElement value="R_AVKON_EMAIL_ADDR_SPECIAL_CHARACTER_TABLE_DIALOG"/>
+		<enumElement value="R_AVKON_CURRENCY_NAME_SPECIAL_CHARACTER_TABLE_DIALOG"/>
+	</enumPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikEdwinBase"
+		baseComponent="com.nokia.sdt.series60.EditorBase" 
+		abstract="true"
+		version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+	
+		<events>
+			<event name="formatChanged" category="Text" 
+				group="CCoeControl"
+			    handlerNameTemplate="Handle{title(name)}FormatChangedL"
+			    descriptionKey="formatChangedDescription"
+			/>
+			<event name="navigation" category="Text" 
+				group="CCoeControl"
+		    	handlerNameTemplate="Handle{title(name)}NavigationL"
+			    descriptionKey="navigationDescription"
+			/>
+			<event name="textUpdated" category="Text" 
+				group="CCoeControl"					
+			    handlerNameTemplate="Handle{title(name)}TextUpdatedL"
+			    descriptionKey="textUpdatedDescription"
+			/>
+		</events>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<script file="CEikEdwinBase.js" prototype="CEikEdwinBase"/>
+			</implementation>
+		</implementations>
+					
+		<sourceGen forms="Container Dialog">
+				
+			<useTemplateGroup ids="SET_ALIGN" />
+			
+<!-- sourcegen common to MEikEdwinObserver events -->
+	<templateGroup id="GenerateCommonEdwinEvents" 
+			ifEvents="formatChanged navigation textUpdated">
+	
+		<template id="EventIncludes" phase="EventIncludes"><![CDATA[
+#include <eikedwob.h>
+]]>		</template>
+		
+		<template id="BaseClass" phase="BaseClassList">,MEikEdwinObserver</template>
+	
+		<defineLocation id="EdwinEventClassDecls" baseLocation="CLASS"
+				owned="false" 
+				location="region(MEdwinObserver support)">
+			<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+typedef void ( ${handlerClassName}::*EdwinEventHandler )( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent event );
+
+void AddEdwinEventHandlerL( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEvent, 
+		EdwinEventHandler aHandler );
+
+class TEdwinEventDispatch 
+	{
+public: 
+	CEikEdwin* src; 
+	TEdwinEvent event; 
+	EdwinEventHandler handler;
+	};
+	
+RArray< TEdwinEventDispatch > iEdwinEventDispatch;
+]]>			</template>
+		</defineLocation>
+
+		<template id="RealizeEdwinEventClassDecls" location="EdwinEventClassDecls"/>
+						
+		<template id="HandleEdwinEventOverride" phase="OverriddenMethods"><![CDATA[
+void HandleEdwinEventL( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEventType );
+]]>		</template>
+
+		<defineLocation id="HandleEdwinEventOverride_Method" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::HandleEdwinEventL(CEikEdwin*,TEdwinEvent))">
+				<template><![CDATA[
+/** 
+ * Override of the HandleEdwinEventL virtual function
+ */
+void ${handlerClassName}::HandleEdwinEventL( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEventType )
+	{
+	for (int i = 0; i < iEdwinEventDispatch.Count(); i++)
+		{
+		const TEdwinEventDispatch& currEntry = iEdwinEventDispatch[i];
+		if ( currEntry.src == anEdwin && currEntry.event == anEventType )
+			{
+			( this->*currEntry.handler )( anEdwin, anEventType );
+			break;
+			}
+		}
+	}
+]]>				</template>
+		</defineLocation>
+			
+		<template id="RealizeEdwinEventOverride_Method" location="HandleEdwinEventOverride_Method"/>
+				
+		<defineLocation id="RegisterEdwinHelperMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::AddEdwinEventHandlerL(CEikEdwin*, TEdwinEvent, EdwinEventHandler))">
+				<template><![CDATA[
+/** 
+ * Helper function to register MEikEdwinObserver event handlers
+ */
+void ${handlerClassName}::AddEdwinEventHandlerL( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEvent, 
+		EdwinEventHandler aHandler )
+	{
+	TEdwinEventDispatch entry;
+	entry.src = anEdwin;
+	entry.event = anEvent;
+	entry.handler = aHandler;
+	TInt err = iEdwinEventDispatch.Append( entry );
+	User::LeaveIfError( err );
+	}
+]]>			</template>
+		</defineLocation>
+		
+		<template id="RealizeRegisterHelperMethod" location="RegisterEdwinHelperMethod"/>
+			
+		<template id="DispatchArrayDestroy" phase="Destroy"><![CDATA[
+iEdwinEventDispatch.Close();		
+]]>		</template>
+
+		<template id="AddObserver" phase="Initialize"><![CDATA[
+${instanceMemberName}->AddEdwinObserverL( this );
+]]>		</template>
+	</templateGroup>
+	
+<!-- BEGIN EVENT formatChanged -->
+			<templateGroup id="GenerateFormatChangedEvent" ifEvents="formatChanged">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEventType );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddEdwinEventHandlerL( 
+		${instanceMemberName}, 
+		EEventFormatChanged, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="FormatChangedHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CEikEdwin*,TEdwinEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventFormatChanged event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CEikEdwin* /* anEdwin */, 
+		TEdwinEvent /* anEventType */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="FormatChangedHandler"/>
+			</templateGroup>
+<!-- END EVENT formatChanged -->
+
+<!-- BEGIN EVENT navigation -->
+			<templateGroup id="GenerateNavigationEvent" ifEvents="navigation">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEventType );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddEdwinEventHandlerL( 
+		${instanceMemberName}, 
+		EEventNavigation, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="NavigationHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CEikEdwin*,TEdwinEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventNavigation event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CEikEdwin* /* anEdwin */, 
+		TEdwinEvent /* anEventType */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="NavigationHandler"/>
+			</templateGroup>
+<!-- END EVENT navigation -->
+
+<!-- BEGIN EVENT textUpdated -->
+			<templateGroup id="GenerateTextUpdatedEvent" ifEvents="textUpdated">
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( 
+		CEikEdwin* anEdwin, 
+		TEdwinEvent anEventType );
+]]>				</template>
+					
+				<template id="AddDispatchArrayEntry" phase="Initialize"><![CDATA[
+AddEdwinEventHandlerL( 
+		${instanceMemberName}, 
+		EEventTextUpdate, 
+		&${handlerClassName}::${event.handlerName} );
+]]>				</template>
+																				
+				<defineLocation id="TextUpdatedHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CEikEdwin*,TEdwinEvent))">
+					<template><![CDATA[
+/** 
+ * Handle the EEventTextUpdate event.
+ */
+void ${handlerClassName}::${event.handlerName}( 
+		CEikEdwin* /* anEdwin */, 
+		TEdwinEvent /* anEventType */ )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template id="RealizeHandler" location="TextUpdatedHandler"/>
+			</templateGroup>
+<!-- END EVENT textUpdated -->		
+
+		</sourceGen>
+	</component>
+</componentDefinition>
+	

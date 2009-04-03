@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+	<wizardPage 
+		id="skeleton" 
+		label="%skeleton.label">
+		<description>%skeleton.desc</description>
+		<uidField 
+				id="uid3"
+				label="%skeleton.uid3.label"
+				min="0xe0000000"
+				max="0xefffffff"
+				mandatory="true">
+				<description>%skeleton.uid3.desc</description>
+		</uidField>
+		<textField 
+				id="author"
+				label="%skeleton.author.label"
+				persist="true">
+				<description>%skeleton.author.desc</description>
+		</textField>
+		<textField 
+				id="copyright"
+				label="%skeleton.copyright.label"
+				multiline="true"
+				default="Your copyright notice"
+				persist="true">
+				<description>%skeleton.copyright.desc</description>
+		</textField>
+		<filenameField 
+				id="groupDir"
+				label="%skeleton.groupDir.label"
+				default="group"
+				mandatory="true"
+				persist="true">
+				<description>%skeleton.groupDir.desc</description>
+		</filenameField>
+	</wizardPage>
+
+	<process class="com.nokia.carbide.cpp.project.core.processes.NewProject"
+	 	bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" 
+			bldInfPath="$(groupDir)/bld.inf"
+			targetMMPFileName="$(baseName).mmp" /> 
+	</process>
+	
+	<process class="com.nokia.carbide.templatewizard.processes.CreateFolders"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		<parameter name="folder" path="$(groupDir)" /> 
+	</process>
+	
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="file"
+			sourcePath="group/Basename.mmp"
+			targetPath="$(groupDir)/$(baseName).mmp"
+			/>
+		<parameter name="file"
+			sourcePath="group/bld.inf"
+			targetPath="$(groupDir)/bld.inf"
+			/>
+	</process>
+
+	<process class="com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks"
+	 	bundle="com.nokia.carbide.cpp.project.ui">
+		<parameter name="project" projectName="$(projectName)"
+			bldInfPath="$(groupDir)/bld.inf"
+			targetMMPFileName="$(baseName).mmp" /> 
+	</process>
+
+</template>

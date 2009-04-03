@@ -1,0 +1,7 @@
+#include <basicheader.rh>
+
+RESOURCE SIMPLE_TYPES_DEFAULTS r_test
+	{
+	byte = 11;
+	long = 5;
+	}

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.duple">
+		<property name="theInt" type="integer"/>
+		<property name="theBool" type="boolean"/>
+		
+		<sourceTypeMapping>
+			<mapResourceType struct="SUBTYPE" headers="subtype.rh">
+				<mapSimpleMember property="theBool" member="flag"/>
+				<mapSimpleMember property="theInt" member="number"/>
+			</mapResourceType>
+		</sourceTypeMapping>
+				
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmask.typemapped.NumbersAndColors">
+		<property name="oneBit" type="boolean"/>
+		<property name="twoBit" type="boolean"/>
+		<property name="red" type="boolean"/>
+		<property name="green" type="boolean"/>
+		<property name="blue" type="boolean"/>
+		<sourceTypeMapping>
+			<mapBitmaskType typeId="numbers"
+					includedProperties="oneBit twoBit"
+					>
+					<mapBitmaskValue properties="oneBit twoBit" value="EAknThree"/>
+					<mapBitmaskValue properties="oneBit" value="EAknOne"/>
+					<mapBitmaskValue properties="twoBit" value="EAknTwo"/>
+			</mapBitmaskType>
+			<mapBitmaskType typeId="colors"
+				includedProperties="red green blue"
+				>
+				<mapBitmaskValue properties="red green blue" value="EAknWhite"/>
+				<mapBitmaskValue properties="green blue" value="EAknCyan"/>
+				<mapBitmaskValue properties="red" value="EAknRed"/>
+				<mapBitmaskValue properties="green" value="EAknGreen"/>
+				<mapBitmaskValue properties="blue" value="EAknBlue"/>
+				<mapBitmaskValue properties="" value="EAknBlack"/>
+			</mapBitmaskType>
+		
+		</sourceTypeMapping>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.dupleBM">
+		<property name="theInt" type="integer"/>
+		<property name="theBool" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.compoundWithArray">
+		<arrayProperty name="a" type="string"/>
+		<arrayProperty name="b" type="com.nokia.test.array.foo"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.compoundWithArray">
+		<arrayProperty name="a" type="string"/>
+		<arrayProperty name="b" type="com.nokia.test.array.foo"/>
+	</compoundPropertyDeclaration>
+	
+		<compoundPropertyDeclaration qualifiedName="com.nokia.test.dupleAS">
+		<property name="theInt" type="integer"/>
+		<property name="theBool" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.compoundWithArray">
+		<arrayProperty name="a" type="string"/>
+		<arrayProperty name="b" type="com.nokia.test.array.foo"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.dupleBM2">
+		<property name="theInt" type="integer"/>
+		<property name="theBool" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.compoundWithArray">
+		<arrayProperty name="a" type="string"/>
+		<arrayProperty name="b" type="com.nokia.test.array.foo"/>
+	</compoundPropertyDeclaration>
+	
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmask.Numbers">
+		<property name="oneBit" type="boolean"/>
+		<property name="twoBit" type="boolean"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmask.Colors">
+		<property name="red" type="boolean"/>
+		<property name="green" type="boolean"/>
+		<property name="blue" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmask.Numbers">
+		<property name="oneBit" type="boolean"/>
+		<property name="twoBit" type="boolean"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmask.Colors">
+		<property name="red" type="boolean"/>
+		<property name="green" type="boolean"/>
+		<property name="blue" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmask.NumbersAndColors">
+		<property name="oneBit" type="boolean"/>
+		<property name="twoBit" type="boolean"/>
+		<property name="red" type="boolean"/>
+		<property name="green" type="boolean"/>
+		<property name="blue" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.bitmaskErrors.NumbersAndColors">
+		<property name="oneBit" type="boolean"/>
+		<property name="twoBit" type="boolean"/>
+		<property name="red" type="boolean"/>
+		<property name="green" type="boolean"/>
+		<property name="blue" type="integer"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.size">
+		<property name="width" type="integer"/>
+		<property name="height" type="integer"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.augmentedPoint">
+		<property name="x" type="integer"/>
+		<property name="y" type="integer"/>
+		<!-- I know this is silly but just for testing -->
+		<compoundProperty name="bounds" type="com.nokia.test.size"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.dupleRIL">
+		<property name="theInt" type="integer"/>
+		<property name="theBool" type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.duple_d">
+		<property name="theInt" type="integer" default="1"/>
+		<property name="theBool" type="boolean" default="true"/>
+		<sourceTypeMapping>
+			<mapResourceType struct="SUBTYPE_DEFAULTS" headers="subtype.rh">
+				<mapSimpleMember property="theBool" member="flag"/>
+				<mapSimpleMember property="theInt" member="number"/>
+			</mapResourceType>
+		</sourceTypeMapping>
+	</compoundPropertyDeclaration>
+	
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.color">
+		<enumElement value="CAknColorRed" displayValue="Red"/>
+		<enumElement value="CAknColorGreen" displayValue="Green"/>
+		<enumElement value="CAknColorBlue" displayValue="Blue"/>
+		<enumElement value="CAknColorNone"/>
+		
+		<sourceTypeMapping>
+			<mapEnumType headers="enumsheader.rh" />
+		
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.color2">
+		<enumElement value="CAknColorCyan" displayValue="C"/>
+		<enumElement value="CAknColorYellow" displayValue="Y"/>
+		<enumElement value="CAknColorMagenta" displayValue="M"/>
+		
+		<sourceTypeMapping>
+			<!-- all values use original enumElement values -->
+			<mapEnumType />
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+
+	<!-- this one is suitable for enum extension since the values are ints. -->
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.color_extender">
+		<enumElement value="1" displayValue="CAknColorRed"/>
+		<enumElement value="2" displayValue="CAknColorGreen"/>
+		<enumElement value="3" displayValue="CAknColorBlue"/>
+		<enumElement value="0"/>
+		
+		<sourceTypeMapping>
+			<mapEnumType headers="enumsheader.rh" />
+		
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+
+	<!-- this one is suitable for enum extension since the values are ints. -->
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.color2_extender">
+		<enumElement value="0" displayValue="CAknColorCyan"/>
+		<enumElement value="1" displayValue="CAknColorYellow"/>
+		<enumElement value="2" displayValue="CAknColorMagenta"/>
+		
+		<sourceTypeMapping>
+			<!-- all values use original enumElement values -->
+			<mapEnumType />
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.colorExpl">
+		<enumElement value="red" displayValue="Red"/>
+		<enumElement value="green" displayValue="Green"/>
+		<enumElement value="blue" displayValue="Blue"/>
+		<enumElement value="unmapped" displayValue="Unmapped"/>
+		<sourceTypeMapping>
+				<mapEnumType >
+					<mapEnum value="red" enumerator="CAknColorRed"/>
+					<mapEnum value="green" enumerator="CAknColorGreen"/>
+					<mapEnum value="blue" enumerator="CAknColorBlue"/>
+				</mapEnumType>
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.colorOH">
+		<enumElement value="CAknColorRed" displayValue="Red"/>
+		<enumElement value="CAknColorGreen" displayValue="Green"/>
+		<enumElement value="CAknColorBlue" displayValue="Blue"/>
+		<enumElement value="CAknColorNone"/>
+		
+		<sourceTypeMapping>
+			<mapEnumType headers="enumvaluesheader.rh" />
+		
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.commands">
+		<enumElement value="CommandAccept"/>
+		<enumElement value="CommandCancel"/>
+		<enumElement value="UNIQUE"/>
+		<sourceTypeMapping>
+			<mapEnumType 
+				uniqueValue="UNIQUE" 
+				nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS" />
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.test.flagEnum">
+		<enumElement value="First" />
+		<enumElement value="Second" />
+		<enumElement value="Third" />
+		<sourceTypeMapping>
+			<mapEnumType headers="enumsheader.rh" >
+				<mapEnum value="First" enumerator="EFlagFirst" />
+				<mapEnum value="Second" enumerator="EFlagSecond" />
+				<mapEnum value="Third" enumerator="EFlagThird" />
+			</mapEnumType>
+		</sourceTypeMapping>
+	</enumPropertyDeclaration>
+	
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.intAndFlagArray">
+		<property name="value" type="integer"/>
+		<enumProperty name="flag" type="com.nokia.test.flagEnum"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.TRgb">
+		<property name="r" type="integer"/>
+		<property name="g" type="integer"/>
+		<property name="b" type="integer"/>
+		<sourceTypeMapping>
+			<mapResourceType struct="RGB" headers="basicheader.rh" >
+				<mapSimpleMember property="r" member="r" />
+				<mapSimpleMember property="g" member="g" />
+				<mapSimpleMember property="b" member="b" />
+			</mapResourceType>
+		</sourceTypeMapping>
+	</compoundPropertyDeclaration>
+
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.paletteEntry">
+		<property name="label" type="string"/>
+		<compoundProperty name="rgb" type="com.nokia.test.TRgb"/>
+	</compoundPropertyDeclaration>
+
+</componentDefinition>

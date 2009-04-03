@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Viewing Expressions</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {font-weight: bold}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Viewing Expressions </h2>
+<p>The <b>Expressions</b> view allows manipulation of  expressions. An <i>expression</i> is a snippet of code that is evaluated to produce a value. In Carbide they are defined using C/C++ expressions. Some expressions may need to be evaluated at a specific location in the program so that its variables can be referenced. </p>
+<p>The Expressions view displays these panes: </p>
+<ul>
+  <li>Expressions list pane&#8212;Lists expressions and expression hierarchies. Click the hierarchical controls to expand or collapse the expression. Right-click to open the Expressions view context menu.</li>
+  <li>Value pane&#8212;Shows the current value of each corresponding expression. Double-click a value to change it. Right-click to set viewing options.</li>
+</ul>
+<p align="center"><img src="../images/view_expressions.png" width="439" height="144"></p>
+<p class="figure">Figure 1 - Expressions view </p>
+<h3>Expressions view toolbar icons</h3>
+<p>The following commands appear on the Expressions view toolbar:</p>
+<table width="88%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="34%" scope="col">Item</th>
+    <th width="14%" scope="col">Icons</th>
+    <th width="52%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Show Type Names </b></td>
+    <td><div align="center"><img src="../images/var_toggle_type_names_icon.png" width="19" height="19" /></div></td>
+    <td>Toggles the display of type names in the Expressions view. </td>
+  </tr>
+  <tr>
+    <td><b>Show Logical Structure </b></td>
+    <td><div align="center"><img src="../images/var_show_logical_struct_icon.png" width="19" height="19" /></div></td>
+    <td>Not available in C/C++ yet. </td>
+  </tr>
+  <tr>
+    <td><b>Collapse All </b></td>
+    <td><div align="center"><img src="../images/var_collapse_all_icon.png" width="17" height="18" /></div></td>
+    <td>Collapses all expanded expressions into the top level. </td>
+  </tr>
+  <tr>
+    <td><b>Remove Selected Expression </b></td>
+    <td><div align="center"><img src="../images/var_remove_selected_globals_icon.png" width="18" height="16" /></div></td>
+    <td>Click to remove all currently selected expressions from the expressions list. </td>
+  </tr>
+  <tr>
+    <td><b>Remove All Expressions </b></td>
+    <td><div align="center"><img src="../images/var_remove_all_globals_icon.png" width="19" height="19" /></div></td>
+    <td>Click to remove all expressions from the expressions list. </td>
+  </tr>
+</table>
+<h3>Expressions view context menu options</h3>
+<p>Right-click in the Expression's pane in the <span class="style1">Expressions</span> view to access the context menu commands shown in Figure 2.</p>
+<p align="center"><img src="../images/view_expressions_menu_cmds.png" width="226" height="223"></p>
+<p class="figure">Figure 2. <span class="style1">Expressions</span> view context menu commands (Expression list pane)</p>
+<p>The  commands include: </p>
+<table width="800"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="25%" scope="col">Item</th>
+    <th width="75%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Select All</b></td>
+    <td>Selects all the expressions shown in the Expressions view.</td>
+  </tr>
+  <tr>
+    <td><b>Copy Expressions</b></td>
+    <td>Copies the selected expressions to the clipboard.</td>
+  </tr>
+  <tr>
+    <td><b>Remove</b></td>
+    <td>Remove the selected expressions from the Expressions view list.</td>
+  </tr>
+  <tr>
+    <td><b>Remove All</b></td>
+    <td>Remove all expressions from the Expressions view list.</td>
+  </tr>
+  <tr>
+    <td><b>Find...</b></td>
+    <td>Opens a <b>Find</b> dialog to search the Expressions view list.</td>
+  </tr>
+  <tr>
+    <td><b>Change Value...</b></td>
+    <td><p>Opens the <b>Set Value</b> dialog where you can modify the value assigned to the selected expressions. Change the value and click <b>OK</b>.</p>
+        <p align="center"><img src="../images/wnd_set_value.png" width="401" height="214"></p></td>
+  </tr>
+  <tr>
+    <td><b>Add Watch Expression...</b></td>
+    <td><p>Opens the <a href="adding_expressions.htm">Add Watch Exression</a> dialog for creation of a new expression.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Disable</b></td>
+    <td>Disables automatic evaluation of the selected expression and appends <span class="code">(disabled)</span> to the expression name. Useful when you have lots of expressions but are concentrating on only a few. The more expressions that need evaluaton, the longer it takes to update the Expressions view.</td>
+  </tr>
+  <tr>
+    <td><b>Enable</b></td>
+    <td>Enables automatic evaluation of the selected expression. Enables a disabled expression so that it is evaluated during the debug session.</td>
+  </tr>
+  <tr>
+    <td><b>Edit Watch Expression...</b></td>
+    <td>Opens the <b>Edit Watch Expression</b> dialog where you can modify the expression and enable it for automatic evaluation.</td>
+  </tr>
+  <tr>
+    <td><b>Reevaluate Watch Expression</b></td>
+    <td>Forces the expression to be reevaluated. Useful after the expressions has been edited or not evaluated due to being disabled.</td>
+  </tr>
+</table>
+<h5>Other references</h5>
+<ul>
+  <li><a href="variables.htm">Variables and Expressions Overview</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

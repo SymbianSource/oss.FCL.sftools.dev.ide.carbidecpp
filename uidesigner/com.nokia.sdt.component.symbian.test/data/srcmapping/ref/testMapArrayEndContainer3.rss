@@ -1,0 +1,20 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY r_test_map_array_end_container3
+	{
+	items = { r_test_map_array_end3 };
+	}
+RESOURCE ARRAY_EMBEDDED r_test_map_array_end3
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = "first";
+			},
+		LBUF
+			{
+			txt = "second";
+			}
+		};
+	}

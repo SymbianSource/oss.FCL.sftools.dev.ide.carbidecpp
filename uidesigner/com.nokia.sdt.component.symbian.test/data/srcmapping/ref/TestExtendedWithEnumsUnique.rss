@@ -1,0 +1,7 @@
+#include <enumsheader.rh>
+
+RESOURCE COLORS r_test_extended_with_enums_unique
+	{
+	aknFgColor = 3;
+	aknBgColor = 2;
+	}

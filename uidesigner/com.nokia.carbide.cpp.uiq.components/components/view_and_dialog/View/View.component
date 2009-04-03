@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU9 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgenAndSourceMapping SYSTEM "View_srcgen_and_srcmapping.inc">
+<!ENTITY common_events SYSTEM "View_events.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.ViewType">
+		<enumElement displayValue="%viewtype.singlepage" value="singlePage"/>
+		<enumElement displayValue="%viewtype.multipage" value="multiPage"/>
+		<enumElement displayValue="%viewtype.dialog" value="dialog"/>
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TQikViewMode">
+		<property default="true"
+			descriptionKey="quikviewmode.usesapptitlebar.description"
+			displayName="%quikviewmode.usesapptitlebar.displayname"
+			name="usesAppTitleBar"
+			type="boolean"/>
+		<property default="true"
+			descriptionKey="quikviewmode.usesbuttonorsoftkeybar.description"
+			displayName="%quikviewmode.usesbuttonorsoftkeybar.displayname"
+			name="usesButtonOrSoftkeyBar"
+			type="boolean"/>
+		<property default="true"
+			descriptionKey="quikviewmode.usesstatusbar.description"
+			displayName="%quikviewmode.usesstatusbar.displayname"
+			name="usesStatusBar"
+			type="boolean"/>
+		<property default="true"
+			descriptionKey="quikviewmode.usestoolbar.description"
+			displayName="%quikviewmode.usestoolbar.displayname"
+			name="usesToolbar"
+			type="boolean"/>
+		<property default="true"
+			descriptionKey="quikviewmode.isnormal.description"
+			displayName="%quikviewmode.isnormal.displayname"
+			name="isNormal"
+			type="boolean"/>
+		<property default="true"
+			descriptionKey="quikviewmode.isfullscreen.description"
+			displayName="%quikviewmode.isfullscreen.displayname"
+			name="isFullScreen"
+			type="boolean"/>
+	</compoundPropertyDeclaration>
+	
+	<!-- Actual component -->
+	<component friendlyName="%friendlyname"
+		baseComponent="com.nokia.carbide.uiq.ViewDialogBase"		
+		qualifiedName="com.nokia.carbide.uiq.CQikView"
+		instanceNameRoot="view"
+		version="1.0">
+		
+		<symbian minSDKVersion="3.0" sdkName="com.uiq"/>
+		
+		<designerImages smallIconFile="View_sm.png"
+			largeIconFile="View.png"/>		
+		
+		<attributes>
+			<attribute key="ui-configuration-group-component-id">com.nokia.carbide.uiq.ViewConfigurationsGroup</attribute>
+			<attribute key="layout-group-component-id">com.nokia.carbide.uiq.LayoutsGroup</attribute>
+			<attribute key="is-initial-content">false</attribute>
+			<attribute key="event-handler-target">true</attribute>
+		</attributes>
+		
+		<properties>
+			<!-- Actual attribute -->
+			<enumProperty category="Hidden"
+				default="singlePage"
+				descriptionKey="type.description"
+				displayName="%type.displayname"
+				name="type"
+				readOnly="true"
+				type="com.nokia.carbide.uiq.ViewType"/>
+			<!-- Following attribute is for testing only
+			<enumProperty
+				default="singlePage"
+				descriptionKey="type.description"
+				displayName="%type.displayname"
+				name="type"
+				type="com.nokia.carbide.uiq.ViewType"/> -->
+			<compoundProperty category="%category.appearance"
+				descriptionKey="viewmode.description"
+				displayName="%viewmode.displayname"
+				name="viewMode"
+				type="com.nokia.carbide.uiq.TQikViewMode"/>
+			<property category="%category.appearance"
+				descriptionKey="overriddenapptitlename.description"
+				displayName="%overriddenapptitlename.displayname"
+				name="overriddenAppTitleName"
+				type="localizedString"/>
+			<compoundProperty category="%category.appearance"
+				descriptionKey="overriddenapptitleicon.description"
+				displayName="%overriddenapptitleicon.displayname"
+				name="overriddenAppTitleIcon"
+				type="com.nokia.carbide.uiq.MbmImageProperty"/>
+		</properties>
+		<!--
+		<propertyOverrides>
+			<propertyOverride name="baseClassInfo"
+				default="CQikMultiPageViewBase;QikMultiPageViewBase.h;qikcore.lib"/>
+			<propertyOverride name="baseClassInfo">
+		</propertyOverrides>
+		-->
+		<propertyOverrides>
+		   <propertyOverride name="name" readOnly="true"/>
+		</propertyOverrides>
+		
+		<events>
+			&common_events;
+		</events>
+		
+		&common_srcgenAndSourceMapping;
+		
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="View.js" prototype="View"/>										
+			</implementation>
+		</implementations>	
+		
+	</component>
+	
+</componentDefinition>

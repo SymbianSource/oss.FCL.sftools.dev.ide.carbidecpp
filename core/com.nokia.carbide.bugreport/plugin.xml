@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+	<extension point="org.eclipse.ui.startup"> 
+		<startup class="com.nokia.carbide.internal.bugreport.actions.NewBugReport"/>
+	</extension>
+
+    <extension
+      point="org.eclipse.core.runtime.products"
+      id="product">      
+      <product name="Bug Report - Plug-in" application="org.eclipse.ui.ide.workbench" > 
+          <property name="appName" value="Bug Reporter"/> 
+     </product> 
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="New Bug Report..."
+            visible="true"
+            id="com.nokia.carbide.bugreport.actionSet">
+         <action
+               label="%help.NewBugReport"
+               icon="icons/bug_report_16x16.png"
+               class="com.nokia.carbide.internal.bugreport.actions.NewBugReport"
+               tooltip="%help.NewBugReportTooltip"
+               menubarPath="help/helpStart"
+               id="com.nokia.carbide.bugreport.actions.NewBugReport">
+         </action>
+      </actionSet>
+   </extension>
+   
+	<extension-point id="product" name="Product for Bug Reporter" schema="schema/product.exsd"/>
+
+<!-- =================================================================================== -->
+<!-- CONTEXT IDs for CONTEXTUAL HELP in windows, dialogs, and views                      -->
+<!-- =================================================================================== -->
+	
+	<extension point="org.eclipse.help.contexts" >
+
+       <contexts file="help/bugreport_help.xml"
+       		plugin="com.nokia.carbide.bugreport" />
+
+       <contexts file="help/bugreport_help.xml"
+       		plugin="com.nokia.carbide.bugdatacollector" />
+
+   	</extension>
+
+
+<!-- =================================================================================== -->
+<!-- INSERT HELP PAGES INTO CARBIDE MANUAL                                               -->
+<!-- =================================================================================== -->
+   <extension point="org.eclipse.help.toc">
+      <toc file="html/bugReporterTOC.xml" primary="true"/>      
+   </extension>
+
+</plugin>

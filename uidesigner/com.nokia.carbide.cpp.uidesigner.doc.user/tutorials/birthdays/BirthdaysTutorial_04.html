@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Birthdays</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h2>Tutorial: Birthdays - Adding Application Logic</h2>
+<P>This example shows how to use the Carbide.c++ UI Designer for S60 to define the UI of an application and to implement the "real work" in the generated code. </P>
+<P>The goals of the application are to:</P>
+<UL>
+  <LI>
+    <P><a href="BirthdaysTutorial_02.html">Maintain data and UI separation</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_03.html">Use the S60 UI Designer to create the UI</a></P>
+  <LI>
+    <P><b>Editing generated source to provide application logic</b></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_05.html">Save and restore birthdays from persistent storage</a></P>
+  <LI><a href="BirthdaysTutorial_06.html">Summary </a>
+  </UL>
+<H3>Adding application logic</H3>
+<P>As created, the application would show an empty list box and allow
+exiting, but not much else. We need to populate the list, handle the
+items on the Options menu, and bring up the form to add and edit
+birthdays.</P>
+<H4>Editing generated source</H4>
+<P>The S60 UI Designer provides the bulk of the source code. We only
+need to add event handlers and data management code. 
+</P>
+<P>In the generated C/C++ sources, commented regions indicate where
+the designer "owns" code:</P>
+<pre>
+/**
+ * Second-phase constructor for view.
+ * Initialize contents from resource.
+ */
+void CBirthdaysListView::ConstructL()
+	{
+	// [[[ begin generated region: do not modify [Generated Code]
+	BaseConstructL( R_BIRTHDAYS_LIST_BIRTHDAYS_LIST_VIEW_2 );
+	// ]]] end generated region [Generated Code]
+	}
+</font></pre>
+<P>The "begin generated region" and "end generated
+region" comments surround code the designer will rewrite on
+each save. The source generation was designed to allow you to edit
+code that requires an override of S60 APIs, so you may add lines
+before the "begin" comment or after the "end"
+comment as needed. (Hint: if you totally dislike the generated code,
+you can put "<span class="code">if (0) {</span>" before, and "<span class="code">}</span>"
+after!)</P>
+<P>You may edit anything else in the generated files, including
+reordering methods and moving sections containing generated code. The
+only caveats are:</P>
+<UL>
+	<LI><P>don't edit inside the "generated" comments</P>
+	<LI><P>don't change the "generated" comments, except
+	perhaps to indent them differently</P>
+	<LI><P>don't rename generated files, classes, enums, methods, etc.</P>
+	<LI><P>don't change the hierarchy of generated code (for example,
+	leave methods in their original class; don't move them to a subclass
+	or inner class).</P>
+</UL>
+<P>If you violate these constraints, the original code will be
+replaced on the next save, sometimes with a lot of warnings.</P>
+<P>In resources, there are no "generated" comments
+because the UI Designer can fully reparse RSS. At this time, however,
+its restrictions are a lot like C++:</P>
+<UL>
+	<LI><P>don't modify generated fields (they will be replaced on the
+	next save)</P>
+	<LI><P>don't rename generated files or resources</P>
+	<LI><P>don't change the hierarchy of resources (for example, moving
+	a resource expression into a standalone resource)</P>
+</UL>
+<P>You may, however, add new fields to generated resources and add
+new resources, #includes, etc. Also, you may modify the contents of
+generated <span class="code">*.loc</span> / <span class="code">*.l<I>xx</I></span> / <span class="code">*.rls</span> files. Here, if you edit
+strings, and they will be propagated back into the design (when it is
+open). This requires a new save of the design to synchronize the
+changes.</P>
+<H4>Creating list items</H4>
+<P STYLE="font-weight: medium">In the design, the list is empty and
+shows "No data". At runtime, however, it will be
+populated dynamically by reading entries from disk and adding entries
+interactively. 
+</P>
+<P>In S60, a list box owns a list box model, which provides the
+content. This list box model is populated with one string per row,
+with fields separated by tabs. The list box style directly determines
+the format of this string. Typically, if you scan top to bottom, then
+left to right, this spells out the fields. In our "Double
+Large" style, the fields are (1) icon index, (2) top-right
+text, and (3) bottom-right text.</P>
+<P>The UI Designer creates utility functions for list item formatting
+based on the current style. See
+"<span class="code">CBirthdaysList::CreateListBoxItemL()</span>" for populating a
+TBuf&lt;&gt; with the items making up a row, and
+"<span class="code">CBirthdaysList::AddListBoxItemL()</span>" for adding that
+string as an item to the list box. 
+</P>
+<P>Side note: "<span class="code">CBirthdaysList::AddResourceArrayItemL()</span>"
+combines these two for the purpose of creating list box items from an
+ARRAY resource (where each element is one field of the item,
+excluding any image index, which is specified at runtime as the final
+argument). This is used when List Items are added at design time.</P>
+<H4>List item images</H4>
+<P>The left-hand column shows an icon, which is a gift box, and
+changes to a gift box with an exclamation mark when a person's
+birthday is within a week. (Have you bought a present?)</P>
+<P>In S60, images are added to a list in an indirect fashion. A list
+box has an array of icons associated with it, and list items refer to
+these icons by index. For instance, if the first field of an item is
+the image, and the second image in the icon array is used, the text
+for the item may read "<FONT FACE="Courier New, monospace">1\tName\tDate"</FONT>
+<FONT FACE="Times New Roman, serif">(images being indexed starting at
+0)</FONT>. 
+</P>
+<P>When constructing a list box with prepopulated items, images are
+specified by editing the "image" property of a list item.
+For dynamically-added list items, you may specify additional images
+in the list box's "additional images" array. The UI
+Designer automatically sets up the list box's icon array for you and
+provides an enumerator for accessing each image in a TListBoxImages
+enumeration in the list box container class. You may use these
+enumerators, for instance, in the
+"<span class="code">CBirthdaysList::CreateListBoxItemL()</span>" call to specify
+the image index.</P>
+<P>If this is still insufficient for your needs, you may edit the
+generated <span class="code">SetupListBoxIconsL()</span> method and add more images to the end,
+after the generated code section. The indices for these images would
+start from <span class="code">E&lt;listbox&gt;FirstUserImageIndex</span>. 
+</P>
+<H4>List box and birthdays list model interaction</H4>
+<P STYLE="font-weight: medium">The list box as defined in S60
+contains a "listbox model" which is the array of
+tab-delimited strings defining the cells in a list item (as described
+in "Creating List Items"). This model reflects the
+contents of the birthdays list, which is an array of <span class="code">TBirthday</span>
+managed by the <span class="code">CBirthdaysDocument</span> class. The listbox model is
+synchronized with the birthdays document whenever a user action
+constitutes a change. This requires explicit synchronization in this
+application. A more advanced program would probably add a listener
+model to the <span class="code">CBirthdaysDocument</span> class so the list could react to
+changes it hasn't caused itself.</P>
+<P STYLE="font-weight: medium">An important limitation of this
+program is that the indices are identical between the
+<span class="code">CBirthdaysDocument</span> and the listbox model. There is no separation
+here, so when elements are added, removed, or edited in the listbox,
+we use the same index for two different models. If you were to add
+sorting to the list, for instance, you would need to sort the
+<span class="code">CBirthdaysDocument</span> model too.</P>
+<H4>Events</H4>
+<P>The list box is pretty much inert without handling events. We add
+events both to the <b>Options</b> menu and to the List box. The "Events"
+view shows, for the currently selected item(s), the available events
+and which ones have handlers. (Use the context menu item "Show
+Events View" if you don't see this view.)</P>
+<P align="center"><img src="birthdays_events_view.png" width="537" height="167"></P>
+<P class="figure">Figure 1 - Events view properties </P>
+<P align="left">The <b>Options</b> menu contains the primary commands for manipulating
+  the list. For each menu item, we use the context menu's "<b>Handle
+  'selected' event</b>" to establish a handler for the menu item.
+  (Once an event is bound, this command changes to "<b>Go to
+'selected' handler code</b>".) </P>
+<P>Note: this context menu shortcut is used for the one most common
+event on the selected object, if any; you will usually find more in
+the Events view.</P>
+<P>We set up events for the items in the Options menu. When binding
+an event, the handler function is named after the menu item (which
+itself is named after the initial text you enter). If you want to
+change the function, type a new name in the "Function"
+column of the Events view. Note that doing this merely adds a new
+empty function with the given name; any existing function will not be
+renamed.</P>
+<UL>
+	<LI><P><B>Add</B>: 
+	</P>
+	<P>The "selected" event handler attached to this item
+	("<span class="code">CBirthdaysListView::HandleAddMenuItemSelectedL()</span>")
+	invokes the Edit Birthday form (see below).</P>
+	<LI><P><B>Edit</B>: 
+	</P>
+	<P>The "selected" event handler attached to this item
+	("<span class="code">CBirthdaysListView::HandleEditMenuItemSelectedL()</span>")
+	invokes the Edit Birthday form (see below).</P>
+	<LI><P><B>Mark/unmark</B>: 
+	</P>
+	<P>The items in this menu are automatically handled as part of a
+	markable list. If the menu were used elsewhere, you would need
+	explicit handler code for the <span class="code">EAknCmdMark</span>, 
+	<span class="code">EAknCmdUnmark</span>,
+	<span class="code">EAknMarkAll</span>, and 
+	<span class="code">EAknUnmarkAll</span> commands.</P>
+	<LI><P><B>Delete</B>: 
+	</P>
+	<P>The "selected" event handler attached to this item
+	("<span class="code">CBirthdaysListView::HandleDeleteMenuItemSelectedL()</span>")
+	invokes the confirmation query asking the user to confirm such a
+	terrible idea. The method
+	"<span class="code">CBirthdaysListView::RunRemoveConfQueryL()</span>" is
+	automatically generated for this purpose. You may override the
+	prompt text, if needed (e.g. to show a detailed report about how
+	many birthdays will be lost). 
+	</P>
+	<P>If the user agrees, the items are deleted from the list. A static
+	method is provided in the generated list box container for this
+	purpose ("<span class="code">CBirthdaysList::DeleteSelectedListBoxItemsL()</span>"),
+	which handles the intricacies of deleting multiple items in a list.</P>
+</UL>
+<P>The Avkon view's "deactivated" event is bound to a
+function "<span class="code">CBirthdaysListView::HandleBirthdaysListViewDeactivated()</span>"
+that saves the birthdays document. (The document is also saved after
+every edit.)</P>
+<P>The list box's "enterKeyPressed" event is bound to a
+function "<span class="code">CBirthdaysList::HandleListBoxEnterKeyPressedL()</span>"
+that edits the current birthday, just like the "Options / Edit"
+menu item. 
+</P>
+<H4>Deleting birthdays</H4>
+<P>When birthdays are deleted, we use the
+"<span class="code">CBirthdaysList::GetSelectedListBoxItemsLC()</span>" routine to
+get the list of indices from the markable list, in ascending order.
+This routine returns <span class="code">NULL</span> for empty lists, since Symbian OS abhors a
+vacuum. 
+</P>
+<P>To delete from the <span class="code">CArray</span>s that underlie the birthday model and
+the list box model, you must delete in the reverse order (or else all
+the indices will be changing while you're deleting them).
+"<span class="code">CBirthdayList::DeleteBirthdaysL()</span>" deletes both from the
+model and then from the list box using the generated
+"<span class="code">CBirthdayList::DeleteSelectedListBoxItemsL()</span>" method.
+(Remember again that in this application we maintain an identical
+ordering of items for these two arrays, so the same indices can be
+used when deleting from both arrays.)</P>
+<H4>Loading and saving data in the form</H4>
+<P>We want the form to work with the current birthday. When a new
+birthday is added, however, we want to see the designer-specified
+default values in the form rather than empty strings. 
+</P>
+<P>We add a method "<span class="code">CBirthdayForm::SetBirthday(TBirthday*,
+TBool)</span>" to set a reference to the birthday it is operating on,
+with the final parameter indicating whether the birthday is empty or
+not. This controls whether the form is initially populated from the
+birthday or from the designer default values.</P>
+<P>The UI Designer provides a "<span class="code">CBirthdayForm::LoadFromDataL()</span>"
+method which initializes the form editors upon construction. Here, we
+read the birthday's data and update the editors, if needed. The
+standard "<span class="code">CAknForm::SaveFormDataL()</span>" method is used to
+save changed data. We edit this method to write editor values back to
+the birthday.</P>
+<P>We add the "<span class="code">CBirthdayForm::IsBirthdayChanged()</span>" method
+is used to detect whether the user made and saved any changes to the
+current birthday. The return value from "<span class="code">CBirthdayForm::RunLD()</span>"
+is <I>not</I> sufficient to detect whether changes were made, since
+this value reflects the softkey used to exit the dialog, and is
+always 0, since the user must use Back to do this.</P>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</BODY>
+</HTML>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Editing Control Button Arrays</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Editing Control Button Arrays</h2>
+
+<p> You can use the <a href="../../reference/views/ref_properties_view.htm">Properties view</a> to edit Control Button Arrays (CBA). CBA's provide the basic soft-key controls for an application that  appear at the bottom of a device&#8217;s display with names like Options/Exit, and Done/Cancel. The S60 SDK provides several  combinations which can be chosen from the control button array property dropdown menu (Figure 1). </p>
+<p>When it comes to editing a CBA, there are two options: </p>
+<ul>
+  <li>If using a standard CBA combination, UI Designer  automatically fills in the left and right custom text and id properties, then generates the appropriate source code to handle the events. </li>
+  <li>If a custom CBA item is desired, the left and right custom text properties must be entered and the id properties for each  set using either a predefined soft key event by defining a new one to handle the custom event. UI Designer then adds the new events to evant handler when it next generates the sources. </li>
+</ul>
+<p align="center"><img src="../../images/views/view_properties_cba_dropdown.png" width="672" height="242" /></p>
+<p class="figure">Figure 1 - Control button array selection dropdown </p>
+<div class="step">
+  <h4 align="left">Editing a Control Button Array </h4>
+  <ol>
+    <li>Select the CBA component in the editor view </li>
+	<p>The Properties view shows the component properties. </p>
+	<li>For a standard CBA combination:
+	  <ul>
+	    <li>Click the Behavior &gt; control button array property, then select a standard CBA combination from the dropdown list </li>
+	    <p>The left and right custom text properties and left and right id properties are automatically set. </p>
+      </ul>
+	</li>
+	<li>For a custom CBA combination:
+	  <ul>
+	    <li>Edit one of the CBA custom text items either in the editor or properties view </li>
+      </ul>
+	</li>
+	  <ol type="a">
+	    <p>The associated custom text property displays the new text and the control button array property changes to CUSTOM.</p>
+	    <p class="note"><b>NOTE</b> If you decide to change a custom CBA into a standard one, the left and right custom text properties will be cleared. You will need to re-enter the CBA&#8217;s default text.</p>
+    </ol>
+  </ol>
+</div>
+<h3><a name="msk"></a>Middle Soft Key</h3>
+<p>An additional middle soft key (MSK) is available in  S60 SDKs greater or equal to 3.2. The middle soft key is only available and visible in Portrait layout mode, not Landscape. The MSK feature is enabled by default. However, it can be disabled in a properties setting. There is no impact to having MSK enabled by default; if you do not set the properties, it will not be displayed.</p>
+<p>To enable/disable the MSK feature, open the project's application.uidesign file in the Carbide.c++ Application Editor (double-click on file in Project Explorer). Select the AppUi tab and select the complete UI design (topmost selection in Outline view). In the properties tab, select <strong>Appearance &gt; enable middle soft key</strong> and select true or false as desired; as shown in Figure 2.</p>
+<p align="center"><img src="../../images/msk_enable.png" alt="MSK enable" width="589" height="681"></p>
+<p class="figure">Figure 2 - MSK Enable or Disable Option</p>
+<p>Additional property settings that support the MSK feature are visible in the <strong>Behavior &gt; control button array</strong> property settings for a Control Pane in a UI design; as shown in Figure 3. The control button array property should be set to CUSTOM when defining the middle key as a context menu.</p>
+<p class="note"><strong>NOTE</strong> If CUSTOM is not displayed for control button array property, you can select None for the left id. CUSTOM will appear and you can then reset left id to desired setting.</p>
+<p>There are essentially four modes of MSK operation. They include:</p>
+<ul>
+  <li> no MSK (middle id property set to none)</li>
+  <li>a single command</li>
+  <li>MSK context menu (middle id set to Context Options)</li>
+  <li>or Options menu (identical setting as left soft key)</li>
+</ul>
+<p align="center"><img src="../../images/msk_props.png" alt="middle soft key" width="587" height="674"></p>
+<p class="figure">Figure 3 - Control Button Array with Middle Soft Key properties</p>
+<h4 align="left">Single Command</h4>
+<p align="left">The MSK can be used to execute a single command or action, for example, Open, Change, etc., and contains a text label.</p>
+<h4 align="left">Context Menu</h4>
+<p align="left">When the MSK is used to open a context specific options menu, the  label is an icon referring to more commands (as shown in Figure 4). As a context menu, this typically involves the menu to be dynamically generated depending on application context. For this option, use the Context Options id in the <strong>Behavior &gt; control button array &gt; middle id</strong> property settings.</p>
+<p class="note"><strong>NOTE</strong> If the Middle custom text is empty and the control button array is not CUSTOM, then no MSK (CBA_BUTTON resource) button will be generated.</p>
+<p align="left">When the MSK is used in Context Options mode (MSK menu contains  items different from the left soft key) an additional property will need to be set on the control pane. The middle soft key in the control pane will need to reference an alternate menu bar.</p>
+<p align="center"><img src="../../images/msk_context.png" alt="MSK Context icon" width="280" height="351"></p>
+<p align="left" class="figure">Figure 4 - Middle Soft Key Context Icon</p>
+<p align="left">For example, you could add a Menu Bar (menuBar1) and items (labeled A, B, and C) to the UI design and assign this menu bar to the left soft key labeled Options. Then add another Menu Bar (menuBar2) and create items labeled A and B, and assign it as the MSK context menu.</p>
+<p align="left">To assign a menu to the left soft key, select the entire UI design view (topmost selection in Outline view) and select <strong>View &gt; options menu</strong> in the Properties tab. Then select menuBar1 as shown in Figure 5.</p>
+<p align="center"><img src="../../images/lsk_optionsmenu.png" alt="Options menu" width="470" height="254"></p>
+<p align="left" class="figure">Figure 5 - Left Soft Key Menu Assignment</p>
+<p align="left">To assign menuBar2 to the MSK context menu, select the control pane (as shown above in Figure 3) in the UI design or Outline view. Then select menuBar2 from the list of menus in the <strong>Middle Soft Key Menu</strong> property settings (Figure 6).  The <strong>Middle Soft Key Menu &gt; 	middle soft context options menu</strong> property provides a dropdown list of all available Menu Bar components you have added to the project.</p>
+<p align="center"><img src="../../images/msk_context_menubar.png" alt="MSK context menu" width="744" height="175"></p>
+<p align="left" class="figure">Figure 6 - Middle Soft Key Menu Selection</p>
+<p align="left">The left soft key (Options) will display menu items A, B, and C and the middle soft key will display menu items A and B.</p>
+<h4 align="left">Options Menu</h4>
+<p align="left">As an Options menu, the middle soft key is meant to duplicate the left soft key (e.g. OK in queries), and the MSK label is an icon (dot) referring to Select. In this case,  make the middle id the same as the left id.</p>
+<p>The list of available ids are the same ids available for the left and right soft keys, including &ldquo;Generated command&rdquo;. Generated commands will add the proper enumeration to the project&rsquo;s HRH file.</p>
+<p>Preset options exist in the <strong>Behavior &gt; control button array</strong> properties setting. The option syntax is read as Left_Right__Middle. For example, OK_CANCEL__SELECT would assign OK to the left key, Cancel to the right soft key, and Select to the middle soft key.</p>
+<p align="center"><img src="../../images/msk_CBA.png" alt="Control Button Array" width="501" height="219"></p>
+<p>&nbsp;</p>
+<h5>Related tasks</h5>
+<ul>
+			  <li><a href="../components/task_comp_prop_eap.htm">Editing Array Properties</a></li>
+			  <li><a href="task_comp_mod_properties_color_data.htm">Editing Color Data</a></li>
+			  <li><a href="task_comp_mod_properties_date.htm">Editing Date Data</a></li>
+			  <li><a href="task_comp_mod_properties_enumerated.htm">Editing Enumerated Data</a></li>
+			  <li><a href="task_comp_mod_properties_image.htm">Editing Image Property Data</a></li>
+			  <li><a href="task_comp_mod_properties_loc_size.htm">Editing Location/Size Data</a></li>
+			  <li><a href="task_comp_mod_properties_numeric.htm">Editing Numeric Data</a></li>
+			  <li><a href="task_comp_mod_properties_string.htm">Editing String List Data</a></li>
+			  <li><a href="task_comp_mod_properties_text.htm">Editing Text Data</a></li>
+			  <li><a href="task_comp_mod_properties_time.htm">Editing Time Data</a></li>
+			  <li><a href="task_comp_mod_properties_restore.htm">Restoring Default Values</a></li>
+			  </ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/views/ref_properties_view.htm">Properties View</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

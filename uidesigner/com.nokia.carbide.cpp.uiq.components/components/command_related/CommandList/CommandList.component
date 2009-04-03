@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- START_USECASES: CU11 END_USECASES -->
+
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CommandList"
+			baseComponent="com.nokia.carbide.uiq.CommandListsChildBase"
+			instanceNameRoot="commandList"
+			category="%commands.category"
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CommandList" classHelpTopic=""
+			resourceType="QIK_COMMAND_LIST" resourceHelpTopic=""/>	
+
+		<designerImages smallIconFile="CommandList_sm.png"
+			largeIconFile="CommandList.png"/>
+			
+		<attributes>
+			<attribute key="is-outline-container">true</attribute>
+			<attribute key ="cpp-class-name">CommandList</attribute>
+		</attributes>
+
+		<properties>
+			<property name="name" type="uniqueName"
+				descriptionKey="nameDescription"
+  				category="%category.design" />	
+		</properties>
+		<sourceMapping>
+			<mapResource struct="QIK_COMMAND_LIST"
+						headers="QikCommand.rh "
+						id="commandList">
+				<mapArrayMember property="." member="items">
+					<select isComponentInstanceOf="com.nokia.carbide.uiq.Command">
+						<choice value="true">
+							<mapInstanceElement />
+						</choice>
+						<choice>
+							<select isComponentInstanceOf="com.nokia.carbide.uiq.NamedGroup">
+								<choice value="true">
+									<mapInstanceElement />
+								</choice>
+								<choice/>
+							</select>					
+						</choice>
+					</select>					
+				</mapArrayMember>				
+			</mapResource>						
+		</sourceMapping>	
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"></interface>
+				<code class="com.nokia.carbide.cpp.uiq.components.command.CommandListChildCommandExtenderFactory"/>
+			</implementation>			
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"></interface>
+				<script file="CommandList.js" prototype="CommandList"></script>
+			</implementation>
+		</implementations>
+
+		
+	</component>
+	
+</componentDefinition>

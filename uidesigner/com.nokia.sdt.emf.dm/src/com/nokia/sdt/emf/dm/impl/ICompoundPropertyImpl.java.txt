@@ -1,0 +1,235 @@
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+package com.nokia.sdt.emf.dm.impl;
+
+import com.nokia.sdt.component.property.IPropertyValueSource;
+import com.nokia.sdt.emf.dm.*;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.*;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
+
+import java.util.Collection;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>ICompound Property</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link com.nokia.sdt.emf.dm.impl.ICompoundPropertyImpl#getProperties <em>Properties</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @generated NOT
+ */
+public class ICompoundPropertyImpl extends IPropertyImpl implements ICompoundProperty, IInternalPropertyChangeListener {
+	/**
+	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProperties()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap properties = null;
+	private IInternalPropertyChangeListener propertyListener;
+
+	private PropertyValueSource valueSource;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ICompoundPropertyImpl() {
+		super();
+	}
+
+	void setPropertyChangeListener(IInternalPropertyChangeListener listener) {
+		this.propertyListener = listener;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected EClass eStaticClass() {
+		return DmPackage.eINSTANCE.getICompoundProperty();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EMap getProperties() {
+		if (properties == null) {
+			PropertyMap pm = new PropertyMap(DmPackage.eINSTANCE.getEStringToIPropertyMapEntry(), 
+					EStringToIPropertyMapEntryImpl.class, this, DmPackage.ICOMPOUND_PROPERTY__PROPERTIES);
+			pm.setPropertyChangeListener(this);
+			properties = pm;
+		}
+		return properties;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
+		if (featureID >= 0) {
+			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
+				case DmPackage.ICOMPOUND_PROPERTY__PROPERTIES:
+					return ((InternalEList)getProperties()).basicRemove(otherEnd, msgs);
+				default:
+					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
+			}
+		}
+		return eBasicSetContainer(null, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case DmPackage.ICOMPOUND_PROPERTY__ID:
+				return getId();
+			case DmPackage.ICOMPOUND_PROPERTY__VALUE:
+				return getValue();
+			case DmPackage.ICOMPOUND_PROPERTY__PROPERTIES:
+				return getProperties();
+		}
+		return eDynamicGet(eFeature, resolve);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eSet(EStructuralFeature eFeature, Object newValue) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case DmPackage.ICOMPOUND_PROPERTY__ID:
+				setId((String)newValue);
+				return;
+			case DmPackage.ICOMPOUND_PROPERTY__VALUE:
+				setValue((String)newValue);
+				return;
+			case DmPackage.ICOMPOUND_PROPERTY__PROPERTIES:
+				getProperties().clear();
+				getProperties().addAll((Collection)newValue);
+				return;
+		}
+		eDynamicSet(eFeature, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eUnset(EStructuralFeature eFeature) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case DmPackage.ICOMPOUND_PROPERTY__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case DmPackage.ICOMPOUND_PROPERTY__VALUE:
+				setValue(VALUE_EDEFAULT);
+				return;
+			case DmPackage.ICOMPOUND_PROPERTY__PROPERTIES:
+				getProperties().clear();
+				return;
+		}
+		eDynamicUnset(eFeature);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean eIsSet(EStructuralFeature eFeature) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case DmPackage.ICOMPOUND_PROPERTY__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case DmPackage.ICOMPOUND_PROPERTY__VALUE:
+				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+			case DmPackage.ICOMPOUND_PROPERTY__PROPERTIES:
+				return properties != null && !properties.isEmpty();
+		}
+		return eDynamicIsSet(eFeature);
+	}
+
+	public IPropertyValueSource getPropertyValueSource() {
+		if (valueSource == null)
+			valueSource = new PropertyValueSource(null, 
+					(PropertyMap)getProperties(), getOwningNode());
+		return valueSource;
+	}
+	
+	public void setFromPropertySource(IPropertySource source) {
+		EMap propertyMap = getProperties();
+		IPropertyDescriptor[] pdList = source.getPropertyDescriptors();
+		if (pdList != null) {
+			for (int i = 0; i < pdList.length; i++) {
+				IPropertyDescriptor pd = pdList[i];
+				Object value = source.getPropertyValue(pd.getId());
+				if (value != null) {
+					IProperty propValue = null;
+					if (value instanceof IPropertySource) {
+						ICompoundPropertyImpl cp = (ICompoundPropertyImpl) DmFactory.eINSTANCE.createICompoundProperty();
+						cp.setFromPropertySource((IPropertySource)value);
+						propValue = cp;
+					}
+					else {
+						propValue = DmFactory.eINSTANCE.createIStringProperty();
+						propValue.setValue(value.toString());
+					}
+					propValue.setId(pd.getId().toString());
+					propertyMap.put(pd.getId(), propValue);
+				}
+			}
+		}
+	}
+
+	public boolean queryPropertyChange(Object propertyId, Object newValue) {
+		return true;
+	}
+
+	public void propertyChanged(Object propertyId) {
+		if (propertyListener != null) {
+			propertyListener.propertyChanged(getId());
+		}
+	}
+	
+	private INodeImpl getOwningNode() {
+		INodeImpl result = null;
+		EObject container = eContainer();
+		while (container != null) {
+			if (container instanceof INodeImpl) {
+				result = (INodeImpl) container;
+				break;
+			}
+			container = container.eContainer();
+		}
+		return result;
+	}
+
+} //ICompoundPropertyImpl

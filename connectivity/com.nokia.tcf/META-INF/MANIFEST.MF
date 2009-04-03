@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Target Connection Framework Plug-in
+Bundle-SymbolicName: com.nokia.tcf;singleton:=true
+Bundle-Version: 1.4.3.qualifier
+Bundle-Activator: com.nokia.tcf.Activator
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.tcf.api,
+ com.nokia.tcf.impl;x-friends:="com.nokia.tcf.test,com.nokia.tcf.legacy"
+Bundle-ClassPath: tcfPlugin.jar
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

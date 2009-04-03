@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Release notes" 
+	link_to="../com.nokia.carbide.help.common/carbideHelpTOC.xml#anchorCarbideInfo" >
+  
+	   <topic label="UI Designer Release Notes"  href = "html/release_notes.htm" />
+	
+</toc>

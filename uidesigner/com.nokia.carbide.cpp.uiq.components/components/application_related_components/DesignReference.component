@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU8 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.carbide.uiq.DesignReference"
+		baseComponent="com.nokia.carbide.uiq.NonLayoutBase"
+		instanceNameRoot="designReference"			
+		version="1.0">
+		
+	 	<symbian sdkName="com.uiq" minSDKVersion="3.0"></symbian>
+		
+		<attributes>
+			<attribute key="is-design-reference">true</attribute>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key="is-non-layout-object">false</attribute>
+			<attribute key="is-layout-container">false</attribute>
+			<attribute key="is-not-user-removable">true</attribute>
+		</attributes>
+		
+		<properties>
+			<property name="filePath" displayName="%filePath"
+				type="string" readOnly="true" category="%category.data" descriptionKey="filePathDescription"></property>
+			<property name="baseName" displayName="%baseName"
+				type="string" readOnly="true" category="%category.data" descriptionKey="baseNameDescription"></property>
+			<property name="isAppUIContainer" type="boolean" default="true" category="Hidden"/>
+		</properties> 
+ 	  
+	</component>
+</componentDefinition>

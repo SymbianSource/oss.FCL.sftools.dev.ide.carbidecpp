@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcmapping SYSTEM "CEikGlobalText_common_srcmapping.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<component friendlyName="%friendlyName"
+	qualifiedName="com.nokia.sdt.series60.CEikRichText"
+	baseComponent="com.nokia.sdt.series60.CEikGlobalText" 
+	category="Editors"
+	instanceNameRoot="richText" version="1.0">
+	<documentation>
+		<information>%information</information>
+		<helpTopic></helpTopic>
+		<wizardDescription></wizardDescription>
+	</documentation>
+	<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+		resourceType="RTXTED" className="CEikRichTextEditor" />
+	<designerImages 
+		smallIconFile="CEikRichText_sm.png" 
+		largeIconFile="CEikRichText.png"/>
+			
+	<attributes>
+		<attribute key="cpp-class-name">CEikRichTextEditor</attribute>
+		<attribute key="rss-control-type-enum">EEikCtRichTextEditor</attribute>
+	</attributes>
+			
+<sourceMapping>
+	<mapResource struct="RTXTED" headers="eikon.rh eikon.hrh uikon.rh uikon.hrh avkon.hrh gulftflg.hrh">
+	&common_srcmapping;
+	</mapResource>
+	<mapResource struct="TBUF" headers="eikon.rh" id="text">
+		<mapSimpleMember property="text" member="buf" />
+	</mapResource>
+</sourceMapping>
+
+<sourceGen forms="Dialog Container">
+
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<template phase="Initialize">
+	{
+	HBufC* text = StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "text").toUpperCase() } );
+	${instanceMemberName}->SetTextL( text );
+	CleanupStack::PopAndDestroy( text );
+	}
+		</template>
+
+			<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikgted.h", "eikenv.h" ]);
+			</inline>
+			
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+			<useTemplate ids="LAYOUT_CONTROLS" />
+			
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <txtfrmat.h>
+]]>		</template>
+
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <eikrted.h>
+]]>		</template>
+
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <txtrich.h>
+]]>		</template>
+
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <gulcolor.h>
+]]>		</template>
+		
+		<inline scope="prototype"><![CDATA[
+include("../../textFormattingSrcgenLibrary.js");
+]]>		</inline>
+
+	<template location="CLASS_USERHANDLERS"><![CDATA[
+void Set${instanceName$title}FormattingL();
+]]>	</template>
+
+	<defineLocation id="SETFORMATTINGFUNCTION" baseLocation="MAIN_FILE" 
+		owned="false" 
+		location="function(${className}::Set${instanceName$title}FormattingL())">
+		<template><![CDATA[
+void ${className}::Set${instanceName$title}FormattingL()
+	{
+	}
+]]>		</template>
+	</defineLocation>
+	
+	<template location="SETFORMATTINGFUNCTION"/>
+	
+	<defineLocation id="SETFORMATTINGFUNCTION_BODY" 
+		baseLocation="SETFORMATTINGFUNCTION"
+		owned="true" location="region(Generated GlobalText formatting)">
+	</defineLocation>
+	
+	<template location="SETFORMATTINGFUNCTION_BODY"><![CDATA[
+<% var generated = createCharFormatStructs(contribs, instance, "SETFORMATTINGFUNCTION_BODY");
+if (generated) { %>
+CRichText* richText = ${instanceMemberName}->RichText();
+richText->ApplyCharFormatL( 
+		charFormat, 
+		charFormatMask, 
+		0, 
+		richText->DocumentLength() - 1 );
+<% } %>
+]]>	</template>
+
+	<template phase="PostActivateL">
+Set${instanceName$title}FormattingL();	
+	</template>
+			
+	<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+	<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+	<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+	<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	<useTemplateGroup ids="GenerateCommonEdwinEvents GenerateFormatChangedEvent"/>
+	<useTemplateGroup ids="GenerateNavigationEvent GenerateTextUpdatedEvent"/>
+	
+	</sourceGen>
+
+</component>
+</componentDefinition>

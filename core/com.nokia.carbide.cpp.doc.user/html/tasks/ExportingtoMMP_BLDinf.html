@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<title>Exporting project(s) to MMP/Bld.inf files in Tasks</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+   </head>
+   <body>
+
+   <div class="step">
+     <h2>Exporting project(s) to MMP/Bld.inf files</h2>
+     <p>
+       The command-line Symbian OS toolchain requires a component description
+       file (<span class="code">Bld.Inf</span>) and one or more project definition files
+       (<span class="code">.mmp</span>) to build a project. The export command allows you to create
+       these files for your projects.       </p>
+     <h4>
+       To export project(s) to a <span class="code">Bld.Inf</span> and/or <span class="code">MMP</span>
+       file:       </h4>
+     <ol> 
+       <li> 
+         Click <span class="code">File &gt; Export...</span> to get a list of the
+         available export wizards: 
+         <p>
+           OR         </p> 
+	     <p>
+	        Click <span class="code">Export</span> from the pop-up menus of the
+	        <span class="code">C/C++ Projects</span> and <span class="code">Navigator</span> views to get a
+		      list of the available export wizards:         </p> 
+	     <div class="Figure">
+		      
+	        <p class="Image"><a name=""><img src="../images/export1.gif" alt="" width="470" height="550"  border="0"></a></p>
+  </div> 
+       </li> 
+	    <li>Select <span class="code">Symbian MMP/Bld.Inf</span> and click
+		    <span class="code">Next</span> to go to the <span class="code">Symbian Projects</span> page: 
+	      </p> 
+	      <div class="Figure">
+		      
+	         <p class="Image"><a name=""><img src="../images/export2.gif" alt="" width="470" height="550"  border="0"></a></p>
+  </div> 
+	    </li> 
+	    <li> 
+		    Select the project(s) you intend to export from the list of
+		    <span class="code">Symbian Projects</span>.	    </li> 
+	    <li> 
+		    Click <span class="code">Next</span> to go to the <span class="code">SDKs and Build Configurations Selection</span> page: 
+	      <div class="Figure">
+		      
+	         <p class="Image"><a name=""><img src="../images/export3.gif" alt="" width="470" height="550"  border="0"></a></p>
+  </div> 
+	    </li> 
+	    <li> 
+		    Select at least one build configuration for each project in the
+		    left-hand pane from the list of available SDKs and build configurations in the
+		    right-hand pane. By default, all the build configurations chosen during the
+		    last export are selected. If a project is being exported for the first time, no
+		    build configurations are selected. 
+	      <p>
+	         The build configurations chosen for a project are distinguished using
+		      guard macros in the <span class="code">MMP</span> file. The guard macros are placed around
+		      the <span class="code">MMP</span> file statements containing resources or build setting,
+		      only valid for a subset of the chosen build configurations.	      </p> 
+	      <p>
+	         There are cases where guard macros may not be able to distinguish
+		      between two build configurations. The export wizard shows a conflict when two
+		      such ambiguous build configurations are selected by the user.	      </p> 
+	      <p>
+	         The combination of build configurations which results in a conflict
+		      are as follows:	      </p> 
+  
+		  <ul> 
+		    <li> 
+		      <p>
+		        Any two build configurations that differ only in the build
+		        variant (UDEB/UREL). For example, "UIQ 3.0 Phone (GCCE) Debug" and "UIQ 3.0
+		        Phone (GCCE) Release" configurations will result in a conflict, as they differ
+		        only in the build variant.	           </p> 
+	        </li> 
+		     <li> 
+		        <p>
+		          Any two build configurations, of which one is user-defined based
+			       on the other using the <span class="code">Manage</span> option in the <span class="code">C/C++
+			         Build properties</span> view of the project.		        </p> 
+			    <p>
+			      <i>For more information on managing build configurations,
+			      refer to the CDT user guide.</i>		        </p> 
+		     </li> 
+	      </ul>
+  
+		  <p>
+		    The wizard will change the build settings in the <span class="code">MMP</span>
+		    file based on the chosen build configuration. If more than one build
+		    configuration which require different build settings are chosen, guard macros
+		    are used to determine the build settings. For example, if you want to change
+		    the <span class="code">SECUREID</span> option for all the <code>EKA2</span> build
+		    configurations, the wizard will append the following lines into the
+		    <span class="code">MMP</span> file:	      </p> 
+	      <p class="CodeBlock">#if def EKA2<br>&nbsp;&nbsp;SECUREID 0x00301<br>#endif</p> 
+	      <p>
+	         Where <code>EKA2</span> is the guard macro for all the build
+		      configurations designed for the EKA2 kernel. The above <span class="code">MMP</span> file
+		      statements check whether the <code>EKA2</span> guard macro is defined, and if
+		      it is, change the <code>SECUREID</span> option accordingly.	      </p> 
+	    </li> 
+	    <li> 
+		    Click <span class="code">Next</span> to go to the <span class="code">MMP File and Bld.inf
+		      File</span> page: 
+	      <div class="Figure">		    
+	        <div align="center"><a name=""><img src="../images/export4.gif" alt="" width="470" height="550"  border="0"></a></div>
+	      </div> 
+	      <ol type="a">
+	        <li>
+	           Type the <span class="code">MMP</span> file location in the <span class="code">MMP
+		          File</span> field, or click <span class="code">Browse</span> to select the
+	           <span class="code">MMP</span> file for each project listed above. 
+	           <p>
+	             By default, the <span class="code">MMP</span> file is exported to one of the
+		          following locations in the order listed below:	           </p>
+	           <ul>
+	             <li> The location where the project was exported the last time. </li>
+	             <li> The group folder of the exported project, if it exists. </li>
+	             <li> The exported project's root directory. </li>
+              </ul>
+	        </li>
+	        <li>
+	           If you select the <span class="code">Export Bld.inf file</span> option, then
+		        type the <span class="code">Bld.Inf</span> file location in the <span class="code">Bld.inf
+		          File</span> field, or click <span class="code">Browse</span> to select the
+	           <span class="code">Bld.Inf</span> file. 
+	           <p>
+	             If you do not select the <span class="code">Export Bld.inf file</span> option,
+		          then you need not specify the <span class="code">Bld.Inf</span> file location.	           </p>
+	           <p>
+	             By default, the <span class="code">Bld.Inf</span> file is exported to one of the
+		           following locations in the order listed below:	           </p>
+	           <ul>
+	             <li>
+	               The location where the <span class="code">Bld.Inf</span> was created when the
+		             project was last exported to an <span class="code">MMP</span> file. </li>
+	             <li> The <span class="code">MMP</span> file location.</li>
+              </ul>
+	        </li>
+          </ol>
+	    </li> 
+       <li>Click Next to go to the Other Makefiles page where you can specify extra Makefiles to invoke from bld.inf </li> 
+  
+	 <blockquote>
+	   <p align="center"><img src="../images/export4a.gif" width="470" height="550"></p>
+    </blockquote>
+       <li>Click Next to open the Scalable Icon Makefiles page where you can specify the Makefiles used to generate scalable icon files.</li>
+	   <p align="center"><img src="../images/export4b.gif" width="470" height="550"></p>
+        <li>Click <span class="code">Next</span> to go to the <span class="code">PRJ_EXPORTS</span> page, to specify the list of files to be copied from the source directories to
+            the releasables directories while building the project:
+            <div class="Figure">
+              
+              <p class="Image"><a name=""><img src="../images/export5.gif" alt="" width="470" height="550"  border="0"></a></p>
+            </div>
+          <p>
+             <i>Note that this page is displayed only if you have selected
+             the Export Bld.inf file option in the previous page.</i>          </p>
+        </li>
+        <li> 
+            Type the <span class="code">Source</span> and <span class="code">Target</span>
+            locations of the file to be copied, and click <span class="code">Add</span> to append
+            the source-target pair to the <span class="code">PRJ_EXPORTS</span> list. You can use
+            <span class="code">Browse</span> to specify the source file and its target location. If
+            the target location for the file is not specified, it will be copied to
+            <span class="code">epoc32\include</span> directory. 
+          <p>
+             Note that the contents of the <span class="code">PRJ_EXPORTS</span> list is
+              exactly the same as it appears in the <code>PRJ_EXPORTS</span> section of the
+             <span class="code">Bld.Inf</span> file.          </p> 
+        </li>
+        <li> 
+            If you want to modify or delete any entry from the
+            <span class="code">PRJ_EXPORTS</span> list, select the entry and click
+            <span class="code">Modify</span> or <span class="code">Delete</span>.        </li>
+        <li> 
+            Click <span class="code">Next</span> to go to the <span class="code">MMP Preview</span>
+            page: 
+          <div class="Figure">
+              
+             <p class="Image"><a name=""><img src="../images/export6.gif" alt="" width="470" height="550"  border="0"></a></p>
+      </div> 
+        </li>
+        <li> 
+            Select a project from the list of projects to be exported, to see a
+            preview of the <span class="code">MMP</span> file in the pane below. You can edit the
+            contents if required.        </li>
+        <li> 
+            Click <span class="code">Finish</span> to complete the export process. The
+            wizard will create the managed <span class="code">MMP</span> file and <code class="filename">Bld.inf</span>
+            file in their specified locations.
+          <p>
+             A managed <span class="code">MMP</span> file contains the same content as a
+              standard <span class="code">MMP</span> file would, but the contents are organised into
+              following managed sections using special tags:          </p> 
+      
+		  <ul> 
+		    <li> 
+		      <p>
+		        Binary Build Information	           </p> 
+            </li> 
+             <li> 
+                <p>
+                  Search Path                </p> 
+             </li> 
+             <li> 
+                <p>
+                  Project Content Managed                </p> 
+             </li> 
+             <li> 
+                <p>
+                  Linkage                </p> 
+             </li> 
+             <li> 
+                <p>
+                  Customization                </p> 
+             </li> 
+          </ul>
+      
+		  <p>
+		    You will be notified in case of any errors during the updated
+		    process, which results in not creating the <span class="code">MMP</span> or
+		    <span class="code">Bld.Inf</span> files.</p> 
+        </li>
+     </ol>
+   </div>
+     <p>
+       The following <span class="code">MMP</span> file generated by the wizard, shows how
+       its content is organised using managed sections:       </p>
+     <h4 class="listing">// HelloCarbide.mmp</h4>
+     <p class="listing">/*&amp; START_BINARY_BUILD &amp;*/<br>
+     // NOTE Content in this section is auto-generated, any changes are overwritten in the next update process.<br>
+     CAPABILITY READUSERDATA<br>
+     TARGET HelloCarbide.exe<br>
+     TARGETTYPE exe<br>
+     UID 0x00000000 0xe4d95f85<br>
+     VENDORID 0x00000000<br>
+     SECUREID 0xE4D95F85<br>
+     /*&amp; END_BINARY_BUILD &amp;*/</p>
+     <p class="listing">/*&amp; START_SEARCH_PATHS &amp;*/<br>
+     // NOTE Content in this section is auto-generated, any changes are overwritten in the next update process.<br>
+     SYSTEMINCLUDE \epoc32\include \epoc32\include\variant \epoc32\include\oem<br>
+     USERINCLUDE ..\inc ..\data<br>
+     /*&amp; END_SEARCH_PATHS &amp;*/</p>
+     <p class="listing">/*&amp; START_PROJECT_CONTENT &amp;*/<br>
+     // NOTE Content in this section is auto-generated, any changes are overwritten in the next update process.<br>
+     SOURCEPATH ..\data<br>
+     START RESOURCE HelloCarbide.rss<br>
+     TARGETPATH resource\apps<br>
+     HEADER<br>
+     END<br>
+     START RESOURCE HelloCarbide_reg.rss<br>
+     TARGETPATH private\10003a3f\apps<br>
+     HEADER<br>
+     END<br>
+     SOURCEPATH ..\src<br>
+     SOURCE Waving.cpp HelloCarbideDocument.cpp HelloCarbideApplication.cpp<br>
+     SOURCE HelloCarbideAppView.cpp HelloCarbideAppUi.cpp HelloCarbide.cpp<br>
+     /*&amp; END_PROJECT_CONTENT &amp;*/</p>
+     <p class="listing">/*&amp; START_LINKAGE_INFORMATION &amp;*/<br>
+     // NOTE Content in this section is auto-generated, any changes are overwritten in the next update process.<br>
+     LIBRARY euser.lib apparc.lib cone.lib eikcore.lib avkon.lib commonengine.lib<br>
+     LIBRARY efsrv.lib estor.lib<br>
+     /*&amp; END_LINKAGE_INFORMATION &amp;*/</p>
+   <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+</html>
+   

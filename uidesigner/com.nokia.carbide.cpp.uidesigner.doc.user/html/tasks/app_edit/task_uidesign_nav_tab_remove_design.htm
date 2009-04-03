@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Removing a UI Design from the Tab Group</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Removing a UI Design from the Tab Group</h2>
+
+<p>Navigation Pane Tabbing is easy to implement with the Carbide.c++ UI Designer.</p>
+<ul>
+<li><a href="../projects/task_proj_new-07.htm">Enable View Switching</a> on the <a href="../../reference/projects/ref_new_proj_07.htm">Container Name and Type Page</a> when you create your project via the <a href="../../reference/projects/ref_new_proj_wizard.htm">New Project Wizard</a>.</li>
+<li><a href="task_uidesign_nav_tab_enable.htm">Enable Navigation Pane Tabbing</a> on the <a href="../../reference/app_editor/ref_ui_design.htm">UI Designs Page</a> of the <a href="../../reference/app_editor/ref_app_editor.htm">Application Editor</a>, as described below.</li>
+<li>You may remove individual  UI Designs in your application from the tab group as desired on the <a href="../../reference/app_editor/ref_ui_design.htm">UI Designs Page</a> of the <a href="../../reference/app_editor/ref_app_editor.htm">Application Editor</a> as described below. You must implement custom code to display any UI Designs which are not part of the tab group.</li>
+</ul>
+<div class="step">
+  <h4 align="left">Removing a UI Design from the Tab Group</h4>
+  <ol>
+    <li><a href="task_open.htm">Open</a> the Application Editors <a href="../../reference/app_editor/ref_ui_design.htm">UI Design</a> page  to view the All UI Designs section (Figure 1).
+      <p class="note"><b>NOTE</b> If the Application Editor is already open, bring it to the front by clicking on its tab.</p>
+    <p align="center"><img src="../../images/app_edit_ui_designs_remove.png" alt="UI Designs page" width="391" height="297" /></p>
+	<p class="figure">Figure 1 -The Application Editor UI Designs page. </p>
+	<p>The All UI section of the UI Designs Page contains a list of all UI Designs currently included in the project. </p></li>
+	<li>Click the UI Design  you wish to remove from the tab group.
+	<p>The UI Design will be highlighted to indicate that it has been selected.</p></li>
+	<li>Check the <b>Enable Navigation Pane Tabbing</b> check box if it is not already checked.
+	<p>If this box was not already checked, the UI Design Details controls will be displayed on the right side of the UI Designs page. </p>
+	<p class="note"><b>NOTE</b> If this box is not checked, your application will not implement a tab group.</p></li>
+	<li>Uncheck the <b>Is in AppUi tab group</b> button to remove the selected design from the tab group.
+	<p>Unchecking the check box will clear the settings of the Text/Image radio buttons and clear the contents of the field which is used to specify the tab text. If you change your mind and recheck the box, you must re-enter the information which defines the tab label. </p>
+	<p class="note"><b>NOTE</b> These changes will not become permanent until your next save of the application.uidesign file.</p></li>
+  </ol>
+</div>
+
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_s60_ui_designs.htm">UI Designs</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+ <li><a href="../../reference/app_editor/ref_ui_design.htm">UI Designs Page</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

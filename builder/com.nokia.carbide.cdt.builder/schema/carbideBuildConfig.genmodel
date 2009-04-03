@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.cdt.builder/src"
+    modelPluginID="com.nokia.carbide.cdt.builder" modelName="CarbideBuildConfig" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>carbideBuildConfig.xsd</foreignModel>
+  <genPackages prefix="CarbideBuildConfig" basePackage="com.nokia.carbide.cdt.internal.builder.gen"
+      resource="XML" disposableProviderFactory="true" ecorePackage="CarbideBuildConfig.ecore#/">
+    <genEnums ecoreEnum="CarbideBuildConfig.ecore#//UseType">
+      <genEnumLiterals ecoreEnumLiteral="CarbideBuildConfig.ecore#//UseType/prepend"/>
+      <genEnumLiterals ecoreEnumLiteral="CarbideBuildConfig.ecore#//UseType/replace"/>
+      <genEnumLiterals ecoreEnumLiteral="CarbideBuildConfig.ecore#//UseType/append"/>
+      <genEnumLiterals ecoreEnumLiteral="CarbideBuildConfig.ecore#//UseType/undefine"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//CertType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//ContentSearchLocationType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//CreateStubFormatType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//CreateStubFormatTypeObject"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//EpocRootType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//ErrorParsersType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//KeyType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//NameType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//NameType1"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//OutputFileNameType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//PasswordType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//PkgFileType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//SignedFileNameType"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//UseTypeObject"/>
+    <genDataTypes ecoreDataType="CarbideBuildConfig.ecore#//ValueType"/>
+    <genClasses ecoreClass="CarbideBuildConfig.ecore#//CarbideBuilderConfigInfoType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//CarbideBuilderConfigInfoType/configuration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//CarbideBuilderConfigInfoType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="CarbideBuildConfig.ecore#//ConfigurationType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//ConfigurationType/sisBuilder"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//ConfigurationType/envVars"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//ConfigurationType/epocRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//ConfigurationType/errorParsers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//ConfigurationType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="CarbideBuildConfig.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/carbideBuilderConfigInfo"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/configuration"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/envVars"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/sisBuilder"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//DocumentRoot/var"/>
+    </genClasses>
+    <genClasses ecoreClass="CarbideBuildConfig.ecore#//EnvVarsType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CarbideBuildConfig.ecore#//EnvVarsType/var"/>
+    </genClasses>
+    <genClasses ecoreClass="CarbideBuildConfig.ecore#//SisBuilderType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/additionalOptions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/cert"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/contentSearchLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/createStubFormat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/outputFileName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/password"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/pkgFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//SisBuilderType/signedFileName"/>
+    </genClasses>
+    <genClasses ecoreClass="CarbideBuildConfig.ecore#//VarType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//VarType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//VarType/use"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CarbideBuildConfig.ecore#//VarType/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

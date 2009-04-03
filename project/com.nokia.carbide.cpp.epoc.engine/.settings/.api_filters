@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component id="com.nokia.carbide.cpp.epoc.engine" version="2">
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/BldInfModel.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfModel">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfModel"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/BldInfStatementUpdater.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfStatementUpdater">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfStatementUpdater"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/api/cpp/epoc/engine/dom/IToken.java" type="com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IToken">
+<filter id="1211105284">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IToken"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/BldInfView.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfView">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfView"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/BldInfData.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfData">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.BldInfData"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/MakefileReference.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.MakefileReference">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.MakefileReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/api/cpp/epoc/engine/dom/IASTPreprocessorTokenStreamProviderStatement.java" type="com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTPreprocessorTokenStreamProviderStatement">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTPreprocessorTokenStreamProviderStatement"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/Extension.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.Extension">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.Extension"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/api/cpp/epoc/engine/preprocessor/IPreprocessor.java" type="com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.IPreprocessor">
+<filter id="1211105284">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.IPreprocessor"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/MakMakeReference.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.MakMakeReference">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.MakMakeReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/Export.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.Export">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.Export"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/api/cpp/epoc/engine/preprocessor/IPreprocessorFilter.java" type="com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.IPreprocessorFilter">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.IPreprocessorFilter"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/api/cpp/epoc/engine/preprocessor/IPreprocessorResults.java" type="com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.IPreprocessorResults">
+<filter id="1211105284">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.IPreprocessorResults"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/internal/cpp/epoc/engine/model/bldinf/MMPReference.java" type="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.MMPReference">
+<filter id="1110441988">
+<message_arguments>
+<message_argument value="com.nokia.carbide.internal.cpp.epoc.engine.model.bldinf.MMPReference"/>
+</message_arguments>
+</filter>
+</resource>
+</component>

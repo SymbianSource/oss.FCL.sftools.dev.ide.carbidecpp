@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.index"?>
+<index>
+
+<!-- A -->
+<!-- B -->
+	
+    <entry keyword="bindings">
+		<topic title="Microsoft Visual Studio"  href="html/help_keys_vs.htm"/>
+		<topic title="Nokia Carbide.c++"        href="html/help_keys_carbide.htm"/>
+		<topic title="Nokia CodeWarrior"        href="html/help_keys_cw.htm"/>
+    </entry>
+	
+<!-- C -->
+<!-- D -->
+<!-- E -->
+<!-- F -->
+<!-- G -->
+<!-- H -->
+<!-- I -->
+<!-- J -->
+<!-- K -->
+
+    <entry keyword="keys">
+		<topic title="Microsoft Visual Studio"  href="html/help_keys_vs.htm"/>
+		<topic title="Nokia Carbide.c++"        href="html/help_keys_carbide.htm"/>
+		<topic title="Nokia CodeWarrior"        href="html/help_keys_cw.htm"/>
+    </entry>
+	
+<!-- L -->
+<!-- M -->
+	
+    <entry keyword="Microsoft Visual Studio shortcuts">
+       <topic href="html/help_keys_vs.htm"/>
+    </entry>
+	
+<!-- N -->
+	
+	<entry keyword="Nokia Carbide.c++ shortcuts">
+       <topic href="html/help_keys_carbide.htm"/>
+    </entry>
+
+	<entry keyword="Nokia CodeWarrior shortcuts">
+       <topic href="html/help_keys_cw.htm"/>
+    </entry>
+
+<!-- O -->
+<!-- P -->
+<!-- Q -->
+<!-- R -->
+<!-- S -->
+
+    <entry keyword="shortcuts">
+		<topic title="Microsoft Visual Studio" href="html/help_keys_vs.htm"/>
+		<topic title="Nokia Carbide.c++"       href="html/help_keys_carbide.htm"/>
+		<topic title="Nokia CodeWarrior"       href="html/help_keys_cw.htm"/>
+    </entry>
+	
+
+<!-- T -->
+<!-- U -->
+<!-- V -->
+<!-- W -->
+<!-- X -->
+<!-- Y -->
+<!-- Z -->
+</index>

@@ -1,0 +1,8 @@
+#include <enumstructheader.rh>
+#include <enumvaluesheader.rh>
+
+RESOURCE COLORS r_test2_oh
+	{
+	aknFgColor = CAknColorGreen;
+	aknBgColor = CAknColorBlue;
+	}

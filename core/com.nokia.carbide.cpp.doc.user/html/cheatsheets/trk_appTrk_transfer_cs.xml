@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Transferring and Installing TRK Debug Agent">
+	<intro>
+		<description>
+		Read the following information and follow the related steps to transfer and install TRK to your phone or target device.
+		</description> 
+	</intro> 
+	
+	<item title="Transfer and Install On-device Debug Agent" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_installation_instr.htm" >
+		<description>
+		Connect to the device using Bluetooth or USB, then transfer and install the TRK debug agent software, App TRK (.SISX).
+		</description>
+	</item>
+
+	<item title="Using Bluetooth to transfer TRK debug agent (.SISX file) to device" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_connection_bluetooth.htm" >
+		<description>
+		Connect to the device using Bluetooth, then transfer the TRK debug agent software, .SISX file.
+		</description>
+	</item>
+
+	<item title="Using Bluetooth to install TRK debug agent on device" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_install_bluetooth.htm" >
+		<description>
+		Install the on-device debug agent, either Application TRK or System TRK .SISX file.
+		</description>
+	</item>
+
+	<item title="Starting the On-Device TRK Debug Agent" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_start_sisx.htm" >
+		<description>
+		Launch App TRK or System TRK program on the device.
+		</description>
+	</item>
+
+	<item title="Using USB to transfer TRK debug agent (.SISX file) to device" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_connection_usb.htm" >
+		<description>
+		Connect to the device using USB, then transfer the TRK debug agent software, .SISX file.
+		</description>
+	</item>
+
+	<item title="Using Nokia's PC Suite to install TRK debug agent on device" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_install_pcsuite.htm" >
+		<description>
+		Install the on-device debug agent, either Application TRK or System TRK .SISX file.
+		</description>
+	</item>
+
+	<item title="Starting the On-Device TRK Debug Agent Using USB" href="/com.nokia.carbide.cpp.doc.user/html/tasks/trk/trk_start_sisx_usb.htm" >
+		<description>
+		Launch App TRK or System TRK program on the device.
+		</description>
+	</item>
+
+</cheatsheet>

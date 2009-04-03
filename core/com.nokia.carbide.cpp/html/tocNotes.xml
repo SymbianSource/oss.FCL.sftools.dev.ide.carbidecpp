@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Release notes" 
+	link_to="../com.nokia.carbide.cpp/html/nokiaTOC.xml#carbideProductNotes" >
+  
+	<anchor id="carbideProductNotes" />
+	<anchor id="carbideFeatureNotes" />
+	<anchor id="carbidePluginNotes" />
+	
+</toc>

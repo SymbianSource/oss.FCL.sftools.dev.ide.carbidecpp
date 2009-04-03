@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Kernel Calls and Thread Context</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Kernel Calls and Thread Context</h2>
+</div>
+<div>
+<p>
+When a user thread makes a call into any kernel code, the kernel code
+continues to run in the context of the user thread. This applies to device
+driver code. 
+</p>
+<p>
+The stack is swapped to a kernel-side stack and the permissions of the
+thread are increased to kernel privilege, but otherwise the user thread is
+still running. Each thread has a small kernel stack used to handle kernel calls
+&#8211; it would be dangerous to continue using the normal thread stack in case it
+overflows. Some calls are handled in this state, others&#0160;&#8211;  typically device
+drivers&#0160;&#8211;  will post a message to a kernel side thread to carry out the request.
+</p>
+</div><div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

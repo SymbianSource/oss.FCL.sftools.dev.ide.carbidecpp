@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<component:componentDefinition 
+xmlns:component="http://www.nokia.com/sdt/emf/component">
+  <component:component 
+  		baseComponent="com.nokia.examples.baseComponent" 
+  		friendlyName="Non-layout Example" 
+  		qualifiedName="com.nokia.examples.example1"
+  		category="Testing"
+  		version="1.0">
+	<component:documentation>
+		<component:information>Non-layout component information</component:information>
+		<component:helpTopic>Non-layout component help topic</component:helpTopic>
+	</component:documentation>
+	<component:symbian sdkName="com.nokia.series60" minSDKVersion="2.0" maxSDKVersion="3.0" 
+		className="CNonLayoutObject" classHelpTopic="org.eclipse.ui.property_sheet_page_help_context" />
+  	<component:designerImages smallIconFile="test-image.bmp" 
+  	       largeIconFile="test-image.bmp" layoutImageFile="test-image.bmp"/>
+  	<component:attributes>
+  		<component:attribute key="is-non-layout-object">true</component:attribute>
+ 	  	<component:attribute key="is-layout-object">false</component:attribute>
+  	</component:attributes>
+   	<component:properties>
+	    <component:property category="Category #1" displayName="a-string" name="a-string" type="string"/>
+    	<component:property category="Second Category" displayName="a-boolean" name="a-boolean" type="boolean"/>
+	    <component:property displayName="an-integer" name="an-integer" type="integer"/>
+  	</component:properties>
+  </component:component>
+</component:componentDefinition>

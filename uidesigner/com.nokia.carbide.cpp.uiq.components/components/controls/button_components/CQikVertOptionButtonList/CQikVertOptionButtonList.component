@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU17 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CQikVertOptionButtonList"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"
+			instanceNameRoot="vertOptionButtonList"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CQikVertOptionButtonList" classHelpTopic=""
+			resourceType="QIK_VERTOPBUT" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CQikVertOptionButtonList_sm.png"
+			largeIconFile="CQikVertOptionButtonList.png"/>		
+				
+		<attributes>
+			<attribute key ="cpp-class-name">CQikVertOptionButtonList</attribute>		
+			<attribute key="layout-type">ordered</attribute>		
+			<attribute key ="rss-control-type-enum">EQikCtVertOptionButtonList</attribute>		
+		</attributes>
+		
+		<properties>
+			<property  name="buttonSpacing" type="integer" 
+				default="3"
+				descriptionKey="buttonSpacingDescription" 
+				category="%category.appearance"/>					
+			<property  name="textOnRight" type="boolean" 
+				default="true"
+				descriptionKey="textOnRightDescription" 
+				category="%category.appearance"/>		
+			<arrayProperty name="labeledOptions" 
+				type="localizedString" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.StringListEditorFactory"
+				descriptionKey="labeledOptionsDescription" 
+				category="%category.data"/>
+		</properties>
+
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true"
+				category="Hidden"/>
+		</propertyOverrides>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<script file="CQikVertOptionButtonList.js" prototype="CQikVertOptionButtonList"/>
+			</implementation>
+		</implementations>	
+		
+		<sourceMapping>
+			<mapResource struct="QIK_VERTOPBUT" headers="qikon.rh">
+				<mapSimpleMember property="buttonSpacing" member="buttonSpacing"/>
+				<mapSimpleMember property="textOnRight" member="textOnRight"/>
+				<select property="items">
+					<choice value="0">
+					<!-- don't emit for 0 items: this causes a panic -->
+					</choice>
+					<choice>
+						<mapResourceMember struct="ARRAY" property="." member="array_id" headers="badef.rh">
+							<mapArrayMember property="labeledOptions" member="items">
+								<mapResourceElement struct="OPBUT" headers="badef.rh">
+									<mapSimpleMember property="." member="text"/>
+									<mapEnumMember property="."
+										member="id"
+										nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID"
+										uniqueValue="*"/>
+								</mapResourceElement>
+							</mapArrayMember>
+						</mapResourceMember>
+					</choice>
+				</select>	
+			</mapResource>			
+		</sourceMapping>
+		
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>
+			<templateGroup id="3" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="QikVertOptionButtonList.h guldef.h"/>			
+				<inline scope="prototype">
+include("../../../srcgenLibrary.js")
+				</inline>	
+			</templateGroup>
+		</sourceGen>
+		
+
+	</component>
+	
+</componentDefinition>

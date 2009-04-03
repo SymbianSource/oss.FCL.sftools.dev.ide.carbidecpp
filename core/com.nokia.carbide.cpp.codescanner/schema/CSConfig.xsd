@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="worryingcomments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="worryRE"/>
+			</xs:sequence>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="worryRE" type="xs:string"/>
+	<xs:element name="wordsRE" type="xs:string"/>
+	<xs:element name="voidparameter">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="variablenames">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="userfree">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="userafter">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="userWaitForRequest">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="unicodesource">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="uncompressedbmp">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="uncompressedaif">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="uids">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="trspassing">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="traprunl">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="trapeleave">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="trapcleanup">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="todocomments">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="title" type="xs:string"/>
+	<xs:element name="tclassdestructor">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="tcclasses">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="timestampedoutput" type="xs:string"/>
+	<xs:element name="struct">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="stringsinresourcefiles">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="stringliterals">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sources">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="exclude"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="severity" type="xs:string"/>
+	<xs:element name="severities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="high"/>
+				<xs:element minOccurs="0" ref="medium"/>
+				<xs:element minOccurs="0" ref="low"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="scripts">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="accessArrayElementWithoutCheck"/>
+				<xs:element minOccurs="0" ref="accessArrayElementWithoutCheck2"/>
+				<xs:element minOccurs="0" ref="activestart"/>
+				<xs:element minOccurs="0" ref="activestop"/>
+				<xs:element minOccurs="0" ref="arraypassing"/>
+				<xs:element minOccurs="0" ref="arrayptrcleanup"/>
+				<xs:element minOccurs="0" ref="assertdebuginvariant"/>
+				<xs:element minOccurs="0" ref="baddefines"/>
+				<xs:element minOccurs="0" ref="baseconstruct"/>
+				<xs:element minOccurs="0" ref="callActiveObjectWithoutCheckingOrStopping"/>
+				<xs:element minOccurs="0" ref="changenotification"/>
+				<xs:element minOccurs="0" ref="cleanup"/>
+				<xs:element minOccurs="0" ref="commentcode"/>
+				<xs:element minOccurs="0" ref="connect"/>
+				<xs:element minOccurs="0" ref="ConnectAndDontCloseMemberVariable"/>
+				<xs:element minOccurs="0" ref="constnames"/>
+				<xs:element minOccurs="0" ref="consttdescptr"/>
+				<xs:element minOccurs="0" ref="controlornull"/>
+				<xs:element minOccurs="0" ref="ctltargettype"/>
+				<xs:element minOccurs="0" ref="debugrom"/>
+				<xs:element minOccurs="0" ref="declarename"/>
+				<xs:element minOccurs="0" ref="deleteMemberVariable"/>
+				<xs:element minOccurs="0" ref="destructor"/>
+				<xs:element minOccurs="0" ref="doubleSemiColon"/>
+				<xs:element minOccurs="0" ref="driveletters"/>
+				<xs:element minOccurs="0" ref="eikbuttons"/>
+				<xs:element minOccurs="0" ref="eikonenvstatic"/>
+				<xs:element minOccurs="0" ref="enummembers"/>
+				<xs:element minOccurs="0" ref="enumnames"/>
+				<xs:element minOccurs="0" ref="exportinline"/>
+				<xs:element minOccurs="0" ref="exportpurevirtual"/>
+				<xs:element minOccurs="0" ref="externaldriveletters"/>
+				<xs:element minOccurs="0" ref="foff"/>
+				<xs:element minOccurs="0" ref="forbiddenwords"/>
+				<xs:element minOccurs="0" ref="forgottoputptroncleanupstack"/>
+				<xs:element minOccurs="0" ref="friend"/>
+				<xs:element minOccurs="0" ref="goto"/>
+				<xs:element minOccurs="0" ref="ifassignments"/>
+				<xs:element minOccurs="0" ref="ifpreprocessor"/>
+				<xs:element minOccurs="0" ref="inheritanceorder"/>
+				<xs:element minOccurs="0" ref="intleaves"/>
+				<xs:element minOccurs="0" ref="jmp"/>
+				<xs:element minOccurs="0" ref="leave"/>
+				<xs:element minOccurs="0" ref="LeaveNoError"/>
+				<xs:element minOccurs="0" ref="leavingoperators"/>
+				<xs:element minOccurs="0" ref="LFunctionCantLeave"/>
+				<xs:element minOccurs="0" ref="longlines"/>
+				<xs:element minOccurs="0" ref="magicnumbers"/>
+				<xs:element minOccurs="0" ref="mclassdestructor"/>
+				<xs:element minOccurs="0" ref="memberlc"/>
+				<xs:element minOccurs="0" ref="membervariablecallld"/>
+				<xs:element minOccurs="0" ref="missingcancel"/>
+				<xs:element minOccurs="0" ref="missingcclass"/>
+				<xs:element minOccurs="0" ref="mmpsourcepath"/>
+				<xs:element minOccurs="0" ref="multilangrsc"/>
+				<xs:element minOccurs="0" ref="multipledeclarations"/>
+				<xs:element minOccurs="0" ref="multipleinheritance"/>
+				<xs:element minOccurs="0" ref="mydocs"/>
+				<xs:element minOccurs="0" ref="namespace"/>
+				<xs:element minOccurs="0" ref="newlreferences"/>
+				<xs:element minOccurs="0" ref="noleavetrap"/>
+				<xs:element minOccurs="0" ref="nonconsthbufc"/>
+				<xs:element minOccurs="0" ref="nonconsttdesc"/>
+				<xs:element minOccurs="0" ref="nonleavenew"/>
+				<xs:element minOccurs="0" ref="nonunicodeskins"/>
+				<xs:element minOccurs="0" ref="null"/>
+				<xs:element minOccurs="0" ref="open"/>
+				<xs:element minOccurs="0" ref="pointertoarrays"/>
+				<xs:element minOccurs="0" ref="pragmadisable"/>
+				<xs:element minOccurs="0" ref="pragmamessage"/>
+				<xs:element minOccurs="0" ref="pragmaother"/>
+				<xs:element minOccurs="0" ref="privateinheritance"/>
+				<xs:element minOccurs="0" ref="pushaddrvar"/>
+				<xs:element minOccurs="0" ref="pushmember"/>
+				<xs:element minOccurs="0" ref="readresource"/>
+				<xs:element minOccurs="0" ref="resourcenotoncleanupstack"/>
+				<xs:element minOccurs="0" ref="resourcesonheap"/>
+				<xs:element minOccurs="0" ref="returndescriptoroutofscope"/>
+				<xs:element minOccurs="0" ref="rfs"/>
+				<xs:element minOccurs="0" ref="rssnames"/>
+				<xs:element minOccurs="0" ref="stringliterals"/>
+				<xs:element minOccurs="0" ref="stringsinresourcefiles"/>
+				<xs:element minOccurs="0" ref="struct"/>
+				<xs:element minOccurs="0" ref="tcclasses"/>
+				<xs:element minOccurs="0" ref="tclassdestructor"/>
+				<xs:element minOccurs="0" ref="todocomments"/>
+				<xs:element minOccurs="0" ref="trapcleanup"/>
+				<xs:element minOccurs="0" ref="trapeleave"/>
+				<xs:element minOccurs="0" ref="traprunl"/>
+				<xs:element minOccurs="0" ref="trspassing"/>
+				<xs:element minOccurs="0" ref="uids"/>
+				<xs:element minOccurs="0" ref="uncompressedaif"/>
+				<xs:element minOccurs="0" ref="uncompressedbmp"/>
+				<xs:element minOccurs="0" ref="unicodesource"/>
+				<xs:element minOccurs="0" ref="userafter"/>
+				<xs:element minOccurs="0" ref="userfree"/>
+				<xs:element minOccurs="0" ref="userWaitForRequest"/>
+				<xs:element minOccurs="0" ref="variablenames"/>
+				<xs:element minOccurs="0" ref="voidparameter"/>
+				<xs:element minOccurs="0" ref="worryingcomments"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="rssnames">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="rfs">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="returndescriptoroutofscope">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="resourcesonheap">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="resourcenotoncleanupstack">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="readresource">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pushmember">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pushaddrvar">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="privateinheritance">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pragmaother">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pragmamessage">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pragmadisable">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pointertoarrays">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="performance">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="panic">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="outputformat" type="xs:string"/>
+	<xs:element name="other">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="openIgnoreRE" type="xs:string"/>
+	<xs:element name="open">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="openIgnoreRE"/>
+			</xs:sequence>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="null">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nonunicodeskins">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nonleavenew">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nonconsttdesc">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nonconsthbufc">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="noleavetrap">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="newlreferences">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="namespace">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="name" type="xs:string"/>
+	<xs:element name="mydocs">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="multipleinheritance">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="multipledeclarations">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="multilangrsc">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mmpsourcepath">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="missingcclass">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cclassIgnoreRE"/>
+			</xs:sequence>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="missingcancel">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="membervariablecallld">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="memberlc">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="medium">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mclassdestructor">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="magicnumbers">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="lxrversion" type="xs:string"/>
+	<xs:element name="lxr" type="xs:string"/>
+	<xs:element name="low">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="longlines">
+		<xs:complexType>
+			<xs:attribute name="length" type="xs:int" use="required"/>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="localisation">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="link" type="xs:string"/>
+	<xs:element name="LFunctionIgnoreRE" type="xs:string"/>
+	<xs:element name="LFunctionCantLeave">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LFunctionIgnoreRE"/>
+			</xs:sequence>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="legal">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LeaveNoError">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="leavingoperators">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="leave">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="keyword">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="type" type="xs:string" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="jmp">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="intleaves">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="input" type="xs:string"/>
+	<xs:element name="inheritanceorder">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ifpreprocessor">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ifassignments">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="high">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="goto">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="functionality">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="friend">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="forgottoputptroncleanupstack">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="forbiddenwords">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="wordsRE"/>
+			</xs:sequence>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="foff">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="filetype" type="xs:string"/>
+	<xs:element name="externaldriveletters">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="exportpurevirtual">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="exportinline">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="exclude" type="xs:string"/>
+	<xs:element name="enumnames">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="enummembers">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="eikonenvstatic">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="eikbuttons">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="driveletters">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="doubleSemiColon">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="documentation">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="destructor">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="description" type="xs:string"/>
+	<xs:element name="deleteMemberVariable">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="declarename">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="debugrom">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="customrules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="customrule"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="customrule">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="name"/>
+				<xs:element maxOccurs="unbounded" ref="keyword"/>
+				<xs:element maxOccurs="unbounded" ref="filetype"/>
+				<xs:element ref="severity"/>
+				<xs:element ref="title"/>
+				<xs:element ref="description"/>
+				<xs:element minOccurs="0" ref="link"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ctltargettype">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="controlornull">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="consttdescptr">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="constnames">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ConnectAndDontCloseMemberVariable">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="connect">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="commentcode">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="codingstandards">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="codescannerConfig">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="arguments"/>
+				<xs:element minOccurs="0" ref="customrules"/>
+				<xs:element minOccurs="0" ref="sources"/>
+				<xs:element minOccurs="0" ref="scripts"/>
+				<xs:element minOccurs="0" ref="severities"/>
+				<xs:element minOccurs="0" ref="categories"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="codereview">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cleanup">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="changenotification">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cclassIgnoreRE" type="xs:string"/>
+	<xs:element name="categories">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="canpanic"/>
+				<xs:element minOccurs="0" ref="codereview"/>
+				<xs:element minOccurs="0" ref="codingstandards"/>
+				<xs:element minOccurs="0" ref="documentation"/>
+				<xs:element minOccurs="0" ref="functionality"/>
+				<xs:element minOccurs="0" ref="legal"/>
+				<xs:element minOccurs="0" ref="localisation"/>
+				<xs:element minOccurs="0" ref="other"/>
+				<xs:element minOccurs="0" ref="panic"/>
+				<xs:element minOccurs="0" ref="performance"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="canpanic">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="callActiveObjectWithoutCheckingOrStopping">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="baseconstruct">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="baddefines">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="assertdebuginvariant">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="arguments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="input"/>
+				<xs:element minOccurs="0" ref="lxr"/>
+				<xs:element minOccurs="0" ref="lxrversion"/>
+				<xs:element minOccurs="0" ref="outputformat"/>
+				<xs:element minOccurs="0" ref="timestampedoutput"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="arrayptrcleanup">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="arraypassing">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="activestop">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="activestart">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="accessArrayElementWithoutCheck2">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="accessArrayElementWithoutCheck">
+		<xs:complexType>
+			<xs:attribute name="enable" type="xs:boolean" use="required"/>
+			<xs:attribute ref="severity"/>
+			<xs:attribute ref="category"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attribute name="severity">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="high"/>
+				<xs:enumeration value="low"/>
+				<xs:enumeration value="medium"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+	<xs:attribute name="category">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="canpanic"/>
+				<xs:enumeration value="codereview"/>
+				<xs:enumeration value="codingstandards"/>
+				<xs:enumeration value="documentation"/>
+				<xs:enumeration value="functionality"/>
+				<xs:enumeration value="legal"/>
+				<xs:enumeration value="localisation"/>
+				<xs:enumeration value="other"/>
+				<xs:enumeration value="panic"/>
+				<xs:enumeration value="performance"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+</xs:schema>

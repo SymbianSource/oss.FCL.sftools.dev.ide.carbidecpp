@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>stack_alignment</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>stack_alignment</h3>
+<p>  Recommends the minimum stack alignment size based on a power of 2.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma stack_alignment( power )</p>
+  <h5>Parameters</h5>
+  <p class="code">power</p>
+  <blockquote>
+    <p>Stack alignment value based on a power of 2.</p>
+  </blockquote>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>By default, the global stack alignment is 4 as per the Win32 ABI. When doubles are accessed in a function, the alignment is bumped to 8 for that function. Spills of SSE registers (e.g. in autovectorized code or code using SSE intrinsics) bump alignment to 16 bytes.</p>
+  <p>Finally, the GCC-style <span class="code">__attribute__((aligned(xxx)))</span> on a local variable declaration can be used to align specific variables, which in turn aligns the stack while use of <span class="code">#pragma disablopts off</span> turns off stack alignment.</p>
+  <p>This pragma recommends a minimum alignment. When one of the above situations occurs, the actual alignment may be greater.<br />
+    In some functions, in order to guarantee alignment, the EBX register is used as a surrogate local base pointer. This happens in functions which have indeterminate control flow (i.e., jump through a pointer), which are involved in exception handling, or which use <span class="code">alloca()</span>. Use of EBX to access locals is not possible if Microsoft C++ exception handling is used in the function, so alignment is disabled for such functions. You can use <span class="code">#pragma warn_stack_alignment</span> to check for such cases.<br />
+</p>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

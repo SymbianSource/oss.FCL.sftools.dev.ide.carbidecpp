@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Retrieving INF/MMP Project Information</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+
+<h2>Retrieving INF/MMP Project Information</h2>
+<p>All Carbide build stages, with the exception of the post-link SIS Builder   stage get their data from INF and MMP files. So naturally Carbide needs a way to   retrieve and store this data for doing things like setting up the source indexer   and displaying the visual INF and MMP editors. The com.nokia.carbide.cdt.builder.<STRONG>EpocEngineHelper</STRONG> class is a good first stop to retrieve this information. For example, if you want   to get all the source files in the first MMP file:</p>
+<p class="listing">// ...assumes ICarbideProjectInformation (cpi) is known.<br>
+  List&lt;IPath&gt; mmpPaths = EpocEngineHelper.getMMPFilesForProject(cpi);<br>
+// array length check omitted for brevity....<br>
+List&lt;IPath&gt; srcFilesTest = EpocEngineHelper.getSourceFilesForConfiguration(defultConfig, mmpPaths.get(0));</p>
+<h3>SDK Management</h3>
+<p>Each SDK entry in devices.xml is analogous to a   com.nokia.carbide.cpp.sdk.core.<STRONG>ISymbianSDK</STRONG> object. If you want to get the entire list of ISymbianSDK   objects (same list and properties from the SDK Preferences page) you   simply invoke:</p>
+<p class="listing">ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();<br>
+List&lt;ISymbianSDK&gt; sdkList = sdkMgr.getSDKList();</p>
+<p>Now you can iterate the list and get whatever information you want out of the   installed SDKs. For example, using Java 5 iterators we can get the EPOCROOT   values of all the SDKs:</p>
+<p class="listing">for (ISymbianSDK currSDK : sdkList){
+   <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;String epocRootStr = currSDK.getEPOCROOT();<br>
+}</p>
+<h3>Reading MMP Statements with the EpocEngine and IMMPData</h3>
+<p>This topic demonstrates how you can read the MMP data for any build   configuration (ICarbideBuildConfiguration). The main interface for retrieving   MMP data is <strong>com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData</strong>. Once you get   access to this interface you can learn anything you want about a particular MMP file.</p>
+<p><strong>Prerequisite:</strong> All MMP and bld.inf parsing requires a dependency to the plugin   <strong>com.nokia.carbide.cpp.epoc.engine</strong>.</p>
+<p>Typically most keywords of interest are either single string settings   (TARGETTYPE, TARGET, EPOCSTACKSIZE) or list of settings (MACRO, CAPABILITY,   LANG). Other types can be directly retrieved from IMMPData routines. Check the   API documentation for specifics.</p>
+<p>The example provided simply iterates through all the MMP files of a   particular build configuration and grabs a list value and single item setting.   You'll need to get the particular MMP file you are interested in. Play around   with the IMMPData object in the run method and you can quickly get the idea.</p>
+<PRE class="listing">// Assumes buildConfig (ICarbideBuildConfiguration) is known
+for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(buildConfig)) {
+     Object data = EpocEnginePlugin.runWithMMPData(mmpPath,  new
+                              DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(),
+                              buildConfig, new AcceptedNodesViewFilter()),  new MMPDataRunnableAdapter() {
+                        public Object run(IMMPData mmpData) {
+                          // Example, getting a keyword as a list of strings
+                          List macros = mmpData.getListArgumentSettings().get(EMMPStatement.MACRO);
+                          // The real return value, getting a single argument setting
+                         return mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
+		  	                }   
+      });
+// Make sure to test for and cast to proper Object type!
+String mmpStatement = (String)data;  // Now we should have the TARGETTYPE
+}</PRE>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div></div>
+</body>
+</html>

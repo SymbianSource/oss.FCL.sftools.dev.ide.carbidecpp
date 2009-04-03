@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Check TRK, TRK, Install TRK"
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Adding, Editing, and Deleting Connections</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Adding, Editing, and Deleting Connections</h2>
+<p>Use  the <strong>Remote Connections</strong> view to monitor, create, edit, or remove  common remote connection settings.</p>
+<ul>
+  <li><a href="CONN_EDIT">Edit connection name and type</a></li>
+  <li><a href="CONN_SET">Set Connection Settings pane</a></li>
+  <li><a href="#INSTALL">Install	Remote Agents pane</a></li>
+</ul>
+<h3><strong><a name="CONN_EDIT" id="INSTALL3"></a></strong>Edit connection name and type</h3>
+<p>Use the <b>Edit connection name and type</b> page to assign a name and connection type to the new connection setup.</p>
+<p align="center"><img src="../images/wnd_new_connection_wizard_01.png" width="456" height="554"></p>
+<p class="figure">Figure 1 - New Connection wizard Edit connection name and type page</p>
+<p>Table 1. Edit connection name and type page - options</p>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="28%" scope="col">Item</th>
+    <th width="59%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>Connetion Name</strong></td>
+    <td><p>Enter a name for the connection.</p>    </td>
+  </tr>
+  <tr>
+    <td><strong>Conection Type</strong></td>
+    <td>Select the type of connection this setup will use.</td>
+  </tr>
+  <tr>
+    <td><strong>Supported Services</strong></td>
+    <td><p>Shows a list of services supported by the connection type chosen.</p>    </td>
+  </tr>
+</table>
+<h3><strong><a name="CONN_SET" id="INSTALL2"></a></strong>Set Connection Settings pane</h3>
+<p>Use  the <b>Set Connection Settings</b> pane to compare the version of remote agent installed on the device with the latest version available for Carbide. In this pane you can:</p>
+<ul>
+  <li>Set  the device OS used by the device and supported by the selected remote agent</li>
+  <li>Allow easy serial port selection when connecting to a device </li>
+  <li>Verify that you have the latest remote agent installed on a device</li>
+</ul>
+<p align="center"><img src="../images/wnd_new_connection_wizard_02.png" width="456" height="554"></p>
+<p class="figure">Figure 2 - New Connection wizard Serial Connection Settings page</p>
+<p>Table 2. Serial Connection Setting page - Set Connection Settings tab</p>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="30%" scope="col">Item</th>
+    <th width="59%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>Serial Port </strong></td>
+    <td>A dropdown list of serial ports with known identifiers for selecting the communication port used by the PC to communicate with the device. A named COM port (<span class="code">COM4 - BthModem0</span>) indicates an active port. Unnamed port numbers have usually not been opened and assigned by the PC.</td>
+  </tr>
+  <tr>
+    <td><b>Baud Rate</b></td>
+    <td>a dropdown list of baud rates common to serial connections.</td>
+  </tr>
+  <tr>
+    <td><strong>Device OS </strong></td>
+    <td><p>A dropdown list of device OSes that are supported by the remote  agent  software. Select the OS used by the device before running a check. </p></td>
+  </tr>
+  <tr>
+    <td><b>Select a service to test</b></td>
+    <td>Click to select a listed service for testing.</td>
+  </tr>
+  <tr>
+    <td><strong>Test Service Status</strong></td>
+    <td><p>Click <strong>Test Service Status</strong> to query the remote agent software on the device for its version number. It then compares the version number found with the latest version available for Carbide. A progress bar will appear should the Check TRK version operation requires more than a few seconds.</p>
+        <p class="note"><strong>NOTE</strong> The PC must have an internet connection to perform a remote agent version check.</p>
+      <p>Once the comparison is complete the Status text is updated with the result and further instructions as required.</p>
+      <p align="center"><img src="../images/wnd_on_device_setup_install_new_version.png" width="466" height="67"></p>
+      <p align="left">If a connection fails, the errors normally fall into these two categories: </p>
+      <ul>
+          <li><strong>connection failure</strong> - this usually indicates the chosen COM port  is not open. Try selecting a different COM port, specifically one with a name attached to it (<span class="code">COM4 - BthModem0</span>) for the type of connection you are using (USB or Bluetooth). Repeat as necessary until you get a successful response. </li>
+        <li><strong>TRK not responding</strong> - this indicates that the COM port is open but TRK is not responding. First, verify that TRK is up and running on the device. Second, TRK may be listening on a different COM port, so choose another named COM port and try again.</li>
+      </ul>
+      <p align="left">&nbsp;</p></td>
+  </tr>
+</table>
+<h3><strong><a name="INSTALL" id="INSTALL"></a>Install Remote Agents</strong> pane</h3>
+<p>Use  the <strong>Install Remote Agents</strong> pane to select the latest remote agent version  to download and install to the device. </p>
+<p align="center"><img src="../images/wnd_new_connection_wizard_03.png" width="456" height="554"></p>
+<p class="figure">Figure 2 - New Connection wizard Serial Connection Settings page</p>
+<p>Table 3. Serial Connection Setting page - Install Remote Agents tab</p>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="30%" scope="col">Item</th>
+    <th width="59%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>Install remote agents</strong></td>
+    <td><p>A list of the most current versions of remote agents sorted by SDK and version. Select the version most compatable with the device. For example, a device running S60 3.1.0 needs a version of the TRK software compiled for that SDK, which in the image above is Application TRK 2.8.7. </p>
+        <p>Additional information about the selected entry is displayed to the right to help you choose the correct version of TRK for the target device. </p></td>
+  </tr>
+  <tr>
+    <td><strong>Save</strong></td>
+    <td>Click <strong>Save</strong> to store a local copy of the currently selected TRK to disk. You can then manually install the file to your devices using the method of your choice. </td>
+  </tr>
+  <tr>
+    <td><strong>Install</strong></td>
+    <td><p>Click <strong>Install</strong> to download and install the TRK selected in the Install latest TRK list. A progress bar is shown if the install operation requires more than a few seconds to complete. </p>
+        <p class="note"><strong>NOTE</strong> The SIS and SISX file types must be associated with an installer application like Nokia PC Suite in order to install them onto the device. Use the Save command above to perform a manual install to the device if you don't have an installer application. </p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h5>Related references</h5>
+<ul>
+  <li><a href="wnd_on_device_setup.htm">On-Device Setup</a></li>
+  <li><a href="wnd_new_conn_install_tab.htm">Install latest TRK</a> </li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feedInfo>
+	<feeds>
+		<feed>
+			<url>http://rss.cnn.com/rss/cnn_topstories.rss</url>
+			<type>news</type>
+			<subscribed>always</subscribed>
+		</feed>
+		<feed>
+			<url>http://rss.cnn.com/rss/cnn_latest.rss</url>
+			<type>news</type>
+			<subscribed>true</subscribed>
+		</feed>
+		<feed>
+			<url>http://www.symbian.com/news/pr/pressreleases.xml</url>
+			<type>news</type>
+			<subscribed>true</subscribed>
+		</feed>
+		<feed>
+			<url>http://www.forum.nokia.com/gen/recently_published.rss</url>
+			<type>resource</type>
+			<subscribed>always</subscribed>
+		</feed>
+	</feeds>
+</feedInfo>

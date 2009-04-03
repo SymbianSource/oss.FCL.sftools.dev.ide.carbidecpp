@@ -1,0 +1,12 @@
+#include <appinfo.rh>
+
+UID2 KUidAppRegistrationResourceFile
+UID3 $(uid3)
+
+RESOURCE APP_REGISTRATION_INFO
+{
+	app_file="$(baseName)";
+
+	embeddability=KAppNotEmbeddable;
+	newfile=KAppDoesNotSupportNewFile;
+}

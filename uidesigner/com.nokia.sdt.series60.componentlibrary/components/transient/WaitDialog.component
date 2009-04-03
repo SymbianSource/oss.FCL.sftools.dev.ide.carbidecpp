@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.WaitDialog" 
+		category="NotesDialogs"
+		instanceNameRoot="waitDialog"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknWaitDialog" classHelpTopic=""
+			resourceType="AVKON_CONFIRMATION_QUERY" resourceHelpTopic="" />
+		<designerImages smallIconFile="WaitDialog_sm.png" 
+			largeIconFile="WaitDialog.png"/>
+		<attributes>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+		</attributes>
+		
+		<properties>
+			<compoundProperty name="location" type="com.nokia.sdt.series60.locationProperty" category="Hidden"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty name="size" type="com.nokia.sdt.series60.sizeProperty" category="Hidden"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<property name="text" type="localizedString" default="Please wait..." category="Data"
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<enumProperty name="tone" type="com.nokia.sdt.series60.Query.tone" category="Data"
+				descriptionKey="toneDescription" />
+			<property name="visibilityDelay" type="boolean" category="Behavior"
+				descriptionKey="visibilityDelayDescription" default="true" />
+			<property name="canceledHandlerCode" type="string" category="Hidden"/>
+		</properties>
+		
+		<events defaultEventName="canceled">
+			<event name="canceled" category="Basic" 
+				   handlerNameTemplate="Handle{title(name)}CanceledL"
+			    descriptionKey="canceledDescription"
+				/>
+		</events>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+				<script file="WaitDialog.js" prototype="WaitDialog"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="DIALOG" headers="avkon.rh avkon.rsg eikon.rh">
+				<mapBitmaskMember property="." member="flags" includedProperties="" >
+					<!-- initial blank entry forces bits on -->
+					<mapBitmaskValue properties="" value="EAknWaitNoteFlags" />
+				</mapBitmaskMember>
+				<mapFixedMember member="buttons" value="R_AVKON_SOFTKEYS_CANCEL" />			
+		        <mapResourceMember property="." member="items[0]" struct="DLG_LINE" headers="avkon.rh">
+					<mapFixedMember member="type" value="EAknCtNote" />			
+					<mapEnumMember property="." member="id" uniqueValue="*"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID" />
+		        	<mapResourceMember property="." member="control" struct="AVKON_NOTE" headers="avkon.rh">
+						<mapFixedMember member="layout" value="EWaitLayout" />			
+						<mapSimpleMember property="text" member="singular_label" />
+						<mapFixedMember member="animation" value="R_QGN_GRAF_WAIT_BAR_ANIM" />
+			        </mapResourceMember>
+		        </mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+		
+			<template phase="HeaderIncludes"><![CDATA[
+#include <aknwaitdialog.h>
+]]>			</template>
+
+			<template phase="ClassMethods">
+void Execute${instanceName$title}LD( const TDesC* aOverrideText = NULL );
+void Remove${instanceName$title}L();
+			</template>
+			
+			<template phase="InstanceVariables">
+CAknWaitDialog* ${instanceMemberName};
+			</template>	
+			
+				<template phase="Destroy">
+TRAPD( err_${instanceName$title}, Remove${instanceName$title}L() );
+				</template>
+			
+			<defineLocation id="ExecuteMethodLocation" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Execute${instanceName$title}LD(const TDesC*))">
+				<template>
+/**
+ * Execute the wait dialog for ${instanceName}. This routine returns
+ * while the dialog is showing. It will be closed and destroyed when
+ * Remove${instanceName$title}L() or the user selects the Cancel soft key.
+ * @param aOverrideText optional override text. When null the text configured
+ * in the UI Designer is used.
+ */
+void ${className}::Execute${instanceName$title}LD( const TDesC* aOverrideText )
+	{
+	}
+				</template>
+			</defineLocation>
+			<template location="ExecuteMethodLocation"><![CDATA[
+<% var visibilityDelayOff = (!instance.properties.visibilityDelay) ? "ETrue" : "EFalse"; 
+%>${instanceMemberName} = new ( ELeave ) CAknWaitDialog( 
+		reinterpret_cast< CEikDialog** >( &${instanceMemberName} ), ${visibilityDelayOff} );
+<% if (properties.tone != "ENoTone") { 
+%>${instanceMemberName}->SetTone( CAknNoteDialog::${properties.tone} );
+<% } 
+%>if ( aOverrideText != NULL )
+	{
+	${instanceMemberName}->SetTextL( *aOverrideText );
+	}
+${instanceMemberName}->ExecuteLD( ${resourceName$upper} );
+]]>			</template>
+
+			<defineLocation id="RemoveMethodLocation" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Remove${instanceName$title}L())">
+				<template>
+/**
+ * Close and dispose of the wait dialog for ${instanceName}
+ */
+void ${className}::Remove${instanceName$title}L()
+	{
+	}
+				</template>
+			</defineLocation>
+			<template location="RemoveMethodLocation"><![CDATA[
+if ( ${instanceMemberName} != NULL )
+	{
+	${instanceMemberName}->SetCallback( NULL );
+	${instanceMemberName}->ProcessFinishedL();    // deletes the dialog
+	${instanceMemberName} = NULL;
+	}<% if (instance.events['canceled'] != null) {%>
+delete ${instanceMemberName}Callback;
+${instanceMemberName}Callback = NULL;
+<% } %>
+ ]]>			</template>
+
+<!-- BEGIN EVENT canceled -->
+			<templateGroup id="ProgressDialogCanceledEvent" ifEvents="canceled">
+
+				<template phase="InstanceVariables">
+class CProgressDialogCallback;
+CProgressDialogCallback* ${instanceMemberName}Callback;
+				</template>	
+			
+				<template id="HandlerDecl" phase="UserHandlers"><![CDATA[
+void ${event.handlerName}( CAknProgressDialog* aDialog );
+]]>				</template>
+
+				<defineLocation id="MProgressDialogCallbackSupport" baseLocation="CLASS"
+						owned="false" 
+						location="region(MProgressDialogCallback support)">
+					<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+typedef void ( ${handlerClassName}::*ProgressDialogEventHandler )( 
+		CAknProgressDialog* aProgressDialog );
+
+/**
+ * This is a helper class for progress/wait dialog callbacks. It routes the dialog's
+ * cancel notification to the handler function for the cancel event.
+ */
+class CProgressDialogCallback : public CBase, public MProgressDialogCallback
+	{ 
+	public:
+		CProgressDialogCallback( 
+				${handlerClassName}* aHandlerObj, 
+				CAknProgressDialog* aDialog, 
+				ProgressDialogEventHandler aHandler ) :
+			handlerObj( aHandlerObj ), dialog( aDialog ), handler( aHandler )
+			{}
+			
+		void DialogDismissedL( TInt aButtonId ) 
+			{
+			( handlerObj->*handler )( dialog );
+			}
+	private:
+		${handlerClassName}* handlerObj;
+		CAknProgressDialog* dialog;
+		ProgressDialogEventHandler handler;
+	};
+	
+]]>					</template>
+				</defineLocation>
+				<template id="RealizeMProgressDialogCallbackSupport" location="MProgressDialogCallbackSupport"/>
+				
+				<template location="ExecuteMethodLocation"><![CDATA[
+${instanceMemberName}Callback = new ( ELeave ) CProgressDialogCallback( 
+	this, ${instanceMemberName}, &${handlerClassName}::${event.handlerName} );
+${instanceMemberName}->SetCallback( ${instanceMemberName}Callback );
+]]>				</template>
+				
+				<defineLocation id="ProgressDialogCanceledHandler" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(CAknProgressDialog*))">
+					<template><![CDATA[
+/** 
+ * Handle the canceled event.
+ */
+void ${handlerClassName}::${event.handlerName}( CAknProgressDialog* /* aDialog */ )
+	{
+<% var code = instance.properties.canceledHandlerCode;
+   if (code != "") { 
+%>	${code} 
+<% } else { 
+%>	// TODO: implement ${event.eventName} event handler
+<% } %>	}
+]]>				
+					</template>
+				</defineLocation>
+				<template id="RealizeHandler" location="ProgressDialogCanceledHandler"/>
+
+			</templateGroup>
+<!-- END EVENT canceled -->
+
+		</sourceGen>
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C++ Compiler" href="html/cpp_compiler/cpp_compiler.htm">
+
+	<topic label="Carbide Implementation of C++" href="html/cpp_compiler/cpp_implementation.htm" > 
+		<topic label="Namespaces" 											href="html/cpp_compiler/cpp_impl_namespaces.htm" /> 
+		<topic label="Implicit Return Statement for main()" 				href="html/cpp_compiler/cpp_impl_implicit_return.htm" /> 
+		<topic label="Keyword Ordering" 									href="html/cpp_compiler/cpp_impl_keyword_ordering.htm" /> 
+		<topic label="Additional Keywords" 									href="html/cpp_compiler/cpp_impl_additional_keywords.htm" /> 
+		<topic label="Default Arguments in Member Functions" 				href="html/cpp_compiler/cpp_impl_default_args.htm" /> 
+		<topic label="Calling an Inherited Member Function" 				href="html/cpp_compiler/cpp_impl_inherited_members.htm" /> 
+		<topic label="Forward Declarations of Arrays of Incomplete Type" 	href="html/cpp_compiler/cpp_impl_forward_decl.htm" /> 
+		<topic label="Vendor Independent C++ ABI" 							href="html/cpp_compiler/cpp_impl_vendor_abi.htm" /> 
+  	</topic>
+
+	<topic label="Extensions to ISO Standard C++" href="html/cpp_compiler/cpp_extensions.htm" /> 
+
+	<topic label="Controlling the C++ Compiler"  href="html/cpp_compiler/cpp_controlling.htm" > 
+		<topic label="Using the C++ Compiler Always" 					href="html/cpp_compiler/cpp_ctrl_always.htm" /> 
+		<topic label="Controlling Variable Scope in for Statements" 	href="html/cpp_compiler/cpp_ctrl_var_scope.htm" /> 
+		<topic label="Controlling Exception Handling" 					href="html/cpp_compiler/cpp_ctrl_exceptions.htm" /> 
+		<topic label="Controlling RTTI" 								href="html/cpp_compiler/cpp_ctrl_rtti.htm" /> 
+		<topic label="Using the bool Type" 								href="html/cpp_compiler/cpp_ctrl_bool_type.htm" /> 
+		<topic label="Controlling C++ Extensions" 						href="html/cpp_compiler/cpp_ctrl_extensions.htm" /> 
+	</topic>
+
+	<topic label="Working with C++ Exceptions" href="html/cpp_compiler/cpp_exceptions_working.htm" /> 
+
+	<topic label="Working with RTTI" href="html/cpp_compiler/cpp_rtti_working.htm" > 
+		<topic label="Using the dynamic cast Operator" 		href="html/cpp_compiler/cpp_rtti_dynamic_cast.htm" /> 
+		<topic label="Using the typeid Operator" 			href="html/cpp_compiler/cpp_rtti_typeid_operator.htm" /> 
+	</topic>
+
+	<topic label="Working with Templates" href="html/cpp_compiler/cpp_templates_working.htm" > 
+		<topic label="Declaring and Defining Templates" 	href="html/cpp_compiler/cpp_templates_defining.htm" /> 
+		<topic label="Instantiating a Template" 			href="html/cpp_compiler/cpp_templates_instantiating.htm" /> 
+		<topic label="Better Template Conformance" 			href="html/cpp_compiler/cpp_templates_conformance.htm" /> 
+	</topic>
+
+</toc>

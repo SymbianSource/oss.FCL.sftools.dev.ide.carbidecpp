@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CAknVolumeSettingItem"
+		baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		category="Controls"
+		instanceNameRoot="volumeSetting" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="VOLUME" className="CAknVolumeSettingItem" />
+		<designerImages 
+			smallIconFile="CAknVolumeSettingItem_sm.png" 
+			largeIconFile="CAknVolumeSettingItem.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CAknVolumeSettingItem</attribute>
+			<attribute key="is-setting-item-list-content">true</attribute>
+			<attribute key="setting-item-class-name">CAknVolumeSettingItem</attribute>
+			<attribute key="data-model-cpp-type">TInt</attribute>
+			<attribute key="rss-control-type-enum">EAknCtVolumeControl</attribute>
+		</attributes>
+	
+		<properties>
+			<property name="value" category="Data" 
+				descriptionKey="valueDescription"
+				type="integer" default="1" minValue="1" maxValue="10"
+				/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="CAknVolumeSettingItem.js" prototype="CAknVolumeSettingItem"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="VOLUME" headers="avkon.rh">
+			<mapFixedMember member="flags" value="ESettingsVolumeControl" />
+			<mapSimpleMember property="value" member="value"/>
+		</mapResource>
+	</sourceMapping>
+
+		<sourceGen forms="Dialog Container">
+	
+			<useTemplate ids="INIT_FROM_CONTAINER" />
+			<useTemplate ids="INIT_FROM_DIALOG" />
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+			<useTemplate ids="LAYOUT_CONTROLS" />
+			<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+		<template phase="Initialize" forms="SettingsList"><![CDATA[
+<% 		this.setupSettingItem(contribs, 0, instance, ""+instance.properties.value); 
+%>]]>	</template>
+
+			<inline>
+this.getCppSystemIncludes(contribs, [  ]);
+			</inline>
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent"/>
+
+	</sourceGen>
+
+	</component>
+</componentDefinition>
+		

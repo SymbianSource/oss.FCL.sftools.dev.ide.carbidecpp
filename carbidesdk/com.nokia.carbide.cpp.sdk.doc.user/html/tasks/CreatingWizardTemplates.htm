@@ -1,0 +1,348 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<title>Creating Wizard Templates</title>
+<style>
+<!--
+.00BodyText
+	{font-size:11.0pt;
+	font-family:Arial;}
+.11BodyText
+	{font-size:11.0pt;
+	font-family:Arial;}
+.Heading1a
+	{text-indent:0in;
+	border:none;
+	padding:0in;
+	font-size:11.0pt;
+	font-family:Arial;
+	text-transform:uppercase;
+	font-weight:bold;}
+.DocumentTitle
+	{font-size:18.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+.Section1
+	{page:Section1;}
+div.listing
+    {line-height:100%;}
+span.attr
+    {color:green}
+-->
+</style>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body>
+
+<h2>Creating Wizard Templates</h2>
+
+<p class=Heading1a>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>ABOUT THIS DOCUMENT</p>
+
+  <p class=11BodyText>This document describes how to create a wizard template for Carbide.c++. </p>
+  
+  <h3>1.1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>Scope</h3>
+  <p class=11BodyText>This document describes the wizardTemplate extension, the xml template format and post-wizard processing model. Some familiarity with XML, Eclipse plugins and extensions and, for custom process creation, the Java programming language, is assumed. This document will not cover instruction in these areas.</p>
+  <div style='border:none;border-top:solid #057C00 1.5pt;padding:10.0pt 0in 0in 0in'>
+    <p class=Heading1a>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>Introduction</p>
+  </div>
+  <p class=11BodyText>Wizards collect data from users and automate tasks. They tend to be UI intensive and can be difficult and tedious to create. For this reason, Carbide.c++ supports wizards generated from xml descriptions. Specifically, Carbide.c++ exposes two such wizards, one for creating projects and one for adding class files to an existing project.</p>
+  <p class=11BodyText>Carbide.c++ exposes the <span class="code">com.nokia.carbide.templatewizard.wizardTemplate</span> extension point for this purpose. Using this extension point allows you to create a  plug-in where you can add as many custom templates as necessary to support your development efforts. </p>
+  <h3>2.1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>General Nomenclature</h3>
+  <p class=11BodyText><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>Wizard Template extension</b>: an Eclipse extension in a plugin extending the <i>com.nokia.carbide.templatewizard.wizardTemplate</i> extension point.</p>
+  <blockquote>
+    <p class="note"><span class="note"><strong>	NOTE</strong></span> Do not add custom templates to the default Carbide.c++ plug-in as updates will overwrite your changes. </p>
+  </blockquote>
+  <p class=11BodyText><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>Extension element</b>: a child element in an Eclipse extension. In the current document, the only extension element is the &lt;template&gt; extension element. This is one of the &lt;template&gt; elements declared in the wizard template extension. Each template extension element defines the specific characteristics of one wizard configuration. A plugin may define more than one wizard template extension, and each extension can have more than one template extension element.</p>
+  <p class=11BodyText><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>Template xml file</b>: an xml file referenced by a template extension element, which describes some number of wizard pages and post-wizard processes in xml.</p>
+  <p class=11BodyText><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>Elements in a template xml file</b>: As the template file is also in xml, it is also made up of elements and child elements. Much of the document will be devoted to explaining the significance of these elements.</p>
+  <br clear=all
+style='page-break-before:always'>
+  <div style='border:none;border-top:solid #057C00 1.5pt;padding:10.0pt 0in 0in 0in'>
+    <p class=Heading1a>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span>The Wizard Template Extension Point</p>
+</div>
+  <p class=11BodyText>Starting with a new Plug-in Project created to house your templates (using <strong>File &gt; New &gt; Project... &gt; Plug-in Project</strong>), here is an example of a wizard template extension with a single template element that should be added to the <span class="code">plugin.xml</span> file:</p>
+  
+  <pre class="listing">
+&lt;extension point=<span class="attr">&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;&gt;</span>
+  &lt;template
+   templateId=<span class="attr">&quot;com.nokia.cdt.templates.s60.controlapplication&quot;</span>
+   location=<span class="attr">&quot;templates/projecttemplates/S60-ControlApplication/template.xml&quot;</span>
+   wizardId=<span class="attr">&quot;com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard&quot; </span>
+   groupLabel=<span class="attr">&quot;S60&quot;</span>
+   filterArguments=<span class="attr">&quot;S60:1.2;2.0-2.9&quot;</span>
+   image=<span class="attr">&quot;icons/icon_S60.png&quot;</span>
+  /&gt;
+&lt;/extension&gt;
+</pre>
+
+  <p class=11BodyText>The template wizard extension point has the identifier: <span class="code">com.nokia.carbide.templatewizard.wizardTemplate</span><i>.</i> </p>
+  <p class=11BodyText>Extensions of the template wizard extension point must specify the following required attributes:</p>
+  <p class=11BodyText>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>templateId</b>: the unique identifier for this template</p>
+  <p class=11BodyText>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>location</b>: the plugin-relative path to the template xml file</p>
+  <p class=11BodyText>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>wizardId</b>: the id of the wizard in which this template is used</p>
+  <p class=11BodyText>The two template wizards provided by Carbide.c++ are:</p>
+  <blockquote>
+    <p class="11BodyText">a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>The Symbian OS C++ project wizard with wizard id: <span class="code">com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard</span></p>
+    <p class="11BodyText">b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>The Symbian OS C++ class wizard with wizard id: <span class="code">com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppClassWizard</span></p>
+  </blockquote>
+<p class=11BodyText>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>groupLabel</b>: the group label under which this template will appear in the template choice page of the appropriate template wizard</p>
+  <p class=11BodyText>Groups are created from group labels that are available from the filtered or unfiltered list of templates for a specific wizard. Anyone creating new templates is free to use an existing group label, or create a new one as needed.</p>
+  <p class=note><strong>NOTE</strong> The <span class="code">groupLabel</span> attribute, as with all attributes in the plugin.xml, can be localized simply by using a % -prefixed key and a standard Java properties file.</p>
+  <p class=11BodyText>For example, the attribute in the template extension element could use the key “S60.label” prefixed with a % character: </p>
+  <p><span style='font-size:10.0pt;
+font-family:&quot;Courier New&quot;;color:navy'>groupLabel=</span><span style='font-size:
+10.0pt;font-family:&quot;Courier New&quot;;color:green'>&quot;%S60.label&quot;</span></p>
+  <p class=11BodyText>The plugin.properties file in the same directory as the plugin.xml would contain the entry:</p>
+  <p class=11BodyText><span style='font-size:10.0pt;
+font-family:&quot;Courier New&quot;'>S60.label=<span style='color:blue'>S60</span></span></p>
+  <p class=11BodyText>Additionally, extensions can specify the following optional attributes:</p>
+  <p class=11BodyText>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>filterArguments</b>: the optional wizard-specific data which is available to the filtering mechanism activated by the “filter templates” checkbox, which is optionally shown in some template wizards; no filter arguments signifies to always show this template</p>
+  <p class=11BodyText>The filter is provided by the wizard and the argument for the filter is specified optionally by each template, in order to work with its intended wizard (see wizardId attribute).</p>
+  <p class=11BodyText>Both the Symbian OS C++ project and class wizards filter templates against Symbian Sdks. Both wizards require the filter arguments to be of the form: [sdk family][:sdk versions]. Sdk family is either S60, S80, UIQ or TechView. Sdk versions can be lists of versions separated by semicolon and/or ranges separated by hyphens. Here are some examples of valid filter argument attributes:</p>
+  <blockquote>
+    <p class="11BodyText"><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><i>S60:1.2;2.0-2.9</i> allows all S60 sdks version 1.2 and 2<sup>nd</sup> edition.</p>
+    <p class="11BodyText"><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><i>S60:3.0-3.9</i> allows all S60 3<sup>rd</sup> edition sdks.</p>
+    <p class="11BodyText"><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><i>S80</i> allows all Series 80 sdks.</p>
+  </blockquote>
+<p class=11BodyText>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>image</b>: the optional plugin-relative location of a 16x16 pixel image file to be used when showing this template in the choose template wizard selection page</p>
+  <p class=11BodyText>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>extraPagesProvider</b>: an optional provider of extra wizard pages </p>
+  <p class=11BodyText>This class must have a 0-argument public constructor and must implement the <i>com.nokia.carbide.templatewizard.ui.IExtraPagesProvider</i> interface (see javadoc). The class is only constructed once per template per Eclipse session. However, it will be initialized and used as many times as the template is chosen by the users.</p>
+  <br clear=all
+style='page-break-before:always'>
+  <div style='border:none;border-top:solid #057C00 1.5pt;padding:10.0pt 0in 0in 0in'>
+    <p class=Heading1a>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>The Template XML Format</p>
+  </div>
+  <h3>4.1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>The template element</h3>
+  <p class=11BodyText>This is an example <b>template</b> element with a description:</p>
+
+<pre class="listing">
+&lt;template
+  version=<span class="attr">&quot;1.0&quot;</span>
+  label=<span class="attr">&quot;S60 2.x Control based GUI application&quot;</span>&gt;
+  &lt;description&gt;<span class="attr">A S60 Control is a rectangular area of the screen that \
+may respond to user input and events. You can use this template for all S60 2.x and 1.2 SDKs.</span>
+...
+ &lt;/template&gt;
+</pre>
+
+  <p class=11BodyText>The template xml file has one required top-level element, the <b>template</b> element. </p>
+  <p class=11BodyText>The <b>template</b> element has these required attributes:</p>
+  <ul>
+    <li><b>version</b>: a version string (e.g., 1.0)</li>
+    <li><b>label</b>: the label string used to denote this template in the choose template wizard selection page</li>
+  </ul>
+<h3>4.2<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>The description element</h3>
+  <p class=11BodyText>The <b>template</b> element has an optional <b>description</b> child element whose text content is used in the description area of the choose template wizard selection page. When a specific template is selected, its description is displayed. </p>
+  <p class=note><strong>NOTE</strong> The description strings are elements and not attributes, in order to allow return characters to be easily specified for formatting purposes. Descriptions may be broken for readability without specifying a return character in the actual description by terminating a line with a backslash. All description strings in the template xml format use this pattern.</p>
+<p class=11BodyText><i>ADDITIONAL NOTE: </i>All <b>label</b> attributes and <b>description</b> elements in the template xml format are localizable using the %-prefixed key method described above for plugin.xml files. In the case of localization, the <b>label</b> attribute’s value and/or <b>description</b> element’s content consists of a %-prefixed key instead of the actual value, and a properties file for the template xml exists in the same directory as the template xml file containing the localized strings for these keys.</p>
+<p class=11BodyText>The <b>template</b> element can have any number of children of type <b>wizardPage</b> elements and <b>process</b> elements.</p>
+  <h3>4.3<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>The wizardPage element</h3>
+  <p class=11BodyText>This is an example of a <b>wizardPage</b> element:</p>
+  
+<pre class="listing">
+&lt;wizardPage
+  id=<span class="attr">&quot;basics&quot;</span>
+  label=<span class="attr">&quot;Basic Settings&quot;</span>
+  &lt;description&gt;<span class="attr">Basic properties of a project</span>
+  &lt;textField
+    id=<span class="attr">&quot;Author:&quot;</span>
+    label=<span class="attr">&quot;myLabel&quot;</span>
+    persist=<span class="attr">&quot;true&quot;</span>
+    &lt;description&gt;<span class="attr">Name of the author</span>&lt;/description&gt;
+  &lt;/textField&gt;
+  &lt;textField 
+    id=<span class="attr">&quot;copyright&quot;</span>
+    label=<span class="attr">&quot;Copyright notice:&quot;</span>
+    multiline=<span class="attr">&quot;true&quot;</span>
+    default=<span class="attr">&quot;Your copyright notice&quot;</span>
+    persist=<span class="attr">&quot;true&quot;</span> 
+    &lt;description&gt;<span class="attr">Your copyright notice</span>
+  &lt;/textField&gt;
+  &lt;uidField
+    id=<span class="attr">&quot;uid3&quot;</span>
+    label=<span class="attr">&quot;Application UID:&quot;</span>
+    min=<span class="attr">&quot;0x00000001&quot;</span>
+    max=<span class="attr">&quot;0x01ffffff&quot;</span>
+    mandatory=<span class="attr">&quot;true&quot;</span>
+    persist=<span class="attr">&quot;true&quot;</span>
+   &lt;description&gt;<span class="attr">The Application UID is the project identifier</span>&lt;/description&gt;
+  &lt;/uidField&gt;
+  &lt;filenameField
+    id=<span class="attr">&quot;groupDir&quot;</span>
+    label=<span class="attr">&quot;Group:&quot;</span>
+    default=<span class="attr">&quot;group&quot;</span>
+    mandatory=<span class="attr">&quot;true&quot;</span>
+    persist=<span class="attr">&quot;true&quot;</span>
+    &lt;description&gt;<span class="attr">The directory for project files</span>&lt;/description&gt;
+  &lt;/filenameField&gt;
+  &lt;/wizardPage&gt;
+</pre>
+
+  <p class=11BodyText>Each <b>wizardPage</b> element declaratively specifies one page in the wizard. The child ordering of <b>wizardPage</b> elements in the <b>template</b> element is the order that the pages will appear. </p>
+  <p class=note><strong>NOTE</strong> Ordering is important and is a common theme in the template xml format. This is true of wizard pages, ui elements within a wizard page, as well as processes. The order is preserved in the context in which child elements are defined.</p>
+  <p class=11BodyText>The <b>wizardPage</b> element has these required attributes:</p>
+  <ul>
+    <li><b class="11BodyText">id</b>: a unique identifier for this wizard page within a template</li>
+    <li><b class="11BodyText">label</b>: the label string used as the title of the wizard page</li>
+  </ul>
+<p class=11BodyText>The <b>wizardPage</b> element has an optional <b>description</b> child element whose text content is used as the description of the wizard page – just below the title. This element behaves like all <b>description</b> elements in the template xml format (see above).</p>
+  <p class=11BodyText>The <b>wizardPage</b> element can have any number of children elements of type <b>textField</b>, <b>uidField</b> or <b>filenameField</b>. These represent user input fields in a wizard page, and although any number can be specified, in practice, only a reasonable number should exist on a given wizard page. The fields are laid out one below the other in the child order in which they are declared in the <b>wizardPage</b> element.</p>
+  <p class=11BodyText>All field elements have these required attributes:</p>
+  <ul>
+    <li><b class="11BodyText">id</b>: a unique identifier for this field that is used for persistence and for value access by processes</li>
+    <li><b class="11BodyText">label</b>: the label string used as the label for the input field</li>
+  </ul>
+<p class=11BodyText>All field elements have an optional <b>description</b> child element whose text content is used as the tooltip text for the field, which behaves like all <b>description</b> elements in the template xml format (see above).</p>
+  <p class=11BodyText>Additionally, fields have these optional attributes:</p>
+  <ul>
+    <li><b class="11BodyText">persist</b>: a boolean value defaulting to false, indicating whether the value in this field should be persisted and used as a default the next time a field with this id is used</li>
+    <li><b class="11BodyText">mandatory</b>: a boolean value defaulting to false, indicating that the user can’t leave this field empty</li>
+  </ul>
+<p class=11BodyText>In addition to these attributes, each field type has its own additional attributes.</p>
+  <p class=11BodyText>The <b>textField</b> element specifies a text field that can be validated by a regular expression pattern and that can be specified to be single or multiple lines.</p>
+  <p class=11BodyText>The <b>textField</b> element has these optional attributes:</p>
+  <ul>
+    <li><b class="11BodyText">default</b>: the initial value this field should contain, unless   a persisted value exists to override it</li>
+    <li><b class="11BodyText">pattern</b>: the Java style regular expression used for validation of user input</li>
+    <li><b class="11BodyText">multiline</b>: a boolean value defaulting to false, indicating that the text field should allow input in multiple lines</li>
+  </ul>
+<p class=11BodyText>The <b>uidField</b> element specifies a text field that must contain a hexadecimal number in the range of a Java long, beginning with the prefix 0x (e.g., 0x0). The uid field has a button to the right labeled “random” that changes the current value of the field to a random value within a specified range. The specified range is also used to validate values input by the user.</p>
+  <p class=11BodyText><i>NOTE: Each uid field adds 2 values to the template for use by processes. The one indexed by the id of the uid field is exactly what is shown in the field, and the other indexed by the id with the suffix -WITHOUT_0X, is the value without the 0x prefix.</i></p>
+  <p class=11BodyText>The <b>uidField</b> element has these required attributes:</p>
+  <ul>
+    <li><b class="11BodyText">min</b>: the minimum value allowed by the field specified in hexadecimal starting with the prefix 0x</li>
+    <li><b class="11BodyText">max</b>: the maximum value allowed by the field specified in hexadecimal starting with the prefix 0x</li>
+  </ul>
+<p class=11BodyText>The <b>filenameField</b> element specifies a text field that is validated to be a valid OS file name composed of only alpha-numeric, hyphen or underscore characters. The additional restrictions exist to avoid path problems with build tools.</p>
+  <p class=11BodyText>The <b>filenameField</b> element has the optional attribute:</p>
+  <ul>
+    <li><b class="11BodyText">default</b>: the initial value this field should contain, unless there exists a persisted value to override it</li>
+  </ul>
+<h3>4.4<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>The process element</h3>
+  <p class=11BodyText>This is an example of a <b>process</b> element with a single <b>parameter</b> child: </p>
+  
+<pre class="listing">
+&lt;process
+  class=<span class="attr">&quot;com.nokia.carbide.cpp.project.core.processes.NewProject&quot;</span>
+  bundle=<span class="attr">&quot;com.nokia.carbide.cpp.project.core&quot;</span>
+  &lt;parameter
+    name=<span class="attr">&quot;project&quot;</span>
+    projectName=<span class="attr">&quot;$(projectName)&quot;</span>
+&lt;/process&gt;
+</pre>
+
+  <p class=11BodyText>The <b>process</b> elements, like those for wizard pages, are declared in the template xml file as children elements of the <b>template</b> element. Each <b>process</b> element declares the execution of the <i>process</i> method of a class implementing the interface <i>com.nokia.carbide.templatewizard.process.IProcess</i> after the user finishes running a template wizard. </p>
+  <p class=11BodyText>Execution of processes occurs in the order in which the <b>process</b> elements appear in the template xml file, so it is fully acceptable that some processes will be dependent on the successful execution of previous processes. Failure in the execution of any processes is reported to the user and logged to the error log, but remaining processes are executed.</p>
+  <p class=11BodyText>The <b>process</b> element has these required attributes:</p>
+  <ul>
+    <li><b class="11BodyText">class</b>: the fully qualified class name of the class implementing <i>com.nokia.carbide.templatewizard.process.IProcess</i> </li>
+  </ul>
+<p class=11BodyText>This class should have a 0-argument public constructor. An instance of this class will be created and its <i>process</i> method will be called for each <b>process</b> element appearing in the template xml file.</p>
+  <p class=11BodyText>To assist implementation of the process class, an abstract base class is provided. <i>com.nokia.carbide.templatewizard.process.AbstractProcess</i> has members that encapsulate initialization, failure with <i>CoreException</i> and accessing process parameters. </p>
+  <p class=11BodyText>See javadoc for class details.</p>
+  <ul>
+    <li><b class="11BodyText">bundle</b>: the bundle id for the bundle in which the process class resides</li>
+  </ul>
+<p class=11BodyText>The <b>process</b> element has any number of children elements of type <b>parameter</b>.</p>
+  <p class=11BodyText>The <b>parameter</b> element has the required attribute:</p>
+  <ul>
+    <li><b class="11BodyText">name</b>: a unique name for the type of parameter expected by the specific process</li>
+  </ul>
+<p class=11BodyText>In addition, <b>parameter</b> elements can have any additional attributes required by the process. These will be accessible via the <i>com.nokia.carbide.templatewizard.process.IParameter</i> interface list provided to processes (see javadoc).</p>
+  <p class=11BodyText>Values collected from the user by the wizard are available to processes via the <i>com.nokia.carbide.template.engine.ITemplate</i> interface provided to processes (see attached javadoc). The method <i>getTemplateValues</i> returns a <i>java.util.Map&lt;String, Object&gt;</i> containing the values indexed by the field ids specified in the field element children of <b>wizardPage</b> elements, as well as values from built in pages. </p>
+  <p class=11BodyText>The template’s map can also be used to communicate state between processes. For example, one process may add a value to the map which is then read by a subsequent process.</p>
+  <p class=11BodyText>These are the built in page value ids:</p>
+  <ul>
+    <li><b class="11BodyText">projectName</b>: the name of the project</li>
+    <li><b class="11BodyText">baseName</b>: for new projects, the name of the project changed into a legal  c++ identifier</li>
+    <li><b class="11BodyText">baseNameUpper</b>: for new projects, baseName uppercased</li>
+    <li><b class="11BodyText">baseNameLower</b>: for new projects, baseName lowercased</li>
+    <li><b class="11BodyText">location</b>: for new projects, the location of the project as a portable path string</li>
+    <li><b class="11BodyText">useDefaultLocation</b>: for new projects, whether the default location checkbox was checked in the new project page – whether the project was in the workspace</li>
+  </ul>
+<p class=11BodyText>Additionally, values from the template map are substituted into the parameter attributes specified in the template xml, whenever the attributes contain the pattern <span style='color:green'>$(<i>id</i>)</span> in the value.</p>
+  <h3>4.5<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>Built in processes</h3>
+  <p class=11BodyText>There are a number of built in processes, provided by Carbide.c++</p>
+  <p class=11BodyText>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>New Project</b>:</p>
+  <ul>
+    <li><b class="11BodyText">class</b>: com.nokia.carbide.cpp.project.core.processes.NewProject</li>
+    <li><b class="11BodyText">bundle</b>: com.nokia.carbide.cpp.project.core</li>
+  </ul>
+  <blockquote>
+    <p class="11BodyText">Requires one parameter with name <b>project</b>, attribute <b>projectName</b>.</p>
+    <p class="11BodyText">Creates a new Carbide.c++ project.</p>
+  </blockquote>
+<p class=11BodyText>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>Create Folders</b>:</p>
+  <ul>
+    <li><b class="11BodyText">class</b>: com.nokia.carbide.templatewizard.processes.CreateFolders</li>
+    <li><b class="11BodyText">bundle</b>: com.nokia.carbide.templatewizard</li>
+  </ul>
+  <blockquote>
+    <p class="11BodyText">Requires one parameter with name <b>project</b>, attribute <b>projectName</b>.</p>
+    <p class="11BodyText">Any number of parameters with name <b>folder</b>, attribute <b>path</b>.</p>
+    <p class="11BodyText">Creates new folders in a project.</p>
+  </blockquote>
+<p class=11BodyText>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>Create 4 character resource ID</b>:</p>
+  <ul>
+    <li><b class="11BodyText">class</b>: com.nokia.carbide.cpp.project.core.processes.CreateRezId</li>
+    <li><b class="11BodyText">bundle</b>: com.nokia.carbide.cpp.project.core</li>
+  </ul>
+  <blockquote>
+    <p class="11BodyText">Requires one parameter with name <b>project</b>, attribute <b>projectName</b>.</p>
+    <p class="11BodyText">Creates a 4 character string based on the project name, which is used in the main resource file in the NAME statement.</p>
+  </blockquote>
+<p class=11BodyText>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>Copy Files</b>:</p>
+  <ul>
+    <li><b class="11BodyText">class</b>: com.nokia.carbide.templatewizard.processes.CopyFiles</li>
+    <li><b class="11BodyText">bundle</b>: com.nokia.carbide.templatewizard</li>
+  </ul>
+<p class=11BodyText>Requires one parameter with name <b>project</b>, attribute <b>projectName</b>.</p>
+<p class=11BodyText>Any number of parameters with name <b>file</b>, attributes <b>sourcePath</b> and <b>targetPath</b> and optionally, the boolean attribute <b>substitute</b>, which says whether this file is parameterized and needs to be substituted (defaults to “true”).</p>
+<p class=11BodyText>Copies files from the sourcePath (relative to the location of the template xml file) to the targetPath (relative to the project) and optionally substitutes variables using the $(<i>id</i>) pattern. Unrecognized variables are left intact.</p>
+  <p class=11BodyText>Optionally, any of three operators can be used to automatically uppercase, lowercase and titlecase (uppercase only the first character) the value prior to substitution. The syntax for using the operators is $(<i>id</i>$upper), $(<i>id</i>$lower) or $(<i>id</i>$title).</p>
+  <p class=11BodyText>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Project Initialization:</p>
+  <ul>
+    <li><b class="11BodyText">class</b>: com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks</li>
+    <li><b class="11BodyText">bundle</b>: com.nokia.carbide.cpp.project.ui</li>
+  </ul>
+<p class=11BodyText>Requires one parameter with name <b>project</b>, attributes <b>projectName, bldInfPath</b> and <b>targetMMPFileName</b>.</p>
+<p class=11BodyText>Initializes Symbian OS c++ projects with build configurations and other required project data, and tries to expand the project tree in the Project Explorer view.</p>
+<br clear=all
+style='page-break-before:always'>
+  <div style='border:none;border-top:solid #057C00 1.5pt;padding:10.0pt 0in 0in 0in'>
+    <p class=Heading1a>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>Conclusion</p>
+  </div>
+  <p class=11BodyText>The wizard template extension, along with template xml files and other associated data files provides a rich environment for creating customized project and class wizards declaratively. New project and class wizards for Symbian OS can be created easily and with little or no programming.</p>
+<h5>Related Information</h5>
+<p><a href="../reference/extension-points/templatewizard_wizardTemplate.html">Wizard Template</a></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</div></body>
+</html>

@@ -1,0 +1,292 @@
+/*
+* Copyright (c) 2002-2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+Predefined include paths to be used in the mmp-files for the 
+*                components in the layered model. There is one definition for
+*                each layer. The mmp-file should use the statement that is 
+*                intended for the same layer as where the mmp-file resides.
+*
+*                There is also macros to be used in the bld.inf-files to 
+*                export of SDK and Domain headers into correct locations. 
+*
+* Usage examples:
+*     *************************************************************
+*     * MMP file related macro usages to add the system include paths
+*     *************************************************************
+*
+*     ---------------------------------------------
+*     Usage for components in applications layer:
+*     ---------------------------------------------
+*     In the beginning of the MMP-file, add the following line 
+*     get the macro definitions and comments
+*         // To get the APP_LAYER_SYSTEMINCLUDE-definition
+*         #include <domain/osextensions/platform_paths.hrh>
+*
+*     Add the following line to the same place as the other 
+*     SYSTEMINCLUDE-statements are.
+*         // Default system include paths for application layer modules.
+*         APP_LAYER_SYSTEMINCLUDE
+*
+*     ---------------------------------------------
+*     Usage for components in middleware layer:
+*     ---------------------------------------------
+*     In the beginning of the MMP-file, add the following line 
+*     get the macro definitions and comments
+*         // To get the MW_LAYER_SYSTEMINCLUDE-definition
+*         #include <domain/osextensions/platform_paths.hrh>
+*
+*     Add the following line to the same place as the other 
+*     SYSTEMINCLUDE-statements are.
+*         // Default system include paths for middleware layer modules.
+*         MW_LAYER_SYSTEMINCLUDE
+*     ---------------------------------------------
+*     Usage for components in OS extension layer:
+*     ---------------------------------------------
+*     In the beginning of the MMP-file, add the following line 
+*     get the macro definitions and comments
+*         // To get the OSEXT_LAYER_SYSTEMINCLUDE-definition
+*         #include <domain/osextensions/platform_paths.hrh>
+*
+*     Add the following line to the same place as the other 
+*     SYSTEMINCLUDE-statements are.
+*         // Default system include paths for osextension layer modules.
+*         OSEXT_LAYER_SYSTEMINCLUDE
+*
+*     *************************************************************
+*     * Macros related to Exporting SDK and Domain headers into 
+*     * correct place in the new system. 
+*     *************************************************************
+*
+*     ---------------------------------------------
+*     Usage for components in applications layer:
+*     ---------------------------------------------
+*     In the beginning of the bld.inf-file, add the following line
+*     get the macro definitions.
+*         // To get the APP_LAYER_SDK_EXP_PATH and 
+*         // APP_LAYER_DOMAIN_EXPORT_PATH macro definitions
+*         #include <domain/osextensions/platform_paths.hrh>
+*
+*     The in the place where you want to export SDK header do:
+*   <somepath>\<filename1.ext>  APP_LAYER_SDK_EXP_PATH(<filename1.ext>)
+*   <somepath>\<filename2.ext> APP_LAYER_SDK_EXP_PATH(<subdir>\<filename2.ext>)
+*   In the above case the filename1.ext would be located in 
+*   \epoc32\include\applications and 
+*   filename2.ext in \epoc32\include\applications\<subdir>
+*   (note: before the change is activated the directories will be  
+*    \epoc32\include and  \epoc32\include\oem)
+*
+*   For Domain APIs use similarly the APP_LAYER_DOMAIN_EXPORT_PATH
+*
+*     ---------------------------------------------
+*     Usage for components in middleware layer:
+*     ---------------------------------------------
+*
+*     In the beginning of the bld.inf-file, add the following line
+*     get the macro definitions.
+*         // To get the MW_LAYER_SDK_EXP_PATH and 
+*         // MW_LAYER_DOMAIN_EXPORT_PATH macro definitions
+*         #include <domain/osextensions/platform_paths.hrh>
+*
+*     The in the place where you want to export SDK header do:
+*   <somepath>\<filename1.ext>  MW_LAYER_SDK_EXP_PATH(<filename1.ext>)
+*   <somepath>\<filename2.ext>  MW_LAYER_SDK_EXP_PATH(<subdir>\<filename2.ext>)
+*   In the above case the filename1.ext would be located in 
+*   \epoc32\include\middleware and 
+*   (note: before the change is activated the directories will be  
+*    \epoc32\include and  \epoc32\include\oem)
+*   filename2.ext in \epoc32\include\middleware\<subdir>
+*
+*   For Domain APIs use similarly the MW_LAYER_DOMAIN_EXPORT_PATH
+*
+*     ---------------------------------------------
+*     Usage for components in OS extension layer:
+*     ---------------------------------------------
+*     In the beginning of the bld.inf-file, add the following line
+*     get the macro definitions.
+*         // To get the OSEXT_LAYER_SDK_EXP_PATH and 
+*         // OSEXT_LAYER_DOMAIN_EXPORT_PATH macro definitions
+*         #include <domain/osextensions/platform_paths.hrh>
+*
+*     The in the place where you want to export SDK header do:
+*   <somepath>\<filename1.ext>  OSEXT_LAYER_SDK_EXP_PATH(<filename1.ext>)
+*   <somepath>\<filename2.ext>  OSEXT_LAYER_SDK_EXP_PATH(<subdir>\<filename2.ext>)
+*   In the above case the filename1.ext would be located in 
+*   \epoc32\include\osextensions and 
+*   filename2.ext in \epoc32\include\osextensions\<subdir>
+*   (note: before the change is activated the directories will be  
+*    \epoc32\include and  \epoc32\include\oem)
+*   For Domain APIs use similarly the OSEXT_LAYER_DOMAIN_EXPORT_PATH
+*
+*
+*/
+
+
+
+#ifndef PLATFORM_PATHS_HRH
+#define PLATFORM_PATHS_HRH
+
+/**
+**************************************************************************
+* General comments about the exporting of headers macros
+*  1) The definitions point currently to the old locations. (which makes some 
+*     macros to have same values. The idea is that you can already start using
+*     them now and those will be later on changed => change affects everybody.
+***************************************************************************
+*/
+
+/**
+* ---------------------------------------
+* Location, where the applications layer specific SDK headers should be exported
+* See usage on top of this hrh-file.
+* ---------------------------------------
+* The new value that is activate later on: 
+* #define APP_LAYER_SDK_EXPORT_PATH(exported) \epoc32\include\applications\##exported 
+* The current definition:
+*/
+#define APP_LAYER_SDK_EXPORT_PATH(exported) \epoc32\include\##exported
+
+/**
+* ---------------------------------------
+* Location, where the applications layer specific domain headers should be exported
+* See usage on top of this hrh-file.
+* ---------------------------------------
+* The new value that is activate later on: 
+* #define APP_LAYER_DOMAIN_EXPORT_PATH \epoc32\include\domain\applications
+* The current definition:
+*/
+#define APP_LAYER_DOMAIN_EXPORT_PATH(exported) \epoc32\include\oem\##exported
+
+/**
+* ---------------------------------------
+* Location, where the middleware layer specific SDK headers should be exported
+* See usage on top of this hrh-file.
+* ---------------------------------------
+* The new value that is activate later on: 
+* #define MW_LAYER_SDK_EXPORT_PATH \epoc32\include\middleware
+* The current definition:
+*/
+#define MW_LAYER_SDK_EXPORT_PATH(exported) \epoc32\include\##exported
+
+/**
+* ---------------------------------------
+* Location, where the middleware layer specific domain headers should be exported
+* ---------------------------------------
+* The new value that is activate later on: 
+* #define MW_LAYER_DOMAIN_EXPORT_PATH \epoc32\include\domain\middleware
+* The current definition:
+*/
+#define MW_LAYER_DOMAIN_EXPORT_PATH(exported) \epoc32\include\oem\##exported
+
+/**
+* ---------------------------------------
+* Location, where the osextension  specific SDK headers should be exported
+* ---------------------------------------
+* The new value that is activate later on: 
+* #define OSEXT_LAYER_SDK_EXPORT_PATH \epoc32\include\osextensions
+* The current definition:
+*/
+#define  OSEXT_LAYER_SDK_EXPORT_PATH(exported) \epoc32\include\##exported
+
+/**
+* ---------------------------------------
+* Location, where the  osextension specific domain headers should be exported
+* ---------------------------------------
+* The new value that is activate later on: 
+* #define OSEXT_LAYER_DOMAIN_EXPORT_PATH \epoc32\include\domain\osextensions
+* The current definition:
+*/
+#define OSEXT_LAYER_DOMAIN_EXPORT_PATH(exported) \epoc32\include\oem\##exported
+
+/**
+**************************************************************************
+*  General comments about the 3 define statements related to include paths:
+*  1) the \epoc32\include\oem is now defined there during transition period. 
+*     Once the directory is empty, the directory will be removed. However this 
+*     enables us to ensure that if you use these define statements => you do 
+*     not have to remove the statements later on, when the directory no longer 
+*     exists.
+*  2) These statements should be enough in normal cases. For certain specific 
+*     cases you migth need to add some specific directory from \epoc32\include
+*     (for instance \epoc32\include\ecom).
+*     In normal cases the include staments in code should be relative to one of 
+*     the system include paths, but in certain cases, the included files requires
+*     that the subdirectory is also part of the system include paths.
+****************************************************************************
+*/
+
+/**
+* This define statements defines the SYSTEMINCLUDE-line, which is intended to be 
+* used in the mmp-files that are part of the applications-layer. It includes all 
+* the needed directories from the \epoc32\include, that are valid ones for the 
+* application-layer components. 
+*
+* Applications layer is the last one in the list, since most likely the most of 
+* the headers come from middleware or osextensions-layer  => thus they are first.
+*/
+#define APP_LAYER_SYSTEMINCLUDE SYSTEMINCLUDE \
+ \epoc32\include \
+ \epoc32\include\oem \
+ \epoc32\include\middleware \
+ \epoc32\include\domain\middleware \
+ \epoc32\include\osextensions \
+ \epoc32\include\domain\osextensions \
+ \epoc32\include\applications \
+ \epoc32\include\domain\applications
+
+/**
+* This define statements defines the SYSTEMINCLUDE-line, which is intended to be
+* used in the mmp-files that are part of the middleware-layer. It includes all 
+* the needed directories from the \epoc32\include, that are valid ones for the 
+* middleware-layer components. 
+*/
+#define MW_LAYER_SYSTEMINCLUDE SYSTEMINCLUDE \
+ \epoc32\include \
+ \epoc32\include\oem \
+ \epoc32\include\middleware \
+ \epoc32\include\domain\middleware \
+ \epoc32\include\osextensions \
+ \epoc32\include\domain\osextensions
+
+/**
+* This define statements defines the SYSTEMINCLUDE-line, which is intended to be
+* used in the mmp-files that are part of the  osextensions-layer. It includes all
+* the needed directories from the \epoc32\include, that are valid ones for the
+* osextensions-layer components. 
+*/
+#define OSEXT_LAYER_SYSTEMINCLUDE SYSTEMINCLUDE \
+ \epoc32\include \
+ \epoc32\include\oem \
+ \epoc32\include\osextensions \
+ \epoc32\include\domain\osextensions
+
+/**
+****************************************************************************
+* Definitions that also define the paths to the layer specific source directories.
+****************************************************************************
+*/
+/**
+* The below 3 macros define the paths to the layer-specific source dirs.
+* See usage on top of this hrh-file, these are used the same way as 
+* for instance the OSEXT_LAYER_DOMAIN_EXPORT_PATH
+*/
+#define APP_LAYER_SOURCE_PATH(rest)    \s60\app\##rest
+#define MW_LAYER_SOURCE_PATH(rest)     \s60\mw\##rest
+#define OSEXT_LAYER_SOURCE_PATH(rest)  \s60\osext\##rest
+
+#endif  // end of PLATFORM_PATHS_HRH
+
+
+
+
+

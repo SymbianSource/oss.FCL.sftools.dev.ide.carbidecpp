@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.templatewizard/src"
+    modelPluginID="com.nokia.carbide.templatewizard" templateDirectory="" modelName="Template"
+    generateSchema="true" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>template.xsd</foreignModel>
+  <genPackages prefix="Template" basePackage="com.nokia.carbide.internal.template.gen"
+      resource="XML" disposableProviderFactory="true" ecorePackage="Template.ecore#/">
+    <genClasses ecoreClass="Template.ecore#//BaseFieldType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//BaseFieldType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//BaseFieldType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//BaseFieldType/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//BaseFieldType/mandatory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//BaseFieldType/persist"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Template.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/baseField"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/filenameField"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/template"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/textField"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Template.ecore#//DocumentRoot/uidField"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//FilenameFieldType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//FilenameFieldType/default"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//MetadataType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//MetadataType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//MetadataType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//MetadataType/value1"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//ParameterType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//ParameterType/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Template.ecore#//ParameterType/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//ProcessType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//ProcessType/parameter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//ProcessType/bundle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//ProcessType/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//ProcessType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//TemplateType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//TemplateType/wizardPage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//TemplateType/process"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TemplateType/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//TemplateType/metadata"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TemplateType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TemplateType/copyright"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TemplateType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TemplateType/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TemplateType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//TextFieldType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TextFieldType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TextFieldType/multiline"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//TextFieldType/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//UidFieldType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//UidFieldType/max"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//UidFieldType/min"/>
+    </genClasses>
+    <genClasses ecoreClass="Template.ecore#//WizardPageType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Template.ecore#//WizardPageType/group"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//WizardPageType/uidField"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//WizardPageType/textField"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Template.ecore#//WizardPageType/filenameField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//WizardPageType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//WizardPageType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//WizardPageType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Template.ecore#//WizardPageType/label"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

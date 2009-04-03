@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>Pragma Syntax</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+    </head>
+
+<body>
+<h2>Pragma Syntax </h2>
+<p>Most pragmas have this syntax:</p>
+<p class="code">#pragma setting-name on | off | reset</p>
+<h5>Parameters</h5>
+<p class="code">off</p>
+<blockquote>
+  <p>Enables the pragma for any functions that follow.</p>
+</blockquote>
+<p class="code">on</p>
+<blockquote>
+  <p>Disables the pragma for any functions that follow.</p>
+</blockquote>
+<p class="code">reset</p>
+<blockquote>
+  <p>Restores the pragma to its original setting.</p>
+</blockquote>
+<p>An exampe of this is  shown below:</p>
+<div class="listing">
+  <p class="code">#pragma profile off</p>
+  <p>// If the Generate Profiler Calls setting is on, turns it off for these functions.</p>
+  <p>#include &lt;smallfuncs.h&gt;</p>
+  <p>#pragma profile reset</p>
+  <p>// If the Generate Profiler Calls setting was originally on, turns it back on.<br />
+    // 
+  Otherwise, the setting remains off</p>
+</div>
+<p>Suppose that you use <span class="code">#pragma profile on</span> instead of <span class="code">#pragma profile reset</span>. If you later disable Generate Profiler Calls from the Preference dialog box, that pragma turns it on. Using reset ensures that you do not inadvertently change the settings in the Project Settings dialog box.</p>
+<p class="note"><strong>TIP</strong> To catch pragmas that the Carbide x86 compiler does not recognize, use the pragma <span class="code">warn_illpragma</span>. See also <a href="../errors/err_ill_pragmas.htm">Illegal Pragmas</a>.</p>
+<p class="note"><strong>NOTE</strong> The default setting of a pragma is based on the command-line default setting. These default settings used in project stationery may differ across target devices when creating a specific project. For example, a pragma for an x86 target may default to off while the same setting for an ARM target may default to on.</p>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

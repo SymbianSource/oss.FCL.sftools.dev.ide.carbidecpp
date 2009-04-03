@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE template [
+<!ENTITY standardDirFields SYSTEM "../../shared/standardDirFields.inc">
+]>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+	<wizardPage 
+		id="basics" 
+		label="%basics.label">
+		<description>%basics.desc</description>
+		<uidField 
+				id="uid3"
+				label="%basics.uid3.label"
+				min="0xe0000000"
+				max="0xefffffff"
+				mandatory="true">
+				<description>%basics.uid3.desc</description>
+		</uidField>
+	</wizardPage>
+
+	<wizardPage 
+		id="directories" 
+		label="%directories.label">
+
+		&standardDirFields;
+
+		<filenameField 
+				id="gfxDir"
+				label="%directories.gfxDir.label"
+				default="gfx"
+				mandatory="true"
+				persist="true">
+				<description>%directories.gfxDir.desc</description>
+		</filenameField>
+	</wizardPage>
+
+	<process class="com.nokia.sdt.series60.processes.AddProjectNameVariantsProcessRunner"
+				bundle="com.nokia.sdt.series60.componentlibrary">
+		<parameter name="project" projectName="$(projectName)" />
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.NewProject"
+	 		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.CreateRezId"
+	 	bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" /> 
+	</process>
+
+	<process class="com.nokia.carbide.cpp.internal.sdk.core.processes.CheckS60CustKitSupport"
+	 	bundle="com.nokia.carbide.cpp.sdk.core">
+		<parameter name="project" projectName="$(projectName)" />			
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.CreateFolders"
+		 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		<parameter name="folder" path="$(sourceDir)" /> 
+		<parameter name="folder" path="$(incDir)" /> 
+		<parameter name="folder" path="$(dataDir)" /> 
+		<parameter name="folder" path="$(groupDir)" /> 
+		<parameter name="folder" path="$(gfxDir)" /> 
+		<parameter name="folder" path="$(sisDir)" /> 
+	</process>
+	
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="file"
+			sourcePath="README.txt"
+			targetPath="README.txt" 
+			/>
+		<parameter name="file"
+			sourcePath="data/YahooImageSearch_reg.loc" 
+			targetPath="$(dataDir)/$(baseName)_reg.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/YahooImageSearch_reg.rss" 
+			targetPath="$(dataDir)/$(baseName)_reg.rss" 
+			/>
+		<parameter name="file"
+			sourcePath="data/YahooImageSearch.l01" 
+			targetPath="$(dataDir)/$(baseName).l01" 
+			/>
+		<parameter name="file"
+			sourcePath="data/YahooImageSearch.loc" 
+			targetPath="$(dataDir)/$(baseName).loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/YahooImageSearch.rss" 
+			targetPath="$(dataDir)/$(baseName).rss" 
+			/>
+		<parameter name="file"
+			sourcePath="data/SearchResults.l01" 
+			targetPath="$(dataDir)/SearchResults.l01" 
+			/>
+		<parameter name="file"
+			sourcePath="data/SearchResults.loc" 
+			targetPath="$(dataDir)/SearchResults.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/SearchResults.rssi" 
+			targetPath="$(dataDir)/SearchResults.rssi" 
+			/>
+		<parameter name="file"
+			sourcePath="data/ImageContainer.l01" 
+			targetPath="$(dataDir)/ImageContainer.l01" 
+			/>
+		<parameter name="file"
+			sourcePath="data/ImageContainer.loc" 
+			targetPath="$(dataDir)/ImageContainer.loc" 
+			/>
+		<parameter name="file"
+			sourcePath="data/ImageContainer.rssi" 
+			targetPath="$(dataDir)/ImageContainer.rssi" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/list_icon.bmp"
+			targetPath="$(gfxDir)/list_icon.bmp" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/list_icon_mask.bmp"
+			targetPath="$(gfxDir)/list_icon_mask.bmp" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="gfx/qgn_menu_YahooImageSearch.svg" 
+			targetPath="$(gfxDir)/qgn_menu_$(baseName).svg" 
+			substitute="false" 
+			/>
+		<parameter name="file"
+			sourcePath="group/baseName.mmp" 
+			targetPath="$(groupDir)/$(baseName).mmp" 
+			/>
+		<parameter name="file"
+			sourcePath="group/bld.inf" 
+			targetPath="$(groupDir)/bld.inf" 
+			/>
+		<parameter name="file"
+			sourcePath="group/Icons_aif_scalable_dc.mk" 
+			targetPath="$(groupDir)/Icons_aif_scalable_dc.mk" 
+			/>
+		<parameter name="file"
+			sourcePath="sis/YahooImageSearch.pkg" 
+			targetPath="$(sisDir)/$(baseName).pkg" 
+			/>
+		<parameter name="file"
+			sourcePath="sis/backup_registration.xml" 
+			targetPath="$(sisDir)/backup_registration.xml" 
+			/>
+		<parameter name="file"
+			sourcePath="application.uidesign" 
+			targetPath="application.uidesign" 
+			/>
+		<parameter name="file"
+			sourcePath="ImageContainer.uidesign" 
+			targetPath="ImageContainer.uidesign" 
+			/>
+		<parameter name="file"
+			sourcePath="SearchResults.uidesign" 
+			targetPath="SearchResults.uidesign" 
+			/>
+	</process>
+	
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" />			
+			
+		<parameter name="file"
+			sourcePath="inc/ImageContainer.h" 
+			targetPath="$(incDir)/ImageContainer.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/ImageContainerView.h" 
+			targetPath="$(incDir)/ImageContainerView.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/ImageDisplayer.h" 
+			targetPath="$(incDir)/ImageDisplayer.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/SearchResults.h" 
+			targetPath="$(incDir)/SearchResults.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/SearchResults.hrh" 
+			targetPath="$(incDir)/SearchResults.hrh" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/SearchResultsView.h" 
+			targetPath="$(incDir)/SearchResultsView.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/WebClientEngine.h" 
+			targetPath="$(incDir)/WebClientEngine.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/WebClientEngine.pan" 
+			targetPath="$(incDir)/WebClientEngine.pan" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/YahooImageSearch.hrh" 
+			targetPath="$(incDir)/$(baseName).hrh" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/YahooImageSearchApplication.h" 
+			targetPath="$(incDir)/YahooImageSearchApplication.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/YahooImageSearchAppUi.h" 
+			targetPath="$(incDir)/YahooImageSearchAppUi.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/YahooImageSearchDocument.h" 
+			targetPath="$(incDir)/YahooImageSearchDocument.h" 
+			/>
+		<parameter name="file"
+			sourcePath="inc/YahooSearchModel.h"
+			targetPath="$(incDir)/YahooSearchModel.h" 
+			/>
+		<parameter name="file"
+			sourcePath="src/ImageContainer.cpp" 
+			targetPath="$(sourceDir)/ImageContainer.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/ImageContainerView.cpp" 
+			targetPath="$(sourceDir)/ImageContainerView.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/ImageDisplayer.cpp" 
+			targetPath="$(sourceDir)/ImageDisplayer.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/SearchResults.cpp" 
+			targetPath="$(sourceDir)/SearchResults.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/SearchResultsView.cpp" 
+			targetPath="$(sourceDir)/SearchResultsView.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/WebClientEngine.cpp" 
+			targetPath="$(sourceDir)/WebClientEngine.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/YahooImageSearchApplication.cpp" 
+			targetPath="$(sourceDir)/YahooImageSearchApplication.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/YahooImageSearchAppUi.cpp" 
+			targetPath="$(sourceDir)/YahooImageSearchAppUi.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/YahooImageSearchDocument.cpp" 
+			targetPath="$(sourceDir)/YahooImageSearchDocument.cpp" 
+			/>
+		<parameter name="file"
+			sourcePath="src/YahooSearchModel.cpp" 
+			targetPath="$(sourceDir)/YahooSearchModel.cpp" 
+			/>
+	</process>
+
+	<process class="com.nokia.carbide.templatewizard.processes.OpenFileInEditor"
+			 bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" fileName="README.txt" />
+	</process>
+
+	<process class="com.nokia.sdt.symbian.updater.SetIgnoreAutoUpgrade"
+				bundle="com.nokia.sdt.symbian">
+		<parameter name="project" projectName="$(projectName)" />
+	</process>
+
+	<process class="com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks"
+	 	bundle="com.nokia.carbide.cpp.project.ui">
+		<parameter name="project" projectName="$(projectName)"
+			bldInfPath="$(groupDir)/bld.inf"
+			targetMMPFileName="$(baseName).mmp" 
+			pkgFilePath="$(sisDir)/$(baseName).pkg" /> 
+	</process>
+
+</template>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<introContent>
+	
+  	<extensionContent 
+		  id="com.nokia.carbide.cpp.uidesigner.doc.user-whatsnew" 
+		  style="uidesigner.css" 
+		  alt-style="uidesigner.properties" 
+		  name="UI Designer Release Notes" 
+		  path="whatsnew/@">
+		  
+		<group style-id="content-group" id="uidesigner">
+       		<link label="UI Designer Release Notes" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.uidesigner.doc.user/html/release_notes.htm" 
+       		id="uid-note" style-id="content-link">
+          		<text>Read these important engineering notes for the UI Designer feature</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+
+</introContent>

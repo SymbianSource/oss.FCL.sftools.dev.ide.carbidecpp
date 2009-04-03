@@ -1,0 +1,5 @@
+#include <arraydialog.rh>
+
+RESOURCE DIALOG r_test_standalone_never
+	{
+	}

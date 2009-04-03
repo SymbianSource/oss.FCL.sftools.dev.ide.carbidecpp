@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Current Process State</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Current Process State</h2>
+</div>
+<div>
+<p>The current process is the process in whose address space the
+current thread was executing when the fault occurred. The 15 lines starting at
+line 33 of the <a href="CrashDebuggerInfoAboutKernel.guide.html">output</a> gives information relating to the current process. This
+has some similarities with the current thread information:</p>
+<p class="listing">TheCurrentProcess=64038d5c<br>
+  PROCESS at 64038d5c VPTR=f80342a4 AccessCount=6 Owner=00000000<br>Full name test2.exe<br>ExitInfo 3,0,<br>Flags a0000000, Handles 6403860c, Attributes 60010000<br>DataBssChunk 64039234, CodeSeg 6403919c<br>DllLock 64039044, Process Lock 64038eec SID 00000000<br>TempCodeSeg 00000000 CodeSeg 6403919c Capability 00000000 0003ffff<br>CodeSegs: Count=0<br>NumChunks=2<br>0: Chunk 64039234, run 00400000, access count 1<br>1: Chunk 6403613c, run 00600000, access count 1<br>Process shared IO buffers cookie 0000031d<br>Process has no shared IO buffers<br>Domain -1, DACR 55555507</p>
+<p>The information includes: </p>
+<ul>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_01" title="Extracting information about the kernel / Current process state / Process object and access count">Process object and access count</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_02" title="Extracting information about the kernel / Current process state / The process name">The process name</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_03" title="Extracting information about the kernel / Current process state / Exit information">Exit information</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_04" title="Extracting information about the kernel / Current process state / Process flags">Process flags</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_05" title="Extracting information about the kernel / Current thread state / Handles">Handles</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_06" title="Extracting information about the kernel / Current process state / Attributes">Attributes</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_07" title="Extracting information about the kernel / Current process state / Information about memory">Information about memory</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_08" title="Extracting information about the kernel / Current process state / Secure id">Secure id</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_09" title="Extracting information about the kernel / Current process state / Capability">Capability</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_10" title="Extracting information about the kernel / Current process state / Code segments">Code segments</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_11" title="Extracting information about the kernel / Current process state / Chunks owned by the process">Chunks owned by the process</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_12" title="Extracting information about the kernel / Current process state / Shared IO buffer information">Shared IO buffer information</a></p>
+</li>
+<li>
+<p><a href="CrashDebuggerInfoAboutKernel.guide04.html#cps_13" title="Extracting information about the kernel / Current process state / Domain information">Domain information</a></p>
+</li>
+</ul>
+</div><div class="Head3">
+<h3><a name="cps_01"></a>Process object and access count</h3>
+</div><div>
+<p class="CodeBlock">PROCESS at 64038d5c VPTR=f80342a4 AccessCount=6 Owner=00000000</p>
+<p>The Process at field contains a pointer to the
+DProcess object representing the process.</p>
+<p>The AccessCount field contains the reference count
+on the process object.</p>
+<p>The owner field contains a pointer to the object
+that owns this DProcess object.</p>
+</div>
+<div class="Head3">
+<h3><a name="cps_02" id="cps_02"></a>The process name</h3>
+</div><div>
+<p class="CodeBlock">Full name test2.exe</p>
+<p>The Full name field gives the name of the process.
+In this example, the name of the process is <b>test2.exe</b>.</p>
+<p>See <a href="CrashDebuggerInfoAboutKernel.guide.html" title="Extracting information about the kernel / Current thread state / The thread name">the thread name</a>.</p>
+</div><div class="Head3">
+<h3><a name="cps_03" id="cps_03"></a>Exit information</h3>
+</div><div>
+<p class="CodeBlock">ExitInfo 3,0,</p>
+<p>The ExitInfo field contains the information that
+characterises the process exit. In this example, the value is 3, meaning that
+this process has not exited. See also TExitType.</p>
+</div><div class="Head3">
+<h3><a name="cps_04" id="cps_04"></a>Process flags</h3>
+</div><div>
+<p class="CodeBlock">Flags a0000000, Handles 6403860c, Attributes 60010000</p>
+<p>The Flags field contains information about the state
+of the process. The possible values in this field are defined by the
+KProcess... constants in u32std.h. While the symbols
+are internal to Symbian OS, the following table summarises the values and their
+meaning.</p>
+<table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0"><tr valign="top"><td class="Cell">
+<p><b>Symbol</b></p></td><td class="Cell">
+<p><b>Value</b></p></td><td class="Cell">
+<p><b>Meaning</b></p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KProcessFlagSystemCritical</p></td><td class="Cell">
+<p>0x00000004</p></td><td class="Cell">
+<p>A process panic causes the entire system to
+reboot.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KProcessFlagSystemPermanent</p></td><td class="Cell">
+<p>0x00000008</p></td><td class="Cell">
+<p>If the process exits for any reason, then this causes the
+entire system to reboot.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KProcessFlagPriorityControl</p></td><td class="Cell">
+<p> 0x40000000</p></td><td class="Cell">
+<p>If set, then other threads are allowed to change this
+thread&#8217;s priority.</p></td></tr>
+<tr valign="top"><td class="Cell">
+<p>KProcessFlagJustInTime</p></td><td class="Cell">
+<p>0x80000000</p></td><td class="Cell">
+<p>If set, then just-in-time debug is enabled for this
+thread.</p></td></tr>
+</table></td></tr></table>
+</div><div class="Head3">
+<h3><a name="cps_05" id="cps_05"></a>Handles</h3>
+</div><div>
+<p class="CodeBlock">Flags a0000000, Handles 6403860c, Attributes 60010000</p>
+<p>The Handles field contains the address of a
+DObjectIx object that contains the handles owned by the
+process.</p>
+</div><div class="Head3">
+<h3><a name="cps_06" id="cps_06"></a>Attributes</h3>
+</div><div>
+<p class="CodeBlock">Flags a0000000, Handles 6403860c, Attributes 60010000</p>
+<p>The Attributes field contains the attributes of the
+process. Some are generic, as defined by
+DProcess::TProcessAttributes, but others depend on the
+memory model.</p>
+</div>
+<h3><a name="cps_07" id="cps_07"></a>Information about memory</h3>
+<div class="Head3"></div>
+<div>
+<p class="CodeBlock">DataBssChunk 64039234, CodeSeg 6403919c</p>
+<p>The DataBssChunk field contains a pointer to the
+DChunk object representing the chunk that contains the process
+data and .bss memory. Be aware that this is not the same as the
+heap - heaps are allocated to threads, and chunk information is found in the
+DThread object.</p>
+<p>The CodeSeg field contains a pointer to the
+DCodeSeg object that represents the code segment.</p>
+</div><div class="Head3">
+<h3><a name="cps_08" id="cps_08"></a>Secure id</h3>
+</div><div>
+<p class="CodeBlock">DllLock 64039044, Process Lock 64038eec SID 00000000</p>
+<p>The SID field contains the secure id of the
+process.</p>
+</div><div class="Head3">
+<h3><a name="cps_09" id="cps_09"></a>Capability</h3>
+</div><div>
+<p class="CodeBlock">TempCodeSeg 00000000 CodeSeg 6403919c Capability 00000000 0003ffff</p>
+<p>The second four bytes of the Capability field contains the set of
+bits that define the capability for this process. This defines what the process
+can and cannot do.</p>
+</div><div class="Head3">
+<h3><a name="cps_10" id="cps_10"></a>Code segments</h3>
+</div><div>
+<p class="CodeBlock">CodeSegs: Count=0</p>
+<p>The CodeSegs: Count field contains the number of
+code segments that have been dynamically loaded into the process. This will be
+zero if the process is XIP.</p>
+</div><div class="Head3">
+<h3><a name="cps_11" id="cps_11"></a>Chunks owned by the process</h3>
+</div><div>
+<p class="CodeBlock">NumChunks=2<br>0: Chunk 64039234, run 00400000, access count 1<br>1: Chunk 6403613c, run 00600000, access count 1</p>
+<p>The NumChunks field contains the number of chunks owned by the
+process.</p>
+<p>Successive lines contain information about each chunk:</p>
+<ul>
+<li>
+<p>the Chunk field contains the address of a kernel
+DChunk object.</p>
+</li>
+<li>
+<p>the run field contains the virtual address at
+which the chunk resides when this is the current process.</p>
+</li>
+<li>
+<p> the access count field contains the reference
+count of the object.</p>
+</li>
+</ul>
+</div><div class="Head3">
+<h3><a name="cps_12" id="cps_12"></a>Shared IO buffer information</h3>
+</div>
+<div>
+<p class="CodeBlock">Process shared IO buffers cookie 0000031d<br>Process has no shared IO buffers</p>
+<p>This is information about shared IO buffers. The cookie is only
+really of interest to base engineers.</p>
+</div>
+<div class="Head3">
+<h3><a name="cps_13" id="cps_13"></a>Domain information</h3>
+</div><div>
+<p class="CodeBlock">Domain -1, DACR 55555507</p>
+<p>This is ARM MMU-specific protection information. Processes have
+domain -1 and DACR 0xFFFFFFFF.</p>
+</div>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide.html">Extracting Kernel Information</a> </li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide02.html">Scheduler State</a></li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide03.html">Current Thread State</a></li>
+  <li><a href="CrashDebuggerInfoAboutKernel.guide05.html">Current Data Section Process</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

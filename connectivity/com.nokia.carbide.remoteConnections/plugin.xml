@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="connectionType" name="Connection Type" schema="schema/connectionType.exsd"/>
+   <extension-point id="service" name="Service" schema="schema/service.exsd"/>
+   <extension-point id="extensionFilter" name="Extension Filter" schema="schema/extensionFilter.exsd"/>
+   <extension-point id="connectedServiceFactory" name="Connected Service Factory" schema="schema/connectedServiceFactory.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="%ViewName"
+            icon="icons/connection.png"
+            category="com.nokia.carbide.cpp"
+            class="com.nokia.carbide.remoteconnections.view.ConnectionsView"
+            id="com.nokia.carbide.remoteconnections.view.ConnectionsView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.nokia.carbide.cpp.CarbideCppPerspective">
+         <view
+               id="com.nokia.carbide.remoteconnections.view.ConnectionsView"
+               relationship="stack"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <category
+            id="com.nokia.carbide.remoteConnections.category"
+            name="%CategoryName">
+      </category>
+      <wizard
+            category="com.nokia.carbide.remoteConnections.category"
+            class="com.nokia.carbide.remoteconnections.wizard.ExportWizard"
+            icon="icons/connection.png"
+            id="com.nokia.carbide.remoteConnections.exportWizard"
+            name="%WizardName">
+         <description>
+            %Export.desc
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            id="com.nokia.carbide.remoteConnections.category"
+            name="%CategoryName">
+      </category>
+      <wizard
+            category="com.nokia.carbide.remoteConnections.category"
+            class="com.nokia.carbide.remoteconnections.wizard.ImportWizard"
+            icon="icons/connection.png"
+            id="com.nokia.carbide.remoteConnections.importWizard"
+            name="%WizardName">
+         <description>
+            %Import.desc
+         </description>
+      </wizard>
+   </extension>
+ <extension
+       point="org.eclipse.ui.actionSets">
+    <actionSet
+          id="com.nokia.carbide.remoteConnections.OnDevice.actionSet"
+          label="On-Device Connections"
+          visible="true">
+       <action
+             class="com.nokia.carbide.remoteconnections.settings.ui.OnDeviceConnectionAction"
+             id="com.nokia.carbide.remoteConnections.OnDevice.action"
+             label="%OnDevice.label"
+             menubarPath="help/onDeviceGroup">
+       </action>
+    </actionSet>
+ </extension>
+
+</plugin>

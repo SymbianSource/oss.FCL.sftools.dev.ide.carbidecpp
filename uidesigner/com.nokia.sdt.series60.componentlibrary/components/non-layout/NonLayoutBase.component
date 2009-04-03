@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- This component is the abstract base component for
+	     all Series 60 non-layout components
+	 -->
+
+	<component
+			baseComponent="com.nokia.sdt.series60.CommonBase" 
+			friendlyName="" 
+			qualifiedName="com.nokia.sdt.series60.NonLayoutBase" 
+			abstract="true"
+			version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<attributes>
+			<attribute key="is-layout-object">false</attribute>
+			<attribute key="is-non-layout-object">true</attribute>
+			</attributes>
+		<properties>
+		</properties>
+	</component>
+</componentDefinition>

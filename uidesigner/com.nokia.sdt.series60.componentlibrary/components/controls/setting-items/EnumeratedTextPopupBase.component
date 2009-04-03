@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.EnumeratedTextPopupType">
+		<property name="settingText" type="localizedString" 
+			descriptionKey="settingTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<property name="popupText" type="localizedString" 
+			descriptionKey="popupTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<property name="value" type="integer" 
+			descriptionKey="valueDescription" />
+		
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.EnumeratedTextPopupBase"
+		baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		abstract="true"
+		version="1.0">
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="AVKON_POPUP_SETTING_TEXTS" className="CAknEnumeratedTextPopupSettingItem" 
+		/>
+		<attributes>
+			<attribute key="is-setting-item-list-content">true</attribute>
+		</attributes>
+	
+		<properties>
+			<property name="active" category="Data" 
+				descriptionKey="activeDescription"
+				type="integer" default="0"/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="EnumeratedTextPopupBase.js" prototype="EnumeratedTextPopupBase"/>
+			</implementation>
+		</implementations>
+
+	</component>
+</componentDefinition>
+		

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.NaviVolume.VolumeType">
+		<enumElement value="R_AVKON_NAVI_PANE_VOLUME_INDICATOR"/>
+		<enumElement value="R_AVKON_NAVI_PANE_RECORDER_VOLUME_INDICATOR"/>
+		<enumElement value="R_AVKON_NAVI_PANE_EARPIECE_VOLUME_INDICATOR"/>
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.NaviBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.NaviVolume" 
+		category="System"
+		instanceNameRoot="naviVolume"
+		version="1.0">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknNavigationControlContainer" classHelpTopic=""
+			resourceType="NAVI_DECORATOR, VOLUME" resourceHelpTopic="" 
+		/>
+		
+		<attributes>
+			<attribute key="rss-control-type-enum">EAknCtNaviPane</attribute>
+		</attributes>
+		
+		<properties>
+			<enumProperty name="volumeType" category="Appearance" 
+			    	type="com.nokia.sdt.series60.NaviVolume.VolumeType"
+			    	descriptionKey="volumeTypeDescription" 
+			    	default="R_AVKON_NAVI_PANE_VOLUME_INDICATOR"/>
+			<property name="value" category="Data" 
+					type="integer" 
+			    	descriptionKey="valueDescription" 
+					default="5" minValue="0" maxValue="9"/>
+		</properties>
+		
+		<designerImages 
+			layoutImageFile="NaviVolumeLayout2.png"
+			smallIconFile="NaviVolume_sm.png" 
+			largeIconFile="NaviVolume.png"
+		/>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<script file="NaviVolume_visual.js" prototype="NaviVolumeVisual"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="NAVI_DECORATOR" headers="avkon.rh">
+				<mapResourceMember property="." member="control" struct="VOLUME" headers="avkon.rh">		
+ 					<mapSimpleMember property="value" member="value"/>
+				</mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+		
+		
+		<sourceGen>
+
+			<useTemplateGroup ids="NaviBaseSetup"/>
+			<useTemplate ids="SetupPrelude"/>
+
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <AknVolumeControl.h>
+]]>			</template>
+
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <avkon.rsg>	
+]]>			</template>
+
+			<template phase="SetupStatusPane"><![CDATA[
+	iNaviDecorator_ = naviPane->CreateVolumeIndicatorL( ${instance.properties.volumeType} ); 
+	static_cast< CAknVolumeControl* >( iNaviDecorator_->DecoratedControl() )
+		->SetValue( ${properties.value} );
+]]>			
+			</template>
+
+			<useTemplate ids="SetupPostlude CleanupPostlude"/>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

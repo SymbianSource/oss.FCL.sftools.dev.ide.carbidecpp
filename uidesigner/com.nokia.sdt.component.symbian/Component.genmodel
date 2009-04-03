@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.sdt.component.symbian/src"
+    editDirectory="/com.nokia.sdt.emf.component.edit/src" editorDirectory="/com.nokia.sdt.emf.component.edit/src"
+    modelPluginID="com.nokia.sdt.component.symbian" runtimeJar="true" modelName="Component"
+    editPluginClass="com.nokia.sdt.emf.component.provider.ComponentEditPlugin" editorPluginClass=""
+    testsDirectory="/com.nokia.sdt.emf.component.tests/src" testSuiteClass="com.nokia.sdt.emf.component.tests.ComponentAllTests"
+    importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>component.xsd</foreignModel>
+  <genPackages prefix="Component" basePackage="com.nokia.sdt.emf" resource="XML" disposableProviderFactory="true"
+      ecorePackage="com.nokia.sdt.emf.component.ecore#/">
+    <genEnums ecoreEnum="com.nokia.sdt.emf.component.ecore#//PropertyDataType">
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/void"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/integer"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/float"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/string"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/localizedString"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//PropertyDataType/uniqueName"/>
+    </genEnums>
+    <genEnums ecoreEnum="com.nokia.sdt.emf.component.ecore#//ReferenceScopeType">
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//ReferenceScopeType/model"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//ReferenceScopeType/children"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//ReferenceScopeType/siblings"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="com.nokia.sdt.emf.component.ecore#//StandaloneType">
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//StandaloneType/false"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//StandaloneType/true"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//StandaloneType/never"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//StandaloneType/default"/>
+      <genEnumLiterals ecoreEnumLiteral="com.nokia.sdt.emf.component.ecore#//StandaloneType/always"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="com.nokia.sdt.emf.component.ecore#//ListOfStrings"/>
+    <genDataTypes ecoreDataType="com.nokia.sdt.emf.component.ecore#//PropertyDataTypeObject"/>
+    <genDataTypes ecoreDataType="com.nokia.sdt.emf.component.ecore#//ReferenceScopeTypeObject"/>
+    <genDataTypes ecoreDataType="com.nokia.sdt.emf.component.ecore#//StandaloneTypeObject"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//AbstractPropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/descriptionKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/displayName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/editorClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/helpKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/readOnly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AbstractPropertyType/resettable"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ArrayPropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ArrayPropertyType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//AttributesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//AttributesType/attribute"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//AttributeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AttributeType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//AttributeType/key"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ChoiceType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ChoiceType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ChoiceType/twoWayMappingGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ChoiceType/twoWayMapping"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ChoiceType/mapResource"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ChoiceType/select"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ChoiceType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//CodeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CodeType/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CodeType/plugin"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ComponentDefinitionType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentDefinitionType/compoundPropertyDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentDefinitionType/enumPropertyDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentDefinitionType/component"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ComponentReferencePropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentReferencePropertyType/constraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentReferencePropertyType/creationKeys"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentReferencePropertyType/promoteReferenceProperties"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentReferencePropertyType/scope"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ComponentType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/documentation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/symbian"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/designerImages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/properties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/extensionProperties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/propertyOverrides"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/events"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/sourceGen"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/sourceMapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ComponentType/implementations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/abstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/baseComponent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/friendlyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/instanceNameRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/qualifiedName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ComponentType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/abstractPropertyGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/abstractProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/sourceTypeMapping"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/converterClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/editableType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/editorClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyDeclarationType/qualifiedName"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//CompoundPropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//CompoundPropertyType/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="com.nokia.sdt.emf.component.ecore#//ConditionalSourceGen">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGen/forms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGen/ifEvents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGen/ifExpr"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="com.nokia.sdt.emf.component.ecore#//ConditionalSourceGenString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGenString/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGenString/forms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGenString/ifEvents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ConditionalSourceGenString/ifExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//DefineLocationType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineLocationType/template"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineLocationType/inline"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineLocationType/script"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineLocationType/expandMacro"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/baseLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/dir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/domain"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/filter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/ifEvents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/isEventHandler"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/owned"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineLocationType/realize"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//DefineMacroType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineMacroType/importArguments"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineMacroType/macroArgument"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineMacroType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineMacroType/template"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineMacroType/inline"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineMacroType/defineLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DefineMacroType/expandMacro"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineMacroType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DefineMacroType/id"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//DesignerImagesType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DesignerImagesType/largeIconFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DesignerImagesType/layoutImageFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DesignerImagesType/smallIconFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DesignerImagesType/thumbnailFile"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//DocumentationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DocumentationType/information"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DocumentationType/helpTopic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DocumentationType/wizardDescription"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/abstractProperty"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/arrayProperty"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/attribute"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/attributes"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/choice"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/code"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/component"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/componentDefinition"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/componentReferenceProperty"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/compoundProperty"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/compoundPropertyDeclaration"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/defineLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/defineMacro"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/designerImages"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/documentation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/enumProperty"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/enumPropertyDeclaration"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/event"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/events"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/expandArgument"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/expandMacro"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/extensionProperties"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/implementation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/implementations"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/importArguments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/inline"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/macroArgument"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapArrayMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/twoWayMapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapArrayType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapBitmaskElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapBitmaskMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapBitmaskType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapBitmaskValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapElementFromType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapEnum"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapEnumElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapEnumMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapEnumType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapFixedElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapFixedMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapFixedType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapIdentifierElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapIdentifierMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapIdentifierType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapInstanceElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapInstanceMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapInstanceType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapIntoProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapMemberFromType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapReferenceElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapReferenceMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapReferenceType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapResource"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapResourceElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapResourceMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapResourceType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapSimpleElement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapSimpleMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/mapSimpleType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/properties"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/propertyOverrides"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/script"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/select"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/sourceGen"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/sourceMapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/sourceTypeMapping"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/symbian"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/template"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/templateGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/useTemplate"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//DocumentRoot/useTemplateGroup"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//EnumElementType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumElementType/displayValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumElementType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//EnumPropertyDeclarationType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//EnumPropertyDeclarationType/enumElement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//EnumPropertyDeclarationType/sourceTypeMapping"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumPropertyDeclarationType/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumPropertyDeclarationType/qualifiedName"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//EnumPropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumPropertyType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumPropertyType/extendWithEnum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EnumPropertyType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//EventsType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//EventsType/event"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventsType/defaultEventName"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//EventType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/descriptionKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/displayName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/group"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/handlerNameTemplate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/helpKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//EventType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ExpandArgumentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandArgumentType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandArgumentType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandArgumentType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ExpandMacroType">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ExpandMacroType/expandArgument"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandMacroType/dontPassArguments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandMacroType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandMacroType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandMacroType/passArguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExpandMacroType/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ExtensionPropertiesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExtensionPropertiesType/abstractPropertyGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ExtensionPropertiesType/abstractProperty"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ExtensionPropertiesType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ImplementationsType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ImplementationsType/implementation"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ImplementationType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ImplementationType/interface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ImplementationType/code"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//ImplementationType/script"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ImportArgumentsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ImportArgumentsType/arguments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ImportArgumentsType/exceptArguments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ImportArgumentsType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ImportArgumentsType/macroName"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//InlineType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//InlineType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//InlineType/scope"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//InterfaceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//InterfaceType/id"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MacroArgumentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MacroArgumentType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MacroArgumentType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MacroArgumentType/help"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MacroArgumentType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MacroArgumentType/optional"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapArrayMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapArrayMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapArrayMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapArrayMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapArrayTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapArrayTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapBitmaskElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapBitmaskMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapBitmaskMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapBitmaskMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapBitmaskMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapBitmaskTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapBitmaskTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapBitmaskValueType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapBitmaskValueType/properties"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapBitmaskValueType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapElementFromTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapElementFromTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapEnumElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapEnumMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapEnumMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapEnumMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapEnumMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapEnumType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapEnumType/enumerator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapEnumType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapEnumTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapEnumTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapFixedElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapFixedMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapFixedMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapFixedMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapFixedTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapFixedTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapIdentifierElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapIdentifierMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapIdentifierMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapIdentifierMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapIdentifierMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapIdentifierTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapIdentifierTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapInstanceElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapInstanceMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapInstanceMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapInstanceMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapInstanceMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapInstanceTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapInstanceTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapIntoPropertyType">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapIntoPropertyType/twoWayMappingGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MapIntoPropertyType/twoWayMapping"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapIntoPropertyType/property"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapMemberFromTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapMemberFromTypeType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapMemberFromTypeType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapMemberFromTypeType/suppressDefault"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapMemberFromTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingArrayType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingArrayType/twoWayMappingGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingArrayType/twoWayMapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingArrayType/select"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingBitmaskType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingBitmaskType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingBitmaskType/mapBitmaskValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingBitmaskType/includedProperties"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingEnumType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingEnumType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingEnumType/mapEnum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingEnumType/enumeration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingEnumType/headers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingEnumType/nameAlgorithm"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingEnumType/uniqueValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingEnumType/validate"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingFixedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingFixedType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingIdentifierType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingInstanceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingInstanceType/rsrcId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingReferenceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingReferenceType/rsrcId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingResourceType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingResourceType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapSimpleMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapInstanceMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapReferenceMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapFixedMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapEnumMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapIdentifierMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapArrayMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapResourceMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapBitmaskMember"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapMemberFromType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/mapIntoProperty"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//MappingResourceType/select"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingResourceType/headers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingResourceType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MappingResourceType/struct"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MappingSimpleType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapReferenceElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapReferenceMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapReferenceMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapReferenceMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapReferenceMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapReferenceTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapReferenceTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapResourceElementType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceElementType/instanceIdentifyingMember"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapResourceMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapResourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceType/baseName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceType/rssFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceType/standalone"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceType/unnamed"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapResourceTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapResourceTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapSimpleElementType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapSimpleMemberType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapSimpleMemberType/member"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapSimpleMemberType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapSimpleMemberType/suppressDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//MapSimpleTypeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//MapSimpleTypeType/typeId"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//PropertiesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//PropertiesType/abstractPropertyGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//PropertiesType/abstractProperty"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//PropertyOverridesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//PropertyOverridesType/propertyOverride"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//PropertyOverrideType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//PropertyOverrideType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//PropertyOverrideType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//PropertyOverrideType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//PropertyOverrideType/readOnly"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//ScriptType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ScriptType/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//ScriptType/prototype"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//SelectType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SelectType/choice"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SelectType/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SelectType/isComponentInstanceOf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SelectType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SelectType/propertyExists"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//SimplePropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SimplePropertyType/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SimplePropertyType/extendWithEnum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SimplePropertyType/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SimplePropertyType/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SimplePropertyType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//SourceGenType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SourceGenType/group"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/defineLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/template"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/templateGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/useTemplate"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/useTemplateGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/inline"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/script"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/defineMacro"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceGenType/expandMacro"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SourceGenType/debug"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SourceGenType/forms"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//SourceMappingType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SourceMappingType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceMappingType/mapResource"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceMappingType/select"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapResourceType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapEnumType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapSimpleType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapFixedType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapBitmaskType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapIdentifierType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapReferenceType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/mapArrayType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//SourceTypeMappingType/select"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//SymbianType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/classHelpTopic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/className"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/maxSDKVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/minSDKVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/resourceHelpTopic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/resourceType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//SymbianType/sdkName"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//TemplateGroupType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateGroupType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//TemplateGroupType/defineLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//TemplateGroupType/template"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//TemplateGroupType/inline"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//TemplateGroupType/useTemplate"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//TemplateGroupType/useTemplateGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//TemplateGroupType/expandMacro"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateGroupType/form"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateGroupType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateGroupType/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateGroupType/mode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateGroupType/phase"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//TemplateType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateType/form"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateType/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateType/mode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//TemplateType/phase"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//TwoWayMappingType"/>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//UseTemplateGroupType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference com.nokia.sdt.emf.component.ecore#//UseTemplateGroupType/useTemplate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//UseTemplateGroupType/ids"/>
+    </genClasses>
+    <genClasses ecoreClass="com.nokia.sdt.emf.component.ecore#//UseTemplateType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute com.nokia.sdt.emf.component.ecore#//UseTemplateType/ids"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

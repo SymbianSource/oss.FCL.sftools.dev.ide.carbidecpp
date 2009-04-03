@@ -1,0 +1,13 @@
+// localized strings for language: UK English (01)
+#define STR_lists_3_0ListBoxView_1 ""
+#define STR_lists_3_0ListBoxView_2 ""
+#define STR_lists_3_0ListBoxView_3 "lists_3_0ListBox"
+#define STR_lists_3_0ListBoxView_4 "item 1"
+#define STR_lists_3_0ListBoxView_5 "secondary 1"
+#define STR_lists_3_0ListBoxView_10 "secondary 3"
+#define STR_lists_3_0ListBoxView_6 "item 2"
+#define STR_lists_3_0ListBoxView_11 "item 4"
+#define STR_lists_3_0ListBoxView_7 "secondary 2"
+#define STR_lists_3_0ListBoxView_12 "secondary 4"
+#define STR_lists_3_0ListBoxView_8 "Question 1"
+#define STR_lists_3_0ListBoxView_9 "item 3"

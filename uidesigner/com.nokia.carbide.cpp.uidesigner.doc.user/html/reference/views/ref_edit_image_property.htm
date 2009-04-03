@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Edit Image Property Dialog</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Edit Image Property Dialog</h2>
+<p>Use the  <b>Edit Image Property</b> dialog to select the images and masks from a Multi-Image File (<span class="code">.mbmdef</span> or <span class="code">.mifdef</span>). Only images that are being built into the application are available for editing.</p>
+<p>When the multi-image file is an <span class="code">.mbmdef</span> file, a bitmap and mask are selected and composed to create an image with transparent pixels. The mask may be empty, in which case the bitmap is opaque. When the multi-image file is an <span class="code">.mifdef</span> file, an SVG-T image is selected, which has an implicit mask described by the bounding rectangle of the SVG drawing.</p>
+<p>When selecting a mask, a one-bit image defines a hard mask, where the black pixels in the mask select pixels from the bitmap and white pixels in the mask are transparent. Any other mask image depth (typically 8) defines a soft mask, seen visually as a grayscale image, where the value of each pixel is the alpha or transparency value of the pixel from the bitmap. In a soft mask, a white pixel is fully opaque, and a black pixel is fully transparent. A gray pixel is partially transparent. In this respect, a soft mask looks roughly inverted compared to a hard mask.</p>
+<p class="note"><b>NOTE</b> The MIFDEF compiler does not support <span class="code">.bmp</span> files, so S60 3.0 applications cannot use <span class="code">.mifdef</span> files to add bitmaps to <span class="code">.mif</span> files. Instead, create a different <span class="code">.mbmdef</span> file using a different basename than the <span class="code">.mifdef</span> file, to add your <span class="code">.bmp</span> files.</p>
+<p align="center"><img src="../../images/edit_image_property_dialog.png" alt="edit image property" width="495" height="370" /></p>
+<p class="figure">Figure 1 - The Edit Image Property dialog </p>
+<h5>Table 1. <span class="figure">Edit Image Property</span> dialog&mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="27%" scope="col">Item</th>
+    <th width="73%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Multi-Image File </b></td>
+    <td>Select the project's <span class="code">.mbmdef</span> or <span class="code">.mifdef</span> file containing the image to display. </td>
+  </tr>
+  <tr>
+    <td><b>Image</b></td>
+    <td><p>Select the image in the chosen multi-image file to display in the image component. The image appears to the right of the Image dropdown with image canvas size and color depth information below. If a mask is associated with the image, it is selected in the Mask section.</p>
+      <p>The combined image + mask appears in the Appearance section with canvas size and color depth information below. This is the best indicator of how the image will appear in the application.</p>
+    <p>Choose &lt;No image&gt; to clear the selection.</p></td>
+  </tr>
+  <tr>
+    <td><b>Mask</b></td>
+    <td><p>Select the image mask from the dropdown menu. The mask image is then shown to the right of the Mask dropdown with mask canvas size and color depth information below. </p>
+    <p>Choose &lt;No image&gt; to clear the selection.</p></td>
+  </tr>
+  <tr>
+    <td><b>Add Image... / Add Bitmap... </b></td>
+    <td>For <span class="code">.mbmdef</span> files, click <a href="../../tasks/properties/task_comp_mod_properties_image_add.htm">Add Icon</a> to add a new icon. For <span class="code">.mifdef</span> files, click <a href="../../tasks/properties/task_comp_mod_properties_image_add.htm">Add Bitmap</a> to add a bitmap.</td>
+  </tr>
+  <tr>
+    <td><b>OK</b></td>
+    <td>Click OK to close the dialog and apply changes.</td>
+  </tr>
+  <tr>
+    <td><b>Cancel</b></td>
+    <td>Click Cancel to close the dialog without applying any changes.</td>
+  </tr>
+</table>
+<h5>Image Validation </h5>
+<p>Images are validated and rendered on a per-component basis. Each component may have different restrictions or guidelines for the type or size of images that appear. In S60 2.x, or an S60 2.8 project without scalable icon support, images are cropped to the size of the context icon, navi image, or image controls. In S60 2.8 with scalable icon support and S60 3.0 projects, images are scaled to the size of the controls. </p>
+<h5>Supported Components</h5>
+<p>The following components currently support images:</p>
+<ul>
+  <li> Context icons</li>
+  <li>Navi image </li>
+  <li>Setting item lists</li>
+  <li>Image control</li>
+  <li>Forms (visible on items when the form's &ldquo;show bitmaps&rdquo; property is enabled) </li>
+  <li>Title pane (if text is blank, any specified image appears) </li>
+</ul>
+<p>Other components may be supported in future releases. </p>
+<div class="step">
+  <h4>Opening the Edit Image Property Dialog</h4>
+  <ul>
+    <li>Right-click the component and select Edit Image Property, or</li>
+    <li>In the Properties view, click the  control (Figure 2) that appears when the Appearance &gt;  image property is selected</li>
+    <p align="center"><img src="../../images/views/view_properties_image_control.png" /></p>
+  </ul>
+  <p class="figure">Figure 2 - Browse control appears when Appearance &gt; image property is selected </p>
+  <ul>
+    <p>The Image Property dialog appears. </p>
+  </ul>
+</div>
+<h5>Related references</h5>
+<ul>
+  <li><a href="ref_properties_view.htm">Properties View</a></li>
+  <li><a href="ref_string_list_editor.htm">String List Editor Dialog</a></li>
+  <li><a href="ref_edit_multiimage_property.htm">Edit Multiple Image Property Dialog</a></li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="../../tasks/properties/task_comp_mod_properties_image_add.htm">Adding Images</a></li>
+</ul>
+
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

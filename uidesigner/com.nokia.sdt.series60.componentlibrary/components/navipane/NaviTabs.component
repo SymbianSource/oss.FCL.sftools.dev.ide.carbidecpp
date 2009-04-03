@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.NaviTabs.TabWidth">
+		<enumElement value="EAknTabWidthWithTwoTabs"/>
+		<enumElement value="EAknTabWidthWithTwoLongTabs"/>
+		<enumElement value="EAknTabWidthWithThreeTabs"/>
+		<enumElement value="EAknTabWidthWithThreeLongTabs"/>
+		<enumElement value="EAknTabWidthWithFourTabs"/>
+		<enumElement value="EAknTabWidthWithOneTab"/>
+	</enumPropertyDeclaration>
+
+	<component baseComponent="com.nokia.sdt.series60.NaviBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.NaviTabs" 
+		category="System"
+		instanceNameRoot="NaviTabs"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknNavigationControlContainer" classHelpTopic=""
+			resourceType="NAVI_DECORATOR, NAVI_LABEL" resourceHelpTopic="" />
+		<designerImages smallIconFile="NaviTabs_sm.png" largeIconFile="NaviTabs.png"/>
+		<attributes>
+			<attribute key="rss-control-type-enum">EAknCtNaviPane</attribute>
+			<attribute key="model-type-disposition">root</attribute>
+		</attributes>
+		<properties>
+		    <enumProperty category="Design" name="tabWidth" 
+		    	type="com.nokia.sdt.series60.NaviTabs.TabWidth" default="EAknTabWidthWithTwoTabs"
+		    	descriptionKey="tabWidthDescription" />
+		    <property category="Hidden" name="active" type="integer"/>
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<script file="NaviTabs_visual.js" prototype="NaviTabsVisual"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="NAVI_DECORATOR" headers="avkon.rh">
+				<mapFixedMember value="ENaviDecoratorControlTabGroup" member="type"/>
+				<mapResourceMember property="." member="control" struct="TAB_GROUP" headers="avkon.rh">
+					<mapEnumMember property="tabWidth" member="tab_width" headers="avkon.hrh" />
+					<!-- <mapSimpleMember property="active" member="active"/> -->
+					<mapArrayMember property="[parent][parent]" member="tabs">
+						<!-- sneaky way of ensuring we only match the view reference children -->
+						<select property="@is-view-reference">
+							<choice value="true">
+								<select property="inTabGroup">
+									<choice value="true">
+										<mapResourceElement struct="TAB" instanceIdentifyingMember="id">
+					           				<mapEnumMember property="." member="id" uniqueValue="*"
+												nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID"/>
+											<mapSimpleMember property="tabText" member="txt"/>
+											<!-- set in code
+											<mapSimpleMember property="tabImage.bmpfile" member="bmpfile"/>
+											<mapIdentifierMember property="tabImage.bmpid" member="bmpid"/>
+											<mapIdentifierMember property="tabImage.bmpmask" member="bmpmask"/>
+											-->
+										</mapResourceElement>
+									</choice>
+									<choice />
+								</select>
+							</choice>
+							<choice />
+						</select>
+					</mapArrayMember>
+				</mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen forms="RootAppUi">
+		
+			<useTemplateGroup ids="NaviBaseSetup"/>
+
+			<template phase="ForwardDeclarations">
+class CAknTabGroup;
+			</template>
+			
+			<template phase="InstanceVariables">
+CAknTabGroup* ${instanceMemberName};
+			</template>
+			
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <akntabgrp.h>
+]]>			</template>
+			
+			<inline><![CDATA[
+function getApplicationName(instance) {
+	var application = instance.parent;
+	// find the application object
+	while (application != null && application.componentId != "com.nokia.sdt.series60.CAknApplication")
+		application = application.parent;
+				
+	if (application != null)
+		return application.name;
+				
+	return "ApplicationNameError";
+}
+]]>			</inline>
+
+			<template phase="MainUserIncludes"><![CDATA[
+#include "${getApplicationName(instance)}.h"
+]]>			</template>
+
+			<template phase="Initialize"><![CDATA[
+CAknNavigationControlContainer* naviPane = ( CAknNavigationControlContainer* )
+	StatusPane()->ControlL( TUid::Uid( EEikStatusPaneUidNavi ) );
+iNaviDecorator_ = naviPane->ResourceDecorator();
+if ( iNaviDecorator_ != NULL )
+	{
+	${instanceMemberName} = ( CAknTabGroup* ) iNaviDecorator_->DecoratedControl();
+<%	
+include("../containers/containerLibrary.js")
+include("../srcgenLibrary.js")
+var index = -1;
+var appUiChildren = instance.parent.parent.children;
+for (var i in appUiChildren) {
+	var child = appUiChildren[i];
+	if (child.isInstanceOf("com.nokia.sdt.series60.AvkonViewReference")) {
+		if (child.properties.inTabGroup) {
+			index++;
+			if (isImagePropertySet(child.properties.tabImage)) {
+				var bmpStr = "";
+				var bmpMaskStr = "";
+				var tabIdStr = instanceMemberName + "->TabIdFromIndex( " + index + " )";
+				if ((child.properties.tabText == null) || (child.properties.tabText.length == 0)) {
+					bmpStr += instanceMemberName + "->ReplaceTabL( " + tabIdStr + ", {0} );\\n";
+					bmpMaskStr += instanceMemberName + "->ReplaceTabL( " + tabIdStr + ", {0}, {1} );\\n";
+				}
+				else {
+					var loadStr = "HBufC* text = StringLoader::LoadLC( " + 
+							Engine.getGeneratedResource(child, "tabText").toUpperCase() + " );\\n";
+					bmpStr += loadStr;
+					bmpMaskStr += loadStr;
+					bmpStr += instanceMemberName + "->ReplaceTabL( " + tabIdStr + ", *text, {0} );\\n";
+					bmpMaskStr += instanceMemberName + "->ReplaceTabL( " + tabIdStr + ", *text, {0}, {1} );\\n";
+					var cleanupStr = "CleanupStack::PopAndDestroy(text);\\n";
+					bmpStr += cleanupStr;
+					bmpMaskStr += cleanupStr;
+				}
+				setupImageFromPropertyViaCFbsBitmap(contribs, child, "Initialize", null, 1, 
+					child.properties["tabImage"], 
+					"EAspectRatioPreserved" /*aspect*/, bmpStr, bmpMaskStr, instanceMemberName + "->Size()");
+			}
+		}
+	}
+} %>
+	}
+]]>			
+			</template>
+		
+			<template phase="HandleKeyEventL"><![CDATA[
+TVwsViewId activeViewId;
+if ( GetActiveViewId( activeViewId ) == KErrNone 
+	&& ${instanceMemberName}->TabIndexFromId( activeViewId.iViewUid.iUid ) 
+		== KErrNotFound )
+	{
+	return EKeyWasNotConsumed;
+	}
+
+TInt active = ${instanceMemberName}->ActiveTabIndex();
+TInt count = ${instanceMemberName}->TabCount();
+
+switch ( aKeyEvent.iCode )
+	{
+	case EKeyLeftArrow:
+		if ( active > 0 )
+			{
+			active--;
+			ActivateLocalViewL( TUid::Uid( ${instanceMemberName}->TabIdFromIndex( active ) ) );
+			return EKeyWasConsumed;
+			}
+		break;
+	case EKeyRightArrow:
+		if ( active + 1 < count )
+			{
+			active++;
+			ActivateLocalViewL( TUid::Uid( ${instanceMemberName}->TabIdFromIndex( active ) ) );
+			return EKeyWasConsumed;
+			}
+		break;
+	default:
+		return EKeyWasNotConsumed;
+	}
+
+]]>			
+			</template>
+			
+			<template phase="ClassMethods">
+void SetActiveTabByViewId( TUid aViewId );
+			</template>
+			<defineLocation id="MethodLocation" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::SetActiveTabByViewId(TUid))">
+				<template>
+void ${className}::SetActiveTabByViewId( TUid aViewId )
+	{
+	}
+				</template>
+			</defineLocation>
+			<template location="MethodLocation"><![CDATA[
+if ( ${instanceMemberName} != NULL 
+	&& ${instanceMemberName}->TabIndexFromId( aViewId.iUid ) != KErrNotFound )
+	{
+	${instanceMemberName}->SetActiveTabById( aViewId.iUid );
+	}
+]]>			</template>
+			
+			<inline>
+				
+			</inline>
+
+			<template phase="HandleViewDeactivation"><![CDATA[
+if ( aNewlyActivatedViewId.iAppUid == KUid${getApplicationName(instance)} )
+	{
+	SetActiveTabByViewId( aNewlyActivatedViewId.iViewUid );
+	}
+]]>			</template>
+
+		</sourceGen>
+	</component>
+</componentDefinition>

@@ -1,0 +1,5 @@
+#include <bitmasks.rh>
+
+RESOURCE BITMASK_DEFAULTS r_test_bitmasks_defaults
+	{
+	}

@@ -1,0 +1,6 @@
+#include <cba.rh>
+
+RESOURCE EIK_APP_INFO r_testcbaholder_builtin
+	{
+	cba = r_avkon_softkeys_options_exit;
+	}

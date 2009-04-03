@@ -1,0 +1,7 @@
+CHARACTER_SET UTF8 // really
+
+// greeting
+rls_string STR_1 "Здравствулте, dude"
+rls_string STR_10 "вторник"
+ /* later */
+ rls_string STR_5 ""

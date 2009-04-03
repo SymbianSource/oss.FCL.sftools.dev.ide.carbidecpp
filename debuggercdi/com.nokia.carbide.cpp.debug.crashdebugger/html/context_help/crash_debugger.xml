@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<contexts>
+	
+	<context id="crash_debugger_view" >
+		<description>The Crash Debugger Console view acts as a command line terminal interface to the crash debugger running on the device.</description>
+		<topic label="Crash Debugger Console View"  	href="html/view.html"  />
+		<topic label="Setting Up the Debug Monitor"  	href="html/DebuggingInformation/CrashDebugger_Setup.html"  />
+		<topic label="Crash Debugger Commands"  		href="html/DebuggingInformation/CrashDebugger_cmd.guide.html"  />
+		<topic label="Symbian OS Documentation"  		href="html/DebuggingInformation/index.html"  />
+	    <topic label="Crash Debugger Launch Configuration"  	href="html/crash_launch_config.html"  />
+	</context>
+
+	<context id="memory_dialog" >
+		<description>The Memory Dump Options window prompts you for the address and length of the data to retrieve from the device.</description>
+		<topic label="Memory Dump Options"  		href="html/memory.html"  />
+		<topic label="Do a Memory Dump"  			href="html/DebuggingInformation/CrashDebugger_cmd_m.guide.html"  />
+		<topic label="Do a Memory Dump, Skipping Unmapped Memory"  href="html/DebuggingInformation/CrashDebugger_cmd_z.guide.html"  />
+		<topic label="Symbian OS Documentation"  	href="html/DebuggingInformation/index.html"  />
+	</context>
+
+	<context id="address_dialog" >
+		<description>The Object Address window prompts you for the address of the object to retrieve details on from the device.</description>
+		<topic label="Object Address"  						href="html/address.html"  />
+		<topic label="Display Brief DObject Information"  	href="html/DebuggingInformation/CrashDebugger_cmd_o.guide.html"  />
+		<topic label="Display Full DObject Information"  	href="html/DebuggingInformation/CrashDebugger_cmd_q.guide.html"  />
+		<topic label="Symbian OS Documentation"  			href="html/DebuggingInformation/index.html"  />
+	</context>
+
+</contexts>

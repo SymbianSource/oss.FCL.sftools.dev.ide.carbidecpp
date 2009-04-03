@@ -1,0 +1,12 @@
+
+#include "subtype.rh"
+
+STRUCT COMPOUND_TYPES {
+	BYTE unused;
+	STRUCT embed;  // of type SUBTYPE
+}
+
+STRUCT RESOURCE_LLINK {
+	BYTE unused;
+	LLINK link;  // of type SUBTYPE
+}

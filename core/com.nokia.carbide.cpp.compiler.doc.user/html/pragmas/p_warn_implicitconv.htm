@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>warn_implicitconv</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>warn_implicitconv</h3>
+<p>  Controls the issuing of warnings for all implicit arithmetic conversions.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma warn_implicitconv on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler issues a warning for all implicit arithmetic conversions when the destination type might not represent the source value. Listing 10.40 provides an example.</p>
+  <div class="listing">
+      <h4>Listing 10.40 Example of Implicit Conversion</h4>
+      <p>#pragma warn_implicitconv on // required to enable warnings<br />
+      #pragma warn_impl_f2i_conv on // enable conversion warning<br />
+      #pragma warn_impl_i2f_conv on // enable conversion warning<br />
+      #pragma warn_impl_s2u_conv on // enable conversion warning </p>
+      <p>float f;<br />
+    signed int si;<br />
+    unsigned int ui;</p>
+    <p>int main()<br />
+    {<br />
+    f = si; // WARNING<br />
+    si = f; // WARNING<br />
+    ui = si; // WARNING<br />
+    si = ui; // WARNING<br />
+    }</p>
+  </div>
+  <p>For more information about this warning, see &ldquo;Implicit Arithmetic Conversions&rdquo;.</p>
+<p class="note"><strong>NOTE</strong> This option &ldquo;opens the gate&rdquo; for the checking of implicit conversions. The sub-pragmas <a href="p_warn_impl_f2i_conv.htm">warn_impl_f2i_conv</a>, <a href="p_warn_impl_i2f_conv.htm">warn_impl_i2f_conv</a>, and <a href="p_warn_impl_s2u_conv.htm">warn_impl_s2u_conv</a> control the classes of conversions checked.</p>
+<p>This pragma corresponds to the Implicit Arithmetic Conversions setting . To check this setting, use <span class="code">__option (warn_implicitconv)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

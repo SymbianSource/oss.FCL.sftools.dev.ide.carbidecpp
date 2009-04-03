@@ -1,0 +1,60 @@
+
+STRUCT ONE_STRING {
+	BUF<256> text;
+	LONG flags;
+	WORD stag;
+}
+
+STRUCT SIMPLE_TYPES {
+	BYTE byte;
+	WORD word;
+	LONG long;
+	TEXT text;
+	DOUBLE double;
+	LTEXT ltext;
+	BUF buf;
+	BUF8 buf8;
+}
+
+STRUCT SIMPLE_TYPES_DEFAULTS {
+	BYTE byte = 1;
+	WORD word = 1;
+	LONG long = 1;
+	TEXT text = "1";
+	DOUBLE double = 1.0;
+	LTEXT ltext = "1";
+	BUF buf = "1";
+	BUF8 buf8 = "1";
+}
+
+STRUCT RECT {
+	LONG x;
+	LONG y;
+	LONG width;
+	LONG height;
+}
+
+STRUCT COUNT_STRUCT {
+	LONG count;
+}
+
+STRUCT TEXT_STRUCT {
+	LTEXT8<100> text;
+}
+
+STRUCT TWO_REFS {
+	LLINK link1;
+	LINK link2;
+}
+
+STRUCT LBUF 
+	{
+	LTEXT txt;
+	}
+	
+STRUCT RGB
+	{
+	BYTE r;
+	BYTE g;
+	BYTE b;
+	}	

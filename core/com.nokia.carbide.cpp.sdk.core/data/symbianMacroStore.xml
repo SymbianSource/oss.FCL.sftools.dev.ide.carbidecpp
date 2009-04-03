@@ -1,0 +1,806 @@
+<SymbianMacroStore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\Temp\SymbianMacroStore\symbianMacroStore.xsd">
+	<SymbianOSMacros>
+		<osVersion version="9.1">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="GCCE">
+					<macro>MARM_ARMV5</macro>
+					<macro>GCCE</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>EPOC32</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>EABI</macro>
+					<macro>MARM_ARMV5</macro>
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM</macro>
+				</platform>
+				<platform name="ARMV5_ABIV2">
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>MARM</macro>
+					<macro>ARMCC_2</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+				<macro>SYMBIAN_CRYPTO</macro>
+				<macro>__CNF_FORMAT_V2__</macro>
+				<macro>__KEYSTORE_API_V2__</macro>
+				<macro>__BLUETOOTH_API_V2__</macro>
+				<macro>__OBEX_USER_DEFINED_HEADERS__</macro>
+				<macro>__HIDE_IPC_V1__</macro>
+				<macro>DO_NOT_USE_THIS_MACRO</macro>
+				<macro>__CONDITIONS_SCHEDULES_VALID__</macro>
+				<macro>__JAVACUSTOMINSTALL__</macro>
+				<macro>__UI_FRAMEWORKS_V2__</macro>
+				<macro>SYMBIAN_HIDE_UI_FRAMEWORKS_V1</macro>
+				<macro>SYMBIAN_REMOVE_UI_FRAMEWORKS_V1</macro>
+				<macro>__BLUETOOTH_HCI_ALLOWS_AFH__</macro>
+				<macro>__MESSAGING_API_V2__</macro>
+				<macro>__HIDE_MESSAGING_API_V1__</macro>
+				<macro>__REMOVE_MESSAGING_API_V1__</macro>
+				<macro>__BC_FUTURE_PROOFING__</macro>
+				<macro>__SECURE_DATA__</macro>
+				<macro>__SECURE_BIN__</macro>
+				<macro>__SECURE_TELEPHONY__</macro>
+				<macro>SYMBIAN_NETWORKING_PLATSEC</macro>
+				<macro>__WATCHER_API_V2__</macro>
+				<macro>SYMBIAN_COREAPPS_API_V2</macro>
+				<macro>SYMBIAN_COREAPPS_PLUGIN_API_V2</macro>
+				<macro>SYMBIAN_SECURE_DBMS</macro>
+				<macro>__SECURE_SOFTWARE_INSTALL__</macro>
+				<macro>__SECURITY_PLATSEC_ARCH__</macro>
+				<macro>SYMBIAN_SECURE_ECOM</macro>
+				<macro>SYMBIAN_SECURITY_CAF_RFILE_HANDLE</macro>
+				<macro>SYMBIAN_C32ROOT_API_V2</macro>
+				<macro>SYMBIAN_ESOCK_V3</macro>
+				<macro>SYMBIAN_UIKON_UNIFICATION</macro>
+				<macro>SYMBIAN_NETWORKING_RSUBCONNECTION</macro>
+				<macro>SYMBIAN_UI_FRAMEWORKS_CONTROL_API_V2</macro>
+				<macro>SYMBIAN_SECURE_MIDLET_INSTALL</macro>
+				<macro>__SECURE_BACKUP__</macro>
+				<macro>SYMBIAN_COMMS_REPOSITORY</macro>
+				<macro>__HIDE_WATCHER_API_V1__</macro>
+				<macro>__REMOVE_WATCHER_API_V1__</macro>
+				<macro>SYMBIAN_NETWORKING_REMOVE_RGENERIC</macro>
+				<macro>SYMBIAN_IGNORE_BIN_TARGETPATH</macro>
+				<macro>SYMBIAN_HIDE_COREAPPS_API_V1</macro>
+				<macro>SYMBIAN_REMOVE_COREAPPS_API_V1</macro>
+				<macro>__SECURE_API__</macro>
+				<macro>SYMBIAN_REMOVE_INSECURE_API</macro>
+				<macro>SYMBIAN_BLUETOOTH_REQUIRES_HCI_FLUSH_COMPLETE_EVENT</macro>
+				<macro>SYMBIAN_FONT_METRICS_V2</macro>
+				<macro>SYMBIAN_GRAPHICS_ALPHA_SUPPORT_V1</macro>
+				<macro>SYMBIAN_TELEPHONY_IMS</macro>
+				<macro>__LEAVE_EQUALS_THROW__</macro>
+				<macro>SYMBIAN_CAF_V2</macro>
+				<macro>SYMBIAN_MDF_API_V2</macro>
+				<macro>SYMBIAN_GENERIC_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_STAGED_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_TIMEZONE_SUPPORT_V1</macro>
+				<macro>SYMBIAN_ECAM_CHUNKAPI</macro>
+				<macro>SYMBIAN_SECURE_PUBLISH_AND_SUBSCRIBE</macro>
+				<macro>SYMBIAN_MMF_AUTOPAUSE_RESUME</macro>
+				<macro>SYMBIAN_BLUETOOTH_ESCO_ENABLED</macro>
+				<macro>SYMBIAN_ROM_STATIC_PLUGIN_INFORMATION</macro>
+				<macro>SYMBIAN_BOOKMARK_DATABASE</macro>
+				<macro>SYMBIAN_ASSUME_SECURE_DATA</macro>
+				<macro>SYMBIAN_REMOVE_TRIVIAL_ENCRYPTION</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="9.2">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="GCCE">
+					<macro>MARM_ARMV5</macro>
+					<macro>GCCE</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>EPOC32</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>EABI</macro>
+					<macro>MARM_ARMV5</macro>
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM</macro>
+				</platform>
+				<platform name="ARMV5_ABIV2">
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>MARM</macro>
+					<macro>ARMCC_2</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+				<macro>SYMBIAN_CRYPTO</macro>
+				<macro>__CNF_FORMAT_V2__</macro>
+				<macro>__KEYSTORE_API_V2__</macro>
+				<macro>__BLUETOOTH_API_V2__</macro>
+				<macro>__OBEX_USER_DEFINED_HEADERS__</macro>
+				<macro>__HIDE_IPC_V1__</macro>
+				<macro>DO_NOT_USE_THIS_MACRO</macro>
+				<macro>__CONDITIONS_SCHEDULES_VALID__</macro>
+				<macro>__JAVACUSTOMINSTALL__</macro>
+				<macro>__UI_FRAMEWORKS_V2__</macro>
+				<macro>SYMBIAN_HIDE_UI_FRAMEWORKS_V1</macro>
+				<macro>SYMBIAN_REMOVE_UI_FRAMEWORKS_V1</macro>
+				<macro>__BLUETOOTH_HCI_ALLOWS_AFH__</macro>
+				<macro>__MESSAGING_API_V2__</macro>
+				<macro>__HIDE_MESSAGING_API_V1__</macro>
+				<macro>__REMOVE_MESSAGING_API_V1__</macro>
+				<macro>__BC_FUTURE_PROOFING__</macro>
+				<macro>__SECURE_DATA__</macro>
+				<macro>__SECURE_BIN__</macro>
+				<macro>__SECURE_TELEPHONY__</macro>
+				<macro>SYMBIAN_NETWORKING_PLATSEC</macro>
+				<macro>__WATCHER_API_V2__</macro>
+				<macro>SYMBIAN_COREAPPS_API_V2</macro>
+				<macro>SYMBIAN_COREAPPS_PLUGIN_API_V2</macro>
+				<macro>SYMBIAN_SECURE_DBMS</macro>
+				<macro>__SECURE_SOFTWARE_INSTALL__</macro>
+				<macro>__SECURITY_PLATSEC_ARCH__</macro>
+				<macro>SYMBIAN_SECURE_ECOM</macro>
+				<macro>SYMBIAN_SECURITY_CAF_RFILE_HANDLE</macro>
+				<macro>SYMBIAN_C32ROOT_API_V2</macro>
+				<macro>SYMBIAN_ESOCK_V3</macro>
+				<macro>SYMBIAN_UIKON_UNIFICATION</macro>
+				<macro>SYMBIAN_NETWORKING_RSUBCONNECTION</macro>
+				<macro>SYMBIAN_UI_FRAMEWORKS_CONTROL_API_V2</macro>
+				<macro>SYMBIAN_SECURE_MIDLET_INSTALL</macro>
+				<macro>__SECURE_BACKUP__</macro>
+				<macro>SYMBIAN_COMMS_REPOSITORY</macro>
+				<macro>__HIDE_WATCHER_API_V1__</macro>
+				<macro>__REMOVE_WATCHER_API_V1__</macro>
+				<macro>SYMBIAN_NETWORKING_REMOVE_RGENERIC</macro>
+				<macro>SYMBIAN_IGNORE_BIN_TARGETPATH</macro>
+				<macro>SYMBIAN_HIDE_COREAPPS_API_V1</macro>
+				<macro>SYMBIAN_REMOVE_COREAPPS_API_V1</macro>
+				<macro>__SECURE_API__</macro>
+				<macro>SYMBIAN_REMOVE_INSECURE_API</macro>
+				<macro>SYMBIAN_BLUETOOTH_REQUIRES_HCI_FLUSH_COMPLETE_EVENT</macro>
+				<macro>SYMBIAN_FONT_METRICS_V2</macro>
+				<macro>SYMBIAN_GRAPHICS_ALPHA_SUPPORT_V1</macro>
+				<macro>SYMBIAN_TELEPHONY_IMS</macro>
+				<macro>__LEAVE_EQUALS_THROW__</macro>
+				<macro>SYMBIAN_CAF_V2</macro>
+				<macro>SYMBIAN_MDF_API_V2</macro>
+				<macro>SYMBIAN_GENERIC_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_STAGED_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_TIMEZONE_SUPPORT_V1</macro>
+				<macro>SYMBIAN_ECAM_CHUNKAPI</macro>
+				<macro>SYMBIAN_SECURE_PUBLISH_AND_SUBSCRIBE</macro>
+				<macro>SYMBIAN_MMF_AUTOPAUSE_RESUME</macro>
+				<macro>SYMBIAN_BLUETOOTH_ESCO_ENABLED</macro>
+				<macro>SYMBIAN_ROM_STATIC_PLUGIN_INFORMATION</macro>
+				<macro>SYMBIAN_BOOKMARK_DATABASE</macro>
+				<macro>SYMBIAN_ASSUME_SECURE_DATA</macro>
+				<macro>SYMBIAN_REMOVE_TRIVIAL_ENCRYPTION</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="9.3">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="GCCE">
+					<macro>MARM_ARMV5</macro>
+					<macro>MARM</macro>
+					<macro>GCCE</macro>
+					<macro>EABI</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>EPOC32</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>EABI</macro>
+					<macro>MARM_ARMV5</macro>
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM</macro>
+				</platform>
+				<platform name="ARMV5_ABIV2">
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>MARM</macro>
+					<macro>ARMCC_2</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+					<macro>ARMV5_ABIV2</macro>
+				</platform>
+				
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+				<macro>SYMBIAN_CRYPTO</macro>
+				<macro>__CNF_FORMAT_V2__</macro>
+				<macro>__KEYSTORE_API_V2__</macro>
+				<macro>__BLUETOOTH_API_V2__</macro>
+				<macro>__OBEX_USER_DEFINED_HEADERS__</macro>
+				<macro>__HIDE_IPC_V1__</macro>
+				<macro>DO_NOT_USE_THIS_MACRO</macro>
+				<macro>__CONDITIONS_SCHEDULES_VALID__</macro>
+				<macro>__JAVACUSTOMINSTALL__</macro>
+				<macro>__UI_FRAMEWORKS_V2__</macro>
+				<macro>SYMBIAN_HIDE_UI_FRAMEWORKS_V1</macro>
+				<macro>SYMBIAN_REMOVE_UI_FRAMEWORKS_V1</macro>
+				<macro>__BLUETOOTH_HCI_ALLOWS_AFH__</macro>
+				<macro>__MESSAGING_API_V2__</macro>
+				<macro>__HIDE_MESSAGING_API_V1__</macro>
+				<macro>__REMOVE_MESSAGING_API_V1__</macro>
+				<macro>__BC_FUTURE_PROOFING__</macro>
+				<macro>__SECURE_DATA__</macro>
+				<macro>__SECURE_BIN__</macro>
+				<macro>__SECURE_TELEPHONY__</macro>
+				<macro>SYMBIAN_NETWORKING_PLATSEC</macro>
+				<macro>__WATCHER_API_V2__</macro>
+				<macro>SYMBIAN_COREAPPS_API_V2</macro>
+				<macro>SYMBIAN_COREAPPS_PLUGIN_API_V2</macro>
+				<macro>SYMBIAN_SECURE_DBMS</macro>
+				<macro>__SECURE_SOFTWARE_INSTALL__</macro>
+				<macro>__SECURITY_PLATSEC_ARCH__</macro>
+				<macro>SYMBIAN_SECURE_ECOM</macro>
+				<macro>SYMBIAN_SECURITY_CAF_RFILE_HANDLE</macro>
+				<macro>SYMBIAN_C32ROOT_API_V2</macro>
+				<macro>SYMBIAN_ESOCK_V3</macro>
+				<macro>SYMBIAN_UIKON_UNIFICATION</macro>
+				<macro>SYMBIAN_NETWORKING_RSUBCONNECTION</macro>
+				<macro>SYMBIAN_UI_FRAMEWORKS_CONTROL_API_V2</macro>
+				<macro>SYMBIAN_SECURE_MIDLET_INSTALL</macro>
+				<macro>__SECURE_BACKUP__</macro>
+				<macro>SYMBIAN_COMMS_REPOSITORY</macro>
+				<macro>__HIDE_WATCHER_API_V1__</macro>
+				<macro>__REMOVE_WATCHER_API_V1__</macro>
+				<macro>SYMBIAN_NETWORKING_REMOVE_RGENERIC</macro>
+				<macro>SYMBIAN_IGNORE_BIN_TARGETPATH</macro>
+				<macro>SYMBIAN_HIDE_COREAPPS_API_V1</macro>
+				<macro>SYMBIAN_REMOVE_COREAPPS_API_V1</macro>
+				<macro>__SECURE_API__</macro>
+				<macro>SYMBIAN_REMOVE_INSECURE_API</macro>
+				<macro>SYMBIAN_BLUETOOTH_REQUIRES_HCI_FLUSH_COMPLETE_EVENT</macro>
+				<macro>SYMBIAN_FONT_METRICS_V2</macro>
+				<macro>SYMBIAN_GRAPHICS_ALPHA_SUPPORT_V1</macro>
+				<macro>SYMBIAN_TELEPHONY_IMS</macro>
+				<macro>__LEAVE_EQUALS_THROW__</macro>
+				<macro>SYMBIAN_CAF_V2</macro>
+				<macro>SYMBIAN_MDF_API_V2</macro>
+				<macro>SYMBIAN_GENERIC_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_STAGED_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_TIMEZONE_SUPPORT_V1</macro>
+				<macro>SYMBIAN_ECAM_CHUNKAPI</macro>
+				<macro>SYMBIAN_SECURE_PUBLISH_AND_SUBSCRIBE</macro>
+				<macro>SYMBIAN_MMF_AUTOPAUSE_RESUME</macro>
+				<macro>SYMBIAN_BLUETOOTH_ESCO_ENABLED</macro>
+				<macro>SYMBIAN_ROM_STATIC_PLUGIN_INFORMATION</macro>
+				<macro>SYMBIAN_BOOKMARK_DATABASE</macro>
+				<macro>SYMBIAN_ASSUME_SECURE_DATA</macro>
+				<macro>SYMBIAN_REMOVE_TRIVIAL_ENCRYPTION</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="9.4">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="GCCE">
+				    <macro>GCCE</macro>
+				    <macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				<platform name="ARMV5_ABIV1">
+					<macro>EABI</macro>
+					<macro>ARMV5_ABIV1</macro>
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>MARM</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>ARMCC</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>ARMCC_2</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+				<macro>SYMBIAN_CRYPTO</macro>
+				<macro>__CNF_FORMAT_V2__</macro>
+				<macro>__KEYSTORE_API_V2__</macro>
+				<macro>__BLUETOOTH_API_V2__</macro>
+				<macro>__OBEX_USER_DEFINED_HEADERS__</macro>
+				<macro>__HIDE_IPC_V1__</macro>
+				<macro>DO_NOT_USE_THIS_MACRO</macro>
+				<macro>__CONDITIONS_SCHEDULES_VALID__</macro>
+				<macro>__JAVACUSTOMINSTALL__</macro>
+				<macro>__UI_FRAMEWORKS_V2__</macro>
+				<macro>SYMBIAN_HIDE_UI_FRAMEWORKS_V1</macro>
+				<macro>SYMBIAN_REMOVE_UI_FRAMEWORKS_V1</macro>
+				<macro>__BLUETOOTH_HCI_ALLOWS_AFH__</macro>
+				<macro>__MESSAGING_API_V2__</macro>
+				<macro>__HIDE_MESSAGING_API_V1__</macro>
+				<macro>__REMOVE_MESSAGING_API_V1__</macro>
+				<macro>__BC_FUTURE_PROOFING__</macro>
+				<macro>__SECURE_DATA__</macro>
+				<macro>__SECURE_BIN__</macro>
+				<macro>__SECURE_TELEPHONY__</macro>
+				<macro>SYMBIAN_NETWORKING_PLATSEC</macro>
+				<macro>__WATCHER_API_V2__</macro>
+				<macro>SYMBIAN_COREAPPS_API_V2</macro>
+				<macro>SYMBIAN_COREAPPS_PLUGIN_API_V2</macro>
+				<macro>SYMBIAN_SECURE_DBMS</macro>
+				<macro>__SECURE_SOFTWARE_INSTALL__</macro>
+				<macro>__SECURITY_PLATSEC_ARCH__</macro>
+				<macro>SYMBIAN_SECURE_ECOM</macro>
+				<macro>SYMBIAN_SECURITY_CAF_RFILE_HANDLE</macro>
+				<macro>SYMBIAN_C32ROOT_API_V2</macro>
+				<macro>SYMBIAN_ESOCK_V3</macro>
+				<macro>SYMBIAN_UIKON_UNIFICATION</macro>
+				<macro>SYMBIAN_NETWORKING_RSUBCONNECTION</macro>
+				<macro>SYMBIAN_UI_FRAMEWORKS_CONTROL_API_V2</macro>
+				<macro>SYMBIAN_SECURE_MIDLET_INSTALL</macro>
+				<macro>__SECURE_BACKUP__</macro>
+				<macro>SYMBIAN_COMMS_REPOSITORY</macro>
+				<macro>__HIDE_WATCHER_API_V1__</macro>
+				<macro>__REMOVE_WATCHER_API_V1__</macro>
+				<macro>SYMBIAN_NETWORKING_REMOVE_RGENERIC</macro>
+				<macro>SYMBIAN_IGNORE_BIN_TARGETPATH</macro>
+				<macro>SYMBIAN_HIDE_COREAPPS_API_V1</macro>
+				<macro>SYMBIAN_REMOVE_COREAPPS_API_V1</macro>
+				<macro>__SECURE_API__</macro>
+				<macro>SYMBIAN_REMOVE_INSECURE_API</macro>
+				<macro>SYMBIAN_BLUETOOTH_REQUIRES_HCI_FLUSH_COMPLETE_EVENT</macro>
+				<macro>SYMBIAN_FONT_METRICS_V2</macro>
+				<macro>SYMBIAN_GRAPHICS_ALPHA_SUPPORT_V1</macro>
+				<macro>SYMBIAN_TELEPHONY_IMS</macro>
+				<macro>__LEAVE_EQUALS_THROW__</macro>
+				<macro>SYMBIAN_CAF_V2</macro>
+				<macro>SYMBIAN_MDF_API_V2</macro>
+				<macro>SYMBIAN_GENERIC_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_STAGED_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_TIMEZONE_SUPPORT_V1</macro>
+				<macro>SYMBIAN_ECAM_CHUNKAPI</macro>
+				<macro>SYMBIAN_SECURE_PUBLISH_AND_SUBSCRIBE</macro>
+				<macro>SYMBIAN_MMF_AUTOPAUSE_RESUME</macro>
+				<macro>SYMBIAN_BLUETOOTH_ESCO_ENABLED</macro>
+				<macro>SYMBIAN_ROM_STATIC_PLUGIN_INFORMATION</macro>
+				<macro>SYMBIAN_BOOKMARK_DATABASE</macro>
+				<macro>SYMBIAN_ASSUME_SECURE_DATA</macro>
+				<macro>SYMBIAN_REMOVE_TRIVIAL_ENCRYPTION</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="9.5">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="GCCE">
+				    <macro>GCCE</macro>
+				    <macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				<platform name="ARMV5_ABIV1">
+					<macro>EABI</macro>
+					<macro>ARMV5_ABIV1</macro>
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>MARM</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>ARMCC</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>ARMCC_2</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+				<macro>SYMBIAN_CRYPTO</macro>
+				<macro>__CNF_FORMAT_V2__</macro>
+				<macro>__KEYSTORE_API_V2__</macro>
+				<macro>__BLUETOOTH_API_V2__</macro>
+				<macro>__OBEX_USER_DEFINED_HEADERS__</macro>
+				<macro>__HIDE_IPC_V1__</macro>
+				<macro>DO_NOT_USE_THIS_MACRO</macro>
+				<macro>__CONDITIONS_SCHEDULES_VALID__</macro>
+				<macro>__JAVACUSTOMINSTALL__</macro>
+				<macro>__UI_FRAMEWORKS_V2__</macro>
+				<macro>SYMBIAN_HIDE_UI_FRAMEWORKS_V1</macro>
+				<macro>SYMBIAN_REMOVE_UI_FRAMEWORKS_V1</macro>
+				<macro>__BLUETOOTH_HCI_ALLOWS_AFH__</macro>
+				<macro>__MESSAGING_API_V2__</macro>
+				<macro>__HIDE_MESSAGING_API_V1__</macro>
+				<macro>__REMOVE_MESSAGING_API_V1__</macro>
+				<macro>__BC_FUTURE_PROOFING__</macro>
+				<macro>__SECURE_DATA__</macro>
+				<macro>__SECURE_BIN__</macro>
+				<macro>__SECURE_TELEPHONY__</macro>
+				<macro>SYMBIAN_NETWORKING_PLATSEC</macro>
+				<macro>__WATCHER_API_V2__</macro>
+				<macro>SYMBIAN_COREAPPS_API_V2</macro>
+				<macro>SYMBIAN_COREAPPS_PLUGIN_API_V2</macro>
+				<macro>SYMBIAN_SECURE_DBMS</macro>
+				<macro>__SECURE_SOFTWARE_INSTALL__</macro>
+				<macro>__SECURITY_PLATSEC_ARCH__</macro>
+				<macro>SYMBIAN_SECURE_ECOM</macro>
+				<macro>SYMBIAN_SECURITY_CAF_RFILE_HANDLE</macro>
+				<macro>SYMBIAN_C32ROOT_API_V2</macro>
+				<macro>SYMBIAN_ESOCK_V3</macro>
+				<macro>SYMBIAN_UIKON_UNIFICATION</macro>
+				<macro>SYMBIAN_NETWORKING_RSUBCONNECTION</macro>
+				<macro>SYMBIAN_UI_FRAMEWORKS_CONTROL_API_V2</macro>
+				<macro>SYMBIAN_SECURE_MIDLET_INSTALL</macro>
+				<macro>__SECURE_BACKUP__</macro>
+				<macro>SYMBIAN_COMMS_REPOSITORY</macro>
+				<macro>__HIDE_WATCHER_API_V1__</macro>
+				<macro>__REMOVE_WATCHER_API_V1__</macro>
+				<macro>SYMBIAN_NETWORKING_REMOVE_RGENERIC</macro>
+				<macro>SYMBIAN_IGNORE_BIN_TARGETPATH</macro>
+				<macro>SYMBIAN_HIDE_COREAPPS_API_V1</macro>
+				<macro>SYMBIAN_REMOVE_COREAPPS_API_V1</macro>
+				<macro>__SECURE_API__</macro>
+				<macro>SYMBIAN_REMOVE_INSECURE_API</macro>
+				<macro>SYMBIAN_BLUETOOTH_REQUIRES_HCI_FLUSH_COMPLETE_EVENT</macro>
+				<macro>SYMBIAN_FONT_METRICS_V2</macro>
+				<macro>SYMBIAN_GRAPHICS_ALPHA_SUPPORT_V1</macro>
+				<macro>SYMBIAN_TELEPHONY_IMS</macro>
+				<macro>__LEAVE_EQUALS_THROW__</macro>
+				<macro>SYMBIAN_CAF_V2</macro>
+				<macro>SYMBIAN_MDF_API_V2</macro>
+				<macro>SYMBIAN_GENERIC_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_STAGED_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_TIMEZONE_SUPPORT_V1</macro>
+				<macro>SYMBIAN_ECAM_CHUNKAPI</macro>
+				<macro>SYMBIAN_SECURE_PUBLISH_AND_SUBSCRIBE</macro>
+				<macro>SYMBIAN_MMF_AUTOPAUSE_RESUME</macro>
+				<macro>SYMBIAN_BLUETOOTH_ESCO_ENABLED</macro>
+				<macro>SYMBIAN_ROM_STATIC_PLUGIN_INFORMATION</macro>
+				<macro>SYMBIAN_BOOKMARK_DATABASE</macro>
+				<macro>SYMBIAN_ASSUME_SECURE_DATA</macro>
+				<macro>SYMBIAN_REMOVE_TRIVIAL_ENCRYPTION</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="9.6">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="GCCE">
+				    <macro>GCCE</macro>
+				    <macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				<platform name="ARMV5_ABIV1">
+					<macro>EABI</macro>
+					<macro>ARMV5_ABIV1</macro>
+					<macro>EPOC32</macro>
+					<macro>ARMCC</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>MARM</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>ARMCC</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>EABI</macro>
+					<macro>ARMCC_2</macro>
+					<macro>ARMCC_2_2</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMV5</macro>
+				</platform>
+				
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+				<macro>SYMBIAN_CRYPTO</macro>
+				<macro>__CNF_FORMAT_V2__</macro>
+				<macro>__KEYSTORE_API_V2__</macro>
+				<macro>__BLUETOOTH_API_V2__</macro>
+				<macro>__OBEX_USER_DEFINED_HEADERS__</macro>
+				<macro>__HIDE_IPC_V1__</macro>
+				<macro>DO_NOT_USE_THIS_MACRO</macro>
+				<macro>__CONDITIONS_SCHEDULES_VALID__</macro>
+				<macro>__JAVACUSTOMINSTALL__</macro>
+				<macro>__UI_FRAMEWORKS_V2__</macro>
+				<macro>SYMBIAN_HIDE_UI_FRAMEWORKS_V1</macro>
+				<macro>SYMBIAN_REMOVE_UI_FRAMEWORKS_V1</macro>
+				<macro>__BLUETOOTH_HCI_ALLOWS_AFH__</macro>
+				<macro>__MESSAGING_API_V2__</macro>
+				<macro>__HIDE_MESSAGING_API_V1__</macro>
+				<macro>__REMOVE_MESSAGING_API_V1__</macro>
+				<macro>__BC_FUTURE_PROOFING__</macro>
+				<macro>__SECURE_DATA__</macro>
+				<macro>__SECURE_BIN__</macro>
+				<macro>__SECURE_TELEPHONY__</macro>
+				<macro>SYMBIAN_NETWORKING_PLATSEC</macro>
+				<macro>__WATCHER_API_V2__</macro>
+				<macro>SYMBIAN_COREAPPS_API_V2</macro>
+				<macro>SYMBIAN_COREAPPS_PLUGIN_API_V2</macro>
+				<macro>SYMBIAN_SECURE_DBMS</macro>
+				<macro>__SECURE_SOFTWARE_INSTALL__</macro>
+				<macro>__SECURITY_PLATSEC_ARCH__</macro>
+				<macro>SYMBIAN_SECURE_ECOM</macro>
+				<macro>SYMBIAN_SECURITY_CAF_RFILE_HANDLE</macro>
+				<macro>SYMBIAN_C32ROOT_API_V2</macro>
+				<macro>SYMBIAN_ESOCK_V3</macro>
+				<macro>SYMBIAN_UIKON_UNIFICATION</macro>
+				<macro>SYMBIAN_NETWORKING_RSUBCONNECTION</macro>
+				<macro>SYMBIAN_UI_FRAMEWORKS_CONTROL_API_V2</macro>
+				<macro>SYMBIAN_SECURE_MIDLET_INSTALL</macro>
+				<macro>__SECURE_BACKUP__</macro>
+				<macro>SYMBIAN_COMMS_REPOSITORY</macro>
+				<macro>__HIDE_WATCHER_API_V1__</macro>
+				<macro>__REMOVE_WATCHER_API_V1__</macro>
+				<macro>SYMBIAN_NETWORKING_REMOVE_RGENERIC</macro>
+				<macro>SYMBIAN_IGNORE_BIN_TARGETPATH</macro>
+				<macro>SYMBIAN_HIDE_COREAPPS_API_V1</macro>
+				<macro>SYMBIAN_REMOVE_COREAPPS_API_V1</macro>
+				<macro>__SECURE_API__</macro>
+				<macro>SYMBIAN_REMOVE_INSECURE_API</macro>
+				<macro>SYMBIAN_BLUETOOTH_REQUIRES_HCI_FLUSH_COMPLETE_EVENT</macro>
+				<macro>SYMBIAN_FONT_METRICS_V2</macro>
+				<macro>SYMBIAN_GRAPHICS_ALPHA_SUPPORT_V1</macro>
+				<macro>SYMBIAN_TELEPHONY_IMS</macro>
+				<macro>__LEAVE_EQUALS_THROW__</macro>
+				<macro>SYMBIAN_CAF_V2</macro>
+				<macro>SYMBIAN_MDF_API_V2</macro>
+				<macro>SYMBIAN_GENERIC_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_STAGED_SYSTEM_STARTUP</macro>
+				<macro>SYMBIAN_TIMEZONE_SUPPORT_V1</macro>
+				<macro>SYMBIAN_ECAM_CHUNKAPI</macro>
+				<macro>SYMBIAN_SECURE_PUBLISH_AND_SUBSCRIBE</macro>
+				<macro>SYMBIAN_MMF_AUTOPAUSE_RESUME</macro>
+				<macro>SYMBIAN_BLUETOOTH_ESCO_ENABLED</macro>
+				<macro>SYMBIAN_ROM_STATIC_PLUGIN_INFORMATION</macro>
+				<macro>SYMBIAN_BOOKMARK_DATABASE</macro>
+				<macro>SYMBIAN_ASSUME_SECURE_DATA</macro>
+				<macro>SYMBIAN_REMOVE_TRIVIAL_ENCRYPTION</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="6.1">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="THUMB">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_THUMB</macro>
+				</platform>
+				<platform name="ARMI">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM </macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMI</macro>
+				</platform>
+				<platform name="ARM4">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARM4</macro>	
+				</platform>
+			</platformMacros>
+			<osMacros>
+				<macro>EKA1</macro>
+			</osMacros>
+		</osVersion>
+
+		<osVersion version="7.0">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="THUMB">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_THUMB</macro>
+				</platform>
+				<platform name="ARMI">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM </macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMI</macro>
+				</platform>
+				<platform name="ARM4">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARM4</macro>	
+				</platform>
+			</platformMacros>
+			<osMacros>
+				<macro>EKA1</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="8.0a">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="THUMB">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_THUMB</macro>
+				</platform>
+				<platform name="ARMI">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM </macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMI</macro>
+				</platform>
+				<platform name="ARM4">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARM4</macro>	
+				</platform>
+			</platformMacros>
+			<osMacros>
+				<macro>EKA1</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="8.1a">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="THUMB">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_THUMB</macro>
+				</platform>
+				<platform name="ARMI">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM </macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARMI</macro>
+				</platform>
+				<platform name="ARM4">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_ARM4</macro>	
+				</platform>
+			</platformMacros>
+			<osMacros>
+				<macro>EKA1</macro>
+			</osMacros>
+		</osVersion>
+		
+		<osVersion version="8.1b">
+			<platformMacros>
+				<platform name="WINSCW">
+					<macro>CW32</macro>
+					<macro>WINS</macro>
+					<macro>WINSCW</macro>
+				</platform>
+				<platform name="ARMV5">
+					<macro>GCC32</macro>
+					<macro>EPOC32</macro>
+					<macro>MARM</macro>
+					<macro>GENERIC_MARM</macro>
+					<macro>MARM_THUMB</macro>
+				</platform>
+			</platformMacros>
+			<osMacros>
+				<macro>EKA2</macro>
+			</osMacros>
+		</osVersion>
+		
+	</SymbianOSMacros>
+	<VendorMacros>
+		<sdkVendor name="com.nokia.s60" version="3.0">
+			<macro>__SERIES60_30__</macro>
+			<macro>__SERIES60_3X__</macro>
+		</sdkVendor>
+		<sdkVendor name="com.nokia.s60" version="3.1">
+			<macro>__SERIES60_31__</macro>
+			<macro>__SERIES60_3X__</macro>
+		</sdkVendor>
+		<sdkVendor name="com.nokia.s60" version="3.2">
+			<macro>__SERIES60_3X__</macro>
+			<macro>__S60_32__</macro>
+			<macro>__S60_3X__</macro>
+		</sdkVendor>
+		<sdkVendor name="com.nokia.s60" version="5.0">
+			<macro>__SERIES60_3X__</macro>
+			<macro>__S60_3X__</macro>
+			<macro>__S60_50__</macro>
+			<macro>__S60_5X__</macro>
+		</sdkVendor>
+		<sdkVendor name="com.nokia.s60" version="5.1">
+			<macro>__SERIES60_3X__</macro>
+			<macro>__S60_3X__</macro>
+			<macro>__S60_51__</macro>
+			<macro>__S60_5X__</macro>
+		</sdkVendor>
+	</VendorMacros>
+</SymbianMacroStore>

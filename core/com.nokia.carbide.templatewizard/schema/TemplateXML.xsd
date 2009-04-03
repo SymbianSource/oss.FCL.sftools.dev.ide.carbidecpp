@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:Template="platform:/resource/com.nokia.carbide.templatewizard/schema/template.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="platform:/resource/com.nokia.carbide.templatewizard/schema/template.xsd">
+  <xsd:complexType name="BaseFieldType">
+    <xsd:attribute name="description" type="xsd:string" use="required"/>
+    <xsd:attribute name="id" type="xsd:string" use="required"/>
+    <xsd:attribute name="label" type="xsd:string" use="required"/>
+    <xsd:attribute default="false" name="mandatory" type="xsd:string"/>
+    <xsd:attribute default="false" name="persist" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="BaseFieldType" type="Template:BaseFieldType"/>
+  <xsd:complexType name="DocumentRoot"/>
+  <xsd:element name="DocumentRoot" type="Template:DocumentRoot"/>
+  <xsd:complexType name="FilenameFieldType">
+    <xsd:complexContent>
+      <xsd:extension base="Template:BaseFieldType">
+        <xsd:attribute name="default" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FilenameFieldType" type="Template:FilenameFieldType"/>
+  <xsd:complexType name="MetadataType">
+    <xsd:attribute name="value" type="xsd:string"/>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="value1" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation>
+										The value of a metadata element.
+									</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:element name="MetadataType" type="Template:MetadataType"/>
+  <xsd:complexType name="ParameterType">
+    <xsd:attribute name="name" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="ParameterType" type="Template:ParameterType"/>
+  <xsd:complexType name="ProcessType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="Template:ParameterType"/>
+    </xsd:sequence>
+    <xsd:attribute name="bundle" type="xsd:string"/>
+    <xsd:attribute name="class" type="xsd:string"/>
+    <xsd:attribute name="name" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="ProcessType" type="Template:ProcessType"/>
+  <xsd:complexType name="TemplateType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="wizardPage" type="Template:WizardPageType"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="process" type="Template:ProcessType"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="metadata" type="Template:MetadataType"/>
+    </xsd:sequence>
+    <xsd:attribute name="description" type="xsd:string"/>
+    <xsd:attribute name="author" type="xsd:string"/>
+    <xsd:attribute name="copyright" type="xsd:string"/>
+    <xsd:attribute name="help" type="xsd:string"/>
+    <xsd:attribute name="label" type="xsd:string" use="required"/>
+    <xsd:attribute name="version" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:element name="TemplateType" type="Template:TemplateType"/>
+  <xsd:complexType name="TextFieldType">
+    <xsd:complexContent>
+      <xsd:extension base="Template:BaseFieldType">
+        <xsd:attribute name="default" type="xsd:string"/>
+        <xsd:attribute default="false" name="multiline" type="xsd:string"/>
+        <xsd:attribute name="pattern" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TextFieldType" type="Template:TextFieldType"/>
+  <xsd:complexType name="UidFieldType">
+    <xsd:complexContent>
+      <xsd:extension base="Template:BaseFieldType">
+        <xsd:attribute name="max" type="xsd:string"/>
+        <xsd:attribute name="min" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="UidFieldType" type="Template:UidFieldType"/>
+  <xsd:complexType name="WizardPageType">
+    <xsd:attribute name="description" type="xsd:string"/>
+    <xsd:attribute name="help" type="xsd:string"/>
+    <xsd:attribute name="id" type="xsd:string" use="required"/>
+    <xsd:attribute name="label" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:element name="WizardPageType" type="Template:WizardPageType"/>
+</xsd:schema>

@@ -1,0 +1,11 @@
+// localized strings for language: UK English (01)
+#define STR_Settings_list_3_0SettingItemListView_4 "Settings_list_3_0SettingItemList"
+#define STR_Settings_list_3_0SettingItemListView_5 "Item"
+#define STR_Settings_list_3_0SettingItemListView_6 "Change"
+#define STR_Settings_list_3_0SettingItemListView_7 "Edit text"
+#define STR_Settings_list_3_0SettingItemListView_8 "Item"
+#define STR_Settings_list_3_0SettingItemListView_9 "Item"
+#define STR_Settings_list_3_0SettingItemListView_10 "Item"
+#define STR_Settings_list_3_0SettingItemListView_1 "Settings"
+#define STR_Settings_list_3_0SettingItemListView_2 ""
+#define STR_Settings_list_3_0SettingItemListView_3 ""

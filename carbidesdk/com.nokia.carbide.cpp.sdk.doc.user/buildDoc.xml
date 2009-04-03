@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CDT ISV Doc Build" default="all"  basedir="." >
+
+	<property name="outputDir" value="reference/api" />
+	<property name="extensionPointsDir" value="html/reference/extension-points" />
+	
+	<target name="all">
+		<antcall target="generateJavadoc" />
+		<antcall target="generateExtensionPointHTML" />
+	</target>
+	
+	<target name="getJavadocPath">
+		<available file="${java.home}/../bin/javadoc.exe" property="javadoc" value="${java.home}/../bin/javadoc.exe"/>
+		<available file="${java.home}/../bin/javadoc" property="javadoc" value="${java.home}/../bin/javadoc" />
+	</target>
+	
+	<target name="generateJavadoc" depends="getJavadocPath" if="javadoc">
+	
+	    <condition property="optionsFile" value="docBuildOptions.txt">
+		      <os family="windows" />
+	    </condition>
+	
+		<replace file="${basedir}/${optionsFile}" token="@rt@" value="${bootclasspath}" />
+	
+		<delete dir="${outputDir}"/>
+		<mkdir dir="${outputDir}"/>	
+		<exec dir="." executable="${javadoc}" output="doc.bin.log">
+			<arg line="@${basedir}/${optionsFile} -J-Xmx500M" />
+		</exec>
+	</target>
+	
+	<target name="generateExtensionPointHTML">
+		<pde.convertSchemaToHTML manifest="../com.nokia.carbide.templatewizard/plugin.xml" destination="${extensionPointsDir}" />
+		<!-- the HTML generated will have fixed references to Eclipse CSS files. We can't copy
+		 	 those into our plugin. So we update the output to point to copies in the cdt.isv
+		 	 documentation -->
+		<replace dir="${extensionPointsDir}">
+			<replacetoken><![CDATA[import url("../..]]></replacetoken>
+			<replacevalue><![CDATA[import url("PLUGINS_ROOT/org.eclipse.cdt.doc.isv]]></replacevalue>
+		</replace>
+	</target>
+	
+	<target name="createDocZip">
+		<zip zipfile="${basedir}/doc.zip"
+			basedir="${basedir}"
+			includes=""
+		/>
+	</target>
+
+</project>

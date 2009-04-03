@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Implicit Arithmetic Conversions</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Implicit Arithmetic Conversions</h3>
+<p>  The compiler converts values automatically from one type to another to perform some operations (ISO C, &sect;3.2 and ISO C++, &sect;4). These kinds of conversions are called &ldquo;implicit conversions&rdquo; because they are not explicitly stated in the source code. </p>
+<p>The rules the compiler follows for deciding when to apply implicit conversions sometimes gives results you do not expect. If you enable the Implicit Arithmetic Conversions setting, the compiler issues a warning when it applies implicit conversions: </p>
+<ul>
+  <li>the destination of an operation is not large enough to hold all possible results</li>
+  <li>a signed value is implicitly converted to an unsigned value</li>
+  <li>an integer value is implicitly converted to a floating-point value</li>
+  <li>a floating-point value is implicitly converted to an integer value</li>
+</ul>
+<p>For example, assigning the value of a variable of type long to a variable of type char results in a warning if you enable this setting.</p>
+<p>The compiler also has pragmas that control specific of implicit conversions the compiler warns about (Table 6.1).</p>
+<h5>Table 6.1 Implicit Arithmetic Conversion Pragmas</h5>
+<table width="90%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="28%" scope="col">This pragma&hellip;</th>
+    <th width="72%" scope="col">Warns about this kind of conversion</th>
+  </tr>
+  <tr>
+    <td class="code">warn_illunionmembers</td>
+    <td>a floating point value to an integer value</td>
+  </tr>
+  <tr>
+    <td class="code">warn_impl_i2f_conv</td>
+    <td>an integer value to a floating-point value</td>
+  </tr>
+  <tr>
+    <td class="code">warn_impl_s2u_conv</td>
+    <td>a signed value to an unsigned value</td>
+  </tr>
+  <tr>
+    <td class="code">warn_implicitconv</td>
+    <td>all; this pragma is equivalent to the Implicit Arithmetic Conversions setting</td>
+  </tr>
+</table>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

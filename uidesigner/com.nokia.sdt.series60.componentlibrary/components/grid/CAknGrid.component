@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		friendlyName="Grid" 
+		abstract="true"
+		qualifiedName="com.nokia.sdt.series60.CAknGrid" 
+		category="Basic"
+		instanceNameRoot="grid"
+		version="1.0">
+		<documentation>
+			<information>A Series 60 two-dimensional grid control.</information>
+			<wizardDescription>A grid takes up the whole screen and can display images in a two-dimensional grid.</wizardDescription>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknGrid" classHelpTopic=""
+			resourceType="GRID" resourceHelpTopic="" />
+		<designerImages 
+			smallIconFile="CAknGrid_sm.png" 
+			largeIconFile="CAknGrid.png" 
+			thumbnailFile="grid_tn.png"/>
+		<attributes>
+			<attribute key="is-top-level-only-layout-object">true</attribute>
+			<attribute key="is-exclusive-child-layout-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="is-initial-content">true</attribute>
+		</attributes>
+	</component>
+</componentDefinition>

@@ -1,0 +1,7 @@
+#include <bitmasks.rh>
+
+RESOURCE BITMASK r_test_bitmasks
+	{
+	numbers = 0;
+	colors = EAknRed | EAknBlue;
+	}

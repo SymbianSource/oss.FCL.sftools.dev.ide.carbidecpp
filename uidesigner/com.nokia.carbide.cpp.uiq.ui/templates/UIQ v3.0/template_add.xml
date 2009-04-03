@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU2 END_USECASES -->
+<!DOCTYPE template [
+<!ENTITY template_add SYSTEM "../shared/template_add.inc">
+]>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+
+	&template_add;
+
+</template>
+

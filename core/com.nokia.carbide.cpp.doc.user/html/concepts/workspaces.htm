@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Workspace Information</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Workspace Information </h2>
+<p>A workspace is the default place to store and create resources like projects, folders, and files. These are then presented to the user in a perspective which enables the presentation and manipulation of the stored resources.</p>
+<p> When Carbide is launched it asks for a workspace to open. As you can have multiple workspaces, all independent from each other, choosing the workspace containing the projects to work on is important. Projects within a workspace are  shown in the Carbide workbench within the <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/concepts/cnav.htm">Project Explorer</a> and <a href="../reference/view_cpp_projects.htm">C/C++ Project</a> views. When you create a new project it is automatically added to the currently open workspace. You can import existing projects into a workspace from INF files.</p>
+<p class="note"><span class="style1">WARNING</span> Bld.inf imported projects are not copied, so do not delete the contents when deleting the project.</p>
+<p>Projects in one workspace cannot refer to projects in a different workspace. Thus, large projects spanning  folders outside of the workspace are not handled at all. Storing all the project files in the workspace makes managing them   easier from a project management perspective. Files accessible inside the workspace, like project source and resource files, are better supported than those outside the workspace (for example, SDK headers). Local History, CVS, MMP/bld.inf editors, etc. are available for files inside the workspace but not for those outside the workspace. </p>
+<p class="note"><b>NOTE</b> Carbide automatically updates MMP and INF files as changes are made within the MMP and INF editors.</p>
+<p><span class="note">Carbide generates project support files, such as </span><span class="code">.project</span><span class="note"> and </span><span class="code">.cproject</span><span class="note"> and a </span><span class="code">.metadata</span><span class="note"> folder, which stores preferences.</span> Metadata files like &quot;.project&quot; are placed in the source tree. If adding these files to CVS causes a problem, these files may be excluded from CVS  using <b>Team &gt; Ignored Resources</b> preference panel to specify name patterns to exclude from version control.</p>
+<h4>Other references</h4>
+<ul>
+  <li><a href="CarbidePerspective.html">Carbide.c++ perspective </a></li>
+  <li><a href="../reference/perspective_debug.htm">Debug perspective </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

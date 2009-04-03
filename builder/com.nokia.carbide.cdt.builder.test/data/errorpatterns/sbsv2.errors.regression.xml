@@ -1,0 +1,4 @@
+<root>
+<!--Error Marker at index 0-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="While Searching for a SPECIFIED DEFFILE: file not found: L:/src/common/generic/app-framework/cone/bwins/CONExu.DEF" severity="1" variable_name="^EMPTY^"/>
+</root>

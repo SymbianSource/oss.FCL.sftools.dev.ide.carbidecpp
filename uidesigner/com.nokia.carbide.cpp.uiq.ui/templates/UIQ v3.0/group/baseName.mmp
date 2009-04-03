@@ -1,0 +1,42 @@
+TARGET			$(baseName).exe
+TARGETTYPE		EXE
+UID               		0x100039CE $(uid3)
+VENDORID		0
+EPOCSTACKSIZE		0x5000
+
+SYSTEMINCLUDE		\epoc32\include \epoc32\include\variant \epoc32\include\ecom
+USERINCLUDE		..\$(incDir)
+
+SOURCEPATH		..\$(resDir)
+START RESOURCE 	$(baseName).rss
+HEADER
+TARGETPATH 		\resource\apps
+LANG			$(LANGUAGE_ID)
+END
+
+SOURCEPATH		..\$(regDir)
+START RESOURCE	$(baseName)_reg.rss
+TARGETPATH		\private\10003a3f\apps
+END
+
+LIBRARY			euser.lib apparc.lib cone.lib eikcore.lib qikcore.lib 
+LIBRARY			qikallocdll.lib eikcoctl.lib egul.lib quiconfigclient.lib
+LIBRARY			qikctl.lib eikctl.lib qikdlg.lib gdi.lib etext.lib
+LIBRARY			qikutils.lib bafl.lib qiklbx.lib
+
+STATICLIBRARY		qikalloc.lib
+
+START BITMAP		$(baseName).mbm
+HEADER
+TARGETPATH		\resource\apps
+SOURCEPATH		..\$(gfxDir)
+SOURCE	c24,8		$(baseName)_Small.bmp $(baseName)_Small_mask.bmp
+SOURCE	c24,8		$(baseName)_Large.bmp $(baseName)_Large_mask.bmp
+SOURCE	c24,8		$(baseName)_xLarge.bmp $(baseName)_xLarge_mask.bmp
+END
+
+SOURCEPATH		..\$(sourceDir)
+
+#ifdef ENABLE_ABIV2_MODE
+  DEBUGGABLE_UDEBONLY
+#endif

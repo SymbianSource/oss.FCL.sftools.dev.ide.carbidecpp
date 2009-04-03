@@ -1,0 +1,138 @@
+#include "lists_3_0ListBox2.loc"
+
+RESOURCE AVKON_VIEW r_lists_3_0_list_box2_lists_3_0_list_box2_view
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
+	menubar = r_lists_3_0_list_box2_options_menu;
+	toolbar = 0;
+	}
+RESOURCE MENU_BAR r_lists_3_0_list_box2_options_menu
+	{
+	titles =
+		{
+		MENU_TITLE
+			{
+			menu_pane = r_lists_3_0_list_box2_menu_pane1_menu_pane;
+			}
+		};
+	}
+RESOURCE MENU_PANE r_lists_3_0_list_box2_menu_pane1_menu_pane
+	{
+	items =
+		{
+		MENU_ITEM
+			{
+			cascade = R_AVKON_MENUPANE_MARKABLE_LIST_IMPLEMENTATION;
+			txt = STR_lists_3_0ListBox2View_10;
+			}
+		};
+	}
+RESOURCE STATUS_PANE_APP_MODEL r_lists_3_0_list_box2_status_pane
+	{
+	panes =
+		{
+		SPANE_PANE
+			{
+			id = EEikStatusPaneUidTitle;
+			type = EAknCtTitlePane;
+			resource = r_lists_3_0_list_box2_title_resource;
+			}
+		};
+	}
+RESOURCE TITLE_PANE r_lists_3_0_list_box2_title_resource
+	{
+	txt = STR_lists_3_0ListBox2View_3;
+	}
+RESOURCE LISTBOX r_lists_3_0_list_box2_list_box
+	{
+	flags = EAknListBoxMarkableList;
+	}
+RESOURCE ARRAY r_lists_3_0_list_box2_listbox_item1
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_4;
+			},
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_5;
+			}
+		};
+	}
+RESOURCE ARRAY r_lists_3_0_list_box2_listbox_item2
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_6;
+			},
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_7;
+			}
+		};
+	}
+RESOURCE ARRAY r_lists_3_0_list_box2_listbox_item3
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_8;
+			},
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_9;
+			}
+		};
+	}
+RESOURCE AVKON_MULTISELECTION_LIST_QUERY r_lists_3_0_list_box2_list_multi_query1
+	{
+	flags = EGeneralQueryFlags;
+	softkeys = R_AVKON_SOFTKEYS_OK_CANCEL;
+	items =
+		{
+		AVKON_MULTISELECTION_LIST_QUERY_DLG_LINE
+			{
+			control = AVKON_LIST_QUERY_CONTROL
+				{
+				listtype = EAknCtDouble2PopupMenuListBox;
+				heading = STR_lists_3_0ListBox2View_11;
+				listbox = AVKON_MULTISELECTION_LIST_QUERY_LIST
+					{
+					};
+				};
+			}
+		};
+	}
+RESOURCE ARRAY r_lists_3_0_list_box2_listbox_item4
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_12;
+			},
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_13;
+			}
+		};
+	}
+RESOURCE ARRAY r_lists_3_0_list_box2_listbox_item5
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_14;
+			},
+		LBUF
+			{
+			txt = STR_lists_3_0ListBox2View_15;
+			}
+		};
+	}

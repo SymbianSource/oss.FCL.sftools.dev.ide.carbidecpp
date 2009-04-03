@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<introContent>
+
+ 	<extensionContent 
+		  id="com.nokia.carbide.cpp.uidesigner.doc.user-overview" 
+		  style="uidesigner.css" 
+		  alt-style="uidesigner.properties" 
+		  name="UI Designer" 
+		  path="overview/@">
+		  
+		<group style-id="content-group" id="uidesigner">
+       		<link 
+				   label="UI Designer" 
+				   url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.uidesigner.doc.user/html/gettingstarted/gettingstarted.htm" 
+				   id="uid-features" 
+				   style-id="content-link">
+				  <text>Get started using the UI Designer feature to create your application interface.</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+
+</introContent>

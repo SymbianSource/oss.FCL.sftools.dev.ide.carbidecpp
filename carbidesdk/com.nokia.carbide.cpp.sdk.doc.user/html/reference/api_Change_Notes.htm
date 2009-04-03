@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Changes to the Carbide API</title>
+<style>
+<!--
+span.attr
+    {color:green}
+-->
+</style>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+
+<body>
+<h2>Changes to the Carbide API </h2>
+
+<p>The following section provides information on changed, deprecated, and removed Carbide APIs. </p>
+<h3>Changed APIs</h3>
+<p>The following APIs have been changed. </p>
+<p>Since Carbide 1.2.0</p>
+<ul>
+  <li><i>N/A</i></li>
+</ul>
+<p>Since Carbide 1.2.1</p>
+<ul>
+  <li><i>In order to support multiple documents per model, we must inject a way to determine how IDocument instances are provided for use in creating ITranslationUnits. Any implementations of com.nokia.carbide.cpp.epoc.engine.model.IViewParserConfiguration must now implement the method IModelDocumentProvider getModelDocumentProvider(). This is used to isolate the mechanism for creating IDocument instances, either from disk or from memory. </i></li>
+</ul>
+<ul>
+  <li><i>Similarly, the method #getTranslationUnit(File) in com.nokia.carbide.cpp.epoc.engine.preprocessor.ITranslationUnitProvider is changed to #getTranslationUnit(File, IModelDocumentProvider). </i></li>
+</ul>
+<p>Since Carbide 1.2.2</p>
+<ul>
+  <li><i>Due to changes in in CDT 4.0, we needed to change com.nokia.carbide.cdt.builder.ICarbideBuildManager and com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo. Methods which modified Carbide.c++ project properties were moved to the new interface com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier.</i></li>
+</ul>
+<ul>
+  <li><i>ICarbideProjectInfo#getCleanCommand has been changed to ICarbideProjectInfo#getCleanLevel to match the preference change. </i></li>
+</ul>
+<ul>
+  <li><i>ICarbideBuildConfiguration#getSISBuilderInfo has been changed to ICarbideBuildConfiguration#getSISBuilderInfoList to match the changes to the SIS Builder tab. </i></li>
+</ul>
+<ul>
+  <li><i>EpocEngineHelper#getProjectRoots now returns a list with three elements (formerly 2), the last of which is the path that contains the build files and the sources (aka the "desired root").</i></li>
+</ul>
+<p>Since Carbide 2.0</p>
+<ul>
+  <li>Added<em> com.nokia.carbide.cpp.sdk.core.ISDKManager#checkDevicesXMLSynchronized()</em>.</li>
+</ul>
+<ul>
+  <li>The EMMPLanguage#UNKNOWNxxx enums have been renamed with their proper names.  All the same language
+  codes are available, so EMMPLangage#forLangCode() or #fromCode() should still work.  (We couldn't leave the unknown
+  enums in, mark them @Deprecated, and add the correct ones, since this would violate uniqueness in the EMMPLanguage#values() 
+  array.)</li>
+</ul>
+<h3>Deprecated APIs</h3>
+<p>The following Carbide APIs have been deprecated and should not be used anymore.  Please see the JavaDoc for these classes and methods for more information.</p>
+<p>Since Carbide 1.2.0</p>
+<ul>
+  <li><i>N/A</i></li>
+</ul>
+<p>Since Carbide 1.2.1</p>
+<ul>
+  <li><i>N/A</i></li>
+</ul>
+<p>Since Carbide 1.2.2</p>
+<ul>
+  <li><i>com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher.getCmdExeLocation()</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder.callAbldBuildForConfiguration(ICarbideBuildConfiguration, IProgressMonitor, IConsole, int, boolean)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder.invokeBldmakeBldFiles(ICarbideBuildConfiguration, CarbideCommandLauncher, IProgressMonitor, IConsole, String[], IPath)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder.projectNeedsMakefileGeneration(IPath, ICarbideBuildConfiguration)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo.getMMPTargetFile()</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.EpocEngineHelper.getPathToMainExecutable(ICarbideBuildConfiguration)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.EpocEngineHelper.getPathToMainExecutable(ICarbideProjectInfo)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.EpocEngineHelper.getTargetPathForMainExecutable(ICarbideProjectInfo)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.EpocEngineHelper.getHostAndTargetResources(ICarbideProjectInfo)</i></li>
+  <li><i>com.nokia.carbide.cdt.internal.builder.EnvironmentVarsInfo</i></li>
+  <li><i>com.nokia.carbide.cdt.internal.builder.SISBuilderInfo</i></li>
+  <li><i>com.nokia.carbide.cpp.sdk.core.getProjectVariantHRHMacros()</i></li>
+</ul>
+<p>Since Carbide 2.0</p>
+<ul>
+  <li>None </li>
+</ul>
+<h3>Removed APIs</h3>
+<p>The following Carbide APIs have been removed and are no longer available to plug-ins.</p>
+<p>Since Carbide 1.2.0</p>
+<ul>
+  <li><i>N/A</i></li>
+</ul>
+<p>Since Carbide 1.2.1</p>
+<ul>
+  <li><i>N/A</i></li>
+</ul>
+<p>Since Carbide 1.2.2</p>
+<ul>
+  <li><i>Some methods that were not intended to be made public were removed from the following classes and interfaces: </i></li>
+  <ul>
+    <li><i>com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder</i></li>
+    <li><i>com.nokia.carbide.cdt.builder.ICarbideBuildManager</i></li>
+    <li><i>com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo</i></li>
+    <li><i>com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration</i></li>
+  </ul>
+</ul>
+<p>Since Carbide 2.0</p>
+<ul>
+  <li>None</li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</div></body>
+</html>

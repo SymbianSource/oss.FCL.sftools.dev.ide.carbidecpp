@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	<component id="com.nokia.examples.codeComp">
+		<property id="name">root</property>
+		<component id="com.nokia.examples.codeComp">
+			<property id="name">code1</property>
+		</component>  
+		<component id="com.nokia.examples.codeComp">
+			<property id="name">code2</property>
+		</component>  
+		<component id="com.nokia.examples.scriptComp">
+			<property id="name">script1</property>
+		</component>  
+		<component id="com.nokia.examples.scriptComp">
+			<property id="name">script2</property>
+		</component>  
+		<component id="com.nokia.examples.codeDerived">
+			<property id="name">codeDerived</property>
+		</component>  
+		<component id="com.nokia.examples.scriptDerived">
+			<property id="name">scriptDerived</property>
+		</component>  
+		<component id="com.nokia.examples.noRender">
+			<property id="name">norender</property>
+		</component>  
+	</component>  
+</designerData>

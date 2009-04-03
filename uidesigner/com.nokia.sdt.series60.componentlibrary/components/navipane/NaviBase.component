@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component baseComponent="com.nokia.sdt.series60.ControlBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.NaviBase" 
+		abstract="true"
+		version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			 />
+		<attributes>
+			<attribute key="is-navipane-content">true</attribute>
+			<attribute key="is-status-pane-content">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			
+			<attribute key="never-add-component">true</attribute>
+			<attribute key="is-system-component">true</attribute>
+			
+			<attribute key="status-pane-id">EEikStatusPaneUidNavi</attribute>
+			
+		</attributes>
+		<propertyOverrides>
+			<propertyOverride name="location" category="Hidden"/>
+			<propertyOverride name="size" category="Hidden"/>
+		</propertyOverrides>
+		
+		<sourceGen>
+
+			<templateGroup id="NaviBaseSetup">
+			
+				<template phase="ForwardDeclarations" id="0">
+class CAknNavigationDecorator;
+				</template>
+				<template phase="InstanceVariables" id="0b">
+// any current navi decorator
+CAknNavigationDecorator* iNaviDecorator_;
+				</template>
+				<template phase="MainSystemIncludes" id="1a"><![CDATA[
+#include <aknnavide.h>
+]]>				</template>
+				<template phase="Construct" id="1">
+iNaviDecorator_ = NULL;
+				</template>
+				<template phase="Destroy" id="2">
+if ( iNaviDecorator_ != NULL )
+	{
+	delete iNaviDecorator_;
+	iNaviDecorator_ = NULL;
+	}
+				</template>
+				<template phase="MainSystemIncludes" id="3"><![CDATA[
+#include <aknnavi.h>
+]]>				</template>
+
+			</templateGroup>
+			
+			<template phase="SetupStatusPane" id="SetupPrelude"><![CDATA[
+// set the navi pane content
+TUid naviPaneUid = TUid::Uid( EEikStatusPaneUidNavi );
+CEikStatusPaneBase::TPaneCapabilities subPaneNavi = 
+	StatusPane()->PaneCapabilities( naviPaneUid );
+if ( subPaneNavi.IsPresent() && subPaneNavi.IsAppOwned() )
+	{
+	CAknNavigationControlContainer* naviPane = 
+		static_cast< CAknNavigationControlContainer* >( 
+			StatusPane()->ControlL( naviPaneUid ) );
+	if ( iNaviDecorator_ != NULL )
+		{
+		delete iNaviDecorator_;
+		iNaviDecorator_ = NULL;
+		}
+]]>			
+			</template>
+
+			<!-- navi content must set iNaviDecorator_ -->
+			
+			<template phase="SetupStatusPane" id="SetupPostlude"><![CDATA[
+	naviPane->PushL( *iNaviDecorator_ );
+	}
+]]>			
+			</template>
+
+			<template phase="CleanupStatusPane" id="CleanupPostlude"><![CDATA[
+// reset the navi pane 
+TUid naviPaneUid = TUid::Uid( EEikStatusPaneUidNavi );
+CEikStatusPaneBase::TPaneCapabilities subPaneNavi = 
+	StatusPane()->PaneCapabilities( naviPaneUid );
+if ( subPaneNavi.IsPresent() && subPaneNavi.IsAppOwned() )
+	{
+	CAknNavigationControlContainer* naviPane = 
+		static_cast< CAknNavigationControlContainer* >( 
+			StatusPane()->ControlL( naviPaneUid ) );
+	if ( iNaviDecorator_ != NULL )
+		{
+		naviPane->Pop( iNaviDecorator_ );
+		delete iNaviDecorator_;
+		iNaviDecorator_ = NULL;
+		}
+	}
+]]>
+			</template>
+			
+		</sourceGen>
+	</component>
+</componentDefinition>

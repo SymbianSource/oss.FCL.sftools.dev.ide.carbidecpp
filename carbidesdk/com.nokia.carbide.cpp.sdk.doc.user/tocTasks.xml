@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Tasks" link_to="sdkTOC.xml#sdkTasks" >
+	<topic label="Adding Items to the Carbide Menu" href="html/tasks/CarbideMenu.htm"/>
+	<topic label="Adding Global Preferences to the Carbide Extensions group" href="html/tasks/CarbideExtensionPreferences.htm"/>
+    <topic label="Adding Plug-in Help" href="html/tasks/CarbideHelp.htm"/>	
+    <topic label="Installing Your Own Carbide Plug-ins" href="html/tasks/carbide_adding_plugins.htm"/>	
+	<topic label="Creating Wizard Templates" href="html/tasks/CreatingWizardTemplates.htm"/> 
+	<topic label="Creating Plugins to Access Carbide Project Information">
+       <topic label="Getting Carbide Project Information" href="html/tasks/sdk_getprojinfo.htm"/>
+       <topic label="Retrieving INF and MMP Project Information" href="html/tasks/sdk_getinfmmpinfo.htm"/>
+    </topic>
+</toc>

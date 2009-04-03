@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE template [
+<!ENTITY projectDirsPageCommonFields SYSTEM "../../shared/projectDirsPageCommonFields.inc">
+<!ENTITY projectCreateAndCommonFoldersProcess SYSTEM "../../shared/projectCreateAndCommonFoldersProcess.inc">
+]>
+<template 
+	version="1.0" 
+	label="%template.label">
+	<description>%template.desc</description>
+	<wizardPage 
+		id="basics" 
+		label="%basics.label">
+		<description>%basics.desc</description>
+		<textField 
+				id="uid2"
+				label="%basics.uid2.label"
+				default="0x1000008d"
+				pattern="0x[0-9a-fA-F]{8}"
+				mandatory="true"
+				persist="true">
+				<description>%basics.uid2.desc</description>
+		</textField>
+		<uidField 
+				id="uid3"
+				label="%basics.uid3.label"
+				min="0xe0000000"
+				max="0xefffffff"
+				mandatory="true">
+				<description>%basics.uid3.desc</description>
+		</uidField>
+		<textField 
+				id="author"
+				label="%basics.author.label"
+				persist="true">
+				<description>%basics.author.desc</description>
+		</textField>
+		<textField 
+				id="copyright"
+				label="%basics.copyright.label"
+				multiline="true"
+				default="Your copyright notice"
+				persist="true">
+				<description>%basics.copyright.desc</description>
+		</textField>
+	</wizardPage>
+
+	<wizardPage id="directories" label="%directories.label">
+
+		&projectDirsPageCommonFields;
+
+	</wizardPage>
+	
+	&projectCreateAndCommonFoldersProcess;	
+	
+	<process class="com.nokia.carbide.templatewizard.processes.CopyFiles"
+	 	bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+
+		<parameter name="file"
+			sourcePath="sis/Basename_EKA2.pkg" 
+			targetPath="$(sisDir)/$(baseName)_EKA2.pkg" 
+			/>  
+		<parameter name="file"
+			sourcePath="group/Basename.mmp"
+			targetPath="$(groupDir)/$(baseName).mmp"
+			/> 
+		<parameter name="file"
+			sourcePath="group/bld.inf"
+			targetPath="$(groupDir)/bld.inf"
+			/> 
+	</process>
+	
+	<process class="com.nokia.carbide.cpp.project.core.processes.CopyFilesAndFormatAsCpp"
+		bundle="com.nokia.carbide.cpp.project.core">
+		<parameter name="project" projectName="$(projectName)" />			
+			
+		<parameter name="file"
+			sourcePath="inc/Basename.h"
+			targetPath="$(incDir)/$(baseName).h"
+			/> 
+		<parameter name="file"
+			sourcePath="inc/Basename.pan"
+			targetPath="$(incDir)/$(baseName).pan"
+			/> 
+		<parameter name="file"
+			sourcePath="src/Basename.cpp"
+			targetPath="$(sourceDir)/$(baseName).cpp"
+			/> 
+		<parameter name="file"
+			sourcePath="src/BasenameDllMain.cpp"
+			targetPath="$(sourceDir)/$(baseName)DllMain.cpp"
+			/> 
+	</process>
+
+	<process class="com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks"
+	 	bundle="com.nokia.carbide.cpp.project.ui">
+		<parameter name="project" projectName="$(projectName)"
+			bldInfPath="$(groupDir)/bld.inf"
+			targetMMPFileName="$(baseName).mmp" /> 
+	</process>
+
+</template>

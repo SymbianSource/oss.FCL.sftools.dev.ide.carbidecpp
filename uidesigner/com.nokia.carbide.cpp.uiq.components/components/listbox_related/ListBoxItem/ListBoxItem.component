@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU13 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.carbide.uiq.ListBoxItem"
+		baseComponent="com.nokia.carbide.uiq.CommonBase"
+		instanceNameRoot="listBoxItem"
+		version="1.0"
+		category="%listbox.category">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+			
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="ListBoxItem" classHelpTopic=""
+			resourceType="QIK_LISTBOX_DATA" resourceHelpTopic=""/>
+				
+		<designerImages 
+			smallIconFile="ListBoxItem_sm.png" 
+			largeIconFile="ListBoxItem.png"/>
+		
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">false</attribute>
+			<attribute key="not-in-toolbox">false</attribute>
+		</attributes>
+		
+		<properties>
+			<!-- temporary until the layout manager is implemented and integrated :
+				see DisplayModelUIQ#createLayoutObject and Container -->
+			<compoundProperty name="location"
+				displayName="%location"
+				descriptionKey="locationDescription"
+				category="Hidden"
+				type="com.nokia.carbide.uiq.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty name="size"
+				displayName="%size"
+				descriptionKey="sizeDescription"
+				category="Hidden"
+				type="com.nokia.carbide.uiq.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<componentReferenceProperty name="layout"
+				displayName="%layout"
+				descriptionKey="layoutDescription"
+				scope="siblings"
+				constraint="com.nokia.carbide.uiq.ListBoxLayout"
+				category="%category.layout"/>
+			<compoundProperty name="flags"
+				displayName="%flags"
+				descriptionKey="flagsDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxDataFlags"
+				category="%category.behavior"/>
+		</properties>
+		
+		<extensionProperties name="Line">
+			<property name="EQikListBoxSlotText1"
+				displayName="%slotText1"
+				descriptionKey="slotText1Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+		</extensionProperties>
+		
+		<extensionProperties name="IconLine">
+			<compoundProperty name="EQikListBoxSlotLeftSmallIcon1"
+				displayName="%slotLeftSmallIcon1"
+				descriptionKey="slotLeftSmallIcon1Description"
+				category="%layout.category"
+				type="com.nokia.carbide.uiq.ImageProperty"/>
+			<property name="EQikListBoxSlotText1"
+				displayName="%slotText1"
+				descriptionKey="slotText1Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+		</extensionProperties>
+		
+		<extensionProperties name="LineIcon">
+			<property name="EQikListBoxSlotText1"
+				displayName="%slotText1"
+				descriptionKey="slotText1Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+			<compoundProperty name="EQikListBoxSlotRightSmallIcon1"
+				displayName="%slotRightSmallIcon1"
+				descriptionKey="slotRightSmallIcon1Description"
+				category="%layout.category"
+				type="com.nokia.carbide.uiq.ImageProperty"/>
+		</extensionProperties>
+		
+		<extensionProperties name="TwoLines">
+			<property name="EQikListBoxSlotText1"
+				displayName="%slotText1"
+				descriptionKey="slotText1Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+			<property name="EQikListBoxSlotText2"
+				displayName="%slotText2"
+				descriptionKey="slotText2Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+		</extensionProperties>
+		
+		<extensionProperties name="IconTwoLines">
+			<compoundProperty name="EQikListBoxSlotLeftSmallIcon1"
+				displayName="%slotLeftSmallIcon1"
+				descriptionKey="slotLeftSmallIcon1Description"
+				category="%layout.category"
+				type="com.nokia.carbide.uiq.ImageProperty"/>
+			<property name="EQikListBoxSlotText1"
+				displayName="%slotText1"
+				descriptionKey="slotText1Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+			<property name="EQikListBoxSlotText2"
+				displayName="%slotText2"
+				descriptionKey="slotText2Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+		</extensionProperties>
+		
+		<extensionProperties name="MediumIconTwoLines">
+			<!--TODO: the use of thumbnails is not working properly. In the meantime,
+				we'll use icon_2. Hence, we do not use URIImageProperty but it would be.-->
+			<!--<compoundProperty name="EQikListBoxSlotLeftMediumThumbnail1"
+				displayName="%slotLeftMediumThumbnail1"
+				descriptionKey="slotLeftMediumThumbnail1Description"
+				category="%layout.category"
+				type="com.nokia.carbide.uiq.URIImageProperty"/>-->
+			<compoundProperty name="EQikListBoxSlotLeftMediumIcon1"
+				displayName="%slotLeftMediumIcon1"
+				descriptionKey="slotLeftMediumIcon1Description"
+				category="%layout.category"
+				type="com.nokia.carbide.uiq.ImageProperty"/>
+			<property name="EQikListBoxSlotText1"
+				displayName="%slotText1"
+				descriptionKey="slotText1Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+			<property name="EQikListBoxSlotText2"
+				displayName="%slotText2"
+				descriptionKey="slotText2Description"
+				category="%layout.category"
+				type="localizedString"
+				default="text"/>
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<!--<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>-->
+				<interface id="com.nokia.sdt.datamodel.adapter.IImagePropertyRenderingInfo"/>
+				<script file="ListBoxItem_impls.js" prototype="ListBoxItem"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IClipboardCommandExtender"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.ControlCollectionItemChildImplFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_LISTBOX_DATA" headers="QikListBox.rh">
+				<mapMemberFromType property="flags" member="data_flags"/>
+				<select property="layout">
+					<choice value="">
+						<select property="[parent].default_layout->">
+							<choice value="">
+							</choice>
+							<choice>
+								<mapEnumMember property="[parent].default_layout->"
+									member="layout_id"
+									nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_LISTBOXLAYOUT_ID"
+									uniqueValue="*"/>
+							</choice>
+						</select>
+					</choice>
+					<choice>
+						<mapEnumMember property="layout->"
+							member="layout_id"
+							nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_LISTBOXLAYOUT_ID"
+							uniqueValue="*"/>
+					</choice>
+				</select>
+				<select propertyExists="EQikListBoxSlotText1">
+					<choice value="true">
+						<mapResourceMember struct="QIK_LISTBOX_TEXT" headers="QikListBox.rh" property="." member="data[]" id="EQikListBoxSlotText1">
+							<mapFixedMember value="EQikListBoxSlotText1" member="slot_id"/>
+							<mapSimpleMember property="EQikListBoxSlotText1" member="txt"/>
+						</mapResourceMember>
+					</choice>
+					<choice>
+					</choice>
+				</select>
+				<select propertyExists="EQikListBoxSlotText2">
+					<choice value="true">
+						<mapResourceMember struct="QIK_LISTBOX_TEXT" headers="QikListBox.rh" property="." member="data[]" id="EQikListBoxSlotText2">
+							<mapFixedMember value="EQikListBoxSlotText2" member="slot_id"/>
+							<mapSimpleMember property="EQikListBoxSlotText2" member="txt"/>
+						</mapResourceMember>
+					</choice>
+					<choice>
+					</choice>
+				</select>
+				<select propertyExists="EQikListBoxSlotLeftSmallIcon1">
+					<choice value="true">
+						<mapResourceMember struct="QIK_LISTBOX_ICON_2" headers="QikListBox.rh" property="." member="data[]" id="EQikListBoxSlotLeftSmallIcon1">
+							<mapFixedMember value="EQikListBoxSlotLeftSmallIcon1" member="slot_id"/>
+							<mapMemberFromType property="EQikListBoxSlotLeftSmallIcon1" member="content"/>
+						</mapResourceMember>
+					</choice>
+					<choice>
+					</choice>
+				</select>
+				<select propertyExists="EQikListBoxSlotRightSmallIcon1">
+					<choice value="true">
+						<mapResourceMember struct="QIK_LISTBOX_ICON_2" headers="QikListBox.rh" property="." member="data[]" id="EQikListBoxSlotRightSmallIcon1">
+							<mapFixedMember value="EQikListBoxSlotRightSmallIcon1" member="slot_id"/>
+							<mapMemberFromType property="EQikListBoxSlotRightSmallIcon1" member="content"/>
+						</mapResourceMember>
+					</choice>
+					<choice>
+					</choice>
+				</select>
+				<select propertyExists="EQikListBoxSlotLeftMediumIcon1">
+					<choice value="true">
+						<!--TODO: thumbnail resources are not working properly, until UIQ provides a fix for this,
+							the workaround will be to use icon_2-->
+						<!--<mapResourceMember struct="QIK_LISTBOX_THUMBNAIL" headers="QikListBox.rh" property="." member="data[]" id="EQikListBoxSlotLeftMediumThumbnail1">
+							<mapFixedMember value="EQikListBoxSlotLeftMediumThumbnail1" member="slot_id"/>
+							<mapSimpleMember property="EQikListBoxSlotLeftMediumThumbnail1.uri" member="image_file"/>
+						</mapResourceMember>-->
+						<mapResourceMember struct="QIK_LISTBOX_ICON_2" headers="QikListBox.rh" property="." member="data[]" id="EQikListBoxSlotLeftMediumIcon1">
+							<mapFixedMember value="EQikListBoxSlotLeftMediumIcon1" member="slot_id"/>
+							<mapMemberFromType property="EQikListBoxSlotLeftMediumIcon1" member="content"/>
+						</mapResourceMember>
+					</choice>
+					<choice>
+					</choice>
+				</select>
+			</mapResource>
+		</sourceMapping>
+		
+	</component>
+	
+</componentDefinition>

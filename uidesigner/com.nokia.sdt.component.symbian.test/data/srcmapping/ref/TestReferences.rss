@@ -1,0 +1,12 @@
+#include <refheader.rh>
+#include <basicheader.rh>
+
+RESOURCE OWNER r_test4
+	{
+	theLink = r_test0;
+	theLlink = r_test0;
+	}
+RESOURCE ONE_STRING r_test0
+	{
+	text = "check this textual data";
+	}

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikFloatingPointEditor"
+		baseComponent="com.nokia.sdt.series60.CEikEdwinBase" 
+		category="Editors"
+		instanceNameRoot="floatingPointEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="FLPTED" className="CEikFloatingPointEditor" />
+		<designerImages 
+			smallIconFile="CEikFloatingPointEditor_sm.png" 
+			largeIconFile="CEikFloatingPointEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikFloatingPointEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="data-model-cpp-type">TReal</attribute>
+			<attribute key="dataquery-className">CAknFloatingPointQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EEikCtFlPtEd</attribute>
+		</attributes>
+	
+		<properties>
+			<property name="value" category="Data" type="float" descriptionKey="valueDescription"
+				minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"/>
+			<property name="default" category="Data" type="float" descriptionKey="defaultDescription"
+				minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"/>
+			<property name="minimum" category="Data" type="float" default="-9.9e99" 
+				minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"
+				descriptionKey="minimumDescription" />
+			<property name="maximum" category="Data" type="float" default="9.9e99" 
+				minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"
+				descriptionKey="maximumDescription" />
+			<property name="maxlength" category="Appearance" type="integer" 
+				descriptionKey="maxlengthDescription" maxValue="12" default="32" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikFloatingPointEditor_visual.js" prototype="CEikFloatingPointEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="FLPTED" headers="eikon.rh">
+			<mapSimpleMember property="maxlength" member="maxlength"/>
+			<mapSimpleMember property="minimum" member="min"/>
+			<mapSimpleMember property="maximum" member="max"/>
+			<mapSimpleMember property="default" member="default"/>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuerySetData">
+	
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"eikfpne.h", "eikenv.h" ]);
+		</inline>
+
+		<template phase="MainConstants">
+_LIT( K${instanceName$title}TextValue, "${properties.value}" );
+		</template>
+		
+		<!-- do not validate the value, since default will be used -->
+		
+		<!-- note: we have to set the text in addition to the integral value
+			or else the editor shows up BLANK -->
+		<template phase="Initialize"><![CDATA[
+	{
+	TReal value = ${properties.value};
+	${instanceMemberName}->SetValueL( &value );
+	${instanceMemberName}->SetTextL( &K${instanceName$title}TextValue );
+	}
+]]>		</template>
+
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	aData = ${properties.value};
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateCommonEdwinEvents GenerateFormatChangedEvent"/>
+		<useTemplateGroup ids="GenerateNavigationEvent GenerateTextUpdatedEvent"/>
+		
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

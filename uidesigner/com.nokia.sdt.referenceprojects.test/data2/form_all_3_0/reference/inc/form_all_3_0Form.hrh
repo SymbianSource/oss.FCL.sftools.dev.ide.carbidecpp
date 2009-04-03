@@ -1,0 +1,16 @@
+enum TForm_all_3_0FormViewControls
+	{
+	EForm_all_3_0FormViewIntegerEditor1 = 1,
+	EForm_all_3_0FormViewDateEditor1,
+	EForm_all_3_0FormViewDurationEditor1,
+	EForm_all_3_0FormViewFixedPointEditor1,
+	EForm_all_3_0FormViewFloatingPointEditor1,
+	EForm_all_3_0FormViewNumEditor1,
+	EForm_all_3_0FormViewNumSecret1,
+	EForm_all_3_0FormViewRangeEditor1,
+	EForm_all_3_0FormViewSecret1,
+	EForm_all_3_0FormViewEdit1,
+	EForm_all_3_0FormViewTimeEditor1,
+	EForm_all_3_0FormViewTimeOffsetEditor1,
+	EForm_all_3_0FormViewTimeAndDateEditor1
+	};

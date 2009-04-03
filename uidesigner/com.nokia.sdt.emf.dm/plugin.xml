@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+-->
+
+<plugin>
+
+    <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///com/nokia/sdt/emf/dm.ecore" 
+       class = "com.nokia.sdt.emf.dm.DmPackage" />
+  </extension>
+  <extension
+        point="org.eclipse.emf.ecore.extension_parser">
+     <parser
+           class="com.nokia.sdt.emf.dm.xml.NXDResourceFactory"
+           type="nxd"/>
+     <parser
+           class="com.nokia.sdt.emf.dm.xml.NXDResourceFactory"
+           type="uidesign"/>
+  </extension>
+
+</plugin>
+

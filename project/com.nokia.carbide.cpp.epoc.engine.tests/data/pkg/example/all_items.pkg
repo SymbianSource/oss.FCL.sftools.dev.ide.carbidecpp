@@ -1,0 +1,65 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description: 
+;
+;Languages
+&EN,FR
+
+;Header
+#{"ShowAll"<169>"-EN", "ShowAll-FR"<0xA9>}, (0x10000004), 1, 2, 3
+
+; Language-specific vendor names
+%{"Vendor","Vendeur"}
+
+; Unique, global vendor name
+:"Vendor"
+
+;A dependency on another software component
+(0x80000003), 1, 2, 3, {"Depend-EN", "Depend-FR"}
+
+;An embedded sis file
+@"sub.sis",(0x80000002)
+
+;logo
+="symbianos.mbm", "image/x-mbm", ""
+
+; Some PKG property key/value pairs
++(0=1,1=2,2=-1)
+
+;Ordinary file to system drive
+{
+"text\englishfile.txt"
+"text\frenchfile.txt"
+}-"$:\private\10000005\import\InstTest\lang.txt"
+
+;Ordinary file to selected drive. 
+"text\file1.txt"-"!:\private\10000005\import\InstTest\file1.txt", FF
+
+;Display 2 options to the user
+!({"Option1","Option1"},{"Option2","Option2"})
+if option1
+    "files\option1.txt"-"!:\private\10000005\import\InstTest\option1.txt";
+endif
+if option2
+    "files\option2.txt"-"!:\private\10000005\import\InstTest\option2.txt";
+endif
+
+;Some text files to display in dialogs during the installation. These files are not installed.
+;'TC' continues with the installation after displaying the dialog. 
+;'TA' presents the user with an option to abort the installation.
+"text\textfilec.txt"-"", FT, TC
+"text\textfilea.txt"-"", FT, TA
+
+;A file to launch by MIME type, both during installation and uninstallation. 
+"files\tbit.gif"-"!:\private\10000005\import\InstTest\tbit.gif",FILEMIME,"image/gif", FR, RB, RW

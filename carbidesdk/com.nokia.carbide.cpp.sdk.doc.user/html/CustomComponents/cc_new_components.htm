@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Developing New Components</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Developing New Components</h2>
+<p>Components are defined within component libraries. The UI  Designer supports two types of component libraries:</p>
+<ul>
+  <li>Eclipse plugins</li>
+  <li>Custom  component projects<br />
+  </li>
+</ul>
+<p>The components shipped with the UI Designer are in an  Eclipse plugin project. The designer uses the extension point com.nokia.sdt.component.symbian.componentLibrary  to locate plugins containing Symbian components. The com.nokia.sdt.series60.componentlibrary  plugin implements this extension point. New plugins can be created in the same  manner to expose new components.</p>
+<p>Another  approach is to use a custom component  project. This is an Eclipse project containing one or more components. A  key advantage to this approach is that components can easily be developed  within your current workspace. Note that custom component projects are <em>not</em> Carbide.c++ projects. They are  either simple Eclipse projects or Java projects. These projects do  not use the Carbide.c++ build system.</p>
+<p>The files pertaining to components are:</p>
+<ul>
+  <li>The .component file, for example <span class="code">mylabel.component</span>.  These are XML files following the schema defined for components.</li>
+  <li>Zero  or more .properties files containing user interface strings that should be  localized for different languages. These files are named after the component  and follow the pattern used for Java localization. If the component file is  mylabel.component, then mylabel.properties is the default localization file. The .properties files may be created or omitted as desired, with strings defined where appropriate. For example, a country-specific file could define just a few strings, leaving most to be defined in the language-specific file.<br />
+    Strings that correspond to display text in the component file can be localized by prefacing the string with a % character. For example, <span class="code">friendlyName=&quot;%friendlyName&quot;</span> would have a corresponding entry in the .properties file, such as <span class="code">friendlyName=My Label</span>.</li>
+  <li>Zero or more image files, referenced from the .component file. These may be in PNG, JPEG, GIF, or BMP format.</li>
+  <li>Zero or more JavaScript files, referenced from the .component file. They may have any name with a  .js extension.</li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div></div>
+
+</body>
+</html>

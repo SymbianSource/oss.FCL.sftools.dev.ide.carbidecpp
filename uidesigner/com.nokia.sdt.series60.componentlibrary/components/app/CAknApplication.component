@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_srcgen SYSTEM "CAknApplication_common.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CAknApplication.LocalizedFileFormat">
+		<enumElement value="loc"/>
+		<enumElement value="rls"/>
+	</enumPropertyDeclaration>
+
+	<component 
+		friendlyName="Series 60 Application" 
+		qualifiedName="com.nokia.sdt.series60.CAknApplication" 
+		baseComponent="com.nokia.sdt.series60.NonLayoutBase"
+		instanceNameRoot="application"
+	    version="1.1">
+		<symbian sdkName="com.nokia.series60" 
+			minSDKVersion="2.0"
+			className="CAknApplication" />
+		<designerImages smallIconFile="" largeIconFile="" layoutImageFile=""/>
+	  	<attributes>
+	  		<attribute key="not-in-toolbox">true</attribute>
+	  		<attribute key="is-layout-object">false</attribute>
+	  		<attribute key="is-non-layout-object">false</attribute>
+	  		<attribute key="is-layout-container">false</attribute>
+	  		<attribute key="is-not-user-removable">true</attribute>
+	  	</attributes>
+		<properties>
+		    <property category="Design" name="className" type="string" />
+		    <property category="Application" name="uid" type="string" />
+		    <property category="Application" name="documentBase" type="string" default="Application"/>
+		    <!-- read from sourcegen -->
+		    <property category="Application" name="nextViewUid" type="integer" default="1" />
+		</properties>
+
+		<sourceMapping>
+			<!-- note: we force avkon.rh, etc. to be included here 
+			since *.rssi cannot repeat any of the includes.
+			
+			Also: avkon.rsg must be before avkon.rh, or else very
+			mysterious errors show up in rcomp.
+			
+			-->
+			<mapResource struct="RSS_SIGNATURE" 
+				headers="avkon.rsg avkon.rh eikon.rh" 
+				unnamed="true" id="app_signature"/>
+			
+			<mapResource struct="TBUF" headers="eikon.rh" unnamed="true" id="app_tbuf">
+				<mapSimpleMember property="documentBase" member="buf"/>
+			</mapResource>
+
+		</sourceMapping>
+				
+		<sourceGen>
+		
+		&common_srcgen;
+
+		</sourceGen>
+	</component>
+</componentDefinition>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU14 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikLabeledCheckBox"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"
+			instanceNameRoot="labeledCheckBox"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikLabeledCheckBox" classHelpTopic=""
+			resourceType="LABELEDCHECKBOX" resourceHelpTopic=""/>	
+			
+		<designerImages smallIconFile="CEikLabeledCheckBox_sm.png"
+			largeIconFile="CEikLabeledCheckBox.png"/>
+				
+		<attributes>
+			<attribute key ="cpp-class-name">CEikLabeledCheckBox</attribute>		
+			<attribute key ="rss-control-type-enum">EEikCtLabeledCheckBox</attribute>		
+		</attributes>
+		
+		<properties>
+			<property  name="text" type="localizedString" 
+				default="text"
+				descriptionKey="textDescription" 
+				category="%category.data"/>					
+			<property  name="textOnRight" type="boolean" 
+				default="true"
+				descriptionKey="textOnRightDescription" 
+				category="%category.appearance"/>		
+			<enumProperty  name="state" 
+				type="com.nokia.carbide.uiq.CEikButtonBase.TState" 
+				default="EClear"
+				descriptionKey="textDescription" 
+				category="%category.appearance"/>
+		</properties>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="CEikLabeledCheckBox.js" prototype="CEikLabeledCheckBox"/>
+			</implementation>
+		</implementations>	
+		
+		<sourceMapping>
+			<mapResource struct="LABELEDCHECKBOX" headers="eikon.rh">
+				<mapSimpleMember property="text" member="labeltext"/>
+				<mapSimpleMember property="textOnRight" member="textonright"/>
+			</mapResource>			
+		</sourceMapping>
+		
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>			
+			<templateGroup id="5" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+							InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+							Headers="eikchkbx.h eikbutb.h"/>			
+				<inline scope="prototype">
+include("../../../srcgenLibrary.js")
+				</inline>	
+				<inline id="6">
+				<![CDATA[
+	setPropertiesForPhase(contribs, "InitializeControlHandlers", 0, instanceMemberName, true,
+		properties.state, "EClear", "{0}->SetState( CEikButtonBase::{1} );\n");
+				]]>			
+				</inline>
+			</templateGroup>
+		</sourceGen>
+		
+
+	</component>
+	
+</componentDefinition>

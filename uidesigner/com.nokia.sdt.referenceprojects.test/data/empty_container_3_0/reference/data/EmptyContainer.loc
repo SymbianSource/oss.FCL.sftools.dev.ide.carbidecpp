@@ -1,0 +1,3 @@
+#ifdef LANGUAGE_01
+#include "EmptyContainer.l01"
+#endif

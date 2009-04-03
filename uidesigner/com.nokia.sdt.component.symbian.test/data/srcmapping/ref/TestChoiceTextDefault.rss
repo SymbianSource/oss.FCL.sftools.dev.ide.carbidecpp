@@ -1,0 +1,6 @@
+#include <basicheader.rh>
+
+RESOURCE TEXT_STRUCT r_test_choice_text_default
+	{
+	text = "default";
+	}

@@ -1,0 +1,168 @@
+<!DOCTYPE lookAndFeel [
+<!ENTITY common_laf SYSTEM "common.inc">
+<!ENTITY portrait_laf SYSTEM "portrait.inc">
+<!ENTITY softkey_laf SYSTEM "softkey.inc">
+<!ENTITY classic_fonts SYSTEM "classic_fonts.inc">
+<!ENTITY classic_laf SYSTEM "classic_laf.inc">
+]>
+<lookAndFeel xmlns="http://www.nokia.com/sdt/lookAndFeel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- this key influences the lookup of image and maskedImage definitions: make new subdirectories if stock images
+change between UI configurations / LAFs.  This is interpreted relative to the data/images directory. -->
+<!--
+<string key="image.dir" value="."/>
+-->
+
+<!-- include common definitions -->
+&common_laf;
+&portrait_laf;
+&softkey_laf;
+&classic_fonts;
+&classic_laf;
+
+<!-- this could be the static image that shows default menus, etc.
+
+see mk:@MSITStore:C:\Symbian\UIQ3.1\documentation\docset.chm::/SDKDocumentation/doc_source/guide/uiqstyleguide/StyleGuide_oo.doc.html
+
+ -->
+<image key="view.screen.background" imageFile="view.screen.background.softkey.touch.portrait.png" />
+<dimension key="screen.size" width="240" height="320"/>
+
+<image key="simpledialog.screen.background" imageFile="simpledialog.screen.background.softkey.touch.portrait.png" />
+<dimension key="screen.size" width="240" height="320"/>
+
+<rectangle key="ViewLayoutsGroup.bounds" x="0" y="45" width="239" height="248" />
+<rectangle key="ViewLayout.bounds" x="0" y="0" width="239" height="248" />
+<rectangle key="ViewPage.bounds" x="0" y="0" width="239" height="248" />
+<rectangle key="ViewCQikContainer.bounds" x="0" y="26" width="239" height="222" />
+<rectangle key="view.container.bounds" x="0" y="71" width="239" height="222"/>
+
+<rectangle key="SimpleDialogLayoutsGroup.bounds" x="12" y="50" width="216" height="235" />
+<rectangle key="SimpleDialogCQikContainer.bounds" x="0" y="0" width="216" height="235" />
+<rectangle key="simpleDialog.container.bounds" x="0" y="71" width="239" height="222"/>
+<!-- <rectangle key="SimpleDialogLayout.bounds" x="0" y="0" width="239" height="248" /> -->
+<!-- <rectangle key="SimpleDialogPage.bounds" x="0" y="0" width="239" height="248" /> -->
+
+<integer key="DialogTextApp.bound.x" value="34"/>
+<integer key="DialogTextApp.bound.y" value="21"/>
+<integer key="DialogTextApp.width" value="182"/>
+<integer key="DialogTextApp.height" value="23"/>
+
+<integer key="DialogIconApp.bound.x" value="12"/>
+<integer key="DialogIconApp.bound.y" value="26"/>
+<integer key="DialogIconApp.width" value="18"/>
+<integer key="DialogIconApp.height" value="18"/>
+
+<integer key="temp.xshift" value="53"/>
+<integer key="temp.yshift" value="0"/>
+<integer key="tab.notch.width" value="8"/>
+<integer key="tab.notch.height" value="9"/>
+<integer key="tab.total.height" value="25"/>
+<integer key="tab.internal.space.start" value="7"/>
+<integer key="tab.internal.space.middle" value="5"/>
+<integer key="tab.internal.space.end" value="7"/>
+<integer key="tab.icon.width" value="18"/>
+<integer key="tab.icon.height" value="18"/>
+<integer key="tab.icon.vertical.pitch" value="7"/>
+<integer key="tab.border.size" value="1"/>
+<integer key="navigation.key.vertical.pitch" value="8"/> <!--8.5-->
+<integer key="navigation.key.horizontal.pitch" value="5"/>
+<integer key="navigation.key.height" value="10"/>
+<integer key="navigation.key.width" value="7"/><!--7.5-->
+<integer key="IconApp.bound.x" value="10"/>
+<integer key="IconApp.bound.y" value="28"/>
+<integer key="IconApp.width" value="32"/>
+<integer key="IconApp.height" value="36"/>
+<integer key="TextApp.bound.x" value="55"/>
+<integer key="TextApp.bound.y" value="23"/>
+<integer key="TextApp.width" value="184"/>
+<integer key="TextApp.height" value="30"/>
+
+<color key="tab.background.color.active" r="221" g="234" b="251"/>
+<color key="tab.background.color.inactive" r="191" g="202" b="229"/>
+<color key="tab.border.color" r="77" g="104" b="143"/>
+<color key="navigation.key.background.color" r="173" g="195" b="231"/>
+
+<boolean key="RowLayoutManager.debugMode" value="false"/>
+<integer key="RowLayoutManager.View.topMargin" value="2"/>
+<integer key="RowLayoutManager.View.numberOfRows" value="8"/>
+<integer key="RowLayoutManager.View.baseLine" value="6"/>
+<integer key="RowLayoutManager.View.rowHeight" value="27"/>
+<integer key="RowLayoutManager.Dialog.topMargin" value="0"/>
+<integer key="RowLayoutManager.Dialog.numberOfRows" value="9"/>
+<integer key="RowLayoutManager.Dialog.baseLine" value="5"/>
+<integer key="RowLayoutManager.Dialog.rowHeight" value="25"/>
+<integer key="RowLayoutManager.rowsGap" value="11"/>
+
+<rectangle key="simpleDialog.informationDialog.bounds" x="0" y="18" width="240" height="319"/>
+<rectangle key="view.informationDialog.bounds" x="0" y="18" width="240" height="319" />
+<image key="informationDialog.icon" imageFile="information_dialog_softkey_touch_portrait_icon.png"/>
+<image key="informationDialog.title.background" imageFile="information_dialog_softkey_portrait_title.png"/>
+<image key="informationDialog.content.background" imageFile="information_dialog_softkey_touch_portrait_content.png"/>
+<image key="informationDialog.scrollContent.background" imageFile="information_dialog_softkey_touch_portrait_scroll_content.png"/>
+<image key="informationDialog.button.background" imageFile="information_dialog_softkey_touch_portrait_button.png"/>
+<rectangle key="informationDialog.title" x="7" y="6" width="226" height="30"/>
+<integer key="informationDialog.title.rectangle.right.margin" value="7"/>
+<integer key="informationDialog.title.padding" value="5"/> <!-- internal border -->
+<rectangle key="informationDialog.icon" x="98" y="45" width="38" height="58"/>
+<integer key="informationDialog.titleIcon.margin" value="8"/>
+<integer key="informationDialog.iconText.margin" value="8"/>
+<rectangle key="informationDialog.button" x="0" y="273" width="240" height="28"/>
+<integer key="informationDialog.textButton.margin" value="7"/>
+<integer key="informationDialog.top.margin" value="6"/>
+<integer key="informationDialog.left.text.margin" value="12"/>
+<integer key="informationDialog.right.text.margin" value="29"/>
+<integer key="informationDialog.lineGap" value="0"/>
+
+<image key="informationMessage.content.background" imageFile="information_message_softkey_touch_portrait_button.png"/>
+
+<rectangle key="simpleDialog.queryDialog.bounds" x="0" y="18" width="240" height="319"/>
+<rectangle key="view.queryDialog.bounds" x="0" y="18" width="240" height="319"/>
+<image key="queryDialog.icon" imageFile="query_dialog_softkey_touch_portrait_icon.png"/>
+<image key="queryDialog.title.background" imageFile="query_dialog_softkey_portrait_title.png"/>
+<image key="queryDialog.content.background" imageFile="query_dialog_softkey_touch_portrait_content.png"/>
+<image key="queryDialog.scrollContent.background" imageFile="query_dialog_softkey_touch_portrait_scroll_content.png"/>
+<image key="queryDialog.button.background" imageFile="query_dialog_softkey_touch_portrait_button.png"/>
+<rectangle key="queryDialog.title" x="7" y="6" width="226" height="30"/>
+<integer key="queryDialog.title.rectangle.right.margin" value="7"/>
+<integer key="queryDialog.title.padding" value="5"/> <!-- internal border -->
+<rectangle key="queryDialog.icon" x="91" y="50" width="30" height="54"/>
+<integer key="queryDialog.titleIcon.margin" value="13"/>
+<integer key="queryDialog.iconText.margin" value="7"/>
+<rectangle key="queryDialog.button" x="0" y="273" width="240" height="28"/>
+<integer key="queryDialog.textButton.margin" value="7"/>
+<integer key="queryDialog.top.margin" value="6"/>
+<integer key="queryDialog.left.text.margin" value="11"/>
+<integer key="queryDialog.right.text.margin" value="29"/>
+<integer key="queryDialog.lineGap" value="0"/>
+
+<image key="select.folder.dialog" imageFile="select_folder_dialog_softkey_touch_portrait.png"/>
+<integer key="select.folder.dialog.text.bound.x" value="55"/>
+<integer key="select.folder.dialog.text.bound.y" value="23"/>
+<integer key="select.folder.dialog.text.width" value="184"/>
+<integer key="select.folder.dialog.text.height" value="30"/>
+<rectangle key="select.folder.dialog.bounds" x="0" y="0" width="240" height="320"/>
+
+<image key="select.file.dialog" imageFile="select_file_dialog_softkey_touch_portrait.png"/>
+<integer key="select.file.dialog.text.bound.x" value="55"/>
+<integer key="select.file.dialog.text.bound.y" value="23"/>
+<integer key="select.file.dialog.text.width" value="184"/>
+<integer key="select.file.dialog.text.height" value="30"/>
+<rectangle key="select.file.dialog.bounds" x="0" y="0" width="240" height="320"/>
+
+<integer key="listbox.horizontalGap" value="5"/>
+<integer key="listbox.smallIconWidth" value="18"/>
+<integer key="listbox.smallIconHeight" value="18"/>
+<integer key="listbox.mediumIconWidth" value="40"/>
+<integer key="listbox.mediumIconHeight" value="40"/>
+<integer key="listbox.mediumThumbnailWidth" value="48"/>
+<integer key="listbox.mediumThumbnailHeight" value="48"/>
+
+<dimension key="sbbIcon.size" width="18" height="18"/>
+<dimension key="sbbMediumThumbnail.size" width="64" height="48"/>
+<dimension key="sbbLargeThumbnail.size" width="97" height="73"/>
+
+<image key="image.placeholder.small" imageFile="image_placeholder_small.png"/>
+<image key="image.placeholder.large" imageFile="image_placeholder_large.png"/>
+<image key="image.placeholder.xlarge" imageFile="image_placeholder_xlarge.png"/>
+</lookAndFeel>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	<component id="com.nokia.examples.updater.component">
+		<property id="name">root</property>
+		<component id="com.nokia.examples.updater.codeContainer">
+			<property id="name">code</property>
+		</component>  
+		<component id="com.nokia.examples.updater.scriptContainer">
+			<property id="name">script</property>
+		</component>  
+	</component>  
+</designerData>

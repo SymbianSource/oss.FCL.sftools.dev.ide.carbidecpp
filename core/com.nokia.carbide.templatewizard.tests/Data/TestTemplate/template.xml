@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<template version="1.0" label="%template.label">
+	<description>%template.desc</description>
+	<wizardPage id="basics" label="%basics.label">
+		<description>%basics.desc</description>
+		<uidField id="uid3"
+				label="%basics.uid3.label"
+				min="0x00000001"
+				max="0x01ffffff"
+				mandatory="true"
+				persist="true">
+				<description>%basics.uid3.desc</description>
+		</uidField>
+		<textField id="author"
+				label="%basics.author.label"
+				persist="true">
+				<description>%basics.author.desc</description>
+		</textField>
+		<textField id="copyright"
+				label="%basics.copyright.label"
+				multiline="true"
+				default="Your copyright notice"
+				persist="true">
+				<description>%basics.copyright.desc</description>
+		</textField>
+	</wizardPage>
+
+	<wizardPage id="directories" label="%directories.label">
+		<description>%directories.desc</description>
+		<filenameField id="incDir"
+				label="%directories.incDir.label"
+	         	default="inc"
+				mandatory="true"
+				persist="true">
+				<description>%directories.incDir.desc</description>
+		</filenameField>
+		<filenameField id="sourceDir"
+				label="%directories.sourceDir.label"
+				default="src"
+				mandatory="true"
+				persist="true">
+				<description>%directories.sourceDir.desc</description>
+		</filenameField>
+		<filenameField id="groupDir"
+				label="%directories.groupDir.label"
+				default="group"
+				mandatory="true"
+				persist="true">
+				<description>%directories.groupDir.desc</description>
+		</filenameField>
+		<filenameField id="dataDir"
+				label="%directories.dataDir.label"
+				default="data"
+				mandatory="true"
+				persist="true">
+				<description>%directories.dataDir.desc</description>
+		</filenameField>
+		<filenameField id="aifDir"
+				label="%directories.aifDir.label"
+				default="aif"
+				mandatory="true"
+				persist="true">
+				<description>%directories.aifDir.desc</description>
+		</filenameField>
+		<filenameField id="sisDir"
+				label="%directories.sisDir.label"
+				default="sis"
+				mandatory="true"
+				persist="true">
+				<description>%directories.sisDir.desc</description>
+		</filenameField>
+	</wizardPage>
+	
+	<!-- one test of the old-style process -->
+	<process class="com.nokia.carbide.templatewizard.processes.CreateFolders"
+		bundle="com.nokia.carbide.templatewizard">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="folder" path="$(sourceDir)" /> 
+		<parameter name="folder" path="$(incDir)" /> 
+		<parameter name="folder" path="bin" /> 
+	</process>
+
+	<process name="com.nokia.carbide.templatewizard.CreateFolders">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="folder" path="$(sourceDir)" /> 
+		<parameter name="folder" path="$(incDir)" /> 
+		<parameter name="folder" path="bin" /> 
+	</process>
+
+	<process name="com.nokia.carbide.templatewizard.CopyFiles">
+		<parameter name="project" projectName="$(projectName)" />
+		
+		<parameter name="file"
+			sourcePath="inc/Basename.loc" 
+			targetPath="$(incDir)/$(baseName).loc" /> 
+		<parameter name="file"
+			sourcePath="inc/BasenameApp.h" 
+			targetPath="$(incDir)/$(baseName)App.h" /> 
+		<parameter name="file"
+			sourcePath="inc/BasenameAppUi.h" 
+			targetPath="$(incDir)/$(baseName)AppUi.h" /> 
+		<parameter name="file"
+			sourcePath="inc/BasenameContainer.h" 
+			targetPath="$(incDir)/$(baseName)Container.h" /> 
+		<parameter name="file"
+			sourcePath="inc/BasenameDocument.h" 
+			targetPath="$(incDir)/$(baseName)Document.h" /> 
+		<parameter name="file"
+			sourcePath="inc/Basename.hrh" 
+			targetPath="$(incDir)/$(baseName).hrh" /> 
+		<parameter name="file"
+			sourcePath="src/BasenameApp.cpp" 
+			targetPath="$(sourceDir)/$(baseName)App.cpp" /> 
+		<parameter name="file"
+			sourcePath="src/BasenameAppUi.cpp" 
+			targetPath="$(sourceDir)/$(baseName)AppUi.cpp" /> 
+		<parameter name="file"
+			sourcePath="src/BasenameContainer.cpp" 
+			targetPath="$(sourceDir)/$(baseName)Container.cpp" /> 
+		<parameter name="file"
+			sourcePath="src/BasenameDocument.cpp" 
+			targetPath="$(sourceDir)/$(baseName)Document.cpp" /> 
+	</process>
+
+	<process name="com.nokia.carbide.templatewizard.CopyFileTree">
+		<parameter name="project" projectName="$(projectName)" />
+		<parameter name="tree" sourcePath="inc" targetPath="inc2" substitute="true" /> 
+		<parameter name="tree" sourcePath="src" targetPath="src2" substitute="true" /> 
+	</process>
+
+	<process name="com.nokia.carbide.templatewizard.DefineTemplateVariable">
+		<parameter name="variable" variableName="FOO" value="1" /> 
+		<parameter name="variable" variableName="BAR" value="2" /> 
+	</process>
+</template>

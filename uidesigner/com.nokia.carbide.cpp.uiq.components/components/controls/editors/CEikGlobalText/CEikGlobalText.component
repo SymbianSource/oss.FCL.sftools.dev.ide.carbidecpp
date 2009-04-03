@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!DOCTYPE componentDefinition [
+<!ENTITY common_global_text_srcmapping SYSTEM "../CEikGlobalText_common_srcmapping.inc">
+]>
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.ceikglobaltext.flags">
+		<property name="EEikEdwinAllowPictures" type="boolean"
+			descriptionKey="EEikEdwinAllowPicturesKey" />
+		<property name="EEikEdwinAllowUndo" type="boolean"
+			descriptionKey="EEikEdwinAllowUndoKey" />	
+		<property name="EEikEdwinAlwaysShowSelection" type="boolean"
+			descriptionKey="EEikEdwinAlwaysShowSelectionKey" />
+		<property name="EEikEdwinCustomWrap" type="boolean"
+			descriptionKey="EEikEdwinCustomWrapKey" 
+			category="Hidden"/>	<!-- for internal use only -->	
+		<property name="EEikEdwinDisableAutoCurEnd" type="boolean"
+			descriptionKey="EEikEdwinDisableAutoCurEndKey" />
+		<property name="EEikEdwinDisplayOnly" type="boolean"
+			descriptionKey="EEikEdwinDisplayOnlyKey" />		
+		<property name="EEikEdwinEnableAutoSelection" type="boolean"
+			descriptionKey="EEikEdwinEnableAutoSelectionKey" />			
+		<property name="EEikEdwinFindStringMaxLen" type="boolean"
+			descriptionKey="EEikEdwinFindStringMaxLenKey" />
+		<property name="EEikEdwinIgnoreVirtualCursor" type="boolean"
+			descriptionKey="EEikEdwinIgnoreVirtualCursorKey" />	
+		<property name="EEikEdwinInclusiveSizeFixed" type="boolean"
+			descriptionKey="EEikEdwinInclusiveSizeFixedKey" />	
+		<property name="EEikEdwinJustAutoCurEnd" type="boolean"
+			descriptionKey="EEikEdwinJustAutoCurEndKey" />		
+		<property name="EEikEdwinKeepDocument" type="boolean"
+			descriptionKey="EEikEdwinKeepDocumentKey" />
+		<property name="EEikEdwinLineCursor" type="boolean"
+			descriptionKey="EEikEdwinLineCursorKey" />	
+		<property name="EEikEdwinNoAutoSelection" type="boolean"
+			descriptionKey="EEikEdwinNoAutoSelectionKey" />													
+		<property name="EEikEdwinNoCursorWrap" type="boolean"
+			descriptionKey="EEikEdwinNoCursorWrapKey" />													 
+		<property name="EEikEdwinNoCursorWrapUp" type="boolean"
+			descriptionKey="EEikEdwinNoCursorWrapUpKey" />	
+		<property name="EEikEdwinNoCustomDraw" type="boolean"
+			descriptionKey="EEikEdwinNoCustomDrawKey" 
+			category="Hidden"/>	<!-- for internal use only -->
+		<property name="EEikEdwinNoHorizScrolling" type="boolean"
+			descriptionKey="EEikEdwinNoHorizScrollingKey" />
+		<property name="EEikEdwinNoLineOrParaBreaks" type="boolean"
+			descriptionKey="EEikEdwinNoLineOrParaBreaksKey" />									
+		<property name="EEikEdwinNoTextParsers" type="boolean"
+			descriptionKey="EEikEdwinNoTextParsersKey" />	
+		<property name="EEikEdwinNoWrap" type="boolean"
+			descriptionKey="EEikEdwinNoWrapKey" />
+		<property name="EEikEdwinOnlyASCIIChars" type="boolean"
+			descriptionKey="EEikEdwinOnlyASCIICharsKey" />	
+		<property name="EEikEdwinOwnsWindow" type="boolean"
+			descriptionKey="EEikEdwinOwnsWindowKey" />
+		<property name="EEikEdwinReadOnly" type="boolean"
+			descriptionKey="EEikEdwinReadOnlyKey" />
+		<property name="EEikEdwinResizable" type="boolean"
+			descriptionKey="EEikEdwinResizableKey" />
+		<property name="EEikEdwinSegmentedStorage" type="boolean"
+			descriptionKey="EEikEdwinSegmentedStorageKey" />
+		<property name="EEikEdwinWidthInPixels" type="boolean"
+			descriptionKey="EEikEdwinWidthInPixelsKey" />	
+	</compoundPropertyDeclaration>					
+					
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.charFormat.fonthighlightstyle" defaultValue="EFontHighlightNone">
+		<enumElement value="EFontHighlightNone"/>
+		<enumElement value="EFontHighlightNormal"/>
+		<enumElement value="EFontHighlightRounded"/>
+		<enumElement value="EFontHighlightShadow"/>
+	</enumPropertyDeclaration>
+						
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.charFormat.pictureAlignment" defaultValue="EAlignBaseLine">
+		<enumElement value="EAlignTop"/>
+		<enumElement value="EAlignBottom"/>
+		<enumElement value="EAlignCentered"/>
+		<enumElement value="EAlignBaseLine"/> 
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.globalText.charFormat">
+		<property name="textColor" type="string" 
+			editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"
+			descriptionKey="textColorDescription" />
+		<property name="highlightColor" type="string" 
+			editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"
+			descriptionKey="highlightColorDescription" />
+		<enumProperty name="highlightStyle" type="com.nokia.sdt.charFormat.fonthighlightstyle" 
+			descriptionKey="highlightStyleDescription" />
+		<property name="strikethrough" type="boolean" descriptionKey="strikethroughDescription" />
+		<property name="underline" type="boolean" descriptionKey="underlineDescription" />
+		<property name="italics" type="boolean" descriptionKey="italicsDescription" />
+		<property name="bold" type="boolean" descriptionKey="boldDescription" />
+		<property name="hiddenText" type="boolean" descriptionKey="hiddenTextDescription" />
+		<enumProperty name="pictureAlignment" type="com.nokia.sdt.charFormat.pictureAlignment"
+			descriptionKey="pictureAlignmentDescription" />
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.globalText.fontcontrolflags">
+		<property name="EGulFontControlAll" type="boolean" default="true"
+			descriptionKey="EGulFontControlAllKey" />
+		<property name="EGulFontControlName" type="boolean" default="false"
+			descriptionKey="EGulFontControlNameKey" />
+		<property name="EGulFontControlSize" type="boolean" default="false"
+			descriptionKey="EGulFontControlSizeKey" />
+		<property name="EGulFontControlBold" type="boolean" default="false"
+			descriptionKey="EGulFontControlBoldKey" />
+		<property name="EGulFontControlItalic" type="boolean" default="false"
+			descriptionKey="EGulFontControlItalicKey" />
+		<property name="EGulFontControlUnderline" type="boolean" default="false"
+			descriptionKey="EGulFontControlUnderlineKey" />
+		<property name="EGulFontControlStrikethrough" type="boolean" default="false"
+			descriptionKey="EGulFontControlStrikethroughKey" />
+		<property name="EGulFontControlTextColor" type="boolean" default="false"
+			descriptionKey="EGulFontControlTextColorKey" />
+		<property name="EGulFontControlPrintPos" type="boolean" default="false"
+			descriptionKey="EGulFontControlPrintPosKey" />
+	</compoundPropertyDeclaration>	
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.globalText.fontnameflags">
+		<property name="EGulAllFonts" type="boolean" default="false" descriptionKey="EGulAllFontsKey" />
+		<property name="EGulMonospaceFontsOnly" type="boolean" default="false" descriptionKey="EGulMonospaceFontsOnlyKey" />
+		<property name="EGulNoMonospaceFonts" type="boolean" default="false" descriptionKey="EGulNoMonospaceFontsKey" />
+		<property name="EGulSymbolFontsOnly" type="boolean" default="false" descriptionKey="EGulSymbolFontsOnlyKey" />
+		<property name="EGulNoSymbolFonts" type="boolean" default="true" descriptionKey="EGulNoSymbolFontsKey" />
+		<property name="EGulNoMonospaceOrSymbolFonts" type="boolean" default="false" descriptionKey="EGulNoMonospaceOrSymbolFontsKey" />
+	</compoundPropertyDeclaration>	
+
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikGlobalText"
+			baseComponent="com.nokia.carbide.uiq.CEikEdwinBase"			
+			version="1.0"
+			abstract="true">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>	
+		
+		<attributes>
+			<attribute key="cpp-class-name">CEikGlobalTextEditor</attribute>
+			<attribute key="rss-control-type-enum">EEikCtGlobalTextEditor</attribute>
+		</attributes>
+
+		<properties>
+			<compoundProperty name="flags"
+				category="%category.behavior" 
+				type="com.nokia.carbide.uiq.ceikglobaltext.flags"
+				descriptionKey="flagsDescription"/>	
+			<property name="width"
+				category="%category.layout" 
+				type="integer" descriptionKey="widthDescription"/>
+			<property name="height"
+				category="%category.layout" 
+				type="integer" descriptionKey="heightDescription"/>
+			<property name="numLines"
+				category="%category.appearance" default="1" 
+				type="integer" descriptionKey="numLinesDescription"/>
+			<property name="textLimit" displayName="%textLimit"
+				category="%category.data" default="0"
+				type="integer" descriptionKey="textLimitDescription"/>	
+			<property name="text"
+				category="%category.data" default="Formatted text"
+				type="localizedString" descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.MultilineTextEditorFactory" />
+			<compoundProperty name="charFormat"
+				category="%category.behavior"
+				type="com.nokia.sdt.globalText.charFormat"
+				descriptionKey="charFormatDescription" />						  
+<!--		<compoundProperty name="fontControlFlags" 
+				category="%category.edit" 
+				type="com.nokia.sdt.globalText.fontcontrolflags"
+				descriptionKey="fontControlFlagsDescription" />	
+			<compoundProperty name="fontNameFlags" 
+				category="%category.edit"
+				type="com.nokia.sdt.globalText.fontnameflags"
+				descriptionKey="fontNameFlagsDescription" />						  
+-->
+		</properties>
+		
+<!--		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>				
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 					
+				<script file="CEikGlobalText.js" prototype="CEikGlobalText"/>
+			</implementation>
+		</implementations>			
+-->		
+		<sourceMapping>
+			<mapResource struct="GTXTED" headers="eikon.rh eikon.hrh uikon.rh uikon.hrh qikon.hrh gulftflg.hrh">
+				<mapBitmaskMember property="flags" member="flags">
+					<mapBitmaskValue properties="EEikEdwinAllowPictures" value="EEikEdwinAllowPictures"/>
+					<mapBitmaskValue properties="EEikEdwinAllowUndo" value="EEikEdwinAllowUndo"/>
+					<mapBitmaskValue properties="EEikEdwinAlwaysShowSelection" value="EEikEdwinAlwaysShowSelection"/>
+					<mapBitmaskValue properties="EEikEdwinCustomWrap" value="EEikEdwinCustomWrap"/> 
+					<mapBitmaskValue properties="EEikEdwinDisableAutoCurEnd" value="EEikEdwinDisableAutoCurEnd"/>
+					<mapBitmaskValue properties="EEikEdwinDisplayOnly" value="EEikEdwinDisplayOnly"/>
+					<mapBitmaskValue properties="EEikEdwinEnableAutoSelection" value="EEikEdwinEnableAutoSelection"/>
+					<mapBitmaskValue properties="EEikEdwinFindStringMaxLen" value="EEikEdwinFindStringMaxLen"/>
+					<mapBitmaskValue properties="EEikEdwinIgnoreVirtualCursor" value="EEikEdwinIgnoreVirtualCursor"/>
+					<mapBitmaskValue properties="EEikEdwinInclusiveSizeFixed" value="EEikEdwinInclusiveSizeFixed"/>
+					<mapBitmaskValue properties="EEikEdwinJustAutoCurEnd" value="EEikEdwinJustAutoCurEnd"/>
+					<mapBitmaskValue properties="EEikEdwinKeepDocument" value="EEikEdwinKeepDocument"/>
+					<mapBitmaskValue properties="EEikEdwinLineCursor" value="EEikEdwinLineCursor"/>
+					<mapBitmaskValue properties="EEikEdwinNoAutoSelection" value="EEikEdwinNoAutoSelection"/>
+					<mapBitmaskValue properties="EEikEdwinNoCursorWrap" value="EEikEdwinNoCursorWrap"/>
+					<mapBitmaskValue properties="EEikEdwinNoCursorWrapUp" value="EEikEdwinNoCursorWrapUp"/>
+					<mapBitmaskValue properties="EEikEdwinNoCustomDraw" value="EEikEdwinNoCustomDraw"/>
+					<mapBitmaskValue properties="EEikEdwinNoHorizScrolling" value="EEikEdwinNoHorizScrolling"/>
+					<mapBitmaskValue properties="EEikEdwinNoLineOrParaBreaks" value="EEikEdwinNoLineOrParaBreaks"/>
+					<mapBitmaskValue properties="EEikEdwinNoTextParsers" value="EEikEdwinNoTextParsers"/>
+					<mapBitmaskValue properties="EEikEdwinNoWrap" value="EEikEdwinNoWrap"/>
+					<mapBitmaskValue properties="EEikEdwinOnlyASCIIChars" value="EEikEdwinOnlyASCIIChars"/>
+					<mapBitmaskValue properties="EEikEdwinOwnsWindow" value="EEikEdwinOwnsWindow"/>
+					<mapBitmaskValue properties="EEikEdwinReadOnly" value="EEikEdwinReadOnly"/>
+					<mapBitmaskValue properties="EEikEdwinResizable" value="EEikEdwinResizable"/>
+					<mapBitmaskValue properties="EEikEdwinSegmentedStorage" value="EEikEdwinSegmentedStorage"/>
+					<mapBitmaskValue properties="EEikEdwinWidthInPixels" value="EEikEdwinWidthInPixels"/>					
+				</mapBitmaskMember>	
+				&common_global_text_srcmapping;			
+			</mapResource>				
+			<mapResource struct="TBUF" headers="eikon.rh" id="text">
+				<mapSimpleMember property="text" member="buf" />
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>	
+			
+			<!--Initialize Phase-->				
+			<expandMacro name="SetupControlInstanceVariable"  Type="${this.getCppClassName(instance)}"
+								InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}"
+								Headers="eikgted.h"/>	
+											
+			<templateGroup id="SET_PROPERTIES">
+
+				<!--if initialization -->	
+				<template id="IF_INSTANCE_BEGIN" phase="InitializeControlHandlers"><![CDATA[
+if ( ${instanceMemberName} != NULL )
+{	
+]]>		        </template>	
+						
+				<!--Text property initialization -->	
+				<template id="SET_TEXT" phase="InitializeControlHandlers"><![CDATA[
+HBufC* text = iEikonEnv->AllocReadResourceLC( ${Engine.getGeneratedResource(instance, "text").toUpperCase()} );
+${instanceMemberName}->SetTextL( text );
+CleanupStack::PopAndDestroy( text );
+]]>		        </template>		
+
+				<!--Char Format property initialization -->	
+				<inline scope="prototype"><![CDATA[
+include("../../../textFormattingSrcgenLibrary.js");
+]]>		       </inline>
+
+				<template id="SET_CHARFORMAT" phase="InitializeControlHandlers"><![CDATA[
+<% var generated = createCharFormatStructsForPhase(contribs, instance, "InitializeControlHandlers");
+if (generated) { 
+	if (instance.component.id == "com.nokia.carbide.uiq.CEikRichText") {%>
+CRichText* richtxted1 = ${instanceMemberName}->RichText();		
+richtxted1->ApplyCharFormatL( charFormat,
+							charFormatMask,
+							0,
+							richtxted1->DocumentLength() );
+<% } else {%>
+${instanceMemberName}->ApplyCharFormatL( charFormat, charFormatMask );
+<% } }%>
+]]>	            </template>
+
+				<!--if finalization -->	
+				<template id="IF_INSTANCE_ENDS" phase="InitializeControlHandlers"><![CDATA[
+}		
+]]>		        </template>	
+
+			</templateGroup>					
+		</sourceGen>		
+		
+	</component>
+
+</componentDefinition>

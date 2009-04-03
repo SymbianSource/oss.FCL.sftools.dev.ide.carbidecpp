@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknView" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitle" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBA" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControl" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknChoiceList" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknButton" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuBar" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.MenuBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.Toolbar" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknPreviewPopUp" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikLabel" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">5.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.sdt.series60.CAknView">
+    <property id="className">CTUI_5_0ContainerView</property>
+    <compoundProperty id="location">
+      <property id="x">51</property>
+      <property id="y">44</property>
+    </compoundProperty>
+    <property id="optionsMenu" type="componentRef">optionsMenu</property>
+    <property id="name">TUI_5_0ContainerView</property>
+    <compoundProperty id="size">
+      <property id="width">240</property>
+      <property id="height">320</property>
+    </compoundProperty>
+    <component id="com.nokia.sdt.series60.StatusPane">
+      <compoundProperty id="location">
+        <property id="x">20</property>
+      </compoundProperty>
+      <property id="name">statusPane</property>
+      <compoundProperty id="size">
+        <property id="width">204</property>
+        <property id="height">63</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.StatusPaneTitle">
+        <compoundProperty id="location">
+          <property id="x">56</property>
+        </compoundProperty>
+        <property id="name">title</property>
+        <property id="titleText" type="i18n">STR_TUI_5_0ContainerView_4</property>
+        <compoundProperty id="size">
+          <property id="width">148</property>
+          <property id="height">43</property>
+        </compoundProperty>
+        <compoundProperty id="image"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.CBA">
+      <compoundProperty id="location">
+        <property id="y">288</property>
+      </compoundProperty>
+      <compoundProperty id="info">
+        <property id="leftText" type="i18n">STR_TUI_5_0ContainerView_1</property>
+        <property id="rightText" type="i18n">STR_TUI_5_0ContainerView_2</property>
+        <property id="middleText" type="i18n">STR_TUI_5_0ContainerView_3</property>
+      </compoundProperty>
+      <property id="name">controlPane</property>
+      <compoundProperty id="size">
+        <property id="width">240</property>
+        <property id="height">32</property>
+      </compoundProperty>
+    </component>
+    <component id="com.nokia.sdt.series60.CCoeControl">
+      <compoundProperty id="location">
+        <property id="y">66</property>
+      </compoundProperty>
+      <property id="className">CTUI_5_0Container</property>
+      <property id="name">TUI_5_0Container</property>
+      <compoundProperty id="size">
+        <property id="width">240</property>
+        <property id="height">170</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CAknChoiceList">
+        <sequenceProperty id="items">
+          <compoundElement>
+            <property id="itemText" type="i18n">STR_TUI_5_0ContainerView_17</property>
+          </compoundElement>
+          <compoundElement>
+            <property id="itemText" type="i18n">STR_TUI_5_0ContainerView_18</property>
+          </compoundElement>
+        </sequenceProperty>
+        <compoundProperty id="location">
+          <property id="x">21</property>
+          <property id="y">6</property>
+        </compoundProperty>
+        <compoundProperty id="showAsButton">
+          <compoundProperty id="images"/>
+          <property id="buttonText" type="i18n">STR_TUI_5_0ContainerView_14</property>
+        </compoundProperty>
+        <property id="name">choiceList1</property>
+        <compoundProperty id="size">
+          <property id="height">24</property>
+          <property id="width">177</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.CAknButton">
+        <compoundProperty id="location">
+          <property id="x">26</property>
+          <property id="y">45</property>
+        </compoundProperty>
+        <property id="buttonHelpText" type="i18n">STR_TUI_5_0ContainerView_38</property>
+        <property id="name">button3</property>
+        <property id="buttonText" type="i18n">STR_TUI_5_0ContainerView_37</property>
+        <compoundProperty id="images"/>
+        <compoundProperty id="size">
+          <property id="width">91</property>
+          <property id="height">33</property>
+        </compoundProperty>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.MenuBar">
+      <compoundProperty id="location">
+        <property id="x">120</property>
+        <property id="y">288</property>
+      </compoundProperty>
+      <property id="name">optionsMenu</property>
+      <compoundProperty id="size"/>
+    </component>
+    <component id="com.nokia.sdt.series60.Toolbar">
+      <compoundProperty id="location">
+        <property id="x">79</property>
+        <property id="y">237</property>
+      </compoundProperty>
+      <property id="name">toolBar1</property>
+      <compoundProperty id="size">
+        <property id="width">81</property>
+        <property id="height">44</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CAknButton">
+        <compoundProperty id="location">
+          <property id="x">7</property>
+          <property id="y">7</property>
+        </compoundProperty>
+        <property id="buttonHelpText" type="i18n">STR_TUI_5_0ContainerView_9</property>
+        <property id="name">button1</property>
+        <property id="buttonText" type="i18n">STR_TUI_5_0ContainerView_8</property>
+        <compoundProperty id="images"/>
+        <compoundProperty id="size">
+          <property id="width">30</property>
+          <property id="height">30</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.CAknButton">
+        <compoundProperty id="location">
+          <property id="x">44</property>
+          <property id="y">7</property>
+        </compoundProperty>
+        <property id="buttonHelpText" type="i18n">STR_TUI_5_0ContainerView_11</property>
+        <property id="name">button2</property>
+        <property id="buttonText" type="i18n">STR_TUI_5_0ContainerView_10</property>
+        <compoundProperty id="images"/>
+        <compoundProperty id="size">
+          <property id="width">30</property>
+          <property id="height">30</property>
+        </compoundProperty>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.CAknPreviewPopUp">
+      <property id="className">CPreviewPopUp1</property>
+      <compoundProperty id="location">
+        <property id="x">55</property>
+        <property id="y">117</property>
+      </compoundProperty>
+      <property id="headingText" type="i18n">STR_TUI_5_0ContainerView_39</property>
+      <property id="name">previewPopUp1</property>
+      <compoundProperty id="size">
+        <property id="width">129</property>
+        <property id="height">86</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CEikLabel">
+        <compoundProperty id="location">
+          <property id="x">20</property>
+          <property id="y">45</property>
+        </compoundProperty>
+        <property id="name">label1</property>
+        <property id="text" type="i18n">STR_TUI_5_0ContainerView_41</property>
+        <compoundProperty id="size">
+          <property id="width">93</property>
+          <property id="height">29</property>
+        </compoundProperty>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_TUI_5_0ContainerView_1"/>
+      <string id="STR_TUI_5_0ContainerView_2"/>
+      <string id="STR_TUI_5_0ContainerView_3"/>
+      <string id="STR_TUI_5_0ContainerView_4">TUI_5_0Container</string>
+      <string id="STR_TUI_5_0ContainerView_8">1</string>
+      <string id="STR_TUI_5_0ContainerView_9">Button Hover Text</string>
+      <string id="STR_TUI_5_0ContainerView_10">2</string>
+      <string id="STR_TUI_5_0ContainerView_11">Button Hover Text</string>
+      <string id="STR_TUI_5_0ContainerView_14">Button</string>
+      <string id="STR_TUI_5_0ContainerView_17">item 1</string>
+      <string id="STR_TUI_5_0ContainerView_18">item 2</string>
+      <string id="STR_TUI_5_0ContainerView_37">Button</string>
+      <string id="STR_TUI_5_0ContainerView_38">Button Hover Text</string>
+      <string id="STR_TUI_5_0ContainerView_39">Header</string>
+      <string id="STR_TUI_5_0ContainerView_41">label</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="optionsMenu">r_tui_5_0_container_options_menu</resourceMapping>
+      <resourceMapping instanceName="button3">r_tui_5_0_container_button3</resourceMapping>
+      <resourceMapping instanceName="choiceList1">r_tui_5_0_container_choice_list1</resourceMapping>
+      <resourceMapping instanceName="label1">r_tui_5_0_container_label1</resourceMapping>
+      <resourceMapping instanceName="toolBar1">r_tui_5_0_container_tool_bar1</resourceMapping>
+      <resourceMapping instanceName="choiceList1" rsrcId="buttonHoverText">r_tui_5_0_container_choice_list1_3</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_tui_5_0_container_status_pane</resourceMapping>
+      <resourceMapping instanceName="previewPopUp1" rsrcId="headingText">r_tui_5_0_container_preview_pop_up1</resourceMapping>
+      <resourceMapping instanceName="choiceList1" rsrcId="buttonText">r_tui_5_0_container_choice_list1_2</resourceMapping>
+      <resourceMapping instanceName="title">r_tui_5_0_container_title_resource</resourceMapping>
+      <resourceMapping instanceName="TUI_5_0ContainerView">r_tui_5_0_container_tui_5_0_container_view</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
+      <enumMapping instanceName="label1" propertyId="font">EEikLabelFontNormal</enumMapping>
+      <enumMapping instanceName="button2" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EButton2Id</enumMapping>
+      <enumMapping instanceName="button1" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ETUI_5_0ContainerViewButton1Command</enumMapping>
+      <enumMapping instanceName="button1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EButton1Id</enumMapping>
+      <enumMapping instanceName="label1" propertyId="alignment">EEikLabelAlignHCenter</enumMapping>
+      <enumMapping instanceName="TUI_5_0ContainerView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">ETUI_5_0ContainerViewId</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
+      <enumMapping instanceName="button2" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ETUI_5_0ContainerViewButton2Command</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+  <generatedFiles>
+    <file>src/previewpopup1.cpp</file>
+    <file>src/tui_5_0container.cpp</file>
+    <file>src/tui_5_0containerview.cpp</file>
+    <file>inc/tui_5_0containerview.h</file>
+    <file>inc/tui_5_0container.h</file>
+    <file>inc/previewpopup1.h</file>
+    <file>data/tui_5_0.rss</file>
+    <file>data/tui_5_0container.rssi</file>
+    <file>inc/tui_5_0.hrh</file>
+    <file>data/tui_5_0.loc</file>
+    <file>data/tui_5_0.l01</file>
+    <file>data/tui_5_0container.l01</file>
+    <file>data/tui_5_0container.loc</file>
+    <file>inc/tui_5_0container.hrh</file>
+  </generatedFiles>
+</designerData>

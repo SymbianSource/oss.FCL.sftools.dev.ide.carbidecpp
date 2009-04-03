@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<!-- START_USECASES: CU10 END_USECASES -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.RowLayoutManager.LayoutData">
+		<!-- default=EQikLayoutHAlignInherit -->
+		<enumProperty name="horizontalAlignment"
+			displayName="%horizontalalignment"
+			category="%category.layout"
+			descriptionKey="horizontalalignment.description"
+			type="com.nokia.carbide.uiq.LayoutManager.TQikLayoutHorizontalAlignment"
+			default="EQikLayoutHAlignInherit"/>
+		<!-- default=EQikLayoutVAlignInherit -->
+		<enumProperty name="verticalAlignment"
+			displayName="%verticalalignment"
+			category="%category.layout"
+			descriptionKey="verticalalignment.description"
+			type="com.nokia.carbide.uiq.LayoutManager.TQikLayoutVerticalAlignment"
+			default="EQikLayoutVAlignInherit"/>
+		<enumProperty name="layoutWhenInvisible"
+			displayName="%layoutwheninvisible"
+			category="%category.layout"
+			descriptionKey="layoutwheninvisible.description"
+			type="com.nokia.carbide.uiq.LayoutManager.TQikLayoutBoolSetting"
+			default="EQikLayoutInheritBoolValue"/>
+		<!-- default=EQikLayoutInheritMinimum -->
+		<property name="minimumWidth"
+			displayName="%minimumwidth"
+			category="%category.layout"
+			descriptionKey="minimumwidth.description"
+			type="integer"
+			default="-2"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalSizes"/>
+		<!-- default=EQikLayoutInheritMinimum -->
+		<property name="minimumHeight"
+			displayName="%minimumheight"
+			category="%category.layout"
+			descriptionKey="minimumheight.description"
+			type="integer"
+			default="-2"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalSizes"/>
+		<!-- default=EQikLayoutInheritMargin -->
+		<property name="leftMargin"
+			displayName="%leftmargin"
+			category="%category.layout"
+			descriptionKey="leftmargin.description"
+			type="integer"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalMargins"/>
+		<!-- default=EQikLayoutInheritMargin -->
+		<property name="rightMargin"
+			displayName="%rightmargin"
+			category="%category.layout"
+			descriptionKey="rightmargin.description"
+			type="integer"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalMargins"/>
+		<!-- default=EQikLayoutInheritMargin -->
+		<property name="topMargin"
+			displayName="%topmargin"
+			category="%category.layout"
+			descriptionKey="topmargin.description"
+			type="integer"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalMargins"/>
+		<!-- default=EQikLayoutInheritMargin -->
+		<property name="bottomMargin"
+			displayName="%bottommargin"
+			category="%category.layout"
+			descriptionKey="bottommargin.description"
+			type="integer"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalMargins"/>
+		<!-- default=EQikLayoutInheritExcessGrabWeight -->
+		<property name="verticalExcessGrabWeight"
+			displayName="%verticalexcessgrabweight"
+			category="%category.layout"
+			descriptionKey="verticalexcessgrabweight.description"
+			type="integer"
+			default="-1"
+			extendWithEnum="com.nokia.carbide.uiq.LayoutManager.Grab"/>
+		<sourceTypeMapping>
+			<mapResourceType struct="QIK_ROW_LAYOUT_DATA" headers="Qikon.rh">
+				<mapEnumMember property="horizontalAlignment" member="horizontal_alignment"/>
+				<mapEnumMember property="verticalAlignment" member="vertical_alignment"/>
+				<mapEnumMember property="layoutWhenInvisible" member="layout_when_invisible"/>
+				<mapSimpleMember property="minimumWidth" member="minimum_width"/>
+				<mapSimpleMember property="minimumHeight" member="minimum_height"/>
+				<mapSimpleMember property="leftMargin" member="left_margin"/>
+				<mapSimpleMember property="rightMargin" member="right_margin"/>
+				<mapSimpleMember property="topMargin" member="top_margin"/>
+				<mapSimpleMember property="bottomMargin" member="bottom_margin"/>
+				<mapSimpleMember property="verticalExcessGrabWeight" member="vertical_excess_grab_weight"/>
+			</mapResourceType>
+		</sourceTypeMapping>
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.carbide.uiq.RowLayoutManager"
+		baseComponent="com.nokia.carbide.uiq.LayoutManager"
+		instanceNameRoot="rowLayoutManager"
+		version="1.0"
+		category="%layout.category">
+		
+		<documentation>
+			<wizardDescription>%wizardDescription</wizardDescription>
+		</documentation>
+			
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="RowLayoutManager" classHelpTopic=""
+			resourceType="QIK_ROW_LAYOUT_MANAGER" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="RowLayoutManager_sm.png"
+			largeIconFile="RowLayoutManager.png"/>			
+			
+		<attributes>
+			<!-- no "is-layout-*" attributes denotes outline-only -->
+			<attribute key="layout-manager-enum">EQikRowLayoutManager</attribute>
+		</attributes>
+		
+		<properties>
+			<enumProperty name="mirrored"
+				displayName="%mirrored"
+				category="%category.layout"
+				descriptionKey="mirrored.description"
+				type="com.nokia.carbide.uiq.LayoutManager.TQikLayoutMirroringSetting"
+				default="EQikLayoutAutoMirror"/>
+			<property name="normalizeRowHeights"
+				displayName="%normalizerowheights"
+				category="%category.layout"
+				descriptionKey="normalizerowheights.description"
+				type="boolean"/>
+			<compoundProperty name="defaultLayoutData"
+				displayName="%defaultlayoutdata"
+				category="%category.layout"
+				descriptionKey="defaultlayoutdata.description"
+				type="com.nokia.carbide.uiq.RowLayoutManager.LayoutData"/>
+		</properties>
+		
+		<extensionProperties name="default">
+			<compoundProperty name="layoutData"
+				displayName="%layoutdata"
+				category="%category.layout"
+				descriptionKey="layoutdata.description"
+				type="com.nokia.carbide.uiq.RowLayoutManager.LayoutData"/>
+		</extensionProperties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="RowLayoutManager.js" prototype="RowLayoutManager"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<!--<interface id="com.nokia.sdt.displaymodel.adapter.ITargetFeedbackListener"/>-->
+				<code class="com.nokia.carbide.cpp.uiq.component.layoutManager.RowLayoutManagerImplFactory"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_ROW_LAYOUT_MANAGER" headers="Qikon.rh" id="layoutManager">
+				<mapEnumMember property="mirrored" member="mirrored"/>
+				<mapSimpleMember property="normalizeRowHeights" member="normalize_row_heights"/>
+				<mapMemberFromType property="defaultLayoutData" member="default_layout_data"/>
+			</mapResource>
+		</sourceMapping>
+		
+	</component>
+	
+</componentDefinition>

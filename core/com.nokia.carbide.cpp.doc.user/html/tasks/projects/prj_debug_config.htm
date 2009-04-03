@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+  <title>Creating a Launch Configuration</title>
+  <link rel="StyleSheet" href="../../../book.css" type="text/css" />
+</head>
+<body bgcolor="#ffffff">
+<h2>Creating a Launch Configuration</h2>
+<p>To run or debug a project you need a <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a>. A project must have at least one launch configuration, and can have as many as necessary. When run on an emulator project the wizard simply creates an emulator launch configuration and launches the emulator. When running a device project for the first time the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a> seeks additional information required to create the launch configuration, then downloads the executable to the device and launches it. Once the emulator or device are loaded with the executable, the debug session  can commence. </p>
+<p>There are two methods for setting up a launch configuration, including:</p>
+<ul>
+  <li><b>Default launch configuration</b>&#8212;  automatically sets up a default launch configuration to run or debug the project on the first Run or Debug execution. This provides a quick and easy method to start running or debugging a new project without the hassle of setting a lot of options. The default launch configuration can always be edited later as the project launch requirements change.</li>
+  <li><b>Custom launch configuration</b>&#8212; enables you to setup a custom launch configuration to debug the project</li>
+</ul>
+<div class="step">
+<h4>Creating a Default Launch Configuration</h4>
+<p class="note"><b>NOTE</b> Carbide.c++ only creates a new default launch configuration when it cannot find one in the project. If the project already contains a launch configuration, Carbide.c++ launches that instead. </p>
+<ul>
+  <li>Click the <b>Run</b> (<img src="../../images/icons/btn_run.png" alt="Run icon" width="16" height="16" align="middle" />) or <b>Debug</b> (<img src="../../images/icons/btn_debug.png" width="17" height="16" align="middle" alt="Debug icon"/>) icon in the tool bar
+    <p>or</p>
+  </li>
+  <li>Choose Select <b>Run &gt; Run</b> menu option to launch the project or <b>Run &gt; Debug</b> menu option to debug the project</li>
+  <p>Carbide.c++ creates a default launch configuration for the project and begins running or debugging the project. If the project already has a defined launch configuration, clicking Run or Debug uses it instead of creating a new one. There are two possible scenarios when creating a default launch configuration: </p>
+  <ul>
+    <li><b>for emulator targets </b> - an emulator launch configuration is created based on the project settings </li>
+    <li><b>for target devices</b> - the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a> appears asking for additional information</li>
+  </ul>
+</ul>
+</div>
+  <p class="note"><b>NOTE</b> To see if a project already has a launch configuration, open a Run or Debug window using the <b>Run &gt; Open Run Dialog...</b> or <b>Run &gt; Open Debug Dialog...</b> menu items. 
+    </blockquote>
+  </p>
+  <p>In the event that the default launch configuration settings need to be changed, it is possible to edit them in the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window, or create a new launch configuration for the project that deviates from the default settings.</p>
+<div class="step">
+<h4>Creating a Custom Launch Configuration </h4>
+<ol>
+  <li>Open the Run or Debug launch configuration window
+    <ul>
+      <li>Select the Run> <b>Open Run Dialog</b>... or <b>Run &gt; Open Debug Dialog... </b> menu item
+        <p>The appropriate Run or <a href="../../reference/wnd_debug_configuration.htm">Debug</a> launch configuration window appears (Figure 1).</p>
+      </li>
+   </ul>
+  <p align="center"><img src="images/wnd_launch_configuration_blank.png" width="709" height="455" alt="Undefined launch configuration"/> </p>
+  <p class="figure">Figure 1 - Initial blank Debug launch configuration window</p>
+  </li>
+  <li>Select a type of launch configuration (for example, Symbian OS Emulation), then click the New launch configuration icon to create a new
+    configuration of that type.
+    <p>A new configuration appears in the Configuration list under the
+      appropriate section  using the project name and target to create the configuration name.</p>
+  <p class="note"><b>NOTE</b> By default, when you click New, the project information is used to fill in the Project and Process to launch text boxes. You normally should not have to edit these for a run/debug a project. If a bld.inf has multiple MMPS then the first executable named in the list of MMP files is used to fill in the executable field.  Therefore, for projects with multiple MMPs you may need to change the executable field.    </p>
+  </li>
+  <p align="center"><img src="images/run_config_new.png" width="787" height="489" alt="New launch configuration" /> </p>
+    <p class="figure">Figure 2 - New launch configuration with name and settings filled in (emulator)</p>
+  </li>
+  <li>View the information to define the project and executable
+  <p>Modify or fill in the following fields in the Main tab so the IDE
+    can setup the configuration properly each time. Typically when creating
+    a new executable from a project that has successfully linked, the
+    fields will be auto-populated and do not need to be modified. The important fields here are:</p>
+  <ul>
+      <li>Name - <span style="font-weight: normal;">This is a unique name to identify this debug launch configuration. It can be any name.</span> </li>
+      <li>Project - <span style="font-weight: normal;">The project  to associate with this debug launch configuration. Click Browse to select a different project.</span></li>
+      <li>Process to launch  - <span style="font-weight: normal;">This is the name of the executable that is linked to the project.</span></li>
+      </ul>
+  </li>
+  
+  <li>Modify settings in the other Carbide tabs to customize the launch configuration
+    for the project
+    <ul>
+      <li>Environment (<i>Eclipse</i>) </li>
+      <li><a href="../../reference/launch_configs/emulator_debugger.htm">Debugger</a></li>
+      <li><a href="../../reference/launch_configs/page_executables.htm">Executables</a></li>
+      <li><a href="../../reference/wnd_carbide_pref_x86.htm">x86 Exceptions</a> </li>
+      <li>Arguments (<i>Eclipse</i>) </li>
+      <li>Source (<i>Eclipse</i>) </li>
+      <li>Common (<i>Eclipse</i>) </li>
+    </ul>
+    <p>To debug something outside of the workspace, be sure to import the binary into the <a href="../../reference/view_executables.htm">Executables</a> view. </p>
+  </li>
+  <li>Click Debug
+    <p>The IDE launches the executable. If the launch configuration is set to change perspective, it  switches to the specified perspective. </p>
+  </li>
+</ol>
+</div>
+<h5>Other references</h5>
+  <ul>
+    <li><a href="../../projects/launch/launch_configs_overview.htm">Launch Configurations</a> </li>
+    <li><a href="../../concepts/Projects.html">Projects</a></li>
+    <li><a href="../CreatingNewProjects.html">Creating Projects</a></li>
+    <li><a href="prj_build.htm">Building Projects</a></li>
+    <li><a href="prj_debug_dlls.htm">Debugging DLLs</a></li>
+    <li><a href="../../reference/view_executables.htm">Executables</a> view  </li>
+</ul>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

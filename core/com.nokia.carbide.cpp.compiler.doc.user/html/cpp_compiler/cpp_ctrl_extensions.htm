@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Controlling C++ Extensions</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Controlling C++ Extensions</h3>
+<p>The C++ compiler has additional extensions that you can activate using the pragma <a href="../pragmas/p_cpp_extensions.htm">cpp_extensions</a>. </p>
+<p>If you enable this pragma, the compiler lets you use the following extensions to the ISO C++ standard:</p>
+<ul>
+  <li>Anonymous struct objects (ISO C++, &sect;9)</li>
+</ul>
+<blockquote>
+  <p class="listing">  #pragma cpp_extensions on<br />
+    void foo()<br />
+    {<br />
+    union {<br />
+    long hilo;<br />
+    struct { short hi, lo; }; <br />
+    // anonymous struct<br />
+    };<br />
+    hi=0x1234; <br />
+    lo=0x5678;<br />
+    // hilo==0x12345678<br />
+  }</p>
+</blockquote>
+<ul>
+  <li>Unqualified pointer to a member function (ISO C++, &sect;8.1)</li>
+</ul>
+<blockquote>
+  <p class="listing">    #pragma cpp_extensions on<br />
+    struct Foo { void f(); }<br />
+    void Foo::f()<br />
+    {<br />
+    void (Foo::*ptmf1)() = &amp;Foo::f;<br />
+  // ALWAYS OK<br />
+  <br />
+  void (Foo::*ptmf2)() = f;<br />
+    // OK if you enabled cpp_extensions. <br />
+  }</p>
+</blockquote>
+<p> To check this setting, use the <span class="code">__option (cpp_extensions)</span>. By default, this setting is off.</p>
+<p>See <a href="../symbols/sym_settings.htm">Checking Option Settings</a> for information on how to use this directive. <br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+<p><br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

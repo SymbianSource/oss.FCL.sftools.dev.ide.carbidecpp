@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknView" version="1.2.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitle" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBARestricted" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknForm" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DialogBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ContainerBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikNumberEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikMfneBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.EditorBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CCoeControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikDurationEditor" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwin" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CEikEdwinBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknPopupFieldText" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.sdt.series60.CAknView">
+    <property id="className">CForm_3_0FormView</property>
+    <compoundProperty id="location">
+      <property id="x">38</property>
+      <property id="y">10</property>
+    </compoundProperty>
+    <property id="name">Form_3_0FormView</property>
+    <compoundProperty id="size">
+      <property id="width">176</property>
+      <property id="height">208</property>
+    </compoundProperty>
+    <component id="com.nokia.sdt.series60.StatusPane">
+      <compoundProperty id="location">
+        <property id="x">16</property>
+        <property id="y">1</property>
+      </compoundProperty>
+      <property id="name">statusPane</property>
+      <compoundProperty id="size">
+        <property id="width">152</property>
+        <property id="height">43</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.StatusPaneTitle">
+        <compoundProperty id="location">
+          <property id="x">48</property>
+        </compoundProperty>
+        <property id="name">title</property>
+        <property id="titleText" type="i18n">STR_Form_3_0FormView_1</property>
+        <compoundProperty id="size">
+          <property id="width">104</property>
+          <property id="height">28</property>
+        </compoundProperty>
+        <compoundProperty id="image"/>
+      </component>
+    </component>
+    <component id="com.nokia.sdt.series60.CBARestricted">
+      <compoundProperty id="location">
+        <property id="y">184</property>
+      </compoundProperty>
+      <property id="name">controlPane</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">24</property>
+      </compoundProperty>
+    </component>
+    <component id="com.nokia.sdt.series60.CAknForm">
+      <compoundProperty id="location">
+        <property id="y">44</property>
+      </compoundProperty>
+      <property id="className">CForm_3_0Form</property>
+      <property id="notifyEsc">true</property>
+      <property id="name">Form_3_0Form</property>
+      <compoundProperty id="size">
+        <property id="width">176</property>
+        <property id="height">140</property>
+      </compoundProperty>
+      <component id="com.nokia.sdt.series60.CEikNumberEditor">
+        <property id="prompt" type="i18n">STR_Form_3_0FormView_2</property>
+        <compoundProperty id="location">
+          <property id="y">6</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">numEditor1</property>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikDurationEditor">
+        <property id="prompt" type="i18n">STR_Form_3_0FormView_3</property>
+        <compoundProperty id="location">
+          <property id="y">31</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">durationEditor1</property>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.CEikEdwin">
+        <compoundProperty id="size">
+          <property id="height">23</property>
+          <property id="width">176</property>
+        </compoundProperty>
+        <compoundProperty id="avkonFlags"/>
+        <property id="prompt" type="i18n">STR_Form_3_0FormView_4</property>
+        <compoundProperty id="location">
+          <property id="y">56</property>
+        </compoundProperty>
+        <compoundProperty id="flags"/>
+        <compoundProperty id="promptImage"/>
+        <compoundProperty id="allowedCaseModes"/>
+        <property id="name">edit1</property>
+        <property id="text" type="i18n">STR_Form_3_0FormView_5</property>
+        <compoundProperty id="allowedInputModes">
+          <property id="EAknEditorFullWidthKatakanaInputMode">true</property>
+          <property id="EAknEditorKatakanaInputMode">true</property>
+          <property id="EAknEditorFullWidthNumericInputMode">true</property>
+          <property id="EAknEditorHiraganaKanjiInputMode">true</property>
+          <property id="EAknEditorHalfWidthTextInputMode">true</property>
+          <property id="EAknEditorFullWidthTextInputMode">true</property>
+        </compoundProperty>
+      </component>
+      <component id="com.nokia.sdt.series60.CAknPopupFieldText">
+        <property id="prompt" type="i18n">STR_Form_3_0FormView_6</property>
+        <sequenceProperty id="items">
+          <element type="i18n">STR_Form_3_0FormView_7</element>
+          <element type="i18n">STR_Form_3_0FormView_8</element>
+          <element type="i18n">STR_Form_3_0FormView_9</element>
+        </sequenceProperty>
+        <compoundProperty id="location">
+          <property id="y">79</property>
+        </compoundProperty>
+        <compoundProperty id="promptImage"/>
+        <property id="name">popupFieldText1</property>
+        <compoundProperty id="size">
+          <property id="height">25</property>
+          <property id="width">176</property>
+        </compoundProperty>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_Form_3_0FormView_1">Form_3_0Form</string>
+      <string id="STR_Form_3_0FormView_2">prompt</string>
+      <string id="STR_Form_3_0FormView_3">prompt</string>
+      <string id="STR_Form_3_0FormView_4">prompt</string>
+      <string id="STR_Form_3_0FormView_5">Edit text</string>
+      <string id="STR_Form_3_0FormView_6">prompt</string>
+      <string id="STR_Form_3_0FormView_7">One</string>
+      <string id="STR_Form_3_0FormView_8">Two</string>
+      <string id="STR_Form_3_0FormView_9">Three</string>
+      <string id="STR_Form_3_0FormView_10">One</string>
+      <string id="STR_Form_3_0FormView_12">Two</string>
+      <string id="STR_Form_3_0FormView_14">Three</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="popupFieldText1" rsrcId="member$textarray">r_form_3_0_form_popup_field_text1_textarray</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_form_3_0_form_status_pane</resourceMapping>
+      <resourceMapping instanceName="edit1" rsrcId="text">r_form_3_0_form_edit1</resourceMapping>
+      <resourceMapping instanceName="title">r_form_3_0_form_title_resource</resourceMapping>
+      <resourceMapping instanceName="Form_3_0FormView">r_form_3_0_form_form_3_0_form_view</resourceMapping>
+      <resourceMapping instanceName="Form_3_0Form">r_form_3_0_form_form_3_0_form</resourceMapping>
+      <resourceMapping instanceName="Form_3_0Form" rsrcId="member$form">r_form_3_0_form_form_3_0_form_form</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
+      <enumMapping instanceName="numEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_3_0FormViewNumEditor1</enumMapping>
+      <enumMapping instanceName="numEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtNumberEditor</enumMapping>
+      <enumMapping instanceName="popupFieldText1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtPopupFieldText</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_3_0FormViewEdit1</enumMapping>
+      <enumMapping instanceName="Form_3_0FormView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EForm_3_0FormViewId</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="numericKeymap">EAknEditorStandardNumberModeKeymap</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
+      <enumMapping instanceName="durationEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtDurationEditor</enumMapping>
+      <enumMapping instanceName="durationEditor1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_3_0FormViewDurationEditor1</enumMapping>
+      <enumMapping instanceName="popupFieldText1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID">EForm_3_0FormViewPopupFieldText1</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultInputMode">EAknEditorTextInputMode</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EEikCtEdwin</enumMapping>
+      <enumMapping instanceName="edit1" propertyId="defaultCase">EAknEditorTextCase</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+  <generatedFiles>
+    <file>src/form_3_0formview.cpp</file>
+    <file>src/form_3_0form.cpp</file>
+    <file>inc/form_3_0form.h</file>
+    <file>inc/form_3_0formview.h</file>
+    <file>data/form_3_0.rss</file>
+    <file>data/form_3_0form.rssi</file>
+    <file>inc/form_3_0.hrh</file>
+    <file>data/form_3_0.loc</file>
+    <file>data/form_3_0.l01</file>
+    <file>data/form_3_0form.l01</file>
+    <file>data/form_3_0form.loc</file>
+    <file>inc/form_3_0form.hrh</file>
+  </generatedFiles>
+</designerData>

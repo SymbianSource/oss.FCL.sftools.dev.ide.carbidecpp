@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU11 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY command_flags_srcmapping SYSTEM "../command_flags_srcmapping.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.command.TQikCommandType">
+		<enumElement value="ControlDefault" displayValue="%controlDefault"/>
+		<enumElement value="Screen" displayValue="%AddedByApplication"/>
+		<enumElement value="Item" displayValue="%AddedByCurrentFocusedControl"/>
+		<enumElement value="Yes" displayValue="%Positive"/>
+		<enumElement value="No" displayValue="%Negative"/>
+		<enumElement value="Done" displayValue="%Done"/>
+		<enumElement value="Delete" displayValue="%Delete"/>
+		<enumElement value="Cancel" displayValue="%Cancel"/>
+		<enumElement value="Help" displayValue="%Help"/>
+		<enumElement value="System" displayValue="%AddedBySystem"/>
+		<enumElement value="Operator" displayValue="%AddedByOperator"/>
+		<enumElement value="Fep" displayValue="%AddedByFEP"/>
+		<enumElement value="Category" displayValue="%Category"/>
+		<enumElement value="All" displayValue="%MaskAll"/>
+		<sourceTypeMapping>
+			<mapEnumType validate="false">
+				<mapEnum value="ControlDefault" enumerator="0"/>
+				<mapEnum value="Screen" enumerator="EQikCommandTypeScreen"/>
+				<mapEnum value="Item" enumerator="EQikCommandTypeItem"/>
+				<mapEnum value="Yes" enumerator="EQikCommandTypeYes"/>
+				<mapEnum value="No" enumerator="EQikCommandTypeNo"/>
+				<mapEnum value="Done" enumerator="EQikCommandTypeDone"/>
+				<mapEnum value="Delete" enumerator="EQikCommandTypeDelete"/>
+				<mapEnum value="Cancel" enumerator="EQikCommandTypeCancel"/>
+				<mapEnum value="Help" enumerator="EQikCommandTypeHelp"/>
+				<mapEnum value="System" enumerator="EQikCommandTypeSystem"/>
+				<mapEnum value="Operator" enumerator="EQikCommandTypeOperator"/>
+				<mapEnum value="Fep" enumerator="EQikCommandTypeFep"/>
+				<mapEnum value="Category" enumerator="EQikCommandTypeCategory"/>
+				<mapEnum value="All" enumerator="EQikCommandTypeAll"/>
+			</mapEnumType>
+		</sourceTypeMapping>				
+	</enumPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.command.stateFlags">
+		<property name="EQikCmdFlagDimmed" type="boolean"
+			descriptionKey="EQikCmdFlagDimmedKey" />
+		<property name="EQikCmdFlagCheckBox" type="boolean"
+			descriptionKey="EQikCmdFlagCheckBoxKey" />	
+		<property name="EQikCmdFlagRadioStart" type="boolean"
+			descriptionKey="EQikCmdFlagRadioStartKey" />
+		<property name="EQikCmdFlagRadioMiddle" type="boolean"
+			descriptionKey="EQikCmdFlagRadioMiddleKey" />	
+		<property name="EQikCmdFlagRadioEnd" type="boolean"
+			descriptionKey="EQikCmdFlagRadioEndKey" />
+		<property name="EQikCmdFlagSymbolOn" type="boolean"
+			descriptionKey="EQikCmdFlagSymbolOnKey" />		
+		<property name="EQikCmdFlagInlinePane" type="boolean"
+			descriptionKey="EQikCmdFlagInlinePaneKey" />			
+		<property name="EQikCmdFlagSortAlphabetic" type="boolean"
+			descriptionKey="EQikCmdFlagSortAlphabeticKey" />
+		<property name="EQikCmdFlagUnavailable" type="boolean"
+			descriptionKey="EQikCmdFlagUnavailableKey" />		
+		<property name="EQikCmdFlagInvisible" type="boolean"
+			descriptionKey="EQikCmdFlagInvisibleKey" />			
+		<property name="EQikCmdFlagDebugOnly" type="boolean"
+			descriptionKey="EQikCmdFlagDebugOnlyKey" />
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.command.cpfFlags">
+		<property name="EQikCpfFlagReplaceContainerPopoutDone" type="boolean"
+			descriptionKey="EQikCpfFlagReplaceContainerPopoutDoneKey" />
+		<property name="EQikCpfFlagPreferToBePlacedInButtonbar" type="boolean"
+			descriptionKey="EQikCpfFlagPreferToBePlacedInButtonbarKey" />	
+		<property name="EQikCpfFlagDuplicateInMenuPane" type="boolean"
+			descriptionKey="EQikCpfFlagDuplicateInMenuPaneKey" />
+		<property name="EQikCpfFlagOkToExclude" type="boolean"
+			descriptionKey="EQikCpfFlagOkToExcludeKey" />	
+		<property name="EQikCpfFlagIsDefault" type="boolean"
+			descriptionKey="EQikCpfFlagIsDefaultKey" />
+		<property name="EQikCpfFlagDoneCommandPreferToBePlacedOnPositiveSoftkey" type="boolean"
+			descriptionKey="EQikCpfFlagDoneCommandPreferToBePlacedOnPositiveSoftkeyKey" />		
+		<property name="EQikCpfFlagHardwarekeyOnly" type="boolean"
+			descriptionKey="EQikCpfFlagHardwarekeyOnlyKey" />			
+		<property name="EQikCpfFlagTouchscreenOnly" type="boolean"
+			descriptionKey="EQikCpfFlagTouchscreenOnlyKey" />
+		<property name="EQikCpfFlagNoTouchscreenOnly" type="boolean"
+			descriptionKey="EQikCpfFlagNoTouchscreenOnlyKey" />		
+		<property name="EQikCpfFlagInteractionMenubarOnly" type="boolean"
+			descriptionKey="EQikCpfFlagInteractionMenubarOnlyKey" />			
+		<property name="EQikCpfFlagInteractionSoftkeysOnly" type="boolean"
+			descriptionKey="EQikCpfFlagInteractionSoftkeysOnlyKey" />
+		<property name="EQikCpfFlagPortraitOnly" type="boolean"
+			descriptionKey="EQikCpfFlagPortraitOnlyKey" />
+		<property name="EQikCpfFlagLandscapeOnly" type="boolean"
+			descriptionKey="EQikCpfFlagLandscapeOnlyKey" />		
+		<property name="EQikCpfFlagExecuteRepeat" type="boolean"
+			descriptionKey="EQikCpfFlagExecuteRepeatKey" />			
+		<property name="EQikCommandGroupIdBeforeCategoryCommands" type="boolean"
+			descriptionKey="EQikCommandGroupIdBeforeCategoryCommandsKey" />
+		<property name="EQikCommandGroupIdCategoryCommands" type="boolean"
+			descriptionKey="EQikCommandGroupIdCategoryCommandsKey" />			
+		<property name="EQikCommandGroupIdAfterCategoryCommands" type="boolean"
+			descriptionKey="EQikCommandGroupIdAfterCategoryCommandsKey" />
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CommandBase"
+			baseComponent="com.nokia.carbide.uiq.CommandListChildBase"
+			category="%commands.category"
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq"
+				minSDKVersion="3.0">
+		</symbian>			
+
+		<attributes>
+			<attribute key ="cpp-class-name">CommandBase</attribute>
+		</attributes>
+
+		<properties>
+			<property name="name" type="uniqueName"
+				descriptionKey="nameDescription"
+				category="%category.design"/>
+			<property  name="text" type="localizedString" 
+				default="text"
+				descriptionKey="textDescription"
+				category="%category.design"/>					
+			<property  name="shortText" type="localizedString" 
+				default="text"
+				descriptionKey="shortTextDescription"
+				category="%category.data"/>					
+			<compoundProperty  name="icon" 
+				type="com.nokia.carbide.uiq.MbmImageProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+				descriptionKey="iconDescription"
+				category="%category.appearance"/>		
+			<property name="priority" type="integer" 
+				default="0"
+			    descriptionKey="priorityDescription"
+				category="%category.behavior"/>
+			<enumProperty name="type"
+				type="com.nokia.carbide.uiq.command.TQikCommandType"
+				descriptionKey="typeDescription"
+				default="ControlDefault"
+				category="%category.behavior"/>				
+			<compoundProperty name="stateFlags" type="com.nokia.carbide.uiq.command.stateFlags"
+				descriptionKey="stateFlagsDescription"
+				category="%category.behavior"/>	
+			<compoundProperty name="cpfFlags" type="com.nokia.carbide.uiq.command.cpfFlags"
+				descriptionKey="cpfFlagsDescription"
+				category="%category.behavior"/>	
+		    <componentReferenceProperty name="anonymousGroup" 
+				constraint="com.nokia.carbide.uiq.AnonymousGroup" 
+				scope="siblings" descriptionKey="anonymousGroupDescription"
+				category="%category.design"/>                                                                                       			
+		    <componentReferenceProperty name="namedGroup" 
+				constraint="com.nokia.carbide.uiq.NamedGroup" 
+				scope="siblings" descriptionKey="namedGroupDescription"
+				category="%category.design"/>                                                                                       			
+		</properties>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_COMMAND" headers="QikCommand.rh">
+				&command_flags_srcmapping;																
+			</mapResource>
+		</sourceMapping>
+		
+	</component>
+	
+</componentDefinition>

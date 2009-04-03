@@ -1,0 +1,14 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_test_array_single
+	{
+	ints = { 987 };
+	structs =
+		{
+		SUBTYPE
+			{
+			flag = 1;
+			number = 25;
+			}
+		};
+	}

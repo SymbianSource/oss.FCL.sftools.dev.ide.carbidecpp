@@ -1,0 +1,98 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+package com.nokia.cdt.internal.debug.launch.wizard;
+
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.ui.RunModeMainTab;
+import com.nokia.cdt.internal.debug.launch.wizard.MainExecutableSelectionWizardPage.IPathValidator;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+
+import java.util.List;
+
+public class AppTRKLaunchWizard extends AbstractLaunchWizard {
+    private TRKConnectionWizardPage fMainPage;
+    private TRKSISSelectionWizardPage fSISSelectionPage;
+	private boolean hasFinished = false;
+    
+    public AppTRKLaunchWizard(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, IProject project, String configurationName) {
+    	super(project, configurationName, mmps, exes, defaultExecutable, exes.size() > 1, true);
+		setWindowTitle(Messages.getString("AppTRKLaunchWizard.1")); //$NON-NLS-1$
+    }
+
+    public boolean performFinish() {
+    	hasFinished = true;
+    	return true;
+    }
+ 
+    public void addPages() {
+    	super.addPages();
+        fMainPage = new TRKConnectionWizardPage(this);
+        fSISSelectionPage = new TRKSISSelectionWizardPage(this);
+        addPage(fMainPage);
+        addPage(fSISSelectionPage);
+	    addPage(getSummaryPage());
+	    MainExecutableSelectionWizardPage binarySelectionPage = getBinarySelectionPage();
+	    if (binarySelectionPage != null) {
+			binarySelectionPage.setPathValidator(new IPathValidator() {
+				public String isValidPath(IPath path) {
+					return RunModeMainTab.isRemoteTextValid(path.toOSString());
+				}
+		    });
+	    }
+   }
+
+    public String toString() {
+    	return Messages.getString("AppTRKLaunchWizard.2"); //$NON-NLS-1$
+    }
+    
+    public String getDescription() {
+    	return Messages.getString("AppTRKLaunchWizard.3"); //$NON-NLS-1$
+    }
+    
+    public ILaunchConfigurationWorkingCopy createLaunchConfiguration(IPath mmpPath, IPath exePath, IPath processToLaunchTargetPath) {
+    	// if we haven't finished then don't create anything
+    	if (!hasFinished) {
+    		return null;
+    	}
+
+    	ILaunchConfigurationWorkingCopy config = null;
+    	try {
+    		// create our config
+    		config = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(SettingsData.APP_TRK_LAUNCH_TYPE_ID).newInstance(null, getConfigName());
+    		
+    		// set the default values
+    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_AppTRK, getProject(), mmpPath, exePath);
+    		if (processToLaunchTargetPath != null)
+    			SettingsData.setProcessToLaunch(config, processToLaunchTargetPath);
+    		
+    		// now let the wizard pages update values 
+    		fMainPage.updateConfiguration(config);
+    		
+    		// now let the wizard pages update values 
+    		fSISSelectionPage.updateConfiguration(config);
+
+    	} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		return config;
+    }
+}

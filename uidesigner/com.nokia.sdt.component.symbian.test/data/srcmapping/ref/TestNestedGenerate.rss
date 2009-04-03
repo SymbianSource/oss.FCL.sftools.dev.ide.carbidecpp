@@ -1,0 +1,32 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+#include "output.hrh"
+
+RESOURCE FORM r_test_form
+	{
+	flags = 456;
+	dialog = DIALOG
+		{
+		lines =
+			{
+			DIALOG_LINE
+				{
+				id = EMyContainerTestFormCheckbox;
+				type = EEikCtCheckbox;
+				field = CHECKBOX
+					{
+					defaultChecked = 1;
+					};
+				},
+			DIALOG_LINE
+				{
+				id = EMyContainerTestFormLabel;
+				type = EEikCtLabel;
+				field = LABEL
+					{
+					text = "literal string";
+					};
+				}
+			};
+		};
+	}

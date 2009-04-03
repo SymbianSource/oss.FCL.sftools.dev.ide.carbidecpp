@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.sdt.series60.CEikRangeEditor.Range"
+			converterClass="com.nokia.sdt.symbian.ui/com.nokia.sdt.symbian.ui.valueConverter.RangeValueConverter">
+		<!-- note: these names are confusing and should really be 'start' and 'end': the *.properties does this -->
+		<property name="minimum" type="integer" descriptionKey="minimumDescription" />
+		<property name="maximum" type="integer" descriptionKey="maximumDescription" />
+		<!-- note: this property lives here so the cell editor can see/change it -->
+		<property name="separatorText" type="localizedString" default="-"
+			descriptionKey="separatorTextDescription" />
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikRangeEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="rangeEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="RANGE_EDITOR" className="CEikRangeEditor" />
+		<designerImages 
+			smallIconFile="CEikRangeEditor_sm.png" 
+			largeIconFile="CEikRangeEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikRangeEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="rss-control-type-enum">EEikCtRangeEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<compoundProperty name="value" category="Data" type="com.nokia.sdt.series60.CEikRangeEditor.Range" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.RangeEditorFactory"
+				descriptionKey="valueDescription"
+			/>
+			<property name="min" category="Data" type="integer" default="0"
+				descriptionKey="minDescription"
+			/>
+			<property name="max" category="Data" type="integer" default="2147483647"
+				descriptionKey="maxDescription" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikRangeEditor_visual.js" prototype="CEikRangeEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="RANGE_EDITOR" headers="eikon.rh">
+			<mapSimpleMember property="min" member="min"/>
+			<mapSimpleMember property="max" member="max"/>
+			<mapSimpleMember property="value.separatorText" member="separatortext"/>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container">
+	
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_DIALOG" />
+
+		<template phase="Initialize"><![CDATA[
+	{
+	SEikRange range = { ${instance.properties.value.minimum}, ${instance.properties.value.maximum} };
+	${instanceMemberName}->SetRange( range );
+	}
+]]>		</template>
+		
+		
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

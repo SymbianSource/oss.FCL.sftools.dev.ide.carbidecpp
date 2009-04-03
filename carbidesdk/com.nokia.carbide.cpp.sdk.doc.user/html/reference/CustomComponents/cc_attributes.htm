@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Attributes Element</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Attributes Element</h2>
+<p>A component definition file can define an optional section for attributes. Attributes are inherited from a component&rsquo;s optional base component. Generally, attributes can hold any static character data that is common to all instances of a component. However, there are some predefined attributes that the UI designer understands and some which are specific to the built-in components.</p>
+<h4>Example Attributes Declaration</h4>
+<pre class="listing">&lt;attributes&gt; 
+ &nbsp; &lt;attribute  key=&quot;is-layout-object&quot;&gt;true&lt;/attribute&gt; 
+ &nbsp; &lt;attribute  key<strong>=&quot;</strong>is-transient-object<strong>&quot;</strong>&gt;true&lt;/attribute&gt;<strong> </strong>
+ &nbsp; &lt;attribute  key=&quot;display-model-class&quot;&gt;
+ &nbsp;&nbsp;&nbsp;&nbsp; com.nokia.sdt.component.symbian.displaymodel.DisplayModel
+ &nbsp; &lt;/attribute&gt;
+&lt;/attributes&gt;</pre>
+<h4>Predefined Common Attributes</h4>
+<table width="79%" border="1" align="center">
+  <tr>
+    <th width="28%" scope="col">Attribute</th>
+    <th width="72%" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td><strong>is-layout-object</strong></td>
+    <td>A boolean flag indicating that a component is a layout object. A layout  object is always created in the upper part of the editor where the &ldquo;layout&rdquo;  exists, and must define location and size properties.</td>
+  </tr>
+  <tr>
+    <td><strong>is-layout-container</strong></td>
+    <td>A boolean flag indicating that a component can be a  layout container. Containers have the additional behavior that they can contain  other layout objects.</td>
+  </tr>
+  <tr>
+    <td><strong>is-non-layout-object</strong></td>
+    <td>A boolean  flag indicating that a component is a non-layout object. A non-layout object is  always created in the lower part of the editor and appears only as an icon.</td>
+  </tr>
+  <tr>
+    <td><strong>is-transient-object</strong></td>
+    <td>A boolean flag indicating that a component  is a transient UI object. It will appear in the upper part of the editor when  it is selected, and all other layout objects will be greyed out. An example of  this is a menu bar. Generally, a trainsient object is also a non-layout object.  Without declaring the latter, it would only show up in the outline view until  selected. If a transient object is also a container, its children should not be  transient objects but regular layout objects.</td>
+  </tr>
+  <tr>
+    <td><strong>is-top-level-only-layout-object</strong></td>
+    <td>A boolean flag indicating that a component  can only be added to a container defining its &quot;is-top-level-content-container&quot;  attribute as true.</td>
+  </tr>
+  <tr>
+    <td><strong>is-top-level-content-container</strong></td>
+    <td>A boolean flag indicating a container  that can be used as a top level content container (e.g. CCoeControl, Form, or SettingsItemList).</td>
+  </tr>
+  <tr>
+    <td><strong>is-exclusive-child-layout-object</strong></td>
+    <td>A boolean flag indicating that a  component must be the exclusive content of its container and can have no  siblings.</td>
+  </tr>
+  <tr>
+    <td><strong>is-not-user-removable</strong></td>
+    <td>A boolean flag indicating that a  component is not removable by the user in the editor. No delete operation will  be available for it.</td>
+  </tr>
+  <tr>
+    <td><strong>is-non-resizable-layout-object</strong></td>
+    <td>A boolean flag indicating that a  component is not resizable by the user in the editor. Selection trackers will  not include resize trackers.</td>
+  </tr>
+  <tr>
+    <td><strong>is-non-resizable-or-moveable-layout-object</strong></td>
+    <td>A boolean flag indicating that a  component is not moveable or resizable by the user in the editor.</td>
+  </tr>
+  <tr>
+    <td><strong>fixed-child-order</strong></td>
+    <td>A boolean flag indicating that  children of this container can't be reordered by the user in the outline or by  any reorder actions (move up/move down).</td>
+  </tr>
+  <tr>
+    <td><strong>lays-out-children</strong></td>
+    <td>A boolean flag indicating that a  container is responsible for laying out its children via its ILayout  implementation (script), so the editor will inhibit sizing and moving them after  they are created.</td>
+  </tr>
+  <tr>
+    <td><strong>never-add-component</strong></td>
+    <td>A boolean flag indicating that a  component can never be added to a container unless that container specifically  has a IQueryContainment implementation (script) allowing it.</td>
+  </tr>
+  <tr>
+    <td><strong>not-in-toolbox</strong></td>
+    <td>A boolean flag indicating to the  UI designer that the component should not appear in the toolbox.</td>
+  </tr>
+  <tr>
+    <td><strong>is-system-component</strong></td>
+    <td>A boolean flag indicating that a component has some special system significance (e.g., control  pane, status pane, navi pane content). System components are not selected when  the select-all action is invoked.</td>
+  </tr>
+  <tr>
+    <td><strong>is-initial-content</strong></td>
+    <td>A boolean flag indicating initial  content for the S60 wizard (e.g., List). This will show the component (and its  thumbnail) in the wizard&rsquo;s initial content page.</td>
+  </tr>
+  <tr>
+    <td><strong>display-model-class</strong></td>
+    <td>The Java class used by the root  container for its IDisplayModel implementation. This attribute should only be  set (and is required to be set) by the root container. This should always be: com.nokia.sdt.component.symbian.displaymodel.DisplayModel</td>
+  </tr>
+  <tr>
+    <td><strong>supported-layouts</strong></td>
+    <td>Semicolon-delimited list of layout  names supported by a container component. These names correspond to various  skins supported by the Symbian UI designer.</td>
+  </tr>
+  <tr>
+    <td><strong>event-handler-target</strong></td>
+    <td>A boolean flag indicating this  component is the target of event handler prototypes and handlers.&nbsp; When set, the script variable  'handlerClassName' is visible to child components and is the value of this  component's 'className' property.</td>
+  </tr>
+  <tr>
+    <td><strong>associated-palette-drawer</strong></td>
+    <td>A string representing the palette  drawer that is associated with some container. This is used to ensure this  drawer is open in the palette when the palette is built.</td>
+  </tr>
+  <tr>
+    <td><strong>vertical-scrollable-container</strong></td>
+    <td>A boolean flag on containers indicating that this container should be scrollable vertically.</td>
+  </tr>
+  <tr>
+    <td><strong>horizontal-scrollable-container</strong></td>
+    <td>A boolean flag on containers indicating that this container should be scrollable horizontally.</td>
+  </tr>
+  <tr>
+    <td><strong>collapsed-in-outline</strong></td>
+    <td>A boolean flag on containers indicating that this container should be collapsed by default
+in the outline (when not specified, containers are expanded by default).</td>
+  </tr>
+  <tr>
+    <td><strong>layout-container-indirection-reference-property</strong></td>
+    <td>The name of the component reference property whose value contains the name of the instance that provides indirection of the layout container adapter. This allows the layout container to display layout object children of another container. NOTE that this can only be used with an outline container, since otherwise, there would be more than one controller and figure in the graphical viewer for the same model object. The case of multiple graphical representations in a view for a single model object is not supported.</td>
+  </tr>
+  <tr>
+    <td><strong>no-transient-child-clipping</strong></td>
+    <td>A boolean flag that applies only to objects rendered in the transient layer. This flag indicates that the container's children should not be clipped when they are painted.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<h4>Predefined Symbian-specific Attributes</h4>
+<table width="704" border="1" align="center">
+  <tr>
+    <th width="216" scope="col">Attribute</th>
+    <th width="472" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td><strong>rss-control-type-enum</strong></td>
+    <td>An  attribute to define the control type in RSS (EEikCt... or EAknCt...).</td>
+  </tr>
+  <tr>
+    <td><strong>is-design-reference</strong></td>
+    <td><p>Indicates whether the component is a design reference.  If so, it is expected to publish the properties:</p>
+      <ul>
+        <li> filePath (string)</li>
+        <li> baseName (string)</li>
+    </ul></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h4>Predefined S60-specific Attributes</h4>
+<table width="704" border="1" align="center">
+  <tr>
+    <th width="216" scope="col">Attribute</th>
+    <th width="472" scope="col">Description</th>
+  </tr>
+  <tr>
+    <td><strong>is-navipane-content</strong></td>
+    <td>A boolean  flag indicating that a component is the contents of the navipane.</td>
+  </tr>
+  <tr>
+    <td><strong>is-dialog-content</strong></td>
+    <td>A boolean  flag indicating that a component is the contents of a dialog.</td>
+  </tr>
+  <tr>
+    <td><strong>is-form-content</strong></td>
+    <td>A boolean  flag indicating that a component is the contents of a form.</td>
+  </tr>
+  <tr>
+    <td><strong>is-ccoecontrol-content</strong></td>
+    <td>A boolean  flag indicating that a component is the contents of a CCoeControl.</td>
+  </tr>
+  <tr>
+    <td><strong>status-pane-id</strong></td>
+    <td>An  attribute to define the pane id for a status pane.</td>
+  </tr>
+  <tr>
+    <td><strong>options-menu-property-name</strong></td>
+    <td>An  attribute to define the name of the options menu reference property, for example <span class="code">optionsMenu</span>.</td>
+  </tr>
+  <tr>
+    <td><strong>has-builtin-options-menu</strong></td>
+    <td>A boolean  flag indicating that a component has a builtin options menu (e.g. CAknForm).  This flag is used by the S60 wizard to inhibit creation of the options menu.</td>
+  </tr>
+  <tr>
+    <td><strong>container-background-color-property-name</strong></td>
+    <td>An  attribute for containers identifying which property defines the background color.</td>
+  </tr>
+  <tr>
+    <td><strong>is-non-resizable-or-moveable-layout-object</strong></td>
+    <td>A boolean flag indicating that a  component is not moveable or resizable by the user in the editor.</td>
+  </tr>
+  <tr>
+    <td><strong>container-background-color</strong></td>
+    <td>An  attribute for containers that defines the actual look and feel color that defines the  background color. It is used as a fallback when the &quot;container-background-color-property-name&quot;  is not set.</td>
+  </tr>
+  <tr>
+    <td><strong>default-cba-value</strong></td>
+    <td>An  attribute with an alternate CBA default for use by the wizard.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h4>Non-Layout Components</h4>
+<p>If creating a non-layout component, use the <strong>is-non-layout-object</strong> attribute in the attribute declaration section of your component definition file. Non-layout components are objects that are not visually represented, such as the S60 standard web-client component.  A non-layout component can represent data or a code pattern to be added to a design. For example, the web-client component performs a HTTP Get on the URL specified as the default. Non-layout components appear in the non-layout area of the UI Designer and are not visually represented in the UI design, however they may have an associated icon image that is visible in the Outline view.</p>
+<p align="center"><img src="images/non_layout.png" alt="Non-layout component" width="666" height="460" /></p>
+<p align="center"><strong>Figure 1. Non-layout Component in Non-layout Area</strong></p>
+<h4 align="left">Transient Components</h4>
+<p align="left">If creating a transient component, use the <strong>is-transient-object</strong> attribute in the attribute declaration section of your component definition file. Similar to non-layout components, transient components do not represent visual objects in the layout of the UI design. Although a transient component does not represent a visual aspect of the design, it does have visual properties.</p>
+<p align="left">An example of a transient component is a menubar and its menu items. At runtime, the menu items are visible when activated. They have &ldquo;transient&rdquo; visual properties. Non-layout components and transient components have no place in the layout of the design and are therefore represented as icons in the non-layout area of the UI Designer editor. Transient component instances, however, will appear in the upper (layout) area of the editor when selected in the non-layout area; and may be edited visually.</p>
+<h5 align="left">Related Reference</h5>
+<p align="left"><a href="cc_definetransientcomp.htm">Defining a Transient Component</a></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

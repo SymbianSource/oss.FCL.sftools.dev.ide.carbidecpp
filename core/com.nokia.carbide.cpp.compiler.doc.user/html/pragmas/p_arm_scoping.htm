@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>ARM_scoping</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>ARM_scoping</h3>
+<p>  Controls the scope of variables declared in the expression parts of if, while, and for statements.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma ARM_scoping on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, any variable you declare in any of the above conditional expressions remains valid until the end of the block that contains the statement. Otherwise, the variables only remains valid until the end of that statement. Listing 10.5 shows an example.</p>
+  <div class="listing">
+      <h4> Listing 10.5 Example of Using Variables Declared in for Statement</h4>
+      <p>for( int i=1; i&lt;1000; i++) { <br />
+      /* . . . */ } <br />
+    return i; // OK if ARM_conform is enabled.</p>
+  </div>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code"><span class="code">__option (ARM_scoping</span>.</span> They default setting is <span class="code">off</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

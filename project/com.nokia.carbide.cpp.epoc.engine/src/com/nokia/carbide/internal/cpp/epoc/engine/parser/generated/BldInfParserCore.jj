@@ -1,0 +1,742 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*	JavaCC input file for bld.inf parsing.  
+*
+*/
+
+
+
+options {
+	STATIC=false;
+	USER_TOKEN_MANAGER=true;
+}
+
+PARSER_BEGIN(BldInfParserCore)
+
+package com.nokia.carbide.internal.cpp.epoc.engine.parser.generated;
+
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.*;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.bldinf.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.bldinf.*;
+
+import java.util.*;
+
+// these must exactly match the keywords used in bld.inf (minus leading PRJ_)
+enum BldInfBlock {
+        NONE,
+        PLATFORMS,
+        MMPFILES,
+        TESTMMPFILES,
+        EXPORTS,
+        TESTEXPORTS,
+        EXTENSIONS,
+        TESTEXTENSIONS
+};
+
+public class BldInfParserCore extends ParserBase {
+	BldInfBlock currentBlock;
+	IASTBldInfBlockStatement currentBlockStmt;
+	Token currentBlockLast;
+	Map<Integer, BldInfBlock> blockMap;
+	IASTBldInfTranslationUnit tu;
+	int blockDepth;
+	
+    public IASTBldInfTranslationUnit parse() {
+   		currentBlock = BldInfBlock.NONE;
+   		currentBlockStmt = null;
+   		currentBlockLast = null;
+    	this.blockMap = new HashMap<Integer, BldInfBlock>();
+    	this.blockDepth = 0;
+    	
+		tu = ASTBldInfFactory.createBldInfTranslationUnit();
+		try {
+			TranslationUnit(tu);
+		} catch (ParseException e) {
+			hadErrors = true;
+			e.printStackTrace();
+		}
+		return tu;
+    }
+}
+
+PARSER_END(BldInfParserCore)
+
+void TranslationUnit(IASTBldInfTranslationUnit tu) : 
+{ 
+	IASTListNode<IASTBldInfStatement> statements = ASTBldInfFactory.createBldInfStatementListNode();
+	Token eof;
+}
+{
+	[ Statements(statements) ]
+	eof=<EOF>
+	{
+		finishCurrentBlock();
+		if (statements != null) {
+			tu.setNodes((IASTListNode)statements);
+			ParserUtils.setSourceRangeForListNode(null, tu.getNodes(), eof);
+			ParserUtils.copySourceInfo(tu, tu.getNodes());
+		} else {
+			ParserUtils.setSourceRangeFromTokenSpan(tu.getNodes(), eof, eof);
+			ParserUtils.setSourceRangeFromTokenSpan(tu, eof, eof);
+		}
+	}
+}
+
+JAVACODE
+void Statements(IASTListNode<IASTBldInfStatement> stmts)
+{
+	do {
+		Statement(stmts);
+	} while (token.kind != EOF);
+}
+
+JAVACODE
+IASTBldInfStatement createProblemStatement(Token start, Token end, ParseException e)
+{
+	IASTBldInfStatement stmt;
+
+	if (end == null) {
+		ppRestOfLine(false);
+		end = token;
+	}
+	List<IToken> tokens = new ArrayList<IToken>();
+	start = start.next;
+	while (true) {
+		if (start.kind == EOF)
+			break;
+		tokens.add(((ASTToken)start).iToken);
+		if (start == end)
+			break;
+		start = start.next;
+	}
+	IASTPreprocessorTokenStream stream = ASTFactory.createPreprocessorTokenStream(tokens);
+	ParserUtils.setSourceRangeForTokenStream(stream, stream);
+	stmt = ASTBldInfFactory.createBldInfProblemStatement(stream, createMessage(start, e));
+	ParserUtils.copySourceInfo(stmt, stream);
+	
+	hadErrors = true;
+	return stmt;
+
+}
+
+
+void Statement(IASTListNode<IASTBldInfStatement> statements) :
+{
+	Token start = token;
+	IASTBldInfStatement node;
+}
+{
+	try {
+		( node = PrjPlatformsStatement() 
+		| node = PrjMmpfilesStatement()
+		| node = PrjExportsStatement()
+		| node = PrjExtensionsStatement()
+		)
+		{
+			statements.add(node);
+		}
+		| ( <BLOCK_ENTER> )
+		{
+			resyncCurrentStatement(statements, 1);
+		}
+		| ( <BLOCK_SWITCH> )
+		{
+			resyncCurrentStatement(statements, 0);
+		}
+		| ( <BLOCK_EXIT> )
+		{
+			resyncCurrentStatement(statements, -1);
+		}
+	 	/* And comments */
+		| ( node = Empty() )
+		{
+		}		
+		| ( CurrentBlockStatement(statements) )
+		{
+		}
+
+	
+	} catch (ParseException e) {
+		statements.add(createProblemStatement(start, null, e));
+	}
+	
+}
+
+/**
+ *	Parse the kind of statement appropriate for the current block
+ *	@returns normally null, or a problem statement
+ */
+JAVACODE
+void CurrentBlockStatement(IASTListNode<IASTBldInfStatement> statements)
+{
+	  int t = (jj_ntk==-1)?jj_ntk():jj_ntk;
+        if (t == EOF || t == EOL || t == BLOCK_ENTER || t == BLOCK_SWITCH || t == BLOCK_EXIT) {
+                token = getNextToken();
+                return;
+        }
+	//System.out.println("current statement parsed for block " + currentBlock);
+		
+	if (currentBlock == BldInfBlock.NONE) {
+		Token start = token;
+		IASTLiteralTextNode node = Argument();
+		statements.add(createProblemStatement(start, null, 
+			new ParseException("Unexpected section keyword: " + node.getValue())));
+		return;
+	}
+	
+	if (currentBlock == BldInfBlock.PLATFORMS) {
+		IASTLiteralTextNode platform = ArgumentOrNewline();
+		if (platform != null) {
+			currentBlockStmt.getList().add(platform);
+		}
+	} else if (currentBlock == BldInfBlock.MMPFILES || currentBlock == BldInfBlock.TESTMMPFILES) {
+		IASTBldInfMakMakeStatement makmake = MakmakeStatement();
+		if (makmake != null) {
+			statements.add(makmake);
+		}
+	} else if (currentBlock == BldInfBlock.EXPORTS || currentBlock == BldInfBlock.TESTEXPORTS) {
+		IASTBldInfExportStatement export = Export();
+		if (export != null) {
+			statements.add(export);
+		}
+	} else if (currentBlock == BldInfBlock.EXTENSIONS || currentBlock == BldInfBlock.TESTEXTENSIONS) {
+		IASTBldInfExtensionBlockStatement ext = ExtensionBlockStatement();
+		if (ext != null) {
+			statements.add(ext);
+		}
+	} else {
+		throw new ParseException("Unhandled block: "+ currentBlock);
+	}
+}
+
+JAVACODE
+  void setCurrentConditionalBlock() throws ParseException {
+	//System.out.println("updating block " + blockDepth + " to " + currentBlock);
+	  blockMap.put(blockDepth, currentBlock);
+  }
+
+JAVACODE
+  void resyncCurrentStatement(IASTListNode<IASTBldInfStatement> statements, int delta) throws ParseException {
+  
+  if (delta > 0) {
+	   blockDepth += delta;
+  	//System.out.println("handling delta " + delta + " to depth " + blockDepth);
+  		blockMap.put(blockDepth, currentBlock);
+  		return;
+  } else  {
+		BldInfBlock prevBlock;
+		if (delta < 0) {
+			prevBlock = blockMap.get(blockDepth);
+			blockDepth += delta;
+		} else {
+			prevBlock = blockMap.get(blockDepth - 1);
+		}
+		//System.out.println("resyncing to depth " + outerDepth);
+		  if (prevBlock != null && prevBlock != currentBlock) {
+		  		finishCurrentBlock();
+			  IASTBldInfStatement stmt = setCurrentBlock(prevBlock, null, null);
+			  if (stmt != null) {
+				  	/*
+				  // set the source info from the last statement of this type
+				  IASTBldInfStatement prev = null;
+				  for (IASTBldInfStatement lastStmt : statements) {
+				  	if (lastStmt.getKeywordName().equalsIgnoreCase(stmt.getKeywordName())) {
+				  		prev = lastStmt;
+				  		break;
+				  	}
+				  }
+					if (prev != null) {
+						ParserUtils.setSourceRangeAfterNode(((IASTBldInfBlockStatement)stmt).getKeyword(), prev);
+						ParserUtils.setSourceRangeAfterNode(stmt, prev);
+					} else {
+						ParserUtils.setSourceRangeFromTokenSpanUpTo(((IASTBldInfBlockStatement)stmt).getKeyword(), token, token);
+						ParserUtils.setSourceRangeFromTokenSpanUpTo(stmt, token, token);
+					}
+					*/
+				  statements.add(stmt);
+			  }
+		  }
+		 }
+  }
+
+/**
+ *	Set up a new block statement.
+ */
+JAVACODE
+IASTBldInfBlockStatement setCurrentBlock(BldInfBlock blockType, IASTBldInfBlockStatement blockStmt, Token lastToken)
+{
+	//System.out.println("Set block type to " +blockType);
+	if (blockType == BldInfBlock.NONE)
+		return null;
+	currentBlock = blockType;
+	currentBlockLast = lastToken;
+	if (blockStmt == null) {
+		blockStmt = ASTBldInfFactory.createBldInfBlockStatement("PRJ_" + blockType.toString());
+		if (lastToken != null) {
+			ParserUtils.setSourceRangeFromTokenSpanUpTo(blockStmt, lastToken, lastToken);
+			ParserUtils.expandSourceRangeToLine(blockStmt);
+		}
+    }
+	currentBlockStmt = blockStmt;
+	setCurrentConditionalBlock();
+	return currentBlockStmt;
+
+}
+
+/**
+ *	Complete the source info for the current block statement.
+ */
+JAVACODE
+void finishCurrentBlock()
+{
+	if (currentBlock == BldInfBlock.EXTENSIONS)
+		((BldInfTokenManager)token_source).setInExtension(false);
+
+	if (currentBlock == BldInfBlock.NONE)
+		return;
+		
+	// NOTE: the block statement's list is only used for PRJ_PLATFORMS.
+	// Other PRJ_xxx statements place their nodes in the top level.
+	if (currentBlockStmt.getList().isEmpty()) {
+        	Token tok = currentBlockLast != null ? currentBlockLast : token;
+        	if (tok != null) {
+        		ParserUtils.setSourceRangeFromTokenAfter(currentBlockStmt.getList(), tok);
+        	}
+	} else {
+		ParserUtils.setSourceRangeForListNode(null, currentBlockStmt.getList(), null);
+		ParserUtils.setAdjacentSourceRangesForListElements(currentBlockStmt.getList());
+	}
+	if (currentBlockStmt.getSourceRegion() != null) {
+		ParserUtils.extendSourceRangeToInclude(currentBlockStmt, currentBlockStmt.getList());
+		ParserUtils.expandSourceRangeToLine(currentBlockStmt);
+	} else {
+		// the block was created in a re-sync and needs to be set from its list
+		ParserUtils.copySourceInfo(currentBlockStmt, currentBlockStmt.getList());
+		ParserUtils.setSourceRangeFromTokenSpanUpTo(((IASTBldInfBlockStatement)currentBlockStmt).getKeyword(), token, token);		
+	}
+	
+	currentBlock = BldInfBlock.NONE;
+	currentBlockStmt = null;
+	//currentBlockLast = null; // always preserve
+}
+
+IASTBldInfStatement PrjPlatformsStatement() :
+{
+	IASTBldInfStatement node;
+	Token start;
+	Token eol = null;
+}
+{
+	{ finishCurrentBlock(); }
+	start=<PRJ_PLATFORMS> [ eol = <EOL > ]
+	{
+		node = setCurrentBlock(BldInfBlock.PLATFORMS, 
+						ASTBldInfFactory.createBldInfPrjPlatformsBlockStatement(
+							getLiteralTextNodeSpanning(start, start), null),
+						eol != null ? eol : start);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol != null ? eol : start);
+		ParserUtils.setSourceRangeFromTokenAfter(((IASTBldInfPrjPlatformsBlockStatement)node).getList(), start);
+		return node;
+	}
+}
+
+IASTBldInfStatement PrjMmpfilesStatement() :
+{
+	IASTBldInfStatement node;
+	Token start;
+	Token eol;
+}
+{
+	{ finishCurrentBlock(); }
+	( start=<PRJ_MMPFILES> | start=<PRJ_TESTMMPFILES>) eol=<EOL>
+	{
+		node = setCurrentBlock(
+						(start.image.equalsIgnoreCase("PRJ_MMPFILES") ? BldInfBlock.MMPFILES : BldInfBlock.TESTMMPFILES), 
+						ASTBldInfFactory.createBldInfPrjMmpfilesBlockStatement(
+							getLiteralTextNodeSpanning(start, start), null),
+						eol);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, start);
+		return node;
+	}
+}
+
+IASTBldInfMakMakeStatement MakmakeStatement() :
+{
+	IASTBldInfMakMakeStatement stmt = null;
+}
+{
+	( 
+	stmt = Makefile()
+	| stmt = Mmpfile()
+	| Empty()
+	)
+	{
+		return stmt;
+	}
+}
+
+IASTBldInfMakMakeStatement Mmpfile() :
+{
+	IASTBldInfMakMakeStatement stmt;
+	Token eol;
+	IASTLiteralTextNode filename;
+	IASTListNode<IASTLiteralTextNode> attributes = null;
+	
+}
+{
+	filename=Argument() attributes=Arguments() eol=<EOL>
+	{
+		stmt = ASTBldInfFactory.createBldInfMmpfileStatement(
+			filename,
+			attributes);
+		if (attributes.size() > 0)
+			ParserUtils.setSourceRangeForListNode(null, attributes, eol);
+		else
+        	ParserUtils.setSourceRangeFromTokenSpanUpTo(attributes, eol, eol);
+					
+		ParserUtils.copySourceInfo(stmt, filename);
+		ParserUtils.extendSourceRangeToInclude(stmt, eol);
+		ParserUtils.expandSourceRangeToLine(stmt);		
+		return stmt;		
+	}
+}
+
+IASTBldInfMakefileStatement Makefile() :
+{
+	IASTBldInfMakefileStatement stmt;
+	Token type;
+	Token eol;
+	IASTLiteralTextNode filename;
+	IASTListNode<IASTLiteralTextNode> attributes = null;
+	
+}
+{
+	( 
+		type=<GNUMAKEFILE>
+	|	type=<NMAKEFILE>
+	|	type=<MAKEFILE>
+	)
+	filename=Argument() attributes=Arguments() eol=<EOL>
+	{
+		stmt = ASTBldInfFactory.createBldInfMakefileStatement(
+			getLiteralTextNodeSpanning(type, type),
+			filename,
+			attributes);
+		if (attributes.size() > 0)
+			ParserUtils.setSourceRangeForListNode(null, attributes, eol);
+		else
+        	ParserUtils.setSourceRangeFromTokenSpanUpTo(attributes, eol, eol);
+		ParserUtils.setSourceRangeFromTokenSpan(stmt, type, eol);
+		ParserUtils.expandSourceRangeToLine(stmt);		
+		return stmt;		
+	}
+}
+
+IASTBldInfStatement PrjExportsStatement() :
+{
+	IASTBldInfStatement node;
+	Token start;
+	Token eol;
+}
+{
+	{ finishCurrentBlock(); }
+	( start=<PRJ_EXPORTS> | start=<PRJ_TESTEXPORTS> ) eol=<EOL>
+	{
+		node = setCurrentBlock(
+						(start.image.equalsIgnoreCase("PRJ_EXPORTS") ? BldInfBlock.EXPORTS : BldInfBlock.TESTEXPORTS), 
+						ASTBldInfFactory.createBldInfPrjExportsBlockStatement(
+							getLiteralTextNodeSpanning(start, start), null),
+						eol);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, start);
+		ParserUtils.extendSourceRangeToInclude(node, eol);
+		ParserUtils.expandSourceRangeToLine(node);		
+		return node;
+	}
+}
+
+IASTBldInfExportStatement Export() :
+{
+	IASTBldInfExportStatement stmt;
+	Token zip = null, eol;
+	IASTLiteralTextNode source, target = null;
+	IASTListNode<IASTLiteralTextNode> targetList = null;
+	
+}
+{
+	( [ zip=<ZIP> ] source=Argument() targetList=Arguments() eol=<EOL> )
+	{
+		if (targetList != null && targetList.size() > 0) {
+			if (targetList.size() == 1) {
+				target = targetList.get(0);
+				target.setParent(null);
+			} else {
+				target = ASTFactory.createPreprocessorLiteralTextNode(targetList.getOriginalText());
+				ParserUtils.copySourceInfo(target, targetList);
+			}
+		}
+		stmt = ASTBldInfFactory.createBldInfExportStatement(
+			source, target,
+			getLiteralTextNodeSpanning(zip, zip));
+		ParserUtils.copySourceInfo(stmt, source);
+		if (zip != null)
+			ParserUtils.extendSourceRangeToInclude(stmt, zip);
+		ParserUtils.extendSourceRangeToInclude(stmt, eol);
+		ParserUtils.expandSourceRangeToLine(stmt);		
+		return stmt;		
+	}
+	| ( <EOL>  )
+	{
+		return null;
+	}
+}
+
+
+IASTBldInfStatement PrjExtensionsStatement() :
+{
+	IASTBldInfStatement node;
+	Token start;
+	Token eol;
+}
+{
+	{ finishCurrentBlock(); }
+	{ ((BldInfTokenManager)token_source).setInExtension(true); }
+	( start=<PRJ_EXTENSIONS> | start=<PRJ_TESTEXTENSIONS> ) eol=<EOL>
+	{
+		node = setCurrentBlock(
+						(start.image.equalsIgnoreCase("PRJ_EXTENSIONS") 
+							? BldInfBlock.EXTENSIONS : BldInfBlock.TESTEXTENSIONS), 
+						ASTBldInfFactory.createBldInfPrjExtensionsBlockStatement(
+							getLiteralTextNodeSpanning(start, start), null),
+						eol);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, start);
+		ParserUtils.extendSourceRangeToInclude(node, eol);
+		ParserUtils.expandSourceRangeToLine(node);		
+		return node;
+	}
+}
+
+IASTBldInfExtensionBlockStatement ExtensionBlockStatement() :
+{
+	IASTBldInfExtensionBlockStatement stmt;
+	IASTListNode<IASTLiteralTextNode> args;
+	IASTListNode<IASTBldInfExtensionStatement> stmts;
+	Token start, end, eol;
+}
+{
+	( start=<START> args=Arguments() eol=<EOL>
+	stmts = ExtensionStatements()
+	end=<END> )
+	{
+		if (stmts == null) {
+			stmts = ASTBldInfFactory.createBldInfExtensionStatementList();
+			ParserUtils.setSourceRangeFromTokenSpan(stmts, end, end);
+		} else {
+			ParserUtils.setSourceRangeForListNode(null, stmts, null);
+			ParserUtils.setAdjacentSourceRangesForListElements(stmts);
+		}
+		if (stmts.isEmpty())
+			ParserUtils.extendSourceRangeToInclude(args, eol);
+		stmt = ASTBldInfFactory.createBldInfExtensionBlockStatement(
+			args, stmts);
+		ParserUtils.setSourceRangeFromTokenSpan(stmt.getKeyword(), start, start);
+		ParserUtils.setSourceRangeFromTokenSpan(stmt, start, end);
+		ParserUtils.expandSourceRangeToLine(stmt);
+		return stmt;
+	}
+	| ( <EOL> )
+	{
+		return null;
+	}
+}
+
+IASTListNode<IASTBldInfExtensionStatement> ExtensionStatements() :
+{
+	IASTBldInfExtensionStatement stmt;
+	IASTListNode<IASTBldInfExtensionStatement> tail = null;
+}
+{
+	stmt = Extension() tail = ExtensionStatements()
+	{
+		if (stmt != null) {
+			if (tail == null)
+				tail = ASTBldInfFactory.createBldInfExtensionStatementList();
+				
+			tail.add(0, stmt);
+		}
+		return tail;
+	}
+	|
+	{
+		return null;
+	}
+}
+
+IASTBldInfExtensionStatement Extension() :
+{
+	IASTBldInfExtensionStatement stmt;
+	IASTLiteralTextNode keyword = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+	Token eol;
+}
+{
+	keyword=Argument() args=Arguments() eol=<EOL>
+	{
+		stmt = ASTBldInfFactory.createBldInfExtensionStatement(
+			keyword, args);
+		ParserUtils.setSourceRangeFromNodes(stmt, keyword, keyword); // not args since it may be empty
+		ParserUtils.extendSourceRangeToInclude(stmt, eol);
+		ParserUtils.expandSourceRangeToLine(stmt);		
+		return stmt;		
+	}
+	| ( <BLOCK_ENTER> | <BLOCK_SWITCH> | <BLOCK_EXIT> )
+	{
+		return null;
+	}
+	| ( <EOL>  )
+	{
+		return null;
+	}
+}
+
+
+IASTLiteralTextNode Argument() : 
+{
+	Token token = null;
+}
+{
+	token=<ARGUMENT>
+	{
+		return getLiteralTextNodeSpanning(token, token);
+   	}
+}
+
+IASTListNode<IASTLiteralTextNode> Arguments() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	[ args = ArgumentList() ]
+	{
+		if (args == null) {
+			args = ASTFactory.createLiteralTextNodeList();
+			args.setSeparator(" ");
+		}
+		if (arg != null)
+			args.add(0, arg);
+		ParserUtils.setSourceRangeForListNode(null, args, null);
+	   	return args;
+   	}
+}
+
+IASTListNode<IASTLiteralTextNode> ArgumentList() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	arg = Argument() [ args=ArgumentList() ]
+	{
+		if (args == null) {
+			args = ASTFactory.createLiteralTextNodeList();
+		}
+		if (arg != null)
+			args.add(0, arg);
+	   	return args;
+   	}
+}
+
+//////
+IASTListNode<IASTLiteralTextNode> ArgumentsAndNewlines() : 
+{
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	args = ArgumentAndNewlineList()
+	{
+		if (args != null)
+			ParserUtils.setSourceRangeForListNode(null, args, null);
+	   	return args;
+   	}
+}
+
+
+
+IASTListNode<IASTLiteralTextNode> ArgumentAndNewlineList() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	arg = ArgumentOrNewline()  args=ArgumentAndNewlineList()
+	{
+		if (arg != null) {
+			if (args == null)
+				args = ASTFactory.createLiteralTextNodeList();
+			args.add(0, arg);
+		}
+	   	return args;
+   	}
+   	| 
+   	{
+   	return null;
+   	}
+}
+
+IASTLiteralTextNode ArgumentOrNewline() : 
+{
+	IASTLiteralTextNode arg = null;
+}
+{
+	( arg = Argument() )
+	{
+	   	return arg;
+   	}
+ 	| ( <EOL> )
+  	{
+   		return null;
+   	}
+}
+
+/**
+ *	Empty line.
+ */
+IASTBldInfStatement Empty() :
+{
+}
+{
+	<EOL>
+	{
+		return null;
+	}
+}
+
+IASTLiteralTextNode ppRestOfLine(boolean skip) : 
+{
+        Token start = token, end = start;
+}
+{
+	{
+        if (skip)
+	        start = end = getNextToken();
+        while (true) {
+        	end = getNextToken();
+        	if (end.kind == EOL || end.kind == EOF)
+        		break;
+        }
+  		return getLiteralTextNodeSpanningUpTo(start, end);
+   	}
+}

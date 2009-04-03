@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="New Bug Report" link_to="../com.nokia.cdt.debug.help/debuggerTOC.xml#anchorCarbideCPPMisc" >
+
+	<topic label="Bug Report" >
+		<topic label="Bug Reports Preference panel"	        href="html/prefs_bug_reporter.htm" />
+		<topic label="New Bug Report or Suggestion page"	href="html/wnd_new_bug_report.htm" />
+		<topic label="Report Summary Page"			        href="html/wnd_summary_page.htm" />
+	</topic>
+           
+</toc>

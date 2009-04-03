@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<!-- Carbide help include all feature and tool plugins developed by the        -->
+<!-- Native Tools team in Austin. It should not include tool plugins developed -->
+<!-- by other groups in Nokia -->
+
+<toc label="Carbide Tools" >
+  
+   <anchor id="anchorCarbideInfo" /> 	    		<!-- forums, blogs, general dev info -->
+   <anchor id="anchorCarbideProduct" />     		<!-- product (j, c++, etc.) manuals -->
+   <anchor id="anchorCarbideFeature" />     		<!-- feature (ui designer, etc.) manuals -->
+   <anchor id="anchorCarbideMisc" />	    		<!-- catch all anchor, very infrequent usage -->
+   <anchor id="anchorCarbideExample" />     		<!-- Examples -->	   
+   <anchor id="anchorLegal" />              		<!-- License info, copyright, trademarks, disclaimers, notices -->
+
+</toc>

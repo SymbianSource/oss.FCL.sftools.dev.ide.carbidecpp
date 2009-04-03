@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Debug Monitor</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head2">
+  <h2>c - Display Contents of Object
+Container</h2>
+</div><div>
+<p>This command displays the contents of one of the kernel's object
+containers, a DObjectCon type. Note that information is dumped
+very quickly without page breaks, which is useful in situations where the
+kernel is likely to become very unstable very shortly after crashing. There is
+an upper case version of this command,
+<a href="CrashDebugger_cmd_CC.guide.html" title="The debug monitor and command syntax / C - display contents of object container">C</a>, which generates
+output with a pause between pages.</p>
+<p>The command has the following syntax:</p>
+<p class="listing">c type</p>
+<p>where type is a single hexadecimal digit between 0 and
+D inclusive that specifies which kernel container is to be dumped. The mapping
+between the hexadecimal digit and the kernel container is:</p>
+<table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0">
+<tr valign="top">
+<td class="Cell">
+<p>0</p>
+</td>
+<td class="Cell">
+<p>Threads</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>1</p>
+</td>
+<td class="Cell">
+<p>Processes</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>2</p>
+</td>
+<td class="Cell">
+<p>Chunks</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>3</p>
+</td>
+<td class="Cell">
+<p>Libraries</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>4</p>
+</td>
+<td class="Cell">
+<p>Semaphores</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>5</p>
+</td>
+<td class="Cell">
+<p>Mutexes</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>6</p>
+</td>
+<td class="Cell">
+<p>Timers</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>7</p>
+</td>
+<td class="Cell">
+<p>Servers</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>8</p>
+</td>
+<td class="Cell">
+<p>Sessions</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>9</p>
+</td>
+<td class="Cell">
+<p>LogicalDevices</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>A</p>
+</td>
+<td class="Cell">
+<p>PhysicalDevices</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>B</p>
+</td>
+<td class="Cell">
+<p>Channels</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>C</p>
+</td>
+<td class="Cell">
+<p>ChangeNotifiers</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>D</p>
+</td>
+<td class="Cell">
+<p>Undertakers</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>E</p>
+</td>
+<td class="Cell">
+<p>Message queues</p>
+</td>
+</tr>
+<tr valign="top">
+<td class="Cell">
+<p>F</p>
+</td>
+<td class="Cell">
+<p>Property references</p>
+</td>
+</tr>
+</table></td></tr></table>
+<p>For example:</p>
+<p class="listing">&gt; c A</p>
+<p class="listing">Container 10 at 640275c4 contains 3 PHYSICAL DEVICES:<br>
+  PHYSICAL DEVICE at 64032dac VPTR=f805d9fc AccessCount=2 Owner=00000000<br>
+  Full name Media.IRam<br>
+  PHYSICAL DEVICE at 640339e8 VPTR=f8067e44 AccessCount=2 Owner=00000000<br>
+  Full name Media.Flash<br>
+  PHYSICAL DEVICE at 64033a64 VPTR=f806b9f8 AccessCount=2 Owner=00000000<br>
+  Full name Media.Ata</p>
+<p class="listing">&gt; c 0</p>
+<p class="listing">Container 0 at 807022b8 contains 12 THREADS:<br>
+  THREAD at 807011c0 VPTR=50052b04 AccessCount=1 Owner=8070107c<br>
+  Full name EKern::Null<br>
+  Thread MState READY<br>
+  Default priority 0 WaitLink Priority 0<br>
+  ExitInfo 3,0,<br>
+  Flags 0000000c, Handles 80701520<br>
+  Supervisor stack base 80700000 size 1000<br>
+  User stack base 00000000 size 0<br>
+  Id=0, Heap=00000000, Created heap=00000000, Frame=00000000<br>
+  Trap handler=00000000, ActiveScheduler=00000000, Exception<br>
+  handler=00000000<br>
+  TempObj=00000000 TempAlloc=00000000<br>
+  NThread @ 8070147c Pri 0 NState READY<br>
+  Next=8070147c Prev=8070147c Att=00 ExcInUserMode=00<br>
+  HeldFM=00000000 WaitFM=00000000 AddrSp=8070107c<br>
+  Time=-1 Timeslice=-1 ReqCount=0<br>
+  SuspendCount=0 CsCount=0 CsFunction=00000000<br>
+  SavedSP=80700f50<br>
+  CAR 00000001<br>
+  DACR 55555547<br>
+  R13_USR 00403ed4 R14_USR 500c88b4 SPSR_SVC 200000d3<br>
+  &nbsp;R4 00000009  R5 5004b7ec  R6 50000000  R7 dc911000<br>
+  &nbsp;R8 00000000  R9 807103c0 R10 50002140 R11 80700fb4<br>
+  &nbsp;PC 500481b4</p>
+<p>The information displayed for each object is the same as that shown
+after using the <a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a> command. After displaying the information for each object, the debugger pauses
+until you press a key.</p>
+<p>Notes</p>
+<ul>
+<li>
+<p> the DObjectCon class is internal to Symbian
+OS.</p>
+</li>
+<li>the type value passed as an argument to the command is one of
+the enum values of the TObjectType enum; this enum is internal to
+Symbian OS.</li>
+</ul>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="CrashDebuggerUsingCommandSyntax.guide.html">Debug Monitor</a></li>
+</ul>
+<h5>Related references</h5>
+<ul><li><a href="CrashDebugger_cmd.guide.html">Crash Debugger Commands</a></li></ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

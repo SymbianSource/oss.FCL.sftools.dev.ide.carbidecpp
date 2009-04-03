@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>access_errors</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>dont_reuse_strings</h3>
+<p>Controls whether or not to store each string literal separately in the string pool.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma dont_reuse_strings on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler stores each string literal separately. Otherwise, the compiler stores only one copy of identical string literals. This pragma helps you save memory if your program contains a lot of identical string literals that you do not modify.</p>
+  <p>For example, take this code segment:</p>
+  <p class="code"> char *str1=&quot;Hello&quot;;<br />
+    char *str2=&quot;Hello&quot;<br />
+    *str2 = 'Y';</p>
+  <p>If you enable this pragma, str1 is &quot;Hello&quot;, and str2 is &quot;Yello&quot;. Otherwise, both str1 and str2 are &quot;Yello&quot;.</p>
+  <p> This pragma corresponds to the Reuse Strings setting . To check this setting, use <span class="code">__option (dont_reuse_strings)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>. </p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

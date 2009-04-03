@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU8 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.carbide.uiq.ApplicationUI"
+		baseComponent="com.nokia.carbide.uiq.CommonBase"
+		instanceNameRoot="applicationUI"			
+		version="1.0">
+  
+	<symbian sdkName="com.uiq" minSDKVersion="3.0"></symbian>
+
+		<attributes>
+     <attribute key="not-in-toolbox">true</attribute>  
+     <attribute key="is-symbian-appui">true</attribute>
+  		</attributes>
+
+	<properties>
+     <property name="className" type="string" descriptionKey="classNameDescription" category="%category.design"/>
+     <property name="shortCaption" type="localizedString" descriptionKey="shortCaptionDescription"
+		category="%category.data"/>
+     <property name="caption" type="localizedString" descriptionKey="captionDescription"
+		category="%category.data"/>
+     <compoundProperty name="image" type="com.nokia.carbide.uiq.MbmImageProperty" descriptionKey="imageDescription"
+		category="%category.appearance"/> 
+     <componentReferenceProperty name="initialDesign" constraint="com.nokia.carbide.uiq.DesignReference" scope="children" 
+			descriptionKey="initialDesignDescription"
+			category="%category.design"/>                                                                                       
+  </properties>
+  
+  <sourceMapping>
+      <mapResource struct="LOCALISABLE_APP_INFO" headers="appinfo.rh" baseName="r_localisable_app_info" id="localisable_app_info">
+          <mapSimpleMember property="shortCaption" member="short_caption"></mapSimpleMember>
+          <mapResourceMember property="." member="caption_and_icon" struct="CAPTION_AND_ICON_INFO">
+              <mapSimpleMember property="caption" member="caption"></mapSimpleMember>
+	                <select property="image.bmpfile">
+	                    <choice value="">
+                      <!-- either no icon or no image set -->
+                          <mapFixedMember member="number_of_icons" value="0"></mapFixedMember>
+                      </choice>
+	                    <choice>
+                          <mapFixedMember member="number_of_icons" value="1"></mapFixedMember>
+                          <mapSimpleMember property="image.bmpfile" member="icon_file"></mapSimpleMember>
+                      </choice>
+                  </select>
+          </mapResourceMember>
+	    </mapResource>  
+  </sourceMapping>
+  
+  <sourceGen>
+	
+		<inline scope="prototype"><![CDATA[
+			${jsObject}.prototype.getParentViewContribs = function(contribs, instance) {
+			// gather contributions from views
+			for (i in instance.children) {
+				var view = instance.children[i];
+				if (view.isInstanceOf("com.nokia.carbide.uiq.DesignReference") 
+				&& (instance.properties.initialDesign == view.name)) {
+					var viewContribs = Engine.generateViewContributions(view.properties.filePath, "RootAppUi_ParentView");
+					if (viewContribs != null)
+						contribs.addAll(viewContribs);
+					viewContribs = Engine.generateViewContributions(view.properties.filePath, "RootAppUi");
+					if (viewContribs != null)
+						contribs.addAll(viewContribs);
+				}
+			}
+}
+]]>		</inline>
+
+		<inline scope="prototype"><![CDATA[
+			${jsObject}.prototype.getNormalViewContribs = function(contribs, instance) {
+			// gather contributions from views
+			for (i in instance.children) {
+				var view = instance.children[i];
+				if (view.isInstanceOf("com.nokia.carbide.uiq.DesignReference") 
+				&& (instance.properties.initialDesign != view.name)) {
+					var viewContribs = Engine.generateViewContributions(view.properties.filePath, "RootAppUi_NormalView");
+					if (viewContribs != null)
+						contribs.addAll(viewContribs);
+					viewContribs = Engine.generateViewContributions(view.properties.filePath, "RootAppUi");
+					if (viewContribs != null)
+						contribs.addAll(viewContribs);
+				}
+			}
+}
+]]>		</inline>
+
+			<inline scope="prototype"><![CDATA[
+${jsObject}.prototype.finalizeContribs = function(contribs) {
+			// fix up the phases so they point to real locations
+			Engine.assignLocationsForPhase(contribs, "Initialize", "APPUI_CONSTRUCTL_METHOD_BODY");
+			Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "APPUI_SOURCE_OWNED_USER_INCLUDES")
+}
+]]>			</inline>
+
+  		<expandMacro name="HeaderFileTemplate" FileName="${instanceName}.h" IncludeGuardMacro="${instanceName$upper}_H">
+<!--      <expandArgument name="IncludeGuardMacro">
+      ${${className}()$upper}APPLICATION_H
+      </expandArgument> -->          
+			    <expandArgument name="InitialOwnedSystemIncludesContent">
+<![CDATA[#include <QikAppUi.h>]]>
+			    </expandArgument>
+		  </expandMacro>
+
+		  <expandMacro name="ClassTemplate" ClassName="${className}" BaseClassName="CQikAppUi">
+          <expandArgument name="ClassComment">
+<![CDATA[
+/**
+ * This class represents the application UI in ${getProjectName()} application,
+ * It has responsibility to create the view.
+ */
+]]>      
+          </expandArgument>           
+<!--			    <expandArgument name="InitialPublicOwnedMethodsContent">
+<![CDATA[
+	${className}AppUi();
+	~${className}AppUi();
+	// from CQikAppUi
+	void ConstructL();]]>
+			    </expandArgument>-->
+		</expandMacro>
+
+		<expandMacro name="SourceFileTemplate" FileName="${instanceName}.cpp" 
+						HeaderFileName="${instanceName}.h" LocationPrefix="APPUI_SOURCE">
+		</expandMacro>
+		    <expandMacro name="GenerateMethodWithOwnedBody" IsOwned="false" FunctionLocationId="APPUI_CONSTRUCTL_METHOD" 
+    			FunctionName="ConstructL" 
+    			ClassName="${className}" 
+    			FunctionArgs="" 
+    			DeclPhase="ClassMethods" 
+    			DeclLocation="CLASS_PUBLIC" 
+    			DefnLocation="APPUI_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * 2nd stage construction of the App UI.
+ * Create view and add it to the framework.
+ * The framework will take over the ownership.
+ */]]>				
+        </expandArgument>
+	      <expandArgument name="StartFunctionBody">
+<![CDATA[
+// Calls ConstructL that initiate the standard values.
+CQikAppUi::ConstructL();
+]]>
+        </expandArgument>
+    </expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="APPUI_CONSTRUCTOR_METHOD" 
+    			FunctionName="${className}" 
+    			ClassName="${className}" 
+    			ReturnType="" 
+    			FunctionArgs="" 
+    			DeclPhase="ClassMethods" 
+    			DeclLocation="CLASS_PUBLIC" 
+    			DefnLocation="APPUI_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * C++ constructor
+ */]]>				
+        </expandArgument>
+	      <expandArgument name="FunctionBody">
+
+        </expandArgument>
+    </expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="APPUI_DESTRUCTOR_METHOD" 
+    			FunctionName="~${className}" 
+    			ReturnType="" 
+    			FunctionArgs="" 
+    			DeclPhase="ClassMethods" 
+    			ClassName="${className}" 
+    			DeclLocation="CLASS_PUBLIC" 
+    			DefnLocation="APPUI_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * C++ destructor
+ */]]>				
+        </expandArgument>
+	      <expandArgument name="FunctionBody">	      
+        
+        </expandArgument>
+    </expandMacro>
+
+     
+    <inline>
+<!--   	<![CDATA[
+		var allContribs = Engine.generateChildContributions("DummyForm");
+		var sourceSystemIncludesContribs = Engine.getContributionsForPhase(allContribs, "SourceSystemIncludes");	
+		Engine.assignLocationsForPhase(sourceSystemIncludesContribs, "SourceSystemIncludes", "HEADER_OWNED_SYSTEM_INCLUDES")
+		contribs.addAll(sourceSystemIncludesContribs);
+		//allContribs.removeAll(sourceSystemIncludesContribs);
+		Engine.assignLocationsForPhase(InitializeContribs, "Initialize", "APPUI_CONSTRUCTL_METHOD_BODY")
+
+	]]>-->
+   	<![CDATA[
+	if (Engine.formMatches(form, [""])) {
+		var allContribs = Engine.generateChildContributions("Container");
+		
+		var mainSystemIncludesContribs = Engine.getContributionsForPhase(allContribs, "MainSystemIncludes");	
+		Engine.assignLocationsForPhase(mainSystemIncludesContribs, "MainSystemIncludes", "APPUI_SOURCE_OWNED_SYSTEM_INCLUDES")
+		contribs.addAll(mainSystemIncludesContribs);
+
+		var mainUserIncludesContribs = Engine.getContributionsForPhase(allContribs, "MainUserIncludes");	
+		Engine.assignLocationsForPhase(mainUserIncludesContribs, "MainUserIncludes", "APPUI_SOURCE_OWNED_USER_INCLUDES")
+		contribs.addAll(mainUserIncludesContribs);
+	
+		var cpInstanceVariablesContribs = Engine.getContributionsForPhase(allContribs, "ClassPrivateInstanceVariables");	
+		Engine.assignLocationsForPhase(cpInstanceVariablesContribs, "ClassPrivateInstanceVariables", "APPUI_CONSTRUCTL_METHOD_BODY")
+		contribs.addAll(cpInstanceVariablesContribs);
+
+		var initializeContribs = Engine.getContributionsForPhase(allContribs, "Initialize");	
+		Engine.assignLocationsForPhase(initializeContribs, "Initialize", "APPUI_CONSTRUCTL_METHOD_BODY")
+		contribs.addAll(initializeContribs);
+
+		var destroyContribs = Engine.getContributionsForPhase(allContribs, "Destroy");	
+		Engine.assignLocationsForPhase(destroyContribs, "Destroy", "APPUI_DESTRUCTOR_METHOD")
+		contribs.addAll(destroyContribs);
+	}
+	]]>
+	
+  </inline>	       
+
+<!--	<expandMacro name="ResolvePhases" Mappings="SourceSystemIncludes=HEADER_OWNED_SYSTEM_INCLUDES" ContribsList="sourceSystemIncludesContribs"></expandMacro>		
+	  <![CDATA[
+		var mappings = "SourceSystemIncludes=HEADER_OWNED_SYSTEM_INCLUDES";
+		var ContribsList = "sourceSystemIncludesContribs";
+    var mappings = $(Mappings::as-string).split(" ");
+		for (var entry in mappings) {
+			var info = entry.split("=");
+			Engine.assignLocationsForPhase($(ContribsList), info[0], info[1]);		
+		}
+]]>	-->
+		<inline>			
+			this.getParentViewContribs(contribs, instance);
+			this.getNormalViewContribs(contribs, instance);
+			this.finalizeContribs(contribs);
+		</inline>
+  </sourceGen>
+  
+  <implementations>
+      <implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"></interface>  
+				<script file="ApplicationUI.js" prototype="ApplicationUI"></script>                 
+      </implementation>
+  </implementations>
+    
+  </component>
+</componentDefinition>

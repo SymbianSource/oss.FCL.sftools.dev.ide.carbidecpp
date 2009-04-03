@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="template">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="wizardPage">
+					<xsd:complexType>
+						<xsd:sequence maxOccurs="1" minOccurs="1">
+						<xsd:choice maxOccurs="unbounded" minOccurs="0">
+							<xsd:element ref="uidField"/>
+							<xsd:element ref="textField"/>
+							<xsd:element ref="filenameField"/>
+						</xsd:choice>
+                            <xsd:element minOccurs="0" name="description" type="xsd:string"/>
+                        </xsd:sequence>
+						<xsd:attribute name="id" type="xsd:string" use="required"/>
+						<xsd:attribute name="label" type="xsd:string" use="required"/>
+						<xsd:attribute name="help" type="xsd:string"/>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="process">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter">
+								<xsd:complexType>
+									<xsd:attribute name="name"/>
+									<xsd:anyAttribute processContents="lax"/>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="optional"/>
+						<xsd:attribute name="class" type="xsd:string" use="optional"/>
+						<xsd:attribute name="bundle" type="xsd:string" use="optional"/>
+					</xsd:complexType>
+				</xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="metadata">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:string">
+								<xsd:attribute name="name" type="xsd:string" use="required"/>
+								<xsd:attribute name="value" type="xsd:string" use="optional">
+									<xsd:annotation><xsd:documentation>
+										The value of a metadata element.
+									</xsd:documentation></xsd:annotation>
+								</xsd:attribute>
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+				</xsd:element>
+            </xsd:sequence>
+             
+			<xsd:attribute name="version" type="xsd:string" use="required"/>
+			<xsd:attribute name="label" type="xsd:string" use="required"/>
+			<xsd:attribute name="help" type="xsd:string"/>
+			<xsd:attribute name="copyright" type="xsd:string" use="optional"/>
+			<xsd:attribute name="author" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+	</xsd:element>
+	<xsd:element abstract="true" name="baseField" type="baseFieldType"/>
+
+	<xsd:complexType name="baseFieldType">
+        <xsd:sequence>
+      <xsd:element name="description" type="xsd:string"/>
+    </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="label" type="xsd:string" use="required"/>
+		<xsd:attribute default="false" name="persist" type="xsd:boolean"/>
+		<xsd:attribute default="false" name="mandatory" type="xsd:boolean"/>
+	</xsd:complexType>
+	<xsd:element name="textField">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="baseFieldType">
+					<xsd:attribute name="default" type="xsd:string"/>
+					<xsd:attribute name="pattern" type="xsd:string"/>
+					<xsd:attribute default="false" name="multiline" type="xsd:boolean"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="uidField">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="baseFieldType">
+					<xsd:attribute name="min" type="xsd:string"/>
+					<xsd:attribute name="max" type="xsd:string"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="filenameField">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="baseFieldType">
+					<xsd:attribute name="default" type="xsd:string"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

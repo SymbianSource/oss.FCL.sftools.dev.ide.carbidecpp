@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+	
+ <component id="com.nokia.examples.basic">
+ 	<property id="name">unknown</property>
+    
+	  <component id="com.nokia.examples.srcmapRemoveRsrc">
+			<property id="name">test0</property>
+	      <property id="text"></property>
+	  </component>  
+
+ </component>
+
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="test0">r_test0</resourceMapping>
+      <resourceMapping instanceName="test0" rsrcId="text">r_test0_1</resourceMapping>
+    </resourceMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+
+     
+</designerData>

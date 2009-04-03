@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component id="com.nokia.carbide.cpp.sdk.ui" version="2">
+<resource path="src/com/nokia/carbide/cpp/sdk/ui/shared/BuildTargetsPage.java" type="com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage">
+<filter id="1194328068">
+<message_arguments>
+<message_argument value="filteringContentProviderWrapper"/>
+</message_arguments>
+</filter>
+<filter id="1194328068">
+<message_arguments>
+<message_argument value="UID"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/cpp/sdk/ui/shared/BuildTargetsPage.java" type="com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage$FilteringContentProviderWrapper">
+<filter id="1143996420">
+<message_arguments>
+<message_argument value="com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage.FilteringContentProviderWrapper"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/cpp/internal/api/sdk/ui/BuildPlatformFilterPage.java" type="com.nokia.carbide.cpp.internal.api.sdk.ui.BuildPlatformFilterPage">
+<filter id="338792546">
+<message_arguments>
+<message_argument value="com.nokia.carbide.cpp.internal.api.sdk.ui.BuildPlatformFilterPage"/>
+<message_argument value="getPlatFilterPrefsStore()"/>
+</message_arguments>
+</filter>
+</resource>
+</component>

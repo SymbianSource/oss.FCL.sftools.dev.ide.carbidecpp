@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C Common Pragmas" topic="html/pragmas/pragmas.htm">
+
+	<topic label="Pragma Syntax" 		href="html/pragmas/pragma_syntax.htm" /> 
+	<topic label="Pragma Scope" 		href="html/pragmas/pragma_scope.htm" /> 
+
+	<topic label="Reference A-E" > 
+		<topic label="access_errors" 					href="html/pragmas/p_access_errors.htm" /> 
+		<topic label="align" 							href="html/pragmas/p_align.htm" /> 
+		<topic label="always_inline" 					href="html/pragmas/p_always_inline.htm" /> 
+		<topic label="ANSI_strict" 						href="html/pragmas/p_ANSI_strict.htm" /> 
+		<topic label="arg_dep_lookup" 					href="html/pragmas/p_arg_dep_lookup.htm" /> 
+		<topic label="arm_conform" 						href="html/pragmas/p_arm_conform.htm" /> 
+		<topic label="arm_scoping" 						href="html/pragmas/p_arm_scoping.htm" /> 
+		<topic label="array_new_delete" 				href="html/pragmas/p_array_new_delete.htm" /> 
+		<topic label="asmpoundcomment" 					href="html/pragmas/p_asmpoundcomment.htm" /> 
+		<topic label="asmsemicolcomment" 				href="html/pragmas/p_asmsemicolcomment.htm" /> 
+		<topic label="auto_inline" 						href="html/pragmas/p_auto_inline.htm" /> 
+		<topic label="bool" 							href="html/pragmas/p_bool.htm" /> 
+		<topic label="c99" 								href="html/pragmas/p_c99.htm" /> 
+		<topic label="check_header_flags" 				href="html/pragmas/p_check_header_flags.htm" /> 
+		<topic label="const_strings" 					href="html/pragmas/p_const_strings.htm" /> 
+		<topic label="cplusplus" 						href="html/pragmas/p_cplusplus.htm" /> 
+		<topic label="cpp_extensions" 					href="html/pragmas/p_cpp_extensions.htm" /> 
+		<topic label="debug_inline" 					href="html/pragmas/p_debug_inline.htm" /> 
+		<topic label="def_inherited" 					href="html/pragmas/p_def_inherited.htm" /> 
+		<topic label="defer_codegen" 					href="html/pragmas/p_defer_codegen.htm" /> 
+		<topic label="defer_defarg_parsing" 			href="html/pragmas/p_defer_defarg_parsing.htm" /> 
+		<topic label="direct_destruction" 				href="html/pragmas/p_direct_destruction.htm" /> 
+		<topic label="dollar_identifiers" 				href="html/pragmas/p_dollar_identifiers.htm" /> 
+		<topic label="dont_inline" 						href="html/pragmas/p_dont_inline.htm" /> 
+		<topic label="dont_reuse_strings" 				href="html/pragmas/p_dont_reuse_strings.htm" /> 
+		<topic label="ecplusplus" 						href="html/pragmas/p_ecplusplus.htm" /> 
+		<topic label="enumsalwaysint" 					href="html/pragmas/p_enumsalwaysint.htm" /> 
+		<topic label="errno_name" 						href="html/pragmas/p_errno_name.htm" /> 
+		<topic label="exceptions" 						href="html/pragmas/p_exceptions.htm" /> 
+		<topic label="explicit_zero_data" 				href="html/pragmas/p_explicit_zero_data.htm" /> 
+		<topic label="export" 							href="html/pragmas/p_export.htm" /> 
+		<topic label="extended_errorcheck" 				href="html/pragmas/p_extended_errorcheck.htm" /> 
+	</topic>
+
+	<topic label="Reference F-L" > 
+		<topic label="faster_pch_gen" 					href="html/pragmas/p_faster_pch_gen.htm" /> 
+		<topic label="flat_include" 					href="html/pragmas/p_flat_include.htm" /> 
+		<topic label="float_constants" 					href="html/pragmas/p_float_constants.htm" /> 
+		<topic label="force_active" 					href="html/pragmas/p_force_active.htm" /> 
+		<topic label="fullpath_file" 					href="html/pragmas/p_fullpath_file.htm" /> 
+		<topic label="fullpath_prepdump" 				href="html/pragmas/p_fullpath_prepdump.htm" /> 
+		<topic label="gcc_extensions" 					href="html/pragmas/p_gcc_extensions.htm" /> 
+		<topic label="global_optimizer" 				href="html/pragmas/p_global_optimizer.htm" /> 
+		<topic label="ignore_oldstyle" 					href="html/pragmas/p_ignore_oldstyle.htm" /> 
+		<topic label="import" 							href="html/pragmas/p_import.htm" /> 
+		<topic label="inline_bottom_up" 				href="html/pragmas/p_inline_bottom_up.htm" /> 
+		<topic label="inline_bottom_up_once" 			href="html/pragmas/p_inline_bottom_up_once.htm" /> 
+		<topic label="inline_depth" 					href="html/pragmas/p_inline_depth.htm" /> 
+		<topic label="inline_max_auto_size" 			href="html/pragmas/p_inline_max_auto_size.htm" /> 
+		<topic label="inline_max_size" 					href="html/pragmas/p_inline_max_size.htm" /> 
+		<topic label="inline_max_total_size" 			href="html/pragmas/p_inline_max_total_size.htm" /> 
+		<topic label="instmgr_file" 					href="html/pragmas/p_instmgr_file.htm" /> 
+		<topic label="internal" 						href="html/pragmas/p_internal.htm" /> 
+		<topic label="keepcomments" 					href="html/pragmas/p_keepcomments.htm" /> 
+		<topic label="lib_export" 						href="html/pragmas/p_lib_export.htm" /> 
+		<topic label="line_prepdump" 					href="html/pragmas/p_line_prepdump.htm" /> 
+		<topic label="longlong" 						href="html/pragmas/p_longlong.htm" /> 
+		<topic label="longlong_enums" 					href="html/pragmas/p_longlong_enums.htm" /> 
+		<topic label="longlong_prepeval" 				href="html/pragmas/p_longlong_prepeval.htm" /> 
+	</topic>
+
+	<topic label="Reference M-O" > 
+		<topic label="macro_prepdump" 					href="html/pragmas/p_macro_prepdump.htm" /> 
+		<topic label="mark" 							href="html/pragmas/p_mark.htm" /> 
+		<topic label="maxerrorcount" 					href="html/pragmas/p_maxerrorcount.htm" /> 
+		<topic label="message" 							href="html/pragmas/p_message.htm" /> 
+		<topic label="mpwc_newline" 					href="html/pragmas/p_mpwc_newline.htm" /> 
+		<topic label="mpwc_relax" 						href="html/pragmas/p_mpwc_relax.htm" /> 
+		<topic label="msg_show_lineref" 				href="html/pragmas/p_msg_show_lineref.htm" /> 
+		<topic label="msg_show_realref" 				href="html/pragmas/p_msg_show_realref.htm" /> 
+		<topic label="multibyteaware" 					href="html/pragmas/p_multibyteaware.htm" /> 
+		<topic label="new_mangler" 						href="html/pragmas/p_new_mangler.htm" /> 
+		<topic label="no_conststringconv" 				href="html/pragmas/p_no_conststringconv.htm" /> 
+		<topic label="no_static_dtors" 					href="html/pragmas/p_no_static_dtors.htm" /> 
+		<topic label="nosyminline" 						href="html/pragmas/p_nosyminline.htm" /> 
+		<topic label="notonce" 							href="html/pragmas/p_notonce.htm" /> 
+		<topic label="objective_c" 						href="html/pragmas/p_objective_c.htm" /> 
+		<topic label="old_pragma_once" 					href="html/pragmas/p_old_pragma_once.htm" /> 
+		<topic label="old_vtable" 						href="html/pragmas/p_old_vtable.htm" /> 
+		<topic label="once" 							href="html/pragmas/p_once.htm" /> 
+		<topic label="only_std_keywords" 				href="html/pragmas/p_only_std_keywords.htm" /> 
+		<topic label="opt_classresults" 				href="html/pragmas/p_opt_classresults.htm" /> 
+		<topic label="opt_common_subs" 					href="html/pragmas/p_opt_common_subs.htm" /> 
+		<topic label="opt_dead_assignments" 			href="html/pragmas/p_opt_dead_assignments.htm" /> 
+		<topic label="opt_dead_code" 					href="html/pragmas/p_opt_dead_code.htm" /> 
+		<topic label="opt_lifetimes" 					href="html/pragmas/p_opt_lifetimes.htm" /> 
+		<topic label="opt_loop_invariants" 				href="html/pragmas/p_opt_loop_invariants.htm" /> 
+		<topic label="opt_propagation" 					href="html/pragmas/p_opt_propagation.htm" /> 
+		<topic label="opt_strength_reduction" 			href="html/pragmas/p_opt_strength_reduction.htm" /> 
+		<topic label="opt_strength_reduction_strict" 	href="html/pragmas/p_opt_strength_reduction_strict.htm" /> 
+		<topic label="opt_unroll_loops" 				href="html/pragmas/p_opt_unroll_loops.htm" /> 
+		<topic label="opt_vectorize_loops" 				href="html/pragmas/p_opt_vectorize_loops.htm" /> 
+		<topic label="optimization_level" 				href="html/pragmas/p_optimization_level.htm" /> 
+		<topic label="optimize_for_size" 				href="html/pragmas/p_optimize_for_size.htm" /> 
+		<topic label="optimizewithasm" 					href="html/pragmas/p_optimizewithasm.htm" /> 
+		<topic label="options" 							href="html/pragmas/p_options.htm" /> 
+	</topic>
+
+	<topic label="Reference P-U" > 
+		<topic label="parse_func_templ" 				href="html/pragmas/p_parse_func_templ.htm" /> 
+		<topic label="parse_mfunc_templ" 				href="html/pragmas/p_parse_mfunc_templ.htm" /> 
+		<topic label="pool_strings" 					href="html/pragmas/p_pool_strings.htm" /> 
+		<topic label="pop/push" 						href="html/pragmas/p_pop_push.htm" /> 
+		<topic label="pragma_prepdump" 					href="html/pragmas/p_pragma_prepdump.htm" /> 
+		<topic label="precompile_target" 				href="html/pragmas/p_precompile_target.htm" /> 
+		<topic label="readonly_strings" 				href="html/pragmas/p_readonly_strings.htm" /> 
+		<topic label="require_prototypes" 				href="html/pragmas/p_require_prototypes.htm" /> 
+		<topic label="reverse_bitfields" 				href="html/pragmas/p_reverse_bitfields.htm" /> 
+		<topic label="RTTI" 							href="html/pragmas/p_rtti.htm" /> 
+		<topic label="show_error_filestack" 			href="html/pragmas/p_show_error_filestack.htm" /> 
+		<topic label="showmessagenumber" 				href="html/pragmas/p_showmessagenumber.htm" /> 
+		<topic label="simple_prepdump" 					href="html/pragmas/p_simple_prepdump.htm" /> 
+		<topic label="space_prepdump" 					href="html/pragmas/p_space_prepdump.htm" /> 
+		<topic label="srcrelincludes" 					href="html/pragmas/p_srcrelincludes.htm" /> 
+		<topic label="store_object_files" 				href="html/pragmas/p_store_object_files.htm" /> 
+		<topic label="strictheaderchecking" 			href="html/pragmas/p_strictheaderchecking.htm" /> 
+		<topic label="suppress_init_code" 				href="html/pragmas/p_suppress_init_code.htm" /> 
+		<topic label="suppress_warnings" 				href="html/pragmas/p_suppress_warnings.htm" /> 
+		<topic label="sym" 								href="html/pragmas/p_sym.htm" /> 
+		<topic label="syspath_once" 					href="html/pragmas/p_syspath_once.htm" /> 
+		<topic label="template_depth" 					href="html/pragmas/p_template_depth.htm" /> 
+		<topic label="text_encoding" 					href="html/pragmas/p_text_encoding.htm" /> 
+		<topic label="thread_safe_int" 					href="html/pragmas/p_thread_safe_int.htm" /> 
+		<topic label="trigraphs" 						href="html/pragmas/p_trigraphs.htm" /> 
+		<topic label="unsigned_char" 					href="html/pragmas/p_unsigned_char.htm" /> 
+		<topic label="unused" 							href="html/pragmas/p_unused.htm" /> 
+	</topic>
+       
+	<topic label="Reference W" > 
+		<topic label="warning" 							href="html/pragmas/p_warning.htm" /> 
+		<topic label="warning_errors" 					href="html/pragmas/p_warning_errors.htm" /> 
+		<topic label="warn_any_ptr_int_conv" 			href="html/pragmas/p_warn_any_ptr_int_conv.htm" /> 
+		<topic label="warn_emtpydecl" 					href="html/pragmas/p_warn_emptydecl.htm" /> 
+		<topic label="warn_extracomma" 					href="html/pragmas/p_warn_extracomma.htm" /> 
+		<topic label="warn_filenamecaps" 				href="html/pragmas/p_warn_filenamecaps.htm" /> 
+		<topic label="warn_filenamecaps_system" 		href="html/pragmas/p_warn_filenamecaps_system.htm" /> 
+		<topic label="warn_hiddenlocals" 				href="html/pragmas/p_warn_hiddenlocals.htm" /> 
+		<topic label="warn_hidevirtual" 				href="html/pragmas/p_warn_hidevirtual.htm" /> 
+		<topic label="warn_illpragma" 					href="html/pragmas/p_warn_illpragma.htm" /> 
+		<topic label="warn_illtokenpasting" 			href="html/pragmas/p_warn_illtokenpasting.htm" /> 
+		<topic label="warn_illunionmembers" 			href="html/pragmas/p_warn_illunionmembers.htm" /> 
+		<topic label="warn_impl_f2i_conv" 				href="html/pragmas/p_warn_impl_f2i_conv.htm" /> 
+		<topic label="warn_impl_i2f_conv" 				href="html/pragmas/p_warn_impl_i2f_conv.htm" /> 
+		<topic label="warn_impl_s2u_conv" 				href="html/pragmas/p_warn_impl_s2u_conv.htm" /> 
+		<topic label="warn_implicitconv" 				href="html/pragmas/p_warn_implicitconv.htm" /> 
+		<topic label="warn_largeargs"	 				href="html/pragmas/p_warn_largeargs.htm" /> 
+		<topic label="warn_missingreturn" 				href="html/pragmas/p_warn_missingreturn.htm" /> 
+		<topic label="warn_no_explicit_virtual" 		href="html/pragmas/p_warn_no_explicit_virtual.htm" /> 
+		<topic label="warn_no_side_effect" 				href="html/pragmas/p_warn_no_side_effect.htm" /> 
+		<topic label="warn_no_typename" 				href="html/pragmas/p_warn_no_typename.htm" /> 
+		<topic label="warn_notinlined" 					href="html/pragmas/p_warn_notinlined.htm" /> 
+		<topic label="warn_padding" 					href="html/pragmas/p_warn_padding.htm" /> 
+		<topic label="warn_pch_portability" 			href="html/pragmas/p_warn_pch_portability.htm" /> 
+		<topic label="warn_possunwant" 					href="html/pragmas/p_warn_possunwant.htm" /> 
+		<topic label="warn_ptr_int_conv" 				href="html/pragmas/p_warn_ptr_int_conv.htm" /> 
+		<topic label="warn_resultnotused" 				href="html/pragmas/p_warn_resultnotused.htm" /> 
+		<topic label="warn_structclass" 				href="html/pragmas/p_warn_structclass.htm" /> 
+		<topic label="warn_undefmacro" 					href="html/pragmas/p_warn_undefmacro.htm" /> 
+		<topic label="warn_unitializedvar" 				href="html/pragmas/p_warn_unitializedvar.htm" /> 
+		<topic label="warn_unusedarg" 					href="html/pragmas/p_warn_unusedarg.htm" /> 
+	</topic>       
+       
+</toc>

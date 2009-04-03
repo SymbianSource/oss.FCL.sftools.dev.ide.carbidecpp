@@ -1,0 +1,19 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_testArr
+	{
+	ints = { 2, 3, 5 };
+	structs =
+		{
+		SUBTYPE
+			{
+			flag = 1;
+			number = 23;
+			},
+		SUBTYPE
+			{
+			flag = 1;
+			number = 42;
+			}
+		};
+	}

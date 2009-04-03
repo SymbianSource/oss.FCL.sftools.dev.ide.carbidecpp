@@ -1,0 +1,8 @@
+// generated file: do not modify
+#include <basicheader.rh>
+#include "output.loc"
+
+RESOURCE ONE_STRING r_test_multifile1b_2
+	{
+	text = STR_10;
+	}

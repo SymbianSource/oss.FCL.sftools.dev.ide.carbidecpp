@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.index"?>
+
+	<!-- INDEX INSTRUCTIONS
+	
+	Use the index.xml file to define the index entries for the plugin's 
+	help contents. In Eclipse 3.2 and beyond an Inex tab appears in the Help
+	viewer making it possible for user to more easily locate subjects of
+	interest to them.
+		
+	In brief, every file used in the help documentation should have at least one
+	associated index entry for it. Ideally, it's simple to make two entries per
+	page by simply re-wording the subject slightly. For example, a view could
+	be indexed twice like this, 1) Breakpoint view, and 2) Views, Breakpoint.
+	
+	See ??? for details on creating indexes.
+	
+	-->
+
+
+<index>
+
+	<!-- AAAAAAAA -->
+	<!-- BBBBBBBB -->
+	<!-- CCCCCCCC -->	
+    <entry keyword="categories element">
+       <topic href="html/customizing_cs.htm#CAT_Element"/>
+    </entry>
+	
+    <entry keyword="Codescanner">
+       <topic href="html/overview_cs.htm"/>
+    </entry>
+    <entry keyword="Codescanner preferences">
+       <topic href="html/pref_codescanner_01.htm"/>
+       <topic href="html/pref_codescanner_02.htm"/>
+       <topic href="html/pref_codescanner_03.htm"/>
+       <topic href="html/run_cs_cmd_line.htm"/>                     
+    </entry>
+
+    <entry keyword="customrules element">
+       <topic href="html/customizing_cs.htm#RULE_Element"/>
+    </entry>
+
+	<!-- DDDDDDDD -->	
+	<!-- EEEEEEEE -->	
+	
+    <entry keyword="arguments element">
+       <topic href="html/customizing_cs.htm#ARG_element"/>
+    </entry>
+	
+    <entry keyword="exporting">
+       <topic href="html/customizing_cs.htm"/>
+       <topic href="html/pref_codescanner_01_cs.htm"/>
+    </entry>
+
+	<!-- FFFFFFFF -->
+
+    <entry keyword="File Filters tab">
+       <topic href="html/pref_codescanner_02_cs.htm"/>
+    </entry>
+
+	<!-- GGGGGGGG -->	
+
+    <entry keyword="General tab">
+       <topic href="html/pref_codescanner_01_cs.htm"/>
+    </entry>
+
+	<!-- HHHHHHHH -->	
+	<!-- IIIIIIII -->
+	
+    <entry keyword="importing">
+       <topic href="html/customizing_cs.htm"/>
+       <topic href="html/pref_codescanner_01_cs.htm"/>
+    </entry>
+
+
+	<!-- JJJJJJJJ -->
+	<!-- KKKKKKKK -->
+
+    <entry keyword="Knowledgebase">
+       <topic href="html/pref_codescanner_01_cs.htm"/>
+    </entry>
+
+	<!-- LLLLLLLL -->
+	<!-- MMMMMMMM -->
+	<!-- NNNNNNNN -->
+	<!-- OOOOOOOO -->
+	<!-- PPPPPPPP -->
+	<!-- QQQQQQQQ -->
+	
+	<!-- RRRRRRRR -->
+	
+	<entry keyword="Running Codescanner">
+       <topic href="html/run_cs.htm"/>
+       <topic href="html/run_cs_cmd_line.htm"/>
+       <topic href="html/run_cs_plugin.htm"/>
+    </entry>
+	
+    <entry keyword="reports">
+       <topic href="html/pref_codescanner_01_cs.htm"/>
+    </entry>
+
+    <entry keyword="Rules tab">
+       <topic href="html/pref_codescanner_03_cs.htm"/>
+    </entry>
+
+	<!-- SSSSSSSS -->
+
+    <entry keyword="sources element">
+       <topic href="html/customizing_cs.htm#SRC_Element"/>
+    </entry>
+
+    <entry keyword="severities element">
+       <topic href="html/customizing_cs.htm#SEV_Element"/>
+    </entry>
+
+    <entry keyword="scripts element">
+       <topic href="html/customizing_cs.htm#SCRIPT_Element"/>
+    </entry>
+
+	<!-- TTTTTTTT -->
+	<!-- UUUUUUUU -->
+	<!-- VVVVVVVV -->
+	<!-- WWWWWWWW -->
+	<!-- XXXXXXXX -->
+	<!-- YYYYYYYY -->
+	<!-- ZZZZZZZZ -->
+
+</index>
+

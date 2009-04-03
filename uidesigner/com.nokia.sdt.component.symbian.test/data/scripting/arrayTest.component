@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.array.foo">
+		<property name="f1" type="integer"/>
+		<property name="f2" type="boolean"/>
+	</compoundPropertyDeclaration>
+	<compoundPropertyDeclaration qualifiedName="com.nokia.test.compoundWithArray">
+		<arrayProperty name="a" type="string"/>
+		<arrayProperty name="b" type="com.nokia.test.array.foo"/>
+	</compoundPropertyDeclaration>
+	
+	<component
+		friendlyName="List" qualifiedName="com.nokia.test.arrayTest" 
+		category="Basic" version="1.0">
+		<properties>
+			<property name="name" type="string" />
+			<arrayProperty name="ints" type="integer"/>
+			<arrayProperty name="strs" type="string"/>
+			<arrayProperty name="foos" type="com.nokia.test.array.foo"/>
+			<compoundProperty name="nested" type="com.nokia.test.compoundWithArray"/>
+		</properties>
+	</component>
+</componentDefinition>

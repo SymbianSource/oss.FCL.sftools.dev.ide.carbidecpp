@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="C Behavior" topic="html/c_behavior/c_behavior.htm">
+
+	<topic label="Identifying Diagnostic Messages" 		href="html/c_behavior/c_be_diag_msgs.htm" /> 
+	<topic label="Arguments to main()" 					href="html/c_behavior/c_be_arguments.htm" /> 
+	<topic label="Interactive Device" 					href="html/c_behavior/c_be_devices.htm" /> 
+	<topic label="Identifiers" 							href="html/c_behavior/c_be_identifiers.htm" /> 
+	<topic label="Character Sets" 						href="html/c_behavior/c_be_char_sets.htm" /> 
+	<topic label="Enumerations" 						href="html/c_behavior/c_be_enums.htm" /> 
+	<topic label="Imlpementation Quantities" 			href="html/c_behavior/c_be_implementation.htm" /> 
+	<topic label="Library Behaviors" 					href="html/c_behavior/c_be_libraries.htm" /> 
+       
+</toc>

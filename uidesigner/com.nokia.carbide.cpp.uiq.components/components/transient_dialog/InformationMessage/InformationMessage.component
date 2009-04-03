@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--START_USECASES: CU20 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.TGulAlignment">
+		<enumElement value="EHLeftVTop" displayValue="%EHLeftVTop"/>
+		<enumElement value="EHLeftVCenter" displayValue="%EHLeftVCenter"/>
+		<enumElement value="EHLeftVBottom" displayValue="%EHLeftVBottom"/>
+		<enumElement value="EHCenterVTop" displayValue="%EHCenterVTop"/>
+		<enumElement value="EHCenterVCenter" displayValue="%EHCenterVCenter"/>
+		<enumElement value="EHCenterVBottom" displayValue="%EHCenterVBottom"/>
+		<enumElement value="EHRightVTop" displayValue="%EHRightVTop"/>
+		<enumElement value="EHRightVCenter" displayValue="%EHRightVCenter"/>
+		<enumElement value="EHRightVBottom" displayValue="%EHRightVBottom"/>
+	</enumPropertyDeclaration>						
+					
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.InfoMsgDialog"
+			baseComponent="com.nokia.carbide.uiq.TransientDialogBase"
+			instanceNameRoot="infoMsg"			
+			version="1.0"
+			category="%category.message">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>	
+		
+		<designerImages smallIconFile="InformationMessage_sm.png"
+			largeIconFile="InformationMessage.png"/>		
+		
+		<attributes>
+		</attributes>
+				
+		<properties>
+			<property name="text" displayName="%text" 
+				category="%category.data" default="Information Message" 
+				type="localizedString" descriptionKey="textDescription" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"/>
+			<property name="duration" displayName="%duration"  
+				category="%category.behavior"
+				type="float" descriptionKey="durationDescription"
+				minValue="-1.7976931348623157e308" maxValue="1.7976931348623157e308"/>
+			<enumProperty name="alignment" displayName="%alignment"
+				category="%category.layout"
+				type="com.nokia.carbide.uiq.TGulAlignment" 
+				default="EHRightVTop" descriptionKey="durationDescription"/>
+			<compoundProperty name="location" displayName="%location" 
+				category="%category.hidden"
+				type="com.nokia.carbide.uiq.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty name="size" displayName="%size" 
+				category="%category.hidden" 
+				type="com.nokia.carbide.uiq.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>						
+															
+		</properties>
+		
+		<implementations>	
+			<implementation>
+				 <interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>			
+				 <interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				 <interface id="com.nokia.sdt.datamodel.adapter.ILayout"/> 
+				 <interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				 <interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>				 
+				<script file="InformationMessage.js" prototype="InformationMessage"/>
+			</implementation>					
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="TBUF" headers="eikon.rh" id="text">
+				<mapSimpleMember property="text" member="buf"/>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+					<!-- create Run ${instanceMemberName} method -->
+					<expandMacro name="GenerateMethodWithOwnedBody"
+								DeclPhase="HeaderClassPublic"
+								FunctionName="Run${instanceMemberName}"
+								FunctionArgs=""
+								ReturnType="void"
+								FunctionLocationId="VIEW_CLASS_HANDLECONTROLEVENTL"
+								IsOwned="false"
+								DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+								ClassName="${className}"
+								OwnedRegionLocationId="VIEW_CLASS_HANDLECONTROLEVENTL_BODY">
+								<expandArgument name="FunctionComment">
+/** 
+ * Run Information Message
+ */
+								</expandArgument>
+								<expandArgument name="FunctionBody">
+<![CDATA[
+	iEikonEnv->InfoMsgWithAlignmentAndDuration(${properties.alignment},
+		${Engine.getGeneratedResource(instance, "text").toUpperCase()},
+		(int)(${properties.duration} * 1000000));
+]]>								</expandArgument>
+					</expandMacro>	
+
+		</sourceGen>		
+				
+	</component>
+
+</componentDefinition>

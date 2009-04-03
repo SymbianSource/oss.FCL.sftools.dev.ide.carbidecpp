@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE componentDefinition [
+<!ENTITY common_implementations SYSTEM "CBA_commonImpl.inc">
+<!ENTITY common_source SYSTEM "CBA_commonSrc.inc">
+]>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CBA.Type_MSK">
+		<enumElement value="R_AVKON_SOFTKEYS_EMPTY"/>
+		<enumElement value="R_AVKON_SOFTKEYS_EMPTY_WITH_IDS"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_EMPTY"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SELECT_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_DETAILS"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CALL_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_DONE"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CLOSE"/>
+		<enumElement value="R_AVKON_SOFTKEYS_DONE_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_DONE_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_MARK_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_UNMARK_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_YES_NO"/>
+		<enumElement value="R_AVKON_SOFTKEYS_UNLOCK_EMPTY"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SAVE_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SHOW_CANCEL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SHOW_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_READ_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_LISTEN_EXIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SEARCH_BACK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_AGAIN_QUIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_QUIT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_INSERT_BACK"/>
+		
+		<enumElement value="R_AVKON_SOFTKEYS_SELECT_CANCEL__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SELECT_BACK__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_CANCEL__MARK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_CANCEL__OK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_EMPTY__OK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_CANCEL__UNMARK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SEND_CANCEL__SEND"/>
+		<enumElement value="R_AVKON_SOFTKEYS_YES_NO__YES"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SHOW_EXIT__SHOW"/>
+		<enumElement value="R_AVKON_SOFTKEYS_CALL_CANCEL__CALL"/>
+		<enumElement value="R_AVKON_SOFTKEYS_READ_EXIT__READ"/>
+		<enumElement value="R_AVKON_SOFTKEYS_LISTEN_EXIT__LISTEN"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_BACK__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_DONE__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_CANCEL__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_EXIT__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_CANCEL__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OK_BACK__OK"/>
+		<enumElement value="R_AVKON_SOFTKEYS_SELECT_CLOSE__SELECT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_NEXT_EXIT__NEXT"/>
+		<enumElement value="R_AVKON_SOFTKEYS_USSD_ANSWER_EXIT__ANSWER"/>
+		<enumElement value="R_AVKON_SOFTKEYS_HIDE_CANCEL__HIDE"/>
+		<enumElement value="R_AVKON_SOFTKEYS_OPTIONS_BACK__SELECT"/>
+		
+	</enumPropertyDeclaration>
+
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CBA.MSK.Id">
+		<enumElement value="" displayValue="None"/>
+		<enumElement value="UNIQUE"/>
+		<enumElement value="EAknSoftkeyOk"/>
+		<enumElement value="EAknSoftkeyCancel"/>
+		<enumElement value="EAknSoftkeySelect"/>
+		<enumElement value="EAknSoftkeyOptions"/>
+		<enumElement value="EAknSoftkeyContextOptions"/>
+		<enumElement value="EAknSoftkeyBack"/>
+		<enumElement value="EAknSoftkeyMark"/>
+		<enumElement value="EAknSoftkeyUnmark"/>
+		<enumElement value="EAknSoftkeyInsert"/>
+		<enumElement value="EAknSoftkeyYes"/>
+		<enumElement value="EAknSoftkeyNo"/>
+		<enumElement value="EAknSoftkeyDone"/>
+		<enumElement value="EAknSoftkeyClose"/>
+		<enumElement value="EAknSoftkeyExit"/>
+		<enumElement value="EAknSoftkeyClear"/>
+		<enumElement value="EAknSoftkeyUnlock"/>
+		<enumElement value="EAknSoftkeySave"/>
+		<enumElement value="EAknSoftkeyShow"/>
+		<enumElement value="EAknSoftkeyListen"/>
+		<enumElement value="EAknSoftkeyRead"/>
+		<enumElement value="EAknSoftkeySearch"/>
+		<enumElement value="EAknSoftkeyEmpty"/>
+		<enumElement value="EAknSoftkeyLock"/>
+		<enumElement value="EAknSoftkeyCall"/>
+		<enumElement value="EAknSoftkeyAgain"/>
+		<enumElement value="EAknSoftkeyQuit"/>
+		<enumElement value="EAknSoftkeyDetails"/>
+		<enumElement value="EAknSoftkeyNext"/>
+		<enumElement value="EAknSoftkeySend"/>
+		<enumElement value="EAknSoftkeyAnswer"/>
+		<enumElement value="EAknSoftkeyHide"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CBA.LeftRight.Id">
+		<enumElement value="" displayValue="None"/>
+		<enumElement value="UNIQUE"/>
+		<enumElement value="EAknSoftkeyOk"/>
+		<enumElement value="EAknSoftkeyCancel"/>
+		<enumElement value="EAknSoftkeySelect"/>
+		<enumElement value="EAknSoftkeyOptions"/>
+		<enumElement value="EAknSoftkeyBack"/>
+		<enumElement value="EAknSoftkeyMark"/>
+		<enumElement value="EAknSoftkeyUnmark"/>
+		<enumElement value="EAknSoftkeyInsert"/>
+		<enumElement value="EAknSoftkeyYes"/>
+		<enumElement value="EAknSoftkeyNo"/>
+		<enumElement value="EAknSoftkeyDone"/>
+		<enumElement value="EAknSoftkeyClose"/>
+		<enumElement value="EAknSoftkeyExit"/>
+		<enumElement value="EAknSoftkeyClear"/>
+		<enumElement value="EAknSoftkeyUnlock"/>
+		<enumElement value="EAknSoftkeySave"/>
+		<enumElement value="EAknSoftkeyShow"/>
+		<enumElement value="EAknSoftkeyListen"/>
+		<enumElement value="EAknSoftkeyRead"/>
+		<enumElement value="EAknSoftkeySearch"/>
+		<enumElement value="EAknSoftkeyEmpty"/>
+		<enumElement value="EAknSoftkeyLock"/>
+		<enumElement value="EAknSoftkeyCall"/>
+		<enumElement value="EAknSoftkeyAgain"/>
+		<enumElement value="EAknSoftkeyQuit"/>
+		<enumElement value="EAknSoftkeyDetails"/>
+		<enumElement value="EAknSoftkeyNext"/>
+		<enumElement value="EAknSoftkeySend"/>
+		<enumElement value="EAknSoftkeyAnswer"/>
+		<enumElement value="EAknSoftkeyHide"/>
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration editableType="com.nokia.sdt.series60.CBA.Type_MSK"
+									qualifiedName="com.nokia.sdt.series60.CBAProperty_3_2">
+		<property name="leftText" type="localizedString" default="" 
+			descriptionKey="leftTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<enumProperty name="leftId" type="com.nokia.sdt.series60.CBA.LeftRight.Id" default="EAknSoftkeyOptions"
+			descriptionKey="leftIdDescription" />
+		<property name="rightText" type="localizedString" default="" 
+			descriptionKey="rightTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		<enumProperty name="rightId" type="com.nokia.sdt.series60.CBA.LeftRight.Id" default="EAknSoftkeyExit"
+			descriptionKey="rightIdDescription" />
+		
+		<property name="middleText" type="localizedString" default="" 
+			descriptionKey="middleTextDescription" />
+		<enumProperty name="middleId" type="com.nokia.sdt.series60.CBA.MSK.Id" default="EAknSoftkeyEmpty"
+			descriptionKey="middleIdDescription" />
+		
+		<enumProperty name="type" type="string" category="Hidden" />
+	</compoundPropertyDeclaration>
+		
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CBA" 
+		baseComponent="com.nokia.sdt.series60.CBABase"
+		category="System"
+		instanceNameRoot="controlPane"
+		version="1.0">
+
+		<symbian sdkName="com.nokia.series60" minSDKVersion="3.2.0"
+			className="CEikButtonGroupContainer" classHelpTopic=""
+			resourceType="CBA" resourceHelpTopic="" />
+
+		<documentation>
+			<information>%information</information>
+		</documentation>
+
+		<designerImages smallIconFile="CBA_sm.png" 
+			largeIconFile="CBA.png"/>
+		
+		<attributes>
+			<attribute key="options-menu-property-name">mskReference</attribute>
+		</attributes>
+		
+		<extensionProperties name="default">
+			<componentReferenceProperty category="Middle Soft Key Menu" scope="model" constraint="com.nokia.sdt.series60.MenuBar" 
+				name="mskReference" descriptionKey="mskReferenceDescription" />
+		</extensionProperties>
+		
+		<properties>
+			<compoundProperty category="Behavior" name="info" type="com.nokia.sdt.series60.CBAProperty_3_2"
+				descriptionKey="infoKey" />			
+		</properties>
+		
+		<implementations>
+			&common_implementations;
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CBA_PropertyExtender_3.2.js" prototype="CBAPropertyExtender"/>
+			</implementation>
+		</implementations>
+	
+	
+		
+	<events>
+		<event name="leftSoftKeyPressed" category="ControlPane" 
+	    	handlerNameTemplate="Handle{title(name)}LeftSoftKeyPressedL"
+	    	descriptionKey="leftSoftKeyPressedDescription"
+		/>
+		<event name="rightSoftKeyPressed" category="ControlPane" 
+	    	handlerNameTemplate="Handle{title(name)}RightSoftKeyPressedL"
+	    	descriptionKey="rightSoftKeyPressedDescription"
+		/>
+		<event name="middleSoftKeyPressed" category="ControlPane" 
+	    	handlerNameTemplate="Handle{title(name)}MiddleSoftKeyPressedL"
+	    	descriptionKey="middleSoftKeyPressedDescription"
+		/>
+	</events>
+		<sourceMapping>
+ 		  <select property="info">
+ 		  	<!-- only emit something for custom CBAs -->
+		    <choice value="com.nokia.sdt.series60.CBA.Type.CUSTOM">
+		    	<!-- this struct MOVES between uikon.rh and eikon.rh with each release! -->
+		    	<mapResource struct="CBA" headers="uikon.rh eikon.rh">
+			        <mapResourceMember property="info" member="buttons[0]"  struct="CBA_BUTTON" headers="uikon.rh eikon.rh">
+			           <mapEnumMember property="leftId" member="id" 
+			           headers="avkon.rsg"
+						uniqueValue="UNIQUE"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"
+			           />
+			           <mapSimpleMember property="leftText" member="txt"/>
+			        </mapResourceMember>
+			        <mapResourceMember property="info" member="buttons[1]"  struct="CBA_BUTTON" headers="uikon.rh eikon.rh">
+			           <mapEnumMember property="rightId" member="id" 
+			           headers="avkon.rsg"
+						uniqueValue="UNIQUE"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"
+			           />
+			           <mapSimpleMember property="rightText" member="txt"/>
+			        </mapResourceMember>
+
+			        <mapResourceMember property="info" member="buttons[2]"  struct="CBA_BUTTON" headers="uikon.rh eikon.rh">
+			           <mapEnumMember property="middleId" member="id" 
+			           headers="avkon.rsg"
+						uniqueValue="UNIQUE"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS"
+			           />
+			           <mapSimpleMember property="middleText" member="txt"/>
+			        </mapResourceMember>
+
+		        </mapResource>
+		    </choice>
+		    <choice/>
+		    
+		  </select>
+		</sourceMapping>
+		
+		<sourceGen forms="AppUi AknView HandleCommandSwitchDispatch">
+			<inline scope="prototype">
+include("cbaLibrary.js")
+			</inline>
+
+			<template form="AknView" phase="MainSystemIncludes"><![CDATA[
+#include <eikbtgpc.h>
+]]>			</template>
+
+			<templateGroup ifEvents="middleSoftKeyPressed">
+			
+			<template phase="UserHandlers">
+TBool ${event.handlerName}( TInt aCommand );
+			</template>
+
+			<defineLocation id="MiddleSoftKeyPressedMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(TInt))">
+					<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool ${handlerClassName}::${event.handlerName}( TInt aCommand )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return EFalse;
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+				<template location="MiddleSoftKeyPressedMethod" />
+	
+				<template form="HandleCommandSwitchDispatch" phase="SwitchContents" 
+					ifEvents="middleSoftKeyPressed"><![CDATA[<%	
+			var middleId = getCbaMiddleId(instance);
+			if (middleId == "EAknSoftkeyOptions") {
+				// S60 explicitly stops further processing when Options is caught by the
+				// AknView::HandleCommandL() or AknAppUi::ProcessCommandL() routines
+				warning(formatString(lookupString("maskedMiddleSoftKeyEventHandler"),
+					instance.name));
+			}
+			if (middleId != null && middleId != "") { %>
+	case ${middleId}:
+		commandHandled = ${event.handlerName}( aCommand );
+		break;
+<% } %>]]>		</template>		
+			</templateGroup>
+			
+			<template form="AknView" phase="DoActivateL"><![CDATA[
+<% 	var contextMenuId = Engine.getGeneratedResource(lookupInstanceByName(properties.mskReference))
+    if (contextMenuId != null) contextMenuId = contextMenuId.toUpperCase() %>			
+<% if (properties.mskReference != "") { %>MenuBar()->SetContextMenuTitleResourceId( ${contextMenuId} );<% } %>
+]]>			</template>
+			
+			&common_source;
+			
+		</sourceGen>	
+		
+	</component>
+</componentDefinition>

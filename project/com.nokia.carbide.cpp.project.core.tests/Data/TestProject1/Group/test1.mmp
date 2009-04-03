@@ -1,0 +1,57 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+// note - we are intentionally making the case of all file and directory
+// names different than they really are in the file system.
+
+TARGET        test1.exe
+TARGETTYPE    exe
+UID           0
+
+SOURCEPATH    ..\src1
+SOURCE        Test1.cpp tEst2.cpp TEST3.cpp
+
+SOURCEPATH    ..\SRC2
+SOURCE        tesT1.cpp TEST2.cpp TEst3.cpp
+
+SOURCEPATH    ..\commonsrc
+SOURCE        testCommon1.cpp TestCommon2.cpp TESTcommon3.cpp
+
+USERINCLUDE   .
+USERINCLUDE   ..\inc
+
+SYSTEMINCLUDE ..\INC
+
+SOURCEPATH    ..\DATA
+RESOURCE      testrss.RSS
+SYSTEMRESOURCE      TESTsystemrss.rss
+
+START RESOURCE testblock.RSS
+TARGETPATH resource\apps
+HEADER
+END
+
+AIF		testaif.aif ..\AIF TestAif.rss c12 Test1.bmp test2.BMP
+
+START BITMAP    test1.mbm
+SOURCEPATH 		..\bmp
+SOURCE          c8  Test1.bmp TEST2.bmp test3.Bmp
+END
+
+DEFFILE .\Test.DEF
+NOSTRICTDEF
+
+DOCUMENT	..\doc\TestDoc.txt

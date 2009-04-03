@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Creating Package and Installation Files">
+	<intro>
+		<description>
+		Read the following information to create project package (.pkg) and application installation (.sis) files.
+		</description> 
+	</intro> 
+	
+	<item title="Creating a project package (.pkg) file using Carbide symbols" href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/working_with_sis_pkg_files.htm" >
+		<description>
+		Create a .pkg file that contains all files to be downloaded to the device.
+		</description>
+	</item>
+
+	<item title="Creating a .sis installation file for the target device" href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_creating_sis_file.htm" >
+		<description>
+		Create an installation file for your application that will be uploaded and installed on target device.
+		</description>
+	</item>
+
+</cheatsheet>

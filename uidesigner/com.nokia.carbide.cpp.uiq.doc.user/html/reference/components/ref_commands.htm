@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Command Components</title>
+<link href ="../../../book.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Commands  </h2>
+
+<p> The command properties include:</p>
+<ul>
+    <li><b>Anonymous Group</b> - The AnonymousGroup component is referenced by
+	Commands and Named Groups. Commands and Named Groups that reference the same
+	Anonymous Group will be displayed together. It is allowed to exist as a
+	child of a CommandList component because of its inheritance from
+	CommandListChildBase.</li>
+    <li><b>Command </b>- The Command component is allowed to exist as a child of
+	a CommandList component because of its inheritance from CommandListChildBase.
+	It also inherits functionality from the CommandBase component.</li>
+  <li><b>Command Id</b>- The CommandId component is referenced by Commands
+	from different CommandLists. It exists as a child of the CommandLists
+	component.</li>
+    <li><b>Command List</b> - A set of Commands that can be referenced by a View/Dialog
+	or Layout.</li>
+	<li><b>Named Group</b> - The NamedGroup component is referenced by Commands,
+	AnonymousGroups and other NamedGroups instances. Commands, AnonymousGroups
+	and NamedGroups that reference the same NamedGroup will be displayed as sub-items. It is allowed to exist as a child of a CommandList component because
+	of its inheritance from CommandListChildBase. It also inherits functionality from the CommandBase component. </li>
+</ul>
+  <p align="center">
+	<img src="../../images/command_page-01.PNG" alt="menus components" width="785" height="601" /></p>
+<p class="figure">Figure 1 - The Commands section of the UI Design Editor</p>
+<h5>Related references</h5>
+<ul>
+  <li>
+	<a href="../../../../com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/uidesign/ref_ui_design_editor.htm">UI Design Editor</a></li>
+  <li>
+	<a href="../../../../com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/views/ref_tool_bar.htm">Toolbar Pane</a></li>
+  <li>
+	<a href="../../../../com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/views/ref_layout.htm">Layout Pane</a></li>
+  <li>
+	<a href="../../../../com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/views/ref_non-layout.htm">Non-layout Pane</a></li>
+  <li><a href="ref_palette.htm">Component Palette Pane</a></li>
+  <ul>
+	  <li>Command Components</li>
+		<li><a href="ref_controls.htm">Controls Components</a></li>
+	  <li><a href="ref_editors.htm">Editors Components</a></li>
+	  <li><a href="ref_layout.htm">Layout Components </a></li>
+		<li><a href="ref_list_box.htm">List Box Components</a></li>
+		<li><a href="ref_message_dialogs.htm">Messages and Dialogs Components</a></li>
+  </ul>
+  <li><a href="ref_information.htm">Component Information Pane</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Create UI Designer Project to Test Custom Component</title>
+<link rel="StyleSheet" href="../../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Tutorial: Vertical Label Component - Create UI Designer Project to Test Custom Component</h2>
+<p>Create a UIQ UI Designer project to test the VerticalLabel component. For example, select <strong>File &gt; New &gt; Symbian OS C++ Project</strong> and choose the &quot;3.x GUI Application with UI Designer&quot; template. Complete the wizard by filling in required fields and selecting appropriate options on each page of the project creation wizard.</p>
+<p>Complete the last two pages of the wizard (Basic Settings and Project Directories) or click Finish at the UIQ UI Design Properties page to accept the default settings. The project will appear in the Project Explorer view. The graphical representation of the selected view (.uidesign file) will appear in the Carbide.c++ UI Design editor.</p>
+<p>Select either the Vertical Label 1 or Vertical Label 2 component in the palette's Custom Controls group. Then click inside the empty UI design to place the new component inside the design.</p>
+<p align="center"><img src="images/comp_palette_custom.png" alt="custom component" width="650" height="432"></p>
+<p align="center"><strong>Figure 1. Custom Component Placed in UI Design</strong></p>
+<p align="left" class="note"><strong>NOTE</strong> The example_verticallabel.rh and example_verticallabel.hrh files must be made accessible to the UI Designer as system includes.</p>
+<p align="left">One way would be to copy these files into an existing  &quot;System includes&quot; directory, such as the UIQ SDK's epoc32\include directory. Alternately, you could copy them into  a &quot;User includes&quot; directory in your project (for example, inc) and add the directory as a system included directory in the MMP file.</p>
+<p align="left">To add a directory, double-click on the .mmp file in your project (in group folder by default) to open the MMP editor. Click the Options tab and select the System includes  folder  in the Compiler Settings group. Click Add to browse to and add the directory containing your .rh and .hrh files. You can also click the &quot;Add a system include path&quot; link in the Overview page.</p>
+<p align="left" class="note"><strong>NOTE</strong> In your source files the &lt;&gt; brackets denote a system include path, where quotes (&quot; &quot;) indicate a user include.</p>
+<p align="center"><img src="../verticallabel_s60/images/include_dir.png" alt="compiler settings" width="298" height="302"></p>
+<p align="center" class="figure">Figure 2 - Compiler Settings Group in MMP Editor</p>
+<p align="left">After placing the custom component into the UI design and saving the file, the example VerticalLabel.cpp file will be placed into the source folder (default is src) of your UI Designer project. The VerticalLabel.cpp file is used to draw the VerticalLabel component on your handheld device or in the emulator at runtime. For the VerticalLabel2 example, the associated JavaScript file is used to draw the custom component only at design time in the UI design. Therefore, if you design a visual component and wish to display your custom component in the UI Designer, then you must supply a JavaScript file that implements some predefined interfaces.</p>
+<p align="left">You can save all files and build and run your UI Designer project in the emulator to view the component as part of the application.</p>
+<p align="left">Remember to refresh your project (F5), refresh components (Components &gt; Refresh Components),  clean your project, or perform a Components &gt; Force Save; as needed.</p>
+<h5 align="left">Step 5 of 5</h5>
+<p align="left"><a href="verticallabel_tutorial_05.htm">Vertical Label Component XML Details</a></p>
+<p><img src="../../../img/nokia_copyright.png" alt="copyright" width="280" height="21"></img></p>
+
+</body>
+</html>

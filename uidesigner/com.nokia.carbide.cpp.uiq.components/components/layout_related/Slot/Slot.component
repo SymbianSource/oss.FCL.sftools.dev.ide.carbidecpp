@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.Slot"
+			baseComponent="com.nokia.carbide.uiq.ContainerBase"
+			instanceNameRoot="slot"			
+			abstract="true"
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>			
+
+		<attributes>
+			<attribute key ="cpp-class-name">Slot</attribute>
+			<attribute key ="is-layout-object">true</attribute>
+			<attribute key ="is-layout-container">true</attribute>
+			<attribute key ="is-qikcontainer-content">false</attribute>
+			<attribute key ="is-slot-content">false</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+		</attributes>
+		
+		<properties>
+			<enumProperty  name="slotId" 
+				type="com.nokia.carbide.uiq.SystemBuildingBlock.TQikBuildingBlockSlots" 
+				default="EQikItemSlot1"
+				category="Hidden"
+				descriptionKey="slotIdDescription" />
+			<property  name="caption" 
+				category="%category.data"
+				type="localizedString" 
+				default="caption"
+				descriptionKey="captionDescription" />
+		</properties>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_SLOT_CONTENT" headers="qikon.rh">
+				<mapEnumMember property="slotId" member="slot_id"/>
+				<select property="caption">
+					<choice value="">
+					</choice>
+					<choice>
+						<mapSimpleMember property="caption" member="caption"/>
+					</choice>
+				</select>
+				<select property="[com.nokia.carbide.uiq.LayoutControlBase]">
+					<choice value="">
+					</choice>
+					<choice>
+						<mapEnumMember property="[com.nokia.carbide.uiq.LayoutControlBase].control->"
+							member="unique_handle"
+							nameAlgorithm="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID"
+							uniqueValue="*"/>
+					</choice>
+				</select>
+			</mapResource>
+		</sourceMapping>
+
+	</component>
+	
+</componentDefinition>

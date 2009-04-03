@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.ItemSlot"
+			baseComponent="com.nokia.carbide.uiq.Slot"
+			instanceNameRoot="itemSlot"			
+			version="1.0">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>	
+		
+		<designerImages smallIconFile="ItemSlot_sm.png"
+			largeIconFile="ItemSlot.png"/>				
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IChildCommandExtender"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.slot.ItemSlotChildCommandExtenderFactory"/>
+			</implementation>			
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstanceChildListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.slot.ItemSlotImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<script file="ItemSlot.js" prototype="ItemSlot"/>
+			</implementation>
+		</implementations>
+
+	</component>
+	
+</componentDefinition>

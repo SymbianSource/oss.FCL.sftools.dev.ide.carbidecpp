@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Updating a Precompiled File Automatically</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Updating a Precompiled File Automatically</h3>
+<p>Use the Carbide IDE&rsquo;s project manager to update a precompiled header automatically. The IDE creates a precompiled file from a source code file during a compile, update, or make operation if the source code file meets these criteria:</p>
+<ul>
+  <li>The text file name ends with .pch (for C header files) or .pch++ (for C++ header files)</li>
+  <li> The file is in a project&rsquo;s build target</li>
+  <li>The file uses the pragma precompile_target pragma</li>
+  <li>The file, or files it depends on, have been modified</li>
+</ul>
+<p class="fix">See the Carbide IDE User Guide for information on how the IDE determines that a file must be updated.</p>
+<p>The IDE uses the build target&rsquo;s settings to preprocess and precompile files.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

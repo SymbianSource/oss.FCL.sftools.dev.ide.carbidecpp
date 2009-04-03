@@ -1,0 +1,111 @@
+#include "Form_3_0Form.hrh"
+#include "Form_3_0Form.loc"
+
+RESOURCE AVKON_VIEW r_form_3_0_form_form_3_0_form_view
+	{
+	}
+RESOURCE STATUS_PANE_APP_MODEL r_form_3_0_form_status_pane
+	{
+	panes =
+		{
+		SPANE_PANE
+			{
+			id = EEikStatusPaneUidTitle;
+			type = EAknCtTitlePane;
+			resource = r_form_3_0_form_title_resource;
+			}
+		};
+	}
+RESOURCE TITLE_PANE r_form_3_0_form_title_resource
+	{
+	txt = STR_Form_3_0FormView_1;
+	}
+RESOURCE DIALOG r_form_3_0_form_form_3_0_form
+	{
+	flags = EEikDialogFlagNoDrag | EEikDialogFlagNoTitleBar | EEikDialogFlagCbaButtons | EEikDialogFlagFillAppClientRect | EEikDialogFlagNotifyEsc | EEikDialogFlagModeless;
+	buttons = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	form = r_form_3_0_form_form_3_0_form_form;
+	}
+RESOURCE FORM r_form_3_0_form_form_3_0_form_form
+	{
+	items =
+		{
+		DLG_LINE
+			{
+			type = EEikCtNumberEditor;
+			prompt = STR_Form_3_0FormView_2;
+			id = EForm_3_0FormViewNumEditor1;
+			control = NUMBER_EDITOR
+				{
+				max = 2147483647;
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtDurationEditor;
+			prompt = STR_Form_3_0FormView_3;
+			id = EForm_3_0FormViewDurationEditor1;
+			control = DURATION_EDITOR
+				{
+				minDuration = DURATION
+					{
+					};
+				maxDuration = DURATION
+					{
+					seconds = 86400;
+					};
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtEdwin;
+			prompt = STR_Form_3_0FormView_4;
+			id = EForm_3_0FormViewEdit1;
+			control = EDWIN
+				{
+				maxlength = 255;
+				default_case = EAknEditorTextCase;
+				allowed_case_modes = EAknEditorAllCaseModes;
+				numeric_keymap = EAknEditorStandardNumberModeKeymap;
+				default_input_mode = EAknEditorTextInputMode;
+				allowed_input_modes = EAknEditorTextInputMode | EAknEditorNumericInputMode | EAknEditorSecretAlphaInputMode | EAknEditorKatakanaInputMode | EAknEditorFullWidthTextInputMode | EAknEditorFullWidthNumericInputMode | EAknEditorFullWidthKatakanaInputMode | EAknEditorHiraganaKanjiInputMode | EAknEditorHalfWidthTextInputMode;
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtPopupFieldText;
+			prompt = STR_Form_3_0FormView_6;
+			id = EForm_3_0FormViewPopupFieldText1;
+			control = POPUP_FIELD_TEXT
+				{
+				popupfield = POPUP_FIELD
+					{
+					width = 8;
+					};
+				textarray = r_form_3_0_form_popup_field_text1_textarray;
+				};
+			}
+		};
+	}
+RESOURCE ARRAY r_form_3_0_form_popup_field_text1_textarray
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_Form_3_0FormView_7;
+			},
+		LBUF
+			{
+			txt = STR_Form_3_0FormView_8;
+			},
+		LBUF
+			{
+			txt = STR_Form_3_0FormView_9;
+			}
+		};
+	}
+RESOURCE TBUF r_form_3_0_form_edit1
+	{
+	buf = STR_Form_3_0FormView_5;
+	}

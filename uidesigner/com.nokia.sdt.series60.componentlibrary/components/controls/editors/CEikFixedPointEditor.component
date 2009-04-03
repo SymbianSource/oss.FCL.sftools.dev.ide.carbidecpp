@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikFixedPointEditor"
+		baseComponent="com.nokia.sdt.series60.CEikEdwinBase" 
+		category="Editors"
+		instanceNameRoot="fixedPointEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="FIXPTED" className="CEikFixedPointEditor" />
+		<designerImages 
+			smallIconFile="CEikFixedPointEditor_sm.png" 
+			largeIconFile="CEikFixedPointEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikFixedPointEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="data-model-cpp-type">TInt</attribute>
+			<attribute key="dataquery-className">CAknFixedPointQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EEikCtFxPtEd</attribute>
+		</attributes>
+	
+		<properties>
+			<!-- note: min is not -2147483648 since RCOMP complains -->
+			<property name="value" category="Data" type="integer" descriptionKey="valueDescription"
+				minValue="-2147483647" maxValue="2147483647"/>
+			<property name="default" category="Data" type="integer" descriptionKey="defaultDescription"
+				minValue="-2147483647" maxValue="2147483647"/>
+			<property name="minimum" category="Data" type="integer" default="-2147483647"
+				minValue="-2147483647" maxValue="2147483647" descriptionKey="minimumDescription" />
+			<property name="maximum" category="Data" type="integer" default="2147483647"
+				minValue="-2147483647" maxValue="2147483647" descriptionKey="maximumDescription" />
+			<property name="decimalPlaces" category="Appearance" type="integer" 
+				minValue="0" maxValue="32" default="2" descriptionKey="decimalPlacesDescription" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikFixedPointEditor_visual.js" prototype="CEikFixedPointEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="FIXPTED" headers="eikon.rh">
+			<mapSimpleMember property="decimalPlaces" member="decimalplaces"/>
+			<mapSimpleMember property="minimum" member="min"/>
+			<mapSimpleMember property="maximum" member="max"/>
+			<mapSimpleMember property="default" member="default"/>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuerySetData">
+	
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"eikfpne.h", "eikenv.h" ]);
+		</inline>
+
+		<inline>
+function toFixedPointText(value, places) {
+	return (value / Math.pow(10, places)).toFixed(places);
+}
+		</inline>
+
+		<!-- do not validate the value, since default will be used -->
+		
+		<!-- note: we have to set the text in addition to the integral value
+			or else the editor shows up BLANK -->
+		<template phase="Initialize"><![CDATA[
+	{
+	TInt value = ${properties.value};
+	${instanceMemberName}->SetValueL( &value );
+	}
+]]>		</template>
+
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	aData = ${properties.value};
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateCommonEdwinEvents GenerateFormatChangedEvent"/>
+		<useTemplateGroup ids="GenerateNavigationEvent GenerateTextUpdatedEvent"/>
+		
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.ChoiceList.Position">
+		<enumElement value="EAknChoiceListPositionBottom" displayValue="Bottom" />
+		<enumElement value="EAknChoiceListPositionLeft" displayValue="Left" />
+		<enumElement value="EAknChoiceListPositionRight" displayValue="Right" />
+	</enumPropertyDeclaration>
+	
+	<!-- USING ENUM FOR BOOLEN MIGHT NOT RIGHT HERE BUT USING IT FOR RECONCILING PURPOSES
+	     SO WE CAN EDIT A VALUE AT THE NODE OF A PROPERTY  -->
+	<enumPropertyDeclaration qualifiedName="com.nokia.sdt.series60.TrueFalse">
+		<enumElement value="No"/>
+		<enumElement value="Yes"/>
+	</enumPropertyDeclaration>
+	
+	<compoundPropertyDeclaration 
+			qualifiedName="com.nokia.sdt.series60.ChoiceListMultiImageProperty"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ImageEditorFactory"
+			converterClass="com.nokia.sdt.series60.component.ChoiceListMultiImagePropertyConverter">
+			<property name="bmpfile" descriptionKey="bmpfileDescription" type="string"/>
+			<property name="bmpid" descriptionKey="bmpidDescription" type="string"/>
+			<property name="bmpmask" descriptionKey="bmpmaskDescription" type="string"/>
+			<property name="bmpidDimmed" descriptionKey="bmpidDimmedDescription" type="string"/>
+			<property name="bmpmaskDimmed" descriptionKey="bmpmaskDimmedDescription" type="string"/>
+			<property name="bmpidPressed" descriptionKey="bmpidPressedDescription" type="string"/>
+			<property name="bmpmaskPressed" descriptionKey="bmpmaskPressedDescription" type="string"/>
+			<property name="bmpidHover" descriptionKey="bmpidHoverDescription" type="string"/>
+			<property name="bmpmaskHover" descriptionKey="bmpmaskHoverDescription" type="string"/>
+	</compoundPropertyDeclaration>
+		
+	<compoundPropertyDeclaration editableType="com.nokia.sdt.series60.TrueFalse"
+	                             qualifiedName="com.nokia.sdt.series60.ButtonData">
+		<property category="Hidden" name="showAsButtonValue" type="boolean" default="false" />
+		<property name="buttonHoverText" type="localizedString"
+				descriptionKey="buttonTextDescription" displayName="%buttonHoverText" />
+		
+		<compoundProperty category="Appearance" name="images"  displayName="%imagesDisplayName"
+				type="com.nokia.sdt.series60.ChoiceListMultiImageProperty"
+				descriptionKey="imagesDescription" />
+		<property name="buttonText" type="localizedString" default="Button"
+				 editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory"
+			     descriptionKey="buttonTextDescription" displayName="%buttonTextDisplay"/>
+	</compoundPropertyDeclaration>
+	
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.ChoiceListItemTextType">
+		<property name="itemText" type="localizedString" 
+			descriptionKey="itemTextDescription"
+			editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+	</compoundPropertyDeclaration>
+	
+	
+	
+	<component baseComponent="com.nokia.sdt.series60.CCoeControlBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.CAknChoiceList"
+		category="Controls"
+		instanceNameRoot="choiceList"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="5.0" 
+			className="CAknChoiceList" classHelpTopic=""
+			resourceType="" resourceHelpTopic="" />
+		<designerImages smallIconFile="ChoiceList_sm.png" 
+			largeIconFile="ChoiceList.png" />
+			
+		<attributes>
+			<attribute key="cpp-class-name">CAknChoiceList</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="editable-array-property">items</attribute>
+		</attributes>
+		
+		<properties>
+			<compoundProperty category="Appearance" name="showAsButton" displayName="%showButtonText"
+				type="com.nokia.sdt.series60.ButtonData" descriptionKey="showAsButtonDescription" />
+			<arrayProperty name="items" category="Data" resettable="false"
+				type="com.nokia.sdt.series60.ChoiceListItemTextType" 
+				editorClass="com.nokia.sdt.series60.component.ChoiceListTextEditorFactory"
+				descriptionKey="textItemArrayDescription"
+			/>
+			<property category="Data" name="defaultMenuIndex" displayName="%defaultMenuIndexDisplay" descriptionKey="defaultMenuIndexDescription" type="integer" default="0" />
+			<enumProperty category="Appearance" name="position" type="com.nokia.sdt.series60.ChoiceList.Position"
+				descriptionKey="buttonPositionDescription" displayName="%positionDisplayName" />
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IReconcileProperty"/>
+				<script file="ChoiceList_reconcile.js" prototype="ChoiceListReconcile"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectImageEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<script file="ChoiceList_visual.js" prototype="CAknChoiceListVisual"/>
+			</implementation>
+		</implementations>
+		
+		<events defaultEventName="selected">
+			<event name="selected" displayName="%selected" category="ToolbarEvent"
+				group="ToolbarEvent" 
+			    handlerNameTemplate="Handle{title(name)}SelectedL"
+			    descriptionKey="selectedDescription"
+			/>
+		</events>
+		
+		<sourceMapping >
+			<mapResource struct="ARRAY" headers="eikon.rh">
+				<mapArrayMember property="items" member="items">
+					<mapResourceElement struct="LBUF" id="lbuf_txt">
+						<mapSimpleMember property="itemText" member="txt"/>
+					</mapResourceElement>
+				</mapArrayMember>
+			</mapResource>
+	
+			<mapResource struct="TBUF" id="buttonText" headers="eikon.rh">
+				<mapSimpleMember property="showAsButton.buttonText" member="buf"/>
+			</mapResource>
+			<mapResource struct="TBUF" id="buttonHoverText" headers="eikon.rh">
+				<mapSimpleMember property="showAsButton.buttonHoverText" member="buf"/>
+			</mapResource>
+
+		</sourceMapping>
+		
+		<sourceGen debug="false">
+			<useTemplateGroup ids="CLASS_CONTRIBS" />
+			<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+			
+			<inline scope="prototype">
+include("../containers/containerLibrary.js")
+			</inline>
+			
+			<template form="AknView" phase="ForwardDeclarations">
+class CAknChoiceList;
+			</template>
+
+			<template form="AknView" phase="InstanceVariables"><![CDATA[
+<% if (instance.parent.isInstanceOf("com.nokia.sdt.series60.Toolbar")) { %>
+CAknChoiceList* ${instanceMemberName};
+<% } %>	
+]]>			</template>
+			
+			<template form="AknView" phase="Destroy"><![CDATA[
+<% if (!instance.parent.isInstanceOf("com.nokia.sdt.series60.Toolbar")) { %>	
+delete ${instanceMemberName};
+${instanceMemberName} = NULL;
+<% } %>	
+]]>			</template>
+			
+			<template form="AknView" phase="DoDeactivate"><![CDATA[
+<% if (instance.parent.isInstanceOf("com.nokia.sdt.series60.Toolbar")) { %>	
+Toolbar()->RemoveItem( ${findOrCreateViewUidConstant(instance)} );
+<% } %>	
+]]>			</template>
+
+
+			<template phase="HeaderIncludes"><![CDATA[
+#include <aknchoicelist.h>
+<%if (properties.showAsButton.showAsButtonValue == true) { %>#include <aknbutton.h>
+#include <stringloader.h>
+<%if (properties.showAsButton.images.bmpfile != "") { %>
+#include <gulicon.h>
+<% } %>	
+<% } %>	
+]]>			</template>
+
+
+			<inline scope="prototype">
+include("../srcgenLibrary.js")
+			</inline>
+
+			<template id="INIT_FROM_CONTAINER" form="Container" phase="Initialize"><![CDATA[
+// Set up ${instanceMemberName}
+CDesCArray* ${instanceName}Array = new ( ELeave )CDesC16ArrayFlat( 1 );
+<% if (properties.showAsButton.showAsButtonValue == true) { %>CAknButton* ${instanceName}Button;
+HBufC* ${instanceName}ButtonText = 
+		StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "buttonText").toUpperCase() } );
+HBufC* ${instanceName}ButtonHoverText = 
+		StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "buttonHoverText").toUpperCase() } );
+<% if (properties.showAsButton.images.bmpidDimmed != "" && properties.showAsButton.images.bmpmaskDimmed != "") { %>
+CFbsBitmap* ${instanceName}BitmapDimmed, *${instanceName}MaskDimmed;
+AknIconUtils::CreateIconL( ${instanceName}BitmapDimmed, 
+						${instanceName}MaskDimmed,
+				${getImageRsrcLiteralName(contribs, instance, properties.showAsButton.images)}, ${properties.showAsButton.images.bmpidDimmed}, ${properties.showAsButton.images.bmpmaskDimmed} );
+<% } if (properties.showAsButton.images.bmpidHover != "" && properties.showAsButton.images.bmpmaskHover != "") { %>
+CFbsBitmap* ${instanceName}BitmapHover, *${instanceName}MaskHover;
+AknIconUtils::CreateIconL( ${instanceName}BitmapHover, 
+						${instanceName}MaskHover,
+				${getImageRsrcLiteralName(contribs, instance, properties.showAsButton.images)}, ${properties.showAsButton.images.bmpidHover}, ${properties.showAsButton.images.bmpmaskHover} );
+<% } if (properties.showAsButton.images.bmpidPressed != "" && properties.showAsButton.images.bmpidPressed != "") { %>
+CFbsBitmap* ${instanceName}BitmapPressed, *${instanceName}MaskPressed;
+AknIconUtils::CreateIconL( ${instanceName}BitmapPressed, 
+					${instanceName}MaskPressed,
+				${getImageRsrcLiteralName(contribs, instance, properties.showAsButton.images)}, ${properties.showAsButton.images.bmpidPressed}, ${properties.showAsButton.images.bmpmaskPressed} );
+<% } if (properties.showAsButton.images.bmpfile != "") { %>
+CFbsBitmap* ${instanceName}Bitmap, *${instanceName}Mask;
+AknIconUtils::CreateIconL( ${instanceName}Bitmap, ${instanceName}Mask,
+				${getImageRsrcLiteralName(contribs, instance, properties.showAsButton.images)}, ${properties.showAsButton.images.bmpid}, ${properties.showAsButton.images.bmpmask} );
+${instanceName}Button = CAknButton::NewL( CGulIcon::NewL( 
+								${instanceName}Bitmap, ${instanceName}Mask ),
+<% } else { %>
+${instanceName}Button = CAknButton::NewL( NULL,
+<% } %><% if (properties.showAsButton.images.bmpidDimmed != "" && properties.showAsButton.images.bmpmaskDimmed != "") { %>						CGulIcon::NewL( 
+							${instanceName}BitmapDimmed, ${instanceName}MaskDimmed ),<% } else { %>						NULL,<% } %>	
+<% if (properties.showAsButton.images.bmpidPressed != "" && properties.showAsButton.images.bmpmaskPressed != "") { %>						CGulIcon::NewL( 
+							${instanceName}BitmapPressed, ${instanceName}MaskPressed ),<% } else { %>						NULL,<% } %>
+<% if (properties.showAsButton.images.bmpidHover != "" && properties.showAsButton.images.bmpmaskHover != "") { %>						CGulIcon::NewL( 
+							${instanceName}BitmapHover, ${instanceName}MaskHover ),<% } else { %>						NULL,<% } %>	
+						${instanceName}ButtonText->Des(),
+						${instanceName}ButtonHoverText->Des(),
+						KAknButtonSizeFitText,
+						0 );
+
+CleanupStack::PopAndDestroy( ${instanceName}ButtonHoverText );
+CleanupStack::PopAndDestroy( ${instanceName}ButtonText );
+
+${instanceMemberName} = CAknChoiceList::NewL( this,
+									${instanceName}Array,
+									CAknChoiceList::EAknChoiceListWithoutCurrentSelection |
+									CAknChoiceList::${properties.position},
+									${instanceName}Button );
+
+<% } else { %>
+${instanceMemberName} = CAknChoiceList::NewL( this, ${instanceName}Array ); // transfers ownership
+${instanceMemberName}->SetFlags( CAknChoiceList::EAknChoiceListWithCurrentSelection | 
+								 CAknChoiceList::${properties.position} );
+<% } %>		
+${instanceMemberName}->SetContainerWindowL( *this );
+${instanceMemberName}->SetObserver( ( MCoeControlObserver* ) iCommandObserver );
+${instanceMemberName}->SetRect ( TRect ( 
+							TPoint ( ${properties.location.x}, ${properties.location.y} ) , 
+							TSize ( ${properties.size.width}, ${properties.size.height} ) )  
+							 ) ; 
+${instanceMemberName}->SetItemsL( ${resourceName$upper} ); // read array from resources
+${instanceMemberName}->SetSelectedIndex( ${properties.defaultMenuIndex} );
+
+]]>			</template>
+
+
+			<template form="AknToolbar" phase="InitToolbarItems"><![CDATA[
+if ( ${instanceMemberName} == NULL )
+	{
+	// Set up ${instanceMemberName}
+	CDesCArray* ${instanceName}Array = new ( ELeave )CDesC16ArrayFlat( 1 );
+	<% if (properties.showAsButton.showAsButtonValue == true) { %>CAknButton* ${instanceName}Button;
+	HBufC* ${instanceName}ButtonText = 
+			StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "buttonText").toUpperCase() } );
+	HBufC* ${instanceName}ButtonHoverText = 
+			StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "buttonHoverText").toUpperCase() } );
+	<% if (properties.showAsButton.images.bmpfile != "") { %>
+	CFbsBitmap* ${instanceName}Bitmap, *${instanceName}Mask;
+	AknIconUtils::CreateIconL( ${instanceName}Bitmap, ${instanceName}Mask,
+					${getImageRsrcLiteralName(contribs, instance, properties.showAsButton.images)}, ${properties.showAsButton.images.bmpid}, ${properties.showAsButton.images.bmpmask} );
+	${instanceName}Button = CAknButton::NewL( CGulIcon::NewL( 
+								${instanceName}Bitmap, ${instanceName}Mask ),
+	<% } else { %>
+	${instanceName}Button = CAknButton::NewL( NULL,
+	<% } %>							NULL,
+								NULL,
+								NULL,
+								${instanceName}ButtonText->Des(),
+								${instanceName}ButtonHoverText->Des(),
+								KAknButtonSizeFitText,
+								0 );
+	
+	CleanupStack::PopAndDestroy( ${instanceName}ButtonHoverText );
+	CleanupStack::PopAndDestroy( ${instanceName}ButtonText );
+	
+	${instanceMemberName} = CAknChoiceList::NewL( Toolbar(),
+										${instanceName}Array,
+										CAknChoiceList::EAknChoiceListWithoutCurrentSelection |
+										CAknChoiceList::${properties.position},
+										${instanceName}Button );
+	
+	<% } else { %>
+	${instanceMemberName} = CAknChoiceList::NewL( Toolbar(), ${instanceName}Array ); // transfers ownership
+	${instanceMemberName}->SetFlags( CAknChoiceList::EAknChoiceListWithCurrentSelection | 
+									 CAknChoiceList::${properties.position} );
+	<% } %>		
+	${instanceMemberName}->SetContainerWindowL( *Toolbar() );
+	${instanceMemberName}->SetRect ( TRect ( 
+								TPoint ( 0, 0 ) , 
+								TSize ( ${properties.size.width}, 0 ) )  
+								 ) ; 
+	${instanceMemberName}->SetItemsL( ${resourceName$upper} ); // read array from resources
+	${instanceMemberName}->SetSelectedIndex( ${properties.defaultMenuIndex} );
+<%
+for (var index in instance.parent.children) {
+		var sib = instance.parent.children[index];
+		if (sib.name == instance.name){
+			break;
+		}
+		else {
+			index++;
+		}
+	}
+ %>			
+	Toolbar()->AddItemL( ${instanceMemberName}, 
+						0, 
+						${findOrCreateViewUidConstant(instance)}, 
+						0, 
+						${index} );
+	}
+]]>			</template>
+		
+		<templateGroup id="HandleSelectedEvent" ifEvents="selected">
+			<template id="0" phase="UserHandlers">
+TBool ${event.handlerName}( TInt aCommand );
+			</template>
+
+			<defineLocation id="SelectedMethod" baseLocation="MAIN_FILE"
+					owned="false"
+					isEventHandler="true"
+					location="function(${handlerClassName}::${event.handlerName}(TInt))">
+					<template id="2"><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ * @param aCommand the command id invoked
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool ${handlerClassName}::${event.handlerName}( TInt aCommand )
+	{
+	// TODO: implement ${event.eventName} event handler
+	return ETrue;
+	}
+]]>				
+					</template>
+				</defineLocation>
+			
+			<template id="3" location="SelectedMethod" />
+	
+			<template id="4" form="HandleCommandSwitchDispatch" phase="SwitchContents" ifEvents="selected"><![CDATA[
+<% var commandId = ${findOrCreateViewUidConstant(instance)};
+	if (commandId != null) { 
+%>	case ${commandId}:
+		commandHandled = ${event.handlerName}( aCommand );
+		break;
+<% } %> ]]>	</template>
+		</templateGroup>
+		
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+		
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

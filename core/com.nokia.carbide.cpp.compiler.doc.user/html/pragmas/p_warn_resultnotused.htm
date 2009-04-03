@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>warn_resultnotused</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>warn_resultnotused</h3>
+<p>Controls the issuing of warnings when function results are ignored.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma warn_resultnotused on | off | reset  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>If you enable this pragma, the compiler issues a warning when it encounters a statement that calls a function without using its result. To prevent this, cast the statement with (void). Listing 10.45 provides an example.</p>
+  <div class="listing">
+      <h4>Listing 10.45 Example of Function Calls with Unused Results</h4>
+      <p>#pragma warn_resultnotused on </p>
+    <p>extern int bar();<br />
+    void foo()<br />
+    {<br />
+    bar(); // WARNING: result of function call is not used<br />
+    (void)bar(); // &lsquo;void&rsquo; cast suppresses warning<br />
+    }</p>
+  </div>
+<p> For more information about this warning, see <a href="../errors/err_ignore_fn.htm">Ignored Function Results</a>.</p>
+<p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (warn_resultnotused)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

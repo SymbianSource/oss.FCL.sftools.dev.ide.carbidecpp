@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.nokia.sdt.emf.dm; singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Export-Package: com.nokia.sdt.emf.dm,
+ com.nokia.sdt.emf.dm.impl,
+ com.nokia.sdt.emf.dm.util,
+ com.nokia.sdt.emf.dm.xml
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.ui.views,
+ com.nokia.sdt.uimodel,
+ com.nokia.cpp.utils.core,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.edit
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: com.nokia.sdt.emf.dm.DataModelPlugin

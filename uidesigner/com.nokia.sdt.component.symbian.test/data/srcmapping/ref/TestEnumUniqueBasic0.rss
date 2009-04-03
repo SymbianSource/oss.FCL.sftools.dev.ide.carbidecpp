@@ -1,0 +1,6 @@
+#include <enumsheader.rh>
+
+RESOURCE COMMAND r_test_enum_unique_basic0
+	{
+	command = CommandCancel;
+	}

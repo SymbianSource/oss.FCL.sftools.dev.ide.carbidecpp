@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Run Mode Debug Example</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Run Mode Debug Example (Application TRK) </h2>
+<p>This example shows how to create and build an application and debug it on a device using the Application TRK on-device debug agent. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
+<div class="step">
+  <h4>Debugging a Run-mode Project using Application TRK </h4>
+  <ol>
+    <li>Import the Bld.inf to create a project using the Import wizard </li>
+    <p>In this example we are importing a project called Music, a complex project that includes several EXEs (MusicPlayer, MusicShop, MusicVisualizer). When we import, we select an ARM target.</p>
+    <li>Go to the project Properties page and in the Carbide Build Configuration panel specify the PKG file in the <a href="../../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a> tab </li>
+    <li>Build the project (Ctrl+B) </li>
+    <li>Verify that all the binaries built by the project appear  in the <a href="../../reference/view_executables.htm">Executables</a> view. </li>
+    <p class="note"><b>NOTE</b> The symbolics are automatically loaded for the binaries that appear in the Executables view.</p>
+    <li>Set  <a href="../breakpoints/pgm_bp_setting.htm">breakpoints</a> in the project source files </li>
+    <p>In this example we will set one breakpoint in two different EXEs. The first is set in the file called <span class="code">MCEngine.cpp</span> (MCServer.exe) and the second is set in  <span class="code">MPlayerAppUI.cpp</span> (MusicPlayer.exe). </p>
+    <li>Click the Debug icon (<img src="../../images/icons/btn_debug.png" width="17" height="16" align="absmiddle">) to launch the <a href="../projects/wiz_new_launch_config.htm">New Launch Configuration</a> wizard
+      <ol type="a">
+        <li>Select the Application TRK Launch Configuration from the Launch Types page, then click Next</li>
+        <p align="center"><img src="../trk/images/trk_launch_types.png" width="438" height="533"></p>
+        <p class="figure">Figure 1 - Launch Types page showing selection </p>
+        <li>If you have more than one executable, select the Main Executable in the Executable Selection page of the wizard, then click Next</li>
+        <p>For this example we select the musicplayer.exe as the main executable.</p>
+        <p align="center"><img src="../trk/images/trk_exe_selection.png" width="438" height="533"></p>
+        <p class="figure">Figure 2 - Executable Selection page showing selection </p>
+        <li>Select the remote connection to use in the TRK Connection Settings page, then click Next</li>
+        <p align="center"><img src="../trk/images/trk_conn_settings.png" width="438" height="533"></p>
+        <p class="figure">Figure 3 - TRK Connection Settings page showing selection </p>
+        <li>Select the SIS file to install in the TRK SIS Selection page if not already populated</li>
+      </ol>
+      <blockquote>
+        <p class="figure"><img src="../trk/images/trk_sis_selection.png" width="438" height="533"></p>
+        <p class="figure">Figure 4 - TRK Connection Settings page showing selection </p>
+      </blockquote>
+      <ol type="a">
+        <li>Click Finish </li>
+        <br>
+        <p>The SISX file is downloaded and authenticated, then the binaries are installed automatically on the phone. </p>
+      </ol>
+    <li>Once the debug session launches, control  returns to the Debugger when one of the breakpoints set earlier is hit. </li>
+    <p>At this point you can debug the program in the Debug perspective. Look at the <a href="../../reference/view_breakpoints.htm">Breakpoints</a> view to verify that the breakpoints set earlier are resolved. In this case, the breakpoint in the MCServer.exe.</p>
+    <p align="center"><img src="../trk/images/trk_debug_perspective_dll.png" width="902" height="629"></p>
+    <p class="figure">Figure 5 - Debug perspective showing the resolved breakpoint </p>
+	<li>Click Resume in the Debug view to hit the breakpoint set in the second EXE</li>
+    <p align="center"><img src="../trk/images/trk_debug_perspective_exe.png" width="902" height="629"></p>
+    <p class="figure">Figure 6 - Debug perspective showing the resolved EXE breakpoint </p>
+	<li>In the Debug view
+	  <ol type="a">
+	    <li>Click <a href="../debugger/work_debug_act_disconnect.htm">Disconnect</a> to leave the application running on the device, OR </li>
+	    <li>Click <a href="../debugger/work_debug_act_stop.htm">Terminate</a>  to stop the application running on the device</li>
+      </ol>
+    </li>
+  </ol>
+  <p>In addition, you can click the <a href="../../reference/view_symbian_kernel.htm">Symbian OS Data View</a> to examine the processes running on the devise during the debug session. </p>
+</div>
+<h5>Related references</h5>
+<ul>
+  <li><a href="../trk/trk_troubleshooting.htm">On-device Debugging Troubleshooting</a></li>
+  <li><a href="../../reference/view_symbian_kernel.htm">Symbian OS View</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

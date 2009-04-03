@@ -1,0 +1,9 @@
+
+START BITMAP Foo.mbm
+TARGETPATH \system\apps\image-tests
+SOURCE c8,8 qgn_note_ok.bmp ./qgn_note_ok_mask_soft.bmp
+SOURCE c12 ../group/note.bmp
+SOURCE 12,1 image.bmp ./missing.bmp
+END
+
+

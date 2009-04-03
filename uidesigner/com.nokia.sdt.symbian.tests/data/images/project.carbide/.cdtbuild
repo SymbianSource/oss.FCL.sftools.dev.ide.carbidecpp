@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+<project id="image-tests.com.symbian.cdt.build.projectType.pdll.1664380335" name="Symbian Polymorphic DLL Project" projectType="com.symbian.cdt.build.projectType.pdll">
+<configuration artifactExtension="app" artifactName="image-tests" description="" id="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW.176640752" name="S60 2.6 WINSCW Polymorphic DLL UDEB" parent="S60_2nd_FP2_CW_com.symbian.cdt.build.projectType.pdll_winscw.udeb_S60_2nd_FP2_CW">
+<toolChain id="com.nokia.sdk.S60_26.build.winscw.toolChain.winscwUdebPdll.489797440" name="WINSCW UDEB Defaults" superClass="com.nokia.sdk.S60_26.build.winscw.toolChain.winscwUdebPdll">
+<option id="com.nokia.cdt.build.toolChain.S60_26.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll.1036214128" name="System Include Paths" superClass="com.nokia.cdt.build.toolChain.S60_26.winscw.GlobalOptions.systemIncludePaths.winscwUdebPdll"/>
+<option id="com.symbian.cdt.sdk.80a.build.winscw.polymorphicDllUdeb.targetType.1428074196" name="TargetType" superClass="com.symbian.cdt.sdk.80a.build.winscw.polymorphicDllUdeb.targetType" value="app" valueType="enumerated"/>
+<option id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid2.udeb.761066027" name="UID2" superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid2.udeb" value="0x100039CE" valueType="string"/>
+<option id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid3.udeb.958577198" name="UID3" superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.uid3.udeb" value="0x09429BF4" valueType="string"/>
+<option id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.vendorid.udeb.1777972519" name="Vendor Id" superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.vendorid.udeb" value="0x00000000" valueType="string"/>
+<option id="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths.170783413" name="User Include Paths" superClass="com.symbian.cdt.build.toolChain.winscw.GlobalOptions.userIncludePaths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\inc&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\data&quot;"/>
+</option>
+<option id="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.targetPath.udeb.1060208463" superClass="com.symbian.cdt.build.80a.toolChain.winscw.GlobalOptions.targetPath.udeb" value="system\apps\image-tests" valueType="string"/>
+<tool id="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll.2053336825" name="WINSCW C/C++ Compiler" superClass="com.nokia.sdk.S60_26.build.winscw.compiler.udebPDll">
+<option id="com.symbian.cdt.build.buildDefinitions.winscw.compiler.warnings.warningsUnusedArgs.174484299" superClass="com.symbian.cdt.build.buildDefinitions.winscw.compiler.warnings.warningsUnusedArgs" value="false" valueType="boolean"/>
+</tool>
+<tool id="com.symbian.cdt.sdk.80a.build.winscw.linker.udebPDll.1216823658" name="WINSCW C/C++ Linker" superClass="com.symbian.cdt.sdk.80a.build.winscw.linker.udebPDll">
+<option id="com.symbian.cdt.build.80a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll.544191120" superClass="com.symbian.cdt.build.80a.buildDefinitions.winscw.linker.libraries.libraries.udebPDll" valueType="libs">
+<listOptionValue builtIn="false" value="edll.lib"/>
+<listOptionValue builtIn="false" value="euser.lib"/>
+<listOptionValue builtIn="false" value="apparc.lib"/>
+<listOptionValue builtIn="false" value="cone.lib"/>
+<listOptionValue builtIn="false" value="eikcore.lib"/>
+<listOptionValue builtIn="false" value="avkon.lib"/>
+<listOptionValue builtIn="false" value="commonengine.lib"/>
+<listOptionValue builtIn="false" value="eikcoctl.lib"/>
+<listOptionValue builtIn="false" value="eikdlg.lib"/>
+<listOptionValue builtIn="false" value="bafl.lib"/>
+<listOptionValue builtIn="false" value="eikctl.lib"/>
+</option>
+</tool>
+<tool id="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default.1008379865" name="Def File Creator for WINSCW" superClass="com.symbian.cdt.build.buildDefinitions.makedef.winscw.default"/>
+<tool id="com.symbian.cdt.build.80a.tool.winscw.aif.udeb.167411263" name="AIF Compiler" superClass="com.symbian.cdt.build.80a.tool.winscw.aif.udeb">
+<option id="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath.1515622220" superClass="com.symbian.cdt.build.buildDefinitions.aif.general.targetPath" value="system\apps\image-tests" valueType="string"/>
+</tool>
+<tool id="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb.1566655026" name="Resource Compiler" superClass="com.symbian.cdt.build.80a.tool.winscw.rcomp.udeb">
+<option id="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath.1503329342" superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.targetPath" value="system\apps\image-tests" valueType="string"/>
+<option id="com.symbian.cdt.build.buildDefinitions.rcomp.general.definedSymbols.158715962" superClass="com.symbian.cdt.build.buildDefinitions.rcomp.general.definedSymbols" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="LANGUAGE_10"/>
+</option>
+</tool>
+<tool id="com.symbian.cdt.build.80a.tool.winscw.mbm.udeb.356665888" name="MBM Compiler" superClass="com.symbian.cdt.build.80a.tool.winscw.mbm.udeb">
+<option id="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath.1150974055" superClass="com.symbian.cdt.build.buildDefinitions.mbm.general.targetPath" value="system\apps\image-tests" valueType="string"/>
+</tool>
+<macros/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

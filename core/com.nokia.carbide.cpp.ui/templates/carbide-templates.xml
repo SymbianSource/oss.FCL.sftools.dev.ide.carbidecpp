@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- NOTE TO TRANSLATOR:
+* This file should remain English as it produces compilable code. 
+-->
+<templates>
+  <template autoinsert="true" context="org.eclipse.cdt.ui.text.templates.c" deleted="false" id="com.nokia.carbide.cpp.templates.c.cleanstackpop" description="Clean Up Stack Pop Stack Item" enabled="true" name="cleanstackpop">CleanupStack::Pop( self );</template> 
+  <template autoinsert="true" context="org.eclipse.cdt.ui.text.templates.c" deleted="false" id="com.nokia.carbide.cpp.templates.c.cleanstackpush" description="Clean Up Stack Push Item" enabled="true" name="cleanstackpush">CleanupStack::PushL( self );</template> 
+  <template autoinsert="true" context="org.eclipse.cdt.ui.text.templates.c" deleted="false"
+   id="com.nokia.carbide.cpp.templates.c.handlecommand"
+   description="Handle command switch framework with leave"
+   enabled="true"
+   name="handlecommand">
+// CAkn{insert}AppUi::HandleKeyEventL()
+// %handleCommandCommentText
+// -----------------------------------------------------------------------------
+//
+void CAkn{insert}AppUi::HandleCommandL( TInt aCommand )
+    {
+
+    
+    switch ( aCommand )
+        {
+        case EAknCmdExit:
+        case EAknSoftkeyExit:
+        case EEikCmdExit:
+            Exit();
+            return; // returns if exit
+
+        case 
+            break;
+
+        case 
+            break;
+
+        case 
+            break;
+
+        default:
+            break;
+        }
+        
+   
+    }
+</template> 
+  <template autoinsert="true" context="org.eclipse.cdt.ui.text.templates.c" deleted="false" id="com.nokia.carbide.cpp.templates.c.lit" description="Symbian literal" enabled="true" name="lit">_LIT(,"")</template> 
+  <template autoinsert="true" context="org.eclipse.cdt.ui.text.templates.c" deleted="false" id="com.nokia.carbide.cpp.templates.c.trap" description="Symbian Trap Statement" enabled="true" name="trap">TRAPD(err, ret = );</template> 
+  </templates>

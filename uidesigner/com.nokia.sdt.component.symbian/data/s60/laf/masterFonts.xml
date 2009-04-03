@@ -1,0 +1,270 @@
+<!-- bundleentry://1111/data/s60/laf/qvga_landscape_right_3_1.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="10" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="14" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="11" />
+<font key="EditorFont" initData="s60snrc.ttf" size="10" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="16" />
+<font key="NormalFont" initData="s60ssb.ttf" size="13" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="11" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="14" />
+<font key="TitleFont" initData="s60tsb.ttf" size="16" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="11" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="13" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="11" />
+<font key="message.font" initData="s60ssb.ttf" size="12" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="10" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="10" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="11" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="11" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="16" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="12" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/vga_portrait.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="21" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="17" />
+<font key="EditorFont" initData="s60snrc.ttf" size="15" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="15" />
+<font key="MessageFont" initData="s60ssb.ttf" size="18" />
+<font key="NormalFont" initData="s60ssb.ttf" size="19" />
+<font key="Settings.list.indicator" initData="s60ssb.ttf" size="14" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="14" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="19" />
+<font key="TitleFont" initData="s60tsb.ttf" size="22" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="16" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="19" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="17" />
+<font key="message.font" initData="s60ssb.ttf" size="18" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="14" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="17" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="15" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="22" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/qvga_portrait.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="12" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="10" />
+<font key="EditorFont" initData="s60ssb.ttf" size="12" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
+<font key="MessageFont" initData="s60ssb.ttf" size="15" />
+<font key="NormalFont" initData="s60ssb.ttf" size="11" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="12" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="15" />
+<font key="TitleFont" initData="s60tsb.ttf" size="16" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="14" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="12" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="12" />
+<font key="message.font" initData="s60ssb.ttf" size="15" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="11" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="11" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="12" />
+<font key="standard.LegendFont" initData="s60snr.ttf" size="12" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="12" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="16" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/classic_landscape_right.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="8" />
+<font key="EditorFont" initData="s60ssb.ttf" size="10" />
+<font key="NormalFont" initData="s60ssb.ttf" size="10" />
+<font key="TimeFont" initData="Acb14.11.ttf" size="11" />
+<font key="message.font" initData="s60ssb.ttf" size="10" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="8" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="8" />
+<font key="status.TitleFont" initData="Alb13.10.ttf" size="10" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/qhd_landscape_right.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="21" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="17" />
+<font key="EditorFont" initData="s60snrc.ttf" size="15" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
+<font key="NormalFont" initData="s60ssb.ttf" size="19" />
+<font key="Settings.list.indicator" initData="s60ssb.ttf" size="14" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="14" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="19" />
+<font key="TitleFont" initData="s60tsb.ttf" size="22" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="20" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="19" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="17" />
+<font key="message.font" initData="s60ssb.ttf" size="18" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="14" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="17" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="15" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="21" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/qhd_portrait.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="21" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="17" />
+<font key="EditorFont" initData="s60snrc.ttf" size="15" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="15" />
+<font key="MessageFont" initData="s60ssb.ttf" size="18" />
+<font key="NormalFont" initData="s60ssb.ttf" size="19" />
+<font key="Settings.list.indicator" initData="s60ssb.ttf" size="14" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="14" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="19" />
+<font key="TitleFont" initData="s60tsb.ttf" size="22" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="20" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="19" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="17" />
+<font key="message.font" initData="s60ssb.ttf" size="18" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="14" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="17" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="15" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="22" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/classic_portrait.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="8" />
+<font key="EditorFont" initData="s60ssb.ttf" size="10" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
+<font key="MessageFont" initData="s60ssb.ttf" size="10" />
+<font key="NormalFont" initData="s60ssb.ttf" size="10" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="10" />
+<font key="TimeFont" initData="Acb14.11.ttf" size="11" />
+<font key="TitleFont" initData="s60tsb.ttf" size="12" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="11" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="10" />
+<font key="menuitem.submenu.font" initData="s60snrc.ttf" size="8" />
+<font key="message.font" initData="s60ssb.ttf" size="10" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="8" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="8" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="9" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="10" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="10" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="12" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/dblres_landscape_right.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="16" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="16" />
+<font key="EditorFont" initData="s60ssb.ttf" size="20" />
+<font key="NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="20" />
+<font key="message.font" initData="s60ssb.ttf" size="20" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="15" />
+<font key="navi.text.font" initData="s60snr.ttf" size="15" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="18" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/vga_landscape.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="21" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="17" />
+<font key="EditorFont" initData="s60snrc.ttf" size="15" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="15" />
+<font key="MessageFont" initData="s60ssb.ttf" size="18" />
+<font key="NormalFont" initData="s60ssb.ttf" size="19" />
+<font key="Settings.list.indicator" initData="s60ssb.ttf" size="14" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="14" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="19" />
+<font key="TitleFont" initData="s60tsb.ttf" size="22" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="16" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="19" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="17" />
+<font key="message.font" initData="s60ssb.ttf" size="18" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="14" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="17" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="14" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="15" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="18" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/qvga_landscape_right.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="9" />
+<font key="EditorFont" initData="s60ssb.ttf" size="11" />
+<font key="NormalFont" initData="s60ssb.ttf" size="11" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="15" />
+<font key="message.font" initData="s60ssb.ttf" size="15" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="11" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="9" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="12" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/qvga_portrait_3_1.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="10" />
+<font key="ButtonFont" initData="s60ssb.ttf" size="14" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="11" />
+<font key="EditorFont" initData="s60snrc.ttf" size="10" />
+<font key="EditorFont.settings.list" initData="s60ssb.ttf" size="16" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
+<font key="MessageFont" initData="s60ssb.ttf" size="12" />
+<font key="NormalFont" initData="s60ssb.ttf" size="13" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="11" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="14" />
+<font key="TitleFont" initData="s60tsb.ttf" size="18" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="13" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="13" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="11" />
+<font key="message.font" initData="s60ssb.ttf" size="12" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="10" />
+<font key="navi.text.font" initData="s60snrc.ttf" size="10" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="11" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="11" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="16" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="16" />
+<!-- END -->
+
+
+<!-- bundleentry://1111/data/s60/laf/dblres_portrait.xml -->
+<font key="AnnotationFont" initData="s60ssb.ttf" size="16" />
+<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="s60snrc.ttf" size="16" />
+<font key="EditorFont" initData="s60ssb.ttf" size="20" />
+<font key="HalfTitleFont" initData="s60tsb.ttf" size="18" />
+<font key="MessageFont" initData="s60ssb.ttf" size="20" />
+<font key="NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="SymbolFont" initData="s60ssb.ttf" size="16" />
+<font key="TimeFont" initData="s60zdigi.ttf" size="20" />
+<font key="TitleFont" initData="s60tsb.ttf" size="22" />
+<font key="control.pane.font" initData="s60tsb.ttf" size="20" />
+<font key="menuitem.font" initData="s60ssb.ttf" size="20" />
+<font key="menuitem.submenu.font" initData="s60ssb.ttf" size="14" />
+<font key="message.font" initData="s60ssb.ttf" size="20" />
+<font key="navi.tab.font" initData="s60ssb.ttf" size="15" />
+<font key="navi.text.font" initData="s60snr.ttf" size="15" />
+<font key="standard.AnnotationFont" initData="s60ssb.ttf" size="16" />
+<font key="standard.LegendFont" initData="s60ssb.ttf" size="16" />
+<font key="standard.NormalFont" initData="s60ssb.ttf" size="20" />
+<font key="status.TitleFont" initData="s60tsb.ttf" size="22" />
+<!-- END -->
+
+

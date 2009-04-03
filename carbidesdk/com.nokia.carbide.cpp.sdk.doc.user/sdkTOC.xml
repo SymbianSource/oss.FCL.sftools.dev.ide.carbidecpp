@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Carbide.c++ Plug-in Developer Guide" 
+	link_to="../com.nokia.carbide.help.common/carbideHelpTOC.xml#anchorCarbideMisc" >
+  
+	<topic label="Carbide.c++ Plug-in Developer Guide" href="html/sdkMainTopic.htm">
+ 
+		<topic label="Getting Started" href="html/gettingStarted/gettingStarted.htm" >
+		   <anchor id="sdkGettingStarted" />
+		</topic>
+			  			  
+		<topic label="Reference" >
+			  <anchor id="sdkReference" />
+		</topic>
+			   
+		<topic label="Tasks" >
+			  <anchor id="sdkTasks" />
+		</topic>
+
+	   <topic label="UI Designer Custom Components"  href = "html/CustomComponents/customcomponents.htm">
+	      <anchor id="uid_customcomponents"/>
+	   </topic>
+					
+		<topic label="Legal"  href="html/legal.htm" />
+
+	</topic>   
+	   
+</toc>

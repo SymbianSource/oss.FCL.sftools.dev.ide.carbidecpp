@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<!-- START_USECASES: CU10 END_USECASES -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TQikLayoutHorizontalAlignment">
+		<enumElement displayValue="%horizontalalignment.inherit" value="EQikLayoutHAlignInherit"/><!-- EQikLayoutHAlignInherit -->
+		<enumElement displayValue="%horizontalalignment.fill" value="EQikLayoutHAlignFill"/><!-- EQikLayoutHAlignFill -->
+		<enumElement displayValue="%horizontalalignment.left" value="EQikLayoutHAlignLeft"/><!-- EQikLayoutHAlignLeft -->
+		<enumElement displayValue="%horizontalalignment.center" value="EQikLayoutHAlignCenter"/><!-- EQikLayoutHAlignCenter -->
+		<enumElement displayValue="%horizontalalignment.right" value="EQikLayoutHAlignRight"/><!-- EQikLayoutHAlignCenter -->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TQikLayoutVerticalAlignment">
+		<enumElement displayValue="%verticalalignment.inherit" value="EQikLayoutVAlignInherit"/><!-- EQikLayoutVAlignInherit -->
+		<enumElement displayValue="%verticalalignment.fill" value="EQikLayoutVAlignFill"/><!-- EQikLayoutVAlignFill -->
+		<enumElement displayValue="%verticalalignment.top" value="EQikLayoutVAlignTop"/><!-- EQikLayoutVAlignTop -->
+		<enumElement displayValue="%verticalalignment.center" value="EQikLayoutVAlignCenter"/><!-- EQikLayoutVAlignCenter -->
+		<enumElement displayValue="%verticalalignment.bottom" value="EQikLayoutVAlignBottom"/><!-- EQikLayoutVAlignBottom -->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TQikLayoutBoolSetting">
+		<enumElement displayValue="%boolsetting.inherit" value="EQikLayoutInheritBoolValue"/>
+		<enumElement displayValue="%boolsetting.false" value="EQikLayoutFalseValue"/>
+		<enumElement displayValue="%boolsetting.true" value="EQikLayoutTrueValue"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalSizes">
+		<enumElement displayValue="%logicalsizes.usecontrolminimum" value="-1"/><!-- EQikLayoutUseControlMinimum -->
+		<enumElement displayValue="%logicalsizes.inheritminimum" value="-2"/><!-- EQikLayoutInheritMinimum -->
+		<enumElement displayValue="%logicalsizes.smalliconsize" value="-3"/><!-- EQikLayoutSmallIconSize -->
+		<enumElement displayValue="%logicalsizes.mediumiconsize" value="-4"/><!-- EQikLayoutMediumIconSize -->
+		<enumElement displayValue="%logicalsizes.largeiconsize" value="-5"/><!-- EQikLayoutLargeIconSize -->
+		<enumElement displayValue="%logicalsizes.mediumthumbnailsize" value="-6"/><!-- EQikLayoutMediumThumbnailSize -->
+		<enumElement displayValue="%logicalsizes.largethumbnailsize" value="-7"/><!-- EQikLayoutLargeThumbnailSize -->
+		<enumElement displayValue="%logicalsizes.mediumportraitthumbnailsize" value="-8"/><!-- EQikLayoutMediumPortraitThumbnailSize -->
+		<enumElement displayValue="%logicalsizes.largeportraitthumbnailsize" value="-9"/><!-- EQikLayoutLargePortraitThumbnailSize -->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TQikLayoutLogicalMargins">
+		<enumElement displayValue="%logicalmargins.inherit" value="-1"/><!-- EQikLayoutInheritMargin -->
+		<enumElement displayValue="%logicalmargins.contentgap" value="-2"/><!-- EQikLayoutContentGap -->
+		<enumElement displayValue="%logicalmargins.contentgapright" value="-3"/><!-- EQikLayoutContentGapRight -->
+		<enumElement displayValue="%logicalmargins.contentgapleft" value="-4"/><!-- EQikLayoutContentGapLeft -->
+		<enumElement displayValue="%logicalmargins.leftedgetocontent" value="-5"/><!-- EQikLayoutLeftEdgeToContent -->
+		<enumElement displayValue="%logicalmargins.rightedgetocontent" value="-6"/><!-- EQikLayoutRightEdgeToContent -->
+		<enumElement displayValue="%logicalmargins.leftedgetopopout" value="-7"/><!-- EQikLayoutLeftEdgeToPopOut -->
+		<enumElement displayValue="%logicalmargins.rightedgetopopout" value="-8"/><!-- EQikLayoutRightEdgeToPopOut -->
+		<enumElement displayValue="%logicalmargins.rowtopmargin" value="-9"/><!-- EQikLayoutRowTopMargin -->
+		<enumElement displayValue="%logicalmargins.rowbottommargin" value="-10"/><!-- EQikLayoutRowBottomMargin -->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.Grab">
+		<enumElement displayValue="%grab.inheritexcessgrabweight" value="-1"/><!-- EQikLayoutInheritExcessGrabWeight -->
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TQikLayoutMirroringSetting">
+		<enumElement displayValue="%mirroringsetting.automirror" value="EQikLayoutAutoMirror"/>
+		<enumElement displayValue="%mirroringsetting.mirror" value="EQikLayoutMirror"/>
+		<enumElement displayValue="%mirroringsetting.nomirroring" value="EQikLayoutNoMirroring"/>
+	</enumPropertyDeclaration>
+	
+	<enumPropertyDeclaration qualifiedName="com.nokia.carbide.uiq.LayoutManager.TTextBaselineAlignment">
+		<enumElement displayValue="%textbaselinealignment.always" value="EAlignAlways"/><!-- EAlignAlways -->
+		<enumElement displayValue="%textbaselinealignment.whentextbaselinespacing" value="EAlignWhenTextBaselineSpacing"/><!-- EAlignWhenTextBaselineSpacing -->
+		<enumElement displayValue="%textbaselinealignment.never" value="EAlignNever"/><!-- EAlignNever -->
+	</enumPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.carbide.uiq.LayoutManager"
+		abstract="true"
+		version="1.0">
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>					
+		
+		<attributes>
+			<attribute key="is-layout-manager">true</attribute>
+		</attributes>
+		
+		<properties>
+			<property name="name"
+				displayName="%name"
+				category="%category.design"
+				descriptionKey="name.description"
+				type="uniqueName"/>
+		</properties>
+		
+	</component>
+		
+</componentDefinition>

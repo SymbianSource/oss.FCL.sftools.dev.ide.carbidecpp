@@ -1,0 +1,44 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Symbian Foundation License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*/
+
+
+
+#if defined(MM_WIN32)
+macro			__MEMMODEL_EMUL_SINGLE_HOST_PROCESS__
+#elif defined(MM_DIRECT)
+macro			__MEMMODEL_DIRECT__
+#elif defined(MM_MULTIPLE)
+macro			__MEMMODEL_MULTIPLE__
+#elif defined(MM_MOVING)
+macro			__MEMMODEL_MOVING__
+#endif
+
+systeminclude		\epoc32\include\kernel
+
+#if defined(MARM)
+systeminclude		\epoc32\include\kernel\arm
+systeminclude		\epoc32\include\memmodel\epoc
+#elif defined(X86)
+systeminclude		\epoc32\include\kernel\x86
+systeminclude		\epoc32\include\memmodel\epoc
+#elif defined(WINS)
+systeminclude		\epoc32\include\kernel\win32
+systeminclude		\epoc32\include\memmodel\emul
+#endif
+
+#include "..\nkern\nkern_ext.mmh"
+

@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests Plug-in
+Bundle-SymbolicName: com.nokia.carbide.templatewizard.symbian.tests
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.carbide.internal.templatewizard.symbian.tests.TestsPlugin
+Bundle-Vendor: NOKIA
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit,
+ com.nokia.carbide.templatewizard,
+ org.eclipse.emf.common,
+ org.eclipse.emf.ecore,
+ org.eclipse.core.resources,
+ com.nokia.cpp.utils.core,
+ com.nokia.carbide.cpp.sdk.core,
+ com.nokia.carbide.cpp.sdk.ui,
+ com.nokia.carbide.cpp.project.core,
+ com.nokia.carbide.cpp.epoc.engine
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.carbide.templatewizard.symbian.tests
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

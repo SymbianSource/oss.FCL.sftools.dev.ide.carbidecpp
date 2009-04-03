@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Reusing Strings</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Reusing Strings</h3>
+<p>The Reuse Strings setting  controls how the compiler stores string literals.</p>
+<p>If you enable this setting, the compiler stores each string literal separately. Otherwise, the compiler stores only one copy of identical string literals. This means if you change one of the strings, you change them all. For example, take this code snippet:</p>
+<p class="listing">char *str1=&quot;Hello&quot;;<br />
+  char *str2=&quot;Hello&quot;; // two identical strings<br />
+  *str2 = 'Y';</p>
+<p>This setting helps you save memory if your program contains identical string literals which you do not modify.</p>
+<p>If you enable the Reuse Strings setting, the strings are stored separately. After changing the first character, <span class="code">str1</span> is still &quot;<span class="code">Hello</span>&quot;, but <span class="code">str2</span> is &quot;<span class="code">Yello</span>&quot;.</p>
+<p>If you disable the Reuse Strings setting, the two strings are stored in one memory location because they are identical. After changing the first character, both <span class="code">str1</span> and <span class="code">str2</span> are &quot;<span class="code">Yello</span>&quot;, which is counterintuitive and can create bugs that are difficult to locate.</p>
+<p>The Reuse Strings setting corresponds to the pragma dont_reuse_strings. To check this setting, use <span class="code">__option (dont_reuse_strings)</span>. By default, this setting is enabled, so strings are not reused.</p>
+<p>See also <a href="../pragmas/p_dont_reuse_strings.htm">dont_reuse_strings</a>. and <a href="../symbols/sym_settings.htm">Checking Settings</a>.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

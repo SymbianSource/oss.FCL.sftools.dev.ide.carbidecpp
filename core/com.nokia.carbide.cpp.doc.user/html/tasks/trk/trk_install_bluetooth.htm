@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Installing On-device Debug Agents using Bluetooth</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {color: #FF0000}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Installing On-device Debug Agents using Bluetooth </h2>
+<p>Use Bluetooth to install the on-device debug agent, either Application TRK or System TRK, as a SISX file, to enable on-target debugging. The installation location of the  on-device debug agent will vary based on the phone. On some phones  it will be the Installed folder, on others it may be in My Own folder. Refer to the documentation that came with the phone to learn where installed programs are stored. </p>
+<p class="note"><b>NOTE</b> The following example shows how to install the SISX file from a PC running Windows XP SP2 using an internal Bluetooth device. The actions to install the SISX file may be different on your version of Windows. Refer to the OS documentation for information on transferring a file via a Bluetooth connection.</p>
+<div class="step">
+  <h4>Installing an On-device Debug Agent using Bluetooth </h4>
+  <ol>
+    <li>On the device ensure that the Bluetooth communications is turned on</li>
+	<li>On the PC ensure that the Bluetooth device is turned on</li>
+	<li>From your PC, search for available Bluetooth devices and make sure your device is listed</li>
+	<li>On the PC, right-click the SISX file, then choose the Send To &gt; Bluetooth &gt; <i>device</i> menu item (Figure 1)    </li>
+	<p align="center"><img src="images/trk_menu_send_to.png" width="700" height="452" /></p>
+	<p class="figure">Figure 1. Right-click SISX file</p>
+	
+    <li> Follow the on-screen instructions to transfer the SISX file to the target device</li>
+	<p>The SISX file is transfered to the target device as a message. On the target device you may need to set a PIN code for the file transfer, accept the message, then wait for the &quot;You have 1 new message&quot; alert to appear.</p>
+    <li>Locate the new message on the target device</li>
+	<p>Start the Messaging application on the target device and locate the new message. </p>
+    <li>Select the SISx file and open the file to install it</li>
+	<li>Click OK when prompted to install TRK</li>
+	<li>Follow the instructions on the screen to finish installing the TRK debug agent</li>
+  </ol>
+</div>
+  <h5>Related concepts</h5>
+  <ul>
+    <li><a href="../../concepts/trk.htm">On-device Debugging </a></li>
+  </ul>
+  <h5>Related references</h5>
+  <ul>
+    
+  <li><a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Setup </a></li>
+  <li><a href="../../reference/launch_configs/run_mode_overview.htm">Debug Window (On-device Debugging) Overview</a></li>
+  </ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="trk_install_usb.htm">Installing On-device Debug Agents using USB</a></li>
+  <li><a href="trk_connection_bluetooth.htm">Connecting via Bluetooth</a></li>
+  <li><a href="trk_connection_usb.htm">Connecting via USB </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

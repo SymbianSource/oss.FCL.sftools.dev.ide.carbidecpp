@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Volatile Variables</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Volatile Variables</h3>
+<p>(ISO C, &sect;6.7.3) When you declare a volatile variable, the Carbide C compiler takes the following precautions to respect the value of the variable:</p>
+<ul>
+  <li>The compiler stores commonly used variables in processor registers to produce faster object code. However, the compiler never stores the value of a volatile variable in a processor register.</li>
+  <li>The compiler uses its common sub-expression optimization to compute the addresses of commonly used variables and the results of often-used expressions once at the beginning of a function to produce faster object code. However, every time an expression uses a volatile variable, the compiler computes both the address of the volatile variable and the results of the expression that uses it.</li>
+</ul>
+<p>Listing 1 shows an example of volatile variables.</p>
+<div class="listing">
+  <h5>Listing 1. Volatile Variables</h5>
+  <p>void main(void)<br />
+    {<br />
+    int i[100];<br />
+    volatile int a, b; /* a and b are not cached in registers. */</p>
+  <p> a = 5;<br />
+    b = 20;</p>
+  <p> i[a + b] = 15; /* compiler calculates a + b */<br />
+    i[a + b] = 30; /* compiler recalculates a + b */<br />
+  }</p>
+</div>
+<p>The compiler does not place the value of a, b, or a+b in registers. But it does recalculate a+b in both assignment statements. <br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

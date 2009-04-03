@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>ODD Preconditions</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Preconditions to On-Device Debugging</h2>
+<p>Before you can use on-device debugging to debug 3rd edition and UIQ devices, the following preconditions must be met.</p>
+<div class="step">
+  <h4>Verifying On-device Debugging Preconditions </h4>
+  <ol>
+    <li>Verify that your system has the following:
+      <ul>
+        <li>S60 v3.x, UIQ 2.X or UIQ 3.X kit installed</li>
+        <li>ActivePerl installed</li>
+        <li>RVCT or GCCE compiler</li>
+        <li>USB or Bluetooth capable S60 3rd Edition or UIQ 3rd Edition device</li>
+        <li>USB or Bluetooth support on your PC </li>
+        <li>Nokia PC Suite (or equivilent software) for connecting and installing applications to the device </li>
+      </ul>
+    </li>
+    <li>Download and install the current TRK SISX file using the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Setup</a> dialog for debugging  S60 5th edition and UIQ devices</li>
+    <p>The Application TRK debug agents are stored If not, install it now using the <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</p>
+    <p class="note"><b>NOTE</b> The Application TRK versions included with Carbide is for CE versions of devices only. They are not intended for use with RnD devices. </p>
+    <li>Specify the communication method with the on-target device during the debug session</li>
+  <p>Start the Application TRK or System TRK on the device. During startup of TRK on the device you must specify the communication method the on-device agent uses to debug the device. Currently, those methods include <a href="trk_connection_bluetooth.htm">Bluetooth</a> and <a href="trk_connection_usb.htm">USB</a> or a null serial cable. For Bluetooth, you must pair the device with the PC and a valid serial port assigned. For USB, A USB cable must connect the PC to the device and a valid serial port assigned. Use <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Setup</a> dialog to make the identification and connection setup quick and easy. </p>
+  </ol>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/trk.htm">On-device Debugging </a></li>
+  <li><a href="../../concepts/build_configurations.htm">Build Configuration</a></li>
+  <li><a href="../../projects/launch/launch_configs_overview.htm">Launch Configuration </a> </li>
+</ul>
+<h5>Related reference</h5>
+<ul>
+  <li><a href="trk_start_sisx.htm">Starting the On-Device TRK Debug Agent</a></li>
+</ul>
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="trk_install_bluetooth.htm">Installing On-device Debug Agents using Bluetooth</a></li>
+  <li><a href="trk_install_usb.htm">Installing On-device Debug Agents using USB </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

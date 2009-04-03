@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+ <extension 
+ 	point="com.nokia.sdt.component.symbian.componentLibrary"
+ 	id="uiq"
+ 	name="UIQ Components">
+ 	<library
+        path="components"
+        sdkPattern="com\.uiq"/> 
+ </extension>
+ <extension
+       id="uiq_layout"
+       name="UIQ Layout Components"
+       point="com.nokia.sdt.component.symbian.componentLibrary">
+    <library
+          class="com.nokia.carbide.cpp.uiq.components.layoutComponents.ComponentLibrary">
+    </library>
+ </extension>
+ <extension
+       point="com.nokia.sdt.sourcegen.nameAlgorithm">
+    <algorithm
+          class="com.nokia.carbide.cpp.uiq.sourcemapping.NameAlgorithmPageId"
+          id="com.nokia.carbide.uiq.NAME_ALG_PAGE_ID">
+    </algorithm>
+    <algorithm
+          class="com.nokia.carbide.cpp.uiq.sourcemapping.NameAlgorithmControlId"
+          id="com.nokia.carbide.uiq.NAME_ALG_CONTROL_ID">
+    </algorithm>
+    <algorithm
+          class="com.nokia.carbide.cpp.uiq.sourcemapping.NameAlgorithmCommandId"
+          id="com.nokia.carbide.uiq.NAME_ALG_COMMAND_ID">
+    </algorithm>
+    <algorithm
+          class="com.nokia.carbide.cpp.uiq.sourcemapping.NameAlgorithmGroupId"
+          id="com.nokia.carbide.uiq.NAME_ALG_GROUP_ID">
+    </algorithm>
+    <algorithm
+          class="com.nokia.carbide.cpp.uiq.sourcemapping.NameAlgorithmNamedGroupId"
+          id="com.nokia.carbide.uiq.NAME_ALG_NAMEDGROUP_ID">
+    </algorithm>
+    <algorithm
+          class="com.nokia.carbide.cpp.uiq.sourcemapping.NameAlgorithmListBoxLayoutId"
+          id="com.nokia.carbide.uiq.NAME_ALG_LISTBOXLAYOUT_ID">
+    </algorithm>
+ </extension>
+
+	<extension
+         point="org.eclipse.ui.popupMenus">
+         
+       <objectContribution
+            adaptable="false"
+            id="com.nokia.carbide.uiq.addListBoxItem"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <filter
+               name="action-filter-test-passes:com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.AddListBoxItemActionFilterDelegate"
+               value="true"/>
+         <action
+               class="com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.AddListBoxItemActionFilterDelegate"
+               enablesFor="1"
+               id="com.nokia.carbide.uiq.addListBoxItem"
+               label="%_UI_AddListBoxItem"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+      </objectContribution>
+
+      <objectContribution
+            adaptable="false"
+            id="com.nokia.carbide.uiq.addChoiceListItem"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <filter
+               name="action-filter-test-passes:com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.AddChoiceListItemActionFilterDelegate"
+               value="true"/>
+         <action
+               class="com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.AddChoiceListItemActionFilterDelegate"
+               enablesFor="1"
+               id="com.nokia.carbide.uiq.addChoiceListItem"
+               label="%_UI_AddChoiceListItem"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+      </objectContribution>
+	  
+	   <objectContribution
+            adaptable="false"
+            id="com.nokia.carbide.cpp.uiq.configureSBBType"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <filter
+               name="action-filter-test-passes:com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.ConfigureSBBTypeActionFilterDelegate"
+               value="true"/>
+         <action
+               class="com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.ConfigureSBBTypeActionFilterDelegate"
+               enablesFor="1"
+               id="com.nokia.carbide.cpp.uiq.configureSBBType"
+               label="%_UI_ConfigureSBBType"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+      </objectContribution>
+      
+       <objectContribution
+            adaptable="false"
+            id="com.nokia.carbide.uiq.addViewPage"
+            objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+         <filter
+               name="action-filter-test-passes:com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.AddViewPageActionFilterDelegate"
+               value="true"/>
+         <action
+               class="com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.AddViewPageActionFilterDelegate"
+               enablesFor="1"
+               id="com.nokia.carbide.uiq.addViewPage"
+               label="%_UI_AddViewPage"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+      </objectContribution>
+       <objectContribution
+             id="com.nokia.carbide.uiq.selectViewPage"
+             objectClass="com.nokia.sdt.uidesigner.ui.actions.IPopupActionTarget">
+          <filter
+                name="action-filter-test-passes:com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.SelectViewPageActionFilterDelegate"
+                value="true"/>
+         <action
+               class="com.nokia.carbide.cpp.uiq.components/com.nokia.carbide.cpp.uiq.actions.SelectViewPageActionFilterDelegate"
+               enablesFor="1"
+               id="com.nokia.carbide.uiq.selectViewPage"
+               label="%_UI_SelectViewPage"
+               menubarPath="com.nokia.sdt.uidesigner.component"/>
+       </objectContribution>
+	  	
+	</extension>
+</plugin>

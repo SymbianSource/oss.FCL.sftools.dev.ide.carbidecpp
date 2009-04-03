@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.sdt.uimodel/src"
+    modelPluginID="com.nokia.sdt.uimodel" modelName="LookAndFeel" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>LookAndFeel.xsd</foreignModel>
+  <genPackages prefix="LookAndFeel" basePackage="com.nokia.sdt.looknfeel" resource="XML"
+      disposableProviderFactory="true" adapterFactory="false" utilityPackageSuffix="impl"
+      generateExampleClass="false" ecorePackage="LookAndFeel.ecore#/">
+    <genClasses ecoreClass="LookAndFeel.ecore#//AliasType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//AliasType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//AliasType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//AliasType/ref"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//BooleanType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//BooleanType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//BooleanType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//ColorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//ColorType/b"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//ColorType/g"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//ColorType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//ColorType/r"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//DimensionType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//DimensionType/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//DimensionType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//DimensionType/width"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/boolean"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/color"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/dimension"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/font"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/image"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/integer"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/lookAndFeel"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/maskedImage"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/position"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/rectangle"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//DocumentRoot/string"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//FontType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//FontType/initData"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//FontType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//FontType/size"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//ImageType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//ImageType/imageFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//ImageType/key"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//IntegerType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//IntegerType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//IntegerType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//LookAndFeelType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//LookAndFeelType/group"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/color"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/colorAlias"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/font"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/fontAlias"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/image"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/maskedImage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/position"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/positionAlias"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/dimension"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/dimensionAlias"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/rectangle"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/rectangleAlias"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/integer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/integerAlias"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/boolean"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/booleanAlias"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/string"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LookAndFeel.ecore#//LookAndFeelType/stringAlias"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//MaskedImageType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//MaskedImageType/imageFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//MaskedImageType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//MaskedImageType/maskFile"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//PositionType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//PositionType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//PositionType/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//PositionType/y"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//RectangleType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//RectangleType/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//RectangleType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//RectangleType/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//RectangleType/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//RectangleType/y"/>
+    </genClasses>
+    <genClasses ecoreClass="LookAndFeel.ecore#//StringType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//StringType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LookAndFeel.ecore#//StringType/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

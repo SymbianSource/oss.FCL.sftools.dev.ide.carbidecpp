@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="S60 SDKs for Java" >
+  
+   <anchor id="anchorS60JavaSDK" /> 	    		<!-- SDK documentation -->
+   <anchor id="anchorCarbideExample" />     		<!-- Examples -->
+   <anchor id="anchorLegal" />              <!-- License info, copyright, trademarks, disclaimers, notices -->
+           
+</toc>

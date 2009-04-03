@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+	<!-- This component is the abstract base component for
+	     all Series 60 control components
+	 -->
+
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.test.locationProperty">
+		<property name="x" type="integer"/>
+		<property name="y" type="integer"/>
+	</compoundPropertyDeclaration>
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.test.sizeProperty">
+		<property name="width" type="integer"/>
+		<property name="height" type="integer"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration 
+		qualifiedName="com.nokia.sdt.symbian.test.imageProperty"
+		converterClass="com.nokia.sdt.symbian.images.SymbianImageValueConverter"
+		>
+		<property name="bmpfile" displayName="multi-image file" type="string" readOnly="true"/>
+		<property name="bmpid" displayName="image id" type="string" readOnly="true"/>
+		<property name="bmpmask" displayName="image mask id" type="string" readOnly="true"/>
+	</compoundPropertyDeclaration>
+
+	<compoundPropertyDeclaration 
+		qualifiedName="com.nokia.carbide.uiq.ImageProperty"
+		converterClass="com.nokia.sdt.symbian.images.UIQImageValueConverter">
+		<property name="bmpfile" displayName="multi-image file" type="string" readOnly="true"/>
+		<property name="bmpid" displayName="image id" type="string" readOnly="true"/>
+		<property name="bmpmask" displayName="image mask id" type="string" readOnly="true"/>
+		<property name="uri" displayName="uri" type="string" readOnly="true"/>
+	</compoundPropertyDeclaration>
+
+
+	<component 
+			friendlyName="" 
+			qualifiedName="com.nokia.sdt.test.testControlBase" 
+			abstract="true"
+			version="0.1">
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+		</attributes>
+		<properties>
+			<property category="Design" name="name" displayName="%name" type="uniqueName"/>
+			<compoundProperty category="Layout" name="location" displayName="%location" 
+				type="com.nokia.sdt.test.locationProperty"
+				/>
+			<compoundProperty category="Layout" name="size" displayName="%size" 
+			type="com.nokia.sdt.test.sizeProperty"
+				/>
+		</properties>
+
+	</component>
+</componentDefinition>

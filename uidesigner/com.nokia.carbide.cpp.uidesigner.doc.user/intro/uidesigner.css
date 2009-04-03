@@ -1,0 +1,11 @@
+a#uid-birthday img { background-image : url(uid.gif); }
+a#uid-birthday:hover img { background-image : url(uid_hov.gif); }
+
+a#uid-yahoo img { background-image : url(uid.gif); }
+a#uid-yahoo:hover img { background-image : url(uid_hov.gif); }
+
+a#uid-note img { background-image : url(uid.gif); }
+a#uid-note:hover img { background-image : url(uid_hov.gif); }
+
+a#uid-features img { background-image : url(uid.gif); }
+a#uid-features:hover img { background-image : url(uid_hov.gif); }

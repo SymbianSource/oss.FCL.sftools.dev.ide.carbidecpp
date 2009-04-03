@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+	<component 
+	friendlyName="SourceGen Test" qualifiedName="com.nokia.examples.srcgen2c" 
+	category="Testing" version="1.0">
+		<sourceGen>
+			<templateGroup id="grp">
+			   <template phase="initcomponents" id="foo" location="mylocation" 
+			   		 mode="modal">
+	template stuff
+			   </template>
+			   <template id="far">
+	template stuff far
+			   </template>
+			</templateGroup>
+		   <template id="foo">
+template stuff #2
+		   </template>
+		   <template phase="initcomponents" id="rap" location="mylocation" 
+		   		 mode="modal">
+template stuff #3
+		   </template>
+		   <template phase="initcomponents" location="mylocation" 
+		   		 mode="modal">
+another stuff
+		   </template>
+			<templateGroup id="grp2">
+			   <template id="foo" >
+	template stuff AGAIN
+			   </template>
+			</templateGroup>
+		   
+		   
+		</sourceGen>
+	</component>
+</componentDefinition>

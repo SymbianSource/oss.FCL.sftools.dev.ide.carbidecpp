@@ -1,0 +1,6 @@
+#include <refheader.rh>
+
+RESOURCE OWNER r_test_resource_llink
+	{theLink = 0;
+
+	}

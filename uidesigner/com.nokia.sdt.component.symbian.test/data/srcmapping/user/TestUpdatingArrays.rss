@@ -1,0 +1,6 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_testArr
+	{
+	ints = { 1, 2, 3 };
+	}

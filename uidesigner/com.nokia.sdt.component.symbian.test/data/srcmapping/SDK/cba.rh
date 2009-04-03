@@ -1,0 +1,46 @@
+#define r_avkon_softkeys_options_back 0x30006601
+
+enum        // CBA constants
+    {
+    EAknSoftkeyOk = EEikBidOk,
+    EAknSoftkeyCancel = EEikBidCancel,
+    EAknSoftkeySelect = EEikBidSelect,
+    EAknSoftkeyOptions= 3000,
+    EAknSoftkeyBack,
+    EAknSoftkeyMark,
+    EAknSoftkeyUnmark,
+    EAknSoftkeyInsert,
+    EAknSoftkeyYes,
+    EAknSoftkeyNo,
+    EAknSoftkeyDone,
+    EAknSoftkeyClose,
+    EAknSoftkeyExit,
+    EAknSoftkeyClear,
+    EAknSoftkeyUnlock,
+    EAknSoftkeySave,
+    EAknSoftkeyShow,
+    EAknSoftkeyListen,
+    EAknSoftkeyRead,
+    EAknSoftkeySearch,
+    EAknSoftkeyEmpty,
+    EAknSoftkeyLock,
+    EAknSoftkeyCall,
+    EAknSoftkeyAgain,
+    EAknSoftkeyQuit,
+    EAknSoftkeyDetails,
+    EAknSoftkeyNext
+    };
+
+
+STRUCT EIK_APP_INFO {
+	LLINK cba;		// CBA
+}
+
+STRUCT CBA {
+	LLINK buttons[];  // CBA_BUTTON
+}
+
+STRUCT CBA_BUTTON {
+	WORD id;
+	LTEXT txt;
+}

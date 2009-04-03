@@ -1,0 +1,4 @@
+// localized strings for language: UK English (01)
+#define STR_EmptyContainerView_1 ""
+#define STR_EmptyContainerView_2 ""
+#define STR_EmptyContainerView_3 "EmptyContainer"

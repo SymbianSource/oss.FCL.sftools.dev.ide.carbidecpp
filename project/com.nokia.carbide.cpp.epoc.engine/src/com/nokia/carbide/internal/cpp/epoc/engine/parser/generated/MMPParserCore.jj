@@ -1,0 +1,507 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*	JavaCC input file for MMP parsing.
+*
+*/
+
+
+
+options {
+	STATIC=false;
+	USER_TOKEN_MANAGER=true;
+}
+
+PARSER_BEGIN(MMPParserCore)
+
+package com.nokia.carbide.internal.cpp.epoc.engine.parser.generated;
+
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.*;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.mmp.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.mmp.*;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class MMPParserCore extends ParserBase {
+    public IASTMMPTranslationUnit parse() {
+		IASTMMPTranslationUnit tu = ASTMMPFactory.createMMPTranslationUnit();
+		try {
+			TranslationUnit(tu);
+		} catch (ParseException e) {
+			hadErrors = true;
+			e.printStackTrace();
+		}
+		return tu;
+    }
+}
+
+PARSER_END(MMPParserCore)
+
+void TranslationUnit(IASTMMPTranslationUnit tu) : 
+{ 
+	IASTListNode<IASTMMPStatement> statements = null;
+	Token eof;
+}
+{
+	[ statements = Statements() ]
+	eof=<EOF>
+	{
+		if (statements != null) {
+			tu.setNodes((IASTListNode)statements);
+			ParserUtils.setSourceRangeForListNode(null, tu.getNodes(), eof);
+			ParserUtils.copySourceInfo(tu, tu.getNodes());
+		} else {
+			ParserUtils.setSourceRangeFromTokenSpan(tu.getNodes(), eof, eof);
+			ParserUtils.setSourceRangeFromTokenSpan(tu, eof, eof);
+		}
+	}
+}
+
+/*
+// stack overflow much?
+IASTListNode<IASTMMPStatement> Statements() : 
+{ 
+	IASTListNode<IASTMMPStatement> tail = null;
+	IASTMMPStatement node;
+}
+{
+	node = StatementOrProblem() [ tail = Statements() ]
+	{
+		if (node != null) {
+			ParserUtils.expandSourceRangeToLine(node);
+			if (tail == null)
+				tail = ASTMMPFactory.createMMPStatementListNode();
+			tail.add(0, node);
+		}
+		return tail;
+	}
+}
+*/
+
+JAVACODE
+IASTListNode<IASTMMPStatement> Statements() {
+	IASTListNode<IASTMMPStatement> stmts = null; 
+	while (((jj_ntk==-1)?jj_ntk():jj_ntk) != EOF) {
+		try {
+			IASTMMPStatement stmt = StatementOrProblem();
+			if (stmt != null) {
+				if (stmts == null) {
+					stmts = ASTMMPFactory.createMMPStatementListNode();			
+				}
+				stmts.add(stmt);
+			}
+		} catch (ParseException e) {
+			hadErrors = true;
+			getNextToken();
+		}
+	}
+	return stmts;
+}
+
+JAVACODE
+IASTMMPStatement createProblemStatement(Token start, Token end, ParseException e)
+{
+	IASTMMPStatement stmt;
+
+	if (end == null) {
+		ppRestOfLine(false);
+		end = token;
+	}
+	List<IToken> tokens = new ArrayList<IToken>();
+	start = start.next;
+	Token ptr = start;
+	while (true) {
+		if (ptr == null || ptr.kind == EOF)
+			break;
+		tokens.add(((ASTToken)ptr).iToken);
+		if (ptr == end)
+			break;
+		ptr = ptr.next;
+	}
+	// special case for this token, which only ends blocks, and does not
+	// show up as an UnknownStatement; thus, we need to keep moving or else
+	// we report this problem ad infinitum
+	if (start.kind == END) {
+		getNextToken();
+	}
+	IASTPreprocessorTokenStream stream = ASTFactory.createPreprocessorTokenStream(tokens);
+	ParserUtils.setSourceRangeForTokenStream(stream, stream);
+	stmt = ASTMMPFactory.createMMPProblemStatement(stream, createMessage(start, e));
+	ParserUtils.copySourceInfo(stmt, stream);
+	ParserUtils.expandSourceRangeToLine(stmt);
+	hadErrors = true;
+	return stmt;
+
+}
+
+
+IASTMMPStatement StatementOrProblem() :
+{
+	IASTMMPStatement stmt;
+	Token start = token;
+}
+{
+	try {
+		( stmt = Statement() )
+		{
+			return stmt;
+		}
+	} catch (ParseException e) {
+		return createProblemStatement(start, null, e);
+	}
+}
+
+IASTMMPStatement Statement() :
+{
+	IASTMMPStatement node;
+	Token end = null;
+}
+{
+	/* 	NOTE: the first three cover most of the generic statements --
+		see IMMPParserConfiguration! */
+	( node = FlagStatement() 
+	| node = SingleArgumentStatement()
+	| node = ListArgumentStatement()
+	/*	These are the statements with different syntax or special DOM nodes */
+	| node = AifStatement()
+	| node = BitmapSourceStatement()
+	| node = UidStatement()
+	| node = UnknownStatement()
+	| node = OptionStatement() 
+	| node = StartBlockStatement()
+	)
+	{
+		if (node != null && end != null) {
+			ParserUtils.expandSourceRangeToLine(node);
+			ParserUtils.extendSourceRangeToInclude(node, end);
+		}
+		return node;
+	}
+	/* ... and comments ... */
+	| ( node = Empty() )
+	{
+		return null;
+	}
+}
+
+IASTMMPStatement FlagStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+}
+{
+	start=<FLAG_STATEMENT> /*garbage=*/Arguments() eol=<EOL>
+	{
+		node = ASTMMPFactory.createMMPFlagStatement(
+			getLiteralTextNodeSpanning(start, start));
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		return node;
+	}
+}
+
+IASTMMPStatement SingleArgumentStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+	Token arg;
+}
+{
+	start=<SINGLE_ARGUMENT_STATEMENT> arg=<ARGUMENT> /*garbage=*/Arguments() eol=<EOL>
+	{
+		node = ASTMMPFactory.createMMPSingleArgumentStatement(
+			getLiteralTextNodeSpanning(start, start),
+			getLiteralTextNodeSpanning(arg, arg));
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		return node;
+	}
+}
+
+IASTMMPStatement ListArgumentStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	start=<LIST_ARGUMENT_STATEMENT> args=Arguments() eol=<EOL>
+	{
+		if (args.size() == 0)
+        	ParserUtils.setSourceRangeFromTokenAfter(args, start);
+		
+		node = ASTMMPFactory.createMMPListArgumentStatement(
+			getLiteralTextNodeSpanning(start, start),
+			args);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		return node;
+	}
+}
+
+
+IASTLiteralTextNode Argument() : 
+{
+	Token token = null;
+}
+{
+	token=<ARGUMENT>
+	{
+		return getLiteralTextNodeSpanning(token, token);
+   	}
+}
+
+IASTListNode<IASTLiteralTextNode> Arguments() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	[ args = ArgumentList() ]
+	{
+		if (args == null) {
+			args = ASTFactory.createLiteralTextNodeList();
+			args.setSeparator(" ");
+		}
+		if (arg != null)
+			args.add(0, arg);
+		ParserUtils.setSourceRangeForListNode(null, args, null);
+	   	return args;
+   	}
+}
+
+IASTListNode<IASTLiteralTextNode> ArgumentList() : 
+{
+	IASTLiteralTextNode arg = null;
+	IASTListNode<IASTLiteralTextNode> args = null;
+}
+{
+	arg = Argument() [ args=ArgumentList() ]
+	{
+		if (args == null) {
+			args = ASTFactory.createLiteralTextNodeList();
+		}
+		if (arg != null)
+			args.add(0, arg);
+	   	return args;
+   	}
+}
+
+IASTMMPStatement AifStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+	Token targetfile, sourcepath, resource;
+	IASTListNode<IASTLiteralTextNode> colorDepthAndBitmaps = null;
+}
+{
+	start=<AIF> targetfile=<ARGUMENT> sourcepath=<ARGUMENT> resource=<ARGUMENT> 
+	colorDepthAndBitmaps=Arguments() eol=<EOL>
+	{
+		IASTLiteralTextNode colorDepth = null;
+        if (colorDepthAndBitmaps.size() > 0) {
+                colorDepth = colorDepthAndBitmaps.remove(0);
+                ParserUtils.setSourceRangeForListNode(resource, colorDepthAndBitmaps, null);
+        } else {
+        	ParserUtils.setSourceRangeFromTokenSpanUpTo(colorDepthAndBitmaps, resource, resource);
+        }
+		node = ASTMMPFactory.createMMPAifStatement(
+			getLiteralTextNodeSpanning(targetfile, targetfile),
+			getLiteralTextNodeSpanning(sourcepath, sourcepath),
+			getLiteralTextNodeSpanning(resource, resource),
+			colorDepth,
+			colorDepthAndBitmaps);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		return node;
+	}
+}
+
+IASTMMPStatement BitmapSourceStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+	Token colorDepth;
+	IASTListNode<IASTLiteralTextNode> bitmaps = null;
+}
+{
+	start=<BITMAP_SOURCE> colorDepth=<ARGUMENT> bitmaps=Arguments() eol=<EOL>
+	{
+		if (bitmaps.size() == 0)
+        	ParserUtils.setSourceRangeFromTokenAfter(bitmaps, colorDepth);
+		
+		node = ASTMMPFactory.createMMPBitmapSourceStatement(
+			getLiteralTextNodeSpanning(colorDepth, colorDepth),
+			bitmaps);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		return node;
+	}
+}
+
+IASTMMPStatement OptionStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+	Token compiler;
+	IASTListNode<IASTLiteralTextNode> option = null;
+}
+{
+	( start=<OPTION> | start=<LINKEROPTION> | start=<OPTION_REPLACE> )
+	compiler=<ARGUMENT> option=Arguments() eol=<EOL>
+	{
+		node = ASTMMPFactory.createMMPOptionStatement(
+			getLiteralTextNodeSpanning(start, start),
+			getLiteralTextNodeSpanning(compiler, compiler),
+			option);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		ParserUtils.expandSourceRangeToLine(node);
+		return node;
+	}
+}
+
+
+IASTMMPStatement StartBlockStatement() :
+{
+	IASTMMPStatement node;
+	Token start, end;
+	Token blocktype, eol;
+	IASTListNode<IASTLiteralTextNode> arguments = null;
+	IASTListNode<IASTMMPStatement> statements = null;
+	IASTLiteralTextNode extra = null;
+}
+{
+	start=<START> blocktype=<ARGUMENT>  
+	{ ((MMPTokenManager) token_source).setBlockType(blocktype.image); }
+	arguments = Arguments() eol=<EOL>
+	[ statements = StatementList() ] 
+	end=<END> extra=ppRestOfLine(true)
+	{ ((MMPTokenManager) token_source).setBlockType(null); }
+	{
+		if (arguments.size() == 0)
+        	ParserUtils.setSourceRangeFromTokenAfter(arguments, blocktype);
+		if (statements == null) {
+			statements = ASTMMPFactory.createMMPStatementListNode();
+        	ParserUtils.setSourceRangeFromTokenAfter(statements, eol);
+		}
+				
+		ParserUtils.setSourceRangeForListNode(eol, statements, end);
+		node = ASTMMPFactory.createMMPStartBlockStatement(
+			getLiteralTextNodeSpanning(blocktype, blocktype),
+			arguments,
+			statements);
+		//ParserUtils.setSourceRangeFromTokenSpan(node, start, end);
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		ParserUtils.extendSourceRangeToInclude(node, statements);
+		ParserUtils.extendSourceRangeToInclude(node, end);
+		ParserUtils.extendSourceRangeToInclude(node, extra);
+		ParserUtils.expandSourceRangeToLine(node);
+		return node;
+	}
+}
+
+IASTListNode<IASTMMPStatement> StatementList() :
+{
+	IASTMMPStatement statement;
+	IASTListNode<IASTMMPStatement> list = null;
+}
+{
+	statement = StatementOrProblem() [ list = StatementList() ]
+	{
+		if (statement != null) {
+			if (list == null)
+				list = ASTMMPFactory.createMMPStatementListNode();
+			list.add(0, statement);
+			ParserUtils.expandSourceRangeToLine(statement);
+		}
+		return list;
+	}
+}
+
+IASTMMPStatement UidStatement() :
+{
+	IASTMMPStatement node;
+	Token start, eol;
+	Token uid2 = null, uid3 = null;
+}
+{
+	start=<UID> uid2=<ARGUMENT> [ uid3=<ARGUMENT> ] eol=<EOL>
+	{
+		node = ASTMMPFactory.createMMPUidStatement(
+			getLiteralTextNodeSpanning(uid2, uid2),
+			getLiteralTextNodeSpanning(uid3, uid3));
+		ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+		return node;
+	}
+}
+
+/**
+ *	Non-empty text which is unrecognized.  If it doesn't follow the
+ *	pattern <IDENTIFIER> ... then it's probably a parse error.
+ */
+IASTMMPStatement UnknownStatement() :
+{
+	IASTMMPStatement node;
+	Token errorStart = token;
+	Token start, eol;
+	IASTListNode<IASTLiteralTextNode> arguments = null;
+}
+{
+	start=<ARGUMENT> arguments=Arguments() eol=<EOL>
+	{
+		if (start.image.matches("\\w+")) {
+			if (arguments.size() == 0)
+	        	ParserUtils.setSourceRangeFromTokenAfter(arguments, start);
+
+			node = ASTMMPFactory.createMMPUnknownStatement(
+				getLiteralTextNodeSpanning(start, start),
+				arguments);
+			ParserUtils.setSourceRangeFromTokenSpan(node, start, eol);
+            ParserUtils.expandSourceRangeToLine(node);
+			return node;
+		} else {
+			return createProblemStatement(errorStart, eol,
+				new ParseException("Invalid statement keyword token: " + start));
+		}
+	}
+}
+
+/**
+ *	Empty line.
+ */
+IASTMMPStatement Empty() :
+{
+}
+{
+	<EOL>
+	{
+		return null;
+	}
+}
+
+IASTLiteralTextNode ppRestOfLine(boolean skip) : 
+{
+        Token start = token, end = start;
+}
+{
+	{
+        if (skip)
+	        start = end = getNextToken();
+       	if (end.kind != EOL && end.kind != EOF) {
+	        while (true) {
+	        	end = getNextToken();
+	        	if (end.kind == EOL || end.kind == EOF)
+	        		break;
+	        }
+	    }
+  		return getLiteralTextNodeSpanningUpTo(start, end);
+   	}
+}

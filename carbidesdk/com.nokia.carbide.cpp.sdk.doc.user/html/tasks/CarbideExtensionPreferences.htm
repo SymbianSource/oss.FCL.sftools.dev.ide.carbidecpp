@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Adding items to the Carbide menu</title>
+<style>
+<!--
+span.attr
+    {color:green}
+-->
+</style>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style3 {color: #006600}
+.style5 {font-family: "Courier New", Courier, mono}
+-->
+</style>
+</head>
+
+<body>
+<h2>Adding global preferences to the Carbide Extensions group</h2>
+
+<p>If you are creating a plug-in specifically for use with Carbide.c++ and it requires a global preferences page, we recommend that you add your preference page(s) under the<strong> Carbide Extensions</strong> group.
+</p>
+<p>Following this guideline reduces the likelihood of preference page clutter for uses with multiple Carbide extension plug-ins.
+It also provides users with a consistent place to look for Carbide.c++ global preferences.
+</p>
+<p>The<strong> Carbide Extensions</strong> group is defined in the <span class="style5">com.nokia.carbide.cpp plugin.xml</span> and such:
+</p>
+
+<pre class="listing">	&lt;extension<br>         point=&quot;<span class="style3">org.eclipse.ui.preferencePages</span>&quot;&gt;<br>      &lt;page<br>           name=&quot;<span class="style3">Carbide Extensions</span>&quot;<br>           class=&quot;<span class="style3">com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage</span>&quot;<br>           id=&quot;<span class="style3">com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage</span>&quot;/&gt;         <br>  &lt;/extension&gt;</pre>
+
+<p>Now your plug-in just needs to define the <span class="style5">category</span> where your new preference page is to reside. Take for example, the <span class="style5">leavescan</span> plug-in preferences:</p>
+<pre class="listing">	&lt;extension<br>         point=&quot;<span class="style3">org.eclipse.ui.preferencePages</span>&quot;&gt;<br>      &lt;page<br>            name=&quot;<span class="style3">Leavescan Preferences</span>&quot;<br>            class=&quot;<span class="style3">com.nokia.carbide.cpp.leavescan.ui.LeavescanPreferences</span>&quot;<br>            category=&quot;<span class="style3">com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage</span>&quot;<br>            id=&quot;<span class="style3">com.nokia.carbide.cpp.leavescan.ui.LeavescanPreferences</span>&quot;&gt;<br>      &lt;/page&gt;<br> &lt;/extension&gt;</pre>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</div></body>
+</html>

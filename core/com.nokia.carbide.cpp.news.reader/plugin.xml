@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="news"
+			id="CarbideNewsFile"
+			name="Carbide.c++ News File"
+			priority="normal">
+		</content-type>
+	</extension>
+
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer
+			class="com.nokia.carbide.cpp.internal.news.reader.ui.NewsPreferenceInitializer">
+		</initializer>
+	</extension>    
+
+	<extension point="org.eclipse.ui.commands">
+    	<command
+			id="com.nokia.carbide.cpp.news.reader.commands.launch.news"
+			name="Launch Carbide News">
+    	</command>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors">
+		<editor
+			class="com.nokia.carbide.cpp.internal.news.reader.editor.NewsEditor"
+			default="false"
+			icon="icons/feed-icon-14x14.png"
+			id="com.nokia.carbide.cpp.news.reader.NewsEditor"
+			name="Carbide.c++ News">
+			<contentTypeBinding
+				contentTypeId="com.nokia.carbide.cpp.news.reader.CarbideNewsFile">
+			</contentTypeBinding>
+		</editor>
+	</extension>
+
+	<extension point="org.eclipse.ui.handlers">
+    	<handler
+			class="com.nokia.carbide.cpp.internal.news.reader.ui.LaunchNewsCommandHandler"
+			commandId="com.nokia.carbide.cpp.news.reader.commands.launch.news">
+		</handler>
+	</extension>
+
+	<extension point="org.eclipse.ui.menus">
+		<!-- Defines a new menu contribution to the Eclipse help menu -->
+		<menuContribution
+			locationURI="menu:help?after=helpEnd">
+            <command
+				commandId="com.nokia.carbide.cpp.news.reader.commands.launch.news"
+				icon="icons/feed-icon-14x14.png"
+				label="Carbide.c++ News"
+				id="newsCommand"
+				tooltip="Carbide News">
+			</command>
+		</menuContribution>
+
+		<!-- Defines a new menu contribution to the Eclipse trim area -->
+		<menuContribution
+			locationURI="toolbar:org.eclipse.ui.trim.status">
+            <toolbar
+				id="com.nokia.carbide.cpp.news.contributions.toolbar.trim">
+				<command
+					commandId="com.nokia.carbide.cpp.news.reader.commands.launch.news"
+					icon="icons/feed-icon-14x14.png"
+					label="Carbide.c++ News"
+					id="newsTrimCommand"
+					tooltip="Carbide.c++ News">
+				</command>
+				<control
+					class="com.nokia.carbide.cpp.internal.news.reader.ui.NewsControlContribution"
+					id="controlContribtion">
+				</control>
+            </toolbar>
+		</menuContribution>
+	</extension>
+
+	<extension
+       point="org.eclipse.ui.preferencePages">
+		<page
+            name="Carbide.c++ News"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+            class="com.nokia.carbide.cpp.internal.news.reader.ui.NewsPreferencePage"
+            id="com.nokia.carbide.cpp.news.reader.NewsPreferencePage">
+		</page>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.startup">
+	</extension>
+
+</plugin>

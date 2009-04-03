@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<compoundPropertyDeclaration qualifiedName="com.nokia.sdt.series60.CEikTimeOffsetEditor.Flags">
+		<property name="EEikTimeWithoutSecondsField" type="boolean"
+			descriptionKey="EEikTimeWithoutSecondsFieldDescription" />
+		<property name="EEikTimeWithoutHoursField" type="boolean"
+			descriptionKey="EEikTimeWithoutHoursFieldDescription" />
+	</compoundPropertyDeclaration>
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikTimeOffsetEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="timeOffsetEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="TIME_OFFSET_EDITOR" className="CEikTimeOffsetEditor" />
+		<designerImages 
+			smallIconFile="CEikTimeOffsetEditor_sm.png" 
+			largeIconFile="CEikTimeOffsetEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikTimeOffsetEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-setting-item-list-content">true</attribute>
+			<attribute key="setting-item-class-name">CAknTimeOffsetSettingItem</attribute>
+			<attribute key="data-model-cpp-type">TTimeIntervalSeconds</attribute>
+			<attribute key="rss-control-type-enum">EEikCtTimeOffsetEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<!-- 24*60*60 - 1 -->
+			<property category="Data" name="minTimeOffsetSeconds" type="integer" 
+				default="-86399" minValue="-86399" maxValue="86399" 
+				descriptionKey="minTimeOffsetSecondsDescription" />
+			<property category="Data" name="maxTimeOffsetSeconds" type="integer" 
+				default="86399" minValue="-86399" maxValue="86399"
+				descriptionKey="maxTimeOffsetSecondsDescription" />
+			<property category="Data" name="timeOffsetSeconds" type="integer"  
+				minValue="-86399" maxValue="86399" 
+				descriptionKey="timeOffsetSecondsDescription" />
+			<compoundProperty category="Data" name="flags" 
+				type="com.nokia.sdt.series60.CEikTimeOffsetEditor.Flags" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"
+				descriptionKey="flagsDescription"
+			/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikTimeOffsetEditor_visual.js" prototype="CEikTimeOffsetEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="TIME_OFFSET_EDITOR" headers="eikon.rh">
+			<mapResourceMember struct="TIME_OFFSET" property="." member="minTimeOffset">
+				<mapSimpleMember property="minTimeOffsetSeconds" member="seconds"/>
+			</mapResourceMember>
+			<mapResourceMember struct="TIME_OFFSET" property="." member="maxTimeOffset">
+				<mapSimpleMember property="maxTimeOffsetSeconds" member="seconds"/>
+			</mapResourceMember>
+			<mapBitmaskMember property="flags" member="flags">
+				<mapBitmaskValue properties="EEikTimeWithoutSecondsField" value="EEikTimeWithoutSecondsField" />
+				<mapBitmaskValue properties="EEikTimeWithoutHoursField" value="EEikTimeWithoutHoursField" />
+			</mapBitmaskMember>
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container">
+	
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+
+		<template phase="Initialize" forms="Container Dialog Form"><![CDATA[
+${instanceMemberName}->SetTimeOffset( TTimeIntervalSeconds( ${properties.timeOffsetSeconds} ) );
+]]>		</template>
+		
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+
+		<template form="SettingsList" phase="Initialize"><![CDATA[
+<%		this.setupSettingItem(contribs, 0, instance, "TTimeIntervalSeconds( " + properties.timeOffsetSeconds + " )"); 
+%>]]>	</template>
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent" />
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

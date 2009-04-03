@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU8 END_USECASES -->
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	  
+	<component friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.carbide.uiq.Application" 
+		baseComponent="com.nokia.carbide.uiq.NonLayoutBase" 
+		instanceNameRoot="application"			
+		version="1.0">
+		
+	<symbian sdkName="com.uiq" minSDKVersion="3.0"></symbian>
+
+		<attributes>
+     <attribute key="not-in-toolbox">true</attribute>  
+     <attribute key="is-layout-object">false</attribute>
+     <attribute key="is-non-layout-object">false</attribute>
+     <attribute key="is-layout-container">false</attribute>
+     <attribute key="is-not-user-removable">true</attribute>
+		</attributes>
+		
+	  <properties>
+			<property name="className" type="string" descriptionKey="classNameDescription" 
+				category="%category.design"/>
+			<property name="uid" type="string" descriptionKey="uidDescription"
+				category="%category.design"/>
+			<property name="documentBase" type="string" default="Application" 
+				descriptionKey="documentBaseDescription"
+				category="%category.design"/>
+			<property name="nextViewId" type="integer" default="1" 
+				descriptionKey="nextViewIdDescription"
+				category="%category.design"/>   
+	  </properties>
+		
+	  <sourceMapping>
+			<mapResource struct="RSS_SIGNATURE" headers="qikon.rh eikon.rh" unnamed="true" id="app_signature"></mapResource>
+			<mapResource struct="TBUF" headers="qikon.rh" unnamed="true" id="app_tbuf">
+			    <mapSimpleMember property="documentBase" member="buf"></mapSimpleMember>
+			</mapResource>
+			<mapResource struct="EIK_APP_INFO" headers="uikon.rh" unnamed="true" id="app_eikappinfo"/>
+	  </sourceMapping>
+
+	<sourceGen>
+		<expandMacro name="HeaderFileTemplate" FileName="${instanceName}.h" IncludeGuardMacro="${instanceName$upper}_H">
+			<expandArgument name="InitialOwnedSystemIncludesContent">
+<![CDATA[#include <QikApplication.h>]]>
+			</expandArgument>
+		</expandMacro>
+
+		<expandMacro name="ClassTemplate" ClassName="${className}" BaseClassName="CQikApplication">
+      <expandArgument name="ClassComment">
+<![CDATA[
+
+/**
+ * This class is the entry point to the application.
+ */
+]]>      
+      </expandArgument>           
+		</expandMacro>
+
+		<expandMacro name="HeaderFileTemplate" FileName="${instanceName}ExternalInterface.h" 
+					IncludeGuardMacro="${instanceName$upper}EXTERNALINTERFACE_H" 
+					LocationPrefix="EXTERNALINTERFACE">
+      <expandArgument name="InitialOwnedConstantsContent">
+<![CDATA[
+/**
+ * Identifies the application's UID3.
+ */
+const TUid KUid${getProjectName()}App = {${properties.uid}};]]>
+      </expandArgument>
+	  <expandArgument name="InitialUserIncludesContent">
+<![CDATA[#include "${getProjectName()}ExternalInterface.h"]]>			
+			</expandArgument>
+		</expandMacro>
+
+		
+		<expandMacro name="SourceFileTemplate" FileName="${instanceName}.cpp" 
+					HeaderFileName="${instanceName}.h" 
+					LocationPrefix="APPLICATION_SOURCE">
+<!--      <expandArgument name="HeaderFileName">
+<![CDATA[${instanceName}Application.h]]>      
+      </expandArgument>  -->         
+			<expandArgument name="InitialSystemIncludesContent">
+<![CDATA[#include <eikstart.h>]]>			
+			</expandArgument>
+			<expandArgument name="InitialUserIncludesContent">
+<![CDATA[#include "${instanceName}ExternalInterface.h"]]>			
+			</expandArgument>
+
+			<expandArgument name="InitialFileTailContent">
+<![CDATA[
+/**
+ * E32Main() contains the program's start up code, the entry point for an EXE.
+ */
+GLDEF_C TInt E32Main()
+	{
+	return EikStart::RunApplication(${className}::NewApplication);
+	}]]>		
+			</expandArgument>
+		</expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="APPLICATION_APPDLLUID_METHOD" 
+				FunctionName="AppDllUid" 
+				FunctionArgs="" IsConst="true" 
+				ReturnType="TUid" 
+				DeclPhase="ClassMethods" 
+				ClassName="${className}" 
+				DeclLocation="CLASS_PRIVATE" 
+				DefnLocation="APPLICATION_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * The function is called by the UI framework to ask for the
+ * application's UID. The returned value is defined by the
+ * constant KUid${className}App and must match the second value
+ * defined in the project definition file.
+ *
+ * @return Application's UID
+ */]]>
+		</expandArgument>				
+        <expandArgument name="FunctionBody">
+return KUid${getProjectName()}App;        
+        </expandArgument>
+     </expandMacro>
+
+    <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="APPLICATION_CREATEDOCUMENTL_METHOD" 
+				FunctionName="CreateDocumentL" 
+				FunctionArgs="" 
+				ReturnType="CApaDocument*" 
+				DeclPhase="ClassMethods" 
+				ClassName="${className}" 
+				DeclLocation="CLASS_PRIVATE" 
+				DefnLocation="APPLICATION_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * This function is called by the UI framework at application start-up.
+ *
+ * @return Instance of the document class.
+ */]]>				
+        </expandArgument>
+
+	      <expandArgument name="FunctionBody">
+return ${instance.findChildOfType("com.nokia.carbide.uiq.ApplicationDocument").className}::NewL(*this);
+        </expandArgument>
+     </expandMacro>
+
+     <expandMacro name="GenerateMethod" IsOwned="false" FunctionLocationId="APPLICATION_NEWAPPLICATION_METHOD" 
+				FunctionName="NewApplication" 
+				IsStatic="true" 
+				FunctionArgs="" 
+				ReturnType="CApaApplication*" 
+				DeclPhase="ClassMethods" 
+				ClassName="${className}" 
+				DeclLocation="CLASS_PUBLIC" 
+				DefnLocation="APPLICATION_SOURCE_FILE">
+        <expandArgument name="FunctionComment">
+<![CDATA[
+/**
+ * The function is called by the framework immediately after it has started the
+ * application's EXE. It is called by the framework and is expected to have
+ * exactly this prototype.
+ *
+ * @return Instance of the application class.
+ */
+]]>				
+        </expandArgument>
+	      <expandArgument name="FunctionBody">
+return new ${className}();
+        </expandArgument>
+     </expandMacro>
+
+    <inline>
+			// iterate children
+			contribs.addAll(Engine.generateChildContributions(form))
+    </inline>
+	
+	<inline>
+		var allContribs = Engine.generateChildContributions("Application");
+		var mainUserIncludesContribs = Engine.getContributionsForPhase(allContribs, "MainUserIncludes");
+		Engine.assignLocationsForPhase(mainUserIncludesContribs, "MainUserIncludes", "APPLICATION_SOURCE_OWNED_USER_INCLUDES")
+		contribs.addAll(mainUserIncludesContribs);
+	</inline>
+	
+	<inline>
+			// gather contributions from views
+			var designReferences = instance.children[0].children[0].children;
+			for (i in designReferences) {
+				var designReference = designReferences[i];
+				if (designReference.isInstanceOf("com.nokia.carbide.uiq.DesignReference")) {
+					var viewContribs = Engine.generateViewContributions(designReference.properties.filePath, "ExternalInterface");
+					if (viewContribs != null) {
+						Engine.assignLocationsForPhase(viewContribs, "Initialize", "EXTERNALINTERFACE_OWNED_CONSTANTS");
+						Engine.assignLocationsForPhase(viewContribs, "OwnedUserIncludes", "EXTERNALINTERFACE_OWNED_USER_INCLUDES");
+						contribs.addAll(viewContribs);
+					}
+				}
+			}
+	</inline>
+	</sourceGen>
+	</component>
+	
+</componentDefinition>

@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<!-- ************* PREFERENCE PAGES ************** -->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Preprocess"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+            class="com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage"
+            id="com.nokia.carbide.cpp.builder.utils.ui.PreprocessPreferencePage">
+      </page>
+   </extension>
+
+  <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.nokia.carbide.cpp.internal.builder.utils.ui.BuilderUtilsPreferenceInitializer">
+      </initializer>
+   </extension>
+
+	<!-- ************* PROPERTY TESTERS ************** -->
+	<extension
+		point="org.eclipse.core.expressions.propertyTesters">
+		<propertyTester
+            class="com.nokia.carbide.cpp.internal.builder.utils.handlers.BuilderUtilsPropertyTester"
+            id="com.nokia.carbide.cpp.builder.utils.propertyTester"
+            namespace="com.nokia.carbide.cpp.builder.utils"
+            properties="canCompile,canPreprocess,isComponent,isProject,isPKGFile,canABLD"
+            type="org.eclipse.jface.viewers.ISelection">
+		</propertyTester>
+	</extension>
+
+	<!-- ************* EXPRESSIONS ************** -->
+	<extension point="org.eclipse.core.expressions.definitions">
+		<definition id="com.nokia.carbide.cpp.builder.utils.definition.canCompile">
+			<and>
+				<count value="+"/>
+				<with variable="selection">
+					<test
+						property="com.nokia.carbide.cpp.builder.utils.canCompile"
+						forcePluginActivation="true">
+					</test>
+				</with>
+			</and>
+		</definition>
+		<definition id="com.nokia.carbide.cpp.builder.utils.definition.canPreprocess">
+			<and>
+				<count value="1"/>
+				<with variable="selection">
+					<test
+						property="com.nokia.carbide.cpp.builder.utils.canPreprocess"
+						forcePluginActivation="true">
+					</test>
+				</with>
+			</and>
+		</definition>
+		<definition id="com.nokia.carbide.cpp.builder.utils.definition.isComponent">
+			<and>
+				<count value="+"/>
+				<with variable="selection">
+					<test
+						property="com.nokia.carbide.cpp.builder.utils.isComponent"
+						forcePluginActivation="true">
+					</test>
+				</with>
+			</and>
+		</definition>
+		<definition id="com.nokia.carbide.cpp.builder.utils.definition.isProject">
+			<and>
+				<count value="+"/>
+				<with variable="selection">
+					<test
+						property="com.nokia.carbide.cpp.builder.utils.isProject"
+						forcePluginActivation="true">
+					</test>
+				</with>
+			</and>
+		</definition>
+		<definition id="com.nokia.carbide.cpp.builder.utils.definition.isPKGFile">
+			<and>
+				<count value="+"/>
+				<with variable="selection">
+					<test
+						property="com.nokia.carbide.cpp.builder.utils.isPKGFile"
+						forcePluginActivation="true">
+					</test>
+				</with>
+			</and>
+		</definition>
+		<definition id="com.nokia.carbide.cpp.builder.utils.definition.canABLD">
+			<and>
+				<count value="+"/>
+				<with variable="selection">
+					<test
+						property="com.nokia.carbide.cpp.builder.utils.canABLD"
+						forcePluginActivation="true">
+					</test>
+				</with>
+			</and>
+		</definition>
+	</extension>
+
+	<!-- ************* COMMANDS ************** -->
+	<extension point="org.eclipse.ui.commands">
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
+            categoryId="org.eclipse.ui.category.file"
+			name="%BuilderUtils.Compile_Source"
+			description="%BuilderUtils.Compile_Source">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.preprocessSource"
+            categoryId="org.eclipse.ui.category.file"
+			name="%BuilderUtils.Preprocess"
+			description="%BuilderUtils.Preprocess">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.buildSymbianComponent"
+            categoryId="org.eclipse.ui.category.file"
+			name="%BuilderUtils.Build_Symbian_Component"
+			description="%BuilderUtils.Build_Symbian_Component">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.cleanSymbianComponent"
+            categoryId="org.eclipse.ui.category.file"
+			name="%BuilderUtils.Clean_Symbian_Component"
+			description="%BuilderUtils.Clean_Symbian_Component">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.freezeSymbianComponent"
+            categoryId="org.eclipse.ui.category.file"
+			name="%BuilderUtils.Freeze_Symbian_Component"
+			description="%BuilderUtils.Freeze_Symbian_Component">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.buildAllConfigs"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Build_All_Targets"
+			description="%BuilderUtils.Build_All_Targets">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.freezeExports"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Freeze_Exports"
+			description="%BuilderUtils.Freeze_Exports_ToolTip">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.buildPKG"
+            categoryId="org.eclipse.ui.category.file"
+			name="%BuilderUtils.Build_PKG"
+			description="%BuilderUtils.Build_PKG_ToolTip">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTarget"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Target"
+			description="%BuilderUtils.Target">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldExport"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Export"
+			description="%BuilderUtils.Export">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldCleanExport"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.CleanExport"
+			description="%BuilderUtils.CleanExport">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldResource"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Resource"
+			description="%BuilderUtils.Resource">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldFinal"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Final"
+			description="%BuilderUtils.Final">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTidy"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.Tidy"
+			description="%BuilderUtils.Tidy">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTestTarget"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.TestTarget"
+			description="%BuilderUtils.TestTarget">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTestExport"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.TestExport"
+			description="%BuilderUtils.TestExport">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTestCleanExport"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.TestCleanExport"
+			description="%BuilderUtils.TestCleanExport">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTestResource"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.TestResource"
+			description="%BuilderUtils.TestResource">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTestFinal"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.TestFinal"
+			description="%BuilderUtils.TestFinal">
+    	</command>
+    	<command
+			id="com.nokia.carbide.cpp.builder.utils.commands.abldTestTidy"
+            categoryId="org.eclipse.ui.category.project"
+			name="%BuilderUtils.TestTidy"
+			description="%BuilderUtils.TestTidy">
+    	</command>
+	</extension>
+
+	<!-- ************* HANDLERS ************** -->
+	<extension point="org.eclipse.ui.handlers">
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.CompileHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canCompile"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.PreprocessHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.preprocessSource">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canPreprocess"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ComponentCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.buildSymbianComponent">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isComponent"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ComponentCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.cleanSymbianComponent">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isComponent"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ComponentCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeSymbianComponent">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isComponent"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ProjectCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.buildAllConfigs">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isProject"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ProjectCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeExports">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isProject"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.BuildPKGCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.buildPKG">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isPKGFile"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTarget">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldExport">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldCleanExport">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldResource">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldFinal">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTidy">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestTarget">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestExport">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestCleanExport">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestResource">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestFinal">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+    	<handler
+			class="com.nokia.carbide.cpp.internal.builder.utils.handlers.ABLDCommandHandler"
+			commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestTidy">
+			<activeWhen>
+				<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+			</activeWhen>
+		</handler>
+	</extension>
+
+	<!-- ************* MENUS ************** -->
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any">
+			<separator name="BuilderUtils" visible="true"/>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.preprocessSource"
+				label="%BuilderUtils.Preprocess">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canPreprocess"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
+				label="%BuilderUtils.Compile_Source">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canCompile"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeSymbianComponent"
+				label="%BuilderUtils.Freeze_Symbian_Component">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isComponent"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.cleanSymbianComponent"
+				label="%BuilderUtils.Clean_Symbian_Component">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isComponent"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildSymbianComponent"
+				label="%BuilderUtils.Build_Symbian_Component">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isComponent"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:project?after=build">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildAllConfigs"
+				label="%BuilderUtils.Build_All_Targets"
+				icon="icons/Build_All_Targets_16x16.png">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isProject"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildAllConfigs"
+				label="%BuilderUtils.Build_All_Targets"
+				icon="icons/Build_All_Targets_16x16.png">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isProject"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:project?after=build">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeExports"
+				label="%BuilderUtils.Freeze_Exports"
+				icon="icons/Freeze_Exports_16x16.png">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isProject"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeExports"
+				label="%BuilderUtils.Freeze_Exports"
+				icon="icons/Freeze_Exports_16x16.png">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isProject"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildPKG"
+				label="%BuilderUtils.Build_PKG">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.isPKGFile"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:project?after=build">
+			<menu
+				id="com.nokia.carbide.cpp.builder.utils.abldmenu"
+				label="ABLD">
+			</menu>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTarget"
+				label="%BuilderUtils.Target">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldExport"
+				label="%BuilderUtils.Export">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldCleanExport"
+				label="%BuilderUtils.CleanExport">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldResource"
+				label="%BuilderUtils.Resource">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldFinal"
+				label="%BuilderUtils.Final">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTidy"
+				label="%BuilderUtils.Tidy">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<menu
+				id="com.nokia.carbide.cpp.builder.utils.abldtestmenu"
+				label="test">
+			</menu>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestTarget"
+				label="%BuilderUtils.Target">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestExport"
+				label="%BuilderUtils.Export">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestCleanExport"
+				label="%BuilderUtils.CleanExport">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestResource"
+				label="%BuilderUtils.Resource">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestFinal"
+				label="%BuilderUtils.Final">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="menu:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestTidy"
+				label="%BuilderUtils.Tidy">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			<menu
+				id="com.nokia.carbide.cpp.builder.utils.abldmenu"
+				label="ABLD">
+			</menu>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTarget"
+				label="%BuilderUtils.Target">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldExport"
+				label="%BuilderUtils.Export">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldCleanExport"
+				label="%BuilderUtils.CleanExport">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldResource"
+				label="%BuilderUtils.Resource">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldFinal"
+				label="%BuilderUtils.Final">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTidy"
+				label="%BuilderUtils.Tidy">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldmenu">
+			<menu
+				id="com.nokia.carbide.cpp.builder.utils.abldtestmenu"
+				label="test">
+			</menu>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestTarget"
+				label="%BuilderUtils.Target">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestExport"
+				label="%BuilderUtils.Export">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestCleanExport"
+				label="%BuilderUtils.CleanExport">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestResource"
+				label="%BuilderUtils.Resource">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestFinal"
+				label="%BuilderUtils.Final">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.abldtestmenu">
+			<command
+				commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTestTidy"
+				label="%BuilderUtils.Tidy">
+				<visibleWhen>
+					<reference definitionId="com.nokia.carbide.cpp.builder.utils.definition.canABLD"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+</plugin>

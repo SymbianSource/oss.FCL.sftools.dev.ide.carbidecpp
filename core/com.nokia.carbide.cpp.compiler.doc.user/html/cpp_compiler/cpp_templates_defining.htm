@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Declaring and Defining Templates</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Declaring and Defining Templates</h3>
+<p>In a header file, declare your class functions and function templates, as shown in Listing 3.9. </p>
+<div class="listing">
+  <h4>Listing 1. templ.h: A Template Declaration File</h4>
+  <p>template &lt;class T&gt; <br />
+    class Templ {<br />
+    T member;<br />
+    public:<br />
+    Templ(T x) { member=x; }<br />
+    T Get();<br />
+    };<br />
+    <br />
+    template &lt;class T&gt; <br />
+    T Max(T,T);</p>
+</div>
+<p>In a source file, include the header file, then define the function templates and the member functions of the class templates. Listing 3.10 shows you an example.</p>
+<p>This source file is a template definition file, which you include in any file that uses your templates. You do not need to add the template definition file to your project. Although this is technically a source file, you work with it as if it were a header file.</p>
+<p>The template definition file does not generate code. The compiler cannot generate code for a template until you specify what values it should substitute for the template arguments. Specifying these values is called instantiating the template. See <a href="cpp_templates_instantiating.htm">Instantiating a Template</a>.</p>
+<div class="listing">
+  <h4>Listing 2. templ.cp: A Template Definition File</h4>
+  <p>#include &quot;templ.h&quot;<br />
+    <br />
+    template &lt;class T&gt; <br />
+    T Templ&lt;T&gt;::Get() <br />
+    { <br />
+    return member; <br />
+    }<br />
+    <br />
+    template &lt;class T&gt; <br />
+    T Max(T x, T y) <br />
+    { <br />
+    return ((x&gt;y)?x:y); <br />
+    }</p>
+</div>
+<p class="note"><strong>WARNING</strong>! Do not include the original template declaration file, which ends in .h, in your source file. Otherwise, the compiler generates an error saying that the function or class is undefined.</p>
+<h4>Providing declarations when declaring the template</h4>
+<p>Carbide.c++ processes any declarations in a template when the template is declared, not when it is instantiated.</p>
+<p>Although the C++ compiler currently accepts declarations in templates that are not available when the template is declared, future versions of the compiler will not. Listing 3.11 shows some examples.</p>
+<div class="listing">
+  <h5>Listing 3.11 Declarations in Template Declarations</h5>
+  <p>// You must define names in a class template declaration</p>
+  <p>struct bar;<br />
+    template&lt;typename T&gt; struct foo {<br />
+    bar *member; // OK<br />
+    };<br />
+    struct bar { };<br />
+  foo&lt;int&gt; fi; </p>
+  <p>// Names in template argument dependent base classes:</p>
+  <p>template&lt;typename T&gt; struct foo {<br />
+    typedef T *tptr;<br />
+    };</p>
+  <p>template&lt;typename T&gt; struct foo {<br />
+    typedef T *tptr;<br />
+    };<br />
+    template&lt;typename T&gt; struct bar : foo&lt;T&gt; {<br />
+    typename foo&lt;T&gt;::tptr member; // OK<br />
+  };</p>
+  <p>// The correct usage of typename in template argument <br />
+    // dependent qualified names in some contexts:</p>
+  <p>template&lt;class T&gt; struct X {<br />
+    typedef X *xptr;<br />
+    xptr f();<br />
+    };<br />
+    template&lt;class T&gt; X&lt;T&gt;::xptr X&lt;T&gt;::f() // 'typename' missing<br />
+    {<br />
+    return 0;<br />
+    }</p>
+  <p>// Workaround: Use 'typename':</p>
+  <p>template&lt;class T&gt; typename X&lt;T&gt;::xptr X&lt;T&gt;::f() // OK<br />
+    {<br />
+    return 0;<br />
+    } <br />
+    
+  </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

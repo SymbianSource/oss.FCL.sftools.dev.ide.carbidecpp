@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+  <extension 
+		point="org.eclipse.ui.popupMenus">
+		<objectContribution
+        	adaptable="true"
+        	id="com.nokia.carbide.win32.utils.contribution1"
+        	nameFilter="*"
+        	objectClass="org.eclipse.core.resources.IResource">
+     		<action
+           		class="com.nokia.carbide.internal.win32.utils.actions.WindowsOpenFileUtils"
+           		enablesFor="1"
+           		id="openInWindowsExplorer"
+           		label="Show in Explorer"/>
+     		<action
+           		class="com.nokia.carbide.internal.win32.utils.actions.WindowsOpenFileUtils"
+           		enablesFor="1"
+           		id="openInCmdPrompt"
+           		label="Open Command Window"/>
+ 			</objectContribution>
+  </extension>
+</plugin>

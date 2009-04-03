@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Autotest Plug-in
+Bundle-SymbolicName: com.nokia.sdt.uidesigner.autotest
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.sdt.uidesigner.autotest.AutotestPlugin
+Bundle-Vendor: NOKIA
+Bundle-Localization: plugin
+Require-Bundle: com.nokia.sdt.component.symbian.test,
+ com.nokia.sdt.uimodel.tests,
+ com.nokia.sdt.sourcegen.tests,
+ org.junit,
+ org.eclipse.core.runtime,
+ com.nokia.sdt.emf.dm.tests,
+ com.nokia.sdt.symbian.tests,
+ com.nokia.sdt.referenceprojects.test,
+ com.nokia.sdt.component.symbian;bundle-version="1.4.0"
+Eclipse-AutoStart: true
+Export-Package: com.nokia.sdt.uidesigner.autotest

@@ -1,0 +1,643 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Checking Settings</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Checking Settings</h3>
+<p>The preprocessor function <span class="code">__option() lets you check pragmas and other settings that control the C</span>/C++ compiler and code generation. You typically modify these settings using various panels in the Project Settings window.</p>
+<p>The syntax for this preprocessor function is as follows:</p>
+<p class="listing"><span class="code">__option(setting</span>-name)</p>
+<p>If the specified setting is enabled, <span class="code">__option() returns </span><span class="code">1</span>; otherwise it returns <span class="code">0</span>.</p>
+<p>To determine if a setting-name is invalid, see <a href="../errors/err_as_warnings.htm">Warnings as Errors</a>.</p>
+<p>Use this function when you want one source file to contain code that uses different settings. The example below shows how to compile one series of lines if you are compiling for machines with the MC68881 floating-point unit and another series if you are compiling for machines without it:</p>
+<p class="listing">#if <span class="code">__option (code</span>68881) // Code for 68K chip with FPU<br />
+  #else<br />
+  // Code for any 68K processor<br />
+  #endif</p>
+<p>Table 1 lists all the setting names you can use in the preprocessor function <span class="code">__option()</span>.</p>
+<h5>Table 1. Preprocessor Setting Names for <span class="code">__option()</span></h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="33%" scope="col">This argument...</th>
+    <th width="67%" class="table" scope="col">Corresponds to the&hellip;</th>
+  </tr>
+  <tr>
+    <td class="code">a6frames</td>
+    <td>Pragma a6frames.</td>
+  </tr>
+  <tr>
+    <td class="code">align_array_members</td>
+    <td>Pragma align_array_members.</td>
+  </tr>
+  <tr>
+    <td class="code">altivec_codegen</td>
+    <td>Pragma altivec_codegen.</td>
+  </tr>
+  <tr>
+    <td class="code">altivec_model</td>
+    <td>Pragma altivec_model.</td>
+  </tr>
+  <tr>
+    <td class="code">altivec_vrsave</td>
+    <td>Pragma altivec_vrsave.</td>
+  </tr>
+  <tr>
+    <td class="code">always_inline</td>
+    <td>Pragma <a href="../pragmas/p_always_inline.htm">always_inline</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">ANSI_strict</td>
+    <td><a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting  and pragma ANSI_strict.</td>
+  </tr>
+  <tr>
+    <td class="code">arg_dep_lookup</td>
+    <td>Pragma <a href="../pragmas/p_arg_dep_lookup.htm">arg_dep_lookup</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">ARM_conform</td>
+    <td>Pragma <a href="../pragmas/p_arm_conform.htm">ARM_conform</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">array_new_delete</td>
+    <td>Pragma <a href="../pragmas/p_array_new_delete.htm">array_new_delete</a></td>
+  </tr>
+  <tr>
+    <td class="code">auto_inline</td>
+    <td>Auto-Inline setting of the Inlining menu  and pragma <a href="../pragmas/p_auto_inline.htm">auto_inline</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">bool</td>
+    <td>Enable bool Support setting  and pragma <a href="../pragmas/p_bool.htm">bool</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">check_header_flags</td>
+    <td>Pragma <a href="../pragmas/p_check_header_flags.htm">check_header_flags</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">code68020</td>
+    <td>Pragma code68020.</td>
+  </tr>
+  <tr>
+    <td class="code">code68881</td>
+    <td>Pragma code68881.</td>
+  </tr>
+  <tr>
+    <td class="code">const_multiply</td>
+    <td>Pragma const_multiply.</td>
+  </tr>
+  <tr>
+    <td class="code">const_strings</td>
+    <td>Pragma <a href="../pragmas/p_const_strings.htm">const_strings</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">cplusplus</td>
+    <td>Force C++ Compilation setting , the pragma <a href="../pragmas/p_cplusplus.htm">cplusplus</a>, and the macro cplusplus. Indicates whether the compiler is compiling this file as a C++ file.</td>
+  </tr>
+  <tr>
+    <td class="code">cpp_extensions</td>
+    <td>Pragma <a href="../pragmas/p_cpp_extensions.htm">cpp_extensions</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">d0_pointers</td>
+    <td>Pragmas pointers_in_D0 and pointers_in_A0.</td>
+  </tr>
+  <tr>
+    <td class="code">def_inherited</td>
+    <td>Pragma <a href="../pragmas/p_def_inherited.htm">def_inherited</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">defer_codegen</td>
+    <td>Pragma <a href="../pragmas/p_defer_codegen.htm">defer_codegen</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">defer_defarg_parsing</td>
+    <td>Pragma <a href="../pragmas/p_defer_defarg_parsing.htm">defer_defarg_parsing</a></td>
+  </tr>
+  <tr>
+    <td class="code">direct_destruction</td>
+    <td>No longer available</td>
+  </tr>
+  <tr>
+    <td class="code">direct_to_SOM</td>
+    <td>Pragma direct_to_SOM.</td>
+  </tr>
+  <tr>
+    <td class="code">disable_registers</td>
+    <td>Pragma disable_registers.</td>
+  </tr>
+  <tr>
+    <td class="code">dollar_identifiers</td>
+    <td>Pragma <a href="../pragmas/p_dollar_identifiers.htm">dollar_identifiers</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">dont_inline</td>
+    <td>Don&rsquo;t Inline setting  and pragma <a href="../pragmas/p_dont_inline.htm">dont_inline</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">dont_reuse_strings</td>
+    <td>Reuse Strings setting  and pragma <a href="../pragmas/p_dont_reuse_strings.htm">dont_reuse_strings</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">ecplusplus</td>
+    <td>Pragma <a href="../pragmas/p_ecplusplus.htm">ecplusplus</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">EIPC_EIPSW</td>
+    <td>Pragma EIPC_EIPSW.</td>
+  </tr>
+  <tr>
+    <td class="code">enumsalwaysint</td>
+    <td>Enums Always Int setting  and pragma <a href="../pragmas/p_enumsalwaysint.htm">enumsalwaysint</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">exceptions</td>
+    <td>Enable C++ Exceptions setting  and pragma <a href="../pragmas_x86/p_exceptions.htm">exceptions</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">export</td>
+    <td>Pragma export.</td>
+  </tr>
+  <tr>
+    <td class="code">extended_errorcheck</td>
+    <td>Extended Error Checking setting  and pragma <a href="../pragmas/p_extended_errorcheck.htm">extended_errorcheck</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">far_data</td>
+    <td>Pragma far_data.</td>
+  </tr>
+  <tr>
+    <td class="code">far_strings</td>
+    <td>Pragma far_strings.</td>
+  </tr>
+  <tr>
+    <td class="code">far_vtables</td>
+    <td>Pragma far_vtables.</td>
+  </tr>
+  <tr>
+    <td class="code">faster_pch_gen</td>
+    <td>Pragma <a href="../pragmas/p_faster_pch_gen.htm">faster_pch_gen</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">float_constants</td>
+    <td>Pragma <a href="../pragmas/p_float_constants.htm">float_constants</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">force_active</td>
+    <td>Pragma <a href="../pragmas/p_force_active.htm">force_active</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">fourbyteints</td>
+    <td>Pragma fourbyteints.</td>
+  </tr>
+  <tr>
+    <td class="code">fp_contract</td>
+    <td>Pragma fp_contract.</td>
+  </tr>
+  <tr>
+    <td class="code">fullpath_prepdump</td>
+    <td>Pragma <a href="../pragmas/p_fullpath_prepdump.htm">fullpath_prepdump</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">function_align</td>
+    <td>Pragma function_align.</td>
+  </tr>
+  <tr>
+    <td class="code">gcc_extensions</td>
+    <td>Pragma <a href="../pragmas/p_gcc_extensions.htm">gcc_extensions</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">IEEEdoubles</td>
+    <td>Pragma IEEEdoubles.</td>
+  </tr>
+  <tr>
+    <td class="code">ignore_oldstyle</td>
+    <td>Pragma <a href="../pragmas/p_ignore_oldstyle.htm">ignore_oldstyle</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">import</td>
+    <td>Pragma <a href="../pragmas/p_import.htm">import</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">inline_bottom_up</td>
+    <td>Pragma <a href="../pragmas/p_inline_bottom_up.htm">inline_bottom_up</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">inline_bottom_up_once</td>
+    <td>Pragma <a href="../pragmas/p_inline_bottom_up_once.htm">inline_bottom_up_once</a></td>
+  </tr>
+  <tr>
+    <td class="code">inline_intrinsics</td>
+    <td>Pragma inline_intrinsics.</td>
+  </tr>
+  <tr>
+    <td class="code">inline_max_auto_size</td>
+    <td>Pragma <a href="../pragmas/p_inline_max_auto_size.htm">inline_max_auto_size</a></td>
+  </tr>
+  <tr>
+    <td class="code">inline_max_size</td>
+    <td>Pragma <a href="../pragmas/p_inline_max_size.htm">inline_max_size</a></td>
+  </tr>
+  <tr>
+    <td class="code">inline_max_total_size</td>
+    <td>Pragma <a href="../pragmas/p_inline_max_total_size.htm">inline_max_total_size</a></td>
+  </tr>
+  <tr>
+    <td class="code">internal</td>
+    <td>Pragma <a href="../pragmas/p_internal.htm">internal</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">interrupt</td>
+    <td>Pragma interrupt.</td>
+  </tr>
+  <tr>
+    <td class="code">k63d</td>
+    <td>K6 3D Favored setting in the Extended Instruction Set menu of the x86 CodeGen panel and pragma <a href="../pragmas_x86/p_k63d.htm">k63d</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">k63d_calls</td>
+    <td> MMX + K6 3D setting in the Extended Instruction Set menu of the x86 CodeGen panel and pragma k63d_calls.</td>
+  </tr>
+  <tr>
+    <td class="code">lib_export</td>
+    <td>Pragma <a href="../pragmas/p_lib_export.htm">lib_export</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">line_prepdump</td>
+    <td>Pragma <a href="../pragmas/p_line_prepdump.htm">line_prepdump</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">little_endian</td>
+    <td>No option. Defined as 1 if you are compiling for a little endian target (such as x86); 0 if you are compiling for a big endian target (such as PowerPC).</td>
+  </tr>
+  <tr>
+    <td class="code">longlong</td>
+    <td>Pragma <a href="../pragmas/p_longlong.htm">longlong</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">longlong_enums</td>
+    <td>Pragma <a href="../pragmas/p_longlong_enums.htm">longlong_enums</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">longlong_prepeval</td>
+    <td>Pragma <a href="../pragmas/p_longlong_prepeval.htm">longlong_prepeval</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">macsbug</td>
+    <td>Pragma macsbug.</td>
+  </tr>
+  <tr>
+    <td class="code">max_errors</td>
+    <td>Pragma max_errors</td>
+  </tr>
+  <tr>
+    <td class="code">microsoft_exceptions</td>
+    <td>Pragma microsoft_exceptions.</td>
+  </tr>
+  <tr>
+    <td class="code">microsoft_RTTI</td>
+    <td>Pragma microsoft_RTTI.</td>
+  </tr>
+  <tr>
+    <td class="code">mmx</td>
+    <td>MMX setting in the Extended Instruction Set menu of the x86 CodeGen panel and pragma <a href="../pragmas_x86/p_mmx.htm">mmx</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">mmx_call</td>
+    <td>Pragma mmx_call.</td>
+  </tr>
+  <tr>
+    <td class="code">mpwc</td>
+    <td>Pragma mpwc.</td>
+  </tr>
+  <tr>
+    <td class="code">mpwc_newline</td>
+    <td>Pragma <a href="../pragmas/p_mpwc_newline.htm">mpwc_newline</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">mpwc_relax</td>
+    <td>Pragma <a href="../pragmas/p_mpwc_relax.htm">mpwc_relax</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">msg_show_lineref</td>
+    <td>Pragma <a href="../pragmas/p_msg_show_lineref.htm">msg_show_lineref</a></td>
+  </tr>
+  <tr>
+    <td class="code">msg_show_realref</td>
+    <td>Pragma <a href="../pragmas/p_msg_show_realref.htm">msg_show_realref</a></td>
+  </tr>
+  <tr>
+    <td class="code">multibyteaware_ preserve_literals</td>
+    <td>Pragma multibyteaware_
+preserve_literals</td>
+  </tr>
+  <tr>
+    <td class="code">no_conststringconv</td>
+    <td>Pragma <a href="../pragmas/p_no_conststringconv.htm">no_conststringconv</a></td>
+  </tr>
+  <tr>
+    <td class="code">no_register_coloring</td>
+    <td>Pragma no_register_coloring.</td>
+  </tr>
+  <tr>
+    <td class="code">no_static_dtors</td>
+    <td>Pragma <a href="../pragmas/p_no_static_dtors.htm">no_static_dtors</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">no_conststringconv</td>
+    <td>Pragma no_conststringconv</td>
+  </tr>
+  <tr>
+    <td class="code">oldstyle_symbols</td>
+    <td>Pragma oldstyle_symbols.</td>
+  </tr>
+  <tr>
+    <td class="code">only_std_keywords</td>
+    <td>ANSI Keywords Only setting  and pragma <a href="../pragmas/p_only_std_keywords.htm">only_std_keywords</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_classresults</td>
+    <td>Pragma <a href="../pragmas/p_opt_classresults.htm">opt_classresults</a></td>
+  </tr>
+  <tr>
+    <td class="code">opt_common_subs</td>
+    <td>Pragma <a href="../pragmas/p_opt_common_subs.htm">opt_common_subs</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_dead_assignments</td>
+    <td>Pragma <a href="../pragmas/p_opt_dead_assignments.htm">opt_dead_assignments</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_dead_code</td>
+    <td>Pragma <a href="../pragmas/p_opt_dead_code.htm">opt_dead_code</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_lifetimes</td>
+    <td>Pragma <a href="../pragmas/p_opt_lifetimes.htm">opt_lifetimes</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_loop_invariants</td>
+    <td>Pragma <a href="../pragmas/p_opt_loop_invariants.htm">opt_loop_invariants</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_propagation</td>
+    <td>Pragma <a href="../pragmas/p_opt_propagation.htm">opt_propagation</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_strength_reduction</td>
+    <td>Pragma <a href="../pragmas/p_opt_strength_reduction.htm">opt_strength_reduction</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_strength_reduction_strict</td>
+    <td>Pragma <a href="../pragmas/p_opt_strength_reduction_strict.htm">opt_strength_reduction_strict</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_unroll_loops</td>
+    <td>Pragma <a href="../pragmas/p_opt_unroll_loops.htm">opt_unroll_loops</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">opt_vectorize_loops</td>
+    <td>Pragma <a href="../pragmas/p_opt_vectorize_loops.htm">opt_vectorize_loops</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">optimize_for_size</td>
+    <td>Pragma <a href="../pragmas/p_optimize_for_size.htm">optimize_for_size</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">optimizewithasm</td>
+    <td>Pragma <a href="../pragmas/p_optimizewithasm.htm">optimizewithasm</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">pool_data</td>
+    <td>Pragma pool_data.</td>
+  </tr>
+  <tr>
+    <td class="code">pool_strings</td>
+    <td>Pool Strings setting  and pragma <a href="../pragmas/p_pool_strings.htm">pool_strings</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">ppc_unroll_speculative</td>
+    <td>Pragma ppc_unroll_speculative.</td>
+  </tr>
+  <tr>
+    <td class="code">precompile</td>
+    <td>Whether or not the file is precompiled.</td>
+  </tr>
+  <tr>
+    <td class="code">preprocess</td>
+    <td>Whether or not the file is preprocessed.</td>
+  </tr>
+  <tr>
+    <td class="code">profile</td>
+    <td>Pragma profile.</td>
+  </tr>
+  <tr>
+    <td class="code">readonly_strings</td>
+    <td>Pragma <a href="../pragmas/p_readonly_strings.htm">readonly_strings</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">register_coloring</td>
+    <td>Pragma <a href="../pragmas_x86/p_register_coloring.htm">register_coloring</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">require_prototypes</td>
+    <td>Require Function Prototypes setting  and pragma <a href="../pragmas/p_require_prototypes.htm">require_prototypes</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">RTTI</td>
+    <td>Enable RTTI setting  and pragma <a href="../pragmas/p_rtti.htm">RTTI</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">showmessagenumber</td>
+    <td>Pragma <a href="../pragmas/p_showmessagenumber.htm">showmessagenumber</a></td>
+  </tr>
+  <tr>
+    <td class="code">side_effects</td>
+    <td>Pragma side_effects.</td>
+  </tr>
+  <tr>
+    <td class="code">simple_prepdump</td>
+    <td>Pragma <a href="../pragmas/p_simple_prepdump.htm">simple_prepdump</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">SOMCallOptimization</td>
+    <td>Pragma SOMCallOptimization.</td>
+  </tr>
+  <tr>
+    <td class="code">SOMCheckEnvironment</td>
+    <td>Pragma SOMCheckEnvironment.</td>
+  </tr>
+  <tr>
+    <td class="code">stack_cleanup</td>
+    <td>Pragma stack_cleanup.</td>
+  </tr>
+  <tr>
+    <td class="code">suppress_init_code</td>
+    <td>Pragma <a href="../pragmas/p_suppress_init_code.htm">suppress_init_code</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">suppress_warnings</td>
+    <td>Pragma <a href="../pragmas/p_suppress_warnings.htm">suppress_warnings</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">sym</td>
+    <td>Marker in the project window debug column and pragma <a href="../pragmas/p_sym.htm">sym</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">syspath_once</td>
+    <td>Pragma <a href="../pragmas/p_syspath_once.htm">syspath_once</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">text_encoding</td>
+    <td>Pragma <a href="../pragmas/p_text_encoding.htm">text_encoding</a></td>
+  </tr>
+  <tr>
+    <td class="code">toc_data</td>
+    <td>Pragma toc_data.</td>
+  </tr>
+  <tr>
+    <td class="code">traceback</td>
+    <td>Pragma traceback.</td>
+  </tr>
+  <tr>
+    <td class="code">trigraphs</td>
+    <td><a href="../pragmas/p_trigraphs.htm">Expand Trigraphs</a> setting  and pragma <a href="../pragmas/p_trigraphs.htm">trigraphs</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">unsigned_char</td>
+    <td>Use Unsigned Chars setting  and pragma <a href="../pragmas/p_unsigned_char.htm">unsigned_char</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">use_fp_instructions</td>
+    <td>Pragma use_fp_instructions.</td>
+  </tr>
+  <tr>
+    <td class="code">use_frame</td>
+    <td>Pragma <a href="../pragmas_x86/p_use_frame.htm">use_frame</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">use_mask_registers</td>
+    <td>Pragma use_mask_registers.</td>
+  </tr>
+  <tr>
+    <td class="code">warning</td>
+    <td>Pragma warning</td>
+  </tr>
+  <tr>
+    <td class="code">warn_any_ptr_int_conv</td>
+    <td>Pragma <a href="../pragmas/p_warn_any_ptr_int_conv.htm">warn_any_ptr_int_conv</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_emptydecl</td>
+    <td>Empty Declarations setting  and pragma <a href="../pragmas/p_warn_emptydecl.htm">warn_emptydecl</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_extracomma</td>
+    <td>Extra Commas setting  and pragma <a href="../pragmas/p_warn_extracomma.htm">warn_extracomma</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_hiddenlocals</td>
+    <td>Pragma <a href="../pragmas/p_warn_hiddenlocals.htm">warn_hiddenlocals</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_hidevirtual</td>
+    <td>Hidden virtual functions setting  and pragma <a href="../pragmas/p_warn_hidevirtual.htm">warn_hidevirtual</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_illegal_instructions</td>
+    <td> Pragma <a href="../pragmas_x86/p_warn_illegal_instructions.htm">warn_illegal_instructions</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_illpragma</td>
+    <td>Illegal Pragmas setting  and pragma <a href="../pragmas/p_warn_illpragma.htm">warn_illpragma</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_illtokenpasting</td>
+    <td>Pragma <a href="../pragmas/p_warn_illtokenpasting.htm">warn_illtokenpasting</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_illunionmembers</td>
+    <td>Pragma <a href="../pragmas/p_warn_illunionmembers.htm">warn_illunionmembers</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_impl_f2i_conv</td>
+    <td>Pragma <a href="../pragmas/p_warn_impl_f2i_conv.htm">warn_impl_f2i_conv</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_impl_i2f_conv</td>
+    <td>Pragma <a href="../pragmas/p_warn_impl_i2f_conv.htm">warn_impl_i2f_conv</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_impl_s2u_conv</td>
+    <td>Pragma <a href="../pragmas/p_warn_impl_s2u_conv.htm">warn_impl_s2u_conv</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_implicitconv</td>
+    <td>Implicit Arithmetic Conversions setting  and pragma <a href="../pragmas/p_warn_implicitconv.htm">warn_implicitconv</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_missingreturn</td>
+    <td>Pragma <a href="../pragmas/p_warn_missingreturn.htm">warn_missingreturn</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_no_explicit_virtual</td>
+    <td>Pragma <a href="../pragmas/p_warn_no_explicit_virtual.htm">warn_no_explicit_virtual</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_no_side_effect</td>
+    <td>pragma <a href="../pragmas/p_warn_no_side_effect.htm">warn_no_side_effect</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_notinlined</td>
+    <td>Non-Inlined Functions setting  and pragma <a href="../pragmas/p_warn_notinlined.htm">warn_notinlined</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_padding</td>
+    <td>pragma <a href="../pragmas/p_warn_padding.htm">warn_padding</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_possunwant</td>
+    <td>Possible Errors setting  and pragma <a href="../pragmas/p_warn_possunwant.htm">warn_possunwant</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_ptr_int_conv</td>
+    <td>pragma <a href="../pragmas/p_warn_ptr_int_conv.htm">warn_ptr_int_conv</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_resultnotused</td>
+    <td>pragma <a href="../pragmas/p_warn_resultnotused.htm">warn_resultnotused</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_structclass</td>
+    <td>Inconsistent &lsquo;class&rsquo; / &lsquo;struct&rsquo; Usage setting  and pragma <a href="../pragmas/p_warn_structclass.htm">warn_structclass</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_undefmacro</td>
+    <td>pragma <a href="../pragmas/p_warn_undefmacro.htm">warn_undefmacro</a></td>
+  </tr>
+  <tr>
+    <td class="code">warn_unusedarg</td>
+    <td>Unused Arguments setting  and pragma <a href="../pragmas/p_warn_unusedarg.htm">warn_unusedarg</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">warn_unusedvar</td>
+    <td>Unused Variables setting  and pragma warn_unusedvar.</td>
+  </tr>
+  <tr>
+    <td class="code">warning_errors</td>
+    <td>Treat Warnings As Errors setting  and pragma <a href="../pragmas/p_warning_errors.htm">warning_errors</a>.</td>
+  </tr>
+  <tr>
+    <td class="code">wchar_type</td>
+    <td>Enable <span class="code">wchar_t</span> Support setting  and pragma <a href="../pragmas/p_wchar_type.htm">wchar_type</a>.</td>
+  </tr>
+</table>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

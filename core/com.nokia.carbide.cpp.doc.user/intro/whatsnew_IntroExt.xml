@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<introContent>
+  	<extensionContent 
+		  id="com.nokia.carbide.cpp.doc.user-whatsnew" 
+		  style="carbide.css" 
+		  alt-style="carbide.properties" 
+		  name="Carbide.c++ Release Notes" 
+		  path="whatsnew/@">
+		  
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
+       		label="Carbide.c++ Release Notes" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+       		id="carbide-link" 
+       		style-id="content-link">
+          	<text>Learn about what's new in Carbide.c++ for Symbian OS developers.</text>
+       		</link>
+       	</group>
+		  
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
+       		label="On-Device Connection (2.0)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm" 
+       		id="carbide-link" 
+       		style-id="content-link">
+          	<text>Create remote connection settings and update Carbide software services on devices.</text>
+       		</link>
+       	</group>
+
+  	</extensionContent>
+</introContent>

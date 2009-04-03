@@ -1,0 +1,7 @@
+// generated file: do not modify
+#ifdef LANGUAGE_16
+#include "output.l16"
+#endif
+#ifdef LANGUAGE_10
+#include "output.l10"
+#endif

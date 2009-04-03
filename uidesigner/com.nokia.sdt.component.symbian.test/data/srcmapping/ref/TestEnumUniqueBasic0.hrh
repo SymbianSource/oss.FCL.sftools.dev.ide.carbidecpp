@@ -1,0 +1,6 @@
+// generated file: do not modify
+enum TMyContainerCommands 
+    {
+    EMyContainerTestEnumUniqueness1TheCmd = 0x6000,
+    EMyContainerTestEnumUniqueness2TheCmd
+    };

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+    <extension
+          point="com.nokia.carbide.bugreport.product"
+          id="com.nokia.carbide.bugdatacollector.product"
+          name="Carbide Bug Data Collector">
+            <product
+              productName="Carbide.c++"
+              class="com.nokia.carbide.internal.bugdatacollector.model.BugDataCollector" />
+    </extension>
+   
+	<extension
+         point="org.eclipse.ui.preferencePages">
+		<page
+            name="%preferences.BugReports"
+            class="com.nokia.carbide.internal.bugdatacollector.ui.preferences.BugDataCollectorPreferencePage"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+            id="com.nokia.carbide.bugdatacollector.ui.preferences.BugDataCollectorPreferencePage">
+		</page>
+	</extension>
+	
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.nokia.carbide.internal.bugdatacollector.ui.preferences.BugDataCollectorPreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>

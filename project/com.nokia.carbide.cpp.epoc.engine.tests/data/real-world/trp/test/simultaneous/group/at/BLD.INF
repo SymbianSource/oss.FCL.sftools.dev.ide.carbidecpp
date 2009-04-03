@@ -1,0 +1,64 @@
+/*
+* Copyright (c) 2001-2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+
+
+/**
+@file
+
+Build information for Simultaneous AT tests
+*/
+
+PRJ_EXPORTS
+
+PRJ_TESTMMPFILES
+
+// Simultaneous Tests
+
+SimultaneousUnitTestsAt.mmp
+
+PRJ_TESTEXPORTS
+
+./trpSimultaneousAT.iby    /epoc32/rom/include/trpsimultaneousat.iby
+
+#ifndef BTTTEST_INI_EXPORT
+#define BTTTEST_INI_EXPORT
+#endif
+
+// Allow the exporting of this file to be skipped if already done by stubbed.
+#ifndef SIMULTANEOUS_INI_EXPORT
+#define SIMULTANEOUS_INI_EXPORT
+../../ini_files/Overnight.ini    z:/simultaneousunittests/overnight.ini
+../../ini_files/SimultaneousAdvancedCall.ini	z:/simultaneousunittests/simultaneousadvancedcall.ini
+../../ini_files/SimultaneousBasicCall.ini	z:/simultaneousunittests/simultaneousbasiccall.ini
+../../ini_files/SimultaneousCellBroadcast.ini	z:/simultaneousunittests/simultaneouscellbroadcast.ini
+../../ini_files/SimultaneousConfCall.ini	z:/simultaneousunittests/simultaneousconfcall.ini
+../../ini_files/SimultaneousCphs.ini	z:/simultaneousunittests/simultaneouscphs.ini
+../../ini_files/SimultaneousData.ini	z:/simultaneousunittests/simultaneousdata.ini
+../../ini_files/SimultaneousFunc100Pc.ini	z:/simultaneousunittests/simultaneousfunc100pc.ini
+../../ini_files/SimultaneousGprsData.ini	z:/simultaneousunittests/simultaneousgprsdata.ini
+../../ini_files/SimultaneousMultiCall.ini	z:/simultaneousunittests/simultaneousmulticall.ini
+../../ini_files/Simultaneousmultimedia.ini	z:/simultaneousunittests/simultaneousmultimedia.ini
+../../ini_files/SimultaneousNetworkHandling.ini	z:/simultaneousunittests/simultaneousnetworkhandling.ini
+../../ini_files/SimultaneousPhone.ini	z:/simultaneousunittests/simultaneousphone.ini
+../../ini_files/SimultaneousPhoneBook.ini	z:/simultaneousunittests/simultaneousphonebook.ini
+../../ini_files/SimultaneousSat.ini	z:/simultaneousunittests/simultaneoussat.ini
+../../ini_files/SimultaneousSecurity.ini	z:/simultaneousunittests/simultaneoussecurity.ini
+../../ini_files/SimultaneousSms.ini	z:/simultaneousunittests/simultaneoussms.ini
+../../ini_files/SimultaneousSs.ini	z:/simultaneousunittests/simultaneousss.ini
+../../ini_files/SimultaneousUssd.ini	z:/simultaneousunittests/simultaneousussd.ini
+#endif
+

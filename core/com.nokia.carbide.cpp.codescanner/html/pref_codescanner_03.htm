@@ -1,0 +1,480 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>CodeScanner Rules preferences </title>
+<link rel="StyleSheet" href="../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+   <body>
+   <div class="Head1">
+<h2>CodeScanner Rules preferences </h2>
+</div>
+   <p>Use the <img src="images/command_link.png" width="16" height="12" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.codescanner.ui.CSPreferencePage)")'>
+   CodeScanner</a> <b>Rules</b> page in the <b>Preferences</b> window  or the project's <a href="#cs_Projects">properties</a> window to enable or disable the rules used to validate Symbian OS project files. Rules are divided by  category and have a severity assigned to them by CodeScanner, but you can use the Edit control to change those settings to better suit your  work environment. You can also sort the rules by clicking a column title.  </p>
+   <p align="center"><img src="images/pref_cs_rules.png" width="705" height="603" alt="" /></p>
+   <p class="figure">Figure 1. Rules global settings </p>
+   <table width="700"
+border="0" cellpadding="2" cellspacing="0">
+	 <tr valign="top"><th width="221" class="Cell">Name</th><th width="558" class="Cell">Function</th></tr>
+         <tr valign="top">
+           <td class="Cell"><b>Configure Project Specific Settings... </b></td>
+           <td class="Cell"><p>Click to open the project  <b>Properties</b> window and configure CodeScanner for that specific project. </p>
+           <p class="note"><b>NOTE</b> Only visible in the global CodeScanner preference panels. This also applies to the File Filters and General pages</p></td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>CodeScanner rules </b></td>
+           <td class="Cell"><p>The list of all CodeScanner rules and their active state. </p>           </td>
+        </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Edit...</b></td>
+           <td class="Cell">Opens the currently selected rule in the edit rule dialog where you can set the categroy and severity of the rule. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Enable All </b></td>
+           <td class="Cell">Activates all the rules in the CodeScanner rules list. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Disable All </b></td>
+           <td class="Cell">Deactivates all the rules in the CodeScanner rules list. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Details</b></td>
+           <td class="Cell">Displays helpful advice to help you avoid triggering the selected rule in your source code and projects. </td>
+         </tr>
+   </table>
+	 <p>&nbsp;</p>
+	 <p>The following table indicates an example of  rules listed in the Rules tab and associated error messages that would be generated in the Problems view.</p>
+	 <table border="0" cellspacing="0" cellpadding="2">
+	 <tr valign="top"><th width="294" class="Cell">Name</th>
+	   <th width="585" class="Cell">Description</th>
+	 </tr>
+
+       <tr>
+         <td width="294" valign="top" class="code"><p>accessArrayElementWithoutCheck</p></td>
+         <td width="585" valign="top"><p>Array element accessed by At()    function without checking index is within array range</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>accessArrayElementWithoutCheck2</p></td>
+         <td width="585" valign="top"><p>Array element accessed by []    without checking range</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>activestart</p></td>
+         <td width="585" valign="top"><p>Using CActiveScheduler::Start</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>activestop</p></td>
+         <td width="585" valign="top"><p>Using CActiveScheduler::Stop</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>arraypassing</p></td>
+         <td width="585" valign="top"><p>Passing arrays by value rather    than reference</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>arrayptrcleanup</p></td>
+         <td width="585" valign="top"><p>Using local CArrayPtr classes    without cleanup items</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>assertdebuginvariant</p></td>
+         <td width="585" valign="top"><p>__ASSERT_DEBUG with    User::Invariant</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>baddefines</p></td>
+         <td width="585" valign="top"><p>Lowercase definition names</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>baseconstruct</p></td>
+         <td width="585" valign="top"><p>Leaving function called before    BaseConstructL()</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>callActiveObjectWithoutCheckingOrStopping</p></td>
+         <td width="585" valign="top"><p>Active object called without checking whether it is active or canceling it first</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>changenotification</p></td>
+         <td width="585" valign="top"><p>Using RSAVarChangeNotify to see System Agent changes</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>cleanup</p></td>
+         <td width="585" valign="top"><p>CleanupStack::Pop(AndDestroy) parameters</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>commentcode</p></td>
+         <td width="585" valign="top"><p>Commented-out code</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>connect</p></td>
+         <td width="585" valign="top"><p>Ignoring Connect() return value</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>ConnectAndDontCloseMemberVariable</p></td>
+         <td width="585" valign="top"><p>Calling Connect() or Open() on a member variable without calling Close() in the destructor</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>constnames</p></td>
+         <td width="585" valign="top"><p>Badly-named constants</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>consttdescptr</p></td>
+         <td width="585" valign="top"><p>Const descriptor pointer as argument</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>controlornull</p></td>
+         <td width="585" valign="top"><p>Accessing return value of ControlOrNull()</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>ctltargettype</p></td>
+         <td width="585" valign="top"><p>Use of targettype ctl</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>debugrom</p></td>
+         <td width="585" valign="top"><p>Debug components in ROM</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>declarename</p></td>
+         <td width="585" valign="top"><p>Use of __DECLARE_NAME</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>deleteMemberVariable</p></td>
+         <td width="585" valign="top"><p>Member variable deleted incorrectly</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>destructor</p></td>
+         <td width="585" valign="top"><p>Pointer access in destructors</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>doubleSemiColon</p></td>
+         <td width="585" valign="top"><p>Use of double semicolon</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>driveletters</p></td>
+         <td width="585" valign="top"><p>Hard-coded drive letters</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>eikbuttons</p></td>
+         <td width="585" valign="top"><p>Checks that the R_EIK_BUTTONS_* resources are not being used</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>eikonenvstatic</p></td>
+         <td width="585" valign="top"><p>Using CEikonEnv::Static</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>enummembers</p></td>
+         <td width="585" valign="top"><p>Enums with badly-named members</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>enumnames</p></td>
+         <td width="585" valign="top"><p>Badly-named enums</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>exportinline</p></td>
+         <td width="585" valign="top"><p>Exporting inline functions</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>exportpurevirtual</p></td>
+         <td width="585" valign="top"><p>Exporting pure virtual functions</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>externaldriveletters</p></td>
+         <td width="585" valign="top"><p>Hard-coded external drive letters</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>foff</p></td>
+         <td width="585" valign="top"><p>Use of _FOFF</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>forbiddenwords</p></td>
+         <td width="585" valign="top"><p>Use of forbidden words in header files</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>forgottoputptroncleanupstack</p></td>
+         <td width="585" valign="top"><p>Neglected to put variable on cleanup stack</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>friend</p></td>
+         <td width="585" valign="top"><p>Use of friends</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>goto</p></td>
+         <td width="585" valign="top"><p>Use of goto</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>ifassignments</p></td>
+         <td width="585" valign="top"><p>Assignment in an If statement</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>ifpreprocessor</p></td>
+         <td width="585" valign="top"><p>Use of #if in .h files</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>inheritanceorder</p></td>
+         <td width="585" valign="top"><p>Incorrect inheritance order of M and C classes</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>intleaves</p></td>
+         <td width="585" valign="top"><p>Methods that leave AND return a TInt error</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>jmp</p></td>
+         <td width="585" valign="top"><p>Use of setjmp and/or longjmp</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>leave</p></td>
+         <td width="585" valign="top"><p>Leaving functions called in non-leaving functions</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>LeaveNoError</p></td>
+         <td width="585" valign="top"><p>Leaving with KErrNone</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>leavingoperators</p></td>
+         <td width="585" valign="top"><p>Leaving functions called in operator functions</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>LFunctionCantLeave</p></td>
+         <td width="585" valign="top"><p>L-functions that cannot leave</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>longlines</p></td>
+         <td width="585" valign="top"><p>Overly long lines of code</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>magicnumbers</p></td>
+         <td width="585" valign="top"><p>Use of magic numbers</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>mclassdestructor</p></td>
+         <td width="585" valign="top"><p>M class has destructor</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>memberlc</p></td>
+         <td width="585" valign="top"><p>Assigning LC methods to member variables</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>membervariablecallld</p></td>
+         <td width="585" valign="top"><p>Calling LD function on member variable</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>missingcancel</p></td>
+         <td width="585" valign="top"><p>Cancel() not called in active object's destructor</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>missingcclass</p></td>
+         <td width="585" valign="top"><p>C class not inheriting from another C class</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>mmpsourcepath</p></td>
+         <td width="585" valign="top"><p>Use of absolute path names in MMP files</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>multilangrsc</p></td>
+         <td width="585" valign="top"><p>Not using    BaflUtils::NearestLanguageFile() when loading a resource file</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>multipledeclarations</p></td>
+         <td width="585" valign="top"><p>Multiple declarations on one line</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>multipleinheritance</p></td>
+         <td width="585" valign="top"><p>Non M-class multiple inheritance</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>mydocs</p></td>
+         <td width="585" valign="top"><p>Hard-coded mydocs directory strings</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>namespace</p></td>
+         <td width="585" valign="top"><p>Use of namespace</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>newlreferences</p></td>
+         <td width="585" valign="top"><p>NewL() returning a reference</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>noleavetrap</p></td>
+         <td width="585" valign="top"><p>TRAP used with no leaving functions</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>nonconsthbufc</p></td>
+         <td width="585" valign="top"><p>Non-const HBufC* parameter passing</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>nonconsttdesc</p></td>
+         <td width="585" valign="top"><p>Non-const TDesC&amp; parameter passing</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>nonleavenew</p></td>
+         <td width="585" valign="top"><p>Use of new without (ELeave)</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>nonunicodeskins</p></td>
+         <td width="585" valign="top"><p>Non-Unicode skins</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>null</p></td>
+         <td width="585" valign="top"><p>NULL equality check</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>open</p></td>
+         <td width="585" valign="top"><p>Ignoring Open() return value</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>pointertoarrays</p></td>
+         <td width="585" valign="top"><p>Pointer to arrays as members of a C class</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>pragmadisable</p></td>
+         <td width="585" valign="top"><p>Use of #pragma warning</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>pragmamessage</p></td>
+         <td width="585" valign="top"><p>Use of #pragma message</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>pragmaother</p></td>
+         <td width="585" valign="top"><p>Use of #pragma other than warning and message</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>privateinheritance</p></td>
+         <td width="585" valign="top"><p>Use of private inheritance</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>pushaddrvar</p></td>
+         <td width="585" valign="top"><p>Pushing address of a variable onto the cleanup stack</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>pushmember</p></td>
+         <td width="585" valign="top"><p>Pushing data members onto the cleanup stack</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>readresource</p></td>
+         <td width="585" valign="top"><p>Using ReadResource() instead of ReadResourceL()</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>resourcenotoncleanupstack</p></td>
+         <td width="585" valign="top"><p>Neglected to put resource objects on cleanup stack</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>resourcesonheap</p></td>
+         <td width="585" valign="top"><p>Resource objects on the heap</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>returndescriptoroutofscope</p></td>
+         <td width="585" valign="top"><p>Return descriptor out of scope</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>rfs</p></td>
+         <td width="585" valign="top"><p>Use of non-pointer/reference RFs</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>rssnames</p></td>
+         <td width="585" valign="top"><p>Duplicate RSS names</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>stringliterals</p></td>
+         <td width="585" valign="top"><p>Use of _L string literals</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>stringsinresourcefiles</p></td>
+         <td width="585" valign="top"><p>Strings in RSS or RA files</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>struct</p></td>
+         <td width="585" valign="top"><p>Use of struct</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>tcclasses</p></td>
+         <td width="585" valign="top"><p>T classes inheriting from C classes</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>tclassdestructor</p></td>
+         <td width="585" valign="top"><p>T class has destructor</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>todocomments</p></td>
+         <td width="585" valign="top"><p>&quot;To do&rdquo; comments</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>trapcleanup</p></td>
+         <td width="585" valign="top"><p>Use of LC function in TRAPs</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>trapeleave</p></td>
+         <td width="585" valign="top"><p>Trapping new(ELeave)</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>traprunl</p></td>
+         <td width="585" valign="top"><p>Trapping of (Do)RunL() rather than using RunError()</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>trspassing</p></td>
+         <td width="585" valign="top"><p>Passing TRequestStatus parameters by value</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>uids</p></td>
+         <td width="585" valign="top"><p>Duplicate UIDs</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>uncompressedaif</p></td>
+         <td width="585" valign="top"><p>Uncompressed AIFs in ROM</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>uncompressedbmp</p></td>
+         <td width="585" valign="top"><p>Uncompressed bitmaps in ROM</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>unicodesource</p></td>
+         <td width="585" valign="top"><p>Unicode source files</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>userafter</p></td>
+         <td width="585" valign="top"><p>Use of User::After</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>userfree</p></td>
+         <td width="585" valign="top"><p>Using User::Free directly</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>userWaitForRequest</p></td>
+         <td width="585" valign="top"><p>Use of User::WaitForRequest</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>variablenames</p></td>
+         <td width="585" valign="top"><p>Local variables with member/argument names</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>voidparameter</p></td>
+         <td width="585" valign="top"><p>Void parameter explicitly declared</p></td>
+       </tr>
+       <tr>
+         <td width="294" valign="top" class="code"><p>worryingcomments</p></td>
+         <td width="585" valign="top"><p>Worrying comments</p></td>
+       </tr>
+     </table>
+   <p>&nbsp;</p>
+	 <h3><a name="cs_Projects" id="cs_Projects"></a>CodeScanner for projects </h3>
+	 <p>CodeScanner options can also be set at the project level in the <a href="pref_codescanner_01.htm#cs_Projects">Properties</a> window. Right-click the project and choose <strong>Properties</strong>, then select the <strong>Carbide.c++ &gt; Carbide CodeScanner</strong> element in the properties  list. Click a tab to view the appropriate page and set its options. </p>
+	 <p align="left">CodeScanner options specific to the project:</p>
+	 <table width="700"
+border="0" cellpadding="2" cellspacing="0">
+       <tr valign="top">
+         <th width="203" class="Cell">Name</th>
+         <th width="487" class="Cell">Description</th>
+       </tr>
+       <tr valign="top">
+         <td class="Cell"><strong>Enable Project Specific Settings </strong></td>
+         <td class="Cell">Activate to set project specific CodeScanner settings. By default a project in the workspace uses the global CodeScanner settings unless this option is activated. </td>
+       </tr>
+       <tr valign="top">
+         <td class="Cell"><b>Configure Workspace Settings... </b></td>
+         <td class="Cell"><p>Click to open the <b>Preferences</b> window and configure CodeScanner for the workspace. </p>
+             <p class="note"><b>NOTE</b> Only visible in the project CodeScanner property panels. </p></td>
+       </tr>
+     </table>
+	 <p>&nbsp;</p>
+	 <h5>Other references</h5>
+	 <ul>
+	   <li><a href="pref_codescanner_01.htm">CodeScanner General </a></li>
+	   <li><a href="pref_codescanner_02.htm">CodeScanner File Filters</a></li>
+   </ul>
+	 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+   </body>
+   </html>
+   

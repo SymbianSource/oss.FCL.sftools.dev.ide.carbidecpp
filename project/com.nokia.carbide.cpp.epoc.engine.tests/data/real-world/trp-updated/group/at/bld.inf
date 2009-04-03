@@ -1,0 +1,42 @@
+/*
+* Copyright (c) 2001-2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
+
+
+/**
+@file
+
+Build information for whole Telephony Reference Platform (AT version)
+*/
+
+#include "../btt_os_ver.h"
+
+PRJ_PLATFORMS
+DEFAULT
+
+PRJ_EXPORTS
+
+trpat.iby     /epoc32/rom/include/trpat.iby
+
+#include "../../agt/trpagt/group/bld.inf"
+#include "../../tsy/group/at/BLD.INF"
+#include "../../csy/csy27010/group/BLD.INF"
+#include "../../nif/rawipnif/group/BLD.INF"
+
+PRJ_TESTMMPFILES
+
+#include "../../test/smoke_test/group/BLD.INF"
+#include "../../test/simultaneous/group/at/BLD.INF"

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	  <component id="com.nokia.examples.base">
+			<property id="name">base</property>
+			<property id="count">42</property>
+			<property id="ref">other</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.other">
+			<property id="name">other</property>
+			<compoundProperty id="compound">
+				<property id="text">Oops</property>
+			</compoundProperty>
+	  </component>  
+	  
+	  <component id="com.nokia.examples.container">
+			<property id="name">container</property>
+		  <component id="com.nokia.examples.other">
+				<property id="name">child2</property>
+		  </component>  
+		  <component id="com.nokia.examples.base">
+				<property id="name">child</property>
+				<property id="count">31</property>
+		  </component>  
+	  </component>  
+
+    <component id="com.nokia.sdt.series60.test.CBA">
+      <property id="name">testCBA_Builtin</property>
+      <compoundProperty id="CBA">
+		<property id="leftText">Options</property>
+		<property id="leftId">EAknSoftkeyOptions</property>
+		<property id="rightText">Exit</property>
+		<property id="rightId">EAknSoftkeyExit</property>
+      </compoundProperty>
+    </component>
+
+    <component id="com.nokia.sdt.series60.test.CBA">
+      <property id="name">testCBA_Custom</property>
+      <compoundProperty id="CBA">
+		<property id="leftText">Options</property>
+		<property id="leftId">EAknSoftkeyOptions</property>
+		<property id="rightText">Snork</property>
+		<property id="rightId">UNIQUE</property>
+      </compoundProperty>
+    </component>
+
+</designerData>

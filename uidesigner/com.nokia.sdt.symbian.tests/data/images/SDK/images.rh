@@ -1,0 +1,6 @@
+STRUCT IMAGE {
+	BUF bmpfile;
+	WORD bmpid;
+	WORD bmpmask;
+	}
+	

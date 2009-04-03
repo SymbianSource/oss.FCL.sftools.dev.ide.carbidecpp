@@ -1,0 +1,7 @@
+#include <enumsheader.rh>
+
+RESOURCE COLORS r_test2
+	{
+	aknFgColor = CAknColorGreen;
+	aknBgColor = CAknColorBlue;
+	}

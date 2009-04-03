@@ -1,0 +1,52 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Symbian Foundation License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*/
+
+
+
+target			edll.lib
+
+targettype		lib
+
+#if defined(GCC32)
+ALWAYS_BUILD_AS_ARM
+#endif
+
+#if defined(WINS)
+sourcepath		epoc\win32
+source			uc_dll.cpp uc_dllx.cpp
+sourcepath		epoc
+source			up_dll_tls.cpp up_dll_file.cpp
+#endif
+
+#if defined(MARM)
+option ARMCC	--no_exceptions --no_exceptions_unwind
+
+sourcepath		epoc\arm
+source			uc_dll.cpp uc_dll.cia
+#endif
+
+#if defined(X86)
+sourcepath		epoc\x86
+source			uc_dll.cpp uc_dllx.cpp
+#endif
+
+SYSTEMINCLUDE	..\include
+
+
+capability		all
+
+VENDORID 0x70000001

@@ -1,0 +1,120 @@
+#include "TUI_5_0Container.hrh"
+#include "TUI_5_0Container.loc"
+
+RESOURCE AVKON_VIEW r_tui_5_0_container_tui_5_0_container_view
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
+	menubar = r_tui_5_0_container_options_menu;
+	toolbar = r_tui_5_0_container_tool_bar1;
+	}
+RESOURCE MENU_BAR r_tui_5_0_container_options_menu
+	{
+	}
+RESOURCE AVKON_TOOLBAR r_tui_5_0_container_tool_bar1
+	{
+	flags = KAknToolbarWithoutCba;
+	items =
+		{
+		TBAR_CTRL
+			{
+			type = EAknCtButton;
+			id = ETUI_5_0ContainerViewButton1Command;
+			control = AVKON_BUTTON
+				{
+				states =
+					{
+					AVKON_BUTTON_STATE
+						{
+						txt = STR_TUI_5_0ContainerView_8;
+						helptxt = STR_TUI_5_0ContainerView_9;
+						bmpmask = -1;
+						dim_bmpmask = -1;
+						press_bmpmask = -1;
+						hover_bmpmask = -1;
+						}
+					};
+				};
+			},
+		TBAR_CTRL
+			{
+			type = EAknCtButton;
+			id = ETUI_5_0ContainerViewButton2Command;
+			control = AVKON_BUTTON
+				{
+				states =
+					{
+					AVKON_BUTTON_STATE
+						{
+						txt = STR_TUI_5_0ContainerView_10;
+						helptxt = STR_TUI_5_0ContainerView_11;
+						bmpmask = -1;
+						dim_bmpmask = -1;
+						press_bmpmask = -1;
+						hover_bmpmask = -1;
+						}
+					};
+				};
+			}
+		};
+	}
+RESOURCE STATUS_PANE_APP_MODEL r_tui_5_0_container_status_pane
+	{
+	panes =
+		{
+		SPANE_PANE
+			{
+			id = EEikStatusPaneUidTitle;
+			type = EAknCtTitlePane;
+			resource = r_tui_5_0_container_title_resource;
+			}
+		};
+	}
+RESOURCE TITLE_PANE r_tui_5_0_container_title_resource
+	{
+	txt = STR_TUI_5_0ContainerView_4;
+	}
+RESOURCE ARRAY r_tui_5_0_container_choice_list1
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_TUI_5_0ContainerView_17;
+			},
+		LBUF
+			{
+			txt = STR_TUI_5_0ContainerView_18;
+			}
+		};
+	}
+RESOURCE TBUF r_tui_5_0_container_choice_list1_2
+	{
+	buf = STR_TUI_5_0ContainerView_14;
+	}
+RESOURCE TBUF r_tui_5_0_container_choice_list1_3
+	{
+	}
+RESOURCE AVKON_BUTTON r_tui_5_0_container_button3
+	{
+	states =
+		{
+		AVKON_BUTTON_STATE
+			{
+			txt = STR_TUI_5_0ContainerView_37;
+			helptxt = STR_TUI_5_0ContainerView_38;
+			bmpmask = -1;
+			dim_bmpmask = -1;
+			press_bmpmask = -1;
+			hover_bmpmask = -1;
+			}
+		};
+	}
+RESOURCE TBUF r_tui_5_0_container_preview_pop_up1
+	{
+	buf = STR_TUI_5_0ContainerView_39;
+	}
+RESOURCE LABEL r_tui_5_0_container_label1
+	{
+	txt = STR_TUI_5_0ContainerView_41;
+	horiz_align = EEikLabelAlignHCenter;
+	}

@@ -1,0 +1,6 @@
+#include <arrayheader.rh>
+
+RESOURCE ARRAY_TYPES r_test_array_fixed
+	{
+	ints = {  };
+	}

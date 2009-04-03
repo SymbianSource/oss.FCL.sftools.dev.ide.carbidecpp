@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="CPP Behavior" topic="html/cpp_behavior/cpp_behavior.htm">
+
+	<topic label="Size of Bytes" 			href="html/cpp_behavior/cpp_be_size_of_bytes.htm" /> 
+	<topic label="Interactive Devices" 		href="html/cpp_behavior/cpp_be_devices.htm" /> 
+	<topic label="Source File Handling" 	href="html/cpp_behavior/cpp_be_src_handling.htm" /> 
+	<topic label="Header File Access" 		href="html/cpp_behavior/cpp_be_hdr_access.htm" /> 
+	<topic label="Character Literals" 		href="html/cpp_behavior/cpp_be_chars.htm" /> 
+       
+</toc>

@@ -1,0 +1,5 @@
+#include <structheader.rh>
+
+RESOURCE COMPOUND_TYPES
+	{
+	}

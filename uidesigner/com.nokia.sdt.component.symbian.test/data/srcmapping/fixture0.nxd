@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+ <component id="unknown">
+    
+	  <component id="com.nokia.examples.srcmapBasic">
+			<property id="name">test0</property>
+	      <property id="textdata">check this textual data</property>
+	  </component>  
+ </component>
+
+<!--
+  <stringBundle>
+    <stringTable language="LANG_Russian">
+      <string id="STR_2">вторник</string>
+      <string id="STR_1">Здравствулте</string>
+    </stringTable>
+    <stringTable language="LANG_American">
+      <string id="STR_2">fourteen</string>
+      <string id="STR_1">Hello</string>
+    </stringTable>
+  </stringBundle>
+  
+  <macroTable>
+    <string id="MACRO_2">Not another "macro"</string>
+    <string id="MACRO_1">A macro value</string>
+  </macroTable>
+-->
+     
+</designerData>

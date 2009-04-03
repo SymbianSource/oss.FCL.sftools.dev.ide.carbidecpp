@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for Debug Perspective default views -->
+<!-- plugin="com.nokia.carbide.templatewizard" -->
+
+<contexts>
+	
+	<!-- NEW SYMBIAN OS PROJECT WIZARD PAGES -->
+	
+	<context id="directories" >
+		<topic label="Project Directories"			href="html/tasks/projects/task_proj_new-09.htm" />
+	</context>
+
+	<context id="basics" >
+		<topic label="Basic Settings"				href="html/tasks/projects/task_proj_new-08.htm" />
+	</context>
+	
+	<context id="choose_template_page" >
+		<topic label="Select a Type of Project"		href="html/tasks/projects/task_proj_new-02.htm" />
+	</context>
+	
+
+	<!-- NEW SYMBIAN OS CLASS WIZARD PAGES (NOT USED BY UID)
+	
+	<context id="location" >
+		<topic label="Name and Location"					href="html/reference/wiz_name_and_location_page.htm" />
+		<topic label="Adding Symbian OS Classes"			href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html"/>
+		<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html"/>
+	</context>
+
+	<context id="other" >
+		<topic label="Other Settings"						href="html/reference/ProjectOtherSettings.html" />
+		<topic label="Adding Symbian OS Classes"			href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html"/>
+		<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html"/>
+	</context>
+	 -->
+	 
+</contexts>

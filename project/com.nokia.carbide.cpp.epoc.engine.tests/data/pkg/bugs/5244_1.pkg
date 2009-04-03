@@ -1,0 +1,60 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description: 
+;
+;
+
+;	Dowser.pkg
+;
+;Language	-	standard language	definitions
+&EN, GE
+
+;Header
+#{"Dowser",	"Dowser"},(0x20008177),1,00,10
+
+;Localised Vendor	name
+%{"Wiegmann, Bernd Softwareentwicklung",	"Wiegmann, Bernd Softwareentwicklung"}
+
+;Unique	Vendor name
+:"Wiegmann, Bernd Softwareentwicklung"
+
+;{
+;"..\..\texte\License-en.txt"
+;"..\..\texte\License-de.txt"
+;}-"",FT,TA
+
+;Supports	Series 60	v	3.0
+[0x101F7961],	0, 0,	0, {"Series60ProductID", "Series60ProductID"}	
+
+;Files to	install
+"$(EPOCROOT)\Epoc32\release\GCCE\UREL\Dowser_20008177.exe"							-"!:\sys\bin\Dowser_20008177.exe"
+"$(EPOCROOT)\Epoc32\release\GCCE\UREL\DowserFrame_2000817C.dll"						-"!:\sys\bin\DowserFrame_2000817C.dll"
+"$(EPOCROOT)\Epoc32\release\GCCE\UREL\DowserFrameGPS_2000817D.dll"					-"!:\sys\bin\DowserFrameGPS_2000817D.dll"
+"$(EPOCROOT)\Epoc32\release\GCCE\UREL\DowserNmEngine_2000817B.dll"					-"!:\sys\bin\DowserNmEngine_2000817B.dll"
+"$(EPOCROOT)\Epoc32\Data\z\resource\apps\Dowser_20008177_aif.mif"					-"!:\resource\apps\Dowser_20008177_aif.mif"
+"$(EPOCROOT)\Epoc32\Data\z\resource\apps\Dowser_20008177.mif"						-"!:\resource\apps\Dowser_20008177.mif"
+"$(EPOCROOT)\Epoc32\Data\z\resource\apps\Dowser_20008177.R01"						-"!:\resource\apps\Dowser_20008177.R01"
+"$(EPOCROOT)\Epoc32\Data\z\resource\apps\Dowser_20008177.R03"						-"!:\resource\apps\Dowser_20008177.R03"
+"$(EPOCROOT)\Epoc32\Data\z\private\10003a3f\import\apps\Dowser_20008177_reg.RSC"	-"!:\private\10003a3f\import\apps\Dowser_20008177_reg.RSC"
+
+"$(EPOCROOT)\Epoc32\release\GCCE\UREL\DowserRecognizer_20008178.dll"				-"!:\sys\bin\DowserRecognizer_20008178.dll"
+"$(EPOCROOT)\Epoc32\Data\z\resource\plugins\DowserRecognizer_20008178.rsc"			-"!:\resource\plugins\DowserRecognizer_20008178.rsc"
+
+;"..\..\texte\Help01\output\Dowser01.hlp"											-"!:\resource\help\Dowser_20008177.h01"
+;"..\..\texte\Help03\output\Dowser03.hlp"											-"!:\resource\help\Dowser_20008177.h03"
+
+
+;required	for	application	to be	covered	by backup/restore	facility 
+"backup_registration.xml"			-"!:\private\20008177\backup_registration.xml"
+

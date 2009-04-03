@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>i - Display Information for the Current Process and Thread</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>i - Display Information for the Current
+Process and Thread</h2>
+</div>
+<div>
+<p>This command displays information for the current process and
+thread.</p>
+<p class="listing">SCHEDULER @80000d98: CurrentThread 8070dd28<br>
+  RescheduleNeeded=00 DfcPending=00 KernCSLocked=00000001<br>DFCS: next 80000ea8 prev 80000ea8<br>ProcessHandler=5004b040, AddressSpace=8070d7c8<br>SYSLOCK: HoldingThread 8070dd28 iWaiting 00000000<br>Extras 0: 8070d7c8 1: 8070d7c8 2: 8070d7c8 3: 00000000<br>Extras 4: 00000000 5: 00000000 6: 00000000 7: 00000000<br>Extras 8: 00000000 9: 00000000 A: 00000000 B: 00000000<br>Extras C: 00000000 D: 00000000 E: 00000000 F: 00000000</p>
+<p>The format for the thread is:</p>
+<p class="listing">TheCurrentThread=8070da6c<br>
+  THREAD at 8070da6c VPTR=50052b50 AccessCount=3 Owner=8070d7c8<br>Full name crash::Main<br>Thread MState READY<br>Default priority 28 WaitLink Priority 28<br>ExitInfo 3,0,<br>Flags 80000004, Handles 8070a79c<br>Superviso81715000 size 1000<br>User stack base 00402000 size 2000<br>Id=19, Heap=00600000, Created heap=00600000, Frame=00000000<br>Trap handler=00000000, ActiveScheduler=00000000, Exception<br>handler=00000000<br>TempObj=00000000 TempAlloc=00000000<br>NThread @ 8070dd28 Pri 28 NState READY<br>Next=8070dd28 Prev=8070dd28 Att=03 ExcInUserMode=10<br>HeldFM=80000eb8 WaitFM=00000000 AddrSp=8070d7c8<br>Time=0 Timeslice=20 ReqCount=0<br>SuspendCount=0 CsCount=0 CsFunction=00000000<br>SavedSP=81715d6c<br>CAR 00000001<br>DACR 30315507<br>R13_USR 00000000 R14_USR 81715dc4 SPSR_SVC 81715e10<br>&nbsp;R4 30303031  R5 30303030  R6 81715dc4  R7 81715e14<br>&nbsp;R8 81715dac  R9 81715da0 R10 50055c88 R11 50055c3c<br>&nbsp;PC 81715dc0</p>
+<p>The format for the process is:</p>
+<p class="listing">TheCurrentProcess=8070d7c8<br>
+  PROCESS at 8070d7c8 VPTR=50052bc4 AccessCount=5 Owner=00000000<br>Full name crash<br>ExitInfo 3,0,<br>Flags 00040000, Handles 80709c98, Attributes 60010000<br>DataBssChunk 8070a514, CodeChunk 8070a9a8<br>DllDataChunk 00000000, Process Lock 8070d90c<br>NumChunks=2<br>0: Chunk 8070a514, run 00400000, access count 1<br>1: Chunk 8070a704, run 00600000, access count 1<br>Domain -1, DACR 55555507<br>TheCurrentAddressSpace=8070d7c8<br>TheCurrentVMProcess=8070d7c8<br>PROCESS at 8070d7c8 VPTR=50052bc4 AccessCount=5 Owner=00000000<br>Full name crash<br>ExitInfo 3,0,<br>Flags 00040000, Handles 80709c98, Attributes 60010000<br>DataBssChunk 8070a514, CodeChunk 8070a9a8<br>DllDataChunk 00000000, Process Lock 8070d90c<br>NumChunks=2<br>0: Chunk 8070a514, run 00400000, access count 1<br>1: Chunk 8070a704, run 00600000, access count 1<br>Domain -1, DACR 55555507<br>TheCurrentDataSectionProcess=8070d7c8<br>TheCompleteDataSectionProcess=8070d7c8<br>PROCESS at 8070d7c8 VPTR=50052bc4 AccessCount=5 Owner=00000000<br>Full name crash<br>ExitInfo 3,0,<br>Flags 00040000, Handles 80709c98, Attributes 60010000<br>DataBssChunk 8070a514, CodeChunk 8070a9a8<br>DllDataChunk 00000000, Process Lock 8070d90c<br>NumChunks=2<br>0: Chunk 8070a514, run 00400000, access count 1<br>1: Chunk 8070a704, run 00600000, access count 1<br>Domain -1, DACR 55555507</p>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="CrashDebuggerUsingCommandSyntax.guide.html">Debug Monitor</a></li>
+</ul>
+<h5>Related references</h5>
+<ul><li><a href="CrashDebugger_cmd.guide.html">Crash Debugger Commands</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

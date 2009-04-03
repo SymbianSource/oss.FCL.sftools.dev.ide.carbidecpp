@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Library-related strategies</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Library-related strategies</h3>
+<p>Library related strategies include:</p>
+<ul>
+  <li>Stream-Based Classes&mdash;MSL classes comprise a lot of object code.</li>
+  <li>Alternative Class Libraries&mdash;Non-standard class libraries can provide a subset of the standard library&rsquo;s functionality with less overhead.</li>
+</ul>
+<h4>Stream-Based Classes</h4>
+<p>MSL C++ stream-based classes initialize several instances of direct and indirect objects. When code size is critical, do not use stream-based classes, which include standard input (<span class="code">cin</span>), standard output (<span class="code">cout</span>), and standard error (<span class="code">cerr</span>). There are also wide-character equivalents for the normal input and output routines. Use only standard C input and output functions unless stream-based classes are absolutely necessary.</p>
+<p>In addition to the standard C++ stream classes, avoid using string streams for in-core formatting because they generate heavy overhead. If size is critical, use C&rsquo;s <span class="code">sprintf</span> or <span class="code">sscanf</span> functions instead.</p>
+<p>The EC++ proposal does not support templatized classes or functions. MSL adheres to the ISO proposed standards that are template-based.</p>
+<h4>Alternative Class Libraries</h4>
+<p>MSL C++ is based on the ISO proposed C++ standard, which is implemented using templates that have a large initial overhead for specialization.</p>
+<p>To avoid this overhead, consider devising your own commonly-used vector, string, or utility classes. You can also use other class libraries, such as the NIH's (National Institute of Health) Class Library. If you do use an alternative library, beware of potential problems with virtual inheritance, RTTI, or other causes of larger code size as described above.
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

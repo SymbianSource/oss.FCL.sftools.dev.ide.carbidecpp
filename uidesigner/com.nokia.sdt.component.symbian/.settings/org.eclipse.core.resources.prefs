@@ -1,0 +1,27 @@
+#Wed Oct 24 15:05:27 CDT 2007
+eclipse.preferences.version=1
+encoding//data/s60/laf/classic_laf.inc=UTF-8
+encoding//data/s60/laf/common.inc=UTF-8
+encoding//data/s60/laf/dblres_laf.inc=UTF-8
+encoding//data/s60/laf/landscape.inc=UTF-8
+encoding//data/s60/laf/portrait.inc=UTF-8
+encoding//data/s60/skins/classic_landscape_right.skin=UTF-8
+encoding//data/s60/skins/classic_portrait.skin=UTF-8
+encoding//data/s60/skins/classic_portrait_2_x.skin=UTF-8
+encoding//data/s60/skins/dblres_landscape_right.skin=UTF-8
+encoding//data/s60/skins/dblres_portrait.skin=UTF-8
+encoding//data/s60/skins/qvga_landscape_right.skin=UTF-8
+encoding//data/s60/skins/qvga_portrait.skin=UTF-8
+encoding//src/com/nokia/sdt/component/symbian/actionFilter/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/actions/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/attributes/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/designerimages/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/displaymodel/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/documentation/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/events/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/properties/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/scripting/impl/strings.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/sourcegen/macrohelp/MacroHelpGenerator.java=UTF-8
+encoding//src/com/nokia/sdt/component/symbian/sourcegen/messages.properties=8859_1
+encoding//src/com/nokia/sdt/component/symbian/sourcemapping/messages.properties=8859_1

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU12 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikComboBox"
+			baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase" 
+			instanceNameRoot="comboBox"
+			version="1.0"
+			category="%controls.category">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0" 
+			className="CEikComboBox" classHelpTopic=""
+			resourceType="COMBOBOX" resourceHelpTopic=""/>	
+		
+		<designerImages smallIconFile="CEikComboBox_sm.png"
+			largeIconFile="CEikComboBox.png"/>
+				
+		<attributes>
+			<attribute key="rss-control-type-enum">EEikCtComboBox</attribute>		
+			<attribute key ="cpp-class-name">CEikComboBox</attribute>
+			<attribute key ="editable-array-property">items</attribute>						
+		<!-- TQikLayoutHorizontalAlignment enum are the possible values for 
+			"TQikLayoutHorizontalAlignment-default" attribute -->
+			<attribute key="TQikLayoutHorizontalAlignment-default">EQikLayoutHAlignLeft</attribute>
+		</attributes>
+
+		<properties>
+			<property  name="textWidth" type="integer" 
+				minValue="0"
+				descriptionKey="textWidthDescription"
+				default="10"
+				category="%category.appearance"/>
+			<property  name="maxTextLength" type="integer" 
+				minValue="0"
+				descriptionKey="maxTextLengthDescription"
+				default="10"
+				category="%category.appearance"/>
+			<property  name="maxTextLengthInc" type="integer" category="Hidden" 
+				default="11"/>
+			<property  name="maxArraySize" type="integer" 
+				minValue="0"
+				descriptionKey="maxArraySizeDescription"
+				default="5"
+				category="%category.appearance"/>
+			<property  name="activeText" type="localizedString" 
+				default="text"
+				descriptionKey="activeTextDescription"
+				category="%category.data"/>
+			<arrayProperty name="items" type="localizedString" 
+						  descriptionKey = "itemsDescription"	
+						  editorClass="com.nokia.sdt.symbian.ui.editors.StringListEditorFactory"
+						  category = "%category.data"/> 
+		</properties>
+
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true"
+				category="Hidden"/>
+		</propertyOverrides>
+
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/> 
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>				
+				<script file="CEikComboBox.js" prototype="CEikComboBox"/>
+			</implementation>
+		</implementations>	
+
+
+		<sourceMapping>
+			<mapResource struct="COMBOBOX" headers="eikon.rh">
+				<mapSimpleMember property="textWidth" member="width"/>
+				<mapSimpleMember property="maxTextLengthInc" member="maxlength"/>
+				<mapSimpleMember property="maxArraySize" member="maxarraysize"/>
+				<mapResourceMember struct="ARRAY" property="." member="array_id" headers="badef.rh">
+					<mapArrayMember property="items" member="items">
+						<mapResourceElement struct="LBUF" headers="badef.rh">
+							<mapSimpleMember property="." member="txt"/>
+						</mapResourceElement>
+					</mapArrayMember>
+				</mapResourceMember>				
+			</mapResource>
+			<mapResource struct="LBUF" headers="badef.rh" id="activeText">
+				<mapSimpleMember property="activeText" member="txt"/>
+			</mapResource>
+		</sourceMapping>
+
+		<sourceGen>
+			<useTemplateGroup ids="makeVisible"/>
+			<templateGroup id="9" form="InstanceGen">
+				<expandMacro name="SetupControlInstanceVariable" Type="${this.getCppClassName(instance)}" 
+					InstanceMemberName="${instanceMemberName}" InstanceTitle="${instanceName$title}" 
+					Headers="eikcmbox.h"></expandMacro>			
+				<template id="SetText" phase="InitializeControlHandlers"><![CDATA[
+if ( ${instanceMemberName} != NULL ) {		
+HBufC* activeText = iEikonEnv->AllocReadResourceLC( ${Engine.getGeneratedResource(instance, "activeText").toUpperCase()} );
+${instanceMemberName}->SetTextL( activeText );
+CleanupStack::PopAndDestroy( activeText );
+}
+]]>		    
+				</template>
+			</templateGroup>
+		</sourceGen>
+
+
+		
+	</component>	
+</componentDefinition>

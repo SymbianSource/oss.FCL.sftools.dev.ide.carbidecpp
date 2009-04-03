@@ -1,0 +1,43 @@
+// $(baseName).mmp
+
+$(S60_50_CustomBuildIncludes)
+
+CAPABILITY NONE
+TARGET $(baseName).exe
+TARGETTYPE exe
+UID 0x100039ce $(uid3)
+VENDORID 0x00000000
+EPOCSTACKSIZE 0x8000
+
+SYSTEMINCLUDE \epoc32\include \epoc32\include\variant \epoc32\include\ecom
+SYSTEMINCLUDE \epoc32\include\oem
+USERINCLUDE ..\$(incDir) ..\$(dataDir)
+
+SOURCEPATH ..\$(dataDir)
+START RESOURCE $(baseName).rss
+TARGET $(baseName).r01
+TARGETPATH resource\apps
+HEADER
+LANG 01
+END
+START RESOURCE $(baseName)_reg.rss
+TARGET $(baseName)_reg.r01
+TARGETPATH private\10003a3f\apps
+HEADER
+LANG 01
+END
+SOURCEPATH ..\$(sourceDir)
+SOURCE TBirthday.cpp BirthdaysListView.cpp BirthdaysList.cpp
+SOURCE BirthdaysDocument.cpp BirthdaysApplication.cpp BirthdaysAppUi.cpp
+SOURCE BirthdayForm.cpp
+
+LIBRARY euser.lib apparc.lib cone.lib eikcore.lib avkon.lib commonengine.lib
+LIBRARY efsrv.lib estor.lib eikcoctl.lib eikdlg.lib bafl.lib eikctl.lib
+LIBRARY fbscli.lib aknicon.lib aknnotify.lib etext.lib gdi.lib egul.lib
+LIBRARY insock.lib ecom.lib InetProtUtil.lib http.lib esock.lib
+
+COMPRESSTARGET
+
+#ifdef ENABLE_ABIV2_MODE
+  DEBUGGABLE_UDEBONLY
+#endif

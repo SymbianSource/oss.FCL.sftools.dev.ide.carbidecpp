@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component 
+			friendlyName="" 
+			qualifiedName="com.nokia.sdt.series60.DesignTimeContainer" 
+			baseComponent="com.nokia.sdt.series60.CommonBase"
+			abstract="true"
+			version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0"/>
+		<attributes>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+	  		<attribute key="display-model-class">com.nokia.sdt.component.symbian.displaymodel.DisplayModelS60</attribute>
+			<attribute key="not-in-toolbox">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+			<attribute key="fixed-child-order">true</attribute>
+			<attribute key="container-background-color">EEikColorWindowBackground</attribute>
+		</attributes>
+		<properties>
+			<property name="className" category="Design" type="string" readOnly="true"
+				descriptionKey="classDescription"/>
+			<compoundProperty name="location" category="Hidden" type="com.nokia.sdt.series60.locationProperty"/>
+			<compoundProperty name="size" category="Hidden" type="com.nokia.sdt.series60.sizeProperty"/>
+		</properties>
+		
+		<sourceGen>
+			<inline scope="prototype"><![CDATA[
+${jsObject}.prototype.getHrhFiles = function(contribs) {
+			// get the generated files matching this pattern and include them
+			var files = Engine.findGeneratedRssFiles(".*\\.hrh");
+			for (idx in files) {
+				var file = files[idx];
+				var mycontrib = Engine.createContributionForPhase("MainUserIncludes")
+				mycontrib.setText("#include \"" + file + "\"\n");
+				contribs.add(mycontrib);
+			}
+}
+]]>			</inline>
+
+			
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

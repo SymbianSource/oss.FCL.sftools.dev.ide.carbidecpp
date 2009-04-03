@@ -1,0 +1,11 @@
+enum TSettings_list_3_0SettingItemListViewCommands
+	{
+	ESettings_list_3_0SettingItemListViewMenuItem1Command = 0x6000
+	};
+enum TSettings_list_3_0SettingItemListViewItems
+	{
+	ESettings_list_3_0SettingItemListViewEdit1 = 1,
+	ESettings_list_3_0SettingItemListViewSecret1,
+	ESettings_list_3_0SettingItemListViewEnumeratedTextPopup1,
+	ESettings_list_3_0SettingItemListViewTimeEditor1
+	};

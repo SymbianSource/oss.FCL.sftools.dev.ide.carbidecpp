@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>longlong_enums</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>longlong_enums</h3>
+<p>  Controls whether or not enumerated types may have the size of the long long type.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma longlong_enums on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>This pragma lets you use enumerators that are large enough to be long long integers. It is ignored if you enable the pragma <a href="p_enumsalwaysint.htm">enumsalwaysint</a>  (described in &ldquo;enumsalwaysint&rdquo;).</p>
+  <p> For more information on how the compiler handles enumerated types, see <a href="../c_compiler/c_enum_types.htm">Enumerated Types</a>.</p>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (longlong_enums)</span><span class="code"></span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">on</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

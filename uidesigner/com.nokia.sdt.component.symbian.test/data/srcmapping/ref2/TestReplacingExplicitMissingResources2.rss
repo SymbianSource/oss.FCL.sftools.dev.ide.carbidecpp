@@ -1,0 +1,11 @@
+#include <refheader.rh>
+#include <basicheader.rh>
+
+RESOURCE OWNER r_test_resource_llink
+	{theLink = r_test_resource_inllink_the_link;
+
+	}
+RESOURCE SIMPLE_TYPES r_test_resource_inllink_the_link
+	{
+	byte = 12;
+	}

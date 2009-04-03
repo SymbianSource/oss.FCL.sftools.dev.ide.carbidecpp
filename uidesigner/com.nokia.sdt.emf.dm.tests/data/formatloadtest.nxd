@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+  <component id="com.nokia.sdt.series60.CCoeControl">
+    <property id="name">CCoeControl1</property>
+    <property id="another">abc def ghi</property>
+    <component id="child-component1">
+      <compoundProperty id="location">
+        <property id="x">100</property>
+        <property id="y">200</property>
+      </compoundProperty>
+      <property id="name">child1</property>
+      <eventBinding id="com.nokia.testevent" handlerDisplay="handlerMethod" handlerSymbol="CMyClass::handlerMethod"/>
+      <eventBinding id="com.nokia.anotherevent" handlerDisplay="anotherHandlerMethod" handlerSymbol="CMyClass::anotherHandlerMethod"/>
+    </component>
+    <component id="child-component2">
+      <property id="reference1" type="componentRef">child-component1</property>
+      <property id="localized1" type="i18n">STR_CCoeControl1_1</property>
+      <property id="localized2" type="i18n">STR_CCoeControl1_2</property>
+      <sequenceProperty id="stringarray1">
+        <element>first item</element>
+        <element>second item</element>
+      </sequenceProperty>
+      <sequenceProperty id="stringarray2">
+        <element type="i18n">first i18n item</element>
+        <element type="i18n">second i18n item</element>
+      </sequenceProperty>
+      <property id="name">child2</property>
+      <sequenceProperty id="stringarray3">
+        <element type="componentRef">first ref item</element>
+        <element type="componentRef">second ref item</element>
+      </sequenceProperty>
+      <sequenceProperty id="compoundarray">
+        <compoundElement>
+          <property id="aa">111</property>
+          <property id="bb">222</property>
+        </compoundElement>
+        <compoundElement>
+          <property id="aa">333</property>
+          <property id="bb">444</property>
+        </compoundElement>
+      </sequenceProperty>
+    </component>
+  </component>
+  <component id="com.nokia.sdt.example.baseComponent">
+    <property id="name">abcdefg</property>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_Hebrew">
+      <string id="STR_1"/>
+      <string id="STR_2"/>
+      <string id="STR_3"/>
+    </stringTable>
+    <stringTable language="LANG_American">
+      <string id="STR_1">abc def ghi</string>
+      <string id="STR_2">localized string 1</string>
+      <string id="STR_3" default="true"/>
+    </stringTable>
+  </stringBundle>
+  <macroTable>
+    <string id="macro1">this_is_a_macro</string>
+  </macroTable>
+</designerData>

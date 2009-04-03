@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>c99</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>c99</h3>
+<p>  Controls the use of a subset of C99 language features.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma c99 on | off | reset
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>Set   <span class="code">pragma c99 on</span> to tell  the Carbide x86 compiler to use the following supported C99 language features:</p>
+  <ul>
+    <li> Trailing commas in enumerations</li>
+    <li> GCC/C9x style compound literals</li>
+  </ul>
+  <blockquote>
+    <div class="listing">
+      <p>      #pragma c99 on<br />
+        struct my_struct {<br />
+        int i; <br />
+        char c[2];} my_var;<br />
+        my_var = ((struct my_struct) {x + y, 'a', 0});</p>
+    </div>
+  </blockquote>
+  <ul>
+  <li> Designated initializers</li>
+  </ul>
+  <blockquote>
+    <div class="listing">
+      <p>    #pragma c99 on</p>
+      <p>struct X {<br />
+      int a,b,c;<br />
+      } x = { .c = 3, .a = 1, 2 };</p>
+      <p>union U {<br />
+      char a;<br />
+      long b;<br />
+      } u = { .b = 1234567 };</p>
+      <p>int arr1[6] = { 1,2, [4] = 3,4 };<br />
+      int arr2[6] = { 1, [1 ... 4] = 3,4 }; // GCC only, not part of C99</p>
+    </div>
+  </blockquote>
+<ul>
+  <li class="code">__func__ predefine</li>
+  <li>Implicit return 0; in <span class="code">main()</span></li>
+  <li>Non-const static data initialization</li>
+  <li>Variable argument macros (__VA_ARGS__)</li>
+  <li><span class="code">bool / _Boo</span>l support</li>
+  <li>long long support</li>
+  <li>restrict support</li>
+  <li>// comments</li>
+  <li> inline support</li>
+  <li>Digraphs</li>
+  <li><span class="code">_Complex</span> and <span class="code">_Imaginary</span> (treated as keywords but not supported)</li>
+  <li>Empty arrays as last struct members</li>
+</ul>
+<blockquote>
+  <div class="listing">
+    <p>struct {<br />
+      int r;<br />
+      char arr[];<br />
+    } s;</p>
+  </div>
+</blockquote>
+<ul>
+  <li>Designated initializers</li>
+  <li> Hexadecimal floating-point constants&ndash;precise representations of constants specified in hexadecimal notation to ensure an accurate constant is generated across compilers and on different hosts. The syntax is shown in Table 10.1.</li>
+</ul>
+<blockquote>
+  <table width="67%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+      <th width="37%" scope="col">Constant Type</th>
+      <th width="63%" scope="col">Format</th>
+    </tr>
+    <tr>
+      <td>hex-fp-constant</td>
+      <td>hex-string [ &#8216;.&rsquo; hex-string ] hex-exp [ size ]</td>
+    </tr>
+    <tr>
+      <td>hex-string</td>
+      <td>hex-digit { hex-digit }</td>
+    </tr>
+    <tr>
+      <td>hex-exp</td>
+      <td>&#8216;p&rsquo; decimal-string</td>
+    </tr>
+    <tr>
+      <td>size</td>
+      <td>&#8216;f&rsquo; | &#8216;F&rsquo; | &#8216;l&rsquo; | &#8216;L&rsquo;</td>
+    </tr>
+    <tr>
+      <td>decimal-string</td>
+      <td>decimal-digit { decimal-digit }</td>
+    </tr>
+    <tr>
+      <td>decimal-digit</td>
+      <td>&lt;any decimal digit&gt;</td>
+    </tr>
+    <tr>
+      <td>hex-digit</td>
+      <td>&lt;any hexadecimal digit&gt;</td>
+    </tr>
+  </table>
+  <p>The compiler generates a warning when the mantissa is more precise than the host floating point format, and warnings are enabled. It generates an error if the exponent is too wide for the host float format.</p>
+  <p>Examples include:</p>
+  <p class="code"> 0x2f.3a2p3<br />
+    0xEp1f<br />
+    0x1.8p0L</p>
+  <p>The standard library supports printing floats in this format using the &ldquo;<span class="code">%a</span>&rdquo; and &ldquo;<span class="code">%A</span>&rdquo; specifiers.</p>
+</blockquote>
+<ul>
+  <li> Variable length arrays are supported within local or function prototype scope (as required by the C99 standard)</li>
+</ul>
+<blockquote>
+  <div class="listing">
+    <p>    // good example of C99 Variable Length Array usage</p>
+    <p> #pragma c99 on<br />
+      void f(int n) {<br />
+      int arr[n];<br />
+      ...<br />
+    }</p>
+  </div>
+  <p> While this example generates an error:</p>
+  <div class="listing">
+    <p> // bad example of C99 Variable Length Array usage</p>
+    <p>#pragma c99 on<br />
+      int n;<br />
+    int arr[n]; // generates an error: variable length array<br />
+    // types can only be used in local or <br />
+    // function prototype scope </p>
+  </div>
+  <p>A variable length array cannot be used in a function template&rsquo;s prototype scope or in a local template typedef, as shown below:</p>
+  <div class="listing">
+  <p>// bad example of C99 usage in Function Prototype</p>
+    <p>#pragma c99 on<br />
+      template&lt;typename T&gt; int f(int n, int A[n][n]);<br />
+    {<br />
+    } // generates an error: variable length arrays<br />
+    // cannot be used in function template prototypes<br />
+  // or local template variables </p>
+  </div>
+</blockquote>
+<ul>
+  <li> Unsuffixed decimal constant rules supported</li>
+</ul>
+<blockquote>
+  <div class="listing">
+    <p>// examples of C99 Unsuffixed Constants</p>
+    <p> #pragma c99 on // and ULONG_MAX == 4294967295<br />
+      sizeof(4294967295) == sizeof(long long)<br />
+    sizeof(4294967295u) == sizeof(unsigned long)</p>
+    <p>#pragma c99 off<br />
+      sizeof(4294967295) == sizeof(unsigned long)<br />
+    sizeof(4294967295u) == sizeof(unsigned long)</p>
+  </div>
+</blockquote>
+<p>The following C99 features are not currently supported:</p>
+<ul>
+  <li> long long bitfields on some targets</li>
+  <li> <span class="code">++bool--</span> expressions</li>
+  <li><span class="code"> (T) (int-list)</span> are handled/parsed as cast-expressions and as literals</li>
+  <li><span class="code"> __STDC_HOSTED__</span> is <span class="code">0</span></li>
+  <li> <span class="code">&lt;bool&gt; op= &lt;expr&gt;</span> does not always work correctly</li>
+</ul>
+<p>This pragma corresponds to the Enable C99 Extensions setting . To check this setting, use <span class="code"><span class="code">__option(c</span>99)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.<br />
+</p>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+
+The RssParser class will use CDT to tokenize and preprocess the
+files making up an RSS file.  The parser constructs a DOM, which
+is constructed of nodes, each of which has a starting file and 
+source offset plus an ending file and source offset.  Each node's 
+source range incorporates the source ranges of its children.
+
+After this token-level parse, we iterate the CDT scanner's
+preprocessor statements from the DOM scanner.  This tells us 
+where macros are defined,
+where includes happen, where #if/#endif appear, etc.  We will
+incorporate these into our DOM so they fit properly (i.e. they
+contain the source ranges of child DOM nodes, etc).  With a
+little effort we can determine where macro expansions occurred
+as well.
+
+We infer the location of whitespace and comments by taking the
+leftover bits and encode these as uninterpreted plain text.
+
+We only construct the DOM and its detailed preprocessor information 
+for files that UI Designer will write out again.  (The parser has 
+already generated type information from headers, etc.)
+
+For our purposes, we impose the restriction that preprocessor 
+statements cannot break nodes.  E.g.:
+
+#if FOO
+STRUCT THIS {
+#else
+STRUCT THAT {
+#endif
+	...
+}
+
+is not allowed.  In such a case we will ignore the category of
+the preprocessor statement and encode it as plain text, e.g.:
+
+if FOO is defined to non-zero:
+
+PLAIN { "...\n#if FOO" }
+STRUCT THIS {
+	PLAIN { "#else\nSTRUCT THAT{\n#endif" }
+	contents
+}
+
+else
+
+PLAIN { "...\n#if FOO\nSTRUCT THIS{\n#else\n" }
+STRUCT THAT {
+	PLAIN { "#endif\n" }
+	contents
+}
+
+Inside AST nodes, we store references to the original text in the
+the ISourceRange member.  Such a node is ignored if a node or
+any of its children are modified.  Thus, when rewriting source, 
+unchanged elements of the DOM are written out by referencing the
+original source, while changed elements are constructed anew.
+Only actually modified nodes are rewritten; thus, a node with
+three children in which only one is modified will have 67% original
+source with a regenerated segment of text inside.
+
+
+

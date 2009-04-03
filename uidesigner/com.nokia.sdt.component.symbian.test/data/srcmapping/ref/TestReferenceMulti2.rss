@@ -1,0 +1,30 @@
+#include <arraydialog.rh>
+#include <basicheader.rh>
+
+RESOURCE DIALOG r_test_dialog
+	{
+	lines =
+		{
+		CHECKBOX
+			{
+			defaultChecked = 1;
+			},
+		LABEL
+			{
+			text = "literal string";
+			}
+		};
+	}
+RESOURCE TWO_REFS r_test_multi_ref2
+	{
+	link1 = r_test_dialog_checkbox;
+	link2 = r_test_dialog_label;
+	}
+RESOURCE CHECKBOX r_test_dialog_checkbox
+	{
+	defaultChecked = 1;
+	}
+RESOURCE LABEL r_test_dialog_label
+	{
+	text = "literal string";
+	}

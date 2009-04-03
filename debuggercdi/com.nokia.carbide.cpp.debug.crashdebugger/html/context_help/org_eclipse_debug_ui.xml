@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for Debug Perspective default views -->
+<!-- plugin="org.eclipse.debug.ui." -->
+
+<contexts>
+	
+	<!-- LAUNCH CONFIGURATION DIALOG PAGES  -->
+
+	<!-- LAUNCH CONFIGURATION DIALOG -->
+	<context id="launch_configuration_dialog" >
+		<topic label="Symbian OS Crash Debugger Launch Configuration"	href="html/crash_launch_config.html" />
+	</context>
+
+</contexts>

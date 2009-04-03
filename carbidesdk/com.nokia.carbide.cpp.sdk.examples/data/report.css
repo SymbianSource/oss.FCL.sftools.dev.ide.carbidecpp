@@ -1,0 +1,30 @@
+table {border-collapse: collapse}
+
+td.header {
+ border-top:1.5pt;
+ border-left:1.0pt;
+ border-bottom:1.5pt;
+ border-right:1.0pt;
+ border-color:green;
+ border-style:solid;
+ background:silver;
+ padding:0in 5.4pt 0in 5.4pt
+}
+
+td.odd {
+ border-top:none;
+ border-left:solid green 1.0pt;
+ border-bottom:solid black 1.0pt;
+ border-right:solid green 1.0pt;
+ background:#CCCCCC;
+ padding:0in 5.4pt 0in 5.4pt
+ }
+ 
+td.even {
+ border-top:none;
+ border-left:solid green 1.0pt;
+ border-bottom:solid black 1.0pt;
+ border-right:solid green 1.0pt;
+ background:#FFFFDD;
+ padding:0in 5.4pt 0in 5.4pt
+ }

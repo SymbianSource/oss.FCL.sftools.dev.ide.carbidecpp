@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="UI Designer Custom Components" link_to="sdkTOC.xml#uid_customcomponents">
+
+	<topic label="Overview"  						href="html/CustomComponents/cc_overview.htm" />
+	<topic label="Custom Component Architecture"	href="html/CustomComponents/cc_architecture.htm" />
+	<topic label="Developing New Components"        href="html/CustomComponents/cc_new_components.htm" />
+	<topic label="Components Menu"             href="html/CustomComponents/menu_overview.htm" >
+		<topic label="Force Save" 								href="html/CustomComponents/menu_force_save.htm" />
+		<topic label="Refresh Components" 						href="html/CustomComponents/menu_refresh_comp.htm" />
+		<topic label="Select Custom Component Projects..." 		href="html/CustomComponents/menu_custom_comp_projects.htm" />
+		<topic label="Configure SourceGen Debugging..." 		href="html/CustomComponents/menu_configure_sourcegen.htm" />
+	</topic>
+
+	<topic label="Tutorials"             href="html/CustomComponents/tutorials/tutorials.htm" >
+	  <topic label="Equal Container S60"     href="html/CustomComponents/tutorials/equal_container/equalcontainer_tutorial.htm" >
+	    <topic label="Create Project for Equal Container Example" href="html/CustomComponents/tutorials/equal_container/equalcontainer_tutorial_01.htm" />
+	    <topic label="Write the Component and Script Code" href="html/CustomComponents/tutorials/equal_container/equalcontainer_tutorial_02.htm" />
+	    <topic label="Change CCoeControl’s Layout Behavior to be Dynamic" href="html/CustomComponents/tutorials/equal_container/equalcontainer_tutorial_03.htm" />
+	    <topic label="Expose the New Container in the Design Wizard" href="html/CustomComponents/tutorials/equal_container/equalcontainer_tutorial_04.htm" />
+	    <topic label="Create UI Design for UI Designer Project" href="html/CustomComponents/tutorials/equal_container/equalcontainer_tutorial_05.htm" />
+		</topic>
+	 <topic label="Vertical Label S60"  href="html/CustomComponents/tutorials/verticallabel_s60/verticallabel_tutorial.htm" >
+	   <topic label="Create Project for Example Component Files" href="html/CustomComponents/tutorials/verticallabel_s60/verticallabel_tutorial_01.htm" />
+	   <topic label="Enable Components Menu" href="html/CustomComponents/tutorials/verticallabel_s60/verticallabel_tutorial_02.htm" />
+	   <topic label="Add Custom Component to UI Designer" href="html/CustomComponents/tutorials/verticallabel_s60/verticallabel_tutorial_03.htm" />
+	   <topic label="Create UI Designer Project to Test Custom Component" href="html/CustomComponents/tutorials/verticallabel_s60/verticallabel_tutorial_04.htm" />
+	   <topic label="XML Details" href="html/CustomComponents/tutorials/verticallabel_s60/verticallabel_tutorial_05.htm" />
+	 </topic>
+
+	 <topic label="Vertical Label UIQ"  href="html/CustomComponents/tutorials/verticallabel_uiq/verticallabel_tutorial.htm" >
+	   <topic label="Create Project for Example Component Files" href="html/CustomComponents/tutorials/verticallabel_uiq/verticallabel_tutorial_01.htm" />
+	   <topic label="Enable Components Menu" href="html/CustomComponents/tutorials/verticallabel_uiq/verticallabel_tutorial_02.htm" />
+	   <topic label="Add Custom Component to UI Designer" href="html/CustomComponents/tutorials/verticallabel_uiq/verticallabel_tutorial_03.htm" />
+	   <topic label="Create UI Designer Project to Test Custom Component" href="html/CustomComponents/tutorials/verticallabel_uiq/verticallabel_tutorial_04.htm" />
+	   <topic label="XML Details" href="html/CustomComponents/tutorials/verticallabel_uiq/verticallabel_tutorial_05.htm" />
+	 </topic>
+
+   </topic>
+</toc>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.cpp.news.reader/src"
+    modelPluginID="com.nokia.carbide.cpp.news.reader" modelName="FeedCache" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>FeedCache.xsd</foreignModel>
+  <genPackages prefix="FeedCache" basePackage="com.nokia.carbide.cpp.news.reader.gen"
+      resource="XML" disposableProviderFactory="true" ecorePackage="FeedCache.ecore#/">
+    <genClasses ecoreClass="FeedCache.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/entries"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/entry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/feed"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/feedCache"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//DocumentRoot/feeds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/link"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/pubDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/read"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/subscribed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//DocumentRoot/type"/>
+    </genClasses>
+    <genClasses ecoreClass="FeedCache.ecore#//EntriesType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//EntriesType/entry"/>
+    </genClasses>
+    <genClasses ecoreClass="FeedCache.ecore#//EntryType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//EntryType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//EntryType/link"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//EntryType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//EntryType/pubDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//EntryType/read"/>
+    </genClasses>
+    <genClasses ecoreClass="FeedCache.ecore#//FeedCacheType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//FeedCacheType/feeds"/>
+    </genClasses>
+    <genClasses ecoreClass="FeedCache.ecore#//FeedsType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//FeedsType/feed"/>
+    </genClasses>
+    <genClasses ecoreClass="FeedCache.ecore#//FeedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//FeedType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//FeedType/link"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//FeedType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//FeedType/pubDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//FeedType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FeedCache.ecore#//FeedType/subscribed"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FeedCache.ecore#//FeedType/entries"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

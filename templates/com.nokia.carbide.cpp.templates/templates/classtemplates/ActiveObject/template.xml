@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE template [
+<!ENTITY classSymbian SYSTEM "../../shared/classSymbian.inc">
+]>
+<template 
+		version="1.0" 
+		label="%template.label">
+
+	&classSymbian;
+
+</template>
+	
+

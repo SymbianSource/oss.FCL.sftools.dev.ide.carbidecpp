@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Handling Menu Selection Events</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Handling Menu Selection Events</h2>
+
+<p>The UI Designer handles most of the normal flow of event processing for you. As you add objects to your application you may specify which events the object will respond to. The UI Designer  generates stub methods which will be called in response to those events. </p>
+<p>Every menu  item calls a custom menu item event handler when it is selected. The UI Designer code generator  names the handler for each menu item based on the menu item name. If the menu item names  are not unique across the application (Close, Close), UI Designer  adds a numeric addenda to the method name to avoid naming conflicts (Close1, Close2). </p>
+<div class="step">
+  <h4 align="left">Handling Menu Selection Events</h4>
+  <ol>
+    <li>Select the menu item  to edit the selection handler method.</li>
+	<p>The menu item is highlighted.</p>
+	<p class="note"><b>NOTE</b> You may select the menu item in either the Layout region or the Outline View.</p>
+	<li>Right click on the selected menu item to display the context menu.</li>
+	<p>The context menu  appears.</p>
+	<li>Select the <b>Handle 'selected' Event</b> or <b>Go to 'selected' Event</b> item from the context menu.</li>
+	<p class="note"><b>NOTE</b> You may be asked to confirm saving modified information.</p>
+	<p>The associated source file will be opened to the handler routine for this menu item's selection event. </p>
+  </ol>
+</div>
+
+
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_com_components.htm">Standard Components</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/views/ref_menu_editor.htm">Menu Editor</a></li>
+</ul>
+
+<h5>Related tasks</h5>
+<ul>
+  <li><a href="task_comp_mod_menu_add.htm">Adding Menus</a></li>
+  <li><a href="task_comp_mod_menu_add_item.htm">Adding Menu Items</a> </li>
+  <li><a href="task_comp_mod_menu_add_submenu.htm">Adding Submenus</a></li>
+  <li><a href="task_comp_mod_menu_del_menu.htm">Deleting Menus</a></li>
+  <li><a href="task_comp_mod_menu_del_item.htm">Deleting Menu Items</a></li>
+  <li><a href="task_comp_mod_menu_rename_item.htm">Renaming Menus</a> </li>
+  <li><a href="task_comp_mod_menu_reorder.htm">Reordering Menus</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

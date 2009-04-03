@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Instantiating a Template: Automatic</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3> Automatic instantiation</h3>
+<p>To instantiate templates automatically, include the template definition file in all source files that use the template, then use the template members like any other type or function. The compiler automatically generates code for a template instantiation whenever it sees a new one. Listing 1 shows how to automatically instantiate the templates for <span class="code">class Templ</span> and <span class="code">class Max</span>.</p>
+<div class="listing">
+  <h4>Listing 1. myprog.cp: A Source File that Uses Templates</h4>
+  <p>#include &lt;iostreams.h&gt;<br />
+    #include &quot;templ.cp&quot; // includes templ.h as well</p>
+  <p>void main(void) {<br />
+    Templ&lt;long&gt; a = 1, b = 2;<br />
+    // The compiler instantiates Templ&lt;long&gt; here.<br />
+    cout &lt;&lt; Max(a.Get(), b.Get());<br />
+    // The compiler instantiates Max&lt;long&gt;() here.<br />
+    };</p>
+</div>
+<p>If you use automatic instantiation, the compiler might take longer to translate your program because the compiler has to determine on its own which instantiations you need. It also scatters the object code for the template instantiations throughout your program.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

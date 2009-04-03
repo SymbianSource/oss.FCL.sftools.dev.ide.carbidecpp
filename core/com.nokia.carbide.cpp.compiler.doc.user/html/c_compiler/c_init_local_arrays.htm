@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Initialization of Local Arrays and Structures</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3> Initialization of Local Arrays and Structures</h3>
+<p>If you enable the pragma gcc_extensions, the compiler allows the initialization of local arrays and structs with non-constant values.<br />
+</p>
+<div class="listing">
+  <h5>GNU C Extension for Initializing Arrays and Structures</h5>
+  <p>void myFunc( int i, double x )<br />
+    {<br />
+    int arr[2] = { i, i + 1 };<br />
+    struct myStruct = { i, x }; <br />
+    } </p>
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

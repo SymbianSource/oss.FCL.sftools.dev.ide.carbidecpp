@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Adding Plug-in Help</title>
+<style>
+<!--
+span.attr
+    {color:green}
+-->
+</style>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+
+<body>
+<h2>Adding Plug-in Help</h2>
+
+<p>If you are creating a plug-in specifically for use with Carbide.c++ we recommend that 
+any menu items you create be added to existing Eclipse menus or to the <b>Carbide</b> menu. The topics in this section include:</p>
+<ul>
+  <li><a href="#help_assist">Carbide Help Assistance</a></li>
+  <li><a href="#help_toc">Carbide Table of Contents Anchors</a></li>
+  <li><a href="#help_css">Carbibe CSS</a></li>
+  <li><a href="#help_f1">Carbide F1 Help</a></li>
+  <li><a href="#help_cheatsheets">Carbide Cheatsheets</a>   </li>
+</ul>
+<h3><a name="help_assist"></a>Carbide Help Assistance </h3>
+<p>It is highly recommended that every plug-in that adds itself to the Carbide menu include help content. Except for highly unusual cases you can include the help content (html, xml, images, etc.) directly in the plug-in itself. This means that users only have a single plugin to install and the help comes along with it. In the event that your plugin involves several related plugins, as say, UI Designer does, then a separate  help plugin may be the better solution. </p>
+<h3><a name="help_toc" id="help_toc"></a>Carbide Table of Content Anchors</h3>
+<p>All plug-in tools that  add themselves to the Carbide menu should install their help to the  <span class="code">anchorCarbideMisc</span> anchor point using the <span class="code">link_to</span> command. This will correctly place the help content for the plug-in within the Carbide Help section of the Help window. </p>
+<p class="note"><b>NOTE</b> All other help content anchors are reserved for use by the Carbide team.</p>
+<p>In the manuals main TOC file, for the <span class="code">&lt;toc&gt;</span> keyword, add  the command:</p>
+<p class="listing">link_to=&quot;../com.nokia.carbide.help.common/carbideHelpTOC.xml#anchorCarbideMisc&quot;</p>
+<p>The complete line might look something like this: </p>
+<p class="listing">&lt;toc label=&quot;Carbide.c++ Plug-in Developer Guide&quot; link_to=&quot;../com.nokia.carbide.help.common/carbideHelpTOC.xml#anchorCarbideMisc&quot; &gt;</p>
+<p>See the Eclipse documentation <b>Platform Plug-in Developer Guide &gt; Programmer's Guide &gt; User assistance support &gt; Help &gt; </b><b>Help content</b> for more information on content assist help. </p>
+<h3><a name="help_css" id="help_css"></a>Carbide CSS </h3>
+<p>To enable your manual to match the style used by the Carbide documentation, use the <span class="code">book.css</span> file as your style sheet. We recommend that you access the copy in the <span class="code">com.nokia.carbide.cpp.ui</span> plug-in to ensure you are always using the latest version. In the <span class="code">&lt;head&gt;</span> section of your HTML files, use the following line: </p>
+<p class="listing">&lt;link rel=&quot;StyleSheet&quot; href=&quot;../book.css&quot; type=&quot;text/css&quot; /&gt;</p>
+<p>If that is not possible, feel free to add a copy to your plug-in and call it from there. </p>
+<h3><a name="help_f1" id="help_f1"></a>Carbide F1 Help </h3>
+<p>Your help content can also include F1 help using the Eclipse help system. All you need is the help menu ID of the window or view you want to attach F1 help to, an XML file containing the links to the help content, and the correct extension point additions to the plugin's <span class="code">plugin.xml</span> file. </p>
+<h5>Help Menu IDs</h5>
+<p>Right now, the best way to get the help menu IDs for a specific Carbide view or wizard is to examine the xml files inside the <span class="code">html/context_help</span> directory of official Carbide manuals.</p>
+<h5>Context Help XML Files</h5>
+<p>Every context help XML file in the various Carbide.c++ manuals contain the F1 help for a specific plugin. The XML file name identifies the specific Carbide plugin that help is associated with and all the help menu IDs you can use. </p>
+<h5>Plugin.xml Extensions</h5>
+<p>To add your context help to the F1 help simply add the reference to your context help xml file to the extension point &quot;<span class="code">org.eclipse.help.contexts</span>&quot; as shown below: </p>
+<p class="listing"> &lt;extension point=&quot;org.eclipse.help.contexts&quot; &gt;<br>
+  &lt;!-- CARBIDE DEBUG UI HELP (BRKPT, VAR, EXPR, etc) --&gt;<br>
+&lt;contexts file=&quot;html/context_help/org_eclipse_debug_ui.xml&quot;<br>
+plugin=&quot;org.eclipse.debug.ui&quot; /&gt;<br>
+&lt;/extension&gt;</p>
+<p>See the Eclipse documentation <b>Platform Plug-in Developer Guide &gt; Programmer's Guide &gt; User assistance support &gt; Help &gt; Context sensitive help</b> for more information on content assist help. </p>
+<h3><a name="help_cheatsheets" id="help_cheatsheets"></a>Carbide Cheatsheets </h3>
+<p>Use the cheatsheet extension point to add any cheatsheet content to the cheatsheet list. Cheatsheets should be limited to very complex or long tasks. It  is really not recommended for small tasks that a few tutorial steps can satisfy. </p>
+<p>Currently, the categories you can link to when adding your cheatsheet include:</p>
+<ul>
+  <li><b>IDE</b>: <span class="code">&lt;category
+id=&quot;com.nokia.carbide.ide.cheatsheets&quot;&gt;</span></li>
+  <li><b>TRK</b>: <span class="code">&lt;category id=&quot;com.nokia.carbide.trk.cheatsheets&quot; &gt;</span></li>
+  <li><b>Tools</b>: <span class="code">&lt;category id=&quot;com.nokia.carbide.cpp.tools.cheatsheets&quot; &gt; </span></li>
+</ul>
+<p>See the Eclipse documentation <b>Platform Plug-in Developer Guide &gt; Programmer's Guide &gt; User assistance support &gt; Cheat sheets </b> for more information on cheatsheets. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</div></body>
+</html>

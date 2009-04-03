@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Examining kernel objects and containers in Debugging information</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Kernel Containers</h2>
+</div>
+<div>
+<p>Internally, the kernel maintains lists of all current objects,
+organized by type. Each list is a container, a DObjectCon object,
+with one for each object type.</p>
+<p>The <a href="CrashDebugger_cmd_c.guide.html" title="The debug monitor and command syntax / c - display contents of object container">c</a>
+command will walk through all objects in a given list. The type of object is
+identified by appending a number after the command. For example,
+DProcess objects are identified by the number 1, so to walk
+through all current DProcess objects type:</p>
+<p class="listing">&gt; c1</p>
+<p>The command effectively executes a
+<a href="CrashDebugger_cmd_q.guide.html" title="The debug monitor and command syntax / q - display full DObject information">q</a> command on each
+object in the "processes" container.</p> 
+
+</div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

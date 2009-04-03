@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Birthdays</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h2>Tutorial: Birthdays - Summary </h2>
+<P>This example shows how to use the Carbide.c++ UI Designer for S60 to define the UI of an application and to implement the "real work" in the generated code. </P>
+<P>The goals of the application are to:</P>
+<UL>
+  <LI>
+    <P><a href="BirthdaysTutorial_02.html">Maintain data and UI separation</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_03.html">Use the S60 UI Designer to create the UI</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_04.html">Editing generated source to provide application logic</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_05.html">Save and restore birthdays from persistent storage</a></P>
+  <LI><b>Summary </b>
+</UL>
+<h3>Summary</h3>
+<P>With this tutorial, we showed how a UI Designer enabled project
+  provided the basis for a relatively useful application.</P>
+<P>We maintained code and data separation using the <span class="code">TBirthday</span> class
+and stored the list of birthdays through the <span class="code">CBirthdaysDocument</span>
+class.</P>
+<P>We saw how the UI Designer provided almost everything visible
+(except for the actual data), including the application's structure.
+We saw how the list box was populated entirely by code, using
+generated support routines to easy bridge the gap between real-life
+data and the pecularities of the S60 list box model and icon
+handling.</P>
+<P>Finally, we saw how to set up the document class to enable saving
+and loading the birthdays list. 
+</P>
+<P>We hope you can see that the Carbide.c++ UI Designer handled most
+of the heavy lifting. Almost all the manually-edited code supports
+application logic, not UI. And the generated code does most of the
+work and leaves room for you to add application logic however you see
+fit. 
+</P>
+<P>Finally, if you wish, you can continue to update the UI designs,
+adding or removing views or form lines, changing the list style,
+handling other events, etc. The generated code will change only
+enough to support the changes in the design. (Just keep out of the
+"do not modify" blocks!) 
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</BODY>
+</HTML>

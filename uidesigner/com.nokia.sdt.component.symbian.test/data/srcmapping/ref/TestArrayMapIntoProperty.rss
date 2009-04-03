@@ -1,0 +1,49 @@
+#include <arrayheader.rh>
+#include <enumsheader.rh>
+#include <basicheader.rh>
+
+RESOURCE ARRAY_TYPES_DEFAULTS r_test_array_map_into_property
+	{
+	ints = { EFlagThird, EFlagFirst, EFlagSecond };
+	}
+RESOURCE PALETTE r_test_array_map_into_property_2
+	{
+	palette_colors = r_test_array_map_into_property_palette_colors;
+	palette_names = r_test_array_map_into_property_palette_names;
+	}
+RESOURCE ARRAY r_test_array_map_into_property_palette_colors
+	{
+	items = { r_test_array_map_into_property_items, r_test_array_map_into_property_items_2, r_test_array_map_into_property_items_3 };
+	}
+RESOURCE RGB r_test_array_map_into_property_items
+	{
+	r = 255;
+	}
+RESOURCE RGB r_test_array_map_into_property_items_2
+	{
+	r = 255;
+	g = 255;
+	b = 255;
+	}
+RESOURCE RGB r_test_array_map_into_property_items_3
+	{
+	r = 255;
+	g = 255;
+	b = 128;
+	}
+RESOURCE ARRAY r_test_array_map_into_property_palette_names
+	{
+	items = { r_test_array_map_into_property_items_4, r_test_array_map_into_property_items_5, r_test_array_map_into_property_items_6 };
+	}
+RESOURCE LBUF r_test_array_map_into_property_items_4
+	{
+	txt = "red";
+	}
+RESOURCE LBUF r_test_array_map_into_property_items_5
+	{
+	txt = "white";
+	}
+RESOURCE LBUF r_test_array_map_into_property_items_6
+	{
+	txt = "orange";
+	}

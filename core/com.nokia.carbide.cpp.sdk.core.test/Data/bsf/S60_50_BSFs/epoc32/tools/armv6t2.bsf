@@ -1,0 +1,8 @@
+#<bsf>#
+
+# This BSF file is to support building for ARM 6T2 architecture. The options specified
+# here are same as for ARMV6 except --cpu 6T2 (instead of --cpu 5T).
+
+CUSTOMIZES ARMV5
+
+INVARIANT_OPTIONS --cpu 6T2 --enum_is_int --library_interface=aeabi_clib --fpmode ieee_no_fenv --export_all_vtbl --no_vfe --apcs /inter --memaccess -UL41

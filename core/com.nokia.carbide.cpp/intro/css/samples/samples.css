@@ -1,0 +1,76 @@
+/* ----------------------------- */
+/* intro/css/samples/samples.css */
+/* ----------------------------- */
+
+
+body {
+	/* Carbide branding mod */
+	/* hide normal eclipse background image */
+	/* background-image : url(../graphics/contentpage/samples_wtr.jpg); */
+	background-image : url(../graphics/rootpage/background_carbide.jpg); */
+}
+
+.samples-group {
+	width : 750px;
+	/* To center in Moz (have to use text-align for IE) */	
+	margin : 0px auto;
+	margin-bottom : 10px;
+	text-align : left;
+	float : none;
+	clear : both;
+}
+
+.sample-link { 
+	width : 360px;
+	text-align : left; 
+	margin-left : 5px;
+	margin-right : 5px;
+	margin-top : 10px;
+	margin-bottom : -30px;
+	vertical-align : top;
+	/* Carbide branding mod */
+	margin-bottom : 0px;
+	background-image : url(../graphics/carbide/page-link-wide.gif);
+	background-repeat:no-repeat;
+	background-position : top left;
+}
+
+.samples-group > .sample-link {
+	float : left;
+	height : 150px;
+	vertical-align : middle;
+}
+
+
+.sample-link .link-label {
+	display : block;
+	width : 300px;
+	position : relative;
+	top : -50px;
+	left : 60px;
+}
+
+
+.sample-link p .text {
+	display : block;
+	width : 300px;
+	position : relative;
+	top : -45px;
+	left : 53px;
+}
+
+.sample-link img {
+	height : 57px;
+	width : 57px;
+	vertical-align : middle;
+}
+
+.sample-link:hover { border-right : 0px; }
+
+/* show the "selected" image for this page */
+#navigation-links a#samples img, #navigation-links a#samples:hover img { background-image : url(../graphics/icons/ctool/samples48sel.gif); }
+
+/* added Carbide bullet icons here for topic */
+a#carbideapp img { background-image : url(../graphics/icons/obj48/carbideapp_obj.gif); }
+a#carbideapp:hover img { background-image : url(../graphics/icons/obj48/carbideapphov_obj.gif); }
+

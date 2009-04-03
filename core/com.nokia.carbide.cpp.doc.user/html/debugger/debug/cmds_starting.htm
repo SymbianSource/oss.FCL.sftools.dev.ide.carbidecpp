@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Starting and Terminating a Debug Session</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Starting  and Terminating a Debug Session</h2>
+<p>Once you've started a debug session, the <b>Debug</b> view provides controls to both terminate and restart the session. The following items describe the commands for:</p>
+<ul>
+  <li><a href="#START_DB">Starting a session</a></li>
+  <li><a href="#TERMINATE_DB">Terminating a session</a></li>
+  <li><a href="#RESTART_DB">Restarting a session</a></li>
+</ul>
+<h4><a name="START_DB" id="START_DB"></a>Starting a session</h4>
+<p>Use the <b>Debug</b> command (<img src="../../images/icons/btn_debug.png" width="17" height="16" align="absmiddle" />) to execute a program under debugger control using the current <a href="../../reference/wnd_debug_configuration.htm">launch configuration</a> settings.</p>
+<p>If the project does not already have a launch configuration, the <a href="../../tasks/projects/wiz_new_launch_config.htm">New Launch Configuration Wizard</a> will automatically create one for emulator targets or ask for additional information to create one. It will generate a default name for the launch configuration and add it to the list of available launch configurations for the project. Once complete and saved the debug session is launched. If a  launch configuration is already available, the Debug command launches  the last  launch configuration used by the project. </p>
+<p>To create new launch configurations where none previously existed or launch the last one created:</p>
+<ul>
+  <li>Click the <b>Debug</b> button (<img src="../../images/icons/btn_debug.png" width="17" height="16" align="absmiddle" />) in the <b>Carbide C/C++</b> perspective</li>
+  <li>Select <b>Run &gt; Debug</b> from the  menu bar </li>
+</ul>
+<p>To launch a specific launch configuration:</p>
+<ul>
+  <li>Right-click the project's EXE file in the C/C++ Projects view and select <b>Debug As &gt; <em>Project_Name</em></b> from the context menu</li>
+</ul>
+<h4><a name="TERMINATE_DB" id="START_DB2"></a>Terminating a session</h4>
+<p>Use the <b>Terminate</b> command (<img src="../../images/icons/btn_terminate.png" width="17" height="15" align="absmiddle" />) to stop or halt a program based on the type of debugging session underway. Terminate behavior includes: </p>
+<ul>
+  <li><b>Emulator</b> - terminates program execution and ends the debug session</li>
+  <li><b>Application TRK</b> or <b>System TRK</b> - kills the process on the device and ends the debug session. To terminate without killing the process, use <a href="../../tasks/debugger/work_debug_act_disconnect.htm">Disconnect</a> instead. </li>
+  <li><b>Stop-mode soft attach</b> - suspends the attached process while other processes continue to run on the device. If only a single process is running on the device, the device CPU is suspended. Once the CPU is suspended you must launch a new debug session to resume the device CPU. </li>
+</ul>
+<p>This behavior differs from <a href="../../tasks/debugger/work_debug_act_stop.htm">suspending</a> a program, as this temporarily suspends execution.</p>
+<p class="note"><b>NOTE</b> If the <a href="../../reference/view_debug.htm">Debug</a> view  loses focus, the Terminate control will appear disabled. To regain focus, select a thread in the Debug view to update the tool bar and reactivate the Terminate control. </p>
+<h4><a name="RESTART_DB" id="START_DB3"></a>Restarting a session</h4>
+<p>Use the <b>Restart</b> command  (<img src="../../images/icons/btn_restart.png" width="20" height="18" align="absmiddle" />) after stopping program execution. The debugger goes back to the beginning of the program and begins execution again. This behavior is equivalent to killing execution, then starting a new debugging session.</p>
+<h4>Other references</h4>
+<ul>
+  <li><a href="debug.htm">Debugging overview</a> </li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

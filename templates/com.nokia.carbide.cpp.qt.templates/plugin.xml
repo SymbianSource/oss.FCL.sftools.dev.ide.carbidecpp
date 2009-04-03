@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+	<!-- PROJECT WIZARDS -->
+	<extension point="com.nokia.carbide.templatewizard.wizardTemplate">
+      <template
+      		displayName="%Qt.console.template.label"
+            groupLabel="%Qt.core.label"
+            image="icons/consoleproject.gif"
+            location="templates/Qt-Console/template.xml"
+            templateId="com.nokia.carbide.cpp.qt.templates.console"
+            wizardId="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
+
+      <template
+      		displayName="%Qt.gui.dialog.template.label"
+            filterArguments="S60:3.0-5.9"
+            groupLabel="%Qt.gui.label"
+            image="icons/guiproject.gif"
+            location="templates/Qt-GUI-Dialog/template.xml"
+            templateId="com.nokia.carbide.cpp.qt.templates.gui.dialog"
+            wizardId="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
+
+      <template
+      		displayName="%Qt.gui.mainwindow.template.label"
+            filterArguments="S60:3.0-5.9"
+            groupLabel="%Qt.gui.label"
+            image="icons/guiproject.gif"
+            location="templates/Qt-GUI-MainWindow/template.xml"
+            templateId="com.nokia.carbide.cpp.qt.templates.gui.mainwindow"
+            wizardId="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
+
+      <template
+      		displayName="%Qt.gui.widget.template.label"
+            filterArguments="S60:3.0-5.9"
+            groupLabel="%Qt.gui.label"
+            image="icons/guiproject.gif"
+            location="templates/Qt-GUI-Widget/template.xml"
+            templateId="com.nokia.carbide.cpp.qt.templates.gui.widget"
+            wizardId="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
+   </extension>
+
+</plugin>

@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<component baseComponent="com.nokia.sdt.series60.DialogBase" 
+			friendlyName="%friendlyName" 
+			qualifiedName="com.nokia.sdt.series60.CAknForm" 
+			category="Basic"
+			instanceNameRoot="form"
+			version="1.0">
+		<documentation>
+			<information>%information</information>
+			<wizardDescription>%information</wizardDescription>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknForm" classHelpTopic="" />
+		<designerImages 
+			smallIconFile="CAknForm_sm.png" 
+			largeIconFile="CAknForm.png" 
+			thumbnailFile="form_tn.png"/>
+			
+		<attributes>
+			<attribute key="is-initial-content">true</attribute>
+			<attribute key="has-builtin-options-menu">true</attribute>
+			<attribute key="event-handler-target">true</attribute>
+			<attribute key="base-container-class">CAknForm</attribute>
+			<attribute key="base-control-observer-class">CAknForm</attribute>
+			<attribute key="default-cba-value">R_AVKON_SOFTKEYS_OPTIONS_BACK</attribute>
+			<attribute key="use-restricted-cba">true</attribute>
+			<attribute key="associated-palette-drawer">Editors</attribute>
+		</attributes>
+
+		<properties>
+			<property category="Form" name="EEikFormHideEmptyFields" type="boolean" default="false"
+				descriptionKey="EEikFormHideEmptyFieldsKey" />
+			<property category="Form" name="EEikFormShowBitmaps" type="boolean" default="false"
+				descriptionKey="EEikFormShowBitmapsKey" />
+			<property category="Form" name="EEikFormEditModeOnly" type="boolean" default="false"
+				descriptionKey="EEikFormEditModeOnlyKey" />
+			<property category="Form" name="EEikFormUseDoubleSpacedFormat" type="boolean" default="false"
+				descriptionKey="EEikFormUseDoubleSpacedFormat" />
+			<property category="Behavior" name="exitsApp" type="boolean" default="true"
+				descriptionKey="exitsAppKey" />
+		</properties>
+		
+		<extensionProperties name="default">
+			<property category="Item" name="prompt" type="localizedString" default="prompt"
+				descriptionKey="promptDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<property category="Item" name="EEikDlgItemTakesEnterKey" 
+				type="boolean" default="false"
+				descriptionKey="EEikDlgItemTakesEnterKeyDescription" />
+			<property category="Item" name="EEikDlgItemOfferAllHotKeys" 
+				type="boolean" default="false"
+				descriptionKey="EEikDlgItemOfferAllHotKeysDescription" />
+			<property category="Item" name="EEikDlgItemSeparatorBefore" 
+				type="boolean" default="false"
+				descriptionKey="EEikDlgItemSeparatorBeforeDescription" /> 
+			<compoundProperty category="Item" name="promptImage" 
+				type="com.nokia.sdt.symbian.imageProperty"
+				descriptionKey="promptImageDescription" />
+		</extensionProperties>
+	
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IScrollBoundsProvider"/>
+				<code class="com.nokia.sdt.series60.component.AknFormVisualAndLayoutImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="CAknForm_propertyExtenders.js" prototype="CAknFormPropertyExtenders"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="CAknForm_queryContainment.js" prototype="CAknFormQueryContainment"/>
+			</implementation>
+			</implementations>
+	
+		<sourceMapping>
+			<mapResource struct="DIALOG" headers="avkon.rsg avkon.rh eikon.rh">
+				<mapBitmaskMember property="." member="flags"
+					includedProperties="wait notifyEsc modeless">
+					<!-- initial blank entries force bits on -->
+					<mapBitmaskValue properties="" value="EEikDialogFlagNoDrag" />
+					<mapBitmaskValue properties="" value="EEikDialogFlagNoTitleBar" />
+					<mapBitmaskValue properties="" value="EEikDialogFlagCbaButtons" />
+					<mapBitmaskValue properties="" value="EEikDialogFlagFillAppClientRect" />
+					
+					<mapBitmaskValue properties="notifyEsc" value="EEikDialogFlagNotifyEsc" />
+					<mapBitmaskValue properties="modeless" value="EEikDialogFlagModeless" />
+					<mapBitmaskValue properties="wait" value="EEikDialogFlagWait" />
+				</mapBitmaskMember>
+	  		    <select property="[parent].[com.nokia.sdt.series60.CBARestricted]">
+	   		        <choice value="">
+	  		          <!-- no CBA -->
+	  		        </choice>
+	  		        <choice>
+						<mapIdentifierMember property="[parent].[com.nokia.sdt.series60.CBARestricted].info" member="buttons" />
+					</choice>
+				</select>
+				<mapResourceMember struct="FORM" property="." member="form" headers="eikon.rh">
+				<mapBitmaskMember property="." member="flags"
+					includedProperties="EEikFormHideEmptyFields EEikFormShowBitmaps EEikFormEditModeOnly EEikFormUseDoubleSpacedFormat">
+					<mapBitmaskValue properties="EEikFormHideEmptyFields" value="EEikFormHideEmptyFields" />
+					<mapBitmaskValue properties="EEikFormShowBitmaps" value="EEikFormShowBitmaps" />
+					<mapBitmaskValue properties="EEikFormEditModeOnly" value="EEikFormEditModeOnly" />
+					<mapBitmaskValue properties="EEikFormUseDoubleSpacedFormat" value="EEikFormUseDoubleSpacedFormat" />
+				</mapBitmaskMember>
+					<mapArrayMember property="." member="items">
+						<select attribute="is-form-content">
+							<!-- only map visible items, not menu bars, etc. -->
+							<choice value="true">
+								<mapResourceElement struct="DLG_LINE" headers="avkon.rh"
+									instanceIdentifyingMember="id">
+									<!-- looking at the current array element, always
+										create a unique value from the dialog and instance name -->
+									<mapEnumMember property="." member="type"
+										nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE"
+									/>
+									<mapSimpleMember property="prompt" member="prompt"/>
+									<mapEnumMember property="." member="id"
+										uniqueValue="*"
+										nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID"
+									/>
+									<!-- looking at the current array element, get the
+										enumerator for the instance's control type -->
+									<mapBitmaskMember property="." member="itemflags"
+										includedProperties="EEikDlgItemTakesEnterKey EEikDlgItemOfferAllHotKeys EEikDlgItemSeparatorBefore">
+										<mapBitmaskValue properties="EEikDlgItemTakesEnterKey" value="EEikDlgItemTakesEnterKey" />
+										<mapBitmaskValue properties="EEikDlgItemOfferAllHotKeys" value="EEikDlgItemOfferAllHotKeys" />
+										<mapBitmaskValue properties="EEikDlgItemSeparatorBefore" value="EEikDlgItemSeparatorBefore" />
+									</mapBitmaskMember>
+									<mapResourceMember property="." member="control"/>
+								<!-- initialized in code for SVG support
+									<mapSimpleMember property="promptImage.bmpfile" member="bmpfile"/>
+									<mapIdentifierMember property="promptImage.bmpid" member="bmpid"/>
+									// stupid header doesn't initialize bmpmask to -1
+									<select property="promptImage.bmpmask">
+										<choice value="">
+											<mapFixedMember member="bmpmask" value="-1"/>
+										</choice>
+										<choice>
+											<mapIdentifierMember property="promptImage.bmpmask" member="bmpmask"/>
+										</choice>
+									</select>
+								-->
+								</mapResourceElement>
+							</choice>
+							<!-- default case does nothing -->
+							<choice/>
+						</select>						
+					</mapArrayMember>
+				</mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen forms="AppUi AknView RootAppUi">
+		
+			<!-- contributions as Form -->
+
+			<defineLocation id="HEADER_FILE" domain="cpp" dir="${inc}" 
+				file="${instanceName}.h"
+				owned="false"
+				location="">
+			</defineLocation>
+			
+			<template location="HEADER_FILE">
+#ifndef ${instanceName.toUpperCase()}_H
+#define ${instanceName.toUpperCase()}_H
+
+			</template>
+			
+			<defineLocation id="HEADER_INCLUDES" baseLocation="HEADER_FILE"
+				location="region(Generated Includes)"
+				filter="unique-includes">
+			</defineLocation>
+			
+			<template location="HEADER_INCLUDES"><![CDATA[
+#include <aknform.h>
+]]>			</template>
+
+			<defineLocation id="EVENT_INCLUDES" baseLocation="HEADER_FILE"
+				owned="false"
+				filter="unique-includes"
+				location="region(Event Handler Includes)">
+			</defineLocation>
+			
+			<template location="EVENT_INCLUDES" />
+		
+			<defineLocation id="HEADER_FORWARD_DECLARATIONS" baseLocation="HEADER_FILE"
+				location="region(Generated Forward Declarations)">
+				<template><![CDATA[
+class MEikCommandObserver;		
+]]>				</template>
+			</defineLocation>	
+				
+			<template location="HEADER_FORWARD_DECLARATIONS"/>
+			
+	
+			<defineLocation id="CLASS" baseLocation="HEADER_FILE"
+				owned="false"
+				location="class(${className})">
+				<template><![CDATA[
+/**
+ * @class	${className} ${instanceName}.h
+ */
+class ${className} : public CAknForm
+	{
+public: // constructors and destructor
+
+	${className}( MEikCommandObserver* aCommandObserver );
+	static ${className}* NewL( MEikCommandObserver* aCommandObserver );
+	static ${className}* NewLC( MEikCommandObserver* aCommandObserver );
+	virtual ~${className}();
+	
+	// from CEikDialog
+	TKeyResponse OfferKeyEventL( 
+			const TKeyEvent& aKeyEvent, 
+			TEventCode aType );
+	
+protected: 
+	// from CAknDialog	
+	void PreLayoutDynInitL();
+	TBool OkToExitL( TInt aButtonId );
+
+	// from CAknForm
+	void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
+	TBool QuerySaveChangesL();
+	TBool SaveFormDataL(); 
+	void DoNotSaveFormDataL();
+
+private:
+	void LoadFromDataL();
+	MEikCommandObserver* iCommandObserver;
+	};
+]]>
+				</template>
+			</defineLocation>
+			
+			<template location="CLASS"/>
+
+			<defineLocation id="CLASS_METHODS" baseLocation="CLASS"
+				filter="unique-prototypes"
+				location="region(Generated Methods)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+			
+			<template location="CLASS_METHODS"/>
+
+		<defineLocation id="CLASS_TYPES" baseLocation="CLASS"
+			location="region(Generated Type Declarations)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template location="CLASS_TYPES"/>
+
+			<defineLocation id="CLASS_IVARS" baseLocation="CLASS"
+			location="region(Generated Instance Variables)">
+				<template><![CDATA[
+private: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+			</defineLocation>
+
+			<template location="CLASS_IVARS"/>
+
+			<defineLocation id="BASE_CLASS_LIST" baseLocation="CLASS"
+				owned="false"
+				filter="unique-bases"
+				location="bases()">
+			</defineLocation>
+			
+			<template location="BASE_CLASS_LIST" />
+			
+			<defineLocation id="CLASS_OVERRIDES" baseLocation="CLASS"
+				owned="false"
+				filter="unique-prototypes"
+				location="region(Overridden Methods)">
+				<template><![CDATA[
+protected: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+				
+			</defineLocation>			
+				
+			<template location="CLASS_OVERRIDES"/>
+			
+			<defineLocation id="CLASS_USERHANDLERS" baseLocation="CLASS"
+				owned="false"
+				filter="unique-prototypes"
+				location="region(User Handlers)">
+				<template><![CDATA[
+protected: <% contrib.indentAdjust(-1); %>
+]]>				</template>
+				
+			</defineLocation>				
+			
+			<template location="CLASS_USERHANDLERS"/>
+
+			<template location="HEADER_FILE">
+#endif // ${instanceName.toUpperCase()}_H
+			</template>
+							
+			<defineLocation id="MAIN_FILE" domain="cpp" dir="${src}" 
+				file="${instanceName}.cpp"
+				owned="false"
+				location="">
+			</defineLocation>
+
+			<template location="MAIN_FILE"/>
+			
+			<defineLocation id="MAIN_SYSTEM_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated System Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include <avkon.hrh>
+]]>				</template>
+				<template><![CDATA[
+#include <avkon.rsg>
+]]>				</template>
+				<template><![CDATA[
+#include <eikmenup.h>
+]]>				</template>
+				<template><![CDATA[
+#include <aknappui.h>
+]]>				</template>
+				<template><![CDATA[
+#include <eikcmobs.h>
+]]>				</template>
+			</defineLocation>
+
+			<template location="MAIN_SYSTEM_INCLUDES"/>
+	
+			<defineLocation id="MAIN_USER_INCLUDES" baseLocation="MAIN_FILE"
+				location="region(Generated User Includes)"
+				filter="unique-includes">
+				<template><![CDATA[
+#include "${instanceName}.h"
+]]>				</template>
+			</defineLocation>		
+
+			<template location="MAIN_USER_INCLUDES"/>
+			
+			<inline>
+if (Engine.formMatches(form, [""])) {
+	this.getHrhFiles(contribs);
+}
+			</inline>
+			
+			<defineLocation id="CONSTANTS" baseLocation="MAIN_FILE"
+				location="region(Generated Constants)">
+			</defineLocation>
+
+			<template location="CONSTANTS" />
+
+			<defineLocation id="CONSTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::${className}(MEikCommandObserver*))">
+				<template><![CDATA[
+/**
+ * Construct the ${className} instance
+ * @param aCommandObserver command observer
+ */ 
+${className}::${className}( MEikCommandObserver* aCommandObserver )
+	{
+	iCommandObserver = aCommandObserver;
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="CONSTRUCTOR"/>
+
+			<defineLocation id="CONSTRUCTOR_BODY" baseLocation="CONSTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template location="CONSTRUCTOR_BODY"/>
+			
+			<template location="MAIN_FILE"><![CDATA[
+/**
+ *  Creates an instance and initializes it.
+ *  Instance is not left on cleanup stack.
+ * @param aCommandObserver command observer
+ * @return initialized instance of ${className}
+ */
+${className}* ${className}::NewL( MEikCommandObserver* aCommandObserver )
+	{
+	${className}* self = ${className}::NewLC( aCommandObserver );
+	CleanupStack::Pop( self );
+	return self;
+	}
+
+/**
+ *  Creates an instance and initializes it.
+ *  Instance is left on cleanup stack.
+ * @param aCommandObserver command observer
+ * @return new instance of ${className}
+ */
+${className}* ${className}::NewLC( MEikCommandObserver* aCommandObserver )
+	{
+	${className}* self = new ( ELeave ) ${className}( aCommandObserver );
+	CleanupStack::PushL( self );
+	self->ConstructL();
+	return self;
+	}
+]]>			
+			</template>
+
+				<defineLocation id="OFFER_KEYEVENTL" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::OfferKeyEventL(const TKeyEvent&amp;,TEventCode))">
+					<template><![CDATA[
+/** 
+ * Handle key event (override)
+ * @param aKeyEvent key event
+ * @param aType event code
+ * @return EKeyWasConsumed if the event was handled, else EKeyWasNotConsumed
+ */
+TKeyResponse ${className}::OfferKeyEventL( 
+		const TKeyEvent& aKeyEvent, 
+		TEventCode aType )
+	{
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="OFFER_KEYEVENTL_BODY" baseLocation="OFFER_KEYEVENTL"
+				location="region(Generated Contents)"/>
+
+		<template location="OFFER_KEYEVENTL_BODY"/>
+			
+		<template location="OFFER_KEYEVENTL"><![CDATA[
+<% if (instance.rootContainer.isInstanceOf("com.nokia.sdt.series60.CAknView")) { 
+%>if ( ( aKeyEvent.iCode == EKeyLeftArrow 
+	|| aKeyEvent.iCode == EKeyRightArrow )
+	&& !IsEditable() )
+	{
+	// allow the tab control to get the arrow keys
+	return EKeyWasNotConsumed;
+	}
+<% } %>
+]]>		</template>
+
+			<!-- this is the same template emitted as an event include
+			from ContainerBase; we need to omit to reduce duplicates -->
+			<template id="OfferKeyEventOverrideContents" location="OFFER_KEYEVENTL"><![CDATA[
+<% if (!instance.events["offerKeyEvent"]) {
+%>return ${instance.attributes["base-container-class"]}::OfferKeyEventL( aKeyEvent, aType );
+<%}%> ]]>	</template>
+
+
+			<defineLocation id="DESTRUCTOR" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::~${className}())">
+				<template><![CDATA[
+/** 
+ * Destroy any instance variables
+ */
+${className}::~${className}()
+	{
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="DESTRUCTOR"/>
+
+			<defineLocation id="DESTRUCTOR_BODY" baseLocation="DESTRUCTOR"
+				location="region(Generated Contents)">
+			</defineLocation>
+			
+			<template location="DESTRUCTOR_BODY"/>
+
+			
+			<template location="MAIN_FILE"><![CDATA[
+/**
+ * Called to handle "Save" menu item. Displays save query.
+ * @return TBool ETrue if the form data is to be saved, EFalse otherwise
+ */
+TBool ${className}::QuerySaveChangesL()
+	{
+	TBool isAnsYes( CAknForm::QuerySaveChangesL() );
+	
+	if ( isAnsYes )
+		{
+		SaveFormDataL();
+		}
+	else
+		{
+		DoNotSaveFormDataL();
+		}
+
+	return isAnsYes;
+	}
+
+/**
+ * Called from QuerySaveChangesL when changes made to the form are to be saved.
+ * @return TBool ETrue if the form data has been saved, EFalse otherwise
+ */
+TBool ${className}::SaveFormDataL()
+	{
+	// TODO save values
+	return ETrue;
+	}
+
+/**
+ * Called from QuerySaveChangesL when changes made to the form are discarded.
+ */
+void ${className}::DoNotSaveFormDataL()
+	{
+	LoadFromDataL();
+	}
+
+/**
+ * Called from DoNotSaveFormDataL when changes are cancelled.
+ * Called from PreLayoutDynInitL to load initial values if needed.
+ */
+void ${className}::LoadFromDataL()
+	{
+	// TODO load saved values	
+
+	}
+]]>
+				</template>			
+			
+			<defineLocation id="PRELAYOUTDYNINITL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::PreLayoutDynInitL())">
+				<template><![CDATA[
+/**
+ * Initialize controls and settings before a Form is laid out.  (override)
+ */
+void ${className}::PreLayoutDynInitL()
+	{
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template location="PRELAYOUTDYNINITL"/>
+			
+			<defineLocation id="PRELAYOUTDYNINITL_BODY" baseLocation="PRELAYOUTDYNINITL"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template location="PRELAYOUTDYNINITL_BODY"/>
+
+			<template location="PRELAYOUTDYNINITL">
+LoadFromDataL();
+			</template>
+
+			<defineLocation id="DYNINITMENUPANEL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::DynInitMenuPaneL(TInt, CEikMenuPane*))">
+				<template><![CDATA[
+/**
+ * Called when built-in menu is displayed.  (override)
+ * CAknForm has a built-in menu. In view mode, the only menu item is "Edit" that switches the form to edit mode.
+ * In edit mode, the items are "Add field" "Save" "Edit label" and "Delete field"
+ * The code below removes all edit mode items except for "Save"
+ * To use these items, remove the appropriate lines and override the appropriate CAknForm methods.
+ * (E.g., to handle "Add field" remove the line for EAknFormCmdAdd and override CAknForm::AddItemL())
+ */
+void ${className}::DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane )
+	{
+	CAknForm::DynInitMenuPaneL( aResourceId, aMenuPane );
+	
+	if ( aResourceId == R_AVKON_FORM_MENUPANE )
+		{
+		aMenuPane->SetItemDimmed( EAknFormCmdAdd, ETrue );
+		aMenuPane->SetItemDimmed( EAknFormCmdLabel, ETrue );
+		aMenuPane->SetItemDimmed( EAknFormCmdDelete, ETrue );
+
+		/* 
+		// sample code to add a custom item with command id 'myCommandId'
+		TInt pos;
+		if ( !aMenuPane->MenuItemExists( myCommandId, pos ) )
+			{
+			CEikMenuPaneItem::SData menuItem;
+			menuItem.iCommandId = myCommandId;
+			menuItem.iCascadeId = 0;	// set for submenus
+			menuItem.iFlags = 0;		// e.g. EEikMenuItemDimmed
+			menuItem.iText = KMyCommandIdText;
+			menuItem.iExtraText = _L("");
+			aMenuPane->AddMenuItemL( menuItem );
+			}
+		*/
+		}
+	}
+]]>				
+				</template>			
+			</defineLocation>
+			
+			<template location="DYNINITMENUPANEL"/>
+			
+			<defineLocation id="DYNINITMENUPANEL_BODY" baseLocation="DYNINITMENUPANEL"
+				owned="true"
+				location="region(Generated Code)"/>
+				
+			<template location="DYNINITMENUPANEL_BODY"><![CDATA[
+<%	var event = instance.events['dynInitMenuPane'];
+	if (event) {%>
+${event.handlerName}( aResourceId, aMenuPane );
+<% } %>
+]]>			</template>
+			
+			<defineLocation id="OKTOEXITL" baseLocation="MAIN_FILE"
+				owned="false"
+				location="function(${className}::OkToExitL(TInt))">
+				<template><![CDATA[
+/**
+ * Handle a button press and tell whether it closes the dialog.  (override)  
+ * @param aButtonId the identifier for the button (avkon.hrh)
+ */
+TBool ${className}::OkToExitL( TInt aButtonId )
+	{
+	}
+]]>
+				</template>			
+			</defineLocation>
+			
+			<template location="OKTOEXITL"/>
+			
+			<defineLocation id="OKTOEXITL_BODY" baseLocation="OKTOEXITL"
+				location="region(Generated Code)">
+			</defineLocation>
+		
+			<inline scope="prototype">
+include("../cba/cbaLibrary.js")
+include("containerLibrary.js")
+			</inline>			
+
+			<template location="OKTOEXITL_BODY"><![CDATA[
+<% if (properties.exitsApp) { 
+	var id = findCbaRightId(instance.parent.children);
+%>
+if ( aButtonId == ${id} )
+	{
+	if ( CAknForm::OkToExitL( EAknSoftkeyBack ) )
+		{
+		iAvkonAppUi->ProcessCommandL( EEikCmdExit );
+		}
+	else
+		{
+		return EFalse;
+		}
+	}<% } %>
+]]>			</template>	
+
+			<template location="OKTOEXITL"><![CDATA[
+// The '${lookupString("exitsApp")}' property automatically adds code to exit the 
+// application when the right soft key is pressed. If this property is set to false, 
+// and AddToStackL has been called on the Form object (e.g., it was not shown as a dialog), 
+// code must be added manually to avoid a panic when exiting the application.
+return CAknForm::OkToExitL( aButtonId );
+]]>			</template>	
+
+			<useTemplateGroup ids="GeneratePrepareForFocusTransition GeneratePageChanged GenerateLineChanged"/>
+			<useTemplateGroup ids="GenerateProcessCommand GenerateOfferKeyToApp"/>
+			<useTemplateGroup ids="GenerateFocusChanged"/>
+			<useTemplateGroup ids="GenerateSizeChanged GeneratePositionChanged"/>
+			<useTemplateGroup ids="GenerateDraw GenerateOfferKeyEvent"/>
+			<useTemplateGroup ids="GeneratePrepareForFocusLoss GeneratePrepareForFocusGain"/>
+
+<!-- BEGIN EVENT resourceChanged -->
+			<templateGroup id="GenerateResourceChanged" ifEvents="resourceChanged">
+				<template id="DeclareResourceChangedOverride" phase="OverriddenMethods"><![CDATA[
+void HandleResourceChange( TInt aType );
+]]>				</template>
+
+				<defineLocation id="ResourceChangedOverride" baseLocation="MAIN_FILE"
+					owned="false"
+					location="function(${handlerClassName}::HandleResourceChange(TInt))">
+					<template><![CDATA[
+/** 
+ * Handle global resource changes, such as scalable UI or skin events (override)
+ */
+void ${handlerClassName}::HandleResourceChange( TInt aType )
+	{
+	${instance.attributes["base-container-class"]}::HandleResourceChange( aType );
+	}
+]]>				
+					</template>
+				</defineLocation>
+				
+			<defineLocation id="ResourceChangedBody" baseLocation="ResourceChangedOverride"
+				location="region(Generated Contents)">
+				<template/>
+			</defineLocation>
+			
+			<template id="InvokeResourceChangedHandler" location="ResourceChangedBody">
+${event.handlerName}( aType );
+			</template>
+
+			<template id="DeclareResourceChangedHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aType );
+			</template>
+
+			<defineLocation id="ResourceChangedHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aType )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeResourceChangedHandler" location="ResourceChangedHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT resourceChanged -->		
+
+<!-- BEGIN EVENT dynInitMenuPane -->
+			<templateGroup id="GenerateDynInitMenuPaneForForm" ifEvents="dynInitMenuPane">
+
+			<template id="DeclareDynInitMenuPaneHandler" phase="UserHandlers">
+void ${event.handlerName}( TInt aResourceId, CEikMenuPane* aMenuPane );
+			</template>
+
+			<defineLocation id="DynInitMenuPaneHandlerMethod" baseLocation="MAIN_FILE"
+				owned="false"
+				isEventHandler="true"
+				location="function(${handlerClassName}::${event.handlerName}(TInt, CEikMenuPane*))">
+			<template><![CDATA[
+/** 
+ * Handle the ${event.eventName} event.
+ */
+void ${handlerClassName}::${event.handlerName}( TInt aResourceId, CEikMenuPane* aMenuPane )
+	{
+	// TODO: implement ${event.eventName} event handler
+	}
+]]>				
+				</template>
+			</defineLocation>
+			
+			<template id="RealizeDynInitMenuPaneHandler" location="DynInitMenuPaneHandlerMethod" />
+			</templateGroup>
+<!-- END EVENT dynInitMenuPane -->
+
+			
+			<!-- gather child contributions -->
+
+			<inline scope="prototype">
+			include("../srcgenLibrary.js");
+			</inline>
+
+			<inline scope="prototype"><![CDATA[
+${jsObject}.prototype.gatherFormLineImageContribs = function(contribs, instance) {
+	var contrib;
+
+	var any = false;	
+	for (var c in instance.children) {
+		var child = instance.children[c];
+		if (!child.component.attributes["is-form-content"])
+			continue;
+		var enm = Engine.findBuiltinOrGeneratedEnumeratorForAlgorithm(
+			child, ".", "com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID");
+		if (enm != null && isImagePropertySet(child.properties.promptImage)) {
+
+			if (!any) {
+				contrib = Engine.createContributionForPhase("MainSystemIncludes");
+				contrib.setText("#include <eikcapc.h>\n");
+				contribs.add(contrib);
+			
+				contrib = Engine.createContributionForPhase("PostInitialize");
+				contrib.setText("CEikCaptionedControl* theLine;\n");
+				contribs.add(contrib);
+			
+				any = true;
+			}
+		
+			contrib = Engine.createContributionForPhase("PostInitialize");
+			contrib.setFormattedText("theLine = Line( {1} );\n",
+				[ instance.memberName, enm ]);
+			contribs.add(contrib);
+			
+			setupImageFromPropertyViaTuple(contribs, child,	"PostInitialize", null, 0,
+				child.properties.promptImage,
+				"theLine->SetBitmapFromFileL( {0}, {1} );\n",
+				"theLine->SetBitmapFromFileL( {0}, {1}, {2} );\n");
+		}
+	}		
+}
+
+]]>			</inline>
+
+			<inline>
+
+
+			if (form != 'RootAppUi') {
+				
+				if (Engine.formMatches(form, [ "AknView", "AppUi" ])) {
+					// clear out any image stuff
+					resetImagePropertyState(instance);
+
+					// get default and dialog-specific contributions
+					contribs.addAll(Engine.generateChildContributions(form+"|Dialog"))
+			
+					// set images dynamically		
+					this.gatherFormLineImageContribs(contribs, instance);
+					
+				} else {
+					// get specific desired contributions
+					contribs.addAll(Engine.generateChildContributions(form))
+				}
+				
+				Engine.collateContributionsByPhase(contribs, ["Initialize", "PostInitialize"]);
+				
+				// fix up the phases so they point to real locations
+				Engine.assignLocationsForPhase(contribs, "ClassSource", "MAIN_FILE");
+				Engine.assignLocationsForPhase(contribs, "ClassHeader", "HEADER_FILE");
+
+				Engine.assignLocationsForPhase(contribs, "MainConstants", "CONSTANTS");
+				Engine.assignLocationsForPhase(contribs, "MainSystemIncludes", "MAIN_SYSTEM_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "MAIN_USER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "Construct", "CONSTRUCTOR_BODY");
+				Engine.assignLocationsForPhase(contribs, "Initialize", "PRELAYOUTDYNINITL_BODY");
+				Engine.assignLocationsForPhase(contribs, "PostInitialize", "PRELAYOUTDYNINITL_BODY");
+				Engine.assignLocationsForPhase(contribs, "Destroy", "DESTRUCTOR_BODY");
+				Engine.assignLocationsForPhase(contribs, "ClassTypeDeclarations", "CLASS_TYPES");
+				Engine.assignLocationsForPhase(contribs, "BaseClassList", "BASE_CLASS_LIST");
+				Engine.assignLocationsForPhase(contribs, "OverriddenMethods", "CLASS_OVERRIDES");
+				Engine.assignLocationsForPhase(contribs, "UserHandlers", "CLASS_USERHANDLERS");
+				Engine.assignLocationsForPhase(contribs, "EventIncludes", "EVENT_INCLUDES");
+				
+				Engine.assignLocationsForPhase(contribs, "HeaderIncludes", "HEADER_INCLUDES");
+				Engine.assignLocationsForPhase(contribs, "ForwardDeclarations", "HEADER_FORWARD_DECLARATIONS");
+				Engine.assignLocationsForPhase(contribs, "InstanceVariables", "CLASS_IVARS");
+				Engine.assignLocationsForPhase(contribs, "ClassMethods", "CLASS_METHODS");
+	
+				//Engine.removeDuplicateContributionsForLocation(contribs, "HEADER_INCLUDES");
+				Engine.removeDuplicateContributionsForLocation(contribs, "HEADER_FORWARD_DECLARATIONS");
+				//Engine.removeDuplicateContributionsForLocation(contribs, "MAIN_SYSTEM_INCLUDES");
+				//Engine.removeDuplicateContributionsForLocation(contribs, "MAIN_USER_INCLUDES");
+				Engine.removeDuplicateContributionsForLocation(contribs, "DESTRUCTOR_BODY");
+			}
+						
+			</inline>
+
+			<template id="IncludeRsgFile" location="MAIN_SYSTEM_INCLUDES"><![CDATA[
+#include <${resourceFileNameBase}.rsg>
+]]>			</template>
+
+			<!-- contributions as child  -->
+
+			<template form="AknView" phase="MainUserIncludes">
+#include "${instanceName}.h"
+			</template>
+
+			<template form="AknView" phase="ForwardDeclarations">
+class ${className};
+			</template>
+
+			<template form="AknView" phase="InstanceVariables">
+${className}* ${instanceMemberName};
+			</template>
+
+			<template form="AknView" phase="DoActivateL"><![CDATA[
+if ( ${instanceMemberName} == NULL )
+	{
+	${className}* form = ${className}::NewL( this );
+	form->SetMopParent( this ); <%
+if ( properties.wait ) {
+	var sb = newStatusBuilder();
+	sb.add(IStatus.ERROR, lookupString("waitPropertySetInView"), [ instanceName ]);
+	logStatus(sb.createStatus("", null));
+	} %>
+	form->ExecuteLD( ${resourceName$upper} );
+	AppUi()->AddToStackL( *this, form );
+	${instanceMemberName} = form;
+	} 
+]]>			</template>
+			
+			<template form="AknView" phase="DoDeactivate">
+if ( ${instanceMemberName} != NULL )
+	{
+	AppUi()->RemoveFromStack( ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	}
+			</template>
+
+
+			<template form="RootAppUi" phase="MainUserIncludes">
+#include "${instanceName}.h"
+			</template>
+
+			<template form="RootAppUi" phase="ForwardDeclarations">
+class ${className};
+			</template>
+
+			<template form="RootAppUi" phase="InstanceVariables">
+${className}* ${instanceMemberName};
+			</template>
+
+			<template form="RootAppUi" phase="Initialize"><![CDATA[
+<% if (resourceName != null) { %>
+${instanceMemberName} = ${className}::NewL( this );
+${instanceMemberName}->SetMopParent( this );
+${instanceMemberName}->ExecuteLD( ${resourceName$upper} );
+AddToStackL( ${instanceMemberName} );
+<% } %>
+]]>			</template>
+
+			<template form="RootAppUi" phase="Destroy">
+if ( ${instanceMemberName} != NULL )
+	{
+	RemoveFromStack( ${instanceMemberName} );
+	delete ${instanceMemberName};
+	${instanceMemberName} = NULL;
+	}
+			</template>
+
+		</sourceGen>
+
+	</component>
+</componentDefinition>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.core.runtime.contentTypes">
+
+	  <!-- Mark extra Symbian headers as C++ headers.
+		Note that some headers here are generated for resources and are
+		by definition C-compatible.  But we don't want their names to show
+		up in the C part of the index, only the C++ part. -->
+      <file-association 
+       content-type="org.eclipse.cdt.core.cxxHeader"
+       file-extensions="hrh,inl,pan,rsg,mbg,lag"/>
+   
+   	  <!-- For resource-only files (those we never expect to see 
+		included in C++ source) we want to use the C/C++ Editor to get
+		their #includes and #defines in the outline.  
+		Further, these files are guaranteed not to be parseable
+		in C or C++ (we shouldn't really even be doing this)
+		so mark them as C to avoid unnecessary parsing overhead -->
+      <file-association 
+       content-type="org.eclipse.cdt.core.cSource"
+       file-extensions="rss"/>
+
+      <file-association 
+       content-type="org.eclipse.cdt.core.cxxSource"
+       file-extensions="cia"/>
+
+      <file-association 
+       content-type="org.eclipse.cdt.core.cHeader"
+       file-extensions="loc,rssi,ra,rh,rls"/>
+
+      <file-association 
+       content-type="org.eclipse.core.runtime.text"
+       file-extensions="pkg,def,ini,symbol,iby,oby,log,policy,cfg,src,inc"/>
+
+	  <!-- workaround for bug #'s 3537, 4165, 4512 -->
+      <file-association 
+       content-type="org.eclipse.core.runtime.text"
+       file-extensions="pl,tcl,bat,cmd,com,vbs,js"/>
+
+	  <!-- workaround for bug #7532 -->
+      <file-association 
+       content-type="org.eclipse.core.runtime.text"
+       file-names="_ccmwaid.inf"/>
+   </extension>
+
+   <extension
+         point="com.nokia.carbide.updater.projectUpdater">
+      <updater class="com.nokia.carbide.cpp.internal.project.core.updater.ProjectUpdater"/>
+   </extension>
+   <extension
+         point="com.nokia.carbide.updater.projectUpdater">
+      <updater class="com.nokia.carbide.cpp.internal.project.core.updater.ROMBuilderUpdater"/>
+   </extension>
+   <extension
+         point="com.nokia.carbide.updater.updateTrigger">
+      <trigger class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateTrigger"/>
+   </extension>
+   <extension
+         point="com.nokia.carbide.updater.updateTrigger">
+      <trigger
+            class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateTrigger13">
+      </trigger>
+   </extension>
+   <extension
+         point="com.nokia.carbide.updater.updateTrigger">
+      <trigger
+            class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateTrigger131">
+      </trigger>
+   </extension>
+   <extension
+         point="com.nokia.carbide.updater.updateProjectsScanner">
+      <scanner class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateProjectsScanner"/>
+   </extension>
+
+   <extension
+         id="ProjectConverter"
+         name="ProjectConverter"
+         point="org.eclipse.cdt.core.projectConverter">
+         <converter
+         	owners="com.nokia.carbide.cpp.project.core.carbidecppproject"
+         	natures="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature"
+         	class="com.nokia.carbide.cpp.internal.project.core.CarbideProjectConverter"
+         />
+   </extension> 
+   
+</plugin>

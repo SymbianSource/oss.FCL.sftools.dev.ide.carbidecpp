@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.sdt.series60.CEikDateEditor"
+		baseComponent="com.nokia.sdt.series60.CEikMfneBase" 
+		category="Editors"
+		instanceNameRoot="dateEditor" version="1.0">
+		<documentation>
+			<information>%information</information>
+			<helpTopic></helpTopic>
+			<wizardDescription></wizardDescription>
+		</documentation>
+		<symbian minSDKVersion="2.0" sdkName="com.nokia.series60"
+			resourceType="DATE_EDITOR" className="CEikDateEditor" />
+		<designerImages 
+			smallIconFile="CEikDateEditor_sm.png" 
+			largeIconFile="CEikDateEditor.png"/>
+				
+		<attributes>
+			<attribute key="cpp-class-name">CEikDateEditor</attribute>
+			<attribute key="is-dialog-content">true</attribute>
+			<attribute key="is-form-content">true</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-setting-item-list-content">true</attribute>
+			<attribute key="setting-item-class-name">CAknTimeOrDateSettingItem</attribute>
+			<attribute key="setting-item-constructor-pattern">{0},\nCAknTimeOrDateSettingItem::EDate,\n{1}</attribute>
+			<attribute key="data-model-cpp-type">TTime</attribute>
+			<attribute key="is-dataquery-content">true</attribute>
+			<attribute key="dataquery-className">CAknTimeQueryDialog</attribute>
+			<attribute key="rss-control-type-enum">EEikCtDateEditor</attribute>
+		</attributes>
+	
+		<properties>
+			<compoundProperty category="Data" name="minDate" type="com.nokia.sdt.series60.CEikDateEditor.Date" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.DateEditorFactory"
+				default="Y2000 M1 D1" descriptionKey="minDateDescription" />
+			
+			<compoundProperty category="Data" name="maxDate" type="com.nokia.sdt.series60.CEikDateEditor.Date" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.DateEditorFactory"
+				default="Y2099 M12 D31" descriptionKey="maxDateDescription" />
+
+			<compoundProperty category="Data" name="date" type="com.nokia.sdt.series60.CEikDateEditor.Date" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.DateEditorFactory"
+				descriptionKey="dateDescription" />
+
+			<!-- have no idea how this is triggered 
+			<property category="Data" name="EEikDateWithoutPopoutCalendar" type="boolean" />
+			-->
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CEikDateEditor_visual.js" prototype="CEikDateEditorVisual"/>
+			</implementation>
+		</implementations>
+
+	<sourceMapping>
+		<mapResource struct="DATE_EDITOR" headers="eikon.rh">
+			<mapResourceMember struct="DATE" property="maxDate" member="maxDate">
+				<mapSimpleMember property="month" member="month"/>
+				<mapSimpleMember property="day" member="day"/>
+				<mapSimpleMember property="year" member="year"/>
+			</mapResourceMember>
+			<mapResourceMember struct="DATE" property="minDate" member="minDate">
+				<mapSimpleMember property="month" member="month"/>
+				<mapSimpleMember property="day" member="day"/>
+				<mapSimpleMember property="year" member="year"/>
+			</mapResourceMember>
+			<!-- have no idea how this is triggered
+			<mapBitmaskMember property="." member="flags" 
+				includedProperties="EEikDateWithoutPopoutCalendar" >
+				<mapBitmaskValue properties="EEikDateWithoutPopoutCalendar" value="EEikDateWithoutPopoutCalendar" />
+			</mapBitmaskMember>
+			-->
+		</mapResource>
+	</sourceMapping>
+
+	<sourceGen forms="Dialog Container AknDataQuerySetData AknDataQuerySetData1 AknDataQuerySetData2">
+	
+		<useTemplate ids="INIT_FROM_CONTAINER" />
+		<useTemplateGroup ids="CONTAINER_CHILD_CONTRIBS" />
+		<useTemplate ids="INIT_FROM_DIALOG" />
+		
+		<inline>
+this.getCppSystemIncludes(contribs, [ "barsread.h", "stringloader.h",
+									"gdi.h", "eikmfne.h", "eikenv.h" ]);
+		</inline>
+
+		<inline scope="prototype"><![CDATA[
+var monthNames = [ "January", "February", "March", "April", 
+	"May", "June", "July", "August", 
+	"September", "October", "November", "December" ]; 
+
+${jsObject}.prototype.dateToInteger = function(d) {
+	// ROUGH estimate, just for range checking
+	// the -0 is needed to convert text to integer
+	var v = ((d.year - 0) * 366) + ((d.month - 0) * 31) + (d.day - 0);
+	return v;
+}	
+]]>		</inline>
+
+		<inline><![CDATA[
+if (this.dateToInteger(properties.date) < this.dateToInteger(properties.minDate)) {
+	error(formatString(lookupString("numberExceedsRangeSG"), instance.name));
+} else
+if (this.dateToInteger(properties.date) > this.dateToInteger(properties.maxDate)) {
+	error(formatString(lookupString("numberExceedsRangeSG"), instance.name));
+}
+]]>		</inline>
+
+		<inline scope="prototype">
+${jsObject}.prototype.formatConstructor = function(properties) {
+	return "TTime( TDateTime( "+properties.date.year+", E"
+		+monthNames[properties.date.month]+", "+properties.date.day
+		+", 0, 0, 0, 0 ) )";
+}
+		</inline>
+		
+		<template phase="Initialize" forms="Container Dialog Form"><![CDATA[
+${instanceMemberName}->SetDate( ${this.formatConstructor(properties)} );
+]]>		</template>
+		
+		<template form="AknDataQuerySetData" phase="SetData"><![CDATA[
+	TTime time = ${this.formatConstructor(properties)};
+	aData = time.DateTime();
+]]>		</template>
+
+		<template form="AknDataQuerySetData1" phase="SetData"><![CDATA[
+	TTime time1 = ${this.formatConstructor(properties)};
+	aData1 = time1.DateTime();
+]]>		</template>
+
+		<template form="AknDataQuerySetData2" phase="SetData"><![CDATA[
+	TTime time2 = ${this.formatConstructor(properties)};
+	aData2 = time2.DateTime();
+]]>		</template>
+
+		<useTemplateGroup ids="SET_ALIGN SET_FONT" />
+
+		<useTemplateGroup ids="CLASS_CONTRIBS" />
+						
+		<useTemplate ids="LAYOUT_CONTROLS" />
+		
+		<useTemplate ids="INIT_FROM_SETTINGS_LIST" />
+
+		<template phase="Initialize" forms="SettingsList"><![CDATA[
+<% 		var init = this.formatConstructor(properties);
+		this.setupSettingItem(contribs, 0, instance, init); 
+%>]]>	</template>
+
+		<useTemplateGroup ids="GenerateCommonControlEvents GenerateStateChangedEvent"/>
+		<useTemplateGroup ids="GenerateRequestingFocusEvent GenerateRequestingExitEvent"/>
+		<useTemplateGroup ids="GenerateRequestingCancelEvent GenerateInteractionRefusedEvent"/>
+		<useTemplateGroup ids="GeneratePrepareFocusTransitionEvent"/>
+
+		<useTemplateGroup ids="GenerateEditingStartedEvent GenerateEditingStoppedEvent" />
+
+	</sourceGen>
+		
+	</component>
+</componentDefinition>
+	

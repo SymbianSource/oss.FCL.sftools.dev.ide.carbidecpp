@@ -1,0 +1,8 @@
+#include <structheader.rh>
+
+RESOURCE COMPOUND_TYPES r_test3_n
+	{
+	embed = SUBTYPE
+		{
+		};
+	}

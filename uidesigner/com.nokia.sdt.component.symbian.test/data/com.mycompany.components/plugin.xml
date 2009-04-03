@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+ <extension 
+ 	point="com.nokia.sdt.component.symbian.componentLibrary"
+ 	id="mycomponentlibrary"
+ 	name="My User Components">
+ 	<library path="components" user="true"/> 
+ </extension>
+ 
+</plugin>

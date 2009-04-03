@@ -1,0 +1,9 @@
+#include <basicheader.rh>
+#include "output.loc"
+#define MACRO_1 "A macro value"
+#define MACRO_2 "Not another \"macro\""
+
+RESOURCE ONE_STRING r_test0_macro
+	{
+	text = MACRO_1;
+	}

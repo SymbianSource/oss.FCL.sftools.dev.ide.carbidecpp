@@ -1,0 +1,14 @@
+#include <arraydialog.rh>
+
+RESOURCE DIALOG_LINKS r_test_dialog_links
+	{
+	lines = { r_test_dialog_checkbox, r_test_dialog_label };
+	}
+RESOURCE CHECKBOX r_test_dialog_checkbox
+	{
+	defaultChecked = 1;
+	}
+RESOURCE LABEL r_test_dialog_label
+	{
+	text = "literal string";
+	}

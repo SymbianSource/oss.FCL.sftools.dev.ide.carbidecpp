@@ -1,0 +1,709 @@
+#include <Uiq_multipage_3_0.mbg>
+#include "UIQ_MultiPage_3_0MultiPageView.hrh"
+#ifdef LANGUAGE_01
+#include "UIQ_MultiPage_3_0MultiPageView_01.rls"
+#endif
+
+RESOURCE QIK_VIEW_CONFIGURATIONS r_uiq_multi_page_3_0_multi_page_view_uiq_multi_page_3_0_multi_page_view
+	{
+	configurations =
+		{
+		QIK_VIEW_CONFIGURATION
+			{
+			ui_config_mode = KQikSoftkeyStylePortrait;
+			command_list = r_uiq_multi_page_3_0_multi_page_view_command_list1;
+			view = r_uiq_multi_page_3_0_multi_page_view_view_layout1;
+			}
+		};
+	}
+RESOURCE QIK_COMMAND_LIST r_uiq_multi_page_3_0_multi_page_view_command_list1
+	{
+	items =
+		{
+		QIK_COMMAND
+			{
+			id = EEikCmdExit;
+			text = STR_UIQ_MultiPage_3_0MultiPageView_1;
+			shortText = STR_UIQ_MultiPage_3_0MultiPageView_2;
+			type = EQikCommandTypeScreen;
+			stateFlags = EQikCmdFlagDebugOnly;
+			}
+		};
+	}
+RESOURCE QIK_VIEW r_uiq_multi_page_3_0_multi_page_view_view_layout1
+	{
+	pages = r_uiq_multi_page_3_0_multi_page_view_view_layout1_pages;
+	}
+RESOURCE QIK_VIEW_PAGES r_uiq_multi_page_3_0_multi_page_view_view_layout1_pages
+	{
+	pages =
+		{
+		QIK_VIEW_PAGE
+			{
+			page_id = EUIQ_MultiPage_3_0MultiPageViewPage;
+			tab_caption = STR_UIQ_MultiPage_3_0MultiPageView_3;
+			page_content = r_uiq_multi_page_3_0_multi_page_view_container1;
+			container = r_uiq_multi_page_3_0_multi_page_view_container1_2;
+			container_type = EQikCtScrollableContainer;
+			},
+		QIK_VIEW_PAGE
+			{
+			page_id = EUIQ_MultiPage_3_0MultiPageViewPage2;
+			tab_caption = STR_UIQ_MultiPage_3_0MultiPageView_19;
+			page_content = r_uiq_multi_page_3_0_multi_page_view_container2;
+			container = r_uiq_multi_page_3_0_multi_page_view_container2_2;
+			container_type = EQikCtScrollableContainer;
+			}
+		};
+	}
+RESOURCE QIK_SCROLLABLE_CONTAINER_SETTINGS r_uiq_multi_page_3_0_multi_page_view_container1
+	{
+	flags = 0;
+	layout_manager_type = EQikRowLayoutManager;
+	layout_manager = r_uiq_multi_page_3_0_multi_page_view_row_layout_manager1;
+	controls =
+		{
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl2;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl3;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl4;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl5;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl6;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl7;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl8;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl9;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl10;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl11;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl12;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl13;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl14;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl15;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl16;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl17;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			},
+		QIK_CONTAINER_ITEM_LD
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl18;
+			layout_data = QIK_ROW_LAYOUT_DATA
+				{
+				};
+			}
+		};
+	}
+RESOURCE QIK_ROW_LAYOUT_MANAGER r_uiq_multi_page_3_0_multi_page_view_row_layout_manager1
+	{
+	default_layout_data = QIK_ROW_LAYOUT_DATA
+		{
+		};
+	}
+RESOURCE QIK_SCROLLABLE_CONTAINER r_uiq_multi_page_3_0_multi_page_view_container1_2
+	{
+	}
+RESOURCE QIK_SCROLLABLE_CONTAINER_SETTINGS r_uiq_multi_page_3_0_multi_page_view_container2
+	{
+	flags = 0;
+	layout_manager_type = EQikRowLayoutManager;
+	layout_manager = r_uiq_multi_page_3_0_multi_page_view_row_layout_manager2;
+	controls =
+		{
+		QIK_CONTAINER_ITEM_CI_LI
+			{
+			type = EQikCtIconCaptionedTwolineBuildingBlock;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_building_block1;
+			layout_data = r_uiq_multi_page_3_0_multi_page_view_building_block1_layout_data;
+			},
+		QIK_CONTAINER_ITEM_CI_LI
+			{
+			type = EQikCtCaptionedTwolineBuildingBlock;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_building_block2;
+			layout_data = r_uiq_multi_page_3_0_multi_page_view_building_block2_layout_data;
+			}
+		};
+	}
+RESOURCE QIK_ROW_LAYOUT_MANAGER r_uiq_multi_page_3_0_multi_page_view_row_layout_manager2
+	{
+	default_layout_data = QIK_ROW_LAYOUT_DATA
+		{
+		};
+	}
+RESOURCE QIK_SYSTEM_BUILDING_BLOCK r_uiq_multi_page_3_0_multi_page_view_building_block1
+	{
+	content =
+		{
+		QIK_SLOT_CONTENT
+			{
+			slot_id = EQikItemSlot1;
+			caption = STR_UIQ_MultiPage_3_0MultiPageView_21;
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl19;
+			},
+		QIK_SLOT_CONTENT
+			{
+			slot_id = EQikItemSlot2;
+			caption = STR_UIQ_MultiPage_3_0MultiPageView_22;
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl20;
+			},
+		QIK_SLOT_CONTENT
+			{
+			slot_id = EQikIconSlot1;
+			caption = STR_UIQ_MultiPage_3_0MultiPageView_23;
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl21;
+			}
+		};
+	}
+RESOURCE QIK_ROW_LAYOUT_DATA r_uiq_multi_page_3_0_multi_page_view_building_block1_layout_data
+	{
+	}
+RESOURCE QIK_SYSTEM_BUILDING_BLOCK r_uiq_multi_page_3_0_multi_page_view_building_block2
+	{
+	content =
+		{
+		QIK_SLOT_CONTENT
+			{
+			slot_id = EQikItemSlot1;
+			caption = STR_UIQ_MultiPage_3_0MultiPageView_25;
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl22;
+			},
+		QIK_SLOT_CONTENT
+			{
+			slot_id = EQikItemSlot2;
+			caption = STR_UIQ_MultiPage_3_0MultiPageView_28;
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl23;
+			}
+		};
+	}
+RESOURCE QIK_ROW_LAYOUT_DATA r_uiq_multi_page_3_0_multi_page_view_building_block2_layout_data
+	{
+	}
+RESOURCE QIK_SCROLLABLE_CONTAINER r_uiq_multi_page_3_0_multi_page_view_container2_2
+	{
+	}
+RESOURCE TBUF r_uiq_multi_page_3_0_multi_page_view_uiq_multi_page_3_0_multi_page_view_2
+	{
+	}
+RESOURCE QIK_CONTROL_COLLECTION r_uiq_multi_page_3_0_multi_page_view_control_collection
+	{
+	items =
+		{
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl;
+			type = EEikCtBitmapButton;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_bitmap_button1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl2;
+			type = EEikCtChoiceList;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_choice_list1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl3;
+			type = EQikCtColorSelector;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_color_selector1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl4;
+			type = EEikCtComboBox;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_combo_box1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl5;
+			type = EEikCtCommandButton;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_command_button1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl6;
+			type = EEikCtImage;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_image1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl7;
+			type = EEikCtLabel;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_label1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl8;
+			type = EEikCtLabeledCheckBox;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_labeled_check_box1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl9;
+			type = EQikCtListBox;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_list_box1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl10;
+			type = EEikCtProgInfo;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_progress_info1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl11;
+			type = EEikCtTextButton;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_text_button1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl12;
+			type = EQikCtVertOptionButtonList;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_vert_option_button_list1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl13;
+			type = EQikCtDateEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_date_editor1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl14;
+			type = EQikCtFloatingPointEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_floating_point_editor1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl15;
+			type = EQikCtNumberEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_number_editor1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl16;
+			type = EEikCtEdwin;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_plain_text_editor1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl17;
+			type = EEikCtRichTextEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_rich_text_editor1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl18;
+			type = EQikCtTimeEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_time_editor1_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl21;
+			type = EEikCtImage;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_image2_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl19;
+			type = EQikCtColorSelector;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_color_selector2_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl20;
+			type = EEikCtLabel;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_label2_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl24;
+			type = EEikCtImage;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_image3_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl25;
+			type = EEikCtImage;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_image4_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl22;
+			type = EQikCtNumberEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_number_editor2_control;
+			},
+		QIK_CONTROL
+			{
+			unique_handle = EUIQ_MultiPage_3_0MultiPageViewControl23;
+			type = EQikCtFloatingPointEditor;
+			itemflags = 0;
+			control = r_uiq_multi_page_3_0_multi_page_view_floating_point_editor2_control;
+			}
+		};
+	}
+RESOURCE BMPBUT r_uiq_multi_page_3_0_multi_page_view_bitmap_button1_control
+	{
+	layout = EEikCmdButFirstRightSecondLeft;
+	helptxt = STR_UIQ_MultiPage_3_0MultiPageView_4;
+	bmp1file = "\\resource\\apps\\UIQ_MultiPage_3_0.mbm";
+	bmp1id = EMbmUiq_multipage_3_0Uiq_multipage_3_0_small;
+	bmp1mask = EMbmUiq_multipage_3_0Uiq_multipage_3_0_small_mask;
+	bmp2id = -1;
+	bmp2mask = -1;
+	}
+RESOURCE CHOICELIST r_uiq_multi_page_3_0_multi_page_view_choice_list1_control
+	{
+	maxdisplaychar = 20;
+	array_id = r_uiq_multi_page_3_0_multi_page_view_choice_list1_array_id;
+	}
+RESOURCE ARRAY r_uiq_multi_page_3_0_multi_page_view_choice_list1_array_id
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_UIQ_MultiPage_3_0MultiPageView_5;
+			},
+		LBUF
+			{
+			txt = STR_UIQ_MultiPage_3_0MultiPageView_6;
+			}
+		};
+	}
+RESOURCE QIK_COLOR_SEL r_uiq_multi_page_3_0_multi_page_view_color_selector1_control
+	{
+	flags = EQikColorSelStandardColor | EQikColorSelStandard16;
+	palette_colors = 0;
+	palette_names = 0;
+	}
+RESOURCE COMBOBOX r_uiq_multi_page_3_0_multi_page_view_combo_box1_control
+	{
+	width = 10;
+	maxlength = 11;
+	maxarraysize = 5;
+	array_id = r_uiq_multi_page_3_0_multi_page_view_combo_box1_array_id;
+	}
+RESOURCE ARRAY r_uiq_multi_page_3_0_multi_page_view_combo_box1_array_id
+	{
+	items =
+		{
+		LBUF
+			{
+			txt = STR_UIQ_MultiPage_3_0MultiPageView_33;
+			}
+		};
+	}
+RESOURCE CMBUT r_uiq_multi_page_3_0_multi_page_view_command_button1_control
+	{
+	layout = EEikCmdButTextRightPictureLeft;
+	txt = STR_UIQ_MultiPage_3_0MultiPageView_9;
+	helptxt = STR_UIQ_MultiPage_3_0MultiPageView_8;
+	}
+RESOURCE QIK_IMAGE r_uiq_multi_page_3_0_multi_page_view_image1_control
+	{
+	horiz_align = EEikLabelAlignHCenter;
+	vert_align = EEikLabelAlignVTop;
+	content = QIK_CONTENT_MBM
+		{
+		};
+	}
+RESOURCE LABEL r_uiq_multi_page_3_0_multi_page_view_label1_control
+	{
+	txt = STR_UIQ_MultiPage_3_0MultiPageView_10;
+	horiz_align = EEikLabelAlignHCenter;
+	vert_align = EEikLabelAlignVTop;
+	}
+RESOURCE LABELEDCHECKBOX r_uiq_multi_page_3_0_multi_page_view_labeled_check_box1_control
+	{
+	labeltext = STR_UIQ_MultiPage_3_0MultiPageView_11;
+	}
+RESOURCE QIK_LISTBOX r_uiq_multi_page_3_0_multi_page_view_list_box1_control
+	{
+	type = EQikRowListBox;
+	v_scrollbar = EQikScrollBarAuto;
+	h_scrollbar = EQikScrollBarAuto;
+	view = r_uiq_multi_page_3_0_multi_page_view_list_box1_view;
+	layouts = { r_uiq_multi_page_3_0_multi_page_view_list_box_layout1 };
+	item_data =
+		{
+		QIK_LISTBOX_DATA
+			{
+			data_flags = 0;
+			data =
+				{
+				QIK_LISTBOX_TEXT
+					{
+					slot_id = EQikListBoxSlotText1;
+					txt = STR_UIQ_MultiPage_3_0MultiPageView_13;
+					}
+				};
+			},
+		QIK_LISTBOX_DATA
+			{
+			data_flags = 0;
+			data =
+				{
+				QIK_LISTBOX_TEXT
+					{
+					slot_id = EQikListBoxSlotText1;
+					txt = STR_UIQ_MultiPage_3_0MultiPageView_12;
+					}
+				};
+			}
+		};
+	}
+RESOURCE QIK_LISTBOX_ROW_VIEW r_uiq_multi_page_3_0_multi_page_view_list_box1_view
+	{
+	highlight_enabled = 1;
+	multiple_select = 0;
+	looping = EQikListBoxSystem;
+	mirroring = EAutoMirror;
+	incremental_match_slot = EQikListBoxDefault;
+	highlight_type = EQikListBoxHighlightFrame;
+	centered_scrolling = EQikListBoxSystem;
+	partially_visible_items = EQikListBoxSystem;
+	}
+RESOURCE QIK_LISTBOX_LAYOUT_PAIR r_uiq_multi_page_3_0_multi_page_view_list_box_layout1
+	{
+	standard_normal_layout = EQikListBoxLine;
+	standard_highlight_layout = EQikListBoxNoLayout;
+	}
+RESOURCE PROGRESSINFO r_uiq_multi_page_3_0_multi_page_view_progress_info1_control
+	{
+	}
+RESOURCE TXTBUT r_uiq_multi_page_3_0_multi_page_view_text_button1_control
+	{
+	layout = EEikCmdButFirstRightSecondLeft;
+	txt1 = STR_UIQ_MultiPage_3_0MultiPageView_15;
+	txt2 = STR_UIQ_MultiPage_3_0MultiPageView_16;
+	helptxt = STR_UIQ_MultiPage_3_0MultiPageView_14;
+	}
+RESOURCE QIK_VERTOPBUT r_uiq_multi_page_3_0_multi_page_view_vert_option_button_list1_control
+	{
+	array_id = r_uiq_multi_page_3_0_multi_page_view_vert_option_button_list1_array_id;
+	}
+RESOURCE ARRAY r_uiq_multi_page_3_0_multi_page_view_vert_option_button_list1_array_id
+	{
+	}
+RESOURCE QIK_DATE_EDITOR r_uiq_multi_page_3_0_multi_page_view_date_editor1_control
+	{
+	maxDate = DATE
+		{
+		month = 11;
+		day = 30;
+		year = 2099;
+		};
+	minDate = DATE
+		{
+		year = 2000;
+		};
+	}
+RESOURCE QIK_FLOATING_POINT_EDITOR r_uiq_multi_page_3_0_multi_page_view_floating_point_editor1_control
+	{
+	}
+RESOURCE QIK_NUMBER_EDITOR r_uiq_multi_page_3_0_multi_page_view_number_editor1_control
+	{
+	flags = EQikNone;
+	min = -2147483647;
+	max = 2147483647;
+	}
+RESOURCE EDWIN r_uiq_multi_page_3_0_multi_page_view_plain_text_editor1_control
+	{
+	maxlength = 255;
+	}
+RESOURCE RTXTED r_uiq_multi_page_3_0_multi_page_view_rich_text_editor1_control
+	{
+	displayMode = 0x00000001;
+	}
+RESOURCE QIK_TIME_EDITOR r_uiq_multi_page_3_0_multi_page_view_time_editor1_control
+	{
+	maxTime = TIME
+		{
+		hour = 23;
+		minute = 59;
+		second = 59;
+		};
+	minTime = TIME
+		{
+		};
+	}
+RESOURCE QIK_IMAGE r_uiq_multi_page_3_0_multi_page_view_image2_control
+	{
+	horiz_align = EEikLabelAlignHCenter;
+	vert_align = EEikLabelAlignVTop;
+	content = QIK_CONTENT_MBM
+		{
+		};
+	}
+RESOURCE QIK_COLOR_SEL r_uiq_multi_page_3_0_multi_page_view_color_selector2_control
+	{
+	flags = EQikColorSelStandardColor | EQikColorSelStandard16;
+	palette_colors = 0;
+	palette_names = 0;
+	}
+RESOURCE LABEL r_uiq_multi_page_3_0_multi_page_view_label2_control
+	{
+	txt = STR_UIQ_MultiPage_3_0MultiPageView_24;
+	horiz_align = EEikLabelAlignHCenter;
+	vert_align = EEikLabelAlignVTop;
+	}
+RESOURCE QIK_IMAGE r_uiq_multi_page_3_0_multi_page_view_image3_control
+	{
+	horiz_align = EEikLabelAlignHCenter;
+	vert_align = EEikLabelAlignVTop;
+	content = QIK_CONTENT_MBM
+		{
+		};
+	}
+RESOURCE QIK_IMAGE r_uiq_multi_page_3_0_multi_page_view_image4_control
+	{
+	horiz_align = EEikLabelAlignHCenter;
+	vert_align = EEikLabelAlignVTop;
+	content = QIK_CONTENT_MBM
+		{
+		};
+	}
+RESOURCE QIK_NUMBER_EDITOR r_uiq_multi_page_3_0_multi_page_view_number_editor2_control
+	{
+	flags = EQikNone;
+	min = -2147483647;
+	max = 2147483647;
+	}
+RESOURCE QIK_FLOATING_POINT_EDITOR r_uiq_multi_page_3_0_multi_page_view_floating_point_editor2_control
+	{
+	}
+RESOURCE LBUF r_uiq_multi_page_3_0_multi_page_view_combo_box1
+	{
+	txt = STR_UIQ_MultiPage_3_0MultiPageView_7;
+	}
+RESOURCE TBUF r_uiq_multi_page_3_0_multi_page_view_plain_text_editor1
+	{
+	buf = STR_UIQ_MultiPage_3_0MultiPageView_17;
+	}
+RESOURCE TBUF r_uiq_multi_page_3_0_multi_page_view_rich_text_editor1
+	{
+	buf = STR_UIQ_MultiPage_3_0MultiPageView_18;
+	}

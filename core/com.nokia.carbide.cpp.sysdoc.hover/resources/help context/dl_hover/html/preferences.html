@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Preferences in Hover Help Guide</title>
+	    <link rel="stylesheet" type="text/css" href="_stock/css/sfdl.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="_stock/css/ui.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="_stock/css/sysdoc.css" media="screen" />
+	    <link href="_stock/css/ajaxToc-sfdl.css" type="text/css" rel="stylesheet">
+</head>
+	<body>		
+		<div id="main_content">
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td valign="top" width="100%">
+						<div id="main_content_txt">
+							<div class="main_content_padding">		
+																<div id="main">
+									<div id="navigator">
+										<div id="navigator_padding">
+										
+											&nbsp;<span class="separator">&#187;</span>
+											<a href="index.html">Hover&nbsp;Help&nbsp;Plug-in&nbsp;Guide</a>
+										
+										</div>
+									</div>
+									<div id="authoredContent">
+										<div class="section">
+<h1>Hover Help Preferences</h1><a name="hover%2eprefs%2e"></a>
+<p>
+		This section describes the preferences panel that you can use to configure
+		and change the Developer Library plug-ins used by Hover Help.
+	 Select <b>Window > Preferences > Carbide.c++ > Hover Help</b> to open the Hover Help preference panel.</p>
+<p>
+		With the preferences panel, you can: 
+	 </p><ul> 
+		<li>
+			 Let Hover Help automatically choose the right Developer Library. 
+		</li>
+		<li>
+			 Select a Developer Library using the drop-down box. 
+		</li>
+ 		<li>
+ 			 Deactivate Hover Help. 
+		</li>
+		<li>
+			 Restore the default Hover Help configuration.
+		</li>
+		<li>
+			 Apply, confirm or cancel the changes. 
+		</li>
+ 
+	 </ul><div class="section">
+<h2><em>Automatically select latest Developer Library</em> Checkbox</h2><a name="hover%2eprefs%2eautomatic"></a>
+<p>
+		  When you check the &quot;Automatically select latest Developer
+		  Library&quot; checkbox, the Developer Library is automatically selected for you.
+		  The name of the selected library is displayed in the grayed field.
+		  If you want to select a particular Developer Library, follow these 
+		  <a href="preferences.html#hover%2eprefs%2eselect_DL" title="The selected Developer Library is shown in the drop-down box.">steps</a>.
+		</p><p>
+		  The right Developer Library is chosen using these heuristics: 
+		</p><ol> 
+		  <li>
+				Choose by audience and license of the Developer Library.
+				<em>Platform</em> development has precedence over <em>public</em> development. 
+			  
+			 
+				For example: &quot;Developer Library <em>rel1</em> (Platform) (<em>date1</em>)&quot; will be chosen rather
+				than &quot;Developer Library <em>rel2</em> (Public) (<em>date2</em>)&quot;.
+			  
+		  </li>
+ 
+		  <li>
+ 
+			 
+				Then choose by latest publication date of the Developer Library.
+				For example: &quot;Developer Library <em>rel1</em> (Platform) (<em>21/03/2009</em>)&quot; will be chosen
+				rather than &quot;Developer Library <em>rel1</em> (Platform) (<em>20/02/2009</em>)&quot;.
+			  
+		  </li>
+ 		  
+		</ol></div>
+<div class="section">
+<h2>Developer Libraries Drop-Down Box</h2><a name="hover%2eprefs%2eselect_DL"></a><p>
+		  The selected Developer Library is shown in the drop-down box. 
+		</p><p>
+		  To change the Developer Library, first uncheck the <a href="preferences.html#hover%2eprefs%2eautomatic" title="When you check the checkbox &quot;Automatically select the latest Developer Library&quot; the Developer Library is automatically selected for you. The name of the selected library is displayed in the greyed field.">&quot;Automatically select latest Developer Library&quot;</a> checkbox.
+		  Then select a Developer Library from the drop-down box list. 
+		  To add a new Developer Library, follow these <a href="setup.html#hover%2eadd_DL%2e" title="New versions of the Developer Library plug-in are published regularly. You can configure Hover Help to use a new version.">steps</a>.
+		</p></div>
+<div class="section">
+<h2><em>Deactivate Hovering</em> Checkbox</h2><a name="hover%2eprefs%2edeactivate"></a><p>
+		  Checking the <code class="ProgramOutput">Deactivate Hovering</code> checkbox disables Hover Help,
+		  and unchecking the checkbox reactivates Hover Help.
+		</p><p>
+		  When you reactivate Hover Help, the
+		  <a href="preferences.html#hover%2eprefs%2eautomatic" title="When you check the checkbox &quot;Automatically select the latest Developer Library&quot; the Developer Library is automatically selected for you. The name of the selected library is displayed in the greyed field.">&quot;Automatically select latest Developer Library&quot;</a>
+		  checkbox is checked. 
+		</p></div>
+<div class="section">
+<h2><em>Restore Defaults</em> Button</h2><a name="hover%2eprefs%2edefault"></a><p>
+		  If the &#8220;Restore Defaults&#8221; button is clicked,
+		  the <a href="preferences.html#hover%2eprefs%2eautomatic" title="When you check the checkbox, the Developer Library is automatically selected for you. The name of the selected library is displayed in the greyed field.">&quot;Automatically select latest Developer Library&quot;</a>
+		  checkbox is checked, and the <a href="preferences.html#hover%2eprefs%2edeactivate" title="When you check the checkbox, Hover Help is disabled.">&quot;Deactivate Hovering&quot;</a>
+		  checkbox is unchecked.
+		</p></div>
+<div class="section">
+<h2><em>Apply</em>, <em>OK</em>, <em>Cancel</em> Buttons</h2><a name="hover%2eprefs%2eApplyConfirmCancel"></a><p>
+		  These buttons have the common Carbide behaviours. 
+		</p></div>
+</div>
+
+   </div>
+									<div id="fnFeedbackChannelCommentsPlaceholder"></div>
+								<br /><br />
+										<div id="footer">        
+											<p id="copyright">
+Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.symbianfoundation.org/legal/sfl-v10.html">http://www.symbianfoundation.org/legal/sfl-v10.html</a>.</p>        
+										</div>   
+									</div> 
+								</div>
+							</div>
+						</div>
+					
+				
+			</table>
+			<div style="clear: both"></div>
+		</div>
+</body>
+</html>

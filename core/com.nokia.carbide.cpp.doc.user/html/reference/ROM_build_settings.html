@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<title>ROM Builder pane</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<meta name="keywords" content="ROM Builder" >
+</head>
+   <body>
+   <h2>ROM Builder pane </h2>
+   <p>Use the <b>ROM Builder</b> pane to specify commands and a working directory for building a GUI ROM Image. The tool used to build GUI ROM images is called buildrom and can typically be found in your SDK path, for example in the <span class="code">\Symbian\9.1\S60_3rd\Epoc32\tools</span> directory. The tool used to build text shell images is called ROM. The ROM image generated from the ROM building process specifies a base address for the image to run at. This might be an address in RAM or ROM. The image must be downloaded to the device at this address.</p>
+   <p>Building a ROM requires that the following are available, or have been successfully created:</p>
+   <ul>
+     <li> Symbian OS components making up a set of releasables</li>
+     <li> a Bootstrap binary image</li>
+     <li> a text file specifying how the ROM image is to be built.</li>
+   </ul>
+   <p>Rom build assembles executable and data files into a ROM image.</p>
+   <p>Executables are pre-processed, relocated, and have their imports and exports bound for a ROM image based at some given virtual address. The files, base address of the ROM, and various other parameters are specified by means of the obey file. This is a file of type .oby and is a text file containing statements that specify how the ROM image is to be built. A .oby file can include other files in the same way that files containing C++ source can #include other C++ files. By convention, the included files have the .iby file type. This structure allows flexibility in the way that ROM images are defined.</p>
+   <p class="note"><b>NOTE</b> The ROM image will be rebuilt for any target whenever a change to the project occurs; except for WINSCW targets.</p>
+   <p align="center"><img src="images/rom_build.png" width="558" height="203" /></p>
+   <p align="center" class="figure">Figure 1. ROM Builder pane </p>
+   <h5>Table 1. ROM Build Settings &mdash;items</h5>
+   <table cellpadding="2" cellspacing="0"
+border="0">
+	 <tr valign="top"><th width="221" class="Cell">Name</th><th width="558" class="Cell">Function</th></tr>
+         <tr valign="top">
+           <td class="Cell"><b>ROM Build Command Line</b></td>
+           <td class="Cell"><p>Enter commands to build the GUI ROM Image. For example, the following sample command  is used for building a techview
+             rom image for a H4 reference board.</p>
+             <p class="code">buildrom -D_FULL_DEBUG -DRVCT -DSTOP_MODE_DEBUGGING -D_EABI=ARMV5 h4hrp techview -oh4.img</p></td>
+        </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Working Directory</b></td>
+           <td class="Cell"><p>Specify the working directory for building the ROM Image. Typically, the working directory is the folder where you need to have your rom image built.
+Note that your sdk and working directory should be on
+the same drive, otherwise some of the rombuild scripts will fail.</p>
+           </td>
+     </tr>
+   </table>
+	 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+   </html>
+   

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Birthdays</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h2>Tutorial: Birthdays - Persistent Storage </h2>
+<P>This example shows how to use the Carbide.c++ UI Designer for S60 to define the UI of an application and to implement the "real work" in the generated code. </P>
+<P>The goals of the application are to:</P>
+<UL>
+  <LI>
+    <P><a href="BirthdaysTutorial_02.html">Maintain data and UI separation</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_03.html">Use the S60 UI Designer to create the UI</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_04.html">Editing generated source to provide application logic</a></P>
+  <LI>
+    <P><b>Save and restore birthdays from persistent storage</b></P>
+  <LI><a href="BirthdaysTutorial_06.html">Summary </a>
+  </UL>
+<h3>Persistent Storage</h3>
+<P>The document class (<span class="code">CBirthdaysDocument</span>) contains the necessary
+overrides to stream the data to and from disk. 
+</P>
+<P><B>Note</B>: most S60 documentation claims that the document
+class, inherited from Symbian OS, is deprecated. Probably for the
+uses of most advanced applications, which need more than a single
+file, this is true. Our example uses the file loading/storing
+capabilities of this class for didactic brevity. Probably an advanced
+application would use a more elaborate mechanism to manage this data.</P>
+<P>S60's <span class="code">CAknDocument</span> class turns off support for automatically
+loading the document when the program starts; we derive our document
+from <span class="code">CEikDocument</span> to work around this. The document is persisted to a
+location automatically determined by the application UID and the
+first <span class="code">TBUF{}</span> 
+struct in <span class="code">&lt;project&gt;.rss</span>. On my system it's
+"<span class="code">C:\Symbian\9.1\S60_3rd\Epoc32\winscw\c\private\010ae5b3\Birthdays</span>".</P>
+<P>We overload the <span class="code">StoreL()</span> and 
+<span class="code">RestoreL()</span> methods of <span class="code">CEikDocument</span> to
+handle saving and loading. These establish a stream store and a
+dictionary on that store. We use the application UID to identify the
+data we are storing or retrieving, then stream out the document into
+the store.</P>
+<P>We store the birthdays as binary streams using <span class="code">RWriteStream</span> and
+<span class="code">RReadStream</span>. The <span class="code">InternalizeL()</span> and 
+<span class="code">ExternalizeL()</span> methods provided
+on <span class="code">TBirthday</span> and <span class="code">CBirthdaysDocument</span> are the entry points for this
+streaming.</p>
+<p>
+Note that these are not part of an interface or virtual
+function overloads; instead, they are referenced by the template
+"<span class="code">operator &lt;&lt; (RReadStream&amp;, T&amp;)</span>" and
+"<span class="code">operator &gt;&gt; (RWriteStream&amp;, const T&amp;)</span>"
+methods. 
+</P>
+<P>Given the use of <span class="code">CEikDocument</span>, loading of the birthdays list
+through <span class="code">RestoreL()</span> is automatic, though saving is still manual.
+Whenever the list modifies a birthday, it invokes the document's
+<span class="code">SaveL()</span> method to ensure the latest changes are persisted.</P>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</BODY>
+</HTML>

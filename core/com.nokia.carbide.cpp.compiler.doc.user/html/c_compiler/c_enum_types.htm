@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Enumerated Types</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Enumerated Types</h3>
+<p>(ISO C, &sect;6.2.5) The Carbide C compiler uses the Enums Always Int and <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> settings to choose which underlying integer type to use for an enumerated type.</p>
+<p>If you enable the Enums Always Int setting, the underlying type for enumerated data types is set to signed int. Enumerators cannot be larger than a signed int. If an enumerated constant is larger than an int, the compiler generates an error.</p>
+<p>If you disable the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting, enumerators that can be represented as an unsigned int are implicitly converted to signed int.</p>
+<div class="listing">
+  <h5>Listing 2.2 Example of Enumerations as Signed Integers</h5>
+  <p>#pragma enumsalwaysint on<br />
+    #pragma ANSI_strict on<br />
+    enum foo { a=0xFFFFFFFF }; // ERROR. a is 4,294,967,295:<br />
+    // too big for a signed int<br />
+    #pragma ANSI_strict off<br />
+    enum bar { b=0xFFFFFFFF }; // OK: b can be represented as an<br />
+    // unsigned int, but is implicitly<br />
+    // converted to a signed int (-1).</p>
+</div>
+<p>If you disable the Enums Always Int setting, the compiler chooses the integral data type that supports the largest enumerated constant. The type can be as small as a char or as large as a long int. It can even be a 64-bit long long value.</p>
+<p>If all enumerators are positive, the compiler chooses the smallest unsigned integral base type that is large enough to represent all enumerators. If at least one enumerator is negative, the compiler chooses the smallest signed integral base type large enough to represent all enumerators.</p>
+<div class="listing">
+  <h5>Listing 2.3 Example of Enumeration Base Types</h5>
+  <p> #pragma enumsalwaysint off<br />
+    enum { a=0,b=1 }; // base type: unsigned char<br />
+    enum { c=0,d=-1 }; // base type: signed char<br />
+    enum { e=0,f=128,g=-1 }; // base type: signed short</p>
+</div>
+<p>The compiler uses long long data types only if you disable Enums Always Int and enable the longlong_enums pragma. (None of the settings corresponds to the longlong_enums pragma.)</p>
+<div class="listing">
+  <h5>Listing 2.4 Example of Enumerations with Type long long</h5>
+  <p> #pragma enumsalwaysint off<br />
+    #pragma longlong_enums off<br />
+    enum { a=0x7FFFFFFFFFFFFFFF }; // ERROR: a is too large<br />
+    #pragma longlong_enums on<br />
+    enum { b=0x7FFFFFFFFFFFFFFF }; // OK: base type: signed long long<br />
+    enum { c=0x8000000000000000 }; // OK: base type: unsigned long long<br />
+    enum {&thorn;d=-1,e=0x80000000 }; // OK: base type: signed long long</p>
+</div>
+<p>When you disable the longlong_enums pragma and enable ANSI Strict, you cannot mix unsigned 32-bit enumerators greater than 0x7FFFFFFF and negative enumerators. If you disable both the longlong_enums pragma and the <a href="../pragmas/p_ANSI_strict.htm">ANSI Strict</a> setting, large unsigned 32-bit enumerators are implicitly converted to signed 32-bit types.</p>
+<div class="listing">
+  <h5>Listing 2.5 Example of Enumerations with Type long</h5>
+  <p>#pragma enumsalwaysint off<br />
+    #pragma longlong_enums off<br />
+    #pragma ANSI_strict on<br />
+    enum { a=-1,b=0xFFFFFFFF }; // error<br />
+    #pragma ANSI_strict off<br />
+  enum { c=-1,d=0xFFFFFFFF }; // base type: signed int (b==-1)</p>
+</div>
+<p>The Enums Always Int setting corresponds to the pragma enumsalwaysint. To check this setting, use <span class="code">__option (enumsalwaysint)</span>.</p>
+<p>By default, this setting is disabled.</p>
+<p>See also &ldquo;enumsalwaysint&rdquo;, &ldquo;longlong_enums&rdquo;, and <a href="../symbols/sym_settings.htm">Checking Settings</a>.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

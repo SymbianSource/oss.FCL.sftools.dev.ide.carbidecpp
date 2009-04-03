@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.StylusPopup" 
+		category="Menu"
+		instanceNameRoot="stylusPopup"
+		version="1.0">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.nokia.series60" minSDKVersion="5.0" 
+			className="CAknStylusPopUpMenu" classHelpTopic=""
+			resourceType="STYLUS_POPUP_MENU" resourceHelpTopic="" />
+		
+		<designerImages smallIconFile="StylusPopup_sm.png" 
+			largeIconFile="StylusPopup.png" />
+		
+		<attributes>
+			<attribute key="cpp-class-name">CAknStylusPopUpMenu</attribute>
+			<attribute key="is-ccoecontrol-content">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+		</attributes>
+		
+		<properties>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+			    <interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+			    <interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+			    <interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="StylusPopup.js" prototype="CAknStylusPopUpMenu"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="STYLUS_POPUP_MENU" headers="eikon.rh">
+				<mapArrayMember property="." member="items"/>
+			</mapResource>	
+		</sourceMapping>
+		
+		<sourceGen>
+		
+			<template phase="HeaderIncludes"><![CDATA[
+#include <AknStylusPopUpMenu.h>
+]]>			</template>
+
+			<template phase="InstanceVariables">
+CAknStylusPopUpMenu* ${instanceMemberName};
+			</template>	
+			
+			<template phase="ClassMethods">
+void Show${instanceName$title}L( const TPoint&amp; point );
+			</template>
+			
+			<template phase="Construct">
+${instanceMemberName} = NULL;
+				</template>
+			
+			<template phase="Destroy">
+delete ${instanceMemberName};
+${instanceMemberName} = NULL;
+				</template>
+			
+			<inline scope="prototype">
+${jsObject}.prototype.getCppClassName = function(instance) {
+	return instance.properties.style;
+}
+			</inline>
+		
+			<template phase="ForwardDeclarations">
+class CAknStylusPopUpMenu;
+			</template>
+			
+			<defineLocation id="SHOW_STYLUS_MENU_METHOD" baseLocation="MAIN_FILE" 
+			    realize="true"
+				owned="true"
+				location="function(${className}::Show${instanceName$title}L(const TPoint&amp;))">
+				<template><![CDATA[
+/**
+ * Display the stylus popup menu for ${instanceName}. This method can be invoked
+ * by your CCoeControl::HandlePointerEventL( const TPointerEvent& aPointerEvent ) function.
+ *
+ * For example:
+ *		static_cast<${className}*>( iCommandObserver )->Show${instanceName$title}L( aPointerEvent.iParentPosition ); 
+ *     
+ * @param The location where the stylus was touched on the screen.
+ */
+void ${className}::Show${instanceName$title}L( const TPoint& point )
+	{
+	if ( ${instanceMemberName} == NULL ) 
+		{
+		// Construct the menu from resources
+		${instanceMemberName} = CAknStylusPopUpMenu::NewL( ( MEikMenuObserver* )this, 
+														point, NULL );
+		TInt resourceReaderId = 0;
+	    resourceReaderId = ${resourceName$upper};
+	    TResourceReader reader;
+	    iCoeEnv->CreateResourceReaderLC( reader , resourceReaderId );
+	    ${instanceMemberName}->ConstructFromResourceL( reader );
+	    CleanupStack::PopAndDestroy(); // reader
+	    }
+	${instanceMemberName}->SetPosition( point );
+	${instanceMemberName}->ShowMenu();
+	}
+]]>	
+				</template>
+			</defineLocation>
+
+			<inline >
+contribs.addAll(Engine.generateChildContributions(form))
+			</inline>
+
+			
+		</sourceGen>
+
+	</component>
+
+</componentDefinition>

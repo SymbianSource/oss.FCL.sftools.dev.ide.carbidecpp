@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+    <title>lib_export</title>
+	<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+  </head>
+
+<body>
+<h3>lib_export</h3>
+<p>  Controls the exporting of data or functions.  </p>
+<h5>Syntax</h5>
+  <p class="code">#pragma lib_export on | off | reset<br />
+  #pragma lib_export list name1 [, name2 ]*<br />
+  </p>
+  <h5>Targets</h5>
+  All platforms.<br />
+  <h5>Remarks</h5>
+  <p>When using the <span class="code">#pragma lib_export on</span> format, all data and functions are automatically exported.</p>
+  <p>Use the <span class="code">#pragma lib_export list</span> format to tag specific data or functions for exporting. It applies to all names if it is used on an overloaded function. You cannot use this pragma for C++ member functions or static class members. An example of a lib_export list:</p>
+  <p class="listing"> extern int f(),g;<br />
+  #pragma lib_export list f,g</p>
+  <p>This pragma does not correspond to any panel setting. To check this setting, use <span class="code">__option (lib_export)</span>, described in <a href="../symbols/sym_settings.htm">Checking Settings</a>. The default setting is <span class="code">off</span>.</p>
+  <p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

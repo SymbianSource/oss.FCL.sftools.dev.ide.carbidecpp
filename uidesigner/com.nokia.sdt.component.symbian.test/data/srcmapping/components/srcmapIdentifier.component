@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+>
+	<component baseComponent="com.nokia.examples.baseComponent"
+	friendlyName="Source Mapping Test" qualifiedName="com.nokia.examples.srcmapIdentifier" 
+	category="Testing" version="1.0">
+		<sourceMapping>
+			<mapResource struct="SIMPLE_TYPES_DEFAULTS" headers="basicheader.rh">
+				<mapIdentifierMember property="bmpmask" member="word" />
+			</mapResource>
+		</sourceMapping>
+		
+		<properties>
+			<property name="bmpmask" type="string"/>
+		</properties>
+	</component>
+</componentDefinition>

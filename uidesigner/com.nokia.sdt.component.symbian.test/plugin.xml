@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="com.nokia.sdt.component.symbian.implementation">
+      <implementation class="com.nokia.sdt.component.symbian.test.FooImplementationTypeFactory"/>
+      <implementation class="com.nokia.sdt.component.symbian.test.FooBarImplementationTypeFactory"/>
+   </extension>
+
+</plugin>

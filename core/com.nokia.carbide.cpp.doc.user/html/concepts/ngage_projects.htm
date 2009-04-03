@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>N-Gage Projects</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>N-Gage Projects</h2>
+<p>Carbide.c++ supports the importing of N-Gage projects. However, there are some process issues that effect how you can debug game projects on devices. The following provides a high level overview of the process you should follow to successfully import, build, deploy, and debug an N-Gage game on a device. </p>
+<h4>Importing N-Gage projects</h4>
+<p>To start,  import your game project into Carbide:</p>
+<ol>
+  <li>Install the N-Gage SDK on your PC</li>
+  <li>Place your game project inside the N-Gage SDK</li>
+  <li> In Carbide.c++, click<b> File &gt; <a href="../tasks/ImportingProjects.html">Import</a></b></li>
+  <li>Select <b>Symbian OS Bld.inf</b> importer and navigate to your bld.inf  file to import it </li>
+</ol>
+<h4>Building the N-Gage project</h4>
+<p>Once the game project has been imported, use these steps to create an N-GAGE game file:</p>
+<ol>
+  <li>Right-click the project and choose <b>Properties</b> to open the <b>Properties for <i>project_name</i></b> window  </li>
+  <li>In the <b>Carbide.c++ &gt; Carbide Build Configuration &gt; <a href="../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a></b> panel, click <b>Add</b>.</li>
+  <li>In the <b><a href="../reference/build_properties/wnd_sis_properties.htm">SIS Properties</a></b> window:
+    <ol>
+      <li>Specify the project and metadata PKG files  to build</li>
+      <li>Enable  the<b> Sign sis file with certificate/key pair</b> for each PKG file </li>
+      <li>Select the certificate/key given to you by the Nokia R&amp;D Certificate Service</li>
+      <li>Click  <b>OK</b></li>
+    </ol>
+  </li>
+  <li>If using a batch file to build the N-Gage installation,  create a new builder within Carbide  by opening the <b>Properties for <i>project_name</i>  &gt;  Builders</b> panel and click <b>New</b>.  </li>
+<p align="center"><img src="images/pane_builders_properties.png" width="682" height="208"></p>
+<p align="center" class="figure">Figure 1 - Builders pane in project Properties dialog</p>
+      <li>Open the <b>Properties for <i>project_name</i> &gt;  Builders</b> panel</li>
+      <li>Click <b>New</b></li>
+      <li>Select <b>Program</b> in the <b>Choose configuration type</b> window, click <b>OK</b> </li>
+      <p align="center"><img src="images/wnd_properties_for_builder.png" width="800" height="640"></p>
+      <p align="center" class="figure">Figure 2 - <b>Properties for N-Gage Builder</b> dialog</p>
+      <li>In the <b>Properties for New_Builder</b> window 
+        <b>Main</b> tab:
+        <ul>
+          <li>Define the builder  name in the <b>Name</b> text box</li>
+          <li>Specify the <b>Location</b> of the builder of the installation file</li>
+          <li>Specify the <b>Working Directory</b>  </li>
+        </ul>
+      </li>
+      <li>Click <b>OK</b> </li>
+    <p>	The new builder appears in the <b>Builders</b> panel. The build steps are performed in the order they are displayed.  Your builder name should appear under the  <b>Carbide CPP Project Builder</b> item. If not, use the <b>Up</b> or <b>Down</b> controls to set the build order.
+      <p align="center"><img src="images/pane_builder_n_gage_builder.png" width="489" height="184"></p>
+      <p align="center" class="figure">Figure 4 - <b>Builder</b> dialog with new N-Gage Builder defined </p>
+  <li>Click OK to close the <b>Properties for <i>project_name</i></b> window</li>
+  <li>Build the project and its SISX file by selecting the <b>Project &gt; Build Project</b> menu item</li>
+  <p>The <a href="../reference/view_log.htm">Console</a> view shows information as the project  and it's SISX file are built and then the build of the installation file (<span class="code">N-GAGE</span>).</p>
+    </ol>
+<h3>For On-device Debugging </h3>
+<h4>Deploying the N-Gage project   to a device </h4>
+<p>Once you have an <span class="code">.N-GAGE</span> game file, you need to deploy it on the target device:</p>
+<ol>
+  <li>Verify that you have a valid developer certificate on the target device given to you by the  Nokia R&amp;D Certificate Service. If not, get and install one.</li>
+  <li>Verify that you have Application TRK installed on the target device. If not, install it now using <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</li>
+<li>Manually install the <span class="code">.N-GAGE</span>  file on the device</li>
+</ol>
+<h4>Debugging the Game project</h4>
+<p>With your game file installed on the device, create a launch configuration for the project. In Carbide:</p>
+<ol>
+  <li>Open<span class="note"><b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel </span>and disable the <b>Build (if required) before launching</b> option</li>
+  <li>Right-click the project and choose <b>Debug As &gt; Open Debug Dialog</b> to open the <b><a href="../reference/wnd_debug_configuration.htm">Debug</a></b> window</li>
+  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Application TRK</b> launch configuration
+    <ul>
+      <li>In the <b><a href="../reference/launch_configs/page_connection.htm">Connection</a></b> tab select the COM port used to connect to the device. </li>
+      <li> In the <b><a href="../reference/launch_configs/app_trk_installation.htm">Installation</a></b> tab, verify that the game SISX file is correct </li>
+      <li>In the <b><a href="../reference/launch_configs/page_trk_debugger.htm">Debug</a></b> tab, enable the View messges between PC and debug agent on the phone if you want to monitor communications between TRK and Carbide </li>
+    </ul>
+  </li>
+
+  <li>Click <b>Debug</b>    </li>
+</ol>
+<p>The Debugger launches the game project in the device and halts when it encounters the breakpoint you set. </p>
+<h3>For Emulator Debugging </h3>
+<h4>Deploying and debugging the N-Gage project on an emulator</h4>
+<p>With your game file installed to the emulator, create a launch configuration for the project. In Carbide:</p>
+<ol>
+  <li>Open <b>Window &gt; Preferences &gt;   Run/Debug &gt; Launching</b> and disable the <b>Build (if required) before launching</b> option</li>
+  <li>Right-click the project and choose <b>Debug As &gt; Open Debug Dialog</b> to open the <b>Debug</b> window</li>
+  <li>Create an <b>Symbian OS Emulation </b> launch configuration</li>
+  <li>Click <b>Debug</b> to launch the emulator </li>
+  <li>In the emulator, select <b>File &gt; Open</b>,  locate and select the .N-GAGE installation file and click <b>Open</b> to install the project </li>
+  <li>Open the Installation folder, launch the N-Gage runtime application</li>
+  <li>In the N-Gage runtime launch the game  </li>
+  <li>If any breakpoint is hit in the game project, the debugger suspends</li>
+</ol>
+<p>From this point you can use all of the debugger features to debug the project. </p>
+<p>Always refer to the N-Gage documentation for more information on creating, deploying, and debugging N-Gage projects. </p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

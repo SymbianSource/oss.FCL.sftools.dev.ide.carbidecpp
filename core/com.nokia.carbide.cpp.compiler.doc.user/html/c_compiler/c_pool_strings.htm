@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Pool Strings</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Pool Strings</h3>
+<p>The <a href="../pragmas/p_pool_strings.htm">Pool Strings</a> setting controls how the compiler stores string constants.</p>
+<p class="note"><strong>NOTE</strong> In principle, this setting works for all targets. However, it is useful only for a Table of Contents based linking mechanism such as that used for MacOS Classic on the PowerPC processor.</p>
+<p>If you enable this setting, the compiler collects all string constants into a single data object so that your program needs only one TOC entry for all of them. While this decreases the number of TOC entries in your program, it also increases your program size because it uses a less efficient method to store the address of the string.</p>
+<p>If you disable this setting, the compiler creates a unique data object and TOC entry for each string constant.</p>
+<p class="note"><strong>TIP</strong> You can change the size of the TOC with the Store Static Data in TOC setting in the PPC Processor panel.</p>
+<p class="note"><strong>NOTE</strong> This option can be overridden in PPC targets by using the Linker Pool Strings or Linker Merges String Constants options.</p>
+<p>Enable this setting if your program is large and has many string constants.</p>
+<p class="note"><strong>NOTE</strong> If you enable the Pool Strings setting, the compiler ignores the PC-Relative Strings setting. This is a 68K-only feature.</p>
+<p>The Pool Strings setting corresponds to the <span class="code">pragma pool_strings</span>. To check this setting, use <span class="code">__option (pool_strings)</span>. By default, this setting is disabled.</p>
+<p>See also &ldquo;pool_strings&rdquo; and <a href="../symbols/sym_settings.htm">Checking Settings</a>.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

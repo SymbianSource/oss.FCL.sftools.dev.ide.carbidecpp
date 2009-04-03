@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Samples Page. -->
+	<extensionContent alt-style="css/swt.properties" style="css/samples.css" path="samples/page-content/beginAnchor">
+
+<!--
+		<group label="Carbide.c++ examples" id="swt" style-id="samples-group">
+
+			<link label="S60 setting screens example" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.templates_1.1.0/templates/com/nokia/cdt/templates/projecttemplates/S60-SettingScreenTutorial/doc/Series_60_DP_Implementing_Settings_Screens_v1_0_en.pdf" id="carbideapp" style-id="sample-link" >
+				<text>This example describes the creation of settings screens for S60 applications, including setting item lists, setting items, and setting pages. PDF documentation is included in the project.</text>
+			</link>
+
+		</group>
+-->
+	</extensionContent>
+	
+</introContent>

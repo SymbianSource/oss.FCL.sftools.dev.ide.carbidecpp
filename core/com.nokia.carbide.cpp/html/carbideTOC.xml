@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Shortcuts"
+	link_to="../com.nokia.carbide.cpp.doc.user/debuggerTOC.xml#anchorCarbideCPPMisc" >
+
+	<topic label="Shortcuts" >
+		<topic label="Microsoft Visual Studio Shortcuts"	href="html/help_keys_vs.htm" />
+		<topic label="Nokia Carbide.c++ Shortcuts"			href="html/help_keys_carbide.htm" />
+		<topic label="Nokia CodeWarrior Shortcuts"			href="html/help_keys_cw.htm" />
+	</topic>
+           
+</toc>

@@ -1,0 +1,39 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description: 
+;
+;
+; Installation file for Addressbook Application
+;Language - standard language definitions
+&EN
+
+; standard SIS file header
+#{"AddressBook"},(0xA0000180),1,0,0, TYPE=SA
+
+;Localised Vendor name
+%{"Vendor-EN"}
+
+;Unique Vendor name
+:"Vendor"
+
+;Supports S60 v 3.0
+[0x101F7961], 0, 0, 0, {"S60ProductID"}
+;Files to install
+"..\..\..\Epoc32\release\gcce\urel\AddressBook.exe"			-"!:\sys\bin\AddressBook.exe"
+"..\..\..\Epoc32\data\z\resource\apps\AddressBook.rsc"			-"!:\resource\apps\AddressBook.rsc"
+"..\..\..\Epoc32\data\z\private\10003a3f\import\apps\AddressBook_reg.rsc"	-"!:\private\10003a3f\import\apps\AddressBook_reg.rsc"
+"..\..\..\Epoc32\data\z\resource\apps\AddressBook_aif.mif"		-"!:\resource\apps\AddressBook_aif.mif"
+
+;required for application to be covered by backup/restore facility 
+"backup_registration.xml"						-"!:\private\A0000180\backup_registration.xml"

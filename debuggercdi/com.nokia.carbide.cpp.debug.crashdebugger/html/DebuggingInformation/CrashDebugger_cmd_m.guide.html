@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>m - Do a Memory Dump</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head2">
+  <h2>m - Do a Memory Dump</h2>
+</div><div>
+<p>This command dumps memory in both hexadecimal and ASCII format. Use
+one of the following command formats:</p>
+<p class="listing">m start end</p>
+<p class="listing">m start+length</p>
+<p>
+start specifies the start address in hexadecimal, and
+end specifies the end address in hexadecimal. If the second
+parameter starts with a + character, then the following hexadecimal characters
+are interpreted as a length. </p>
+<p>Address parameters are always virtual addresses (the MMU is still
+on).</p>
+<p>The resulting format is similar to the EKA1 format.</p>
+<p>For example:</p>
+<p class="listing">&gt; .m 81c01c60+30</p>
+<p class="listing">81C01C60: 00 00 00 00 15 00 00 10 E0 6A 13 50 01 00 00 80 .........j.P....<br>
+  81C01C70: 30 3B C0 81 34 D9 03 50 00 00 FF FF E8 1C C0 81 0;..4..P........<br>
+  81C01C80: 34 D9 03 50 30 3B C0 81 FC 4A 13 50 E8 1C C0 81 4..P0;...J.P.....</p>
+<p>If an illegal memory access occurs, the debugger traps the
+exception and displays an error message.</p>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="CrashDebuggerUsingCommandSyntax.guide.html">Debug Monitor</a></li>
+</ul>
+<h5>Related references</h5>
+<ul><li><a href="CrashDebugger_cmd.guide.html">Crash Debugger Commands</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

@@ -1,0 +1,14 @@
+
+STRUCT COLORS {
+	WORD aknFgColor;
+	WORD aknBgColor;
+}
+
+STRUCT COLORS_DEFAULTS {
+	WORD aknFgColor = CAknColorGreen;
+	WORD aknBgColor = CAknColorCyan;
+}
+
+STRUCT COMMAND {
+	WORD command;
+}

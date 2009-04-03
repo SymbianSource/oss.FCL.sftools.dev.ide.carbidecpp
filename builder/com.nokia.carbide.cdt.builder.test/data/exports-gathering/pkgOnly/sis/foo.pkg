@@ -1,0 +1,22 @@
+;Languages
+&EN,FR
+
+;Ordinary file to system drive
+{
+"text\englishfile.txt"
+"$(EPOCROOT)text\frenchfile.txt"
+}-"$:\private\10000005\import\InstTest\lang.txt"
+
+;Ordinary file to selected drive. 
+"$(EPOCROOT)epoc32\text\file1.txt"-"!:\private\10000005\import\InstTest\file1.txt", FF
+
+;Display 2 options to the user
+!({"Option1","Option1"},{"Option2","Option2"})
+if option1
+    "$(EPOCROOT)epoc32\files\option1.txt"-"!:\private\10000005\import\InstTest\option1.txt";
+endif
+
+;Some text files to display in dialogs during the installation. These files are not installed.
+;'TC' continues with the installation after displaying the dialog. 
+;'TA' presents the user with an option to abort the installation.
+"$(EPOCROOT)epoc32\text\textfilec.txt"-"", FT, TC

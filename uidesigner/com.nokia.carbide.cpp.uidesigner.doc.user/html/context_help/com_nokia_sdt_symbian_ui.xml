@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define help for various Properties/Preference panels and windows -->
+<!-- plugin="com.nokia.sdt.symbian.ui" -->
+
+<contexts>
+	
+	<!-- SYMBIAN UI EDITOR -->
+	
+	<!-- APPLICATION EDITOR OVERVIEW PAGE -->
+	<context id="appEditorOverviewPageContext" >
+		<description>Use the Application Editor to set application-level settings for the UI of your S60 application.</description>
+		<topic label="Application Editor Overview"  			href="html/reference/app_editor/ref_overview.htm" />
+		<topic label="Changing the Baseline SDK"				href="html/tasks/app_edit/task_overview_baseline_sdk.htm" />
+		<topic label="UI Designs Page"  						href="html/reference/app_editor/ref_ui_design.htm" />
+		<topic label="Languages Page"  							href="html/reference/app_editor/ref_languages.htm" />
+		<topic label="AppUI Page"  								href="html/reference/app_editor/ref_appui.htm" />
+	</context>
+
+
+	<!-- APPLICATION EDITOR UIDESIGNS PAGE -->
+	<context id="appEditorViewsFormPageContext" >
+		<description>The UI Designs page enables the adding, removing, and the control over an application's Navigation Pane Tabbing.</description>
+		<topic label="UI Designs Page"  							href="html/reference/app_editor/ref_ui_design.htm" />
+		<topic label="Adding a UI Design"							href="html/tasks/app_edit/task_uidesign_add.htm" />
+		<topic label="Removing a UI Design"							href="html/tasks/app_edit/task_uidesign_remove.htm" />
+		<topic label="Importing a Removed UI Design"				href="html/tasks/app_edit/task_uidesign_import.htm" />
+		<topic label="Enabling Navigation Pane Tabbing"				href="html/tasks/app_edit/task_uidesign_nav_tab_enable.htm" />
+		<topic label="Adding a UI Design to the Tab Group"			href="html/tasks/app_edit/task_uidesign_nav_tab_add_design.htm" />
+		<topic label="Removing a UI Design from the Tab Group"		href="html/tasks/app_edit/task_uidesign_nav_tab_remove_design.htm" />
+		<topic label="Reordering UI Designs"						href="html/tasks/app_edit/task_uidesign_nav_tab_reorder.htm" />
+		<topic label="Setting the Tab Text"							href="html/tasks/app_edit/task_uidesign_nav_tab_set_text.htm" />
+		<topic label="Setting the Tab Image"						href="html/tasks/app_edit/task_uidesign_nav_tab_set_image.htm" />
+	</context>
+
+
+	<!-- APPLICATION EDITOR LANGUAGES PAGE -->
+	<context id="appEditorLanguagesPageContext" >
+		<description>The Languages page enables language support to your project.</description>
+		<topic label="Languages Page"  								href="html/reference/app_editor/ref_languages.htm" />
+		<topic label="Adding a Language"							href="html/tasks/app_edit/task_lang_add.htm" />
+		<topic label="Removing a Language"							href="html/tasks/app_edit/task_lang_remove.htm" />
+		<topic label="Selecting the Display Language"				href="html/tasks/app_edit/task_lang_display.htm" />
+		<topic label="Selecting the Localization Format"			href="html/tasks/app_edit/task_lang_format.htm" />
+		<topic label="Translating Text for Added Languages"			href="html/tasks/app_edit/task_lang_translate.htm" />
+	</context>
+
+
+	<!-- APPLICATION EDITOR APPUI PAGE / UI DESIGNER EDITOR -->
+	<context id="appEditorAppUiPageContext" >
+		<description>Use the Application Editor AppUi page to create the application's user interface.</description>
+		<topic label="AppUi Page"  									href="html/reference/app_editor/ref_appui.htm" />
+		<topic label="Adding New Objects" 							href="html/tasks/components/task_comp_new_obj.htm" />
+		<topic label="Aligning Objects" 							href="html/tasks/components/task_comp_align_objs.htm" />
+		<topic label="Deleting Objects" 							href="html/tasks/components/task_comp_delete_obj.htm" />
+		<topic label="Inspecting Object Properties" 				href="html/tasks/properties/task_comp_mod_properties.htm" />
+		<topic label="Matching Objects' Height or Width" 			href="html/tasks/components/task_comp_match_objs.htm" />
+		<topic label="Moving Objects" 								href="html/tasks/components/task_comp_move_obj.htm" />
+		<topic label="Resizing Objects" 							href="html/tasks/components/task_comp_resize_obj.htm" />
+		<topic label="Reordering Objects" 							href="html/tasks/components/task_comp_reorder_obj.htm" />
+		<topic label="Selecting Objects" 							href="html/tasks/components/task_comp_sel_obj.htm" />
+	</context>
+
+
+		<!-- EDIT ARRAY PROPERTIES -->
+	<context id="arrayEditorDialogContextId"  >
+		<description>Use the Edit Array Properties dialog to specify default binary or custom array properties.</description>
+		<topic label="Inspecting Object Properties" 		href="html/tasks/properties/task_comp_mod_properties.htm" />
+		<topic label="Restoring Default Values" 			href="html/tasks/properties/task_comp_mod_properties_restore.htm" />
+	</context>
+
+
+		<!-- EDIT IMAGE PROPERTIES -->
+	<context id="imageEditorDialogContextId" >
+		<description>Use the Edit Image Property dialog to specify the images and masks in MIF or MBMDEF files.</description>
+		<topic label="Edit Image Property Dialog" 			href="html/reference/app_editor/ref_property.htm" />
+		<topic label="Editing Image Property Data" 			href="html/tasks/properties/task_comp_mod_properties_image.htm" />
+		<topic label="Inspecting Object Properties" 		href="html/tasks/properties/task_comp_mod_properties.htm" />
+		<topic label="Restoring Default Values" 			href="html/tasks/properties/task_comp_mod_properties_restore.htm" />
+	</context>
+
+
+</contexts>
+

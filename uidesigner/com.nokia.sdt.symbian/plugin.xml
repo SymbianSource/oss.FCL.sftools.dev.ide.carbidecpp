@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+  <extension
+        point="com.nokia.sdt.uimodel.modelLoader">
+     <loader
+           class="com.nokia.sdt.symbian.dm.DesignerDataModelProvider"
+           fileExtension="nxd"/>
+  </extension>
+  <extension
+        point="com.nokia.sdt.uimodel.modelLoader">
+     <loader
+           class="com.nokia.sdt.symbian.dm.DesignerDataModelProvider"
+           fileExtension="uidesign"/>
+  </extension>
+  <extension
+        point="com.nokia.sdt.uimodel.projectContextProvider">
+     <provider class="com.nokia.sdt.symbian.workspace.impl.ProjectContextProvider"/>
+  </extension>
+  <extension
+        point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="com.nokia.sdt.symbian.workspace.ISymbianProjectContext"
+           class="com.nokia.sdt.symbian.workspace.impl.SymbianProjectContextAdapterFactory"/>
+  </extension>
+  <extension
+        id="carbideCPPUIDesignerProjectNature"
+        name="Carbide.c++ UI Designer Project Nature"
+        point="org.eclipse.core.resources.natures">
+     <runtime>
+        <run class="com.nokia.sdt.symbian.ProjectNature"/>
+     </runtime>
+  </extension>
+  <extension
+        point="com.nokia.carbide.updater.refactoringUpdater">
+     <refactoring class="com.nokia.sdt.symbian.updater.RefactoringUpdater"/>
+  </extension>
+  <extension
+        point="com.nokia.carbide.updater.updateTrigger">
+     <trigger class="com.nokia.sdt.symbian.updater.UpdateTrigger"/>
+  </extension>  
+</plugin>

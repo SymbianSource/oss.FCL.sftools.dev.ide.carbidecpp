@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CDI_Test Plug-in
+Bundle-SymbolicName: com.nokia.cdt.debug.cw.symbian.tests
+Bundle-Version: 1.0.0
+Bundle-Activator: com.nokia.cdt.debug.cw.symbian.tests.TestsPlugin
+Bundle-Vendor: NOKIA
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.cdt.core,
+ com.nokia.cdt.debug.cw.symbian,
+ org.junit
+Bundle-ActivationPolicy: lazy

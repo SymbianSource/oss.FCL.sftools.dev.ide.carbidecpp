@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.carbide.uiq.Application" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.NonLayoutBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ApplicationDocument" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.ApplicationUI" version="1.0.0"/>
+    <manifestEntry id="com.nokia.carbide.uiq.DesignReference" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">rsc</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.uiq</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.REGISTRY_DIRECTORY_ID">reg</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.ROOT_CONTAINER">UIQ_MultiPage_3_0AppUi</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.LOCALIZED_FILE_FORMAT">rls</property>
+  <property id="com.nokia.sdt.symbian.dm.ROOT_APPLICATION_NAME">UIQ_MultiPage_3_0</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
+  <component id="com.nokia.carbide.uiq.Application">
+    <property id="className">CUIQ_MultiPage_3_0Application</property>
+    <property id="documentBase">UIQ_MultiPage_3_0</property>
+    <property id="name">UIQ_MultiPage_3_0Application</property>
+    <property id="uid">0xEFA1BB5E</property>
+    <component id="com.nokia.carbide.uiq.ApplicationDocument">
+      <property id="className">CUIQ_MultiPage_3_0Document</property>
+      <property id="name">UIQ_MultiPage_3_0Document</property>
+      <component id="com.nokia.carbide.uiq.ApplicationUI">
+        <property id="shortCaption" type="i18n">STR_UIQ_MultiPage_3_0Application_1</property>
+        <property id="caption" type="i18n">STR_UIQ_MultiPage_3_0Application_2</property>
+        <property id="initialDesign" type="componentRef">designReference1</property>
+        <property id="className">CUIQ_MultiPage_3_0AppUi</property>
+        <property id="name">UIQ_MultiPage_3_0AppUi</property>
+        <compoundProperty id="image"/>
+        <component id="com.nokia.carbide.uiq.DesignReference">
+          <property id="filePath">UIQ_MultiPage_3_0MultiPageView.uidesign</property>
+          <property id="baseName">UIQ_MultiPage_3_0MultiPageView</property>
+          <property id="name">designReference1</property>
+        </component>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_UIQ_MultiPage_3_0Application_1">UIQ_MultiPage_3_0</string>
+      <string id="STR_UIQ_MultiPage_3_0Application_2">UIQ_MultiPage_3_0</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="UIQ_MultiPage_3_0AppUi" rsrcId="localisable_app_info">r_localisable_app_info</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="UIQ_MultiPage_3_0MultiPageView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EUIQ_MultiPage_3_0MultiPageViewId</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+  <generatedFiles>
+    <file>src/uiq_multipage_3_0appui.cpp</file>
+    <file>inc/uiq_multipage_3_0applicationexternalinterface.h</file>
+    <file>inc/uiq_multipage_3_0document.h</file>
+    <file>inc/uiq_multipage_3_0application.h</file>
+    <file>src/uiq_multipage_3_0application.cpp</file>
+    <file>src/uiq_multipage_3_0multipageview.cpp</file>
+    <file>inc/uiq_multipage_3_0multipageview.h</file>
+    <file>inc/uiq_multipage_3_0appui.h</file>
+    <file>src/uiq_multipage_3_0document.cpp</file>
+    <file>rsc/uiq_multipage_3_0.rss</file>
+    <file>inc/uiq_multipage_3_0.hrh</file>
+    <file>rsc/uiq_multipage_3_0multipageview.rssi</file>
+    <file>inc/uiq_multipage_3_0multipageview.hrh</file>
+    <file>rsc/uiq_multipage_3_0_01.rls</file>
+    <file>rsc/uiq_multipage_3_0multipageview_01.rls</file>
+  </generatedFiles>
+</designerData>

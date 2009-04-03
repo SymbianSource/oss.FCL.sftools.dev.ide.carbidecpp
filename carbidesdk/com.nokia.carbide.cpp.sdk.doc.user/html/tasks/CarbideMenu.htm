@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Adding items to the Carbide menu</title>
+<style>
+<!--
+span.attr
+    {color:green}
+-->
+</style>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+
+<body>
+<h2>Adding items to the Carbide menu</h2>
+
+<p>If you are creating a plug-in specifically for use with Carbide.c++ we recommend that 
+any menu items you create be added to existing Eclipse menus or to the <b>Carbide</b> menu.
+</p>
+<p>Following this guideline reduces the likelihood of menu clutter for uses with multiple Carbide extensions.
+It also provides users with a consistent place to look for extension commands.
+</p>
+<p>The standard Eclipse technique for adding items to a menu is the <code>org.eclipse.ui.actionSet</code>
+extension point. To add to the Carbide menu you use a standard action set, and specify the Carbide menu
+in the <code>menubarPath</code> attribute. Below is an example:
+</p>
+
+<pre class="listing">
+&lt;extension
+     point=<span class="attr">"org.eclipse.ui.actionSets"</span>&gt;
+  &lt;actionSet
+      id=<span class="attr">"Example.actionSet1"</span>
+      label=<span class="attr">"Example Actions"</span>
+      visible=<span class="attr">"true"</span>&gt;
+    &lt;menu
+       id=<span class="attr">"com.nokia.carbide.cpp.ui.CarbideMenu"</span>
+       label=<span class="attr">"&amp;amp;Carbide"</span>
+       path=<span class="attr">"additions"</span>&gt;
+       &lt;groupMarker name=<span class="attr">"CarbideExtensions"</span>/&gt;
+     &lt;/menu&gt;
+     &lt;action
+        class=<span class="attr">"SampleItem"</span>
+        id=<span class="attr">"example.actions.CarbideExample"</span>
+        label=<span class="attr">"My Extension"</span>
+        icon=<span class="attr">"icons/sample.gif"</span>
+        toolbarPath=<span class="attr">"sampleGroup"</span>
+        menubarPath=<span class="attr">"com.nokia.carbide.cpp.ui.CarbideMenu/CarbideExtensions"</span>
+     /&gt;
+  &lt;/actionSet&gt;
+&lt;/extension&gt;
+</pre>
+
+<p>The &lt;menu&gt; element must be included because Eclipse 3.2 does not completely support
+declaring menus in one plugin and referencing them from another. Please include this element exactly as-is.
+</p>
+
+<p>Note that the <code>menubarPath</code> has two elements to the path:</p>
+<ul>
+<li><code>com.nokia.carbide.cpp.ui.CarbideMenu</code> - this specifies the Carbide menu itself.
+</li>
+<li><code>CarbideExtensions</code> - this specifies the particular group in the menu for
+extension commands. It's important to include this specific group for compatibility with future Carbide.c++ releases.
+</li>
+</ul>
+<p>Carbide defines two other named groups in this menu: <code>CarbideStart</code> and 
+<code>CarbideEnd</code>. These are for internal use and should not be used by third-party plugins.
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</div></body>
+</html>

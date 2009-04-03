@@ -1,0 +1,8 @@
+<contexts>
+      <context  id="hoverHelpContext"> 
+        <description>Hover Help Guide</description> 
+        <topic href="resources/help context/dl_hover/html/getting_started.html"  label="Overview"/> 
+        <topic href="resources/help context/dl_hover/html/setup.html"  label="Set Up"/>
+        <topic href="resources/help context/dl_hover/html/preferences.html"  label="Preferences"/>
+      </context> 
+</contexts> 

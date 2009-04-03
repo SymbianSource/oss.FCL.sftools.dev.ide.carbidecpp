@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU13 END_USECASES -->
+<!DOCTYPE componentDefinition [
+<!ENTITY ListboxEvents SYSTEM "CQikListBox_Events.inc">
+<!ENTITY ListboxSrcGen SYSTEM "CQikListBox_srcGen.inc">
+]>
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<component friendlyName="%friendlyName"
+		qualifiedName="com.nokia.carbide.uiq.CQikListBox"
+		baseComponent="com.nokia.carbide.uiq.ControlCollectionItemBase"
+		instanceNameRoot="listBox"
+		version="1.0"
+		category="%controls.category">
+		
+		<documentation>
+			<information>%information</information>
+		</documentation>
+			
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"
+			className="CQikListBox" classHelpTopic=""
+			resourceType="QIK_LISTBOX" resourceHelpTopic=""/>			
+			
+		<designerImages 
+			smallIconFile="CQikListBox_sm.png" 
+			largeIconFile="CQikListBox.png"/>			
+		
+		<attributes>
+			<attribute key="is-layout-container">true</attribute>
+			<!--Custom attributes-->
+			<attribute key="rss-control-type-enum">EQikCtListBox</attribute>
+			<attribute key="cpp-class-name">CQikListBox</attribute>
+			<!--Following attribute allows mirroring the children of listbox in the
+				control collection as children of the listbox reference-->
+			<attribute key="layout-container-indirection-reference-property">control</attribute>
+			<!--Following two attributes are needed for enabling row layout target feedback-->
+			<attribute key="layout-type">ordered</attribute>
+			<attribute key="ordered-layout-type">vertical-row</attribute>
+			<attribute key="vertical-scrollable-container">true</attribute>
+			<attribute key="horizontal-scrollable-container">true</attribute>
+		</attributes>
+		
+		<properties>
+			<enumProperty name="type"
+				displayName="%type"
+				descriptionKey="typeDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxType"
+				default="EQikRowListBox"
+				category="%category.layout"/>
+			<enumProperty name="v_scrollbar"
+				displayName="%v_scrollbar"
+				descriptionKey="v_scrollbarDescription"
+				type="com.nokia.carbide.uiq.TQikScrollBarVisibility"
+				default="EQikScrollBarAuto"
+				category="%category.behavior"/>
+			<enumProperty name="h_scrollbar"
+				displayName="%h_scrollbar"
+				descriptionKey="h_scrollbarDescription"
+				type="com.nokia.carbide.uiq.TQikScrollBarVisibility"
+				default="EQikScrollBarAuto"
+				category="%category.behavior"/>
+			<!--Properties within view member resource and common to row/grid-->
+			<property name="height_in_rows"
+				displayName="%height_in_rows"
+				descriptionKey="height_in_rowsDescription"
+				type="integer"
+				minValue="-1"
+				maxValue="255"
+				extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"
+				default="-1"
+				category="%category.layout"/>
+			<property name="highlight_enabled"
+				displayName="%highlight_enabled"
+				descriptionKey="highlight_enabledDescription"
+				type="boolean"
+				default="true"
+				category="%category.behavior"/>
+			<property name="multiple_select"
+				displayName="%multiple_select"
+				descriptionKey="multiple_selectDescription"
+				type="boolean"
+				default="false"
+				category="%category.behavior"/>
+			<compoundProperty name="margins"
+				displayName="%margins"
+				descriptionKey="marginsDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxMargins"
+				category="%category.layout"/>
+			<enumProperty name="looping"
+				displayName="%looping"
+				descriptionKey="loopingDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxProperty"
+				default="EQikListBoxSystem"
+				category="%category.behavior"/>
+			<enumProperty name="mirroring"
+				displayName="%mirroring"
+				descriptionKey="mirroringDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxMirroring"
+				category="%category.behavior"/>
+			<enumProperty name="incremental_match_slot"
+				displayName="%incremental_match_slot"
+				descriptionKey="incremental_match_slotDescription"
+				type="com.nokia.carbide.uiq.TListBoxStdLayoutTextSlots"
+				default="EQikListBoxDefault"
+				category="%category.behavior"/>
+			<property name="max_incremental_matching_characters"
+				displayName="%max_incremental_matching_characters"
+				descriptionKey="max_incremental_matching_charactersDescription"
+				type="integer"
+				minValue="-1"
+				extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"
+				default="-1"
+				category="%category.behavior"/>
+			<enumProperty name="highlight_type"
+				displayName="%highlight_type"
+				descriptionKey="highlight_typeDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxHighlightStyle"
+				default="EQikListBoxHighlightFrame"
+				category="%category.behavior"/>
+			<!--Following three properties apply only for EQikRowListBox-->
+			<enumProperty name="centered_scrolling"
+				displayName="%centered_scrolling"
+				descriptionKey="centered_scrollingDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxProperty"
+				default="EQikListBoxSystem"
+				category="%category.behavior"/>
+			<property name="center_value"
+				displayName="%center_value"
+				descriptionKey="center_valueDescription"
+				type="integer"
+				minValue="-1"
+				maxValue="255"
+				extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"
+				default="-1"
+				category="%category.appearance"/>
+			<enumProperty name="partially_visible_items"
+				displayName="%partially_visible_items"
+				descriptionKey="partially_visible_itemsDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxProperty"
+				default="EQikListBoxSystem"
+				category="%category.appearance"/>
+			<!--Following three properties apply only for EQikGridListBox-->
+			<property name="grid_columns"
+				displayName="%grid_columns"
+				descriptionKey="grid_columnsDescription"
+				type="integer"
+				minValue="-1"
+				maxValue="255"
+				extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"
+				default="-1"
+				category="%category.layout"/>
+			<property name="grid_rows"
+				displayName="%grid_rows"
+				descriptionKey="grid_rowsDescription"
+				type="integer"
+				minValue="-1"
+				maxValue="255"
+				extendWithEnum="com.nokia.carbide.uiq.EQikListBoxDefault"
+				default="-1"
+				category="%category.layout"/>
+			<enumProperty name="scroll_direction"
+				displayName="%scroll_direction"
+				descriptionKey="scroll_directionDescription"
+				type="com.nokia.carbide.uiq.TQikListBoxScrollDirection"
+				default="EQikVerticalDirection"
+				category="%category.layout"/>
+			<componentReferenceProperty name="default_layout"
+				displayName="%default_layout"
+				descriptionKey="default_layoutDescription"
+				constraint="com.nokia.carbide.uiq.ListBoxLayout"
+				category="%category.layout"/>
+		</properties>
+		
+		<propertyOverrides>
+			<propertyOverride name="isVisible" readOnly="true" category="Hidden"/>
+			<propertyOverride name="dimmed" readOnly="true" category="Hidden"/>
+		</propertyOverrides>
+		
+		<sourceMapping>
+			<mapResource struct="QIK_LISTBOX" headers="QikListBox.rh">
+				<mapEnumMember property="type" member="type"/>
+				<mapEnumMember property="v_scrollbar" member="v_scrollbar"/>
+				<mapEnumMember property="h_scrollbar" member="h_scrollbar"/>
+				<select property="type">
+					<choice value="EQikRowListBox">
+						<mapResourceMember property="." member="view" struct="QIK_LISTBOX_ROW_VIEW" headers="QikListBox.rh" id="listBoxView">
+							<mapSimpleMember property="height_in_rows" member="height_in_rows"/>
+							<mapSimpleMember property="highlight_enabled" member="highlight_enabled"/>
+							<mapSimpleMember property="multiple_select" member="multiple_select"/>
+							<mapSimpleMember property="margins.left" member="left_margin"/>
+							<mapSimpleMember property="margins.right" member="right_margin"/>
+							<mapSimpleMember property="margins.top" member="top_margin"/>
+							<mapSimpleMember property="margins.bottom" member="bottom_margin"/>
+							<mapEnumMember property="looping" member="looping"/>
+							<mapEnumMember property="mirroring" member="mirroring"/>
+							<mapEnumMember property="incremental_match_slot" member="incremental_match_slot" validate="false"/>
+							<mapSimpleMember property="max_incremental_matching_characters" member="max_incremental_matching_characters"/>
+							<mapEnumMember property="highlight_type" member="highlight_type"/>
+							<mapEnumMember property="centered_scrolling" member="centered_scrolling"/>
+							<mapSimpleMember property="center_value" member="center_value"/>
+							<mapEnumMember property="partially_visible_items" member="partially_visible_items"/>
+						</mapResourceMember>
+					</choice>
+					<choice value="EQikGridListBox">
+						<mapResourceMember property="." member="view" struct="QIK_LISTBOX_GRID_VIEW" headers="QikListBox.rh" id="listBoxView">
+							<mapSimpleMember property="height_in_rows" member="height_in_rows"/>
+							<mapSimpleMember property="highlight_enabled" member="highlight_enabled"/>
+							<mapSimpleMember property="multiple_select" member="multiple_select"/>
+							<mapSimpleMember property="margins.left" member="left_margin"/>
+							<mapSimpleMember property="margins.right" member="right_margin"/>
+							<mapSimpleMember property="margins.top" member="top_margin"/>
+							<mapSimpleMember property="margins.bottom" member="bottom_margin"/>
+							<mapEnumMember property="looping" member="looping"/>
+							<mapEnumMember property="mirroring" member="mirroring"/>
+							<mapEnumMember property="incremental_match_slot" member="incremental_match_slot" validate="false"/>
+							<mapSimpleMember property="max_incremental_matching_characters" member="max_incremental_matching_characters"/>
+							<mapEnumMember property="highlight_type" member="highlight_type"/>
+							<mapSimpleMember property="grid_columns" member="grid_columns"/>
+							<mapSimpleMember property="grid_rows" member="grid_rows"/>
+							<mapEnumMember property="scroll_direction" member="scroll_direction"/>
+						</mapResourceMember>
+					</choice>
+					<choice>
+					</choice>
+				</select>
+				<mapArrayMember property="[com.nokia.carbide.uiq.ListBoxLayoutGroup]" member="layouts"/>
+				<mapArrayMember property="." member="item_data">
+					<select isComponentInstanceOf="com.nokia.carbide.uiq.ListBoxItem">
+						<choice value="true">
+							<mapInstanceElement/>
+						</choice>
+						<choice>
+						</choice>
+					</select>
+				</mapArrayMember>
+			</mapResource>
+		</sourceMapping>
+		
+		&ListboxEvents;
+		
+		&ListboxSrcGen;
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IChildCommandExtender"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IScrollBoundsProvider"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.CQikListBoxImplFactory"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentValidator"/>
+				<script file="CQikListBox_impls.js" prototype="CQikListBox"/>
+			</implementation>
+		</implementations>
+		
+	</component>
+	
+</componentDefinition>

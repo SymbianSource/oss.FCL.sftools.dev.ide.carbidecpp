@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>ARM Fault Status Register Values</title>
+<link rel="StyleSheet" href="sysdoc-eclipse.css" type="text/css" />
+<link rel="StyleSheet" href="sysdoc-eclipse.css" type="text/css" />
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+    <style type="text/css">
+<!--
+.style1 {font-family: "Courier New", Courier, mono}
+-->
+    </style>
+	<div class="Head1">
+
+<h2><a name="debugging%2earm%2dexceptions%2dprocessormodes%2eexceptions"></a>ARM Fault Status Register Values (FSR register)</h2>
+</div>
+<div>
+<p>The lowest 4-bits of the FSR register indicates the fault generated
+by the MMU. The FSR register value is displayed as a result of entering an
+<a href="CrashDebugger_cmd_f.guide.html" title="The debug monitor and command syntax / f - display kernel fault information">f</a> command in the
+debug monitor.</p><table cellpadding="1" border="0" cellspacing="0"><tr><td width="509"
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0">
+<tr valign="top"><td width="67" class="Cell">
+<p align="center"><b>Value</b></p></td><td width="357" class="Cell">
+<p><b>Explanation</b></p></td></tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">0</p></td>
+  <td class="Cell"><p>Vector exception</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">1</p></td>
+  <td class="Cell"><p>Alignment fault</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">2</p></td>
+  <td class="Cell"><p> Terminal exception </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">3</p></td>
+  <td class="Cell"><p>Alignment fault </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">4</p></td>
+  <td class="Cell"><p>External abort on linefetch for section translation </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">5</p></td>
+  <td class="Cell"><p>Section translation fault (unmapped virtual address)</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">6</p></td>
+  <td class="Cell"><p> External abort on linefetch for page translation </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">7</p></td>
+  <td class="Cell"><p>Page translation fault (unmapped virtual address)</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">8</p></td>
+  <td class="Cell"><p> External abort on non-linefetch for section translation</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">9</p></td>
+  <td class="Cell"><p> Domain fault on section translation (i.e. accessing invalid domain) </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">A</p></td>
+  <td class="Cell"><p>External abort on non-linefetch for page translation</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">B</p></td>
+  <td class="Cell"><p> Domain fault on page translation (i.e. accessing invalid domain)</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">C</p></td>
+  <td class="Cell"><p> External abort on first level translation</p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">D</p></td>
+  <td class="Cell"><p> Permission fault on section (i.e. no permission to access virtual address) </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">E</p></td>
+  <td class="Cell"><p>External abort on second level translation </p></td>
+</tr>
+<tr valign="top">
+  <td class="Cell"><p align="center" class="style1">F</p></td>
+  <td class="Cell"><p> Permission fault on page (i.e. no permission to access virtual address)</p></td>
+</tr>
+</table></td></tr></table>
+<a name="debugging%2earm%2dexceptions%2dprocessormodes%2ecpsr"></a>
+</div>
+	   <h5>Related references </h5>
+	   <ul>
+	     <li><a href="CrashDebuggerARMexceptionsProcessorModes.guide.html">ARM Exception Types</a></li>
+         <li><a href="CrashDebuggerARMexceptionsProcessorModes.guide02.html">ARM Fault Status Register Values</a></li>
+         <li><a href="CrashDebuggerARMexceptionsProcessorModes.guide03.html">ARM Processor Modes</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

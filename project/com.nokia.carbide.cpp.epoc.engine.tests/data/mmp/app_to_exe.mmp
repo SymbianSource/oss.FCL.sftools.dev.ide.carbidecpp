@@ -1,0 +1,59 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Symbian Foundation License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*/
+
+#ifdef APP_TO_EXE
+TARGET      myapp.exe
+TARGETTYPE  exe
+#else
+TARGET      MyApp.app
+TARGETTYPE  app
+#endif
+UID         0x100039CE 0x1xxxxxxx
+ 
+VENDORID    XXXX
+CAPABILITY  XXXX
+ 
+// Note that for APP_TO_EXE targetpath need not be defined, it
+// is automatically handled by the build tools
+#ifndef APP_TO_EXE
+TARGETPATH  \System\Apps\MyApp
+#endif
+START RESOURCE ..\data\myapp.rss
+HEADER
+#ifdef APP_TO_EXE
+TARGETPATH \sys\bin
+#endif
+
+END  // RESOURCE
+
+#ifdef SCALABLE_UI // New app framework used
+START RESOURCE ..\data\myapp_reg.rss
+// Do not change the UID below.
+TARGETPATH \private\10003a3f\import\apps
+END
+#else // Old app framework used (no changes in the definitions below)
+START RESOURCE ..\data\myapp_caption.rss
+HEADER
+#ifdef APP_TO_EXE
+TARGETPATH XXXX
+#endif
+
+END  // RESOURCE
+
+AIF myapp.aif  ..\aif\  myappaif.rss  c8,8 ..\..\bitmaps2\qgn_menu_myapp_lst.bmp  ..\..\bitmaps2\qgn_menu_myapp_lst_mask_soft.bmp
+
+#endif

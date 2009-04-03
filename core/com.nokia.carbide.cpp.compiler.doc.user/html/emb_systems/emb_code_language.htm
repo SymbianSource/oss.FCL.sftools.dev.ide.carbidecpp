@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Language-related strategies</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Language-related Strategies</h3>
+<p>  Language-related strategies limit or avoid the use of ISO C++ features. While these features can make software design and maintenance easier, they can also increase code size.</p>
+<ul>
+  <li>Virtual Functions&mdash;Not using virtual functions reduces code size.</li>
+  <li>Runtime Type Identification&mdash;Extra data is not generated if program does not use Runtime Type Identification (RTTI).</li>
+  <li>Exception Handling&mdash;While the Carbide.c++ compiler provides zero-overhead exception handling to provide optimum execution speed, it still generates extra object code for exception support.</li>
+  <li>Operator New&mdash;Do not throw an exception within the new operator.</li>
+  <li>Multiple and Virtual Inheritance</li>
+</ul>
+<h4>Virtual Functions</h4>
+<p>For optimal code size, do not use virtual functions unless absolutely necessary. A virtual function is never dead-stripped, even if it is never called.</p>
+<h4>Runtime Type Identification</h4>
+<p>If code size is an issue, do not use RTTI because it generates a data table for every class. Disabling RTTI decreases the size of the data section.</p>
+<p>The EC++ proposal does not allow runtime type identification.</p>
+<p>See also &ldquo;Controlling RTTI&rdquo;.</p>
+<h4>Exception Handling</h4>
+<p>If you must handle exceptions, be careful when using C++ exception handling routines. Carbide has a zero runtime overhead error handling mechanism. However, using exceptions does increase code size, particularly the exception tables data.</p>
+<p>The EC++ proposal does not allow exception handling.</p>
+<p class="note"><strong>NOTE</strong> The proposed ISO standard libraries and the use of the new operator require exception handling.</p>
+<h4>Operator New</h4>
+<p>The C++ new operator might throw an exception, depending on how the runtime library implements the new operator. To make the new operator throw exceptions, set __throws_bad_alloc to 1 in the prefix file for your target and rebuild your library. To prevent the new operator from throwing exceptions, set __throws_bad_alloc to 0 in the prefix file for your target and rebuild your library.</p>
+<p>See your release notes or Targeting manual for more information.</p>
+<h4>Multiple and Virtual Inheritance</h4>
+<p>Implementing multiple inheritance requires a modest amount of code and data overhead. The EC++ proposal does not allow multiple inheritance.</p>
+<p>For optimal code size, do not use virtual inheritance. Virtual base classes are often complex and add a lot of code to the constructor and destructor functions.</p>
+<p>The EC++ proposal does not allow virtual inheritance.</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

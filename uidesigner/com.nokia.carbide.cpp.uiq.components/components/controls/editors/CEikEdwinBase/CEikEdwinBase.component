@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--START_USECASES: CU19 END_USECASES-->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">		
+						
+	<component friendlyName="%friendlyName"
+			qualifiedName="com.nokia.carbide.uiq.CEikEdwinBase"
+			baseComponent="com.nokia.carbide.uiq.EditorBase"			
+			version="1.0"
+			abstract="true">
+			
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+
+		<events>
+			<event name="EEventFormatChanged" category="%category.text"
+				group="Control"
+			    handlerNameTemplate="Handle{title(name)}FormatChangedL"
+			    displayName="%formatChanged"
+				descriptionKey="formatChangedDescription"/>
+			
+			
+			<event name="EEventNavigation" category="%category.text" 
+				group="Control"
+		    	handlerNameTemplate="Handle{title(name)}NavigationL"
+				displayName="%navigation"
+			    descriptionKey="navigationDescription"/>
+			
+			
+			<event name="EEventPrepareForSelectionDelete" category="%category.text" 
+				group="Control"					
+			    handlerNameTemplate="Handle{title(name)}PrepareForSelectionDeleteL"
+				displayName="%prepareForSelectionDelete"
+			    descriptionKey="prepareForSelectionDeleteDescription"/>
+								
+		</events>	
+		
+		<sourceGen>	
+			
+			<templateGroup id="GenerateCommonEdwinEvents">
+				
+				<template id="EdwinObserver" phase="InitializeControlHandlers" form="InstanceGen"><![CDATA[
+if ( ${instanceMemberName} != NULL )
+	{
+	${instanceMemberName}->SetEdwinObserver( this );
+	}
+
+]]>             </template>				
+				
+				<!-- add includes -->			
+				<expandMacro name="AddCppIncludes" Headers="eikedwin.h eikedwob.h" Phase="HeaderEventHandlerIncludes"/>
+				
+				<expandMacro name="ClassTemplate"
+					BaseClassName="${className}Base"
+					ExtraBaseClasses="MEikEdwinObserver"
+					/>
+							
+				
+				<!-- add Edwin Typedef into the Private Methods-->
+				<template id="EdwinTypedefPrivateMethodContent" phase="ClassPrivateMethods">
+<![CDATA[	typedef void ( ${className}::*EdwinEventHandler )( 
+				CEikEdwin* aEdwin, TEdwinEvent aEvent );
+	class TEdwinEventDispatch 
+		{
+	public: 
+		CEikEdwin* src; 
+		TEdwinEvent event; 
+		EdwinEventHandler handler;
+		};
+		
+	RArray< TEdwinEventDispatch > iEdwinEventDispatch;]]>	
+				</template>				
+										
+				<!-- create AddEdwinEventHandlerL method-->	
+				<expandMacro name="GenerateMethodWithOwnedBody"
+						DeclPhase="HeaderClassPrivate"
+						FunctionName="AddEdwinEventHandlerL"
+						FunctionArgs="CEikEdwin* aEdwin, TEdwinEvent aEvent, EdwinEventHandler aHandler"
+						ReturnType="void"
+						FunctionLocationId="VIEW_CLASS_ADDEDWINEVENTHANDLERL"
+						IsOwned="false"
+						DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+						ClassName="${className}"
+						OwnedRegionLocationId="VIEW_CLASS_ADDEDWINEVENTHANDLERL_BODY">
+						<expandArgument name="FunctionComment">
+/** 
+ * Helper function to register MEikEdwinObserver event handlers
+ */
+						</expandArgument>
+						<expandArgument name="FunctionBody">
+<![CDATA[
+	TEdwinEventDispatch entry;
+	entry.src = aEdwin;
+	entry.event = aEvent;
+	entry.handler = aHandler;
+	iEdwinEventDispatch.AppendL( entry );]]>
+						</expandArgument>
+					</expandMacro>
+					
+					
+					<!-- create HandleEdwinEventL method-->	
+					<expandMacro name="GenerateMethodWithOwnedBody"
+								DeclPhase="HeaderClassPublic"
+								FunctionName="HandleEdwinEventL"
+								FunctionArgs="CEikEdwin* aEdwin, TEdwinEvent aEventType"
+								ReturnType="void"
+								FunctionLocationId="VIEW_CLASS_HANDLECONTROLEVENTL"
+								IsOwned="false"
+								DefnLocation="VIEWDIALOGBASE_SOURCE_FILE"
+								ClassName="${className}"
+								OwnedRegionLocationId="VIEW_CLASS_HANDLECONTROLEVENTL_BODY">
+								<expandArgument name="FunctionComment">
+/** 
+ * Override of the HandleEdwinEventL virtual function
+ * 
+ * @param aEdwin The Edwin control that sent the event.
+ * @param aEventType The event type.
+ */
+								</expandArgument>
+								<expandArgument name="FunctionBody">
+<![CDATA[
+	for (int i = 0; i < iEdwinEventDispatch.Count(); i++)
+		{
+		const TEdwinEventDispatch& currEntry = iEdwinEventDispatch[i];
+		if ( currEntry.src == aEdwin && currEntry.event == aEventType )
+			{
+			( this->*currEntry.handler )( aEdwin, aEventType );
+			break;
+			}
+		}]]>						
+								</expandArgument>
+					</expandMacro>					
+		</templateGroup>
+
+	</sourceGen>	
+
+	</component>
+
+</componentDefinition>

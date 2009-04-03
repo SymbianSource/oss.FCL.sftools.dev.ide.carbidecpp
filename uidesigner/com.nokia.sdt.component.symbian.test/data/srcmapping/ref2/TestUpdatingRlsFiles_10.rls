@@ -1,0 +1,6 @@
+// greeting
+rls_string STR_1 "Hello"
+rls_string STR_2 "Goodbye" /* later */
+// localized strings for language: American English (10)
+rls_string STR_5 "TODO"
+rls_string STR_10 "fourteen"

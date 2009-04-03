@@ -1,0 +1,24 @@
+; Installation file for $(baseName) EXE
+;
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+;
+
+;
+; UID is the exe's UID
+;
+#{"$(baseName) EXE"},($(uid3)),1,0,0
+
+; the vendor names are required for EKA2 so uncomment
+; these two lines for S60 3.0 and UIQ 3.x.
+;Localised Vendor name
+%{"Vendor-EN"}
+
+;Unique Vendor name
+;:"Vendor"
+
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		  -"!:\system\programs\$(baseName).exe"
+	

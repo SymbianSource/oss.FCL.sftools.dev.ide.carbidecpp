@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START_USECASES: CU10 END_USECASES -->
+<!-- Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					
+	<!-- This component is the abstract base component for
+	     all UIQ control collection item components
+	 -->					
+	<component 
+			baseComponent="com.nokia.carbide.uiq.CommonBase"
+			qualifiedName="com.nokia.carbide.uiq.ControlCollectionItemBase"
+			version="1.0"
+			abstract="true">
+									
+		<symbian sdkName="com.uiq" minSDKVersion="3.0"/>
+		
+		<attributes>
+	    	<attribute key="not-in-toolbox">false</attribute>
+			<attribute key ="is-qikcontainer-content">true</attribute>
+			<attribute key ="is-slot-content">true</attribute>
+		</attributes>
+		
+		<properties>
+			<property name="dimmed"
+				displayName="%dimmed"
+				descriptionKey="dimmedDescription"
+				category="%category.appearance"
+				type="boolean"
+				default="false"/>
+			<property name="isVisible"
+				displayName="%visible"
+				descriptionKey="visible.description"
+				category="%category.appearance"
+				type="boolean"
+				default="true"/>
+		</properties>
+		
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<script file="ControlCollectionItemBase.js" prototype="ControlCollectionItemBaseEventInfo"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IPropertyExtenders"/>
+				<script file="ControlCollectionItemBase_propertyExtenders.js" prototype="ControlCollectionItemBasePropertyExtenders"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IClipboardCommandExtender"/>
+				<code class="com.nokia.carbide.cpp.uiq.components.controlCollection.ClipboardCommandExtenderFactory"/>
+			</implementation> 			
+		</implementations>
+
+		<sourceGen>
+
+			<templateGroup id="makeVisible" form="InstanceGen">
+			
+				<inline id="mv">
+					<![CDATA[
+	setPropertiesForPhase(contribs, "InitializeControlHandlers", 0, instanceMemberName, true,
+		properties.isVisible, true, "{0}->MakeVisible( {1} );\n",
+		properties.dimmed,false,"{0}->SetDimmed( {1} );\n");
+					]]>			
+				</inline>
+				
+			</templateGroup>
+		</sourceGen>
+
+	</component>
+
+</componentDefinition>

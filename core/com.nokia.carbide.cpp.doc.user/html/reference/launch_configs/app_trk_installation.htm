@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Installation Pane</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Installation Pane</h2>
+<p>The Debug or launch configuration window's <b>Installation</b> pane specifies the .sis file to install on the target device when using Application TRK. This is required when using the TRK debug agent with 9.x based SDK&rsquo;s.</p>
+<p align="center"><img src="../images/panel_trk_installation.png" width="598" height="224" /></p>
+<p class="figure">Figure 1 - Debug window's Installation pane</p>
+<h5>Table 1. Installation pane &mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="38%" scope="col">Item</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><p><b>Installation file </b></p>
+    <p>&nbsp;</p></td>
+    <td><p>Enter the complete path to the .sis or .pkg file to install on the target device or  click Browse to use the standard file selection dialog.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Download directory </b></td>
+    <td>The directory on the target device to download the file into before installing it. The default directory value is <span class="code">C:\data\</span>. </td>
+  </tr>
+  <tr>
+    <td><b>Install each launch even if installer file has not changed </b></td>
+    <td>Enable this option to force an update of the installed file even if no changes have been detected. This ensures a clean program install for each debug session. </td>
+  </tr>
+  <tr>
+    <td><b>Do not show installer UI on the phone </b></td>
+    <td>Use this option to specify if the installer UI on the target device is shown when installing the file. Disabling this option may require interaction with the installer UI on the target device, slowing down the install process. The default setting is <span class="code">on</span>. </td>
+  </tr>
+  <tr>
+    <td><b>Install to drive </b></td>
+    <td>A list of common drives where files may be installed to. The default drive setting is <span class="code">C</span>. </td>
+  </tr>
+</table>
+
+<div class="step">  
+    <h4>To access the Installation Pane</h4>
+    <ol>
+      <li>Select the  Run &gt; Debug...  menu item</li>
+      <p>The <b>Debug</b> window appears. </p>
+      <li>Select a Symbian OS Application TRK configuration in the Configurations list</li>
+      <li>Click Installer tab</li>
+      <p>The Installation pane appears (Figure 1). </p>
+    </ol>
+</div>
+<h5>Common concepts</h5>
+  <ul>
+    <li><a href="../../concepts/debugger_about.htm">About the Debugger</a></li>
+    <li><a href="../../concepts/trk.htm">Target Resident Kernel (TRK)</a></li>
+</ul>
+<h5 align="left">Common references </h5>
+<ul>
+  <li><a href="page_trk_main.htm">Main Pane</a></li>
+  <li><a href="page_trk_debugger.htm">Debugger Pane</a></li>
+  <li><a href="page_connection.htm">Connection Pane</a></li>
+  <li><a href="page_file_transfer.htm">File Transfer Pane</a></li>
+  <li><a href="page_executables.htm">Executables Pane</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

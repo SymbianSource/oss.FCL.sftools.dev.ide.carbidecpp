@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData version="1.1.0">
+  <componentManifest>
+    <manifestEntry id="com.nokia.sdt.series60.CAknApplication" version="1.1.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.NonLayoutBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CommonBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknDocument" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknViewAppUi" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknAppUi" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CAknAppUiBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignTimeContainer" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPane" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.ControlBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneCaption" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.StatusPaneTitleBase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBA" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.CBABase" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.AvkonViewReference" version="1.0.0"/>
+    <manifestEntry id="com.nokia.sdt.series60.DesignReference" version="1.0.0"/>
+  </componentManifest>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">$(dataDir)</property>
+  <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
+  <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
+  <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">$(incDir)</property>
+  <property id="com.nokia.sdt.symbian.dm.ROOT_CONTAINER">YahooImageSearchAppUi</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">$(sourceDir)</property>
+  <property id="com.nokia.sdt.symbian.dm.ROOT_APPLICATION_NAME">YahooImageSearch</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+  <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">$(groupDir)</property>
+  <component id="com.nokia.sdt.series60.CAknApplication">
+    <property id="className">CYahooImageSearchApplication</property>
+    <property id="documentBase">$(baseName)</property>
+    <property id="name">YahooImageSearchApplication</property>
+    <property id="uid">$(uid3)</property>
+    <component id="com.nokia.sdt.series60.CAknDocument">
+      <property id="className">CYahooImageSearchDocument</property>
+      <property id="name">YahooImageSearchDocument</property>
+      <component id="com.nokia.sdt.series60.CAknViewAppUi">
+        <property id="initialDesign" type="componentRef">aknViewReference1</property>
+        <property id="className">CYahooImageSearchAppUi</property>
+        <compoundProperty id="location">
+          <property id="x">38</property>
+          <property id="y">10</property>
+        </compoundProperty>
+        <property id="name">YahooImageSearchAppUi</property>
+        <compoundProperty id="size">
+          <property id="width">176</property>
+          <property id="height">208</property>
+        </compoundProperty>
+        <component id="com.nokia.sdt.series60.StatusPane">
+          <compoundProperty id="location">
+            <property id="x">16</property>
+            <property id="y">1</property>
+          </compoundProperty>
+          <property id="name">statusPane</property>
+          <compoundProperty id="size">
+            <property id="width">152</property>
+            <property id="height">43</property>
+          </compoundProperty>
+          <component id="com.nokia.sdt.series60.StatusPaneCaption">
+            <property id="shortCaption" type="i18n">STR_YahooImageSearchApplication_2</property>
+            <compoundProperty id="location">
+              <property id="x">48</property>
+            </compoundProperty>
+            <property id="longCaption" type="i18n">STR_YahooImageSearchApplication_1</property>
+            <property id="name">caption</property>
+            <compoundProperty id="size">
+              <property id="width">104</property>
+              <property id="height">28</property>
+            </compoundProperty>
+          </component>
+        </component>
+        <component id="com.nokia.sdt.series60.CBA">
+          <compoundProperty id="location">
+            <property id="y">184</property>
+          </compoundProperty>
+          <compoundProperty id="info"/>
+          <property id="name">controlPane</property>
+          <compoundProperty id="size">
+            <property id="width">176</property>
+            <property id="height">24</property>
+          </compoundProperty>
+        </component>
+        <component id="com.nokia.sdt.series60.AvkonViewReference">
+          <property id="filePath">SearchResults.uidesign</property>
+          <property id="baseName">SearchResults</property>
+          <compoundProperty id="tabImage"/>
+          <property id="name">aknViewReference1</property>
+        </component>
+        <component id="com.nokia.sdt.series60.AvkonViewReference">
+          <property id="filePath">ImageContainer.uidesign</property>
+          <property id="baseName">ImageContainer</property>
+          <compoundProperty id="tabImage"/>
+          <property id="name">aknViewReference2</property>
+        </component>
+      </component>
+    </component>
+  </component>
+  <stringBundle>
+    <stringTable language="LANG_English">
+      <string id="STR_YahooImageSearchApplication_1">ImageSearch</string>
+      <string id="STR_YahooImageSearchApplication_2">YahooImageSearch</string>
+    </stringTable>
+  </stringBundle>
+  <macroTable/>
+  <sourceMappingState>
+    <resourceMappings>
+      <resourceMapping instanceName="YahooImageSearchAppUi" rsrcId="localisable_app_info">r_localisable_app_info</resourceMapping>
+      <resourceMapping instanceName="statusPane">r_application_status_pane</resourceMapping>
+      <resourceMapping instanceName="YahooImageSearchAppUi">r_application_yahoo_image_search_app_ui</resourceMapping>
+      <resourceMapping instanceName="aknViewReference1" rsrcId="tabText">r_application_akn_view_reference1</resourceMapping>
+      <resourceMapping instanceName="aknViewReference2" rsrcId="tabText">r_application_akn_view_reference2</resourceMapping>
+    </resourceMappings>
+    <enumMappings>
+      <enumMapping instanceName="aknViewReference1" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">ESearchResultsViewId</enumMapping>
+      <enumMapping instanceName="aknViewReference2" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">EImageContainerViewId</enumMapping>
+    </enumMappings>
+    <arrayMappings/>
+  </sourceMappingState>
+</designerData>

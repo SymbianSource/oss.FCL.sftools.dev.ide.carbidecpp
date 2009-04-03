@@ -1,0 +1,29 @@
+#include <arraydialog.rh>
+#include <enumsheader.rh>
+#include "TestUpdatingDialog1.hrh"
+
+RESOURCE DIALOG r_test_dialog_sub
+	{
+	lines =
+		{
+		DIALOG_LINE
+			{
+			id = EMyContainerTestDialogCheckboxSub;
+			type = EEikCtCheckbox;
+			field = CHECKBOX
+				{
+				defaultChecked = 1;
+				};
+			},
+		DIALOG_LINE
+			{
+			id = EMyContainerTestDialogLabelSub;
+			type = EEikCtLabel;
+			field = LABEL
+				{
+				text = "literal string";
+				};
+			}
+		};
+	flags = 123;
+	}

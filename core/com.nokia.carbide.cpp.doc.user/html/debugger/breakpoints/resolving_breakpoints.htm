@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Breakpoint Status Indicators </title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2> Breakpoint Status Indicators </h2>
+<p>Breakpoints must be located and resolved by the debugger before they can be hit. When a breakpoint is hit in the module, the debugger halts program execution and displays the state of the program in the <a href="../../reference/perspective_debug.htm">Debug</a> perspective. </p>
+<p>To hit a breakpoint during a debug session, the debugger must first load the symbols for an executable module and then attempt to resolve the breakpoints within the loaded module. Any module listed into the <a href="../../reference/view_executables.htm">Executables</a> view is available for loading by  a debug session. If a module is not present in the Executable view you'll need to import it before the debugger to load and resolve any breakpoints within that module. </p>
+<p>You  set a breakpoint on any executable line of code that the debugger can resolve. Lines containing comments and other non executable code cannot be assigned a breakpoint as they are normally stripped from the  compiled   binary. Carbide helps by preventing you from setting a breakpoint on a non-compilable line of code. </p>
+<p>When the debugger attempts to resolve a breakpoint the possible results are shown in Table 1.</p>
+<h5>Table 1 Breakpoint&mdash;type, icons, and states </h5>
+<table width="90%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="15%" scope="col">Type</th>
+    <th width="14%" scope="col">Icon</th>
+    <th width="14%" scope="col">State</th>
+    <th width="71%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Enabled</b></td>
+    <td><div align="center"><img src="../../tasks/breakpoints/images/breakpoints_enabled_icon.png" width="9" height="10" /></div></td>
+    <td><div align="center">Unresolved</div></td>
+    <td><p>The breakpoint is enabled but the symbols for the module  are not loaded or the breakpoint was not able to be set within the current function.Breakpoint icon remains in unflagged state indicating unresolved status.</p>
+      <p>If  the breakpoint has been set in the source file but not resolved: </p>
+      <ul>
+        <li>a debug session has not been launched to resolve the breakpoint. For example, you just set the breakpoint and have yet to launch a debug session. </li>
+        <li>the symbols file containing the breakpoint cannot be found. Ensure the module to debug is present in the Executable view list so the debugger can locate and load the executable for symbol resolution. </li>
+        <li>breakpoint is set on a source line without any executable code</li>
+        <li>breakpoint is located in a deadstripped  function not present in the executable </li>
+      </ul>      </td>
+  </tr>
+  <tr>
+    <td><div align="center"> <img src="../../images/icons/breakpoints_enabled_icon.png" width="15" height="12" /></div></td>
+    <td><div align="center">Resolved</div></td>
+    <td><p>The breakpoint is currently enabled,  the symbols for the module  are loaded,  and the breakpoint  located in the executable   being debugged. The debugger halts program execution at an enabled breakpoint. </p>
+      <ul>
+        <li><b>resolved</b> &#8212; the symbols for the module  are loaded  and the breakpoint  located in the executable that&#8217;s currently being debugged, circle icon changes to flagged icon </li>
+        <li><b>resolved and moved</b> &#8212;the breakpoint is not found in the executable at the specified point. Debugger moves breakpoint forward in the current function until a line is found that can be resolved. Breakpoint icon moved to source line matching new breakpoint location and changed to flagged icon</li>
+    </ul>      
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Disabled</b></td>
+    <td><div align="center"><img src="../../tasks/breakpoints/images/breakpoints_disabled_icon.png" width="12" height="11" /></div></td>
+    <td><div align="center">Unresolved</div></td>
+    <td>Indicates that the breakpoint is currently disabled but not located in the executable during a debug session. The debugger does not halt program execution at a disabled breakpoint.</td>
+  </tr>
+  <tr>
+    <td><div align="center"><img src="../../images/icons/breakpoints_disabled_icon.png" width="15" height="12" /></div></td>
+    <td><div align="center">Resolved</div></td>
+    <td>Indicates that the breakpoint is currently disabled and resolved for the source line. The debugger does not halt program execution at a disabled breakpoint.</td>
+  </tr>
+</table>
+<h4>Other references</h4>
+<ul>
+  <li><a href="breakpoints.htm">Breakpoints overview </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

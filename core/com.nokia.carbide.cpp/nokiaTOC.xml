@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Carbide Help" 
+	link_to="../com.nokia.carbide.help.common/carbideHelpTOC.xml#anchorLegal">
+  
+	<topic label="Legal"                href="html/legal.htm" />
+           
+</toc>

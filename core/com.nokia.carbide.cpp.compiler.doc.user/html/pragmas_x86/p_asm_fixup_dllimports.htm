@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>asm_fixup_dllimports</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>asm_fixup_dllimports</h3>
+<p>Instructs the compiler to correct inline assembly that incorrectly accesses global variables from a DLL.</p>
+<h5>Syntax</h5>
+  <p class="code">#pragma asm_fixup_dllimports on | off | reset</p>
+  <h5>Targets</h5>
+  Intel x86<br />
+  <h5>Remarks</h5>
+  <p>In the Win32 DLL model, variables must be addressed indirectly through the symbol <span class="code">__imp_&lt;symbol&gt;</span> and replaced with the normal link-time symbol <span class="code">_&lt;symbol&gt;</span>. The compiler detects references to <span class="code">_&lt;symbol&gt;</span> and replaces them with the correct sequence of code. </p>
+<p class="note"><strong>NOTE</strong> This transformation may not always be possible and an &ldquo;illegal operand&rdquo; error is reported when the compiler can&rsquo;t make the substitution. </p>
+<p> This pragma does not correspond to any panel setting. To check this setting, use the <span class="code">__option (asm_fixup_dllimports)</span>. The default setting is off.<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

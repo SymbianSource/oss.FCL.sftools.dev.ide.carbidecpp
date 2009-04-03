@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<component baseComponent="com.nokia.sdt.series60.NonLayoutBase" 
+		friendlyName="%friendlyName" 
+		qualifiedName="com.nokia.sdt.series60.ConfirmationQuery" 
+		category="NotesDialogs"
+		instanceNameRoot="confQuery"
+		version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" 
+			className="CAknQueryDialog" classHelpTopic=""
+			resourceType="AVKON_CONFIRMATION_QUERY" resourceHelpTopic="" />
+		<designerImages smallIconFile="ConfirmationQuery_sm.png" 
+			largeIconFile="ConfirmationQuery.png"/>
+		<attributes>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-non-resizable-or-moveable-layout-object">true</attribute>
+		</attributes>
+		<properties>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<compoundProperty category="Hidden" name="size" type="com.nokia.sdt.series60.sizeProperty"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory"/>
+			<property category="Data" name="text" type="localizedString" 
+				default="Question" 
+				descriptionKey="textDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+			<enumProperty category="Data" name="tone" 
+				type="com.nokia.sdt.series60.Query.tone" 
+				descriptionKey="toneDescription" />
+		</properties>
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/> 
+				<script file="ConfirmationQuery_visual.js" prototype="ConfirmationQueryVisual"/>
+			</implementation>
+		</implementations>
+		
+		<sourceMapping>
+			<mapResource struct="DIALOG" headers="avkon.rsg avkon.rh eikon.rh">
+				<mapBitmaskMember property="." member="flags" includedProperties="" >
+					<!-- initial blank entry forces bits on -->
+					<mapBitmaskValue properties="" value="EAknGeneralQueryFlags" />
+				</mapBitmaskMember>
+				<mapFixedMember member="buttons" value="R_AVKON_SOFTKEYS_YES_NO" />			
+		        <mapResourceMember property="." member="items[0]" struct="DLG_LINE" headers="avkon.rh">
+					<mapFixedMember member="type" value="EAknCtQuery" />			
+					<mapEnumMember property="." member="id" uniqueValue="*"
+						nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_DIALOG_LINE_ID" />
+		        	<mapResourceMember property="." member="control" struct="AVKON_CONFIRMATION_QUERY" headers="avkon.rh">
+						<mapFixedMember member="layout" value="EConfirmationQueryLayout" />			
+						<mapSimpleMember property="text" member="label" />
+			        </mapResourceMember>
+		        </mapResourceMember>
+			</mapResource>
+		</sourceMapping>
+		
+		<sourceGen>
+			<template phase="ClassMethods">
+static TInt Run${instanceName$title}L( const TDesC* aOverrideText = NULL );
+			</template>
+			<defineLocation id="MethodLocation" baseLocation="MAIN_FILE" 
+				owned="true"
+				location="function(${className}::Run${instanceName$title}L(const TDesC*))">
+				<template>
+/**
+ * Show the popup dialog for ${instanceName}
+ * @param aOverrideText optional override text
+ * @return EAknSoftkeyYes (left soft key id) or 0
+ */
+TInt ${className}::Run${instanceName$title}L( const TDesC* aOverrideText )
+	{
+	}
+				</template>
+			</defineLocation>
+			<template location="MethodLocation"><![CDATA[
+<% if (properties.tone != "ENoTone") { %>
+CAknQueryDialog* queryDialog = CAknQueryDialog::NewL( CAknQueryDialog::${properties.tone} );	
+<% } else { %>			
+CAknQueryDialog* queryDialog = CAknQueryDialog::NewL();	
+<% } %>
+if ( aOverrideText != NULL )
+	{
+	queryDialog->SetPromptL( *aOverrideText );
+	}
+return queryDialog->ExecuteLD( ${resourceName$upper} );
+]]>			</template>
+
+			<template phase="MainSystemIncludes"><![CDATA[
+#include <aknquerydialog.h>
+]]>			</template>
+		</sourceGen>
+	</component>
+	
+</componentDefinition>

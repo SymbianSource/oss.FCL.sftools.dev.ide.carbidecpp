@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved. -->
+<!-- This component and the accompanying materials are made available -->
+<!-- under the terms of the License "Eclipse Public License v1.0" -->
+<!-- which accompanies this distribution, and is available -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html". -->
+
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	
+	<component baseComponent="com.nokia.sdt.series60.CommonBase" 
+			friendlyName="%friendlyName" 
+			qualifiedName="com.nokia.sdt.series60.CAknPreviewPopUp" 
+			category="NotesDialogs"
+			instanceNameRoot="previewPopUp"
+			version="1.0">
+		<documentation>
+			<information>%information</information>
+		</documentation>
+		<symbian sdkName="com.nokia.series60" minSDKVersion="3.2" 
+			className="CAknPreviewPopUpController" classHelpTopic="" />
+		<designerImages 
+			smallIconFile="CAknPreviewPopUp_sm.png" 
+			largeIconFile="CAknPreviewPopUp.png"/>
+		<attributes>
+			<attribute key="is-non-layout-object">true</attribute>
+			<attribute key="is-transient-object">true</attribute>
+			<attribute key="is-layout-object">true</attribute>
+			<attribute key="is-layout-container">true</attribute>
+			<attribute key="event-handler-target">true</attribute>
+		</attributes>
+		
+		<properties>
+			<property category="Hidden" name="className" type="string" readOnly="true"/>
+			<compoundProperty category="Hidden" name="location" type="com.nokia.sdt.series60.locationProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory" readOnly="true"/>
+			<compoundProperty category="Layout" name="size" type="com.nokia.sdt.series60.sizeProperty" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.ReadOnlySummaryEditorFactory" readOnly="true"
+				descriptionKey="sizeDescription"/>
+			<property category="Appearance" name="backColor" displayName="%backColor" type="string" 
+				editorClass="com.nokia.sdt.symbian.ui.editors.RGBEditorFactoryWithSystemColorCombo"
+				descriptionKey="backColorDescription" />
+			<property category="Behavior" name="asynchronous"
+				descriptionKey="asynchronousDescription"
+				type="boolean"
+				default="true" />
+			<property category="Flags" name="ELayoutDefault"
+				descriptionKey="ELayoutDefaultDescription"
+				type="boolean"
+				default="false" />
+			<property category="Flags" name="ELayoutSubMenu"
+				descriptionKey="ELayoutSubMenuDescription"
+				type="boolean"
+				default="false" />
+			<property category="Flags" name="EPermanentMode"
+				descriptionKey="EPermanentModeDescription"
+				type="boolean"
+				default="false" />
+			<property category="Flags" name="EFixedMode"
+				descriptionKey="EFixedModeDescription"
+				type="boolean"
+				default="false" />
+			<property category="Flags" name="EExcludeFrames"
+				descriptionKey="EExcludeFramesDescription"
+				type="boolean"
+				default="false" />
+			<property category="Behavior" name="showDelay"
+				descriptionKey="showDelayDescription"
+				type="float"
+				default="1.0" minValue="0" maxValue="2147.0" />
+			<property category="Behavior" name="hideDelay"
+				descriptionKey="hideDelayDescription"
+				type="float"
+				default="3.0" minValue="0" maxValue="2147.0" />
+			<property category="Data" name="headingText" type="localizedString" 
+				default="" descriptionKey="headingTextDescription"
+				editorClass="com.nokia.sdt.symbian.ui.editors.ScalableTextEditorFactory" />
+		</properties>
+
+		<events>
+			<event name="resourceChanged" category="Content" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}ResourceChanged"
+					descriptionKey="resourceChangedDescription"
+				/>
+			<event name="sizeChanged" category="Content" 
+					group="CAknPreviewPopUp"
+					descriptionKey="sizeChangedDescription"
+					handlerNameTemplate="Handle{title(name)}SizeChanged"
+				/>
+			<event name="draw" category="Content" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}Draw"
+					descriptionKey="drawDescription"
+				/>
+			<event name="positionChanged" category="Content" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}PositionChanged"
+					descriptionKey="positionChangedDescription"
+				/>
+			<event name="handlePointerEvent" category="Content" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}PointerEventL"
+					descriptionKey="handlePointerEventDescription"
+				/>
+			<event name="handleLongTapEvent" category="Content" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}LongTapEventL"
+					descriptionKey="handleLongTapEventDescription"
+				/>
+			<event name="previewPopUpShown" category="Observer" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}PreviewPopUpShownL"
+					descriptionKey="previewPopUpShownDescription"
+				/>
+			<event name="previewPopUpHidden" category="Observer" 
+					group="CAknPreviewPopUp"
+					handlerNameTemplate="Handle{title(name)}PreviewPopUpHiddenL"
+					descriptionKey="previewPopUpHiddenDescription"
+				/>
+		</events>
+
+		<implementations>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IVisualAppearance"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IDirectLabelEdit"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.ILayout"/>
+				<script file="CAknPreviewPopUp.js" prototype="CAknPreviewPopUpVisual"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IQueryContainment"/>
+				<script file="CAknPreviewPopUp.js" prototype="CAknPreviewPopUpContainment"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IInitializer"/>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentInstancePropertyListener"/>
+				<script file="CAknPreviewPopUp.js" prototype="CAknPreviewPopUpInit"/>
+			</implementation>
+			<implementation>
+				<interface id="com.nokia.sdt.datamodel.adapter.IComponentEventInfo"/>
+				<script file="CAknPreviewPopUp.js" prototype="CAknPreviewPopUpEventInfo"/>
+			</implementation>
+		</implementations>
+
+		<sourceMapping>
+			<select property="headingText">
+				<choice value="">
+				</choice>
+				<choice>
+					<mapResource struct="TBUF" headers="eikon.rh" id="headingText">
+						<mapSimpleMember property="headingText" member="buf" />
+					</mapResource>
+				</choice>
+			</select>
+		</sourceMapping>
+
+		<sourceGen>
+		
+			<expandMacro name="HeaderFileTemplate"
+				LocationPrefix="CONTENT_HEADER">
+				<expandArgument name="InitialOwnedSystemIncludesContent"><![CDATA[
+#include <coecntrl.h>		
+#include <aknpreviewpopupcontentprovider.h>
+				]]></expandArgument>
+				<expandArgument name="InitialOwnedForwardDeclarationsContent"><![CDATA[
+class MEikCommandObserver;		
+class CAknPreviewPopUpController;
+				]]></expandArgument>
+			</expandMacro>
+
+			<template id="IncludeRsgFile" location="CONTENT_MAIN_OWNED_SYSTEM_INCLUDES"><![CDATA[
+<% if (resourceFileNameBase != null) {%>#include <${resourceFileNameBase}.rsg>
+<% } %>]]></template>
+		
+			<expandMacro name="SourceFileTemplate"
+				LocationPrefix="CONTENT_MAIN">
+				<expandArgument name="InitialSystemIncludesContent"><![CDATA[
+#include <eikcmobs.h>
+#include <aknpreviewpopupcontroller.h>
+				]]></expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="ClassTemplate"
+				LocationPrefix="CONTENT_"
+				BaseLocation="CONTENT_HEADER_FILE"
+				BaseClassName="CCoeControl"
+				ExtraBaseClasses="public MAknPreviewPopUpContentProvider">
+				<expandArgument name="ClassComment">
+/**
+ * Content class for ${instanceName}.
+ * @class	${className} ${instanceName$title}.h
+ */
+				</expandArgument>
+				<expandArgument name="InitialPrivateTailContent">
+MEikCommandObserver* iCommandObserver;
+CAknPreviewPopUpController* iController;
+				</expandArgument>
+			</expandMacro>
+
+			<defineLocation id="CONTENT_CHILD_ENUMS" 
+				baseLocation="CONTENT_CLASS"
+				owned="false"
+				location="enum(TControls)">
+				<template><![CDATA[
+public: <% contrib.indentAdjust(-1); %>
+enum TControls
+	{
+	};
+]]>				</template>
+			</defineLocation>
+
+			<defineLocation id="CONTENT_CHILD_ENUMS_CONTENTS" 
+				baseLocation="CONTENT_CHILD_ENUMS"
+				location="region(Generated Contents)">
+			</defineLocation>
+
+			<template id="GetChildEnums" location="CONTENT_CHILD_ENUMS_CONTENTS"><![CDATA[<%
+	// each control must contribute enumerators
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		var enumContribs = Engine.generateChildContributions("HandleCCoeControlEnums");
+		Engine.assignLocationsForPhase(enumContribs, "ChildEnumsContents", "CONTENT_CHILD_ENUMS_CONTENTS");
+		contribs.addAll(enumContribs);
+	}
+%>]]>
+			</template>
+
+			<template id="AddLastChildEnum" location="CONTENT_CHILD_ENUMS">
+// add any user-defined entries here...
+
+ELastControl
+			</template>
+
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				FunctionLocationId="CONSTRUCTOR"
+				FunctionName="${className}"
+				FunctionArgs=""
+				ReturnType=""
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * First phase of Symbian two-phase construction. Should not 
+ * contain any code that could leave.
+ */
+				</expandArgument>				
+			</expandMacro>
+
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				IsVirtual="true"
+				FunctionLocationId="DESTRUCTOR"
+				FunctionName="~${className}"
+				FunctionArgs=""
+				ReturnType=""
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/** 
+ * Destroy child controls.
+ */
+				</expandArgument>				
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod"
+				IsOwned="false"
+				IsStatic="true"
+				FunctionLocationId="NEWL_METHOD"
+				FunctionName="NewL"
+				FunctionArgs="MEikCommandObserver* aCommandObserver"
+				ReturnType="${className}*"
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Construct the control (first phase).
+ *  Creates an instance and initializes it.
+ *  Instance is not left on cleanup stack.
+ * @return initialized instance of ${className}
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+${className}* self = ${className}::NewLC( aCommandObserver );
+CleanupStack::Pop( self );
+return self;
+			]]>	</expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethod"
+				IsOwned="false"
+				IsStatic="true"
+				FunctionLocationId="NEWLC_METHOD"
+				FunctionName="NewLC"
+				FunctionArgs="MEikCommandObserver* aCommandObserver"
+				ReturnType="${className}*"
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Construct the control (first phase).
+ *  Creates an instance and initializes it.
+ *  Instance is left on cleanup stack.
+ * @return new instance of ${className}
+ */
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+${className}* self = new ( ELeave ) ${className}();
+CleanupStack::PushL( self );
+self->ConstructL( aCommandObserver );
+return self;
+			]]>	</expandArgument>
+			</expandMacro>
+	
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				FunctionLocationId="CONSTRUCTL_METHOD"
+				FunctionName="ConstructL"
+				FunctionArgs="MEikCommandObserver* aCommandObserver"
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ * Construct the control (second phase).
+ *  Creates a window to contain the controls and activates it.
+ */ 
+				</expandArgument>				
+				<expandArgument name="StartFunctionBody"><![CDATA[
+iCommandObserver = aCommandObserver;
+CreateWindowL();
+InitializeControlsL();
+ActivateL();
+			]]> </expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethod"
+				IsOwned="false"
+				IsConst="true"
+				FunctionLocationId="COUNTCOMPONENTCONTROLS_METHOD"
+				FunctionName="CountComponentControls"
+				FunctionArgs=""
+				ReturnType="TInt"
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+* Return the number of controls in the container (override)
+* @return count
+*/
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+return ( int ) ELastControl;
+			]]> </expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				IsConst="true"
+				FunctionLocationId="COMPONENTCONTROL_METHOD"
+				FunctionName="ComponentControl"
+				FunctionArgs="TInt aIndex"
+				ReturnType="CCoeControl*"
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment"><![CDATA[
+/**
+* Get the control with the given index (override)
+* @param aIndex Control index [0...n) (limited by #CountComponentControls)
+* @return Pointer to control
+*/
+			]]> </expandArgument>
+				<expandArgument name="EndFunctionBody"><![CDATA[
+// handle any user controls here...
+
+return NULL;
+			]]> </expandArgument>
+			</expandMacro>
+
+			<template id="ComponentControlSwitch1" location="COMPONENTCONTROL_METHOD_BODY"><![CDATA[
+switch ( aIndex )
+	{
+]]>			</template>
+
+			<template id="GetChildSwitchCases" location="COMPONENTCONTROL_METHOD_BODY"><![CDATA[<%
+	// each control must contribute switch cases
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		var switchContribs = Engine.generateChildContributions("HandleComponentSwitchDispatch");
+		Engine.assignLocationsForPhase(switchContribs, "ComponentControlBody", "COMPONENTCONTROL_METHOD_BODY");
+		contribs.addAll(switchContribs);
+	}
+		%>]]></template>
+
+			<template id="ComponentControlSwitch2" location="COMPONENTCONTROL_METHOD_BODY"><![CDATA[
+	}
+]]>			</template>
+
+			<expandMacro name="GenerateMethod"
+				IsOwned="false"
+				FunctionLocationId="STARTCONTENTBUILDINGL_METHOD"
+				FunctionName="StartContentBuildingL"
+				FunctionArgs=""
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+* When asynchronous, called by the preview popup controller when 
+* content building should be started.
+*/
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+iController->ContentReady();
+			]]>	</expandArgument>
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod"
+				IsOwned="false"
+				FunctionLocationId="CANCELCONTENTBUILDING_METHOD"
+				FunctionName="CancelContentBuilding"
+				FunctionArgs=""
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE"
+				Realize="true">
+				<expandArgument name="FunctionComment">
+/**
+* When asynchronous, called by the preview popup controller if ongoing
+* content building operation should be cancelled.
+*/
+				</expandArgument>				
+			</expandMacro>
+
+			<expandMacro name="GenerateMethod" 
+				IsOwned="false" 
+				FunctionLocationId="SETPOPUPCONTROLLER_METHOD" 
+				FunctionName="SetPopUpController" 
+				FunctionArgs="CAknPreviewPopUpController* aController" 
+				DeclLocation="CONTENT_CLASS_PUBLIC"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+* Set the pop-up controller member.
+*/
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+iController = aController;
+			]]>	</expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				FunctionLocationId="MINIMUMSIZE_METHOD"
+				FunctionName="MinimumSize"
+				FunctionArgs=""
+				ReturnType="TSize"
+				DeclLocation="CONTENT_CLASS_PROTECTED"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+* Return the size of the pop-up.
+* Modify this method to dynamically size the pop-up.
+*/
+				</expandArgument>
+				<expandArgument name="StartFunctionBody">
+TSize size;
+				</expandArgument>				
+				<expandArgument name="FunctionBody"><![CDATA[
+<% include("popupDialogLibrary.js")
+	var size = new Point(instance.properties.size.width, instance.properties.size.height);
+	var laf = findExistingLookAndFeel(instance);
+	if (laf != null) {
+		size.y -= getPreviewPopUpHeadingHeight(instance, laf);
+	}
+	// the frame
+	size.x -= 12;
+	size.y -= 12;
+%>size = TSize(${size.x}, ${size.y});]]></expandArgument>
+				<expandArgument name="EndFunctionBody">
+return size;
+				</expandArgument>				
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				FunctionLocationId="SIZECHANGED_METHOD"
+				FunctionName="SizeChanged"
+				FunctionArgs=""
+				DeclLocation="CONTENT_CLASS_PROTECTED"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ *	Handle resizing of the container. This implementation will lay out
+ *  labels, images, etc. to the size they were given in the UI designer.
+ *  This code will need to be modified to adjust arbitrary controls to
+ *  any screen size.
+ */				
+				</expandArgument>				
+				<expandArgument name="StartFunctionBody"><![CDATA[
+CCoeControl::SizeChanged();
+LayoutControls();
+			]]> </expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				IsConst="true"
+				FunctionLocationId="DRAW_METHOD"
+				FunctionName="Draw"
+				FunctionArgs="const TRect&amp; aRect"
+				DeclLocation="CONTENT_CLASS_PRIVATE"
+				DefnLocation="CONTENT_MAIN_FILE">
+				<expandArgument name="FunctionComment">
+/**
+ *	Draw container contents.
+ */				
+				</expandArgument>				
+			</expandMacro>
+			
+			<inline scope="prototype">
+function getBackgroundColorRgb(properties) {
+	if (properties.backColor.indexOf(',') > 0)
+		return "( " + properties.backColor + " )";
+	else
+		return " = iEikonEnv->Color( ( TLogicalColor ) " + properties.backColor + " )";
+}	
+			</inline>
+			
+			<template id="DrawBodyBgColor" location="DRAW_METHOD_BODY"><![CDATA[
+CWindowGc& gc = SystemGc();
+<%if (properties.backColor == "") {%>gc.Clear( aRect );
+<%} else {%>gc.SetPenStyle( CGraphicsContext::ENullPen );
+TRgb backColor${getBackgroundColorRgb(properties)};
+gc.SetBrushColor( backColor );
+gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
+gc.DrawRect( aRect );
+<%}%>
+]]>				</template>
+
+			<expandMacro name="GenerateMethod"
+				FunctionLocationId="INITIALIZECONTROLSL_METHOD"
+				FunctionName="InitializeControlsL"
+				FunctionArgs=""
+				DeclLocation="CONTENT_CLASS_PRIVATE_OWNED_METHODS"
+				DefnLocation="CONTENT_MAIN_FILE"
+				Realize="true">
+				<expandArgument name="FunctionComment">
+/**
+ *	Initialize each control upon creation.
+ */				
+				</expandArgument>
+			</expandMacro>
+			
+			<expandMacro name="GenerateMethod"
+				FunctionLocationId="LAYOUTCONTROLS_METHOD"
+				FunctionName="LayoutControls"
+				FunctionArgs=""
+				DeclLocation="CONTENT_CLASS_PRIVATE_OWNED_METHODS"
+				DefnLocation="CONTENT_MAIN_FILE"
+				Realize="true">
+				<expandArgument name="FunctionComment">
+/**
+ * Layout components as specified in the UI Designer
+ */
+				</expandArgument>
+			</expandMacro>
+
+			<templateGroup id="GenerateResourceChanged" ifEvents="resourceChanged">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					IsOwned="false"
+					FunctionLocationId="HANDLERESOURCECHANGED_METHOD"
+					FunctionArgs="TInt aType"
+					FunctionName="HandleResourceChange"
+					DeclLocation="CONTENT_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					DefnLocation="CONTENT_MAIN_FILE">
+					<expandArgument name="FunctionComment">
+/** 
+ * Handle global resource changes, such as scalable UI or skin events (override)
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::HandleResourceChange( aType );
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					FunctionLocationId="RESOURCECHANGED_EVENTHANDLER"
+					FunctionArgs="TInt aType"
+					DeclLocation="CONTENT_CLASS_PROTECTED_USER_HANDLERS"
+					DefnLocation="CONTENT_MAIN_FILE">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="GenerateSizeChangedHandler" ifEvents="sizeChanged">
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					FunctionLocationId="SIZECHANGED_EVENTHANDLER"
+					FunctionArgs=""
+					DeclLocation="CONTENT_CLASS_PROTECTED_USER_HANDLERS"
+					DefnLocation="CONTENT_MAIN_FILE">
+				</expandMacro>
+				<template id="InvokeSizeChangedHandler" location="SIZECHANGED_METHOD_BODY">
+${event.handlerName}();
+				</template>
+			</templateGroup>
+			
+			<templateGroup id="GenerateDrawHandler" ifEvents="draw">
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					IsConst="true"
+					FunctionLocationId="DRAW_EVENTHANDLER"
+					FunctionArgs="const TRect&amp; aRect"
+					DeclLocation="CONTENT_CLASS_PROTECTED_USER_HANDLERS"
+					DefnLocation="CONTENT_MAIN_FILE">
+				</expandMacro>
+				<template id="InvokeDrawHandler" location="DRAW_METHOD_BODY">
+${event.handlerName}( aRect );
+				</template>
+			</templateGroup>
+			
+			<templateGroup id="GeneratePositionChanged" ifEvents="positionChanged">
+				<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+					IsOwned="false"
+					FunctionLocationId="POSITIONCHANGED_METHOD"
+					FunctionArgs=""
+					FunctionName="PositionChanged"
+					DeclLocation="CONTENT_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					DefnLocation="CONTENT_MAIN_FILE">
+					<expandArgument name="FunctionComment">
+/** 
+ * Handle position change (override)
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::PositionChanged();
+					</expandArgument>
+				</expandMacro>
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					FunctionLocationId="POSITIONCHANGED_EVENTHANDLER"
+					FunctionArgs=""
+					DeclLocation="CONTENT_CLASS_PROTECTED_USER_HANDLERS"
+					DefnLocation="CONTENT_MAIN_FILE">
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="HandlePointerEvent" ifEvents="handlePointerEvent handleLongTapEvent">
+				<expandMacro name="GenerateMethodWithOwnedBody"
+					IsOwned="false"
+					FunctionLocationId="HANDLEPOINTEREVENTL_METHOD"
+					FunctionArgs="const TPointerEvent&amp; aPointerEvent"
+					FunctionName="HandlePointerEventL"
+					DeclLocation="CONTENT_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+					DefnLocation="CONTENT_MAIN_FILE">
+					<expandArgument name="FunctionComment">
+/** 
+ * Handle pointer events (override)
+ */
+					</expandArgument>
+					<expandArgument name="StartFunctionBody">
+CCoeControl::HandlePointerEventL( aPointerEvent );
+					</expandArgument>
+				</expandMacro>
+			</templateGroup>
+			
+			<templateGroup id="HandlePointerEventHandler" ifEvents="handlePointerEvent">
+
+				<template id="InvokeHandlePointerEventHandler" location="HANDLEPOINTEREVENTL_METHOD_BODY">
+${event.handlerName}( aPointerEvent );
+				</template>
+				
+				<expandMacro name="GenerateUserEventHandlerFunction"
+					FunctionLocationId="HANDLEPOINTEREVENT_EVENTHANDLER"
+					FunctionArgs="const TPointerEvent&amp; aPointerEvent"
+					DeclLocation="CONTENT_CLASS_PROTECTED_USER_HANDLERS"
+					DefnLocation="CONTENT_MAIN_FILE">
+				</expandMacro>
+			</templateGroup>
+
+			<inline><![CDATA[
+			include("../srcgenLibrary.js");
+
+if (!Engine.formMatches(form, ["RootAppUi"])) {
+
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		// clear out any image stuff
+		resetImagePropertyState(instance);
+	}
+	
+	if (!Engine.formMatches(form, ["RootAppUi"])) {
+		if (Engine.formMatches(form, [ "AknView", "AppUi" ])) {
+			// get default and container-specific contributions
+			// (the argument is a regular expression)
+			contribs.addAll(Engine.generateChildContributions(form+"|Container"))
+		} else {
+			// unknown form -- likely specific to a parent -- so get 
+			// form-specific contributions
+			contribs.addAll(Engine.generateChildContributions(form))
+		}
+	}
+
+	if (Engine.formMatches(form, ["AppUi", "AknView"])) {
+		Engine.collateContributionsByPhase(contribs, ["Initialize", "PostInitialize"]);
+		
+		// fix up the phases so they point to real locations
+		Engine.assignLocationsForPhase(contribs, "MainConstants", "CONTENT_HEADER_OWNED_CONSTANTS");
+		Engine.assignLocationsForPhase(contribs, "MainSystemIncludes", "CONTENT_MAIN_OWNED_SYSTEM_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "MainUserIncludes", "CONTENT_MAIN_OWNED_USER_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "Destroy", "DESTRUCTOR_BODY");
+		Engine.assignLocationsForPhase(contribs, "Construct", "CONSTRUCTOR_BODY");
+		Engine.assignLocationsForPhase(contribs, "Initialize", "INITIALIZECONTROLSL_METHOD");
+		Engine.assignLocationsForPhase(contribs, "PostInitialize", "INITIALIZECONTROLSL_METHOD");
+		Engine.assignLocationsForPhase(contribs, "PostActivateL", "CONSTRUCTL_METHOD_BODY");
+		Engine.assignLocationsForPhase(contribs, "LayoutControls", "LAYOUTCONTROLS_METHOD");
+		Engine.assignLocationsForPhase(contribs, "HeaderIncludes", "CONTENT_HEADER_OWNED_SYSTEM_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "ForwardDeclarations", "CONTENT_HEADER_OWNED_FORWARD_DECLARATIONS");
+		Engine.assignLocationsForPhase(contribs, "ClassTypeDeclarations", "CONTENT_CLASS_PUBLIC_OWNED_TYPES");
+		Engine.assignLocationsForPhase(contribs, "InstanceVariables", "CONTENT_CLASS_PRIVATE_OWNED_INSTANCE_VARIABLES");
+		Engine.assignLocationsForPhase(contribs, "ClassMethods", "CONTENT_CLASS_PRIVATE_OWNED_METHODS");
+		Engine.assignLocationsForPhase(contribs, "ClassSource", "CONTENT_MAIN_FILE");
+		Engine.assignLocationsForPhase(contribs, "ClassHeader", "CONTENT_HEADER_FILE");
+		Engine.assignLocationsForPhase(contribs, "BaseClassList", "CONTENT_CLASS_BASES");
+		Engine.assignLocationsForPhase(contribs, "OverriddenMethods", "CONTENT_CLASS_PROTECTED_OVERRIDDEN_METHODS");
+		Engine.assignLocationsForPhase(contribs, "UserHandlers", "CONTENT_CLASS_PROTECTED_USER_HANDLERS");
+		Engine.assignLocationsForPhase(contribs, "EventIncludes", "CONTENT_HEADER_EVENT_HANDLER_INCLUDES");
+		Engine.assignLocationsForPhase(contribs, "SizeChanged", "SIZECHANGED_METHOD_BODY");
+								
+		// remove duplicate contributions where the location doesn't already have a filter
+		Engine.removeDuplicateContributionsForLocation(contribs, "CONTENT_HEADER_OWNED_FORWARD_DECLARATIONS");
+		Engine.removeDuplicateContributionsForLocation(contribs, "DESTRUCTOR_BODY");
+	}
+}
+			]]> </inline>			
+
+		<template phase="ForwardDeclarations"><![CDATA[
+class CAknPreviewPopUpController;
+class ${className};
+	]]> </template>			
+			
+		<template phase="MainSystemIncludes"><![CDATA[
+#include <aknpreviewpopupcontroller.h>
+#include <barsread.h>
+#include <stringloader.h>
+	]]> </template>			
+			
+		<template phase="MainSystemIncludes"><![CDATA[
+#include "${instanceName$title}.h"
+	]]> </template>			
+			
+		<inline scope="prototype">
+function controllerInstance() {
+	return instanceMemberName + "Controller";
+}
+			
+function contentInstance() {
+	return instanceMemberName + "Content";
+}
+		</inline>
+			
+		<template phase="Construct"><![CDATA[
+${controllerInstance()} = NULL;
+${contentInstance()} = NULL;
+	]]> </template>
+			
+		<template phase="Destroy"><![CDATA[
+delete ${controllerInstance()};
+${controllerInstance()} = NULL;
+delete ${contentInstance()};
+${contentInstance()} = NULL;
+	]]> </template>
+			
+		<template phase="InstanceVariables"><![CDATA[
+CAknPreviewPopUpController* ${controllerInstance()};
+${className}* ${contentInstance()};
+	]]> </template>
+			
+		<inline>
+function getStyleArgs(instance) {
+	var flags = "";
+	if (instance.properties.ELayoutDefault)
+		flags += "CAknPreviewPopUpController::ELayoutDefault";
+	if (instance.properties.ELayoutSubMenu) {
+		if (flags.length != 0)
+			flags += " |\n\t\t";
+		flags += "CAknPreviewPopUpController::ELayoutSubMenu";
+	}
+	if (instance.properties.EPermanentMode) {
+		if (flags.length != 0)
+			flags += " |\n\t\t";
+		flags += "CAknPreviewPopUpController::EPermanentMode";
+	}
+	if (instance.properties.EFixedMode) {
+		if (flags.length != 0)
+			flags += " |\n\t\t";
+		flags += "CAknPreviewPopUpController::EFixedMode";
+	}
+	if (instance.properties.EExcludeFrames) {
+		if (flags.length != 0)
+			flags += " |\n\t\t";
+		flags += "CAknPreviewPopUpController::EExcludeFrames";
+	}
+
+	return flags;
+}
+			
+function getCommandObserver(instance) {
+	if (instance.parent.componentId == "com.nokia.sdt.series60.CAknView" ||
+			instance.parent.componentId == "com.nokia.sdt.series60.CAknAppUi")
+		return "this";
+
+	return "iCoeEnv->AppUi()";	
+}
+		</inline>
+			
+		<inline><![CDATA[
+var mycontrib = Engine.createContributionForPhase("Initialize")
+var text = contentInstance() + " = " + className + "::NewL( " + getCommandObserver(instance) + " );\n";
+var styleArgs = getStyleArgs(instance);
+text += controllerInstance() + " = CAknPreviewPopUpController::NewL(\n"
+if (styleArgs.length == 0 && !instance.properties.asynchronous)
+	text += "\t\t*" + contentInstance() + " );\n";
+if (styleArgs.length > 0 && !instance.properties.asynchronous)
+	text += "\t\t*" + contentInstance() + ",\n\t\t" + styleArgs + " );\n";
+if (styleArgs.length == 0 && instance.properties.asynchronous)
+	text += "\t\t*" + contentInstance() + ",\n\t\t*" + contentInstance() + " );\n";
+if (styleArgs.length > 0 && instance.properties.asynchronous)
+	text += "\t\t*" + contentInstance() + ",\n\t\t*" + contentInstance() + ",\n\t\t" + styleArgs + " );\n";
+text += contentInstance() + "->SetPopUpController( " + controllerInstance() + " );\n";
+mycontrib.setText(text);
+contribs.add(mycontrib);
+	]]> </inline>
+			
+			<template phase="Initialize"><![CDATA[
+<% if (instance.properties.headingText.length > 0) {
+%>	{
+	HBufC* headingText = StringLoader::LoadLC( ${Engine.getGeneratedResource(instance, "headingText").toUpperCase() } );
+	${controllerInstance()}->SetHeadingTextL( *headingText );
+	CleanupStack::PopAndDestroy( headingText );
+	}<% } %>
+]]>			</template>
+
+			<inline>
+function getMicroSecs(aFloat) {
+	return (1000000.0 * aFloat).toFixed();				
+}				
+			</inline>
+			
+			<template phase="Initialize"><![CDATA[
+<% if (instance.properties.showDelay != 1.0) {
+%>	{
+	TTimeIntervalMicroSeconds32 ms = ${getMicroSecs(instance.properties.showDelay)};
+	${controllerInstance()}->SetPopUpShowDelay( ms );
+	}<% } %>
+]]>			</template>
+
+			<template phase="Initialize"><![CDATA[
+<% if (instance.properties.hideDelay != 3.0) {
+%>	{
+	TTimeIntervalMicroSeconds32 ms = ${getMicroSecs(instance.properties.hideDelay)};
+	${controllerInstance()}->SetPopUpHideDelay( ms );
+	}<% } %>
+]]>			</template>
+
+			<expandMacro name="GenerateMethod"
+				FunctionLocationId="SHOW_PREVIEW_POPUP_RECT_METHOD"
+				FunctionName="Show${instanceName$title}L"
+				FunctionArgs="const TRect&amp; aHighlightRect, const TDesC* aOverrideHeadingText"
+				DeclPhase="ClassMethods"
+				DefnLocation="MAIN_FILE"
+				ClassName="${parentClassName}">
+				<expandArgument name="FunctionComment">
+/**
+ * Show the preview pop-up for ${instanceName}.
+ * Sets the position of the preview pop-up so that it is aligned with the highlight rect.
+ * This is intented to be used in conjunction with lists and grids if the 
+ * application wishes to implement a popup that follows lists/grids item highlight.
+ * If fixed mode is used then the value of the highlight rect has no effect.
+ * @param aHighlightRect Screen-relative rectangle used to calculate pop-up's position.
+ * @param aOverrideText optional override header text
+ */
+				</expandArgument>
+			</expandMacro>
+
+			<template location="SHOW_PREVIEW_POPUP_RECT_METHOD">
+if ( aOverrideHeadingText != NULL )
+	{
+	${controllerInstance()}->SetHeadingTextL( *aOverrideHeadingText );
+	}
+${controllerInstance()}->SetPositionByHighlight( aHighlightRect );
+${controllerInstance()}->ShowPopUp();
+			</template>
+			
+			
+			<expandMacro name="GenerateMethod"
+				FunctionLocationId="SHOW_PREVIEW_POPUP_POINT_METHOD"
+				FunctionName="Show${instanceName$title}L"
+				FunctionArgs="const TPoint&amp; aPoint, const TDesC* aOverrideHeadingText"
+				DeclPhase="ClassMethods"
+				DefnLocation="MAIN_FILE"
+				ClassName="${parentClassName}">
+				<expandArgument name="FunctionComment">
+/**
+ * Show the preview pop-up for ${instanceName}.
+ * Sets the position of preview popup left and down from the given point. 
+ * If there is not enough space, the pop-up is opened up and left.
+ * If fixed mode is used then the value of the point has no effect.
+ * @param aPoint Popup's position.
+ * @param aOverrideText optional override header text
+ */
+				</expandArgument>
+			</expandMacro>
+			
+			<template location="SHOW_PREVIEW_POPUP_POINT_METHOD">
+if ( aOverrideHeadingText != NULL )
+	{
+	${controllerInstance()}->SetHeadingTextL( *aOverrideHeadingText );
+	}
+${controllerInstance()}->SetPosition( aPoint );
+${controllerInstance()}->ShowPopUp();
+			</template>
+			
+		<templateGroup id="GeneratePreviewPopupObserverEvents" ifEvents="previewPopUpShown previewPopUpHidden">
+			<template phase="EventIncludes"><![CDATA[
+#include <aknpreviewpopupobserver.h>
+		]]> </template>			
+				
+			<template phase="BaseClassList">, MAknPreviewPopUpObserver</template>
+			
+			<expandMacro name="GenerateMethodWithOwnedBody"
+				IsOwned="false"
+				FunctionLocationId="HANDLEPREVIEWPOPUPEVENTL_METHOD"
+				FunctionArgs="CAknPreviewPopUpController* aController, TPreviewPopUpEvent aEvent"
+				FunctionName="HandlePreviewPopUpEventL"
+				DeclPhase="ClassPublic"
+				DefnLocation="MAIN_FILE"
+				ClassName="${parentClassName}">
+				<expandArgument name="FunctionComment">
+/** 
+ * Handle preview pop-up events
+ */
+				</expandArgument>
+			</expandMacro>
+			
+			<template id="DispatchPreviewPopUpShown" location="HANDLEPREVIEWPOPUPEVENTL_METHOD_BODY"><![CDATA[<%
+	var event = instance.events["previewPopUpShown"];
+	if (event) { %>
+if ( aEvent == MAknPreviewPopUpObserver::EPreviewPopUpShown &&
+		aController == ${controllerInstance()} )
+	{
+	${event.handlerName}( aController, aEvent );
+	return;
+	}
+	<%}%>
+	]]> </template>
+
+			<template id="DispatchPreviewPopUpHidden" location="HANDLEPREVIEWPOPUPEVENTL_METHOD_BODY"><![CDATA[<%
+	var event = instance.events["previewPopUpHidden"];
+	if (event) { %>
+if ( aEvent == MAknPreviewPopUpObserver::EPreviewPopUpHidden &&
+		aController == ${controllerInstance()} )
+	{
+	${event.handlerName}( aController, aEvent );
+	return;
+	}
+	<%}%>
+	]]> </template>
+			
+			<template phase="Initialize"><![CDATA[
+${controllerInstance()}->AddObserverL( *this );			
+		]]> </template>
+
+		</templateGroup>
+
+		<templateGroup id="GeneratePreviewPopupShownHandler" ifEvents="previewPopUpShown">
+			<expandMacro name="GenerateUserEventHandlerFunction"
+				FunctionLocationId="PREVIEWPOPUPSHOWN_EVENTHANDLER"
+				FunctionArgs="CAknPreviewPopUpController* aController, TPreviewPopUpEvent aEvent"
+				DeclPhase="UserHandlers"
+				DefnLocation="MAIN_FILE"
+				ClassName="${parentClassName}">
+			</expandMacro>
+		</templateGroup>
+
+		<templateGroup id="GeneratePreviewPopupHiddenHandler" ifEvents="previewPopUpHidden">
+			<expandMacro name="GenerateUserEventHandlerFunction"
+				FunctionLocationId="PREVIEWPOPUPHIDDEN_EVENTHANDLER"
+				FunctionArgs="CAknPreviewPopUpController* aController, TPreviewPopUpEvent aEvent"
+				DeclPhase="UserHandlers"
+				DefnLocation="MAIN_FILE"
+				ClassName="${parentClassName}">
+			</expandMacro>
+		</templateGroup>
+
+<!-- BEGIN EVENT handleLongTapEvent -->
+	<templateGroup id="HandleLongTapEvent" ifEvents="handleLongTapEvent">
+			
+		<template id="EventIncludes" location="CONTENT_HEADER_EVENT_HANDLER_INCLUDES"><![CDATA[
+#include <AknLongTapDetector.h>
+]]>		</template>
+		
+		<template id="EventInterface" location="CONTENT_CLASS_BASES">, MAknLongTapDetectorCallBack</template>			
+			
+		<template id="CallDetectorWithPointerEvent" location="HANDLEPOINTEREVENTL_METHOD_BODY"><![CDATA[
+iLongTapDetector->PointerEventL( aPointerEvent );
+	]]> </template>
+		
+		<expandMacro name="GenerateVirtualMethodOverrideForEventHandler"
+			IsOwned="false"
+			FunctionLocationId="HANDLELONGTAPEVENTL_METHOD"
+			FunctionArgs="const TPoint&amp; aPenEventLocation, const TPoint&amp; aPenEventScreenLocation"
+			FunctionName="HandleLongTapEventL"
+			DeclLocation="CONTENT_CLASS_PROTECTED_OVERRIDDEN_METHODS"
+			DefnLocation="CONTENT_MAIN_FILE">
+			<expandArgument name="FunctionComment">
+/** 
+ * Implement the HandleLongTapEventL method of MAknLongTapDetectorCallBack 
+ */
+			</expandArgument>
+		</expandMacro>
+		
+		<expandMacro name="GenerateUserEventHandlerFunction"
+			FunctionLocationId="HANDLELONGTAP_EVENTHANDLER"
+			FunctionArgs="const TPoint&amp; aPenEventLocation, const TPoint&amp; aPenEventScreenLocation"
+			DeclLocation="CONTENT_CLASS_PROTECTED_USER_HANDLERS"
+			DefnLocation="CONTENT_MAIN_FILE">
+		</expandMacro>
+		
+		<template id="DeclareDetectorMember" location="CONTENT_CLASS_PRIVATE_OWNED_INSTANCE_VARIABLES">
+CAknLongTapDetector* iLongTapDetector;			
+		</template>
+
+		<template id="MainSystemIncludes" location="CONTENT_MAIN_OWNED_SYSTEM_INCLUDES"><![CDATA[
+#include <AknLongTapDetector.h>
+]]>		</template>
+
+		<template id="ClearDetectorMember" location="CONSTRUCTOR_BODY">
+iLongTapDetector = NULL;		
+		</template>
+
+		<template id="DestroyDetectorMember" location="DESTRUCTOR_BODY">
+delete iLongTapDetector;		
+iLongTapDetector = NULL;		
+		</template>
+
+		<template id="ConstructDetectorMember" location="CONSTRUCTL_METHOD_BODY">
+iLongTapDetector = CAknLongTapDetector::NewL( this );			
+		</template>
+
+	</templateGroup>
+<!-- END EVENT handleLongTapEvent -->		
+		</sourceGen>
+		
+	</component>
+</componentDefinition>

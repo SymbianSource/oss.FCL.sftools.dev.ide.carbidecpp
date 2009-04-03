@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet title="Getting Started with UI Designer">
+
+	<!-- 
+		Each cheatsheet should begin with an overall statement as to what the user will accomplish
+		if they complete all the steps included in the file.
+	-->
+	
+	<intro>
+		<description>
+		Follow these steps to learn the basics of using the UI Designer feature.
+		</description> 
+	</intro> 
+	
+	<!-- 
+		For each step in the process, add an item and description. At a minimum it should include
+		an href to the exact task for the step. This places a "?" icon link next to the title that 
+		the user can click to get more detail about completing the step.
+		
+		Each item can also include a link to perform an action via javascript to open dialogs, etc., 
+		however, that requires some work to understand how that is implemented. More to come.
+	-->
+	
+	<item title="Creating a new project for UI Designer" href="/com.nokia.sdt.uidesigner.help/html/tasks/task_proj_new-00.htm" skip="true" >
+		<description>
+		Use the New Project wizard to create a GUI project using UI Designer. Follow the wizard's online instructions to create the GUI project. 
+		</description>
+	</item>
+
+	<item title="step infinity" href="/com.nokia.sdt.uidesigner.help/html/tasks/task_proj_new-00.htm" >
+		<description>
+		description here... 
+		</description>
+	</item>
+
+</cheatsheet>

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Auto-Targeting of Executables</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Auto-Targeting of Executables</h2>
+<p>In run-mode  debugger now supports the auto-targeting of processes that are already running or are created during the execution of the debug session. Previously, the debugger forced users to explicitly attach to a running process. Now, the debugger attempts to target all the EXEs specified in the <a href="../reference/launch_configs/page_executables.htm">Executables</a> tab of the launch configuration. </p>
+<ul>
+  <li>If the executables are already started, it gets the load address of the executable and targets it for debugging, resolving any breakpoints it finds.</li>
+  <li>The debugger will target any executable not already started whenever a &quot;process load&quot; event occurs, resolving its breakpoints as well.</li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

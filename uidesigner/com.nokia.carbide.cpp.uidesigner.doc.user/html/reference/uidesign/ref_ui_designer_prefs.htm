@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>UI Designer Preferences</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>UI Designer Preferences</h2>
+<p>Use the UI Designer page of the Preferences to specify whether automatic saves and navigation to event handler source occurs always, never, or only when prompted and to determine the action taken when you double-click on design objects.</p>
+<p align="center"><img src="../../images/ui_designer_preferences.png" alt="ui designer prefs" width="696" height="583" /></p>
+<p class="figure">Figure 1 - UI Designer Preferences</p>
+<h5>Table 1. <span class="figure">UI Designer Preferences</span>&mdash;items </h5>
+<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="31%" scope="col">Item</th>
+    <th width="69%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Automatically save and navigate to event handler source </b></td>
+    <td><p>Controls when UI Designer saves changes  when assigning an event handler to an object in the Events view or using the object's context menu. UI Designer needs to save the design in order to generate the source code to handle the event, this option controls when that save action occurs. The options include: </p>
+      <ul>
+        <li><b>Prompt</b> &#8212; Ask to save the design before navigating to the event handler source  (default). </li>
+        <li><b>Always</b> &#8212; Always save the design before navigating to the event handler source.</li>
+        <li><b>Never</b> &#8212; Do not save the design nor navigate to the event. You must manually save the design to generate the source for the event.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Double-clicking on design objects will </b></td>
+    <td><p>Specify the action UI Designer takes when you double-click an editable object in the design. </p>
+      <ul>
+        <li><b>edit a label (if one exists)</b> &#8212; displays an editable text box  if the object has an editable label (default)</li>
+        <li><b>handle the default event (if it exists)</b> &#8212; takes you to the object's default event handler</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td><b>Notify before undoing two-way source synchronization </b></td>
+    <td>Controls the appearance of a notification dialog when attempting to perform an Undo operation on a generated file that is out of synchronization with the UI design. When checkmarked, a dialog appears warning you that the files are not in sync. When unchecked, no warning dialog appears. </td>
+  </tr>
+  <tr>
+    <td><b>Generated source file header template location</b></td>
+    <td><p>Enter the path  and file name to  a file header template file that is used when creating generated files. The default template file, <span class="code">sourceFileHeader.txt</span> includes this information:</p>
+      <blockquote>
+        <p class="listing">/*
+          ========================================================================<br />
+    Name : ${fileName}<br />
+    Author : ${author}<br />
+    Copyright : ${copyright}<br />
+    Description : <br />
+    ========================================================================<br />
+    */</p>
+    </blockquote>      <p>Which can be edited to include additional information, or use the <b>Browse</b> control to select another file to supply the header information. </p></td>
+  </tr>
+</table>
+<h5>Related tasks</h5>
+<ul>
+  <li> <a href="../../tasks/uidesign/task_uid_prefs.htm">Setting UI Designer Preferences</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

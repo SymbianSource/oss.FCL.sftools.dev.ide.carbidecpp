@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SDK Core Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.sdk.core; singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: com.nokia.carbide.cpp.sdk.core.SDKCorePlugin
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.edit,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.core.resources,
+ org.eclipse.cdt.core,
+ org.eclipse.ui,
+ com.nokia.cpp.utils.core,
+ com.nokia.carbide.cpp.epoc.engine,
+ org.eclipse.update.core,
+ com.nokia.carbide.templatewizard,
+ org.eclipse.core.filesystem
+Bundle-ActivationPolicy: lazy
+Export-Package: com.nokia.carbide.cpp.internal.api.sdk,
+ com.nokia.carbide.cpp.internal.sdk.core.model;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.internal.sdk.core.xml;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.sdk.core,
+ com.nokia.carbide.cpp.internal.sdk.core.gen.Devices;x-friends:="com.nokia.carbide.cpp.sdk.core.test,com.nokia.carbide.cpp.sdk.ui",
+ com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.impl;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.util;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore.impl;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore.util;x-friends:="com.nokia.carbide.cpp.sdk.core.test"
+Bundle-ClassPath: sdkCorePlugin.jar

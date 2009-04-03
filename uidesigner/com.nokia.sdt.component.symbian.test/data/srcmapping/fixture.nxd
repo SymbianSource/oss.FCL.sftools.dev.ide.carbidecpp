@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designerData>
+	  <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
+	
+ <component id="com.nokia.examples.basic">
+ 	<property id="name">unknown</property>
+    
+	  <component id="com.nokia.examples.srcmapBasic">
+			<property id="name">test0</property>
+	      <property id="textdata">check this textual data</property>
+	  </component>  
+	  
+	  <component id="com.nokia.examples.srcmapBasic">
+			<property id="name">Test0</property>
+	      <property id="textdata">check this textual data</property>
+	  </component>  
+	  <component id="com.nokia.examples.srcmapBasic">
+			<property id="name">MyComponentInstance</property>
+	      <property id="textdata">check this textual data</property>
+	  </component>  
+	  <component id="com.nokia.examples.srcmapBasic">
+			<property id="name">What.the.Hell?</property>
+	      <property id="textdata">check this textual data</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapDerived">
+			<property id="name">test0_d</property>
+	      <property id="textdata">check this textual data</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapBasic">
+			<property id="name">test0_macro</property>
+	      <property id="textdata" type="macro">MACRO_1</property>
+	  </component>  
+
+	  
+	  <component id="com.nokia.examples.srcmapBasicHolder">
+	  	<property id="name">test0_i18n_holder</property>
+		  <component id="com.nokia.examples.srcmapBasic">
+				<property id="name">test0_i18n</property>
+		      <property id="textdata" type="i18n">STR_1</property>
+		  </component>  
+		</component>
+		
+	  <component id="com.nokia.examples.srcmapIdentifier">
+			<property id="name">test_id_0</property>
+	      <property id="bmpmask">EMbmImagePicture</property>
+	  </component>  
+  
+	  <component id="com.nokia.examples.srcmapIdentifier">
+			<property id="name">test_id_1</property>
+	  </component>  
+
+     <component id="com.nokia.examples.srcmapSimple">
+			<property id="name">test1</property>
+	      <property id="bytedata">12</property>
+	      <property id="worddata">23</property>
+	      <property id="longdata">34</property>
+	      <property id="textdata">45</property>
+	      <property id="doubledata">56</property>
+	      <property id="ltextdata">67</property>
+	      <property id="bufdata">78</property>
+	      <property id="buf8data">89</property>
+	  </component>  
+
+     <component id="com.nokia.examples.srcmapSimple">
+			<property id="name">test1_n</property>
+	  </component>  
+
+     <component id="com.nokia.examples.srcmapSimple_defaults">
+			<property id="name">test1_d</property>
+	      <property id="bytedata">1</property>
+	      <property id="worddata">1</property>
+	      <property id="longdata">1</property>
+	      <property id="textdata">1</property>
+	      <property id="doubledata">1</property>
+	      <property id="ltextdata">1</property>
+	      <property id="bufdata">1</property>
+	      <property id="buf8data">1</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapSimple">
+			<property id="name">test1_esc</property>
+			<!-- note: in XML these strings are raw -->
+	      <property id="bufdata">dir\file</property>
+	      <property id="buf8data">escaped	tab</property>
+	  </component>  
+  
+
+     <component id="com.nokia.examples.srcmapRect">
+		<property id="name">testRect</property>
+  		<compoundProperty id="point">
+  			<property id="x">15</property>
+  			<property id="y">10</property>
+	  		<compoundProperty id="bounds">
+	  			<property id="width">45</property>
+	  			<property id="height">50</property>
+  			</compoundProperty>
+  		</compoundProperty>
+      </component>
+	  		
+	  <component id="com.nokia.examples.srcmapChoices">
+		<property id="name">testChoice_Text</property>
+		<property id="emitCount">false</property>
+		<property id="text">intertext</property>
+		<property id="count">666</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoices">
+		<property id="name">testChoice_Count</property>
+		<property id="emitCount">true</property>
+		<property id="text">incorrect</property>
+		<property id="count">7</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoices">
+		<property id="name">testChoice_TextDefault</property>
+		<property id="text">default</property>
+		<property id="count">666</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoicesCBA">
+		<property id="name">testChoice_CBABuiltin</property>
+		<compoundProperty id="CBA">
+			<property id="type">r_avkon_softkeys_options_back</property>
+			<property id="leftId">EAknSoftkeyOptions</property>
+			<property id="leftText">Options</property>
+		</compoundProperty>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoicesCBA">
+		<property id="name">testChoice_CBACustom</property>
+		<compoundProperty id="CBA">
+			<property id="type">CUSTOM</property>
+			<property id="leftId">EAknSoftkeyPanic</property>
+			<property id="leftText">Panic</property>
+		</compoundProperty>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoicesABC">
+		<property id="name">testChoice_A</property>
+		<property id="type">A</property>
+		<property id="A">23</property>
+		<property id="B">42</property>
+		<property id="C">68</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoicesABC">
+		<property id="name">testChoice_B</property>
+		<property id="type">B</property>
+		<property id="A">23</property>
+		<property id="B">42</property>
+		<property id="C">68</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoicesABC">
+		<property id="name">testChoice_C</property>
+		<property id="type">C</property>
+		<property id="A">23</property>
+		<property id="B">42</property>
+		<property id="C">68</property>
+	  </component>  
+	  
+	  <component id="com.nokia.examples.srcmapChoicesABC">
+		<property id="name">testChoice_D</property>
+		<property id="type">D</property>
+		<property id="A">23</property>
+		<property id="B">42</property>
+		<property id="C">68</property>
+	  </component>  
+	  
+	  <component id="com.nokia.examples.srcmapEnums">
+		  	<property id="name">test2</property>
+		  	<property id="fgColor">CAknColorGreen</property>
+		  	<property id="bgColor">CAknColorBlue</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnumsOtherHeader">
+		  	<property id="name">test2_oh</property>
+		  	<property id="fgColor">CAknColorGreen</property>
+		  	<property id="bgColor">CAknColorBlue</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnums">
+		  	<property id="name">test2_n</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnums_defaults">
+		  	<property id="name">test2_d</property>
+		  	<property id="fgColor">CAknColorGreen</property>
+		  	<property id="bgColor">CAknColorCyan</property>
+	  </component>
+	  <component id="com.nokia.examples.srcmapEnums_nodefaults">
+		  	<property id="name">test2_nd</property>
+		  	<property id="fgColor">CAknColorGreen</property>
+		  	<property id="bgColor">CAknColorCyan</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnums_defaults2">
+		  	<property id="name">test2_dn2</property>
+		  	<property id="fgColor">CAknColorNone</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnums_explicit">
+		  	<property id="name">test2_explicit</property>
+		  	<property id="fgColor">green</property>
+	  </component>
+
+
+	  <component id="com.nokia.examples.srcmapEnums_explicit">
+		  	<property id="name">test2_unmapped</property>
+		  	<property id="fgColor">unmapped</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnums">
+		  	<property id="name">test2_broken</property>
+		  	<property id="fgColor">unknown</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnumUnique">
+		  	<property id="name">testEnumUniqueBasic0</property>
+		  	<property id="theCmd">CommandCancel</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnumUnique">
+		  	<property id="name">testEnumUniqueBasic1</property>
+		  	<property id="theCmd">UNIQUE</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnumUnique">
+		  	<property id="name">testEnumUniqueness1</property>
+		  	<property id="theCmd">UNIQUE</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnumUnique">
+		  	<property id="name">testEnumUniqueness2</property>
+		  	<property id="theCmd">UNIQUE</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapEnums_dlgLineID">
+		  	<property id="name">testEnumDialogLineId</property>
+	  </component>
+	  <component id="com.nokia.examples.srcmapEnums_dlgCtrl">
+		  	<property id="name">testEnumDialogControl</property>
+	  </component>
+	  <component id="com.nokia.examples.srcmapEnums_dlgCtrl">
+		  	<property id="name">testEnumDialogControl2</property>
+	  </component>
+
+ 	  <component id="com.nokia.examples.srcmapEnums_referencer">
+		  	<property id="name">testEnumDialogReferencer1</property>
+			   <property id="control">testEnumDialogControl</property>
+	  </component>
+ 	  <component id="com.nokia.examples.srcmapEnums_referencer">
+		  	<property id="name">testEnumDialogReferencer2</property>
+			   <property id="control">testEnumDialogControl</property>
+	  </component>
+ 	  <component id="com.nokia.examples.srcmapEnums_referencer">
+		  	<property id="name">testEnumDialogReferencer3</property>
+			   <property id="control">testEnumDialogLineId</property>
+	  </component>
+ 	  <component id="com.nokia.examples.srcmapEnums_referencer">
+		  	<property id="name">testEnumDialogReferencer4</property>
+			   <property id="control">testEnumDialogControl2</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapExtendedWithEnums">
+		  	<property id="name">testExtendedWithEnums</property>
+		  	<property id="fgColor">CAknColorGreen</property>
+		  	<property id="bgColor">123</property>
+	  </component>
+ 
+	  <component id="com.nokia.examples.srcmapExtendedWithEnums">
+		  	<property id="name">testExtendedWithEnumsDefaults</property>
+	  </component>
+ 
+	  <component id="com.nokia.examples.srcmapExtendedWithEnums">
+		  	<property id="name">testExtendedWithEnumsUnique</property>
+		  	<property id="fgColor">CAknColorBlue</property>
+		  	<property id="bgColor">CAknColorMagenta</property>
+	  </component>
+ 
+	  <component id="com.nokia.examples.srcmapExtendedWithEnumsInitDefault">
+		  	<property id="name">testExtendedWithEnumsInitDefault</property>
+		  	<property id="fgColor">CAknColorGreen</property>
+		  	<property id="bgColor">CAknColorCyan</property>
+	  </component>
+ 
+	  <component id="com.nokia.examples.srcmapExtendedWithEnumsInitDefault">
+		  	<property id="name">testExtendedWithEnumsDefaultsInitDefault</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapExtendedWithEnumsInitDefault">
+		  	<property id="name">testExtendedWithEnumsInitDefaultUnique</property>
+		  	<property id="fgColor">CAknColorBlue</property>
+		  	<property id="bgColor">CAknColorMagenta</property>
+	  </component>
+	 	
+	  <component id="com.nokia.examples.srcmapResources">
+	  		<property id="name">test3</property>
+	  		<compoundProperty id="compound">
+	  			<property id="theInt">23</property>
+	  			<property id="theBool">true</property>
+	  		</compoundProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapResources">
+	  		<property id="name">test3_n</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapResources_defaults">
+	  		<property id="name">test3_d</property>
+	  		<compoundProperty id="compound">
+	  			<property id="theInt">1</property>
+	  			<property id="theBool">true</property>
+	  		</compoundProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapResourceInLink">
+	  		<property id="name">testResourceInLink</property>
+	  		<compoundProperty id="compound">
+	  			<property id="theInt">23</property>
+	  			<property id="theBool">true</property>
+	  		</compoundProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapResources2">
+	  		<property id="name">testResources2</property>
+  			<property id="theUnused">-1</property>
+  			<property id="theInt">23</property>
+  			<property id="theBool">true</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapResourceUnnamed">
+	  		<property id="name">testResourceUnnamed</property>
+	  </component>
+	  <component id="com.nokia.examples.srcmapResourceBaseName">
+	  		<property id="name">testResourceBaseName</property>
+	  </component>
+
+
+	  <component id="com.nokia.examples.srcmapRefs">
+	  		<property id="name">test4</property>
+	  		<property id="link">test0</property>
+	  		<property id="llink">test0</property>
+	  </component>
+	  
+	  <component id="com.nokia.examples.srcmapRefs">
+	  		<property id="name">testRefs_ParentChildOrdering</property>
+	  		<property id="link">testRefs_Child</property>
+			  <component id="com.nokia.examples.srcmapBasic">
+					<property id="name">testRefs_Child</property>
+					<property id="textdata">check this textual data</property>
+			  </component>  
+	  </component>	  
+
+	  <component id="com.nokia.examples.srcmapRefsChild">
+	  		<property id="name">testRefs_MultiExport</property>
+			  <component id="com.nokia.examples.srcmapBasic">
+				  <property id="name">testRefs_MultiExportChild</property>
+			      <property id="textdata">check this textual data</property>
+			  </component>  
+	  </component>	  
+
+	  <component id="com.nokia.examples.srcmapRefs">
+	  		<property id="name">testRefs_MultiExportReferrer</property>
+	  		<property id="link">testRefs_MultiExportChild</property>
+	  </component>	  
+
+
+	  <component id="com.nokia.examples.srcmapArrays">
+	  		<property id="name">test5</property>
+		      <sequenceProperty id="intArray">
+		        <element>2</element>
+		        <element>3</element>
+		        <element>5</element>
+		      </sequenceProperty>
+		      <sequenceProperty id="structArray">
+		        <compoundElement>
+		        	<property id="theInt">23</property>
+		        	<property id="theBool">true</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="theInt">42</property>
+		        	<property id="theBool">true</property>
+		        </compoundElement>
+		      </sequenceProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArrays">
+	  		<property id="name">test5_n</property>
+		      <sequenceProperty id="intArray">
+		      </sequenceProperty>
+		      <sequenceProperty id="structArray">
+		      </sequenceProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArrays">
+	  		<property id="name">test5_de</property>
+		      <sequenceProperty id="intArray">
+		        <element>2</element>
+		        <element>0</element>
+		        <element>5</element>
+		      </sequenceProperty>
+		      <sequenceProperty id="structArray">
+		        <compoundElement>
+		        	<property id="theInt">23</property>
+		        	<property id="theBool">false</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="theInt">0</property>
+		        	<property id="theBool">false</property>
+		        </compoundElement>
+		      </sequenceProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArraysMapIntoProperty">
+	  		<property id="name">testArrayMapIntoProperty</property>
+		      <sequenceProperty id="intAndFlagArray">
+		        <compoundElement>
+		        	<property id="value">23</property>
+		        	<property id="flag">Third</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="value">0</property>
+		        	<property id="flag">First</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="value">42</property>
+		        	<property id="flag">Second</property>
+		        </compoundElement>
+		      </sequenceProperty>
+		      
+		      <sequenceProperty id="palette">
+		        <compoundElement>
+		        	<property id="label">red</property>
+		        	<compoundProperty id="rgb">
+        				<property id="r">255</property>
+        			</compoundProperty>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="label">white</property>
+		        	<compoundProperty id="rgb">
+        				<property id="r">255</property>
+        				<property id="g">255</property>
+        				<property id="b">255</property>
+        			</compoundProperty>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="label">orange</property>
+		        	<compoundProperty id="rgb">
+        				<property id="r">255</property>
+        				<property id="g">255</property>
+        				<property id="b">128</property>
+        			</compoundProperty>
+		        </compoundElement>
+		      </sequenceProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArraysPartial">
+	  		<property id="name">testArrayPartial</property>
+	  		<!--
+		      <sequenceProperty id="intAndFlagArray">
+		        <compoundElement>
+		        	<property id="value">23</property>
+		        	<property id="flag">Third</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="value">0</property>
+		        	<property id="flag">First</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="value">42</property>
+		        	<property id="flag">Second</property>
+		        </compoundElement>
+		      </sequenceProperty>
+		     -->
+		   <component id="com.nokia.examples.srcmapBasic">
+		   	  <property id="name">testArrayPartialC0</property>
+		   	  <property id="textdata">Hi there</property>
+		   </component>
+		   <component id="com.nokia.examples.srcmapIdentifier">
+		   	  <property id="name">testArrayPartialC2</property>
+		   	  <property id="bmpmask">Foo</property>
+		   </component>
+		   <component id="com.nokia.examples.srcmapBasic">
+		   	  <property id="name">testArrayPartialC1</property>
+		   	  <property id="textdata">And again</property>
+		   </component>
+	  </component>
+	  
+	  <component id="com.nokia.examples.srcmapArrays_defaults">
+	  		<property id="name">test5_d</property>
+		      <sequenceProperty id="intArray">
+		        <element>2</element>
+		        <element>3</element>
+		        <element>5</element>
+		      </sequenceProperty>
+		      <sequenceProperty id="structArray">
+		        <compoundElement>
+		        	<property id="theInt">1</property>
+		        	<property id="theBool">true</property>
+		        </compoundElement>
+		        <compoundElement>
+		        	<property id="theInt">1</property>
+		        	<property id="theBool">true</property>
+		        </compoundElement>
+		      </sequenceProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArrays_refs">
+	  		<property id="name">test5_refs</property>
+		      <sequenceProperty id="refArray">
+		      	 <element type="componentRef">test0</element>
+		      	 <element type="componentRef">test4</element>
+		      </sequenceProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArrays_FixedElements">
+	  		<property id="name">testArrayFixed</property>
+        	<property id="int0">23</property>
+        	<property id="int1">42</property>
+	  </component>
+
+	
+	  <component id="com.nokia.examples.srcmapArraySingle">
+	  		<property id="name">testArraySingle</property>
+        	<property id="count">987</property>
+        	<compoundProperty id="compound">
+        		<property id="theInt">25</property>
+        		<property id="theBool">true</property>
+        	</compoundProperty>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapDialog">
+	  		<property id="name">testDialog</property>
+	  		<component id="com.nokia.examples.srcmapDialogCheckbox">
+	  			<property id="name">testDialogCheckbox</property>
+	  			<property id="checked">true</property>
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testDialogLabel</property>
+	  			<property id="text">literal string</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapDialog">
+	  		<property id="name">testDialogEmpty</property>
+	  </component>
+	  
+	  <component id="com.nokia.examples.srcmapDialogLinks">
+	  		<property id="name">testDialogLinks</property>
+	  		<component id="com.nokia.examples.srcmapDialogCheckbox">
+	  			<property id="name">testDialogCheckbox</property>
+	  			<property id="checked">true</property>
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testDialogLabel</property>
+	  			<property id="text">literal string</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapDialogLinks">
+	  		<property id="name">testDialogLinksEmpty</property>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapDialog">
+	  		<property id="name">testDialog</property>
+	  		<component id="com.nokia.examples.srcmapDialogCheckbox">
+	  			<property id="name">testDialogCheckbox</property>
+	  			<property id="checked">true</property>
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testDialogLabel</property>
+	  			<property id="text">literal string</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapDialogSub">
+	  		<property id="name">testDialogSub</property>
+	  		<component id="com.nokia.examples.srcmapDialogCheckbox">
+	  			<property id="name">testDialogCheckboxSub</property>
+	  			<property id="checked">true</property>
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testDialogLabelSub</property>
+	  			<property id="text">literal string</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapForm">
+	  		<property id="name">testForm</property>
+	  		<property id="flags">123</property>
+	  		<property id="formFlags">456</property>
+	  		<component id="com.nokia.examples.srcmapDialogCheckbox">
+	  			<property id="name">testFormCheckbox</property>
+	  			<property id="checked">true</property>
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testFormLabel</property>
+	  			<property id="text">literal string</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapArrayOfStrings">
+	  		<property id="name">testArrayOfStrings</property>
+		      <sequenceProperty id="stringArray">
+		        <element type="i18n">STR_1</element>
+		        <element type="i18n">STR_10</element>
+		      </sequenceProperty>
+	  </component>
+
+	 <component id="com.nokia.examples.srcmapRefs">
+	  		<property id="name">testDialogRef</property>
+	  		<property id="link">testDialogCheckbox</property>
+	  </component>
+	  
+    <component id="com.nokia.sdt.series60.test.CBAstandalone">
+      <property id="name">testCBAstandalone_Builtin</property>
+      <compoundProperty id="CBA">
+		<property id="leftText">Options</property>
+		<property id="leftId">EAknSoftkeyOptions</property>
+		<property id="rightText">Exit</property>
+		<property id="rightId">EAknSoftkeyExit</property>
+      </compoundProperty>
+    </component>
+
+    <component id="com.nokia.sdt.series60.test.CBAstandalone">
+      <property id="name">testCBAstandalone_Custom</property>
+      <compoundProperty id="CBA">
+		<property id="leftText">Options</property>
+		<property id="leftId">EAknSoftkeyOptions</property>
+		<property id="rightText">Snork</property>
+		<property id="rightId">UNIQUE</property>
+      </compoundProperty>
+    </component>
+
+	<!-- -->
+    <component id="com.nokia.sdt.series60.test.CBA">
+      <property id="name">testCBA_Builtin</property>
+      <compoundProperty id="CBA">
+		<property id="leftText">Options</property>
+		<property id="leftId">EAknSoftkeyOptions</property>
+		<property id="rightText">Exit</property>
+		<property id="rightId">EAknSoftkeyExit</property>
+      </compoundProperty>
+    </component>
+
+    <component id="com.nokia.sdt.series60.test.CBAHolder">
+      <property id="name">testCBAHolder_Builtin</property>
+      <property id="theCBA">testCBA_Builtin</property>
+    </component>
+
+	<!-- -->
+	
+    <component id="com.nokia.sdt.series60.test.CBA">
+      <property id="name">testCBA_Custom</property>
+      <compoundProperty id="CBA">
+		<property id="leftText">Options</property>
+		<property id="leftId">EAknSoftkeyOptions</property>
+		<property id="rightText">Snork</property>
+		<property id="rightId">UNIQUE</property>
+      </compoundProperty>
+    </component>
+
+    <component id="com.nokia.sdt.series60.test.CBAHolder">
+      <property id="name">testCBAHolder_Custom</property>
+      <property id="theCBA">testCBA_Custom</property>
+    </component>
+
+	<!-- -->
+    <component id="com.nokia.sdt.series60.test.CBAHolder2">
+      <property id="name">testCBAHolder2_Builtin</property>
+	    <component id="com.nokia.sdt.series60.test.CBA">
+	      <property id="name">testCBA2_Builtin</property>
+	      <compoundProperty id="CBA">
+			<property id="leftText">Options</property>
+			<property id="leftId">EAknSoftkeyOptions</property>
+			<property id="rightText">Exit</property>
+			<property id="rightId">EAknSoftkeyExit</property>
+	      </compoundProperty>
+	    </component>
+    </component>
+	<!-- -->
+
+    <component id="com.nokia.sdt.series60.test.CBAHolder2">
+      <property id="name">testCBAHolder2_Custom</property>
+	    <component id="com.nokia.sdt.series60.test.CBA">
+	      <property id="name">testCBA2_Custom</property>
+	      <compoundProperty id="CBA">
+			<property id="leftText">Options</property>
+			<property id="leftId">EAknSoftkeyOptions</property>
+			<property id="rightText">Snork</property>
+			<property id="rightId">UNIQUE</property>
+	      </compoundProperty>
+	    </component>
+    </component>
+	<!-- -->
+
+	  <component id="com.nokia.examples.srcmapMulti0">
+			<property id="name">test_multi0</property>
+	      <property id="textdata">text</property>
+	      <property id="altdata">alternate</property>
+	  </component>  
+	  <component id="com.nokia.examples.srcmapMulti1">
+			<property id="name">test_multi1</property>
+	      <property id="textdata">text</property>
+	      <property id="altdata">alternate</property>
+	  </component>  
+	  <component id="com.nokia.examples.srcmapMulti2">
+			<property id="name">test_multi2</property>
+	      <property id="textdata">text</property>
+	      <property id="altdata">alternate</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapMultiRef">
+			<property id="name">test_multiRef</property>
+	      <property id="one">test_multi2</property>
+	      <property id="two">test_multi2</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapMultiRef2">
+			<property id="name">test_multiRef2</property>
+	      <property id="one">testDialogCheckbox</property>
+	      <property id="two">testDialogLabel</property>
+	  </component>  
+
+ 	  <component id="com.nokia.examples.srcmapMultiRef3">
+			<property id="name">test_multiRef3</property>
+		   <component id="com.nokia.examples.srcmapMulti2">
+			   <property id="name">test_multiRef3_Child1</property>
+		   </component>
+	  </component>  
+
+	   <component id="com.nokia.examples.srcmapResourceInLLink">
+			<property id="name">test_resourceInLLink</property>
+	  </component>  
+
+	    <component id="com.nokia.examples.srcmapSimple">
+			<property id="name">test_resourceInLLink_sub</property>
+	      <property id="bytedata">12</property>
+	  </component>  
+
+<!-- ===================== -->
+
+	  <component id="com.nokia.examples.srcmapMultiFile0">
+			<property id="name">test_multifile0</property>
+	      <property id="textdata">text</property>
+	      <property id="altdata">alternate</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapMultiFile1">
+			<property id="name">test_multifile1</property>
+	      <property id="textdata">text</property>
+	      <property id="altdata">alternate</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapMultiFile1">
+			<property id="name">test_multifile1b</property>
+	      <property id="textdata" type="i18n">STR_1</property>
+	      <property id="altdata" type="i18n">STR_10</property>
+	  </component>  
+
+<!-- ===================== -->
+
+	  <component id="com.nokia.examples.srcmapStandalone">
+	  		<property id="name">testStandalone</property>
+	  		<component id="com.nokia.examples.srcmapDialogLabelStandalone">
+	  			<property id="name">testStandaloneLabel1</property>
+	  			<property id="text">literal string 1</property>
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabelStandalone">
+	  			<property id="name">testStandaloneLabel2</property>
+	  			<property id="text">literal string 2</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapStandaloneDialog">
+	  		<property id="name">testStandaloneDefault</property>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testStandaloneDefaultLabel1</property>
+	  			<property id="text">literal string 1</property>
+	  			<property id="flag">true</property>
+	  			
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testStandaloneDefaultLabel2</property>
+	  			<property id="text">literal string 2</property>
+	  			<property id="flag">true</property>
+	  		</component>
+	  </component>
+
+	  <component id="com.nokia.examples.srcmapStandaloneDialog">
+	  		<property id="name">testStandaloneNever</property>
+	  		<component id="com.nokia.examples.srcmapDialogLabelStandaloneNever">
+	  			<property id="name">testStandaloneNeverLabel1</property>
+	  			<property id="text">literal string 1</property>
+	  			<property id="flag">true</property>
+	  			
+	  		</component>
+	  		<component id="com.nokia.examples.srcmapDialogLabelStandaloneNever">
+	  			<property id="name">testStandaloneNeverLabel2</property>
+	  			<property id="text">literal string 2</property>
+	  			<property id="flag">true</property>
+	  		</component>
+	  </component>
+	 
+	  <component id="com.nokia.examples.srcmapStandaloneNeverContainer">
+	  		<property id="name">testStandaloneNeverContainer</property>
+	  		<component id="com.nokia.examples.srcmapStandaloneNever">
+	  			<property id="name">testStandaloneNever1</property>
+	  			<property id="text">literal string 1</property>
+	  		</component>
+	  </component>
+	 
+	   <component id="com.nokia.examples.srcmapStandaloneNeverRef">
+	  		<property id="name">testStandaloneNeverRef</property>
+		   <property id="control">testStandaloneNever2</property>
+	  		
+	  </component>
+
+	 <component id="com.nokia.examples.srcmapStandaloneNever">
+	  		<property id="name">testStandaloneNever2</property>
+	  		<property id="text">literal string 2</property>
+	  </component>
+<!-- ===================== -->
+
+	  <component id="com.nokia.test.srcmapBitmasks">
+	  		<property id="name">testBitmasks</property>
+	  		<compoundProperty id="colors">
+	  		</compoundProperty>
+	  		<compoundProperty id="numbers">
+	  		</compoundProperty>
+	  </component>
+	  <component id="com.nokia.test.srcmapBitmasksPartial">
+	  		<property id="name">testBitmasksPartial</property>
+	  		<compoundProperty id="numbersAndColors">
+	  		</compoundProperty>
+	  </component>
+	  <component id="com.nokia.test.srcmapBitmasksPartialTypeMapped">
+	  		<property id="name">testBitmasksPartialTypeMapped</property>
+	  		<compoundProperty id="numbersAndColors">
+	  		</compoundProperty>
+	  </component>
+	  <component id="com.nokia.test.srcmapBitmasksErrors">
+	  		<property id="name">testBitmasksErrors</property>
+	  		<compoundProperty id="numbersAndColors">
+	  		</compoundProperty>
+	  </component>
+	  <component id="com.nokia.test.srcmapBitmasksChildren">
+	  		<property id="name">testBitmasksChildren</property>
+	  </component>
+
+	  <component id="com.nokia.test.srcmapBitmasksDefaults">
+	  		<property id="name">testBitmasksDefaults</property>
+	  		<compoundProperty id="colors">
+	  		</compoundProperty>
+	  		<compoundProperty id="numbers">
+	  		</compoundProperty>
+	  </component>
+
+	<!-- ========================= -->
+	
+	  <component id="com.nokia.examples.srcmapChoicesDialogAttrs">
+	  		<property id="name">testDialogAttrs</property>
+	  		<component id="com.nokia.examples.srcmapDialogCheckbox">
+	  			<property id="name">testDialogCheckboxSub</property>
+	  			<property id="checked">true</property>
+	  		</component>
+		  <component id="com.nokia.examples.srcmapBasic">
+				<property id="name">testDialogNonLineChild</property>
+		      <property id="textdata">do not inline me</property>
+		  </component>  
+	  		<component id="com.nokia.examples.srcmapDialogLabel">
+	  			<property id="name">testDialogLabelSub</property>
+	  			<property id="text">literal string</property>
+	  		</component>
+	  </component>
+
+<!-- ==================================== -->
+
+	<!-- note: both lack the actual text value, which is different
+	from checking existence of the property -->
+	  <component id="com.nokia.examples.srcmapChoicesPropertyExistsNoText">
+		<property id="name">testChoicePropertyExistsNoText</property>
+		<property id="withTextProperty">false</property>
+		<property id="count">123</property>
+	  </component>  
+
+	  <component id="com.nokia.examples.srcmapChoicesPropertyExistsWithText">
+		<property id="name">testChoicePropertyExistsWithTextUnset</property>
+		<property id="withTextProperty">true</property>
+		<property id="count">456</property>
+	  </component>  
+	  
+	  <component id="com.nokia.examples.srcmapChoicesPropertyExistsWithText">
+		<property id="name">testChoicePropertyExistsWithTextSet</property>
+		<property id="withTextProperty">true</property>
+		<property id="count">789</property>
+		<property id="text">setting</property>
+	  </component>  
+	  
+<!-- ==================================== -->
+	  
+	  <component id="com.nokia.examples.srcmapChoicesIsComponentInstanceOf">
+		  <property id="name">testChoiceIsComponentInstanceOf</property>
+		  <component id="com.nokia.examples.baseComponent">
+			  <property id="name">testChoiceIsComponentInstanceOfChild0</property>
+		  </component>
+		  <component id="com.nokia.examples.srcmapDerived">
+			  <property id="name">testChoiceIsComponentInstanceOfChild1</property>
+		  </component>
+		  <component id="com.nokia.examples.srcmapSimple">
+			  <property id="name">testChoiceIsComponentInstanceOfChild2</property>
+		  </component>
+	  </component>
+
+	   <component id="com.nokia.examples.srcmapTestUpdatingChangedResourcesBug1064">
+		  <property id="name">testUpdatingChangedResourceBug1064</property>
+		  <property id="use_defaults">true</property>
+		  <property id="byte">11</property>
+		  <property id="long">5</property>
+	  </component>
+
+	   <component id="com.nokia.examples.srcmapTestMapArrayEndContainer">
+		  <property id="name">testMapArrayEndContainer1</property>
+		  <property id="type">EElement1__</property>
+		   <component id="com.nokia.examples.srcmapTestMapArrayEnd">
+			  <property id="name">testMapArrayEnd1</property>
+			  <property id="element1">first</property>
+			</component>
+	  </component>
+	   <component id="com.nokia.examples.srcmapTestMapArrayEndContainer">
+		  <property id="name">testMapArrayEndContainer2</property>
+		  <property id="type">EElement1_1</property>
+		  <component id="com.nokia.examples.srcmapTestMapArrayEnd">
+			  <property id="name">testMapArrayEnd2</property>
+			  <property id="element1">first</property>
+			  <property id="element3">third</property>
+		  </component>
+	  </component>
+	   <component id="com.nokia.examples.srcmapTestMapArrayEndContainer">
+		  <property id="name">testMapArrayEndContainer3</property>
+		  <property id="type">EElement11_</property>
+		   <component id="com.nokia.examples.srcmapTestMapArrayEnd">
+			  <property id="name">testMapArrayEnd3</property>
+			  <property id="element1">first</property>
+			  <property id="element2">second</property>
+		  </component>
+	  </component>
+	   <component id="com.nokia.examples.srcmapTestMapArrayEndContainer">
+		  <property id="name">testMapArrayEndContainer4</property>
+		  <property id="type">EElement_11</property>
+		   <component id="com.nokia.examples.srcmapTestMapArrayEnd">
+			  <property id="name">testMapArrayEnd4</property>
+			  <property id="element2">second</property>
+			  <property id="element3">third</property>
+		  </component>
+	  </component>
+	   <component id="com.nokia.examples.srcmapTestMapArrayEndContainer">
+		  <property id="name">testMapArrayEndContainer5</property>
+		  <property id="type">EElement111</property>
+		   <component id="com.nokia.examples.srcmapTestMapArrayEnd">
+			  <property id="name">testMapArrayEnd5</property>
+			  <property id="element1">first</property>
+			  <property id="element2">second</property>
+			  <property id="element3">third</property>
+		  </component>
+	  </component>
+
+	 <component id="com.nokia.examples.basic">
+		 <property id="name">layoutContainer0</property>
+	 </component>
+	 
+	 <component id="com.nokia.examples.basic">
+		 <property id="name">layoutContainer1</property>
+		 <component id="com.nokia.examples.srcmapEnums_listboxLayout">
+			  <property id="name">testLayout1</property>
+		 </component>
+	</component>	 
+	 <component id="com.nokia.examples.basic">
+			<!-- we put children out of order to verify ordering of enums -->
+		 <property id="name">layoutContainer2</property>
+		 <component id="com.nokia.examples.srcmapEnums_listboxLayout">
+			  <property id="name">testLayout2b</property>
+		 </component>
+		 <component id="com.nokia.examples.srcmapEnums_listboxLayout">
+			  <property id="name">testLayout2a</property>
+		 </component>
+	</component>	 
+	 <component id="com.nokia.examples.basic">
+			<!-- we add non-layout children to verify correct numbering of layouts -->
+		 <property id="name">layoutContainer3</property>
+		 <component id="com.nokia.examples.basic">
+			 <property id="name">layoutContainer3_0</property>
+		 </component>
+		 <component id="com.nokia.examples.srcmapEnums_listboxLayout">
+			  <property id="name">testLayout3b</property>
+		 </component>
+		 <component id="com.nokia.examples.basic">
+			 <property id="name">layoutContainer3_1</property>
+		 </component>
+		 <component id="com.nokia.examples.srcmapEnums_listboxLayout">
+			  <property id="name">testLayout3a</property>
+		 </component>
+	</component>	 
+ </component>
+
+  <stringBundle>
+    <stringTable language="LANG_Russian">
+      <string id="STR_10">вторник</string>
+      <string id="STR_1">Здравствулте, dude</string>
+      <string id="STR_5"></string>
+    </stringTable>
+    <stringTable language="LANG_American">
+      <string id="STR_10">fourteen</string>
+      <string id="STR_1">Hello</string>
+      <string id="STR_5">TODO</string>
+    </stringTable>
+  </stringBundle>
+  
+  <macroTable>
+    <string id="MACRO_1">A macro value</string>
+    <string id="MACRO_2">Not another "macro"</string>
+  </macroTable>
+     
+</designerData>

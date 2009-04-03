@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugging a Symbian OS Program on the S60 Emulator</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Debugging a Symbian OS Program</h2>
+<p>Use the Carbide.c++ debugger to debug a compiled Symbian OS program in an emulator or on-device. The same process works for other emulators and target devices as well.</p>
+<p class="note"><b>NOTE</b> This example uses an emulator. The steps are identical for on-device debugging, although a .sym file is not needed for emulator builds.</p>
+<div class="step">
+  <h4>Debugging a Symbian OS program</h4>
+<p class="note"><b>NOTE</b> You can only debug compiled programs. Use the <a href="../projects/prj_build.htm">Build Project</a> command to compile project sources into a binary file if you do not already have an executable in the project. You will also need a symbolics ( .sym) file for debugging on a target device. Ensure that a .sym file has been created. If you are importing an existing application, you may have to rebuild the application and create a related .sym file. Make sure a .sym file has been created in the output directory.</p>
+  <ol>
+    <li>Set a breakpoint in the HelloCarbide program</li>
+    <p>Open the \src\<span class="code">CHelloCarbideAppUI.cpp</span> file and <a href="../breakpoints/pgm_bp_setting.htm">set a breakpoint</a> in the <span class="code">HandleCommandL</span> routine.</p>
+    <p align="center"><img src="images/debug_set_breakpoint.png" width="602" height="238" /></p>
+  <p class="figure">Figure 1 - Breakpoint set in <span class="code">CHelloCarbideAppUI</span>::HandleCommandL routine. </p>
+  <li>Launch the Carbide.c++ debugger and S60 EPOC Emulator</li>
+  <p><a href="../debugger/work_debug_act_start.htm">Start</a> the Carbide debugger which launches the S60 EPOC Emulator and installs the HelloCarbide application. For on-device debugging, your application will be installed on your target device.</p>
+  <p align="center"><img src="images/debug_s60_emulator_launch.png" width="293" height="391" /></p>
+  <p class="figure"><span class="figure">Figure 2 - S60 Emulator launches</span></p>
+  <li>Open the Installed directory within the S60 Emulator or your target device </li>
+    Use  the S60 Emulator controls to locate and open the Installation directory. Select Open from the Options menu (Figure 3).
+    <p align="center"><img src="images/debug_s60_emulator_02.png" width="352" height="168" /></p>
+    <p class="figure">Figure 3 - Open the Installed directory </p>
+    <li>Launch the HelloCarbide application</li>
+    <p>Use the S60 Emulator or target device controls to launch the HelloCarbide application (Figure 4).
+  </p>
+    <p align="center"><img src="images/debug_s60_emulator_03.png" width="122" height="106" /></p>
+  <p class="figure">Figure 4 - Launch the HelloCarbide application </p>
+  <p>The HelloCarbide application launches (Figure 5). </p>
+    <p align="center"><img src="images/debug_s60_emulator_04.png" width="293" height="391" /></p>
+    <p class="figure">Figure 5 - HelloCarbide application running on S60 Emulator </p>
+    <li>Click the Options soft-key on the S60 Emulator to display the Select menu.</li>
+	<li>Choose the Message menu item and press the Select soft-key to send a message  (Figure 6).</li>
+	<p></p><p align="center"><img src="images/debug_s60_emulator_05.png" width="384" height="254" /></p>
+  <p class="figure">Figure 6 - Send Message to HelloCarbide application </p>
+  <p>The <span class="code">HandleCommandL</span> breakpoint  is hit in the program and control returns to the Carbide.c++ debugger (Figure 7). You can now set additional breakpoints, examine variables, or use the<a href="../../reference/view_debug.htm"> Debug view</a> buttons to control the program. </p>
+  <p align="center"><img src="images/debug_s60_emulator_06.png" width="602" height="238" /></p>
+  <p class="figure">Figure 7 - Back in the CHelloCarbideAppUI::HandleCommandL routine</p>
+  </ol>
+  <p>That's it for this basic introduction to debugging with Carbide.c++.</p>
+</div>
+<h5>Concepts</h5>
+  <ul>
+    <li><a href="../../concepts/Projects.html">Projects</a></li>
+</ul>
+  <h5>Tasks</h5>
+  <ul>
+    <li><a href="../CreatingNewProjects.html">Creating Projects</a></li>
+    <li><a href="../projects/prj_build.htm">Building Projects</a></li>
+    <li><a href="../projects/prj_debug_config.htm">Creating a Launch Configuration</a></li>
+  </ul>
+  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

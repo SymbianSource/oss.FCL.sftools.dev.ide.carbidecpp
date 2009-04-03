@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>ANSI Predefined Symbols</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>ANSI Predefined Symbols</h3>
+<p>  Table 1 lists the symbols required by the ANSI/ISO C standard.</p>
+<h5>Table 1. ANSI Predefined Symbols</h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="24%" scope="col">This symbol&hellip;</th>
+    <th width="76%" scope="col">is&hellip;</th>
+  </tr>
+  <tr>
+    <td class="code">__DATE__</td>
+    <td>The date the file is compiled; for example, &quot;Jul 14, 1995&quot;. This symbol is a predefined macro.</td>
+  </tr>
+  <tr>
+    <td class="code">__FILE__</td>
+    <td>The name of the file being compiled; for example &quot;prog.c&quot;. This symbol is a predefined macro.</td>
+  </tr>
+  <tr>
+    <td class="code">__func__</td>
+    <td>The name of the function currently being compiled. This predefined identifier is only available under the emerging ANSI/ISO C99 standard.</td>
+  </tr>
+  <tr>
+    <td class="code">__LINE__</td>
+    <td>The number of the line being compiled (before including any header files). This symbol is a predefined macro.</td>
+  </tr>
+  <tr>
+    <td class="code">__TIME__</td>
+    <td>The time the file is compiled in 24-hour format; for example, &quot;13:01:45&quot;. This symbol is a predefined macro.</td>
+  </tr>
+  <tr>
+    <td class="code">__STDC__</td>
+    <td>Defined as 1 if compiling C source code; undefined when compiling C++ source code. This macro lets you know that Carbide C implements the ANSI C standard.</td>
+  </tr>
+</table>
+<div class="listing">
+  <h5>Listing 1 shows a small program that uses the ANSI predefined symbols.</h5>
+  <p> Listing 1. Using ANSI Predefined Symbols<br />
+    #include &lt;stdio.h&gt;</p>
+  <p>void main(void)<br />
+    {<br />
+    printf(&quot;Hello World!\n&quot;);<br />
+    <br />
+    printf(&quot;%s, %s\n&quot;, __DATE__, __TIME__);<br />
+    printf(&quot;%s, line: %d\n&quot;, __FILE__, __LINE__);<br />
+    }</p>
+  <p>/* The program prints something like the following:<br />
+    Hello World!<br />
+    Oct 31 2005, 18:53:50<br />
+    main.ANSI.c, line: 10<br />
+    */<br />
+    </p>
+</div>
+<p></p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

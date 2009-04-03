@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Getting Started" link_to="toc.xml#uid_gettingstarted"> 
+
+	<topic label="Overview" 				href="html/gettingstarted/start_overview.htm" /> 
+	<topic label="Basic Walk-through" 		href="html/gettingstarted/start_tut_walkthrough.htm" />
+	<topic label="Developer References" 	href="html/gettingstarted/start_dev_refs.htm" /> 
+
+</toc>

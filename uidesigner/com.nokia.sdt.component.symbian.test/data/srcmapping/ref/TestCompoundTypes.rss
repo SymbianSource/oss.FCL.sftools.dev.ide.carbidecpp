@@ -1,0 +1,10 @@
+#include <structheader.rh>
+
+RESOURCE COMPOUND_TYPES r_test3
+	{
+	embed = SUBTYPE
+		{
+		flag = 1;
+		number = 23;
+		};
+	}

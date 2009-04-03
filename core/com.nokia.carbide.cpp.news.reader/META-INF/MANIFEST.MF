@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Carbide News Reader Plug-in
+Bundle-SymbolicName: com.nokia.carbide.cpp.news.reader;singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: com.nokia.carbide.cpp.internal.news.reader.CarbideNewsReaderPlugin
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.ui,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.workbench.texteditor,
+ com.nokia.cpp.utils.core,
+ com.sun.syndication,
+ com.sun.syndication.fetcher
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: NewsReaderPlugin.jar
+Export-Package: com.nokia.carbide.cpp.internal.news.reader;x-friends:="com.nokia.carbide.cpp.news.reader.tests",
+ com.nokia.carbide.cpp.internal.news.reader.editor;x-friends:="com.nokia.carbide.cpp.news.reader.tests",
+ com.nokia.carbide.cpp.internal.news.reader.feed;x-friends:="com.nokia.carbide.cpp.news.reader.tests",
+ com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache;x-friends:="com.nokia.carbide.cpp.news.reader.tests",
+ com.nokia.carbide.cpp.internal.news.reader.gen.FeedInfo;x-friends:="com.nokia.carbide.cpp.news.reader.tests",
+ com.nokia.carbide.cpp.internal.news.reader.ui;x-friends:="com.nokia.carbide.cpp.news.reader.tests"

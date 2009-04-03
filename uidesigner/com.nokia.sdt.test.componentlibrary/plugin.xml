@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="internal_testing"
+         name="Internal testing components"
+         point="com.nokia.sdt.component.symbian.componentLibrary">
+      <library path="components" sdkPattern="com\.nokia\.series60" />
+   </extension>
+   <extension
+         point="com.nokia.sdt.uidesigner.editorExtender">
+      <extender
+            class="com.nokia.sdt.test.componentLibrary.editorPages.TestEditorPageProvider"
+            editorIdFilter="com.nokia.sdt.uidesigner.viewEditor">
+      </extender>
+   </extension>
+
+</plugin>

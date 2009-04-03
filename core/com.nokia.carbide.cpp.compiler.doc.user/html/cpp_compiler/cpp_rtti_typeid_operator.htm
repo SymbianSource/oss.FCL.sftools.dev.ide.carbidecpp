@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Using the typeid Operator</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Using the typeid Operator</h3>
+<p>  The <span class="code">typeid</span> operator lets you determine the type of an object. Like the <span class="code">sizeof</span> operator, it takes two kinds of arguments:</p>
+<ul>
+  <li>the name of a class</li>
+  <li>an expression that evaluates to an object</li>
+</ul>
+<p class="note"><strong>NOTE</strong> Whenever you use <span class="code">typeid</span> operator, you must <span class="code">#include</span> the <span class="code">typeinfo</span> header file.</p>
+<p>The <span class="code">typeid</span> operator returns a reference to a <span class="code">std::type_info</span> object that you can compare with the <span class="code">==</span> and <span class="code">!=</span> operators. For example, if you have these classes and objects: </p>
+<div class="listing">
+  <p>class Person { /* . . . */ };<br />
+    class Athlete : public Person { /* . . . */ };</p>
+  <p>using namespace std;</p>
+  <p>Person *lois = new Person;<br />
+    Athlete *arnold = new Athlete;<br />
+    Athlete *louganis = new Athlete;</p>
+</div>
+<p>All these expressions are true:</p>
+<p class="listing">#include &lt;typeinfo&gt;<br />
+  // . . .<br />
+  if (typeid(Athlete) == typeid(*arnold))<br />
+  // arnold is an Athlete, result is true<br />
+  if (typeid(*arnold) == typeid(*louganis))<br />
+  // arnold and louganis are both Athletes, result is true<br />
+  if (typeid(*lois) == typeid(*arnold)) // ...<br />
+  // lois and arnold are not the same type, result is false</p>
+<p>You can access the name of a type with the <span class="code">name()</span> member function in the <span class="code">std::type_info</span> class. For example, these statements:</p>
+<p class="listing">#include &lt;typeinfo&gt;<br />
+  // . . .<br />
+  cout &lt;&lt; &quot;Lois is a(n) &quot; <br />
+&lt;&lt; typeid(*lois).name() &lt;&lt; endl;<br />
+cout &lt;&lt; &quot;Arnold is a(n) &quot; <br />
+&lt;&lt; typeid(*arnold).name() &lt;&lt; endl;</p>
+<p>Print this:</p>
+<p class="code">Lois is a(n) Person<br />
+  Arnold is a(n) Athlete<br />
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

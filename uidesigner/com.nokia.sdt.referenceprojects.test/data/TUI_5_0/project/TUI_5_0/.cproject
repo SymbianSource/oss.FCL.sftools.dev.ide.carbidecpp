@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 4.0.0?>
+
+<cproject>
+<storageModule buildFromInf="true" buildingTestComps="true" cleanLevel="0" concurrentBuildJobs="4" defaultMMPChangedAction="0" infBuildComponents="" infFileLocation="group/bld.inf" macrosFile="" manageDependencies="true" moduleId="com.nokia.carbide.cdt.builder.carbideCPPBuilder" overrideWorkspaceSettings="false" promptForMMPChangedAction="true" useConcurrentBuilding="true" useIncrementalBuilder="false" useMMPMacros="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.settings">
+<cconfiguration id="Emulator Debug (WINSCW) [S60_5.0]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_5.0]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_5.0]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MWLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+</storageModule>
+<storageModule filesCache="C:\Symbian\9.4\S60_5_0\epoc32\include\oem\data_caging_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\TUI_5_0.mmp;C:\Symbian\9.4\S60_5_0\epoc32\include\domain\osextensions\platform_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\bld.inf;" includesCache="C:/Symbian/Carbide/workspace/TUI_5_0/inc[LOCAL];C:/Symbian/Carbide/workspace/TUI_5_0/data[LOCAL];C:/Symbian/9.4/S60_5_0/epoc32/include;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;C:/Symbian/9.4/S60_5_0/epoc32/include/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/variant;C:/Symbian/9.4/S60_5_0/epoc32/include/ecom;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;_UNICODE;__SERIES60_5x__;_DEBUG;__WINS__;__CW32__;__SERIES60_50__;" moduleId="configDataCache" sourcesCache="/TUI_5_0/data;/TUI_5_0/inc;/TUI_5_0/src;" timestampCache="1204046333522" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+<cconfiguration id="Emulator Release (WINSCW) [S60_5.0]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Release (WINSCW) [S60_5.0]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Release (WINSCW) [S60_5.0]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MWLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+</storageModule>
+<storageModule filesCache="C:\Symbian\9.4\S60_5_0\epoc32\include\oem\data_caging_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\TUI_5_0.mmp;C:\Symbian\9.4\S60_5_0\epoc32\include\domain\osextensions\platform_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\bld.inf;" includesCache="C:/Symbian/Carbide/workspace/TUI_5_0/inc[LOCAL];C:/Symbian/Carbide/workspace/TUI_5_0/data[LOCAL];C:/Symbian/9.4/S60_5_0/epoc32/include;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;C:/Symbian/9.4/S60_5_0/epoc32/include/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/variant;C:/Symbian/9.4/S60_5_0/epoc32/include/ecom;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;_UNICODE;__SERIES60_5x__;NDEBUG;__WINS__;__CW32__;__SERIES60_50__;" moduleId="configDataCache" sourcesCache="/TUI_5_0/data;/TUI_5_0/inc;/TUI_5_0/src;" timestampCache="1204046333616" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+<cconfiguration id="Phone Debug (ARMV5) [S60_5.0]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Debug (ARMV5) [S60_5.0]" moduleId="org.eclipse.cdt.core.settings" name="Phone Debug (ARMV5) [S60_5.0]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RVCTCompilerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RVCTLinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.Elf2E32ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<SIS_BUILDER_DATA_ID CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" HASSISCHANGES="true" HASSISXCHANGES="true" PKGFILESTORAGE="sis/TUI_5_0.pkg" SIGNINGTYPESTORAGE="1"/>
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+</storageModule>
+<storageModule filesCache="C:\Symbian\9.4\S60_5_0\epoc32\include\oem\data_caging_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\TUI_5_0.mmp;C:\Symbian\9.4\S60_5_0\epoc32\include\domain\osextensions\platform_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\bld.inf;" includesCache="C:/Symbian/Carbide/workspace/TUI_5_0/inc[LOCAL];C:/Symbian/Carbide/workspace/TUI_5_0/data[LOCAL];C:/Symbian/9.4/S60_5_0/epoc32/include;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;C:/Symbian/9.4/S60_5_0/epoc32/include/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/variant;C:/Symbian/9.4/S60_5_0/epoc32/include/ecom;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;" macrosCache="__EXE__;__THROW(t)=throw (t);NONSHARABLE_CLASS(x)=class __declspec(notshared) x;__EPOC32__;EXPORT_C=__declspec(dllexport);NONSHARABLE_STRUCT(x)=struct __declspec(notshared) x;____ONLY_USE_NAKED_IN_CIA____=__asm;__EH_FRAME_PUSH2(reg1,reg2)=FRAME PUSH {reg1, reg2};__EABI__=1;__wchar_t_defined=1;__ARMCC__;__NO_THROW=throw ();va_end(ap)=((void)0);__NAKED__=__asm;VA_END(ap)=va_end(ap);va_arg(ap,type)=__va_arg(ap, type);_UNICODE;VA_ARG(ap,type)=va_arg(ap,type);__EH_FRAME_SAVE1(reg,offset)=FRAME SAVE {reg}, offset;_STDARG_H=1;__EH_FRAME_ADDRESS(reg,offset)=FRAME ADDRESS reg, offset;va_start(ap,parmN)=__va_start(ap, parmN);__NO_CLASS_CONSTS__=1;__NORETURN_TERMINATOR()=1;__SERIES60_50__;__GENERIC_MARM__;__VALUE_IN_REGS__=__value_in_regs;__SOFTFP=__softfp;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__TText_defined=1;IMPORT_C=__declspec(dllimport);__ARMCC_2__;_STDARG_E_H=1;__EABI_CTORS__=1;VA_LIST=va_list;I64LIT(x)=x##LL;__MARM__;__VA_LIST_defined=1;UI64LIT(x)=x##ULL;__int64=long long;VA_START(ap,pn)=va_start(ap, pn);__ARMCC_2_2__;TEMPLATE_SPECIALIZATION=template&lt;&gt;;__SERIES60_5x__;__NORETURN__=__declspec(noreturn);_DEBUG;__MARM_ARMV5__;" moduleId="configDataCache" sourcesCache="/TUI_5_0/data;/TUI_5_0/inc;/TUI_5_0/src;" timestampCache="1204046333741" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+<cconfiguration id="Phone Release (ARMV5) [S60_5.0]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (ARMV5) [S60_5.0]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (ARMV5) [S60_5.0]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RVCTCompilerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RVCTLinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.Elf2E32ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<SIS_BUILDER_DATA_ID CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" HASSISCHANGES="true" HASSISXCHANGES="true" PKGFILESTORAGE="sis/TUI_5_0.pkg" SIGNINGTYPESTORAGE="1"/>
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+</storageModule>
+<storageModule filesCache="C:\Symbian\9.4\S60_5_0\epoc32\include\oem\data_caging_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\TUI_5_0.mmp;C:\Symbian\9.4\S60_5_0\epoc32\include\domain\osextensions\platform_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\bld.inf;" includesCache="C:/Symbian/Carbide/workspace/TUI_5_0/inc[LOCAL];C:/Symbian/Carbide/workspace/TUI_5_0/data[LOCAL];C:/Symbian/9.4/S60_5_0/epoc32/include;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;C:/Symbian/9.4/S60_5_0/epoc32/include/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/variant;C:/Symbian/9.4/S60_5_0/epoc32/include/ecom;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;" macrosCache="__EXE__;__THROW(t)=throw (t);NONSHARABLE_CLASS(x)=class __declspec(notshared) x;__EPOC32__;EXPORT_C=__declspec(dllexport);NONSHARABLE_STRUCT(x)=struct __declspec(notshared) x;____ONLY_USE_NAKED_IN_CIA____=__asm;__EH_FRAME_PUSH2(reg1,reg2)=FRAME PUSH {reg1, reg2};__EABI__=1;__wchar_t_defined=1;NDEBUG;__ARMCC__;__NO_THROW=throw ();va_end(ap)=((void)0);__NAKED__=__asm;VA_END(ap)=va_end(ap);va_arg(ap,type)=__va_arg(ap, type);_UNICODE;VA_ARG(ap,type)=va_arg(ap,type);__EH_FRAME_SAVE1(reg,offset)=FRAME SAVE {reg}, offset;_STDARG_H=1;__EH_FRAME_ADDRESS(reg,offset)=FRAME ADDRESS reg, offset;va_start(ap,parmN)=__va_start(ap, parmN);__NO_CLASS_CONSTS__=1;__NORETURN_TERMINATOR()=1;__SERIES60_50__;__GENERIC_MARM__;__VALUE_IN_REGS__=__value_in_regs;__SOFTFP=__softfp;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__TText_defined=1;IMPORT_C=__declspec(dllimport);__ARMCC_2__;_STDARG_E_H=1;__EABI_CTORS__=1;VA_LIST=va_list;I64LIT(x)=x##LL;__MARM__;__VA_LIST_defined=1;UI64LIT(x)=x##ULL;__int64=long long;VA_START(ap,pn)=va_start(ap, pn);__ARMCC_2_2__;TEMPLATE_SPECIALIZATION=template&lt;&gt;;__SERIES60_5x__;__NORETURN__=__declspec(noreturn);__MARM_ARMV5__;" moduleId="configDataCache" sourcesCache="/TUI_5_0/data;/TUI_5_0/inc;/TUI_5_0/src;" timestampCache="1204046333882" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+<cconfiguration id="Phone Debug (GCCE) [S60_5.0]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Debug (GCCE) [S60_5.0]" moduleId="org.eclipse.cdt.core.settings" name="Phone Debug (GCCE) [S60_5.0]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCEErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.Elf2E32ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<SIS_BUILDER_DATA_ID CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" HASSISCHANGES="true" HASSISXCHANGES="true" PKGFILESTORAGE="sis/TUI_5_0.pkg" SIGNINGTYPESTORAGE="1"/>
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+</storageModule>
+<storageModule filesCache="C:\Symbian\9.4\S60_5_0\epoc32\include\oem\data_caging_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\TUI_5_0.mmp;C:\Symbian\9.4\S60_5_0\epoc32\include\domain\osextensions\platform_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\bld.inf;" includesCache="C:/Symbian/Carbide/workspace/TUI_5_0/inc[LOCAL];C:/Symbian/Carbide/workspace/TUI_5_0/data[LOCAL];C:/Symbian/9.4/S60_5_0/epoc32/include;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;C:/Symbian/9.4/S60_5_0/epoc32/include/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/variant;C:/Symbian/9.4/S60_5_0/epoc32/include/ecom;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;" macrosCache="__EXE__;__THROW(t)=throw (t);NONSHARABLE_CLASS(x)=class __declspec(notshared) x;__EPOC32__;EXPORT_C=__declspec(dllexport);NONSHARABLE_STRUCT(x)=struct __declspec(notshared) x;____ONLY_USE_NAKED_IN_CIA____=__asm;__EH_FRAME_PUSH2(reg1,reg2)=FRAME PUSH {reg1, reg2};__EABI__=1;__wchar_t_defined=1;__GCCE__;__NO_THROW=throw ();va_end(ap)=__builtin_va_end(ap.__ap);__NAKED__=__asm;VA_END(ap)=va_end(ap);va_arg(ap,type)=__builtin_va_arg(ap.__ap, type);_UNICODE;VA_ARG(ap,type)=va_arg(ap,type);__EH_FRAME_SAVE1(reg,offset)=FRAME SAVE {reg}, offset;_STDARG_H=1;__EH_FRAME_ADDRESS(reg,offset)=FRAME ADDRESS reg, offset;va_start(ap,parmN)=__builtin_va_start(ap.__ap, parmN);__NO_CLASS_CONSTS__=1;__NORETURN_TERMINATOR()=1;__SERIES60_50__;__GENERIC_MARM__;__VALUE_IN_REGS__=1;__SOFTFP=1;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__TText_defined=1;IMPORT_C=__declspec(dllimport);_STDARG_E_H=1;__EABI_CTORS__=1;VA_LIST=va_list;I64LIT(x)=x##LL;__MARM__;__VA_LIST_defined=1;UI64LIT(x)=x##ULL;__int64=long long;VA_START(ap,pn)=va_start(ap, pn);TEMPLATE_SPECIALIZATION=template&lt;&gt;;__SERIES60_5x__;__NORETURN__=__declspec(noreturn);_DEBUG;__MARM_ARMV5__;_VA_LIST_DEFINED=1;" moduleId="configDataCache" sourcesCache="/TUI_5_0/data;/TUI_5_0/inc;/TUI_5_0/src;" timestampCache="1204046334101" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+<cconfiguration id="Phone Release (GCCE) [S60_5.0]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (GCCE) [S60_5.0]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (GCCE) [S60_5.0]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCEErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.Elf2E32ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<SIS_BUILDER_DATA_ID CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" HASSISCHANGES="true" HASSISXCHANGES="true" PKGFILESTORAGE="sis/TUI_5_0.pkg" SIGNINGTYPESTORAGE="1"/>
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+</storageModule>
+<storageModule filesCache="C:\Symbian\9.4\S60_5_0\epoc32\include\oem\data_caging_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\TUI_5_0.mmp;C:\Symbian\9.4\S60_5_0\epoc32\include\domain\osextensions\platform_paths.hrh;C:\Symbian\Carbide\workspace\TUI_5_0\group\bld.inf;" includesCache="C:/Symbian/Carbide/workspace/TUI_5_0/inc[LOCAL];C:/Symbian/Carbide/workspace/TUI_5_0/data[LOCAL];C:/Symbian/9.4/S60_5_0/epoc32/include;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;C:/Symbian/9.4/S60_5_0/epoc32/include/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/middleware;C:/Symbian/9.4/S60_5_0/epoc32/include/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/domain/osextensions;C:/Symbian/9.4/S60_5_0/epoc32/include/variant;C:/Symbian/9.4/S60_5_0/epoc32/include/ecom;C:/Symbian/9.4/S60_5_0/epoc32/include/oem;" macrosCache="__EXE__;__THROW(t)=throw (t);NONSHARABLE_CLASS(x)=class __declspec(notshared) x;__EPOC32__;EXPORT_C=__declspec(dllexport);NONSHARABLE_STRUCT(x)=struct __declspec(notshared) x;____ONLY_USE_NAKED_IN_CIA____=__asm;__EH_FRAME_PUSH2(reg1,reg2)=FRAME PUSH {reg1, reg2};__EABI__=1;__wchar_t_defined=1;__GCCE__;NDEBUG;__NO_THROW=throw ();va_end(ap)=__builtin_va_end(ap.__ap);__NAKED__=__asm;VA_END(ap)=va_end(ap);va_arg(ap,type)=__builtin_va_arg(ap.__ap, type);_UNICODE;VA_ARG(ap,type)=va_arg(ap,type);__EH_FRAME_SAVE1(reg,offset)=FRAME SAVE {reg}, offset;_STDARG_H=1;__EH_FRAME_ADDRESS(reg,offset)=FRAME ADDRESS reg, offset;va_start(ap,parmN)=__builtin_va_start(ap.__ap, parmN);__NO_CLASS_CONSTS__=1;__NORETURN_TERMINATOR()=1;__SERIES60_50__;__GENERIC_MARM__;__VALUE_IN_REGS__=1;__SOFTFP=1;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__TText_defined=1;IMPORT_C=__declspec(dllimport);_STDARG_E_H=1;__EABI_CTORS__=1;VA_LIST=va_list;I64LIT(x)=x##LL;__MARM__;__VA_LIST_defined=1;UI64LIT(x)=x##ULL;__int64=long long;VA_START(ap,pn)=va_start(ap, pn);TEMPLATE_SPECIALIZATION=template&lt;&gt;;__SERIES60_5x__;__NORETURN__=__declspec(noreturn);__MARM_ARMV5__;_VA_LIST_DEFINED=1;" moduleId="configDataCache" sourcesCache="/TUI_5_0/data;/TUI_5_0/inc;/TUI_5_0/src;" timestampCache="1204046334241" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+</storageModule>
+</cproject>

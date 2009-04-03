@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Pragma Scope in Precompiled Files</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h3>Pragma Scope in Precompiled Files</h3>
+<p>Pragma settings inside a precompiled file affect only the source code within that file. The pragma settings for an item declared in a precompiled header file (such as data or a function) are saved then restored when the precompiled header file is included.</p>
+<p>For example, the source code in Listing 5.3 specifies that the variable xxx is a far variable.</p>
+<div class="listing">
+  <h5>Listing 5.3 Pragma Settings in a Precompiled Header</h5>
+  <p>// my_pch.pch<br />
+    // Generate a precompiled header named pch.mch.</p>
+  <p>#pragma precompile_target &quot;my_pch.mch&quot; </p>
+  <p>#pragma far_data on<br />
+    extern int xxx;</p>
+</div>
+<p>The source code in Listing 5.4 includes the precompiled version of Listing 5.3.</p>
+<div class="listing">
+  <h5>Listing 5.4 Pragma Settings in an Included Precompiled File</h5>
+  <p>// test.c<br />
+    #pragma far_data off // far data is disabled<br />
+    #include &quot;my_pch.mch&quot; // this precompiled file sets far_data on<br />
+  // far_data is still off but xxx is still a far variable</p>
+</div>
+<p>The pragma setting in the precompiled file is active within the precompiled file, even though the source file including the precompiled file has a different setting.
+</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+
+</body>
+</html>

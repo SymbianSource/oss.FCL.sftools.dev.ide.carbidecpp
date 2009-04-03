@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). -->
+<!-- All rights reserved.                                              -->
+<!-- This component and the accompanying materials are made available  -->
+<!-- under the terms of the License "Eclipse Public License v1.0"      -->
+<!-- which accompanies this distribution, and is available             -->
+<!-- at the URL "http://www.eclipse.org/legal/epl-v10.html".           -->
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component">
+	
+	<compoundPropertyDeclaration 
+		qualifiedName="com.nokia.test.compoundWithDefault.property"
+		converterClass="com.nokia.sdt.test.componentLibrary.DefaultTestConverter">
+		<property name="int1" type="integer"/>
+		<property name="int2" type="integer"/>
+		<property name="string1" type="localizedString"/>
+		<property name="string2" type="localizedString"/>
+	</compoundPropertyDeclaration>
+
+	<component friendlyName="CompooundPropertyWithDefault" 
+		qualifiedName="com.nokia.test.compoundWithDefault" 
+		category="Testing" version="1.0">
+		<symbian sdkName="com.nokia.series60" minSDKVersion="2.0" maxSDKVersion="3.0"/>
+		<attributes>
+			<attribute key="not-in-toolbox">true</attribute>
+		</attributes>
+		<properties>
+			<property name="name" type="uniqueName"/>
+			<compoundProperty name="testWithDefault" 
+				type="com.nokia.test.compoundWithDefault.property"
+				default="magic"/>
+			<compoundProperty name="testNoDefault" 
+				type="com.nokia.test.compoundWithDefault.property"/>
+		</properties>
+	</component>
+</componentDefinition>

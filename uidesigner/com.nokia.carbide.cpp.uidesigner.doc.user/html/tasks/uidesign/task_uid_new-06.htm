@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Resolving Name Collisions</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Resolving Name Collisions </h2>
+
+<p>The UI Designer creates names for the files it generates based on the names you specify for the project and each individual container. In most cases, choosing a unique name for each UI design within a project  ensures that all generated file names within the project are unique. However, it is possible that a generated file name could conflict with the name of a file that you have created manually. </p>
+<p>If this occurs, the UI Designer will recognize this problem when it attempts to initialize the UI design and display the <b>File Name Collision Detected </b> dialog (Figure 1).</p>
+<p align="center"><img src="../../images/ui_design_new_name_collision.png" alt="name collision" width="441" height="270" /></p>
+<p class="figure">Figure 1 - Name Collision detected between existing files and new UI Design name </p>
+<p class="note"><b>NOTE</b> The specific files listed in the dialog will vary.</p>
+<p>Follow the steps on this page to resolve the naming conflict as appropriate to your situation.</p>
+<div class="step">
+<h4>Resolving Name Collisions  </h4>
+<ol>
+<li>Option 1: Click No to cancel the file generation - recommended option if you did not create these files with this wizard.</li>
+    <p>
+      The wizard will cancel the file generation.</p>
+    <p class="note"><b>NOTE</b> After you click No, repeat the steps to create your new UI design with a  unique name to avoid the name collision. </p>
+    <li>Option 2: Click Yes to complete the wizard - recommended option if you created these files with this wizard.</li>
+    <p>After you click Yes :</p>
+    <ul>
+      <li>a new S60 UI Design with the name you specified in step 5 is created on disk and displayed in the Project Explorer view.</li>
+      <li>an &quot;application.uidesign&quot; file is created on disk and displayed in the Project Explorer view.</li>
+      <li>an #include of the new  design&rsquo;s &lt;<em>UIDesignName</em>&gt;.rssi file and other necessary system #includes will be added to your project's &lt;<em>ProjectName</em>&gt;.rss file. If this file does not already exist, the UI Designer will create it.</li>
+      <li>the UI Designer will generate code and merge it into each of the listed files. </li>
+    </ul>
+    <p>If you did not create these files with the same wizard:</p>
+    <ul>
+    <li>they are most probably not formatted correctly for optimum file generation by the UI Designer</li>
+	<li>the wizard will place newly generated regions at the end of their respective parents instead of their correct place within the parent</li>
+	<li>you must correct this placement manually. </li>
+	</ul>
+</ol>
+</div>
+<h5>Related concepts</h5>
+<ul>
+  <li><a href="../../concepts/con_s60_ui_designs.htm">UI Designs</a></li>
+</ul>
+
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../reference/uidesign/ref_ui_design_wizard.htm">UI Design Wizard</a></li>
+</ul>
+
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

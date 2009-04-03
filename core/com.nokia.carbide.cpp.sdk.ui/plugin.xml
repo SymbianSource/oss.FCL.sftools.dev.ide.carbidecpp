@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%SDKUIPlugin.SDK_Preferences"
+            class="com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+            id="com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage">
+      </page>
+      <page
+            name="%SDKUIPlugin.Platform_Filtering_Preferences"
+            class="com.nokia.carbide.cpp.internal.api.sdk.ui.BuildPlatformFilterPage"
+            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
+            id="com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.nokia.carbide.cpp.internal.sdk.ui.SDKUIPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+   </extension>
+   
+
+</plugin>

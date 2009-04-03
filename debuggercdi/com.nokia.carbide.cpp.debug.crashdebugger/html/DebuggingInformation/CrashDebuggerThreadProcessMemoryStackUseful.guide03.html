@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+	<html><head>
+	<title>Thread State Summary</title>
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="sysdoc-eclipse.css" type="text/css" rel="stylesheet" media="print">
+	<link href="../../book.css" type="text/css" rel="stylesheet" >
+<div class="Head1">
+
+<h2>Thread State Summary</h2>
+</div>
+<div>
+<p>
+This is a brief summary about nanokernel thread states and Symbian OS
+thread states. 
+</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.5.4"></a></span>Nanokernel thread states</h3>
+</div><div>
+<p>
+The state of a nanokernel thread is referred to as the NState (or
+N-state). This is to disambiguate it from any other state, such as the state of
+a Symbian OS thread (referred to as the MState or M-state). 
+</p>
+<p>
+The states of a nanokernel thread are defined by the values of the NThreadBase::NThreadState enumeration. 
+</p>
+
+</div>
+<div class="Head3">
+<h3><span class="Bodytext"><a name="1.5.5"></a></span>Symbian OS thread states</h3>
+</div><div>
+<p>
+The state of a Symbian OS thread is referred to as the MState (or
+M_state). This is in addition to the nanokernel N-state, and tracks threads
+waiting on Symbian OS synchronisation objects. The DThread class
+representing a Symbian OS thread is internal to Symbian, but the following
+table defines its possible states. The values in the left-hand column are the
+enumerators of the internal enumeration DThread::TThreadState. 
+</p>
+<table cellpadding="1" border="0" cellspacing="0"><tr><td
+class="TableWrap"><table cellpadding="5" cellspacing="1"
+border="0">
+  <tr valign="top"><td>
+<p class="code">
+ECreated</p></td><td class="Cell">
+<p>
+The initial state of all Symbian OS threads. It is a transient
+state; the thread starts in this state when the DThread object is
+created, and stays in that state until it is ready to be resumed, typically
+when DLL linkage and memory allocation is complete. At this point, the state
+will change to EReady. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EDead</p></td><td class="Cell">
+<p>
+This is the final state of a Symbian OS thread. A thread enters
+this state when it reaches the end of its exit handler, just before the
+nanokernel terminates it. In effect, the thread has exited but has not yet been
+deleted. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EReady</p></td><td class="Cell">
+<p>
+This indicates that the thread is not waiting on, or attached
+to any Symbian OS kernel wait object. It does not necessarily imply that the
+thread is actually ready to run - this is indicated by the N-state. For
+example, a thread that is explicitly suspended or waiting on a nanokernel wait
+object (generally a fast semaphore) still has a READY M-state provided that it
+is not attached to any Symbian OS wait object. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EWaitSemaphore</p></td><td class="Cell">
+<p>
+This indicates that the thread is currently blocked waiting for
+a Symbian OS semaphore, and is enqueued on the semaphore&#8217;s wait queue. The
+thread&#8217;s DThread::iWaitObj field points to the semaphore. 
+</p>
+<p>
+For example, this is the case if the thread calls User::WaitForRequest() or RSemaphore::Wait()
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EWaitSemaphoreSuspended</p></td><td class="Cell">
+<p>
+This indicates that the thread has been explicitly suspended
+after blocking on a Symbian OS semaphore, and is enqueued on the semaphore&#8217;s
+suspended queue. The thread&#8217;s DThread::iWaitObj field points to
+the semaphore. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EWaitMutex</p></td><td class="Cell">
+<p>
+This indicates that the thread is currently blocked waiting for
+a Symbian OS mutex, and is enqueued on the mutex wait queue. The thread&#8217;s
+DThread::iWaitObj field points to the mutex. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EWaitMutexSuspended</p></td><td class="Cell">
+<p>
+This indicates that the thread has been explicitly suspended
+after blocking on a Symbian OS mutex, and is enqueued on the mutex suspended
+queue. The thread&#8217;s DThread::iWaitObj field points to the mutex. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EHoldMutexPending</p></td><td class="Cell">
+<p>
+This indicates that the thread has been woken up from the
+EWaitMutex state but has not yet claimed the mutex. The thread is enqueued on
+the mutex pending queue and the thread&#8217;s DThread::iWaitObj field
+points to the mutex. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EWaitCondVar</p></td><td class="Cell">
+<p>
+This indicates that the thread is waiting on a condition
+variable. 
+</p></td></tr>
+<tr valign="top"><td>
+<p class="code">
+EWaitCondVarSuspended</p></td><td class="Cell">
+<p>
+This indicates that the thread is suspended while waiting on a
+condition variable. 
+</p></td></tr>
+</table></td></tr></table>
+</div><div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	   </body>
+	   </html>
+	   

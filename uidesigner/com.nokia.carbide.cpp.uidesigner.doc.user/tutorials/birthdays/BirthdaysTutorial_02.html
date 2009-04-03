@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Tutorial: Birthdays</TITLE>
+	<link rel="StyleSheet" href="../../html/../book.css" type="text/css"/>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h2>Tutorial: Birthdays - Maintaining UI / Data Separation</h2>
+<P>This example shows how to use the Carbide.c++ UI Designer for S60 to define the UI of an application and to implement the "real work" in the generated code. </P>
+<P>The goals of the application are to:</P>
+<UL>
+  <LI>
+    <P><b>Maintain data and UI separation</b></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_03.html">Use the S60 UI Designer to create the UI</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_04.html">Editing generated source to provide application logic</a></P>
+  <LI>
+    <P><a href="BirthdaysTutorial_05.html">Save and restore birthdays from persistent storage</a></P>
+  <LI><a href="BirthdaysTutorial_06.html">Summary </a>
+  </UL>
+<h3>Maintaining UI / Data Separation</h3>
+<P>We want to define a record for a birthday and a list of birthdays,
+but not tie this to the UI that displays or edits it. The UI, of
+course, must be able to read and write birthdays, so the term
+"separation" really refers to separation of ownership. So
+in this application, birthday information is owned by the
+application, and the UI derives its content from and contributes to
+this information.</P>
+<P>The <span class="code">TBirthday.cpp</span> and <span class="code">.h</span>
+files define the model for one birthday,
+containing setters and getters for the name, date, and todo fields.
+For ease of programming these are fixed-size <span class="code">TBuf</span> objects and copied
+in and out without checking sizes. Since it contains no
+heap-allocated storage, this is a "T" class. The
+constraints on the editors in the UI ensure (hopefully) that these
+buffer limits will never be exceeded. More error-checking would be
+expected from a real application. 
+</P>
+<P>We don't provide a custom class for the list of birthdays, instead
+storing these inside the <span class="code">CBirthdaysDocument</span> class. The "document"
+is a standard S60 application class, used in Symbian OS to manage the
+data for an application. We maintain an array of birthdays and
+provide accessors for adding, removing, and accessing a TBirthday by
+index. 
+</P>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</BODY>
+</HTML>

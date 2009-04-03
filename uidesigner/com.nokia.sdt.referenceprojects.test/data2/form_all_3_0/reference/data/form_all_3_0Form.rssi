@@ -1,0 +1,227 @@
+#include "form_all_3_0Form.hrh"
+#include "form_all_3_0Form.loc"
+
+RESOURCE AVKON_VIEW r_form_all_3_0_form_form_all_3_0_form_view
+	{
+	}
+RESOURCE STATUS_PANE_APP_MODEL r_form_all_3_0_form_status_pane
+	{
+	panes =
+		{
+		SPANE_PANE
+			{
+			id = EEikStatusPaneUidTitle;
+			type = EAknCtTitlePane;
+			resource = r_form_all_3_0_form_title_resource;
+			}
+		};
+	}
+RESOURCE TITLE_PANE r_form_all_3_0_form_title_resource
+	{
+	txt = STR_form_all_3_0FormView_1;
+	}
+RESOURCE DIALOG r_form_all_3_0_form_form_all_3_0_form
+	{
+	flags = EEikDialogFlagNoDrag | EEikDialogFlagNoTitleBar | EEikDialogFlagCbaButtons | EEikDialogFlagFillAppClientRect | EEikDialogFlagNotifyEsc | EEikDialogFlagModeless;
+	buttons = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	form = r_form_all_3_0_form_form_all_3_0_form_form;
+	}
+RESOURCE FORM r_form_all_3_0_form_form_all_3_0_form_form
+	{
+	items =
+		{
+		DLG_LINE
+			{
+			type = EAknCtIntegerEdwin;
+			prompt = STR_form_all_3_0FormView_2;
+			id = EForm_all_3_0FormViewIntegerEditor1;
+			control = AVKON_INTEGER_EDWIN
+				{
+				unset_value = 0;
+				min = -1;
+				max = 2147483647;
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtDateEditor;
+			prompt = STR_form_all_3_0FormView_3;
+			id = EForm_all_3_0FormViewDateEditor1;
+			control = DATE_EDITOR
+				{
+				maxDate = DATE
+					{
+					month = 11;
+					day = 30;
+					year = 2099;
+					};
+				minDate = DATE
+					{
+					year = 2000;
+					};
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtDurationEditor;
+			prompt = STR_form_all_3_0FormView_4;
+			id = EForm_all_3_0FormViewDurationEditor1;
+			control = DURATION_EDITOR
+				{
+				minDuration = DURATION
+					{
+					};
+				maxDuration = DURATION
+					{
+					seconds = 86400;
+					};
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtFxPtEd;
+			prompt = STR_form_all_3_0FormView_5;
+			id = EForm_all_3_0FormViewFixedPointEditor1;
+			control = FIXPTED
+				{
+				decimalplaces = 3;
+				min = -2;
+				max = 2147483647;
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtFlPtEd;
+			prompt = STR_form_all_3_0FormView_6;
+			id = EForm_all_3_0FormViewFloatingPointEditor1;
+			control = FLPTED
+				{
+				maxlength = 32;
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtNumberEditor;
+			prompt = STR_form_all_3_0FormView_7;
+			id = EForm_all_3_0FormViewNumEditor1;
+			control = NUMBER_EDITOR
+				{
+				max = 2147483647;
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtNumericSecretEditor;
+			prompt = STR_form_all_3_0FormView_8;
+			id = EForm_all_3_0FormViewNumSecret1;
+			control = NUMSECRETED
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtRangeEditor;
+			prompt = STR_form_all_3_0FormView_10;
+			id = EForm_all_3_0FormViewRangeEditor1;
+			control = RANGE_EDITOR
+				{
+				max = 2147483647;
+				separatortext = STR_form_all_3_0FormView_11;
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtSecretEd;
+			prompt = STR_form_all_3_0FormView_12;
+			id = EForm_all_3_0FormViewSecret1;
+			control = SECRETED
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtEdwin;
+			prompt = STR_form_all_3_0FormView_14;
+			id = EForm_all_3_0FormViewEdit1;
+			control = EDWIN
+				{
+				maxlength = 255;
+				default_case = EAknEditorTextCase;
+				allowed_case_modes = EAknEditorAllCaseModes;
+				numeric_keymap = EAknEditorStandardNumberModeKeymap;
+				default_input_mode = EAknEditorTextInputMode;
+				allowed_input_modes = EAknEditorTextInputMode | EAknEditorNumericInputMode | EAknEditorSecretAlphaInputMode | EAknEditorKatakanaInputMode | EAknEditorFullWidthTextInputMode | EAknEditorFullWidthNumericInputMode | EAknEditorFullWidthKatakanaInputMode | EAknEditorHiraganaKanjiInputMode | EAknEditorHalfWidthTextInputMode;
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtTimeEditor;
+			prompt = STR_form_all_3_0FormView_16;
+			id = EForm_all_3_0FormViewTimeEditor1;
+			control = TIME_EDITOR
+				{
+				minTime = TIME
+					{
+					};
+				maxTime = TIME
+					{
+					hour = 23;
+					minute = 59;
+					second = 59;
+					};
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtTimeOffsetEditor;
+			prompt = STR_form_all_3_0FormView_17;
+			id = EForm_all_3_0FormViewTimeOffsetEditor1;
+			control = TIME_OFFSET_EDITOR
+				{
+				minTimeOffset = TIME_OFFSET
+					{
+					seconds = -86399;
+					};
+				maxTimeOffset = TIME_OFFSET
+					{
+					seconds = 86399;
+					};
+				};
+			},
+		DLG_LINE
+			{
+			type = EEikCtTimeAndDateEditor;
+			prompt = STR_form_all_3_0FormView_18;
+			id = EForm_all_3_0FormViewTimeAndDateEditor1;
+			control = TIME_AND_DATE_EDITOR
+				{
+				minTimeAndDate = TIME_AND_DATE
+					{
+					year = 2000;
+					};
+				maxTimeAndDate = TIME_AND_DATE
+					{
+					second = 59;
+					minute = 59;
+					hour = 23;
+					day = 30;
+					month = 11;
+					year = 2099;
+					};
+				interveningtext = STR_form_all_3_0FormView_19;
+				};
+			}
+		};
+	}
+RESOURCE TBUF r_form_all_3_0_form_num_secret1
+	{
+	buf = STR_form_all_3_0FormView_9;
+	}
+RESOURCE TBUF r_form_all_3_0_form_secret1
+	{
+	buf = STR_form_all_3_0FormView_13;
+	}
+RESOURCE TBUF r_form_all_3_0_form_edit1
+	{
+	buf = STR_form_all_3_0FormView_15;
+	}

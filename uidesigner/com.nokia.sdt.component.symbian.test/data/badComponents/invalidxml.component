@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<componentDefinition xmlns="http://www.nokia.com/sdt/emf/component" 
+xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.nokia.com/sdt/emf/component
+C:\Users\NOKIAI~1\RADPLA~1\design\component.xsd">
+	<component friendlyName="it-gets-bad-after-here" 
+		
