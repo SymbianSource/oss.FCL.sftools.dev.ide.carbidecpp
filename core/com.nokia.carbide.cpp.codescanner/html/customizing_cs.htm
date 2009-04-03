@@ -99,8 +99,12 @@
 &lt;connect category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;ConnectAndDontCloseMemberVariable category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   &lt;constnames category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;consttdescptr category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-&lt;controlornull category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
+&lt;controlornull category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br>
+&lt;crepository category=&quot;other&quot;                   enable=&quot;true&quot;                   severity=&quot;low&quot;/&gt;<br />
 &lt;ctltargettype category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
+&lt;customizableicons category=&quot;other&quot;                         enable=&quot;true&quot;                         severity=&quot;low&quot;&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;iconsRE&gt;iconA.bmp|iconB.svg|iconC&lt;/iconsRE&gt;     <br>
+	&lt;/customizableicons&gt;<br>
 <br />
 &lt;debugrom category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;declarename category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
@@ -108,36 +112,37 @@
 &lt;destructor category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;doubleSemiColon category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;driveletters category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;eikbuttons category=&quot;localisation&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;eikonenvstatic category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;enummembers category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;enumnames category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;exportinline category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;exportpurevirtual category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
-<br />
+  <br />
+&lt;flags category=&quot;other&quot;             enable=&quot;true&quot;             severity=&quot;low&quot;/&gt;<br>
 &lt;foff category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;forbiddenwords category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;&gt;       <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;wordsRE&gt;Epoc|Nokia Mobile Phones|NMP|(^|\s)S60&lt;/wordsRE&gt;   <br />
 &lt;/forbiddenwords&gt;<br />
 &lt;forgottoputptroncleanupstack category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;friend category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;goto category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;ifassignments category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;ifpreprocessor category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;inheritanceorder category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;intleaves category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;jmp category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;leave category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;LeaveNoError category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;leavingoperators category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;LFunctionCantLeave category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;&gt;       &lt;LFunctionIgnoreRE&gt;RunL&lt;/LFunctionIgnoreRE&gt;   &lt;/LFunctionCantLeave&gt;   <br />
 &lt;longlines category=&quot;codingstandards&quot; enable=&quot;true&quot; length=&quot;160&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;magicnumbers category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;mclassdestructor category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;memberlc category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
@@ -150,7 +155,7 @@
 &lt;multipledeclarations category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;multipleinheritance category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;mydocs category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;namespace category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;newlreferences category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;noleavetrap category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
@@ -159,10 +164,10 @@
 &lt;nonleavenew category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;nonunicodeskins category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;null category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;open category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;&gt;       &nbsp;&nbsp;&nbsp;&nbsp;&lt;openIgnoreRE&gt;RDesReadStream|RDesWriteStream&lt;/openIgnoreRE&gt;<br />
 &lt;/open&gt;   <br />
-<br />
+  <br />
 &lt;pointertoarrays category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;pragmadisable category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;pragmamessage category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
@@ -170,17 +175,17 @@
 &lt;privateinheritance category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;pushaddrvar category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;pushmember category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;readresource category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;resourcenotoncleanupstack category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;resourcesonheap category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   &lt;returndescriptoroutofscope category=&quot;canpanic&quot; enable=&quot;true&quot; severity=&quot;high&quot;/&gt;   <br />
 &lt;rfs category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;rssnames category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;stringliterals category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;stringsinresourcefiles category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;struct category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;tcclasses category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;tclassdestructor category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;todocomments category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
@@ -188,7 +193,7 @@
 &lt;trapeleave category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;traprunl category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;trspassing category=&quot;functionality&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;uids category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;uncompressedaif category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;uncompressedbmp category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
@@ -196,14 +201,14 @@
 &lt;userafter category=&quot;performance&quot; enable=&quot;true&quot; severity=&quot;medium&quot;/&gt;   <br />
 &lt;userfree category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;userWaitForRequest category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;variablenames category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
 &lt;voidparameter category=&quot;codingstandards&quot; enable=&quot;true&quot; severity=&quot;low&quot;/&gt;   <br />
-<br />
+  <br />
 &lt;worryingcomments category=&quot;codereview&quot; enable=&quot;true&quot; severity=&quot;low&quot;&gt;       &nbsp;&nbsp;&nbsp;&nbsp;&lt;worryRE&gt;\!|\?|[Zz]{3}|kludge|workaround|\scrap|hack&lt;/worryRE&gt;   <br />
 &lt;/worryingcomments&gt;<br />
-<br />
-<span class="listing">&lt;/scripts&gt; </span></p>
+  <br />
+  <span class="listing">&lt;/scripts&gt; </span></p>
    <h4><a name="SEV_Element" id="ARG_Element4"></a>Severities Element</h4>
    <p>Each Severities element can contain one or more Severity elements, each of which corresponds to a severity level: </p>
    <ul>
