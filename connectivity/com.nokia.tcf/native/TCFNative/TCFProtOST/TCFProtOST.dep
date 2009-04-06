@@ -1,0 +1,21 @@
+# Microsoft Developer Studio Generated Dependency File, included by TCFProtOST.mak
+
+..\TCFServer\BaseProtocol.cpp : \
+	"..\TCFServer\BaseProtocol.h"\
+	
+
+.\OSTProtocol.cpp : \
+	"..\TCFServer\BaseProtocol.h"\
+	".\OSTProtocol.h"\
+	
+
+.\StdAfx.cpp : \
+	"..\..\..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\StdAfx.h"\
+	
+
+.\TCFProtOST.cpp : \
+	"..\TCFServer\BaseProtocol.h"\
+	".\OSTProtocol.h"\
+	".\TCFProtOST.h"\
+	

@@ -29,14 +29,6 @@ import org.eclipse.core.runtime.IStatus;
 public interface ITCConnection {
 	
 	/**
-	 * Connection types
-	 */
-	public final int MEDIA_REALTCP = 2;
-	public final int MEDIA_REALSERIAL = 3;
-	public final int MEDIA_VIRTUALSERIAL = 4;
-	public final int MEDIA_USB = 5;
-
-	/**
 	 * Default retry interval and retry timeout (in seconds)
 	 */
 	public final long DEFAULT_COMM_ERROR_RETRY_INTERVAL = 1; // 1 second
@@ -51,7 +43,7 @@ public interface ITCConnection {
 	 * Return connection type
 	 * @return
 	 */
-	public int getConnectionType();
+	public String getConnectionType();
 	/**
 	 * Get the current retry interval in seconds
 	 * @return
@@ -67,7 +59,7 @@ public interface ITCConnection {
 	 * @param inConnectionType
 	 * @return IStatus
 	 */
-	public IStatus setConnectionType(int inConnectionType);
+	public IStatus setConnectionType(String inConnectionType);
 	
 	/**
 	 * Set the retry interval after a comm error in seconds. The default is 1 second. 

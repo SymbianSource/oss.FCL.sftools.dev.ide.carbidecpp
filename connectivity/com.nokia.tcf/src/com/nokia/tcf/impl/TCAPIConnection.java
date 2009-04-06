@@ -19,33 +19,14 @@
  */
 package com.nokia.tcf.impl;
 
+import com.nokia.tcf.Activator;
+import com.nokia.tcf.api.*;
+
+import org.eclipse.core.runtime.*;
+
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.MessageFormat;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.osgi.service.datalocation.Location;
-
-import com.nokia.tcf.api.ITCAPIConnection;
-import com.nokia.tcf.api.ITCConnection;
-import com.nokia.tcf.api.ITCErrorListener;
-import com.nokia.tcf.api.ITCMessage;
-import com.nokia.tcf.api.ITCRealSerialConnection;
-import com.nokia.tcf.api.ITCRealTCPConnection;
-import com.nokia.tcf.api.ITCVirtualSerialConnection;
-import com.nokia.tcf.api.TCFClassFactory;
-import com.nokia.tcf.api.ITCMessageIds;
-import com.nokia.tcf.api.ITCMessageInputStream;
-import com.nokia.tcf.api.ITCMessageOptions;
-import com.nokia.tcf.api.ITCVersion;
-import com.nokia.tcf.Activator;
-import com.nokia.tcf.api.TCErrorConstants;
 
 public class TCAPIConnection implements ITCAPIConnection {
 
@@ -70,11 +51,11 @@ public class TCAPIConnection implements ITCAPIConnection {
 		}
 	}
 	private TCErrorListenerList<ITCErrorListener> errorListenerList;
-	private ITCCookie cookie;		// this client's handle to native
-	private ITCMessageIds messageIds; // this client's message ids
-	private TCMessageInputStream inputStream; // this client's message input stream (not using message file)
+	protected ITCCookie cookie;		// this client's handle to native
+	protected ITCMessageIds messageIds; // this client's message ids
+	protected TCMessageInputStream inputStream; // this client's message input stream (not using message file)
 	protected ITCMessageOptions messageOptions; // this client's message options
-	private TCFMonitorThread monitorThread; // the client's native monitor
+	protected TCFMonitorThread monitorThread; // the client's native monitor
 	public boolean stopTCFMonitorThread;	//  stream monitor start/stop flag
 	protected IStatus statusOK;
 	protected ITCConnection connection; // the client's connection
@@ -132,15 +113,15 @@ public class TCAPIConnection implements ITCAPIConnection {
 	}
 	protected IStatus checkConnectionType(ITCConnection inConnection) {
 		IStatus status = statusOK;
-		int type = inConnection.getConnectionType();
-		if (type == ITCConnection.MEDIA_VIRTUALSERIAL) {
+		String type = inConnection.getConnectionType();
+		if (type.compareToIgnoreCase("virtualserial") == 0) {
 			ITCVirtualSerialConnection c = (ITCVirtualSerialConnection)inConnection;
 			String p = c.getComPort();
 			if (p == null) {
 				status = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)TCErrorConstants.TCAPI_ERR_MISSING_MEDIA_DATA, 
 						TCErrorConstants.getErrorMessage(TCErrorConstants.TCAPI_ERR_MISSING_MEDIA_DATA), null);
 			}
-		} else if (type == ITCConnection.MEDIA_REALTCP) {
+		} else if (type.compareToIgnoreCase("tcp") == 0) {
 			ITCRealTCPConnection c = (ITCRealTCPConnection)inConnection;
 			String ip = c.getIpAddress();
 			String p = c.getPort();
@@ -148,7 +129,7 @@ public class TCAPIConnection implements ITCAPIConnection {
 				status = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)TCErrorConstants.TCAPI_ERR_MISSING_MEDIA_DATA, 
 						TCErrorConstants.getErrorMessage(TCErrorConstants.TCAPI_ERR_MISSING_MEDIA_DATA), null);
 			}
-		} else if (type == ITCConnection.MEDIA_REALSERIAL) {
+		} else if (type.compareToIgnoreCase("serial") == 0) {
 			ITCRealSerialConnection c = (ITCRealSerialConnection)inConnection;
 			long err = checkRealSerialSettings(c);
 			if (err != TCErrorConstants.TCAPI_ERR_NONE) {
@@ -339,7 +320,7 @@ public class TCAPIConnection implements ITCAPIConnection {
 		}
 		return status;
 	}
-	protected IStatus finishConnect(int type, String[] settings, 
+	protected IStatus finishConnect(String type, String[] settings, 
 			ITCConnection inConnection, ITCMessageOptions inMessageOptions, ITCMessageIds inMessageIds) {
 		IStatus status = statusOK;
 		// connect
@@ -467,29 +448,24 @@ public class TCAPIConnection implements ITCAPIConnection {
 		
 		IStatus status = checkConnectOptions(inConnection, inMessageOptions, inMessageIds);
 		String[] settings = null;
-		int type = 0;
+		String type = null;
 
 		// do connect
 		if (status.isOK()) {
 			settings = null;
 			type = inConnection.getConnectionType();
-			switch(type) {
-			case ITCConnection.MEDIA_REALTCP: {
+			if (type.compareToIgnoreCase("tcp") == 0) {
 				settings = new String[3];
 				ITCRealTCPConnection t = (ITCRealTCPConnection)inConnection;
 				settings[0] = t.getIpAddress();
 				settings[1] = t.getPort();
 				settings[2] = t.getDecodeFormat().toLowerCase();
-				break;
-			}
-			case ITCConnection.MEDIA_VIRTUALSERIAL: {
+			} else if (type.compareToIgnoreCase("virtualserial") == 0) {
 				settings = new String[2];
 				ITCVirtualSerialConnection s = (ITCVirtualSerialConnection)inConnection;
 				settings[0] = s.getComPort();
 				settings[1] = s.getDecodeFormat().toLowerCase();
-				break;
-			}
-			case ITCConnection.MEDIA_REALSERIAL: {
+			} else if (type.compareToIgnoreCase("serial") == 0) {
 				settings = new String[7];
 				ITCRealSerialConnection s = (ITCRealSerialConnection)inConnection;
 				settings[0] = s.getComPort();
@@ -499,20 +475,15 @@ public class TCAPIConnection implements ITCAPIConnection {
 				settings[4] = s.getStopBits();
 				settings[5] = s.getFlowControl();
 				settings[6] = s.getDecodeFormat().toLowerCase();
-				break;
-			}
-			case ITCConnection.MEDIA_USB: {
+			} else if (type.compareToIgnoreCase("usb") == 0) {
 				settings = new String[1];
-				break;
-			}
-			default:
-				// Add other connection types here - error already checked in checkConnection()
-				break;
+			} else {
+				// Add other connections here
 			}
 		}
 		return finishConnect(type, settings, inConnection, inMessageOptions, inMessageIds);
 	}
-	private void ensureWritableFile(String filePath) throws IOException {
+	protected void ensureWritableFile(String filePath) throws IOException {
 		// ensure file path points to a writable regular file
 		IPath path = new Path(filePath);
 		File file = path.toFile();
@@ -628,32 +599,11 @@ public class TCAPIConnection implements ITCAPIConnection {
 			connections = new ITCConnection[(int)numberConnections];
 			for (int inIndex = 0; inIndex < numberConnections; inIndex++)
 			{
-				int[] type = new int[1];
+				String[] type = new String[1];
 				ret = nativeGetTypeOfConnection(inIndex, type);
-				switch ((int)type[0]) {
-				case (int)ITCConnection.MEDIA_VIRTUALSERIAL: {
+				if (type[0].compareToIgnoreCase("virtualserial") == 0) {
 					ITCVirtualSerialConnection outConnection = (ITCVirtualSerialConnection)TCFClassFactory.createITCVirtualSerialConnection(null);
-					int[] outType = new int[1];
-					long[] outOptions = new long[3];
-					String[] outSettings = new String[1];
-					ret = nativeGetConnectionSettings(inIndex, outType, outOptions, outSettings);
-					if (ret == TCErrorConstants.TCAPI_ERR_NONE) {
-						outConnection.setConnectionType(outType[0]);
-						outConnection.setRetryInterval(outOptions[0]);
-						outConnection.setRetryTimeout(outOptions[1]);
-						outConnection.setDecodeFormat(convertDecodeFormat(outOptions[2]));
-						outConnection.setComPort(outSettings[0]);
-						
-						connections[inIndex] = outConnection;
-					} else {
-						// error processing from nativeGetConnectionSettings
-						status = new Status(Status.ERROR,Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
-					}
-					break;
-				}
-				case (int)ITCConnection.MEDIA_REALTCP: {
-					ITCRealTCPConnection outConnection = (ITCRealTCPConnection)TCFClassFactory.createITCRealTCPConnection(null, null);
-					int[] outType = new int[1];
+					String[] outType = new String[1];
 					long[] outOptions = new long[3];
 					String[] outSettings = new String[2];
 					ret = nativeGetConnectionSettings(inIndex, outType, outOptions, outSettings);
@@ -661,66 +611,66 @@ public class TCAPIConnection implements ITCAPIConnection {
 						outConnection.setConnectionType(outType[0]);
 						outConnection.setRetryInterval(outOptions[0]);
 						outConnection.setRetryTimeout(outOptions[1]);
-						outConnection.setDecodeFormat(convertDecodeFormat(outOptions[2]));
-						outConnection.setIpAddress(outSettings[0]);
-						outConnection.setPort(outSettings[1]);
+						outConnection.setComPort(outSettings[0]);
+						outConnection.setDecodeFormat(outSettings[1]);
 						
 						connections[inIndex] = outConnection;
 					} else {
 						// error processing from nativeGetConnectionSettings
 						status = new Status(Status.ERROR,Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
 					}
-					break;
-				}
-				case (int)ITCConnection.MEDIA_REALSERIAL: {
+				} else if (type[0].compareToIgnoreCase("serial") == 0) {
 					ITCRealSerialConnection outConnection = (ITCRealSerialConnection)TCFClassFactory.createITCRealSerialConnection(null);
-					int[] outType = new int[1];
+					String[] outType = new String[1];
 					long[] outOptions = new long[6];
-					String[] outSettings = new String[6];
+					String[] outSettings = new String[7];
 					ret = nativeGetConnectionSettings(inIndex, outType, outOptions, outSettings);
 					if (ret == TCErrorConstants.TCAPI_ERR_NONE) {
 						outConnection.setConnectionType(outType[0]);
 						outConnection.setRetryInterval(outOptions[0]);
 						outConnection.setRetryTimeout(outOptions[1]);
-						outConnection.setDecodeFormat(convertDecodeFormat(outOptions[2]));
 						outConnection.setComPort(outSettings[0]);
 						outConnection.setBaudRate(outSettings[1]);
 						outConnection.setDataBits(outSettings[2]);
 						outConnection.setParity(outSettings[3]);
 						outConnection.setStopBits(outSettings[4]);
 						outConnection.setFlowControl(outSettings[5]);
+						outConnection.setDecodeFormat(outSettings[6]);
 						
 						connections[inIndex] = outConnection;
 					} else {
 						// error processing from nativeGetConnectionSettings
 						status = new Status(Status.ERROR,Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
 					}
-					break;
-				}
-				case (int)ITCConnection.MEDIA_USB: {
-					break;
-				}
-				default:
+				} else if (type[0].compareToIgnoreCase("tcp") == 0) {
+					ITCRealTCPConnection outConnection = (ITCRealTCPConnection)TCFClassFactory.createITCRealTCPConnection(null, null);
+					String[] outType = new String[1];
+					long[] outOptions = new long[3];
+					String[] outSettings = new String[3];
+					ret = nativeGetConnectionSettings(inIndex, outType, outOptions, outSettings);
+					if (ret == TCErrorConstants.TCAPI_ERR_NONE) {
+						outConnection.setConnectionType(outType[0]);
+						outConnection.setRetryInterval(outOptions[0]);
+						outConnection.setRetryTimeout(outOptions[1]);
+						outConnection.setIpAddress(outSettings[0]);
+						outConnection.setPort(outSettings[1]);
+						outConnection.setDecodeFormat(outSettings[2]);
+						
+						connections[inIndex] = outConnection;
+					} else {
+						// error processing from nativeGetConnectionSettings
+						status = new Status(Status.ERROR,Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
+					}
+				} else if (type[0].compareToIgnoreCase("usb") == 0) {
+					// Finish this sometime when real USB is used on PC
+				} else {
 					// Add other connection types here
-					break;
 				}
 			}
 		}
 		return connections;
 	}
 
-	protected String convertDecodeFormat(long decodeFormat) {
-		if (decodeFormat == 1) {
-			return "platsim";
-		}
-		if (decodeFormat == 2) {
-			return "ost";
-		}
-		if (decodeFormat == 3) {
-			return "rawtrk";
-		}
-		return "ost";
-	}
 	/* (non-Javadoc)
 	 * @see com.nokia.tcf.api.ITCAPIConnection#getInputStream()
 	 */
@@ -775,10 +725,10 @@ public class TCAPIConnection implements ITCAPIConnection {
 
 					long[] formattingOptions = new long[5];
 					formattingOptions[0] = 0;
-					formattingOptions[1] = messageOptions.getMessageEncodeFormat();
-					formattingOptions[2] = messageOptions.getOSTVersion();
-					formattingOptions[3] = inMessage.getMyMessageId();
-					formattingOptions[4] = (inMessage.isUseMyMessageId() == true) ? 1 : 0;
+					formattingOptions[1] = messageOptions.getMessageEncodeFormat(); // add protocol or not
+					formattingOptions[2] = messageOptions.getOSTVersion();			// OST version byte to use if OST
+					formattingOptions[3] = inMessage.getMyMessageId();				// message ID to use of adding protocol
+					formattingOptions[4] = (inMessage.isUseMyMessageId() == true) ? 1 : 0; // use my ID or not
 					String[] settings = new String[1];
 					settings[0] = connection.getDecodeFormat().toLowerCase();
 					try {
@@ -895,7 +845,7 @@ public class TCAPIConnection implements ITCAPIConnection {
 		}
 		return status;
 	}
-	protected IStatus doTestConnection(int type, String[] settings, ITCConnection inConnection) {
+	protected IStatus doTestConnection(String type, String[] settings, ITCConnection inConnection) {
 		IStatus status = statusOK;
 		// test connection
 		long[] options = new long[3];
@@ -914,10 +864,8 @@ public class TCAPIConnection implements ITCAPIConnection {
 	public IStatus testConnection(ITCConnection inConnection) {
 		IStatus status = statusOK;
 		String[] settings = null;
-		int type = inConnection.getConnectionType();
-		switch(type) {
-		case ITCConnection.MEDIA_REALSERIAL:
-		{
+		String type = inConnection.getConnectionType();
+		if (type.compareToIgnoreCase("serial") == 0) {
 			settings = new String[7];
 			ITCRealSerialConnection s = (ITCRealSerialConnection)inConnection;
 			settings[0] = s.getComPort();
@@ -927,36 +875,25 @@ public class TCAPIConnection implements ITCAPIConnection {
 			settings[4] = s.getStopBits();
 			settings[5] = s.getFlowControl();
 			settings[6] = s.getDecodeFormat().toLowerCase();
-		}
-			break;
-		case ITCConnection.MEDIA_REALTCP:
-		{
+		} else if (type.compareToIgnoreCase("tcp") == 0) {
 			settings = new String[3];
 			ITCRealTCPConnection s = (ITCRealTCPConnection)inConnection;
 			settings[0] = s.getIpAddress();
 			settings[1] = s.getPort();
 			settings[2] = s.getDecodeFormat().toLowerCase();
-		}	
-			break;
-		case ITCConnection.MEDIA_USB:
-		{
+		} else if (type.compareToIgnoreCase("usb") == 0) {
 			settings = new String[1];
-		}
-			break;
-		case ITCConnection.MEDIA_VIRTUALSERIAL:
-		{
+			// finish this sometime when real USB is used on PC
+		} else if (type.compareToIgnoreCase("virtualserial") == 0) {
 			settings = new String[2];
 			ITCVirtualSerialConnection s = (ITCVirtualSerialConnection)inConnection;
 			settings[0] = s.getComPort();
 			settings[1] = s.getDecodeFormat().toLowerCase();
-		}
-			break;
-		default:
+		} else {
+			// add new connections here
 			long err = TCErrorConstants.TCAPI_ERR_MEDIA_NOT_SUPPORTED;
 			status = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)err, TCErrorConstants.getErrorMessage((int)err), null);
-			break;
 		}
-		
 		if (status.isOK()) {
 			status = doTestConnection(type, settings, inConnection);
 /*			// test connection
@@ -989,17 +926,17 @@ public class TCAPIConnection implements ITCAPIConnection {
 
 	// natives
 	// connect/disconnect
-	private native long nativeConnect(int inType, long[] inOptions, String[] inSettings, long[] inMessageOptions, String inFilePath, long[] outClientId);
-	private native long nativeDisconnect(long inClientId); 
+	protected native long nativeConnect(String inType, long[] inOptions, String[] inSettings, long[] inMessageOptions, String inFilePath, long[] outClientId);
+	protected native long nativeDisconnect(long inClientId); 
 	// connections
 	protected native long nativeGetNumberConnections(long[] outNumber);
-	protected native long nativeGetTypeOfConnection(long inIndex, int[] outType);
-	protected native long nativeGetConnectionSettings(long inIndex, int[] outType, long[] outOptions, String[] outSettings);
+	protected native long nativeGetTypeOfConnection(long inIndex, String[] outType);
+	protected native long nativeGetConnectionSettings(long inIndex, String[] outType, long[] outOptions, String[] outSettings);
 	// port handling errors
 	public native boolean nativePollError(long inClienId, int[] outErrorCode, boolean[] outHasOSErrorCode, long[] outOSErrorCode);
 	// versions
-	private native long nativeGetNumberVersionEntities(long inClientId);
-	private native long nativeGetVersion(long inClientId, long inNumToGet, String[] outVersion);
+	protected native long nativeGetNumberVersionEntities(long inClientId);
+	protected native long nativeGetVersion(long inClientId, long inNumToGet, String[] outVersion);
 	// input stream
 	public native long nativePollInputStream(long inClientId, long[] outNumberTotalMessages);
 	public native long nativePollInputStream2(long inClientId, long inNumberMessagesToPeek, long[] outNumberMessagesPeeked, long[] outNumberBytesPeeked);
@@ -1008,17 +945,17 @@ public class TCAPIConnection implements ITCAPIConnection {
 	public native long nativeOpenInputStream(long inClientId, String inBaseFilePath, long inInputStreamSize, boolean inOverFlowToFile);
 	public native long nativeCloseInputStream(long inClientId);
 	// message file
-	private native long nativeClearFile(long inClientId);
+	protected native long nativeClearFile(long inClientId);
 	// send message
-	private native long nativeSendMessage(long inClientId, long[] inFormattingOptions, String[] inSettings, byte[] inMessage);
+	protected native long nativeSendMessage(long inClientId, long[] inFormattingOptions, String[] inSettings, byte[] inMessage);
 	// register message IDs
-	private native long nativeSetMessageIds(long inClientId, byte[] inMessageIds);
+	protected native long nativeSetMessageIds(long inClientId, byte[] inMessageIds);
 	// start/stop processing
-	private native long nativeStart(long inClientId);
-	private native long nativeStop(long inClientId);
+	protected native long nativeStart(long inClientId);
+	protected native long nativeStop(long inClientId);
 	// test connections
-	private native long nativeTestConnection(int inType, long[] inOptions, String[] inSettings);
-	private native long nativeTestConnection(long inClientId);
+	protected native long nativeTestConnection(String inType, long[] inOptions, String[] inSettings);
+	protected native long nativeTestConnection(long inClientId);
 	// start/stop server - done from plugin activator start/stop methods
 	public native long nativeStartServer();
 	public native long nativeStopServer();

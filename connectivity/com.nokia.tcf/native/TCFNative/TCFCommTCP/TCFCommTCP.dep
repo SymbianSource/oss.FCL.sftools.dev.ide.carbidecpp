@@ -1,0 +1,66 @@
+# Microsoft Developer Studio Generated Dependency File, included by TCFCommTCP.mak
+
+..\TCFServer\BaseCom.cpp : \
+	"..\Common\Headers\ErrorMonitorData.h"\
+	"..\Common\Headers\InputStream.h"\
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\ServerClient.h"\
+	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
+	"..\TCFServer\BaseCom.h"\
+	"..\TCFServer\Client.h"\
+	"..\TCFServer\MessageFile.h"\
+	"..\TCFServer\Registry.h"\
+	
+
+..\Common\Source\mutex.cpp : \
+	"..\Common\Headers\mutex.h"\
+	
+
+.\StdAfx.cpp : \
+	"..\..\..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\StdAfx.h"\
+	
+
+..\Common\Source\TCDebugLog.cpp : \
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	
+
+.\TCFCommTCP.cpp : \
+	"..\Common\Headers\ErrorMonitorData.h"\
+	"..\Common\Headers\InputStream.h"\
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\ServerClient.h"\
+	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
+	"..\TCFServer\BaseCom.h"\
+	"..\TCFServer\Client.h"\
+	"..\TCFServer\MessageFile.h"\
+	"..\TCFServer\Registry.h"\
+	".\TCFCommTCP.h"\
+	".\TcpComm.h"\
+	
+
+.\TcpComm.cpp : \
+	"..\Common\Headers\ErrorMonitorData.h"\
+	"..\Common\Headers\InputStream.h"\
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\OSTConstants.h"\
+	"..\Common\Headers\pn_const.h"\
+	"..\Common\Headers\ServerClient.h"\
+	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
+	"..\TCFServer\BaseCom.h"\
+	"..\TCFServer\Client.h"\
+	"..\TCFServer\Connection.h"\
+	"..\TCFServer\MessageFile.h"\
+	"..\TCFServer\Registry.h"\
+	".\TcpComm.h"\
+	

@@ -40,7 +40,7 @@ public class TCRealTCPConnection extends TCBaseConnection implements
 	 * @param inIpPort
 	 */
 	public TCRealTCPConnection(String inIpAddress, String inPort) {
-		super(MEDIA_REALTCP);
+		super("tcp");
 		ipAddress = inIpAddress;
 		ipPort = inPort;
 		decodeFormat = "ost";
@@ -56,7 +56,7 @@ public class TCRealTCPConnection extends TCBaseConnection implements
 	 * @param retryTimeout
 	 */
 	public TCRealTCPConnection(String inIpAddress, String inIpPort, long retryInterval, long retryTimeout) {
-		super(MEDIA_REALTCP, retryInterval, retryTimeout);
+		super("tcp", retryInterval, retryTimeout);
 		ipAddress = inIpAddress;
 		ipPort = inIpPort;
 		decodeFormat = "ost";
