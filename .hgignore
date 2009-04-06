@@ -1,6 +1,5 @@
 # use glob syntax.
 syntax: glob
-*.class
 bin
 runtime
 .DS_Store
