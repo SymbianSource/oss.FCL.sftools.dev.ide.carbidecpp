@@ -1,0 +1,482 @@
+# #################################################################
+# Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+# All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the License "Symbian Foundation License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+#
+# Initial Contributors:
+# Nokia Corporation - initial contribution.
+#
+# #################################################################
+
+Nokia CodeScanner Command Line Tool Release Notes
+=================================================
+
+Version 2.1.2
+=============
+- Added new IAD rule to check flag usage. IA must not use R&D flags 
+nor feature flags via preprocessor statements in the source code. 
+This means bldvariant.hrh and productvariant.hrh should not be used.
+This new rule is set to low severity in the "Other" category by 
+default. It can be configured by adding a <flags> script element 
+in the configuration file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <flags category="other" 
+           enable="true" 
+           severity="low"/>
+  </scripts>
+</codescannerConfig>
+
+- Added new IAD rule to check Central Repository usage. IA cannot 
+assume that the Central Repository is set up fully. This means the 
+return value of CRepository::get() cannot be ignored.
+This new rule is set to low severity in the "Other" category by 
+default. It can be configured by adding a <crepository> script 
+element in the configuration file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <crepository category="other" 
+                 enable="true" 
+                 severity="low"/>
+  </scripts>
+</codescannerConfig>
+
+- Added new IAD rule to check customizable icons. Due to device 
+customization requirements, IA must not remove any customization 
+done by the variant team. This means IA cannot include customizable 
+icons.
+This new rule is set to low severity in the "Other" category by 
+default. It can be configured by adding a <customizableicons> 
+script element in the configuration file. Names of icons can be 
+specified in the <iconsRE> element.
+Example :
+<codescannerConfig>
+  <scripts>
+    <customizableicons category="other" 
+                       enable="true" 
+                       severity="low">
+      <iconsRE>iconA.bmp|iconB.svg|iconC</iconsRE>
+    </customizableicons>
+  </scripts>
+</codescannerConfig>
+
+
+Version 2.1.1
+=============
+- Added support for user-defined rules. This can be done by
+adding a <customrules> element to the configuration file.
+Example :
+<codescannerConfig>
+  <customrules>
+    <customrule>
+      <name>myOwnRule</name>
+      <keyword type=”class”>CMyOwnClass</keyword>
+      <filetype>h</filetype>
+      <severity>low</severity>
+      <title>My CodeScanner rule targeting CMyOwnClass</title>
+      <description>Locate definition of CMyOwnClass</description>
+    </customrule>
+  </customrules>
+</codescannerConfig>
+More information on the syntax of this new element can be found in 
+the document "CodeScanner_XML_ConfigFile_Spec.doc".
+
+- When scanning with low severity rules, CodeScanner now 
+generates informative messages instead of warnings when the 
+StdOut output format is selected.
+
+- Added support to disable individual error/warning via
+CodeScanner commands embedded in comments. The command has the 
+following format : 
+  codescanner(::<rule name>)+
+Example :
+void CTestCase::Foo()
+{
+  array->At(a); // codescanner::accessArrayElementWithoutCheck
+  User::Leave(KErrNone); /* codescanner::LeaveNoError */
+}
+A complete list of CodeScanner rule names can be found in the 
+document "CodeScanner_Rules.doc".
+
+- Added new rule to check whether Cancel() function is called 
+in active object's destructor.
+Cancel() should always be called in active object's destructor 
+to cancel an outstanding request if there is one. If there is 
+no request pending then Cancel() just does nothing, but if we 
+do not call Cancel() when having an outstanding request a panic 
+will be raised.
+This new rule is set to low severity in the "Coding Standards"
+category by default. It can be configured by adding a 
+<missingcancel> script element in the configuration
+file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <missingcancel category="codingstandards" 
+                   enable="true" 
+                   severity="low"/>
+  </scripts>
+</codescannerConfig>
+
+-Updated the function parser in CodeScanner to filter out constant 
+initialization.
+
+- Updated active object checking rule to ignore After() from 
+RTimer type member variables.
+
+- Updated to skip excluded folders specified in configuration file 
+when generating component summary reports.
+
+
+Version 2.1.0
+=============
+- Previously CodeScanner has been distributed as a single-file
+executable which packs all the DLLs and library modules it needed 
+into an archive attached to itself. During runtime, it creates a 
+directory (_MEI<id>) in the user's temp directory, and extract 
+these files there. When execution is complete, it recursively 
+removes the entire directory it created. 
+Unfortunately the cleanup process sometimes fail. So over time 
+user's temp directory can be littered with these directories, 
+which can cause CodeScanner to fail if it tries to reuse a 
+directory that was created from a previous run.
+To address this problem, we separated all these modules from 
+CodeScanner.exe and shipping them "as is". This change should be
+transparent from user's point of view, except when copying
+CodeScanner to other locations on user's system.
+
+- Updated configuration file format to allow passing arguments 
+to CodeScanner. One can now add an <arguments> element to the 
+configuration file with one or more of the following 
+child elements :
+<input> - specify additional directory/file to scan
+<outputformat> (html|xml|std) - specify output format
+<lxr> - url to lxr site
+<lxrversion> - lxr version
+<timestampedoutput> (on/off) - create time-stamped output directory 
+Example:
+<codescannerConfig>
+  <arguments>
+    <input>C:\Testing\CodeScanner_Tests\Bug_6393\Includes</input>
+    <outputformat>html|xml</outputformat>
+    <lxr>http://s60lxr/source/</lxr>
+    <lxrversion>S60_3_2_200736</lxrversion>
+    <timestampedoutput>on</timestampedoutput>
+  </arguments>
+</codescannerConfig>
+
+- Added new rule to check stack-based resource objects not put 
+on the cleanup stack.
+If a stack-based resource object is not put on the cleanup stack 
+with CleanupClosePushL() or CleanupResetAndDestroyPushL(), and 
+a leaving function or ELeave is called, a memory leak occurs. 
+CodeScanner occasionally gives false positives for this issue. 
+Individual cases should be investigated.
+This new rule is set to low severity in the "Code Review"
+category by default. It can be configured by adding a 
+<resourcenotoncleanupstack> script element in the configuration
+file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <resourcenotoncleanupstack category="codereview" 
+                               enable="true" 
+                               severity="low"/>
+  </scripts>
+</codescannerConfig>
+
+- Added new rule to check inheritance order of M and C classes. 
+If a C class inherits first from an M class and then a C class,
+a panic can occur when trying to pop a CBase pointer pointing 
+to such a class from the cleanup stack when in fact a pointer 
+pointing to the first predecessor, the mixin class, was popped 
+instead.
+This new rule is set to high severity in the "Can Panic"
+category by default. It can be configured by adding a 
+<inheritanceorder> script element in the configuration file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <inheritanceorder category="canpanic" 
+                      enable="true" 
+                      severity="high"/>
+  </scripts>
+</codescannerConfig>
+
+- Updated rule for L-functions that cannot leave. It is now
+possible to specify functions to be ignored by this rule in the
+configuration file. This is done by adding a <LFunctionIgnoreRE> 
+element to the <LFunctionCantLeave> script element.
+Example:
+<codescannerConfig>
+  <scripts>
+    <LFunctionCantLeave enable="true">
+      <LFunctionIgnoreRE>RunL</LFunctionIgnoreRE>
+    </LFunctionCantLeave>
+  </scripts>
+</codescannerConfig>
+
+- Updated description of rule for badly-named enum members.
+
+- Updated NULL equality check rule to ignore pointer comparisons 
+with NULL inside various __ASSERT_XXX() macros.
+
+- Removed duplicate rule for hard-coded external drive letters. 
+There is now only 1 rule that check for this problem and it is 
+a low severity rule in the Coding Standard category.
+
+- Improved rule for accessing array element by [] without 
+checking range.
+
+
+Version 2.0.9
+=============
+- Updated check for Open() to allow assignment of return value on 
+a different line.
+Example :
+  TInt error = 
+    myFile.Open();
+
+
+Version 2.0.8
+=============
+- Updated check for C class not inheriting from another C class.
+It is now possible to specify C class that does not inherit from
+another C class in the configuration file. This is done by adding
+a <cclassIgnoreRE> element to the <missingcclass> script element.
+Example :
+<missingcclass enable="true">
+  <cclassIgnoreRE>CLogger|CKeypadData</cclassIgnoreRE>
+</missingcclass>
+
+- Updated check for ignored Open() return value.
+It is now possible to specify object or class with Open() method
+that does not return any value in the configuration file. 
+This is done by adding an <openIgnoreRE> element to the 
+<open> script element. For a local variable, one can specify 
+either the type or variable name in the <openIgnoreRE> element. 
+For other types of object, one should specify the object name in 
+the <openIgnoreRE> element. 
+Example:
+<open enable="true">
+  <openIgnoreRE>CKeyStore|iKeyStore|lKeyStore</openIgnoreRE>
+</open>
+
+- Fixed a bug where some scripts cannot be disabled from the
+configuration file.
+
+
+Version 2.0.7
+=============
+- Updated standard console output to include severity level and
+category information in the error/warning messages.
+
+- Incorporated Psyco module to improve scanning performance. Please
+refer to the document "MIT license.txt" for licensing info.
+
+
+Version 2.0.6
+=============
+- Updated check for CleanupStack::Pop(AndDestroy)() to ignore
+CleanupStack::Pop(TInt, TAny*) and 
+CleanupStack::PopAndDestroy(TInt, TAny*)
+
+- Updated check for Open() to allow handler of return value on a 
+different line.
+Example :
+  User::LeaveIfError(
+    myFile.Open());
+
+- Updated check for At() to ignore timer objects.
+Example :
+  TTime now;
+  iTimer.At(iStatus, now);
+
+- Improved handling of scanning of code with #ifdef/#else/#endif
+preprocessor commands. CodeScanner sometimes can be confused by
+code surrounded by these preprocessor commands, e.g. generating
+warnings on member variable deleted incorrectly, even when it 
+happens inside a destructor. This has been fixed.
+
+
+Version 2.0.5
+=============
+- Added new option to specify additional source directory/file :
+"-i <source dir/file>" -- specify additional directory/file to scan
+Example : codescanner -i C:\resources -i C:\includes
+          C:\sources C:\results
+
+
+Version 2.0.4
+=============
+- Updated HTML generation to use '/' instead of '\' when generating
+links; this change is needed for Mozilla Firefox compatibility.
+
+- Added new option to toggle creation of time-stamped directory for
+results :
+"-t on/off" -- create a time-stamped directory for results; default
+               is on
+Example : codescanner -t off C:\sources C:\results
+
+- Added new option to configure output format of results:
+"-o html|xml|std" -- specify output format : HTML, XML or StdOut;
+                     default output format is HTML
+Multiple output formats can be specified at the same time.
+Example : codescanner -o xml,html C:\sources C:\results
+
+- Updated configuration file format to allow user setting the
+category and severity of scripts individually. Each <scripts> element
+contains one or more Script elements, each of which corresponds to a
+CodeScanner rule. Each Script element has the following attributes:
+enable (boolean) – specifies whether a script is enabled by CodeScanner.
+severity (string) – specifies the severity level of a script.
+category (string) – specifies the category of a script.
+Example :
+<codescannerConfig>
+  <scripts>
+    <baddefines enable="true" severity="low" category="codingstandards"/>
+    <friend enable="true" severity="low" category="codereview"/>
+    <leave enable="true" severity="high" category="canpanic"/>
+  </scripts>
+</codescannerConfig>
+
+
+Version 2.0.3
+=============
+- Updated HTML generation so that links with the '#' character can be
+opened by Mozilla Firefox correctly.
+
+- Added new options to generate links to LXR server instead of local 
+file system. The new options are :
+"-x" -- specify URL of LXR site
+"-r" -- specify LXR version
+
+Example : codescanner -x http://some.lxr.server/sources/ -r S60_3_2_12
+C:\sources C:\results
+
+Once scanning is completed, the results will point to the remote 
+LXR server instead of the local "C:\sources" folder.
+*****This new feature has been contributed by James Uther of Nokia*****
+
+
+Version 2.0.2
+=============
+- Updated HTML generation so that source file links can be opened by
+Mozilla Firefox.
+
+- Improved handling of function parameter list spanning multiple lines.
+Example :
+void CMenuBar::MyMenu (const HBufC* a,
+                       const TDesC& b)
+{ ... }
+
+- Improved handling of TRAP block spanning multiple lines.
+Example :
+  TRAPD(
+    err,
+    WaitDialogL(aErrorCode)
+  );
+
+- Updated handling of NULL equality check to allow comparison with NULL
+in return statement. 
+Example :
+  return (ptr != NULL);
+
+- Updated handling of hard-coded numbers so that '2' is no longer 
+considered a 'magic number'.
+
+
+Version 2.0.1b
+==============
+- When checking for leaving functions called in non-leaving functions,
+Cases where macros are used for class declarations are now filtered out.
+Example :
+NONSHARABLE_CLASS(CMyClass) : public CActive 
+{ ... }
+
+- When generating individual component report, text containing HTML tags
+(eg. <s>, <i>) are now cleaned up before written to file. This
+prevents unintended text formatting.
+
+- Corrected spelling mistake in usage info.
+
+
+Version 2.0.0a
+==============
+- This is the first development release of Nokia's version of CodeScanner CLI. 
+Our goals for this release are to :
+1) support feature-functions available in Mobile Innovation's CodeScanner v 1.11
+2) address reported issues
+
+The following are known issues from CodeScanner v 1.11 :
+1) CodeScanner output is not entirely compatible with Mozilla Firefox. 
+For security reasons, Mozila Firefox and Mozilla Suite do not allow links to 
+local files (and directories). This includes linking to files on the hard drive, 
+on mapped network drives, and those accessible via UNC paths.
+2) CodeScanner treats 2 as a ‘magic number’. In User Interface code, '2' is 
+often used to calculate offsets and should not always be replaced by variable.
+3) CodeScanner does not ignore CleanupStack::Pop() without parameters 
+if CleanupClosePushL() or similar utility is used.
+4) CodeScanner flags all use of #if in .h files irrespective of context.
+
+Licensing Notes
+===============
+CodeScanner is built with Python 2.5.1 but does NOT use any of the following
+files or modules :
+python2.5-2.5.1/Lib/test/decimaltestdata/abs.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/add.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/base.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/clamp.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/compare.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/decimal128.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/decimal32.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/decimal64.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/divide.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/divideint.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/inexact.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/max.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/min.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/minus.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/multiply.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/normalize.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/plus.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/power.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/quantize.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/randomBound32.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/randoms.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/remainder.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/remainderNear.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/rescale.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/rounding.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/samequantum.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/squareroot.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/subtract.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/testall.decTest 
+python2.5-2.5.1/Lib/test/decimaltestdata/tointegral.decTest 
+/Demo/curses/tclock.py python2.5-2.5.1/Modules/expat/ascii.h 
+python2.5-2.5.1/Modules/expat/asciitab.h 
+python2.5-2.5.1/Modules/expat/expat.h 
+python2.5-2.5.1/Modules/expat/expat_external.h 
+python2.5-2.5.1/Modules/expat/iasciitab.h 
+python2.5-2.5.1/Modules/expat/latin1tab.h 
+python2.5-2.5.1/Modules/expat/utf8tab.h 
+python2.5-2.5.1/Modules/expat/xmlparse.c 
+python2.5-2.5.1/Modules/expat/xmlrole.c 
+python2.5-2.5.1/Modules/expat/xmlrole.h 
+python2.5-2.5.1/Modules/expat/xmltok.c 
+python2.5-2.5.1/Modules/expat/xmltok.h 
+python2.5-2.5.1/Modules/expat/xmltok_impl.c 
+python2.5-2.5.1/Modules/expat/xmltok_impl.h 
+python2.5-2.5.1/Doc/html/about.dat 
+python2.5-2.5.1/Doc/html/stdabout.dat 
+python2.5-2.5.1/Modules/expat/pyexpatns.h 
+python2.5-2.5.1/Lib/robotparser.py 
+python2.5-2.5.1/Lib/ctypes/macholib/README.ctypes 
+python2.5-2.5.1/Lib/wsgiref.egg-info
+
+Please refer to the document "python 2_5_1 licenses.txt" for licensing info.
