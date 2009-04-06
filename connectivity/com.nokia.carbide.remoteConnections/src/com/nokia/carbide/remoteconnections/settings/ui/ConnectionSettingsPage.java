@@ -799,8 +799,10 @@ public class ConnectionSettingsPage extends WizardPage {
 					agentTestTabComposite.layout(true, true);
 				}
 				disposeConnectedService();
-				String buttonLabel = Messages.getString("ConnectionSettingsPage.StartServiceTestButtonLabel"); //$NON-NLS-1$
-				serviceTestButton.setText(buttonLabel);
+				if (!serviceTestButton.isDisposed()) {
+					String buttonLabel = Messages.getString("ConnectionSettingsPage.StartServiceTestButtonLabel"); //$NON-NLS-1$
+					serviceTestButton.setText(buttonLabel);
+				}
 			}
 		});
 	}
