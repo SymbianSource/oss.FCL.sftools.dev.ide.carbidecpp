@@ -27,6 +27,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(TestRVCTErrorParser.class);
 		suite.addTestSuite(TestMakmakeErrorParser.class);
+		suite.addTestSuite(TestSBSv2ErrorParser.class);
 		//$JUnit-END$
 		return suite;
 	}
