@@ -40,3 +40,10 @@ make: *** [J://epoc32/release/winscw/udeb/tconetestserver.lib] Error 2
 make: *** Waiting for unfinished jobs....
 
 </buildlog>
+
+<![CDATA[
++ C:/APPS/rvct22_616/bin/armlink.exe --diag_suppress 6331 --bpabi --reloc --no_scanlib --datacompressor=off --debug --dll --split --rw-base 0x400000 --symver_soname --soname 'helloworld{000a0000}[e800005a].exe' --entry _E32Startup 'P:/epoc32/release/armv5/udeb/eexe.lib(uc_exe_.o)' -o P:/epoc32/release/armv5/udeb/helloworld.exe.sym --symbols --list P:/epoc32/release/armv5/udeb/helloworld.exe.map --via P:/epoc32/build/helloworld/c_34df0185eb73bae4/helloworld_exe/armv5/udeb/helloworld_udeb_objects.via P:/epoc32/release/armv5/udeb/usrt2_2.lib P:/epoc32/release/armv5/lib/euser.dso P:/epoc32/release/armv5/lib/apparc.dso P:/epoc32/release/armv5/lib/cone.dso P:/epoc32/release/armv5/lib/eikcore.dso P:/epoc32/release/armv5/lib/gdi.dso P:/epoc32/release/armv5/lib/drtaeabi.dso P:/epoc32/release/armv5/lib/dfpaeabi.dso P:/epoc32/release/armv5/lib/dfprvct2_2.dso P:/epoc32/release/armv5/lib/drtrvct2_2.dso 'C:/APPS/rvct22_616/lib/armlib/h_t__uf.l(switch8.o)'
+Fatal error: L6002U: Could not open file P:/epoc32/build/helloworld/c_34df0185eb73bae4/helloworld_exe/armv5/udeb/HelloWorld_AppUi.o: No such file or directory
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning, 0 error and 1 fatal error messages.
+]]>
