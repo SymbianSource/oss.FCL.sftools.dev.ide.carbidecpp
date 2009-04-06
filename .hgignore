@@ -2,4 +2,4 @@
 syntax: glob
 bin
 runtime
-.DS_Store
+\.DS_Store

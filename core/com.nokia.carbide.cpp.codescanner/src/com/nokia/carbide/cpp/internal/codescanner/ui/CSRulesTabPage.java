@@ -92,11 +92,12 @@ public class CSRulesTabPage extends Composite {
 	private Button enableAllButton = null;
 	private Button disableAllButton = null;
 	private String cclassIgnore = "";
+	private String icons = "";
 	private String lfunctionIgnore = "";
+	private int longLinesLength = 0;
 	private String forbiddenWords = "";
 	private String openIgnore = "";
 	private String worryingComments = "";
-	private int longLinesLength = 0;
 	private CSConfigSettings defaultConfigSettings = null;
 	private List<CSRule> rules = null;
 	private CSRulesSorter rulesSorter = null;
@@ -282,6 +283,10 @@ public class CSRulesTabPage extends Composite {
 		rulesTableViewer.setInput(rules.toArray());
 		setCheckedElements();
 		cclassIgnore = defaultConfigSettings.getScriptCClassIgnore();
+		icons = defaultConfigSettings.getScriptIcons();
+		if (icons == null) {
+			icons = "";
+		}
 		longLinesLength = defaultConfigSettings.getScriptLongLinesLength();
 		forbiddenWords = defaultConfigSettings.getScriptForbiddenWords();
 		openIgnore = defaultConfigSettings.getScriptOpenIgnore();
@@ -341,6 +346,7 @@ public class CSRulesTabPage extends Composite {
 		// retrieve other stored values
 		cclassIgnore = store.getString(CSPreferenceConstants.CCLASSIGNORE);
 		forbiddenWords = store.getString(CSPreferenceConstants.FORBIDEENWORDS);
+		icons = store.getString(CSPreferenceConstants.ICONS);
 		lfunctionIgnore = store.getString(CSPreferenceConstants.LFUNCTIONIGNORE);
 		longLinesLength = store.getInt(CSPreferenceConstants.LONGLINES_LENGTH);
 		openIgnore = store.getString(CSPreferenceConstants.OPENIGNORE);
@@ -398,6 +404,7 @@ public class CSRulesTabPage extends Composite {
 		// retrieve other stored values
 		cclassIgnore = pageSettings.get(CSPreferenceConstants.CCLASSIGNORE);
 		forbiddenWords = pageSettings.get(CSPreferenceConstants.FORBIDEENWORDS);
+		icons = pageSettings.get(CSPreferenceConstants.ICONS);
 		lfunctionIgnore = pageSettings.get(CSPreferenceConstants.LFUNCTIONIGNORE);
 		longLinesLength = pageSettings.getInt(CSPreferenceConstants.LONGLINES_LENGTH);
 		openIgnore = pageSettings.get(CSPreferenceConstants.OPENIGNORE);
@@ -438,6 +445,7 @@ public class CSRulesTabPage extends Composite {
 		// store other values
 		store.setValue(CSPreferenceConstants.CCLASSIGNORE, cclassIgnore);
 		store.setValue(CSPreferenceConstants.FORBIDEENWORDS, forbiddenWords);
+		store.setValue(CSPreferenceConstants.ICONS, icons);
 		store.setValue(CSPreferenceConstants.LFUNCTIONIGNORE, lfunctionIgnore);
 		store.setValue(CSPreferenceConstants.LONGLINES_LENGTH, longLinesLength);
 		store.setValue(CSPreferenceConstants.OPENIGNORE, openIgnore);
@@ -478,6 +486,7 @@ public class CSRulesTabPage extends Composite {
 		// store other values
 		pageSettings.put(CSPreferenceConstants.CCLASSIGNORE, cclassIgnore);
 		pageSettings.put(CSPreferenceConstants.FORBIDEENWORDS, forbiddenWords);
+		pageSettings.put(CSPreferenceConstants.ICONS, icons);
 		pageSettings.put(CSPreferenceConstants.LFUNCTIONIGNORE, lfunctionIgnore);
 		pageSettings.put(CSPreferenceConstants.LONGLINES_LENGTH, longLinesLength);
 		pageSettings.put(CSPreferenceConstants.OPENIGNORE, openIgnore);
@@ -516,6 +525,11 @@ public class CSRulesTabPage extends Composite {
 		store.setDefault(CSPreferenceConstants.RULES_ENABLED, enabledString);
 		store.setDefault(CSPreferenceConstants.CCLASSIGNORE, configSettings.getScriptCClassIgnore());
 		store.setDefault(CSPreferenceConstants.FORBIDEENWORDS, configSettings.getScriptForbiddenWords());
+		String icons = configSettings.getScriptIcons();
+		if (icons == null) {
+			icons = "";
+		}
+		store.setDefault(CSPreferenceConstants.ICONS, icons);
 		store.setDefault(CSPreferenceConstants.LFUNCTIONIGNORE, configSettings.getScriptLFunctionIgnore());
 		store.setDefault(CSPreferenceConstants.LONGLINES_LENGTH, configSettings.getScriptLongLinesLength());
 		store.setDefault(CSPreferenceConstants.OPENIGNORE, configSettings.getScriptOpenIgnore());
@@ -552,6 +566,11 @@ public class CSRulesTabPage extends Composite {
 		pageSettings.put(CSPreferenceConstants.RULES_ENABLED, enabledString);
 		pageSettings.put(CSPreferenceConstants.CCLASSIGNORE, configSettings.getScriptCClassIgnore());
 		pageSettings.put(CSPreferenceConstants.FORBIDEENWORDS, configSettings.getScriptForbiddenWords());
+		String icons = configSettings.getScriptIcons();
+		if (icons == null) {
+			icons = "";
+		}
+		pageSettings.put(CSPreferenceConstants.ICONS, icons);
 		pageSettings.put(CSPreferenceConstants.LFUNCTIONIGNORE, configSettings.getScriptLFunctionIgnore());
 		pageSettings.put(CSPreferenceConstants.LONGLINES_LENGTH, configSettings.getScriptLongLinesLength());
 		pageSettings.put(CSPreferenceConstants.OPENIGNORE, configSettings.getScriptOpenIgnore());
@@ -574,10 +593,12 @@ public class CSRulesTabPage extends Composite {
 					String extraAttr = "";
 
 					CSScript script = rule.getScript();
-					if (script.equals(CSScript.script_longlines)) {
+					if (script.equals(CSScript.script_customizableicons)) {
 						hasExtra = true;
-						extraAttrTitle = Messages.getString("RulesTabPage.EditLongLinesLabel");
-						extraAttr = longLinesLength + "";
+						extraAttrTitle = Messages.getString("RulesTabPage.EditIconsLabel");
+						if (icons != null) {
+							extraAttr = icons;
+						}
 					}
 					else
 					if (script.equals(CSScript.script_forbiddenwords)) {
@@ -594,6 +615,12 @@ public class CSRulesTabPage extends Composite {
 						if (lfunctionIgnore != null) {
 							extraAttr = lfunctionIgnore;
 						}
+					}
+					else
+					if (script.equals(CSScript.script_longlines)) {
+						hasExtra = true;
+						extraAttrTitle = Messages.getString("RulesTabPage.EditLongLinesLabel");
+						extraAttr = longLinesLength + "";
 					}
 					else
 					if (script.equals(CSScript.script_missingcclass)) {
@@ -637,6 +664,10 @@ public class CSRulesTabPage extends Composite {
 						}
 						String newExtraAttr = dialog.getExtra();
 						if (dialog.hasExtra() && !newExtraAttr.equals(extraAttr)) {
+							if (script.equals(CSScript.script_customizableicons)) {
+								icons = newExtraAttr;
+							}
+							else
 							if (script.equals(CSScript.script_forbiddenwords)) {
 								forbiddenWords = newExtraAttr;
 							}

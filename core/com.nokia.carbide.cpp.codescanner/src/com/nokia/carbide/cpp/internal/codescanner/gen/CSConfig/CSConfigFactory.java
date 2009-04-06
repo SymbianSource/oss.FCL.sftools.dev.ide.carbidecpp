@@ -253,6 +253,15 @@ public interface CSConfigFactory extends EFactory {
 	ControlornullType createControlornullType();
 
 	/**
+	 * Returns a new object of class '<em>Crepository Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Crepository Type</em>'.
+	 * @generated
+	 */
+	CrepositoryType createCrepositoryType();
+
+	/**
 	 * Returns a new object of class '<em>Ctltargettype Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -260,6 +269,15 @@ public interface CSConfigFactory extends EFactory {
 	 * @generated
 	 */
 	CtltargettypeType createCtltargettypeType();
+
+	/**
+	 * Returns a new object of class '<em>Customizableicons Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Customizableicons Type</em>'.
+	 * @generated
+	 */
+	CustomizableiconsType createCustomizableiconsType();
 
 	/**
 	 * Returns a new object of class '<em>Customrules Type</em>'.
@@ -413,6 +431,15 @@ public interface CSConfigFactory extends EFactory {
 	 * @generated
 	 */
 	ExternaldrivelettersType createExternaldrivelettersType();
+
+	/**
+	 * Returns a new object of class '<em>Flags Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Flags Type</em>'.
+	 * @generated
+	 */
+	FlagsType createFlagsType();
 
 	/**
 	 * Returns a new object of class '<em>Foff Type</em>'.

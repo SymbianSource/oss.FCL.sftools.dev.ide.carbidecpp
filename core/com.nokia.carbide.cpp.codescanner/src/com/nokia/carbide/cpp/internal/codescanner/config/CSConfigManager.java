@@ -323,6 +323,11 @@ public class CSConfigManager implements IResourceChangeListener {
 
 		configSettings.setScriptCClassIgnore(pageSettings.get(CSPreferenceConstants.CCLASSIGNORE));
 		configSettings.setScriptForbiddenWords(pageSettings.get(CSPreferenceConstants.FORBIDEENWORDS));
+		String icons = pageSettings.get(CSPreferenceConstants.ICONS);
+		if (icons.length() == 0) {
+			icons = null;
+		}
+		configSettings.setScriptIcons(icons);
 		configSettings.setScriptLFunctionIgnore(pageSettings.get(CSPreferenceConstants.LFUNCTIONIGNORE));
 		configSettings.setScriptLongLinesLength(pageSettings.getInt(CSPreferenceConstants.LONGLINES_LENGTH));
 		configSettings.setScriptOpenIgnore(pageSettings.get(CSPreferenceConstants.OPENIGNORE));
@@ -405,6 +410,11 @@ public class CSConfigManager implements IResourceChangeListener {
 
 		configSettings.setScriptCClassIgnore(store.getString(CSPreferenceConstants.CCLASSIGNORE));
 		configSettings.setScriptForbiddenWords(store.getString(CSPreferenceConstants.FORBIDEENWORDS));
+		String icons = store.getString(CSPreferenceConstants.ICONS);
+		if (icons != null && icons.length() == 0) {
+			icons = null;
+		}
+		configSettings.setScriptIcons(icons);
 		configSettings.setScriptLFunctionIgnore(store.getString(CSPreferenceConstants.LFUNCTIONIGNORE));
 		configSettings.setScriptLongLinesLength(store.getInt(CSPreferenceConstants.LONGLINES_LENGTH));
 		configSettings.setScriptOpenIgnore(store.getString(CSPreferenceConstants.OPENIGNORE));
@@ -477,6 +487,7 @@ public class CSConfigManager implements IResourceChangeListener {
 
     		settings.put(CSPreferenceConstants.CCLASSIGNORE, getCClassIgnoreFromConfig(configSettings));
     		settings.put(CSPreferenceConstants.FORBIDEENWORDS, getForbiddenWordsFromConfig(configSettings));
+    		settings.put(CSPreferenceConstants.ICONS, getIconsFromConfig(configSettings));
     		settings.put(CSPreferenceConstants.LFUNCTIONIGNORE, getLFunctionIgnoreFromConfig(configSettings));
     		settings.put(CSPreferenceConstants.LONGLINES_LENGTH, getLongLinesLengthFromConfig(configSettings));
     		settings.put(CSPreferenceConstants.OPENIGNORE, getOpenIgnoreFromConfig(configSettings));
@@ -540,6 +551,7 @@ public class CSConfigManager implements IResourceChangeListener {
 
     		store.setValue(CSPreferenceConstants.CCLASSIGNORE, getCClassIgnoreFromConfig(configSettings));
     		store.setValue(CSPreferenceConstants.FORBIDEENWORDS, getForbiddenWordsFromConfig(configSettings));
+    		store.setValue(CSPreferenceConstants.ICONS, getIconsFromConfig(configSettings));
     		store.setValue(CSPreferenceConstants.LFUNCTIONIGNORE, getLFunctionIgnoreFromConfig(configSettings));
     		store.setValue(CSPreferenceConstants.LONGLINES_LENGTH, getLongLinesLengthFromConfig(configSettings));
         	store.setValue(CSPreferenceConstants.OPENIGNORE, getOpenIgnoreFromConfig(configSettings));
@@ -605,6 +617,23 @@ public class CSConfigManager implements IResourceChangeListener {
 		String value = configSettings.getScriptForbiddenWords();
 		if (value == null) {
 			value = getDefaultConfig().getScriptForbiddenWords();
+		}
+		return value;
+	}
+
+	/**
+	 * Get the customizable icons list from from a CodeScanner configuration settings. 
+	 * If the list does not exist in, get it from the default configuration settings.
+	 * @param configSettings - CodeScanner configuration settings to be read
+	 * @return customizable icons list as a string
+	 */
+	private String getIconsFromConfig(CSConfigSettings configSettings) {
+		String value = configSettings.getScriptIcons();
+		if (value == null) {
+			value = getDefaultConfig().getScriptIcons();
+		}
+		if (value == null) {
+			value = "";
 		}
 		return value;
 	}

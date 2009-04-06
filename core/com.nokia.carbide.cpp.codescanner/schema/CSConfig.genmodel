@@ -2,10 +2,8 @@
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.nokia.carbide.cpp.codescanner/src"
-    modelPluginID="com.nokia.carbide.cpp.codescanner" modelName="CSConfig" editPluginClass="com.nokia.carbide.cpp.codescanner.gen.CSConfig.provider.CSConfigEditPlugin"
-    editorPluginClass="com.nokia.carbide.cpp.codescanner.gen.CSConfig.presentation.CSConfigEditorPlugin"
-    testSuiteClass="com.nokia.carbide.cpp.codescanner.tests.gen.CSConfigAllTests"
-    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="5.0">
+    modelPluginID="com.nokia.carbide.cpp.codescanner" modelName="CSConfig" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="5.0" copyrightFields="false">
   <foreignModel>CSConfig.xsd</foreignModel>
   <genPackages prefix="CSConfig" basePackage="com.nokia.carbide.cpp.internal.codescanner.gen"
       resource="XML" disposableProviderFactory="true" loadInitialization="true" literalsInterface="false"
@@ -155,10 +153,21 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ControlornullType/enable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ControlornullType/severity"/>
     </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CrepositoryType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CrepositoryType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CrepositoryType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CrepositoryType/severity"/>
+    </genClasses>
     <genClasses ecoreClass="CSConfig.ecore#//CtltargettypeType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CtltargettypeType/category"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CtltargettypeType/enable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CtltargettypeType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//CustomizableiconsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomizableiconsType/iconsRE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomizableiconsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomizableiconsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//CustomizableiconsType/severity"/>
     </genClasses>
     <genClasses ecoreClass="CSConfig.ecore#//CustomrulesType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//CustomrulesType/customrule"/>
@@ -224,7 +233,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/constnames"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/consttdescptr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/controlornull"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/crepository"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/ctltargettype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/customizableicons"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/customrule"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/customrules"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/debugrom"/>
@@ -244,6 +255,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/exportpurevirtual"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/externaldriveletters"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/filetype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/flags"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/foff"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/forbiddenwords"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/forgottoputptroncleanupstack"/>
@@ -251,6 +263,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/functionality"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/goto"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/high"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//DocumentRoot/iconsRE"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/ifassignments"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/ifpreprocessor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSConfig.ecore#//DocumentRoot/inheritanceorder"/>
@@ -385,6 +398,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExternaldrivelettersType/category"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExternaldrivelettersType/enable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//ExternaldrivelettersType/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="CSConfig.ecore#//FlagsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FlagsType/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FlagsType/enable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FlagsType/severity"/>
     </genClasses>
     <genClasses ecoreClass="CSConfig.ecore#//FoffType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSConfig.ecore#//FoffType/category"/>
@@ -682,7 +700,9 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/constnames"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/consttdescptr"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/controlornull"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/crepository"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/ctltargettype"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/customizableicons"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/debugrom"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/declarename"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/deleteMemberVariable"/>
@@ -696,6 +716,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/exportinline"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/exportpurevirtual"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/externaldriveletters"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/flags"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/foff"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/forbiddenwords"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSConfig.ecore#//ScriptsType/forgottoputptroncleanupstack"/>

@@ -340,8 +340,12 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getConsttdescptr();
 			case script_controlornull:
 				return this.csConfig.getScripts().getControlornull();
+			case script_crepository:
+				return this.csConfig.getScripts().getCrepository();
 			case script_ctltargettype:
 				return this.csConfig.getScripts().getCtltargettype();
+			case script_customizableicons:
+				return this.csConfig.getScripts().getCustomizableicons();
 			case script_debugrom:
 				return this.csConfig.getScripts().getDebugrom();
 			case script_declarename:
@@ -366,8 +370,8 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getExportinline();
 			case script_exportpurevirtual:
 				return this.csConfig.getScripts().getExportpurevirtual();
-//			case script_externaldriveletters:
-//				return this.csConfig.getScripts().getExternaldriveletters();
+			case script_flags:
+				return this.csConfig.getScripts().getFlags();
 			case script_foff:
 				return this.csConfig.getScripts().getFoff();
 			case script_forbiddenwords:
@@ -553,8 +557,12 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getConsttdescptr().isEnable();
 			case script_controlornull:
 				return this.csConfig.getScripts().getControlornull().isEnable();
+			case script_crepository:
+				return this.csConfig.getScripts().getCrepository().isEnable();
 			case script_ctltargettype:
 				return this.csConfig.getScripts().getCtltargettype().isEnable();
+			case script_customizableicons:
+				return this.csConfig.getScripts().getCustomizableicons().isEnable();
 			case script_debugrom:
 				return this.csConfig.getScripts().getDebugrom().isEnable();
 			case script_declarename:
@@ -579,8 +587,8 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getExportinline().isEnable();
 			case script_exportpurevirtual:
 				return this.csConfig.getScripts().getExportpurevirtual().isEnable();
-//			case script_externaldriveletters:
-//				return this.csConfig.getScripts().getExternaldriveletters().isEnable();
+			case script_flags:
+				return this.csConfig.getScripts().getFlags().isEnable();
 			case script_foff:
 				return this.csConfig.getScripts().getFoff().isEnable();
 			case script_forbiddenwords:
@@ -784,8 +792,14 @@ public class CSConfigSettings {
 			case script_controlornull:
 				this.csConfig.getScripts().getControlornull().setEnable(value);
 				break;
+			case script_crepository:
+				this.csConfig.getScripts().getCrepository().setEnable(value);
+				break;
 			case script_ctltargettype:
 				this.csConfig.getScripts().getCtltargettype().setEnable(value);
+				break;
+			case script_customizableicons:
+				this.csConfig.getScripts().getCustomizableicons().setEnable(value);
 				break;
 			case script_debugrom:
 				this.csConfig.getScripts().getDebugrom().setEnable(value);
@@ -823,9 +837,9 @@ public class CSConfigSettings {
 			case script_exportpurevirtual:
 				this.csConfig.getScripts().getExportpurevirtual().setEnable(value);
 				break;
-//			case script_externaldriveletters:
-//				this.csConfig.getScripts().getExternaldriveletters().setEnable(value);
-//				break;
+			case script_flags:
+				this.csConfig.getScripts().getFlags().setEnable(value);
+				break;
 			case script_foff:
 				this.csConfig.getScripts().getFoff().setEnable(value);
 				break;
@@ -1079,8 +1093,12 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getConsttdescptr().getCategory().toString();
 			case script_controlornull:
 				return this.csConfig.getScripts().getControlornull().getCategory().toString();
+			case script_crepository:
+				return this.csConfig.getScripts().getCrepository().getCategory().toString();
 			case script_ctltargettype:
 				return this.csConfig.getScripts().getCtltargettype().getCategory().toString();
+			case script_customizableicons:
+				return this.csConfig.getScripts().getCustomizableicons().getCategory().toString();
 			case script_debugrom:
 				return this.csConfig.getScripts().getDebugrom().getCategory().toString();
 			case script_declarename:
@@ -1105,8 +1123,8 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getExportinline().getCategory().toString();
 			case script_exportpurevirtual:
 				return this.csConfig.getScripts().getExportpurevirtual().getCategory().toString();
-//			case script_externaldriveletters:
-//				return this.csConfig.getScripts().getExternaldriveletters().getCategory().toString();
+			case script_flags:
+				return this.csConfig.getScripts().getFlags().getCategory().toString();
 			case script_foff:
 				return this.csConfig.getScripts().getFoff().getCategory().toString();
 			case script_forbiddenwords:
@@ -1311,8 +1329,14 @@ public class CSConfigSettings {
 			case script_controlornull:
 				this.csConfig.getScripts().getControlornull().setCategory(category);
 				break;
+			case script_crepository:
+				this.csConfig.getScripts().getCrepository().setCategory(category);
+				break;
 			case script_ctltargettype:
 				this.csConfig.getScripts().getCtltargettype().setCategory(category);
+				break;
+			case script_customizableicons:
+				this.csConfig.getScripts().getCustomizableicons().setCategory(category);
 				break;
 			case script_debugrom:
 				this.csConfig.getScripts().getDebugrom().setCategory(category);
@@ -1350,9 +1374,9 @@ public class CSConfigSettings {
 			case script_exportpurevirtual:
 				this.csConfig.getScripts().getExportpurevirtual().setCategory(category);
 				break;
-//			case script_externaldriveletters:
-//				this.csConfig.getScripts().getExternaldriveletters().setCategory(category);
-//				break;
+			case script_flags:
+				this.csConfig.getScripts().getFlags().setCategory(category);
+				break;
 			case script_foff:
 				this.csConfig.getScripts().getFoff().setCategory(category);
 				break;
@@ -1606,8 +1630,12 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getConsttdescptr().getSeverity().toString();
 			case script_controlornull:
 				return this.csConfig.getScripts().getControlornull().getSeverity().toString();
+			case script_crepository:
+				return this.csConfig.getScripts().getCrepository().getSeverity().toString();
 			case script_ctltargettype:
 				return this.csConfig.getScripts().getCtltargettype().getSeverity().toString();
+			case script_customizableicons:
+				return this.csConfig.getScripts().getCustomizableicons().getSeverity().toString();
 			case script_debugrom:
 				return this.csConfig.getScripts().getDebugrom().getSeverity().toString();
 			case script_declarename:
@@ -1632,8 +1660,8 @@ public class CSConfigSettings {
 				return this.csConfig.getScripts().getExportinline().getSeverity().toString();
 			case script_exportpurevirtual:
 				return this.csConfig.getScripts().getExportpurevirtual().getSeverity().toString();
-//			case script_externaldriveletters:
-//				return this.csConfig.getScripts().getExternaldriveletters().getSeverity().toString();
+			case script_flags:
+				return this.csConfig.getScripts().getFlags().getSeverity().toString();
 			case script_foff:
 				return this.csConfig.getScripts().getFoff().getSeverity().toString();
 			case script_forbiddenwords:
@@ -1838,8 +1866,14 @@ public class CSConfigSettings {
 			case script_controlornull:
 				this.csConfig.getScripts().getControlornull().setSeverity(severity);
 				break;
+			case script_crepository:
+				this.csConfig.getScripts().getCrepository().setSeverity(severity);
+				break;
 			case script_ctltargettype:
 				this.csConfig.getScripts().getCtltargettype().setSeverity(severity);
+				break;
+			case script_customizableicons:
+				this.csConfig.getScripts().getCustomizableicons().setSeverity(severity);
 				break;
 			case script_debugrom:
 				this.csConfig.getScripts().getDebugrom().setSeverity(severity);
@@ -1877,9 +1911,9 @@ public class CSConfigSettings {
 			case script_exportpurevirtual:
 				this.csConfig.getScripts().getExportpurevirtual().setSeverity(severity);
 				break;
-//			case script_externaldriveletters:
-//				this.csConfig.getScripts().getExternaldriveletters().setSeverity(severity);
-//				break;
+			case script_flags:
+				this.csConfig.getScripts().getFlags().setSeverity(severity);
+				break;
 			case script_foff:
 				this.csConfig.getScripts().getFoff().setSeverity(severity);
 				break;
@@ -2120,6 +2154,22 @@ public class CSConfigSettings {
 	 */
 	public void setScriptForbiddenWords(String value) {
 		this.csConfig.getScripts().getForbiddenwords().setWordsRE(value);
+	}
+
+	/**
+	 * Retrieve the iconsRE value of the customizableicons script
+	 * @return iconsRE
+	 */
+	public String getScriptIcons() {
+		return this.csConfig.getScripts().getCustomizableicons().getIconsRE();
+	}
+
+	/**
+	 * Set the iconsRE value of the customizableicons script
+	 * @param value - new iconsRE value
+	 */
+	public void setScriptIcons(String value)	 {
+		this.csConfig.getScripts().getCustomizableicons().setIconsRE(value);
 	}
 
 	/**
@@ -2483,11 +2533,24 @@ public class CSConfigSettings {
 		script_Controlornull.setSeverity(SeverityType.HIGH);
 		scripts.setControlornull(script_Controlornull);
 
+		CrepositoryType script_Crepository = CSConfigFactory.eINSTANCE.createCrepositoryType();
+		script_Crepository.setCategory(CategoryType.OTHER);
+		script_Crepository.setEnable(true);
+		script_Crepository.setSeverity(SeverityType.LOW);
+		scripts.setCrepository(script_Crepository);
+
 		CtltargettypeType script_Ctltargettype = CSConfigFactory.eINSTANCE.createCtltargettypeType();
 		script_Ctltargettype.setCategory(CategoryType.FUNCTIONALITY);
 		script_Ctltargettype.setEnable(true);
 		script_Ctltargettype.setSeverity(SeverityType.MEDIUM);
 		scripts.setCtltargettype(script_Ctltargettype);
+
+		CustomizableiconsType script_Customizableicons = CSConfigFactory.eINSTANCE.createCustomizableiconsType();
+		script_Customizableicons.setCategory(CategoryType.OTHER);
+		script_Customizableicons.setEnable(true);
+		script_Customizableicons.setSeverity(SeverityType.LOW);
+		//script_Customizableicons.setIconsRE("");
+		scripts.setCustomizableicons(script_Customizableicons);
 
 		DebugromType script_Debugrom = CSConfigFactory.eINSTANCE.createDebugromType();
 		script_Debugrom.setCategory(CategoryType.PERFORMANCE);
@@ -2561,11 +2624,11 @@ public class CSConfigSettings {
 		script_Exportpurevirtual.setSeverity(SeverityType.MEDIUM);
 		scripts.setExportpurevirtual(script_Exportpurevirtual);
 
-//		ExternaldrivelettersType script_Externaldriveletters = CSConfigFactory.eINSTANCE.createExternaldrivelettersType();
-//		script_Externaldriveletters.setCategory(CategoryType.CANPANIC);
-//		script_Externaldriveletters.setEnable(true);
-//		script_Externaldriveletters.setSeverity(SeverityType.HIGH);
-//		scripts.setExternaldriveletters(script_Externaldriveletters);
+		FlagsType script_Flags = CSConfigFactory.eINSTANCE.createFlagsType();
+		script_Flags.setCategory(CategoryType.OTHER);
+		script_Flags.setEnable(true);
+		script_Flags.setSeverity(SeverityType.LOW);
+		scripts.setFlags(script_Flags);
 
 		FoffType script_Foff = CSConfigFactory.eINSTANCE.createFoffType();
 		script_Foff.setCategory(CategoryType.CODEREVIEW);
