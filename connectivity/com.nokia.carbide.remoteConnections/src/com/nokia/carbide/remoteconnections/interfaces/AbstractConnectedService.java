@@ -32,7 +32,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class AbstractConnectedService implements IConnectedService {
 	
-	protected final static int TIMEOUT = 2000;
+	public final static int TIMEOUT = 2000;
 	
 	public static class ConnectionFailException extends Exception {
 		public ConnectionFailException(String string) {
@@ -122,6 +122,7 @@ public abstract class AbstractConnectedService implements IConnectedService {
 	protected IRunnableContext runnableContext;
 	protected Status currentStatus;
 	protected Tester tester;
+	protected boolean manualTesting;
 
 	public AbstractConnectedService(IService service, AbstractSynchronizedConnection connection) {
 		this.service = service;
@@ -173,7 +174,7 @@ public abstract class AbstractConnectedService implements IConnectedService {
 	}
 
 	public void testStatus() {
-		if (!isEnabled())
+		if (!(isEnabled() || manualTesting))
 			return;
 			
 		final TestResult result[] = { null };
@@ -196,11 +197,15 @@ public abstract class AbstractConnectedService implements IConnectedService {
 			result[0] = runTestStatus(new NullProgressMonitor());
 		}
 		
-		if (!isEnabled()) // could be waiting for response past when service testing was disabled
+		if (!(isEnabled() || manualTesting)) // could be waiting for response past when service testing was disabled
 			return;
 		if (result[0].shortDescription != null && result[0].longDescription != null) {
 			currentStatus.setEStatus(result[0].estatus, result[0].shortDescription, result[0].longDescription);
 		}
+	}
+	
+	public void setManualTesting() {
+		manualTesting = true;
 	}
 
 	public boolean isEnabled() {
