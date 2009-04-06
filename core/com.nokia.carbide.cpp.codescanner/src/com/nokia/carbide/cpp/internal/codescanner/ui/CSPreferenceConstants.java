@@ -41,6 +41,7 @@ public class CSPreferenceConstants {
 	public final static String RULES_ENABLED		= "CodeScannerRulesEnabled";
 	public final static String CCLASSIGNORE			= "CodeScannerCClassIgnore";
 	public final static String FORBIDEENWORDS		= "CodeScannerForbiddenWords";
+	public final static String ICONS				= "CodeScannerIcons";
 	public final static String LFUNCTIONIGNORE		= "CodeScannerLFunctionIgnore";
 	public final static String LONGLINES_LENGTH		= "CodeScannerLongLinesLength";
 	public final static String OPENIGNORE			= "CodeScannerOpenIgnore";

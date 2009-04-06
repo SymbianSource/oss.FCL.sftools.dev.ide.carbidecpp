@@ -2,7 +2,7 @@
 <feature
       id="com.nokia.carbide.cpp"
       label="%featureName"
-      version="2.0.3.qualifier"
+      version="2.1.0.qualifier"
       provider-name="Nokia"
       plugin="com.nokia.carbide.cpp"
       image="Carbide_Image.png">

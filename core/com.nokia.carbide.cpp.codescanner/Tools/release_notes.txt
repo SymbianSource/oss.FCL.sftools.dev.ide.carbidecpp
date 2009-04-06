@@ -1,5 +1,70 @@
+# #################################################################
+# Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+# All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the License "Symbian Foundation License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.symbianfoundation.org/legal/sfl-v10.html".
+#
+# Initial Contributors:
+# Nokia Corporation - initial contribution.
+#
+# #################################################################
+
 Nokia CodeScanner Command Line Tool Release Notes
 =================================================
+
+Version 2.1.2
+=============
+- Added new IAD rule to check flag usage. IA must not use R&D flags 
+nor feature flags via preprocessor statements in the source code. 
+This means bldvariant.hrh and productvariant.hrh should not be used.
+This new rule is set to low severity in the "Other" category by 
+default. It can be configured by adding a <flags> script element 
+in the configuration file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <flags category="other" 
+           enable="true" 
+           severity="low"/>
+  </scripts>
+</codescannerConfig>
+
+- Added new IAD rule to check Central Repository usage. IA cannot 
+assume that the Central Repository is set up fully. This means the 
+return value of CRepository::get() cannot be ignored.
+This new rule is set to low severity in the "Other" category by 
+default. It can be configured by adding a <crepository> script 
+element in the configuration file. 
+Example :
+<codescannerConfig>
+  <scripts>
+    <crepository category="other" 
+                 enable="true" 
+                 severity="low"/>
+  </scripts>
+</codescannerConfig>
+
+- Added new IAD rule to check customizable icons. Due to device 
+customization requirements, IA must not remove any customization 
+done by the variant team. This means IA cannot include customizable 
+icons.
+This new rule is set to low severity in the "Other" category by 
+default. It can be configured by adding a <customizableicons> 
+script element in the configuration file. Names of icons can be 
+specified in the <iconsRE> element.
+Example :
+<codescannerConfig>
+  <scripts>
+    <customizableicons category="other" 
+                       enable="true" 
+                       severity="low">
+      <iconsRE>iconA.bmp|iconB.svg|iconC</iconsRE>
+    </customizableicons>
+  </scripts>
+</codescannerConfig>
+
 
 Version 2.1.1
 =============
@@ -18,17 +83,16 @@ Example :
     </customrule>
   </customrules>
 </codescannerConfig>
-Please refer to the document "CodeScanner XML Configuration File 
-Specification" (CodeScanner_XML_ConfigFile_Spec.doc) for more
-information on this new element.
+More information on the syntax of this new element can be found in 
+the document "CodeScanner_XML_ConfigFile_Spec.doc".
 
 - When scanning with low severity rules, CodeScanner now 
 generates informative messages instead of warnings when the 
 StdOut output format is selected.
 
 - Added support to disable individual error/warning via
-CodeScanner command embedded in comments. The format of this
-command : 
+CodeScanner commands embedded in comments. The command has the 
+following format : 
   codescanner(::<rule name>)+
 Example :
 void CTestCase::Foo()
@@ -58,6 +122,9 @@ Example :
                    severity="low"/>
   </scripts>
 </codescannerConfig>
+
+-Updated the function parser in CodeScanner to filter out constant 
+initialization.
 
 - Updated active object checking rule to ignore After() from 
 RTimer type member variables.
@@ -413,14 +480,3 @@ python2.5-2.5.1/Lib/ctypes/macholib/README.ctypes
 python2.5-2.5.1/Lib/wsgiref.egg-info
 
 Please refer to the document "python 2_5_1 licenses.txt" for licensing info.
-
-
-This version of CodeScanner is intended for Nokia internal use only.
-
-Please report any problems found to : 
-support.carbide@nokia.com
-
-
-Stephen Chong
-Nokia Corporation
-stephen.chong@nokia.com

@@ -17,6 +17,135 @@
 
 package com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl;
 
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.AccessArrayElementWithoutCheck2Type;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.AccessArrayElementWithoutCheckType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ActivestartType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ActivestopType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ArgumentsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ArraypassingType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ArrayptrcleanupType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.AssertdebuginvariantType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.BaddefinesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.BaseconstructType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CallActiveObjectWithoutCheckingOrStoppingType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CanpanicType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CategoriesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CategoryType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ChangenotificationType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CleanupType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CodereviewType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CodescannerConfigType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CodingstandardsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CommentcodeType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ConnectAndDontCloseMemberVariableType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ConnectType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ConstnamesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ConsttdescptrType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ControlornullType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CrepositoryType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CtltargettypeType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomizableiconsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomruleType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CustomrulesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DebugromType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DeclarenameType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DeleteMemberVariableType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DestructorType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentationType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DoubleSemiColonType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DrivelettersType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.EikbuttonsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.EikonenvstaticType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.EnummembersType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.EnumnamesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ExportinlineType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ExportpurevirtualType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ExternaldrivelettersType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FlagsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FoffType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ForbiddenwordsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ForgottoputptroncleanupstackType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FriendType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.FunctionalityType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.GotoType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.HighType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.IfassignmentsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.IfpreprocessorType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.InheritanceorderType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.IntleavesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.JmpType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.KeywordType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LFunctionCantLeaveType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LeaveNoErrorType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LeaveType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LeavingoperatorsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LegalType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LocalisationType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LonglinesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.LowType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MagicnumbersType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MclassdestructorType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MediumType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MemberlcType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MembervariablecallldType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MissingcancelType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MissingcclassType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MmpsourcepathType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MultilangrscType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MultipledeclarationsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MultipleinheritanceType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.MydocsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NamespaceType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NewlreferencesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NoleavetrapType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NonconsthbufcType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NonconsttdescType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NonleavenewType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NonunicodeskinsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.NullType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.OpenType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.OtherType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PanicType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PerformanceType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PointertoarraysType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PragmadisableType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PragmamessageType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PragmaotherType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PrivateinheritanceType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PushaddrvarType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.PushmemberType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ReadresourceType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ResourcenotoncleanupstackType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ResourcesonheapType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ReturndescriptoroutofscopeType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.RfsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.RssnamesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.SeveritiesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.SeverityType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.SourcesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.StringliteralsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.StringsinresourcefilesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.StructType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TcclassesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TclassdestructorType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TodocommentsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TrapcleanupType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TrapeleaveType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TraprunlType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.TrspassingType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UidsType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UncompressedaifType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UncompressedbmpType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UnicodesourceType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UserWaitForRequestType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UserafterType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.UserfreeType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.VariablenamesType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.VoidparameterType;
+import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.WorryingcommentsType;
 import com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.*;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -73,7 +202,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getConstnames <em>Constnames</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getConsttdescptr <em>Consttdescptr</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getControlornull <em>Controlornull</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getCrepository <em>Crepository</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getCtltargettype <em>Ctltargettype</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getCustomizableicons <em>Customizableicons</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getCustomrule <em>Customrule</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getCustomrules <em>Customrules</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getDebugrom <em>Debugrom</em>}</li>
@@ -93,6 +224,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getExportpurevirtual <em>Exportpurevirtual</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getExternaldriveletters <em>Externaldriveletters</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getFiletype <em>Filetype</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getFlags <em>Flags</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getFoff <em>Foff</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getForbiddenwords <em>Forbiddenwords</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getForgottoputptroncleanupstack <em>Forgottoputptroncleanupstack</em>}</li>
@@ -100,6 +232,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getFunctionality <em>Functionality</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getGoto <em>Goto</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getHigh <em>High</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getIconsRE <em>Icons RE</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getIfassignments <em>Ifassignments</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getIfpreprocessor <em>Ifpreprocessor</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.impl.DocumentRootImpl#getInheritanceorder <em>Inheritanceorder</em>}</li>
@@ -264,6 +397,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @ordered
 	 */
 	protected static final String FILETYPE_EDEFAULT = null;
+
+	/**
+	 * The default value of the '{@link #getIconsRE() <em>Icons RE</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIconsRE()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ICONS_RE_EDEFAULT = null;
 
 	/**
 	 * The default value of the '{@link #getInput() <em>Input</em>}' attribute.
@@ -1179,6 +1322,33 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public CrepositoryType getCrepository() {
+		return (CrepositoryType)getMixed().get(CSConfigPackage.eINSTANCE.getDocumentRoot_Crepository(), true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCrepository(CrepositoryType newCrepository, NotificationChain msgs) {
+		return ((FeatureMap.Internal)getMixed()).basicAdd(CSConfigPackage.eINSTANCE.getDocumentRoot_Crepository(), newCrepository, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCrepository(CrepositoryType newCrepository) {
+		((FeatureMap.Internal)getMixed()).set(CSConfigPackage.eINSTANCE.getDocumentRoot_Crepository(), newCrepository);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CtltargettypeType getCtltargettype() {
 		return (CtltargettypeType)getMixed().get(CSConfigPackage.eINSTANCE.getDocumentRoot_Ctltargettype(), true);
 	}
@@ -1199,6 +1369,33 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public void setCtltargettype(CtltargettypeType newCtltargettype) {
 		((FeatureMap.Internal)getMixed()).set(CSConfigPackage.eINSTANCE.getDocumentRoot_Ctltargettype(), newCtltargettype);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CustomizableiconsType getCustomizableicons() {
+		return (CustomizableiconsType)getMixed().get(CSConfigPackage.eINSTANCE.getDocumentRoot_Customizableicons(), true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCustomizableicons(CustomizableiconsType newCustomizableicons, NotificationChain msgs) {
+		return ((FeatureMap.Internal)getMixed()).basicAdd(CSConfigPackage.eINSTANCE.getDocumentRoot_Customizableicons(), newCustomizableicons, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCustomizableicons(CustomizableiconsType newCustomizableicons) {
+		((FeatureMap.Internal)getMixed()).set(CSConfigPackage.eINSTANCE.getDocumentRoot_Customizableicons(), newCustomizableicons);
 	}
 
 	/**
@@ -1692,6 +1889,33 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public FlagsType getFlags() {
+		return (FlagsType)getMixed().get(CSConfigPackage.eINSTANCE.getDocumentRoot_Flags(), true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetFlags(FlagsType newFlags, NotificationChain msgs) {
+		return ((FeatureMap.Internal)getMixed()).basicAdd(CSConfigPackage.eINSTANCE.getDocumentRoot_Flags(), newFlags, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFlags(FlagsType newFlags) {
+		((FeatureMap.Internal)getMixed()).set(CSConfigPackage.eINSTANCE.getDocumentRoot_Flags(), newFlags);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FoffType getFoff() {
 		return (FoffType)getMixed().get(CSConfigPackage.eINSTANCE.getDocumentRoot_Foff(), true);
 	}
@@ -1874,6 +2098,24 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public void setHigh(HighType newHigh) {
 		((FeatureMap.Internal)getMixed()).set(CSConfigPackage.eINSTANCE.getDocumentRoot_High(), newHigh);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIconsRE() {
+		return (String)getMixed().get(CSConfigPackage.eINSTANCE.getDocumentRoot_IconsRE(), true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIconsRE(String newIconsRE) {
+		((FeatureMap.Internal)getMixed()).set(CSConfigPackage.eINSTANCE.getDocumentRoot_IconsRE(), newIconsRE);
 	}
 
 	/**
@@ -4262,8 +4504,12 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return basicSetConsttdescptr(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__CONTROLORNULL:
 				return basicSetControlornull(null, msgs);
+			case CSConfigPackage.DOCUMENT_ROOT__CREPOSITORY:
+				return basicSetCrepository(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__CTLTARGETTYPE:
 				return basicSetCtltargettype(null, msgs);
+			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMIZABLEICONS:
+				return basicSetCustomizableicons(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULE:
 				return basicSetCustomrule(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULES:
@@ -4296,6 +4542,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return basicSetExportpurevirtual(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__EXTERNALDRIVELETTERS:
 				return basicSetExternaldriveletters(null, msgs);
+			case CSConfigPackage.DOCUMENT_ROOT__FLAGS:
+				return basicSetFlags(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__FOFF:
 				return basicSetFoff(null, msgs);
 			case CSConfigPackage.DOCUMENT_ROOT__FORBIDDENWORDS:
@@ -4529,8 +4777,12 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getConsttdescptr();
 			case CSConfigPackage.DOCUMENT_ROOT__CONTROLORNULL:
 				return getControlornull();
+			case CSConfigPackage.DOCUMENT_ROOT__CREPOSITORY:
+				return getCrepository();
 			case CSConfigPackage.DOCUMENT_ROOT__CTLTARGETTYPE:
 				return getCtltargettype();
+			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMIZABLEICONS:
+				return getCustomizableicons();
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULE:
 				return getCustomrule();
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULES:
@@ -4569,6 +4821,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getExternaldriveletters();
 			case CSConfigPackage.DOCUMENT_ROOT__FILETYPE:
 				return getFiletype();
+			case CSConfigPackage.DOCUMENT_ROOT__FLAGS:
+				return getFlags();
 			case CSConfigPackage.DOCUMENT_ROOT__FOFF:
 				return getFoff();
 			case CSConfigPackage.DOCUMENT_ROOT__FORBIDDENWORDS:
@@ -4583,6 +4837,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getGoto();
 			case CSConfigPackage.DOCUMENT_ROOT__HIGH:
 				return getHigh();
+			case CSConfigPackage.DOCUMENT_ROOT__ICONS_RE:
+				return getIconsRE();
 			case CSConfigPackage.DOCUMENT_ROOT__IFASSIGNMENTS:
 				return getIfassignments();
 			case CSConfigPackage.DOCUMENT_ROOT__IFPREPROCESSOR:
@@ -4857,8 +5113,14 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case CSConfigPackage.DOCUMENT_ROOT__CONTROLORNULL:
 				setControlornull((ControlornullType)newValue);
 				return;
+			case CSConfigPackage.DOCUMENT_ROOT__CREPOSITORY:
+				setCrepository((CrepositoryType)newValue);
+				return;
 			case CSConfigPackage.DOCUMENT_ROOT__CTLTARGETTYPE:
 				setCtltargettype((CtltargettypeType)newValue);
+				return;
+			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMIZABLEICONS:
+				setCustomizableicons((CustomizableiconsType)newValue);
 				return;
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULE:
 				setCustomrule((CustomruleType)newValue);
@@ -4917,6 +5179,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case CSConfigPackage.DOCUMENT_ROOT__FILETYPE:
 				setFiletype((String)newValue);
 				return;
+			case CSConfigPackage.DOCUMENT_ROOT__FLAGS:
+				setFlags((FlagsType)newValue);
+				return;
 			case CSConfigPackage.DOCUMENT_ROOT__FOFF:
 				setFoff((FoffType)newValue);
 				return;
@@ -4937,6 +5202,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return;
 			case CSConfigPackage.DOCUMENT_ROOT__HIGH:
 				setHigh((HighType)newValue);
+				return;
+			case CSConfigPackage.DOCUMENT_ROOT__ICONS_RE:
+				setIconsRE((String)newValue);
 				return;
 			case CSConfigPackage.DOCUMENT_ROOT__IFASSIGNMENTS:
 				setIfassignments((IfassignmentsType)newValue);
@@ -5301,8 +5569,14 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case CSConfigPackage.DOCUMENT_ROOT__CONTROLORNULL:
 				setControlornull((ControlornullType)null);
 				return;
+			case CSConfigPackage.DOCUMENT_ROOT__CREPOSITORY:
+				setCrepository((CrepositoryType)null);
+				return;
 			case CSConfigPackage.DOCUMENT_ROOT__CTLTARGETTYPE:
 				setCtltargettype((CtltargettypeType)null);
+				return;
+			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMIZABLEICONS:
+				setCustomizableicons((CustomizableiconsType)null);
 				return;
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULE:
 				setCustomrule((CustomruleType)null);
@@ -5361,6 +5635,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case CSConfigPackage.DOCUMENT_ROOT__FILETYPE:
 				setFiletype(FILETYPE_EDEFAULT);
 				return;
+			case CSConfigPackage.DOCUMENT_ROOT__FLAGS:
+				setFlags((FlagsType)null);
+				return;
 			case CSConfigPackage.DOCUMENT_ROOT__FOFF:
 				setFoff((FoffType)null);
 				return;
@@ -5381,6 +5658,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return;
 			case CSConfigPackage.DOCUMENT_ROOT__HIGH:
 				setHigh((HighType)null);
+				return;
+			case CSConfigPackage.DOCUMENT_ROOT__ICONS_RE:
+				setIconsRE(ICONS_RE_EDEFAULT);
 				return;
 			case CSConfigPackage.DOCUMENT_ROOT__IFASSIGNMENTS:
 				setIfassignments((IfassignmentsType)null);
@@ -5717,8 +5997,12 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getConsttdescptr() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__CONTROLORNULL:
 				return getControlornull() != null;
+			case CSConfigPackage.DOCUMENT_ROOT__CREPOSITORY:
+				return getCrepository() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__CTLTARGETTYPE:
 				return getCtltargettype() != null;
+			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMIZABLEICONS:
+				return getCustomizableicons() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULE:
 				return getCustomrule() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__CUSTOMRULES:
@@ -5757,6 +6041,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getExternaldriveletters() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__FILETYPE:
 				return FILETYPE_EDEFAULT == null ? getFiletype() != null : !FILETYPE_EDEFAULT.equals(getFiletype());
+			case CSConfigPackage.DOCUMENT_ROOT__FLAGS:
+				return getFlags() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__FOFF:
 				return getFoff() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__FORBIDDENWORDS:
@@ -5771,6 +6057,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getGoto() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__HIGH:
 				return getHigh() != null;
+			case CSConfigPackage.DOCUMENT_ROOT__ICONS_RE:
+				return ICONS_RE_EDEFAULT == null ? getIconsRE() != null : !ICONS_RE_EDEFAULT.equals(getIconsRE());
 			case CSConfigPackage.DOCUMENT_ROOT__IFASSIGNMENTS:
 				return getIfassignments() != null;
 			case CSConfigPackage.DOCUMENT_ROOT__IFPREPROCESSOR:

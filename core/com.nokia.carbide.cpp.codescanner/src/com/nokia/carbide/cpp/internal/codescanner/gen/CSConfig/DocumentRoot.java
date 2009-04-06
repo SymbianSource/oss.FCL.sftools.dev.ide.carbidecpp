@@ -59,7 +59,9 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getConstnames <em>Constnames</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getConsttdescptr <em>Consttdescptr</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getControlornull <em>Controlornull</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCrepository <em>Crepository</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCtltargettype <em>Ctltargettype</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomizableicons <em>Customizableicons</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomrule <em>Customrule</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomrules <em>Customrules</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getDebugrom <em>Debugrom</em>}</li>
@@ -79,6 +81,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getExportpurevirtual <em>Exportpurevirtual</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getExternaldriveletters <em>Externaldriveletters</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFiletype <em>Filetype</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFlags <em>Flags</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFoff <em>Foff</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getForbiddenwords <em>Forbiddenwords</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getForgottoputptroncleanupstack <em>Forgottoputptroncleanupstack</em>}</li>
@@ -86,6 +89,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFunctionality <em>Functionality</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getGoto <em>Goto</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getHigh <em>High</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIconsRE <em>Icons RE</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIfassignments <em>Ifassignments</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIfpreprocessor <em>Ifpreprocessor</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getInheritanceorder <em>Inheritanceorder</em>}</li>
@@ -912,6 +916,33 @@ public interface DocumentRoot extends EObject {
 	void setControlornull(ControlornullType value);
 
 	/**
+	 * Returns the value of the '<em><b>Crepository</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Crepository</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Crepository</em>' containment reference.
+	 * @see #setCrepository(CrepositoryType)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getDocumentRoot_Crepository()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='crepository' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	CrepositoryType getCrepository();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCrepository <em>Crepository</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Crepository</em>' containment reference.
+	 * @see #getCrepository()
+	 * @generated
+	 */
+	void setCrepository(CrepositoryType value);
+
+	/**
 	 * Returns the value of the '<em><b>Ctltargettype</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -937,6 +968,33 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setCtltargettype(CtltargettypeType value);
+
+	/**
+	 * Returns the value of the '<em><b>Customizableicons</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Customizableicons</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Customizableicons</em>' containment reference.
+	 * @see #setCustomizableicons(CustomizableiconsType)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getDocumentRoot_Customizableicons()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='customizableicons' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	CustomizableiconsType getCustomizableicons();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getCustomizableicons <em>Customizableicons</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Customizableicons</em>' containment reference.
+	 * @see #getCustomizableicons()
+	 * @generated
+	 */
+	void setCustomizableicons(CustomizableiconsType value);
 
 	/**
 	 * Returns the value of the '<em><b>Customrule</b></em>' containment reference.
@@ -1452,6 +1510,33 @@ public interface DocumentRoot extends EObject {
 	void setFiletype(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Flags</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Flags</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Flags</em>' containment reference.
+	 * @see #setFlags(FlagsType)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getDocumentRoot_Flags()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='flags' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	FlagsType getFlags();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getFlags <em>Flags</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Flags</em>' containment reference.
+	 * @see #getFlags()
+	 * @generated
+	 */
+	void setFlags(FlagsType value);
+
+	/**
 	 * Returns the value of the '<em><b>Foff</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -1639,6 +1724,33 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setHigh(HighType value);
+
+	/**
+	 * Returns the value of the '<em><b>Icons RE</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Icons RE</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Icons RE</em>' attribute.
+	 * @see #setIconsRE(String)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getDocumentRoot_IconsRE()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='iconsRE' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	String getIconsRE();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.DocumentRoot#getIconsRE <em>Icons RE</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Icons RE</em>' attribute.
+	 * @see #getIconsRE()
+	 * @generated
+	 */
+	void setIconsRE(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Ifassignments</b></em>' containment reference.
