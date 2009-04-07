@@ -171,7 +171,97 @@ public class EpocEngineHelper {
 		for (IPath testPath : testFiles){
 			testExtensionPaths.add(testPath);
 		}
+	}
+	
+	/**
+	 * Return list of all named project extensions referenced by the given
+	 * bld.inf full path.  This function differentiates between PRJ_EXTENSIONS and PRJ_TESTEXTENSIONS
+	 * @param bldInfFilePath - The IPath to the bld.inf file that is to be preprocessed.
+	 * @param buildConfigs - List of build configuration to parse for.
+	 * @param normalExtensions - The list of named PRJ_EXTENSIONS for the bld.inf
+	 * @param testExtensions - The list of named PRJ_TESTEXTENSIONS for the bld.inf
+	 * @param monitor
+	 */
+	public static void getNamedExtensions(final IPath bldInfFilePath, List<ISymbianBuildContext> buildConfigs, 
+		List<IExtension> normalExtensions, List<IExtension> testExtensions, IProgressMonitor monitor) {
 		
+		// get a bld.inf view for each build target.  take the union of all extensions for each view
+		// of the bld.inf file.
+		final Set<IExtension> normalFiles = new LinkedHashSet<IExtension>();
+		final Set<IExtension> testFiles = new LinkedHashSet<IExtension>();
+		
+		monitor.beginTask("Scanning bld.inf project extensions", buildConfigs.size());
+
+		for (final ISymbianBuildContext context : buildConfigs) {
+			EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
+					new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
+					new BldInfDataRunnableAdapter() {
+						public Object run(IBldInfData data) {
+							for (IExtension extension : data.getExtensions()) {
+								if (extension.getName() != null) {
+									normalFiles.add(extension);
+								}
+							}
+							for (IExtension extension : data.getTestExtensions()) {
+								if (extension.getName() != null) {
+									testFiles.add(extension);
+								}
+							}
+							return null;
+						}
+				});
+
+			monitor.worked(1);
+		}
+		
+		monitor.done();
+		
+		for (IExtension normal : normalFiles){
+			normalExtensions.add(normal);
+		}
+		for (IExtension test : testFiles){
+			testExtensions.add(test);
+		}
+	}
+	
+	/**
+	 * Determines if the given bld.inf file contains any unnamed project extensions
+	 * @param bldInfFilePath - The IPath to the bld.inf file that is to be preprocessed.
+	 * @param buildConfigs - List of build configuration to parse for.
+	 * @param monitor
+	 * @return
+	 */
+	public static boolean hasUnnamedExtensions(final IPath bldInfFilePath, List<ISymbianBuildContext> buildConfigs, IProgressMonitor monitor) {
+
+		final Set<IExtension> extensions = new LinkedHashSet<IExtension>();
+
+		monitor.beginTask("Scanning bld.inf project extensions", buildConfigs.size());
+
+		for (final ISymbianBuildContext context : buildConfigs) {
+			EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
+					new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
+					new BldInfDataRunnableAdapter() {
+						public Object run(IBldInfData data) {
+							for (IExtension extension : data.getExtensions()) {
+								if (extension.getName() == null) {
+									extensions.add(extension);
+								}
+							}
+							for (IExtension extension : data.getTestExtensions()) {
+								if (extension.getName() == null) {
+									extensions.add(extension);
+								}
+							}
+							return null;
+						}
+				});
+
+			monitor.worked(1);
+		}
+		
+		monitor.done();
+
+		return extensions.size() > 0;
 	}
 	
 	/**

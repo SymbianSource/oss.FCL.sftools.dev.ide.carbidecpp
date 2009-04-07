@@ -53,6 +53,12 @@ public interface IExtension {
 	/** Access/modify the list of dependencies.  No interpretation is performed.  As in the bld.inf, no extension will be present. */
 	List<IPath> getDependencies();
 	
+	/** Get the name associated with the extension, may be null for unnamed extension */
+	String getName();
+	
+	/** Set the name associated with the extension, may be null for unnamed extension */
+	void setName(String name);
+	
 	/** Get the tool name, may be null */
 	String getToolName();
 	

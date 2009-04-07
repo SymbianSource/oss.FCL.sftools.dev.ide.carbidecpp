@@ -93,12 +93,11 @@ public class MMPSelectionPage extends WizardPage {
 			setErrorMessage(Messages.MMPSelectionPage_noMMPsSelectedError);
 			return false;
 		}
-		// if there are any new-style prj extensions, warn them that they won't be built
+		// if there are any unnamed new-style prj extensions, warn them that they won't be built
 		// when not building the entire bld.inf.
-		boolean hasProjectExtensions = selectionUI.hasProjectExtensions();
-		if (hasProjectExtensions && !areAllMakMakeReferencesChecked()) {
-			setMessage(Messages.MMPSelectionPage_prjExtensionsWarning, WARNING);
-			return true;
+		String warning = selectionUI.getExtensionsWarningMessage();
+		if (warning != null) {
+			setMessage(warning, WARNING);
 		}
 		return true;
     }
@@ -111,7 +110,7 @@ public class MMPSelectionPage extends WizardPage {
 		// know if we need to re-parse again if either of these changes, e.g. the user
 		// hits back and selects a different bld.inf or set of configs
 		if (visible) {
-			selectionUI.setBldInfFile(new Path(theWizard.getBldInfFile()), theWizard.getSelectedConfigs());
+			selectionUI.setBldInfFile(new Path(theWizard.getBldInfFile()), theWizard.getSelectedConfigs(), theWizard.useSBSv2Builder());
 		}
 		super.setVisible(visible);
 	}

@@ -71,8 +71,6 @@ public class Messages extends NLS {
 
 	public static String MMPSelectionPage_noMMPsSelectedError;
 
-	public static String MMPSelectionPage_prjExtensionsWarning;
-
 	public static String ProjectPropertiesPage_noProjectSpecifiedError;
 
 	public static String ProjectPropertiesPage_projectExistsError;
