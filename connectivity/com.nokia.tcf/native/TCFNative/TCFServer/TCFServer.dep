@@ -1,75 +1,100 @@
 # Microsoft Developer Studio Generated Dependency File, included by TCFServer.mak
 
-.\BaseCom.cpp : \
-	"..\Common\Headers\ErrorMonitorData.h"\
-	"..\Common\Headers\InputStream.h"\
-	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
-	"..\Common\Headers\ServerClient.h"\
-	"..\Common\Headers\shareddata.h"\
-	"..\Common\Headers\TCConstants.h"\
-	"..\Common\Headers\TCDebugLog.h"\
-	"..\Common\Headers\TCErrorConstants.h"\
-	".\BaseCom.h"\
-	".\Client.h"\
-	".\Registry.h"\
-	
-
 .\Client.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
+	
+
+.\CommRegistryItem.cpp : \
+	"..\Common\Headers\ErrorMonitorData.h"\
+	"..\Common\Headers\InputStream.h"\
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\ServerClient.h"\
+	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
+	".\BaseCom.h"\
+	".\BaseProtocol.h"\
+	".\Client.h"\
+	".\CommRegistryItem.h"\
+	".\MessageFile.h"\
+	".\Registry.h"\
 	
 
 .\Connection.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
-	".\MustiTcpComm.h"\
-	".\RealSerialComm.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
-	".\TcpComm.h"\
-	".\VirtualSerialComm.h"\
+	
+
+.\ConnectionImpl.cpp : \
+	"..\Common\Headers\ErrorMonitorData.h"\
+	"..\Common\Headers\InputStream.h"\
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\ServerClient.h"\
+	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
+	".\BaseCom.h"\
+	".\BaseProtocol.h"\
+	".\Client.h"\
+	".\CommRegistryItem.h"\
+	".\Connection.h"\
+	".\ConnectionImpl.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
+	".\Registry.h"\
+	".\RegistryImpl.h"\
+	".\ServerManager.h"\
 	
 
 ..\Common\Source\ErrorMonitorData.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
 	
@@ -78,91 +103,105 @@
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
 	
 
-.\MustiTcpComm.cpp : \
+.\MessageFile.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
-	".\MustiTcpComm.h"\
+	".\CommRegistryItem.h"\
+	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
-	".\TcpComm.h"\
+	".\ServerManager.h"\
 	
 
 ..\Common\Source\mutex.cpp : \
 	"..\Common\Headers\mutex.h"\
 	
 
-.\RealSerialComm.cpp : \
-	"..\Common\Headers\ErrorMonitorData.h"\
-	"..\Common\Headers\InputStream.h"\
+.\ProtocolRegistryItem.cpp : \
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
-	"..\Common\Headers\TCConstants.h"\
-	"..\Common\Headers\TCDebugLog.h"\
-	"..\Common\Headers\TCErrorConstants.h"\
-	".\BaseCom.h"\
-	".\Client.h"\
-	".\RealSerialComm.h"\
-	".\Registry.h"\
+	".\BaseProtocol.h"\
+	".\ProtocolRegistryItem.h"\
 	
 
 .\Registry.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
+	
+
+.\RegistryImpl.cpp : \
+	"..\Common\Headers\ErrorMonitorData.h"\
+	"..\Common\Headers\InputStream.h"\
+	"..\Common\Headers\mutex.h"\
+	"..\Common\Headers\ServerClient.h"\
+	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
+	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
+	".\Client.h"\
+	".\MessageFile.h"\
+	".\Registry.h"\
+	".\RegistryImpl.h"\
 	
 
 ..\Common\Source\ServerClient.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
 	
@@ -171,17 +210,21 @@
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\ConnectionImpl.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
+	".\resource.h"\
 	".\ServerManager.h"\
 	
 
@@ -202,51 +245,22 @@
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\BaseCom.h"\
+	".\BaseProtocol.h"\
 	".\Client.h"\
+	".\CommRegistryItem.h"\
 	".\Connection.h"\
+	".\MessageFile.h"\
+	".\ProtocolRegistryItem.h"\
 	".\Registry.h"\
 	".\ServerManager.h"\
 	
 
-.\TcpComm.cpp : \
-	"..\Common\Headers\ErrorMonitorData.h"\
-	"..\Common\Headers\InputStream.h"\
-	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
-	"..\Common\Headers\ServerClient.h"\
-	"..\Common\Headers\shareddata.h"\
-	"..\Common\Headers\TCConstants.h"\
-	"..\Common\Headers\TCDebugLog.h"\
-	"..\Common\Headers\TCErrorConstants.h"\
-	".\BaseCom.h"\
-	".\Client.h"\
-	".\Registry.h"\
-	".\TcpComm.h"\
-	
-
-.\VirtualSerialComm.cpp : \
-	"..\Common\Headers\ErrorMonitorData.h"\
-	"..\Common\Headers\InputStream.h"\
-	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\PNConstants.h"\
-	"..\Common\Headers\ServerClient.h"\
-	"..\Common\Headers\shareddata.h"\
-	"..\Common\Headers\TCConstants.h"\
-	"..\Common\Headers\TCDebugLog.h"\
-	"..\Common\Headers\TCErrorConstants.h"\
-	".\BaseCom.h"\
-	".\Client.h"\
-	".\RealSerialComm.h"\
-	".\Registry.h"\
-	".\VirtualSerialComm.h"\
+.\resource.rc : \
+	".\resource.h"\
 	

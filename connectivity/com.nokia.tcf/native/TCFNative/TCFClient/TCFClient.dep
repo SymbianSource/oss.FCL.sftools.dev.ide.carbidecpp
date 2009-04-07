@@ -9,6 +9,9 @@
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\ClientManager.h"\
+	".\jdk1.5.0_10\include\jni.h"\
+	".\jdk1.5.0_10\include\win32\jni_md.h"\
+	".\resource.h"\
 	
 
 ..\Common\Source\ErrorMonitorData.cpp : \
@@ -20,6 +23,8 @@
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\ClientManager.h"\
+	".\jdk1.5.0_10\include\jni.h"\
+	".\jdk1.5.0_10\include\win32\jni_md.h"\
 	
 
 ..\Common\Source\InputStream.cpp : \
@@ -29,7 +34,10 @@
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
 	".\ClientManager.h"\
+	".\jdk1.5.0_10\include\jni.h"\
+	".\jdk1.5.0_10\include\win32\jni_md.h"\
 	
 
 ..\Common\Source\mutex.cpp : \
@@ -45,6 +53,8 @@
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\ClientManager.h"\
+	".\jdk1.5.0_10\include\jni.h"\
+	".\jdk1.5.0_10\include\win32\jni_md.h"\
 	
 
 ..\Common\Source\shareddata.cpp : \
@@ -82,18 +92,27 @@
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCDebugLog.h"\
+	"..\Common\Headers\TCErrorConstants.h"\
 	".\ClientManager.h"\
+	".\jdk1.5.0_10\include\jni.h"\
+	".\jdk1.5.0_10\include\win32\jni_md.h"\
 	
 
 .\TCFCppApi.cpp : \
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\pn_const.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
+	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	".\ClientManager.h"\
+	".\jdk1.5.0_10\include\jni.h"\
+	".\jdk1.5.0_10\include\win32\jni_md.h"\
 	".\TCFCppApi.h"\
+	
+
+.\resource.rc : \
+	".\resource.h"\
 	

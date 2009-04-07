@@ -10,6 +10,7 @@
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	"..\TCFServer\BaseCom.h"\
+	"..\TCFServer\BaseProtocol.h"\
 	"..\TCFServer\Client.h"\
 	"..\TCFServer\MessageFile.h"\
 	"..\TCFServer\Registry.h"\
@@ -20,7 +21,6 @@
 	
 
 .\StdAfx.cpp : \
-	"..\..\..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	".\StdAfx.h"\
 	
 
@@ -39,6 +39,7 @@
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	"..\TCFServer\BaseCom.h"\
+	"..\TCFServer\BaseProtocol.h"\
 	"..\TCFServer\Client.h"\
 	"..\TCFServer\MessageFile.h"\
 	"..\TCFServer\Registry.h"\
@@ -50,14 +51,13 @@
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
-	"..\Common\Headers\OSTConstants.h"\
-	"..\Common\Headers\pn_const.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCConstants.h"\
 	"..\Common\Headers\TCDebugLog.h"\
 	"..\Common\Headers\TCErrorConstants.h"\
 	"..\TCFServer\BaseCom.h"\
+	"..\TCFServer\BaseProtocol.h"\
 	"..\TCFServer\Client.h"\
 	"..\TCFServer\Connection.h"\
 	"..\TCFServer\MessageFile.h"\
