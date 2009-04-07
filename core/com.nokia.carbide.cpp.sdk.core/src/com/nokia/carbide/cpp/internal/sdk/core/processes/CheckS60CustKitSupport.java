@@ -32,8 +32,14 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	
 	private static final String SELECTED_BUILD_CONFIGS_VALUE_KEY = "selectedBuildConfigs"; //$NON-NLS-1$
 	private static final String S60_50_BUILD_MACROS = "S60_50_CustomBuildIncludes";
+	
 	private static final String S60_INC_MACROS = "#include <data_caging_paths.hrh>\n#include <domain/osextensions/platform_paths.hrh>\nMW_LAYER_SYSTEMINCLUDE";
 	private static final String S60_MIDDWARE_INC = "epoc32/include/middleware";
+	
+	private static final String S60_MIDDWARE_INC2 =  "epoc32/include/mw";
+	private static final String S60_INC_MACROS2 = "#include <domain/osextensions/platform_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
+
+	
 	protected IProject project;
 
 	@Override
@@ -74,6 +80,15 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 						// add symbol as at least one build config is a CustKit
 						S60_50_Macros_String = S60_INC_MACROS;
 						break;
+					}
+					else {
+						// try newer middleware paths moved to app layer includes
+						middleWareInclude = new File(sdk.getEPOCROOT() + S60_MIDDWARE_INC2);
+						if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()){
+							// add symbol as at least one build config is a CustKit
+							S60_50_Macros_String = S60_INC_MACROS2;
+							break;
+						}
 					}
 				}
 			}
