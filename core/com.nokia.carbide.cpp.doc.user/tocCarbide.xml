@@ -11,7 +11,6 @@
    </topic>
 			<topic label="Supported Target Types"	href="html/concepts/build_targets.htm" />		
 			<topic label="Supported SDKs" 		    href="html/sos_references.htm" />
-			<topic label="Carbide Licenses" 		href="html/license.htm" />
 			<topic label="Updating Carbide.c++" 	href="html/tasks/start/carbide_updating.htm" />
 		</topic>
 	

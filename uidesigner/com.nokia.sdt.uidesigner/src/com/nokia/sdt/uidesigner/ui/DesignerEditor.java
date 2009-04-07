@@ -20,6 +20,7 @@ package com.nokia.sdt.uidesigner.ui;
 
 import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
 import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
+import com.nokia.sdt.editor.EditorServices;
 import com.nokia.sdt.uidesigner.ui.utils.Strings;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -56,7 +57,8 @@ public class DesignerEditor extends AbstractDesignerDataModelEditor {
 
 	@Override
 	protected IStatus doLoadInput(IProgressMonitor monitor) {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
+		if (!EditorServices.isAnyEditorOpen())
+			FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 		return super.doLoadInput(monitor);
 	}
 
@@ -64,7 +66,8 @@ public class DesignerEditor extends AbstractDesignerDataModelEditor {
 	public void dispose() {
 		super.dispose();
 		designerEditorPage = null; // page will be disposed by superclass
-		FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
+		if (!EditorServices.isAnyEditorOpen())
+			FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 	}
 
 	@Override
