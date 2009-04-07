@@ -155,7 +155,8 @@ public class ApplicationEditor extends AbstractDesignerDataModelEditor implement
 	}
 
 	protected IStatus preLoadInput(IProgressMonitor monitor) {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
+		if (!EditorServices.isAnyEditorOpen())
+			FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 		IFile file = ResourceUtil.getFile(getEditorInput());
 		WorkspaceContext wc = WorkspaceContext.getContext();
 		IDesignerDataModelSpecifier modelSpecifier = wc.findSpecifierForResource(file);
@@ -292,8 +293,9 @@ public class ApplicationEditor extends AbstractDesignerDataModelEditor implement
 	 * Subclasses may extend.
 	 */
 	public void dispose() {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 		super.dispose();
+		if (!EditorServices.isAnyEditorOpen())
+			FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 	}
 		
 	/**
