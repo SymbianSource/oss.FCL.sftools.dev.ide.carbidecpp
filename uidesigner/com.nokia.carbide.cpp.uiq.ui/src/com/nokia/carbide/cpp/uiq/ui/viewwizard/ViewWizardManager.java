@@ -17,9 +17,13 @@
 /* START_USECASES: CU1, CU2 END_USECASES */
 package com.nokia.carbide.cpp.uiq.ui.viewwizard;
 
+import com.nokia.carbide.cpp.uiq.ui.UIQUserInterfacePlugin;
 import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.carbide.internal.api.templatewizard.ui.TemplateWizard;
 import com.nokia.carbide.template.engine.ITemplate;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.UITaskUtils;
 import com.nokia.sdt.component.*;
 import com.nokia.sdt.component.adapter.CommonAttributes;
 import com.nokia.sdt.component.adapter.IAttributes;
@@ -34,16 +38,11 @@ import com.nokia.sdt.displaymodel.IDisplayModel;
 import com.nokia.sdt.editor.EditorServices;
 import com.nokia.sdt.editor.IDesignerDataModelEditor;
 import com.nokia.sdt.emf.dm.*;
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
-import com.nokia.carbide.cpp.uiq.ui.UIQUserInterfacePlugin;
 import com.nokia.sdt.sourcegen.*;
 import com.nokia.sdt.symbian.dm.*;
 import com.nokia.sdt.symbian.ui.UIPlugin;
 import com.nokia.sdt.symbian.workspace.ISymbianProjectContext;
 import com.nokia.sdt.symbian.workspace.impl.ProjectContextProvider;
-import com.nokia.cpp.internal.api.utils.core.*;
-import com.nokia.cpp.internal.api.utils.ui.UITaskUtils;
 import com.nokia.sdt.workspace.*;
 
 import org.eclipse.cdt.core.model.*;
@@ -271,7 +270,6 @@ public class ViewWizardManager {
 	 * 
 	 */
 	public ViewWizardManager() {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 		dataModelProvider = new DesignerDataModelProvider();
 		ComponentSystem cs = ComponentSystem.getComponentSystem();
 		try {
@@ -1023,7 +1021,6 @@ public class ViewWizardManager {
 			disposeStoredModel(ROOT_MODEL_KEY);
 		}
 		disposeStoredModel(VIEW_MODEL_KEY);
-		FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 	}
 	
 	public void disposeStoredModel(String modelKey) {

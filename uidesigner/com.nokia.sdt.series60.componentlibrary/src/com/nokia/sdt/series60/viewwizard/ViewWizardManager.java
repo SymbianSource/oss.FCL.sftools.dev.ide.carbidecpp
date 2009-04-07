@@ -228,7 +228,6 @@ public class ViewWizardManager {
 	 * 
 	 */
 	public ViewWizardManager() {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 		dataModelProvider = new DesignerDataModelProvider();
 		ComponentSystem cs = ComponentSystem.getComponentSystem();
 		try {
@@ -916,7 +915,6 @@ public class ViewWizardManager {
 			disposeStoredModel(ROOT_MODEL_KEY);
 		}
 		disposeStoredModel(VIEW_MODEL_KEY);
-		FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_UI_DESIGNER);
 	}
 	
 	public void disposeStoredModel(String modelKey) {
