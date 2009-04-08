@@ -1257,5 +1257,54 @@ public class TestBldInfView4 extends BaseBldInfViewTest {
 				"AddingInsideConditional"));
 
 	}
+
+	public void testNamedExtension() throws Exception {
+		String text= "PRJ_MMPFILES\n"+
+		"first.mmp\n"+
+		"\n"+
+		"PRJ_TESTEXTENSIONS\r\n" + 
+		"start       extension        base\\config       myExtension\r\n" +
+		"tool armcc\r\n"+
+		"target zap_ma_ma\r\n"+
+		"sources ..\\src\\file1.cpp sub\\file2.cpp\r\n"+
+		"dependencies ..\\src\\file1 sub\\file2\r\n"+
+		"\r\n" + 
+		"end";
+		
+		makeModel(text);
+		IBldInfView view = getView(config);
+		checkNoProblems(view);
+	
+		_testNamedExtension(view);
+		_testNamedExtension(view.getData());
+		
+		commitTest(view, text);
+	}
+
+	private void _testNamedExtension(IBldInfData bldInfData) {
+		IExtension ext = bldInfData.getTestExtensions().get(0);
+		assertNotNull(ext);
+		assertTrue(ext.isValid());
+		assertNotNull(ext.getName());
+		assertEquals("myExtension", ext.getName());
+	}
+
+	public void testModifyNamedExtension() {
+		makeModel("PRJ_EXTENSIONS\n"+
+				"START EXTENSION base/graphics/svg\n"+
+				"END\n");
+		IBldInfView view = getView(config);
+		checkNoProblems(view);
+
+		IExtension ext = view.getExtensions().get(0);
+		ext.setName("myExtension");	
+		assertNotNull(ext.getName());
+		assertEquals("myExtension", ext.getName());
+		commitTest(view,
+				"PRJ_EXTENSIONS\n"+
+				"START EXTENSION base/graphics/svg myExtension\n"+
+				"END\n");
+	}
+
 }
 
