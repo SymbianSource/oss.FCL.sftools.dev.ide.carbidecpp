@@ -458,7 +458,7 @@ public class FeedManager {
 	 * Reload feeds from cache if necessary.
 	 */
 	private void validateFeeds() {
-		if (newsFeeds == null || newsFeeds.size() == 0 || resourceFeed == null) {
+		if ((newsFeeds == null || newsFeeds.size() == 0) && resourceFeed == null) {
 			try {
 				if (!loadFeedListing()) {
 					return;
