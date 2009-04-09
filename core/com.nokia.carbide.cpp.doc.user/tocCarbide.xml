@@ -3,12 +3,12 @@
 
 <toc label="Introduction" href="html/concepts/Introduction.html"  >
 
-	<topic label="Carbide.c++ Overview" >
+	<topic label="Carbide.c++ Overview" href="html/tasks/start/carbide_overview.htm" >
+		<topic label="System Requirements" 			href="html/tasks/start/carbide_requirements.htm" />
+		<topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" >
+		<topic label="Carbide Tools" 				href="html/tasks/start/carbide_tools.htm" >
+		<topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" >
 	      
-		<topic label="Introduction" 				href="html/concepts/Introduction.html" >
-		<topic label="System Requirements" 		href="html/tasks/start/carbide_requirements.htm" />
-   <topic href="html/tasks/start/carbide_install.htm" label="Carbide.c++ Installation">
-   </topic>
 			<topic label="Supported Target Types"	href="html/concepts/build_targets.htm" />		
 			<topic label="Supported SDKs" 		    href="html/sos_references.htm" />
 			<topic label="Updating Carbide.c++" 	href="html/tasks/start/carbide_updating.htm" />
