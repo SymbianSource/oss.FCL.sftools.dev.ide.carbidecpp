@@ -59,7 +59,7 @@ public interface ICarbideBuilder {
 
 	public boolean needsBldmakeMakefileGeneration(ICarbideBuildConfiguration config);
 
-	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest);
+	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress);
 	
 	public IPath getMakefileDirectory(ICarbideBuildConfiguration config);
 }

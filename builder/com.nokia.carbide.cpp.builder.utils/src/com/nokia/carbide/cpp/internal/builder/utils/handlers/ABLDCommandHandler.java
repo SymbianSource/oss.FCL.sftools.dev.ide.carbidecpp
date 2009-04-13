@@ -102,7 +102,7 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 						return new Status(IStatus.ERROR, "Carbide.c++ builder utils plugin", IStatus.ERROR, "Failed to generate bldmake makefiles", null); 
 					}
 					
-					if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher)) {
+					if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, new NullProgressMonitor())) {
 						return new Status(IStatus.ERROR, "Carbide.c++ builder utils plugin", IStatus.ERROR, "Failed to generate mmp makefiles", null); 
 					}
 

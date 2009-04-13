@@ -27,6 +27,7 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -177,7 +178,9 @@ public class ProjectCommandHandler extends AbstractHandler {
 						for (final ICarbideBuildConfiguration currConfig : buildConfigList) {
 							launcher.setErrorParserManager(cpi.getINFWorkingDirectory(), CarbideCPPBuilder.getParserIdArray(currConfig.getErrorParserId()));
 							
-
+							if (monitor.isCanceled()) {
+								return new Status(IStatus.CANCEL, "Carbide.c++ builder utils plugin", IStatus.CANCEL, "Build Cancelled", null); 
+							}
 							// kick off a build for each configuration...
 							CarbideCPPBuilder.invokeBuild(currConfig, launcher, subMonitor.newChild(1), false);
 							

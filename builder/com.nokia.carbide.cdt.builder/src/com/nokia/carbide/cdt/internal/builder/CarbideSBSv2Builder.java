@@ -450,7 +450,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		}
 	}
 
-	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
+	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 		return true;
 	}
 

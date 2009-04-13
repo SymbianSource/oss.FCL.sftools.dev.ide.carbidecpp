@@ -892,8 +892,8 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param launcher the Carbide launcher
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 */
-	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher) {
-		return generateAbldMakefilesIfNecessary(config, launcher, true);
+	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IProgressMonitor progress) {
+		return generateAbldMakefilesIfNecessary(config, launcher, true, progress);
 	}
 
 	/**
@@ -911,7 +911,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 * @since 2.0
 	 */
-	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists) {
+	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists, IProgressMonitor progress) {
 
 		if (calculateComponentLists) {
 			calculateComponentLists(config, launcher);
@@ -919,13 +919,13 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		// generate the makefiles if necessary
 		for (IPath path : normalMakMakePaths) {
-			if (!generateAbldMakefileIfNecessary(config, launcher, path, false)) {
+			if (!generateAbldMakefileIfNecessary(config, launcher, path, false, progress)) {
 				return false;
 			}
 		}
 		
 		for (IPath path : testMakMakePaths) {
-			if (!generateAbldMakefileIfNecessary(config, launcher, path, true)) {
+			if (!generateAbldMakefileIfNecessary(config, launcher, path, true, progress)) {
 				return false;
 			}
 		}
@@ -947,8 +947,8 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param isTest true for test components, false otherwise
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 */
-	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
-		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest);
+	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
+		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, progress);
 	}
 	
 /**
