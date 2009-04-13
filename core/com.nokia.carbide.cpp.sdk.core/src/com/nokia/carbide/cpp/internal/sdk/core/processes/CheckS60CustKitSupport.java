@@ -39,7 +39,9 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_MIDDWARE_INC2 =  "epoc32/include/mw";
 	private static final String S60_INC_MACROS2 = "#include <domain/osextensions/platform_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
-	
+	private static final String S60_SF_FOLDER =  "sf";
+	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
+
 	protected IProject project;
 
 	@Override
@@ -72,24 +74,36 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 				Check.checkContract(obj instanceof ISymbianBuildContext);
 				ISymbianBuildContext symbianBuildContext = (ISymbianBuildContext)obj;
 				ISymbianSDK sdk = symbianBuildContext.getSDK();
-				if (sdk != null){
+				if (sdk != null) {
 					File middleWareInclude = new File(sdk.getEPOCROOT() + S60_MIDDWARE_INC);
-					// NOTE: Here we need to check the SDK major version becuase the 3.2 CustKit
-					// has the middleware folder but doesn't use the new build macros for include paths
-					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()){
+					
+					// NOTE: Here we need to check the SDK major version becuase
+					// the 3.2 CustKit
+					// has the middleware folder but doesn't use the new build
+					// macros for include paths
+					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
 						// add symbol as at least one build config is a CustKit
 						S60_50_Macros_String = S60_INC_MACROS;
 						break;
 					}
-					else {
-						// try newer middleware paths moved to app layer includes
-						middleWareInclude = new File(sdk.getEPOCROOT() + S60_MIDDWARE_INC2);
-						if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()){
-							// add symbol as at least one build config is a CustKit
-							S60_50_Macros_String = S60_INC_MACROS2;
-							break;
-						}
+					
+					middleWareInclude = new File(sdk.getEPOCROOT() + S60_MIDDWARE_INC2);
+					File sfoPath = new File(sdk.getEPOCROOT() + S60_SF_FOLDER);
+					// check for middleware paths and /sf path (if SFO kit)
+					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists() && sfoPath.exists()) {
+						// add symbol as at least one build config is a CustKit
+						S60_50_Macros_String = S60_INC_MACROS_SF;
+						break;
 					}
+					
+					// try newer middleware paths moved to app layer includes
+					
+					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
+						// add symbol as at least one build config is a CustKit
+						S60_50_Macros_String = S60_INC_MACROS2;
+						break;
+					}
+
 				}
 			}
 		}
