@@ -19,8 +19,7 @@ package com.nokia.carbide.cpp.debug.kernelaware.testapi;
 
 import com.freescale.cdt.debug.cw.core.CWPlugin;
 import com.nokia.carbide.cpp.debug.kernelaware.*;
-import com.nokia.carbide.cpp.debug.kernelaware.ui.GenericTableTab;
-import com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView;
+import com.nokia.carbide.cpp.debug.kernelaware.ui.*;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.widgets.TabFolder;
@@ -123,7 +122,13 @@ public class SymbianOSViewTester {
 	 */
 	public static Text getFilterText(IViewPart viewPart) {
 		Viewer viewer = getCurrentViewer(viewPart);
-		GenericTableTab tableTab = (GenericTableTab) viewer.getData("controller");
-		return tableTab.getFilterText();
+		Object data = viewer.getData("controller");
+		if (data instanceof GenericTableTab) {
+			return ((GenericTableTab) data).getFilterText();
+		}
+		else if (data instanceof OverviewTab) {
+			return ((OverviewTab) data).getFilterText();
+		}
+		return null;
 	}
 }
