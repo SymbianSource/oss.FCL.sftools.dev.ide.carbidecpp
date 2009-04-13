@@ -333,7 +333,7 @@ public class FeedManager {
 		}
 
 		FeedFetcherCache feedInfoCache = HashMapFeedInfoCache.getInstance();
-		FeedFetcher fetcher = new HttpURLFeedFetcher(feedInfoCache);
+		FeedFetcher fetcher = new CarbideFeedFetcher(feedInfoCache);
 		SyndFeed sFeed = fetcher.retrieveFeed(feedUrl);
 		CarbideSyndFeed feed = new CarbideSyndFeed(sFeed);
 		if (feed != null) {
