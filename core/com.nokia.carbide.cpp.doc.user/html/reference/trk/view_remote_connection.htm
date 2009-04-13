@@ -4,20 +4,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="keywords" content="Check TRK, TRK, Install TRK"
-<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+><meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Remote Connections view</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Helvetica, sans-serif;
+	font-weight: bold;
+}
+-->
+</style>
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Remote Connections view</h2>
-<p>Use  the <strong>Remote Connections</strong> view to monitor, create, edit, or remove  common  connection settings for remote agents.The columns include:</p>
+<p>Use  the <strong>Remote Connections</strong> view to monitor, create, edit, or remove  common  connection settings for remote agents. The columns include:</p>
 <ul>
   <li>Connection/Services - connection name defined by you and remote agent type</li>
   <li>Type - connection type, i.e. Bluetooth, USB, TCP/IP, etc.</li>
-  <li>Status - current connection status, i.e. Available, Not available, etc.</li>
+  <li>Status - current connection status, i.e. Available, Not available, In Use, etc.</li>
+  <li>Description - provides information on the current connection test status.</li>
 </ul>
-<p align="center"><img src="../images/view_remote_connections.png" width="413" height="153"></p>
+<p align="center"><img src="../images/view_remote_connections.png" width="431" height="252"></p>
 <p class="figure">Figure 1 - Remote Connections view</p>
 <h3>Remote Connections view toolbar icons</h3>
 <p>The following commands appear on the toolbar within the Remote Connections view: </p>
@@ -51,7 +60,7 @@
 </table>
 <h3>Remote Connections view context menu options</h3>
 <p>Based on the current selection, one or more of the following commands appear on the context menu when you right-click within the Remote Connections view. For example, if no connections are defined, only the <b>New Connection</b> command is available on the context menu. Right-click on a connection name and the additional <b>Enable Service Testing</b> and <b>Disable Service Testing</b> are available.</p>
-<p align="center"><img src="../images/context_menu_remote_conn_view.png" width="193" height="86"></p>
+<p align="center"><img src="../images/context_menu_remote_conn_view.png" width="211" height="104"></p>
 <p class="figure">Figure 2 - Remote Connections context menu</p>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
@@ -60,40 +69,45 @@
     <th width="59%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><strong>New Connection</strong></td>
+    <td><span class="style1">New Connection</span></td>
     <td><center>
       <img src="../images/icon_remote_connection_new.png" width="20" height="18">
     </center>    </td>
     <td>Select to open the New  Connection wizard to add a connection.</td>
   </tr>
   <tr>
-    <td><strong>Edit Connection Settings</strong></td>
+    <td><span class="style1">Rename Connection</span></td>
+    <td>&nbsp;</td>
+    <td>Select to rename the currently selected connection.</td>
+  </tr>
+  <tr>
+    <td><span class="style1">Edit Connection Settings</span></td>
     <td><center>
       <img src="../images/icon_remote_connection_edit.png" width="19" height="19">
     </center>    </td>
     <td><p>Select to edit the selected remote connection.</p></td>
   </tr>
   <tr>
-    <td><strong>Delete Connection</strong></td>
+    <td><span class="style1">Delete Connection</span></td>
     <td><center>
       <img src="../images/icon_remote_connection_delete.png" width="17" height="16">
     </center>    </td>
     <td><p>Select to delete the selected connection from the connection list.</p></td>
   </tr>
   <tr>
-    <td><b>Connection Documentation</b></td>
+    <td><span class="style1">Connection Documentation</span></td>
     <td><center>
         <img src="../images/icon_remote_connection_docs.png" width="19" height="17">
     </center></td>
     <td>Select to open the Help view with connection information.</td>
   </tr>
   <tr>
-    <td><b>Disable Service Testing</b></td>
+    <td><span class="style1">Disable Service Testing</span></td>
     <td>&nbsp;</td>
     <td>Select to disable the connection testing. This releases the port so other connection services can use it. </td>
   </tr>
   <tr>
-    <td><b>Enable Service Testing</b></td>
+    <td><span class="style1">Enable Service Testing</span></td>
     <td>&nbsp;</td>
     <td>Select to re-enable testing of the connection.</td>
   </tr>
