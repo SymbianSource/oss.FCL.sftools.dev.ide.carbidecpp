@@ -28,7 +28,7 @@
   </topic>
 		
 		<topic label="Carbide Menus " 							href="html/reference/menus/menus.htm" >
-     <topic href="html/reference/trk/view_remote_connection.htm" label="On-Device Connection...">
+     <topic href="html/reference/trk/wnd_on_device_setup.htm" label="On-Device Connection...">
      </topic>
 			<topic label="Open Command Window"					href="html/reference/menus/open_cmd_window.htm" />
 			<topic label="Run CodeScanner"						href="html/reference/menus/run_codescanner.htm" />
