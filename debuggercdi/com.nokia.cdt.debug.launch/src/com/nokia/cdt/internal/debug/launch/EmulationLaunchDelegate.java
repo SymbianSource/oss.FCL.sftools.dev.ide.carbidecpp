@@ -57,6 +57,7 @@ import org.eclipse.ui.console.IOConsoleOutputStream;
 import com.freescale.cdt.debug.cw.DebuggerLog;
 import com.freescale.cdt.debug.cw.core.cdi.ISessionListener;
 import com.freescale.cdt.debug.cw.core.cdi.Session;
+import com.freescale.cdt.debug.cw.core.cdi.model.Target;
 import com.freescale.cdt.debug.cw.core.settings.DebuggerCommonData;
 import com.freescale.cdt.debug.cw.core.ui.console.LoggingConsole;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
@@ -158,7 +159,8 @@ public class EmulationLaunchDelegate extends NokiaAbstractLaunchDelegate {
 							
 							File wd = getWorkingDirectory(config);
 							long t = System.currentTimeMillis();
-							cwDebugSession.launchExecutable(launch, config, exeFile, otherExecutables, arguments, wd, getEnvironmentAsProperty(config), monitor, project, renderTargetLabel(debugConfig), true);
+							Target target = cwDebugSession.launchExecutable(launch, config, exeFile, otherExecutables, arguments, wd, getEnvironmentAsProperty(config), monitor, project, renderTargetLabel(debugConfig), true);
+							ATFLaunchSupport.saveDebugTargetFromLaunchDelegate(target.getCoreModelTarget());
 							t = System.currentTimeMillis() - t;
 //							System.out.println("launchExecutable returns in : " + t);
 							DebuggerLog.log("launchExecutable returns in : " + t);

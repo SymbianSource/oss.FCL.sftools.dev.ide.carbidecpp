@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Display;
 
 import com.freescale.cdt.debug.cw.CWException;
 import com.freescale.cdt.debug.cw.core.cdi.Session;
+import com.freescale.cdt.debug.cw.core.cdi.model.Target;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.debug.cw.symbian.SymbianPlugin;
 
@@ -110,7 +111,8 @@ public class Trace32LaunchDelegate extends NokiaAbstractLaunchDelegate {
 								config = synchronizeWithProjectAccessPaths(project, config);
 								
 								File wd = getWorkingDirectory(config);
-								cwDebugSession.launchExecutable(launch, config, exeFile, otherExecutables, arguments, wd, getEnvironmentAsProperty(config), monitor, project, getTargetLabel(exeFile.getName()), true);
+								Target target = cwDebugSession.launchExecutable(launch, config, exeFile, otherExecutables, arguments, wd, getEnvironmentAsProperty(config), monitor, project, getTargetLabel(exeFile.getName()), true);
+								ATFLaunchSupport.saveDebugTargetFromLaunchDelegate(target.getCoreModelTarget());
 
 							} catch (CoreException e) {
 								Session session = (Session)dsession;
