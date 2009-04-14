@@ -3,43 +3,55 @@
 
 <toc label="Introduction" href="html/concepts/Introduction.html"  >
 
-	<topic label="Carbide.c++ Overview" href="html/tasks/start/carbide_overview.htm" >
+	<topic label="Carbide.c++ Overview" 			href="html/tasks/start/carbide_overview.htm" >
+
 		<topic label="System Requirements" 			href="html/tasks/start/carbide_requirements.htm" />
 		<topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" />
 		<topic label="Carbide Tools" 				href="html/tasks/start/carbide_tools.htm" />
+
 		<topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" >
 			<topic label="Supported Target Types"	href="html/concepts/build_targets.htm" />		
 			<topic label="Supported SDKs" 		    href="html/sos_references.htm" />
 			<topic label="Updating Carbide.c++" 	href="html/tasks/start/carbide_updating.htm" />
 		</topic>
-		<topic label="Tour of the UI"			href="html/concepts/tour.html" />
-		<topic label="Project Updater"          href="html/reference/olderproject_updater.html" />
-		<topic label="Application Emulator Debug Example"  				href="html/tasks/start/carbide_example.htm" >
+	
+		<topic label="Tour of the UI"				href="html/concepts/tour.html" />
+		<topic label="Project Updater"          	href="html/reference/olderproject_updater.html" />
+
+		<topic label="Application Emulator Debug Example"  	href="html/tasks/start/carbide_example.htm" >
 			<topic label="1. Creating New Projects" 		        	href="html/tasks/CreatingNewProjects.html" />
 			<topic label="2. Building Projects and Symbian Components" 	href="html/tasks/projects/prj_build.htm" />
 			<topic label="3. Creating a Launch Configuration"			href="html/tasks/projects/prj_debug_config.htm" />
 			<topic label="4. Debugging a Symbian OS Program" 			href="html/tasks/start/carbide_debugging.htm" />
 		</topic>
-		<topic href="html/concepts/SampleExampleProjectCreate.html" label="DLL Emulator Example">
-  </topic>
-		
-	 <topic label="Carbide Menus " 							href="html/reference/menus/menus.htm" >
-     	<topic href="html/reference/trk/view_remote_connection.htm" label="On-Device Connection..." />
-		<topic label="Open Command Window"					href="html/reference/menus/open_cmd_window.htm" />
-		<topic label="Run CodeScanner"						href="html/reference/menus/run_codescanner.htm" />
-		<topic label="Run Leavescan"						href="html/reference/menus/run_leavescan.htm" />
-		<topic label="S60 UI Designer"						href="html/reference/menus/s60_ui_designer.htm" />
-		<topic label="Show in Explorer"						href="html/reference/menus/open_explorer_window.htm" />
-   		<topic href="html/reference/menus/new_symbian_class.htm" label="Symbian OS C++ Class">
-      		<topic href="html/tasks/projects/prj_adding_symbian_class.htm" label="New Symbian OS C++ Class wizard" />
-     	</topic>
-		<topic href="html/tasks/CreatingNewProjects.html" label="Symbian OS C++ Project">
-      		<topic href="html/tasks/CreatingNewProjects.html" label="New Symbian OS C++ Project wizard" />
-      	</topic>
-		<topic label="Symbian OS MMP File"					href="html/reference/menus/new_symbian_mmp_file.htm" />
-		<topic label="Context menus" 						href="html/concepts/contextual_menus.htm" />
+	
+		<topic label="DLL Emulator Example" href="html/concepts/SampleExampleProjectCreate.html" />
+
+	</topic>
+
+	<topic label="Carbide Menus " 					href="html/reference/menus/menus.htm" >
+
+		<topic label="On-Device Connection..."		href="html/reference/trk/view_remote_connection.htm" />
+		<topic label="Open Command Window"			href="html/reference/menus/open_cmd_window.htm" />
+		<topic label="Run CodeScanner"				href="html/reference/menus/run_codescanner.htm" />
+		<topic label="Run Leavescan"				href="html/reference/menus/run_leavescan.htm" />
+		<topic label="S60 UI Designer"				href="html/reference/menus/s60_ui_designer.htm" />
+		<topic label="Show in Explorer"				href="html/reference/menus/open_explorer_window.htm" />
+
+		<topic label="Symbian OS C++ Class"			href="html/reference/menus/new_symbian_class.htm" >
+      		<topic label="New Symbian OS C++ Class wizard"	href="html/tasks/projects/prj_adding_symbian_class.htm" />
+		</topic>
+
+		<topic label="Symbian OS C++ Project"		href="html/tasks/CreatingNewProjects.html" >
+			<topic label="New Symbian OS C++ Project wizard"	href="html/tasks/CreatingNewProjects.html" />
+		</topic>
+
+		<topic label="Symbian OS MMP File"			href="html/reference/menus/new_symbian_mmp_file.htm" />
+		<topic label="Context menus" 				href="html/concepts/contextual_menus.htm" />
+
 	</topic>
 	
+
 	<topic label="Project management" >
 	
 		<topic label="Carbide C/C++ perspective" 		    href="html/concepts/CarbidePerspective.html" >
@@ -49,7 +61,6 @@
 			<topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
 			<topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
 			<topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
-
 		</topic>
 		
 		<topic label="Carbide.c++ preferences" 				href="html/reference/wnd_carbide_pref.htm" >
@@ -65,53 +76,50 @@
 			<topic label="Preprocess"						href="html/reference/wnd_preprocess_prefs.htm" />
 			<topic label="SDK Preferences"                  href="html/reference/SDKPreferences.html" />
 			<topic label="UI Designer"          			href="PLUGINS_ROOT/com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/uidesign/ref_ui_designer_prefs.htm" />
-          <topic href="html/reference/wnd_pref_code_style.htm" label="Code Styles">
-           <topic href="html/tasks/code_style_workspace.htm" label="Setting the Workspace Code Style">
-           </topic>
-           <topic href="html/tasks/code_style_reformatting_sources.htm" label="Reformatting a Source File">
-           </topic>
-          </topic>
-        </topic>
-  <topic href="html/tasks/WorkingwithSDKs.html" label="Working with SDKs">
-     <topic href="html/concepts/SDKSupport.html" label="SDK Support">
-     </topic>
-     <topic href="html/tasks/AddinganSDK.html" label="Adding an SDK">
-        <topic href="html/tasks/sdks/sdk_add.htm" label="Adding SDKs">
-        </topic>
-     </topic>
-     <topic href="html/tasks/sdks/sdk_search.htm" label="Searching for SDKs">
-     </topic>
-     <topic href="html/tasks/sdks/sdk_view_properties.htm" label="Viewing SDK Properties">
-     </topic>
-     <topic href="html/tasks/RmvngandVwngPropsosSDK.html" label="Editing SDK Properties">
-     </topic>
-     <topic href="html/tasks/sdks/sdk_add_custkits.htm" label="Adding Symbian Custom Kits">
-     </topic>
-  </topic>
 
-		<topic label="Creating projects" 								href="html/tasks/CreatingProjectsToc.htm">
-			<topic label="Project Templates" 					    	href="html/concepts/templates.htm"/>
-			<topic label="Creating from a Template" 					href="html/tasks/CreatingNewProjects.html"/>
-			<topic label="Importing Projects from a BLD.INF File"		href="html/tasks/ImportingProjects.html"/>
+			<topic label="Code Styles"						href="html/reference/wnd_pref_code_style.htm" >
+				<topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />
+				<topic label="Reformatting a Source File"		href="html/tasks/code_style_reformatting_sources.htm" />
+			</topic>
+		</topic>
+
+		<topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
+			<topic label="SDK Support"						href="html/concepts/SDKSupport.html" />
+
+			<topic label="Adding an SDK"					href="html/tasks/AddinganSDK.html" >
+				<topic label="Adding SDKs"					href="html/tasks/sdks/sdk_add.htm" />
+			</topic>
+
+			<topic label="Searching for SDKs"				href="html/tasks/sdks/sdk_search.htm" />
+			<topic label="Viewing SDK Properties"			href="html/tasks/sdks/sdk_view_properties.htm" />
+			<topic label="Editing SDK Properties"			href="html/tasks/RmvngandVwngPropsosSDK.html" />
+			<topic label="Adding Symbian Custom Kits"		href="html/tasks/sdks/sdk_add_custkits.htm" />
+		</topic>
+
+		<topic label="Creating projects" 								href="html/tasks/CreatingProjectsToc.htm" >
+			<topic label="Project Templates" 					    	href="html/concepts/templates.htm" />
+			<topic label="Creating from a Template" 					href="html/tasks/CreatingNewProjects.html" />
+			<topic label="Importing Projects from a BLD.INF File"		href="html/tasks/ImportingProjects.html" />
 			<topic label="Importing Projects with Inter-Dependencies"	href="html/tasks/projects/prj_build_multi_projects.htm" />
-			<topic label="N-Gage Projects" 								href="html/concepts/ngage_projects.htm"/>
+			<topic label="N-Gage Projects" 								href="html/concepts/ngage_projects.htm" />
 		</topic>
 	
 		<topic label="C/C++ Project and File Properties"	href="html/reference/ProjectPreferences.html" >
 		
 			<topic label="Carbide Build Configurations"					href="html/reference/build_properties/pane_build_config.htm" >
+
 				<topic label="SIS Builder" 								href="html/reference/build_properties/pane_build_config_sis.htm" >
 					<topic label="SIS Properties"						href="html/reference/build_properties/wnd_sis_properties.htm" />
 				</topic>
+
 				<topic label="Environment"								href="html/reference/build_properties/pane_build_config_env.htm" />
 				<topic label="Arguments"								href="html/reference/build_properties/pane_build_config_args.htm" />
 				<topic label="Paths and Symbols"						href="html/reference/build_properties/pane_build_config_paths.htm" />
 				<topic label="ROM Builder"								href="html/reference/ROM_build_settings.html" />
 			</topic>
-   <topic href="html/reference/build_properties/pane_macro_settings.htm" label="Carbide Macro Settings">
-   </topic>
-			
-			<topic label="Carbide Project Settings"			href="html/reference/build_properties/pane_project_settings.htm" />
+
+			<topic label="Carbide Macro Settings"						href="html/reference/build_properties/pane_macro_settings.htm" />
+			<topic label="Carbide Project Settings"						href="html/reference/build_properties/pane_project_settings.htm" />
 		</topic>
 	
 		<topic label="Building projects"  							href="html/concepts/build_system.htm" >
@@ -138,121 +146,89 @@
    			<topic label="Freeze Exports"							href="html/reference/menus/freeze_exports.htm" />
 		</topic>
 	
-		<topic label="Resource and project editors"  	href="html/tasks/ModifyingResources.html" >
+		<topic label="Resource and project editors"		href="html/tasks/ModifyingResources.html" >
 			
-			<topic label="AIF files" 				 	 href="html/concepts/AIFDefWizard.html" >
-				<topic label="AIF Editor" 				 href="html/reference/AIFEditor.html"/>
-				<topic label="Creating an AIF File" 	 href="html/tasks/AppInfoFile.html"/>
+			<topic label="AIF files"					href="html/concepts/AIFDefWizard.html" >
+				<topic label="AIF Editor"				href="html/reference/AIFEditor.html" />
+				<topic label="Creating an AIF File"		href="html/tasks/AppInfoFile.html" />
 			</topic>
 			
-			<topic label="Classes"  								href="html/tasks/ClassesToc.htm">
-				<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html"/>
-				<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html"/>
+			<topic label="Classes"  								href="html/tasks/ClassesToc.htm" >
+				<topic label="Adding Classes" 						href="html/tasks/AddingClasses.html" />
+				<topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html" />
 				<topic label="Adding Symbian OS Classes Wizard"		href="html/tasks/projects/prj_adding_symbian_class.htm" />
 			</topic>
 			
-			<topic href="html/reference/INF_Editor.html" label="INF editor">
-      <topic href="html/reference/INF_Editor.html" label="Overview tab">
-      </topic>
-      <topic href="html/reference/INF_Editor_exports.html" label="Exports tab">
-      </topic>
-      <topic href="html/reference/INF_Editor_file.html" label="BLD.INF tab">
-      </topic>
-      <topic href="html/reference/INF_Editor_addedit_make.html" label="Add / Edit Make File">
-      </topic>
-      <topic href="html/reference/INF_Editor_addedit_mmp.html" label="Add / Edit MMP File">
-      </topic>
-   </topic>
+			<topic label="INF editor"					href="html/reference/INF_Editor.html" >
+				<topic label="Overview tab"				href="html/reference/INF_Editor.html" />
+				<topic label="Exports tab"				href="html/reference/INF_Editor_exports.html" />
+				<topic label="BLD.INF tab"				href="html/reference/INF_Editor_file.html" />
+				<topic label="Add / Edit Make File"		href="html/reference/INF_Editor_addedit_make.html" />
+				<topic label="Add / Edit MMP File"		href="html/reference/INF_Editor_addedit_mmp.html" />
+			</topic>
 	
-			<topic label="MBM/MIF files" 			 href="html/concepts/MBMDefWizard.html" >
-				<topic label="MBM Editor" 			 href="html/reference/MBMEditor.html"/>
-				<topic label="Creating MBM Files" 	 href="html/tasks/Multi-BitmapFile.html"/>
-				<topic label="MBM/MIF Editor"		 href="html/reference/view_mifdef_editor.htm" />
+			<topic label="MBM/MIF files" 			href="html/concepts/MBMDefWizard.html" >
+				<topic label="MBM Editor" 			href="html/reference/MBMEditor.html" />
+				<topic label="Creating MBM Files" 	href="html/tasks/Multi-BitmapFile.html" />
+				<topic label="MBM/MIF Editor"		href="html/reference/view_mifdef_editor.htm" />
 			</topic>
 			
-			<topic label="MMP files" 				 href="html/concepts/mmpfiles.htm" >
-				<topic label="MMP Wizard"		     href="html/reference/NewMMP_wizard.html" />
-				<topic href="html/reference/MMP_Editor.html" label="MMP Editor">
-       <topic href="html/reference/MMP_Editor_sources.html" label="Sources tab">
-       </topic>
-       <topic href="html/reference/MMP_Editor_libraries.html" label="Libraries tab">
-       </topic>
-       <topic href="html/reference/MMP_Editor_options.html" label="Options tab">
-       </topic>
-       <topic href="html/reference/MMP_Editor_mmp_tab.html" label="MMP File tab">
-       </topic>
-    </topic>
+			<topic label="MMP files" 				href="html/concepts/mmpfiles.htm" >
+				<topic label="MMP Wizard"		    href="html/reference/NewMMP_wizard.html" />
+
+				<topic label="MMP Editor"			href="html/reference/MMP_Editor.html" >
+					<topic label="Sources tab"		href="html/reference/MMP_Editor_sources.html" />
+					<topic label="Libraries tab"	href="html/reference/MMP_Editor_libraries.html" />
+					<topic label="Options tab"		href="html/reference/MMP_Editor_options.html" />
+					<topic label="MMP File tab"		href="html/reference/MMP_Editor_mmp_tab.html" />
+  				</topic>
 			</topic>
-			
 		</topic>
 	
+		<topic label="Launch configurations"				href="html/projects/launch/launch_configs_overview.htm" >
+			<topic label="New Launch Configuration Wizard"	href="html/projects/launch/wiz_new_launch_config.htm" />
+			<topic label="Debug dialog"						href="html/projects/launch/wnd_debug_configuration.htm" />
 
-   <topic href="html/projects/launch/launch_configs_overview.htm" label="Launch configurations">
-    <topic href="html/projects/launch/wiz_new_launch_config.htm" label="New Launch Configuration Wizard">
-    </topic>
-    <topic href="html/projects/launch/wnd_debug_configuration.htm" label="Debug dialog">
-    </topic>
-    <topic label="Launch configurations" href="html/concepts/launch_configuration.htm">
-	    <topic label="Applications" href="html/projects/launch/applications.htm">
-	    </topic>
-     <topic label="Application TRK" href="html/projects/launch/run_mode.htm">
-     </topic>
-     <topic label="Attach to Process" href="html/projects/launch/attach_process.htm" >
-     </topic>
-	    <topic href="html/projects/launch/emulation.htm" label="Emulation">
-	    </topic>
-     <topic label="Sophia (STI)" href="html/projects/launch/sophia.htm" >
-     </topic>
-     <topic label="System TRK" href="html/projects/launch/stop_mode.htm" >
-     </topic>
-     <topic label="Trace32" href="html/projects/launch/trace32.htm" >
-     </topic>
-     <anchor id="launch_config_ANCHOR"/>
-   </topic>
-    <topic href="html/projects/launch/pages_overview.htm" label="Configuration panes">
-       <topic href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_arg.htm" label="Arguments">
-       </topic>
-       <topic href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm" label="Common">
-       </topic>
-       <topic href="html/projects/launch/page_debugger.htm" label="Debugger">
-       </topic>
-       <topic href="html/projects/launch/page_executables.htm" label="Executables">
-       </topic>
-       <topic label="File Transfer" href="html/projects/launch/page_file_transfer.htm" >
-       </topic>
-       <topic label="Installation" href="html/projects/launch/page_installation.htm" >
-       </topic>
-       <topic label="Main" href="html/projects/launch/page_main.htm" >
-       </topic>
-       <topic label="ROM Image" href="html/projects/launch/page_rom_image.htm" >
-       </topic>
-       <topic label="ROM Log File" href="html/projects/launch/page_rom_log.htm" >
-       </topic>
-       <topic href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" label="Sources">
-       </topic>
-       <topic label="x86 Exceptions" href="html/projects/launch/page_exceptions.htm" >
-       </topic>
-    </topic>
-    <topic href="html/projects/launch/customizing_launch_configs.htm" label="Customizing launch configurations">
-    </topic>
-    <topic href="html/projects/launch/launch_configuration_filter.htm" label="Filtering launch configurations">
-    </topic>
- </topic>
-   <topic href="html/qt_help/qt_overview.htm" label="Qt project support">
-      <topic href="html/qt_help/qt_project_setup.htm" label="Qt development setup">
-      <topic href="html/qt_help/qt_creating_projs_01.htm" label="Creating Qt projects">
-      </topic>
-      <topic href="html/qt_help/qt_importing_projs_01.htm" label="Importing Qt projects">
-      </topic>
-      </topic>
-      <topic href="html/qt_help/qt_perspectives.htm" label="Qt C/C++ perspective">
-      </topic>
-      <topic href="html/qt_help/qt_pref_panel.htm" label="Qt preference panel">
-      </topic>
-      <topic href="html/qt_help/qt_project_properties.htm" label="Qt project properties">
-      </topic>
-   </topic>
+		    <topic label="Launch configurations"			href="html/concepts/launch_configuration.htm" >
+				<topic label="Applications"					href="html/projects/launch/applications.htm" />
+				<topic label="Application TRK"				href="html/projects/launch/run_mode.htm" />
+				<topic label="Attach to Process"			href="html/projects/launch/attach_process.htm" />
+				<topic label="Emulation"					href="html/projects/launch/emulation.htm" />
+				<topic label="Sophia (STI)"					href="html/projects/launch/sophia.htm" />
+				<topic label="System TRK"					href="html/projects/launch/stop_mode.htm" />
+				<topic label="Trace32"						href="html/projects/launch/trace32.htm" />
+				<anchor id="launch_config_ANCHOR"/>
+			</topic>
+			
+ 			<topic label="Configuration panes"				href="html/projects/launch/pages_overview.htm" >
+				<topic label="Arguments"					href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_arg.htm" />
+				<topic label="Common"						href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm" />
+				<topic label="Debugger"						href="html/projects/launch/page_debugger.htm" />
+				<topic label="Executables"					href="html/projects/launch/page_executables.htm" />
+				<topic label="File Transfer"				href="html/projects/launch/page_file_transfer.htm" />
+				<topic label="Installation"					href="html/projects/launch/page_installation.htm" />
+				<topic label="Main"							href="html/projects/launch/page_main.htm" />
+				<topic label="ROM Image"					href="html/projects/launch/page_rom_image.htm" />
+				<topic label="ROM Log File"					href="html/projects/launch/page_rom_log.htm" />
+				<topic label="Sources"						href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
+				<topic label="x86 Exceptions"				href="html/projects/launch/page_exceptions.htm" />
+			</topic>
 
+			<topic label="Customizing launch configurations"	href="html/projects/launch/customizing_launch_configs.htm" />
+			<topic label="Filtering launch configurations"		href="html/projects/launch/launch_configuration_filter.htm" />
+		</topic>
+
+		<topic label="Qt project support"					href="html/qt_help/qt_overview.htm" >
+
+			<topic label="Qt development setup"				href="html/qt_help/qt_project_setup.htm" >
+				<topic label="Creating Qt projects"			href="html/qt_help/qt_creating_projs_01.htm" />
+				<topic label="Importing Qt projects"		href="html/qt_help/qt_importing_projs_01.htm" />
+			</topic>
+
+			<topic label="Qt C/C++ perspective"				href="html/qt_help/qt_perspectives.htm" />
+			<topic label="Qt preference panel"				href="html/qt_help/qt_pref_panel.htm" />
+			<topic label="Qt project properties"			href="html/qt_help/qt_project_properties.htm" />
+		</topic>
 	</topic>
   
 	
@@ -303,12 +279,12 @@
    </topic>
 			
 			<topic label="Variables view"			href="html/reference/view_variables.htm" >
-      <topic href="html/concepts/working_with_variables.htm" label="Working with Variables">
+      <topic label="Working with Variables" href="html/concepts/working_with_variables.htm">
       </topic>
 			    <topic label="Opening a Variables View"				href="html/tasks/variables/show_variables_view.htm" />
-			    <topic href="html/tasks/variables/show_global_variables.htm" label="Showing Global Variables">
+			    <topic label="Showing Global Variables" href="html/tasks/variables/show_global_variables.htm">
        </topic>
-       <topic href="html/tasks/variables/set_variable_formats.htm" label="Setting Variable Formats">
+       <topic label="Setting Variable Formats" href="html/tasks/variables/set_variable_formats.htm">
        </topic>
 		    </topic>
 		</topic>
