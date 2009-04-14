@@ -453,6 +453,10 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 		return true;
 	}
+	
+	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
+		return true;
+	}
 
 	public IPath getMakefileDirectory(ICarbideBuildConfiguration buildConfig) {
 		// the makefile's are build config specific but are generated every time no

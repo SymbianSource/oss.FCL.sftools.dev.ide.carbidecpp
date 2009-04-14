@@ -2199,6 +2199,11 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 	}
 	
+	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
+		return generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, new NullProgressMonitor()); 
+	}
+
+	
 	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 
 		// generate the makefile if necessary

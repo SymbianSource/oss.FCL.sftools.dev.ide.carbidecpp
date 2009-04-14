@@ -892,8 +892,8 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param launcher the Carbide launcher
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 */
-	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IProgressMonitor progress) {
-		return generateAbldMakefilesIfNecessary(config, launcher, true, progress);
+	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher) {
+		return generateAbldMakefilesIfNecessary(config, launcher, true);
 	}
 
 	/**
@@ -908,6 +908,27 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param config the build configuration context
 	 * @param launcher the Carbide launcher
 	 * @param calculateComponentLists whether or not to calculate the list of makmake components
+	 * @return false if any makefile generation was necessary but failed, true otherwise
+	 * @since 2.0
+	 * @deprecated Use {@link #generateAbldMakeFileIfNecessary(generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, boolean, IProgressMonitor)} instead
+	 */
+	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists) {
+		return generateAbldMakefilesIfNecessary(config, launcher, calculateComponentLists, new NullProgressMonitor());
+	}
+
+	/**
+	 * Generates the abld makefiles if necessary.
+	 * Loops through the mmp files to be built for the given build configuration and generates the makefile
+	 * for the mmp if:
+	 * 	 1) the makefile for the mmp does not exist
+	 *   2) if the mmp or any of its includes is newer than the makefile
+	 *   3) the makefile does not have the necessary Carbide changes
+	 *   
+	 *   The command used will be 'abld [test] makefile platform mmpname'
+	 * @param config the build configuration context
+	 * @param launcher the Carbide launcher
+	 * @param calculateComponentLists whether or not to calculate the list of makmake components
+	 * @param progress monitor to allow user to cancel
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 * @since 2.0
 	 */
@@ -932,7 +953,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		return true;
 	}
-
+	
 	/**
 	 * Generates the abld makefile if necessary.
 	 * Generates the makefile for the given mmp file if:
