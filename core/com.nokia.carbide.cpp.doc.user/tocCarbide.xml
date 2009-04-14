@@ -5,51 +5,41 @@
 
 	<topic label="Carbide.c++ Overview" href="html/tasks/start/carbide_overview.htm" >
 		<topic label="System Requirements" 			href="html/tasks/start/carbide_requirements.htm" />
-		<topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" >
-		<topic label="Carbide Tools" 				href="html/tasks/start/carbide_tools.htm" >
+		<topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" />
+		<topic label="Carbide Tools" 				href="html/tasks/start/carbide_tools.htm" />
 		<topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" >
-	      
 			<topic label="Supported Target Types"	href="html/concepts/build_targets.htm" />		
 			<topic label="Supported SDKs" 		    href="html/sos_references.htm" />
 			<topic label="Updating Carbide.c++" 	href="html/tasks/start/carbide_updating.htm" />
 		</topic>
-	
 		<topic label="Tour of the UI"			href="html/concepts/tour.html" />
 		<topic label="Project Updater"          href="html/reference/olderproject_updater.html" />
-
 		<topic label="Application Emulator Debug Example"  				href="html/tasks/start/carbide_example.htm" >
 			<topic label="1. Creating New Projects" 		        	href="html/tasks/CreatingNewProjects.html" />
 			<topic label="2. Building Projects and Symbian Components" 	href="html/tasks/projects/prj_build.htm" />
 			<topic label="3. Creating a Launch Configuration"			href="html/tasks/projects/prj_debug_config.htm" />
 			<topic label="4. Debugging a Symbian OS Program" 			href="html/tasks/start/carbide_debugging.htm" />
 		</topic>
-	
 		<topic href="html/concepts/SampleExampleProjectCreate.html" label="DLL Emulator Example">
   </topic>
 		
-		<topic label="Carbide Menus " 							href="html/reference/menus/menus.htm" >
-     <topic href="html/reference/trk/view_remote_connection.htm" label="On-Device Connection...">
-     </topic>
-			<topic label="Open Command Window"					href="html/reference/menus/open_cmd_window.htm" />
-			<topic label="Run CodeScanner"						href="html/reference/menus/run_codescanner.htm" />
-			<topic label="Run Leavescan"						href="html/reference/menus/run_leavescan.htm" />
-			<topic label="S60 UI Designer"						href="html/reference/menus/s60_ui_designer.htm" />
-			<topic label="Show in Explorer"						href="html/reference/menus/open_explorer_window.htm" />
-   <topic href="html/reference/menus/new_symbian_class.htm" label="Symbian OS C++ Class">
-      <topic href="html/tasks/projects/prj_adding_symbian_class.htm" label="New Symbian OS C++ Class wizard">
-      </topic>
-   </topic>
-			<topic href="html/tasks/CreatingNewProjects.html" label="Symbian OS C++ Project">
-      <topic href="html/tasks/CreatingNewProjects.html" label="New Symbian OS C++ Project wizard">
-      </topic>
-   </topic>
-			<topic label="Symbian OS MMP File"					href="html/reference/menus/new_symbian_mmp_file.htm" />
-			<topic label="Context menus" 						href="html/concepts/contextual_menus.htm" />
-		</topic>
-
+	 <topic label="Carbide Menus " 							href="html/reference/menus/menus.htm" >
+     	<topic href="html/reference/trk/view_remote_connection.htm" label="On-Device Connection..." />
+		<topic label="Open Command Window"					href="html/reference/menus/open_cmd_window.htm" />
+		<topic label="Run CodeScanner"						href="html/reference/menus/run_codescanner.htm" />
+		<topic label="Run Leavescan"						href="html/reference/menus/run_leavescan.htm" />
+		<topic label="S60 UI Designer"						href="html/reference/menus/s60_ui_designer.htm" />
+		<topic label="Show in Explorer"						href="html/reference/menus/open_explorer_window.htm" />
+   		<topic href="html/reference/menus/new_symbian_class.htm" label="Symbian OS C++ Class">
+      		<topic href="html/tasks/projects/prj_adding_symbian_class.htm" label="New Symbian OS C++ Class wizard" />
+     	</topic>
+		<topic href="html/tasks/CreatingNewProjects.html" label="Symbian OS C++ Project">
+      		<topic href="html/tasks/CreatingNewProjects.html" label="New Symbian OS C++ Project wizard" />
+      	</topic>
+		<topic label="Symbian OS MMP File"					href="html/reference/menus/new_symbian_mmp_file.htm" />
+		<topic label="Context menus" 						href="html/concepts/contextual_menus.htm" />
 	</topic>
 	
-
 	<topic label="Project management" >
 	
 		<topic label="Carbide C/C++ perspective" 		    href="html/concepts/CarbidePerspective.html" >
