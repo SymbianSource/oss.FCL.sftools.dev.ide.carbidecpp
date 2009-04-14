@@ -17,7 +17,7 @@ border="0" cellpadding="2" cellspacing="0">
          <tr valign="top">
            <td class="Cell"><b>Configure Project Specific Settings... </b></td>
            <td class="Cell"><p>Click to open the project  <b>Properties</b> window and configure CodeScanner for that specific project. </p>
-           <p class="note"><b>NOTE</b> Only visible in the global CodeScanner preference panels. This also applies to the File Filters and General pages</p></td>
+           <p class="note"><b>NOTE</b> Only visible in the global CodeScanner preference panels. This also applies to the File Filters and General pages</td>
          </tr>
          <tr valign="top">
            <td class="Cell"><b>CodeScanner rules </b></td>
@@ -43,412 +43,424 @@ border="0" cellpadding="2" cellspacing="0">
 	 <p>&nbsp;</p>
 	 <p>The following table indicates an example of  rules listed in the Rules tab and associated error messages that would be generated in the Problems view.</p>
 	 <table border="0" cellspacing="0" cellpadding="2">
-	 <tr valign="top"><th width="294" class="Cell">Name</th>
-	   <th width="585" class="Cell">Description</th>
+	 <tr valign="top"><th width="353" class="Cell">Name</th>
+	   <th width="398" class="Cell">Description</th>
 	 </tr>
 
        <tr>
-         <td width="294" valign="top" class="code"><p>accessArrayElementWithoutCheck</p></td>
-         <td width="585" valign="top"><p>Array element accessed by At()    function without checking index is within array range</p></td>
+         <td class="code">accessArrayElementWithoutCheck</td>
+         <td width="398" valign="top">Array element accessed by At() function without checking index is within array range</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>accessArrayElementWithoutCheck2</p></td>
-         <td width="585" valign="top"><p>Array element accessed by []    without checking range</p></td>
+         <td class="code">accessArrayElementWithoutCheck2</td>
+         <td width="398" valign="top">Array element accessed by [] without checking range</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>activestart</p></td>
-         <td width="585" valign="top"><p>Using CActiveScheduler::Start</p></td>
+         <td class="code">activestart</td>
+         <td width="398" valign="top">Using CActiveScheduler::Start</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>activestop</p></td>
-         <td width="585" valign="top"><p>Using CActiveScheduler::Stop</p></td>
+         <td class="code">activestop</td>
+         <td width="398" valign="top">Using CActiveScheduler::Stop</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>arraypassing</p></td>
-         <td width="585" valign="top"><p>Passing arrays by value rather    than reference</p></td>
+         <td class="code">arraypassing</td>
+         <td width="398" valign="top">Passing arrays by value rather    than reference</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>arrayptrcleanup</p></td>
-         <td width="585" valign="top"><p>Using local CArrayPtr classes    without cleanup items</p></td>
+         <td class="code">arrayptrcleanup</td>
+         <td width="398" valign="top">Using local CArrayPtr classes    without cleanup items</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>assertdebuginvariant</p></td>
-         <td width="585" valign="top"><p>__ASSERT_DEBUG with    User::Invariant</p></td>
+         <td class="code">assertdebuginvariant</td>
+         <td width="398" valign="top">__ASSERT_DEBUG with    User::Invariant</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>baddefines</p></td>
-         <td width="585" valign="top"><p>Lowercase definition names</p></td>
+         <td class="code">baddefines</td>
+         <td width="398" valign="top">Lowercase definition names</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>baseconstruct</p></td>
-         <td width="585" valign="top"><p>Leaving function called before    BaseConstructL()</p></td>
+         <td class="code">baseconstruct</td>
+         <td width="398" valign="top">Leaving function called before    BaseConstructL()</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>callActiveObjectWithoutCheckingOrStopping</p></td>
-         <td width="585" valign="top"><p>Active object called without checking whether it is active or canceling it first</p></td>
+         <td class="code">callActiveObjectWithoutCheckingOrStopping</td>
+         <td width="398" valign="top">Active object called without checking whether it is active or canceling it first</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>changenotification</p></td>
-         <td width="585" valign="top"><p>Using RSAVarChangeNotify to see System Agent changes</p></td>
+         <td class="code">changenotification</td>
+         <td width="398" valign="top">Using RSAVarChangeNotify to see System Agent changes</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>cleanup</p></td>
-         <td width="585" valign="top"><p>CleanupStack::Pop(AndDestroy) parameters</p></td>
+         <td class="code">cleanup</td>
+         <td width="398" valign="top">CleanupStack::Pop(AndDestroy) parameters</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>commentcode</p></td>
-         <td width="585" valign="top"><p>Commented-out code</p></td>
+         <td class="code">commentcode</td>
+         <td width="398" valign="top">Commented-out code</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>connect</p></td>
-         <td width="585" valign="top"><p>Ignoring Connect() return value</p></td>
+         <td class="code">connect</td>
+         <td width="398" valign="top">Ignoring Connect() return value</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>ConnectAndDontCloseMemberVariable</p></td>
-         <td width="585" valign="top"><p>Calling Connect() or Open() on a member variable without calling Close() in the destructor</p></td>
+         <td class="code">ConnectAndDontCloseMemberVariable</td>
+         <td width="398" valign="top">Calling Connect() or Open() on a member variable without calling Close() in the destructor</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>constnames</p></td>
-         <td width="585" valign="top"><p>Badly-named constants</p></td>
+         <td class="code">constnames</td>
+         <td width="398" valign="top">Badly-named constants</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>consttdescptr</p></td>
-         <td width="585" valign="top"><p>Const descriptor pointer as argument</p></td>
+         <td class="code">consttdescptr</td>
+         <td width="398" valign="top">Const descriptor pointer as argument</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>controlornull</p></td>
-         <td width="585" valign="top"><p>Accessing return value of ControlOrNull()</p></td>
+         <td class="code">controlornull</td>
+         <td width="398" valign="top">Accessing return value of ControlOrNull()</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>ctltargettype</p></td>
-         <td width="585" valign="top"><p>Use of targettype ctl</p></td>
+         <td class="code">crepositorie</td>
+         <td valign="top">Check for Central Repository usage</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>debugrom</p></td>
-         <td width="585" valign="top"><p>Debug components in ROM</p></td>
+         <td class="code">ctltargettype</td>
+         <td width="398" valign="top">Use of targettype ctl</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>declarename</p></td>
-         <td width="585" valign="top"><p>Use of __DECLARE_NAME</p></td>
+         <td valign="top" class="code">customizableicons</td>
+         <td valign="top"> Check for customizable icons</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>deleteMemberVariable</p></td>
-         <td width="585" valign="top"><p>Member variable deleted incorrectly</p></td>
+         <td class="code">debugrom</td>
+         <td width="398" valign="top">Debug components in ROM</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>destructor</p></td>
-         <td width="585" valign="top"><p>Pointer access in destructors</p></td>
+         <td class="code">declarename</td>
+         <td width="398" valign="top">Use of __DECLARE_NAME</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>doubleSemiColon</p></td>
-         <td width="585" valign="top"><p>Use of double semicolon</p></td>
+         <td class="code">deleteMemberVariable</td>
+         <td width="398" valign="top">Member variable deleted incorrectly</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>driveletters</p></td>
-         <td width="585" valign="top"><p>Hard-coded drive letters</p></td>
+         <td class="code">destructor</td>
+         <td width="398" valign="top">Pointer access in destructors</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>eikbuttons</p></td>
-         <td width="585" valign="top"><p>Checks that the R_EIK_BUTTONS_* resources are not being used</p></td>
+         <td class="code">doubleSemiColon</td>
+         <td width="398" valign="top">Use of double semicolon</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>eikonenvstatic</p></td>
-         <td width="585" valign="top"><p>Using CEikonEnv::Static</p></td>
+         <td class="code">driveletters</td>
+         <td width="398" valign="top">Hard-coded drive letters</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>enummembers</p></td>
-         <td width="585" valign="top"><p>Enums with badly-named members</p></td>
+         <td class="code">eikbuttons</td>
+         <td width="398" valign="top">Checks that the R_EIK_BUTTONS_* resources are not being used</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>enumnames</p></td>
-         <td width="585" valign="top"><p>Badly-named enums</p></td>
+         <td class="code">eikonenvstatic</td>
+         <td width="398" valign="top">Using CEikonEnv::Static</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>exportinline</p></td>
-         <td width="585" valign="top"><p>Exporting inline functions</p></td>
+         <td class="code">enummembers</td>
+         <td width="398" valign="top">Enums with badly-named members</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>exportpurevirtual</p></td>
-         <td width="585" valign="top"><p>Exporting pure virtual functions</p></td>
+         <td class="code">enumnames</td>
+         <td width="398" valign="top">Badly-named enums</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>externaldriveletters</p></td>
-         <td width="585" valign="top"><p>Hard-coded external drive letters</p></td>
+         <td class="code">exportinline</td>
+         <td width="398" valign="top">Exporting inline functions</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>foff</p></td>
-         <td width="585" valign="top"><p>Use of _FOFF</p></td>
+         <td class="code">exportpurevirtual</td>
+         <td width="398" valign="top">Exporting pure virtual functions</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>forbiddenwords</p></td>
-         <td width="585" valign="top"><p>Use of forbidden words in header files</p></td>
+         <td class="code">externaldriveletters</td>
+         <td width="398" valign="top">Hard-coded external drive letters</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>forgottoputptroncleanupstack</p></td>
-         <td width="585" valign="top"><p>Neglected to put variable on cleanup stack</p></td>
+         <td class="code">flags</td>
+         <td valign="top">Check for flag usage</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>friend</p></td>
-         <td width="585" valign="top"><p>Use of friends</p></td>
+         <td class="code">foff</td>
+         <td width="398" valign="top">Use of _FOFF</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>goto</p></td>
-         <td width="585" valign="top"><p>Use of goto</p></td>
+         <td class="code">forbiddenwords</td>
+         <td width="398" valign="top">Use of forbidden words in header files</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>ifassignments</p></td>
-         <td width="585" valign="top"><p>Assignment in an If statement</p></td>
+         <td class="code">forgottoputptroncleanupstack</td>
+         <td width="398" valign="top">Neglected to put variable on cleanup stack</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>ifpreprocessor</p></td>
-         <td width="585" valign="top"><p>Use of #if in .h files</p></td>
+         <td class="code">friend</td>
+         <td width="398" valign="top">Use of friends</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>inheritanceorder</p></td>
-         <td width="585" valign="top"><p>Incorrect inheritance order of M and C classes</p></td>
+         <td class="code">goto</td>
+         <td width="398" valign="top">Use of goto</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>intleaves</p></td>
-         <td width="585" valign="top"><p>Methods that leave AND return a TInt error</p></td>
+         <td class="code">ifassignments</td>
+         <td width="398" valign="top">Assignment in an If statement</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>jmp</p></td>
-         <td width="585" valign="top"><p>Use of setjmp and/or longjmp</p></td>
+         <td class="code">ifpreprocessor</td>
+         <td width="398" valign="top">Use of #if in .h files</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>leave</p></td>
-         <td width="585" valign="top"><p>Leaving functions called in non-leaving functions</p></td>
+         <td class="code">inheritanceorder</td>
+         <td width="398" valign="top">Incorrect inheritance order of M and C classes</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>LeaveNoError</p></td>
-         <td width="585" valign="top"><p>Leaving with KErrNone</p></td>
+         <td class="code">intleaves</td>
+         <td width="398" valign="top">Methods that leave AND return a TInt error</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>leavingoperators</p></td>
-         <td width="585" valign="top"><p>Leaving functions called in operator functions</p></td>
+         <td class="code">jmp</td>
+         <td width="398" valign="top">Use of setjmp and/or longjmp</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>LFunctionCantLeave</p></td>
-         <td width="585" valign="top"><p>L-functions that cannot leave</p></td>
+         <td class="code">leave</td>
+         <td width="398" valign="top">Leaving functions called in non-leaving functions</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>longlines</p></td>
-         <td width="585" valign="top"><p>Overly long lines of code</p></td>
+         <td class="code">LeaveNoError</td>
+         <td width="398" valign="top">Leaving with KErrNone</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>magicnumbers</p></td>
-         <td width="585" valign="top"><p>Use of magic numbers</p></td>
+         <td class="code">leavingoperators</td>
+         <td width="398" valign="top">Leaving functions called in operator functions</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>mclassdestructor</p></td>
-         <td width="585" valign="top"><p>M class has destructor</p></td>
+         <td class="code">LFunctionCantLeave</td>
+         <td width="398" valign="top">L-functions that cannot leave</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>memberlc</p></td>
-         <td width="585" valign="top"><p>Assigning LC methods to member variables</p></td>
+         <td class="code">longlines</td>
+         <td width="398" valign="top">Overly long lines of code</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>membervariablecallld</p></td>
-         <td width="585" valign="top"><p>Calling LD function on member variable</p></td>
+         <td class="code">magicnumbers</td>
+         <td width="398" valign="top">Use of magic numbers</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>missingcancel</p></td>
-         <td width="585" valign="top"><p>Cancel() not called in active object's destructor</p></td>
+         <td class="code">mclassdestructor</td>
+         <td width="398" valign="top">M class has destructor</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>missingcclass</p></td>
-         <td width="585" valign="top"><p>C class not inheriting from another C class</p></td>
+         <td class="code">memberlc</td>
+         <td width="398" valign="top">Assigning LC methods to member variables</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>mmpsourcepath</p></td>
-         <td width="585" valign="top"><p>Use of absolute path names in MMP files</p></td>
+         <td class="code">membervariablecallld</td>
+         <td width="398" valign="top">Calling LD function on member variable</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>multilangrsc</p></td>
-         <td width="585" valign="top"><p>Not using    BaflUtils::NearestLanguageFile() when loading a resource file</p></td>
+         <td class="code">missingcancel</td>
+         <td width="398" valign="top">Cancel() not called in active object's destructor</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>multipledeclarations</p></td>
-         <td width="585" valign="top"><p>Multiple declarations on one line</p></td>
+         <td class="code">missingcclass</td>
+         <td width="398" valign="top">C class not inheriting from another C class</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>multipleinheritance</p></td>
-         <td width="585" valign="top"><p>Non M-class multiple inheritance</p></td>
+         <td class="code">mmpsourcepath</td>
+         <td width="398" valign="top">Use of absolute path names in MMP files</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>mydocs</p></td>
-         <td width="585" valign="top"><p>Hard-coded mydocs directory strings</p></td>
+         <td class="code">multilangrsc</td>
+         <td width="398" valign="top">Not using    BaflUtils::NearestLanguageFile() when loading a resource file</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>namespace</p></td>
-         <td width="585" valign="top"><p>Use of namespace</p></td>
+         <td class="code">multipledeclarations</td>
+         <td width="398" valign="top">Multiple declarations on one line</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>newlreferences</p></td>
-         <td width="585" valign="top"><p>NewL() returning a reference</p></td>
+         <td class="code">multipleinheritance</td>
+         <td width="398" valign="top">Non M-class multiple inheritance</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>noleavetrap</p></td>
-         <td width="585" valign="top"><p>TRAP used with no leaving functions</p></td>
+         <td class="code">mydocs</td>
+         <td width="398" valign="top">Hard-coded mydocs directory strings</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>nonconsthbufc</p></td>
-         <td width="585" valign="top"><p>Non-const HBufC* parameter passing</p></td>
+         <td class="code">namespace</td>
+         <td width="398" valign="top">Use of namespace</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>nonconsttdesc</p></td>
-         <td width="585" valign="top"><p>Non-const TDesC&amp; parameter passing</p></td>
+         <td class="code">newlreferences</td>
+         <td width="398" valign="top">NewL() returning a reference</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>nonleavenew</p></td>
-         <td width="585" valign="top"><p>Use of new without (ELeave)</p></td>
+         <td class="code">noleavetrap</td>
+         <td width="398" valign="top">TRAP used with no leaving functions</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>nonunicodeskins</p></td>
-         <td width="585" valign="top"><p>Non-Unicode skins</p></td>
+         <td class="code">nonconsthbufc</td>
+         <td width="398" valign="top">Non-const HBufC* parameter passing</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>null</p></td>
-         <td width="585" valign="top"><p>NULL equality check</p></td>
+         <td class="code">nonconsttdesc</td>
+         <td width="398" valign="top">Non-const TDesC&amp; parameter passing</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>open</p></td>
-         <td width="585" valign="top"><p>Ignoring Open() return value</p></td>
+         <td class="code">nonleavenew</td>
+         <td width="398" valign="top">Use of new without (ELeave)</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>pointertoarrays</p></td>
-         <td width="585" valign="top"><p>Pointer to arrays as members of a C class</p></td>
+         <td class="code">nonunicodeskins</td>
+         <td width="398" valign="top">Non-Unicode skins</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>pragmadisable</p></td>
-         <td width="585" valign="top"><p>Use of #pragma warning</p></td>
+         <td class="code">null</td>
+         <td width="398" valign="top">NULL equality check</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>pragmamessage</p></td>
-         <td width="585" valign="top"><p>Use of #pragma message</p></td>
+         <td class="code">open</td>
+         <td width="398" valign="top">Ignoring Open() return value</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>pragmaother</p></td>
-         <td width="585" valign="top"><p>Use of #pragma other than warning and message</p></td>
+         <td class="code">pointertoarrays</td>
+         <td width="398" valign="top">Pointer to arrays as members of a C class</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>privateinheritance</p></td>
-         <td width="585" valign="top"><p>Use of private inheritance</p></td>
+         <td class="code">pragmadisable</td>
+         <td width="398" valign="top">Use of #pragma warning</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>pushaddrvar</p></td>
-         <td width="585" valign="top"><p>Pushing address of a variable onto the cleanup stack</p></td>
+         <td class="code">pragmamessage</td>
+         <td width="398" valign="top">Use of #pragma message</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>pushmember</p></td>
-         <td width="585" valign="top"><p>Pushing data members onto the cleanup stack</p></td>
+         <td class="code">pragmaother</td>
+         <td width="398" valign="top">Use of #pragma other than warning and message</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>readresource</p></td>
-         <td width="585" valign="top"><p>Using ReadResource() instead of ReadResourceL()</p></td>
+         <td class="code">privateinheritance</td>
+         <td width="398" valign="top">Use of private inheritance</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>resourcenotoncleanupstack</p></td>
-         <td width="585" valign="top"><p>Neglected to put resource objects on cleanup stack</p></td>
+         <td class="code">pushaddrvar</td>
+         <td width="398" valign="top">Pushing address of a variable onto the cleanup stack</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>resourcesonheap</p></td>
-         <td width="585" valign="top"><p>Resource objects on the heap</p></td>
+         <td class="code">pushmember</td>
+         <td width="398" valign="top">Pushing data members onto the cleanup stack</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>returndescriptoroutofscope</p></td>
-         <td width="585" valign="top"><p>Return descriptor out of scope</p></td>
+         <td class="code">readresource</td>
+         <td width="398" valign="top">Using ReadResource() instead of ReadResourceL()</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>rfs</p></td>
-         <td width="585" valign="top"><p>Use of non-pointer/reference RFs</p></td>
+         <td class="code">resourcenotoncleanupstack</td>
+         <td width="398" valign="top">Neglected to put resource objects on cleanup stack</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>rssnames</p></td>
-         <td width="585" valign="top"><p>Duplicate RSS names</p></td>
+         <td class="code">resourcesonheap</td>
+         <td width="398" valign="top">Resource objects on the heap</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>stringliterals</p></td>
-         <td width="585" valign="top"><p>Use of _L string literals</p></td>
+         <td class="code">returndescriptoroutofscope</td>
+         <td width="398" valign="top">Return descriptor out of scope</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>stringsinresourcefiles</p></td>
-         <td width="585" valign="top"><p>Strings in RSS or RA files</p></td>
+         <td class="code">rfs</td>
+         <td width="398" valign="top">Use of non-pointer/reference RFs</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>struct</p></td>
-         <td width="585" valign="top"><p>Use of struct</p></td>
+         <td class="code">rssnames</td>
+         <td width="398" valign="top">Duplicate RSS names</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>tcclasses</p></td>
-         <td width="585" valign="top"><p>T classes inheriting from C classes</p></td>
+         <td class="code">stringliterals</td>
+         <td width="398" valign="top">Use of _L string literals</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>tclassdestructor</p></td>
-         <td width="585" valign="top"><p>T class has destructor</p></td>
+         <td class="code">stringsinresourcefiles</td>
+         <td width="398" valign="top">Strings in RSS or RA files</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>todocomments</p></td>
-         <td width="585" valign="top"><p>&quot;To do&rdquo; comments</p></td>
+         <td class="code">struct</td>
+         <td width="398" valign="top">Use of struct</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>trapcleanup</p></td>
-         <td width="585" valign="top"><p>Use of LC function in TRAPs</p></td>
+         <td class="code">tcclasses</td>
+         <td width="398" valign="top">T classes inheriting from C classes</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>trapeleave</p></td>
-         <td width="585" valign="top"><p>Trapping new(ELeave)</p></td>
+         <td class="code">tclassdestructor</td>
+         <td width="398" valign="top">T class has destructor</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>traprunl</p></td>
-         <td width="585" valign="top"><p>Trapping of (Do)RunL() rather than using RunError()</p></td>
+         <td class="code">todocomments</td>
+         <td width="398" valign="top">&quot;To do&rdquo; comments</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>trspassing</p></td>
-         <td width="585" valign="top"><p>Passing TRequestStatus parameters by value</p></td>
+         <td class="code">trapcleanup</td>
+         <td width="398" valign="top">Use of LC function in TRAPs</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>uids</p></td>
-         <td width="585" valign="top"><p>Duplicate UIDs</p></td>
+         <td class="code">trapeleave</td>
+         <td width="398" valign="top">Trapping new(ELeave)</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>uncompressedaif</p></td>
-         <td width="585" valign="top"><p>Uncompressed AIFs in ROM</p></td>
+         <td class="code">traprunl</td>
+         <td width="398" valign="top">Trapping of (Do)RunL() rather than using RunError()</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>uncompressedbmp</p></td>
-         <td width="585" valign="top"><p>Uncompressed bitmaps in ROM</p></td>
+         <td class="code">trspassing</td>
+         <td width="398" valign="top">Passing TRequestStatus parameters by value</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>unicodesource</p></td>
-         <td width="585" valign="top"><p>Unicode source files</p></td>
+         <td class="code">uids</td>
+         <td width="398" valign="top">Duplicate UIDs</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>userafter</p></td>
-         <td width="585" valign="top"><p>Use of User::After</p></td>
+         <td class="code">uncompressedaif</td>
+         <td width="398" valign="top">Uncompressed AIFs in ROM</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>userfree</p></td>
-         <td width="585" valign="top"><p>Using User::Free directly</p></td>
+         <td class="code">uncompressedbmp</td>
+         <td width="398" valign="top">Uncompressed bitmaps in ROM</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>userWaitForRequest</p></td>
-         <td width="585" valign="top"><p>Use of User::WaitForRequest</p></td>
+         <td class="code">unicodesource</td>
+         <td width="398" valign="top">Unicode source files</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>variablenames</p></td>
-         <td width="585" valign="top"><p>Local variables with member/argument names</p></td>
+         <td class="code">userafter</td>
+         <td width="398" valign="top">Use of User::After</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>voidparameter</p></td>
-         <td width="585" valign="top"><p>Void parameter explicitly declared</p></td>
+         <td class="code">userfree</td>
+         <td width="398" valign="top">Using User::Free directly</td>
        </tr>
        <tr>
-         <td width="294" valign="top" class="code"><p>worryingcomments</p></td>
-         <td width="585" valign="top"><p>Worrying comments</p></td>
+         <td class="code">userWaitForRequest</td>
+         <td width="398" valign="top">Use of User::WaitForRequest</td>
+       </tr>
+       <tr>
+         <td class="code">variablenames</td>
+         <td width="398" valign="top">Local variables with member/argument names</td>
+       </tr>
+       <tr>
+         <td class="code">voidparameter</td>
+         <td width="398" valign="top">Void parameter explicitly declared</td>
+       </tr>
+       <tr>
+         <td class="code">worryingcomments</td>
+         <td width="398" valign="top">Worrying comments</td>
        </tr>
      </table>
-   <p>&nbsp;</p>
+   &nbsp;</p>
 	 <h3><a name="cs_Projects" id="cs_Projects"></a>CodeScanner for projects </h3>
 	 <p>CodeScanner options can also be set at the project level in the <a href="pref_codescanner_01.htm#cs_Projects">Properties</a> window. Right-click the project and choose <strong>Properties</strong>, then select the <strong>Carbide.c++ &gt; Carbide CodeScanner</strong> element in the properties  list. Click a tab to view the appropriate page and set its options. </p>
 	 <p align="left">CodeScanner options specific to the project:</p>
@@ -465,7 +477,7 @@ border="0" cellpadding="2" cellspacing="0">
        <tr valign="top">
          <td class="Cell"><b>Configure Workspace Settings... </b></td>
          <td class="Cell"><p>Click to open the <b>Preferences</b> window and configure CodeScanner for the workspace. </p>
-             <p class="note"><b>NOTE</b> Only visible in the project CodeScanner property panels. </p></td>
+           <p class="note"><b>NOTE</b> Only visible in the project CodeScanner property panels. </td>
        </tr>
      </table>
 	 <p>&nbsp;</p>
