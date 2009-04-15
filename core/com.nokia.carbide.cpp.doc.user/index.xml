@@ -548,10 +548,6 @@
 	   <topic href="html/tasks/registers/mem_reg_viewing.htm" label="Expanding Groups"/>
 	</entry>
 
-	<entry keyword="Registers Details Window">
-	   <topic href="html/reference/view_reg_details.htm"/>
-	</entry>
-
 	<entry keyword="Registers View">
 	   <topic href="html/reference/view_registers.htm"/>
 	</entry>
