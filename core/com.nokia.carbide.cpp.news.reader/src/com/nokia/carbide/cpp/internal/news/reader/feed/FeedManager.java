@@ -44,7 +44,6 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.fetcher.FeedFetcher;
 import com.sun.syndication.fetcher.impl.FeedFetcherCache;
 import com.sun.syndication.fetcher.impl.HashMapFeedInfoCache;
-import com.sun.syndication.fetcher.impl.HttpURLFeedFetcher;
 
 /**
  * A class to manage feeds for the Carbide.c++ news reader.
@@ -191,11 +190,11 @@ public class FeedManager {
 	}
 
 	/**
-	 * Remove an entry from a feed.
-	 * @param feed - feed object in question
-	 * @param entryTitle - title of the entry to be removed
+	 * Search for a feed entry by name and then mark it as read.
+	 * @param entries - feed entries to be checked
+	 * @param entryTitle - title of the entry to be marked as read
 	 */
-	public void removeNewsFeedEntry(List<CarbideSyndEntry> entries, String entryTitle) {
+	public void markEntryAsRead(List<CarbideSyndEntry> entries, String entryTitle) {
 		if (entries == null || entryTitle == null) {
 			return;
 		}
@@ -204,7 +203,7 @@ public class FeedManager {
 			CarbideSyndEntry entry = iterator.next();
 			String title = entry.getTitle();
 			title = title.replaceAll("\n", "");
-			if (title.equals(entryTitle)) {
+			if (title.equals(entryTitle) && !entry.isRead()) {
 				entry.setRead(true);
 				break;
 			}

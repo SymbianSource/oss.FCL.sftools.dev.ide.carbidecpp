@@ -557,7 +557,7 @@ public class NewsPage extends FormPage {
 	private void handleMarkEntryRead(String feedTitle, String entryTitle) {
 		CarbideSyndFeed feed = newsFeeds.get(currentFeed);
 		if (feed != null) {
-			CarbideNewsReaderPlugin.getFeedManager().removeNewsFeedEntry(feed.getEntries(), entryTitle);
+			CarbideNewsReaderPlugin.getFeedManager().markEntryAsRead(feed.getEntries(), entryTitle);
 		}
 		newsBrowser.setText(createNewsContents());
 		newsFeedsTableViewer.refresh();

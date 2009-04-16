@@ -114,13 +114,13 @@ public class FeedInfoManager {
 		if (pathStr != null) {
 			URL fileUrl = new URL(pathStr);
 			if (fileUrl != null) {
-				HttpURLConnection httpConnection = null;
+				HttpURLConnection connection = null;
 				InputStream inputStream = null;
 				try {
-					URLConnection connection = fileUrl.openConnection();
-					httpConnection = (HttpURLConnection)connection;
-					httpConnection.connect();
-					int responseCode = httpConnection.getResponseCode();
+					connection = (HttpURLConnection) fileUrl.openConnection();
+					setRequestHeaders(connection);
+					connection.connect();
+					int responseCode = connection.getResponseCode();
 					handlesHttpErrorCode(responseCode);
 					inputStream = connection.getInputStream();
 					if (inputStream != null) {
@@ -138,8 +138,8 @@ public class FeedInfoManager {
 				} catch (Exception e) {
 					CarbideNewsReaderPlugin.log(e);
 				} finally {
-					if (httpConnection != null) {
-					    httpConnection.disconnect();
+					if (connection != null) {
+					    connection.disconnect();
 					}
 					if (inputStream != null) {
 						inputStream.close();
@@ -205,8 +205,17 @@ public class FeedInfoManager {
 		} else if (responseCode >= 400 && responseCode < 500) {
 			throw new Exception("The requested resource could not be found. HTTP Response code was:" + responseCode);
 		} else if (responseCode >= 500 && responseCode < 600) {
-			throw new Exception("The server encounted an error. HTTP Response code was:" + responseCode);
+			throw new Exception("The server encountered an error. HTTP Response code was:" + responseCode);
 		}
+	}
+
+	/**
+	 * Sets appropriate HTTP headers.
+	 * @param connection - URL connection
+	 */
+	private void setRequestHeaders(URLConnection connection) {
+		// specify acceptable content types
+		connection.setRequestProperty("Accept", "*/xml");
 	}
 
 }
