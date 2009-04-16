@@ -120,19 +120,20 @@ public class FeedManagerTest extends TestCase implements IFeedCacheChangedlisten
 		}
 	}
 
-	public void testRemoveNewsFeedEntry() {
+	public void testMarkEntryAsRead() {
 		try {
 			feedManager.loadFeeds();
 			List<CarbideSyndFeed> newsFeeds = feedManager.getNewsFeeds();
 			if (newsFeeds != null && newsFeeds.size() > 0) {
 				CarbideSyndFeed feed = newsFeeds.get(0);
-				List<CarbideSyndEntry> feedEntries = feed.getEntries();
-				if (feedEntries != null && feedEntries.size() > 0) {
+				List<CarbideSyndEntry> feedEntries = feed.getUnreadEntries();
+				while (feedEntries != null && feedEntries.size() > 0) {
 					int oldCount = feed.getUnreadEntries().size();
 					CarbideSyndEntry feedEntry = feedEntries.get(0);
-					feedManager.removeNewsFeedEntry(feedEntries, feedEntry.getTitle());
+					feedManager.markEntryAsRead(feedEntries, feedEntry.getTitle());
 					int newCount = feed.getUnreadEntries().size();
-					assertTrue(newCount > oldCount);
+					assertTrue(newCount < oldCount);
+					feedEntries = feed.getUnreadEntries();
 				}
 			}
 		} catch (Exception e) {
