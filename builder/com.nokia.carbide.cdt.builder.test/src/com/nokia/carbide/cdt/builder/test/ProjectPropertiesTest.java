@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
@@ -248,6 +249,89 @@ public class ProjectPropertiesTest extends TestCase {
 		assertEquals(true, readSisInfo.isEnabled());
 		
 		assertEquals(false, readSisInfo.isCreateStubFormat());
+	}
+	
+	public void testSBSv1BuildArgsReadWrite(){
+		
+		final String build_ARG = "-testbuild";
+		final String clean_ARG = "-testclean";
+		final String export_ARG = "-testexport";
+		final String final_ARG = "-testfinal";
+		final String freeze_ARG = "-testfreeze";
+		final String library_ARG = "-testlibrary";
+		final String makefile_ARG = "-testmakefile";
+		final String resource_ARG = "-testresource";
+		final String target_ARG = "-testtarget";
+		
+		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
+		assertNotNull("Ooops, ICarbideProjectInfo is null, something bad happened.", cpi);
+		
+		ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
+		IBuildArgumentsInfo argInfo = defaultConfig.getBuildArgumentsInfo();
+		
+		// read the arguments
+		String abldBuildArgs = argInfo.getAbldBuildArgs();
+		String abldCleanArgs = argInfo.getAbldCleanArgs();
+		String abldExportArgs = argInfo.getAbldExportArgs();
+		String abldFinalArgs = argInfo.getAbldFinalArgs();
+		String abldFreezeArgs = argInfo.getAbldFreezeArgs();
+		String abldLibraryArgs = argInfo.getAbldLibraryArgs();
+		String abldMakefileArgs = argInfo.getAbldMakefileArgs();
+		String abldResourceArgs = argInfo.getAbldResourceArgs();
+		String abldTargetArgs = argInfo.getAbldTargetArgs();
+		
+		abldBuildArgs   += build_ARG;
+		abldCleanArgs   += clean_ARG;
+		abldExportArgs  += export_ARG;
+		abldFinalArgs   += final_ARG;
+		abldFreezeArgs  += freeze_ARG;
+		abldLibraryArgs += library_ARG;
+		abldMakefileArgs  += makefile_ARG;
+		abldResourceArgs  += resource_ARG;
+		abldTargetArgs    += target_ARG;
+		
+		// set the argument
+		argInfo.setAbldBuildArgs(abldBuildArgs);
+		argInfo.setAbldCleanArgs(abldCleanArgs);
+		argInfo.setAbldExportArgs(abldExportArgs);
+		argInfo.setAbldFinalArgs(abldFinalArgs);
+		argInfo.setAbldFreezeArgs(abldFreezeArgs);
+		argInfo.setAbldLibraryArgs(abldLibraryArgs);
+		argInfo.setAbldMakefileArgs(abldMakefileArgs);
+		argInfo.setAbldResourceArgs(abldResourceArgs);
+		argInfo.setAbldTargetArgs(abldTargetArgs);
+		
+		// make sure to update the entire object
+		defaultConfig.setBuildArgumentsInfo(argInfo);
+		
+		// read the args from memory, make sure it's OK
+		assertTrue("Failed to re-read build args", argInfo.getAbldBuildArgs().contains(build_ARG));
+		assertTrue("Failed to re-read clean args", argInfo.getAbldCleanArgs().contains(clean_ARG));
+		assertTrue("Failed to re-read export args", argInfo.getAbldExportArgs().contains(export_ARG));
+		assertTrue("Failed to re-read final args", argInfo.getAbldFinalArgs().contains(final_ARG));
+		assertTrue("Failed to re-read freeze args", argInfo.getAbldFreezeArgs().contains(freeze_ARG));
+		assertTrue("Failed to re-read library args", argInfo.getAbldLibraryArgs().contains(library_ARG));
+		assertTrue("Failed to re-read makefile args", argInfo.getAbldMakefileArgs().contains(makefile_ARG));
+		assertTrue("Failed to re-read resource args", argInfo.getAbldResourceArgs().contains(resource_ARG));
+		assertTrue("Failed to re-read target args", argInfo.getAbldTargetArgs().contains(target_ARG));
+		
+		// now write to files
+		defaultConfig.saveConfiguration(false);
+		
+		// now read again
+		defaultConfig = cpi.getDefaultConfiguration();
+		argInfo = defaultConfig.getBuildArgumentsInfo();
+		
+		// read the args now that were pulled from disk, make sure it's OK
+		assertTrue("Failed to re-read build args", argInfo.getAbldBuildArgs().contains(build_ARG));
+		assertTrue("Failed to re-read clean args", argInfo.getAbldCleanArgs().contains(clean_ARG));
+		assertTrue("Failed to re-read export args", argInfo.getAbldExportArgs().contains(export_ARG));
+		assertTrue("Failed to re-read final args", argInfo.getAbldFinalArgs().contains(final_ARG));
+		assertTrue("Failed to re-read freeze args", argInfo.getAbldFreezeArgs().contains(freeze_ARG));
+		assertTrue("Failed to re-read library args", argInfo.getAbldLibraryArgs().contains(library_ARG));
+		assertTrue("Failed to re-read makefile args", argInfo.getAbldMakefileArgs().contains(makefile_ARG));
+		assertTrue("Failed to re-read resource args", argInfo.getAbldResourceArgs().contains(resource_ARG));
+		assertTrue("Failed to re-read target args", argInfo.getAbldTargetArgs().contains(target_ARG));
 	}
 	
 	public void testChangesNotApplied() {
