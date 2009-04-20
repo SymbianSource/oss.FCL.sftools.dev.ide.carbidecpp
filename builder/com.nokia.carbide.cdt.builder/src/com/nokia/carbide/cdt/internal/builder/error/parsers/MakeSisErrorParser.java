@@ -22,19 +22,37 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 
 public class MakeSisErrorParser extends CarbideBaseErrorParser {
 	
+	String packageFile = null;
+	
 	public MakeSisErrorParser() {
 	}
 
 	public boolean processLine(String aLine, ErrorParserManager aErrorParserManager) {
-		// Known patterns.
+		// Known patterns:
+		//
 		// (a)
 		// filename(lineno) : description
+		// OR
+		// (lineno) : description 
 		//
 		// (b)
 		// filename(lineno) : Warning: description
+		// OR
+		// (lineno) : Warning: description
 		//
 		// (c)
 		// filename(lineno) : Error: description
+		// OR
+		// (lineno) : Error: description
+		
+		if (   aLine.contains("makesis.exe ")) {
+			int packageStart = aLine.indexOf("makesis.exe ") + "makesis.exe ".length();
+			int packageEnd   = aLine.indexOf(' ', packageStart);
+			// store the name of the package file for cases above where
+			// the line number is shown without the package filename
+			if (packageEnd != -1)
+				packageFile = aLine.substring(packageStart, packageEnd);
+		}
 		
 		if (aLine.equalsIgnoreCase("error: invalid destination file")){
 			msgSeverity = IMarkerGenerator.SEVERITY_ERROR_BUILD;
@@ -44,6 +62,17 @@ public class MakeSisErrorParser extends CarbideBaseErrorParser {
 		if (aLine.startsWith("Error : Cannot find file")) {
 			msgSeverity = IMarkerGenerator.SEVERITY_ERROR_BUILD;
 			aErrorParserManager.generateMarker(null, -1, aLine, msgSeverity, null);
+		}
+		
+		// if line starts with (lineno):, prefix it with the package file name
+		if (   aLine.indexOf(':') >= 2
+			&& aLine.charAt(0) == '('
+			&& aLine.charAt(aLine.indexOf(':') - 2) == ')') {
+			try {
+				Integer.parseInt(aLine.substring(1, aLine.indexOf(':') - 2));
+				aLine = packageFile + aLine;
+			} catch (NumberFormatException nfe) {
+			}
 		}
 		
 		if (!setFirstColon(aLine)) {
