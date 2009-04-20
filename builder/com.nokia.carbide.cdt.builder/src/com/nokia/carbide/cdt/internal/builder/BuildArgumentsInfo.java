@@ -232,4 +232,54 @@ public class BuildArgumentsInfo implements IBuildArgumentsInfo {
 	public String getAbldFreezeArgs() {
 		return abldFreezeArgs;
 	}
+
+	public void setBldmakeBldFilesArgs(String args) {
+		bldmakeBldFilesArgs = args;
+	}
+
+	public void setAbldBuildArgs(String args) {
+		abldBuildArgs = args;
+	}
+
+	public void setAbldCleanArgs(String args) {
+		abldCleanArgs = args;
+	}
+
+	public void setAbldExportArgs(String args) {
+		abldExportArgs = args;
+	}
+	
+	public void setAbldFreezeArgs(String args) {
+		abldFreezeArgs = args;
+	}
+	
+	public void setAbldFinalArgs(String args) {
+		abldFinalArgs = args;
+		
+	}
+
+	public void setAbldLibraryArgs(String args) {
+		abldLibraryArgs = args;
+	}
+
+	public void setAbldMakefileArgs(String args) {
+		abldMakefileArgs = args;
+	}
+
+	public void setAbldResourceArgs(String args) {
+		abldResourceArgs = args;
+	}
+
+	public void setAbldTargetArgs(String args) {
+		abldTargetArgs = args;
+		
+	}
+
+	public void setBldmakeCleanArgs(String args) {
+		abldBuildArgs = args;
+		
+	}
+	
+	
+	
 }

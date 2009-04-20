@@ -65,10 +65,17 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	List<ISISBuilderInfo> getSISBuilderInfoList();
 	
 	/**
-	 * Get the build arguments info.  Contains pref settings from the Arguments tab.
+	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
+	 * This only applies when building with SBSv1 (bldmake, abld)
 	 * @return IBuildArgumentsInfo instance, never null
 	 */
 	IBuildArgumentsInfo getBuildArgumentsInfo();
+	
+	/**
+	 * Set the build arguments info for SBSv2 build arguments
+	 * @return IBuildArgumentsInfo instance, never null
+	 */
+	void setBuildArgumentsInfo(IBuildArgumentsInfo bldArgInfo);
 	
 	/**
 	 * Get the parent Carbide project of this configuration.
