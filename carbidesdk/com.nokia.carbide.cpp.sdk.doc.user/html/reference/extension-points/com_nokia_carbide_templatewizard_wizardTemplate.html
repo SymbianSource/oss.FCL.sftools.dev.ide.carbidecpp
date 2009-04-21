@@ -2,8 +2,7 @@
 <HTML>
 <HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>Wizard Template</title>
-<style type="text/css">@import url("PLUGINS_ROOT/org.eclipse.cdt.doc.isv/book.css");</style>
-<style type="text/css">@import url("PLUGINS_ROOT/org.eclipse.cdt.doc.isv/schema.css");</style>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 </HEAD>
 <BODY>
 <H1 style="text-align:center">Wizard Template</H1>
@@ -40,14 +39,14 @@ The template element registers a single template with the template wizard.</p>
 <li><b>extraPagesProvider</b> - An optional provider of extra wizard pages</li>
 </ul>
 <br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6><pre class="Example"><span class="code SchemaTag">
-&lt;extension point=</span><span class="code SchemaCstring">&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;</span><span class="code SchemaTag">&gt;
+</span><span class="code">&lt;extension point=&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;&gt;
   &lt;template
-   templateId=</span><span class="code SchemaCstring">&quot;com.nokia.cdt.templates.s60.controlapplication&quot;</span><span class="code SchemaTag">
-   location=</span><span class="code SchemaCstring">&quot;templates/projecttemplates/S60-ControlApplication/template.xml&quot;</span><span class="code SchemaTag">
-   wizardId=</span><span class="code SchemaCstring">&quot;com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard&quot;</span><span class="code SchemaTag"> 
-   groupLabel=</span><span class="code SchemaCstring">&quot;S60&quot;</span><span class="code SchemaTag">
-   filterArguments=</span><span class="code SchemaCstring">&quot;S60:1.2;2.0-2.9&quot;</span><span class="code SchemaTag">
-   image=</span><span class="code SchemaCstring">&quot;icons/icon_S60.png&quot;</span><span class="code SchemaTag">
+   templateId=&quot;com.nokia.cdt.templates.s60.controlapplication&quot;
+   location=&quot;templates/projecttemplates/S60-ControlApplication/template.xml&quot;
+   wizardId=&quot;com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard&quot; 
+   groupLabel=&quot;S60&quot;
+   filterArguments=&quot;S60:1.2;2.0-2.9&quot;
+   image=&quot;icons/icon_S60.png&quot;
   /&gt;
 &lt;/extension&gt;
 </span></pre>
@@ -57,9 +56,7 @@ The template element registers a single template with the template wizard.</p>
 <p></p>
 
 <br>
-<p class="note SchemaCopyright">
-(C) Copyright 2007 Nokia Corporation.
-
-</p>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>
+License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 </BODY>
 </HTML>
