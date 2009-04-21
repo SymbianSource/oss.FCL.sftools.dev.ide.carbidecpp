@@ -20,6 +20,9 @@ package com.nokia.carbide.cdt.builder.project;
  * IBuildArgumentsInfo represents one instance of configuration data for the Arguments tab.
  * This interface only applies for the Symbian 'abld' build system (SBSv1)
  * @see ICarbideBuildConfiguration
+ * 
+ * @deprecated use BuildArgumentsInfo directly
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IBuildArgumentsInfo {
 	
@@ -88,61 +91,4 @@ public interface IBuildArgumentsInfo {
 	 * @return string of arguments which may be empty
 	 */
 	String getAbldFreezeArgs();
-	
-	/**
-	 * Set the arguments to pass to bldmake bldfiles
-	 */
-	void setBldmakeBldFilesArgs(String args);
-	
-	/**
-	 * Get the arguments to pass to bldmake clean
-	 * @return string of arguments which may be empty
-	 */
-	void setBldmakeCleanArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld build
-	 */
-	void setAbldBuildArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld export
-	 */
-	void setAbldExportArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld freeze
-	 */
-	void setAbldFreezeArgs(String args);
-	
-	/**
-	 * Set the arguments to pass to abld makefile
-	 */
-	void setAbldMakefileArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld library
-	 */
-	void setAbldLibraryArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld resource
-	 */
-	void setAbldResourceArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld target
-	 */
-	void setAbldTargetArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld final
-	 */
-	void setAbldFinalArgs(String args);
-
-	/**
-	 * Set the arguments to pass to abld clean
-	 */
-	void setAbldCleanArgs(String args);
-	
 }

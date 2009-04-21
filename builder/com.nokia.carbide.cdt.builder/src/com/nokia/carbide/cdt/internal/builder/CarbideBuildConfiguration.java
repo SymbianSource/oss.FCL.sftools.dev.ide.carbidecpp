@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 
+import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
@@ -91,7 +92,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 				} else if (se.getName().equals(ENV_VAR_DATA_ID)) {
 					envVarsInfo.loadFromStorage(se);
 				} else if (se.getName().equals(ARGUMENTS_DATA_ID)) {
-					buildArgumentsInfo.loadFromStorage(se);
+					loadBuildArgsFromStorage(se);
 				} else if (se.getName().equals(ROM_BUILDER_DATA_ID)) {
 					romBuilderInfo.loadFromStorage(se);
 				}
@@ -112,11 +113,114 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			}
 			
 			envVarsInfo.saveToStorage(rootStorage.createChild(ENV_VAR_DATA_ID));
-			buildArgumentsInfo.saveToStorage(rootStorage.createChild(ARGUMENTS_DATA_ID));
+			saveBuildArgsToStorage(rootStorage.createChild(ARGUMENTS_DATA_ID));
 			romBuilderInfo.saveToStorage(rootStorage.createChild(ROM_BUILDER_DATA_ID));
 		}
 	}
+	
+	private void loadBuildArgsFromStorage(ICStorageElement rootStorage) {
+		String value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.bldmakeBldFilesArgs = value;
+		}
+		
+		value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKECLEANARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.bldmakeCleanArgs = value;
+		}
 
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDBUILDARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldBuildArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDEXPORTARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldExportArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDMAKEFILEARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldMakefileArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDLIBRARYARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldLibraryArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDRESOURCEARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldResourceArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDTARGETARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldTargetArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDFINALARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldFinalArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDCLEANARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldCleanArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDFREEZEARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldFreezeArgs = value;
+		}
+	}
+	
+	public void saveBuildArgsToStorage(ICStorageElement rootStorage) {
+		if (buildArgumentsInfo.bldmakeBldFilesArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE, buildArgumentsInfo.bldmakeBldFilesArgs);
+		}
+
+		if (buildArgumentsInfo.bldmakeCleanArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.BLDMAKECLEANARGSSTORAGE, buildArgumentsInfo.bldmakeCleanArgs);
+		}
+
+		if (buildArgumentsInfo.abldBuildArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDBUILDARGSSTORAGE, buildArgumentsInfo.abldBuildArgs);
+		}
+
+		if (buildArgumentsInfo.abldExportArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDEXPORTARGSSTORAGE, buildArgumentsInfo.abldExportArgs);
+		}
+
+		if (buildArgumentsInfo.abldMakefileArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDMAKEFILEARGSSTORAGE, buildArgumentsInfo.abldMakefileArgs);
+		}
+
+		if (buildArgumentsInfo.abldLibraryArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDLIBRARYARGSSTORAGE, buildArgumentsInfo.abldLibraryArgs);
+		}
+
+		if (buildArgumentsInfo.abldResourceArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDRESOURCEARGSSTORAGE, buildArgumentsInfo.abldResourceArgs);
+		}
+
+		if (buildArgumentsInfo.abldTargetArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDTARGETARGSSTORAGE, buildArgumentsInfo.abldTargetArgs);
+		}
+
+		if (buildArgumentsInfo.abldFinalArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDFINALARGSSTORAGE, buildArgumentsInfo.abldFinalArgs);
+		}
+
+		if (buildArgumentsInfo.abldCleanArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDCLEANARGSSTORAGE, buildArgumentsInfo.abldCleanArgs);
+		}
+
+		if (buildArgumentsInfo.abldFreezeArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDFREEZEARGSSTORAGE, buildArgumentsInfo.abldFreezeArgs);
+		}
+	}
+	
 	public ICarbideProjectInfo getCarbideProject() {
 		// we need to get the project info from the build manager to ensure we
 		// have the correct object.
@@ -166,10 +270,6 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		}
 	}
 	
-	@Override
-	/**
-	 * Compares two configurations to see if their display names are equivalent
-	 */
 	public boolean equals(Object obj) {
 		if (obj instanceof ICarbideBuildConfiguration || obj instanceof ISymbianBuildContext){
 			ISymbianBuildContext context = (ISymbianBuildContext)obj;
@@ -260,13 +360,15 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	}
 
 	public IBuildArgumentsInfo getBuildArgumentsInfo() {
-		return buildArgumentsInfo;
+		return (IBuildArgumentsInfo)buildArgumentsInfo;
 	}
 	
-	public void setBuildArgumentsInfo(IBuildArgumentsInfo buildArgumentsInfo) {
-		if (buildArgumentsInfo instanceof BuildArgumentsInfo) {
-			this.buildArgumentsInfo = (BuildArgumentsInfo)buildArgumentsInfo;
-		}
+	public BuildArgumentsInfo getBuildArgumentsInfoCopy() {
+		return new BuildArgumentsInfo(buildArgumentsInfo);
+	}
+	
+	public void setBuildArgumentsInfo(BuildArgumentsInfo buildArgumentsInfo) {
+		this.buildArgumentsInfo = buildArgumentsInfo;
 	}
 
 	public IROMBuilderInfo getROMBuildInfo() {
