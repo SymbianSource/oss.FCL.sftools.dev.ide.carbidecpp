@@ -106,10 +106,26 @@ public class FeedInfoManager {
 	/**
 	 * Retrieve the feed info file from remote server, make a local copy of this file
 	 * and returns the URL to the local copy.
+	 * @param useLocal - use local copy of feed listing file? 
 	 * @return URL of local copy of feed info file
 	 * @throws Exception
 	 */
-	public URL getFeedInfoFileURL() throws Exception {
+	public URL getFeedInfoFileURL(boolean useLocalCopy) throws Exception {
+		if (feedInfoFile == null) {
+			feedInfoFile = createFeedInfoFile();
+		}
+
+		if (useLocalCopy) {
+			// try to use local copy of the fee info file if it exists.
+			if (feedInfoFile != null && feedInfoFile.exists()) {
+				return feedInfoFile.toURL();
+			}
+			else {
+				return null;
+			}
+		}
+
+		// retrieve the feed info file from remote server and make a local copy of this file
 		String pathStr = CarbideNewsReaderPlugin.getFeedManager().getProperty(FEED_INFO_FILE_KEY);
 		if (pathStr != null) {
 			URL fileUrl = new URL(pathStr);
@@ -124,9 +140,6 @@ public class FeedInfoManager {
 					handlesHttpErrorCode(responseCode);
 					inputStream = connection.getInputStream();
 					if (inputStream != null) {
-						if (feedInfoFile == null) {
-							feedInfoFile = createFeedInfoFile();
-						}
 						if (feedInfoFile != null) {
 							if (feedInfoFile.exists()) {
 								feedInfoFile.delete();
@@ -147,6 +160,7 @@ public class FeedInfoManager {
 				}
 			}
 		}
+
 		return null;
 	}
 

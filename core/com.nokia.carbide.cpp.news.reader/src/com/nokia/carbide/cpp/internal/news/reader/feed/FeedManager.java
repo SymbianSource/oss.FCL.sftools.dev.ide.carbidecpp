@@ -95,7 +95,7 @@ public class FeedManager {
 	@SuppressWarnings("static-access")
 	public void loadFeeds() {
 		try {
-			if (!loadFeedListing()) {
+			if (!loadFeedListing(false)) {
 				return;
 			}
 
@@ -251,7 +251,7 @@ public class FeedManager {
 	@SuppressWarnings("static-access")
 	public void updateFeeds() {
 		try {
-			if (!loadFeedListing()) {
+			if (!loadFeedListing(false)) {
 				return;
 			}
 
@@ -383,11 +383,12 @@ public class FeedManager {
 	}
 
 	/**
-	 * Load feed information from feed listing file. 
+	 * Load feed information from feed listing file.
+	 * @param useLocal - use local copy of feed listing file? 
 	 * @return true on success; false otherwise
 	 */
-	private boolean loadFeedListing() throws Exception {
-		URL url = feedListingManager.getFeedInfoFileURL();
+	private boolean loadFeedListing(boolean useLocalCopy) throws Exception {
+		URL url = feedListingManager.getFeedInfoFileURL(useLocalCopy);
 		if (url != null) {
 			return feedListingManager.loadFeedInfo(url);
 		}
@@ -459,7 +460,7 @@ public class FeedManager {
 	private void validateFeeds() {
 		if ((newsFeeds == null || newsFeeds.size() == 0) && resourceFeed == null) {
 			try {
-				if (!loadFeedListing()) {
+				if (!loadFeedListing(true)) {
 					return;
 				}
 
