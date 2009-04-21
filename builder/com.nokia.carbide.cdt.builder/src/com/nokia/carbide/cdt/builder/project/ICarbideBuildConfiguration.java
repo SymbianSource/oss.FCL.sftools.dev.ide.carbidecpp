@@ -18,12 +18,14 @@ package com.nokia.carbide.cdt.builder.project;
 
 import java.util.List;
 
+import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**
  * An ICarbideBuildConfiguration interface represents on buildable target for a project. A single
  * Carbide.c++ project (ICarbideProjectInfo) contains 1 to N ICarbideBuildConfigation objects.
  *
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 
@@ -68,14 +70,24 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
 	 * This only applies when building with SBSv1 (bldmake, abld)
 	 * @return IBuildArgumentsInfo instance, never null
+	 * 
+	 * @deprecated use 
 	 */
 	IBuildArgumentsInfo getBuildArgumentsInfo();
 	
 	/**
-	 * Set the build arguments info for SBSv2 build arguments
+	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
+	 * This only applies when building with SBSv1 (bldmake, abld)
+	 * @return A copy of BuildArgumentsInfo instance, never null
+	 */
+	BuildArgumentsInfo getBuildArgumentsInfoCopy();
+	
+	/**
+	 * Set the build arguments info for SBSv2 build arguments. This only sets values in memory, does
+	 * not write settings to disk. See 
 	 * @return IBuildArgumentsInfo instance, never null
 	 */
-	void setBuildArgumentsInfo(IBuildArgumentsInfo bldArgInfo);
+	void setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo);
 	
 	/**
 	 * Get the parent Carbide project of this configuration.
@@ -111,5 +123,10 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 * @return
 	 */
 	IROMBuilderInfo getROMBuildInfo();
-
+	
+	/**
+	 * Compares two configurations to see if their display names are equivalent.
+	 */
+	boolean equals(Object obj);
+	
 }

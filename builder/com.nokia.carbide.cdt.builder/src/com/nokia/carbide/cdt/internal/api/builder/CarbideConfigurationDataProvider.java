@@ -40,13 +40,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 
+import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVariable;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
-import com.nokia.carbide.cdt.internal.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.internal.builder.BuildConfigurationData;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
