@@ -56,10 +56,10 @@ span.attr
 
 <p>Since Carbide 2.0.4</p>
 <ul>
-  <li>Added setter methods for SBSv1 (abld) arguments in <em> com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo</em>.</li>
+  <li>Added <em> com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration#getBuildArgumentsInfoCopy( )</em>.</li>
 </ul>
 <ul>
-  <li>Added <em> com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration#setBuildArgumentsInfo(IBuildArgumentsInfo bldArgInfo)</em>.</li>
+  <li>Added <em> com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration#setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo)</em>.</li>
 </ul>
 
 <h3>Deprecated APIs</h3>
@@ -91,6 +91,13 @@ span.attr
 <ul>
   <li>None </li>
 </ul>
+
+<p>Since Carbide 2.0.4</p>
+<ul>
+  <li><i>com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration#getBuildArgumentsInfo( )</i></li>
+</ul>
+
 <h3>Removed APIs</h3>
 <p>The following Carbide APIs have been removed and are no longer available to plug-ins.</p>
 <p>Since Carbide 1.2.0</p>
