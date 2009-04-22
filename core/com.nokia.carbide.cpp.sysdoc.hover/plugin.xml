@@ -52,7 +52,7 @@
              class="com.nokia.carbide.cpp.sysdoc.internal.hover.view.DeveloperLibraryView"
              icon="icons/view.gif"
              id="com.nokia.carbide.cpp.sysdoc.internal.hover.view.DeveloperLibraryView"
-             name="Devloper Library">
+             name="Developer Library">
        </view>
     </extension>
   	
