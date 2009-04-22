@@ -480,6 +480,7 @@
 			<topic label="System Search preferences"    href="html/reference/search/wnd_system_search_prefs.htm" />
  	</topic>
 		
-	<topic href="html/hints_tips.htm" label="Tips &amp; Hints">
- </topic>
+	<topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
+	<topic href="html/tasks/carbide_tools.htm" label="Creating Carbide Tools" />
+
 </toc>
