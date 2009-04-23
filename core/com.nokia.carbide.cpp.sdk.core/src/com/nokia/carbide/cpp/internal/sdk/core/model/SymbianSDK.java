@@ -997,6 +997,17 @@ public class SymbianSDK implements ISymbianSDK {
 						if (index > 0){
 							String osVersionString = versionTokens[2].substring(index+1, versionTokens[2].length());
 							
+							if (osVersionString.compareToIgnoreCase("tb91sf") == 0){
+								setOSVersion(new Version("9.4.0"));
+								setSDKVersion(new Version("5.1.0"));
+								break;
+							}
+							
+							if (osVersionString.compareToIgnoreCase("tb92sf") == 0){
+								setOSVersion(new Version("9.5.0"));
+								break;
+							}
+							
 							if (osVersionString.endsWith(EKA1_A_BRANCH_IDENTIFIER) || 
 							    osVersionString.endsWith(EKA2_B_BRANCH_IDENTIFIER) ||
 							    osVersionString.endsWith(EKA1_S_BRANCH_IDENTIFIER)){
