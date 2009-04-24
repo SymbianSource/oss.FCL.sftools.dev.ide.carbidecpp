@@ -1,0 +1,9 @@
+process_begin: CreateProcess((null), mwccsym2.exe -g -O0 -wchar_t off -align 4
+-warnings on -w nohidevirtual,nounusedexpr -msgstyle gcc -enum int -str pool
+-nostdinc -d _DEBUG -d _UNICODE -d __SYMBIAN32__ -d __CW32__ -d __WINS__ -d
+__WINSCW__ -cwd source -i- -i
+\AUSCVS_JOEY_DEV\ECLIPSE\RUNTIME-NEW_CONFIGURATION\TESTLIB\INC -i
+\Symbian\8.0a\S60_2nd_FP2_CW\EPOC32\INCLUDE -o
+\Symbian\8.0a\S60_2nd_FP2_CW\EPOC32\BUILD\AUSCVS_JOEY_DEV\ECLIPSE\RUNTIME-NEW_CONFIGURATION\TESTLIB\GROUP\TESTLIB\WINSCW\UDEB\TESTLIB.o
+-c \AUSCVS_JOEY_DEV\ECLIPSE\RUNTIME-NEW_CONFIGURATION\TESTLIB\SRC\Testlib.cpp,
+...) failed.

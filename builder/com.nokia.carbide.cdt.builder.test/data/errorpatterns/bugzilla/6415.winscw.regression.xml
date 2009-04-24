@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="-1" message="make[1]: *** [..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\RELEASE\GCCE\UREL\Punch2Go_A00001CE.exe] Error 87 - possibly too many arguments.  If there are a lot of source files in a library, try breaking those out into multiple libraries." severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+</root>
+

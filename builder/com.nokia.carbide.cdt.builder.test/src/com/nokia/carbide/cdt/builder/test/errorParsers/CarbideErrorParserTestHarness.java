@@ -27,37 +27,32 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import java.util.List;
 
 import junit.framework.Assert;
 
 import org.eclipse.cdt.core.ProblemMarkerInfo;
+import org.eclipse.cdt.core.model.ICModelMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.jdom.Attribute;
+import org.jdom.Comment;
+import org.jdom.DefaultJDOMFactory;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.filter.ElementFilter;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
+import com.nokia.carbide.cdt.builder.test.TestPlugin;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
 public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	static final String EMPTY = "^EMPTY^";
@@ -72,6 +67,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	IProject project;
 	ArrayList<ProblemMarkerInfo> ideProblemMarkerInfoList;
 	ArrayList<ProblemMarkerInfo> xmlFilePromblemMarkerInfoList;
+	boolean debug = false;
 	
 	public CarbideErrorParserTestHarness(IProject project, 
 			  IProgressMonitor monitor, 
@@ -117,8 +113,14 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		// pick out the stdout stream directly, where CDT error parser sniff
 		// for error messages from build console
 		try {
+			stdoutStream.getProject().deleteMarkers(ICModelMarker.C_MODEL_PROBLEM_MARKER, true, IResource.DEPTH_INFINITE); // clear UI list before we start
+			stdoutStream.clearScratchBuffer();	// some error parser do multiple lines
+			consoleOutput += "\n";	// force the input file to flush all lines
 			stdoutStream.write(consoleOutput.getBytes());
+			stdoutStream.flush();
 		} catch (IOException e) {
+			Assert.fail();
+		} catch (CoreException e) {
 			Assert.fail();
 		}
 	}
@@ -174,6 +176,16 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		readControlXML(xmlInputStream);
 		
 		if (ideProblemMarkerInfoList.size() != xmlFilePromblemMarkerInfoList.size()) {
+			if (debug) {
+				java.io.File file;
+				try {
+					file = FileUtils.pluginRelativeFile(TestPlugin.getDefault(), "data/currentOutput.xml");
+					writeRegressionXMLFile(new java.io.PrintStream(file));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			Assert.fail("IDE contains " + ideProblemMarkerInfoList.size() + " markers and Control file contains " + xmlFilePromblemMarkerInfoList.size());
 			return false;
 		}
@@ -252,18 +264,20 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	// read control case from a XML file and setup internal list
 	public void readControlXML(InputStream xmlInputStream) {
 		try {
-			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder docBuilder;
-			docBuilder = dbfac.newDocumentBuilder();
-	        Document doc = docBuilder.parse(xmlInputStream);
-	        doc.getDocumentElement().normalize();
+	        SAXBuilder docBuilder = new SAXBuilder();
+	        Document doc = docBuilder.build(xmlInputStream);
 
-	        NodeList markerNodeList = doc.getElementsByTagName(MARKER_INFO);
-	        int markerNodeListSize = markerNodeList.getLength();
+	        Element root = doc.getRootElement();
+	        ElementFilter elementFilter = new ElementFilter(MARKER_INFO);
+
+	        List<?> allMarkerInfo = root.getContent(elementFilter);
 	        
 	        xmlFilePromblemMarkerInfoList.clear();
 	        
-	        for (int i = 0; i < markerNodeListSize; i++) {
+	        int markerInfoListSize = allMarkerInfo.size();
+	        
+	        for (int i = 0; i < markerInfoListSize; i++) {
+	        	Object info = allMarkerInfo.get(i);
 	        	IResource file = null;
 	        	int lineNumber;
 	        	String description;
@@ -271,31 +285,29 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	        	String variableName;
 	        	IPath externalPath;
 	        	
-	        	Node markerNode = markerNodeList.item(i);
-		        NamedNodeMap attributes = markerNode.getAttributes();
+	        	Assert.assertTrue(info instanceof Element);
+	        	Element markerInfo = (Element)info;
 		        
-		        Node locationNode = attributes.getNamedItem(LINE_NUMBER);
-		        lineNumber = Integer.parseInt(locationNode.getNodeValue());
+		        Attribute locationNode = markerInfo.getAttribute(LINE_NUMBER);
+		        lineNumber = Integer.parseInt(locationNode.getValue());
 
-		        Node messageNode = attributes.getNamedItem(MESSAGE);
-		        description = messageNode.getNodeValue();
+		        Attribute messageNode = markerInfo.getAttribute(MESSAGE);
+		        description = messageNode.getValue();
 		        
-		        Node severityNode = attributes.getNamedItem(SEVERITY);
-		        severity = Integer.parseInt(severityNode.getNodeValue());
+		        Attribute severityNode = markerInfo.getAttribute(SEVERITY);
+		        severity = Integer.parseInt(severityNode.getValue());
 
-		        Node variableNameNode = attributes.getNamedItem(VARIABLE_NAME);
-		        variableName = variableNameNode.getNodeValue();
+		        Attribute variableNameNode = markerInfo.getAttribute(VARIABLE_NAME);
+		        variableName = variableNameNode.getValue();
 		        
-		        Node externalPathStringNode = attributes.getNamedItem(EXTERNAL_PATH_STRING);
-		        externalPath = new Path(externalPathStringNode.getNodeValue());		        
+		        Attribute externalPathStringNode = markerInfo.getAttribute(EXTERNAL_PATH_STRING);
+		        externalPath = new org.eclipse.core.runtime.Path(externalPathStringNode.getValue());		        
 
 	        	ProblemMarkerInfo details = new ProblemMarkerInfo(file, lineNumber, description, severity, variableName, externalPath);
 	        	xmlFilePromblemMarkerInfoList.add(details);
 
 	        }
-		} catch (ParserConfigurationException e) {
-			Assert.fail();
-		} catch (SAXException e) {
+		} catch (JDOMException e) {
 			Assert.fail();
 		} catch (IOException e) {
 			Assert.fail();
@@ -312,29 +324,22 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	 */
 	public void writeRegressionXMLFile(PrintStream printStream) {		
 		try {
-			
-			// prepare XML tree
-	        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder docBuilder;
-
-			docBuilder = dbfac.newDocumentBuilder();
-	        Document doc = docBuilder.newDocument();
-
-	        Element root = doc.createElement("root");
-	        doc.appendChild(root);
+	        DefaultJDOMFactory jdomFactory = new DefaultJDOMFactory();
+	        Document jdomdoc = jdomFactory.document(jdomFactory.element("root"));
+	        Element root = jdomdoc.getRootElement();
 	        
 	        int index = 0;
-
-			for (ProblemMarkerInfo marker : ideProblemMarkerInfoList)
-			{
-		        Element child = doc.createElement(MARKER_INFO);
-		        Comment comment = doc.createComment("Error Marker at index " + index);
-		        ++index;
-
+	        for (ProblemMarkerInfo marker : ideProblemMarkerInfoList)
+	        {
+	        	Element child = jdomFactory.element(MARKER_INFO);
+	        	Comment comment = jdomFactory.comment("Error Marker at index " + index);
+	        	++index;
+	        	
 		        /* CarbideCommandLauncher.addMarker() does not set file
 		        file = marker.getAttribute(IMarker.LOCATION, 0);
 				child.setAttribute(LOCATION, new Integer(file).toString()); 
 		         */
+	        	
 		        child.setAttribute(FILE, EMPTY); // file
 				child.setAttribute(LINE_NUMBER, new Integer(marker.lineNumber).toString());
 				String description;
@@ -360,34 +365,21 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 				}
 				child.setAttribute(EXTERNAL_PATH_STRING, externalPathString);
 				
-				root.appendChild(comment);
-		        root.appendChild(child);
-			}
+				root.addContent(comment);
+				root.addContent(child);
+	        }
 
-	        // print
-	        TransformerFactory transfac = TransformerFactory.newInstance();
-	        Transformer trans = transfac.newTransformer();
-	        trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-	        trans.setOutputProperty(OutputKeys.INDENT, "yes");
-
-	        // create string from xml tree
-	        StringWriter sw = new StringWriter();
-	        StreamResult result = new StreamResult(sw);
-	        DOMSource source = new DOMSource(doc);
-	        trans.transform(source, result);
-	        String xmlString = sw.toString();
+			// drop JAXP for JDOM
+			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+			outputter.output(jdomdoc, printStream);
 
 	        // print xml
-	        printStream.println(xmlString);
 	        printStream.flush();
 	        printStream.close();
         
-		} catch (ParserConfigurationException e) {
-			Assert.fail();
-		} catch (TransformerConfigurationException e) {
-			Assert.fail();
-		} catch (TransformerException e) {
-			Assert.fail();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

@@ -991,7 +991,7 @@ public static String[] getParserIdArray(int id) {
 		        "com.nokia.carbide.cdt.builder.SBSv2ErrorParser",
 		        "com.nokia.carbide.cdt.builder.CarbideMakeErrorParser",
 		        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-		        "com.nokia.carbide.cdt.builder.GCCErrorParser",
+		        "org.eclipse.cdt.core.GCCErrorParser",				// for cpp message from RCOMP
 		        "com.nokia.carbide.cdt.builder.MWLDErrorParser",
 		        "com.nokia.carbide.cdt.builder.MWCCErrorParser",
 		        "com.nokia.carbide.cdt.builder.MakeDefErrorParser"
@@ -1008,6 +1008,7 @@ public static String[] getParserIdArray(int id) {
 			        "com.nokia.carbide.cdt.builder.RVCTLinkerErrorParser",
 			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
 			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
+			        "org.eclipse.cdt.core.GCCErrorParser",				// for cpp message from RCOMP
 			        "com.nokia.carbide.cdt.builder.Elf2E32ErrorParser"
 			        };
 			break;
@@ -1018,7 +1019,9 @@ public static String[] getParserIdArray(int id) {
 			        "com.nokia.carbide.cdt.builder.SBSv2ErrorParser",
 			        "com.nokia.carbide.cdt.builder.CarbideMakeErrorParser",
 			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-			        "com.nokia.carbide.cdt.builder.GCCEErrorParser",
+			        "com.nokia.carbide.cdt.builder.GCCECompilerErrorParser",		// also handles cpp message from RCOMP
+			        "com.nokia.carbide.cdt.builder.GCCEAssemblerErrorParser",
+			        "com.nokia.carbide.cdt.builder.GCCELinkerErrorParser",
 			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
 			        "com.nokia.carbide.cdt.builder.Elf2E32ErrorParser"
 			        };
@@ -1068,7 +1071,7 @@ public static String[] getParserIdArray(int id) {
 			        "com.nokia.carbide.cdt.builder.RVCTCompilerErrorParser",
 			        "com.nokia.carbide.cdt.builder.RVCTLinkerErrorParser",
 			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-			        "com.nokia.carbide.cdt.builder.GCCEErrorParser",
+			        "org.eclipse.cdt.core.GCCErrorParser",				// for cpp message from RCOMP
 			        "com.nokia.carbide.cdt.builder.MWLDErrorParser",
 			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
 			        "com.nokia.carbide.cdt.builder.Elf2E32ErrorParser",

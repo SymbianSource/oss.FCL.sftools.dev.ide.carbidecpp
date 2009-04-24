@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
@@ -29,18 +31,15 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.test.TestPlugin;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
-
-import junit.framework.TestCase;
 
 public class TestRVCTErrorParser extends TestCase {
 	private static final String PROJECT_NAME = "TestRVCTErrorParser";
 	private static final String PROJECT_PATH = "group/bld.inf";
-	private static final String SDK_ID_UPPER_CASE = "S60_3RD_MR";  // ID of the SDK we want to use to create build configurations
-	
 	private static final String TEST_DATA_INPUT_FILE = "data/errorpatterns/rvct.errors.input.1.txt";
 	private static final String CONTROL_DATA_FILE    = "data/errorpatterns/rvct.errors.regression.1.xml";
 	
@@ -50,22 +49,24 @@ public class TestRVCTErrorParser extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		project = ProjectCorePlugin.createProject(PROJECT_NAME, null);
+		List<ISymbianBuildContext> contextList = new ArrayList<ISymbianBuildContext>();
 		
 		// You need to set the proper default configuration so the correct set of error parsers is called
 		List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
-		ISymbianSDK sdk = null;
 		for (ISymbianSDK currSDK : sdkList){
-			if (currSDK.getUniqueId().toUpperCase().equals(SDK_ID_UPPER_CASE)){
-				sdk = currSDK;
+			List<ISymbianBuildContext> contexts = currSDK.getUnfilteredBuildConfigurations();
+			for (ISymbianBuildContext context : contexts) {
+				if (context.getPlatformString().equals(ISymbianBuildContext.ARMV5_PLATFORM)) {
+					contextList.add(context);
+					break;
+				}
+			}
+			if (contextList.size() > 0) {
 				break;
 			}
 		}
 		
-		assertNotNull(sdk);
-		
-		ISymbianBuildContext context = new SymbianBuildContext(sdk, ISymbianBuildContext.ARMV5_PLATFORM, ISymbianBuildContext.DEBUG_TARGET);
-		List<ISymbianBuildContext> contextList = new ArrayList<ISymbianBuildContext>();
-		contextList.add(context);
+		assertTrue(contextList.size() > 0);		// if this fail, you don't have any SDK installed supporting GCCE
 		
 		// Don't do this... Because it will just default to WINSCW target
 //		ProjectCorePlugin.postProjectCreatedActions(project, "group/bld.inf", 
@@ -114,4 +115,22 @@ public class TestRVCTErrorParser extends TestCase {
 			fail();
 		}
 	}
+	
+	/**
+	 * Regress Bugzilla issues by entries
+	 */
+	public void testBugzillaRegression() {
+		final String reportID[] = {"3053"};
+		//argument 1 is console output you get from the tool
+		//argument 2 is control XML with the marker data
+		try {
+			for (int i = 0; i < reportID.length; i++) {
+				harness.parseStringAndTestAgainstXML(FileUtils.pluginRelativeFile(TestPlugin.getDefault(), "data/errorpatterns/bugzilla/" + reportID[i] +".rvct.input.txt"), 
+						FileUtils.pluginRelativeFile(TestPlugin.getDefault(), "data/errorpatterns/bugzilla/" + reportID[i] +".rvct.regression.xml"));
+			}
+		} catch (IOException e) {
+			fail();
+		}
+	}
+
 }

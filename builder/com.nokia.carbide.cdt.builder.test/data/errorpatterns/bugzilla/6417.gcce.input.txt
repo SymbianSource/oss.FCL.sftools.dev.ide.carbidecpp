@@ -1,0 +1,181 @@
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::NewL(CDataKeeper&)':
+Overtimehandler.cpp:(.text+0x0): multiple definition of `COvertimeHandler::NewL(CDataKeeper&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::COvertimeHandler(CDataKeeper&)':
+Overtimehandler.cpp:(.text+0xa4): multiple definition of `COvertimeHandler::COvertimeHandler(CDataKeeper&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0xa4): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::ConstructL()':
+Overtimehandler.cpp:(.text+0x1ac): multiple definition of `COvertimeHandler::ConstructL()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x1ac): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::COvertimeHandler(CDataKeeper&)':
+Overtimehandler.cpp:(.text+0x40): multiple definition of `COvertimeHandler::COvertimeHandler(CDataKeeper&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x40): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::restoreDefaultValues()':
+Overtimehandler.cpp:(.text+0x3b8): multiple definition of `COvertimeHandler::restoreDefaultValues()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x3b8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x0): multiple definition of `vtable for COvertimeHandler'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::~COvertimeHandler()':
+Overtimehandler.cpp:(.text+0x108): multiple definition of `COvertimeHandler::~COvertimeHandler()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x108): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::~COvertimeHandler()':
+Overtimehandler.cpp:(.text+0x13c): multiple definition of `COvertimeHandler::~COvertimeHandler()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x13c): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::~COvertimeHandler()':
+Overtimehandler.cpp:(.text+0x170): multiple definition of `COvertimeHandler::~COvertimeHandler()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x170): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::save(MSettingsStorage&)':
+Overtimehandler.cpp:(.text+0x1b0): multiple definition of `COvertimeHandler::save(MSettingsStorage&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x1b0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::load(MSettingsStorage&)':
+Overtimehandler.cpp:(.text+0x280): multiple definition of `COvertimeHandler::load(MSettingsStorage&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x280): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleViewActivated()':
+Overtimehandler.cpp:(.text+0x450): multiple definition of `COvertimeHandler::handleViewActivated()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x450): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleViewDeactivated()':
+Overtimehandler.cpp:(.text+0x454): multiple definition of `COvertimeHandler::handleViewDeactivated()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x454): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleWentBackground()':
+Overtimehandler.cpp:(.text+0x458): multiple definition of `COvertimeHandler::handleWentBackground()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x458): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleWentForeground()':
+Overtimehandler.cpp:(.text+0x45c): multiple definition of `COvertimeHandler::handleWentForeground()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x45c): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getOvertimeEngine()':
+Overtimehandler.cpp:(.text+0x460): multiple definition of `COvertimeHandler::getOvertimeEngine()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x460): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getPunchEngine()':
+Overtimehandler.cpp:(.text+0x478): multiple definition of `COvertimeHandler::getPunchEngine()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x478): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getSelectedHolidayId() const':
+Overtimehandler.cpp:(.text+0x490): multiple definition of `COvertimeHandler::getSelectedHolidayId() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x490): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getSelectedHolidayObject()':
+Overtimehandler.cpp:(.text+0x498): multiple definition of `COvertimeHandler::getSelectedHolidayObject()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x498): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getEditHolidayObject()':
+Overtimehandler.cpp:(.text+0x4c0): multiple definition of `COvertimeHandler::getEditHolidayObject()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x4c0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getSelectedVacationId() const':
+Overtimehandler.cpp:(.text+0x4c8): multiple definition of `COvertimeHandler::getSelectedVacationId() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x4c8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getSelectedVacationObject()':
+Overtimehandler.cpp:(.text+0x4d0): multiple definition of `COvertimeHandler::getSelectedVacationObject()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x4d0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getEditVacationObject()':
+Overtimehandler.cpp:(.text+0x4f8): multiple definition of `COvertimeHandler::getEditVacationObject()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x4f8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getStartStatistics() const':
+Overtimehandler.cpp:(.text+0x500): multiple definition of `COvertimeHandler::getStartStatistics() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x500): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getEndStatistics() const':
+Overtimehandler.cpp:(.text+0x508): multiple definition of `COvertimeHandler::getEndStatistics() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x508): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getStartResult() const':
+Overtimehandler.cpp:(.text+0x510): multiple definition of `COvertimeHandler::getStartResult() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x510): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::getWorkHours() const':
+Overtimehandler.cpp:(.text+0x518): multiple definition of `COvertimeHandler::getWorkHours() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x518): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::setSelectedHolidayId(int)':
+Overtimehandler.cpp:(.text+0x520): multiple definition of `COvertimeHandler::setSelectedHolidayId(int)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x520): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::setSelectedVacationId(int)':
+Overtimehandler.cpp:(.text+0x528): multiple definition of `COvertimeHandler::setSelectedVacationId(int)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x528): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::setStartStatistics(TTime const&)':
+Overtimehandler.cpp:(.text+0x530): multiple definition of `COvertimeHandler::setStartStatistics(TTime const&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x530): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::setEndStatistics(TTime const&)':
+Overtimehandler.cpp:(.text+0x598): multiple definition of `COvertimeHandler::setEndStatistics(TTime const&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x598): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::setStartResult(int)':
+Overtimehandler.cpp:(.text+0x600): multiple definition of `COvertimeHandler::setStartResult(int)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x600): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::setWorkHours(int)':
+Overtimehandler.cpp:(.text+0x63c): multiple definition of `COvertimeHandler::setWorkHours(int)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x63c): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleHolidayEditL(MObjectProvider*, MReloadable*)':
+Overtimehandler.cpp:(.text+0x678): multiple definition of `COvertimeHandler::handleHolidayEditL(MObjectProvider*, MReloadable*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x678): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::canModifyObject(TBOBase const*)':
+Overtimehandler.cpp:(.text+0xb20): multiple definition of `COvertimeHandler::canModifyObject(TBOBase const*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0xb20): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleHolidayNewL(MObjectProvider*, MReloadable*)':
+Overtimehandler.cpp:(.text+0x750): multiple definition of `COvertimeHandler::handleHolidayNewL(MObjectProvider*, MReloadable*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x750): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleHolidayDeleteL(MObjectProvider*, MReloadable*)':
+Overtimehandler.cpp:(.text+0x7f4): multiple definition of `COvertimeHandler::handleHolidayDeleteL(MObjectProvider*, MReloadable*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x7f4): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleVacationEditL(MObjectProvider*, MReloadable*)':
+Overtimehandler.cpp:(.text+0x8cc): multiple definition of `COvertimeHandler::handleVacationEditL(MObjectProvider*, MReloadable*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x8cc): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleVacationNewL(MObjectProvider*, MReloadable*)':
+Overtimehandler.cpp:(.text+0x9a4): multiple definition of `COvertimeHandler::handleVacationNewL(MObjectProvider*, MReloadable*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0x9a4): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o: In function `COvertimeHandler::handleVacationDeleteL(MObjectProvider*, MReloadable*)':
+Overtimehandler.cpp:(.text+0xa48): multiple definition of `COvertimeHandler::handleVacationDeleteL(MObjectProvider*, MReloadable*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp:(.text+0xa48): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x64): multiple definition of `typeinfo for COvertimeHandler'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x64): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x50): multiple definition of `typeinfo name for COvertimeHandler'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x50): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::CMyContainer(CDataKeeper*)':
+Mycontainer.cpp:(.text+0x0): multiple definition of `CMyContainer::CMyContainer(CDataKeeper*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x0): multiple definition of `vtable for CMyContainer'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::CMyContainer(CDataKeeper*)':
+Mycontainer.cpp:(.text+0x5c): multiple definition of `CMyContainer::CMyContainer(CDataKeeper*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x5c): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::~CMyContainer()':
+Mycontainer.cpp:(.text+0xb8): multiple definition of `CMyContainer::~CMyContainer()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0xb8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::~CMyContainer()':
+Mycontainer.cpp:(.text+0x144): multiple definition of `CMyContainer::~CMyContainer()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x144): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::~CMyContainer()':
+Mycontainer.cpp:(.text+0x1d0): multiple definition of `CMyContainer::~CMyContainer()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x1d0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::BaseContainerConstructL()':
+Mycontainer.cpp:(.text+0x264): multiple definition of `CMyContainer::BaseContainerConstructL()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x264): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::getDataKeeper() const':
+Mycontainer.cpp:(.text+0x268): multiple definition of `CMyContainer::getDataKeeper() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x268): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::handleSizeChanged(TRect const&)':
+Mycontainer.cpp:(.text+0x270): multiple definition of `CMyContainer::handleSizeChanged(TRect const&)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x270): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::CountComponentControls() const':
+Mycontainer.cpp:(.text+0x284): multiple definition of `CMyContainer::CountComponentControls() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x284): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::ComponentControl(int) const':
+Mycontainer.cpp:(.text+0x29c): multiple definition of `CMyContainer::ComponentControl(int) const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x29c): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::addControlL(CCoeControl*)':
+Mycontainer.cpp:(.text+0x2c8): multiple definition of `CMyContainer::addControlL(CCoeControl*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x2c8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::removeControl(CCoeControl*)':
+Mycontainer.cpp:(.text+0x318): multiple definition of `CMyContainer::removeControl(CCoeControl*)'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x318): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::resetControls()':
+Mycontainer.cpp:(.text+0x3a8): multiple definition of `CMyContainer::resetControls()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x3a8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::handleBeforeDestruction()':
+Mycontainer.cpp:(.text+0x3c8): multiple definition of `CMyContainer::handleBeforeDestruction()'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x3c8): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o: In function `CMyContainer::isDestructing() const':
+Mycontainer.cpp:(.text+0x3f0): multiple definition of `CMyContainer::isDestructing() const'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp:(.text+0x3f0): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x118): multiple definition of `typeinfo for CMyContainer'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x118): first defined here
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x108): multiple definition of `typeinfo name for CMyContainer'
+..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x108): first defined here
+make[1]: *** [..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\RELEASE\GCCE\UREL\P2GData_A00001CD.dll] Error 1
+make: *** [TARGETP2GDATACLASSES] Error 2
+make -j 4 -s  -C \Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3 -f "PROGRAMICON.MK" TO_ROOT=..\..\..\..\.. EPOCBLD=..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\PROGRAMICON\GCCE TO_BLDINF=..\..\..\..\..\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3 PLATFORM=GCCE CFG=UREL BLD
+make -j 4 -s  -C \Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3 -f "PROGRAMGRAPHICS.MK" TO_ROOT=..\..\..\..\.. EPOCBLD=..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\PROGRAMGRAPHICS\GCCE TO_BLDINF=..\..\..\..\..\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3 PLATFORM=GCCE CFG=UREL BLD
+make -j 4 -s  -r -f "\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GCOMMON\GCCE\P2GCOMMON.GCCE" UREL
+make -j 4 -s  -r -f "\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GSERVER\GCCE\P2GSERVER.GCCE" UREL
+make -j 4 -s  -r -f "\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\P2GDATACLASSES.GCCE" UREL

@@ -1,0 +1,17 @@
+Reportagencycontainer.cpp
+Reportcontainer.cpp
+Reportprojectcontainer.cpp
+Reportselectcontainer.cpp
+Reportsummarycontainer.cpp
+Reporttaskcontainer.cpp
+Reportview.cpp
+Yearselectitem.cpp
+Importhistorycontainer.cpp
+make[1]: *** [..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\RELEASE\GCCE\UREL\Punch2Go_A00001CE.exe] Error 87
+Importprogressdlgimpl.cpp
+Logentrydetailsdlg.cpp
+Logentrydetailscontainer.cpp
+Logentryeditdlg.cpp
+Logentryeditlistbox.cpp
+make: *** [TARGETPUNCH2GO] Error 2
+Maincontainer.cpp

@@ -22,83 +22,10 @@ import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.ErrorParserManager;
 import org.eclipse.cdt.core.IMarkerGenerator;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 
 public class RCOMPErrorParser extends CarbideBaseErrorParser {
 
-	private Pattern cppFileLineWarningPattern;
-	private Pattern cppFileLinePattern;
-	private Pattern cppFileLineInfoPattern;
-	
-	public RCOMPErrorParser() {
-		// match file, line, possible column, and warning
-		cppFileLineWarningPattern = Pattern.compile("(.+):(\\d+):(?:(\\d+:)?)\\s+warning:\\s+(.*)"); //$NON-NLS-1$
-		// match file, line, possible column, and error
-		cppFileLinePattern = Pattern.compile("(.+):(\\d+):(?:(\\d+:)?)\\s+(.*)"); //$NON-NLS-1$
-//		 match file, line, possible column, and info
-		cppFileLineInfoPattern = Pattern.compile("(.+):(\\d+):(?:(\\d+:)?)\\s+note:(.*)"); //$NON-NLS-1$
-	}
-
-	private boolean processPreprocessorLine(String line, ErrorParserManager errorParserManager) {
-		// Known patterns:
-		//
-		// (a)
-		// %s:%d: warning: %s
-		//
-		// (b)
-		// %s:%d:%d: warning: %s
-		//
-		// (c)
-		// %s:%d: %s
-		//
-		// (d)
-		// %s:%d:%d: %s
-		//
-		// (e)
-		// * cpp failed
-
-		initialise();
-
-		Matcher cppMatcher = cppFileLineWarningPattern.matcher(line);
-		if (cppMatcher.matches()) {
-			msgFileName = cppMatcher.group(1);
-			msgLineNumber = Integer.parseInt(cppMatcher.group(2));
-			msgDescription = cppMatcher.group(4);
-			setFile(errorParserManager);
-			errorParserManager.generateExternalMarker(msgIFile, msgLineNumber,	msgDescription, IMarkerGenerator.SEVERITY_WARNING, null, externalFilePath);
-			return true;
-		}
-
-		cppMatcher = cppFileLineInfoPattern.matcher(line);
-		if (cppMatcher.matches()) {
-			msgFileName = cppMatcher.group(1);
-			msgLineNumber = Integer.parseInt(cppMatcher.group(2));
-			msgDescription = cppMatcher.group(4);
-			setFile(errorParserManager);
-			errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, IMarkerGenerator.SEVERITY_INFO, null, externalFilePath);
-			return true;
-		}
-		
-		cppMatcher = cppFileLinePattern.matcher(line);
-		if (cppMatcher.matches()) {
-			msgFileName = cppMatcher.group(1);
-			msgLineNumber = Integer.parseInt(cppMatcher.group(2));
-			msgDescription = cppMatcher.group(4);
-			setFile(errorParserManager);
-			errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, IMarkerGenerator.SEVERITY_ERROR_BUILD, null, externalFilePath);
-			return true;
-		}
-
-		if (line.startsWith("* cpp failed") || line.startsWith("* BMCONV failed") 
-			|| line.startsWith("* mifconv.exe failed") || line.startsWith("* epocaif.pl failed") 
-			|| line.toUpperCase().startsWith("FAILED TO UPDATE FILE") ) {
-			errorParserManager.generateExternalMarker(null, -1, line, IStatus.ERROR, null, externalFilePath);
-			return true;
-		}
-
-		return false;
-	}
 	public boolean processLine(String line, ErrorParserManager errorParserManager) {
 		// Known patterns.
 		// (a)
@@ -111,11 +38,11 @@ public class RCOMPErrorParser extends CarbideBaseErrorParser {
 		// filename(lineno) : Error: (ErrorNumber) iDescription
 		//
 		// (d)
-		// cannot open %s for writing (where %s is the asbolute path to the .rsc
+		// cannot open %s for writing (where %s is the absolute path to the .rsc
 		// file)
 		//
 		// (e)
-		// Failed to write UIDs to %s (where %s is the asbolute path to the .rsc
+		// Failed to write UIDs to %s (where %s is the absolute path to the .rsc
 		// file)
 		//
 		// (f)
@@ -124,26 +51,43 @@ public class RCOMPErrorParser extends CarbideBaseErrorParser {
 		// (g)
 		// ERROR: %s (where %s could be anything really)
 		//
-		// (h) C Pre-Processor
-		// Filename:lineNumber: iDescription
-		//
-		// (i) C Pre-Processor failing
+		// (h) C Pre-Processor failing
 		// * cpp failed
+		//
+		// (i)
+		// Failed to open %s
+		//
+		// (j)
+		// RCOMP failed with code %d
+		//
+		
+		// Warning pattern
+		// (a)
+		// atof may have failed for %s
 		
 		initialise();
 		
-		if (processPreprocessorLine(line, errorParserManager))
-			return true;
-		
+		// some error
 		HashSet<String> linePrefixes = new HashSet<String>();
 		linePrefixes.add("cannot open "); //$NON-NLS-1$
 		linePrefixes.add("Failed to write UIDs to "); //$NON-NLS-1$
 		linePrefixes.add("* RCOMP failed -"); //$NON-NLS-1$
 		linePrefixes.add("ERROR: "); //$NON-NLS-1$
 		linePrefixes.add("* cpp failed"); //$NON-NLS-1$
+		linePrefixes.add("Failed to open "); //$NON-NLS-1$
+		linePrefixes.add("RCOMP failed with code "); //$NON-NLS-1$
 
 		if (checkForLineBeginnings(line, linePrefixes.toArray(new String[linePrefixes.size()]))) {
 			errorParserManager.generateMarker(null, -1, line, msgSeverity, null);
+			return true;
+		}
+		
+		// some warning
+		HashSet<String> warningLinePrefixes = new HashSet<String>();
+		warningLinePrefixes.add("atof may have failed for "); //$NON-NLS-1$
+		
+		if (checkForLineBeginnings(line, warningLinePrefixes.toArray(new String[warningLinePrefixes.size()]))) {
+			errorParserManager.generateMarker(null, -1, line, IMarkerGenerator.SEVERITY_WARNING, null);
 			return true;
 		}
 
@@ -151,7 +95,7 @@ public class RCOMPErrorParser extends CarbideBaseErrorParser {
 		// for an invalid command line.  Same in Symbian 7.0s and 9.2, so assumed static.
 		if (line.indexOf("epocmbm [-h headerfile]") >= 0) { //$NON-NLS-1$
 			errorParserManager.generateMarker(null, -1,
-					"epocmbm build failed (perhaps due to an empty image list or invalid color format specification): please check the Console",
+					"epocmbm build failed (perhaps due to an empty image list or invalid color format specification): please check the Console", //$NON-NLS-1$
 					IMarkerGenerator.SEVERITY_ERROR_BUILD, null);
 			return true;
 		}
@@ -163,7 +107,7 @@ public class RCOMPErrorParser extends CarbideBaseErrorParser {
 		if (!setFileNameAndLineNumber(line) && !setDetailsFromCppOutput(line)) {
 			return false;	
 		}
-		String[] extensionsToExclude = {".pkg", ".def", ".defi"}; //$NON-NLS-1$ //$NON-NLS-2$ 
+		String[] extensionsToExclude = {".pkg", ".def", ".defi", ".asm", ".c" ,".c++", ".cc", ".cia", ".cpp", ".cxx", "h", ".hh", ".hpp", ".hxx", ".s"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ 
 		if (hasExcludedExtension(extensionsToExclude)) {
 			return false;
 		}
@@ -208,7 +152,7 @@ public class RCOMPErrorParser extends CarbideBaseErrorParser {
 			// Remove the warning.
 			msgDescription = msgDescription.substring("warning".length()).trim(); //$NON-NLS-1$
 			msgSeverity = IMarkerGenerator.SEVERITY_WARNING;
-		} else if (msgDescription.matches("(?i)error.*")) {
+		} else if (msgDescription.matches("(?i)error.*")) { //$NON-NLS-1$
 			// Remove the error.
 			msgDescription = msgDescription.substring("error".length()).trim(); //$NON-NLS-1$
 		}

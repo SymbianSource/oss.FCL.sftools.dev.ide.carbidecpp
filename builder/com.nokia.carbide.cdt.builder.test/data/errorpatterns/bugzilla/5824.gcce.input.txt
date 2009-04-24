@@ -1,0 +1,23 @@
+perl.exe -S ABLD.PL \BlackFlag\ target gcce udeb  
+  make -r  -f "\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\BlackFlag\GCCE.make" TARGET
+CFG=UDEB VERBOSE=-s
+arm-none-symbianelf-g++: ..\..\SRC\Main.cpp: No such file or directory
+arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect
+arm-none-symbianelf-g++: no input files
+arm-none-symbianelf-g++: ..\..\SRC\Dbg_breakpoints.cpp: No such file or directory
+arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect
+arm-none-symbianelf-g++: no input files
+make[1]: ***
+[..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\BlackFlag\BLACKFLAG\GCCE\UDEB\main.o] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make[1]: ***
+[..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\BlackFlag\BLACKFLAG\GCCE\UDEB\dbg_breakpoints.o] Error 1
+arm-none-symbianelf-g++: ..\..\SRC\Dbg_debug_menu.cpp: No such file or directory
+arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect
+arm-none-symbianelf-g++: no input files
+make[1]: ***
+[..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\BlackFlag\BLACKFLAG\GCCE\UDEB\dbg_debug_menu.o] Error 1
+make: *** [TARGETBLACKFLAG] Error 2
+arm-none-symbianelf-g++: ..\..\SRC\Dbg_derived_types.cpp: No such file or directory
+arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect
+arm-none-symbianelf-g++: no input files

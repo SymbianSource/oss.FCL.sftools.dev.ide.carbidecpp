@@ -1,0 +1,11 @@
+***Performing targeted build for configuration... Phone Debug (GCCE)
+[S60_3rd_MR].
+C:\WINNT\system32\cmd.exe /c abld  target GCCE UDEB  -v 
+  make -r  -f
+"\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Symbian\Carbide\workspace\baz\group\GCCE.make"
+TARGET CFG=UDEB
+The process cannot access the file because it is being used by another process.
+make[1]: *** [..\..\..\..\9.1\S60_3rd_MR\EPOC32\RELEASE\GCCE\UDEB\baz.exe]
+Error 1
+make: *** [TARGETBAZ] Error 2
+make   -C \Symbian\Carbide\workspace\baz\group -f "ICONS_SCALABLE_DC.MK"

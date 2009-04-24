@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="-1" message="'nmake' is not recognized as an internal or external command, operable program or batch file." severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+</root>
+

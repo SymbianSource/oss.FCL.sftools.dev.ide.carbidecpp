@@ -21,23 +21,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
+import com.nokia.carbide.automation.utils.UITestCase;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.test.TestPlugin;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
-public class ErrorParserRegressionGenerator extends TestCase {
+public class ErrorParserRegressionGenerator extends UITestCase {
+	public ErrorParserRegressionGenerator(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final String PROJECT_NAME = "TestErrorParser";
+	// Platform matters, set this before you build
+	private static final String PLATFORM_STRING = ISymbianBuildContext.EMULATOR_PLATFORM;
 
 	CarbideErrorParserTestHarness harness;
 	private IProject project;
@@ -46,11 +53,24 @@ public class ErrorParserRegressionGenerator extends TestCase {
 		super.setUp();
 		project = ProjectCorePlugin.createProject(PROJECT_NAME, null);
 		
-		// You need to set the proper default configuration so the correct set of error parsers is called
-		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDKList().get(0);
-		ISymbianBuildContext context = new SymbianBuildContext(sdk, ISymbianBuildContext.ARMV5_PLATFORM, ISymbianBuildContext.DEBUG_TARGET);
+		// look for first SDK with the platform
 		List<ISymbianBuildContext> contextList = new ArrayList<ISymbianBuildContext>();
-		contextList.add(context);
+		// You need to set the proper default configuration so the correct set of error parsers is called
+		List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
+		for (ISymbianSDK currSDK : sdkList){
+			List<ISymbianBuildContext> contexts = currSDK.getUnfilteredBuildConfigurations();
+			for (ISymbianBuildContext context : contexts) {
+				if (context.getPlatformString().equals(PLATFORM_STRING)) {
+					contextList.add(context);
+					break;
+				}
+			}
+			if (contextList.size() > 0) {
+				break;
+			}
+		}
+
+		assertTrue(contextList.size() > 0);		// this means you don't have any SDK installe with the said platform
 		
 //		ProjectCorePlugin.postProjectCreatedActions(project, "group/bld.inf", 
 //				TestPlugin.getUsableBuildConfigs(), new ArrayList<String>(), 

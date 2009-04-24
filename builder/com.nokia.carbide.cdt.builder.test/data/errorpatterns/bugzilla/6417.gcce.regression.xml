@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::NewL(CDataKeeper&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 1-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 2-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::COvertimeHandler(CDataKeeper&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 3-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 4-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::ConstructL()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 5-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 6-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::COvertimeHandler(CDataKeeper&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 7-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 8-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::restoreDefaultValues()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 9-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 10-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x0): multiple definition of `vtable for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 11-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x0): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 12-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::~COvertimeHandler()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 13-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 14-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::~COvertimeHandler()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 15-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 16-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::~COvertimeHandler()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 17-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 18-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::save(MSettingsStorage&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 19-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 20-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::load(MSettingsStorage&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 21-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 22-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleViewActivated()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 23-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 24-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleViewDeactivated()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 25-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 26-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleWentBackground()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 27-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 28-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleWentForeground()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 29-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 30-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getOvertimeEngine()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 31-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 32-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getPunchEngine()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 33-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 34-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getSelectedHolidayId() const'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 35-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 36-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getSelectedHolidayObject()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 37-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 38-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getEditHolidayObject()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 39-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 40-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getSelectedVacationId() const'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 41-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 42-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getSelectedVacationObject()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 43-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 44-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getEditVacationObject()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 45-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 46-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getStartStatistics() const'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 47-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 48-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getEndStatistics() const'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 49-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 50-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getStartResult() const'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 51-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 52-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::getWorkHours() const'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 53-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 54-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::setSelectedHolidayId(int)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 55-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 56-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::setSelectedVacationId(int)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 57-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 58-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::setStartStatistics(TTime const&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 59-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 60-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::setEndStatistics(TTime const&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 61-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 62-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::setStartResult(int)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 63-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 64-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::setWorkHours(int)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 65-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 66-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleHolidayEditL(MObjectProvider*, MReloadable*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 67-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 68-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::canModifyObject(TBOBase const*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 69-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 70-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleHolidayNewL(MObjectProvider*, MReloadable*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 71-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 72-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleHolidayDeleteL(MObjectProvider*, MReloadable*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 73-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 74-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleVacationEditL(MObjectProvider*, MReloadable*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 75-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 76-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleVacationNewL(MObjectProvider*, MReloadable*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 77-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 78-->
+  <marker_info file="^EMPTY^" line_number="0" message="Overtimehandler.cpp: multiple definition of `COvertimeHandler::handleVacationDeleteL(MObjectProvider*, MReloadable*)'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp:" />
+  <!--Error Marker at index 79-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:Overtimehandler.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp:" />
+  <!--Error Marker at index 80-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x64): multiple definition of `typeinfo for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 81-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x64): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 82-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x50): multiple definition of `typeinfo name for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 83-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x50): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 84-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::CMyContainer(CDataKeeper*)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 85-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 86-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x0): multiple definition of `vtable for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 87-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x0): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 88-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::CMyContainer(CDataKeeper*)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 89-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 90-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::~CMyContainer()'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 91-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 92-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::~CMyContainer()'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 93-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 94-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::~CMyContainer()'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 95-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 96-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::BaseContainerConstructL()'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 97-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 98-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::getDataKeeper() const'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 99-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 100-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::handleSizeChanged(TRect const&amp;)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 101-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 102-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::CountComponentControls() const'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 103-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 104-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::ComponentControl(int) const'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 105-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 106-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::addControlL(CCoeControl*)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 107-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 108-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::removeControl(CCoeControl*)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 109-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 110-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::resetControls()'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 111-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 112-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::handleBeforeDestruction()'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 113-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 114-->
+  <marker_info file="^EMPTY^" line_number="0" message="Mycontainer.cpp: multiple definition of `CMyContainer::isDestructing() const'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp:" />
+  <!--Error Marker at index 115-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:Mycontainer.cpp: first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp:" />
+  <!--Error Marker at index 116-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x118): multiple definition of `typeinfo for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 117-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x118): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 118-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x108): multiple definition of `typeinfo name for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 119-->
+  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x108): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+</root>
+

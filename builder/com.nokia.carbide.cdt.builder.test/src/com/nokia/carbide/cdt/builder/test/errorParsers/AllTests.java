@@ -28,6 +28,8 @@ public class AllTests {
 		suite.addTestSuite(TestRVCTErrorParser.class);
 		suite.addTestSuite(TestMakmakeErrorParser.class);
 		suite.addTestSuite(TestSBSv2ErrorParser.class);
+		suite.addTestSuite(TestGcceErrorParser.class);
+		suite.addTestSuite(TestMakeErrorParser.class);
 		//$JUnit-END$
 		return suite;
 	}

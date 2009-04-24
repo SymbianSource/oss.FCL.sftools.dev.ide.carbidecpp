@@ -1,0 +1,6 @@
+perl.exe -S ABLD.PL \Symbian\Carbide\kinoma\test3\group\ target gcce urel  
+  make -r  -f "\S60\devices\S60_3rd_FP2_SDK_v1.1\EPOC32\BUILD\Symbian\Carbide\kinoma\test3\group\GCCE.make" TARGET CFG=UREL VERBOSE=-s
+\S60\devices\S60_3rd_FP2_SDK_v1.1\EPOC32\BUILD\Symbian\Carbide\kinoma\test3\group\TEST3\GCCE\UREL\test3.o: In function `MainL()':
+test3.cpp:(.text+0x14): undefined reference to `foo()'
+make[1]: *** [\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\GCCE\urel\test3.exe] Error 1
+make: *** [TARGETTEST3] Error 2
