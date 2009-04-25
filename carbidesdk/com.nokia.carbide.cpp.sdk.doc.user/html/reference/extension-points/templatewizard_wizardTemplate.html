@@ -10,7 +10,7 @@
 <H1>Wizard Template</H1>
 <p></p>
 <h5 class=CaptionFigColumn id=header>Identifier:</h5>
-<p>com.nokia.carbide.templatewizard.wizardTemplate</p>
+<p class="code">com.nokia.carbide.templatewizard.wizardTemplate</p>
 <h5 class=CaptionFigColumn id=header>Since: </h5>
 Carbide.c++ 1.2
 
@@ -41,12 +41,13 @@ The template element registers a single template with the template wizard.</p>
 </ul>
 <br>
 <h5 class=CaptionFigColumn id=header>Examples:</h5>
-<pre><p class=code id=tag>&lt;extension point=&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;&gt;<p class=code id=tag>&lt;template
-   templateId=&quot;com.nokia.cdt.templates.s60.controlapplication&quot;<br>   location=&quot;templates/projecttemplates/S60-ControlApplication/template.xml&quot;
-   wizardId=&quot;com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard&quot;
-   groupLabel=&quot;S60&quot;
-   filterArguments=&quot;S60:1.2;2.0-2.9&quot;
-   image=&quot;icons/icon_S60.png&quot;
+<pre><p class=code id=tag>&lt;extension point=&quot;com.nokia.carbide.templatewizard.wizardTemplate&quot;&gt;<p class=code id=tag>&lt;!-- Register application template for Yadda Yadda company --&gt;
+&lt;template
+   templateId=&quot;com.yadda.templates.application&quot;<br>   location=&quot;templates/projecttemplates/Yadda-Application/template.xml&quot;
+   wizardId=&quot;com.yaddayadda.wizards.NewYaddaProjectWizard&quot;
+   groupLabel=&quot;YaddaYadda&quot;
+   filterArguments=&quot;Yadda:1.2;2.0-4.0&quot;
+   image=&quot;icons/icon_yadda_yadda.png&quot;
   /&gt;
 <p class=code id=tag>&lt;/extension&gt;</p></pre>
 <h5 class=CaptionFigColumn id=header>API Information: </h5>

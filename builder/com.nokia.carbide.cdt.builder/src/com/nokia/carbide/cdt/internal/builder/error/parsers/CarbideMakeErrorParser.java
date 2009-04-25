@@ -50,6 +50,7 @@ public class CarbideMakeErrorParser extends CarbideBaseErrorParser {
 		if (matcher.matches()) {
 			setDescription(matcher.group(1));
 			String msg = " - possibly too many arguments.  If there are a lot of source files in a library, try breaking those out into multiple libraries.";
+			msgLineNumber = -1;
 			eoParser.generateMarker(rsrc, msgLineNumber, line + msg, msgSeverity, null);
 			return true;
 		}
@@ -108,7 +109,7 @@ public class CarbideMakeErrorParser extends CarbideBaseErrorParser {
 		
 		if (line.contains(rvctNotInstalled)){
 			// create a specific error message when rvct is not installed since the build tools don't
-			this.msgDescription = "RVCT not isntalled or 'armcc' is not on PATH. Please check that your environment for the RVCT compiler is correct.";
+			this.msgDescription = "RVCT not installed or 'armcc' is not on PATH. Please check that your environment for the RVCT compiler is correct.";
 			this.msgLineNumber = -1;
 			this.msgSeverity = IMarkerGenerator.SEVERITY_ERROR_BUILD;
 			eoParser.generateMarker(rsrc, msgLineNumber, msgDescription, msgSeverity, null);

@@ -160,11 +160,27 @@
       </errorparser>
     </extension>
     <extension
-         id="GCCEErrorParser"
-         name="GCCE Error Parser"
+         id="GCCEAssemblerErrorParser"
+         name="GCCE Assembler Error Parser"
          point="org.eclipse.cdt.core.ErrorParser">
       <errorparser
-            class="com.nokia.carbide.cdt.internal.builder.error.parsers.GCCEErrorParser">
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.GCCEAssemblerErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="GCCECompilerErrorParser"
+         name="GCCE Compiler Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.GCCECompilerErrorParser">
+      </errorparser>
+    </extension>
+    <extension
+         id="GCCELinkerErrorParser"
+         name="GCCE Linker Error Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            class="com.nokia.carbide.cdt.internal.builder.error.parsers.GCCELinkerErrorParser">
       </errorparser>
     </extension>
     <extension

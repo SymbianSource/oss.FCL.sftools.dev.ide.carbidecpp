@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import com.freescale.cdt.debug.cw.CWException;
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
 import com.freescale.cdt.debug.cw.core.cdi.Session;
+import com.freescale.cdt.debug.cw.core.cdi.model.Target;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -159,8 +160,9 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 							config = synchronizeWithProjectAccessPaths(project, config);
 							
 							File wd = getWorkingDirectory(config);
-							cwDebugSession.launchExecutable(launch, config, exeFile, otherExecutables, arguments, wd, getEnvironmentAsProperty(config), monitor, project, getTargetLabel(exeFile.getName()), true);
-
+							Target target = cwDebugSession.launchExecutable(launch, config, exeFile, otherExecutables, arguments, wd, getEnvironmentAsProperty(config), monitor, project, getTargetLabel(exeFile.getName()), true);
+							ATFLaunchSupport.saveDebugTargetFromLaunchDelegate(target.getCoreModelTarget());
+							
 						} catch (CoreException e) {
 							Session session = (Session)dsession;
 							session.cleanupAfterLaunchFailure();

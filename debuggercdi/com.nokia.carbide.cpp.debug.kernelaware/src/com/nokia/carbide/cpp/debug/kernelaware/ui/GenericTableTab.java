@@ -315,6 +315,7 @@ public class GenericTableTab {
 					.getDisplayName());
 		}
 
+		viewer.setData("controller", this); //$NON-NLS-1$
 		return viewer;
 	}
 
@@ -383,5 +384,9 @@ public class GenericTableTab {
 			else
 				viewer.refresh();
 		}
+	}
+	
+	public Text getFilterText() {
+		return filterText;
 	}
 }

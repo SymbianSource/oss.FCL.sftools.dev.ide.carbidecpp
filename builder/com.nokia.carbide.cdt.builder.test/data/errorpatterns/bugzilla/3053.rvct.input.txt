@@ -1,0 +1,20 @@
+make[1]: Leaving directory `C:/Symbian/9.1/S60_3rd_MR/S60Ex/AddressBook/group'
+  make -r  -f
+"\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Symbian\9.1\S60_3rd_MR\S60Ex\AddressBook\group\ARMV5.make"
+TARGET CFG=UDEB
+Warning: C3492W: Site License not found, falling back to normal license
+ARM/Thumb C/C++ Compiler, RVCT2.2 [Build 593]
+Error: C3397E: Cannot obtain license for Compiler (feature compiler) with
+license version >= 2.2: 
+The desired vendor daemon is down
+ 1) Check the lmgrd log file, or 2) Try lmreread
+Feature:       compiler
+Vendor:Host:   asqarun1.americas.nokia.com
+License path:  7166@asqarun1.americas.nokia.com
+FLEXlm error:  -97,121
+For further information, refer to the FLEXlm End User Manual,
+available at "www.macrovision.com".
+
+make[1]: ***
+[..\..\..\EPOC32\BUILD\Symbian\9.1\S60_3rd_MR\S60Ex\AddressBook\group\ADDRESSBOOK\ARMV5\UDEB\AddressBookApp.o]
+Error 1

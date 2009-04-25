@@ -1,0 +1,5 @@
+<root>
+<!--Error Marker at index 0-->
+<marker_info external_path_string="/Symbian/Carbide/workspace/test/src/Foo.s" file="^EMPTY^" line_number="13" message="/Symbian/Carbide/workspace/test/src/Foo.s ignoring redefinition of register alias 'WIDTH'" severity="1" variable_name="^EMPTY^"/>
+</root>
+

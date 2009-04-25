@@ -1,0 +1,17 @@
+perl.exe -S ABLD.PL \Symbian\Carbide\workspace\test3\group\ target gcce urel  
+  make -r  -f "\S60\devices\S60_3rd_FP2_SDK_v1.1\EPOC32\BUILD\Symbian\Carbide\workspace\test3\group\GCCE.make" TARGET CFG=UREL VERBOSE=-s
+arm-none-symbianelf-ld: \S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\ARMV5\LIB\foo.dso: No such file: No such file or directory
+make[1]: *** [\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\GCCE\urel\test3.exe] Error 1
+make: *** [TARGETTEST3] Error 2
+
+perl.exe -S ABLD.PL \Symbian\Carbide\workspace\test3\group\ target gcce urel  
+  make -r  -f "\S60\devices\S60_3rd_FP2_SDK_v1.1\EPOC32\BUILD\Symbian\Carbide\workspace\test3\group\GCCE.make" TARGET CFG=UREL VERBOSE=-s
+arm-none-symbianelf-g++: \test\test.cpp: No such file or directory
+make[1]: *** [\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\GCCE\urel\test3.exe] Error 1
+make: *** [TARGETTEST3] Error 2
+
+perl.exe -S ABLD.PL \Symbian\Carbide\workspace\test3\group\ target gcce urel  
+  make -r  -f "\S60\devices\S60_3rd_FP2_SDK_v1.1\EPOC32\BUILD\Symbian\Carbide\workspace\test3\group\GCCE.make" TARGET CFG=UREL VERBOSE=-s
+arm-none-symbianelf-as: \test\test.s: No such file or directory
+make[1]: *** [\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\GCCE\urel\test3.exe] Error 1
+make: *** [TARGETTEST3] Error 2

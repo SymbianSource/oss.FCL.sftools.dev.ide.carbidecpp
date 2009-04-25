@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="0" message="test3.cpp: undefined reference to `foo()'" severity="2" variable_name="^EMPTY^" external_path_string="test3.cpp:" />
+</root>
+

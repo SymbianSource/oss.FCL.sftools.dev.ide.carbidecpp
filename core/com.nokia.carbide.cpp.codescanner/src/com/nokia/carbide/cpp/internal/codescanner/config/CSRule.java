@@ -123,8 +123,12 @@ public class CSRule {
 			return Messages.getString("CSRule.Consttdescptr");
 		case script_controlornull:
 			return Messages.getString("CSRule.Controlornull");
+		case script_crepository:
+			return Messages.getString("CSRule.Crepository");
 		case script_ctltargettype:
 			return Messages.getString("CSRule.Ctltargettype");
+		case script_customizableicons:
+			return Messages.getString("CSRule.Customizableicons");
 		case script_debugrom:
 			return Messages.getString("CSRule.Debugrom");
 		case script_declarename:
@@ -149,8 +153,8 @@ public class CSRule {
 			return Messages.getString("CSRule.Exportinline");
 		case script_exportpurevirtual:
 			return Messages.getString("CSRule.Exportpurevirtual");
-//		case script_externaldriveletters:
-//			return Messages.getString("CSRule.Externaldriveletters");
+		case script_flags:
+			return Messages.getString("CSRule.Flags");
 		case script_foff:
 			return Messages.getString("CSRule.Foff");
 		case script_forbiddenwords:

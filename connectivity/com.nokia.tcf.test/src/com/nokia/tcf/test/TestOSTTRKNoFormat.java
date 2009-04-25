@@ -38,13 +38,17 @@ import junit.framework.TestCase;
  */
 public class TestOSTTRKNoFormat extends TestCase {
 
+	private boolean startServer = true; // use false when doing Junit plugin test - use true when doing non-plugin junit test
+
 	public void testOstTRK() {
 		// for non-plugin junit test
 		TCAPIConnection api2 = new TCAPIConnection();
-		api2.nativeStartServer();
+		if (startServer) {
+			api2.nativeStartServer();
+		}
 
 		// connection
-		ITCVirtualSerialConnection conn = (ITCVirtualSerialConnection)TCFClassFactory.createITCVirtualSerialConnection("COM19");
+		ITCVirtualSerialConnection conn = (ITCVirtualSerialConnection)TCFClassFactory.createITCVirtualSerialConnection("COM27");
 		// set OST decoding for this connection
 		conn.setDecodeFormat("ost");
 		
@@ -188,7 +192,9 @@ public class TestOSTTRKNoFormat extends TestCase {
 			}
 		}
 		// for non-plugin junit test
-		api2.nativeStopServer();
+		if (startServer) {
+			api2.nativeStopServer();
+		}
 	}
 
 }

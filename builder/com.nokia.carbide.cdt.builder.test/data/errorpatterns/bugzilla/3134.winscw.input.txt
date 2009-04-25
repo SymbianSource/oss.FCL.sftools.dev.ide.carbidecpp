@@ -1,0 +1,2 @@
+  -- C:\Symbian\9.1\S60_3rd\EPOC32\INCLUDE\RVCT0_0\RVCT0_0.H: No such file or directory
+  ERROR: cpp.EXE failure

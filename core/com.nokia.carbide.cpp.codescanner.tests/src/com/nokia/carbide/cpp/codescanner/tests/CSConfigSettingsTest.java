@@ -309,13 +309,27 @@ public class CSConfigSettingsTest extends TestCase {
 		assertTrue(result.equals("secret"));
 	}
 
+	public void testGetScriptIcons() throws Exception {
+		String result = "";
+		result = this.configSettings.getScriptIcons();
+		assertNull(result);
+	}
+
+	public void testSetScriptIcons() throws Exception {
+		this.configSettings.setScriptIcons("myicon.png");
+		String result = "";
+		result = this.configSettings.getScriptIcons();
+		assertNotNull(result);
+		assertTrue(result.equals("myicon.png"));
+	}
+
 	public void testGetScriptLFunctionIgnore() throws Exception {
 		String result = "";
 		result = this.configSettings.getScriptLFunctionIgnore();
 		assertTrue(result.length() > 0);
 	}
 
-	public void testSetLFunctionCClassIgnore() throws Exception {
+	public void testSetScriptLFunctionIgnore() throws Exception {
 		this.configSettings.setScriptLFunctionIgnore("RunL|MyfuncL");
 		String result = "";
 		result = this.configSettings.getScriptLFunctionIgnore();

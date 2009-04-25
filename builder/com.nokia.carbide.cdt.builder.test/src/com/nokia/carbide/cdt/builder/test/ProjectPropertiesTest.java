@@ -26,7 +26,9 @@ import org.eclipse.cdt.core.dom.IPDOMManager;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
+import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
@@ -249,6 +251,92 @@ public class ProjectPropertiesTest extends TestCase {
 		
 		assertEquals(false, readSisInfo.isCreateStubFormat());
 	}
+	
+	public void testSBSv1BuildArgsReadWrite(){
+		
+		final String build_ARG = "-testbuild";
+		final String clean_ARG = "-testclean";
+		final String export_ARG = "-testexport";
+		final String final_ARG = "-testfinal";
+		final String freeze_ARG = "-testfreeze";
+		final String library_ARG = "-testlibrary";
+		final String makefile_ARG = "-testmakefile";
+		final String resource_ARG = "-testresource";
+		final String target_ARG = "-testtarget";
+		
+		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
+		assertNotNull("Ooops, ICarbideProjectInfo is null, something bad happened.", cpi);
+		
+		ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
+		BuildArgumentsInfo argInfoCopyOrig = defaultConfig.getBuildArgumentsInfoCopy();
+		BuildArgumentsInfo argInfoCopyMod = defaultConfig.getBuildArgumentsInfoCopy();
+		
+		// Just sanity check to make sure deprecated methods still exist.
+		IBuildArgumentsInfo testDeprecation = defaultConfig.getBuildArgumentsInfo();
+		String test = testDeprecation.getAbldBuildArgs();
+		
+		
+		// read the arguments
+		argInfoCopyMod.abldBuildArgs   += build_ARG;
+		argInfoCopyMod.abldCleanArgs   += clean_ARG;
+		argInfoCopyMod.abldExportArgs  += export_ARG;
+		argInfoCopyMod.abldFinalArgs   += final_ARG;
+		argInfoCopyMod.abldFreezeArgs  += freeze_ARG;
+		argInfoCopyMod.abldLibraryArgs += library_ARG;
+		argInfoCopyMod.abldMakefileArgs  += makefile_ARG;
+		argInfoCopyMod.abldResourceArgs  += resource_ARG;
+		argInfoCopyMod.abldTargetArgs    += target_ARG;
+		
+		// set the argument
+		defaultConfig.setBuildArgumentsInfo(argInfoCopyMod);
+		
+		// read the args from memory, make sure it's OK
+		BuildArgumentsInfo argInfoCopyVerify = defaultConfig.getBuildArgumentsInfoCopy();
+		assertTrue("Failed to re-read build args", argInfoCopyVerify.abldBuildArgs.contains(build_ARG));
+		assertTrue("Failed to re-read clean args", argInfoCopyVerify.abldCleanArgs.contains(clean_ARG));
+		assertTrue("Failed to re-read export args", argInfoCopyVerify.abldExportArgs.contains(export_ARG));
+		assertTrue("Failed to re-read final args", argInfoCopyVerify.abldFinalArgs.contains(final_ARG));
+		assertTrue("Failed to re-read freeze args", argInfoCopyVerify.abldFreezeArgs.contains(freeze_ARG));
+		assertTrue("Failed to re-read library args", argInfoCopyVerify.abldLibraryArgs.contains(library_ARG));
+		assertTrue("Failed to re-read makefile args", argInfoCopyVerify.abldMakefileArgs.contains(makefile_ARG));
+		assertTrue("Failed to re-read resource args", argInfoCopyVerify.abldResourceArgs.contains(resource_ARG));
+		assertTrue("Failed to re-read target args", argInfoCopyVerify.abldTargetArgs.contains(target_ARG));
+		
+		// now write to files
+		defaultConfig.saveConfiguration(false);
+		
+		// now read again
+		
+		// no work, how to know if it loads from disk....
+		BuildArgumentsInfo argInfoFromDisk = defaultConfig.getBuildArgumentsInfoCopy();
+		
+		// read the args now that were pulled from disk, make sure it's OK
+		assertTrue("Failed to re-read build args", argInfoCopyVerify.abldBuildArgs.contains(build_ARG));
+		assertTrue("Failed to re-read clean args", argInfoCopyVerify.abldCleanArgs.contains(clean_ARG));
+		assertTrue("Failed to re-read export args", argInfoCopyVerify.abldExportArgs.contains(export_ARG));
+		assertTrue("Failed to re-read final args", argInfoCopyVerify.abldFinalArgs.contains(final_ARG));
+		assertTrue("Failed to re-read freeze args", argInfoCopyVerify.abldFreezeArgs.contains(freeze_ARG));
+		assertTrue("Failed to re-read library args", argInfoCopyVerify.abldLibraryArgs.contains(library_ARG));
+		assertTrue("Failed to re-read makefile args", argInfoCopyVerify.abldMakefileArgs.contains(makefile_ARG));
+		assertTrue("Failed to re-read resource args", argInfoCopyVerify.abldResourceArgs.contains(resource_ARG));
+		assertTrue("Failed to re-read target args", argInfoCopyVerify.abldTargetArgs.contains(target_ARG));
+		
+		// Now restore the settings, write to disk and verify
+		defaultConfig.setBuildArgumentsInfo(argInfoCopyOrig);
+		defaultConfig.saveConfiguration(false); // write to disk
+		defaultConfig = cpi.getDefaultConfiguration();
+		argInfoCopyVerify = defaultConfig.getBuildArgumentsInfoCopy();
+		assertFalse("Failed to re-read build args after restore", argInfoCopyVerify.abldBuildArgs.contains(build_ARG));
+		assertFalse("Failed to re-read clean args after restore", argInfoCopyVerify.abldCleanArgs.contains(clean_ARG));
+		assertFalse("Failed to re-read export args after restore", argInfoCopyVerify.abldExportArgs.contains(export_ARG));
+		assertFalse("Failed to re-read final args after restore", argInfoCopyVerify.abldFinalArgs.contains(final_ARG));
+		assertFalse("Failed to re-read freeze args after restore", argInfoCopyVerify.abldFreezeArgs.contains(freeze_ARG));
+		assertFalse("Failed to re-read library args after restore", argInfoCopyVerify.abldLibraryArgs.contains(library_ARG));
+		assertFalse("Failed to re-read makefile args after restore", argInfoCopyVerify.abldMakefileArgs.contains(makefile_ARG));
+		assertFalse("Failed to re-read resource args after restore", argInfoCopyVerify.abldResourceArgs.contains(resource_ARG));
+		assertFalse("Failed to re-read target args after restore", argInfoCopyVerify.abldTargetArgs.contains(target_ARG));
+
+		}
 	
 	public void testChangesNotApplied() {
 		ICarbideProjectModifier cpm = CarbideBuilderPlugin.getBuildManager().getProjectModifier(project);

@@ -48,7 +48,9 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getConstnames <em>Constnames</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getConsttdescptr <em>Consttdescptr</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getControlornull <em>Controlornull</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCrepository <em>Crepository</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCtltargettype <em>Ctltargettype</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCustomizableicons <em>Customizableicons</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getDebugrom <em>Debugrom</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getDeclarename <em>Declarename</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getDeleteMemberVariable <em>Delete Member Variable</em>}</li>
@@ -62,6 +64,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getExportinline <em>Exportinline</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getExportpurevirtual <em>Exportpurevirtual</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getExternaldriveletters <em>Externaldriveletters</em>}</li>
+ *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getFlags <em>Flags</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getFoff <em>Foff</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getForbiddenwords <em>Forbiddenwords</em>}</li>
  *   <li>{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getForgottoputptroncleanupstack <em>Forgottoputptroncleanupstack</em>}</li>
@@ -642,6 +645,33 @@ public interface ScriptsType extends EObject {
 	void setControlornull(ControlornullType value);
 
 	/**
+	 * Returns the value of the '<em><b>Crepository</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Crepository</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Crepository</em>' containment reference.
+	 * @see #setCrepository(CrepositoryType)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getScriptsType_Crepository()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='crepository' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	CrepositoryType getCrepository();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCrepository <em>Crepository</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Crepository</em>' containment reference.
+	 * @see #getCrepository()
+	 * @generated
+	 */
+	void setCrepository(CrepositoryType value);
+
+	/**
 	 * Returns the value of the '<em><b>Ctltargettype</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -667,6 +697,33 @@ public interface ScriptsType extends EObject {
 	 * @generated
 	 */
 	void setCtltargettype(CtltargettypeType value);
+
+	/**
+	 * Returns the value of the '<em><b>Customizableicons</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Customizableicons</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Customizableicons</em>' containment reference.
+	 * @see #setCustomizableicons(CustomizableiconsType)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getScriptsType_Customizableicons()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='customizableicons' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	CustomizableiconsType getCustomizableicons();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getCustomizableicons <em>Customizableicons</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Customizableicons</em>' containment reference.
+	 * @see #getCustomizableicons()
+	 * @generated
+	 */
+	void setCustomizableicons(CustomizableiconsType value);
 
 	/**
 	 * Returns the value of the '<em><b>Debugrom</b></em>' containment reference.
@@ -1018,6 +1075,33 @@ public interface ScriptsType extends EObject {
 	 * @generated
 	 */
 	void setExternaldriveletters(ExternaldrivelettersType value);
+
+	/**
+	 * Returns the value of the '<em><b>Flags</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Flags</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Flags</em>' containment reference.
+	 * @see #setFlags(FlagsType)
+	 * @see com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.CSConfigPackage#getScriptsType_Flags()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='flags' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	FlagsType getFlags();
+
+	/**
+	 * Sets the value of the '{@link com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig.ScriptsType#getFlags <em>Flags</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Flags</em>' containment reference.
+	 * @see #getFlags()
+	 * @generated
+	 */
+	void setFlags(FlagsType value);
 
 	/**
 	 * Returns the value of the '<em><b>Foff</b></em>' containment reference.

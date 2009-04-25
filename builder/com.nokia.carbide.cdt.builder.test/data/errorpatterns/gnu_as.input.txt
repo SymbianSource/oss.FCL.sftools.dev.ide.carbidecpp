@@ -1,0 +1,2 @@
+/Symbian/Carbide/workspace/test/src/Foo.s: Assembler messages:
+/Symbian/Carbide/workspace/test/src/Foo.s:13: Warning: ignoring redefinition of register alias 'WIDTH'

@@ -26,6 +26,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusC
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -81,7 +82,7 @@ public class ConnectionsView extends ViewPart {
 	private static final Image CONNECTION_IMG = CONNECTION_IMGDESC.createImage();
 	private static final Color COLOR_RED = new Color(Display.getDefault(), 192, 0, 0);
 	private static final Color COLOR_GREEN = new Color(Display.getDefault(), 0, 128, 0);
-	private static final Color COLOR_YELLOW = new Color(Display.getDefault(), 192, 192, 0);
+	private static final Color COLOR_ELECTRIC = new Color(Display.getDefault(), 0, 0, 255);
 	private static final Color COLOR_GREY = new Color(Display.getDefault(), 96, 96, 96);
 	private static final String NEW_ACTION = "ConnectionsView.new"; //$NON-NLS-1$
 	private static final String EDIT_ACTION = "ConnectionsView.edit"; //$NON-NLS-1$
@@ -114,7 +115,7 @@ public class ConnectionsView extends ViewPart {
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
 								if (!isDisposed) {
-									viewer.refresh(treeNode, true);
+									viewer.refresh(true);
 									packColumns();
 								}
 							}
@@ -180,8 +181,12 @@ public class ConnectionsView extends ViewPart {
 		public Image getImage(Object obj) {
 			TreeNode node = (TreeNode) obj;
 			Object value = node.getValue();
-			if (value instanceof IConnection)
+			if (value instanceof IConnection) {
+				if (isConnectionInUse((IConnection) value)) {
+					return STATUS_INUSE_IMG;
+				}
 				return CONNECTION_IMG;
+			}
 			else if (value instanceof IConnectedService) {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
 				switch (status) {
@@ -190,12 +195,25 @@ public class ConnectionsView extends ViewPart {
 				case UP:
 					return STATUS_AVAIL_IMG;
 				case IN_USE:
-					return STATUS_INUSE_IMG;
+					return CONNECTION_IMG;
 				case UNKNOWN:
 					return STATUS_UNK_IMG;
 				}
 			}
 			return null;
+		}
+
+		private boolean isConnectionInUse(IConnection connection) {
+			Collection<IConnectedService> connectedServices = 
+				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+			// if any service is in-use, then connection is in-use
+			for (IConnectedService connectedService : connectedServices) {
+				IStatus status = connectedService.getStatus();
+				if (status.getEStatus().equals(EStatus.IN_USE))
+					return true;
+			}
+			
+			return false;
 		}
 	}
 	
@@ -206,8 +224,28 @@ public class ConnectionsView extends ViewPart {
 			Object value = node.getValue();
 			if (value instanceof IConnectedService) {
 				IStatus status = ((IConnectedService) value).getStatus();
-				return status.getShortDescription();
+				if (!status.getEStatus().equals(EStatus.IN_USE)) // if in-use, we show it in the connection row
+					return status.getShortDescription();
 			}
+			else if (value instanceof IConnection) {
+				IStatus status = getFirstInUseStatus((IConnection) value);
+				if (status != null)
+					return status.getShortDescription();
+			}
+				
+			return null;
+		}
+
+		private IStatus getFirstInUseStatus(IConnection connection) {
+			Collection<IConnectedService> connectedServices = 
+				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+			// if any service is in-use, then connection is in-use
+			for (IConnectedService connectedService : connectedServices) {
+				IStatus status = connectedService.getStatus();
+				if (status.getEStatus().equals(EStatus.IN_USE))
+					return status;
+			}
+			
 			return null;
 		}
 
@@ -222,16 +260,37 @@ public class ConnectionsView extends ViewPart {
 					return COLOR_RED;
 				case UP:
 					return COLOR_GREEN;
-				case IN_USE:
-					return COLOR_YELLOW;
 				case UNKNOWN:
 					return COLOR_GREY;
 				}
 			}
+			else if (value instanceof IConnection) // only showing in-use for connections
+				return COLOR_ELECTRIC;
+			
 			return null;
 		}
 	}
 	
+	public class DescriptionLabelProvider extends ColumnLabelProvider {
+		
+		@Override
+		public String getText(Object obj) {
+			TreeNode node = (TreeNode) obj;
+			Object value = node.getValue();
+			if (value instanceof IConnectedService) {
+				IStatus status = ((IConnectedService) value).getStatus();
+				if (!status.getEStatus().equals(EStatus.IN_USE)) { // if in-use, we show it in the connection row
+					String longDescription = status.getLongDescription();
+					if (longDescription != null)
+						longDescription = TextUtils.canonicalizeNewlines(longDescription, " ");
+					return longDescription;
+				}
+			}
+			
+			return null;
+		}
+	}
+
 	private class TypeLabelProvider extends ColumnLabelProvider {
 		
 		public String getText(Object obj) {
@@ -318,6 +377,10 @@ public class ConnectionsView extends ViewPart {
 		TreeViewerColumn statusColumn = new TreeViewerColumn(viewer, SWT.LEFT);
 		statusColumn.setLabelProvider(new StatusLabelProvider());
 		statusColumn.getColumn().setText(Messages.getString("ConnectionsView.StatusColumnHeader")); //$NON-NLS-1$
+		
+		TreeViewerColumn descriptionColumn = new TreeViewerColumn(viewer, SWT.LEFT);
+		descriptionColumn.setLabelProvider(new DescriptionLabelProvider());
+		descriptionColumn.getColumn().setText("Description");
 		
 		viewer.setContentProvider(new TreeNodeContentProvider());
 		viewer.setInput(loadConnections());

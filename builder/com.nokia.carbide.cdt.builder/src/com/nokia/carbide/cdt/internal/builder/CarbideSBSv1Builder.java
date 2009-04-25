@@ -189,7 +189,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			
 			// run abld makefile platform for each component to be built if needed
-			if (!generateAbldMakefileIfNecessary(buildConfig, launcher, componentPath, isTest)) {
+			if (!generateAbldMakefileIfNecessary(buildConfig, launcher, componentPath, isTest, progress)) {
 				return false;
 			}
 
@@ -337,7 +337,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		progress.setTaskName("Cleaning " + componentName);
 
 		// run abld makefile platform for each component to be built if needed
-		if (!generateAbldMakefileIfNecessary(buildConfig, launcher, componentPath, isTest)) {
+		if (!generateAbldMakefileIfNecessary(buildConfig, launcher, componentPath, isTest, progress)) {
 			return false;
 		}
 
@@ -390,7 +390,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		String componentName = componentPath.removeFileExtension().lastSegment();
 		
 		// run abld makefile platform for each component to be built if needed
-		if (!generateAbldMakefileIfNecessary(buildConfig, launcher, componentPath, isTest)) {
+		if (!generateAbldMakefileIfNecessary(buildConfig, launcher, componentPath, isTest, monitor)) {
 			return false;
 		}
 
@@ -483,7 +483,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return;
 		}
 
-		if (!generateAbldMakefileIfNecessary(buildConfig, launcher, fullMMPPath, isTest)) {
+		if (!generateAbldMakefileIfNecessary(buildConfig, launcher, fullMMPPath, isTest, monitor)) {
 			return;
 		}
 
@@ -936,7 +936,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 		
 		// run abld makefile platform for each component to be built if needed
-		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false)) {
+		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false, progress)) {
 			return false;
 		}
 
@@ -1251,7 +1251,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 		
 		// run abld makefile platform for each component to be built if needed
-		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false)) {
+		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false, progress)) {
 			return false;
 		}
 
@@ -1477,7 +1477,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return;
 		}
 		
-		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false)) {
+		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false, progress)) {
 			return;
 		}
 		
@@ -1575,7 +1575,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return;
 		}
 
-		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false)) {
+		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false, progress)) {
 			return;
 		}
 		
@@ -1679,7 +1679,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return;
 		}
 		
-		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false)) {
+		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false, progress)) {
 			return;
 		}
 		
@@ -1748,7 +1748,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return;
 		}
 
-		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false)) {
+		if (!CarbideCPPBuilder.generateAbldMakefilesIfNecessary(buildConfig, launcher, false, progress)) {
 			return;
 		}
 		
@@ -2200,6 +2200,11 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	}
 	
 	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
+		return generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, new NullProgressMonitor()); 
+	}
+
+	
+	public boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 
 		// generate the makefile if necessary
 		if (needsAbldMakefileGeneration(config, componentPath)) {
@@ -2249,7 +2254,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			// now make our changes to the generated makefile
 			if (areWeManagingTheMakeFiles) {
 				try {
-					updateMakefile(config, componentPath);
+					updateMakefile(config, componentPath, progress);
 				} catch (CoreException e) {
 					CarbideBuilderPlugin.log(e);
 					e.printStackTrace();
@@ -2434,9 +2439,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		return makefilePath.toFile();
 	}
 	
-	protected void updateMakefile(ICarbideBuildConfiguration config, IPath componentPath) throws CoreException {
+	protected void updateMakefile(ICarbideBuildConfiguration config, IPath componentPath, IProgressMonitor progress) throws CoreException {
 		// ignore extension makefiles.
 		if (isExtensionMakefile(componentPath)) {
+			return;
+		}
+		
+		if (progress.isCanceled()) {
 			return;
 		}
 		

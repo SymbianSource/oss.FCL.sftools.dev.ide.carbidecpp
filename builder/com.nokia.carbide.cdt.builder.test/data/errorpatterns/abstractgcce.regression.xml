@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="0" message="\test\test.cpp: No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.cpp:" />
+  <!--Error Marker at index 1-->
+  <marker_info file="^EMPTY^" line_number="0" message="no input files" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 2-->
+  <marker_info file="^EMPTY^" line_number="0" message="`-x c++' after last input file has no effect" severity="1" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 3-->
+  <marker_info file="^EMPTY^" line_number="0" message="some message" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+</root>
+

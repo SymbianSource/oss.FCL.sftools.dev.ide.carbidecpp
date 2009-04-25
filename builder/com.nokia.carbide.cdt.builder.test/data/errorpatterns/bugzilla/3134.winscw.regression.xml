@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="-1" message="RVCT not installed or 'armcc' is not on PATH. Please check that your environment for the RVCT compiler is correct." severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 1-->
+  <marker_info file="^EMPTY^" line_number="-1" message="ERROR: cpp.EXE failure" severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+</root>
+

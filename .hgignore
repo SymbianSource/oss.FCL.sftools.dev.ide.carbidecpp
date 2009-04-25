@@ -1,0 +1,8 @@
+# use glob syntax.
+syntax: glob
+bin
+runtime
+\.DS_Store
+connectivity/com.nokia.tcf/os/*
+connectivity/com.nokia.tcf/native/TCFNative/*/Release
+connectivity/com.nokia.tcf/native/TCFNative/*/Debug

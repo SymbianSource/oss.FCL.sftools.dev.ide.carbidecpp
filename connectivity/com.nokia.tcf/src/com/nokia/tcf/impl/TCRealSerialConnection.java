@@ -42,7 +42,7 @@ public class TCRealSerialConnection extends TCBaseConnection implements
 	 * All serial parameters are defaulted.
 	 */
 	public TCRealSerialConnection() {
-		super(MEDIA_REALSERIAL);
+		super("serial");
 		comPort = DEFAULT_COM_PORT;
 		baudRate = DEFAULT_BAUD;
 		parity = DEFAULT_PARITY;
@@ -59,7 +59,7 @@ public class TCRealSerialConnection extends TCBaseConnection implements
 	 * @param inComPort
 	 */
 	public TCRealSerialConnection(String inComPort) {
-		super(MEDIA_REALSERIAL);
+		super("serial");
 		comPort = inComPort;
 		baudRate = DEFAULT_BAUD;
 		parity = DEFAULT_PARITY;
@@ -79,7 +79,7 @@ public class TCRealSerialConnection extends TCBaseConnection implements
 	 */
 	public TCRealSerialConnection(String inComPort, long retryInterval,
 			long retryTimeout) {
-		super(MEDIA_REALSERIAL, retryInterval, retryTimeout);
+		super("serial", retryInterval, retryTimeout);
 		comPort = inComPort;
 		baudRate = DEFAULT_BAUD;
 		parity = DEFAULT_PARITY;
@@ -98,7 +98,7 @@ public class TCRealSerialConnection extends TCBaseConnection implements
 	 * @param inBaudRate
 	 */
 	public TCRealSerialConnection(String inComPort, String inBaudRate) {
-		super(MEDIA_REALSERIAL);
+		super("serial");
 		comPort = inComPort;
 		baudRate = inBaudRate;
 		parity = DEFAULT_PARITY;

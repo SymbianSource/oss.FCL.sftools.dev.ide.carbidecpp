@@ -28,7 +28,7 @@ import com.nokia.tcf.api.TCErrorConstants;
 
 public abstract class TCBaseConnection implements ITCConnection {
 
-	private int connectionType;
+	private String connectionType;
 	private long retryInterval;
 	private long retryTimeout;
 	protected String decodeFormat;
@@ -38,10 +38,10 @@ public abstract class TCBaseConnection implements ITCConnection {
 	 * @param retryTimeout
 	 * @param decodeFormat
 	 */
-	public TCBaseConnection(int connectionType, long retryInterval,
+	public TCBaseConnection(String connectionType, long retryInterval,
 			long retryTimeout, String decodeFormat) {
 		super();
-		this.connectionType = connectionType;
+		this.connectionType = connectionType.toLowerCase();
 		this.retryInterval = retryInterval;
 		this.retryTimeout = retryTimeout;
 		this.decodeFormat = decodeFormat;
@@ -50,9 +50,9 @@ public abstract class TCBaseConnection implements ITCConnection {
 	/**
 	 * @param connectionType
 	 */
-	public TCBaseConnection(int connectionType) {
+	public TCBaseConnection(String connectionType) {
 		super();
-		this.connectionType = connectionType;
+		this.connectionType = connectionType.toLowerCase();
 		this.retryInterval = DEFAULT_COMM_ERROR_RETRY_INTERVAL;
 		this.retryTimeout = DEFAULT_COMM_ERROR_RETRY_TIMEOUT;
 		this.decodeFormat = "ost";
@@ -63,10 +63,10 @@ public abstract class TCBaseConnection implements ITCConnection {
 	 * @param retryInterval
 	 * @param retryTimeout
 	 */
-	public TCBaseConnection(int connectionType, long retryInterval,
+	public TCBaseConnection(String connectionType, long retryInterval,
 			long retryTimeout) {
 		super();
-		this.connectionType = connectionType;
+		this.connectionType = connectionType.toLowerCase();
 		this.retryInterval = retryInterval;
 		this.retryTimeout = retryTimeout;
 		this.decodeFormat = "ost";
@@ -80,7 +80,7 @@ public abstract class TCBaseConnection implements ITCConnection {
 	/* (non-Javadoc)
 	 * @see com.nokia.tcf.api.ITCConnection#getConnectionType()
 	 */
-	public int getConnectionType() {
+	public String getConnectionType() {
 		return this.connectionType;
 	}
 
@@ -101,9 +101,9 @@ public abstract class TCBaseConnection implements ITCConnection {
 	/* (non-Javadoc)
 	 * @see com.nokia.tcf.api.ITCConnection#setConnectionType(int)
 	 */
-	public IStatus setConnectionType(int inConnectionType) {
+	public IStatus setConnectionType(String inConnectionType) {
 		IStatus status = new Status(Status.OK, Activator.PLUGIN_ID, (int)TCErrorConstants.TCAPI_ERR_NONE, "OK", null);
-		connectionType = inConnectionType;
+		connectionType = inConnectionType.toLowerCase();
 		return status;
 	}
 
@@ -145,14 +145,7 @@ public abstract class TCBaseConnection implements ITCConnection {
 	 */
 	public IStatus setDecodeFormat(String inDecodeFormat) {
 		IStatus status = new Status(Status.OK, Activator.PLUGIN_ID, (int)TCErrorConstants.TCAPI_ERR_NONE, "OK", null);
-		if ((inDecodeFormat.compareToIgnoreCase("platsim") == 0) ||
-				(inDecodeFormat.compareToIgnoreCase("ost") == 0) ||
-				(inDecodeFormat.compareToIgnoreCase("rawtrk") == 0)) {
-			decodeFormat = inDecodeFormat;
-		} else {
-			status  = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)TCErrorConstants.TCAPI_ERR_INVALID_DECODE_FORMAT, "Error", null);
-			decodeFormat = "ost";
-		}
+		decodeFormat = inDecodeFormat;
 		return status;
 	}
 

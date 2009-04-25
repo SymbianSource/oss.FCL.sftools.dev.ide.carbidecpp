@@ -910,8 +910,29 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param calculateComponentLists whether or not to calculate the list of makmake components
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 * @since 2.0
+	 * @deprecated Use {@link #generateAbldMakeFileIfNecessary(generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, boolean, IProgressMonitor)} instead
 	 */
 	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists) {
+		return generateAbldMakefilesIfNecessary(config, launcher, calculateComponentLists, new NullProgressMonitor());
+	}
+
+	/**
+	 * Generates the abld makefiles if necessary.
+	 * Loops through the mmp files to be built for the given build configuration and generates the makefile
+	 * for the mmp if:
+	 * 	 1) the makefile for the mmp does not exist
+	 *   2) if the mmp or any of its includes is newer than the makefile
+	 *   3) the makefile does not have the necessary Carbide changes
+	 *   
+	 *   The command used will be 'abld [test] makefile platform mmpname'
+	 * @param config the build configuration context
+	 * @param launcher the Carbide launcher
+	 * @param calculateComponentLists whether or not to calculate the list of makmake components
+	 * @param progress monitor to allow user to cancel
+	 * @return false if any makefile generation was necessary but failed, true otherwise
+	 * @since 2.0
+	 */
+	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists, IProgressMonitor progress) {
 
 		if (calculateComponentLists) {
 			calculateComponentLists(config, launcher);
@@ -919,20 +940,20 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		// generate the makefiles if necessary
 		for (IPath path : normalMakMakePaths) {
-			if (!generateAbldMakefileIfNecessary(config, launcher, path, false)) {
+			if (!generateAbldMakefileIfNecessary(config, launcher, path, false, progress)) {
 				return false;
 			}
 		}
 		
 		for (IPath path : testMakMakePaths) {
-			if (!generateAbldMakefileIfNecessary(config, launcher, path, true)) {
+			if (!generateAbldMakefileIfNecessary(config, launcher, path, true, progress)) {
 				return false;
 			}
 		}
 
 		return true;
 	}
-
+	
 	/**
 	 * Generates the abld makefile if necessary.
 	 * Generates the makefile for the given mmp file if:
@@ -947,8 +968,8 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param isTest true for test components, false otherwise
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 */
-	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
-		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest);
+	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
+		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, progress);
 	}
 	
 /**
@@ -970,7 +991,7 @@ public static String[] getParserIdArray(int id) {
 		        "com.nokia.carbide.cdt.builder.SBSv2ErrorParser",
 		        "com.nokia.carbide.cdt.builder.CarbideMakeErrorParser",
 		        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-		        "com.nokia.carbide.cdt.builder.GCCErrorParser",
+		        "org.eclipse.cdt.core.GCCErrorParser",				// for cpp message from RCOMP
 		        "com.nokia.carbide.cdt.builder.MWLDErrorParser",
 		        "com.nokia.carbide.cdt.builder.MWCCErrorParser",
 		        "com.nokia.carbide.cdt.builder.MakeDefErrorParser"
@@ -987,6 +1008,7 @@ public static String[] getParserIdArray(int id) {
 			        "com.nokia.carbide.cdt.builder.RVCTLinkerErrorParser",
 			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
 			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
+			        "org.eclipse.cdt.core.GCCErrorParser",				// for cpp message from RCOMP
 			        "com.nokia.carbide.cdt.builder.Elf2E32ErrorParser"
 			        };
 			break;
@@ -997,7 +1019,9 @@ public static String[] getParserIdArray(int id) {
 			        "com.nokia.carbide.cdt.builder.SBSv2ErrorParser",
 			        "com.nokia.carbide.cdt.builder.CarbideMakeErrorParser",
 			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-			        "com.nokia.carbide.cdt.builder.GCCEErrorParser",
+			        "com.nokia.carbide.cdt.builder.GCCECompilerErrorParser",		// also handles cpp message from RCOMP
+			        "com.nokia.carbide.cdt.builder.GCCEAssemblerErrorParser",
+			        "com.nokia.carbide.cdt.builder.GCCELinkerErrorParser",
 			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
 			        "com.nokia.carbide.cdt.builder.Elf2E32ErrorParser"
 			        };
@@ -1047,7 +1071,7 @@ public static String[] getParserIdArray(int id) {
 			        "com.nokia.carbide.cdt.builder.RVCTCompilerErrorParser",
 			        "com.nokia.carbide.cdt.builder.RVCTLinkerErrorParser",
 			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-			        "com.nokia.carbide.cdt.builder.GCCEErrorParser",
+			        "org.eclipse.cdt.core.GCCErrorParser",				// for cpp message from RCOMP
 			        "com.nokia.carbide.cdt.builder.MWLDErrorParser",
 			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
 			        "com.nokia.carbide.cdt.builder.Elf2E32ErrorParser",

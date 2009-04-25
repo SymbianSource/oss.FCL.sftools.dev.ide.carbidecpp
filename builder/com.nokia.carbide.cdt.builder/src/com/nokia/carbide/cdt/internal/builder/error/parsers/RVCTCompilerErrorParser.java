@@ -39,6 +39,7 @@ public class RVCTCompilerErrorParser extends CarbideBaseErrorParser {
 		// e.g. "no source": Error:  #5: cannot open source input file "\CarbideB18_workspace\BlackFlag\group\SRC\dbg_debug_menu.cpp": No such file or directory
 		if (aLine.contains("No such file or directory")){
 			aErrorParserManager.generateMarker(aErrorParserManager.getProject(), 0, aLine, IMarkerGenerator.SEVERITY_ERROR_BUILD, null);
+			return true;
 		}
 		
 		

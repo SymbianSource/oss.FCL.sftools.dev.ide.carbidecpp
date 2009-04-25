@@ -172,7 +172,7 @@ public abstract class CarbideBaseErrorParser implements IErrorParser {
 	 * sets iIFile variable if possible
 	 * 
 	 * @param errorParserManager
-	 *            Errro parser manager to query
+	 *            Error parser manager to query
 	 */
 	protected void setFile(ErrorParserManager errorParserManager) {
 		// if no filename, just return

@@ -34,7 +34,7 @@ public class TCVirtualSerialConnection extends TCBaseConnection implements
 	 *  Create Virtual Serial connection with default COM port. Retry periods are defaulted.
 	 */
 	public TCVirtualSerialConnection() {
-		super(MEDIA_VIRTUALSERIAL);
+		super("virtualserial");
 		this.comPort = ITCVirtualSerialConnection.DEFAULT_COM_PORT;
 		decodeFormat = "ost";
 	}
@@ -48,7 +48,7 @@ public class TCVirtualSerialConnection extends TCBaseConnection implements
 	 */
 	public TCVirtualSerialConnection(long retryInterval,
 			long retryTimeout) {
-		super(MEDIA_VIRTUALSERIAL, retryInterval, retryTimeout);
+		super("virtualserial", retryInterval, retryTimeout);
 		this.comPort = ITCVirtualSerialConnection.DEFAULT_COM_PORT;
 		decodeFormat = "ost";
 	}
@@ -59,7 +59,7 @@ public class TCVirtualSerialConnection extends TCBaseConnection implements
 	 * @param inPort
 	 */
 	public TCVirtualSerialConnection(String inPort) {
-		super(MEDIA_VIRTUALSERIAL);
+		super("virtualserial");
 		this.comPort = inPort;
 		decodeFormat = "ost";
 	}

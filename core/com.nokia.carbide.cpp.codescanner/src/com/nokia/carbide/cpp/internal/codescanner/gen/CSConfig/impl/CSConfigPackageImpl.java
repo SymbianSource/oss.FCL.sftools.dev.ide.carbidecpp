@@ -230,7 +230,21 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass crepositoryTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass ctltargettypeTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass customizableiconsTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -350,6 +364,13 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * @generated
 	 */
 	private EClass externaldrivelettersTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass flagsTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2010,9 +2031,48 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCrepositoryType() {
+		if (crepositoryTypeEClass == null) {
+			crepositoryTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(26);
+		}
+		return crepositoryTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCrepositoryType_Category() {
+        return (EAttribute)getCrepositoryType().getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCrepositoryType_Enable() {
+        return (EAttribute)getCrepositoryType().getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCrepositoryType_Severity() {
+        return (EAttribute)getCrepositoryType().getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCtltargettypeType() {
 		if (ctltargettypeTypeEClass == null) {
-			ctltargettypeTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(26);
+			ctltargettypeTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(27);
 		}
 		return ctltargettypeTypeEClass;
 	}
@@ -2049,9 +2109,57 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCustomizableiconsType() {
+		if (customizableiconsTypeEClass == null) {
+			customizableiconsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(28);
+		}
+		return customizableiconsTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCustomizableiconsType_IconsRE() {
+        return (EAttribute)getCustomizableiconsType().getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCustomizableiconsType_Category() {
+        return (EAttribute)getCustomizableiconsType().getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCustomizableiconsType_Enable() {
+        return (EAttribute)getCustomizableiconsType().getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCustomizableiconsType_Severity() {
+        return (EAttribute)getCustomizableiconsType().getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCustomrulesType() {
 		if (customrulesTypeEClass == null) {
-			customrulesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(27);
+			customrulesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(29);
 		}
 		return customrulesTypeEClass;
 	}
@@ -2072,7 +2180,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getCustomruleType() {
 		if (customruleTypeEClass == null) {
-			customruleTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(28);
+			customruleTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(30);
 		}
 		return customruleTypeEClass;
 	}
@@ -2147,7 +2255,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDebugromType() {
 		if (debugromTypeEClass == null) {
-			debugromTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(29);
+			debugromTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(31);
 		}
 		return debugromTypeEClass;
 	}
@@ -2186,7 +2294,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDeclarenameType() {
 		if (declarenameTypeEClass == null) {
-			declarenameTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(30);
+			declarenameTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(32);
 		}
 		return declarenameTypeEClass;
 	}
@@ -2225,7 +2333,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDeleteMemberVariableType() {
 		if (deleteMemberVariableTypeEClass == null) {
-			deleteMemberVariableTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(31);
+			deleteMemberVariableTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(33);
 		}
 		return deleteMemberVariableTypeEClass;
 	}
@@ -2264,7 +2372,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDestructorType() {
 		if (destructorTypeEClass == null) {
-			destructorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(32);
+			destructorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(34);
 		}
 		return destructorTypeEClass;
 	}
@@ -2303,7 +2411,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDocumentationType() {
 		if (documentationTypeEClass == null) {
-			documentationTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(33);
+			documentationTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(35);
 		}
 		return documentationTypeEClass;
 	}
@@ -2324,7 +2432,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDocumentRoot() {
 		if (documentRootEClass == null) {
-			documentRootEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(34);
+			documentRootEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(36);
 		}
 		return documentRootEClass;
 	}
@@ -2586,7 +2694,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Ctltargettype() {
+	public EReference getDocumentRoot_Crepository() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(28);
 	}
 
@@ -2595,7 +2703,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Customrule() {
+	public EReference getDocumentRoot_Ctltargettype() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(29);
 	}
 
@@ -2604,7 +2712,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Customrules() {
+	public EReference getDocumentRoot_Customizableicons() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(30);
 	}
 
@@ -2613,7 +2721,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Debugrom() {
+	public EReference getDocumentRoot_Customrule() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(31);
 	}
 
@@ -2622,7 +2730,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Declarename() {
+	public EReference getDocumentRoot_Customrules() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(32);
 	}
 
@@ -2631,7 +2739,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_DeleteMemberVariable() {
+	public EReference getDocumentRoot_Debugrom() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(33);
 	}
 
@@ -2640,8 +2748,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Description() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(34);
+	public EReference getDocumentRoot_Declarename() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(34);
 	}
 
 	/**
@@ -2649,7 +2757,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Destructor() {
+	public EReference getDocumentRoot_DeleteMemberVariable() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(35);
 	}
 
@@ -2658,8 +2766,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Documentation() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(36);
+	public EAttribute getDocumentRoot_Description() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(36);
 	}
 
 	/**
@@ -2667,7 +2775,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_DoubleSemiColon() {
+	public EReference getDocumentRoot_Destructor() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(37);
 	}
 
@@ -2676,7 +2784,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Driveletters() {
+	public EReference getDocumentRoot_Documentation() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(38);
 	}
 
@@ -2685,7 +2793,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Eikbuttons() {
+	public EReference getDocumentRoot_DoubleSemiColon() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(39);
 	}
 
@@ -2694,7 +2802,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Eikonenvstatic() {
+	public EReference getDocumentRoot_Driveletters() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(40);
 	}
 
@@ -2703,7 +2811,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Enummembers() {
+	public EReference getDocumentRoot_Eikbuttons() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(41);
 	}
 
@@ -2712,7 +2820,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Enumnames() {
+	public EReference getDocumentRoot_Eikonenvstatic() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(42);
 	}
 
@@ -2721,8 +2829,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Exclude() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(43);
+	public EReference getDocumentRoot_Enummembers() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(43);
 	}
 
 	/**
@@ -2730,7 +2838,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Exportinline() {
+	public EReference getDocumentRoot_Enumnames() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(44);
 	}
 
@@ -2739,8 +2847,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Exportpurevirtual() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(45);
+	public EAttribute getDocumentRoot_Exclude() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(45);
 	}
 
 	/**
@@ -2748,7 +2856,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Externaldriveletters() {
+	public EReference getDocumentRoot_Exportinline() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(46);
 	}
 
@@ -2757,8 +2865,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Filetype() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(47);
+	public EReference getDocumentRoot_Exportpurevirtual() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(47);
 	}
 
 	/**
@@ -2766,7 +2874,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Foff() {
+	public EReference getDocumentRoot_Externaldriveletters() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(48);
 	}
 
@@ -2775,8 +2883,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Forbiddenwords() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(49);
+	public EAttribute getDocumentRoot_Filetype() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(49);
 	}
 
 	/**
@@ -2784,7 +2892,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Forgottoputptroncleanupstack() {
+	public EReference getDocumentRoot_Flags() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(50);
 	}
 
@@ -2793,7 +2901,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Friend() {
+	public EReference getDocumentRoot_Foff() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(51);
 	}
 
@@ -2802,7 +2910,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Functionality() {
+	public EReference getDocumentRoot_Forbiddenwords() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(52);
 	}
 
@@ -2811,7 +2919,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Goto() {
+	public EReference getDocumentRoot_Forgottoputptroncleanupstack() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(53);
 	}
 
@@ -2820,7 +2928,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_High() {
+	public EReference getDocumentRoot_Friend() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(54);
 	}
 
@@ -2829,7 +2937,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Ifassignments() {
+	public EReference getDocumentRoot_Functionality() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(55);
 	}
 
@@ -2838,7 +2946,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Ifpreprocessor() {
+	public EReference getDocumentRoot_Goto() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(56);
 	}
 
@@ -2847,7 +2955,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Inheritanceorder() {
+	public EReference getDocumentRoot_High() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(57);
 	}
 
@@ -2856,7 +2964,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Input() {
+	public EAttribute getDocumentRoot_IconsRE() {
         return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(58);
 	}
 
@@ -2865,7 +2973,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Intleaves() {
+	public EReference getDocumentRoot_Ifassignments() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(59);
 	}
 
@@ -2874,7 +2982,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Jmp() {
+	public EReference getDocumentRoot_Ifpreprocessor() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(60);
 	}
 
@@ -2883,7 +2991,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Keyword() {
+	public EReference getDocumentRoot_Inheritanceorder() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(61);
 	}
 
@@ -2892,8 +3000,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Leave() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(62);
+	public EAttribute getDocumentRoot_Input() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(62);
 	}
 
 	/**
@@ -2901,7 +3009,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_LeaveNoError() {
+	public EReference getDocumentRoot_Intleaves() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(63);
 	}
 
@@ -2910,7 +3018,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Leavingoperators() {
+	public EReference getDocumentRoot_Jmp() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(64);
 	}
 
@@ -2919,7 +3027,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Legal() {
+	public EReference getDocumentRoot_Keyword() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(65);
 	}
 
@@ -2928,7 +3036,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_LFunctionCantLeave() {
+	public EReference getDocumentRoot_Leave() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(66);
 	}
 
@@ -2937,8 +3045,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_LFunctionIgnoreRE() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(67);
+	public EReference getDocumentRoot_LeaveNoError() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(67);
 	}
 
 	/**
@@ -2946,8 +3054,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Link() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(68);
+	public EReference getDocumentRoot_Leavingoperators() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(68);
 	}
 
 	/**
@@ -2955,7 +3063,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Localisation() {
+	public EReference getDocumentRoot_Legal() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(69);
 	}
 
@@ -2964,7 +3072,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Longlines() {
+	public EReference getDocumentRoot_LFunctionCantLeave() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(70);
 	}
 
@@ -2973,8 +3081,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Low() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(71);
+	public EAttribute getDocumentRoot_LFunctionIgnoreRE() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(71);
 	}
 
 	/**
@@ -2982,7 +3090,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Lxr() {
+	public EAttribute getDocumentRoot_Link() {
         return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(72);
 	}
 
@@ -2991,8 +3099,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Lxrversion() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(73);
+	public EReference getDocumentRoot_Localisation() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(73);
 	}
 
 	/**
@@ -3000,7 +3108,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Magicnumbers() {
+	public EReference getDocumentRoot_Longlines() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(74);
 	}
 
@@ -3009,7 +3117,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Mclassdestructor() {
+	public EReference getDocumentRoot_Low() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(75);
 	}
 
@@ -3018,8 +3126,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Medium() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(76);
+	public EAttribute getDocumentRoot_Lxr() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(76);
 	}
 
 	/**
@@ -3027,8 +3135,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Memberlc() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(77);
+	public EAttribute getDocumentRoot_Lxrversion() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(77);
 	}
 
 	/**
@@ -3036,7 +3144,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Membervariablecallld() {
+	public EReference getDocumentRoot_Magicnumbers() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(78);
 	}
 
@@ -3045,7 +3153,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Missingcancel() {
+	public EReference getDocumentRoot_Mclassdestructor() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(79);
 	}
 
@@ -3054,7 +3162,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Missingcclass() {
+	public EReference getDocumentRoot_Medium() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(80);
 	}
 
@@ -3063,7 +3171,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Mmpsourcepath() {
+	public EReference getDocumentRoot_Memberlc() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(81);
 	}
 
@@ -3072,7 +3180,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Multilangrsc() {
+	public EReference getDocumentRoot_Membervariablecallld() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(82);
 	}
 
@@ -3081,7 +3189,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Multipledeclarations() {
+	public EReference getDocumentRoot_Missingcancel() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(83);
 	}
 
@@ -3090,7 +3198,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Multipleinheritance() {
+	public EReference getDocumentRoot_Missingcclass() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(84);
 	}
 
@@ -3099,7 +3207,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Mydocs() {
+	public EReference getDocumentRoot_Mmpsourcepath() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(85);
 	}
 
@@ -3108,8 +3216,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Name() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(86);
+	public EReference getDocumentRoot_Multilangrsc() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(86);
 	}
 
 	/**
@@ -3117,7 +3225,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Namespace() {
+	public EReference getDocumentRoot_Multipledeclarations() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(87);
 	}
 
@@ -3126,7 +3234,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Newlreferences() {
+	public EReference getDocumentRoot_Multipleinheritance() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(88);
 	}
 
@@ -3135,7 +3243,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Noleavetrap() {
+	public EReference getDocumentRoot_Mydocs() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(89);
 	}
 
@@ -3144,8 +3252,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Nonconsthbufc() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(90);
+	public EAttribute getDocumentRoot_Name() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(90);
 	}
 
 	/**
@@ -3153,7 +3261,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Nonconsttdesc() {
+	public EReference getDocumentRoot_Namespace() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(91);
 	}
 
@@ -3162,7 +3270,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Nonleavenew() {
+	public EReference getDocumentRoot_Newlreferences() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(92);
 	}
 
@@ -3171,7 +3279,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Nonunicodeskins() {
+	public EReference getDocumentRoot_Noleavetrap() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(93);
 	}
 
@@ -3180,7 +3288,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Null() {
+	public EReference getDocumentRoot_Nonconsthbufc() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(94);
 	}
 
@@ -3189,7 +3297,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Open() {
+	public EReference getDocumentRoot_Nonconsttdesc() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(95);
 	}
 
@@ -3198,8 +3306,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_OpenIgnoreRE() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(96);
+	public EReference getDocumentRoot_Nonleavenew() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(96);
 	}
 
 	/**
@@ -3207,7 +3315,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Other() {
+	public EReference getDocumentRoot_Nonunicodeskins() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(97);
 	}
 
@@ -3216,8 +3324,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Outputformat() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(98);
+	public EReference getDocumentRoot_Null() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(98);
 	}
 
 	/**
@@ -3225,7 +3333,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Panic() {
+	public EReference getDocumentRoot_Open() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(99);
 	}
 
@@ -3234,8 +3342,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Performance() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(100);
+	public EAttribute getDocumentRoot_OpenIgnoreRE() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(100);
 	}
 
 	/**
@@ -3243,7 +3351,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Pointertoarrays() {
+	public EReference getDocumentRoot_Other() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(101);
 	}
 
@@ -3252,8 +3360,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Pragmadisable() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(102);
+	public EAttribute getDocumentRoot_Outputformat() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(102);
 	}
 
 	/**
@@ -3261,7 +3369,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Pragmamessage() {
+	public EReference getDocumentRoot_Panic() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(103);
 	}
 
@@ -3270,7 +3378,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Pragmaother() {
+	public EReference getDocumentRoot_Performance() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(104);
 	}
 
@@ -3279,7 +3387,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Privateinheritance() {
+	public EReference getDocumentRoot_Pointertoarrays() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(105);
 	}
 
@@ -3288,7 +3396,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Pushaddrvar() {
+	public EReference getDocumentRoot_Pragmadisable() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(106);
 	}
 
@@ -3297,7 +3405,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Pushmember() {
+	public EReference getDocumentRoot_Pragmamessage() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(107);
 	}
 
@@ -3306,7 +3414,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Readresource() {
+	public EReference getDocumentRoot_Pragmaother() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(108);
 	}
 
@@ -3315,7 +3423,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Resourcenotoncleanupstack() {
+	public EReference getDocumentRoot_Privateinheritance() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(109);
 	}
 
@@ -3324,7 +3432,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Resourcesonheap() {
+	public EReference getDocumentRoot_Pushaddrvar() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(110);
 	}
 
@@ -3333,7 +3441,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Returndescriptoroutofscope() {
+	public EReference getDocumentRoot_Pushmember() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(111);
 	}
 
@@ -3342,7 +3450,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Rfs() {
+	public EReference getDocumentRoot_Readresource() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(112);
 	}
 
@@ -3351,7 +3459,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Rssnames() {
+	public EReference getDocumentRoot_Resourcenotoncleanupstack() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(113);
 	}
 
@@ -3360,7 +3468,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Scripts() {
+	public EReference getDocumentRoot_Resourcesonheap() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(114);
 	}
 
@@ -3369,7 +3477,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Severities() {
+	public EReference getDocumentRoot_Returndescriptoroutofscope() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(115);
 	}
 
@@ -3378,7 +3486,16 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Sources() {
+	public EReference getDocumentRoot_Rfs() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(116);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDocumentRoot_Rssnames() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(117);
 	}
 
@@ -3387,7 +3504,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Stringliterals() {
+	public EReference getDocumentRoot_Scripts() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(118);
 	}
 
@@ -3396,7 +3513,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Stringsinresourcefiles() {
+	public EReference getDocumentRoot_Severities() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(119);
 	}
 
@@ -3405,16 +3522,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Struct() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(120);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDocumentRoot_Tcclasses() {
+	public EReference getDocumentRoot_Sources() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(121);
 	}
 
@@ -3423,7 +3531,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Tclassdestructor() {
+	public EReference getDocumentRoot_Stringliterals() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(122);
 	}
 
@@ -3432,8 +3540,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Timestampedoutput() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(123);
+	public EReference getDocumentRoot_Stringsinresourcefiles() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(123);
 	}
 
 	/**
@@ -3441,8 +3549,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Title() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(124);
+	public EReference getDocumentRoot_Struct() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(124);
 	}
 
 	/**
@@ -3450,7 +3558,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Todocomments() {
+	public EReference getDocumentRoot_Tcclasses() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(125);
 	}
 
@@ -3459,7 +3567,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Trapcleanup() {
+	public EReference getDocumentRoot_Tclassdestructor() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(126);
 	}
 
@@ -3468,8 +3576,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Trapeleave() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(127);
+	public EAttribute getDocumentRoot_Timestampedoutput() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(127);
 	}
 
 	/**
@@ -3477,8 +3585,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Traprunl() {
-        return (EReference)getDocumentRoot().getEStructuralFeatures().get(128);
+	public EAttribute getDocumentRoot_Title() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(128);
 	}
 
 	/**
@@ -3486,7 +3594,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Trspassing() {
+	public EReference getDocumentRoot_Todocomments() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(129);
 	}
 
@@ -3495,7 +3603,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Uids() {
+	public EReference getDocumentRoot_Trapcleanup() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(130);
 	}
 
@@ -3504,7 +3612,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Uncompressedaif() {
+	public EReference getDocumentRoot_Trapeleave() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(131);
 	}
 
@@ -3513,7 +3621,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Uncompressedbmp() {
+	public EReference getDocumentRoot_Traprunl() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(132);
 	}
 
@@ -3522,7 +3630,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Unicodesource() {
+	public EReference getDocumentRoot_Trspassing() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(133);
 	}
 
@@ -3531,7 +3639,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Userafter() {
+	public EReference getDocumentRoot_Uids() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(134);
 	}
 
@@ -3540,7 +3648,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Userfree() {
+	public EReference getDocumentRoot_Uncompressedaif() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(135);
 	}
 
@@ -3549,7 +3657,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_UserWaitForRequest() {
+	public EReference getDocumentRoot_Uncompressedbmp() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(136);
 	}
 
@@ -3558,7 +3666,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Variablenames() {
+	public EReference getDocumentRoot_Unicodesource() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(137);
 	}
 
@@ -3567,7 +3675,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Voidparameter() {
+	public EReference getDocumentRoot_Userafter() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(138);
 	}
 
@@ -3576,8 +3684,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_WordsRE() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(139);
+	public EReference getDocumentRoot_Userfree() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(139);
 	}
 
 	/**
@@ -3585,7 +3693,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Worryingcomments() {
+	public EReference getDocumentRoot_UserWaitForRequest() {
         return (EReference)getDocumentRoot().getEStructuralFeatures().get(140);
 	}
 
@@ -3594,8 +3702,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_WorryRE() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(141);
+	public EReference getDocumentRoot_Variablenames() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(141);
 	}
 
 	/**
@@ -3603,8 +3711,8 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Category() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(142);
+	public EReference getDocumentRoot_Voidparameter() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(142);
 	}
 
 	/**
@@ -3612,7 +3720,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Severity1() {
+	public EAttribute getDocumentRoot_WordsRE() {
         return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(143);
 	}
 
@@ -3621,8 +3729,44 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDocumentRoot_Worryingcomments() {
+        return (EReference)getDocumentRoot().getEStructuralFeatures().get(144);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDocumentRoot_WorryRE() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(145);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDocumentRoot_Category() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(146);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDocumentRoot_Severity1() {
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(147);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getDocumentRoot_Severity() {
-        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(116);
+        return (EAttribute)getDocumentRoot().getEStructuralFeatures().get(120);
 	}
 
 	/**
@@ -3632,7 +3776,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDoubleSemiColonType() {
 		if (doubleSemiColonTypeEClass == null) {
-			doubleSemiColonTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(35);
+			doubleSemiColonTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(37);
 		}
 		return doubleSemiColonTypeEClass;
 	}
@@ -3671,7 +3815,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getDrivelettersType() {
 		if (drivelettersTypeEClass == null) {
-			drivelettersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(36);
+			drivelettersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(38);
 		}
 		return drivelettersTypeEClass;
 	}
@@ -3710,7 +3854,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getEikbuttonsType() {
 		if (eikbuttonsTypeEClass == null) {
-			eikbuttonsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(37);
+			eikbuttonsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(39);
 		}
 		return eikbuttonsTypeEClass;
 	}
@@ -3749,7 +3893,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getEikonenvstaticType() {
 		if (eikonenvstaticTypeEClass == null) {
-			eikonenvstaticTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(38);
+			eikonenvstaticTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(40);
 		}
 		return eikonenvstaticTypeEClass;
 	}
@@ -3788,7 +3932,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getEnummembersType() {
 		if (enummembersTypeEClass == null) {
-			enummembersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(39);
+			enummembersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(41);
 		}
 		return enummembersTypeEClass;
 	}
@@ -3827,7 +3971,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getEnumnamesType() {
 		if (enumnamesTypeEClass == null) {
-			enumnamesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(40);
+			enumnamesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(42);
 		}
 		return enumnamesTypeEClass;
 	}
@@ -3866,7 +4010,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getExportinlineType() {
 		if (exportinlineTypeEClass == null) {
-			exportinlineTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(41);
+			exportinlineTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(43);
 		}
 		return exportinlineTypeEClass;
 	}
@@ -3905,7 +4049,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getExportpurevirtualType() {
 		if (exportpurevirtualTypeEClass == null) {
-			exportpurevirtualTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(42);
+			exportpurevirtualTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(44);
 		}
 		return exportpurevirtualTypeEClass;
 	}
@@ -3944,7 +4088,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getExternaldrivelettersType() {
 		if (externaldrivelettersTypeEClass == null) {
-			externaldrivelettersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(43);
+			externaldrivelettersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(45);
 		}
 		return externaldrivelettersTypeEClass;
 	}
@@ -3981,9 +4125,48 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFlagsType() {
+		if (flagsTypeEClass == null) {
+			flagsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(46);
+		}
+		return flagsTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFlagsType_Category() {
+        return (EAttribute)getFlagsType().getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFlagsType_Enable() {
+        return (EAttribute)getFlagsType().getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFlagsType_Severity() {
+        return (EAttribute)getFlagsType().getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFoffType() {
 		if (foffTypeEClass == null) {
-			foffTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(44);
+			foffTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(47);
 		}
 		return foffTypeEClass;
 	}
@@ -4022,7 +4205,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getForbiddenwordsType() {
 		if (forbiddenwordsTypeEClass == null) {
-			forbiddenwordsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(45);
+			forbiddenwordsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(48);
 		}
 		return forbiddenwordsTypeEClass;
 	}
@@ -4070,7 +4253,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getForgottoputptroncleanupstackType() {
 		if (forgottoputptroncleanupstackTypeEClass == null) {
-			forgottoputptroncleanupstackTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(46);
+			forgottoputptroncleanupstackTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(49);
 		}
 		return forgottoputptroncleanupstackTypeEClass;
 	}
@@ -4109,7 +4292,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getFriendType() {
 		if (friendTypeEClass == null) {
-			friendTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(47);
+			friendTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(50);
 		}
 		return friendTypeEClass;
 	}
@@ -4148,7 +4331,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getFunctionalityType() {
 		if (functionalityTypeEClass == null) {
-			functionalityTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(48);
+			functionalityTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(51);
 		}
 		return functionalityTypeEClass;
 	}
@@ -4169,7 +4352,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getGotoType() {
 		if (gotoTypeEClass == null) {
-			gotoTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(49);
+			gotoTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(52);
 		}
 		return gotoTypeEClass;
 	}
@@ -4208,7 +4391,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getHighType() {
 		if (highTypeEClass == null) {
-			highTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(50);
+			highTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(53);
 		}
 		return highTypeEClass;
 	}
@@ -4229,7 +4412,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getIfassignmentsType() {
 		if (ifassignmentsTypeEClass == null) {
-			ifassignmentsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(51);
+			ifassignmentsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(54);
 		}
 		return ifassignmentsTypeEClass;
 	}
@@ -4268,7 +4451,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getIfpreprocessorType() {
 		if (ifpreprocessorTypeEClass == null) {
-			ifpreprocessorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(52);
+			ifpreprocessorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(55);
 		}
 		return ifpreprocessorTypeEClass;
 	}
@@ -4307,7 +4490,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getInheritanceorderType() {
 		if (inheritanceorderTypeEClass == null) {
-			inheritanceorderTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(53);
+			inheritanceorderTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(56);
 		}
 		return inheritanceorderTypeEClass;
 	}
@@ -4346,7 +4529,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getIntleavesType() {
 		if (intleavesTypeEClass == null) {
-			intleavesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(54);
+			intleavesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(57);
 		}
 		return intleavesTypeEClass;
 	}
@@ -4385,7 +4568,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getJmpType() {
 		if (jmpTypeEClass == null) {
-			jmpTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(55);
+			jmpTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(58);
 		}
 		return jmpTypeEClass;
 	}
@@ -4424,7 +4607,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getKeywordType() {
 		if (keywordTypeEClass == null) {
-			keywordTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(56);
+			keywordTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(59);
 		}
 		return keywordTypeEClass;
 	}
@@ -4454,7 +4637,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLeaveNoErrorType() {
 		if (leaveNoErrorTypeEClass == null) {
-			leaveNoErrorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(57);
+			leaveNoErrorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(60);
 		}
 		return leaveNoErrorTypeEClass;
 	}
@@ -4493,7 +4676,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLeaveType() {
 		if (leaveTypeEClass == null) {
-			leaveTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(58);
+			leaveTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(61);
 		}
 		return leaveTypeEClass;
 	}
@@ -4532,7 +4715,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLeavingoperatorsType() {
 		if (leavingoperatorsTypeEClass == null) {
-			leavingoperatorsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(59);
+			leavingoperatorsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(62);
 		}
 		return leavingoperatorsTypeEClass;
 	}
@@ -4571,7 +4754,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLegalType() {
 		if (legalTypeEClass == null) {
-			legalTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(60);
+			legalTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(63);
 		}
 		return legalTypeEClass;
 	}
@@ -4592,7 +4775,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLFunctionCantLeaveType() {
 		if (lFunctionCantLeaveTypeEClass == null) {
-			lFunctionCantLeaveTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(61);
+			lFunctionCantLeaveTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(64);
 		}
 		return lFunctionCantLeaveTypeEClass;
 	}
@@ -4640,7 +4823,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLocalisationType() {
 		if (localisationTypeEClass == null) {
-			localisationTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(62);
+			localisationTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(65);
 		}
 		return localisationTypeEClass;
 	}
@@ -4661,7 +4844,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLonglinesType() {
 		if (longlinesTypeEClass == null) {
-			longlinesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(63);
+			longlinesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(66);
 		}
 		return longlinesTypeEClass;
 	}
@@ -4709,7 +4892,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getLowType() {
 		if (lowTypeEClass == null) {
-			lowTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(64);
+			lowTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(67);
 		}
 		return lowTypeEClass;
 	}
@@ -4730,7 +4913,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMagicnumbersType() {
 		if (magicnumbersTypeEClass == null) {
-			magicnumbersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(65);
+			magicnumbersTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(68);
 		}
 		return magicnumbersTypeEClass;
 	}
@@ -4769,7 +4952,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMclassdestructorType() {
 		if (mclassdestructorTypeEClass == null) {
-			mclassdestructorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(66);
+			mclassdestructorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(69);
 		}
 		return mclassdestructorTypeEClass;
 	}
@@ -4808,7 +4991,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMediumType() {
 		if (mediumTypeEClass == null) {
-			mediumTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(67);
+			mediumTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(70);
 		}
 		return mediumTypeEClass;
 	}
@@ -4829,7 +5012,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMemberlcType() {
 		if (memberlcTypeEClass == null) {
-			memberlcTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(68);
+			memberlcTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(71);
 		}
 		return memberlcTypeEClass;
 	}
@@ -4868,7 +5051,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMembervariablecallldType() {
 		if (membervariablecallldTypeEClass == null) {
-			membervariablecallldTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(69);
+			membervariablecallldTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(72);
 		}
 		return membervariablecallldTypeEClass;
 	}
@@ -4907,7 +5090,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMissingcancelType() {
 		if (missingcancelTypeEClass == null) {
-			missingcancelTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(70);
+			missingcancelTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(73);
 		}
 		return missingcancelTypeEClass;
 	}
@@ -4946,7 +5129,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMissingcclassType() {
 		if (missingcclassTypeEClass == null) {
-			missingcclassTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(71);
+			missingcclassTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(74);
 		}
 		return missingcclassTypeEClass;
 	}
@@ -4994,7 +5177,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMmpsourcepathType() {
 		if (mmpsourcepathTypeEClass == null) {
-			mmpsourcepathTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(72);
+			mmpsourcepathTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(75);
 		}
 		return mmpsourcepathTypeEClass;
 	}
@@ -5033,7 +5216,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMultilangrscType() {
 		if (multilangrscTypeEClass == null) {
-			multilangrscTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(73);
+			multilangrscTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(76);
 		}
 		return multilangrscTypeEClass;
 	}
@@ -5072,7 +5255,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMultipledeclarationsType() {
 		if (multipledeclarationsTypeEClass == null) {
-			multipledeclarationsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(74);
+			multipledeclarationsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(77);
 		}
 		return multipledeclarationsTypeEClass;
 	}
@@ -5111,7 +5294,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMultipleinheritanceType() {
 		if (multipleinheritanceTypeEClass == null) {
-			multipleinheritanceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(75);
+			multipleinheritanceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(78);
 		}
 		return multipleinheritanceTypeEClass;
 	}
@@ -5150,7 +5333,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getMydocsType() {
 		if (mydocsTypeEClass == null) {
-			mydocsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(76);
+			mydocsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(79);
 		}
 		return mydocsTypeEClass;
 	}
@@ -5189,7 +5372,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNamespaceType() {
 		if (namespaceTypeEClass == null) {
-			namespaceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(77);
+			namespaceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(80);
 		}
 		return namespaceTypeEClass;
 	}
@@ -5228,7 +5411,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNewlreferencesType() {
 		if (newlreferencesTypeEClass == null) {
-			newlreferencesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(78);
+			newlreferencesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(81);
 		}
 		return newlreferencesTypeEClass;
 	}
@@ -5267,7 +5450,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNoleavetrapType() {
 		if (noleavetrapTypeEClass == null) {
-			noleavetrapTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(79);
+			noleavetrapTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(82);
 		}
 		return noleavetrapTypeEClass;
 	}
@@ -5306,7 +5489,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNonconsthbufcType() {
 		if (nonconsthbufcTypeEClass == null) {
-			nonconsthbufcTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(80);
+			nonconsthbufcTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(83);
 		}
 		return nonconsthbufcTypeEClass;
 	}
@@ -5345,7 +5528,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNonconsttdescType() {
 		if (nonconsttdescTypeEClass == null) {
-			nonconsttdescTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(81);
+			nonconsttdescTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(84);
 		}
 		return nonconsttdescTypeEClass;
 	}
@@ -5384,7 +5567,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNonleavenewType() {
 		if (nonleavenewTypeEClass == null) {
-			nonleavenewTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(82);
+			nonleavenewTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(85);
 		}
 		return nonleavenewTypeEClass;
 	}
@@ -5423,7 +5606,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNonunicodeskinsType() {
 		if (nonunicodeskinsTypeEClass == null) {
-			nonunicodeskinsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(83);
+			nonunicodeskinsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(86);
 		}
 		return nonunicodeskinsTypeEClass;
 	}
@@ -5462,7 +5645,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getNullType() {
 		if (nullTypeEClass == null) {
-			nullTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(84);
+			nullTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(87);
 		}
 		return nullTypeEClass;
 	}
@@ -5501,7 +5684,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getOpenType() {
 		if (openTypeEClass == null) {
-			openTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(85);
+			openTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(88);
 		}
 		return openTypeEClass;
 	}
@@ -5549,7 +5732,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getOtherType() {
 		if (otherTypeEClass == null) {
-			otherTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(86);
+			otherTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(89);
 		}
 		return otherTypeEClass;
 	}
@@ -5570,7 +5753,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPanicType() {
 		if (panicTypeEClass == null) {
-			panicTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(87);
+			panicTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(90);
 		}
 		return panicTypeEClass;
 	}
@@ -5591,7 +5774,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPerformanceType() {
 		if (performanceTypeEClass == null) {
-			performanceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(88);
+			performanceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(91);
 		}
 		return performanceTypeEClass;
 	}
@@ -5612,7 +5795,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPointertoarraysType() {
 		if (pointertoarraysTypeEClass == null) {
-			pointertoarraysTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(89);
+			pointertoarraysTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(92);
 		}
 		return pointertoarraysTypeEClass;
 	}
@@ -5651,7 +5834,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPragmadisableType() {
 		if (pragmadisableTypeEClass == null) {
-			pragmadisableTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(90);
+			pragmadisableTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(93);
 		}
 		return pragmadisableTypeEClass;
 	}
@@ -5690,7 +5873,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPragmamessageType() {
 		if (pragmamessageTypeEClass == null) {
-			pragmamessageTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(91);
+			pragmamessageTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(94);
 		}
 		return pragmamessageTypeEClass;
 	}
@@ -5729,7 +5912,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPragmaotherType() {
 		if (pragmaotherTypeEClass == null) {
-			pragmaotherTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(92);
+			pragmaotherTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(95);
 		}
 		return pragmaotherTypeEClass;
 	}
@@ -5768,7 +5951,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPrivateinheritanceType() {
 		if (privateinheritanceTypeEClass == null) {
-			privateinheritanceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(93);
+			privateinheritanceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(96);
 		}
 		return privateinheritanceTypeEClass;
 	}
@@ -5807,7 +5990,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPushaddrvarType() {
 		if (pushaddrvarTypeEClass == null) {
-			pushaddrvarTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(94);
+			pushaddrvarTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(97);
 		}
 		return pushaddrvarTypeEClass;
 	}
@@ -5846,7 +6029,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getPushmemberType() {
 		if (pushmemberTypeEClass == null) {
-			pushmemberTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(95);
+			pushmemberTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(98);
 		}
 		return pushmemberTypeEClass;
 	}
@@ -5885,7 +6068,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getReadresourceType() {
 		if (readresourceTypeEClass == null) {
-			readresourceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(96);
+			readresourceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(99);
 		}
 		return readresourceTypeEClass;
 	}
@@ -5924,7 +6107,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getResourcenotoncleanupstackType() {
 		if (resourcenotoncleanupstackTypeEClass == null) {
-			resourcenotoncleanupstackTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(97);
+			resourcenotoncleanupstackTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(100);
 		}
 		return resourcenotoncleanupstackTypeEClass;
 	}
@@ -5963,7 +6146,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getResourcesonheapType() {
 		if (resourcesonheapTypeEClass == null) {
-			resourcesonheapTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(98);
+			resourcesonheapTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(101);
 		}
 		return resourcesonheapTypeEClass;
 	}
@@ -6002,7 +6185,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getReturndescriptoroutofscopeType() {
 		if (returndescriptoroutofscopeTypeEClass == null) {
-			returndescriptoroutofscopeTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(99);
+			returndescriptoroutofscopeTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(102);
 		}
 		return returndescriptoroutofscopeTypeEClass;
 	}
@@ -6041,7 +6224,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getRfsType() {
 		if (rfsTypeEClass == null) {
-			rfsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(100);
+			rfsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(103);
 		}
 		return rfsTypeEClass;
 	}
@@ -6080,7 +6263,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getRssnamesType() {
 		if (rssnamesTypeEClass == null) {
-			rssnamesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(101);
+			rssnamesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(104);
 		}
 		return rssnamesTypeEClass;
 	}
@@ -6119,7 +6302,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getScriptsType() {
 		if (scriptsTypeEClass == null) {
-			scriptsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(102);
+			scriptsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(105);
 		}
 		return scriptsTypeEClass;
 	}
@@ -6300,7 +6483,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Ctltargettype() {
+	public EReference getScriptsType_Crepository() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(19);
 	}
 
@@ -6309,7 +6492,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Debugrom() {
+	public EReference getScriptsType_Ctltargettype() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(20);
 	}
 
@@ -6318,7 +6501,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Declarename() {
+	public EReference getScriptsType_Customizableicons() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(21);
 	}
 
@@ -6327,7 +6510,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_DeleteMemberVariable() {
+	public EReference getScriptsType_Debugrom() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(22);
 	}
 
@@ -6336,7 +6519,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Destructor() {
+	public EReference getScriptsType_Declarename() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(23);
 	}
 
@@ -6345,7 +6528,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_DoubleSemiColon() {
+	public EReference getScriptsType_DeleteMemberVariable() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(24);
 	}
 
@@ -6354,7 +6537,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Driveletters() {
+	public EReference getScriptsType_Destructor() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(25);
 	}
 
@@ -6363,7 +6546,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Eikbuttons() {
+	public EReference getScriptsType_DoubleSemiColon() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(26);
 	}
 
@@ -6372,7 +6555,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Eikonenvstatic() {
+	public EReference getScriptsType_Driveletters() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(27);
 	}
 
@@ -6381,7 +6564,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Enummembers() {
+	public EReference getScriptsType_Eikbuttons() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(28);
 	}
 
@@ -6390,7 +6573,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Enumnames() {
+	public EReference getScriptsType_Eikonenvstatic() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(29);
 	}
 
@@ -6399,7 +6582,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Exportinline() {
+	public EReference getScriptsType_Enummembers() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(30);
 	}
 
@@ -6408,7 +6591,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Exportpurevirtual() {
+	public EReference getScriptsType_Enumnames() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(31);
 	}
 
@@ -6417,7 +6600,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Externaldriveletters() {
+	public EReference getScriptsType_Exportinline() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(32);
 	}
 
@@ -6426,7 +6609,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Foff() {
+	public EReference getScriptsType_Exportpurevirtual() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(33);
 	}
 
@@ -6435,7 +6618,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Forbiddenwords() {
+	public EReference getScriptsType_Externaldriveletters() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(34);
 	}
 
@@ -6444,7 +6627,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Forgottoputptroncleanupstack() {
+	public EReference getScriptsType_Flags() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(35);
 	}
 
@@ -6453,7 +6636,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Friend() {
+	public EReference getScriptsType_Foff() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(36);
 	}
 
@@ -6462,7 +6645,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Goto() {
+	public EReference getScriptsType_Forbiddenwords() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(37);
 	}
 
@@ -6471,7 +6654,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Ifassignments() {
+	public EReference getScriptsType_Forgottoputptroncleanupstack() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(38);
 	}
 
@@ -6480,7 +6663,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Ifpreprocessor() {
+	public EReference getScriptsType_Friend() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(39);
 	}
 
@@ -6489,7 +6672,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Inheritanceorder() {
+	public EReference getScriptsType_Goto() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(40);
 	}
 
@@ -6498,7 +6681,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Intleaves() {
+	public EReference getScriptsType_Ifassignments() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(41);
 	}
 
@@ -6507,7 +6690,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Jmp() {
+	public EReference getScriptsType_Ifpreprocessor() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(42);
 	}
 
@@ -6516,7 +6699,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Leave() {
+	public EReference getScriptsType_Inheritanceorder() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(43);
 	}
 
@@ -6525,7 +6708,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_LeaveNoError() {
+	public EReference getScriptsType_Intleaves() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(44);
 	}
 
@@ -6534,7 +6717,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Leavingoperators() {
+	public EReference getScriptsType_Jmp() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(45);
 	}
 
@@ -6543,7 +6726,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_LFunctionCantLeave() {
+	public EReference getScriptsType_Leave() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(46);
 	}
 
@@ -6552,7 +6735,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Longlines() {
+	public EReference getScriptsType_LeaveNoError() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(47);
 	}
 
@@ -6561,7 +6744,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Magicnumbers() {
+	public EReference getScriptsType_Leavingoperators() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(48);
 	}
 
@@ -6570,7 +6753,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Mclassdestructor() {
+	public EReference getScriptsType_LFunctionCantLeave() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(49);
 	}
 
@@ -6579,7 +6762,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Memberlc() {
+	public EReference getScriptsType_Longlines() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(50);
 	}
 
@@ -6588,7 +6771,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Membervariablecallld() {
+	public EReference getScriptsType_Magicnumbers() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(51);
 	}
 
@@ -6597,7 +6780,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Missingcancel() {
+	public EReference getScriptsType_Mclassdestructor() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(52);
 	}
 
@@ -6606,7 +6789,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Missingcclass() {
+	public EReference getScriptsType_Memberlc() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(53);
 	}
 
@@ -6615,7 +6798,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Mmpsourcepath() {
+	public EReference getScriptsType_Membervariablecallld() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(54);
 	}
 
@@ -6624,7 +6807,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Multilangrsc() {
+	public EReference getScriptsType_Missingcancel() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(55);
 	}
 
@@ -6633,7 +6816,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Multipledeclarations() {
+	public EReference getScriptsType_Missingcclass() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(56);
 	}
 
@@ -6642,7 +6825,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Multipleinheritance() {
+	public EReference getScriptsType_Mmpsourcepath() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(57);
 	}
 
@@ -6651,7 +6834,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Mydocs() {
+	public EReference getScriptsType_Multilangrsc() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(58);
 	}
 
@@ -6660,7 +6843,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Namespace() {
+	public EReference getScriptsType_Multipledeclarations() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(59);
 	}
 
@@ -6669,7 +6852,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Newlreferences() {
+	public EReference getScriptsType_Multipleinheritance() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(60);
 	}
 
@@ -6678,7 +6861,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Noleavetrap() {
+	public EReference getScriptsType_Mydocs() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(61);
 	}
 
@@ -6687,7 +6870,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Nonconsthbufc() {
+	public EReference getScriptsType_Namespace() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(62);
 	}
 
@@ -6696,7 +6879,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Nonconsttdesc() {
+	public EReference getScriptsType_Newlreferences() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(63);
 	}
 
@@ -6705,7 +6888,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Nonleavenew() {
+	public EReference getScriptsType_Noleavetrap() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(64);
 	}
 
@@ -6714,7 +6897,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Nonunicodeskins() {
+	public EReference getScriptsType_Nonconsthbufc() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(65);
 	}
 
@@ -6723,7 +6906,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Null() {
+	public EReference getScriptsType_Nonconsttdesc() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(66);
 	}
 
@@ -6732,7 +6915,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Open() {
+	public EReference getScriptsType_Nonleavenew() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(67);
 	}
 
@@ -6741,7 +6924,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Pointertoarrays() {
+	public EReference getScriptsType_Nonunicodeskins() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(68);
 	}
 
@@ -6750,7 +6933,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Pragmadisable() {
+	public EReference getScriptsType_Null() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(69);
 	}
 
@@ -6759,7 +6942,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Pragmamessage() {
+	public EReference getScriptsType_Open() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(70);
 	}
 
@@ -6768,7 +6951,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Pragmaother() {
+	public EReference getScriptsType_Pointertoarrays() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(71);
 	}
 
@@ -6777,7 +6960,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Privateinheritance() {
+	public EReference getScriptsType_Pragmadisable() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(72);
 	}
 
@@ -6786,7 +6969,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Pushaddrvar() {
+	public EReference getScriptsType_Pragmamessage() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(73);
 	}
 
@@ -6795,7 +6978,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Pushmember() {
+	public EReference getScriptsType_Pragmaother() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(74);
 	}
 
@@ -6804,7 +6987,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Readresource() {
+	public EReference getScriptsType_Privateinheritance() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(75);
 	}
 
@@ -6813,7 +6996,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Resourcenotoncleanupstack() {
+	public EReference getScriptsType_Pushaddrvar() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(76);
 	}
 
@@ -6822,7 +7005,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Resourcesonheap() {
+	public EReference getScriptsType_Pushmember() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(77);
 	}
 
@@ -6831,7 +7014,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Returndescriptoroutofscope() {
+	public EReference getScriptsType_Readresource() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(78);
 	}
 
@@ -6840,7 +7023,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Rfs() {
+	public EReference getScriptsType_Resourcenotoncleanupstack() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(79);
 	}
 
@@ -6849,7 +7032,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Rssnames() {
+	public EReference getScriptsType_Resourcesonheap() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(80);
 	}
 
@@ -6858,7 +7041,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Stringliterals() {
+	public EReference getScriptsType_Returndescriptoroutofscope() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(81);
 	}
 
@@ -6867,7 +7050,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Stringsinresourcefiles() {
+	public EReference getScriptsType_Rfs() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(82);
 	}
 
@@ -6876,7 +7059,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Struct() {
+	public EReference getScriptsType_Rssnames() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(83);
 	}
 
@@ -6885,7 +7068,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Tcclasses() {
+	public EReference getScriptsType_Stringliterals() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(84);
 	}
 
@@ -6894,7 +7077,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Tclassdestructor() {
+	public EReference getScriptsType_Stringsinresourcefiles() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(85);
 	}
 
@@ -6903,7 +7086,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Todocomments() {
+	public EReference getScriptsType_Struct() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(86);
 	}
 
@@ -6912,7 +7095,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Trapcleanup() {
+	public EReference getScriptsType_Tcclasses() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(87);
 	}
 
@@ -6921,7 +7104,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Trapeleave() {
+	public EReference getScriptsType_Tclassdestructor() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(88);
 	}
 
@@ -6930,7 +7113,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Traprunl() {
+	public EReference getScriptsType_Todocomments() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(89);
 	}
 
@@ -6939,7 +7122,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Trspassing() {
+	public EReference getScriptsType_Trapcleanup() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(90);
 	}
 
@@ -6948,7 +7131,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Uids() {
+	public EReference getScriptsType_Trapeleave() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(91);
 	}
 
@@ -6957,7 +7140,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Uncompressedaif() {
+	public EReference getScriptsType_Traprunl() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(92);
 	}
 
@@ -6966,7 +7149,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Uncompressedbmp() {
+	public EReference getScriptsType_Trspassing() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(93);
 	}
 
@@ -6975,7 +7158,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Unicodesource() {
+	public EReference getScriptsType_Uids() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(94);
 	}
 
@@ -6984,7 +7167,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Userafter() {
+	public EReference getScriptsType_Uncompressedaif() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(95);
 	}
 
@@ -6993,7 +7176,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Userfree() {
+	public EReference getScriptsType_Uncompressedbmp() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(96);
 	}
 
@@ -7002,7 +7185,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_UserWaitForRequest() {
+	public EReference getScriptsType_Unicodesource() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(97);
 	}
 
@@ -7011,7 +7194,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Variablenames() {
+	public EReference getScriptsType_Userafter() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(98);
 	}
 
@@ -7020,7 +7203,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Voidparameter() {
+	public EReference getScriptsType_Userfree() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(99);
 	}
 
@@ -7029,8 +7212,35 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScriptsType_Worryingcomments() {
+	public EReference getScriptsType_UserWaitForRequest() {
         return (EReference)getScriptsType().getEStructuralFeatures().get(100);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScriptsType_Variablenames() {
+        return (EReference)getScriptsType().getEStructuralFeatures().get(101);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScriptsType_Voidparameter() {
+        return (EReference)getScriptsType().getEStructuralFeatures().get(102);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScriptsType_Worryingcomments() {
+        return (EReference)getScriptsType().getEStructuralFeatures().get(103);
 	}
 
 	/**
@@ -7040,7 +7250,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getSeveritiesType() {
 		if (severitiesTypeEClass == null) {
-			severitiesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(103);
+			severitiesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(106);
 		}
 		return severitiesTypeEClass;
 	}
@@ -7079,7 +7289,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getSourcesType() {
 		if (sourcesTypeEClass == null) {
-			sourcesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(106);
+			sourcesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(109);
 		}
 		return sourcesTypeEClass;
 	}
@@ -7100,7 +7310,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getStringliteralsType() {
 		if (stringliteralsTypeEClass == null) {
-			stringliteralsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(107);
+			stringliteralsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(110);
 		}
 		return stringliteralsTypeEClass;
 	}
@@ -7139,7 +7349,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getStringsinresourcefilesType() {
 		if (stringsinresourcefilesTypeEClass == null) {
-			stringsinresourcefilesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(108);
+			stringsinresourcefilesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(111);
 		}
 		return stringsinresourcefilesTypeEClass;
 	}
@@ -7178,7 +7388,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getStructType() {
 		if (structTypeEClass == null) {
-			structTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(109);
+			structTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(112);
 		}
 		return structTypeEClass;
 	}
@@ -7217,7 +7427,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTcclassesType() {
 		if (tcclassesTypeEClass == null) {
-			tcclassesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(110);
+			tcclassesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(113);
 		}
 		return tcclassesTypeEClass;
 	}
@@ -7256,7 +7466,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTclassdestructorType() {
 		if (tclassdestructorTypeEClass == null) {
-			tclassdestructorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(111);
+			tclassdestructorTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(114);
 		}
 		return tclassdestructorTypeEClass;
 	}
@@ -7295,7 +7505,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTodocommentsType() {
 		if (todocommentsTypeEClass == null) {
-			todocommentsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(112);
+			todocommentsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(115);
 		}
 		return todocommentsTypeEClass;
 	}
@@ -7334,7 +7544,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTrapcleanupType() {
 		if (trapcleanupTypeEClass == null) {
-			trapcleanupTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(113);
+			trapcleanupTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(116);
 		}
 		return trapcleanupTypeEClass;
 	}
@@ -7373,7 +7583,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTrapeleaveType() {
 		if (trapeleaveTypeEClass == null) {
-			trapeleaveTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(114);
+			trapeleaveTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(117);
 		}
 		return trapeleaveTypeEClass;
 	}
@@ -7412,7 +7622,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTraprunlType() {
 		if (traprunlTypeEClass == null) {
-			traprunlTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(115);
+			traprunlTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(118);
 		}
 		return traprunlTypeEClass;
 	}
@@ -7451,7 +7661,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getTrspassingType() {
 		if (trspassingTypeEClass == null) {
-			trspassingTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(116);
+			trspassingTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(119);
 		}
 		return trspassingTypeEClass;
 	}
@@ -7490,7 +7700,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUidsType() {
 		if (uidsTypeEClass == null) {
-			uidsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(117);
+			uidsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(120);
 		}
 		return uidsTypeEClass;
 	}
@@ -7529,7 +7739,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUncompressedaifType() {
 		if (uncompressedaifTypeEClass == null) {
-			uncompressedaifTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(118);
+			uncompressedaifTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(121);
 		}
 		return uncompressedaifTypeEClass;
 	}
@@ -7568,7 +7778,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUncompressedbmpType() {
 		if (uncompressedbmpTypeEClass == null) {
-			uncompressedbmpTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(119);
+			uncompressedbmpTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(122);
 		}
 		return uncompressedbmpTypeEClass;
 	}
@@ -7607,7 +7817,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUnicodesourceType() {
 		if (unicodesourceTypeEClass == null) {
-			unicodesourceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(120);
+			unicodesourceTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(123);
 		}
 		return unicodesourceTypeEClass;
 	}
@@ -7646,7 +7856,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUserafterType() {
 		if (userafterTypeEClass == null) {
-			userafterTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(121);
+			userafterTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(124);
 		}
 		return userafterTypeEClass;
 	}
@@ -7685,7 +7895,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUserfreeType() {
 		if (userfreeTypeEClass == null) {
-			userfreeTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(122);
+			userfreeTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(125);
 		}
 		return userfreeTypeEClass;
 	}
@@ -7724,7 +7934,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getUserWaitForRequestType() {
 		if (userWaitForRequestTypeEClass == null) {
-			userWaitForRequestTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(123);
+			userWaitForRequestTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(126);
 		}
 		return userWaitForRequestTypeEClass;
 	}
@@ -7763,7 +7973,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getVariablenamesType() {
 		if (variablenamesTypeEClass == null) {
-			variablenamesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(124);
+			variablenamesTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(127);
 		}
 		return variablenamesTypeEClass;
 	}
@@ -7802,7 +8012,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getVoidparameterType() {
 		if (voidparameterTypeEClass == null) {
-			voidparameterTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(125);
+			voidparameterTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(128);
 		}
 		return voidparameterTypeEClass;
 	}
@@ -7841,7 +8051,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EClass getWorryingcommentsType() {
 		if (worryingcommentsTypeEClass == null) {
-			worryingcommentsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(126);
+			worryingcommentsTypeEClass = (EClass)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(129);
 		}
 		return worryingcommentsTypeEClass;
 	}
@@ -7901,7 +8111,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EEnum getSeverityType() {
 		if (severityTypeEEnum == null) {
-			severityTypeEEnum = (EEnum)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(104);
+			severityTypeEEnum = (EEnum)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(107);
 		}
 		return severityTypeEEnum;
 	}
@@ -7925,7 +8135,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	 */
 	public EDataType getSeverityTypeObject() {
 		if (severityTypeObjectEDataType == null) {
-			severityTypeObjectEDataType = (EDataType)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(105);
+			severityTypeObjectEDataType = (EDataType)EPackage.Registry.INSTANCE.getEPackage(CSConfigPackage.eNS_URI).getEClassifiers().get(108);
 		}
 		return severityTypeObjectEDataType;
 	}
@@ -8001,7 +8211,7 @@ public class CSConfigPackageImpl extends EPackageImpl implements CSConfigPackage
 	@Override
 	protected void fixInstanceClass(EClassifier eClassifier) {
 		if (eClassifier.getInstanceClassName() == null) {
-			eClassifier.setInstanceClassName("com.nokia.carbide.cpp.codescanner.gen.CSConfig." + eClassifier.getName());
+			eClassifier.setInstanceClassName("com.nokia.carbide.cpp.internal.codescanner.gen.CSConfig." + eClassifier.getName());
 			setGeneratedClassName(eClassifier);
 		}
 	}

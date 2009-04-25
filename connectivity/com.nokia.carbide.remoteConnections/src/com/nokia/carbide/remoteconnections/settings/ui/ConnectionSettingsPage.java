@@ -23,6 +23,7 @@ import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
@@ -55,6 +56,23 @@ import java.util.*;
 import java.util.List;
 
 public class ConnectionSettingsPage extends WizardPage {
+	
+	public final class Tester extends Thread {
+		@Override
+		public void run() {
+			((AbstractConnectedService) connectedService).setManualTesting();
+			for (int i = 0; i < 3 && connectedService != null; i++) {
+				connectedService.testStatus();
+				try {
+					if (i < 2)
+						sleep(AbstractConnectedService.TIMEOUT);
+				} catch (InterruptedException e) {
+					break;
+				}
+			}
+			resetServiceTesting(false);
+		}
+	}
 
 	private final static TreeNode LOADING_CONTENT_TREENODE = 
 		new TreeNode(Messages.getString("ConnectionSettingsPage.GettingDataMessage")); //$NON-NLS-1$
@@ -78,8 +96,9 @@ public class ConnectionSettingsPage extends WizardPage {
 	private IConnectionFactory connectionFactory;
 	private IConnection connection;
 	private IService service;
-	private IConnectedService connectedService;
+	private volatile IConnectedService connectedService;
 	private IStatusChangedListener statusListener;
+	private Tester tester;
 	private SashForm installerSashForm;
 	private TreeViewer installerTreeViewer;
 	private Text installerInfoText;
@@ -201,7 +220,7 @@ public class ConnectionSettingsPage extends WizardPage {
 				IService curService = (IService) selection.getFirstElement();
 				if (!curService.equals(service)) {
 					service = curService;
-					resetServiceTesting();
+					resetServiceTesting(true);
 				}
 			}
 		});
@@ -230,7 +249,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				if (isTesting) {
 					serviceTestButton.setText(Messages.getString("ConnectionSettingsPage.StartServiceTestButtonLabel")); //$NON-NLS-1$
-					resetServiceTesting();
+					resetServiceTesting(true);
 				}
 				else {
 					serviceTestButton.setText(Messages.getString("ConnectionSettingsPage.StopServiceTestButtonLabel")); //$NON-NLS-1$
@@ -443,7 +462,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			}
 			servicesListViewer.getList().addFocusListener(new FocusAdapter() {
 				public void focusGained(FocusEvent e) {
-					resetServiceTesting();
+					resetServiceTesting(true);
 				}
 			});
 			
@@ -505,7 +524,7 @@ public class ConnectionSettingsPage extends WizardPage {
 				}
 				deviceOSComboViewer.getCombo().addFocusListener(new FocusAdapter() {
 					public void focusGained(FocusEvent e) {
-						resetServiceTesting();
+						resetServiceTesting(true);
 					}
 				});
 			}
@@ -568,13 +587,16 @@ public class ConnectionSettingsPage extends WizardPage {
 						public void run() {
 							if (!statusText.isDisposed())
 								statusText.setText(status.getLongDescription());
+							if (status.getEStatus().equals(EStatus.UP))
+								resetServiceTesting(false);
 						}
 					});
 				}
 			});
 			if (connectedService instanceof AbstractConnectedService)
 				((AbstractConnectedService) connectedService).setRunnableContext(getContainer());
-			connectedService.setEnabled(true);
+			tester = new Tester();
+			tester.start();
 			isTesting = true;
 		}
 	}
@@ -764,16 +786,25 @@ public class ConnectionSettingsPage extends WizardPage {
 		}
 	}
 	
-	private void resetServiceTesting() {
+	private void resetServiceTesting(final boolean resetAll) {
 		isTesting = false;
 		if (service == null)
 			return;
-		serviceTestInfo.setText(service.getAdditionalServiceInfo());
-		agentTestTabComposite.layout(true, true);
-		statusText.setText(STATUS_NOT_TESTED);
-		disposeConnectedService();
-		String buttonLabel = Messages.getString("ConnectionSettingsPage.StartServiceTestButtonLabel"); //$NON-NLS-1$
-		serviceTestButton.setText(buttonLabel);
+		// may be called from a test thread
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				if (resetAll) {
+					statusText.setText(STATUS_NOT_TESTED);
+					serviceTestInfo.setText(service.getAdditionalServiceInfo());
+					agentTestTabComposite.layout(true, true);
+				}
+				disposeConnectedService();
+				if (!serviceTestButton.isDisposed()) {
+					String buttonLabel = Messages.getString("ConnectionSettingsPage.StartServiceTestButtonLabel"); //$NON-NLS-1$
+					serviceTestButton.setText(buttonLabel);
+				}
+			}
+		});
 	}
 
 }

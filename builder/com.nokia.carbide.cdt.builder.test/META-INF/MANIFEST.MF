@@ -6,16 +6,21 @@ Bundle-Version: 1.0.0
 Bundle-Activator: com.nokia.carbide.cdt.builder.test.TestPlugin
 Bundle-Vendor: NOKIA
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: abbot,
+ abbot.swt,
+ abbot.swt.eclipse,
+ org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,
  com.nokia.carbide.cpp.sdk.core,
  org.eclipse.emf.common,
  com.nokia.carbide.cpp.project.core,
  org.eclipse.core.resources,
+ com.nokia.carbide.automation.utils,
  com.nokia.carbide.cdt.builder,
  com.nokia.carbide.cpp.epoc.engine,
  com.nokia.cpp.utils.core,
- org.eclipse.cdt.core
+ org.eclipse.cdt.core,
+ org.jdom
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cdt.builder.test
