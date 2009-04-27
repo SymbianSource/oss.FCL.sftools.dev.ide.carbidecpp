@@ -31,7 +31,7 @@
 
 	<topic label="Carbide Menus " 					href="html/reference/menus/menus.htm" >
 
-		<topic label="On-Device Connection..."		href="html/reference/trk/view_remote_connection.htm" />
+     <topic href="html/reference/trk/wnd_on_device_setup.htm" label="On-Device Connection..."/>
 		<topic label="Open Command Window"			href="html/reference/menus/open_cmd_window.htm" />
 		<topic label="Run CodeScanner"				href="html/reference/menus/run_codescanner.htm" />
 		<topic label="Run Leavescan"				href="html/reference/menus/run_leavescan.htm" />
@@ -446,6 +446,7 @@
 			<topic label="System Search preferences"    href="html/reference/search/wnd_system_search_prefs.htm" />
  	</topic>
 		
-	<topic href="html/hints_tips.htm" label="Tips &amp; Hints">
- </topic>
+	<topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
+	<topic href="html/tasks/carbide_tools.htm" label="Creating Carbide Tools" />
+
 </toc>

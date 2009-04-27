@@ -77,6 +77,9 @@ class ExtensionListConverter implements StructuredItemStatementListConverter<IAS
 			return null;
 		}
 		extension.setTemplatePath(FileUtils.createPossiblyRelativePath(extensionStmt.getArguments().get(1).getValue()));
+		if (extensionStmt.getArguments().size() > 2) {
+			extension.setName(extensionStmt.getArguments().get(2).getValue());
+		}
 		for (IASTBldInfExtensionStatement stmt : extensionStmt.getList()) {
 			if (stmt.getArguments() == null || stmt.getArguments().size() == 0) {
 				bldInfView.addErrorMessage(Messages.getString("ExtensionListConverter.MissingArgumentsError"),  stmt); //$NON-NLS-1$
@@ -137,6 +140,9 @@ class ExtensionListConverter implements StructuredItemStatementListConverter<IAS
 		IASTListNode<IASTLiteralTextNode> arguments = ASTFactory.createListNode(" "); //$NON-NLS-1$
 		arguments.add(ASTFactory.createPreprocessorLiteralTextNode(EXTENSION_KEYWORD));
 		arguments.add(ASTFactory.createPreprocessorLiteralTextNode(bldInfView.pathString(extension.getTemplatePath())));
+		if (extension.getName() != null) {
+			arguments.add(ASTFactory.createPreprocessorLiteralTextNode(extension.getName()));
+		}
 		
 		IASTListNode<IASTBldInfExtensionStatement> stmts = ASTBldInfFactory.createBldInfExtensionStatementList();
 		if (extension.getTargetPath() != null) {

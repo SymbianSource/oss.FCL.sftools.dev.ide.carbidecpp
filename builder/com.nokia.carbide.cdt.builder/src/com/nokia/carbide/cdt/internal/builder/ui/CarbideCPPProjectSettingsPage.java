@@ -16,20 +16,24 @@
 */
 package com.nokia.carbide.cdt.internal.builder.ui;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.EpocEngineHelper;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI;
-import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI.FileInfo;
-import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
-import com.nokia.carbide.cdt.internal.builder.CarbideProjectModifier;
-import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableColorProvider;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,13 +41,25 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.dialogs.PropertyPage;
 
-import java.util.*;
-import java.util.List;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI;
+import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI.FileInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideProjectModifier;
+import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class CarbideCPPProjectSettingsPage extends PropertyPage {
 	
@@ -57,9 +73,6 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 	private Group optionsGroup;
 	private BuildSettingsUI buildSettingsUI;
 	
-	List<IPath> normalExtensionPaths = new ArrayList<IPath>();
-	List<IPath> testExtensionPaths = new ArrayList<IPath>();
-
 	
 	protected Control createContents(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
@@ -107,7 +120,6 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 			}
 		});
 		
-		
 		// spacer
 		new Label(composite, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 
@@ -137,7 +149,6 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 		optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		boolean sbsv2Project = false;
-		
 		IProject project = getProject();
 		if (project != null) {
 			sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project);
@@ -344,10 +355,7 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
     		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>();
 			buildConfigList.addAll(cpi.getBuildConfigurations());
 
-			EpocEngineHelper.getExtensions(cpi.getAbsoluteBldInfPath(), buildConfigList, normalExtensionPaths, testExtensionPaths, new NullProgressMonitor());
-    		
     		enableOrDisableControls();
-    		checkValid();
         }
 	}
 	
@@ -383,6 +391,8 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 		if (!CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)) {
 			buildSettingsUI.setMMPChangedActionEnabledState(useProjectSettings && !isQtProject);
 		}
+
+		checkValid();
 	}
 	
 	private void initMMPSelectionUI(CarbideProjectInfo cpi) {
@@ -395,7 +405,7 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 		selectionUI.setLayoutData(gridData);
 		
 		// set the data
-		selectionUI.setBldInfFile(cpi.getAbsoluteBldInfPath(), cpi.getBuildConfigurations());
+		selectionUI.setBldInfFile(cpi.getAbsoluteBldInfPath(), cpi.getBuildConfigurations(), CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()));
 		
 		// set checked state
 		selectionUI.setAllChecked(false);
@@ -512,12 +522,11 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 		
 		// if there are any new-style prj extensions, warn them that they won't be built
 		// when not building the entire bld.inf.
-    	if (normalExtensionPaths.size() > 0 || testExtensionPaths.size() > 0) {
-            if (selectedComponentsButton.getSelection()) {
-        		if (!selectionUI.isCheckedAll()) {
-        			setMessage(Messages.getString("CarbideCPPProjectSettingsPage.prjExtensionsWarning"), WARNING); //$NON-NLS-1$
-        		}
-            }
+        if (selectedComponentsButton.getSelection()) {
+    		String warning = selectionUI.getExtensionsWarningMessage();
+    		if (warning != null) {
+    			setMessage(warning, WARNING);
+    		}
     	}
 	}
 

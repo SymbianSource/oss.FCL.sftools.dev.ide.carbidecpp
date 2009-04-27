@@ -122,7 +122,7 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
         		newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
         		monitor.worked(1);
 
-    			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(bldInfSelectionPage.useSBSv2Builder()));
+    			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder()));
 
     			// TODO pass PKG file path to postProjectCreatedActions, currently passing null
         		ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
@@ -187,5 +187,9 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
     public void setWizardIncomplete() {
     	// setting the last page is good enough
     	projectPropertiesPage.setPageComplete(false);
+    }
+    
+    public boolean useSBSv2Builder() {
+    	return bldInfSelectionPage.useSBSv2Builder();
     }
 }

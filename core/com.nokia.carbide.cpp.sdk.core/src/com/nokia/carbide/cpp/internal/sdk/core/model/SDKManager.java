@@ -164,9 +164,6 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 					}
 				}
 
-				// make sure we don't rescan over and over again
-				hasScannedSDKs = true;
-
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (URISyntaxException e) {
@@ -176,6 +173,9 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 			}
 		}
 
+		// make sure we don't rescan over and over again
+		hasScannedSDKs = true;
+		
 		// tell others about it
 		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		scanCarbideSDKCache();

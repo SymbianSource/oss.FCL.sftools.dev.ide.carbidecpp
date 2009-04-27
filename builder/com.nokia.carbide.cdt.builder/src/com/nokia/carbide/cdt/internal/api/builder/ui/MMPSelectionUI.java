@@ -18,6 +18,7 @@ package com.nokia.carbide.cdt.internal.api.builder.ui;
 
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
@@ -169,12 +170,13 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 	private List<? extends ISymbianBuildContext> buildConfigs;
 	private IPath bldInfFile;
 	private final IRunnableContext runnableContext;
-    private List<FileInfo> data = Collections.EMPTY_LIST;
-    private boolean hasProjectExtensions;
+    private List<FileInfo> data = Collections.emptyList();
+    private boolean hasUnnamedProjectExtensions;
 	private ViewerFilter testFileFilter;
 	private ViewerFilter extMakFileFilter;
 	private int lastSortColumn = BUILD_ORDER_COLUMN; // default
 	private int sortDirection = 1; // default
+	private boolean useSBSv2Builder;
 
 	/**
 	 * Create the composite
@@ -367,12 +369,14 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 	 * @param bldInfFile IPath
 	 * @param buildConfigs List<ISymbianBuildContext>
 	 */
-	public void setBldInfFile(final IPath bldInfFile, final List buildConfigs) {
+	public void setBldInfFile(final IPath bldInfFile, final List buildConfigs, final boolean useSBSv2Builder) {
 		if (bldInfFile.equals(this.bldInfFile) && buildConfigs.equals(this.buildConfigs))
 			return;
 		
 		this.bldInfFile = bldInfFile;
 		this.buildConfigs = buildConfigs;
+		this.useSBSv2Builder = useSBSv2Builder;
+
 		try {
 			runnableContext.run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor) {
@@ -388,11 +392,23 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 			    	for (IPath currPath : testMakMakeList) {
 						data.add(new FileInfo(currPath, ++i, true));
 			    	}
-					List<IPath> normalExtensionsList = new ArrayList<IPath>();
-					List<IPath> testExtensionsList = new ArrayList<IPath>();
-					EpocEngineHelper.getExtensions(bldInfFile, buildConfigs, 
-							normalExtensionsList, testExtensionsList, monitor);
-					hasProjectExtensions = normalExtensionsList.size() > 0 || testExtensionsList.size() > 0;
+
+			    	// named extensions are only supported in SBSv2
+			    	if (useSBSv2Builder) {
+				    	List<IExtension> normalNamedExtensionsList = new ArrayList<IExtension>();
+						List<IExtension> testNamedExtensionsList = new ArrayList<IExtension>();
+						EpocEngineHelper.getNamedExtensions(bldInfFile, buildConfigs,
+								normalNamedExtensionsList, testNamedExtensionsList, monitor);
+						
+				    	for (IExtension extension : normalNamedExtensionsList) {
+							data.add(new FileInfo(new Path(extension.getName()), ++i, false));
+				    	}
+				    	for (IExtension extension : testNamedExtensionsList) {
+							data.add(new FileInfo(new Path(extension.getName()), ++i, true));
+				    	}
+			    	}
+					
+			    	hasUnnamedProjectExtensions = EpocEngineHelper.hasUnnamedExtensions(bldInfFile, buildConfigs, monitor);
 				}
 			});
 		} catch (InvocationTargetException e) {
@@ -468,14 +484,6 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 		updateCheckedStateFromViewer();
 	}
 
-	/**
-	 * Return true if the current bld.inf file has project extensions
-	 * @return boolean
-	 */
-	public boolean hasProjectExtensions() {
-		return hasProjectExtensions;
-	}
-	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
@@ -565,5 +573,16 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 		}
 		
 		return true;
+	}
+	
+	public String getExtensionsWarningMessage() {
+		if (hasUnnamedProjectExtensions && !isCheckedAll()) {
+			if (useSBSv2Builder) {
+				return Messages.getString("MMPSelectionUI.prjExtensionsWarningSBSv2"); //$NON-NLS-1$
+			} else {
+				return Messages.getString("MMPSelectionUI.prjExtensionsWarningSBSv1"); //$NON-NLS-1$
+			}
+		}
+		return null;
 	}
 }

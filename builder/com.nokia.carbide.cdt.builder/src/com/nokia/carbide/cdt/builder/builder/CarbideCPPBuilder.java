@@ -66,6 +66,7 @@ import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
@@ -695,8 +696,23 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		// get the list of mmp/make files for this build configuration
 		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfigList, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
-		
-		// if we're not supposed to build test components then clear the list
+
+		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject())) {
+			// add any named extensions
+	    	List<IExtension> normalNamedExtensionsList = new ArrayList<IExtension>();
+			List<IExtension> testNamedExtensionsList = new ArrayList<IExtension>();
+			EpocEngineHelper.getNamedExtensions(cpi.getAbsoluteBldInfPath(), buildConfigList,
+					normalNamedExtensionsList, testNamedExtensionsList, new NullProgressMonitor());
+			
+	    	for (IExtension extension : normalNamedExtensionsList) {
+	    		normalMakMakePaths.add(new Path(extension.getName()));
+	    	}
+	    	for (IExtension extension : testNamedExtensionsList) {
+	    		testMakMakePaths.add(new Path(extension.getName()));
+	    	}
+		}
+
+    	// if we're not supposed to build test components then clear the list
 		if (cpi.isBuildingFromInf() && !cpi.isBuildingTestComps()) {
 			testMakMakePaths.clear();
 		}
@@ -722,16 +738,13 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 				}
 			}
 			
-			if (buildingSubset) {
-				List<IPath> normalExtensionPaths = new ArrayList<IPath>();
-				List<IPath> testExtensionPaths = new ArrayList<IPath>();
-				EpocEngineHelper.getExtensions(cpi.getAbsoluteBldInfPath(), buildConfigList, normalExtensionPaths, testExtensionPaths, new NullProgressMonitor());
-				
-				if (normalExtensionPaths.size() > 0 || testExtensionPaths.size() > 0) {
-					String warningText = "WARNING: PRJ_EXTENSIONS and PRJ_TESTEXTENSIONS will be excluded because you've selected a subset of the bld.inf.";
-					launcher.writeToConsole(warningText + "\n");
-		   			CarbideBuilderPlugin.createCarbideProjectMarker(cpi.getProject(), IMarker.SEVERITY_WARNING, warningText, IMarker.PRIORITY_LOW);
+			if (buildingSubset && EpocEngineHelper.hasUnnamedExtensions(cpi.getAbsoluteBldInfPath(), buildConfigList, new NullProgressMonitor())) {
+				String warningText = "WARNING: PRJ_EXTENSIONS and PRJ_TESTEXTENSIONS will be excluded from the build because you've selected to build a subset of the bld.inf, and there is no way to specify unnamed components.";
+				if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject())) {
+					warningText = warningText + "  If you name the extensions then you can select them to be built from the UI.";
 				}
+				launcher.writeToConsole(warningText + "\n");
+	   			CarbideBuilderPlugin.createCarbideProjectMarker(cpi.getProject(), IMarker.SEVERITY_WARNING, warningText, IMarker.PRIORITY_LOW);
 			}
 		}
 	}

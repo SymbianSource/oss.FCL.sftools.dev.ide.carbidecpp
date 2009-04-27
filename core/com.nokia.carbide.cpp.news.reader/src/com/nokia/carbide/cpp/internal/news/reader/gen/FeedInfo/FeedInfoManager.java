@@ -106,27 +106,40 @@ public class FeedInfoManager {
 	/**
 	 * Retrieve the feed info file from remote server, make a local copy of this file
 	 * and returns the URL to the local copy.
+	 * @param useLocal - use local copy of feed listing file? 
 	 * @return URL of local copy of feed info file
 	 * @throws Exception
 	 */
-	public URL getFeedInfoFileURL() throws Exception {
+	public URL getFeedInfoFileURL(boolean useLocalCopy) throws Exception {
+		if (feedInfoFile == null) {
+			feedInfoFile = createFeedInfoFile();
+		}
+
+		if (useLocalCopy) {
+			// try to use local copy of the fee info file if it exists.
+			if (feedInfoFile != null && feedInfoFile.exists()) {
+				return feedInfoFile.toURL();
+			}
+			else {
+				return null;
+			}
+		}
+
+		// retrieve the feed info file from remote server and make a local copy of this file
 		String pathStr = CarbideNewsReaderPlugin.getFeedManager().getProperty(FEED_INFO_FILE_KEY);
 		if (pathStr != null) {
 			URL fileUrl = new URL(pathStr);
 			if (fileUrl != null) {
-				HttpURLConnection httpConnection = null;
+				HttpURLConnection connection = null;
 				InputStream inputStream = null;
 				try {
-					URLConnection connection = fileUrl.openConnection();
-					httpConnection = (HttpURLConnection)connection;
-					httpConnection.connect();
-					int responseCode = httpConnection.getResponseCode();
+					connection = (HttpURLConnection) fileUrl.openConnection();
+					setRequestHeaders(connection);
+					connection.connect();
+					int responseCode = connection.getResponseCode();
 					handlesHttpErrorCode(responseCode);
 					inputStream = connection.getInputStream();
 					if (inputStream != null) {
-						if (feedInfoFile == null) {
-							feedInfoFile = createFeedInfoFile();
-						}
 						if (feedInfoFile != null) {
 							if (feedInfoFile.exists()) {
 								feedInfoFile.delete();
@@ -138,8 +151,8 @@ public class FeedInfoManager {
 				} catch (Exception e) {
 					CarbideNewsReaderPlugin.log(e);
 				} finally {
-					if (httpConnection != null) {
-					    httpConnection.disconnect();
+					if (connection != null) {
+					    connection.disconnect();
 					}
 					if (inputStream != null) {
 						inputStream.close();
@@ -147,6 +160,7 @@ public class FeedInfoManager {
 				}
 			}
 		}
+
 		return null;
 	}
 
@@ -205,8 +219,17 @@ public class FeedInfoManager {
 		} else if (responseCode >= 400 && responseCode < 500) {
 			throw new Exception("The requested resource could not be found. HTTP Response code was:" + responseCode);
 		} else if (responseCode >= 500 && responseCode < 600) {
-			throw new Exception("The server encounted an error. HTTP Response code was:" + responseCode);
+			throw new Exception("The server encountered an error. HTTP Response code was:" + responseCode);
 		}
+	}
+
+	/**
+	 * Sets appropriate HTTP headers.
+	 * @param connection - URL connection
+	 */
+	private void setRequestHeaders(URLConnection connection) {
+		// specify acceptable content types
+		connection.setRequestProperty("Accept", "*/xml");
 	}
 
 }

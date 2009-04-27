@@ -44,7 +44,6 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.fetcher.FeedFetcher;
 import com.sun.syndication.fetcher.impl.FeedFetcherCache;
 import com.sun.syndication.fetcher.impl.HashMapFeedInfoCache;
-import com.sun.syndication.fetcher.impl.HttpURLFeedFetcher;
 
 /**
  * A class to manage feeds for the Carbide.c++ news reader.
@@ -96,7 +95,7 @@ public class FeedManager {
 	@SuppressWarnings("static-access")
 	public void loadFeeds() {
 		try {
-			if (!loadFeedListing()) {
+			if (!loadFeedListing(false)) {
 				return;
 			}
 
@@ -191,11 +190,11 @@ public class FeedManager {
 	}
 
 	/**
-	 * Remove an entry from a feed.
-	 * @param feed - feed object in question
-	 * @param entryTitle - title of the entry to be removed
+	 * Search for a feed entry by name and then mark it as read.
+	 * @param entries - feed entries to be checked
+	 * @param entryTitle - title of the entry to be marked as read
 	 */
-	public void removeNewsFeedEntry(List<CarbideSyndEntry> entries, String entryTitle) {
+	public void markEntryAsRead(List<CarbideSyndEntry> entries, String entryTitle) {
 		if (entries == null || entryTitle == null) {
 			return;
 		}
@@ -204,7 +203,7 @@ public class FeedManager {
 			CarbideSyndEntry entry = iterator.next();
 			String title = entry.getTitle();
 			title = title.replaceAll("\n", "");
-			if (title.equals(entryTitle)) {
+			if (title.equals(entryTitle) && !entry.isRead()) {
 				entry.setRead(true);
 				break;
 			}
@@ -252,7 +251,7 @@ public class FeedManager {
 	@SuppressWarnings("static-access")
 	public void updateFeeds() {
 		try {
-			if (!loadFeedListing()) {
+			if (!loadFeedListing(false)) {
 				return;
 			}
 
@@ -333,7 +332,7 @@ public class FeedManager {
 		}
 
 		FeedFetcherCache feedInfoCache = HashMapFeedInfoCache.getInstance();
-		FeedFetcher fetcher = new HttpURLFeedFetcher(feedInfoCache);
+		FeedFetcher fetcher = new CarbideFeedFetcher(feedInfoCache);
 		SyndFeed sFeed = fetcher.retrieveFeed(feedUrl);
 		CarbideSyndFeed feed = new CarbideSyndFeed(sFeed);
 		if (feed != null) {
@@ -384,11 +383,12 @@ public class FeedManager {
 	}
 
 	/**
-	 * Load feed information from feed listing file. 
+	 * Load feed information from feed listing file.
+	 * @param useLocal - use local copy of feed listing file? 
 	 * @return true on success; false otherwise
 	 */
-	private boolean loadFeedListing() throws Exception {
-		URL url = feedListingManager.getFeedInfoFileURL();
+	private boolean loadFeedListing(boolean useLocalCopy) throws Exception {
+		URL url = feedListingManager.getFeedInfoFileURL(useLocalCopy);
 		if (url != null) {
 			return feedListingManager.loadFeedInfo(url);
 		}
@@ -458,9 +458,9 @@ public class FeedManager {
 	 * Reload feeds from cache if necessary.
 	 */
 	private void validateFeeds() {
-		if (newsFeeds == null || newsFeeds.size() == 0 || resourceFeed == null) {
+		if ((newsFeeds == null || newsFeeds.size() == 0) && resourceFeed == null) {
 			try {
-				if (!loadFeedListing()) {
+				if (!loadFeedListing(true)) {
 					return;
 				}
 

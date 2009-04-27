@@ -33,6 +33,7 @@ public class Extension implements IExtension {
 	private IPath targetPath;
 	private IPath templatePath;
 	private String toolName;
+	private String extensionName;
 
 	public Extension() {
 	}
@@ -44,6 +45,7 @@ public class Extension implements IExtension {
 		this.targetPath = other.targetPath;
 		this.templatePath = other.templatePath;
 		this.toolName = other.toolName;
+		this.extensionName = other.extensionName;
 	}
 
 	@Override
@@ -60,6 +62,8 @@ public class Extension implements IExtension {
 				+ ((templatePath == null) ? 0 : templatePath.hashCode());
 		result = prime * result
 				+ ((toolName == null) ? 0 : toolName.hashCode());
+		result = prime * result
+				+ ((extensionName == null) ? 0 : extensionName.hashCode());
 		return result;
 	}
 
@@ -104,6 +108,11 @@ public class Extension implements IExtension {
 				return false;
 		} else if (!toolName.equalsIgnoreCase(other.toolName))
 			return false;
+		if (extensionName == null) {
+			if (other.extensionName != null)
+				return false;
+		} else if (!extensionName.equalsIgnoreCase(other.extensionName))
+			return false;
 		return true;
 	}
 
@@ -120,6 +129,14 @@ public class Extension implements IExtension {
 	 */
 	public List<IPath> getDependencies() {
 		return dependencies;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension#getName()
+	 */
+	public String getName() {
+		return extensionName;
 	}
 
 	/* (non-Javadoc)
@@ -155,6 +172,14 @@ public class Extension implements IExtension {
 	 */
 	public String getToolName() {
 		return toolName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension#setName(java.lang.String)
+	 */
+	public void setName(String name) {
+		extensionName = name;
 	}
 
 	/* (non-Javadoc)

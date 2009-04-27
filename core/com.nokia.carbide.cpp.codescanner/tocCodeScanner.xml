@@ -6,8 +6,9 @@
 
 	<topic label="CodeScanner User Guide" href="html/codescanner.htm" >
 		
-		<topic label="Overview" href="html/overview_cs.htm" />
-		<topic label="Quick Start" href="html/start_cs.htm" />
+		<topic label="Release Notes"        href="html/release_notes.htm" />
+		<topic label="Overview" 			href="html/overview_cs.htm" />
+		<topic label="Quick Start" 			href="html/start_cs.htm" />
 		
 		<topic label="CodeScanner preferences"		href="html/pref_codescanner_01.htm" >
 			<topic label="File Filters" 	href="html/pref_codescanner_02.htm" />
@@ -23,7 +24,7 @@
 		<topic label="Optimizing CodeScanner"		href="html/optimizing_cs.htm" />
 		<topic label="Customizing CodeScanner"		href="html/customizing_cs.htm" />
 		
-		<topic label="Release Notes"        href="html/release_notes.htm" />
+		<topic label="Bugs Fixed"        href="html/bugs_fixed.htm" />
 	</topic>
 	
 </toc>

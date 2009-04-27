@@ -261,6 +261,7 @@ public class OverviewTab {
 		Tree tree = viewer.getTree();
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
+		viewer.setData("controller", this); //$NON-NLS-1$
 		return viewer;
 	}
 
@@ -276,5 +277,10 @@ public class OverviewTab {
 			else
 				viewer.refresh();
 		}
+	}
+	
+	
+	public Text getFilterText() {
+		return filterText;
 	}
 }
