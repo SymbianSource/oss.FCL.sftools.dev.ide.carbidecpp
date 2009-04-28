@@ -8,8 +8,8 @@
 <body bgcolor="#FFFFFF">
 
 <h2>Getting Carbide Project Information</h2>
-<p>The following example code fragment demonstrates the use of Carbide.c++ APIs to access Carbide project information.</p>
-<p class="note"><strong>NOTE</strong> There are two perspective IDs that may be useful when using the Carbide APIs. The perspective ID for  the Carbide.c++ perspective is <strong>com.nokia.carbide.cpp.CarbideCppPerspective</strong> and for the Debug view it is <strong>org.eclipse.debug.ui.DebugPerspective</strong>.</p>
+<p>The following example code fragments demonstrate the use of Carbide.c++ APIs to access Carbide project information.</p>
+<p class="note"><strong>NOTE</strong> There are two perspective IDs that may be useful when using the Carbide APIs. The perspective ID for  the Carbide.c++ perspective is com.nokia.carbide.cpp.CarbideCppPerspective and for the Debug view it is org.eclipse.debug.ui.DebugPerspective.</p>
 <p>Retrieving Carbide.c++ project information starts with knowing your org.eclipse.core.resources.<STRONG>IProject</STRONG> resource and retrieving the com.nokia.carbide.cdt.builder.<STRONG>ICarbideBuildManager</STRONG> instance:</p>
 <p class="listing">ICarbideBuildManager buildMgr = ICarbideBuilderPlugin.getBuildManager();</p>
 <p>Now with your IProject resource you can grab the actual Carbide   project in com.nokia.carbide.cdt.builder.<STRONG>ICarbideProjectInfo</STRONG>:</p>
@@ -64,6 +64,6 @@ for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(buildConf
 // Make sure to test for and cast to proper Object type!
 String mmpStatement = (String)data;  // Now we should have the TARGETTYPE
 }</PRE>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 </body>
 </html>
