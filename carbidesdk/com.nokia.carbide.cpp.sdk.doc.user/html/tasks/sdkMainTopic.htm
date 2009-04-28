@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Carbide Plug-ins Overview</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+
+<body>
+<h2>Carbide Plug-ins Overview</h2>
+
+<p>Creating a Carbide tool plug-in requires some knowledge and understanding of the Eclipse plug-in environment. There are two methods of creating Carbibe plug-ins, including:</p>
+<ul>
+  <li><a href="../gettingStarted/import_examples.htm">Importing</a> an existing Carbide tool plug-in and modifying it </li>
+  <li><a href="PLUGINS_ROOT/org.eclipse.platform.doc.isv/guide/firstplugin.htm">Creating</a> a new  Eclipse plug-in and adding Carbide API calls</li>
+</ul>
+<p>Each has its advantages and disadvantages. Importing an existing Carbide plug-in provides a working plug-in that you can modify and add to easily to get something up and running quickly. However, the plug-in probably doesn't include the API interaction you want to implement and includes a lot of resources you probably don't need or want. Creating a new plug-in from scratch has the advantage of giving you a clean slate upon which to add your own code. It doesn't include any basic Carbide support like menu items and preference panel calls that nearly every tool requires, forcing you to add them on your own.</p>
+<p>Which one you choose depends on the type of plug-in you want to develop and how much support you need to get up and running. In either case, both methods will require access to Carbide projects to allow them to interact with the active project.</p>
+<h2>Accessing Carbide Project Information</h2>
+<p>The following pages describe how to access specific Carbide project information for use in your own tool plug-ins.</p>
+<ul>
+  <li><a href="sdk_getprojinfo.htm">Getting Carbide Project Information</a></li>
+  <li><a href="sdk_getinfmmpinfo.htm">Retrieving INF and MMP Project Information </a></li>
+</ul>
+<h4>Related information</h4>
+<ul>
+  <li><a href="PLUGINS_ROOT/org.eclipse.platform.doc.isv/guide/firstplugin.htm">Simple Plug-in Example</a> (Platform Plug-in Developer Guide)</li>
+  <li><a href="PLUGINS_ROOT/com.nokia.carbide.cpp.doc.user/html/tasks/carbide_tools.htm">Creating Carbide Plug-ins</a></li>
+  <li><a href="PLUGINS_ROOT/org.eclipse.pde.doc.user/guide/intro/pde_overview.htm">Plug-in Development Environment Guide</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>
+  License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>
