@@ -7,3 +7,4 @@
 # e.g. "0=20020612"
 # This value will be added automaticaly via the build scripts
 0=@buildNumber@
+1=
