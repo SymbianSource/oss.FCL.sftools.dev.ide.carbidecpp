@@ -28,6 +28,7 @@ public class AllTests {
 		suite.addTestSuite(SDKCreationTest.class);
 		suite.addTestSuite(MacroStoreLoaderTest.class);
 		suite.addTestSuite(BSFCatalogTest.class);
+		suite.addTestSuite(SBVCatalogTest.class);
 		suite.addTestSuite(DevicesLoaderTest.class);
 		suite.addTestSuite(SymbianContextTest.class);
 		suite.addTestSuite(TestSDKChangeListener.class);

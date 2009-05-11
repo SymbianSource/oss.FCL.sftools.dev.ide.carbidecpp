@@ -1,0 +1,20 @@
+VARIANT			  				variants
+
+EXTENDS								default
+
+VIRTUAL
+
+VARIANT_HRH						/epoc32/include/feature_settings.hrh
+
+BUILD_INCLUDE	prepend	/epoc32/include/config
+
+ROM_INCLUDE 	prepend	/epoc32/include/config
+ROM_INCLUDE 	prepend	/epoc32/rom/config
+
+
+ROM_INCLUDE 	prepend	/epoc32/rom/include/language/osext
+ROM_INCLUDE 	prepend	/epoc32/rom/include/core/tools
+ROM_INCLUDE 	prepend	/epoc32/rom/include/core/osext
+ROM_INCLUDE 	prepend	/epoc32/rom/include/core/os
+ROM_INCLUDE 	prepend	/epoc32/rom/include/core/mw
+ROM_INCLUDE 	prepend	/epoc32/rom/include/core/app

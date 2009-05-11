@@ -263,7 +263,7 @@ public class SymbianSDK implements ISymbianSDK {
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr.getBSFScannerEnabled()){
 			buildTargets.addAll(getBSFPlatformContexts());
-			//buildTargets.addAll(getBinaryVariationPlatformContexts()); // Symbian Binary Variation (.var)
+			buildTargets.addAll(getBinaryVariationPlatformContexts()); // Symbian Binary Variation (.var)
 		}
 		
 		return buildTargets;
