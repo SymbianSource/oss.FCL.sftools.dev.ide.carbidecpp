@@ -17,10 +17,7 @@
 
 package com.nokia.carbide.cpp.epoc.engine.model.sbv;
 
-import com.nokia.carbide.cpp.epoc.engine.model.ETristateFlag;
 import com.nokia.carbide.cpp.epoc.engine.model.IView;
-
-import java.util.Map;
 
 /**
  * A view onto .VAR (Symbian Binary Variation) contents.  This is a parse over a single .VAR file.
@@ -34,28 +31,36 @@ public interface ISBVView extends IView<ISBVOwnedModel> {
 	/** Get the name of SBV as a platform. */
 	String getName();
 	
-	/** Set the CUSTOMIZES platform.
-	 * @param platform may not be null, but may be "" */
-	void setCustomizes(String platform);
+	/** Set the EXTENDS platform.
+	 * @param binary variant platform may not be null, but may be "" */
+	void setExtends(String platform);
 	
-	/** Get the CUSTOMIZES platform. 
-	 * @return platform this customizes; never null, but may be the empty string if .var is invalid.  */
-	String getCustomizes();
+	/** Get the EXTENDS platform. 
+	 * @return binary variant platform this extends; never null, but may be the empty string if .var is invalid.  */
+	String getExtends();
 	
-	/** Tell whether the .var is compiled with its parent (COMPILEWITHPARENT,
-	 * COMPILEALONE, or unspecified) */
-	ETristateFlag getCompileWithParent();
+	/**
+	 * Set whether or not the VIRTUAL flag defined?
+	 * @param flag
+	 */
+	void setVirtualFlag(boolean flag);
 	
-	/** Set the COMPILEWITHPARENT disposition. */
-	void setCompileWithParent(ETristateFlag flag);
-
-	/** Get the map of customization options, which is a map of
-	 * the (capitalized) first token on the line to the remainder of the line.
-	 * @return map never null */
-	Map<String, String> getCustomizationOptions();
-
-	/** Replace the map of customization options. 
-	 * @param map may not be null*/
-	void setCustomizationOptions(Map<String, String> map);
-
+	/**
+	 * Get whether or not the virtual flag is defined.
+	 * @return true if VIRTUAL is defined in the .var file
+	 */
+	boolean getVirtualFlag();
+	
+	/**
+	 * Sets the BUILD_HRH value
+	 * @param pathStr, the value of the path in the .var file
+	 */
+	void setBuildHRHFile(String pathStr);
+	
+	/**
+	 * Get the BUILD_HRH value
+	 * @return The string of the BUILD_HRH, null if not defined.
+	 */
+	String getBuildVariantHRH();
+	
 }

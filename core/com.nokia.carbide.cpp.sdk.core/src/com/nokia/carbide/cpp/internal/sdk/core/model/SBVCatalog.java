@@ -52,9 +52,6 @@ public class SBVCatalog implements ISBVCatalog {
 		// gather the individual SBV platforms
 		for (File sbvFile : sbvFiles) {
 			IPath sbvPath = new Path(sbvFile.getAbsolutePath());
-			if (sbvPath.toFile().toString().endsWith("variants.var")){
-				continue;
-			}
 			SBVPlatform platform = SBVPlatform.createPlatform(this, sbvPath, messages, sdkIncludePath);
 			if (platform != null) {
 				platforms.add(platform);

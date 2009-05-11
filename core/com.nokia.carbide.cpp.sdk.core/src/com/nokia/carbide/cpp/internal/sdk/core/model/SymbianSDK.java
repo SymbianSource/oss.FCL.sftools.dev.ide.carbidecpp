@@ -299,8 +299,11 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 			ISBVCatalog catalog = getSBVCatalog();
 			for (ISBVPlatform sbvPlatform : catalog.getPlatforms()) {
 				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
-				binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
-				binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
+				// Only add the build platform if it's not virtual.
+				if (!sbvPlatform.isVirtual()){
+					binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
+					binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
+				}
 			}
 		}
 		

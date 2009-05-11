@@ -12,15 +12,14 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.*;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.*;
 
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.ISBVViewRunnable;
-import com.nokia.carbide.cpp.epoc.engine.model.ETristateFlag;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.internal.api.sdk.Messages;
 import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
@@ -36,30 +35,40 @@ public class SBVPlatform implements ISBVPlatform {
 	/** The exact basename of the .var */
 	private String name;
 	private IPath path;
-	private ISBVPlatform customizedPlatform;
-	private String customizes;
+	private ISBVPlatform extendedPlatform;
+	private String extendedPlatName;
 	private IPath[] systemIncludePaths;
 	private IPath sdkIncludePath;
 	private IPath systemIncludePath;
-	private Map<String, String> customizationOptions;
-	private ETristateFlag compileWithParent;
+	private IPath bldVarintHRH;
 	private ISBVCatalog catalog;
-
-	/**
+	private boolean virtual;
+	
+	/** Create a Symbian Binary Variation platform from parse results of a .var file
 	 * @param sdk
 	 * @param sbvPath
 	 * @param enableAbiV2Mode used to remap ARMV5, ARMV6, or ARMV6_ABIV1 to an appropriate canonical name  
  
 	 */
-	// TODO: Add ISBVView for actual parsing
 	SBVPlatform(ISBVCatalog catalog, IPath sdkIncludePath, ISBVView view ) {
 		this.catalog = catalog;
 		this.sdkIncludePath = sdkIncludePath;
 		this.name = view.getName();
-		this.customizes = view.getCustomizes().toUpperCase();
+		this.extendedPlatName = view.getExtends().toUpperCase();
 		this.path = view.getModel().getPath();
-		this.compileWithParent = view.getCompileWithParent();
-		this.customizationOptions = new HashMap<String, String>(view.getCustomizationOptions());
+		this.virtual = view.getVirtualFlag();
+		
+		String temp = view.getBuildVariantHRH();
+		String EPOC32_INCLUDE = "epoc32" + File.separator + "include";
+		if (temp != null && temp.length() > 0){
+			if (sdkIncludePath.toOSString().contains(EPOC32_INCLUDE)){
+				bldVarintHRH = new Path(sdkIncludePath.toOSString().substring(0, sdkIncludePath.toOSString().indexOf(EPOC32_INCLUDE)) + temp);
+			} else {
+				bldVarintHRH = new Path(sdkIncludePath + temp);
+			}
+		}
+		
+
 	}
 
 	/* (non-Javadoc)
@@ -85,9 +94,9 @@ public class SBVPlatform implements ISBVPlatform {
 	 */
 	void setCustomizedPlatform(ISBVPlatform customized) {
 		Check.checkState(customized != this);
-		this.customizedPlatform = customized;
+		this.extendedPlatform = customized;
 		if (customized != null) {
-			this.customizes = customized.getName();
+			this.extendedPlatName = customized.getName();
 		}
 	}
 	
@@ -113,17 +122,17 @@ public class SBVPlatform implements ISBVPlatform {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getCustomizedPlatformName()
+	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getExtendedPlatformName()
 	 */
-	public String getCustomizedPlatformName() {
-		return customizes;
+	public String getExtendedVariantName() {
+		return extendedPlatName;
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getCustomizedPlatform()
+	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getExtendedVariant()()
 	 */
-	public ISBVPlatform getCustomizedPlatform() {
-		return customizedPlatform;
+	public ISBVPlatform getExtendedVariant() {
+		return extendedPlatform;
 	}
 
 	/* (non-Javadoc)
@@ -131,10 +140,21 @@ public class SBVPlatform implements ISBVPlatform {
 	 */
 	public IPath getSystemIncludePath() {
 		if (systemIncludePath == null) {
-			IPath customizedPlatformPath = null;
-			if (customizedPlatform != null) {
-				customizedPlatformPath = customizedPlatform.getSystemIncludePath();
+			IPath extendedPlatformPath = null;
+			if (extendedPlatform != null) {
+				extendedPlatformPath = extendedPlatform.getSystemIncludePath();
 			}
+			
+			// VIRTUALVARIANT does not have its own path
+
+			// else, construct the system include path from the customized
+			// platform by appending our platform name
+			if (extendedPlatformPath == null) {
+				systemIncludePath = sdkIncludePath.append(name); //$NON-NLS-1$
+			} else {
+				systemIncludePath = extendedPlatformPath.append(name);
+			}
+			
 		}
 		
 		return systemIncludePath;
@@ -151,8 +171,10 @@ public class SBVPlatform implements ISBVPlatform {
 				ISBVPlatform platform = this;
 				while (platform != null) {
 					IPath path = platform.getSystemIncludePath();
-					if (path != null)
+					if (path != null){
 						paths.add(path);
+					}
+					platform = platform.getExtendedVariant();
 				}
 				systemIncludePaths = (IPath[]) paths.toArray(new IPath[paths.size()]);
 			}
@@ -202,6 +224,15 @@ public class SBVPlatform implements ISBVPlatform {
 		return (SBVPlatform) EpocEnginePlugin.runWithSBVView(sbvPath, runnable);
 	}
 
-	
+	public boolean isVirtual() {
+		return virtual;
+	}
+
+	public IPath getBuildVariantHRHFile() {
+		
+		return bldVarintHRH;
+		
+	}
+
 }
 

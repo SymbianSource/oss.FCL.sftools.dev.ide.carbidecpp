@@ -63,4 +63,29 @@ public interface ISBVPlatform {
 	 * @return array of full filesystem paths, never null 
 	 */
 	IPath[] getSystemIncludePaths();
+	
+	/**
+	 * Get the name of the variant this SBV platform extends
+	 * @return
+	 */
+	String getExtendedVariantName();
+	
+	/**
+	 * Get the variant platform this platform extends
+	 * @return
+	 */
+	public ISBVPlatform getExtendedVariant();
+	
+	/**
+	 * Is the VIRTUAL keyword present?
+	 * @return
+	 */
+	public boolean isVirtual();
+	
+	/**
+	 * Get the 
+	 * @return The path to the defined HRH file, null if none.
+	 */
+	public IPath getBuildVariantHRHFile();
+	
 }

@@ -37,20 +37,18 @@ import com.nokia.cpp.internal.api.utils.core.*;
 
 public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	
-	private static final String HEADER = "#<sbv>#"; //$NON-NLS-1$
-	private static final String COMPILEWITHPARENT = "COMPILEWITHPARENT"; //$NON-NLS-1$
-	private static final String COMPILEALONE = "COMPILEALONE"; //$NON-NLS-1$
-	private static final String CUSTOMIZES = "CUSTOMIZES"; //$NON-NLS-1$
-	private static final String VARIANT = "VARIANT"; //$NON-NLS-1$
-	private static final String VIRTUALVARIANT = "VIRTUALVARIANT"; //$NON-NLS-1$
+	private static final String EXTENDS = "EXTENDS"; //$NON-NLS-1$
+	private static final String VIRTUAL = "VIRTUAL"; //$NON-NLS-1$
+	private static final String VARIANT_HRH = "VARIANT_HRH"; //$NON-NLS-1$
+
 	
 	private IASTSBVTranslationUnit tu;
 	private boolean sawHeaderComment;
-	private boolean sawCustomizes;
-	
-	private ETristateFlag compileWithParent;
-	private Map<String, String> customizationOptions;
-	private String customizes;
+	private boolean sawExtends;
+	private boolean sawBuildHRH;
+	private String extendsVariantStr;
+	private String varintHRHStr;
+	private boolean isVirtual;
 	
 	/**
 	 * @param model
@@ -60,26 +58,20 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	public SBVView(ModelBase model, IViewConfiguration viewConfiguration) {
 		super(model, null, viewConfiguration);
 		tu = null;
-		customizationOptions = new HashMap<String, String>();
 	}
 	
 	private void refresh() {
-		compileWithParent = ETristateFlag.UNSPECIFIED;
-		customizationOptions.clear();
-		customizes = ""; //$NON-NLS-1$
+		extendsVariantStr = ""; //$NON-NLS-1$
 		
 		IDocumentParser sbvParser = ParserFactory.createSBVParser();
 		tu = (IASTSBVTranslationUnit) sbvParser.parse(getModel().getPath(), getModel().getDocument());
 		
 		sawHeaderComment = false;
-		sawCustomizes = false;
+		sawExtends = false;
+		sawBuildHRH = false;
 		
 		for (IASTTopLevelNode stmt : tu.getNodes()) {
-			if (stmt instanceof IASTSBVCommentStatement) { 
-				if (((IASTSBVCommentStatement) stmt).getNewText().equals(HEADER)) {
-					sawHeaderComment = true;
-				}
-			} else if (stmt instanceof IASTSBVFlagStatement) {
+			if (stmt instanceof IASTSBVFlagStatement) {
 				String flag = ((IASTSBVFlagStatement) stmt).getKeywordName();
 				handleStatement(flag);
 			} else if (stmt instanceof IASTSBVArgumentStatement) {
@@ -98,12 +90,16 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	 * @param value
 	 */
 	private void handleStatement(String option, String value) {
-		if (!sawCustomizes && option.equals(CUSTOMIZES)) {
-			setCustomizes(value);
-			sawCustomizes = true;
-		} else {
-			getCustomizationOptions().put(option, value);
-		}
+		if (!sawExtends && option.equals(EXTENDS)) {
+			setExtends(value);
+			sawExtends = true;
+		} 
+		
+		if (!sawBuildHRH && option.equals(VARIANT_HRH)) {
+			setBuildHRHFile(value);
+			sawBuildHRH = true;
+		} 
+		
 	}
 
 	/**
@@ -111,13 +107,9 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	 * @param flag
 	 */
 	private void handleStatement(String flag) {
-		if (flag.equals(COMPILEWITHPARENT)) {
-			setCompileWithParent(ETristateFlag.ENABLED);
-		} else if (flag.equals(COMPILEALONE)) {
-			setCompileWithParent(ETristateFlag.DISABLED);
-		} else {
-			getCustomizationOptions().put(flag, null);
-		}
+		if (flag.equals(VIRTUAL)) {
+			setVirtualFlag(true);
+		} 
 	}
 
 	@Override
@@ -175,32 +167,19 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 					new Object[0],
 					new MessageLocation(fullPath)));
 		}
-		if (!sawCustomizes) {
+		if (!sawExtends) {
 			messageList.add(ASTFactory.createErrorMessage("SBVView.NoCustomizesStatement",
 					new Object[0],
 					new MessageLocation(fullPath)));
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#getCompileWithParent()
-	 */
-	public ETristateFlag getCompileWithParent() {
-		return compileWithParent;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#getCustomizationOptions()
-	 */
-	public Map<String, String> getCustomizationOptions() {
-		return customizationOptions;
-	}
 
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#getCustomizes()
 	 */
-	public String getCustomizes() {
-		return customizes;
+	public String getExtends() {
+		return extendsVariantStr;
 	}
 
 	/* (non-Javadoc)
@@ -210,27 +189,12 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 		return getModel().getPath().removeFileExtension().lastSegment();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#setCompileWithParent(com.nokia.carbide.cpp.epoc.engine.model.ETristateFlag)
-	 */
-	public void setCompileWithParent(ETristateFlag flag) {
-		Check.checkArg(flag);
-		this.compileWithParent = flag;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#setCustomizationOptions(java.util.Map)
-	 */
-	public void setCustomizationOptions(Map<String, String> map) {
-		Check.checkArg(map);
-		this.customizationOptions = map;
-	}
 
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#setCustomizes(java.lang.String)
 	 */
-	public void setCustomizes(String platform) {
-		this.customizes = platform;
+	public void setExtends(String platform) {
+		this.extendsVariantStr = platform;
 	}
 	
 	/* (non-Javadoc)
@@ -239,4 +203,26 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	public IData getData() {
 		return null;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#setVirtualFlag(boolean)
+	 */
+	public void setVirtualFlag(boolean flag) {
+		this.isVirtual = flag;
+	}
+
+	public boolean getVirtualFlag() {
+		return isVirtual;
+	}
+
+	public String getBuildVariantHRH() {
+		return varintHRHStr;
+	}
+
+	public void setBuildHRHFile(String pathStr) {
+		varintHRHStr = pathStr;
+	}
+	
+	
+	
 }
