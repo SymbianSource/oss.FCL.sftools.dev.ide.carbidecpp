@@ -113,6 +113,7 @@ public interface ISymbianBuildContext {
 	
 	/**
 	 * For platforms that are building with Symbian Binary Variation, this suffix will be included in the configuration name
+	 * For example, if you are building variant armv5.product1, then this will return "product1" string.
 	 * @return The name of the Symbian Binary Variation, or an empy String if the configuration is not a variation.
 	 */
 	public String getBuildVariationName();

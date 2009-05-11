@@ -81,7 +81,9 @@ public class SymbianSDK implements ISymbianSDK {
 	
 	private List<IDefine> variantHRHMacros = null;
 	private List<ISymbianBuildContext> bsfContextList = new ArrayList<ISymbianBuildContext>(0);
-
+	
+	private List<ISymbianBuildContext> binaryVariantContextList = new ArrayList<ISymbianBuildContext>(0);
+	
 	private Date createDate;
 	private URL publisherURL;
 	private String sdkDescription;
@@ -92,6 +94,7 @@ public class SymbianSDK implements ISymbianSDK {
 	List<String> supportedTargetTypesList = new ArrayList<String>();
 
 	private IBSFCatalog bsfCatalog;
+	private ISBVCatalog sbvCatalog;
 
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
 	
@@ -260,6 +263,7 @@ public class SymbianSDK implements ISymbianSDK {
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr.getBSFScannerEnabled()){
 			buildTargets.addAll(getBSFPlatformContexts());
+			//buildTargets.addAll(getBinaryVariationPlatformContexts()); // Symbian Binary Variation (.var)
 		}
 		
 		return buildTargets;
@@ -283,6 +287,24 @@ public class SymbianSDK implements ISymbianSDK {
 		}
 		
 		return bsfContextList;
+	}
+	
+public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
+		
+		synchronized (binaryVariantContextList) {
+			if (!binaryVariantContextList.isEmpty()){
+				return binaryVariantContextList;
+			}
+			
+			ISBVCatalog catalog = getSBVCatalog();
+			for (ISBVPlatform sbvPlatform : catalog.getPlatforms()) {
+				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
+				binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
+				binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
+			}
+		}
+		
+		return binaryVariantContextList;
 	}
  	
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
@@ -1187,5 +1209,16 @@ public class SymbianSDK implements ISymbianSDK {
 		return bsfCatalog;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.cpp.sdk.core.ISymbianSDK#getBSFCatalog()
+	 */
+	public ISBVCatalog getSBVCatalog() {
+		synchronized (this) {
+			if (sbvCatalog == null) {
+				sbvCatalog = SBVCatalogFactory.createCatalog(this);
+			}
+		}
+		return sbvCatalog;
+	}
 	
 }
