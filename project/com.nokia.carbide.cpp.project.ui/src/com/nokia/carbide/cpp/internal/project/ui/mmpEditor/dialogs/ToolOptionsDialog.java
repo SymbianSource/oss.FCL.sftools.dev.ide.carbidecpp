@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class ToolOptionsDialog extends ValidatingDialog {
 
-		private ComboViewer toolChainViewer;
+	private ComboViewer toolChainViewer;
 	private Text optionsText;
 	
 	private String theToolChain;
@@ -262,4 +262,13 @@ public class ToolOptionsDialog extends ValidatingDialog {
 		newShell.setText(title);
 		WorkbenchUtils.setHelpContextId(newShell, HelpContexts.TOOL_OPTIONS_DIALOG);
 	}
+
+	public Combo getToolChainCombo() {
+		return toolChainViewer.getCombo();
+	}
+
+	public Text getOptionsText() {
+		return optionsText;
+	}
+
 }

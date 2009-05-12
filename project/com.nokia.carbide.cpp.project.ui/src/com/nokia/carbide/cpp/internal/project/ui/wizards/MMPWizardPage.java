@@ -51,6 +51,7 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 public class MMPWizardPage extends WizardPage {
 	private Text containerText;
 	private Text fileText;
+	private Button browseButton;
 	private Button isTestCheck;
 	private ISelection selection;
 	private boolean isTest;
@@ -109,9 +110,9 @@ public class MMPWizardPage extends WizardPage {
 			}
 		});
 
-		Button button = new Button(container, SWT.PUSH);
-		button.setText(Messages.getString("MMPWizardPage.browseButton")); //$NON-NLS-1$
-		button.addSelectionListener(new SelectionAdapter() {
+		browseButton = new Button(container, SWT.PUSH);
+		browseButton.setText(Messages.getString("MMPWizardPage.browseButton")); //$NON-NLS-1$
+		browseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				handleBrowse();
 			}
@@ -243,4 +244,21 @@ public class MMPWizardPage extends WizardPage {
 	public void performHelp() {
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl().getShell(), ProjectUIHelpIds.MMP_WIZARD_PAGE);
 	}
+
+	public Text getContainerText() {
+		return containerText;
+	}
+
+	public Text getFileNameText() {
+		return fileText;
+	}
+
+	public Button getBrowseButton() {
+		return browseButton;
+	}
+
+	public Button getTestMMPButton() {
+		return isTestCheck;
+	}
+
 }

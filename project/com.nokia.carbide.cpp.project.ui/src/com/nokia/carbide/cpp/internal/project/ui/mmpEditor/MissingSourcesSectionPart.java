@@ -175,4 +175,13 @@ public class MissingSourcesSectionPart extends SectionPart {
 			page.refresh();
 		}
 	}
+
+	public TableViewer getTableViewer() {
+		return tableViewer;
+	}
+
+	public Button getRemoveButton() {
+		return removeButton;
+	}
+
 }

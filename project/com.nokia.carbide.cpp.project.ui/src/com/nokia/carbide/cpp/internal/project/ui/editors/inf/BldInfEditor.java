@@ -330,5 +330,12 @@ public class BldInfEditor extends CarbideFormEditor implements
 		}
 	}
 
-	
+	public OverviewPage getOverviewPage() {
+		return overviewPage;
+	}
+
+	public ExportsPage getExportsPage() {
+		return exportsPage;
+	}
+
 }

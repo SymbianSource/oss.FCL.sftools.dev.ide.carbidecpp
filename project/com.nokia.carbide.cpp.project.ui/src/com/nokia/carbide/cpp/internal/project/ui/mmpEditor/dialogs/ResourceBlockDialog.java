@@ -371,4 +371,41 @@ public class ResourceBlockDialog extends ValidatingDialog {
 					EGeneratedHeaderFlags.Header : EGeneratedHeaderFlags.NoHeader);
 		}
 	}
+
+	public Combo getRSSFilePathCombo() {
+		return chooseFileComposite.getPathViewerCombo();
+	}
+
+	public Button getBrowseButton() {
+		return chooseFileComposite.getBrowseButton();
+	}
+
+	public Text getTargetFileNameText() {
+		return targetFileText;
+	}
+
+	public Combo getTargetFilePathCombo() {
+		return targetPathViewer.getCombo();
+	}
+
+	public Text getUID2Text() {
+		return uid2Text;
+	}
+
+	public Text getUID3Text() {
+		return uid3Text;
+	}
+
+	public Button getOnlyGenerateHeaderButton() {
+		return onlyGenerateHeaderButton;
+	}
+
+	public Button getGenerateHeaderButton() {
+		return generateHeaderButton;
+	}
+
+	public Button getDontGenerateHeaderButton() {
+		return dontGenerateHeaderButton;
+	}
+
 }

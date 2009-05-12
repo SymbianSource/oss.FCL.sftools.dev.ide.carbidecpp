@@ -55,6 +55,7 @@ public class ExportSectionPart extends SectionPart {
 	private Button removeButton;
 	private TableViewer tableViewer;
 	private Composite buttonComposite;
+	private ExportFileDialog exportFileDialog;
 	
 	
 	private final int COLUMN_SOURCE = 0;
@@ -237,8 +238,8 @@ public class ExportSectionPart extends SectionPart {
 	protected void addButtonPressed() {
 		IExport newExport = editorContext.bldInfView.createExport();
 		
-		ExportFileDialog dlg = new ExportFileDialog(getSection().getShell(), isTest ? Messages.ExportSectionPart_AddTestExport : Messages.ExportSectionPart_AddExport, newExport, editorContext.project);
-		int dlgResult = dlg.open();
+		exportFileDialog = new ExportFileDialog(getSection().getShell(), isTest ? Messages.ExportSectionPart_AddTestExport : Messages.ExportSectionPart_AddExport, newExport, editorContext.project);
+		int dlgResult = exportFileDialog.open();
 		if (dlgResult == Dialog.OK) {
 			List<IExport> addedList = new ArrayList<IExport>();
 			addedList.add(newExport);
@@ -265,8 +266,8 @@ public class ExportSectionPart extends SectionPart {
 			newExport.setTargetPath(export.getTargetPath());
 			newExport.setZipped(export.isZipped());
 
-			ExportFileDialog dlg = new ExportFileDialog(getSection().getShell(), isTest ? Messages.ExportSectionPart_EditTestExport : Messages.ExportSectionPart_EditExport, newExport, editorContext.project);
-			int dlgResult = dlg.open();
+			exportFileDialog = new ExportFileDialog(getSection().getShell(), isTest ? Messages.ExportSectionPart_EditTestExport : Messages.ExportSectionPart_EditExport, newExport, editorContext.project);
+			int dlgResult = exportFileDialog.open();
 			if (dlgResult == Dialog.OK) {
 
 				Map<Integer, Object> replaceMap = new HashMap<Integer, Object>();
@@ -342,4 +343,33 @@ public class ExportSectionPart extends SectionPart {
 		downButton.setEnabled(selectionSize == 1 && 
 				firstSelection < tableViewer.getTable().getItemCount() - 1);
 	}
+
+	public TableViewer getTableViewer() {
+		return tableViewer;
+	}
+
+	public Button getAddButton() {
+		return addButton;
+	}
+
+	public Button getEditButton() {
+		return editButton;
+	}
+
+	public Button getUpButton() {
+		return upButton;
+	}
+
+	public Button getDownButton() {
+		return downButton;
+	}
+
+	public Button getRemoveButton() {
+		return removeButton;
+	}
+
+	public Dialog getExportFileDialog() {
+		return exportFileDialog;
+	}
+
 }

@@ -133,4 +133,13 @@ public class MMPFilePathDialog extends ValidatingDialog {
 		newShell.setText(Messages.getString("MMPFilePathDialog.dialogTitle"));  //$NON-NLS-1$
 		WorkbenchUtils.setHelpContextId(newShell, HelpContexts.MMPFILEPATH_DIALOG);
 	}
+
+	public Combo getFilePathCombo() {
+		return chooseFileComposite.getPathViewerCombo();
+	}
+
+	public Button getBrowseButton() {
+		return chooseFileComposite.getBrowseButton();
+	}
+
 }

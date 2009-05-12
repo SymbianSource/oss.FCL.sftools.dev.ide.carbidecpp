@@ -258,4 +258,29 @@ public class MMPFileDialog extends StatusDialog implements IMakMakeFileDialog {
 	public int show() {
 		return open();
 	}
+
+	public Text getFilePathText() {
+		return filePath;
+	}
+
+	public Button getBrowseButton() {
+		return browseButton;
+	}
+
+	public Button getTidyButton() {
+		return tidyButton;
+	}
+
+	public Button getBuildAsARMButton() {
+		return buildAsArmButton;
+	}
+
+	public Button getManualButton() {
+		return manualButton;
+	}
+
+	public Button getSupportButton() {
+		return supportButton;
+	}
+
 }

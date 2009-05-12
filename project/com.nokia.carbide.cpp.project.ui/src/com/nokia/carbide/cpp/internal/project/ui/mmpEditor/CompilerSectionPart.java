@@ -354,4 +354,37 @@ public class CompilerSectionPart extends SectionPart {
 	CompilerPresentationModel getModel() {
 		return model;
 	}
+
+	public TreeViewer getCompilerTreeViewer() {
+		return compilerTreeViewer;
+	}
+
+	public Button getAddButton() {
+		return addButton;
+	}
+
+	public Button getEditButton() {
+		return editButton;
+	}
+
+	public Button getUpButton() {
+		return upButton;
+	}
+
+	public Button getDownButton() {
+		return downButton;
+	}
+
+	public Button getRemoveButton() {
+		return removeButton;
+	}
+
+	public Button getSrcDebugButton() {
+		return srcdebugButton;
+	}
+
+	public Button getStrictDependenciesButton() {
+		return strictDependenciesButton;
+	}
+
 }

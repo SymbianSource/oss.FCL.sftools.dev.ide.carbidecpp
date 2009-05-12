@@ -114,4 +114,9 @@ public class SourcesSectionPart extends SectionPart {
 	public List<IPath> getMissingFilePaths() {
 		return missingFilePaths;
 	}
+
+	public SourceSelectionViewer getTreeViewer() {
+		return sourceViewer;
+	}
+
 }

@@ -16,6 +16,7 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.mmpEditor.dialogs;
 
+import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.swt.widgets.Shell;
@@ -37,6 +38,10 @@ public class LanguageSelectionDialog extends ListSelectionDialog {
 		super.configureShell(shell);
 		shell.setText(Messages.getString("LanguageSelectionDialog.dialogTitle")); //$NON-NLS-1$
 		WorkbenchUtils.setHelpContextId(shell, HelpContexts.LANGUAGES_DIALOG);
+	}
+
+	public CheckboxTableViewer getTableViewer() {
+		return getViewer();
 	}
 
 }

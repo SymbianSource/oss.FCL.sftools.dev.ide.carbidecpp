@@ -363,4 +363,21 @@ public class ResourcesSectionPart extends SectionPart {
 		editButton.setEnabled(editEnabled);
 		removeButton.setEnabled(removeEnabled);
 	}
+
+	public TreeViewer getTreeViewer() {
+		return resourceTreeViewer;
+	}
+
+	public Button getAddButton() {
+		return addButton;
+	}
+
+	public Button getEditButton() {
+		return editButton;
+	}
+
+	public Button getRemoveButton() {
+		return removeButton;
+	}
+
 }

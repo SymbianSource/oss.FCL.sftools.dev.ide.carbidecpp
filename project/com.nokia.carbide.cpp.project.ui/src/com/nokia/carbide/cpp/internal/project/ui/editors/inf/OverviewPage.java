@@ -25,6 +25,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.*;
 
 import java.util.LinkedHashSet;
@@ -176,4 +177,21 @@ public class OverviewPage extends BldInfEditorFormPage {
 		super.createPartControl(parent);
 		WorkbenchUtils.setHelpContextId(getPartControl(), HelpContexts.OVERVIEW_PAGE);
 	}
+
+	public Label getActiveBuildConfigLabel() {
+		return activeBuildConfigLabel;
+	}
+
+	public Label getProjectPlatformsLabel() {
+		return prjPlatformsLabel;
+	}
+
+	public SectionPart getComponentsSectionPart() {
+		return makMakeFiles;
+	}
+
+	public SectionPart getTestComponentsSectionPart() {
+		return testMakMakeFiles;
+	}
+
 }

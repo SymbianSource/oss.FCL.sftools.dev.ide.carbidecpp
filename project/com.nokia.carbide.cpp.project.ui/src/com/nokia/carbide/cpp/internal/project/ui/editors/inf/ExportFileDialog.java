@@ -229,4 +229,21 @@ public class ExportFileDialog extends StatusDialog {
 		updateStatus(status);
 		
 	}
+
+	public Text getSourcePathText() {
+		return sourcePath;
+	}
+
+	public Button getBrowseButton() {
+		return browseButton;
+	}
+
+	public Text getDestinationPath() {
+		return destinationPath;
+	}
+
+	public Button getIsArchiveButton() {
+		return isArchiveButton;
+	}
+
 }

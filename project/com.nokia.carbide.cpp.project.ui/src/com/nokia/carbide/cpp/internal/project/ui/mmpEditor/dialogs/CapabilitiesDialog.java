@@ -114,4 +114,8 @@ public class CapabilitiesDialog extends TrayDialog {
 		return result;
 	}
 
+	public CheckboxTableViewer getCapabilitiesViewer() {
+		return capabilitiesViewer;
+	}
+
 }

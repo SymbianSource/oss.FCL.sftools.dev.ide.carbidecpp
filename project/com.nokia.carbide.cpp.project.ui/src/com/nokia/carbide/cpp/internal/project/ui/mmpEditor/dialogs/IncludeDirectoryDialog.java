@@ -119,4 +119,13 @@ public class IncludeDirectoryDialog extends ValidatingDialog {
 		newShell.setText(Messages.getString("IncludeDirectoryDialog.dialogTitle")); //$NON-NLS-1$
 		WorkbenchUtils.setHelpContextId(newShell, HelpContexts.INCLUDE_DIRECTORY_DIALOG);
 	}
+
+	public Combo getIncludeDirectoryCombo() {
+		return chooseDirectoryComposite.getPathViewerCombo();
+	}
+
+	public Button getBrowseButton() {
+		return chooseDirectoryComposite.getBrowseButton();
+	}
+
 }

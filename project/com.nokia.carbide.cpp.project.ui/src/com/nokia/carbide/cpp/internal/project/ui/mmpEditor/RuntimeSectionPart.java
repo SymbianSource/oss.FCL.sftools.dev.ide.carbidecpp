@@ -60,6 +60,7 @@ public class RuntimeSectionPart extends SectionPart {
 	private Text minHeapSizeText;
 	private Button debuggableButton;
 	private ComboViewer pagingModeViewer;
+	private CapabilitiesDialog capabilitiesDialog;
 	
 	static final String DEFAULT_MIN_HEAP = "0x1000"; //$NON-NLS-1$
 	static final String DEFAULT_MAX_HEAP = "0x100000"; //$NON-NLS-1$
@@ -500,10 +501,10 @@ public class RuntimeSectionPart extends SectionPart {
 
 	private void doChooseCapabilities() {
 		List<String> capabilities = editorContext.mmpView.getListArgumentSettings().get(EMMPStatement.CAPABILITY);
-		CapabilitiesDialog dialog = new CapabilitiesDialog(getSection().getShell(), capabilities.toArray());
-		int dlgResult = dialog.open();
+		capabilitiesDialog = new CapabilitiesDialog(getSection().getShell(), capabilities.toArray());
+		int dlgResult = capabilitiesDialog.open();
 		if (dlgResult == Dialog.OK) {
-			Object[] checkedCapabilities = dialog.getCheckedCapabilities();
+			Object[] checkedCapabilities = capabilitiesDialog.getCheckedCapabilities();
 			List<Object> newList = new ArrayList<Object>();
 			for (Object obj : checkedCapabilities) {
 				newList.add(obj.toString());
@@ -568,4 +569,49 @@ public class RuntimeSectionPart extends SectionPart {
 			}
 		}
 	}
+
+	public Button getChooseButton() {
+		return chooseButton;
+	}
+
+	public Text getCapabilitiesText() {
+		return capabilitiesText;
+	}
+
+	public Text getMinHeapSizeText() {
+		return minHeapSizeText;
+	}
+
+	public Text getMaxHeapSizeText() {
+		return maxHeapSizeText;
+	}
+
+	public Text getStackSizeText() {
+		return stackSizeText;
+	}
+
+	public Combo getProcessPriorityCombo() {
+		return processPriorityViewer.getCombo();
+	}
+
+	public Text getSecureIDText() {
+		return secureIDText;
+	}
+
+	public Text getVendorIDText() {
+		return vendorIDText;
+	}
+
+	public Button getDebuggableButton() {
+		return debuggableButton;
+	}
+	
+	public Combo getPagingModeCombo() {
+		return pagingModeViewer.getCombo();
+	}
+
+	public CapabilitiesDialog getCapabilitiesDialog() {
+		return capabilitiesDialog;
+	}
+
 }

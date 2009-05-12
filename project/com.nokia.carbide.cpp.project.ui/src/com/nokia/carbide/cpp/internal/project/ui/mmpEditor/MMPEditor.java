@@ -353,4 +353,21 @@ public class MMPEditor extends CarbideFormEditor implements
 			}
 		}
 	}
+
+	public OverviewPage getOverviewPage() {
+		return overviewPage;
+	}
+
+	public LibrariesPage getLibrariesPage() {
+		return librariesPage;
+	}
+
+	public SourcesPage getSourcesPage() {
+		return sourcesPage;
+	}
+
+	public OptionsPage getOptionsPage() {
+		return optionsPage;
+	}
+
 }

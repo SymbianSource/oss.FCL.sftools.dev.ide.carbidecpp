@@ -111,4 +111,20 @@ public class OptionsPage extends MMPEditorFormPage {
 		}
 	}
 
+	public LinkerSectionPart getLinkerSection() {
+		return linkerSectionPart;
+	}
+
+	public RuntimeSectionPart getRuntimeSection() {
+		return runtimeSectionPart;
+	}
+
+	public CompilerSectionPart getCompilerSection() {
+		return compilerSectionPart;
+	}
+
+	public KernelSectionPart getKernelSection() {
+		return kernelSectionPart;
+	}
+
 }

@@ -71,6 +71,7 @@ public class LinkerSectionPart extends SectionPart {
 	private Button noStrictdefButton;
 	private Button dontExportLibraryButton;
 	private Button exportUnfrozenButton;
+	private Button browseButton;
 	private ComboViewer defFileViewer;
 	private Text baseAddrText;
 	private Text linkAsText;
@@ -196,7 +197,6 @@ public class LinkerSectionPart extends SectionPart {
 		formData_7.left = new FormAttachment(win32BaseAddressLabel, 0, SWT.LEFT);
 		baseAddrText.setLayoutData(formData_7);
 
-		Button browseButton;
 		browseButton = toolkit.createButton(container, Messages.LinkerSectionPart_browseBtn, SWT.NONE);
 		final FormData formData_9 = new FormData();
 		formData_9.top = new FormAttachment(defFileCombo, -23, SWT.BOTTOM);
@@ -407,7 +407,40 @@ public class LinkerSectionPart extends SectionPart {
 					}
 				}
 			});
-			}
+		}
 	}
+
+	public Combo getDefFileCombo() {
+		return defFileViewer.getCombo();
+	}
+
+	public Button getBrowseButton() {
+		return browseButton;
+	}
+
+	public Button getExportUnfrozenButton() {
+		return exportUnfrozenButton;
+	}
+
+	public Button getDontExportLibraryButton() {
+		return dontExportLibraryButton;
+	}
+
+	public Button getNoStrictdefButton() {
+		return noStrictdefButton;
+	}
+
+	public Button getCompressTargetExecutableButton() {
+		return compressTargetExecutableButton;
+	}
+
+	public Text getLinkAsText() {
+		return linkAsText;
+	}
+
+	public Text getWin32BaseAddrText() {
+		return baseAddrText;
+	}
+
 }
 

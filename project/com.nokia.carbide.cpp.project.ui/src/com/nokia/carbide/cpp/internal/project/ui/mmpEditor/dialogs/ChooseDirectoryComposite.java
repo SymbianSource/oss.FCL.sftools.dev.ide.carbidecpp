@@ -223,4 +223,13 @@ public class ChooseDirectoryComposite extends Composite {
 	public void setDefaultFocus() {
 		pathViewer.getControl().setFocus();
 	}
+
+	public Combo getPathViewerCombo() {
+		return pathViewer.getCombo();
+	}
+
+	public Button getBrowseButton() {
+		return browseButton;
+	}
+
 }

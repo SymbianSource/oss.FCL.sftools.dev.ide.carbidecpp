@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.*;
 import org.eclipse.ui.ide.IDE;
 
@@ -170,4 +171,9 @@ public class MMPWizard extends Wizard implements INewWizard {
 		this.selection = selection;
 		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_NEW_MMP_FILE_WIZARD_BANNER));
 	}
+
+	public WizardPage getMMPWizardPage() {
+		return page;
+	}
+
 }

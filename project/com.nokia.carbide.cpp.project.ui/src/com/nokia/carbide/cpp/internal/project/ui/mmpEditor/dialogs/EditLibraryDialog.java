@@ -118,4 +118,8 @@ public class EditLibraryDialog extends ValidatingDialog {
 		WorkbenchUtils.setHelpContextId(newShell, HelpContexts.EDIT_LIBRARY_DIALOG);
 	}
 
+	public Text getLibraryNameText() {
+		return libraryTextControl;
+	}
+
 }

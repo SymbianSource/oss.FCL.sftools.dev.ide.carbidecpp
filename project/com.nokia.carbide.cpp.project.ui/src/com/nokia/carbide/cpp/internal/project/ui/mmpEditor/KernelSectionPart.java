@@ -93,4 +93,13 @@ public class KernelSectionPart extends SectionPart {
 			getSection().setExpanded(true);
 		}
 	}
+
+	public Button getAsspExportsButton() {
+		return asspExportsButton;
+	}
+
+	public Button getAsspAbiButton() {
+		return asspAbiButton;
+	}
+
 }

@@ -54,6 +54,7 @@ public class ChooseFileComposite extends Composite {
 	private final String fileViewerLabel;
 	
 	private ComboViewer filePathViewer;
+	private Button browseButton;
 
 	@SuppressWarnings("unused") //$NON-NLS-1$
 	private boolean modifyingFilePathViewer;
@@ -124,7 +125,7 @@ public class ChooseFileComposite extends Composite {
 		fileCombo.setLayoutData(new GridData(180, SWT.DEFAULT));
 		filePathViewer.setInput(new Object());
 
-		final Button browseButton = new Button(this, SWT.NONE);
+		browseButton = new Button(this, SWT.NONE);
 		final GridData gridData_5 = new GridData();
 		gridData_5.horizontalIndent = 10;
 		browseButton.setLayoutData(gridData_5);
@@ -235,4 +236,13 @@ public class ChooseFileComposite extends Composite {
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
 		filePathViewer.addSelectionChangedListener(listener);
 	}
+
+	public Combo getPathViewerCombo() {
+		return filePathViewer.getCombo();
+	}
+
+	public Button getBrowseButton() {
+		return browseButton;
+	}
+
 }

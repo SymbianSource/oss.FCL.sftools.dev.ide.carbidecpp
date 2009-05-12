@@ -124,4 +124,16 @@ public class SourcesPage extends MMPEditorFormPage {
 		}
 	}
 
+	public SourcesSectionPart getSourcesSection() {
+		return sourcesSection;
+	}
+
+	public ResourcesSectionPart getReourcesSection() {
+		return resourcesSection;
+	}
+
+	public MissingSourcesSectionPart getMissingSourcesSection() {
+		return missingSourcesSectionPart;
+	}
+
 }

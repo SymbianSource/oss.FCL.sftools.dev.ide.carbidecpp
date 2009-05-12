@@ -135,4 +135,25 @@ public class LibrariesPage extends MMPEditorFormPage {
 			setInputs();
 		}
 	}
+
+	public LibrarySectionPart getMainLibrariesSection() {
+		return mainLibraries;
+	}
+
+	public LibrarySectionPart getStaticLibrariesSection() {
+		return staticLibraries;
+	}
+
+	public LibrarySectionPart getASSPLibrariesSection() {
+		return asspLibraries;
+	}
+
+	public LibrarySectionPart getWin32LibrariesSection() {
+		return win32Libraries;
+	}
+
+	public LibrarySectionPart getDebugLibrariesSection() {
+		return debugLibraries;
+	}
+
 }

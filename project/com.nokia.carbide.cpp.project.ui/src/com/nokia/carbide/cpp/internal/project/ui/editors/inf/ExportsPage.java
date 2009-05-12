@@ -22,6 +22,7 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
@@ -95,4 +96,13 @@ public class ExportsPage extends BldInfEditorFormPage {
 		super.createPartControl(parent);
 		WorkbenchUtils.setHelpContextId(getPartControl(), HelpContexts.EXPORTS_PAGE);
 	}
+
+	public SectionPart getExportsSection() {
+		return exports;
+	}
+
+	public SectionPart getTestExportsSection() {
+		return testExports;
+	}
+
 }

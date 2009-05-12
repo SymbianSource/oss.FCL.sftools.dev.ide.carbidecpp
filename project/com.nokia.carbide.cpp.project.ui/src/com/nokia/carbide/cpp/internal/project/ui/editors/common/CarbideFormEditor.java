@@ -771,4 +771,10 @@ public abstract class CarbideFormEditor extends FormEditor
 		MultiPageEditorActionBarContributor contributor = (MultiPageEditorActionBarContributor) getEditorSite().getActionBarContributor();
 		contributor.setActivePage(activeEditor);
 	}
+
+	public CarbideTextEditor getTextEditorPage() {
+		setActivePage(textEditorPageIndex);
+		return textEditorPage;
+	}
+
 }

@@ -69,6 +69,8 @@ public class LibrarySectionPart extends SectionPart {
 	private Button addButton;
 	private TableViewer tableViewer;
 	private Composite buttonComposite;
+	private AddLibraryDialog addLibraryDialog;
+	private EditLibraryDialog editLibraryDialog;
 	
 	class TableLabelProvider extends LabelProvider implements ITableLabelProvider {
 		public String getColumnText(Object element, int columnIndex) {
@@ -223,10 +225,10 @@ public class LibrarySectionPart extends SectionPart {
 		List<String> includedList = (List<String>) tableViewer.getInput();
 		sdkLibraries.removeAll(includedList);
 		
-		AddLibraryDialog dlg = new AddLibraryDialog(getSection().getShell(), sdkLibraries);
-		int dlgResult = dlg.open();
+		addLibraryDialog = new AddLibraryDialog(getSection().getShell(), sdkLibraries);
+		int dlgResult = addLibraryDialog.open();
 		if (dlgResult == Dialog.OK) {
-			List<String> libNames = dlg.getLibraryNames();
+			List<String> libNames = addLibraryDialog.getLibraryNames();
 			if (libNames != null && libNames.size() > 0) {
 				// ensure the names have the .lib extension
 				for (int i = 0; i < libNames.size(); i++) {
@@ -259,10 +261,10 @@ public class LibrarySectionPart extends SectionPart {
 				originalLibName = originalLibName.substring(0, dotPos);
 			}
 	
-			EditLibraryDialog dlg = new EditLibraryDialog(getSection().getShell(), originalLibName);
-			int dlgResult = dlg.open();
+			editLibraryDialog = new EditLibraryDialog(getSection().getShell(), originalLibName);
+			int dlgResult = editLibraryDialog.open();
 			if (dlgResult == Dialog.OK) {
-				String newLibName = dlg.getLibraryName();
+				String newLibName = editLibraryDialog.getLibraryName();
 				String extension = TextUtils.getExtension(newLibName);
 				if (!LIB_EXTENSION.equalsIgnoreCase(extension)) {
 					newLibName += "." + LIB_EXTENSION; //$NON-NLS-1$
@@ -342,4 +344,37 @@ public class LibrarySectionPart extends SectionPart {
 		downButton.setEnabled(selectionSize == 1 && 
 				firstSelection < tableViewer.getTable().getItemCount() - 1);
 	}
+
+	public TableViewer getTableViewer() {
+		return tableViewer;
+	}
+
+	public Button getAddButton() {
+		return addButton;
+	}
+
+	public Button getEditButton() {
+		return editButton;
+	}
+
+	public Button getUpButton() {
+		return upButton;
+	}
+
+	public Button getDownButton() {
+		return downButton;
+	}
+
+	public Button getRemovepButton() {
+		return removeButton;
+	}
+
+	public AddLibraryDialog getAddLibraryDialog() {
+		return addLibraryDialog;
+	}
+
+	public EditLibraryDialog getEditLibraryDialog() {
+		return editLibraryDialog;
+	}
+
 }

@@ -27,12 +27,14 @@ import com.nokia.cpp.internal.api.utils.ui.editor.FormEditorEditingContext;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.SectionPart;
@@ -58,6 +60,10 @@ public class MakMakeFilesSectionPart extends SectionPart {
 	private Button removeButton;
 	private TableViewer tableViewer;
 	private Composite buttonComposite;
+	private MMPWizard mmpWizard;
+	private MMPFileDialog mmpFileDialog;
+	private MakeFileDialog makeFileDialog;
+	private IEditorPart componentEditor;
 	
 	private final static String YES = Messages.MakMakeFilesSectionPart_Yes;
 	private final static String NO = Messages.MakMakeFilesSectionPart_No;
@@ -274,19 +280,19 @@ public class MakMakeFilesSectionPart extends SectionPart {
 	}
 	
 	protected void createMMPFileButtonPressed() {
-		MMPWizard wizard = new MMPWizard(isTest);
-		WizardDialog dlg = new WizardDialog(WorkbenchUtils.getActiveShell(), wizard);
+		mmpWizard = new MMPWizard(isTest);
+		WizardDialog dlg = new WizardDialog(WorkbenchUtils.getActiveShell(), mmpWizard);
 		if (dlg.open() == Window.OK) {
 			refresh();
 		}
 	}
 
 	protected void addMMPFileButtonPressed() {
-		MMPFileDialog dlg = new MMPFileDialog(getSection().getShell(), null, editorContext, isTest);
-		int dlgResult = dlg.open();
+		mmpFileDialog = new MMPFileDialog(getSection().getShell(), null, editorContext, isTest);
+		int dlgResult = mmpFileDialog.open();
 		if (dlgResult == Dialog.OK) {
 			List<IMakMakeReference> addedList = new ArrayList<IMakMakeReference>();
-			addedList.add(dlg.getMakeMakeFile());
+			addedList.add(mmpFileDialog.getMakeMakeFile());
 
 			AddListValueOperation op = new AddListValueOperation(
 					editorContext.bldInfView, 
@@ -299,11 +305,11 @@ public class MakMakeFilesSectionPart extends SectionPart {
 	}
 
 	protected void addMakeFileButtonPressed() {
-		MakeFileDialog dlg = new MakeFileDialog(getSection().getShell(), null, editorContext, isTest);
-		int dlgResult = dlg.open();
+		makeFileDialog = new MakeFileDialog(getSection().getShell(), null, editorContext, isTest);
+		int dlgResult = makeFileDialog.open();
 		if (dlgResult == Dialog.OK) {
 			List<IMakMakeReference> addedList = new ArrayList<IMakMakeReference>();
-			addedList.add(dlg.getMakeMakeFile());
+			addedList.add(makeFileDialog.getMakeMakeFile());
 
 			AddListValueOperation op = new AddListValueOperation(
 					editorContext.bldInfView, 
@@ -325,8 +331,10 @@ public class MakMakeFilesSectionPart extends SectionPart {
 			
 			if (ref instanceof IMMPReference) {
 				dlg = new MMPFileDialog(getSection().getShell(), (IMMPReference)ref, editorContext, isTest);
+				mmpFileDialog = (MMPFileDialog) dlg;
 			} else {
 				dlg = new MakeFileDialog(getSection().getShell(), (IMakefileReference)ref, editorContext, isTest);
+				makeFileDialog = (MakeFileDialog) dlg;
 			}
 
 			int dlgResult = dlg.show();
@@ -356,7 +364,7 @@ public class MakMakeFilesSectionPart extends SectionPart {
 			EpocEnginePathHelper pathHelper = new EpocEnginePathHelper(editorContext.project);
 
 			try {
-				IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), editorContext.project.getFile(pathHelper.convertToProject(ref.getPath())));
+				componentEditor = IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), editorContext.project.getFile(pathHelper.convertToProject(ref.getPath())));
 			} catch (PartInitException e) {
 				e.printStackTrace();
 			}
@@ -421,5 +429,57 @@ public class MakMakeFilesSectionPart extends SectionPart {
 		upButton.setEnabled(selectionSize == 1 && firstSelection > 0);
 		downButton.setEnabled(selectionSize == 1 && 
 				firstSelection < tableViewer.getTable().getItemCount() - 1);
+	}
+
+	public TableViewer getTableViewer() {
+		return tableViewer;
+	}
+
+	public Button getCreateMMPButton() {
+		return createMMPButton;
+	}
+
+	public Button getAddMMPButton() {
+		return addMMPButton;
+	}
+
+	public Button getAddMakeFileButton() {
+		return addMakeButton;
+	}
+
+	public Button getEditButton() {
+		return editButton;
+	}
+
+	public Button getOpenButton() {
+		return launchEditorButton;
+	}
+
+	public Button getUpButton() {
+		return upButton;
+	}
+
+	public Button getDownButton() {
+		return downButton;
+	}
+
+	public Button getRemoveButton() {
+		return removeButton;
+	}
+
+	public Wizard getMMPWizard() {
+		return mmpWizard;
+	}
+
+	public Dialog getMMPFileDialog() {
+		return mmpFileDialog;
+	}
+
+	public Dialog getMakeFileDialog() {
+		return makeFileDialog;
+	}
+
+	public IEditorPart getComponentEditor() {
+		return componentEditor;
 	}
 }

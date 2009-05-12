@@ -183,4 +183,13 @@ public class AddLibraryDialog extends TrayDialog {
 		libraryViewer.refresh();
 		libraryViewer.getControl().redraw();
 	}
+
+	public Text getLibraryText() {
+		return libraryTextControl;
+	}
+
+	public TableViewer getLibraryViewer() {
+		return libraryViewer;
+	}
+
 }

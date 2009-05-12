@@ -68,6 +68,11 @@ public class OverviewPage extends MMPEditorFormPage {
 	private Label targetPathLabel;
 	private Text targetNameText;
 	private Label targetNameLabel;
+	private ImageHyperlink sourceFilesImageHyperlink;
+	private ImageHyperlink librariesImageHyperlink;
+	private ImageHyperlink optionsImageHyperlink;
+	private Hyperlink addAUserHyperlink;
+	private Hyperlink addASystemHyperlink;
 
 	// target types known not to require UID2. Although GUI EXEs do
 	// require UID, there's no unambiguous distinction between GUI and
@@ -202,7 +207,7 @@ public class OverviewPage extends MMPEditorFormPage {
 		toolkit.paintBordersFor(composite_1);
 		projectDefinitionSection.setClient(composite_1);
 
-		final ImageHyperlink sourceFilesImageHyperlink = toolkit.createImageHyperlink(composite_1, SWT.NONE);
+		sourceFilesImageHyperlink = toolkit.createImageHyperlink(composite_1, SWT.NONE);
 		sourceFilesImageHyperlink.setImage(ResourceManager.getPluginImage(ProjectUIPlugin.getDefault(), "icons/pencil.png")); //$NON-NLS-1$
 		sourceFilesImageHyperlink.setText(Messages.OverviewPage_sourcesLinkTitle);
 		sourceFilesImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
@@ -213,7 +218,7 @@ public class OverviewPage extends MMPEditorFormPage {
 
 		toolkit.createLabel(composite_1, Messages.OverviewPage_sourcesLinkDescription, SWT.WRAP);
 
-		final ImageHyperlink librariesImageHyperlink = toolkit.createImageHyperlink(composite_1, SWT.NONE);
+		librariesImageHyperlink = toolkit.createImageHyperlink(composite_1, SWT.NONE);
 		librariesImageHyperlink.setImage(ResourceManager.getPluginImage(ProjectUIPlugin.getDefault(), "icons/pencil.png")); //$NON-NLS-1$
 		librariesImageHyperlink.setText(Messages.OverviewPage_libsLinktitle);
 		librariesImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
@@ -224,7 +229,7 @@ public class OverviewPage extends MMPEditorFormPage {
 
 		toolkit.createLabel(composite_1, Messages.OverviewPage_libsLinkDescription, SWT.WRAP);
 
-		final ImageHyperlink optionsImageHyperlink = toolkit.createImageHyperlink(composite_1, SWT.NONE);
+		optionsImageHyperlink = toolkit.createImageHyperlink(composite_1, SWT.NONE);
 		optionsImageHyperlink.setImage(ResourceManager.getPluginImage(ProjectUIPlugin.getDefault(), "icons/pencil.png")); //$NON-NLS-1$
 		optionsImageHyperlink.setText(Messages.OverviewPage_optionsLinkTitle);
 		optionsImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
@@ -246,7 +251,7 @@ public class OverviewPage extends MMPEditorFormPage {
 		toolkit.paintBordersFor(composite_2);
 		commonTasksSection.setClient(composite_2);
 
-		final Hyperlink addAUserHyperlink = toolkit.createHyperlink(composite_2, Messages.OverviewPage_addUserPathLink, SWT.NONE);
+		addAUserHyperlink = toolkit.createHyperlink(composite_2, Messages.OverviewPage_addUserPathLink, SWT.NONE);
 		final FormData formData_6 = new FormData();
 		formData_6.top = new FormAttachment(0, 5);
 		formData_6.left = new FormAttachment(0, 5);
@@ -257,7 +262,7 @@ public class OverviewPage extends MMPEditorFormPage {
 			}		
 		});
 
-		final Hyperlink addASystemHyperlink = toolkit.createHyperlink(composite_2, Messages.OverviewPage_addSysPathLink, SWT.NONE);
+		addASystemHyperlink = toolkit.createHyperlink(composite_2, Messages.OverviewPage_addSysPathLink, SWT.NONE);
 		final FormData formData_7 = new FormData();
 		formData_7.top = new FormAttachment(addAUserHyperlink, 5, SWT.BOTTOM);
 		formData_7.left = new FormAttachment(addAUserHyperlink, 0, SWT.LEFT);
@@ -403,4 +408,49 @@ public class OverviewPage extends MMPEditorFormPage {
 		editorContext.editor.addPageChangedListener(listener);
 		editorContext.editor.setActivePage(MMPEditorContext.OPTIONS_PAGE_ID);
 	}
+
+	public Label getActiveBuildConfigLabel() {
+		return activeBuildConfigLabel;
+	}
+
+	public Text getTargetNameText() {
+		return targetNameText;
+	}
+
+	public Text getTargetPathText() {
+		return targetPathText;
+	}
+
+	public Text getUID2Text() {
+		return uid2Text;
+	}
+
+	public Text getUID3Text() {
+		return uid3Text;
+	}
+
+	public Combo getTargetTypeCombo() {
+		return targetTypeViewer.getCombo();
+	}
+
+	public Hyperlink getAddAUserIncludeHyperlink() {
+		return addAUserHyperlink;
+	}
+
+	public Hyperlink getAddASystemIncludeHyperlink() {
+		return addASystemHyperlink;
+	}
+
+	public ImageHyperlink getSourcesHyperlink() {
+		return sourceFilesImageHyperlink;
+	}
+
+	public ImageHyperlink getLibrariesHyperlink() {
+		return librariesImageHyperlink;
+	}
+
+	public ImageHyperlink getOptionsHyperlink() {
+		return optionsImageHyperlink;
+	}
+	
 }
