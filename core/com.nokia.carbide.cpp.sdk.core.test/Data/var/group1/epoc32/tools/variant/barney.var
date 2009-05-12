@@ -1,0 +1,13 @@
+VARIANT			  				barney
+
+EXTENDS								flintstone500
+
+VARIANT_HRH						/epoc32/include/feature_settings.hrh
+
+BUILD_INCLUDE	prepend /epoc32/include/config/flintstone500/barney
+
+ROM_INCLUDE	prepend   /epoc32/include/config/flintstone500/barney
+ROM_INCLUDE	prepend   /epoc32/rom/config/flintstone500/barney
+
+
+

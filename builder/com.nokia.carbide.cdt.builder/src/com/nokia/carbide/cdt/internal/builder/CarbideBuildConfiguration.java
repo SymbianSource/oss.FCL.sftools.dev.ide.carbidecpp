@@ -67,7 +67,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	
 
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
-		super(context.getSDK(), context.getPlatformString(), context.getTargetString(), context.getBuildVariationName());
+		super(context.getSDK(), context.getPlatformString(), context.getTargetString());
 		projectTracker = new TrackedResource(project);
 		sisBuilderInfoList = new ArrayList<ISISBuilderInfo>(0);
 		envVarsInfo = new EnvironmentVarsInfo2(project, context);

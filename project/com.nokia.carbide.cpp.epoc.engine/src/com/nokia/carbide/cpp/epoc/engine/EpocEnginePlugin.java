@@ -16,6 +16,9 @@
 */
 package com.nokia.carbide.cpp.epoc.engine;
 
+import org.eclipse.core.runtime.*;
+import org.osgi.framework.BundleContext;
+
 import com.nokia.carbide.cpp.epoc.engine.model.*;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
 import com.nokia.carbide.cpp.epoc.engine.model.bsf.*;
@@ -23,14 +26,10 @@ import com.nokia.carbide.cpp.epoc.engine.model.makefile.IMakefileModel;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.IMakefileOwnedModel;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.*;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
+import com.nokia.carbide.cpp.epoc.engine.model.sbv.*;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewDataCache;
-import com.nokia.cpp.internal.api.utils.core.*;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Plugin;
-import org.osgi.framework.BundleContext;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -54,6 +53,7 @@ public class EpocEnginePlugin extends Plugin {
 	private static IModelProvider<IMakefileOwnedModel, IMakefileModel> makefileModelProvider;
 	private static IModelProvider<IImageMakefileOwnedModel, IImageMakefileModel> imageMakefileModelProvider;
 	private static IModelProvider<IBSFOwnedModel, IBSFModel> bsfModelProvider;
+	private static IModelProvider<ISBVOwnedModel, ISBVModel> sbvModelProvider;
 
 	private static ViewDataCache<IMMPOwnedModel, IMMPModel, IMMPView, IMMPData> mmpViewDataCache;
 
@@ -145,7 +145,7 @@ public class EpocEnginePlugin extends Plugin {
 	}
 	
 	/**
-	 * Get the provider that manages access to image (scalable icon) makefiles in the workspace.
+	 * Get the provider that manages access to BSF files in an SDK.
 	 * @return provider, never null
 	 */
 	public static synchronized IModelProvider<IBSFOwnedModel, IBSFModel> getBSFModelProvider() {
@@ -155,6 +155,16 @@ public class EpocEnginePlugin extends Plugin {
 		return bsfModelProvider;
 	}
 	
+	/**
+	 * Get the provider that manages access to the .var files in the SDK (for Symbian Binary Variation support).
+	 * @return provider, never null
+	 */
+	public static synchronized IModelProvider<ISBVOwnedModel, ISBVModel> getSBVModelProvider() {
+		if (sbvModelProvider == null) {
+			sbvModelProvider = ModelProviderFactory.createModelProvider(new SBVModelFactory());
+		}
+		return sbvModelProvider;
+	}
 
 	/**
 	 * Get the dispatcher for resource change events handling multiple paths.
@@ -329,6 +339,46 @@ public class EpocEnginePlugin extends Plugin {
 			getBSFModelProvider().releaseSharedModel(model);
 		}
 	}
+	
+	/**
+	 * Get a shared instance of the given SBV model, create a view
+	 * with the given configuration, and run user code using the model.
+	 * <p>
+	 * The model and view are automatically released.
+	 * <p>
+	 * If the model cannot be loaded or an exception is thrown, the runnable's 
+	 * #failedLoad() is called.
+	 * @param modelPath workspace-relative path
+	 * @param runnable the code to run when the model is loaded (or fails)
+	 * @return result from runnable#run
+	 */
+	public static Object runWithSBVView(IPath modelPath, 
+				ISBVViewRunnable runnable) {
+		ISBVModel model;
+		if (runnable instanceof ViewRunnableAdapter) {
+			((ViewRunnableAdapter) runnable).setModelPath(modelPath);
+		}
+		try {
+			model = getSBVModelProvider().getSharedModel(modelPath);
+		} catch (CoreException e) {
+			return runnable.failedLoad(e);
+		} catch (Throwable t) {
+			return runnable.failedLoad(new CoreException(Logging.newStatus(EpocEnginePlugin.getDefault(), t)));
+		}
+		ISBVView view = null;
+		if (model == null) {
+			return runnable.failedLoad(null);
+		}
+		try {
+			view = model.createView(null);
+			return runnable.run(view);
+		} finally {
+			if (view != null)
+				view.dispose();
+			getSBVModelProvider().releaseSharedModel(model);
+		}
+	}
+
 	
 	/**
 	 * Get a read-only copy of data for the given MMP view

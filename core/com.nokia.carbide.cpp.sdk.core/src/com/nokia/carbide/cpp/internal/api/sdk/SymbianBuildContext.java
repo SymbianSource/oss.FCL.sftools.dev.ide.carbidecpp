@@ -41,7 +41,6 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	private String platform;
 	private String target;
 	private String displayString = null;
-	private String symbianBuildVariationString;
 	
 	private static String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
 	private static String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
@@ -63,26 +62,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	
 	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget) {
 		sdkId = theSDK.getUniqueId();
-		String[] platformString = thePlatform.split("\\.");
-		if (platformString != null && platformString.length == 2){
-			platform = platformString[0];
-			symbianBuildVariationString = platformString[1];
-		} else {
-			platform = thePlatform;
-			symbianBuildVariationString = "";
-		}
-		
-		target = theTarget;
-		getDisplayString();
-	}
-	
-	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget, String theBinaryVariationName) {
-		sdkId = theSDK.getUniqueId();
 		platform = thePlatform;
 		target = theTarget;
-		symbianBuildVariationString = theBinaryVariationName;
 		getDisplayString();
 	}
+
 	
 	@Override
 	public int hashCode() {
@@ -157,13 +141,8 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 			} else {
 				displayString = displayString + SPACE_DISPLAY_TEXT + RELEASE_DISPLAY_TEXT;
 			}
-			
-			String platDisplay = platform;
-			if (symbianBuildVariationString.length() > 0){
-				platDisplay = platform + "." + symbianBuildVariationString;
-			}
-			
-			displayString = displayString + " (" + platDisplay + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
+
+			displayString = displayString + " (" + platform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
 		}
 		return displayString;
 	}
@@ -529,6 +508,13 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 
 
 	public String getBuildVariationName() {
-		return symbianBuildVariationString;
+		String varName = "";
+		
+		String[] tokens = getPlatformString().split("\\.");
+		if (tokens.length == 2){
+			varName = tokens[1];
+		}
+		
+		return varName;
 	}
 }

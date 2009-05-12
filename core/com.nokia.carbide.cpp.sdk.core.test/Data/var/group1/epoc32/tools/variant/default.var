@@ -1,0 +1,10 @@
+VARIANT			  				default
+
+VARIANT_HRH						/epoc32/include/feature_settings.hrh
+
+BUILD_INCLUDE	set			/epoc32/include
+
+ROM_INCLUDE 	set			/epoc32/include
+ROM_INCLUDE 	prepend	/epoc32/include/internal
+ROM_INCLUDE 	prepend	/epoc32/rom/include
+ROM_INCLUDE 	prepend	/epoc32/rom

@@ -23,6 +23,7 @@ import com.nokia.carbide.internal.cpp.epoc.engine.parser.mmp.IMMPParserConfigura
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.mmp.MMPParser;
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.pkg.IPKGParserConfiguration;
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.pkg.PKGParser;
+import com.nokia.carbide.internal.cpp.epoc.engine.parser.sbv.SBVParser;
 
 
 public abstract class ParserFactory {
@@ -70,6 +71,15 @@ public abstract class ParserFactory {
 	public static IDocumentParser createBSFParser() {
 		return new BSFParser();
 	}
+	
+	/**
+	 * Create a SBV (.var) parser, whose output contains only IASTSBVStatements.
+	 * @return
+	 */
+	public static IDocumentParser createSBVParser() {
+		return new SBVParser();
+	}
+
 
 	/**
 	 * Create a PKG parser, whose output contains only IASTBSFStatements.
