@@ -51,6 +51,9 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 					systemPaths.add(cpi.getAbsoluteBldInfPath().removeLastSegments(1).toFile());
 				}
 			}
+			
+			IBSFPlatform bsfplatform = buildContext.getSDK().getBSFCatalog().findPlatform(buildContext.getPlatformString());
+			ISBVPlatform sbvPlatform = buildContext.getSDK().getSBVCatalog().findPlatform(buildContext.getPlatformString());
 
 			// look in the epoc32 directory of the SDK
 			IPath includePath = buildContext.getSDK().getIncludePath();
@@ -59,8 +62,6 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 				File dir;
 				
 				// get additional include directories from BSF platform, if defined
-				IBSFPlatform bsfplatform = buildContext.getSDK().getBSFCatalog().findPlatform(buildContext.getPlatformString());
-				ISBVPlatform sbvPlatform = buildContext.getSDK().getSBVCatalog().findPlatform(buildContext.getPlatformString());
 				if (bsfplatform != null) {
 					IPath[] systemIncludePaths = bsfplatform.getSystemIncludePaths();
 					for (IPath path : systemIncludePaths) {
@@ -117,6 +118,13 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 			
 			// also search files in same folder as variant.hrh
 			File prefix = buildContext.getSDK().getPrefixFile();
+			if (sbvPlatform != null){
+				// might be an alternate HRH file to use
+				IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();
+				if (!varVarHRH.toFile().equals(prefix) && varVarHRH.toFile().exists()){
+					prefix = varVarHRH.toFile();
+				} 
+			}
 			if (prefix != null) {
 				systemPaths.add(prefix.getParentFile());
 			}

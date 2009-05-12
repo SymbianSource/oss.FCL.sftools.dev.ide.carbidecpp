@@ -78,9 +78,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -2738,7 +2736,16 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				}
 
 				// add the compiler prefix file if any
+				ISBVPlatform sbvPlatform = config.getSDK().getSBVCatalog().findPlatform(config.getPlatformString());
 				File sdkPrefix = config.getSDK().getPrefixFile();
+				if (sbvPlatform != null){
+					// might be an alternate HRH file to use
+					IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();
+					if (!varVarHRH.toFile().equals(sdkPrefix) && varVarHRH.toFile().exists()){
+						sdkPrefix = varVarHRH.toFile();
+					} 
+				}
+				
 				if (sdkPrefix != null && sdkPrefix.exists()) {
 					newRule = newRule + "-include \"" + sdkPrefix.getAbsolutePath() + "\" "; 
 				}
