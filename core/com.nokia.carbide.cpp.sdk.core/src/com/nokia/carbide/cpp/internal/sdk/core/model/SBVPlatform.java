@@ -22,8 +22,7 @@ import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.ISBVViewRunnable;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.internal.api.sdk.Messages;
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.cpp.internal.api.utils.core.*;
 
 /**
@@ -37,9 +36,9 @@ public class SBVPlatform implements ISBVPlatform {
 	private IPath path;
 	private ISBVPlatform extendedPlatform;
 	private String extendedPlatName;
-	private IPath[] systemIncludePaths;
+	private List<IPath> systemBuildIncludePaths = new ArrayList<IPath>();
+	private List<IPath> romBuildIncludePaths = new ArrayList<IPath>();
 	private IPath sdkIncludePath;
-	private IPath systemIncludePath;
 	private IPath bldVarintHRH;
 	private ISBVCatalog catalog;
 	private boolean virtual;
@@ -53,21 +52,18 @@ public class SBVPlatform implements ISBVPlatform {
 	SBVPlatform(ISBVCatalog catalog, IPath sdkIncludePath, ISBVView view ) {
 		this.catalog = catalog;
 		this.sdkIncludePath = sdkIncludePath;
-		this.name = view.getName();
 		this.extendedPlatName = view.getExtends().toUpperCase();
 		this.path = view.getModel().getPath();
 		this.virtual = view.getVirtualFlag();
+		this.name = view.getVariantName();
 		
 		String temp = view.getBuildVariantHRH();
-		String EPOC32_INCLUDE = "epoc32" + File.separator + "include";
-		if (temp != null && temp.length() > 0){
-			if (sdkIncludePath.toOSString().contains(EPOC32_INCLUDE)){
-				bldVarintHRH = new Path(sdkIncludePath.toOSString().substring(0, sdkIncludePath.toOSString().indexOf(EPOC32_INCLUDE)) + temp);
-			} else {
-				bldVarintHRH = new Path(sdkIncludePath + temp);
-			}
-		}
+		String epocRoot = getEPOCRoot();
 		
+		bldVarintHRH = new Path(epocRoot + temp);
+		
+		setBuildIncludePaths(view.getBuildIncludes());
+		setROMBuildIncludePaths(view.getROMBuildIncludes());
 
 	}
 
@@ -132,54 +128,7 @@ public class SBVPlatform implements ISBVPlatform {
 	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getExtendedVariant()()
 	 */
 	public ISBVPlatform getExtendedVariant() {
-		return extendedPlatform;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getSystemIncludePath()
-	 */
-	public IPath getSystemIncludePath() {
-		if (systemIncludePath == null) {
-			IPath extendedPlatformPath = null;
-			if (extendedPlatform != null) {
-				extendedPlatformPath = extendedPlatform.getSystemIncludePath();
-			}
-			
-			// VIRTUALVARIANT does not have its own path
-
-			// else, construct the system include path from the customized
-			// platform by appending our platform name
-			if (extendedPlatformPath == null) {
-				systemIncludePath = sdkIncludePath.append(name); //$NON-NLS-1$
-			} else {
-				systemIncludePath = extendedPlatformPath.append(name);
-			}
-			
-		}
-		
-		return systemIncludePath;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getSystemIncludePaths()
-	 */
-	public IPath[] getSystemIncludePaths() {
-		if (systemIncludePaths == null) {
-			synchronized (this) {
-				// get unique set of paths in the proper order (most specific to least)
-				Set<IPath> paths = new LinkedHashSet<IPath>();
-				ISBVPlatform platform = this;
-				while (platform != null) {
-					IPath path = platform.getSystemIncludePath();
-					if (path != null){
-						paths.add(path);
-					}
-					platform = platform.getExtendedVariant();
-				}
-				systemIncludePaths = (IPath[]) paths.toArray(new IPath[paths.size()]);
-			}
-		}
-		return systemIncludePaths;
+		return catalog.findPlatform(getExtendedVariantName());
 	}
 
 	/**
@@ -233,6 +182,94 @@ public class SBVPlatform implements ISBVPlatform {
 		return bldVarintHRH;
 		
 	}
+	
+	protected void setBuildIncludePaths(Map<String, String> incPaths){
+		synchronized (this)
+		{
+			Set<String> set = incPaths.keySet();
+			for (String currPath : set) {
+				IPath path = new Path(getEPOCRoot() + currPath);
+				systemBuildIncludePaths.add(path);
+			}
+		}
+		
+	}
+	
+	protected List<IPath> getBuildIncludePathsFromParents(){
+		
+		List<IPath> parentBuildIncludes = new ArrayList<IPath>();
+		
+		ISBVPlatform platform = getExtendedVariant();
+		ISBVPlatform prevPlat;
+		while (platform != null) {
+			parentBuildIncludes.addAll(platform.getBuildIncludePaths());
+			prevPlat = platform;
+			platform = getExtendedVariant();
+			if (prevPlat.getName().equalsIgnoreCase(platform.getName())){
+				break;
+			}
+		}
+		
+		return parentBuildIncludes;
+	}
+	
+	protected void setROMBuildIncludePaths(Map<String, String> incPaths){
+		synchronized (this)
+		{
+			Set<String> set = incPaths.keySet();
+			for (String currPath : set){
+				IPath path = new Path(getEPOCRoot() + currPath);
+				romBuildIncludePaths.add(path);
+			}
+		}
+	}
+	
+	protected List<IPath> getROMBuildIncludePathsFromParents(){
+		
+		List<IPath> parentROMBuildIncludes = new ArrayList<IPath>();
+		
+		ISBVPlatform platform = getExtendedVariant();
+		ISBVPlatform prevPlat;
+		while (platform != null) {
+			parentROMBuildIncludes.addAll(platform.getROMBuildIncludePaths());
+			prevPlat = platform;
+			platform = getExtendedVariant();
+			if (prevPlat.getName().equalsIgnoreCase(platform.getName())){
+				break;
+			}
+		}
+		
+		return parentROMBuildIncludes;
+	}
 
+	protected String getEPOCRoot(){
+
+		String EPOC32_INCLUDE = "epoc32" + File.separator + "include";
+		if (sdkIncludePath.toOSString().contains(EPOC32_INCLUDE)){
+			return sdkIncludePath.toOSString().substring(0, sdkIncludePath.toOSString().indexOf(EPOC32_INCLUDE));
+		} 
+		
+		return sdkIncludePath.toOSString();
+	}
+	
+	public List<IPath> getBuildIncludePaths(){
+		List<IPath> fullList = new ArrayList<IPath>();
+		
+		fullList.addAll(systemBuildIncludePaths);
+		fullList.addAll(getBuildIncludePathsFromParents());
+		
+		return fullList;
+	}
+	
+	public List<IPath> getROMBuildIncludePaths(){
+		List<IPath> fullList = new ArrayList<IPath>();
+		
+		fullList.addAll(romBuildIncludePaths);
+		fullList.addAll(getROMBuildIncludePathsFromParents());
+		
+		return fullList;
+	}
+	
+	
 }
 

@@ -18,6 +18,7 @@
 package com.nokia.carbide.cpp.sdk.core.test;
 
 import java.net.URL;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -69,7 +70,7 @@ public class SBVCatalogTest extends TestCase {
 		assertEquals("flintstone500", platforms[3].getName());
 		assertEquals("fred99nhd", platforms[4].getName());
 		assertEquals("variants", platforms[5].getName());
-		assertEquals("wilma88", platforms[6].getName());
+		assertEquals("differentname", platforms[6].getName()); // filename is wilma88, but test that we us the VARIANT keyword
 	}
 	
 	/**
@@ -95,10 +96,27 @@ public class SBVCatalogTest extends TestCase {
 		assertTrue(platform.isVirtual());
 		assertEquals("VARIANTS", platform.getExtendedVariantName().toUpperCase());
 		
-		assertNotNull(platform.getSystemIncludePath());
-		assertEquals(1, platform.getSystemIncludePaths().length);
+		assertNotNull(platform.getBuildIncludePaths());
+		assertEquals(3, platform.getBuildIncludePaths().size());
 		
 		assertTrue("Didn't get expected VARIANT_HRH value", platform.getBuildVariantHRHFile().toPortableString().contains("/epoc32/include/feature_settings.hrh"));
+		
+		// test null platform
+		platform = catalog.findPlatform("wilma88");
+		assertNull(platform);
+		
+		// test build include paths
+		platform = catalog.findPlatform("dino79");
+		assertNotNull(platform);
+		assertEquals(4, platform.getBuildIncludePaths().size());
+		
+		List<IPath> incPaths = platform.getBuildIncludePaths();
+		for (IPath path : incPaths){
+			System.out.println("Include path for dino79 bianry variant: " + path.toOSString());
+		}
+		
+		assertEquals(16, platform.getROMBuildIncludePaths().size());
+		
 	}	
 	
 	/**

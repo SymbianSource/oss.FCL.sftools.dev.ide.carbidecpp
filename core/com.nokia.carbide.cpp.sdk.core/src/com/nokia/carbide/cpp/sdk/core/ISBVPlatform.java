@@ -12,6 +12,8 @@
 */
 package com.nokia.carbide.cpp.sdk.core;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
@@ -31,7 +33,7 @@ public interface ISBVPlatform {
 	ISBVCatalog getCatalog();
 	
 	/**
-	 * Get the platform's name, as seen in the .var filename.
+	 * Get the platform's name, from the VARIANT keyword value.
 	 * 
 	 * @return name, never null
 	 */
@@ -47,22 +49,6 @@ public interface ISBVPlatform {
 	 * @return path, never null
 	 */
 	IPath getSBVPath();
-
-	/**
-	 * Get the system include path for this variant.
-	 * @return full filesystem path to the include directory for the variant,
-	 * which may be the parent/customized platform's directory for virtual
-	 * variant, or null if no non-virtual parent exists.
-	 */
-	IPath getSystemIncludePath();
-	
-	/**
-	 * Get the system include file paths needed for this variant and all its parents.
-	 * This does not include the epoc32\include\oem directory, which is presumed
-	 * for all platforms.
-	 * @return array of full filesystem paths, never null 
-	 */
-	IPath[] getSystemIncludePaths();
 	
 	/**
 	 * Get the name of the variant this SBV platform extends
@@ -72,7 +58,7 @@ public interface ISBVPlatform {
 	
 	/**
 	 * Get the variant platform this platform extends
-	 * @return
+	 * @return The ISBVPlatform, or null if it does not extend a platform
 	 */
 	public ISBVPlatform getExtendedVariant();
 	
@@ -87,5 +73,17 @@ public interface ISBVPlatform {
 	 * @return The path to the defined HRH file, null if none.
 	 */
 	public IPath getBuildVariantHRHFile();
+	
+	/**
+	 * The list of BUILD_INCLUDE paths from the variant and all it's parents
+	 * @return list of paths
+	 */
+	List<IPath> getBuildIncludePaths();
+	
+	/**
+	 * The list of ROM_INCLUDE paths from the variant and all it's parents
+	 * @return list of paths
+	 */
+	List<IPath> getROMBuildIncludePaths();
 	
 }

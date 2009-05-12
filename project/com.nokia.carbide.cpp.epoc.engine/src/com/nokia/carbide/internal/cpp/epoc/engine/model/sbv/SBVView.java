@@ -37,18 +37,33 @@ import com.nokia.cpp.internal.api.utils.core.*;
 
 public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	
+	/** The name of the variant that this configuration extends  */
 	private static final String EXTENDS = "EXTENDS"; //$NON-NLS-1$
+	/** The name of the variant  */
+	private static final String VARIANT = "VARIANT"; //$NON-NLS-1$
+	/** Defines the variant as a virtual variant, which means that this variant configuration is not compiled.  */
 	private static final String VIRTUAL = "VIRTUAL"; //$NON-NLS-1$
+	/** 	 The global variant hrh file, which is include to the building and image creation. If this parameter is not existing the system tries to include a <variantname>.hrh  */
 	private static final String VARIANT_HRH = "VARIANT_HRH"; //$NON-NLS-1$
-
+	/** set,prepend or append include paths to the global list of build time system includes (Used during abld command).  */
+	private static final String BUILD_INCLUDE = "BUILD_INCLUDE"; //$NON-NLS-1$
+	/** set,prepend or append include paths to the global list of rom build time system includes (Used during buildrom.pl command).  */
+	private static final String ROM_INCLUDE = "ROM_INCLUDE"; //$NON-NLS-1$
 	
 	private IASTSBVTranslationUnit tu;
+	private String variantName;
 	private boolean sawHeaderComment;
 	private boolean sawExtends;
 	private boolean sawBuildHRH;
 	private String extendsVariantStr;
 	private String varintHRHStr;
 	private boolean isVirtual;
+	
+	/** Path, flag */
+	private Map<String, String> buildIncludePaths = new HashMap<String, String>();
+	
+	/** ROM build includes */
+	private Map<String, String> romBuildIncludePaths = new HashMap<String, String>();;
 	
 	/**
 	 * @param model
@@ -95,10 +110,22 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 			sawExtends = true;
 		} 
 		
-		if (!sawBuildHRH && option.equals(VARIANT_HRH)) {
+		else if (!sawBuildHRH && option.equals(VARIANT_HRH)) {
 			setBuildHRHFile(value);
 			sawBuildHRH = true;
 		} 
+		
+		else if (option.equals(VARIANT)) {
+			setVariantName(value);
+		}
+		
+		else if (option.equals(BUILD_INCLUDE)){
+			addBuildInclude(value);
+		}
+		
+		else if (option.equals(ROM_INCLUDE)){
+			addROMInclude(value);
+		}
 		
 	}
 
@@ -183,14 +210,6 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#getName()
-	 */
-	public String getName() {
-		return getModel().getPath().removeFileExtension().lastSegment();
-	}
-
-
-	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView#setCustomizes(java.lang.String)
 	 */
 	public void setExtends(String platform) {
@@ -221,6 +240,38 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 
 	public void setBuildHRHFile(String pathStr) {
 		varintHRHStr = pathStr;
+	}
+	
+	public void setVariantName(String variantName){
+		this.variantName = variantName;
+	}
+	
+	public String getVariantName(){
+		return variantName;
+	}
+
+	public void addBuildInclude(String arguments) {
+		String[] args = arguments.split("\\s+");
+		if (args.length == 2){
+			buildIncludePaths.put(args[1], args[0]);
+		}
+		
+	}
+
+	public void addROMInclude(String arguments) {
+		String[] args = arguments.split("\\s+");
+		if (args.length == 2){
+			romBuildIncludePaths.put(args[1], args[0]);
+		}
+		
+	}
+
+	public Map<String, String> getBuildIncludes() {
+		return buildIncludePaths;
+	}
+
+	public Map<String, String> getROMBuildIncludes() {
+		return romBuildIncludePaths;
 	}
 	
 	

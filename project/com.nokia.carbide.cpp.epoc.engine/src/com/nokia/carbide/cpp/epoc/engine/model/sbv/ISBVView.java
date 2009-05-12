@@ -17,6 +17,8 @@
 
 package com.nokia.carbide.cpp.epoc.engine.model.sbv;
 
+import java.util.Map;
+
 import com.nokia.carbide.cpp.epoc.engine.model.IView;
 
 /**
@@ -28,8 +30,9 @@ import com.nokia.carbide.cpp.epoc.engine.model.IView;
  */
 public interface ISBVView extends IView<ISBVOwnedModel> {
 	
-	/** Get the name of SBV as a platform. */
-	String getName();
+	public static final String INCLUDE_FLAG_SET = "SET";
+	public static final String INCLUDE_FLAG_PREPEND = "PREPEND";
+	public static final String INCLUDE_FLAG_APPEND = "APPEND";
 	
 	/** Set the EXTENDS platform.
 	 * @param binary variant platform may not be null, but may be "" */
@@ -62,5 +65,43 @@ public interface ISBVView extends IView<ISBVOwnedModel> {
 	 * @return The string of the BUILD_HRH, null if not defined.
 	 */
 	String getBuildVariantHRH();
+	
+	/**
+	 * Set the name of the VARIANT
+	 * @param variantName
+	 */
+	void setVariantName(String variantName);
+	
+	/** 
+	 * Get the name of the VARIANT
+	 * 
+	 * @return the variant name
+	 */
+	String getVariantName();
+	
+	
+	/** 
+	 * add a build include path
+	 */
+	void addBuildInclude(String arguments);
+	
+	/**
+	 * Get the BUILD_INLCUDES
+	 * @return A map of the build includes: <Include dir, flag>
+	 */
+	Map<String, String> getBuildIncludes();
+	
+	/** 
+	 * add a rom build include path
+	 */
+	void addROMInclude(String arguments);
+	
+	/**
+	 * Get the ROM_INLCUDES
+	 * @return A map of the build includes: <Include dir, flag>
+	 */
+	Map<String, String> getROMBuildIncludes();
+	
+	
 	
 }
