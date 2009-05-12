@@ -52,7 +52,6 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	
 	private IASTSBVTranslationUnit tu;
 	private String variantName;
-	private boolean sawHeaderComment;
 	private boolean sawExtends;
 	private boolean sawBuildHRH;
 	private String extendsVariantStr;
@@ -81,7 +80,6 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 		IDocumentParser sbvParser = ParserFactory.createSBVParser();
 		tu = (IASTSBVTranslationUnit) sbvParser.parse(getModel().getPath(), getModel().getDocument());
 		
-		sawHeaderComment = false;
 		sawExtends = false;
 		sawBuildHRH = false;
 		
@@ -189,13 +187,9 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 	@Override
 	protected void addViewSpecificMessages(List<IMessage> messageList) {
 		IPath fullPath = getModel().getPath();
-		if (!sawHeaderComment) {
-			messageList.add(ASTFactory.createErrorMessage("SBVView.InvalidSBVHeader",
-					new Object[0],
-					new MessageLocation(fullPath)));
-		}
+
 		if (!sawExtends) {
-			messageList.add(ASTFactory.createErrorMessage("SBVView.NoCustomizesStatement",
+			messageList.add(ASTFactory.createErrorMessage("SBVView.NoExtendsStatement",
 					new Object[0],
 					new MessageLocation(fullPath)));
 		}

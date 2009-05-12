@@ -88,7 +88,7 @@ public class SBVPlatform implements ISBVPlatform {
 	 * Set the customized platform.
 	 * @param customized
 	 */
-	void setCustomizedPlatform(ISBVPlatform customized) {
+	void setExtendedPlatform(ISBVPlatform customized) {
 		Check.checkState(customized != this);
 		this.extendedPlatform = customized;
 		if (customized != null) {
@@ -128,7 +128,7 @@ public class SBVPlatform implements ISBVPlatform {
 	 * @see com.nokia.carbide.cpp.sdk.core.ISBVPlatform#getExtendedVariant()()
 	 */
 	public ISBVPlatform getExtendedVariant() {
-		return catalog.findPlatform(getExtendedVariantName());
+		return extendedPlatform;
 	}
 
 	/**

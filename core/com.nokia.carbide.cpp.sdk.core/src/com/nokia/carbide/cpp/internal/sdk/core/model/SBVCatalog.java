@@ -14,15 +14,16 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
-import com.nokia.cpp.internal.api.utils.core.IMessage;
+import com.nokia.carbide.cpp.internal.api.sdk.Messages;
+import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.cpp.internal.api.utils.core.*;
 
 /**
  * This class defines the hierarchy of VAR files detected for a given SDK.
@@ -58,11 +59,35 @@ public class SBVCatalog implements ISBVCatalog {
 			}
 		}
 		
-		// TODO: Do we need to bother with a hierarchy?
 		// now wire up the platforms
-		//establishPlatformHierarchy();
+		establishPlatformHierarchy();
 	}
 
+	/**
+	 * Iterate the platforms and connect them together
+	 */
+	private void establishPlatformHierarchy() {
+		List<ISBVPlatform> remaining = new ArrayList<ISBVPlatform>(platforms);
+		while (!remaining.isEmpty()) {
+			SBVPlatform current = (SBVPlatform) remaining.remove(0);
+			String variantPlatformName = current.getExtendedVariantName();
+			if (variantPlatformName != null) {
+				ISBVPlatform customizedPlatform = findPlatform(variantPlatformName);
+				if (customizedPlatform == null) {
+					messages.add(new Message(IMessage.ERROR,
+							new MessageLocation(current.getSBVPath()),
+							"SBVCatalog.MissingCustomizedPlatform", //$NON-NLS-1$
+							MessageFormat.format(
+									Messages.getString("SBVCatalog.MissingCustomizedPlatform"), //$NON-NLS-1$
+									new Object[] { current.getName(), variantPlatformName })
+							));
+				} else {
+					current.setExtendedPlatform(customizedPlatform);
+				}
+			}
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.sdk.core.ISBVCatalog#getMessages()
 	 */
