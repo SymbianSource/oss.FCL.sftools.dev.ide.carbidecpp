@@ -13,25 +13,15 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultModelDocumentProvider;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProvider;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianMissingSDKFactory;
-import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
-import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
-import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
 
@@ -384,12 +374,22 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 				File prefixFile = getSDK().getPrefixFile();
 				if (prefixFile != null) {
 
-					// add any BSF includes so the headers are picked up from the correct location
+					// add any BSF/SBV includes so the headers are picked up from the correct location
 					List<File> systemPaths = new ArrayList<File>();
-					IBSFPlatform plat = getSDK().getBSFCatalog().findPlatform(platform);
-					if (plat != null) {
-						for (IPath path : plat.getSystemIncludePaths()) {
+					IBSFPlatform bsfPlat = getSDK().getBSFCatalog().findPlatform(platform);
+					ISBVPlatform sbvPlat = getSDK().getSBVCatalog().findPlatform(platform);
+					if (bsfPlat != null) {
+						for (IPath path : bsfPlat.getSystemIncludePaths()) {
 							systemPaths.add(path.toFile());
+						}
+					} else if (sbvPlat != null) {
+						Map<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
+						Set<IPath> set = platPaths.keySet();
+						for (IPath path : set) {
+							String pathType = platPaths.get(path);
+							if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
+								systemPaths.add(path.toFile());
+							}
 						}
 					}
 					

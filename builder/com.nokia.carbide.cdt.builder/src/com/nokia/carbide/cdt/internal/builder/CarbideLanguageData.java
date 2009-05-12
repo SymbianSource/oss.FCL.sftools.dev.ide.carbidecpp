@@ -17,40 +17,24 @@
 package com.nokia.carbide.cdt.internal.builder;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
-import org.eclipse.cdt.core.settings.model.CIncludePathEntry;
-import org.eclipse.cdt.core.settings.model.CMacroEntry;
-import org.eclipse.cdt.core.settings.model.CMacroFileEntry;
-import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
-import org.eclipse.cdt.core.settings.model.ICLanguageSettingEntry;
-import org.eclipse.cdt.core.settings.model.ICProjectDescription;
-import org.eclipse.cdt.core.settings.model.ICSettingEntry;
-import org.eclipse.cdt.core.settings.model.ICStorageElement;
+import org.eclipse.cdt.core.settings.model.*;
 import org.eclipse.cdt.core.settings.model.extension.CLanguageData;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.content.IContentType;
-import org.eclipse.core.runtime.content.IContentTypeManager;
-import org.eclipse.core.runtime.content.IContentTypeSettings;
+import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.content.*;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 /**
  * Part of the new CDT 4.0 project model requirements.  All this class
@@ -186,13 +170,25 @@ public class CarbideLanguageData extends CLanguageData {
 
 		// add platform includes first
 		IBSFPlatform platform = carbideBuildConfig.getSDK().getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+		ISBVPlatform sbvPlat = carbideBuildConfig.getSDK().getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
 		if (platform != null) {
 			IPath[] systemIncludePaths = platform.getSystemIncludePaths();
 			for (IPath path : systemIncludePaths) {
 				includeEntries.add(new CIncludePathEntry(path, 0));
 			}
 		}
-
+		else if (sbvPlat != null){
+			
+			Map<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
+			Set<IPath> set = platPaths.keySet();
+			for (IPath path : set) {
+				String pathType = platPaths.get(path);
+				if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
+					includeEntries.add(new CIncludePathEntry(path, 0));
+				}
+			}
+		}
+		
 		// get the user and system includes
 		List<File> userIncludes = new ArrayList<File>();
 		List<File> systemIncludes = new ArrayList<File>();

@@ -13,6 +13,7 @@
 package com.nokia.carbide.cpp.sdk.core;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
 
@@ -75,15 +76,15 @@ public interface ISBVPlatform {
 	public IPath getBuildVariantHRHFile();
 	
 	/**
-	 * The list of BUILD_INCLUDE paths from the variant and all it's parents
-	 * @return list of paths
+	 * The MAP of BUILD_INCLUDE paths from the variant and all it's parents
+	 * @return Map of IPaths and the operation to perform (set, prepend, append)
 	 */
-	List<IPath> getBuildIncludePaths();
+	Map<IPath, String> getBuildIncludePaths();
 	
 	/**
-	 * The list of ROM_INCLUDE paths from the variant and all it's parents
+	 * The MAP of ROM_INCLUDE paths from the variant and all it's parents
 	 * @return list of paths
 	 */
-	List<IPath> getROMBuildIncludePaths();
+	Map<IPath, String> getROMBuildIncludePaths();
 	
 }

@@ -18,7 +18,8 @@
 package com.nokia.carbide.cpp.sdk.core.test;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -110,9 +111,12 @@ public class SBVCatalogTest extends TestCase {
 		assertNotNull(platform);
 		assertEquals(4, platform.getBuildIncludePaths().size());
 		
-		List<IPath> incPaths = platform.getBuildIncludePaths();
-		for (IPath path : incPaths){
-			System.out.println("Include path for dino79 bianry variant: " + path.toOSString());
+		Map<IPath, String> systemPaths = platform.getBuildIncludePaths();
+		Set<IPath> set = systemPaths.keySet();
+		for (IPath path : set) {
+			String pathType = systemPaths.get(path);
+			assertNotNull(pathType);
+			System.out.println("BUILD_INCLUDE = " + path.toOSString() + " Type = " + pathType);
 		}
 		
 		assertEquals(16, platform.getROMBuildIncludePaths().size());

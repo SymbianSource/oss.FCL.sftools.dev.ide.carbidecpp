@@ -74,8 +74,16 @@ public class SBVCatalog implements ISBVCatalog {
 	 * @see com.nokia.carbide.cpp.sdk.core.ISBVCatalog#findPlatform(java.lang.String)
 	 */
 	public ISBVPlatform findPlatform(String platformName) {
+		
+		// The platform name for a symbian binary variant should be <plat>.<variant>
+		//So we will only care about the second part to find the actual SBV platform
+		String searchName = platformName;
+		String[] token = platformName.split("\\.");
+		if (token.length == 2){
+			searchName = token[1];
+		}
 		for (ISBVPlatform platform : platforms) {
-			if (platform.getName().equalsIgnoreCase(platformName))
+			if (platform.getName().equalsIgnoreCase(searchName))
 				return platform;
 		}
 		return null;

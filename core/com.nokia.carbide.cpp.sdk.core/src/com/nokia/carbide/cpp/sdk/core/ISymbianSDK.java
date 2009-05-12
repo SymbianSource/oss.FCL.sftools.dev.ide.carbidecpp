@@ -359,4 +359,9 @@ public interface ISymbianSDK {
 	 * Get the BSF catalog for the SDK.
 	 */
 	IBSFCatalog getBSFCatalog();
+	
+	/**
+	 * Get the Symbian Binary Variation (SBV) catalog for the SDK.
+	 */
+	ISBVCatalog getSBVCatalog();
 }

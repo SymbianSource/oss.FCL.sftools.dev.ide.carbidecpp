@@ -36,8 +36,8 @@ public class SBVPlatform implements ISBVPlatform {
 	private IPath path;
 	private ISBVPlatform extendedPlatform;
 	private String extendedPlatName;
-	private List<IPath> systemBuildIncludePaths = new ArrayList<IPath>();
-	private List<IPath> romBuildIncludePaths = new ArrayList<IPath>();
+	private Map<IPath, String> systemBuildIncludePaths = new HashMap<IPath, String>();
+	private Map<IPath, String> romBuildIncludePaths = new HashMap<IPath, String>();
 	private IPath sdkIncludePath;
 	private IPath bldVarintHRH;
 	private ISBVCatalog catalog;
@@ -189,20 +189,21 @@ public class SBVPlatform implements ISBVPlatform {
 			Set<String> set = incPaths.keySet();
 			for (String currPath : set) {
 				IPath path = new Path(getEPOCRoot() + currPath);
-				systemBuildIncludePaths.add(path);
+				String pathProperty = incPaths.get(currPath);
+				systemBuildIncludePaths.put(path, pathProperty);
 			}
 		}
 		
 	}
 	
-	protected List<IPath> getBuildIncludePathsFromParents(){
+	protected Map<IPath, String> getBuildIncludePathsFromParents(){
 		
-		List<IPath> parentBuildIncludes = new ArrayList<IPath>();
+		Map<IPath, String> parentBuildIncludes = new HashMap<IPath, String>();
 		
 		ISBVPlatform platform = getExtendedVariant();
 		ISBVPlatform prevPlat;
 		while (platform != null) {
-			parentBuildIncludes.addAll(platform.getBuildIncludePaths());
+			parentBuildIncludes.putAll(platform.getBuildIncludePaths());
 			prevPlat = platform;
 			platform = getExtendedVariant();
 			if (prevPlat.getName().equalsIgnoreCase(platform.getName())){
@@ -213,25 +214,26 @@ public class SBVPlatform implements ISBVPlatform {
 		return parentBuildIncludes;
 	}
 	
-	protected void setROMBuildIncludePaths(Map<String, String> incPaths){
+	protected void setROMBuildIncludePaths(Map<String, String> romPaths){
 		synchronized (this)
 		{
-			Set<String> set = incPaths.keySet();
-			for (String currPath : set){
+			Set<String> set = romPaths.keySet();
+			for (String currPath : set) {
 				IPath path = new Path(getEPOCRoot() + currPath);
-				romBuildIncludePaths.add(path);
+				String pathProperty = romPaths.get(currPath);
+				romBuildIncludePaths.put(path, pathProperty);
 			}
 		}
 	}
 	
-	protected List<IPath> getROMBuildIncludePathsFromParents(){
+	protected Map<IPath, String> getROMBuildIncludePathsFromParents(){
 		
-		List<IPath> parentROMBuildIncludes = new ArrayList<IPath>();
+		Map<IPath, String> parentROMBuildIncludes = new HashMap<IPath, String>();
 		
 		ISBVPlatform platform = getExtendedVariant();
 		ISBVPlatform prevPlat;
 		while (platform != null) {
-			parentROMBuildIncludes.addAll(platform.getROMBuildIncludePaths());
+			parentROMBuildIncludes.putAll(platform.getROMBuildIncludePaths());
 			prevPlat = platform;
 			platform = getExtendedVariant();
 			if (prevPlat.getName().equalsIgnoreCase(platform.getName())){
@@ -252,22 +254,23 @@ public class SBVPlatform implements ISBVPlatform {
 		return sdkIncludePath.toOSString();
 	}
 	
-	public List<IPath> getBuildIncludePaths(){
-		List<IPath> fullList = new ArrayList<IPath>();
+	public Map<IPath, String> getBuildIncludePaths(){
 		
-		fullList.addAll(systemBuildIncludePaths);
-		fullList.addAll(getBuildIncludePathsFromParents());
+		Map<IPath, String> fullPathMap = new HashMap<IPath, String>();
 		
-		return fullList;
+		fullPathMap.putAll(systemBuildIncludePaths);
+		fullPathMap.putAll(getBuildIncludePathsFromParents());
+		
+		return fullPathMap;
 	}
 	
-	public List<IPath> getROMBuildIncludePaths(){
-		List<IPath> fullList = new ArrayList<IPath>();
+	public Map<IPath, String> getROMBuildIncludePaths(){
+		Map<IPath, String> fullPathMap = new HashMap<IPath, String>();
 		
-		fullList.addAll(romBuildIncludePaths);
-		fullList.addAll(getROMBuildIncludePathsFromParents());
+		fullPathMap.putAll(romBuildIncludePaths);
+		fullPathMap.putAll(getROMBuildIncludePathsFromParents());
 		
-		return fullList;
+		return fullPathMap;
 	}
 	
 	
