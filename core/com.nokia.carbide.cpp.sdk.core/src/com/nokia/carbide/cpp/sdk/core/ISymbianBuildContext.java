@@ -110,4 +110,10 @@ public interface ISymbianBuildContext {
 	 * @return a list of macros which may be empty.
 	 */
 	public List<IDefine> getCompilerMacros();
+	
+	/**
+	 * For platforms that are building with Symbian Binary Variation, this suffix will be included in the configuration name
+	 * @return The name of the Symbian Binary Variation, or an empy String if the configuration is not a variation.
+	 */
+	public String getBuildVariationName();
 }

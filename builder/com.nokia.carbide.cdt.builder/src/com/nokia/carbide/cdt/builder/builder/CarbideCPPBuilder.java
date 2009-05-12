@@ -2061,4 +2061,8 @@ public static String[] getParserIdArray(int id) {
 		
 		return false;
     }
+    
+    public static IPath getBuilderMakefileDir(ICarbideBuildConfiguration config){
+    	return getBuilder(config.getCarbideProject().getProject()).getMakefileDirectory(config);
+    }
 }
