@@ -222,4 +222,12 @@ class TestSymbianSDK implements ISymbianSDK {
 		return Collections.EMPTY_LIST;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.cpp.sdk.core.ISymbianSDK#getSBVCatalog()
+	 */
+	public ISBVCatalog getSBVCatalog() {
+		return null;
+	}
+	
+	
 }
