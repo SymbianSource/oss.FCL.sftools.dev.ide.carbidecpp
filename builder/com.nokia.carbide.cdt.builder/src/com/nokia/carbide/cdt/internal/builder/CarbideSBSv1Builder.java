@@ -531,8 +531,19 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			view.dispose();
 			modelProvider.releaseSharedModel(model);
 
-			IPath objectDir = new Path(epocBldMacros[0].getValue().toString()).append(buildConfig.getTargetString());
-
+			IPath objectDir = null;
+			if (buildConfig.isSymbianBinaryVariation()){
+				// if symbian binary variation, then the object file dir will be in sub-directory with <md5>/udeb/<obj>
+				String MD5Name = EpocEngineHelper.getMD5HashForBinaryVariant(buildConfig, fullMMPPath);
+				if (MD5Name != null && MD5Name.length() > 0){
+					objectDir = new Path(epocBldMacros[0].getValue().toString()).append(MD5Name).append(buildConfig.getTargetString());
+				}
+			} 
+			
+			if (objectDir == null){
+				objectDir = new Path(epocBldMacros[0].getValue().toString()).append(buildConfig.getTargetString());
+			}
+			
 			IPath path = objectDir.append(file.removeFileExtension().lastSegment() + ".o").removeTrailingSeparator();
 			
 			if (FileUtils.getSafeFileExtension(file).toLowerCase().compareTo("cia") == 0) {
@@ -2429,11 +2440,16 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// each platform has its own directory
 		String platformName = config.getPlatformString().toUpperCase();
-		makefilePath = makefilePath.append(platformName);
+		makefilePath = makefilePath.append(config.getBasePlatformForVariation().toUpperCase());
 
 		// and the makefile has the form MMPNAME.PLATFORM
 		makefilePath = makefilePath.append(mmpName + "." + platformName);
-
+		
+		if (!makefilePath.toFile().exists()){
+			makefilePath = makefilePath.removeLastSegments(1);
+			makefilePath = makefilePath.append(mmpName + "." + platformName + ".DEFAULT");
+		}
+		
 		return makefilePath.toFile();
 	}
 	

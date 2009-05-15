@@ -178,9 +178,10 @@ public class SBVPlatform implements ISBVPlatform {
 	}
 
 	public IPath getBuildVariantHRHFile() {
-		
+		// TODO: If the bldvariant is not defined we are supposed to use the <variant name>.hrh
+		// as the preinclude. But currently we aren't sure how to look that up or where the default
+		// location should be
 		return bldVarintHRH;
-		
 	}
 	
 	protected void setBuildIncludePaths(Map<String, String> incPaths){
