@@ -6,12 +6,25 @@
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>SDK Platform Filter</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
-<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script></head>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+<style type="text/css">
+<!--
+.style1 {
+	color: #000000;
+	font-weight: bold;
+}
+.style2 {
+	color: #000000
+}
+.style3 {font-size: 14px; font-family: "Courier New", Courier, mono;}
+-->
+</style>
+</head>
 <body bgcolor="#FFFFFF">
 <h2> Platform Filtering Preferences </h2>
 <p> Use the <img src="../../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage)")'>
 Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to select which platforms are visible when creating new projects or build configurations. For Symbian Build System version 1 (SBSv1), the EKA2 and EKA1 platforms are available with a list of build targets for each.</p>
-<p align="center"><img src="images/wnd_sdk_platform_filter.png" width="676" height="544" alt="" /></p>
+<p align="center"><img src="images/wnd_sdk_platform_filter.png" width="673" height="544" alt="" /></p>
 <p class="figure">Figure 1. SDK Platform Filter window (SBSv1 tab) </p>
 <h5>Table 1 SDK Platform Filter&mdash;SBSv1 items</h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -43,8 +56,13 @@ Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to sele
     </ul></td>
   </tr>
   <tr>
-    <td><b>Discover SDK Customization Platforms Dynamically (BSF Scanner) </b></td>
-    <td><p>Select this option to scan for .bsf files under <span class="code">\epoc32\root</span> for platform extensions, such as ARMV6 and ARM9E </p></td>
+    <td><b>Discover customization (.bsf) and Symbian Binary Variant (.var) platforms dynamically</b></td>
+    <td><p>Select this option to scan for customized platform extensions and binary variations. The variant files searched for include:</p>
+      <ul>
+        <li>.bsf files, located in the <span class="code">\epoc32\root</span> directory</li>
+        <li>Symbian Binary Variant (.var) files, located in the <span class="code">\epoc32\tools</span> directory</li>
+      </ul>
+    </td>
   </tr>
 </table>
 <p>&nbsp;</p>
