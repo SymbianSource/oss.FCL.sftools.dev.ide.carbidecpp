@@ -56,6 +56,7 @@ import java.util.List;
 public class MMPSelectionUI extends Composite implements ISelectionProvider {
 
 	private static final String AUTOTEST_UID = ".uid"; //$NON-NLS-1$
+	private static int MMP_SELECTION_THRESHOLD = 3;
 
 	public final class FileInfo {
     	private int ordinal;
@@ -420,7 +421,12 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 		for (TableColumn tableColumn : columns) {
 			tableColumn.pack();
 		}
-		setAllChecked(true);
+		if (data.size() > MMP_SELECTION_THRESHOLD) {
+			setAllChecked(false);
+		}
+		else {
+			setAllChecked(true);
+		}
 	}
 	
     /**
@@ -585,4 +591,14 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 		}
 		return null;
 	}
+
+	/**
+	 * Set the MMP selection threshold. When number of MMPs <= threshold, all MMPs are selected by default.
+	 * When number of MMPs > threshold, no MMP is selected by default.
+	 * @param threshold - threshold for MMP selection
+	 */
+	public static void setMMPSelectionThreshold(int threshold) {
+		MMP_SELECTION_THRESHOLD = threshold;
+	}
+
 }

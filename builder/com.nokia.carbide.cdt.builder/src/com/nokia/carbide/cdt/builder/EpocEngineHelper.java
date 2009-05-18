@@ -16,71 +16,30 @@
 */
 package com.nokia.carbide.cdt.builder;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.*;
 
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.carbide.cpp.epoc.engine.BldInfDataRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
-import com.nokia.carbide.cpp.epoc.engine.ImageMakefileDataRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.MMPViewRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSource;
-import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
-import com.nokia.carbide.cpp.epoc.engine.image.IMultiImageSource;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfData;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExport;
+import com.nokia.carbide.cdt.builder.project.*;
+import com.nokia.carbide.cpp.epoc.engine.*;
+import com.nokia.carbide.cpp.epoc.engine.image.*;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMMPReference;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPBitmap;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPViewConfiguration;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGEmbeddedSISFile;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGInstallFile;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.PKGModelHelper;
-import com.nokia.cpp.internal.api.utils.core.CommonPathFinder;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
-import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
+import com.nokia.cpp.internal.api.utils.core.*;
 
 public class EpocEngineHelper {
 
@@ -847,7 +806,7 @@ public class EpocEngineHelper {
 						exePath = tempPath.lastSegment();
 					}
 					
-					String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
+					String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getBasePlatformForVariation());
 					IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform).append(buildConfig.getTargetString());
 
 					// if targetpath is non-null and this is an EKA1 emulator config then add it
@@ -2017,60 +1976,21 @@ public class EpocEngineHelper {
 			
 			ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 			if (cpi != null){
+				
 				// construct the location of the binary variant makefile.
-				// we can parse the makefile and get the variant name for each in the comments:
-				//
-				//# FeatureVariantURELLabel d41d8cd98f00b204e9800998ecf8427e
-				//# FeatureVariantUDEBLabel d41d8cd98f00b204e9800998ecf8427e
-				
 				ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
-				IPath makefileDir = CarbideCPPBuilder.getBuilderMakefileDir(defaultConfig);
+				File realMakeFile = getMakeFileForSymbianBinaryVariant(mmpData, defaultConfig);	
 				
-				IPath mmpFile = mmpData.getModelPath();
-				mmpFile = mmpFile.removeFileExtension();
-				String mmpRootName = mmpFile.lastSegment();
-				String plat = defaultConfig.getPlatformString();
-				String variant = defaultConfig.getBuildVariationName();
+				String MD5Name = getMD5HashForBinaryVariant(defaultConfig, mmpData.getModelPath());
 				
-				String makefilePath = makefileDir.toOSString() + File.separator + mmpRootName + File.separator + plat + File.separator;
-				String variantMakeFileName = mmpRootName + "." + plat + "." + variant;
-				String MD5Name = "";
-				
-				//System.out.println("Makefile dir: " + makefilePath +  variantMakeFileName);
-				File realMakeFile = new File(makefilePath + variantMakeFileName);
-				if (realMakeFile.exists()){
-					String text = "";
-					try {
-						text = new String(FileUtils.readFileContents(realMakeFile, null));
-					} catch (CoreException e) {
-						e.printStackTrace();
-					}
-					
-					String searchString = "";
-					if (defaultConfig.getTargetString().equals(SymbianBuildContext.DEBUG_TARGET)){
-						searchString = "# FeatureVariantUDEBLabel";
-					} else {
-						searchString = "# FeatureVariantURELLabel";
-					}
-					
-					for (String line : text.split("\n")) {
-						if (line.startsWith(searchString)){
-							String tokens[] = line.split(" ");
-							if (tokens.length == 3){
-								MD5Name = tokens[2];
-								break;
-							}
-						}
-					}
-					
-					if (MD5Name.length() > 0){
-						System.out.println("The target is: " + target.removeFileExtension().addFileExtension(MD5Name + "." + FileUtils.getSafeFileExtension(target)).toOSString()); //$NON-NLS-1$
-						return 	target = target.removeFileExtension().addFileExtension(MD5Name + "." + FileUtils.getSafeFileExtension(target)); //$NON-NLS-1$
-					}
-					
+				if (MD5Name != null && MD5Name.length() > 0){
+					//System.out.println("The target is: " + target.removeFileExtension().addFileExtension(MD5Name + "." + FileUtils.getSafeFileExtension(target)).toOSString()); //$NON-NLS-1$
+					return 	target = target.removeFileExtension().addFileExtension(MD5Name + "." + FileUtils.getSafeFileExtension(target)); //$NON-NLS-1$
 				} else {
-					return null; // makefile likely not created yet so no need for error, this is normal case.
+					// The MD5 may not be able to be calculated
+					return null;
 				}
+				
 			} else {
 				return null;
 			}
@@ -2083,6 +2003,88 @@ public class EpocEngineHelper {
 			}
 		}
 		return target;
+	}
+	
+	static public String getMD5HashForBinaryVariant(final ICarbideBuildConfiguration config, final IPath mmpFullPath){
+		
+		return (String)EpocEnginePlugin.runWithMMPData(mmpFullPath, 
+				new DefaultMMPViewConfiguration(config, new AcceptedNodesViewFilter()),
+				new MMPDataRunnableAdapter() {
+
+				public Object run(IMMPData mmpData) {
+					
+					String md5 = "";
+					
+					File makefile = getMakeFileForSymbianBinaryVariant(mmpData, config);
+					if (makefile != null && makefile.exists()){
+						md5 = getMD5VariantFromMakefile(makefile, config);
+					}
+
+					return md5;	
+				}
+		});								
+	}
+	
+	
+	private static File getMakeFileForSymbianBinaryVariant(IMMPData mmpData, ICarbideBuildConfiguration config){
+		
+		IPath makefileDir = CarbideCPPBuilder.getBuilderMakefileDir(config);
+		
+		IPath mmpFile = mmpData.getModelPath();
+		mmpFile = mmpFile.removeFileExtension();
+		String mmpRootName = mmpFile.lastSegment();
+		String plat = config.getPlatformString();
+		String basePlat = config.getBasePlatformForVariation();
+		
+		String makefilePath = makefileDir.toOSString() + File.separator + mmpRootName + File.separator + basePlat + File.separator;
+		String variantMakeFileName = mmpRootName + "." + plat;
+		File realMakeFile = new File(makefilePath + variantMakeFileName);
+		
+		return realMakeFile;
+	}
+	
+	/**
+	 * Get the MD5 hash value for an existing configuration by parsing its makefile.
+	 * @param makefile - The build makefile to parse to check for the MD5
+	 * @param config - The build configuration to check under
+	 * @return The string for the MD5 hash. An empty string if it cannot be determined.
+	 */
+	private static String getMD5VariantFromMakefile(File makefile, ICarbideBuildConfiguration config){
+		// TODO: We can also use the .vmap in the release folder as well.
+		// we can parse the makefile and get the variant name for each in the comments:
+		//
+		//# FeatureVariantURELLabel d41d8cd98f00b204e9800998ecf8427e
+		//# FeatureVariantUDEBLabel d41d8cd98f00b204e9800998ecf8427e
+		String MD5Str = "";
+
+		if (makefile.exists()){
+			String text = "";
+			try {
+				text = new String(FileUtils.readFileContents(makefile, null));
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+			
+			String searchString = "";
+			if (config.getTargetString().equals(SymbianBuildContext.DEBUG_TARGET)){
+				searchString = "# FeatureVariantUDEBLabel";
+			} else {
+				searchString = "# FeatureVariantURELLabel";
+			}
+			
+			for (String line : text.split("\n")) {
+				if (line.startsWith(searchString)){
+					String tokens[] = line.split(" ");
+					if (tokens.length == 3){
+						MD5Str = tokens[2];
+						break;
+					}
+				}
+			}
+			
+		} 
+		
+		return MD5Str;
 	}
 	
 	/**

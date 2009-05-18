@@ -517,4 +517,29 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		
 		return varName;
 	}
+
+
+	public boolean isSymbianBinaryVariation() {
+		if (getPlatformString().split("\\.").length == 2){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	public String getBasePlatformForVariation() {
+		String plat = "";
+		
+		String[] tokens = getPlatformString().split("\\.");
+		if (tokens.length == 2){
+			plat = tokens[0];
+		} else {
+			return platform;
+		}
+		
+		return plat;
+	}
+	
+	
 }

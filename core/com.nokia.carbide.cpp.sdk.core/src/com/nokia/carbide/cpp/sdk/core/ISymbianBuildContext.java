@@ -62,6 +62,14 @@ public interface ISymbianBuildContext {
 	public String getPlatformString();
 	
 	/**
+	 * For Symbian Bianry Variation, platforms will be names <plat>.<variation>
+	 * So in some cases you need to know only the platforms that the variant is based on.
+	 * @return The base platform string.
+	 * @see isSymbianBinaryVariation()
+	 */
+	public String getBasePlatformForVariation();
+	
+	/**
 	 * The debug or release target the platform is building for.
 	 * @return UDEB or UREL.
 	 * @see DEBUG_TARGET and RELEASE_TARGET
@@ -117,4 +125,10 @@ public interface ISymbianBuildContext {
 	 * @return The name of the Symbian Binary Variation, or an empy String if the configuration is not a variation.
 	 */
 	public String getBuildVariationName();
+	
+	/**
+	 * Is the current build context building as a Symbian Binary Variation? Not to be confused with BSF.
+	 * @return true if this is a binary variant build
+	 */
+	public boolean isSymbianBinaryVariation();
 }

@@ -76,7 +76,6 @@ public class FeedManagerTest extends TestCase implements IFeedCacheChangedlisten
 	public void testGetNewsFeeds() {
 		List<CarbideSyndFeed> newsFeeds = feedManager.getNewsFeeds();
 		assertNotNull(newsFeeds);
-		assertTrue(newsFeeds.size() == 0);
 		feedManager.loadFeeds();
 		newsFeeds = feedManager.getNewsFeeds();
 		if (newsFeeds != null && newsFeeds.size() > 0) {
@@ -102,7 +101,13 @@ public class FeedManagerTest extends TestCase implements IFeedCacheChangedlisten
 	}
 
 	public void testGetResourceFeed() {
-		assertNull(feedManager.getResourceFeed());
+		CarbideSyndFeed resourceFeed = feedManager.getResourceFeed();
+		if (resourceFeed != null && resourceFeed.getEntries().size() > 0) {
+			for (Iterator<CarbideSyndEntry> iterator = resourceFeed.getEntries().iterator(); iterator.hasNext();) {
+				CarbideSyndEntry entry = iterator.next();
+				assertNotNull(entry);
+			}
+		}
 	}
 
 	public void testGetSubscribedNewsFeeds() {

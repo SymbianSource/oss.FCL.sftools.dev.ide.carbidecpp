@@ -44,7 +44,7 @@ import java.util.Set;
 public abstract class ModelProviderBase implements IModelProvider {
 
 	// not static or final so it can change during test
-	private boolean DUMP = true;
+	private boolean DUMP = false;
 	
 	private static int gProviderCounter;
 	private int providerId;

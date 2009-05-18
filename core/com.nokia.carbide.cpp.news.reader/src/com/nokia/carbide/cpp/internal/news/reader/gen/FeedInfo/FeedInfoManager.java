@@ -135,6 +135,7 @@ public class FeedInfoManager {
 				try {
 					connection = (HttpURLConnection) fileUrl.openConnection();
 					setRequestHeaders(connection);
+					connection.setUseCaches(false);
 					connection.connect();
 					int responseCode = connection.getResponseCode();
 					handlesHttpErrorCode(responseCode);
