@@ -2084,7 +2084,7 @@ public class EpocEngineHelper {
 			
 		} 
 		
-		return MD5Str;
+		return MD5Str.trim();
 	}
 	
 	/**
