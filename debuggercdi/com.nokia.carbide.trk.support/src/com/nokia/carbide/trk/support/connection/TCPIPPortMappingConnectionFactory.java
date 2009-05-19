@@ -19,6 +19,7 @@ package com.nokia.carbide.trk.support.connection;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.trk.support.Messages;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.*;
@@ -156,16 +157,16 @@ public class TCPIPPortMappingConnectionFactory extends TCPIPConnectionFactory {
 		updatePortMappings(initialSettings);
 		Label label = new Label(composite, SWT.NONE);
 		GridDataFactory.defaultsFor(label).span(2, 1).applyTo(label);
-		label.setText("Service to port mappings");
+		label.setText(Messages.getString("TCPIPPortMappingConnectionFactory.ViewerLabel")); //$NON-NLS-1$
 	
 		viewer = new TableViewer(composite, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
 		viewer.setContentProvider(new ArrayContentProvider());
 		
 		TableViewerColumn serviceColumn = new TableViewerColumn(viewer, SWT.LEFT);
-		serviceColumn.getColumn().setText("Service");
+		serviceColumn.getColumn().setText(Messages.getString("TCPIPPortMappingConnectionFactory.ServiceHeader")); //$NON-NLS-1$
 		
 		TableViewerColumn portColumn = new TableViewerColumn(viewer, SWT.RIGHT);
-		portColumn.getColumn().setText("Port");
+		portColumn.getColumn().setText(Messages.getString("TCPIPPortMappingConnectionFactory.PortHeader")); //$NON-NLS-1$
 		portColumn.setEditingSupport(new PortColumnEditingSupport(viewer));
 		
 		viewer.setLabelProvider(new TableLabelProvider());
@@ -174,9 +175,9 @@ public class TCPIPPortMappingConnectionFactory extends TCPIPConnectionFactory {
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		GridDataFactory.defaultsFor(table).span(2, 1).hint(SWT.DEFAULT, 60).grab(true, false).applyTo(table);
-		table.setToolTipText("Service to port mappings for this connection. Port settings are user editable");
+		table.setToolTipText(Messages.getString("TCPIPPortMappingConnectionFactory.ViewerTooltip")); //$NON-NLS-1$
 		table.setData(UID, "TCPIPPortMappingConnectionFactory.table"); //$NON-NLS-1$
-		table.setData("viewer", viewer);
+		table.setData("viewer", viewer); //$NON-NLS-1$
 		packColumns();
 	}
 

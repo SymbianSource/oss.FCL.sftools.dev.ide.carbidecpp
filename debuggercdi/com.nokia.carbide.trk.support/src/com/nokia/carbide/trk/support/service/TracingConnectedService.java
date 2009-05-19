@@ -76,7 +76,7 @@ public class TracingConnectedService extends AbstractConnectedService {
 
 	private boolean getTraceCoreResponseFromOSTUSB(String port) throws ConnectionFailException {
 		ITCConnection conn = TCFClassFactory.createITCVirtualSerialConnection(port);
-		conn.setDecodeFormat("ost");
+		conn.setDecodeFormat("ost"); //$NON-NLS-1$
 		return getTraceCoreResponseUsingTCF(conn, true, (byte)0x0, (byte)0x0, TC_REQ_OST,
 				new IMessageValidator() {
 					public boolean isValidMessage(byte[] message) {

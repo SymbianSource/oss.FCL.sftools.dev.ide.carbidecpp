@@ -283,7 +283,7 @@ public class ConnectionsView extends ViewPart {
 				if (!status.getEStatus().equals(EStatus.IN_USE)) { // if in-use, we show it in the connection row
 					String longDescription = status.getLongDescription();
 					if (longDescription != null)
-						longDescription = TextUtils.canonicalizeNewlines(longDescription, " ");
+						longDescription = TextUtils.canonicalizeNewlines(longDescription, " "); //$NON-NLS-1$
 					return longDescription;
 				}
 			}
@@ -381,7 +381,7 @@ public class ConnectionsView extends ViewPart {
 		
 		TreeViewerColumn descriptionColumn = new TreeViewerColumn(viewer, SWT.LEFT);
 		descriptionColumn.setLabelProvider(new DescriptionLabelProvider());
-		descriptionColumn.getColumn().setText("Description");
+		descriptionColumn.getColumn().setText(Messages.getString("ConnectionsView.DescriptionColumnHeader")); //$NON-NLS-1$
 		
 		viewer.setContentProvider(new TreeNodeContentProvider());
 		viewer.setInput(loadConnections());
