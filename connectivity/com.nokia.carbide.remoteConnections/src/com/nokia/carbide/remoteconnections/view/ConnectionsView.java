@@ -169,6 +169,7 @@ public class ConnectionsView extends ViewPart {
 			connection.setDisplayName(value.toString());
 			viewer.refresh(true);
 			packColumns();
+			RemoteConnectionsActivator.getConnectionsManager().storeConnections();
 		}
 	}
 

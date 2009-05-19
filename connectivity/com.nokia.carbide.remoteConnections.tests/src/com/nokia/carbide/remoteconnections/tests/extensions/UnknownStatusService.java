@@ -19,6 +19,7 @@
 package com.nokia.carbide.remoteconnections.tests.extensions;
 
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
 
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.swt.graphics.Image;
@@ -28,7 +29,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.*;
 
-public class UnknownStatusService implements IService {
+@SuppressWarnings("restriction")
+public class UnknownStatusService implements IService2 {
 
 	private static final String _5_0 = "5.0";
 	private static final String S60 = "S60";
@@ -171,6 +173,18 @@ public class UnknownStatusService implements IService {
 
 	public boolean isTestable() {
 		return false;
+	}
+
+	public Map<String, String> getDefaults() {
+		return Collections.singletonMap(TCPIPConnectionFactory.IP_PORT, "10000");
+	}
+
+	public boolean wantsDeviceOS() {
+		return false;
+	}
+
+	public Object getAdapter(Class adapter) {
+		return null;
 	}
 
 }

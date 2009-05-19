@@ -18,10 +18,12 @@
 package com.nokia.carbide.remoteconnections.tests.extensions;
 
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
 
 import java.util.*;
 
 
+@SuppressWarnings("restriction")
 public class ConnectedServiceFactory implements IConnectedServiceFactory {
 
 	public IConnectedService createConnectedService(IService service, IConnection connection) {
@@ -30,16 +32,28 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 		else if (service instanceof UnknownStatusService) {
 			return ((UnknownStatusService) service).createInstance(connection);
 		}
+		else if (service instanceof DefaultProvidingTCPIPService) {
+			return ((DefaultProvidingTCPIPService) service).createInstance(connection);
+		}
 		return null;
 	}
 
 	public Collection<String> getCompatibleConnectionTypeIds(IService service) {
-		if (service instanceof RandomCycleService)
-			return Collections.singleton(IntervalConnectionType.class.getName());
+		if (service instanceof RandomCycleService) {
+			return Arrays.asList(
+					new String[] 
+			        {IntervalConnectionType.class.getName(),
+					TCPIPConnectionType.ID});
+		}
 		else if (service instanceof UnknownStatusService) {
-			String[] ids = {IntervalConnectionType.class.getName(),
-					NoSettingsConnectionType.class.getName()};
-			return Arrays.asList(ids);
+			return Arrays.asList(
+					new String[] 
+					{IntervalConnectionType.class.getName(),
+					NoSettingsConnectionType.class.getName(), 
+					TCPIPConnectionType.ID});
+		}
+		else if (service instanceof DefaultProvidingTCPIPService) {
+			return Collections.singleton(TCPIPConnectionType.ID);
 		}
 		return Collections.EMPTY_LIST;
 	}

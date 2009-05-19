@@ -112,6 +112,7 @@ public class SettingsWizard extends Wizard {
 		}
 		
 		enableConnectedServices(true);
+		RemoteConnectionsActivator.getConnectionsManager().storeConnections();
 		return true;
 	}
 	

@@ -128,11 +128,12 @@ public class TestInstallerProvider implements IRemoteAgentInstallerProvider {
 	public List<String> getSDKFamilyNames(IRunnableContext runnableContext) {
 		if (!initialized) {
 			try {
-				runnableContext.run(false, false, new IRunnableWithProgress() {
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						getMockData(monitor);
-					}
-				});
+				if (runnableContext != null)
+					runnableContext.run(false, false, new IRunnableWithProgress() {
+						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+							getMockData(monitor);
+						}
+					});
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

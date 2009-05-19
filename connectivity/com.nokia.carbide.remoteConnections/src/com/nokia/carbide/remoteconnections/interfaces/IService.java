@@ -18,7 +18,6 @@
 
 package com.nokia.carbide.remoteconnections.interfaces;
 
-import java.util.Collection;
 
 /**
  * The interface for remote service extension
