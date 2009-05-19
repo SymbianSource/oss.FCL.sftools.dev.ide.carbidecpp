@@ -1884,6 +1884,27 @@ public class EpocEngineHelper {
 	}
 	
 	/**
+	 * Tell if given MMP has the FEATUREVARIANT keyword
+	 * 
+	 * @param projectInfo the current Carbide project
+	 * @param relativeMMPPath -project relative path to the MMP file we need to inspect
+	 * 
+	 */
+	public static boolean hasFeatureVariantKeyword(ICarbideProjectInfo projectInfo, final IPath relativeMMPPath) {
+		Boolean result = (Boolean) EpocEnginePlugin.runWithMMPData(
+				relativeMMPPath, 
+			new DefaultMMPViewConfiguration(
+					projectInfo,
+					new AllNodesViewFilter()),
+			new MMPDataRunnableAdapter() {
+				public Object run(IMMPData data) {
+					return data.getFlags().contains(EMMPStatement.FEATUREVARIANT);
+				}
+		});
+		return result != null ? result.booleanValue() : false;
+	}
+	
+	/**
 	 * A particular MMP file is considered to be a Symbian Binary Variation iff the MMP file
 	 * has the keyword "FEATUREVARIANT" flag defined and the build configuration has a valid
 	 * build variant target in it's configuration name.
@@ -1891,7 +1912,7 @@ public class EpocEngineHelper {
 	 * @param project - The project we need to get the build configuration name from
 	 * @return true if a variant executable will be built for this mmp
 	 */
-	public static boolean isFeatureVariantMMP(IMMPData mmpData, IProject project){
+	private static boolean isFeatureVariantMMP(IMMPData mmpData, IProject project){
 		
 		boolean isFeatureVariant = false;
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
@@ -2035,6 +2056,11 @@ public class EpocEngineHelper {
 		String mmpRootName = mmpFile.lastSegment();
 		String plat = config.getPlatformString();
 		String basePlat = config.getBasePlatformForVariation();
+		String variantPlat = config.getBuildVariationName();
+		
+		if (variantPlat.length() == 0){
+			plat = plat + "." + ISymbianBuildContext.DEFAULT_VARIANT;
+		}
 		
 		String makefilePath = makefileDir.toOSString() + File.separator + mmpRootName + File.separator + basePlat + File.separator;
 		String variantMakeFileName = mmpRootName + "." + plat;

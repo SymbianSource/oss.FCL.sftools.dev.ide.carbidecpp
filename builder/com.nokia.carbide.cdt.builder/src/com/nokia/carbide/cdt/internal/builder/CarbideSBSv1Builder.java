@@ -532,8 +532,10 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			modelProvider.releaseSharedModel(model);
 
 			IPath objectDir = null;
-			if (buildConfig.isSymbianBinaryVariation()){
+			if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				 EpocEngineHelper.hasFeatureVariantKeyword(cpi, fullMMPPath)){
 				// if symbian binary variation, then the object file dir will be in sub-directory with <md5>/udeb/<obj>
+				// The platform can only be a variant if the MMP file has FEATUREVARIANT keyword && The platform is ARMV5-based.
 				String MD5Name = EpocEngineHelper.getMD5HashForBinaryVariant(buildConfig, fullMMPPath);
 				if (MD5Name != null && MD5Name.length() > 0){
 					objectDir = new Path(epocBldMacros[0].getValue().toString()).append(MD5Name).append(buildConfig.getTargetString());
@@ -2439,7 +2441,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		makefilePath = makefilePath.append(mmpName);
 
 		// each platform has its own directory
-		String platformName = config.getPlatformString().toUpperCase();
+		String platformName = "";
+		if (EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
+			platformName = config.getPlatformString().toUpperCase();
+		} else {
+			platformName = config.getBasePlatformForVariation();
+		}
+		
 		makefilePath = makefilePath.append(config.getBasePlatformForVariation().toUpperCase());
 
 		// and the makefile has the form MMPNAME.PLATFORM
