@@ -25,6 +25,7 @@
       <category
             id="com.nokia.carbide.ide.cheatsheets"
             name="Carbide.c++ Getting Started" />
+            
       <cheatsheet
             category="com.nokia.carbide.ide.cheatsheets"
             contentFile="html/cheatsheets/getStarted_cs.xml"
@@ -43,9 +44,22 @@
 		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
            contentFile="html/cheatsheets/trk_appTrk_Using_cs.xml"
+           id="com.nokia.carbide.cpp.doc.user.new_remote_connection"
+           name="Creating On-device Connections"/>
+
+		 <cheatsheet
+		   composite="true"
+		   category="com.nokia.carbide.trk.cheatsheets"
+           contentFile="html/cheatsheets/trk_appTrk_Using_cs.xml"
            id="com.nokia.carbide.cpp.doc.user.trk_appTRK_Using"
            name="Run Mode On-Device Debugging"/>
 	   
+          <cheatsheet
+            category="com.nokia.carbide.trk.cheatsheets"
+			contentFile="html/cheatsheets/stop_mode_cs.xml"
+            id="com.nokia.carbide.cpp.doc.user.stop_mode"
+            name="Stop Mode On-Device Debugging" />
+
    </extension>
 
    <extension
@@ -81,11 +95,6 @@
             id="com.nokia.carbide.cpp.doc.user.trk_appTrk_viewdata"
             name="Viewing Registers and Symbian OS Data and Troubleshooting Tips" />
 
-          <cheatsheet
-            category="com.nokia.carbide.trk.cheatsheets"
-			contentFile="html/cheatsheets/stop_mode_cs.xml"
-            id="com.nokia.carbide.cpp.doc.user.stop_mode"
-            name="Stop Mode On-Device Debugging" />
 
    </extension>
 
