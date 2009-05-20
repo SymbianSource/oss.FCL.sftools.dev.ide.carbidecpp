@@ -865,7 +865,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 			
 			List<String> argsList = new ArrayList<String>();
 			argsList.add("bldfiles");
-			argsList.add(config.getPlatformString().toLowerCase());
+			argsList.add(config.getBasePlatformForVariation().toLowerCase());
 			
 			for (String arg : config.getBuildArgumentsInfo().getBldmakeBldFilesArgs().split(" ")) {
 				argsList.add(arg);
