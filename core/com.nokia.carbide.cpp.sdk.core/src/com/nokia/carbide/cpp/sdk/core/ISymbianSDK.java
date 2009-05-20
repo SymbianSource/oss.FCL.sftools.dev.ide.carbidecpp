@@ -29,6 +29,8 @@ import org.osgi.framework.Version;
  *  - String value are empty ""
  *  - IPath and IFile objects are null
  *  - containers have zero size
+ *  
+ *  @noimplement This interface is not intended to be implemented by clients.
  */
 
 public interface ISymbianSDK {

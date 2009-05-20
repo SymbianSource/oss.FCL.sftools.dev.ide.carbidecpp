@@ -24,6 +24,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
  * Instantiate this interface and pass to EpocEnginePlugin#runWithSBVView()
  * to encapsulate some of the bookkeeping of model/view handling. 
  *
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISBVViewRunnable extends IViewRunnable<ISBVModel, ISBVView> {
 

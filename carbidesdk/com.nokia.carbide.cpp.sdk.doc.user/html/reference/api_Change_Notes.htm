@@ -65,14 +65,24 @@ span.attr
 <p>Since Carbide 2.1.0</p>
 <ul>
   <li>Added <em> com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder#getBuilderMakefileDir(ICarbideBuildConfiguration config)</em>.</li>
-</ul>
-
-<ul>
-  <li>Added <em> com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext#getBuildVariationName( )</em>.</li>
-</ul>
-
-<ul>
-  <li>Added <em> com.nokia.carbide.cdt.builder.EpocEngineHelper#isFeatureVariantMMP(IMMPData mmpData, IProject project)</em>.</li>
+  <li>Support was added for Symbian Binary Variation (SBV):</li>
+  <ul>
+    <li>Added <em> com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext#getBuildVariationName( )</em>.</li>
+    <li>Added <em> com.nokia.carbide.cdt.builder.EpocEngineHelper#hasFeatureVariantKeyword( ICarbideProjectInfo projectInfo, IPath relativeMMPPath )</em>.</li>
+    <li>Added <em> com.nokia.carbide.cdt.builder.EpocEngineHelper#getMD5HashForBinaryVariant( ICarbideBuildConfiguration config,  IPath mmpFullPath)</em>.</li>
+    <li>Added <em>com.nokia.carbide.cpp.sdk.core.ISymbianSDK#getSBVCatalog( )</em>.</li>
+    <li>Added <em>com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext#getBuildVariationName( )</em>.</li>
+    <li>Added <em>com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext#isSymbianBinaryVariation( )</em>.</li>
+    <li>Added <em>com.nokia.carbide.cpp.sdk.core.ISBVCatalog.</em> </li>
+    <li>Added <em>com.nokia.carbide.cpp.sdk.core.ISBVPlatfor</em>m.</li>
+    <li>Added EPOC Engine support for SBV in the following packages:
+      <ul>
+        <li><em>com.nokia.carbide.cpp.epoc.engine</em></li>
+        <li><em>com.nokia.carbide.cpp.epoc.engine.model</em></li>
+        <li><em>com.nokia.carbide.cpp.epoc.engine.model.sbv</em>.</li>
+      </ul>
+    </li>
+  </ul>
 </ul>
 
 <h3>Deprecated APIs</h3>
@@ -113,7 +123,7 @@ span.attr
 
 <p>Since Carbide 2.1</p>
 <ul>
-  <li><i>com.nokia.carbide.cdt.builder.getVariantTargetName(IMMPData mmpData, IPath target)</i></li>
+  <li><i>com.nokia.carbide.cdt.builder.EpocEngineHelper#getVariantTargetName(IMMPData mmpData, IPath target)</i></li>
 </ul>
 
 <h3>Removed APIs</h3>

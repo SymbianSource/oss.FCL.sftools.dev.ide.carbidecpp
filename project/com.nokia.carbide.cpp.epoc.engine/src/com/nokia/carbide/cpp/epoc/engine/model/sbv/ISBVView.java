@@ -26,7 +26,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.IView;
  * <p>
  * Note: this view cannot be rewritten.
  * 
- * 
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISBVView extends IView<ISBVOwnedModel> {
 	

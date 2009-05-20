@@ -2089,6 +2089,12 @@ public class EpocEngineHelper {
 		return target;
 	}
 	
+	/**
+	 * Get the MD5 hash for a configuration if it is a true binary variation.
+	 * @param config - The Carbide build configuration to check against
+	 * @param mmpFullPath - The path to the MMP file that builds the binary
+	 * @return A string of the MD5 hash. Returns an empty string if the configuration is not a binary variant or cannot be determined.
+	 */
 	static public String getMD5HashForBinaryVariant(final ICarbideBuildConfiguration config, final IPath mmpFullPath){
 		
 		return (String)EpocEnginePlugin.runWithMMPData(mmpFullPath, 

@@ -25,6 +25,8 @@ import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
  *  Once a platform is available
  * from a catalog, it is contained in a hierarchy of platforms, terminating at
  * built-in platforms (like ARMV5). 
+ * 
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISBVPlatform {
 	/**
