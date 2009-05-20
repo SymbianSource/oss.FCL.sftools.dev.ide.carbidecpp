@@ -142,6 +142,9 @@ public class FeedCacheManager {
 		List<FeedType> cachedFeeds = feedCache.getFeeds().getFeed();
 		for (Iterator<FeedType> iterator = cachedFeeds.iterator(); iterator.hasNext();) {
 			FeedType cachedFeed = iterator.next();
+			if (cachedFeed == null) {
+				continue;
+			}
 			if (cachedFeed.getTitle().equals(feed.getTitle()) && 
 				cachedFeed.getLink().equals(feed.getLink())) {
 				return true;
@@ -284,6 +287,9 @@ public class FeedCacheManager {
 		EList<EntryType> entryList = entries.getEntry();
 		for (Iterator<CarbideSyndEntry> iterator = feed.getEntries().iterator(); iterator.hasNext();) {
 			CarbideSyndEntry feedEntry = iterator.next();
+			if (feedEntry == null) {
+				continue;
+			}
 			EntryType cachedEntry = FeedCacheFactory.eINSTANCE.createEntryType();
 			if (feedEntry.getDescription() != null) {
 				cachedEntry.setDescription(feedEntry.getDescription());
@@ -409,6 +415,9 @@ public class FeedCacheManager {
 			int index = -1;
 			for (Iterator<FeedType> iterator = cachedFeeds.iterator(); iterator.hasNext();) {
 				FeedType oldFeed = iterator.next();
+				if (oldFeed == null) {
+					continue;
+				}
 				if (oldFeed.getTitle().equals(newFeed.getTitle()) &&
 					oldFeed.getLink().equals(newFeed.getLink())) {
 					cachedUpdated = isCachedFeedOutOfSync(oldFeed, newFeed);
