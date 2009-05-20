@@ -1347,7 +1347,7 @@ public class EpocEngineHelper {
 								// add the absolute workspace path to the folder directly under the project.
 								// ideally we'd be more precise but then CDT creates a C folder named Foo\Bar,
 								// rather than just expanding Foo and then seeing bar a C source folder.
-								topLevelSourcePaths.add(fullPath./*uptoSegment(2).*/makeAbsolute());
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
 							}
 						}
 
@@ -1358,7 +1358,7 @@ public class EpocEngineHelper {
 								// add the absolute workspace path to the folder directly under the project.
 								// ideally we'd be more precise but then CDT creates a C folder named Foo\Bar,
 								// rather than just expanding Foo and then seeing bar a C source folder.
-								topLevelSourcePaths.add(fullPath./*uptoSegment(2).*/makeAbsolute());
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
 							}
 						}
 
@@ -1366,7 +1366,7 @@ public class EpocEngineHelper {
 							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.USERINCLUDE, path);
 							if (fullPath != null) {
 								// add the absolute workspace path to the folder directly under the project.
-								topLevelSourcePaths.add(fullPath./*uptoSegment(2).*/makeAbsolute());
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
 							}
 						}
 						
@@ -1374,7 +1374,7 @@ public class EpocEngineHelper {
 							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.SYSTEMINCLUDE, path);
 							if (fullPath != null) {
 								// add the absolute workspace path to the folder directly under the project.
-								topLevelSourcePaths.add(fullPath./*uptoSegment(2).*/makeAbsolute());
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
 							}
 						}
 						
