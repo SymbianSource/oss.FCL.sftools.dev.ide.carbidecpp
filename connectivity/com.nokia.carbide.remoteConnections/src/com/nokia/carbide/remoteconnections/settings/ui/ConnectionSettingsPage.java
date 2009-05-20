@@ -220,6 +220,7 @@ public class ConnectionSettingsPage extends WizardPage {
 				IService curService = (IService) selection.getFirstElement();
 				if (!curService.equals(service)) {
 					service = curService;
+					serviceTestButton.setEnabled(service.isTestable()); 
 					resetServiceTesting(true);
 				}
 			}
@@ -593,10 +594,11 @@ public class ConnectionSettingsPage extends WizardPage {
 					});
 				}
 			});
-			if (connectedService instanceof AbstractConnectedService)
+			if (connectedService instanceof AbstractConnectedService) {
 				((AbstractConnectedService) connectedService).setRunnableContext(getContainer());
-			tester = new Tester();
-			tester.start();
+				tester = new Tester();
+				tester.start();
+			}
 			isTesting = true;
 		}
 	}
@@ -797,6 +799,10 @@ public class ConnectionSettingsPage extends WizardPage {
 					statusText.setText(STATUS_NOT_TESTED);
 					serviceTestInfo.setText(service.getAdditionalServiceInfo());
 					agentTestTabComposite.layout(true, true);
+					boolean wantsDeviceOS = service.getInstallerProvider() != null;
+					if (service instanceof IService2)
+						wantsDeviceOS &= ((IService2) service).wantsDeviceOS();
+					deviceOSComboViewer.getCombo().setEnabled(wantsDeviceOS);
 				}
 				disposeConnectedService();
 				if (!serviceTestButton.isDisposed()) {

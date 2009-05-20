@@ -27,10 +27,10 @@ import com.nokia.carbide.trk.support.Messages;
  */
 public class TCPIPConnectionType implements IConnectionType {
 
-	public static final String ID = TCPIPConnectionType.class.getName();
+	public static final String ID = "com.nokia.carbide.connection.TCPIPConnectionType"; //$NON-NLS-1$
 
 	public IConnectionFactory getConnectionFactory() {
-		return new TCPIPConnectionFactory(this);
+		return new TCPIPPortMappingConnectionFactory(this);
 	}
 
 	public String getDescription() {

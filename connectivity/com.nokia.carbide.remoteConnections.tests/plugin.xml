@@ -57,5 +57,11 @@
             class="com.nokia.carbide.remoteconnections.tests.extensions.ConnectedServiceFactory">
       </connectedServiceFactory>
    </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.service">
+      <service
+            class="com.nokia.carbide.remoteconnections.tests.extensions.DefaultProvidingTCPIPService">
+      </service>
+   </extension>
 
 </plugin>

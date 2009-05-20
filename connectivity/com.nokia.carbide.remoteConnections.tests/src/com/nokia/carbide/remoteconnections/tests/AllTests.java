@@ -29,6 +29,7 @@ public class AllTests {
 		suite.addTestSuite(SerializationTest.class);
 		suite.addTestSuite(ServiceTest.class);
 		suite.addTestSuite(FilterTest.class);
+		suite.addTestSuite(TCPIPConnectionTypeTests.class);
 		//$JUnit-END$
 		return suite;
 	}

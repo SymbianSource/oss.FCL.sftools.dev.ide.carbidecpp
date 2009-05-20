@@ -33,8 +33,8 @@ public class TestFilter implements IExtensionFilter {
 	private static List<String> serviceIds = new ArrayList<String>();
 	private static List<Pair<String, String>> connectedServiceIdPairs = new ArrayList<Pair<String,String>>();
 	
-	public static boolean isTest;
-
+	public static boolean isTest = Boolean.parseBoolean(System.getenv("remoteconnections.tests"));
+	
 	public static void reset() {
 		connectionTypeIds.clear();
 		serviceIds.clear();

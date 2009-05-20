@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Creating On-device Connections">
+   <intro>
+      <description>
+         Use the <b>New Connections</b> window to create, edit, and manage remote connection settings to enable on-device debugging and the installation of remote agents.
+      </description>
+   </intro>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm"
+         title="Open the New Connections window">
+      <description>
+         Use the <b>New Connections</b> window to create, edit, and manage remote connection settings to enable on-device debugging and the installation of remote agents.
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.makeFast=com.nokia.carbide.remoteconnections.view.ConnectionsView)"/>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm"
+         title="Define the remote connection">
+      <description>
+         Use the <b>Edit connection name and type</b> page to define basic remote connection settings.
+         
+      </description>
+      <subitem
+            label="Enter a name for this connection">
+      </subitem>
+      <subitem
+            label="Select the connectin type required to connect to the remote device.">
+      </subitem>
+      <subitem
+            label="Click Next.">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm"
+         title="Select serial port and device OS">
+      <description>
+         In the <b>Connection settings</b> page specify the connection settings, the device OS, and verify the presence of a remote agent.
+      </description>
+      <subitem
+            label="Select the serial port">
+     </subitem>
+      <subitem
+            label="Select the device OS used by the conenction setting">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm"
+         title="Verify connection and presence of remote agent">
+      <description>
+         Select service to test and click Initiate service testing
+      </description>
+      <subitem
+            label="Select a service in the Select the service to test list.">
+      </subitem>
+      <subitem
+            label="Click Initiate service test to  test connection.">
+      </subitem>
+      <subitem
+            label="Examine Status box for results.">
+      </subitem>
+      <subitem
+            label="Click Finish.">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/view_remote_connection.htm"
+         title="Verify and monitor connections">
+      <description>
+         Verify and monitor connections using the <b>Remote Connections</b> view.
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.makeFast=com.nokia.carbide.remoteconnections.view.ConnectionsView)"/>
+   </item>
+</cheatsheet>

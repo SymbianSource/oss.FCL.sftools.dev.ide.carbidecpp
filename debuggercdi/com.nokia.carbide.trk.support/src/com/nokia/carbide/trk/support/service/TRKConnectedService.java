@@ -116,7 +116,7 @@ public class TRKConnectedService extends AbstractConnectedService {
 
 	private Version getTRKVersionFromOSTUSB(String port) throws ConnectionFailException {
 		ITCConnection conn = TCFClassFactory.createITCVirtualSerialConnection(port);
-		conn.setDecodeFormat("ost");
+		conn.setDecodeFormat("ost"); //$NON-NLS-1$
 		return getTRKVersionUsingTCF(conn, (byte)0x90, (byte)0x90);
 	}
 	

@@ -87,8 +87,8 @@ public class RandomCycleConnectedService implements IConnectedService {
 		}
 
 		public void run() {
-			IntervalConnection testConnection = service.getConnection();
-			int msInterval = testConnection.getInterval();
+			IConnection testConnection = service.getConnection();
+			int msInterval = testConnection instanceof IntervalConnection ? ((IntervalConnection) testConnection).getInterval() : 1000;
 			try {
 				Thread.sleep(msInterval);
 			} catch (InterruptedException e) {
@@ -177,7 +177,7 @@ public class RandomCycleConnectedService implements IConnectedService {
 	}
 
 	private ListenerList<IStatusChangedListener> listeners;
-	private IntervalConnection connection;
+	private IConnection connection;
 	private EStatus status;
 	private RandomCycleScheduler downageScheduler;
 	private final IService service;
@@ -185,8 +185,7 @@ public class RandomCycleConnectedService implements IConnectedService {
 	private static Random rand;
 
 	public RandomCycleConnectedService(IService service, IConnection connection) {
-		Check.checkContract(connection instanceof IntervalConnection);
-		this.connection = (IntervalConnection) connection;
+		this.connection = connection;
 		this.service = service;
 		status = EStatus.DOWN;
 		if (downageScheduler == null) {
@@ -240,7 +239,7 @@ public class RandomCycleConnectedService implements IConnectedService {
 		t.start();
 	}
 
-	public IntervalConnection getConnection() {
+	public IConnection getConnection() {
 		return connection;
 	}
 

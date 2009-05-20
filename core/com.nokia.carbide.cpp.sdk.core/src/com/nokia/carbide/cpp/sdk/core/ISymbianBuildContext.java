@@ -42,6 +42,12 @@ public interface ISymbianBuildContext {
 	public static final String ARMV6_ABIV2_PLATFORM = "ARMV6_ABIV2";
 	
 	/**
+	 * DEFAULT suffix to use for components that are specified as variant, but don't buid as variants. For example, plain ARMV5, when specified as
+	 * as a FEATUREVARIANT, will build as ARMV5.DEFAULT
+	 */
+	public static final String DEFAULT_VARIANT = "DEFAULT";
+	
+	/**
 	 * Target constants
 	 */
 
@@ -64,6 +70,7 @@ public interface ISymbianBuildContext {
 	/**
 	 * For Symbian Bianry Variation, platforms will be names <plat>.<variation>
 	 * So in some cases you need to know only the platforms that the variant is based on.
+	 * For example, a build platform name of "armv5.myvariant" will return "armv5".
 	 * @return The base platform string.
 	 * @see isSymbianBinaryVariation()
 	 */

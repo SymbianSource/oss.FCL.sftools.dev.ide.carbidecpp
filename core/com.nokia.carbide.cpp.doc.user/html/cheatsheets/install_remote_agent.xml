@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Installing Remote Agents">
+   <intro>
+      <description>
+         A remote agent is required on a device in order to communicate with Carbide while debugging. Follow the steps below to learn how to download and install the latest remote agent for your target device.
+      </description>
+   </intro>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/view_remote_connection.htm"
+         title="Select a remote connection">
+      <description>
+         In the <b>Remote Connections</b> view select the connection setting used to communicate with the remote device.
+      </description>
+      <subitem
+            label="Right-click the connection setting used to communicate with the device and select Edit Connection Settings.">
+      </subitem>
+      <subitem
+            label="Click Next to open the Settings page.">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_conn_install_tab.htm"
+         title="Select the appropriate remote agent">
+      <description>
+         Choose the remote agent that matches the OS on the target device.
+      </description>
+      <subitem
+            label="In the remote agents list, select the remote agent that most closely matches the OS on the target device.">
+      </subitem>
+      <subitem
+            label="Click Save to download and save the remote agent for installation later. This step is optional as the immediate installation step below is recommended."
+            skip="true">
+      </subitem>
+      <subitem
+            label="Click Install to download and immediately install the selected remote agent to the target device.">
+      </subitem>
+   </item>
+</cheatsheet>
