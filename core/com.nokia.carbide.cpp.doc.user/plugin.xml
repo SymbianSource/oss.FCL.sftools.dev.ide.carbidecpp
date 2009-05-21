@@ -53,7 +53,6 @@
            name="Installing Remote Agents"/>
 
 		 <cheatsheet
-		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
            contentFile="html/cheatsheets/trk_appTrk_Using_cs.xml"
            id="com.nokia.carbide.cpp.doc.user.trk_appTRK_Using"
@@ -67,6 +66,7 @@
 
    </extension>
 
+	<!--
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
 		 
@@ -103,8 +103,8 @@
 
    </extension>
 
-<!-- TRK cheatsheets extension -->
- <!-- replaced by newer cheatsheet
+   <!-- TRK cheatsheets extension -->
+   <!-- replaced by newer cheatsheet
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
           <category
