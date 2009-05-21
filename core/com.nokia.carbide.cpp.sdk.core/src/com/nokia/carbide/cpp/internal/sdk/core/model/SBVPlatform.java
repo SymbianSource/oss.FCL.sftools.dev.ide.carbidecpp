@@ -197,9 +197,9 @@ public class SBVPlatform implements ISBVPlatform {
 		
 	}
 	
-	protected Map<IPath, String> getBuildIncludePathsFromParents(){
+	protected LinkedHashMap<IPath, String> getBuildIncludePathsFromParents(){
 		
-		Map<IPath, String> parentBuildIncludes = new HashMap<IPath, String>();
+		LinkedHashMap<IPath, String> parentBuildIncludes = new LinkedHashMap<IPath, String>();
 		
 		ISBVPlatform platform = getExtendedVariant();
 		ISBVPlatform prevPlat;
@@ -255,9 +255,9 @@ public class SBVPlatform implements ISBVPlatform {
 		return sdkIncludePath.toOSString();
 	}
 	
-	public Map<IPath, String> getBuildIncludePaths(){
+	public LinkedHashMap<IPath, String> getBuildIncludePaths(){
 		
-		Map<IPath, String> fullPathMap = new HashMap<IPath, String>();
+		LinkedHashMap<IPath, String> fullPathMap = new LinkedHashMap<IPath, String>();
 		
 		fullPathMap.putAll(systemBuildIncludePaths);
 		fullPathMap.putAll(getBuildIncludePathsFromParents());
@@ -265,8 +265,8 @@ public class SBVPlatform implements ISBVPlatform {
 		return fullPathMap;
 	}
 	
-	public Map<IPath, String> getROMBuildIncludePaths(){
-		Map<IPath, String> fullPathMap = new HashMap<IPath, String>();
+	public LinkedHashMap<IPath, String> getROMBuildIncludePaths(){
+		LinkedHashMap<IPath, String> fullPathMap = new LinkedHashMap<IPath, String>();
 		
 		fullPathMap.putAll(romBuildIncludePaths);
 		fullPathMap.putAll(getROMBuildIncludePathsFromParents());
