@@ -41,14 +41,12 @@
             name="Carbide.c++ On-device Debugging"/>
        
 		 <cheatsheet
-		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
            contentFile="html/cheatsheets/new_remote_conn.xml"
            id="com.nokia.carbide.cpp.doc.user.new_remote_connection"
            name="Creating On-device Connections"/>
 
 		 <cheatsheet
-		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
            contentFile="html/cheatsheets/install_remote_agent.xml"
            id="com.nokia.carbide.cpp.doc.user.install_remote_agent"
