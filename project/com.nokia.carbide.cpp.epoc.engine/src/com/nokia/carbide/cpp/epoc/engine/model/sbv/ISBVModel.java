@@ -22,6 +22,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.IModel;
 /**
  * This is the user interface to a Symbian Binary Variation (VAR) model.
  *
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISBVModel extends IModel<ISBVView> {
 

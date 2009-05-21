@@ -25,6 +25,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
  * from the configuration display string
  * @see ICarbideBuildConfiguration
  * 
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISymbianBuildContext {
 	

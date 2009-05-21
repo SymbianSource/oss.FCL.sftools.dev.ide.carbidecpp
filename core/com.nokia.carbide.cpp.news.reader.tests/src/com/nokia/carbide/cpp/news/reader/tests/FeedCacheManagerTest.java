@@ -19,9 +19,11 @@ package com.nokia.carbide.cpp.news.reader.tests;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.nokia.carbide.cpp.internal.news.reader.feed.CarbideSyndEntry;
 import com.nokia.carbide.cpp.internal.news.reader.feed.CarbideSyndFeed;
 import com.nokia.carbide.cpp.internal.news.reader.feed.FeedManager;
 import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.FeedCacheFactory;
@@ -29,6 +31,10 @@ import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.FeedCacheManager
 import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.FeedCacheType;
 import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.FeedType;
 import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.IFeedCacheChangedlistener;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndFeedImpl;
 
 import junit.framework.TestCase;
 
@@ -184,6 +190,32 @@ public class FeedCacheManagerTest extends TestCase implements IFeedCacheChangedl
 			URL url = file.toURL();
 			if (feedCacheManager.loadCacheFromFile(url)) {
 				assertTrue(feedCacheManager.saveCacheToFile(url));
+			}
+		} catch (Exception e) {
+			fail();
+		}
+	}
+
+	public void testSaveFeedToCache() {
+		try {
+			feedCacheManager.setFeedCache(null);
+			feedCacheManager.saveFeedToCache(null);
+			assertNull(feedCacheManager.getFeedCache());
+			File file = getDefaultFeedCacheFile();
+			URL url = file.toURL();
+			if (feedCacheManager.loadCacheFromFile(url)) {
+				SyndFeed syndFeed = new SyndFeedImpl();
+				CarbideSyndFeed feed = new CarbideSyndFeed(syndFeed);
+				List<CarbideSyndEntry> entries = new ArrayList<CarbideSyndEntry>();
+				SyndEntry syndEntry = new SyndEntryImpl();
+				CarbideSyndEntry entry = new CarbideSyndEntry(syndEntry);
+				entries.add(entry);
+				feed.setEntries(entries);
+				feed.setDescription("A feed for testing feed cache manager.");
+				feed.setTitle("Test feed");
+				feed.setLink("http://www.nokia.com");
+				feedCacheManager.saveFeedToCache(feed);
+				assertTrue(feedCacheManager.isFeedInCache(feed));
 			}
 		} catch (Exception e) {
 			fail();

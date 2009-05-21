@@ -21,6 +21,8 @@ import com.nokia.carbide.cpp.epoc.engine.model.*;
 
 /**
  * This is the owner interface to the SBV (Symbian Binary Variant) model.  
+ * 
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISBVOwnedModel extends ISBVModel, IOwnedModel<ISBVView> {
 
