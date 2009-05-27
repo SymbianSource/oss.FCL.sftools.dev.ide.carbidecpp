@@ -194,4 +194,8 @@ public class OverviewPage extends BldInfEditorFormPage {
 		return testMakMakeFiles;
 	}
 
+	public String getErrorMesaage() {
+		return getManagedForm().getForm().getMessage();
+	}
+
 }

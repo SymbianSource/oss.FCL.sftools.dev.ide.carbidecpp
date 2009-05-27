@@ -136,4 +136,8 @@ public class SourcesPage extends MMPEditorFormPage {
 		return missingSourcesSectionPart;
 	}
 
+	public String getErrorMesaage() {
+		return getManagedForm().getForm().getMessage();
+	}
+
 }

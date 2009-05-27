@@ -32,6 +32,19 @@ import com.nokia.carbide.cpp.internal.project.ui.editors.inf.ExportsPage;
 public class ExpportsPageTester {
 
 	/**
+	 * Retrieves any error message from the Exports page.
+	 * @param page - Exports page provided by caller
+	 * @return error message string if success, null otherwise
+	 */
+	public static String getErrorMesaage(FormPage page) {
+		if (page != null && page instanceof ExportsPage) {
+			ExportsPage exportsPage = (ExportsPage) page;
+			return exportsPage.getErrorMesaage();
+		}
+		return null;
+	}
+
+	/**
 	 * Retrieves the Exports section from an Exports page.
 	 * @param page - Exports page provided by caller
 	 * @return - Exports section if success, null otherwise

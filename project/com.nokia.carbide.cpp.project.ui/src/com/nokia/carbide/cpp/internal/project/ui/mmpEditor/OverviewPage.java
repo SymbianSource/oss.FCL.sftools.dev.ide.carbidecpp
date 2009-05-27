@@ -452,5 +452,9 @@ public class OverviewPage extends MMPEditorFormPage {
 	public ImageHyperlink getOptionsHyperlink() {
 		return optionsImageHyperlink;
 	}
-	
+
+	public String getErrorMesaage() {
+		return getManagedForm().getForm().getMessage();
+	}
+
 }

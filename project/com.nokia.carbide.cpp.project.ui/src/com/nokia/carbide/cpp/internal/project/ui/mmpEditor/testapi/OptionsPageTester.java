@@ -37,6 +37,19 @@ import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.RuntimeSectionPart;
 public class OptionsPageTester {
 
 	/**
+	 * Retrieves any error message from the Options page.
+	 * @param page - Options page provided by caller
+	 * @return error message string if success, null otherwise
+	 */
+	public static String getErrorMesaage(FormPage page) {
+		if (page != null && page instanceof OptionsPage) {
+			OptionsPage optionsPage = (OptionsPage) page;
+			return optionsPage.getErrorMesaage();
+		}
+		return null;
+	}
+
+	/**
 	 * Retrieves the "Runtime" section of the Options page.
 	 * @param page - Options page provided by caller
 	 * @return - section part if success, null otherwise
