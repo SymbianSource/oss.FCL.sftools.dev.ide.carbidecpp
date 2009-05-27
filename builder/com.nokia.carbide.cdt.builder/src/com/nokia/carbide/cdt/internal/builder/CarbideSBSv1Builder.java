@@ -2351,8 +2351,16 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				abldArgs.add(TEST_CMD); //$NON-NLS-1$
 			}
 			
+			String buildPlatform = "";
+			if ( config.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+					 EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
+				buildPlatform = config.getPlatformString().toLowerCase();
+			} else {
+				buildPlatform = config.getBasePlatformForVariation().toLowerCase();
+			}
+			
 			abldArgs.add(MAKEFILE_CMD); //$NON-NLS-1$
-			abldArgs.add(config.getPlatformString().toLowerCase());
+			abldArgs.add(buildPlatform);
 			abldArgs.add(componentPath.removeFileExtension().lastSegment());
 			
 			for (String arg : config.getBuildArgumentsInfo().getAbldMakefileArgs().split(" ")) {
