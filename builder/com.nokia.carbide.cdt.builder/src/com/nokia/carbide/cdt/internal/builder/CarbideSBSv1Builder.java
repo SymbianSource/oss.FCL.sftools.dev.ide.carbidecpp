@@ -2828,6 +2828,9 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				int firstInclude = rcompCmd.indexOf("-I");
 				int dashU = rcompCmd.lastIndexOf("-u");
 				int dashO = rcompCmd.lastIndexOf("-o$@");
+				if (dashO < 0){
+					dashO = rcompCmd.lastIndexOf("-o\"$@\"");
+				}
 				if (firstInclude < 0 || dashU < 0 || dashO < 0) {
 					throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "Failed trying to build cpp command", null)); //$NON-NLS-1$
 				}
@@ -2910,7 +2913,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					// cleanup the __PRODUCT_INCLUDE__ macro if necessary
 					macros = macros.replaceFirst("\\\\\"", "\"<" + makefilePath.getDevice());
 					macros = macros.replaceFirst("\\\\\"", ">\"");
-					macros = macros.replaceAll("\\\\", "\\\\\\\\");
+					macros = macros.replaceAll("\\\\", "/");
 
 					newRule = newRule.replaceFirst("-u ", macros);
 				}
