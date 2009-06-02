@@ -21,139 +21,80 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.cdt.core.CCProjectNature;
+import org.eclipse.cdt.core.CProjectNature;
 import org.eclipse.cdt.debug.core.executables.Executable;
-import org.eclipse.cdt.debug.core.executables.ExecutablesManager;
-import org.eclipse.cdt.debug.core.executables.StandardExecutableProvider;
+import org.eclipse.cdt.debug.core.executables.IProjectExecutablesProvider;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
-import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 
-public class CarbideExecutablesProvider extends StandardExecutableProvider implements IJobChangeListener {
+public class CarbideExecutablesProvider implements IProjectExecutablesProvider {
 
-	private ArrayList<Executable> executables = new ArrayList<Executable>();
-	private ArrayList<Executable> activeExecutables = new ArrayList<Executable>();
+	List<String> supportedNatureIds = new ArrayList<String>();
 
 	public CarbideExecutablesProvider() {
-		super();
-		Job.getJobManager().addJobChangeListener(this);		
+		supportedNatureIds.add(CProjectNature.C_NATURE_ID);
+		supportedNatureIds.add(CCProjectNature.CC_NATURE_ID);
+		supportedNatureIds.add(CarbideBuilderPlugin.CARBIDE_PROJECT_NATURE_ID);
+		supportedNatureIds.add(CarbideBuilderPlugin.CARBIDE_SBSV2_PROJECT_NATURE_ID);
+	}
+	
+	public List<String> getProjectNatures() {
+		return supportedNatureIds;
 	}
 
-	public int getPriority() {
-		return HIGH_PRIORITY;
-	}
+	public List<Executable> getExecutables(IProject project, IProgressMonitor monitor) {
+		List<Executable> executables = new ArrayList<Executable>();
 
-	public boolean executableExists(IPath exePath) {
-		for (Executable executable : executables) {
-			if (executable.getPath().equals(exePath))
-				return true;
-		}
-		return false;
-	}
+		if (CarbideBuilderPlugin.getBuildManager().isCarbideProject(project)) {
+			ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
+			if (cpi != null) {
+				List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(cpi.getDefaultConfiguration());
 
-	public Executable[] getExecutables(IProgressMonitor monitor) {
+				SubMonitor progress = SubMonitor.convert(monitor, mmps.size());
 
-		synchronized (executables) {
-			executables.clear();
-			activeExecutables.clear();
-			
-			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-			IProject[] projects = root.getProjects();
+				for (IPath mmp : mmps) {
+					if (progress.isCanceled()) {
+						break;
+					}
+					
+					progress.subTask("Parsing " + mmp.lastSegment());
 
-			monitor.beginTask("Checking Carbide Projects", projects.length);
-
-			for (IProject project : projects) {
-
-				if (monitor.isCanceled())
-					break;
-
-				try {
-					if (CarbideBuilderPlugin.getBuildManager().isCarbideProject(project)) {
-						ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
-						if (cpi != null) {
-							ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
-							List<ICarbideBuildConfiguration> buildConfigList = cpi.getBuildConfigurations();
-							for (ICarbideBuildConfiguration currConfig : buildConfigList) {
-								if (monitor.isCanceled())
-									break;
-
-								for (IPath mmp : EpocEngineHelper.getMMPFilesForBuildConfiguration(currConfig)) {
-									if (monitor.isCanceled())
-										break;
-
-									IPath hp = EpocEngineHelper.getHostPathForExecutable(currConfig, mmp);
-									if (hp != null) {
-										File hpFile = hp.toFile();
-										if (hpFile.exists())
-										{
-											Executable exe = new Executable(new Path(hpFile.getCanonicalPath()), project, null);
-											executables.add(exe);
-											if (currConfig == defaultConfig)
-												activeExecutables.add(exe);										
-										}
-									}
-								}
+ 					IPath hp = EpocEngineHelper.getHostPathForExecutable(cpi.getDefaultConfiguration(), mmp);
+					if (hp != null) {
+						File hpFile = hp.toFile();
+						if (hpFile.exists()) {
+							try {
+								Executable exe = new Executable(new Path(hpFile.getCanonicalPath()), project, null);
+								executables.add(exe);
+							} catch (Exception e) {
 							}
 						}
-
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+					
+					progress.worked(1);
 				}
-				monitor.worked(1);
 			}
-
-			monitor.done();
 		}
-		return activeExecutables.toArray(new Executable[activeExecutables.size()]);
+		
+		return executables;
 	}
 
-	public void aboutToRun(IJobChangeEvent event) {}
-
-	public void awake(IJobChangeEvent event) {}
-
-	/**
-	 * This is the lower case name of the build job for "Build Target Only". This is used here to avoid
-	 * having a reference to com.nokia.cdt.carbide.builder.utils.
-	 * @see com.nokia.carbide.cdt.build.utils.popup.actions.AbldCommandAction#runAbldActionOnProject(...)
-	 */
-	private static final String BUILD_TARGET_ONLY_JOB_NAME_LOWER = "performing targeted build for configuration";
-	
-	/**
-	 * This is the lower case name of the build job for "Build Symbian Component". This is used here to avoid
-	 * having a reference to com.nokia.cdt.carbide.builder.utils.
-	 * @see com.nokia.carbide.cdt.build.utils.popup.actions.AbldCommandAction#doBuildSingleMMPComponent(...)
-	 */
-	private static final String BUILD_SYMBIAN_COMPONENT_JOB_NAME_LOWER = "building selected component";
-
-	private static final String BUILD_ALL_CONFIGURATIONS_JOB_NAME_LOWER = "building all configurations for project";
-
-	public void done(IJobChangeEvent event) {
-
-		if (event.getJob().belongsTo(ResourcesPlugin.FAMILY_MANUAL_BUILD) ||
-				event.getJob().getName().toLowerCase().startsWith(BUILD_TARGET_ONLY_JOB_NAME_LOWER) ||
-				event.getJob().getName().toLowerCase().startsWith(BUILD_ALL_CONFIGURATIONS_JOB_NAME_LOWER) ||
-				event.getJob().getName().toLowerCase().startsWith(BUILD_SYMBIAN_COMPONENT_JOB_NAME_LOWER)) {
-				{
-					ExecutablesManager.getExecutablesManager().scheduleRefresh(this, 1000);
-				}
-			}
+	public IStatus removeExecutable(Executable executable, IProgressMonitor monitor) {
+		try {
+			executable.getPath().toFile().delete();
+		} catch (Exception e) {
+			return new Status(IStatus.WARNING, SymbianPlugin.PLUGIN_ID, "An error occured trying to delete " + executable.getPath().toOSString());
 		}
-
-	public void running(IJobChangeEvent event) {}
-
-	public void scheduled(IJobChangeEvent event) {}
-
-	public void sleeping(IJobChangeEvent event) {}
-
+		return Status.OK_STATUS;
+	}
 }

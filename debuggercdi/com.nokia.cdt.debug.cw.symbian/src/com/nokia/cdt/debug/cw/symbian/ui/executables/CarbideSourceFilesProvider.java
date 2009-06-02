@@ -14,7 +14,7 @@
 * Description: 
 *
 */
-package com.nokia.cdt.internal.debug.launch;
+package com.nokia.cdt.debug.cw.symbian.ui.executables;
 
 import java.util.ArrayList;
 
