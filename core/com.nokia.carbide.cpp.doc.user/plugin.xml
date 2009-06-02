@@ -41,23 +41,20 @@
             name="Carbide.c++ On-device Debugging"/>
        
 		 <cheatsheet
-		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
            contentFile="html/cheatsheets/new_remote_conn.xml"
            id="com.nokia.carbide.cpp.doc.user.new_remote_connection"
            name="Creating On-device Connections"/>
 
 		 <cheatsheet
-		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
            contentFile="html/cheatsheets/install_remote_agent.xml"
            id="com.nokia.carbide.cpp.doc.user.install_remote_agent"
-           name="Installing Remote Agents"/>
+           name="Downloading and Installing Remote Agents"/>
 
 		 <cheatsheet
-		   composite="true"
 		   category="com.nokia.carbide.trk.cheatsheets"
-           contentFile="html/cheatsheets/trk_appTrk_Using_cs.xml"
+           contentFile="html/cheatsheets/run_mode_cs.xml"
            id="com.nokia.carbide.cpp.doc.user.trk_appTRK_Using"
            name="Run Mode On-Device Debugging"/>
 	   
@@ -69,6 +66,7 @@
 
    </extension>
 
+	<!--
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
 		 
@@ -104,32 +102,7 @@
 
 
    </extension>
-
-<!-- TRK cheatsheets extension -->
- <!-- replaced by newer cheatsheet
-   <extension
-         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
-          <category
-            id="com.nokia.carbide.trk.cheatsheets"
-            name="Carbide.c++ On-device Debugging"/>
-
-
-          <cheatsheet
-            category="com.nokia.carbide.trk.cheatsheets"
-            contentFile="html/cheatsheets/trk_setup_cs.xml"
-            id="com.nokia.carbide.cpp.doc.user.trk_setup"
-            name="On-device Debugging Setup" />
-
-	   	  <cheatsheet
-            category="com.nokia.carbide.trk.cheatsheets"
-			composite="true"
-            contentFile="html/cheatsheets/trk_appTrk_Using_cs.xml"
-            id="com.nokia.carbide.cpp.doc.user.trk_appTRK_Using"
-            name="Run Mode On-device Application Debugging" />
-
-	</extension>
-  -->
-
+	-->
 	
 <!-- =================================================================================== -->
 <!-- CONTEXT IDs for CONTEXTUAL HELP in windows, dialogs, and views                      -->

@@ -26,6 +26,7 @@ public class SBSv2ErrorParser extends CarbideBaseErrorParser {
 
 	private static final Pattern warningPattern = Pattern.compile("<warning>(.*)</warning>"); //$NON-NLS-1$
 	private static final Pattern errorPattern = Pattern.compile("<error>(.*)</error>"); //$NON-NLS-1$
+	private static final Pattern infoPattern = Pattern.compile("<info>(.*)</info>"); //$NON-NLS-1$
 
 	public SBSv2ErrorParser() {
 	}
@@ -34,7 +35,11 @@ public class SBSv2ErrorParser extends CarbideBaseErrorParser {
 
 		initialise();
 		
-		Matcher matcher = warningPattern.matcher(line);
+		Matcher matcher = infoPattern.matcher(line);
+		if (matcher.matches()) {
+			return true; // just ignore info messages
+		}
+		matcher = warningPattern.matcher(line);
 		if (matcher.matches()) {
 			// strip the tags
 			String text = line.substring("<warning>".length(), line.length() - "</warning>".length()); //$NON-NLS-1$ //$NON-NLS-2$

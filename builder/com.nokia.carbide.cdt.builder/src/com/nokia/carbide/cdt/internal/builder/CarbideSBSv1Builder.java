@@ -1190,10 +1190,20 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 			// run abld build platform for each component
 			for (IPath path : normalMakMakePaths) {
-
+				
+				String buildPlatform = "";
+				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
+					
+					buildPlatform = buildConfig.getPlatformString().toLowerCase();
+					
+				} else {
+					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				}
+				
 				List<String> argsList = new ArrayList<String>();
 				argsList.add(BUILD_CMD);
-				argsList.add(buildConfig.getPlatformString().toLowerCase());
+				argsList.add(buildPlatform);
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
@@ -1212,11 +1222,21 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 			// run abld build platform target for each test component
 			for (IPath path : testMakMakePaths) {
-
+				
+				String buildPlatform = "";
+				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
+					
+					buildPlatform = buildConfig.getPlatformString().toLowerCase();
+					
+				} else {
+					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				}
+				
 				List<String> argsList = new ArrayList<String>();
 				argsList.add(TEST_CMD);
 				argsList.add(BUILD_CMD);
-				argsList.add(buildConfig.getPlatformString().toLowerCase());
+				argsList.add(buildPlatform);
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
@@ -1716,10 +1736,20 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 			// run abld clean/reallyclean for each component
 			for (IPath path : normalMakMakePaths) {
-
+				
+				String buildPlatform = "";
+				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
+					
+					buildPlatform = buildConfig.getPlatformString().toLowerCase();
+					
+				} else {
+					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				}
+				
 				List<String> argsList = new ArrayList<String>();
 				argsList.add(abldCleanCmd);
-				argsList.add(buildConfig.getPlatformString().toLowerCase());
+				argsList.add(buildPlatform);
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
@@ -1881,10 +1911,20 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 			// run abld freeze for each component
 			for (IPath path : normalMakMakePaths) {
-
+				
+				String buildPlatform = "";
+				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
+					
+					buildPlatform = buildConfig.getPlatformString().toLowerCase();
+					
+				} else {
+					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				}
+				
 				List<String> argsList = new ArrayList<String>();
 				argsList.add(FREEZE_CMD);
-				argsList.add(buildConfig.getPlatformString().toLowerCase());
+				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
 				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
@@ -2351,8 +2391,16 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				abldArgs.add(TEST_CMD); //$NON-NLS-1$
 			}
 			
+			String buildPlatform = "";
+			if ( config.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+					 EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
+				buildPlatform = config.getPlatformString().toLowerCase();
+			} else {
+				buildPlatform = config.getBasePlatformForVariation().toLowerCase();
+			}
+			
 			abldArgs.add(MAKEFILE_CMD); //$NON-NLS-1$
-			abldArgs.add(config.getPlatformString().toLowerCase());
+			abldArgs.add(buildPlatform);
 			abldArgs.add(componentPath.removeFileExtension().lastSegment());
 			
 			for (String arg : config.getBuildArgumentsInfo().getAbldMakefileArgs().split(" ")) {
@@ -2780,6 +2828,9 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				int firstInclude = rcompCmd.indexOf("-I");
 				int dashU = rcompCmd.lastIndexOf("-u");
 				int dashO = rcompCmd.lastIndexOf("-o$@");
+				if (dashO < 0){
+					dashO = rcompCmd.lastIndexOf("-o\"$@\"");
+				}
 				if (firstInclude < 0 || dashU < 0 || dashO < 0) {
 					throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "Failed trying to build cpp command", null)); //$NON-NLS-1$
 				}
@@ -2862,7 +2913,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					// cleanup the __PRODUCT_INCLUDE__ macro if necessary
 					macros = macros.replaceFirst("\\\\\"", "\"<" + makefilePath.getDevice());
 					macros = macros.replaceFirst("\\\\\"", ">\"");
-					macros = macros.replaceAll("\\\\", "\\\\\\\\");
+					macros = macros.replaceAll("\\\\", "/");
 
 					newRule = newRule.replaceFirst("-u ", macros);
 				}

@@ -35,6 +35,19 @@ import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.SourcesSectionPart;
 public class SourcesPageTester {
 
 	/**
+	 * Retrieves any error message from the Sources page.
+	 * @param page - Sources page provided by caller
+	 * @return error message string if success, null otherwise
+	 */
+	public static String getErrorMesaage(FormPage page) {
+		if (page != null && page instanceof SourcesPage) {
+			SourcesPage sourcesPage = (SourcesPage) page;
+			return sourcesPage.getErrorMesaage();
+		}
+		return null;
+	}
+
+	/**
 	 * Retrieves the "C/C++ Sources" section of the Sources page.
 	 * @param page - Overview page provided by caller
 	 * @return - section part if success, null otherwise

@@ -35,6 +35,19 @@ import com.nokia.carbide.cpp.internal.project.ui.editors.inf.OverviewPage;
 public class OverviewPageTester {
 
 	/**
+	 * Retrieves any error message from the Overview page.
+	 * @param page - Overview page provided by caller
+	 * @return error message string if success, null otherwise
+	 */
+	public static String getErrorMesaage(FormPage page) {
+		if (page != null && page instanceof OverviewPage) {
+			OverviewPage overviewPage = (OverviewPage) page;
+			return overviewPage.getErrorMesaage();
+		}
+		return null;
+	}
+
+	/**
 	 * Retrieves the "Active Build Configuration" label from the Overview page.
 	 * @param page - Overview page provided by caller
 	 * @return - label widget if success, null otherwise

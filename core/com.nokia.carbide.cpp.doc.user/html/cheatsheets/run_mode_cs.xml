@@ -1,59 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="On-device Run Mode Debugging Setup">
-   <intro href="html/tasks/debugger/run_mode_debug.htm">
+<cheatsheet title="Run Mode On-device Debugging">
+   <intro href="/com.nokia.carbide.cpp.doc.user/html/reference/perspective_debug.htm">
       <description>
          Follow these steps to install on-device run mode debug software and compilers, create ROM images, and define launch configurations.
       </description>
    </intro>
    <item
-         dialog="true"
-         href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"
-         skip="false"
-         title="Install device connection software">
+         href="/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm"
+         title="Target Side Requirements">
       <description>
-         Choose one of the these methods to install device connection software on your PC to interact with the target device.
+         Before you can perform run-mode debugging on a target device, be sure that your development setup includes the following:
       </description>
-      <subitem label="Using Bluetooth" skip="true">
+      <subitem
+            label="Select or create a connection setting for the target device. See the cheatsheet Creating On-device Connections for details.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=com.nokia.carbide.cpp.doc.user.com.nokia.carbide.cpp.doc.user.new_remote_connection)"/>
       </subitem>
-      <subitem label="Using Nokia PC Suite software" skip="true">
+      <subitem
+            label="Ensure that the latest remote agent is installed on the target device. If not, see the Installing Remote Agents cheatsheet to download and install the latest debugger remote agent."
+            skip="true">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=com.nokia.carbide.cpp.doc.user.install_remote_agent)"/>
       </subitem>
    </item>
-   <item title="Install necessary software and configure it" dialog="true" skip="false" href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm">
+   <item title="Host Side Requirements" dialog="true" skip="false" href="/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_requirements.htm">
       <description>
          Before you begin stop mode debugging, make sure all preconditions are met.
       </description>
       <subitem
-            label="Install Perl">
+            label="Install or verify that the correct version of Perl () is installed.">
       </subitem>
-      <subitem label="Install an SDK" skip="false">
+      <subitem label="Install or verify that the correct SDK is installed for the target device." skip="false">
       </subitem>
-      <subitem label="Setup environment variables" skip="false">
+      <subitem label="Verify that the correct environment variables are set for the SDK. Installers normally set these variables, but if you installed the SDK from a ZIP file you may need to add them yourself." skip="true">
       </subitem>
-      <subitem label="Setup a virtual drive" skip="false">
-      </subitem>
-   </item>
-   <item
-         dialog="true"
-         href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"
-         skip="false"
-         title="Install the SISX file on the device">
-      <description>
-         Choose one of these methods to install the SISX file on the target device.
-      </description>
-      <subitem label="Use Bluetooth" skip="true">
-      </subitem>
-      <subitem label="Use Nokia PC Suite" skip="true">
+      <subitem label="Setup a virtual drive for those kits that require a subst drive to operate correctly." skip="true">
       </subitem>
    </item>
    <item
-         dialog="true"
-         href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"
-         skip="false"
-         title="Create a launch configuration">
+         href="/com.nokia.carbide.cpp.doc.user/html/tasks/ImportingProjects.html"
+         title="Import Project into Workspace">
       <description>
-         Body
+         Import the bld.inf file into the <b>Project Explorer</b> view to create the project.
       </description>
-      <command serialization="org.eclipse.debug.ui.commands.OpenDebugConfigurations" confirm="false">
-      </command>
+      <subitem
+            label="Click File &gt; Import to open the Import wizard.">
+      </subitem>
+      <subitem
+            label="Select the Symbian OS &gt; Symbian OS Bld.inf file option, then click Next.">
+      </subitem>
+      <subitem
+            label="Locate and select the bld.info file to import, and the Builder to use with the project, then click Next.">
+      </subitem>
+      <subitem
+            label="Select the SDK and Build Configurations to create in the project, then click Next.">
+      </subitem>
+      <subitem
+            label="Select which MMPs to import with the project, then click Next.">
+      </subitem>
+      <subitem
+            label="Name the project and set the root directory, then click Finish.">
+      </subitem>
    </item>
-</cheatsheet>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_build.htm"
+         title="Build Project">
+      <description>
+         Once imported its time to build the project to ensure correct any build issue prior to debugging.
+      </description>
+      <subitem
+            label="Click Project &gt; Build Project to compile and link the project.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.project.buildProject"/>
+      </subitem>
+      <subitem
+            label="Any problems building the project should be cleared up at this stage.">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/tasks/breakpoints/pgm_bp_setting.htm"
+         title="Set Breakpoint in Project">
+      <description>
+         <b>Body</b>
+      </description>
+      <subitem
+            label="Open a source file in the project. It should be one you know will be execuated. Event handling routines are excellent for this.">
+      </subitem>
+      <subitem
+            label="Right-click the source line and select the Enable Breakpoint option. A breakpoing icon appears at the start of the line.">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/debugger/debug/cmds_starting.htm"
+         title="Launch Project to Debug">
+      <description>
+         Launch the project in debug mode to define a  launch configuration, download the executable to the target device, and start debugging the program.
+      </description>
+      <subitem
+            label="Click Project &gt; Debug to launch the New Launch Configuration wizard.">
+         <command
+               required="false"
+               serialization="org.eclipse.debug.ui.commands.DebugLast"/>
+      </subitem>
+      <subitem
+            label="Complete the New Launch Configuration wizard, then click Debug.">
+      </subitem>
+      <subitem
+            label="Download executable to target device.">
+      </subitem>
+      <subitem
+            label="Program is launched on target device and control returns to the Carbide debugger.">
+      </subitem>
+   </item>
+   <item
+         href="/com.nokia.carbide.cpp.doc.user/html/debugger/debug/cmds_resuming.htm"
+         title="Resume Debugging Session">
+      <description>
+         Use the <b>Debug</b> perspective to examine variables, breakpoints, memory, assembly code, and other details of the halted program.
+      </description>
+      <subitem
+            label="Set a new breakpoint in the program.">
+      </subitem>
+      <subitem
+            label="Click Resume to restart the program. The program should execute until the new breakpoint is hit, at which time control again returns to the Carbide debugger.">
+      </subitem>
+      <subitem
+            label="Repeat the above steps as necessary to fully debug your program on the device.">
+      </subitem>
+   </item>
+ </cheatsheet>

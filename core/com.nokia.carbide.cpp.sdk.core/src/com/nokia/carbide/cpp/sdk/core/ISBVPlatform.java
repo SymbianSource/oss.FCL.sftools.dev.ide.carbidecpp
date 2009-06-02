@@ -12,12 +12,12 @@
 */
 package com.nokia.carbide.cpp.sdk.core;
 
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 
 /**
  * This interface defines a single Symbian Binary Variation (SBV) platform.
@@ -81,12 +81,12 @@ public interface ISBVPlatform {
 	 * The MAP of BUILD_INCLUDE paths from the variant and all it's parents
 	 * @return Map of IPaths and the operation to perform (set, prepend, append)
 	 */
-	Map<IPath, String> getBuildIncludePaths();
+	LinkedHashMap<IPath, String> getBuildIncludePaths();
 	
 	/**
 	 * The MAP of ROM_INCLUDE paths from the variant and all it's parents
 	 * @return list of paths
 	 */
-	Map<IPath, String> getROMBuildIncludePaths();
+	LinkedHashMap<IPath, String> getROMBuildIncludePaths();
 	
 }

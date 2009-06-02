@@ -32,6 +32,19 @@ import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.LibrarySectionPart;
 public class LibrariesPageTester {
 
 	/**
+	 * Retrieves any error message from the Libraries page.
+	 * @param page - Libraries page provided by caller
+	 * @return error message string if success, null otherwise
+	 */
+	public static String getErrorMesaage(FormPage page) {
+		if (page != null && page instanceof LibrariesPage) {
+			LibrariesPage librariesPage = (LibrariesPage) page;
+			return librariesPage.getErrorMesaage();
+		}
+		return null;
+	}
+
+	/**
 	 * Retrieves the "Libraries" section of the Libraries page.
 	 * @param page - Libraries page provided by caller
 	 * @return - section part if success, null otherwise

@@ -179,7 +179,7 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		else if (sbvPlat != null){
 			
-			Map<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
+			LinkedHashMap<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
 			Set<IPath> set = platPaths.keySet();
 			for (IPath path : set) {
 				String pathType = platPaths.get(path);
