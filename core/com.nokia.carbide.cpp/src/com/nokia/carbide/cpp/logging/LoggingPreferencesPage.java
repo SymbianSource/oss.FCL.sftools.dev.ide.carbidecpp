@@ -18,11 +18,14 @@ package com.nokia.carbide.cpp.logging;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -58,6 +61,8 @@ import org.eclipse.ui.ide.IDE;
 
 public class LoggingPreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
+	public static final String REFRESH_LOG_ITEM = "Refresh Log";
+
 	class TreeContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		}
@@ -66,7 +71,10 @@ public class LoggingPreferencesPage extends PreferencePage implements IWorkbench
 		}
 
 		public Object[] getElements(Object inputElement) {
-			return DiagnosticLogManager.getDiagnosticLogManager().getLogGroups();
+			Collection<Object> elements = new ArrayList<Object>();
+			elements.addAll(Arrays.asList(DiagnosticLogManager.getDiagnosticLogManager().getLogGroups()));
+			elements.add(REFRESH_LOG_ITEM);
+			return elements.toArray();
 		}
 
 		public Object[] getChildren(Object parentElement) {
@@ -198,6 +206,10 @@ public class LoggingPreferencesPage extends PreferencePage implements IWorkbench
 				DiagnosticLog log = (DiagnosticLog) element;
 				enableLog(log, event.getChecked());
 			}
+			else if (element.equals(REFRESH_LOG_ITEM)) {
+				String prefId = ResourcesPlugin.PI_RESOURCES + ".refresh.log";
+				ResourcesPlugin.getPlugin().getPluginPreferences().setValue(prefId, event.getChecked());
+			}
 		updateGroupsCheckedState();
 	}
 
@@ -228,6 +240,12 @@ public class LoggingPreferencesPage extends PreferencePage implements IWorkbench
 					logPath.setText(log.getFile().getCanonicalPath());
 				} catch (IOException e) { e.printStackTrace(); }
 			}					
+			else if (firstElement.equals(REFRESH_LOG_ITEM)) {
+				IPath path = ResourcesPlugin.getWorkspace().getRoot().getLocation().append("refresh.log");
+				try {
+					logPath.setText(path.toFile().getCanonicalPath());
+				} catch (IOException e) {e.printStackTrace(); }
+			}
 		}
 		
 	}
@@ -251,7 +269,15 @@ public class LoggingPreferencesPage extends PreferencePage implements IWorkbench
 								IDE.openEditorOnFileStore(activePage, fileStore);
 							} catch (PartInitException e) { e.printStackTrace(); }							
 							}
-					}										
+					}
+					else if (object.equals(REFRESH_LOG_ITEM)) {
+						IPath path = ResourcesPlugin.getWorkspace().getRoot().getLocation().append("refresh.log");
+						File f = path.toFile();
+						IFileStore fileStore= EFS.getLocalFileSystem().getStore(Path.fromOSString(f.getAbsolutePath()));
+						try {
+							IDE.openEditorOnFileStore(activePage, fileStore);
+						} catch (PartInitException e) { e.printStackTrace(); }							
+					}
 				}
 				
 			}					
@@ -272,7 +298,9 @@ public class LoggingPreferencesPage extends PreferencePage implements IWorkbench
 			checkboxTreeViewer.setChecked(logGroup, allChecked);
 			checkboxTreeViewer.setGrayed(logGroup, anyChecked && !allChecked);
 		}
-		
+		String prefId = ResourcesPlugin.PI_RESOURCES + ".refresh.log";
+		boolean prefState = ResourcesPlugin.getPlugin().getPluginPreferences().getBoolean(prefId);
+		checkboxTreeViewer.setChecked(REFRESH_LOG_ITEM, prefState);
 	}
 
 	protected void mailLogs() {
