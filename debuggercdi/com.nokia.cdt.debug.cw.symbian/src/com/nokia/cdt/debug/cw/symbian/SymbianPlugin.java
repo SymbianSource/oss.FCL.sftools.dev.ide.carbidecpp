@@ -17,21 +17,16 @@
 
 package com.nokia.cdt.debug.cw.symbian;
 
-import java.io.File;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.freescale.cdt.debug.cw.core.CWPlugin;
 import com.freescale.cdt.debug.cw.core.ui.console.LoggingConsole;
-import com.nokia.carbide.cpp.internal.support.SupportPlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 /**
@@ -77,27 +72,6 @@ public class SymbianPlugin extends AbstractUIPlugin {
 		// Force the the core FSL UI plugin to load; this ensures the UI registers
 		// its callback into the core (non-UI) plugin before it's actually needed
 		com.freescale.cdt.debug.cw.core.ui.CWDebugUIPlugin.getDefault();
-
-		IPath basePath = SupportPlugin.getDefault().getDebuggerDirectory();
-
-		Path dePath = new Path(basePath.toPortableString());
-		String deFilePath = dePath.append("de.exe").toOSString(); //$NON-NLS-1$
-
-		Path cwNativePath = new Path(basePath.toPortableString());
-		String cwNativeFilePath = cwNativePath.append("CWNative.dll") //$NON-NLS-1$
-				.toOSString();
-
-		File deFile = new File(deFilePath);
-		if (deFile.exists())
-			CWPlugin.getDefault().getPluginPreferences().setValue(
-					CWPlugin.GLOBPREF_DE_LOCATION, deFile.getAbsolutePath());
-		else {
-			// what to do here?
-		}
-
-		File cwNativeFile = new File(cwNativeFilePath);
-		boolean cwNativeLoaded = CWPlugin.getDefault().loadCWNative(cwNativeFile.getAbsolutePath());
-		assert(cwNativeLoaded);
 	}
 
 	/**
