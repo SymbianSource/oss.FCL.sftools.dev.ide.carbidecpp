@@ -5,16 +5,6 @@
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
 
-     <launchConfigurationType
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
-            name="Symbian OS Application"
-            delegate="com.nokia.cdt.internal.debug.launch.ContextLaunchDelegate"
-            modes="run,debug"
-            public="true"
-            id="com.nokia.cdt.debug.launch.contextLaunch">
-      </launchConfigurationType>
-
       <launchConfigurationType
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
             sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
@@ -80,11 +70,6 @@
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
             icon="icons/launch_config_file_16x16.png"
-            configTypeID="com.nokia.cdt.debug.launch.contextLaunch"
-            id="com.nokia.cdt.debug.launch.contextLaunchImage">
-      </launchConfigurationTypeImage>
-      <launchConfigurationTypeImage
-            icon="icons/launch_config_file_16x16.png"
             configTypeID="com.nokia.cdt.debug.launch.emulationLaunch"
             id="com.nokia.cdt.debug.launch.emulationLaunchImage">
       </launchConfigurationTypeImage>
@@ -115,15 +100,6 @@
             configTypeID="com.nokia.cdt.debug.launch.stiLaunch"
             id="com.nokia.cdt.debug.launch.stiLaunchImage">
       </launchConfigurationTypeImage>
-    </extension>
-
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            type="com.nokia.cdt.debug.launch.contextLaunch"
-            class="com.nokia.cdt.internal.debug.launch.ui.ContextConfigurationTabGroup"
-            id="com.nokia.cdt.debug.launch.contextLaunchTabGroup">
-      </launchConfigurationTabGroup>
     </extension>
 
    <extension
@@ -198,7 +174,7 @@
                    <or>
                      <instanceof value="org.eclipse.cdt.core.model.IBinary"/>
                      <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
-                     <instanceof value="com.nokia.cdt.debug.cw.symbian.ui.executables.Executable"/>
+                     <instanceof value="org.eclipse.cdt.debug.core.executables.Executable"/>
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.cdt.launch.isExecutable"/>
@@ -231,19 +207,10 @@
   		 </contextualLaunch>
          <description
              mode="run"
-             description="Runs a Symbian OS executable on either the emulator or a phone"/>
+             description="Runs a Symbian OS executable"/>
           <description
              mode="debug"
-             description="Debugs a Symbian OS executable on either the emulator or a phone"/>
-         <perspective
-               id="com.nokia.carbide.cpp.CarbideCppPerspective">
-         </perspective>
-         <perspective
-               id="org.eclipse.debug.ui.DebugPerspective">
-         </perspective>
-         <configurationType
-               id="com.nokia.cdt.debug.launch.contextLaunch">
-         </configurationType>
+             description="Debugs a Symbian OS executable"/>
       </shortcut>
      </extension>
    
@@ -271,7 +238,7 @@
 	<extension point="org.eclipse.core.runtime.adapters">
          <factory 
             class="" 
-            adaptableType="com.nokia.cdt.debug.cw.symbian.ui.executables.Executable">
+            adaptableType="org.eclipse.cdt.debug.core.executables.Executable">
             <adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
          </factory>
     </extension>
