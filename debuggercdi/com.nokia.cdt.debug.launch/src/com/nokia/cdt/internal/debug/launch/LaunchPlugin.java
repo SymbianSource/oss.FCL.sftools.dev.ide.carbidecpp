@@ -21,7 +21,6 @@ import java.util.*;
 import org.eclipse.cdt.core.model.*;
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.cdt.debug.core.executables.Executable;
-import org.eclipse.cdt.debug.core.executables.ExecutablesManager;
 import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.*;
@@ -46,10 +45,8 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.debug.cw.symbian.*;
-import com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemapping;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchCreationWizard;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
@@ -435,15 +432,6 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				listenForVariablesView();
-				
-				CarbideExecutablesProvider provider = new CarbideExecutablesProvider();
-				ExecutablesManager em = ExecutablesManager.getExecutablesManager();
-				em.addSourceFileRemapping(new SymbianSourceFileRemapping());
-				em.addExecutablesProvider(provider);
-				em.addExecutableImporter(new CarbideExecutableImporter(provider));
-				em.scheduleRefresh(provider, 0);
-				em.addSourceFilesProvider(new CarbideSourceFilesProvider());
-				
 				return Status.OK_STATUS;
 			}};
 			earlyJob.schedule();

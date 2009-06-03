@@ -1156,7 +1156,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	}
 	
 	public boolean isEKA1() {
-		return !isEKA2();
+		return !isEKA2() && getOSVersion().getMajor() < 9 && getOSVersion().getMajor() >= 6;
 	}
 	
 	public boolean isEKA2() {

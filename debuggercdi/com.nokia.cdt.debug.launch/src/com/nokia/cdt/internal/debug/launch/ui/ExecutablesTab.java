@@ -26,7 +26,6 @@ import java.util.StringTokenizer;
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.cdt.debug.core.executables.ExecutablesManager;
-import org.eclipse.cdt.debug.core.executables.IExecutablesChangeEvent;
 import org.eclipse.cdt.debug.core.executables.IExecutablesChangeListener;
 import org.eclipse.cdt.launch.AbstractCLaunchDelegate;
 import org.eclipse.cdt.launch.ui.CLaunchConfigurationTab;
@@ -124,7 +123,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 
 	public ExecutablesTab(boolean supportsTargetAll) {
 		this.supportsTargetAll = supportsTargetAll;
-		executablesToTarget = Collections.EMPTY_LIST; // avoid NPE if accessed before filled
+		executablesToTarget = Collections.emptyList(); // avoid NPE if accessed before filled
 	}
 
 	/* (non-Javadoc)
@@ -401,14 +400,12 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 		try {
 			String launchExeName = AbstractCLaunchDelegate.getProgramName(configuration);
 			if (launchExeName == null)
-				return Collections.EMPTY_LIST;
+				return Collections.emptyList();
 			
 			// ignore 'urel', 'udeb' and 'lib' directories when getting the binaries for the same target
 			// removeLastSegments(2) will strip the filename and 'urel', 'udeb' or 'lib'
 			IPath launchExeTargetPath = new Path(new File(launchExeName).getCanonicalPath()).removeLastSegments(2); 
-			Executable[] exes = ExecutablesManager.getExecutablesManager().getExecutables();
-			for (int i = 0; i < exes.length; i++) {
-				Executable executable = exes[i];
+			for (Executable executable : ExecutablesManager.getExecutablesManager().getExecutables()) {
 				IPath exePath = executable.getPath();
 				if (launchExeTargetPath.isPrefixOf(exePath))
 						files.add(new ExeFileToDebug(exePath.toOSString(), true));
@@ -447,11 +444,14 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 		getControl().setFocus();
 	}
 
-	public void executablesChanged(IExecutablesChangeEvent event) {
-		changeTargetingRule(targetingRule);
-	}
-
 	public ILaunchConfiguration getLaunchConfiguration() {
 		return configuration;
+	}
+
+	public void executablesChanged(List<Executable> executables) {
+	}
+
+	public void executablesListChanged() {
+		changeTargetingRule(targetingRule);
 	}
 }

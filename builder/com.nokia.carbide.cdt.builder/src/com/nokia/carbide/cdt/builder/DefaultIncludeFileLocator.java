@@ -72,7 +72,7 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 					}
 				} else if (sbvPlatform != null){
 					
-					Map<IPath, String> platPaths = sbvPlatform.getBuildIncludePaths();
+					LinkedHashMap<IPath, String> platPaths = sbvPlatform.getBuildIncludePaths();
 					Set<IPath> set = platPaths.keySet();
 					for (IPath path : set) {
 						String pathType = platPaths.get(path);

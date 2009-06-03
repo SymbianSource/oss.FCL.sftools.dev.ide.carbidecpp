@@ -156,4 +156,8 @@ public class LibrariesPage extends MMPEditorFormPage {
 		return debugLibraries;
 	}
 
+	public String getErrorMesaage() {
+		return getManagedForm().getForm().getMessage();
+	}
+
 }

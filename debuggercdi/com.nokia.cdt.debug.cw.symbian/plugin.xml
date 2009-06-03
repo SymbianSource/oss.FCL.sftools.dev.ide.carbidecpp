@@ -183,5 +183,21 @@
          </action>
       </viewerContribution>
    </extension>   
-    
+
+   <!-- *************** Executables manager extensions **************** -->
+   <extension
+       point="org.eclipse.cdt.debug.core.ExecutablesProvider">
+      <provider class="com.nokia.cdt.debug.cw.symbian.CarbideExecutablesProvider"/>
+   </extension>
+
+   <extension
+       point="org.eclipse.cdt.debug.core.SourceFilesProvider">
+      <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.CarbideSourceFilesProvider"/>
+   </extension>
+
+   <extension
+       point="org.eclipse.cdt.debug.core.SourceRemappingProvider">
+      <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemapping"/>
+   </extension>
+
 </plugin>

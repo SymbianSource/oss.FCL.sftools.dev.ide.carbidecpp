@@ -18,8 +18,7 @@
 package com.nokia.carbide.cpp.sdk.core.test;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import junit.framework.TestCase;
 
@@ -106,12 +105,38 @@ public class SBVCatalogTest extends TestCase {
 		platform = catalog.findPlatform("wilma88");
 		assertNull(platform);
 		
+	}	
+	
+	/**
+	 * Test the number and order of build include paths
+	 * @throws Exception
+	 */
+	public void testBuildIncludePaths() throws Exception {
+		setupForSDK(new Path("Data/var/group1"));
+		ISBVPlatform[] platforms = catalog.getPlatforms();
+		assertEquals(7, platforms.length);
+		
+		ISBVPlatform platform;
+		
 		// test build include paths
 		platform = catalog.findPlatform("dino79");
 		assertNotNull(platform);
 		assertEquals(4, platform.getBuildIncludePaths().size());
 		
-		Map<IPath, String> systemPaths = platform.getBuildIncludePaths();
+		LinkedHashMap<IPath, String> systemPaths = platform.getBuildIncludePaths();
+
+		Set<IPath> pathSet = systemPaths.keySet();
+		Object[] paths = pathSet.toArray();
+		IPath p;
+		p = (IPath)paths[0];
+		assertTrue("Variant build include Paths possibly in wrong order", p.toPortableString().contains("epoc32/include/config/flintstone500/dino79"));
+		p = (IPath)paths[1];
+		assertTrue("Variant build include Paths possibly in wrong order", p.toPortableString().contains("/epoc32/include/config/flintstone500"));
+		p = (IPath)paths[2];
+		assertTrue("Variant build include Paths possibly in wrong order", p.toPortableString().contains("/epoc32/include/config"));
+		p = (IPath)paths[3];
+		assertTrue("Variant build include Paths possibly in wrong order", p.toPortableString().contains("/epoc32/include"));
+		
 		Set<IPath> set = systemPaths.keySet();
 		for (IPath path : set) {
 			String pathType = systemPaths.get(path);
@@ -121,7 +146,8 @@ public class SBVCatalogTest extends TestCase {
 		
 		assertEquals(16, platform.getROMBuildIncludePaths().size());
 		
-	}	
+		
+	}
 	
 	/**
 	 * @param built

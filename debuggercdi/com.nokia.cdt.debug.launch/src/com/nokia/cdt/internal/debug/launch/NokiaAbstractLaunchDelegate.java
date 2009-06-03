@@ -30,7 +30,6 @@ import java.util.StringTokenizer;
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.IBinary;
 import org.eclipse.cdt.core.model.ICProject;
-import org.eclipse.cdt.debug.core.executables.ExecutablesManager;
 import org.eclipse.cdt.launch.AbstractCLaunchDelegate;
 import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.core.resources.IProject;
@@ -221,7 +220,6 @@ public abstract class NokiaAbstractLaunchDelegate extends
 	protected IPath[] getOtherExecutables(ICProject project, IPath exePath,
 			ILaunchConfiguration config, IProgressMonitor monitor) throws CModelException {
 		ArrayList<IPath> targetedBinaries = new ArrayList<IPath>();
-		ExecutablesManager.getExecutablesManager().setRefreshNeeded(true);
 		targetedBinaries.addAll(getBldInfExecutables(project, exePath, config, monitor));
 		return (IPath[]) targetedBinaries.toArray(new IPath[targetedBinaries
 				.size()]);
