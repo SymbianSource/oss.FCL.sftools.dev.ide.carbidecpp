@@ -16,8 +16,6 @@
 */
 package com.nokia.cdt.debug.cw.symbian.ui.executables;
 
-import java.util.ArrayList;
-
 import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.cdt.debug.core.executables.ISourceFilesProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -29,13 +27,14 @@ import com.nokia.cdt.debug.cw.symbian.symbolreader.SymbolReaderManager;
 public class CarbideSourceFilesProvider extends PlatformObject implements
 		ISourceFilesProvider {
 
-	public String[] getSourceFiles(Executable executable,
-			IProgressMonitor monitor) {	
-		ArrayList<String> sourceFiles = new ArrayList<String>();
+	public String[] getSourceFiles(Executable executable, IProgressMonitor monitor) {	
 		ISymbolFile symFile = SymbolReaderManager.getSymbolReaderManager().openSymbolFile(executable.getPath().toOSString());
-		String[] sourceArray = symFile.getSourceFiles();
-		symFile.close();
-		return sourceArray;
+		if (symFile != null) {
+			String[] sourceArray = symFile.getSourceFiles();
+			symFile.close();
+			return sourceArray;
+		}
+		return new String[0];
 	}
 
 	public int getPriority(Executable executable) {
