@@ -19,8 +19,6 @@ package com.nokia.cdt.internal.debug.launch.ui;
 import java.util.StringTokenizer;
 
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
-import org.eclipse.cdt.launch.internal.ui.LaunchMessages;
-import org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -68,7 +66,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		Composite comp = new Composite(parent, SWT.NONE);
 		setControl(comp);
 		
-		LaunchUIPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.RUN_MODE_MAIN);
+		LaunchPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.RUN_MODE_MAIN);
 		
 		GridLayout topLayout = new GridLayout();
 		comp.setLayout(topLayout);
@@ -97,7 +95,6 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
 		}
-		LaunchUIPlugin.setDialogShell(parent.getShell());
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_BUILD);
 }
@@ -146,8 +143,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		try {
 			remoteText.setText(config.getAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, "")); //$NON-NLS-1$
 		} catch (CoreException e) {
-			setErrorMessage(LaunchMessages.getFormattedString("Launch.common.Exception_occurred_reading_configuration_EXCEPTION", e.getStatus().getMessage())); //$NON-NLS-1$
-			LaunchUIPlugin.log(e);
+			LaunchPlugin.log(e);
 		}
 		try {
 	        if (!RemoteConnectionsTRKHelper.configUsesConnectionAttribute(config)) {

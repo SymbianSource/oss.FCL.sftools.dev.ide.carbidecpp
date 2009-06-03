@@ -16,12 +16,13 @@
 */
 package com.nokia.cdt.internal.debug.launch.ui;
 
-import org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 public class StopModeMainTab extends CarbideMainTab {
 
@@ -30,7 +31,7 @@ public class StopModeMainTab extends CarbideMainTab {
 		Composite comp = new Composite(parent, SWT.NONE);
 		setControl(comp);
 		
-		LaunchUIPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.STOP_MODE_MAIN);
+		LaunchPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.STOP_MODE_MAIN);
 		
 		GridLayout topLayout = new GridLayout();
 		comp.setLayout(topLayout);
@@ -50,7 +51,6 @@ public class StopModeMainTab extends CarbideMainTab {
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
 		}
-		LaunchUIPlugin.setDialogShell(parent.getShell());
 	}
 
 	public void setDefaults(ILaunchConfigurationWorkingCopy config) {

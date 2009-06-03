@@ -20,7 +20,6 @@ import cwdbg.PreferenceConstants;
 
 import org.eclipse.cdt.launch.internal.ui.LaunchImages;
 import org.eclipse.cdt.launch.internal.ui.LaunchMessages;
-import org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin;
 import org.eclipse.cdt.launch.ui.*;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -36,6 +35,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+
 public class RunModeArgumentsTab extends CLaunchConfigurationTab {
 
 	protected Text argumentsText;
@@ -48,7 +49,7 @@ public class RunModeArgumentsTab extends CLaunchConfigurationTab {
 	    composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 	    setControl(composite);
 	    
-		LaunchUIPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), ICDTLaunchHelpContextIds.LAUNCH_CONFIGURATION_DIALOG_ARGUMNETS_TAB);
+		LaunchPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), ICDTLaunchHelpContextIds.LAUNCH_CONFIGURATION_DIALOG_ARGUMNETS_TAB);
 			
 	    Group group = new Group(composite, SWT.NONE);
 	    Font font = composite.getFont();
@@ -80,8 +81,7 @@ public class RunModeArgumentsTab extends CLaunchConfigurationTab {
 			argumentsText.setText(configuration.getAttribute(PreferenceConstants.J_PN_ProgramArguments, "")); //$NON-NLS-1$
 		}
 		catch (CoreException e) {
-			setErrorMessage(LaunchMessages.getFormattedString("Launch.common.Exception_occurred_reading_configuration_EXCEPTION", e.getStatus().getMessage())); //$NON-NLS-1$
-			LaunchUIPlugin.log(e);
+			LaunchPlugin.log(e);
 		}
 	}
 
