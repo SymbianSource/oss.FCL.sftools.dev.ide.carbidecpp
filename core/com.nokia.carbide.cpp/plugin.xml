@@ -541,4 +541,23 @@
            id="com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage"/>         
    </extension>
 
+	<extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+           name="Carbide Extensions"
+           class="com.nokia.carbide.cpp.preferences.ExtensionsPropertiesPage"
+           id="com.nokia.carbide.cpp.preferences.ExtensionsPropertiesPage">
+            <filter
+             	name="nature"
+        		value="com.nokia.carbide.cdt.builder.carbideCPPBuilderNature">
+    	    </filter>            
+         <enabledWhen>
+            <or>
+		     <instanceof value="org.eclipse.core.resources.IProject"/>
+		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
+		    </or>          
+         </enabledWhen>
+      </page>
+   </extension>
+
 </plugin>
