@@ -16,18 +16,9 @@
 */
 package com.nokia.carbide.cdt.builder;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.*;
+import java.sql.Time;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -441,7 +432,7 @@ public class EpocEngineHelper {
 		IPath root = null;
 		IPath desiredRoot = null;
 		IPath requiredRoot = null;
-		
+
 		if (requiredPaths.size() > 0) {
 			// requiredPaths contains a list of required paths
 			// (for MMPs).  Take the shortest common source path of all.
@@ -458,7 +449,11 @@ public class EpocEngineHelper {
 			CommonPathFinder finder = new CommonPathFinder();
 			finder.addDirectory(root);
 			for (IPath path : desiredPaths) {
-				finder.addDirectory(path);
+				// boog 9221, bad root can be chosen for non-existent sourcepaths in MMPs
+				// so ingore those
+				if (path.toFile().exists()){
+					finder.addDirectory(path);
+				} 
 			}
 			desiredRoot = finder.getCommonPath();
 			root = finder.getCommonPath();
@@ -469,7 +464,11 @@ public class EpocEngineHelper {
 			CommonPathFinder finder = new CommonPathFinder();
 			finder.addDirectory(root);
 			for (IPath path : optionalPaths) {
-				finder.addDirectory(path);
+				// boog 9221, bad root can be chosen for non-existent sourcepaths in MMPs
+				// so ingore those
+				if (path.toFile().exists()){
+					finder.addDirectory(path);
+				} 
 			}
 			root = finder.getCommonPath();
 		}
