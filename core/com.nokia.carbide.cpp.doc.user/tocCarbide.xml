@@ -46,7 +46,7 @@
 			<topic label="New Symbian OS C++ Project wizard"	href="html/tasks/CreatingNewProjects.html" />
 		</topic>
 
-		<topic label="Symbian OS MMP File"			href="html/reference/menus/new_symbian_mmp_file.htm" />
+		<topic label="Symbian OS MMP File"			href="html/reference/NewMMP_wizard.html" />
 		<topic label="Context menus" 				href="html/concepts/contextual_menus.htm" />
 
 	</topic>
