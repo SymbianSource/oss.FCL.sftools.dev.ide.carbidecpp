@@ -23,7 +23,6 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI.IListener;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
-import org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -48,7 +47,7 @@ public class AttachMainTab extends CarbideMainTab {
 		Composite comp = new Composite(parent, SWT.NONE);
 		setControl(comp);
 		
-		LaunchUIPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.ATTACH_MAIN);
+		LaunchPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.ATTACH_MAIN);
 		
 		GridLayout topLayout = new GridLayout();
 		comp.setLayout(topLayout);
@@ -73,7 +72,6 @@ public class AttachMainTab extends CarbideMainTab {
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
 		}
-		LaunchUIPlugin.setDialogShell(parent.getShell());
 	}
 
 	public void setDefaults(ILaunchConfigurationWorkingCopy config) {

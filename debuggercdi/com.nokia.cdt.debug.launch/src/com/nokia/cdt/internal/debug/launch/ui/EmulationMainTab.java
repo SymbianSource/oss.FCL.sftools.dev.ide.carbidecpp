@@ -19,7 +19,6 @@ package com.nokia.cdt.internal.debug.launch.ui;
 import com.freescale.cdt.debug.cw.core.settings.DebuggerCommonData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
-import org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -46,7 +45,7 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		Composite comp = new Composite(parent, SWT.NONE);
 		setControl(comp);
 		
-		LaunchUIPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.EMULATION_MAIN);
+		LaunchPlugin.getDefault().getWorkbench().getHelpSystem().setHelp(getControl(), LaunchTabHelpIds.EMULATION_MAIN);
 		// Move the focus from the launch config view to this composite. Afterward the focus will move with the tabs.
 		comp.setFocus(); 
 		
@@ -81,7 +80,6 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
 		}
-		LaunchUIPlugin.setDialogShell(parent.getShell());
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_BUILD);
 
