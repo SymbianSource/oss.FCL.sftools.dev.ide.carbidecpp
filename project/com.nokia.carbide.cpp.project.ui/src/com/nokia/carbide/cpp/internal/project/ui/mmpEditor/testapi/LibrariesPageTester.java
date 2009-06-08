@@ -36,10 +36,10 @@ public class LibrariesPageTester {
 	 * @param page - Libraries page provided by caller
 	 * @return error message string if success, null otherwise
 	 */
-	public static String getErrorMesaage(FormPage page) {
+	public static String getErrorMessage(FormPage page) {
 		if (page != null && page instanceof LibrariesPage) {
 			LibrariesPage librariesPage = (LibrariesPage) page;
-			return librariesPage.getErrorMesaage();
+			return librariesPage.getErrorMessage();
 		}
 		return null;
 	}

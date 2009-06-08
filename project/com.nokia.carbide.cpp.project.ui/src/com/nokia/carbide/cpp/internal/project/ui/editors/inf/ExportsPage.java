@@ -105,7 +105,7 @@ public class ExportsPage extends BldInfEditorFormPage {
 		return testExports;
 	}
 
-	public String getErrorMesaage() {
+	public String getErrorMessage() {
 		return getManagedForm().getForm().getMessage();
 	}
 
