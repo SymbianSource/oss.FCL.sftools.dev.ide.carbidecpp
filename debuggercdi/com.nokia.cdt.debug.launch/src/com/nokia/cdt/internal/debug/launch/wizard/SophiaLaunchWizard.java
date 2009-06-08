@@ -28,59 +28,69 @@ import com.nokia.cdt.debug.cw.symbian.SettingsData;
 
 public class SophiaLaunchWizard extends AbstractLaunchWizard {
 
-	    private SophiaWizardPage fSophiaPage;
-	    private StopModeRomImageWizardPage fRomImgPage;
-	    
-		private boolean hasFinished = false;
+    private SophiaWizardPage fSophiaPage;
+    private StopModeRomImageWizardPage fRomImgPage;
+    
+	private boolean hasFinished = false;
 
-		public SophiaLaunchWizard(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, IProject project, String configurationName) {
-			super(project, configurationName, mmps, exes, defaultExecutable, true, false);
-			setWindowTitle(Messages.getString("SophiaLaunchWizard.1")); //$NON-NLS-1$
-	    }
+	public SophiaLaunchWizard(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, IProject project, String configurationName) {
+		super(project, configurationName, mmps, exes, defaultExecutable, true, false);
+		setWindowTitle(Messages.getString("SophiaLaunchWizard.1")); //$NON-NLS-1$
+    }
 
-	    public boolean performFinish() {
-	    	hasFinished = true;
-	    	return true;
-	    }
-	 
-	    public void addPages() {
-	    	super.addPages();
-	    	fSophiaPage = new SophiaWizardPage(this);
-	    	fRomImgPage = new StopModeRomImageWizardPage(this);
-	        addPage(fSophiaPage);
-	        addPage(fRomImgPage);
-	        addPage(getSummaryPage());
-	    }
+	@Override
+	public String getLaunchTypeID() {
+		return SettingsData.STI_LAUNCH_TYPE_ID;
+	}
 
-	    public String toString() {
-	    	return Messages.getString("SophiaLaunchWizard.2"); //$NON-NLS-1$
-	    }
-	    
-	    public String getDescription() {
-	    	return Messages.getString("SophiaLaunchWizard.3"); //$NON-NLS-1$
-	    }
-	    
-	    public ILaunchConfigurationWorkingCopy createLaunchConfiguration(IPath mmpPath, IPath exePath, IPath processToLaunchTargetPath) {
-	    	// if we haven't finished then don't create anything
-	    	if (!hasFinished) {
-	    		return null;
-	    	}
+	@Override
+	public boolean supportsCategory(String categoryId) {
+		return categoryId.equals(BOARD_CATEGORY_ID);
+	}
 
-	    	ILaunchConfigurationWorkingCopy config = null;
-	    	try {
-	    		// create our config
-	    		config = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(SettingsData.STI_LAUNCH_TYPE_ID).newInstance(null, getConfigName());
-	    		
-	    		// set the default values
-	    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_SophiaSTI, getProject(), mmpPath, exePath);
-	    		
-	    		// now let the wizard pages update values 
-	    		fSophiaPage.updateConfiguration(config);
-	    		fRomImgPage.updateConfiguration(config);
-	    		
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-			return config;
-	    }
+	public boolean performFinish() {
+    	hasFinished = true;
+    	return true;
+    }
+ 
+    public void addPages() {
+    	super.addPages();
+    	fSophiaPage = new SophiaWizardPage(this);
+    	fRomImgPage = new StopModeRomImageWizardPage(this);
+        addPage(fSophiaPage);
+        addPage(fRomImgPage);
+        addPage(getSummaryPage());
+    }
+
+    public String toString() {
+    	return Messages.getString("SophiaLaunchWizard.2"); //$NON-NLS-1$
+    }
+    
+    public String getDescription() {
+    	return Messages.getString("SophiaLaunchWizard.3"); //$NON-NLS-1$
+    }
+    
+    public ILaunchConfigurationWorkingCopy createLaunchConfiguration(IPath mmpPath, IPath exePath, IPath processToLaunchTargetPath) {
+    	// if we haven't finished then don't create anything
+    	if (!hasFinished) {
+    		return null;
+    	}
+
+    	ILaunchConfigurationWorkingCopy config = null;
+    	try {
+    		// create our config
+    		config = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(SettingsData.STI_LAUNCH_TYPE_ID).newInstance(null, getConfigName());
+    		
+    		// set the default values
+    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_SophiaSTI, getProject(), mmpPath, exePath);
+    		
+    		// now let the wizard pages update values 
+    		fSophiaPage.updateConfiguration(config);
+    		fRomImgPage.updateConfiguration(config);
+    		
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		return config;
+    }
 }

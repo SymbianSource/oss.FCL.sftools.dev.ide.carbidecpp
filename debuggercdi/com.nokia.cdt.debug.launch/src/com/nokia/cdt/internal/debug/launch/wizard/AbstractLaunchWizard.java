@@ -22,12 +22,16 @@ import com.nokia.cpp.internal.api.utils.core.Pair;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.jface.wizard.Wizard;
 
 import java.util.List;
 
 public abstract class AbstractLaunchWizard extends Wizard implements ILaunchWizard {
 
+	public static final String PHONE_CATEGORY_ID = "com.nokia.cdt.debug.launch.phoneCategory"; //$NON-NLS-1$
+	public static final String BOARD_CATEGORY_ID = "com.nokia.cdt.debug.launch.boardCategory"; //$NON-NLS-1$
+	
 	private LaunchWizardSummaryPage summaryPage;
 	private String configName = ""; //$NON-NLS-1$
 	private IProject project;
@@ -51,6 +55,14 @@ public abstract class AbstractLaunchWizard extends Wizard implements ILaunchWiza
 		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_NEW_LAUNCH_CONFIG_WIZARD_BANNER));
 	}
 
+	public abstract String getLaunchTypeID();
+	
+	public abstract boolean supportsCategory(String categoryId);
+	
+	public boolean supportsMode(String mode) {
+		return DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(getLaunchTypeID()).supportsMode(mode);
+	}
+	
 	public String getConfigName() {
 		return configName;
 	}
@@ -91,9 +103,9 @@ public abstract class AbstractLaunchWizard extends Wizard implements ILaunchWiza
 			return binarySelectionPage.getSelectedExeMmpPair();
 		
 		if (exes != null && !exes.isEmpty())
-			return new Pair(exes.get(0), mmps.isEmpty() ? null : mmps.get(0));
+			return new Pair<IPath, IPath>(exes.get(0), mmps.isEmpty() ? null : mmps.get(0));
 		
-		return new Pair(null, null);
+		return new Pair<IPath, IPath>(null, null);
 	}
 	
 	public IPath getProcessToLaunchTargetPath() {

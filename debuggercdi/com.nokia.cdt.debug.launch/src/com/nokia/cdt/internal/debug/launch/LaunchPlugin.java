@@ -293,7 +293,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 			// or both
 			try {
 				final LaunchCreationWizard wizard = 
-					new LaunchCreationWizard(project, defaultConfigName, mmpPaths, exePaths, defaultExecutable, isX86, useEmulatorByDefault);
+					new LaunchCreationWizard(project, defaultConfigName, mmpPaths, exePaths, defaultExecutable, isX86, useEmulatorByDefault, mode);
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						wizard.init(PlatformUI.getWorkbench(), null);

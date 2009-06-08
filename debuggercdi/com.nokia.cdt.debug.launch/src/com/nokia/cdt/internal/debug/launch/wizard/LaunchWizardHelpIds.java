@@ -28,6 +28,8 @@ public class LaunchWizardHelpIds {
 	
 	public static final String WIZARD_BINARY_SELECTION_PAGE = HelpID_Prefix + "wizard_binary_selection_page"; //$NON-NLS-1$
 
+	public static final String CATEGORY_SELECTION_PAGE = HelpID_Prefix + "category_selection_page"; //$NON-NLS-1$
+
 	public static final String WIZARD_SELECTION_PAGE = HelpID_Prefix + "wizard_selection_page"; //$NON-NLS-1$
 
 	public static final String WIZARD_SUMMARY_PAGE = HelpID_Prefix + "wizard_summary_page"; //$NON-NLS-1$

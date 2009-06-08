@@ -37,6 +37,16 @@ public class SystemTRKLaunchWizard extends AbstractLaunchWizard {
 		setWindowTitle(Messages.getString("SystemTRKLaunchWizard.1")); //$NON-NLS-1$
     }
 
+	@Override
+	public String getLaunchTypeID() {
+		return SettingsData.SYS_TRK_LAUNCH_TYPE_ID;
+	}
+
+	@Override
+	public boolean supportsCategory(String categoryId) {
+		return categoryId.equals(PHONE_CATEGORY_ID);
+	}
+
     public boolean performFinish() {
     	hasFinished = true;
     	return true;

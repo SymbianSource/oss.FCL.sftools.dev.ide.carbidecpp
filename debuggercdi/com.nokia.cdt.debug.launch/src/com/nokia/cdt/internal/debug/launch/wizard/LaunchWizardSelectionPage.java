@@ -16,19 +16,11 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -50,76 +42,21 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cpp.internal.api.utils.core.*;
-
 class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectionChangedListener, IStructuredContentProvider {
 
+	private LaunchCreationWizard mainWizard;
 	private FormBrowser descriptionBrowser;
 	private TableViewer wizardSelectionTableViewer = null;
-	private List<Wizard> wizards = new ArrayList<Wizard>();
 	private ILaunchWizard selectedWizard = null;
+	private boolean inputChanged = false;
 	
-	
-	public LaunchWizardSelectionPage(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, IProject project, String configurationName) throws Exception {
+	public LaunchWizardSelectionPage(LaunchCreationWizard mainWizard, List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, IProject project, String configurationName, String mode) throws Exception {
 		super(Messages.getString("LaunchWizardSelectionPage.0")); //$NON-NLS-1$
 		setTitle(Messages.getString("LaunchWizardSelectionPage.1")); //$NON-NLS-1$
 		setDescription(Messages.getString("LaunchWizardSelectionPage.2")); //$NON-NLS-1$
+		this.mainWizard = mainWizard;
 		descriptionBrowser = new FormBrowser();
 		descriptionBrowser.setText(""); //$NON-NLS-1$
-		
-		AppTRKLaunchWizard appTRKWizard = new AppTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		appTRKWizard.addPages();
-		wizards.add(appTRKWizard);
-		
-		SystemTRKLaunchWizard sysTRKWizard = new SystemTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		sysTRKWizard.addPages();
-		wizards.add(sysTRKWizard);
-
-		Trace32LaunchWizard trace32Wizard = new Trace32LaunchWizard(mmps, exes, defaultExecutable, project, configurationName); 
-		trace32Wizard.addPages();
-		wizards.add(trace32Wizard);
-
-		SophiaLaunchWizard sophiaWizard = new SophiaLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		sophiaWizard.addPages();
-		wizards.add(sophiaWizard);
-
-		AttachTRKLaunchWizard attachTRKWizard = new AttachTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		attachTRKWizard.addPages();
-		wizards.add(attachTRKWizard);
-
-		// load any wizard extensions
-		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(LaunchPlugin.PLUGIN_ID + ".launchWizardExtension"); //$NON-NLS-1$
-		IExtension[] extensions = extensionPoint.getExtensions();
-		
-		for (int i = 0; i < extensions.length; i++) {
-			IExtension extension = extensions[i];
-			IConfigurationElement[] elements = extension.getConfigurationElements();
-			Check.checkContract(elements.length == 1);
-			IConfigurationElement element = elements[0];
-			
-			boolean failed = false;
-			try {
-				Object extObject = element.createExecutableExtension("class"); //$NON-NLS-1$
-				if (extObject instanceof ILaunchWizardContributor) {
-					AbstractLaunchWizard wizard = ((ILaunchWizardContributor)extObject).getWizard(mmps, exes, defaultExecutable, project, configurationName);
-					wizard.addPages();
-					wizards.add(wizard);
-				} else {
-					failed = true;
-				}
-			} 
-			catch (CoreException e) {
-				failed = true;
-			}
-			
-			if (failed) {
-				LaunchPlugin.log(Logging.newStatus(LaunchPlugin.getDefault(), 
-						IStatus.ERROR,
-						"Unable to load launchWizardExtension extension from " + extension.getContributor().getName()));
-			}
-		}
 	}
 
 	public void createDescriptionIn(Composite composite) {
@@ -169,7 +106,6 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 				moveToNextPage();
 			}
 		});
-		wizardSelectionTableViewer.setInput(wizards);
 		wizardSelectionTableViewer.addSelectionChangedListener(this);
 
 		createDescriptionIn(sashForm);
@@ -177,9 +113,6 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 
 		Dialog.applyDialogFont(container);
 		setControl(container);
-
-		// select the first element by default
-		wizardSelectionTableViewer.setSelection(new StructuredSelection(wizardSelectionTableViewer.getElementAt(0)), true);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), LaunchWizardHelpIds.WIZARD_SELECTION_PAGE);
 	}
@@ -207,16 +140,25 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible && wizardSelectionTableViewer != null) {
+			wizardSelectionTableViewer.setInput(mainWizard.getWizardsForCategory(mainWizard.getSelectedCategoryId()));
+			if (inputChanged) {
+				wizardSelectionTableViewer.setSelection(new StructuredSelection(wizardSelectionTableViewer.getElementAt(0)), true);
+			}
 			wizardSelectionTableViewer.getTable().setFocus();
 		}
 	}
 
 	public Object[] getElements(Object inputElement) {
+		List<Wizard> wizards = (List<Wizard>)inputElement;
 		return wizards.toArray();
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		
+		if (oldInput == null || newInput == null || !oldInput.equals(newInput)) {
+			inputChanged = true;
+		} else {
+			inputChanged = false;
+		}
 	}
 	
 	public ILaunchWizard getSelectedWizard() {

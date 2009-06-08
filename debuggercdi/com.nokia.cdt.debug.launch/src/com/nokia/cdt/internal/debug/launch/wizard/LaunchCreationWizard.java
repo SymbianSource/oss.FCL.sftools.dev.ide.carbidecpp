@@ -24,7 +24,13 @@ import com.nokia.cpp.internal.api.utils.core.*;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,23 +39,30 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LaunchCreationWizard extends Wizard {
 
 	private MainExecutableSelectionWizardPage fBinarySelectionPage;
 	private LaunchWizardSummaryPage fEmulationSummaryPage;
+	private LaunchCategorySelectionPage fCategorySelectionPage;
 	private LaunchWizardSelectionPage fWizardSelectionPage;
 	private ILaunchConfigurationWorkingCopy launchConfig;
 	private boolean shouldOpenLaunchDialog;
 	private IProject project;
 	private String configurationName;
+	private List<AbstractLaunchWizard> wizards = new ArrayList<AbstractLaunchWizard>();
 	
 	public LaunchCreationWizard(IProject project, String configurationName, 
 										List<IPath> mmps, List<IPath> exes, IPath defaultExecutable,  
-										boolean isEmulation, boolean emulatorOnly) throws Exception {
+										boolean isEmulation, boolean emulatorOnly, String mode) throws Exception {
 		this.project = project;
 		
+		this.configurationName = configurationName;
+		
+		loadWizards(mmps, exes, defaultExecutable, mode);
+
 		// show the binary selection page as only page in main wizard if emulation, 
 		// otherwise it will be shown as needed by non-emulation wizards
 		if (isEmulation)  {
@@ -58,11 +71,10 @@ public class LaunchCreationWizard extends Wizard {
 			IPath emulatorPath = getEmulatorPathFromExePath(exes.get(0));
 			fBinarySelectionPage = new MainExecutableSelectionWizardPage(mmps, exes, defaultExecutable, true, emulatorPath, emulatorOnly, fEmulationSummaryPage);
 		}
-		else {	
-	        fWizardSelectionPage = new LaunchWizardSelectionPage(mmps, exes, defaultExecutable, project, configurationName);
+		else {
+			fCategorySelectionPage = new LaunchCategorySelectionPage(this);
+	        fWizardSelectionPage = new LaunchWizardSelectionPage(this, mmps, exes, defaultExecutable, project, configurationName, mode);
 		}
-
-		this.configurationName = configurationName;
 	}
 
 	public boolean performFinish() {
@@ -99,6 +111,7 @@ public class LaunchCreationWizard extends Wizard {
     		addPage(fEmulationSummaryPage);
     	} 
     	else if (fWizardSelectionPage != null) {
+            addPage(fCategorySelectionPage);
             addPage(fWizardSelectionPage);
     	}
     }
@@ -136,4 +149,84 @@ public class LaunchCreationWizard extends Wizard {
 		return shouldOpenLaunchDialog;
 	}
 	
+	public String getSelectedCategoryId() {
+		return fCategorySelectionPage.getSelectedCategoryId();
+	}
+	
+	public List<Wizard> getWizardsForCategory(String categoryId) {
+		List<Wizard> wizardsInCatgegory = new ArrayList<Wizard>();
+		for (AbstractLaunchWizard wizard : wizards) {
+			if (wizard.supportsCategory(categoryId)) {
+				wizardsInCatgegory.add(wizard);
+			}
+		}
+		return wizardsInCatgegory;
+	}
+	
+	private void loadWizards(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, String mode) {
+		AppTRKLaunchWizard appTRKWizard = new AppTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
+		if (appTRKWizard.supportsMode(mode)) {
+			appTRKWizard.addPages();
+			wizards.add(appTRKWizard);
+		}
+		
+		SystemTRKLaunchWizard sysTRKWizard = new SystemTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
+		if (sysTRKWizard.supportsMode(mode)) {
+			sysTRKWizard.addPages();
+			wizards.add(sysTRKWizard);
+		}
+
+		Trace32LaunchWizard trace32Wizard = new Trace32LaunchWizard(mmps, exes, defaultExecutable, project, configurationName); 
+		if (trace32Wizard.supportsMode(mode)) {
+			trace32Wizard.addPages();
+			wizards.add(trace32Wizard);
+		}
+
+		SophiaLaunchWizard sophiaWizard = new SophiaLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
+		if (sophiaWizard.supportsMode(mode)) {
+			sophiaWizard.addPages();
+			wizards.add(sophiaWizard);
+		}
+
+		AttachTRKLaunchWizard attachTRKWizard = new AttachTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
+		if (attachTRKWizard.supportsMode(mode)) {
+			attachTRKWizard.addPages();
+			wizards.add(attachTRKWizard);
+		}
+
+		// load any wizard extensions
+		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(LaunchPlugin.PLUGIN_ID + ".launchWizardExtension"); //$NON-NLS-1$
+		IExtension[] extensions = extensionPoint.getExtensions();
+		
+		for (int i = 0; i < extensions.length; i++) {
+			IExtension extension = extensions[i];
+			IConfigurationElement[] elements = extension.getConfigurationElements();
+			Check.checkContract(elements.length == 1);
+			IConfigurationElement element = elements[0];
+			
+			boolean failed = false;
+			try {
+				Object extObject = element.createExecutableExtension("class"); //$NON-NLS-1$
+				if (extObject instanceof ILaunchWizardContributor) {
+					AbstractLaunchWizard wizard = ((ILaunchWizardContributor)extObject).getWizard(mmps, exes, defaultExecutable, project, configurationName);
+					if (wizard.supportsMode(mode)) {
+						wizard.addPages();
+						wizards.add(wizard);
+					}
+				} else {
+					failed = true;
+				}
+			} 
+			catch (CoreException e) {
+				failed = true;
+			}
+			
+			if (failed) {
+				LaunchPlugin.log(Logging.newStatus(LaunchPlugin.getDefault(), 
+						IStatus.ERROR,
+						"Unable to load launchWizardExtension extension from " + extension.getContributor().getName()));
+			}
+		}
+	}
 }

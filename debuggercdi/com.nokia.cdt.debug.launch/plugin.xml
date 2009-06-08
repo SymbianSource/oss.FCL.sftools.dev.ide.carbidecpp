@@ -262,6 +262,7 @@
          point="org.eclipse.ui.startup">
    </extension>
 
-   <extension-point id="launchWizardExtension" name="Launch Wizard Page" schema="schema/launchWizardExtension"/>
+   <extension-point id="launchWizardExtension" name="Launch Wizard Page" schema="schema/launchWizardExtension.exsd"/>
+   <extension-point id="launchCategoryExtension" name="Launch Category" schema="schema/launchCategoryExtension.exsd"/>
 
 </plugin>
