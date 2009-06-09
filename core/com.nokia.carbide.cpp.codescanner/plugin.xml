@@ -69,6 +69,12 @@
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
             class="com.nokia.carbide.cpp.internal.codescanner.ui.CSPreferencePage"
             id="com.nokia.carbide.cpp.codescanner.ui.CSPreferencePage">
+     <keywordReference
+           id="com.nokia.carbide.cpp.codescanner.common">
+     </keywordReference>
+     <keywordReference
+           id="com.nokia.carbide.cpp.codescanner.codescanner">
+     </keywordReference>
 		</page>
 	</extension>
 <!-- =================================================================================== -->
@@ -338,5 +344,16 @@
 <!-- Extension point(s) provided by the CodeScanner plugin                               -->
 <!-- =================================================================================== -->
 	<extension-point id="rules" name="Rules" schema="schema/knowledgeBase.exsd"/>
+ <extension
+       point="org.eclipse.ui.keywords">
+    <keyword
+          id="com.nokia.carbide.cpp.codescanner.common"
+          label="%carbcPreference.common">
+    </keyword>
+    <keyword
+          id="com.nokia.carbide.cpp.codescanner.codescanner"
+          label="%carbcPreference.codescanner">
+    </keyword>
+ </extension>
 
 </plugin>
