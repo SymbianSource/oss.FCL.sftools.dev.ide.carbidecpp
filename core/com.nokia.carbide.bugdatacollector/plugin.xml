@@ -18,6 +18,12 @@
             class="com.nokia.carbide.internal.bugdatacollector.ui.preferences.BugDataCollectorPreferencePage"
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
             id="com.nokia.carbide.bugdatacollector.ui.preferences.BugDataCollectorPreferencePage">
+     <keywordReference
+           id="com.nokia.carbide.bugdatacollector.common">
+     </keywordReference>
+     <keywordReference
+           id="com.nokia.carbide.bugdatacollector.bugreporter">
+     </keywordReference>
 		</page>
 	</extension>
 	
@@ -26,6 +32,17 @@
       <initializer
             class="com.nokia.carbide.internal.bugdatacollector.ui.preferences.BugDataCollectorPreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.keywords">
+      <keyword
+            id="com.nokia.carbide.bugdatacollector.common"
+            label="%carbcPreference.common">
+      </keyword>
+      <keyword
+            id="com.nokia.carbide.bugdatacollector.bugreporter"
+            label="%carbcPreference.bugreporter">
+      </keyword>
    </extension>
 
 </plugin>
