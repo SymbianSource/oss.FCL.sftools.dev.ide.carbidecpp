@@ -46,28 +46,41 @@ public class NewPluginChecker {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				boolean installed = false;
+				boolean oneSDKWasScanned = false;
 				for (ISymbianSDK sdk : sdkList) {
-					// XML was parsed, now try to run the feature installer
-					try {
-						String eclipsePluginsPath = sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR;
-						DynamicFeatureInstaller installer = new DynamicFeatureInstaller(new File(eclipsePluginsPath), null);
-						if (installer.install()) {
-							installed = true;
+					
+					if (sdk.isPreviouslyScanned() == false){
+						oneSDKWasScanned = true;
+						// XML was parsed, now try to run the feature installer
+						try {
+							sdk.setPreviouslyScanned(true);
+							String eclipsePluginsPath = sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR;
+							DynamicFeatureInstaller installer = new DynamicFeatureInstaller(new File(eclipsePluginsPath), null);
+							if (installer.install()) {
+								installed = true;
+							}
+	// Boog 8383: We should fail silently, since this will not break anything and may SDKs will not have any documentation
+	// Otherwise, these errors will be logged every time this check is done (workspace is opened)
+	// Originally, this was used to install MBS build support, but now is only used for SDK documentation
+						} catch (MalformedURLException e) {
+	//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
+						} catch (FileNotFoundException e) {
+	//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
+						} catch (InstallationFailureException e) {
+	//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
 						}
-// Boog 8383: We should fail silently, since this will not break anything and may SDKs will not have any documentation
-// Otherwise, these errors will be logged every time this check is done (workspace is opened)
-// Originally, this was used to install MBS build support, but now is only used for SDK documentation
-					} catch (MalformedURLException e) {
-//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
-					} catch (FileNotFoundException e) {
-//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
-					} catch (InstallationFailureException e) {
-//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
 					}
+					
+				}
+				
+				if (oneSDKWasScanned) {
+					SDKCorePlugin.getSDKManager().updateCarbideSDKCache();
 				}
 				if (installed) {
+					// plugins from some SDK were installed
 					doEclipseRestartDialog(workbench);
 				}
+				
 				return Status.OK_STATUS;
 			}
 		};

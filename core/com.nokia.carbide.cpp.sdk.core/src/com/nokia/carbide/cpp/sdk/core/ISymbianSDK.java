@@ -366,4 +366,17 @@ public interface ISymbianSDK {
 	 * Get the Symbian Binary Variation (SBV) catalog for the SDK.
 	 */
 	ISBVCatalog getSBVCatalog();
+	
+	/**
+	 * Tells whether or not the plug-in installer has sniffed this SDK for eclipse plug-ins to install.
+	 * @return true if the SDK was scanned.
+	 */
+	boolean isPreviouslyScanned();
+	
+	/**
+	 * Set flag to tell whether or not the SDK was scanned for eclipse plugins to install.
+	 * @param wasScanned was the SDK scanned for plugins?
+	 */
+	void setPreviouslyScanned(boolean wasScanned);
+	
 }
