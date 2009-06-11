@@ -271,20 +271,27 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 				programName = AbstractCLaunchDelegate.getProgramName(configuration);
 			} catch (CoreException e) {
 			}
-			boolean resetProgramName = true;
-			// check to see if the current program name is one of the executables to target
-			for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
-				if (exeFileToDebug.getExePath().equalsIgnoreCase(programName)) {
-					resetProgramName = false;
-					break;
-				}
-			}
-			if (resetProgramName) {
-				// ensure one of the enabled files to target is set as the program name
+			
+			// only do this when the current program name is not empty.  if it is, we'll be changing it
+			// which causes the apply button to become enabled which is not expected behavior.  this will
+			// be called later if/when they do specify the main program, so we'll make sure then that it's
+			// actually being targeted.
+			if (programName.length() > 0) {
+				boolean resetProgramName = true;
+				// check to see if the current program name is one of the executables to target
 				for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
-					if (exeFileToDebug.getEnabled()) {
-						configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exeFileToDebug.getExePath());
+					if (exeFileToDebug.getExePath().equalsIgnoreCase(programName)) {
+						resetProgramName = false;
 						break;
+					}
+				}
+				if (resetProgramName) {
+					// ensure one of the enabled files to target is set as the program name
+					for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
+						if (exeFileToDebug.getEnabled()) {
+							configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exeFileToDebug.getExePath());
+							break;
+						}
 					}
 				}
 			}

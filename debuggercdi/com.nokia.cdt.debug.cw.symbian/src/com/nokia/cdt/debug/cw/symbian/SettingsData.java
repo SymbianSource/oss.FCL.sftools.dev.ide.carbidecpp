@@ -722,10 +722,6 @@ public class SettingsData {
 			setInstallationTab(configuration, project);
 		}
 		
-		if (settingsGroup.equals(LaunchConfig_SysTRK)) {
-			setFileTransferTab(configuration, project);
-		}
-	
 		if (settingsGroup.equals(LaunchConfig_Trace32) ||
 				settingsGroup.equals(LaunchConfig_SophiaSTI))
 		{
@@ -737,6 +733,7 @@ public class SettingsData {
 		if (settingsGroup.equals(LaunchConfig_AppTRK) || settingsGroup.equals(LaunchConfig_SysTRK)) {
 			setTrkMainTab(configuration, project);
 			setTrkDebuggerTab(configuration, project);
+			setFileTransferTab(configuration, project);
 			
 			// TRK Debugging: specify TRK protocol plugin.
 			//
