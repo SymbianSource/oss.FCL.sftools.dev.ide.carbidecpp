@@ -21,6 +21,7 @@ import com.nokia.carbide.cdt.builder.project.*;
 import com.nokia.carbide.cdt.internal.api.builder.ui.ManageConfigurationsDialog;
 import com.nokia.carbide.cpp.epoc.engine.model.IView;
 import com.nokia.carbide.cpp.epoc.engine.model.MMPModelFactory;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.*;
 import com.nokia.cpp.internal.api.utils.core.*;
 import com.nokia.cpp.internal.api.utils.ui.*;
@@ -370,4 +371,7 @@ public class MMPEditor extends CarbideFormEditor implements
 		return optionsPage;
 	}
 
+	public IMMPView getMMPView() {
+		return editorContext.mmpView;
+	}
 }

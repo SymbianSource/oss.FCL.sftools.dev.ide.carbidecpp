@@ -21,6 +21,7 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
 import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.MMPEditor;
 
 /**
@@ -89,6 +90,19 @@ public class MMPEditorTester {
 		if (editor != null && editor instanceof MMPEditor) {
 			MMPEditor mmpEditor = (MMPEditor) editor;
 			return mmpEditor.getTextEditorPage();
+		}
+		return null;
+	}
+
+	/**
+	 * Retrieves the view model of the MMP editor.
+	 * @param editor - editor part provided by caller
+	 * @return MMP view model if success, null otherwise
+	 */
+	public static IMMPView getMMPView(FormEditor editor) {
+		if (editor != null && editor instanceof MMPEditor) {
+			MMPEditor mmpEditor = (MMPEditor) editor;
+			return mmpEditor.getMMPView();
 		}
 		return null;
 	}

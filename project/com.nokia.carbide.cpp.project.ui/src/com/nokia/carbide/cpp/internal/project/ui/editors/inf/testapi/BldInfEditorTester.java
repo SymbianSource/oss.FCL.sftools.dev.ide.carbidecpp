@@ -21,6 +21,7 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
 import com.nokia.carbide.cpp.internal.project.ui.editors.inf.BldInfEditor;
 
 /**
@@ -63,6 +64,19 @@ public class BldInfEditorTester {
 		if (editor != null && editor instanceof BldInfEditor) {
 			BldInfEditor infEditor = (BldInfEditor) editor;
 			return infEditor.getTextEditorPage();
+		}
+		return null;
+	}
+
+	/**
+	 * Retrieves the view model of the Bld.inf editor.
+	 * @param editor - editor part provided by caller
+	 * @return Bld.inf view model if success, null otherwise
+	 */
+	public static IBldInfView getBldInfView(FormEditor editor) {
+		if (editor != null && editor instanceof BldInfEditor) {
+			BldInfEditor infEditor = (BldInfEditor) editor;
+			return infEditor.getBldInfView();
 		}
 		return null;
 	}
