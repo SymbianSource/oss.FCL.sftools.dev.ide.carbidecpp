@@ -45,6 +45,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.api.builder.ui.ManageConfigurationsDialog;
 import com.nokia.carbide.cpp.epoc.engine.model.BldInfModelFactory;
 import com.nokia.carbide.cpp.epoc.engine.model.IView;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.CarbideFormEditor;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.CarbideTextEditor;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -336,6 +337,10 @@ public class BldInfEditor extends CarbideFormEditor implements
 
 	public ExportsPage getExportsPage() {
 		return exportsPage;
+	}
+
+	public IBldInfView getBldInfView() {
+		return editorContext.bldInfView;
 	}
 
 }

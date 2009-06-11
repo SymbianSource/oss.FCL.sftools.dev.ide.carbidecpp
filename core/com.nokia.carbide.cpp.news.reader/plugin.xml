@@ -85,11 +85,28 @@
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
             class="com.nokia.carbide.cpp.internal.news.reader.ui.NewsPreferencePage"
             id="com.nokia.carbide.cpp.news.reader.NewsPreferencePage">
+     <keywordReference
+           id="com.nokia.carbide.cpp.news.reader.common">
+     </keywordReference>
+     <keywordReference
+           id="com.nokia.carbide.cpp.news.reader.newsreader">
+     </keywordReference>
 		</page>
 	</extension>
 
 	<extension
 		point="org.eclipse.ui.startup">
 	</extension>
+ <extension
+       point="org.eclipse.ui.keywords">
+    <keyword
+          id="com.nokia.carbide.cpp.news.reader.common"
+          label="%carbcPreference.common">
+    </keyword>
+    <keyword
+          id="com.nokia.carbide.cpp.news.reader.newsreader"
+          label="%carbcPreference.newsreader">
+    </keyword>
+ </extension>
 
 </plugin>

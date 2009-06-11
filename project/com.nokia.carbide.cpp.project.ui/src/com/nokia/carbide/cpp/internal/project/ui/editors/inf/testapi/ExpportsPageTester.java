@@ -36,10 +36,10 @@ public class ExpportsPageTester {
 	 * @param page - Exports page provided by caller
 	 * @return error message string if success, null otherwise
 	 */
-	public static String getErrorMesaage(FormPage page) {
+	public static String getErrorMessage(FormPage page) {
 		if (page != null && page instanceof ExportsPage) {
 			ExportsPage exportsPage = (ExportsPage) page;
-			return exportsPage.getErrorMesaage();
+			return exportsPage.getErrorMessage();
 		}
 		return null;
 	}

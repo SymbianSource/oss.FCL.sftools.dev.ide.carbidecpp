@@ -18,6 +18,12 @@
             id="com.nokia.carbide.cpp.sysdoc.internal.hover.preferences.HoverHelpPreferencePage"
             name="Hover Help"
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage">
+         <keywordReference
+               id="com.nokia.carbide.cpp.sysdoc.hover.common">
+         </keywordReference>
+         <keywordReference
+               id="com.nokia.carbide.cpp.sysdoc.hover.hoverhelp">
+         </keywordReference>
       </page>
    </extension>
    <extension
@@ -66,6 +72,22 @@
             file="resources/help context/hoverTOC.xml"
             primary="false" />      
     </extension>
+    
+<!-- =================================================================================== -->
+<!-- PREFERENCE PANEL FILTER SETUP FOR CARBIDE                                           -->
+<!-- =================================================================================== -->
+
+   <extension
+         point="org.eclipse.ui.keywords">
+      <keyword
+            id="com.nokia.carbide.cpp.sysdoc.hover.common"
+            label="%carbcPreference.common">
+      </keyword>
+      <keyword
+            id="com.nokia.carbide.cpp.sysdoc.hover.hoverhelp"
+            label="%carbcPreference.hoverhelp">
+      </keyword>
+   </extension>
 	
   	
 </plugin>

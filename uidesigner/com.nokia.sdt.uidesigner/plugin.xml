@@ -55,6 +55,24 @@
            category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
            class="com.nokia.sdt.uidesigner.preferences.UIDesignerPreferences"
            id="com.nokia.sdt.uidesigner.preferences.UIDesignerPreferences"
-           name="UI Designer"/>
+           name="UI Designer">
+        <keywordReference
+              id="com.nokia.sdt.uidesigner.common">
+        </keywordReference>
+        <keywordReference
+              id="com.nokia.sdt.uidesigner.uidesigner">
+        </keywordReference>
+     </page>
+  </extension>
+  <extension
+        point="org.eclipse.ui.keywords">
+     <keyword
+           id="com.nokia.sdt.uidesigner.common"
+           label="%carbcPreference.common">
+     </keyword>
+     <keyword
+           id="com.nokia.sdt.uidesigner.uidesigner"
+           label="%carbcPreference.uidesigner">
+     </keyword>
   </extension>
 </plugin>

@@ -39,10 +39,10 @@ public class SourcesPageTester {
 	 * @param page - Sources page provided by caller
 	 * @return error message string if success, null otherwise
 	 */
-	public static String getErrorMesaage(FormPage page) {
+	public static String getErrorMessage(FormPage page) {
 		if (page != null && page instanceof SourcesPage) {
 			SourcesPage sourcesPage = (SourcesPage) page;
-			return sourcesPage.getErrorMesaage();
+			return sourcesPage.getErrorMessage();
 		}
 		return null;
 	}

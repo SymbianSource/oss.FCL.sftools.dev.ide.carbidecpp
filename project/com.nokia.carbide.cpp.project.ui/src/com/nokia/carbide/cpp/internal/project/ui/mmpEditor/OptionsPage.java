@@ -127,7 +127,7 @@ public class OptionsPage extends MMPEditorFormPage {
 		return kernelSectionPart;
 	}
 
-	public String getErrorMesaage() {
+	public String getErrorMessage() {
 		return getManagedForm().getForm().getMessage();
 	}
 

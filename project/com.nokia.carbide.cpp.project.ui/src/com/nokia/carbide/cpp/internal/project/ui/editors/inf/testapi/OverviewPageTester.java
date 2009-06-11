@@ -39,10 +39,10 @@ public class OverviewPageTester {
 	 * @param page - Overview page provided by caller
 	 * @return error message string if success, null otherwise
 	 */
-	public static String getErrorMesaage(FormPage page) {
+	public static String getErrorMessage(FormPage page) {
 		if (page != null && page instanceof OverviewPage) {
 			OverviewPage overviewPage = (OverviewPage) page;
-			return overviewPage.getErrorMesaage();
+			return overviewPage.getErrorMessage();
 		}
 		return null;
 	}

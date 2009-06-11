@@ -15,6 +15,8 @@
             category="org.eclipse.cdt.debug.ui.CDebugPreferencePage"
             class="com.nokia.cdt.debug.cw.symbian.ui.GlobalSettings"
             id="com.nokia.cdt.debug.cw.symbian.ui.GlobalSettings">
+            <keywordReference id="com.nokia.cdt.debug.cw.symbian.carbidecommon"/>
+            <keywordReference id="com.nokia.cdt.debug.cw.symbian.carbidedebugger"/>
       </page>
    </extension>
   <extension
@@ -198,6 +200,19 @@
    <extension
        point="org.eclipse.cdt.debug.core.SourceRemappingProvider">
       <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemapping"/>
+   </extension>
+   
+   <!-- *************** Preference Page Keyword Filtering **************** -->
+   <extension
+         point="org.eclipse.ui.keywords">
+      <keyword
+            id="com.nokia.cdt.debug.cw.symbian.carbidedebugger"
+            label="%carbcPreference.carbidedebugger">
+      </keyword>
+      <keyword
+            id="com.nokia.cdt.debug.cw.symbian.carbidecommon"
+            label="%carbcPreference.common">
+      </keyword>
    </extension>
 
 </plugin>

@@ -189,7 +189,7 @@
 			<topic label="New Launch Configuration Wizard"	href="html/projects/launch/wiz_new_launch_config.htm" />
 			<topic label="Debug dialog"						href="html/projects/launch/wnd_debug_configuration.htm" />
 
-		    <topic label="Launch types"			href="html/concepts/launch_configuration.htm" >
+		    <topic label="Launch types"			href="html/projects/launch/launch_types.htm" >
 				<topic label="Applications"					href="html/projects/launch/applications.htm" />
 				<topic label="Application TRK"				href="html/projects/launch/run_mode.htm" />
 				<topic label="Attach to Process"			href="html/projects/launch/attach_process.htm" />

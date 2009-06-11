@@ -41,10 +41,10 @@ public class OptionsPageTester {
 	 * @param page - Options page provided by caller
 	 * @return error message string if success, null otherwise
 	 */
-	public static String getErrorMesaage(FormPage page) {
+	public static String getErrorMessage(FormPage page) {
 		if (page != null && page instanceof OptionsPage) {
 			OptionsPage optionsPage = (OptionsPage) page;
-			return optionsPage.getErrorMesaage();
+			return optionsPage.getErrorMessage();
 		}
 		return null;
 	}
