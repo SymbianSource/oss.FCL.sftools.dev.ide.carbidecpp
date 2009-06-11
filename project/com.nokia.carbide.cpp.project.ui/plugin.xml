@@ -78,6 +78,12 @@
             name="%carbidePrefPageName"
             class="com.nokia.carbide.cpp.internal.project.ui.preferences.CarbidePreferencePage"
             id="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage">
+         <keywordReference
+               id="com.nokia.carbide.cpp.project.ui.common">
+         </keywordReference>
+         <keywordReference
+               id="com.nokia.carbide.cpp.project.ui.carbidecpp">
+         </keywordReference>
       </page>
    </extension>
    <extension
@@ -515,6 +521,17 @@
               </visibleWhen>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.keywords">
+      <keyword
+            id="com.nokia.carbide.cpp.project.ui.common"
+            label="%carbdPreference.common">
+      </keyword>
+      <keyword
+            id="com.nokia.carbide.cpp.project.ui.carbidecpp"
+            label="%carbcPreference.carbidecpp">
+      </keyword>
    </extension>
 
  </plugin>
