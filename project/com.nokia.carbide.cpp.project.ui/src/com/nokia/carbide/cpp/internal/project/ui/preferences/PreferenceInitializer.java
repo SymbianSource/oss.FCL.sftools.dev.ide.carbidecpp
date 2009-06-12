@@ -34,6 +34,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
 		store.setDefault(PreferenceConstants.PREF_KEEP_PROJECTS_IN_SYNC, true);
+		store.setDefault(PreferenceConstants.PREF_INDEX_ALL, false);
 	}
 
 }

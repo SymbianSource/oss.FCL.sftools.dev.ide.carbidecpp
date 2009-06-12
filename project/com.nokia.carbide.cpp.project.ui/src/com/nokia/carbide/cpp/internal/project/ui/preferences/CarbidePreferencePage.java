@@ -16,125 +16,142 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.preferences;
 
-import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
-
-import com.freescale.swt.widgets.CheckboxGroup;
 import com.nokia.carbide.cpp.internal.api.project.core.ResourceChangeListener;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
 import com.nokia.carbide.cpp.project.ui.utils.ProjectUIUtils;
 
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
+
 public class CarbidePreferencePage extends PreferencePage implements IWorkbenchPreferencePage { 
 	
-	private CheckboxGroup keepProjectFilesInSync;
+	private Button keepProjectFilesInSync;
 
-	private Group addGroup;
+	private Composite addGroup;
 	private Button addAskFirst;
 	private Button addAlways;
 	private Button addNever;
 
-	private Group deleteGroup;
+	private Composite deleteGroup;
 	private Button deleteAskFirst;
 	private Button deleteAlways;
 	private Button deleteNever;
+
+	private Button indexBuildOnly;
+
+	private Button indexAll;
 
 
 	public CarbidePreferencePage() {
 		super();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	public void createControl(Composite parent) {
+	protected Control createContents(Composite parent) {
 		Composite content = new Composite(parent, SWT.NONE);
-		setControl(content);
-		final GridLayout gridLayout = new GridLayout();
-		content.setLayout(gridLayout);
+		content.setLayout(new GridLayout());
 
-		keepProjectFilesInSync = new CheckboxGroup(content, SWT.CHECK);
-		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		keepProjectFilesInSync.setLayoutData(data);
+		Group inSyncGroup = new Group(content, SWT.NONE);
+		inSyncGroup.setLayout(new GridLayout());
+		inSyncGroup.setText(Messages.getString("CarbidePreferencePage.ProjectSyncTitle")); //$NON-NLS-1$
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(inSyncGroup);
+		
+		keepProjectFilesInSync = new Button(inSyncGroup, SWT.CHECK);
+		GridDataFactory.defaultsFor(keepProjectFilesInSync).indent(0, 10).applyTo(keepProjectFilesInSync);
 		keepProjectFilesInSync.setText(Messages.getString("CarbidePreferencePage.EnableResourceListenerText")); //$NON-NLS-1$
 		keepProjectFilesInSync.setToolTipText(Messages.getString("CarbidePreferencePage.EnableResourceListenerTooltip")); //$NON-NLS-1$
-		keepProjectFilesInSync.getGroup().setLayout(gridLayout);
 		keepProjectFilesInSync.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				updateProjectSyncOptions();
+				updateProjectSyncEnabledState();
 			}
 		});
 
-		keepProjectFilesInSync.setSelection(ProjectUIUtils.keepProjectsInSync());
-
-		addGroup = new Group(keepProjectFilesInSync.getGroup(), SWT.NONE);
-		GridLayout layout = new GridLayout();
-		addGroup.setLayout(layout);
-		addGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		addGroup.setText(Messages.getString("CarbidePreferencePage.AddedFilesText")); //$NON-NLS-1$
+		addGroup = new Composite(inSyncGroup, SWT.NONE);
 		addGroup.setFont(parent.getFont());
+		addGroup.setLayout(new GridLayout());
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(addGroup);
 		addGroup.setToolTipText(Messages.getString("CarbidePreferencePage.AddedFilesToolTip")); //$NON-NLS-1$
 
-		int addOption = ProjectUIUtils.getAddFilesToProjectOption();
-
+		Label addLabel = new Label(addGroup, SWT.NONE);
+		addLabel.setText(Messages.getString("CarbidePreferencePage.AddedFilesText")); //$NON-NLS-1$
+		
 		addAskFirst = new Button(addGroup, SWT.RADIO);
 		addAskFirst.setText(Messages.getString("CarbidePreferencePage.AskFirstText")); //$NON-NLS-1$
 		addAskFirst.setToolTipText(Messages.getString("CarbidePreferencePage.AskFirstToolTip")); //$NON-NLS-1$
-		addAskFirst.setSelection(addOption == ResourceChangeListener.UPDATE_FILES_OPTION_ASK);
+		GridDataFactory.defaultsFor(addAskFirst).indent(10, 0).applyTo(addAskFirst);
 
 		addAlways = new Button(addGroup, SWT.RADIO);
 		addAlways.setText(Messages.getString("CarbidePreferencePage.AlwaysText")); //$NON-NLS-1$
 		addAlways.setToolTipText(Messages.getString("CarbidePreferencePage.AlwaysToolTip")); //$NON-NLS-1$
-		addAlways.setSelection(addOption == ResourceChangeListener.UPDATE_FILES_OPTION_ALWAYS);
+		GridDataFactory.defaultsFor(addAlways).indent(10, 0).applyTo(addAlways);
 
 		addNever = new Button(addGroup, SWT.RADIO);
 		addNever.setText(Messages.getString("CarbidePreferencePage.NeverText")); //$NON-NLS-1$
 		addNever.setToolTipText(Messages.getString("CarbidePreferencePage.NeverToolTip")); //$NON-NLS-1$
-		addNever.setSelection(addOption == ResourceChangeListener.UPDATE_FILES_OPTION_NEVER);
+		GridDataFactory.defaultsFor(addNever).indent(10, 0).applyTo(addNever);
 
-		int deleteOption = ProjectUIUtils.getChangedFilesInProjectOption();
 
-		deleteGroup = new Group(keepProjectFilesInSync.getGroup(), SWT.NONE);
-		GridLayout layout2 = new GridLayout();
-		deleteGroup.setLayout(layout2);
-		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL);
-		deleteGroup.setLayoutData(gd2);
-		deleteGroup.setText(Messages.getString("CarbidePreferencePage.ChangedFilesText")); //$NON-NLS-1$
+		deleteGroup = new Composite(inSyncGroup, SWT.NONE);
+		deleteGroup.setLayout(new GridLayout());
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(deleteGroup);
 		deleteGroup.setFont(parent.getFont());
 		deleteGroup.setToolTipText(Messages.getString("CarbidePreferencePage.ChangedFilesToolTip")); //$NON-NLS-1$
+
+		Label deleteLabel = new Label(deleteGroup, SWT.NONE);
+		deleteLabel.setText(Messages.getString("CarbidePreferencePage.ChangedFilesText")); //$NON-NLS-1$
 
 		deleteAskFirst = new Button(deleteGroup, SWT.RADIO);
 		deleteAskFirst.setText(Messages.getString("CarbidePreferencePage.AskFirstText")); //$NON-NLS-1$
 		deleteAskFirst.setToolTipText(Messages.getString("CarbidePreferencePage.AskFirstToolTip")); //$NON-NLS-1$
-		deleteAskFirst.setSelection(deleteOption == ResourceChangeListener.UPDATE_FILES_OPTION_ASK);
+		GridDataFactory.defaultsFor(deleteAskFirst).indent(10, 0).applyTo(deleteAskFirst);
 
 		deleteAlways = new Button(deleteGroup, SWT.RADIO);
 		deleteAlways.setText(Messages.getString("CarbidePreferencePage.AlwaysText")); //$NON-NLS-1$
 		deleteAlways.setToolTipText(Messages.getString("CarbidePreferencePage.AlwaysToolTip")); //$NON-NLS-1$
-		deleteAlways.setSelection(deleteOption == ResourceChangeListener.UPDATE_FILES_OPTION_ALWAYS);
+		GridDataFactory.defaultsFor(deleteAlways).indent(10, 0).applyTo(deleteAlways);
 
 		deleteNever = new Button(deleteGroup, SWT.RADIO);
 		deleteNever.setText(Messages.getString("CarbidePreferencePage.NeverText")); //$NON-NLS-1$
 		deleteNever.setToolTipText(Messages.getString("CarbidePreferencePage.NeverToolTip")); //$NON-NLS-1$
-		deleteNever.setSelection(deleteOption == ResourceChangeListener.UPDATE_FILES_OPTION_NEVER);
+		GridDataFactory.defaultsFor(deleteNever).indent(10, 0).applyTo(deleteNever);
+
+		boolean keepInSync = ProjectUIUtils.keepProjectsInSync();
+		int addOption = ProjectUIUtils.getAddFilesToProjectOption();
+		int deleteOption = ProjectUIUtils.getChangedFilesInProjectOption();
+		setUpdateFilesOptions(keepInSync, addOption, deleteOption);
+		updateProjectSyncEnabledState();
+
+		Group indexGroup = new Group(content, SWT.NONE);
+		indexGroup.setLayout(new GridLayout());
+		indexGroup.setText(Messages.getString("CarbidePreferencePage.IndexingTitle")); //$NON-NLS-1$
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(indexGroup);
 		
-		updateProjectSyncOptions();
+		indexBuildOnly = new Button(indexGroup, SWT.RADIO);
+		indexBuildOnly.setText(Messages.getString("CarbidePreferencePage.IndexOnlyBuildLabel")); //$NON-NLS-1$
+		indexBuildOnly.setToolTipText(Messages.getString("CarbidePreferencePage.IndexOnlyBuildTooltip")); //$NON-NLS-1$
+		GridDataFactory.defaultsFor(indexBuildOnly).applyTo(indexBuildOnly);
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(super.getControl(), ProjectUIHelpIds.CARBIDE_PREFS_PAGE);
+		indexAll = new Button(indexGroup, SWT.RADIO);
+		indexAll.setText(Messages.getString("CarbidePreferencePage.IndexAllLabel")); //$NON-NLS-1$
+		indexAll.setToolTipText(Messages.getString("CarbidePreferencePage.IndexAllToolTip")); //$NON-NLS-1$
+		GridDataFactory.defaultsFor(indexAll).applyTo(indexAll);
+		
+		boolean indexAllOption = ProjectUIUtils.getIndexAllOption();
+		indexBuildOnly.setSelection(!indexAllOption);
+		indexAll.setSelection(indexAllOption);
+		
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(content, ProjectUIHelpIds.CARBIDE_PREFS_PAGE);
+	
+		return content;
 	}
 	
-	private void updateProjectSyncOptions() {
+	private void updateProjectSyncEnabledState() {
 		boolean enabled = keepProjectFilesInSync.getSelection();
 		addGroup.setEnabled(enabled);
 		addAskFirst.setEnabled(enabled);
@@ -146,14 +163,29 @@ public class CarbidePreferencePage extends PreferencePage implements IWorkbenchP
 		deleteNever.setEnabled(enabled);
 	}
 	
-	@Override
-	protected Control createContents(Composite parent) {
-		return null;
-	}
-
 	public void init(IWorkbench workbench) {
 	}
 	
+	@Override
+	protected void performDefaults() {
+		setUpdateFilesOptions(true, 0, 0);
+		updateProjectSyncEnabledState();
+		indexBuildOnly.setSelection(true);
+		indexAll.setSelection(false);
+		super.performDefaults();
+	}
+
+	private void setUpdateFilesOptions(boolean keepInSync, int addOptions, int deleteOptions) {
+		keepProjectFilesInSync.setSelection(keepInSync);
+		addAskFirst.setSelection(ResourceChangeListener.UPDATE_FILES_OPTION_ASK == addOptions);
+		addAlways.setSelection(ResourceChangeListener.UPDATE_FILES_OPTION_ALWAYS == addOptions);
+		addNever.setSelection(ResourceChangeListener.UPDATE_FILES_OPTION_NEVER == addOptions);
+		deleteAskFirst.setSelection(ResourceChangeListener.UPDATE_FILES_OPTION_ASK == deleteOptions);
+		deleteAlways.setSelection(ResourceChangeListener.UPDATE_FILES_OPTION_ALWAYS == deleteOptions);
+		deleteNever.setSelection(ResourceChangeListener.UPDATE_FILES_OPTION_NEVER == deleteOptions);
+	}
+
+
 	
 	public boolean performOk() {
 		ProjectUIUtils.setKeepProjectsInSync(keepProjectFilesInSync.getSelection());
@@ -174,6 +206,8 @@ public class CarbidePreferencePage extends PreferencePage implements IWorkbenchP
 			ProjectUIUtils.setChangedFilesInProjectOption(ResourceChangeListener.UPDATE_FILES_OPTION_NEVER);
 		}
 
+		ProjectUIUtils.setIndexAllOption(indexAll.getSelection());
+		
 		return super.performOk();
 	}
 

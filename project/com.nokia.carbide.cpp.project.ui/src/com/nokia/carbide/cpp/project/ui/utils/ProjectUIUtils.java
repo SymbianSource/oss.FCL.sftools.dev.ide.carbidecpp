@@ -84,4 +84,22 @@ public class ProjectUIUtils {
 	public static void setChangedFilesInProjectOption(int option) {
 		ProjectUIPlugin.setChangedFilesInProjectOption(option);
 	}
+	
+	/**
+	 * Returns the preference option for whether or not to index all source files 
+	 * or just those of the build components
+	 * @return the option
+	 */
+	public static boolean getIndexAllOption() {
+		return ProjectUIPlugin.getIndexAllOption();
+	}
+	
+	/**
+	 * Sets the preference option for whether or not to index all source files 
+	 * or just those of the build components
+	 * @param option true to enable the feature, false to disable
+	 */
+	public static void setIndexAllOption(boolean option) {
+		ProjectUIPlugin.setIndexAllOption(option);
+	}
 }
