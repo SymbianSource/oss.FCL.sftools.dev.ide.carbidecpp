@@ -9,6 +9,12 @@
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
             class="com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage"
             id="com.nokia.carbide.cpp.builder.utils.ui.PreprocessPreferencePage">
+         <keywordReference
+               id="com.nokia.carbide.cpp.builder.common">
+         </keywordReference>
+         <keywordReference
+               id="com.nokia.carbide.cpp.builder.preprocess">
+         </keywordReference>
       </page>
    </extension>
 
@@ -748,4 +754,15 @@
 			</command>
 		</menuContribution>
 	</extension>
+ <extension
+       point="org.eclipse.ui.keywords">
+    <keyword
+          id="com.nokia.carbide.cpp.builder.common"
+          label="%carbcPreference.common">
+    </keyword>
+    <keyword
+          id="com.nokia.carbide.cpp.builder.preprocess"
+          label="%carbcPreference.preprocess">
+    </keyword>
+ </extension>
 </plugin>
