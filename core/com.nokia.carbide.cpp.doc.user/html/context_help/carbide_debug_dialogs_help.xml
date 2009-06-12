@@ -93,9 +93,9 @@
 	<!-- EXECUTABLES -->
 	<context id="all_executables">
 		<description>Control which executables are included in the debug process.</description>
-		<topic label="Executables" 							href="html/reference/trk/panel_trk_exes.htm" />
+		<topic label="Executables tab" 						href="html/reference/trk/panel_trk_exes.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 	
 	<!-- ============================================================== -->
@@ -104,28 +104,28 @@
 	
 	<context id="context_main" >
 		<description>Define the project's launch configuration.</description>
-		<topic label="Main"         						href="html/reference/emulator/panel_emulator_main.htm" />
+		<topic label="Main tab"         					href="html/reference/emulator/panel_emulator_main.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>
 
 	<!-- LAUNCH.MAIN -->
 	<context id="emulation_main" >
 		<description>Define the project's launch configuration.</description>
-		<topic label="Main"         						href="html/reference/emulator/panel_emulator_main.htm" />
+		<topic label="Main tab"        						href="html/reference/emulator/panel_emulator_main.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>
 
 	<!-- LAUNCH.DEBUGGER -->
 	<context id="emulation_debugger" >
 		<description>Control symbolics loading and other debugger options.</description>
-		<topic label="Debugger" 							href="html/reference/emulator/panel_debugger.htm" />
+		<topic label="Debugger tab" 						href="html/reference/emulator/panel_debugger.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>
 
 	<!-- LAUNCH.EXCEPTIONS -->
 	<context id="emulation_exceptions" >
 		<description>Control the exceptions the debugger should catch.</description>
-		<topic label="x86 Exceptions" 						href="html/reference/emulator/panel_debug_exceptions.htm" />
+		<topic label="x86 Exceptions tab" 					href="html/reference/emulator/panel_debug_exceptions.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>
 	
@@ -157,55 +157,55 @@
 	<!-- RUNMODE.MAIN -->
 	<context id="runmode_main" >
 		<description>Control symbolics loading and other debugger options.</description>
-		<topic label="Main" 								href="html/reference/trk/panel_trk_main.htm" />
+		<topic label="Main tab" 							href="html/reference/trk/panel_trk_main.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>S
 
 	<!-- RUNMODE.DEBUGGER -->
 	<context id="runmode_debugger" >
 		<description>Control entry points, message handling, and instruction set default settings.</description>
-		<topic label="Debugger"      						href="html/reference/trk/panel_trk_debugger.htm" />
+		<topic label="Debugger tab"      					href="html/reference/trk/panel_trk_debugger.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<!-- RUNMODE.CONNECTION -->
 	<context id="runmode_connection" >
 		<description>Specify the method used to transfer files to the target device.</description>
-		<topic label="Connection"    						href="html/reference/trk/panel_trk_connection.htm" />
+		<topic label="Connection tab"    					href="html/reference/trk/panel_trk_connection.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<!-- RUNMODE.INSTALLATION -->
 	<context id="runmode_installation" >
 		<description>Specify the .sis file to install on the target device.</description>
-		<topic label="Installation"  						href="html/reference/trk/panel_trk_installation.htm" />
+		<topic label="Installation tab"  					href="html/reference/trk/panel_trk_installation.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<!-- RUNMODE.FILETRANSFER -->
 	<context id="runmode_filetransfer" >
 		<description>Manage the files transfered to the target device at the start of each launch.</description>
-		<topic label="File Transfer" 						href="html/reference/trk/panel_trk_file_transfer.htm" />
+		<topic label="File Transfer tab" 					href="html/reference/trk/panel_trk_file_transfer.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<!-- RUNMODE.FILETRANSFERDIALOG -->
 	<context id="runmode_filetransferDialog" >
 		<description>Select additional files for addition to the file transfer list.</description>
-		<topic label="File Transfer" 						href="html/reference/trk/panel_trk_file_transfer.htm" />
+		<topic label="File Transfer tab" 					href="html/reference/trk/panel_trk_file_transfer.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	
@@ -216,7 +216,7 @@
 	<!-- STOPMODE.MAIN -->
 	<context id="stopmode_main" >
 		<description>Control symbolics loading and other debugger options.</description>
-		<topic label="Main" 								href="html/reference/trk/panel_trk_main.htm" />
+		<topic label="Main tab" 							href="html/reference/trk/panel_trk_main.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
 	</context>
@@ -224,7 +224,7 @@
 	<!-- STOPMODE.DEBUGGER -->
 	<context id="stopmode_debugger" >
 		<description>Control entry points, message handling, and instruction set default settings.</description>
-		<topic label="Debugger"      						href="html/reference/trk/panel_trk_debugger.htm" />
+		<topic label="Debugger tab"      					href="html/reference/trk/panel_trk_debugger.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
 	</context>
@@ -243,7 +243,7 @@
 		<topic label="Sophia Target Interface Support"    	href="html/reference/wnd_sophia_config.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<!--  STOPMODE.ROMIMAGE -->
@@ -266,24 +266,31 @@
 	<!-- ============================================================== -->
 
 	<!-- WIZARD BINARY SELECTION PAGE (LAUNCH CONFIG WIZARD) -->
+
+	<context id="category_selection_page">
+		<description>Select the target device category.</description>
+		<topic label="New Launch Configuration Wizard"  	href="html/tasks/projects/wiz_new_launc_config.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
+	</context>
+
 	<context id="wizard_binary_selection_page">
 		<description>Control which executables are included in the debug process.</description>
-		<topic label="Launch Configuration"  				href="html/concepts/launch_configuration.htm" />
-		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="New Launch Configuration Wizard"  	href="html/tasks/projects/wiz_new_launc_config.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 	
 	<context id="wizard_selection_page" >
 		<description>Select a launch type to create a launch configuration.</description>
-		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
-		<topic label="Launch Configuration Filter"		href="html/reference/launch_configuration_filter.htm" />
-		<topic label="Carbide Project Settings"		    href="html/reference/build_properties/pane_project_settings.htm" />
+		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
+		<topic label="Launch Configuration Filter"			href="html/reference/launch_configuration_filter.htm" />
+		<topic label="Carbide Project Settings"		    	href="html/reference/build_properties/pane_project_settings.htm" />
 	</context>
 
 	<context id="wizard_summary_page" >
 		<description>Review launch configuration information.</description>
 		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<context id="wizard_sophia_page" >
@@ -312,23 +319,23 @@
 
 	<context id="wizard_rom_image_page" >
 		<description>Specify ROM image information.</description>
+  		<topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Launch Configurations"				href="html/concepts/launch_configuration.htm" />
-  <topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<context id="wizard_stop_mode_rom_img_page" >
 		<description>Define startup options and ROM image download information.</description>
+  		<topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
 		<topic label="Stop-mode Debugger"					href="html/reference/launch_configs/page_trk_debugger.htm" />
-		<topic label="ROM Image options"						href="html/reference/launch_configs/stop_mode_rom_image.htm" />
-  <topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
+		<topic label="ROM Image options"					href="html/reference/launch_configs/stop_mode_rom_image.htm" />
 	</context>
 
 	<context id="wizard_trk_sis_selection_page" >
 		<description>Specify the SIS file to install.</description>
 		<topic label="SIS Builder"							href="html/reference/build_properties/pane_build_config_sis.htm" />
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Launch Configurations"				href="html/concepts/launch_configuration.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<context id="get_sis_info_dialog" >
