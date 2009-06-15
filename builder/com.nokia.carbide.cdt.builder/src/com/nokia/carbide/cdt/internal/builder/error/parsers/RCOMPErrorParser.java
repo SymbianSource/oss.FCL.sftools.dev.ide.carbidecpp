@@ -112,6 +112,9 @@ public class RCOMPErrorParser extends CarbideBaseErrorParser {
 			return false;
 		}
 		setFile(errorParserManager);
+		if (msgDescription.toLowerCase().contains("warning:")){
+			msgSeverity = IMarkerGenerator.SEVERITY_WARNING;
+		}
 		errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, msgSeverity, null, externalFilePath);
 		return true;
 	}
