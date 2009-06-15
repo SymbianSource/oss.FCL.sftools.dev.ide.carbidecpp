@@ -22,6 +22,7 @@ import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
 import com.nokia.carbide.cpp.project.ui.utils.ProjectUIUtils;
 
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -128,7 +129,7 @@ public class CarbidePreferencePage extends PreferencePage implements IWorkbenchP
 		updateProjectSyncEnabledState();
 
 		Group indexGroup = new Group(content, SWT.NONE);
-		indexGroup.setLayout(new GridLayout());
+		GridLayoutFactory.swtDefaults().margins(10, 10).applyTo(indexGroup);
 		indexGroup.setText(Messages.getString("CarbidePreferencePage.IndexingTitle")); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(indexGroup);
 		
