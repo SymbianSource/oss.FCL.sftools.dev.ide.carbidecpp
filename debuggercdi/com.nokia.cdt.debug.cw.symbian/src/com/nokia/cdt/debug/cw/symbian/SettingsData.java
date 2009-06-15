@@ -720,8 +720,16 @@ public class SettingsData {
 
 		if (settingsGroup.equals(LaunchConfig_AppTRK)) {
 			setInstallationTab(configuration, project);
+
+			// set this so it's there in the config and the apply button doesn't become
+			// enabled when switching to the tab
+			configuration.setAttribute( PreferenceConstants.J_PN_FilesToTransfer, "" ); //$NON-NLS-1$
 		}
 		
+		if (settingsGroup.equals(LaunchConfig_SysTRK)) {
+			setFileTransferTab(configuration, project);
+		}
+
 		if (settingsGroup.equals(LaunchConfig_Trace32) ||
 				settingsGroup.equals(LaunchConfig_SophiaSTI))
 		{
@@ -733,7 +741,6 @@ public class SettingsData {
 		if (settingsGroup.equals(LaunchConfig_AppTRK) || settingsGroup.equals(LaunchConfig_SysTRK)) {
 			setTrkMainTab(configuration, project);
 			setTrkDebuggerTab(configuration, project);
-			setFileTransferTab(configuration, project);
 			
 			// TRK Debugging: specify TRK protocol plugin.
 			//
