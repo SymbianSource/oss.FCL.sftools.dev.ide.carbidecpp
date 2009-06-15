@@ -228,6 +228,14 @@ class TestSymbianSDK implements ISymbianSDK {
 	public ISBVCatalog getSBVCatalog() {
 		return null;
 	}
+	public boolean isPreviouslyScanned() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public void setPreviouslyScanned(boolean wasScanned) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

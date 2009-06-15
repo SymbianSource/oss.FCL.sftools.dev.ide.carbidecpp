@@ -9,12 +9,24 @@
             class="com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage"
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
             id="com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage">
+         <keywordReference
+               id="com.nokia.carbide.cpp.sdk.common">
+         </keywordReference>
+         <keywordReference
+               id="com.nokia.carbide.cpp.sdk.sdkpreferences">
+         </keywordReference>
       </page>
       <page
             name="%SDKUIPlugin.Platform_Filtering_Preferences"
             class="com.nokia.carbide.cpp.internal.api.sdk.ui.BuildPlatformFilterPage"
             category="com.nokia.carbide.cpp.project.ui.preferences.CarbidePreferencePage"
             id="com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage">
+         <keywordReference
+               id="com.nokia.carbide.cpp.sdk.common">
+         </keywordReference>
+         <keywordReference
+               id="com.nokia.carbide.cpp.sdk.platfromfiltering">
+         </keywordReference>
       </page>
    </extension>
    <extension
@@ -25,6 +37,21 @@
    </extension>
    <extension
          point="org.eclipse.ui.startup">
+   </extension>
+   <extension
+         point="org.eclipse.ui.keywords">
+      <keyword
+            id="com.nokia.carbide.cpp.sdk.common"
+            label="%carbcPreference.common">
+      </keyword>
+      <keyword
+            id="com.nokia.carbide.cpp.sdk.sdkpreferences"
+            label="%carbcPreference.platformpreferences">
+      </keyword>
+      <keyword
+            id="com.nokia.carbide.cpp.sdk.platfromfiltering"
+            label="%carbcPreference.platformfiltering">
+      </keyword>
    </extension>
    
 

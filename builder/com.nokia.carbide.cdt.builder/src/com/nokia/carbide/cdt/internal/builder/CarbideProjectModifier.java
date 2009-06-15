@@ -16,27 +16,25 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import java.util.ArrayList;
-
-import org.eclipse.cdt.core.CCorePlugin;
-import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
-import org.eclipse.cdt.core.settings.model.ICProjectDescription;
-import org.eclipse.cdt.core.settings.model.ICStorageElement;
-import org.eclipse.cdt.core.settings.model.WriteAccessException;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
+import org.eclipse.cdt.core.CCorePlugin;
+import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.model.ICProject;
+import org.eclipse.cdt.core.settings.model.*;
+import org.eclipse.core.runtime.*;
+
+import java.util.ArrayList;
+
 public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbideProjectModifier {
 
 	// need to make all changes to the same description and save it
 	protected ICProjectDescription projDes;
+	private boolean shouldForceRebuildCache;
 
 
 	/*
@@ -138,12 +136,14 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 					if (settingName.equals(PROJECT_RELATIVE_INFFILE_PROPS_KEY)) {
 						projectRelativeBldInfPath = new Path(settingValue);
 					} else if (settingName.equals(BLD_FROM_INF_PROPS_KEY)) {
+						shouldForceRebuildCache = true;
 						if (settingValue.equalsIgnoreCase("false")) {
 							buildFromInf = false;
 						} else {
 							buildFromInf = true;
 						}
 					} else if (settingName.equals(INF_COMPONENTS_PROPS_KEY)) {
+						shouldForceRebuildCache = true;
 						setInfBuildComponentList(settingValue);
 					} else if (settingName.equals(OVERRIDE_WORKSPACE_SETTINGS_KEY)) {
 						if (settingValue.equalsIgnoreCase("false")) {
@@ -232,18 +232,31 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 
 	public boolean saveChanges() {
 
-		checkInteralSettings();
+		checkInternalSettings();
 		
 		// make sure this flag is set before saving the ICProjectDescription
 		projDes.setCdtProjectCreated();
 		
+		if (shouldForceRebuildCache) {
+			for (ICConfigurationDescription configuration : projDes.getConfigurations()) {
+				BuildConfigurationData data = (BuildConfigurationData) configuration.getConfigurationData();
+				data.forceRebuildCache();
+			}
+		}
+		
 		try {
+			// replace the old info in the map with the new
+			CarbideBuilderPlugin.getBuildManager().setProjectInfo(this);
+			
 			// save the CDT project description
 			CCorePlugin.getDefault().setProjectDescription(projectTracker.getProject(), projDes, true, new NullProgressMonitor());
 			
-			// replace the old info in the map with the new
-			CarbideBuilderPlugin.getBuildManager().setProjectInfo(this);
-
+			if (shouldForceRebuildCache) {
+				ICProject cproject = CoreModel.getDefault().create(projectTracker.getProject());
+				if (cproject != null)
+					CCorePlugin.getIndexManager().reindex(cproject);				
+			}
+			
 			return true;
 		} catch (CoreException e) {
 			e.printStackTrace();
@@ -252,7 +265,7 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		return false;
 	}
 	
-	public void checkInteralSettings() {
+	public void checkInternalSettings() {
 
 		// make sure our internal settings are written to disk
 		try {

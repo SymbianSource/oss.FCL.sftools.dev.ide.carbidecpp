@@ -72,6 +72,7 @@ public class SymbianSDK implements ISymbianSDK {
 	
 	protected DeviceType deviceEntry = null;
 	private boolean enabled = true;
+	private boolean wasScanned = false;
 	private Version osVersion;
 	private Version sdkVersion;
 	private String sdkOSBranch;
@@ -1222,6 +1223,14 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 			}
 		}
 		return sbvCatalog;
+	}
+
+	public void setPreviouslyScanned(boolean wasScanned) {
+		this.wasScanned = wasScanned;
+	}
+	
+	public boolean isPreviouslyScanned() {
+		return wasScanned;
 	}
 	
 }

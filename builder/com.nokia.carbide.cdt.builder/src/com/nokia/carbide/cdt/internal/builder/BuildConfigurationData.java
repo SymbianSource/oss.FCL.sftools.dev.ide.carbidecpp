@@ -63,6 +63,7 @@ public class BuildConfigurationData extends CConfigurationData {
 	private List<ICSourceEntry> extraSourceEntries;
 	private List<File> cacheFileSource;
 	private long cacheTimestamp;
+	private boolean forceRebuildCache;
 
 	private final String CONFIG_DATA_CACHE = "configDataCache"; //$NON-NLS-1$
 	private final String SOURCES_CACHE = "sourcesCache"; //$NON-NLS-1$
@@ -164,6 +165,10 @@ public class BuildConfigurationData extends CConfigurationData {
 					buildCache();
 					cacheBuilt = true;
 				}
+			} else if (forceRebuildCache) {
+				buildCache();
+				forceRebuildCache = false;
+				cacheBuilt = true;
 			} else {
 				// rebuild if any of the files have changed since we built the cache last
 				for (File file : cacheFileSource) {
@@ -343,4 +348,8 @@ public class BuildConfigurationData extends CConfigurationData {
 		return null;
 	}
 	
+	public void forceRebuildCache() {
+		forceRebuildCache = true;
+	}
+
 }

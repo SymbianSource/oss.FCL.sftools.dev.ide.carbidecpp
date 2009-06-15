@@ -62,6 +62,7 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	private static final String SDK_CACHE_OS_VERSION_ATTRIB = "osVersion";
 	private static final String SDK_CACHE_OS_BRANCH_ATTRIB = "osBranch";
 	private static final String SDK_CACHE_SDK_VERSION_ATTRIB = "sdkVersion";
+	private static final String SDK_SCANNED_FOR_PLUGINS = "sdkScanned";
 	
 	private static final String EMPTY_STRING = "";
 	private static boolean enableBSFScanner;
@@ -420,8 +421,20 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 				if (sdkVersionItem != null)
 					sdkVersion = sdkVersionItem.getNodeValue();
 				
+				// get whether or not this SDK has been scanned
+				String wasScanned = "false";
+				Node sdkScannedItem = attribs.getNamedItem(SDK_SCANNED_FOR_PLUGINS);
+				if (sdkScannedItem != null)
+					wasScanned = sdkScannedItem.getNodeValue();
+				
 				ISymbianSDK sdk = getSDK(id, false);
 				if (sdk != null){
+					
+					if (wasScanned.equalsIgnoreCase("true")){
+						sdk.setPreviouslyScanned(true);
+					} else {
+						sdk.setPreviouslyScanned(false);
+					}
 					
 					if (sdkEnabled.equalsIgnoreCase("true")){
 						sdk.setEnabled(true);
@@ -505,6 +518,14 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 						enabledNode.setNodeValue("false");
 					}
 					attribs.setNamedItem(enabledNode);
+					
+					Node wasScannedNode = d.createAttribute(SDK_SCANNED_FOR_PLUGINS);
+					if (true == currSDK.isPreviouslyScanned()) {
+						wasScannedNode.setNodeValue("true");
+					} else {
+						wasScannedNode.setNodeValue("false");
+					}
+					attribs.setNamedItem(wasScannedNode);
 					
 					Node osVerNode = d.createAttribute(SDK_CACHE_OS_VERSION_ATTRIB);
 					osVerNode.setNodeValue(currSDK.getOSVersion().toString());

@@ -224,6 +224,16 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 		store.setValue(PreferenceConstants.PREF_CHANGED_FILES_OPTION, option);
 	}
 
+	public static boolean getIndexAllOption() {
+		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
+		return store.getBoolean(PreferenceConstants.PREF_INDEX_ALL);
+	}
+	
+	public static void setIndexAllOption(boolean option) {
+		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
+		store.setValue(PreferenceConstants.PREF_INDEX_ALL, option);
+	}
+	
 	static public void log(IStatus status) {
 		Logging.log(plugin, status);
 	}
