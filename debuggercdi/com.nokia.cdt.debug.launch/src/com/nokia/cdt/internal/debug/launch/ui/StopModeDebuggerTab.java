@@ -386,7 +386,7 @@ public class StopModeDebuggerTab extends CLaunchConfigurationTab {
 	 */
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		try {			
-			breakAtMain.setSelection(configuration.getAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_STOP_AT_MAIN , true ));
+			breakAtMain.setSelection(configuration.getAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_STOP_AT_MAIN , false ));
 			mainBreakSymbol.setText(configuration.getAttribute( PreferenceConstants.J_PN_StopAtMainSymbol , "E32Main" )); //$NON-NLS-1$
 
 			int startAddressValue = configuration.getAttribute( PreferenceConstants.J_PN_RomImgStartAddress , 0);

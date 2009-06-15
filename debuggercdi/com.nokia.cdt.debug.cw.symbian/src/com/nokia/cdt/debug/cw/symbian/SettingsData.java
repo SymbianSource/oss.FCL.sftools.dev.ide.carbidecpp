@@ -57,6 +57,7 @@ import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cpp.internal.support.SupportPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -142,6 +143,8 @@ public class SettingsData {
 	public static final String spn_SophiaSTIConn_StiEmulatorType= SPN(spn_SophiaSTIConn,	"STIJTAGType"); //$NON-NLS-1
 
 	//================= End of Shadowed panels ===========================================
+
+	public static final String TARGET_PATH_INCLUDES_FILENAME = "TARGET_PATH_INCLUDES_FILENAME"; //$NON-NLS-1$
 
 	public static final int J_PN_TrkTimeout_Default = 2000;
 	
@@ -387,7 +390,7 @@ public class SettingsData {
 				String exeName = null;
 				if (mainExeHostPath != null)
 					exeName = mainExeHostPath.lastSegment();
-				else if (binary.isExecutable())
+				else if (binary != null && binary.isExecutable())
 					exeName = binary.getResource().getLocation().lastSegment();
 				if (exeName != null)	
 					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, "C:\\sys\\bin\\" + exeName); //$NON-NLS-1$
@@ -423,6 +426,13 @@ public class SettingsData {
 	}
 	
 	public static void setRomImgTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
+
+		configuration.setAttribute( PreferenceConstants.J_PN_DebugNonXip, false);
+		configuration.setAttribute( PreferenceConstants.J_PN_DownloadRomImage, false);
+		configuration.setAttribute( PreferenceConstants.J_PN_RomImagePath, ""); //$NON-NLS-1$
+		configuration.setAttribute( PreferenceConstants.J_PN_DownloadAddress, 0);
+		configuration.setAttribute( PreferenceConstants.J_PN_AskForDownload, true);		
+
 		if (project != null) {
 	        ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project.getProject());
 	        
@@ -447,13 +457,13 @@ public class SettingsData {
 		configuration.setAttribute( DebugPlugin.ATTR_PROCESS_FACTORY_ID, ProcessFactory.ID );			
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_START_MODE, ICDTLaunchConfigurationConstants.DEBUGGER_MODE_RUN );
 		configuration.setAttribute( PreferenceConstants.J_PN_StopAtMainSymbol, "E32Main" ); //$NON-NLS-1$
-		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_STOP_AT_MAIN, false);
+		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_STOP_AT_MAIN, false );
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ENABLE_VARIABLE_BOOKKEEPING, false );
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ENABLE_REGISTER_BOOKKEEPING, false );
-		configuration.setAttribute( PreferenceConstants.J_PN_ViewUnframedData, true);
-		configuration.setAttribute( PreferenceConstants.J_PN_ViewCommMessages, false);
-		configuration.setAttribute( PreferenceConstants.J_PN_DefaultInstructionSet, PreferenceConstants.J_PV_DefaultInstructionSet_Auto);
-		configuration.setAttribute( PreferenceConstants.J_PN_TRKMessageTimeout, J_PN_TrkTimeout_Default);
+		configuration.setAttribute( PreferenceConstants.J_PN_ViewUnframedData, true );
+		configuration.setAttribute( PreferenceConstants.J_PN_ViewCommMessages, false );
+		configuration.setAttribute( PreferenceConstants.J_PN_DefaultInstructionSet, PreferenceConstants.J_PV_DefaultInstructionSet_Auto );
+		configuration.setAttribute( PreferenceConstants.J_PN_TRKMessageTimeout, J_PN_TrkTimeout_Default );
 	}
 	
 	public static void setStopModeDebuggerTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
@@ -462,11 +472,20 @@ public class SettingsData {
 		configuration.setAttribute( DebugPlugin.ATTR_PROCESS_FACTORY_ID, ProcessFactory.ID );
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_START_MODE, ICDTLaunchConfigurationConstants.DEBUGGER_MODE_RUN );
 		configuration.setAttribute( PreferenceConstants.J_PN_StopAtMainSymbol, "E32Main" ); //$NON-NLS-1$
-		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_STOP_AT_MAIN, false);
+		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_STOP_AT_MAIN, false );
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ENABLE_VARIABLE_BOOKKEEPING, false );
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ENABLE_REGISTER_BOOKKEEPING, false );
-		configuration.setAttribute( PreferenceConstants.J_PN_DefaultInstructionSet, PreferenceConstants.J_PV_DefaultInstructionSet_Auto);
+		configuration.setAttribute( PreferenceConstants.J_PN_RomImgStartAddress , 0);
+		configuration.setAttribute( PreferenceConstants.J_PN_DebugRunFromStart, PreferenceConstants.J_PV_DebugRunFromStart_Debug);
+		configuration.setAttribute( PreferenceConstants.J_PN_DefaultInstructionSet, PreferenceConstants.J_PV_DefaultInstructionSet_Auto );
+		configuration.setAttribute( PreferenceConstants.J_PN_TargetProcessor, 8);
+		configuration.setAttribute( PreferenceConstants.J_PN_RunTargetInitFile, false);
+		configuration.setAttribute( PreferenceConstants.J_PN_TargetInitFilePath, ""); //$NON-NLS-1$
+		configuration.setAttribute( PreferenceConstants.J_PN_RunMemConfigFile, false);
+		configuration.setAttribute( PreferenceConstants.J_PN_MemConfigFilePath, ""); //$NON-NLS-1$
+		configuration.setAttribute( PreferenceConstants.J_PN_ResetTarget, false);
 	}
+
 	public static void setSerialConnTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
 		//======== Serial Connection Tab =====================================
 		//
@@ -482,6 +501,7 @@ public class SettingsData {
 		//======== File Transfer tab ============================================
 		//
 		configuration.setAttribute( PreferenceConstants.J_PN_FilesToTransfer, "" ); //$NON-NLS-1$
+		configuration.setAttribute( TARGET_PATH_INCLUDES_FILENAME, "true" ); //$NON-NLS-1$
 		
 		// only do this for system TRK configurations
 		if (project != null) {
@@ -563,7 +583,7 @@ public class SettingsData {
 		// Defaults to all executables from the same SDK
 		configuration.setAttribute( LCS_ExecutableTargetingRule, LCS_ExeTargetingRule_AllInSDK ); //$NON-NLS-1$
 		configuration.setAttribute( PreferenceConstants.J_PN_ExecutablesToDebug, "" ); //$NON-NLS-1$
-		configuration.setAttribute(	PreferenceConstants.J_PN_SymbolLoadingRule,	PreferenceConstants.J_PV_SymbolLoadingRule_Auto);
+		configuration.setAttribute(	PreferenceConstants.J_PN_SymbolLoadingRule,	PreferenceConstants.J_PV_SymbolLoadingRule_Auto );
 	}
 
 	/**
@@ -581,18 +601,18 @@ public class SettingsData {
 		// All but emulator debugger support OS Data View (kernel aware view) at present.
 		// 
 		if (settingsGroup.equals(LaunchConfig_Emulator)) 
-			configuration.setAttribute( PreferenceConstants.J_PN_SupportOSView, false);
+			configuration.setAttribute( PreferenceConstants.J_PN_SupportOSView, false );
 		else
-			configuration.setAttribute( PreferenceConstants.J_PN_SupportOSView, true);
+			configuration.setAttribute( PreferenceConstants.J_PN_SupportOSView, true );
 		
 		if (settingsGroup.equals(LaunchConfig_AppTRK) || 
 			    settingsGroup.equals(LaunchConfig_SysTRK) ||
 			    settingsGroup.equals(LaunchConfig_Emulator))
 		{
-			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, false);
+			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, false );
 		}
 		else // others like T32, Sophia and crash debugger.
-			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, true);	
+			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, true );	
 	}
 
 	// a convenience function.
@@ -694,11 +714,18 @@ public class SettingsData {
 			
 		}
 		
+		// set rom log file defaults.  do this for all launch types since it shouldn't hurt
+		// and could be easy to miss some launch types that use this tab
+		configuration.setAttribute(PreferenceConstants.J_PN_ParseRomLogFile, false);
+		configuration.setAttribute(PreferenceConstants.J_PN_RomLogFilePath, ""); //$NON-NLS-1$
+		configuration.setAttribute(PreferenceConstants.J_PN_SymbianKitEpoc32Dir, ""); //$NON-NLS-1$
+		configuration.setAttribute(PreferenceConstants.J_PN_LogUnresolved, false);
+
 		// For all but crash debugger, use our "SymbianDebugger".
 		// Crash debugger will set its own debugger (see CrashDebugConfigurationTabGroup.setDefaults()).
 		// 
-		if (! settingsGroup.equals(LaunchConfig_CrashDebugger)) {
-			configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ID, SymbianDebugger.DEBUGGER_ID);
+		if (!settingsGroup.equals(LaunchConfig_CrashDebugger)) {
+			configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ID, SymbianDebugger.DEBUGGER_ID);
 			// Executables tab is not shown for crash debugger launch configuration.
 			setExecutablesTab(configuration, settingsGroup, project);
 		}
@@ -723,7 +750,8 @@ public class SettingsData {
 
 			// set this so it's there in the config and the apply button doesn't become
 			// enabled when switching to the tab
-			configuration.setAttribute( PreferenceConstants.J_PN_FilesToTransfer, "" ); //$NON-NLS-1$
+			configuration.setAttribute(PreferenceConstants.J_PN_FilesToTransfer, ""); //$NON-NLS-1$
+			configuration.setAttribute(TARGET_PATH_INCLUDES_FILENAME, "true"); //$NON-NLS-1$
 		}
 		
 		if (settingsGroup.equals(LaunchConfig_SysTRK)) {
@@ -775,8 +803,26 @@ public class SettingsData {
 					""); // see SymbianCrashDebuggerPrefix.h on DE side //$NON-NLS-1$
 		}
 		
-		if (settingsGroup.equals(LaunchConfig_Trace32))//$NON-NLS-1$
-			{
+		if (settingsGroup.equals(LaunchConfig_Trace32)) {
+			String t32ExePathStr = "C:\\t32\\t32marm.exe"; //$NON-NLS-1$
+			
+			//set the default config file from the Symbian support folder which has the predefined settings for connecting to Carbide.
+			String supportDir = SupportPlugin.getDefault().getSymbianSupportDirectory();
+			String defaultConfigFilePath = supportDir + "\\Trace32\\config_carbide.t32"; //$NON-NLS-1$
+	
+			if (new File("C:\\apps\\t32\\t32marm.exe").exists()) { //$NON-NLS-1$
+				t32ExePathStr = "C:\\apps\\t32\\t32marm.exe"; //$NON-NLS-1$
+				// use config_carbide_1.t32 where the SYS path is C:\Apps\T32\
+				defaultConfigFilePath = supportDir + "\\Trace32\\config_carbide_1.t32"; //$NON-NLS-1$
+			}
+
+			configuration.setAttribute(spn_Trace32Conn_ExePath, t32ExePathStr);
+			configuration.setAttribute(spn_Trace32Conn_ConfigFilePath, defaultConfigFilePath);
+			configuration.setAttribute(spn_Trace32Conn_BootScriptFile, ""); //$NON-NLS-1$
+			configuration.setAttribute(spn_Trace32Conn_LogOption, false);
+			configuration.setAttribute(spn_Trace32Conn_UdpPort, "20000"); //$NON-NLS-1$
+			configuration.setAttribute(spn_Trace32Conn_BootConfigArgs, ""); //$NON-NLS-1$
+
 			// Stop mode debugging using Trace32 : specify Trace32 debugger protocol plugin.
 			//
 			ConnectionTypeInfo connTI = new ConnectionTypeInfo(
@@ -792,6 +838,11 @@ public class SettingsData {
 		}
 	
 		if (settingsGroup.equals(LaunchConfig_SophiaSTI)) {
+			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_DllPath, "C:\\CarbideIF_ARM\\WTI.dll"); //$NON-NLS-1$
+			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_JtagClock, "Auto"); //$NON-NLS-1$
+			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_LogOption, false);
+			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_StiEmulatorType, "Auto"); //$NON-NLS-1$
+			
 			// Stop mode debugging using STI : specify Sophia STI debugger protocol plugin.
 			//
 			ConnectionTypeInfo connTI = new ConnectionTypeInfo(
