@@ -40,8 +40,6 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 
 	private FilesBlock fFilesBlock;
 	
-	private static final String TARGET_PATH_INCLUDES_FILENAME = "TARGET_PATH_INCLUDES_FILENAME"; //$NON-NLS-1$
-
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
 	 */
@@ -75,7 +73,6 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.debug.core.ILaunchConfigurationWorkingCopy)
 	 */
 	public void setDefaults(ILaunchConfigurationWorkingCopy config) {
-		config.setAttribute( TARGET_PATH_INCLUDES_FILENAME, "true"); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)
@@ -85,7 +82,7 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 		try {
 			List<FileToTransfer> files = new ArrayList<FileToTransfer>();
 
-			String conversionTag = configuration.getAttribute(TARGET_PATH_INCLUDES_FILENAME, "false"); //$NON-NLS-1$
+			String conversionTag = configuration.getAttribute(SettingsData.TARGET_PATH_INCLUDES_FILENAME, "false"); //$NON-NLS-1$
 			if (conversionTag.compareToIgnoreCase("true") != 0) { //$NON-NLS-1$
 				// needs conversion - add the filename from the host path to the target path which was just a directory
 				String filesString = configuration.getAttribute(PreferenceConstants.J_PN_FilesToTransfer, ""); //$NON-NLS-1$
@@ -134,7 +131,6 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 			filesString += files[i].getHostPath() + "," + files[i].getTargetPath() + "," + (files[i].getEnabled() ? "1" : "0") + ","; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
 		configuration.setAttribute( PreferenceConstants.J_PN_FilesToTransfer, filesString);
-		configuration.setAttribute( TARGET_PATH_INCLUDES_FILENAME, "true"); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)

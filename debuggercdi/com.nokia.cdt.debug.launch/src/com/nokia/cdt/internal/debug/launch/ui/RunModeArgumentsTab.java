@@ -92,7 +92,6 @@ public class RunModeArgumentsTab extends CLaunchConfigurationTab {
 	}
 
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		configuration.setAttribute(PreferenceConstants.J_PN_ProgramArguments, (String) null);
 	}
 
 	@Override

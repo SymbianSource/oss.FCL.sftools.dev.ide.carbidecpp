@@ -420,6 +420,15 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 		} catch (Exception e) {
 			LaunchPlugin.log(e);
 		}
+		
+		// now add the ones for the project as well since they may not be built yet and therefore
+		// not returned by the executables manager.
+		for (ExeFileToDebug exe : getExecutablesForTheProject(configuration)) {
+			if (!files.contains(exe)) {
+				files.add(exe);
+			}
+		}
+
 		return files;
 	}
 
