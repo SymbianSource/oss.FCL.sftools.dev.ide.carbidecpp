@@ -1318,8 +1318,118 @@ public class EpocEngineHelper {
 	 * header file.
 	 * @param info the project info of the project to get the source roots for
 	 * @return list of workspace relative source root paths
+	 * @deprecated This method is now deprecated and the new getPreferredSourceRootsForProject() should be used since it honors several new preferences.
 	 */
 	public static List<IPath> getSourceRootsForProject(final ICarbideProjectInfo info) {
+		final List<IPath> sourceRoots = new ArrayList<IPath>();
+
+		IMMPReference[] mmps = (IMMPReference[])EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(),
+			new DefaultViewConfiguration(info),
+			new BldInfDataRunnableAdapter() {
+
+				public Object failedLoad(CoreException exception) {
+					return new IMMPReference[0];
+				}
+
+				public Object run(IBldInfData data) {
+					return data.getAllMMPReferences();
+				}
+				
+			});
+		
+		for (IMMPReference mmp : mmps) {
+			EpocEnginePathHelper helper = new EpocEnginePathHelper(info.getProject());
+			final IPath workspaceRelativeMMPPath = helper.convertToWorkspace(mmp.getPath());
+			EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
+					new DefaultMMPViewConfiguration(info, new AllNodesViewFilter()), 
+					new MMPDataRunnableAdapter() {
+
+					public Object run(IMMPData mmpData) {
+						MMPViewPathHelper helper = new MMPViewPathHelper(info.getProject(), null);
+						
+						Set<IPath> topLevelSourcePaths = new HashSet<IPath>();
+
+						// this covers sources, resource lists, and documents
+						for (IPath path : mmpData.getEffectiveSourcePaths()) {
+							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.SOURCEPATH, path);
+							if (fullPath != null) {
+								// add the absolute workspace path to the folder directly under the project.
+								// ideally we'd be more precise but then CDT creates a C folder named Foo\Bar,
+								// rather than just expanding Foo and then seeing bar a C source folder.
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+							}
+						}
+
+						// add potential sourcepaths for which source entries may not yet exist
+						for (IPath path : mmpData.getRealSourcePaths()) {
+							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.SOURCEPATH, path);
+							if (fullPath != null) {
+								// add the absolute workspace path to the folder directly under the project.
+								// ideally we'd be more precise but then CDT creates a C folder named Foo\Bar,
+								// rather than just expanding Foo and then seeing bar a C source folder.
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+							}
+						}
+
+						for (IPath path : mmpData.getUserIncludes()) {
+							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.USERINCLUDE, path);
+							if (fullPath != null) {
+								// add the absolute workspace path to the folder directly under the project.
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+							}
+						}
+						
+						for (IPath path : mmpData.getSystemIncludes()) {
+							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.SYSTEMINCLUDE, path);
+							if (fullPath != null) {
+								// add the absolute workspace path to the folder directly under the project.
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+							}
+						}
+						
+						for (IMMPResource resource : mmpData.getResourceBlocks()) {
+							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.START_RESOURCE, resource.getSource());
+							if (fullPath != null) {
+								// add the absolute workspace path to the folder directly under the project.
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+							}
+						}
+
+						for (IMMPAIFInfo aif : mmpData.getAifs()) {
+							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.AIF_SOURCE, aif.getResource());
+							if (fullPath != null) {
+								// add the absolute workspace path to the folder directly under the project.
+								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+							}
+						}
+
+						for (IPath path : topLevelSourcePaths) {
+							if (!sourceRoots.contains(path)) {
+								sourceRoots.add(path);
+							}
+						}
+						
+						return null;
+					}
+			});
+		}
+	
+		return sourceRoots;
+	}
+
+	
+	/**
+	 * Gets the list of source roots for a project. Depending on several preferences, this can have different behavior.
+	 * If the CDT preference "Show source roots at top of project" is unset (default in Carbide),
+	 * then the source roots will be nested as deeply as possible to avoid indexing more than specified by the project itself,
+	 * otherwise, they will always be direct children of the project.
+	 * If the Carbide preference "Index only source files from mmp files being built" then the source roots will only be
+	 * determined by the build components of the project, otherwise they will be determined by all mmps regardless of which
+	 * are selected for building by the project.
+	 * @param info the project info of the project to get the source roots for
+	 * @return list of workspace relative source root paths
+	 */
+	public static List<IPath> getPreferredSourceRootsForProject(final ICarbideProjectInfo info) {
 		final List<IPath> sourceRoots = new ArrayList<IPath>();
 		final boolean showSourceRootsAtTopOfProject = CCorePlugin.showSourceRootsAtTopOfProject();
 
@@ -1337,9 +1447,8 @@ public class EpocEngineHelper {
 				
 			});
 		
-		boolean indexAll = getIndexAllPreference();
 		List<String> buildComponents = null;
-		if (!indexAll) // if indexAll, leave buildComponents as null because that will cause the same behavior
+		if (!getIndexAllPreference()) // if indexAll, leave buildComponents as null because that will cause the same behavior
 			buildComponents = info.isBuildingFromInf() ? null : info.getInfBuildComponents();
 		for (IMMPReference mmp : mmps) {
 			if (buildComponents != null && !containsIgnoreCase(buildComponents, mmp.getPath().lastSegment()))
@@ -1418,7 +1527,13 @@ public class EpocEngineHelper {
 							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.START_RESOURCE, resource.getSource());
 							if (fullPath != null) {
 								// add the absolute workspace path to the folder directly under the project.
-								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+								if (showSourceRootsAtTopOfProject) {
+									// ideally we'd be more precise but then CDT creates a C folder named Foo\Bar,
+									// rather than just expanding Foo and then seeing bar a C source folder.
+									topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+								}
+								else // ideal
+									topLevelSourcePaths.add(fullPath.removeLastSegments(1).makeAbsolute());
 							}
 						}
 
@@ -1426,7 +1541,13 @@ public class EpocEngineHelper {
 							IPath fullPath = helper.convertMMPToWorkspace(EMMPPathContext.AIF_SOURCE, aif.getResource());
 							if (fullPath != null) {
 								// add the absolute workspace path to the folder directly under the project.
-								topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+								if (showSourceRootsAtTopOfProject) {
+									// ideally we'd be more precise but then CDT creates a C folder named Foo\Bar,
+									// rather than just expanding Foo and then seeing bar a C source folder.
+									topLevelSourcePaths.add(fullPath.uptoSegment(2).makeAbsolute());
+								}
+								else // ideal
+									topLevelSourcePaths.add(fullPath.removeLastSegments(1).makeAbsolute());
 							}
 						}
 

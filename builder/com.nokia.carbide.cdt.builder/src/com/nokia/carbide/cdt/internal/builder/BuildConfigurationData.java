@@ -219,7 +219,7 @@ public class BuildConfigurationData extends CConfigurationData {
 			return;
 		}
 		
-		List<IPath> sourcePaths = EpocEngineHelper.getSourceRootsForProject(cpi);
+		List<IPath> sourcePaths = EpocEngineHelper.getPreferredSourceRootsForProject(cpi);
 		for (IPath srcPath : sourcePaths) {
 			// if the project root is a source path then that's the only one we
 			// want to set because anything else would be under the project root
