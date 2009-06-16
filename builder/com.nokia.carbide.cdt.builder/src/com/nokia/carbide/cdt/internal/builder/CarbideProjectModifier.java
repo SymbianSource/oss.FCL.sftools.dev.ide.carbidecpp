@@ -21,6 +21,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -237,7 +238,9 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		// make sure this flag is set before saving the ICProjectDescription
 		projDes.setCdtProjectCreated();
 		
-		if (shouldForceRebuildCache) {
+		boolean rebuildCacheAndReindex = shouldForceRebuildCache && !getIndexAllPreference();
+		
+		if (rebuildCacheAndReindex) {
 			for (ICConfigurationDescription configuration : projDes.getConfigurations()) {
 				BuildConfigurationData data = (BuildConfigurationData) configuration.getConfigurationData();
 				data.forceRebuildCache();
@@ -251,7 +254,7 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 			// save the CDT project description
 			CCorePlugin.getDefault().setProjectDescription(projectTracker.getProject(), projDes, true, new NullProgressMonitor());
 			
-			if (shouldForceRebuildCache) {
+			if (rebuildCacheAndReindex) {
 				ICProject cproject = CoreModel.getDefault().create(projectTracker.getProject());
 				if (cproject != null)
 					CCorePlugin.getIndexManager().reindex(cproject);				
@@ -265,6 +268,17 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		return false;
 	}
 	
+	private static boolean getIndexAllPreference() {
+		// Can't access this pref from the project ui plugin because it would cause a circular dependency
+		Plugin plugin = Platform.getPlugin("com.nokia.carbide.cpp.project.ui"); //$NON-NLS-1$
+		if (plugin == null) {
+			CarbideBuilderPlugin.log(Logging.newStatus(CarbideBuilderPlugin.getDefault(), 
+					IStatus.WARNING, "Could not find project UI plugin!"));
+			return true;
+		}
+		return plugin.getPluginPreferences().getBoolean("indexAll"); //$NON-NLS-1$
+	}
+
 	public void checkInternalSettings() {
 
 		// make sure our internal settings are written to disk
