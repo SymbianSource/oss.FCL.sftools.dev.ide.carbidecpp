@@ -16,7 +16,6 @@
 */
 package com.nokia.cdt.internal.debug.launch.ui;
 
-import com.nokia.carbide.cpp.internal.support.SupportPlugin;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
@@ -240,22 +239,10 @@ public class Trace32ConnectionTab extends CLaunchConfigurationTab {
 	 */
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		try {			
-			String t32ExePathStr = "C:\\t32\\t32marm.exe"; //$NON-NLS-1$
-	
-			//set the default config file from the Symbian support folder which has the predefined settings for connecting to Carbide.
-			String supportDir = SupportPlugin.getDefault().getSymbianSupportDirectory();
-			String defaultConfigFilePath = supportDir + "\\Trace32\\config_carbide.t32"; //$NON-NLS-1$
-	
-			if (new File("C:\\apps\\t32\\t32marm.exe").exists()) { //$NON-NLS-1$
-				t32ExePathStr = "C:\\apps\\t32\\t32marm.exe"; //$NON-NLS-1$
-				// use config_carbide_1.t32 where the SYS path is C:\Apps\T32\
-				defaultConfigFilePath = supportDir + "\\Trace32\\config_carbide_1.t32"; //$NON-NLS-1$
-			}
-			
-			t32ExePath.setText(configuration.getAttribute( SettingsData.spn_Trace32Conn_ExePath, t32ExePathStr)); 							
-			t32ConfigFilePath.setText(configuration.getAttribute( SettingsData.spn_Trace32Conn_ConfigFilePath, defaultConfigFilePath)); //$NON-NLS-1$
+			t32ExePath.setText(configuration.getAttribute( SettingsData.spn_Trace32Conn_ExePath, "")); 							
+			t32ConfigFilePath.setText(configuration.getAttribute( SettingsData.spn_Trace32Conn_ConfigFilePath, "")); //$NON-NLS-1$
 			t32BootConfigFilePath.setText(configuration.getAttribute( SettingsData.spn_Trace32Conn_BootScriptFile, "")); //$NON-NLS-1$
-			viewT32Messages.setSelection(configuration.getAttribute( SettingsData.spn_Trace32Conn_LogOption, false));	
+			viewT32Messages.setSelection(configuration.getAttribute( SettingsData.spn_Trace32Conn_LogOption, false));
 			
 			checkControlState();
 		} catch (CoreException e) {

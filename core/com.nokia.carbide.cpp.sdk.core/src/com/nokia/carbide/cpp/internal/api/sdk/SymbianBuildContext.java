@@ -42,6 +42,10 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	// a copy of bad SDK default to fall back
 	private static ISymbianSDK fallbackForBadSdk = SymbianMissingSDKFactory.createInstance("dummy_ID"); //$NON-NLS-1$
 	
+	// last time we checked the hrh file mod dates - only check if changed in last second
+	private static final long HRH_TIMESTAMP_CHECK_QUANTUM = 1000; // 1 sec
+	private static long lastHrhTimestampCheck;
+	
 	private File prefixFileParsed;
 	private List<File> hrhFilesParsed = new ArrayList<File>();
 	private List<IDefine> variantHRHMacros = new ArrayList<IDefine>();
@@ -353,13 +357,15 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 			}
 			
 			// now check to see if any of the included hrh files have changed
-			if (!buildCache) {
+			// we will do this at most once per quantum, because it is expensive and during import it was done 100 times per second
+			if (!buildCache && (System.currentTimeMillis() - lastHrhTimestampCheck) > HRH_TIMESTAMP_CHECK_QUANTUM) {
 				for (File file : hrhFilesParsed) {
 					if (file.lastModified() > hrhCacheTimestamp) {
 						buildCache = true;
 						break;
 					}
 				}
+				lastHrhTimestampCheck = System.currentTimeMillis();
 			}
 		}
 		

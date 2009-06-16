@@ -194,10 +194,6 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.debug.core.ILaunchConfigurationWorkingCopy)
 	 */
 	public void setDefaults(ILaunchConfigurationWorkingCopy config) {
-		config.setAttribute( PreferenceConstants.J_PN_ParseRomLogFile, false);
-		config.setAttribute( PreferenceConstants.J_PN_RomLogFilePath, ""); //$NON-NLS-1$
-		config.setAttribute( PreferenceConstants.J_PN_SymbianKitEpoc32Dir, ""); //$NON-NLS-1$
-		config.setAttribute( PreferenceConstants.J_PN_LogUnresolved, false);
 	}
 
 	/* (non-Javadoc)
