@@ -38,7 +38,15 @@ changes making the tools unusable!</p>
 <h3><a name="whatsNew" id="whatsNew2"></a>What's New in 2.1.0 </h3>
 <p>The following features for Symbian OS development are provided within Carbide.c++:</p>
 <ul>
-  <li><b>???</b> - </li>
+  <li><b>Performance inprovements</b> - the following areas of Carbide have been optimized to improve performance:
+    <ul>
+      <li><b>Importing large projects</b>   - Importing large projects is one of our primary points of performance improvements. When too many project roots were used the more source and include paths were brought into the project, up to an including entire SDKs. Generally, we found that once a project root contains over 15-20K files under the project root, Carbide became extremely sluggish. We have improved some edge cases where project roots were calculated incorrectly and now include only what's really needed. </li>
+      <li><b>Modifying Project Settings and Build Configuration Data</b>-    This is quite a significant improvement as modifying MMP files and switching build configurations are a couple of the most common operations done by end-users and because the time spent processing project and configuration data is done on the main thread, locking the UI. With optimization in one CDT function we were able to bring most project-related and configuration switch changes from 20 seconds to less than 3 seconds. You should also see improvements when saving MMP and INF files (the &quot;Refreshing Configuration Job&quot;). </li>
+      <li><b>Executables View Refreshing</b> - The Executables view refresh was impacting everything from IDE start-up to import and project creation as well refreshes during rebuilds. Some of our wall clock tests on large projects (such as contacts the browser) show the executables job running from 15-25 seconds down to about 5 seconds.</li>
+    </ul>
+  </li>
+  <li><b>New Launch Configuration improvements</b> - ???</li>
+  <li><b>Keywords in preference panels</b> - All Carbide related preference panels now include keywords to make searching for options a bit easier.</li>
 </ul>
 <h4>2.0.4</h4>
 <ul>
@@ -52,12 +60,12 @@ changes making the tools unusable!</p>
 <ul><li><b>Eclipse 3.4.1 </b>&#8212; The Eclipse 3.4 project (Ganymede) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.4</a> for more information.</li>
 </ul>
 <ul><li><b>CDT 5.0.1</b> &#8212; The final version of CDT included as part of the Ganymede release. See the <a href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/concepts/cdt_c_whatsnew.htm">CDT 5.0 News and Noteworthy</a> page for more information. </li>
-  <li><b>SDK Migration support in CodeScanner</b> &#8212; CodeScanner now includes support for S60 SDK rules that provide helpful migration informaton on S60 functions within any C/C++ editor view and provide links to additional information within the SDK documentation or web. Very helpful during development to keep you code up-to-date with the latest SDK revisions.</li>
+  <li><b>SDK Migration support in CodeScanner</b> &#8212; CodeScanner now includes support for S60 SDK rules that provide helpful migration information on S60 functions within any C/C++ editor view and provide links to additional information within the SDK documentation or web. Very helpful during development to keep you code up-to-date with the latest SDK revisions.</li>
   <li><b>Qt SDK for S60  support </b>&#8212; Carbide now <a href="qt_help/qt_overview.htm">supports</a> the <a href="qt_help/qt_importing_projs_01.htm">importing</a> and <a href="qt_help/qt_creating_projs_01.htm">creation</a> of Qt projects using the  <a href="http://trolltech.com/developer/technical-preview-qt-for-s60">Qt SDK for S60</a>.</li>
   <li><b>Executables view improvements</b> &#8212; The <a href="reference/view_executables.htm">Executables</a> view now supports the loading of some additional DLL cases to ensure that the DLLs you want to debug are available during a debug session. In addition,  a Remove button has been added to the view's toolbar that makes it easier for you to remove any executables from the list.</li>
   <li><b>More indexer improvements </b>&#8212; Speed improvements for code completion, syntax coloring, and much more.</li>
   <li><b>Remote Connections view</b> &#8212; A visual list of <a href="reference/trk/view_remote_connection.htm">remote connections</a> and their state for managing multiple and diverse device connections.</li>
-  <li><b>Partial upgrade SIS file support</b> &#8212; Carbide now supports the generation of partial upgrade  SIS/SISX files. This increases debugger turnaround by only generating new files for changes and uploading these smaller execuables to the device.</li>
+  <li><b>Partial upgrade SIS file support</b> &#8212; Carbide now supports the generation of partial upgrade  SIS/SISX files. This increases debugger turnaround by only generating new files for changes and uploading these smaller executables to the device.</li>
   <li><b>More Program Counter support </b>&#8212; Added a Move to Line command for the debugger that enables you to move the PC to a new line while debugging without executing any intermediate lines or resuming execution.</li>
   <li>Multiple<b> TRK</b> improvements including:
     <ul>
@@ -80,7 +88,7 @@ changes making the tools unusable!</p>
 <ul>
   <li><b><a href="reference/trk/wnd_on_device_setup.htm">On-Device Setup</a> </b> dialog &#8212; connects, verifies and updates Carbide software services like the TRK debug agent on a device to ensure you are always using the latest version in your development efforts. Having trouble connecting with  TRK, give this a try. </li>
   <li><b>New Bug Report wizard  </b> &#8212; directly submit bugs and enhancement requests  to  Carbide Bugzilla from within Carbide using the <strong>Help &gt; New Bug Report</strong> menu option. Enter the name and password into the Bug Reporter preference panel and quick bug reports are easy to submit. </li>
-  <li><strong>Launch configuration panels UI unification and improvements</strong>&#8212; a host of minor UI improvements are being made in the launch configuration panes to provide a more coherent and reproducable experience across all launch configuration dialogs. </li>
+  <li><strong>Launch configuration panels UI unification and improvements</strong>&#8212; a host of minor UI improvements are being made in the launch configuration panes to provide a more coherent and reproducible experience across all launch configuration dialogs. </li>
 </ul>
 <blockquote>
   <p>For example, the concept of a &quot;main executable&quot; had been replaced with the Executables tab where a list of executables targeted for debugging were shown. This UI change brings the launch configurations into sync with that change by removing the Main Executable from the Main tab. The Main tab will only show a process to launch and not executables targeted for debugging. </p>
@@ -139,11 +147,11 @@ changes making the tools unusable!</p>
     </tr>
     <tr>
       <td style="vertical-align: top;"><span class="style5">Carbide.c++ terminates on startup on low memory machines</span></td>
-      <td style="vertical-align: top;"> <p>Machines with less than 1GB of memory (or machines runing in a virtual machine) may experience start-up problems. Error dialog typically contains: </p>
+      <td style="vertical-align: top;"> <p>Machines with less than 1GB of memory (or machines running in a virtual machine) may experience start-up problems. Error dialog typically contains: </p>
         <p><span class="code">JVM terminated, Return code = -1 </span></p>
         <p>or when running from eclipse.exe: </p>
         <p><span class="code">Error occurred during initialization of VM  Could not reserve enough space for object heap</span> </p>
-<p>The <a href="hints_tips.htm">solution</a> is to edit your <span class="code">Carbide.c++.1.x.ini</span> (or <span class="code">eclipse.ini</span> if launching Eclipsec.exe) and use a smaller value for the <span class="code">-Xmx </span>paramater to the JVM. </p>
+<p>The <a href="hints_tips.htm">solution</a> is to edit your <span class="code">Carbide.c++.1.x.ini</span> (or <span class="code">eclipse.ini</span> if launching Eclipsec.exe) and use a smaller value for the <span class="code">-Xmx </span>parameter to the JVM. </p>
 <p class="note"><b>NOTE</b> In this scenario, Carbide.c++ performance may degrade.</p></td>
     </tr>
     <tr>
@@ -159,7 +167,7 @@ changes making the tools unusable!</p>
       <td style="vertical-align: top;">Workaround: Switch the project to a machine running Windows XP in order to use &quot;Remote Desktop Connection&quot;. </td>
     </tr>
     <tr>
-      <td style="vertical-align: top;">[6414] Using Mylyn causes MMP files to be spellchecked and common terms like EXE, CPP, and EUSER.LIB flagged as misspellings in editor views </td>
+      <td style="vertical-align: top;">[6414] Using Mylyn causes MMP files to be spell checked and common terms like EXE, CPP, and EUSER.LIB flagged as misspellings in editor views </td>
       <td style="vertical-align: top;"><p>Workaround: Remove Mylyn from the Carbide installation. </p>      </td>
     </tr>
     <tr>
@@ -172,7 +180,7 @@ changes making the tools unusable!</p>
     </tr>
     <tr>
       <td style="vertical-align: top;">[3010] Bad synchronization in MMP editor for Linker definition file.</td>
-      <td style="vertical-align: top;">  The templates for Symbian DLL projects do not define a <span class="code">DEFFILE</span> statement, for the case where a <span class="code">DEF</span> file is not needed or imports are not frozen. If you edit the <span class="code">DEF</span> filename through the MMP editor, it is not automatically conditionalized for the current target. If you wish to define target-specific <span class="code">DEF</span> file names in the MMP editor, manually insert <span class="code">#ifdef...#endif</span> blocks, or first uncomment the <span class="code">#ifdef...#endif</span> block from the template, so that target-specific filenames will be properly updated.</td>
+      <td style="vertical-align: top;">  The templates for Symbian DLL projects do not define a <span class="code">DEFFILE</span> statement, for the case where a <span class="code">DEF</span> file is not needed or imports are not frozen. If you edit the <span class="code">DEF</span> filename through the MMP editor, it is not automatically conditioned for the current target. If you wish to define target-specific <span class="code">DEF</span> file names in the MMP editor, manually insert <span class="code">#ifdef...#endif</span> blocks, or first uncomment the <span class="code">#ifdef...#endif</span> block from the template, so that target-specific filenames will be properly updated.</td>
     </tr>
     <tr>
       <td style="vertical-align: top;">[2784] Changes to contents of <span class="code">#includes</span> of bld.inf and MMP files are not performed -- instead, changes involving reordering or deleting go to the main file. </td>
