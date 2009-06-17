@@ -516,6 +516,7 @@
 		   
 		</theme>
 	</extension>
+	
  <extension point="com.nokia.carbide.cpp.diagnosticLogGroup">
    <diagnosticLogGroup
            id="com.nokia.carbide.cpp.diagnosticLogs"
@@ -530,6 +531,12 @@
           class="com.nokia.carbide.cpp.logging.LoggingPreferencesPage"
           id="com.nokia.carbide.cpp.LoggingPreferencesPage"
           name="Diagnostic Logs">
+       <keywordReference
+             id="com.nokia.carbide.cpp.common">
+       </keywordReference>
+       <keywordReference
+             id="com.nokia.carbide.cpp.diagnostics">
+       </keywordReference>
     </page>
  </extension>
 
@@ -559,5 +566,21 @@
          </enabledWhen>
       </page>
    </extension>
+   
+<!-- =================================================================================== -->
+<!-- Carbide preference panel keywords                                                   -->
+<!-- =================================================================================== -->
+
+ <extension
+       point="org.eclipse.ui.keywords">
+    <keyword
+          id="com.nokia.carbide.cpp.common"
+          label="%carbcPreference.common">
+    </keyword>
+    <keyword
+          id="com.nokia.carbide.cpp.diagnostics"
+          label="%carbcPreference.diagnostics">
+    </keyword>
+ </extension>
 
 </plugin>
