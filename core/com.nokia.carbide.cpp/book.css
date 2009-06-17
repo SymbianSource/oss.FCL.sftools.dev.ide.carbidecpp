@@ -12,7 +12,7 @@ html {
 
 /* 	Set default font to serif style, 12-pt and plain	*/
 body, p, table {
-	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: normal;
 }
