@@ -40,14 +40,15 @@ changes making the tools unusable!</p>
 <ul>
   <li><b>Performance inprovements</b> - the following areas of Carbide have been optimized to improve performance:
     <ul>
-      <li><b>Importing large projects</b>   - Importing large projects is one of our primary points of performance improvements. When too many project roots were used the more source and include paths were brought into the project, up to an including entire SDKs. Generally, we found that once a project root contains over 15-20K files under the project root, Carbide became extremely sluggish. We have improved some edge cases where project roots were calculated incorrectly and now include only what's really needed. </li>
+      <li><b>Importing large projects</b>   - Importing large projects is one of our primary points of performance improvements. When too many project roots were used the more source and include paths were brought into the project, up to an including entire SDKs. Generally, we found that once a project root contains over 15-20K files Carbide became extremely sluggish. We have improved some edge cases where project roots were calculated incorrectly and now include only what's really needed. </li>
       <li><b>Modifying Project Settings and Build Configuration Data</b>-    This is quite a significant improvement as modifying MMP files and switching build configurations are a couple of the most common operations done by end-users and because the time spent processing project and configuration data is done on the main thread, locking the UI. With optimization in one CDT function we were able to bring most project-related and configuration switch changes from 20 seconds to less than 3 seconds. You should also see improvements when saving MMP and INF files (the &quot;Refreshing Configuration Job&quot;). </li>
       <li><b>Executables View Refreshing</b> - The Executables view refresh was impacting everything from IDE start-up to import and project creation as well refreshes during rebuilds. Some of our wall clock tests on large projects (such as contacts the browser) show the executables job running from 15-25 seconds down to about 5 seconds.</li>
     </ul>
   </li>
   <li><b>New Launch Configuration improvements</b> - The <b>New Launch Configuration</b> wizard now starts with a new <b>Category Selection</b> page which helps guide developers in choosing the correct launch configuration  for a project, whether it be for Phones, Boards, or other target devices. In addition, the <span class="fix">??</span> page enables developers to define if a project is automatically built or not at the launch configuration level.</li>
+  <li><b>Customization (.bsf) and Symbian Variant Binary (.var) platform</b> discovery is now supported. See the Platform Filtering Preference panel for details.</li>
   <li><b>Keywords in preference panels</b> - All Carbide related preference panels now include keywords to make searching for options a bit easier.</li>
-  <li><b>New Carbide Extensions section</b> - Project Property dialogs now include a <b>Carbide Extensions</b> section which allows Carbide plug-in and utility developers a place to add their own project  settings.</li>
+  <li><b>New Carbide Extensions section</b> - Project Property dialogs now include a <b>Carbide Extensions</b> section which allows Carbide plug-in and utilities a place to add their own project  settings.</li>
 </ul>
 <h4>2.0.4</h4>
 <ul>
