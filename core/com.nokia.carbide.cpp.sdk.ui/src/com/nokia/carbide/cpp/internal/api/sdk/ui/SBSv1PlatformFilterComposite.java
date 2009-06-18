@@ -191,6 +191,20 @@ public class SBSv1PlatformFilterComposite extends Composite {
 		getPlatFilterPrefsStore();
 	}
 	
+	public void setDefaults(){
+		enableBSFScanner.setSelection(false);
+		platEKA2_WINSCW.setSelection(true);
+		platEKA2_GCCE.setSelection(true);
+		platEKA2_ARMV5.setSelection(true);
+		platEKA2_ARMV5_ABIV2.setSelection(false);
+		platEKA2_ARMV5_ABIV1.setSelection(false);
+		
+		platEKA1_WINSCW.setSelection(true);
+		platEKA1_THUMB.setSelection(true);
+		platEKA1_ARMI.setSelection(true);
+		platEKA1_ARM4.setSelection(true);
+	}
+	
 	private void writePlatFilterOptionSetting(String platFilterIdName, boolean value){
 		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
 		
