@@ -29,6 +29,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import java.util.List;
 
 public class SystemTRKLaunchWizard extends AbstractLaunchWizard {
+    private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
     private TRKConnectionWizardPage fMainPage;
 	private boolean hasFinished = false;
 
@@ -54,7 +55,9 @@ public class SystemTRKLaunchWizard extends AbstractLaunchWizard {
  
     public void addPages() {
     	super.addPages();
+        fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
         fMainPage = new TRKConnectionWizardPage(this);
+        addPage(fBuildOptionsSelectionPage);
         addPage(fMainPage);
         addPage(getSummaryPage());
 	    getBinarySelectionPage().setPathValidator(new IPathValidator() {
@@ -89,6 +92,7 @@ public class SystemTRKLaunchWizard extends AbstractLaunchWizard {
     			SettingsData.setProcessToLaunch(config, processToLaunchTargetPath);
     		
     		// now let the wizard pages update values 
+    		fBuildOptionsSelectionPage.updateConfiguration(config);
     		fMainPage.updateConfiguration(config);
     		
 		} catch (CoreException e) {

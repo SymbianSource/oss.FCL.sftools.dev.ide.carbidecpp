@@ -79,7 +79,9 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		createVerticalSpacer(comp, 1);
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
+			createVerticalSpacer(comp, 1);
 		}
+		createBuildOptionGroup(comp, 1);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_BUILD);
 

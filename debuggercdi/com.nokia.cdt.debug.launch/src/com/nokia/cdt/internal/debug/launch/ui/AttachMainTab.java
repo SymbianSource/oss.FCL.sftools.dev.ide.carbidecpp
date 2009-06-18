@@ -71,7 +71,9 @@ public class AttachMainTab extends CarbideMainTab {
 		createVerticalSpacer(comp, 1);
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
+			createVerticalSpacer(comp, 1);
 		}
+		createBuildOptionGroup(comp, 1);
 	}
 
 	public void setDefaults(ILaunchConfigurationWorkingCopy config) {

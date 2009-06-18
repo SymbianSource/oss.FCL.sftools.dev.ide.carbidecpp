@@ -28,6 +28,7 @@ import com.nokia.cdt.debug.cw.symbian.SettingsData;
 
 public class SophiaLaunchWizard extends AbstractLaunchWizard {
 
+    private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
     private SophiaWizardPage fSophiaPage;
     private StopModeRomImageWizardPage fRomImgPage;
     
@@ -55,8 +56,10 @@ public class SophiaLaunchWizard extends AbstractLaunchWizard {
  
     public void addPages() {
     	super.addPages();
+    	fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
     	fSophiaPage = new SophiaWizardPage(this);
     	fRomImgPage = new StopModeRomImageWizardPage(this);
+        addPage(fBuildOptionsSelectionPage);
         addPage(fSophiaPage);
         addPage(fRomImgPage);
         addPage(getSummaryPage());
@@ -85,6 +88,7 @@ public class SophiaLaunchWizard extends AbstractLaunchWizard {
     		SettingsData.setDefaults(config, SettingsData.LaunchConfig_SophiaSTI, getProject(), mmpPath, exePath);
     		
     		// now let the wizard pages update values 
+    		fBuildOptionsSelectionPage.updateConfiguration(config);
     		fSophiaPage.updateConfiguration(config);
     		fRomImgPage.updateConfiguration(config);
     		

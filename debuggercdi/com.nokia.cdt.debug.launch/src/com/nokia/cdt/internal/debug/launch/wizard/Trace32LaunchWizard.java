@@ -28,6 +28,7 @@ import com.nokia.cdt.debug.cw.symbian.SettingsData;
 
 public class Trace32LaunchWizard extends AbstractLaunchWizard {
 
+    	private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
 	    private Trace32WizardPage fTrace32Page;
 	    private StopModeRomImageWizardPage fRomImgPage;
 	    
@@ -55,8 +56,10 @@ public class Trace32LaunchWizard extends AbstractLaunchWizard {
 	 
 	    public void addPages() {
 	    	super.addPages();
+	    	fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
 	    	fTrace32Page = new Trace32WizardPage(this);
 	    	fRomImgPage = new StopModeRomImageWizardPage(this);
+	        addPage(fBuildOptionsSelectionPage);
 	        addPage(fTrace32Page);
 	        addPage(fRomImgPage);
 	        addPage(getSummaryPage());
@@ -85,6 +88,7 @@ public class Trace32LaunchWizard extends AbstractLaunchWizard {
 	    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_Trace32, getProject(), mmpPath, exePath);
 	    		
 	    		// now let the wizard pages update values 
+	    		fBuildOptionsSelectionPage.updateConfiguration(config);
 	    		fTrace32Page.updateConfiguration(config);
 	    		fRomImgPage.updateConfiguration(config);
 	    		

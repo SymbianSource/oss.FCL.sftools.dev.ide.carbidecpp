@@ -16,17 +16,8 @@
 */
 package com.nokia.cdt.internal.debug.launch.ui;
 
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-
-import org.eclipse.cdt.core.CCorePlugin;
-import org.eclipse.cdt.core.model.ICProject;
-import org.eclipse.cdt.core.settings.model.ICProjectDescription;
-import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.cdt.launch.internal.ui.LaunchMessages;
 import org.eclipse.cdt.launch.ui.CMainTab;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
@@ -80,45 +71,11 @@ public class CarbideMainTab extends CMainTab {
 		});
 	}
 
-	protected void updateProgramFromConfig(ILaunchConfiguration config) {
-		if (fProgText != null)
-			super.updateProgramFromConfig(config);
-	}
-
 	@Override
 	public void activated(ILaunchConfigurationWorkingCopy workingCopy) {
 		super.activated(workingCopy);
 		
 		// forces page to get focus so that help works without having to select some control first.
 		getControl().setFocus();
-	}
-
-	@Override
-	public void performApply(ILaunchConfigurationWorkingCopy config) {
-		ICProject cProject = this.getCProject();
-		if (cProject != null)
-		{
-			config.setMappedResources(new IResource[] { cProject.getProject() });
-			try { // Only initialize the build config ID once.
-				if (config.getAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, "").length() == 0)//$NON-NLS-1$
-				{
-					ICProjectDescription projDes = CCorePlugin.getDefault().getProjectDescription(cProject.getProject());
-					if (projDes != null)
-					{
-						String buildConfigID = projDes.getActiveConfiguration().getId();
-						config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, buildConfigID);			
-					}				
-				}
-			} catch (CoreException e) { 
-				LaunchPlugin.log(e);
-			}
-		}
-		config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_NAME, fProjText.getText());
-		if (fProgText != null) {
-			config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, fProgText.getText());
-		}
-		if (fTerminalButton != null) {
-			config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_USE_TERMINAL, fTerminalButton.getSelection());
-		}
 	}
 }

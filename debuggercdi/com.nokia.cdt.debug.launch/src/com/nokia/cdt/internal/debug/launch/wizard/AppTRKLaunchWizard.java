@@ -29,6 +29,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import java.util.List;
 
 public class AppTRKLaunchWizard extends AbstractLaunchWizard {
+    private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
     private TRKConnectionWizardPage fMainPage;
     private TRKSISSelectionWizardPage fSISSelectionPage;
 	private boolean hasFinished = false;
@@ -55,8 +56,10 @@ public class AppTRKLaunchWizard extends AbstractLaunchWizard {
  
     public void addPages() {
     	super.addPages();
+        fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
         fMainPage = new TRKConnectionWizardPage(this);
         fSISSelectionPage = new TRKSISSelectionWizardPage(this);
+        addPage(fBuildOptionsSelectionPage);
         addPage(fMainPage);
         addPage(fSISSelectionPage);
 	    addPage(getSummaryPage());
@@ -95,9 +98,8 @@ public class AppTRKLaunchWizard extends AbstractLaunchWizard {
     			SettingsData.setProcessToLaunch(config, processToLaunchTargetPath);
     		
     		// now let the wizard pages update values 
+    		fBuildOptionsSelectionPage.updateConfiguration(config);
     		fMainPage.updateConfiguration(config);
-    		
-    		// now let the wizard pages update values 
     		fSISSelectionPage.updateConfiguration(config);
 
     	} catch (CoreException e) {

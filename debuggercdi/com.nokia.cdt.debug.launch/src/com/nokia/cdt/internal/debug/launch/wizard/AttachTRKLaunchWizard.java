@@ -27,6 +27,7 @@ import java.util.List;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 
 public class AttachTRKLaunchWizard extends AbstractLaunchWizard {
+    private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
     private TRKConnectionWizardPage fMainPage;
 	private boolean hasFinished = false;
     
@@ -52,7 +53,9 @@ public class AttachTRKLaunchWizard extends AbstractLaunchWizard {
  
     public void addPages() {
     	super.addPages();
+        fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
         fMainPage = new TRKConnectionWizardPage(this);
+        addPage(fBuildOptionsSelectionPage);
         addPage(fMainPage);
 	    addPage(getSummaryPage());
    }
@@ -80,8 +83,9 @@ public class AttachTRKLaunchWizard extends AbstractLaunchWizard {
     		SettingsData.setDefaults(config, SettingsData.LaunchConfig_AppTRK, getProject(), mmpPath, exePath);
     		
     		// now let the wizard pages update values 
+    		fBuildOptionsSelectionPage.updateConfiguration(config);
     		fMainPage.updateConfiguration(config);
- 
+
     	} catch (CoreException e) {
 			e.printStackTrace();
 		}

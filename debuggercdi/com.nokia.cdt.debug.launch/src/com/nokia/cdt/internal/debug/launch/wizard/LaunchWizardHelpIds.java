@@ -49,4 +49,5 @@ public class LaunchWizardHelpIds {
 
 	public static final String GET_SIS_DIALOG = HelpID_Prefix + "get_sis_info_dialog"; //$NON-NLS-1$
 
+	public static final String BUILD_OPTIONS_SELECTION_PAGE = HelpID_Prefix + "build_options_selection_page"; //$NON-NLS-1$
 }

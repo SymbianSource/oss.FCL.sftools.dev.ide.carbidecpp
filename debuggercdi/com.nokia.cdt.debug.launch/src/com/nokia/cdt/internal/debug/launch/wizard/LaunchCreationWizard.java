@@ -48,6 +48,7 @@ public class LaunchCreationWizard extends Wizard {
 	private LaunchWizardSummaryPage fEmulationSummaryPage;
 	private LaunchCategorySelectionPage fCategorySelectionPage;
 	private LaunchWizardSelectionPage fWizardSelectionPage;
+    private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
 	private ILaunchConfigurationWorkingCopy launchConfig;
 	private boolean shouldOpenLaunchDialog;
 	private IProject project;
@@ -67,6 +68,7 @@ public class LaunchCreationWizard extends Wizard {
 		// otherwise it will be shown as needed by non-emulation wizards
 		if (isEmulation)  {
 			fEmulationSummaryPage = new LaunchWizardSummaryPage(configurationName);
+			fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
 			Check.checkState(exes.size() > 0);
 			IPath emulatorPath = getEmulatorPathFromExePath(exes.get(0));
 			fBinarySelectionPage = new MainExecutableSelectionWizardPage(mmps, exes, defaultExecutable, true, emulatorPath, emulatorOnly, fEmulationSummaryPage);
@@ -83,7 +85,8 @@ public class LaunchCreationWizard extends Wizard {
 				Pair<IPath, IPath> exeAndMmp = fBinarySelectionPage.getSelectedExeMmpPair();
 				launchConfig = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(LaunchPlugin.EMULATION_LAUNCH_TYPE).newInstance(null, configurationName);
 				SettingsData.setDefaults(launchConfig, SettingsData.LaunchConfig_Emulator, project, exeAndMmp.second, exeAndMmp.first);
-		    	IPath processToLaunchTargetPath = fBinarySelectionPage.getProcessToLaunchTargetPath();	
+				fBuildOptionsSelectionPage.updateConfiguration(launchConfig);
+				IPath processToLaunchTargetPath = fBinarySelectionPage.getProcessToLaunchTargetPath();	
 				if (processToLaunchTargetPath != null)
 	    			SettingsData.setProcessToLaunch(launchConfig, processToLaunchTargetPath);
 				shouldOpenLaunchDialog = fEmulationSummaryPage.shouldOpenLaunchConfigurationDialog();
@@ -108,6 +111,7 @@ public class LaunchCreationWizard extends Wizard {
     public void addPages() {
     	if (fBinarySelectionPage != null) {
     		addPage(fBinarySelectionPage);
+    		addPage(fBuildOptionsSelectionPage);
     		addPage(fEmulationSummaryPage);
     	} 
     	else if (fWizardSelectionPage != null) {

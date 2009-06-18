@@ -74,7 +74,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		createVerticalSpacer(comp, 1);
 		createProjectGroup(comp, 1);
 		createRemoteAppGroup(comp, 1);
-		
+
 		fProjLabel.setToolTipText(Messages.getString("RunModeMainTab.8")); //$NON-NLS-1$
 		fProjText.setToolTipText(Messages.getString("RunModeMainTab.8")); //$NON-NLS-1$
 
@@ -94,7 +94,9 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		createVerticalSpacer(comp, 1);
 		if (wantsTerminalOption() /*&& ProcessFactory.supportesTerminal()*/) {
 			createTerminalOption(comp, 1);
+			createVerticalSpacer(comp, 1);
 		}
+		createBuildOptionGroup(comp, 1);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_BUILD);
 }
