@@ -14,12 +14,12 @@
  */
 body { font-family : Helvetica, sans-serif; }
 
-H1, H2, H3, H4, p, a { color : #4D4D4D; }
+H1, H2, H3, H4, p, a { color : #0A94D6; }
 
 .intro-header H1 {
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
-	color: #00A1D0;
+	color: #0A94D6;
 }
 
 h2 {
@@ -38,7 +38,7 @@ HR {
 	width: 90%;
 	align: left;
 	height : 1px;
-	color :  #dfdfe4;
+	color :  #0A94D6;
 }
 
 /* For the main page content's title */
@@ -154,7 +154,7 @@ body {
 	height : 164px;
 	position : absolute;
 	top : 0px;
-	background-image : url(../graphics/contentpage/backgroundcurve.gif);
+	/* background-image : url(../graphics/contentpage/backgroundcurve.gif); */
 	background-repeat : no-repeat;
 	background-position : top center;
 	margin : 0;
@@ -186,7 +186,7 @@ body, .page{
 
 .page { 
 	min-height : 475px;
-	background-image : url(../graphics/contentpage/background.jpg);
+	/* background-image : url(../graphics/root/background.jpg); */
 	background-repeat : repeat-x;
 	background-position : top left;
 }
@@ -399,7 +399,7 @@ h1, p { margin-left : 10px; } /* required in mozilla so the page description is 
 	color: #03c;
 	/* Carbide branding mod
 	margin-bottom : 0px;
-	background-image : url(../graphics/contentpage/page-link-wide.gif);
+	/* background-image : url(../graphics/contentpage/page-link-wide.gif); */
 	background-repeat:no-repeat;
 	background-position : top left;
 	*/

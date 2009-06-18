@@ -16,13 +16,13 @@
 .intro-header H1 {
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
-	color: #00A1D0;
+	color: #0A94D6;
 }
 
 #page-links a .link-label, #action-links a .link-label {
 	font-size : 13pt;
 	font-weight : 600;
-	color : #00A1D0;
+	color : #0A94D6;
 }
 #page-links a p .text, #action-links a p .text {
 	font-size : 13pt;
@@ -45,14 +45,14 @@ body {
 	min-width : 770px;
 	/* since IE doesn't support min-width, use expression */
 	width:expression(document.body.clientWidth < 770? "770px": "auto" );
-	background-image : url(../graphics/root/background.jpg);
+	/* background-image : url(../graphics/root/background.jpg); */
 	background-repeat : no-repeat;
 	background-position : top left;
-	background-color : #7169D1;
+	/* background-color : #7169D1; */
 }
 #root {
 /*
-	background-image : url(../graphics/root/brandmark.gif);
+	/* background-image : url(../graphics/root/brandmark.gif); */
 */
 	background-repeat : no-repeat;
 	background-position : bottom left;
