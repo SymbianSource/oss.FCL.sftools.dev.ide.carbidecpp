@@ -43,12 +43,9 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 		super();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	public void createControl(Composite parent) {
+	
+	public Control createContents(Composite parent) {
 		Composite content = new Composite(parent, SWT.NONE);
-		setControl(content);
 		GridLayout gridLayout = new GridLayout();
 		content.setLayout(gridLayout);
 		
@@ -75,12 +72,10 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 		}
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(super.getControl(), SDKUIHelpIds.SDK_BUILD_FILTER_PAGE);
+		
+		return content;
 	}
 	
-	@Override
-	protected Control createContents(Composite parent) {
-		return null;
-	}
 
 	public void init(IWorkbench workbench) {
 	}
@@ -94,4 +89,20 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 
 		return super.performOk();
 	}
+
+	@Override
+	protected void performApply() {
+		performOk();
+		super.performApply();
+	}
+
+	@Override
+	protected void performDefaults() {
+		sbsv1Tab.setDefaults();
+		sbsv2Tab.setDefaults();
+		super.performDefaults();
+	}
+	
+	
+	
 }

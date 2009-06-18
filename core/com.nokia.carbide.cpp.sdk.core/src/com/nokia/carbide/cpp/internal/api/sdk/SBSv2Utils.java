@@ -149,9 +149,11 @@ public class SBSv2Utils {
 			// remove the leading delimeter
 			if (store.length() > 0) {
 				store = store.substring(1);
+			}
+			if (store.length() >= 0){
+				// lenght of zero means there are not configs to filter (or show them all)
 				prefs.setValue(SBSV2_FILTERED_CONFIGS_STORE, store);
 				SDKCorePlugin.getDefault().savePluginPreferences();
-
 			}
 		}
 	}
