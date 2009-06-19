@@ -61,7 +61,8 @@ public class FullTestSuite {
 		TestSuite suite = new TestSuite(
 		"Test for com.nokia.sdt.uidesigner.autotest");
 		// reference project tests
-		suite.addTest(com.nokia.sdt.referenceprojects.test.AllTests.suite());
+		// TODO revive the reference project tests (and regenerate the data) if/when more UI designer work is done!
+//		suite.addTest(com.nokia.sdt.referenceprojects.test.AllTests.suite());
 		// add the WorkbenchTestSuite tests
 		suite.addTest(WorkbenchTestSuite.suite());
 		
