@@ -119,6 +119,8 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		for (TableItem item : tableViewer.getTable().getItems()) {
 			if (item.getText().toLowerCase().startsWith("tool") || item.getText().toLowerCase().startsWith("gccxml")) {
 				tableViewer.setChecked(item.getData(), false);
+			} else {
+				tableViewer.setChecked(item.getData(), true);
 			}
 		}
 	}
