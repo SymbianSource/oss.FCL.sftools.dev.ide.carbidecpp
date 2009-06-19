@@ -43,6 +43,10 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     private static final String REALLYCLEAN_CMD = "REALLYCLEAN"; //$NON-NLS-1$
 
     private static final String COMPONENT_ARG = "-p"; //$NON-NLS-1$
+    private static final String COMPILE_ARG = "-c"; //$NON-NLS-1$
+    
+    private static final IPath SBS_BAT = new Path("sbs.bat"); //$NON-NLS-1$
+    
     
     public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		
@@ -562,10 +566,25 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	}
 
 	public void compileFile(IPath file, ICarbideBuildConfiguration buildConfig, IPath fullMMPPath, CarbideCommandLauncher launcher, IProgressMonitor monitor) throws CoreException {
-		//TODO there's no way to do this with SBSV2 at this time.  The location of the object code
-		// is dependent on the xml config files so it could change from target to target and over
-		// time.  Symbian will look at adding this feature in the future.  For now we'll disable
-		// the compile command for SBSv2 projects.
-		// see http://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=7659 for more details.
+		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
+		IPath workingDirectory = cpi.getINFWorkingDirectory();
+		
+		String buildTarget = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
+		
+		String[] sbsArgs = new String[] {"--source-target=\"" + file.toOSString() + "\"", COMPILE_ARG, buildTarget, COMPONENT_ARG, fullMMPPath.toFile().getName()};
+		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());
+		
+		int retVal = launcher.executeCommand(SBS_BAT, sbsArgs, getResolvedEnvVars(buildConfig), workingDirectory);
+		if (retVal != 0) {
+			launcher.writeToConsole("\n=== make failed with error code " + retVal + " ===");
+			launcher.writeToConsole("\n***Stopping. Check the Problems view or Console output for errors.\n");
+   			CarbideBuilderPlugin.createCarbideProjectMarker(cpi.getProject(), IMarker.SEVERITY_ERROR,  "make returned with exit value = " + retVal, IMarker.PRIORITY_LOW);
+			return;
+		}
+
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return;
+		}
 	}
 }
