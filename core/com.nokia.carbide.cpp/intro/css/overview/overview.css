@@ -101,7 +101,10 @@ iframe {
 #overview-links a > .link-label { width : 700px; }
 #overview-links a p > .text { width : 700px; }
 
-#overview-links a:hover { border-right : 5px; }
+/* #overview-links a:hover { border-right : 5px; } */
+#overview-links a:hover { 
+	background-image : url(../graphics/contentpage/page-link-wide.gif);
+}
 
 a#basics img { background-image : url(../graphics/icons/obj48/wbbasics_obj.gif); }
 a#basics:hover img { background-image : url(../graphics/icons/obj48/wbbasicshov_obj.gif); }

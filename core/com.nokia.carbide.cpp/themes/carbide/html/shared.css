@@ -396,7 +396,7 @@ h1, p { margin-left : 10px; } /* required in mozilla so the page description is 
 	float : none;
 	clear : both;
 	text-align : left;
-	color: #03c;
+	color: #0A94D6;
 	/* Carbide branding mod
 	margin-bottom : 0px;
 	/* background-image : url(../graphics/contentpage/page-link-wide.gif); */
@@ -404,6 +404,7 @@ h1, p { margin-left : 10px; } /* required in mozilla so the page description is 
 	background-position : top left;
 	*/
 }
+
 
 .categoryContentnav {
 	font-size: 9pt; 
@@ -417,7 +418,11 @@ h1, p { margin-left : 10px; } /* required in mozilla so the page description is 
 	color: #00507C;
 }
 
-.content-link:hover { border-right : 0px; }
+/* .content-link:hover { border-right : 0px; } */
+.content-link:hover { 
+	background-image : url(../graphics/contentpage/page-link-wide.gif);
+}
+
 
 iframe {
 	position:relative;

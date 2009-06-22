@@ -63,7 +63,7 @@ public class BuilderUtilsPropertyTester extends PropertyTester {
 					// disable for SBSv2 projects for now. see
 					// http://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=7659 for details.
 					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(file.getProject())) {
-						return false;
+						return true;
 					}
 				}
 				return true;

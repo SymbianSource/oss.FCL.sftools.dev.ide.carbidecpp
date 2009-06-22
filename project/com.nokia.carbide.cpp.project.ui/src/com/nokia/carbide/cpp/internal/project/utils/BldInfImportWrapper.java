@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
@@ -77,7 +78,7 @@ public class BldInfImportWrapper {
 	/**
 	 * Create a Carbide project from member variable data. This is basically the same code as from com.nokia.carbide.cpp.internal.project.ui.importWizards#performFinish()
 	 */
-	public void createProjectFromBldInf(){
+	public void createProjectFromBldInf(final boolean isSBSv2){
 		
 		final String projectRelativePath = bldInfFile.removeFirstSegments(rootDirectory.segmentCount()).setDevice(null).toOSString();
 		
@@ -108,7 +109,12 @@ public class BldInfImportWrapper {
 
         		project = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
         		monitor.worked(1);
+        		
+        		project.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, isSBSv2);
+        		
         		// TODO pass PKG file path to postProjectCreatedActions, currently passing null
+        		
+        		
         		ProjectCorePlugin.postProjectCreatedActions(project, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
 
         		if (monitor.isCanceled()) {

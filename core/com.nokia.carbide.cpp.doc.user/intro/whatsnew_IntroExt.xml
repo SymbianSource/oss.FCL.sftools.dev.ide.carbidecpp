@@ -10,7 +10,7 @@
 		  
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
-       		label="Carbide.c++ Release Notes" 
+       		label="Carbide.c++ Release Notes (2.1)" 
        		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
        		id="carbide-link" 
        		style-id="content-link">
@@ -18,6 +18,36 @@
        		</link>
        	</group>
 		  
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
+       		label="Performance Improvements (2.1)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+       		id="carbide-link" 
+       		style-id="content-link">
+          	<text>Carbide performance improvements for large project importing, building, and other critical areas.</text>
+       		</link>
+       	</group>
+
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
+       		label="Hover Help (2.0.4)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/view_carbide_news.htm" 
+       		id="carbide-link" 
+       		style-id="content-link">
+          	<text>See Symbian API Reference information appear when you hover over a Symbian symbol in C/C++ editors.</text>
+       		</link>
+       	</group>
+
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
+       		label="Carbide.c++ News Reader (2.0.3)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/view_carbide_news.htm" 
+       		id="carbide-link" 
+       		style-id="content-link">
+          	<text>Provides updates on the latest Carbide, Symbian, and S60 news.</text>
+       		</link>
+       	</group>
+
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
        		label="On-Device Connection (2.0)" 

@@ -12,7 +12,7 @@
 			<link label="Carbide.c++ Welcome message" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp/html/welcome_note.htm"  
 				id="carbide" 
-				style-id="overview-links">
+				style-id="content-link">
 				<text>Welcome message to Carbide.c++ developers</text>
 			</link>
 		</group>
