@@ -571,7 +571,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		
 		String buildTarget = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
 		
-		String[] sbsArgs = new String[] {"--source-target=\"" + file.toOSString() + "\"", COMPILE_ARG, buildTarget, COMPONENT_ARG, fullMMPPath.toFile().getName()};
+		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, buildTarget, COMPONENT_ARG, fullMMPPath.toFile().getName()};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());
 		
 		int retVal = launcher.executeCommand(SBS_BAT, sbsArgs, getResolvedEnvVars(buildConfig), workingDirectory);

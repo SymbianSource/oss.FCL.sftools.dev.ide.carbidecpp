@@ -110,7 +110,7 @@ public class TestBldInfImportDataLoader extends TestCase {
 			BldInfImportWrapper infWrapper = new BldInfImportWrapper(projectName, rootDirPath, infPath, 
 					componentsList, makMakRefList, buildConfigs);
 			
-			infWrapper.createProjectFromBldInf();
+			infWrapper.createProjectFromBldInf(false);
 			IProject project = infWrapper.getProject();
 			
 			assertNotNull(project);
