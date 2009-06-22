@@ -147,7 +147,7 @@ public class CarbidePreferencePage extends PreferencePage implements IWorkbenchP
 		indexBuildOnly.setSelection(!indexAllOption);
 		indexAll.setSelection(indexAllOption);
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(content, ProjectUIHelpIds.CARBIDE_PREFS_PAGE);
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, ProjectUIHelpIds.CARBIDE_PREFS_PAGE);
 	
 		return content;
 	}
