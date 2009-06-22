@@ -16,9 +16,14 @@
 */
 package com.nokia.carbide.cpp.project.core;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cpp.internal.api.project.core.ProjectCorePluginUtility;
+import com.nokia.carbide.cpp.internal.project.core.Messages;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.CProjectNature;
@@ -27,29 +32,15 @@ import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.internal.core.model.CModelManager;
 import org.eclipse.core.filesystem.URIUtil;
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceDescription;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Plugin;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.osgi.framework.BundleContext;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.carbide.cpp.internal.api.project.core.ProjectCorePluginUtility;
-import com.nokia.carbide.cpp.internal.project.core.Messages;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.cpp.internal.api.utils.core.Logging;
+import java.io.File;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -73,6 +64,8 @@ public class ProjectCorePlugin extends Plugin {
 	// internal utility class
 	private static ProjectCorePluginUtility pluginUtility;
 	
+	
+	private static long projectCreationStartTime = -1L;
 	
 	/**
 	 * The constructor
@@ -136,6 +129,7 @@ public class ProjectCorePlugin extends Plugin {
 	 * @throws CoreException
 	 */
 	public static IProject createProject(String name, String location) throws CoreException {
+		projectCreationStartTime = System.currentTimeMillis();
 		IProject projectHandle = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
 
 		if (!projectHandle.exists()) {
@@ -225,7 +219,7 @@ public class ProjectCorePlugin extends Plugin {
 	 * @return the ICProject handle
 	 * @throws CoreException
 	 */
-	public static ICProject postProjectCreatedActions(IProject project, String projectRelativeBldInfPath, 
+	public static ICProject postProjectCreatedActions(final IProject project, String projectRelativeBldInfPath, 
 			List<ISymbianBuildContext> buildConfigs, List<String> infComponentsList, String debugMMP, 
 			Map<ISymbianBuildContext, String> pkgMappings, IProgressMonitor monitor) throws CoreException {
 
@@ -298,7 +292,55 @@ public class ProjectCorePlugin extends Plugin {
         workspaceDesc.setAutoBuilding(autoBuilding);
 		workspace.setDescription(workspaceDesc);
 		
+		reportProjectCreationStats(project);
+		
 		return cProject;
+	}
+
+	private static void reportProjectCreationStats(final IProject project) {
+		if (projectCreationStartTime < 0)
+			return;
+		
+		Thread t = new Thread() {
+			public void run() {
+				long resourceCount = countResources(project);
+				NumberFormat nfTime = NumberFormat.getNumberInstance();
+				nfTime.setMaximumFractionDigits(2);
+				nfTime.setMinimumFractionDigits(2);
+				double creationTime = (System.currentTimeMillis() - projectCreationStartTime) / 1000.0;
+				int mmpCount = getMMPFileCount(project);
+				log(new Status(IStatus.INFO, getUniqueId(), 
+						MessageFormat.format(Messages.getString("ProjectCorePlugin.ProjectCreationStatsFormat"), //$NON-NLS-1$
+								project.getName(), resourceCount, mmpCount, nfTime.format(creationTime))));
+				projectCreationStartTime = -1;
+			}
+
+			private int getMMPFileCount(final IProject project) {
+				int mmpCount;
+				ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
+				if (cpi.isBuildingFromInf())
+					mmpCount = EpocEngineHelper.getMMPFilesForProject(cpi).size();
+				else
+					mmpCount = cpi.getNormalInfBuildComponents().size();
+				return mmpCount;
+			}
+
+			private long countResources(IProject project) {
+				final long count[] = { 0 };
+				try {
+					project.accept(new IResourceProxyVisitor() {
+						public boolean visit(IResourceProxy proxy) throws CoreException {
+							count[0]++;
+							return true;
+						}
+					}, 0);
+				} catch (CoreException e) {
+					log(e);
+				}
+				return count[0];
+			}
+		};
+		t.start();
 	}
 
 	public static void log(IStatus status) {
