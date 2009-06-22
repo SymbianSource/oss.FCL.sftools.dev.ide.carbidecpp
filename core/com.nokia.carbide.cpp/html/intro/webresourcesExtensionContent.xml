@@ -10,49 +10,36 @@
 		path="webresources/@">
 		
 		<group 
-			label="Carbide.c++ Blogs" 
+			label="Symbian Resources" 
 			id="content-group" 
 			style-id="content-group">
-			
+
 			<link 
-				label="Developing for S60 Blog" 
-				url="http://org.eclipse.ui.intro/openURL?url=http://blogs.s60.com/developing-on-s60/" 
-				id="carbide-people"
+				label="Symbian Foundation" 
+				url="http://org.eclipse.ui.intro/openURL?url=http://developer.symbian.org/" 
+				id="carbide-web"
 				style-id="content-link" >
-				<text>Information straight from the Native Tools development team and other S60 teams.</text>
-			</link>
+				<text>Visit the Symbian Foundation for the latest developer information.</text>
+			</link>			
 			
 			<link 
-				label="Forum Nokia Blog" 
-				url="http://org.eclipse.ui.intro/openURL?url=http://blogs.forum.nokia.com" 
-				id="carbide-people"
-				style-id="content-link" >
-				<text>Provides discussion forums for developers and others interested in the development of applications and content for Nokia platform devices.</text>
-			</link>
-		</group>
-			
-		<group 
-			label="Carbide.c++ Forums" 
-			id="content-group" 
-			style-id="content-group">
-			<link 
-				label="Forum Nokia Wiki for mobile developers" 
-				url="http://org.eclipse.ui.intro/openURL?url=http://wiki.forum.nokia.com" 
+				label="Symbian Foundation Wiki"
+				url="http://org.eclipse.ui.intro/openURL?url=http://developer.symbian.org/wiki/index.php/Main_Page" 
 				id="carbide-people"
 				style-id="content-link" >
 				<text>A resource for the Developer Community to share information.</text>
 			</link>
 			
 			<link 
-				label="Forum Nokia Discussion Forum" 
-				url="http://org.eclipse.ui.intro/openURL?url=http://discussion.forum.nokia.com" 
+				label="Symbian Foundation Forum" 
+				url="http://org.eclipse.ui.intro/openURL?url=http://developer.symbian.org/forum/" 
 				id="carbide-people"
 				style-id="content-link" >
-				<text>A forum for feedback, announcements, job listings and other developer news.</text>
+				<text>A forum for feedback, announcements, and other developer news.</text>
 			</link>
 			
 		</group>
-		
+
 	</extensionContent>
   
 </introContent>

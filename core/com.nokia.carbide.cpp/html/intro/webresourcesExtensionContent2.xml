@@ -3,27 +3,5 @@
 <introContent>
 <!-- Extension to the Web Resources page. -->
 
-	<extensionContent 
-		id="com.nokia.carbide.cpp-partners" 
-		alt-style="carbide.properties" 
-		style="carbide.css" 
-		path="webresources/@">
-				
-		<group 
-			label="Other resources" 
-			id="content-group" 
-			style-id="content-group">
-			
-			<link 
-				label="Forum Nokia community" 
-				url="http://org.eclipse.ui.intro/openURL?url=http://www.forum.nokia.com/" 
-				id="carbide-web"
-				style-id="content-link" >
-				<text>Visit Forum Nokia for the latest Carbide.c++ information.</text>
-			</link>			
-			
-		</group>
-
-	</extensionContent>
   
 </introContent>
