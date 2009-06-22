@@ -97,6 +97,12 @@
 				<instanceof value="org.eclipse.cdt.core.model.ICProject"/>
 				</or>          
 			</enabledWhen>
+   <keywordReference
+         id="com.nokia.carbide.cpp.codescanner.common">
+   </keywordReference>
+   <keywordReference
+         id="com.nokia.carbide.cpp.codescanner.codescanner">
+   </keywordReference>
 		</page>
 	</extension>
 <!-- =================================================================================== -->
