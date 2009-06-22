@@ -59,6 +59,15 @@
 	   <topic href="html/reference/view_breakpoints.htm"/>
 	</entry>
 
+	<entry keyword="build">
+	   <topic href="html/projects/launch/wiz_new_launch_config.htm"/>
+	   <topic href="html/projects/launch/page_main.htm"/>
+	</entry>
+
+	<entry keyword="Build preference panel">
+	   <topic href="html/reference/wnd_build_prefs.htm"/>
+	</entry>
+
 	<entry keyword="Build preference panel">
 	   <topic href="html/reference/wnd_build_prefs.htm"/>
 	</entry>
@@ -92,6 +101,12 @@
 	<entry keyword="Building Projects">
 	   <topic href="html/tasks/projects/prj_build.htm"/>
 	</entry>
+
+	<entry keyword="Build Options Selection">
+	   <topic href="html/projects/launch/wiz_new_launch_config.htm"/>
+	   <topic href="html/projects/launch/page_main.htm"/>
+	</entry>
+
 
 <!-- C -->
 
