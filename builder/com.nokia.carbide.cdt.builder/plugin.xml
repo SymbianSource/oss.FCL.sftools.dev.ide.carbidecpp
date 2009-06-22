@@ -84,16 +84,17 @@
             id="com.nokia.carbide.cdt.builder.build"
             label="%carbcPreference.build">
       </keyword>
-   </extension>
-   <extension
-         point="org.eclipse.ui.keywords">
       <keyword
-            id="com.nokia.carbide.cdt.builder.common"
-            label="%carbcPreference.common">
+            id="com.nokia.carbide.cdt.builder.buildproperty"
+            label="%carbcProperty.build">
       </keyword>
       <keyword
-            id="com.nokia.carbide.cdt.builder.build"
-            label="%carbcPreference.build">
+            id="com.nokia.carbide.cdt.builder.macroproperty"
+            label="%carbcProperty.macro">
+      </keyword>
+      <keyword
+            id="com.nokia.carbide.cdt.builder.projectproperty"
+            label="%carbcProperty.project">
       </keyword>
    </extension>
   <extension
@@ -136,6 +137,9 @@
 		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
 		    </or>          
          </enabledWhen>
+         <keywordReference
+               id="com.nokia.carbide.cdt.builder.projectproperty">
+         </keywordReference>
       </page>
       <page
             name="%CarbideBuilder.Carbide_Build_Configurations"
@@ -152,6 +156,9 @@
 		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
 		    </or>          
          </enabledWhen>
+         <keywordReference
+               id="com.nokia.carbide.cdt.builder.buildproperty">
+         </keywordReference>
       </page>
       <page
             name="%CarbideBuilder.Carbide_Macro_Settings"
@@ -168,6 +175,9 @@
 		     <instanceof value="org.eclipse.cdt.core.model.ICProject"/>
 		    </or>          
          </enabledWhen>
+         <keywordReference
+               id="com.nokia.carbide.cdt.builder.macroproperty">
+         </keywordReference>
       </page>
     </extension>
 	<!-- ************* ERROR PARSERS ************** -->
