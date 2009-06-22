@@ -367,5 +367,13 @@
 		<topic label="Install latest TRK" 						href="html/reference/trk/wnd_on_device_install_tab.htm"/>
 		<topic label="On-Device Setup" 							href="html/reference/trk/wnd_on_device_setup.htm"/>
 	</context>
+	
+	
+	<!-- Build Options Selection page (2.1) -->
+	<context id="build_options_selection_page" >
+    <description>Select how auto build applies to this launch configuration.</description>
+	   <topic label="New Launch Configuration Wizard" 		href="html/projects/launch/wiz_new_launch_config.htm"/>
+	   <topic label="Launch Configuration Main page" 		href="html/projects/launch/page_main.htm"/>
+	</context>
 
 </contexts>
