@@ -49,13 +49,9 @@ changes making the tools unusable!</p>
   <li><b>New Launch Configuration improvements</b> - The <b>New Launch Configuration</b> wizard now starts with a new <a href="projects/launch/wiz_new_launch_config.htm#CATEGORY">Category Selection</a> page which helps guide developers in choosing the correct launch configuration  for a project, whether it be for Phones, Boards, or other target devices. In addition, the <a href="projects/launch/wiz_new_launch_config.htm#BLD_OPT">Build Options Selection</a> page enables developers to define if a project is automatically built or not at the launch configuration level.</li>
   <li><b>Customization (.bsf) and Symbian Variant Binary (.var) platform</b> discovery is now supported. See the Platform Filtering Preference panel for details.</li>
   <li><b>TRK improvements</b> - TRK continues to evolve and now includes these improvements:
-    <ul><li>XTI drivers should no longer miss any messages from the host PC.</li>
-      <li>Added support for XTI command line options. </li>
-      <li>TRK now automatically reconnects if you disconnect the USB cable and reconnect the cable.</li>
+    <ul>
+      <li>TRK now automatically reconnects if you disconnect the USB cable and then reconnect.</li>
       <li>Added support for targeting nested static libraries of a polymorphic dll. </li>
-      <li>Added support for phone info command. </li>
-      <li>Added support for detach command. </li>
-      <li>TRK no longer  queries for the USB device state during start up as this is not supported by all targets.</li>
       <li>TRK now checks for  duplicates before adding a library to the target list to avoid sending duplicate library loading commands (bug 9035).</li>
       <li>Users no longer need to specify a port number for Bluetooth connections as TRK now automatically locates BT serial port and uses that for the connections setup (bug 2502).</li>
     </ul>

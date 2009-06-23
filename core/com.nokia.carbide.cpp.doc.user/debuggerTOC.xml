@@ -4,11 +4,13 @@
 <toc label="Carbide.c++ User Guide" href="html/debugger.htm" >
    
 	<topic label="Release notes"  href="html/release_notes.htm" />
+
 	<link toc="tocCarbide.xml" />
-	
 	<anchor id="anchorCarbideCPPMisc" />
 	
 	<topic label="Bugs fixed"  			href="html/bugs_fixed.htm" />
+	<anchor id="anchorNokiaOther" />
+
 	<topic label="Legal"  href="html/legal.htm" />
 
 </toc>
