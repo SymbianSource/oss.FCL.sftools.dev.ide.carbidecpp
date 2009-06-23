@@ -36,19 +36,32 @@ Updating the CDT feature in Carbide.c++/Eclipse will wipe out our
 changes making the tools unusable!</p>
 <p> See the <a href="hints_tips.htm">Tips &amp; tricks</a> page for more helpful information.</p>
 <h3><a name="whatsNew" id="whatsNew2"></a>What's New in 2.1.0 </h3>
-<p>The following features for Symbian OS development are provided within Carbide.c++:</p>
+<p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <ul>
   <li><b>Performance inprovements</b> - the following areas of Carbide have been optimized to improve performance:
     <ul>
       <li><b>Importing large projects</b>   - Importing large projects is one of our primary points of performance improvements. When too many project roots were used the more source and include paths were brought into the project, up to an including entire SDKs. Generally, we found that once a project root contains over 15-20K files Carbide became extremely sluggish. We have improved some edge cases where project roots were calculated incorrectly and now include only what's really needed. </li>
       <li><b>Modifying Project Settings and Build Configuration Data</b>-    This is quite a significant improvement as modifying MMP files and switching build configurations are a couple of the most common operations done by end-users and because the time spent processing project and configuration data is done on the main thread, locking the UI. With optimization in one CDT function we were able to bring most project-related and configuration switch changes from 20 seconds to less than 3 seconds. You should also see improvements when saving MMP and INF files (the &quot;Refreshing Configuration Job&quot;). </li>
       <li><b>Executables View Refreshing</b> - The Executables view refresh was impacting everything from IDE start-up to import and project creation as well refreshes during rebuilds. Some of our wall clock tests on large projects (such as contacts the browser) show the executables job running from 15-25 seconds down to about 5 seconds.</li>
+      <li><b>Indexing Options</b>  - Use the <b>Indexing Options</b> section in the <a href="reference/wnd_carbide_pref.htm">Carbide.c++</a> preference panel to control how  project MMP files are indexed.</li>
     </ul>
   </li>
-  <li><b>New Launch Configuration improvements</b> - The <b>New Launch Configuration</b> wizard now starts with a new <a href="projects/launch/wiz_new_launch_config.htm#CATEGORY">Category Selection</a> page which helps guide developers in choosing the correct launch configuration  for a project, whether it be for Phones, Boards, or other target devices. In addition, the Build Options Selection page enables developers to define if a project is automatically built or not at the launch configuration level.</li>
+  <li><b>New Launch Configuration improvements</b> - The <b>New Launch Configuration</b> wizard now starts with a new <a href="projects/launch/wiz_new_launch_config.htm#CATEGORY">Category Selection</a> page which helps guide developers in choosing the correct launch configuration  for a project, whether it be for Phones, Boards, or other target devices. In addition, the <a href="projects/launch/wiz_new_launch_config.htm#BLD_OPT">Build Options Selection</a> page enables developers to define if a project is automatically built or not at the launch configuration level.</li>
   <li><b>Customization (.bsf) and Symbian Variant Binary (.var) platform</b> discovery is now supported. See the Platform Filtering Preference panel for details.</li>
-  <li><b>Keywords in preference panels</b> - All Carbide related preference panels now include keywords to make searching for options a bit easier.</li>
-  <li><b>New Carbide Extensions section</b> - Project Property dialogs now include a <b>Carbide Extensions</b> section which allows Carbide plug-in and utilities a place to add their own project  settings.</li>
+  <li><b>TRK improvements</b> - TRK continues to evolve and now includes these improvements:
+    <ul><li>XTI drivers should no longer miss any messages from the host PC.</li>
+      <li>Added support for XTI command line options. </li>
+      <li>TRK now automatically reconnects if you disconnect the USB cable and reconnect the cable.</li>
+      <li>Added support for targeting nested static libraries of a polymorphic dll. </li>
+      <li>Added support for phone info command. </li>
+      <li>Added support for detach command. </li>
+      <li>TRK no longer  queries for the USB device state during start up as this is not supported by all targets.</li>
+      <li>TRK now checks for  duplicates before adding a library to the target list to avoid sending duplicate library loading commands (bug 9035).</li>
+      <li>Users no longer need to specify a port number for Bluetooth connections as TRK now automatically locates BT serial port and uses that for the connections setup (bug 2502).</li>
+    </ul>
+  </li>
+  <li><b>Keywords in preference panels and property pages</b> - All Carbide related preference panels and project property pages now include keywords to make searching for options a bit easier.</li>
+  <li><b>New Carbide Extensions section</b> - Project Property dialogs now include a <b>Carbide Extensions</b> section which allows Carbide plug-in and utilities a place to add their own project  settings pages.</li>
 </ul>
 <h4>2.0.4</h4>
 <ul>
@@ -141,7 +154,7 @@ changes making the tools unusable!</p>
  style="vertical-align: top; text-align: center; font-weight: bold; ">Workaround</th>
     </tr>
     <tr align="center">
-      <td colspan="2" bgcolor="#CBE6C1"><a name="CRITICAL_ITEMS"></a><span class="style8">CRITICAL ITEMS</span></td>
+      <td colspan="2" bgcolor="#FFFFCC"><a name="CRITICAL_ITEMS"></a><span class="style8">CRITICAL ITEMS</span></td>
     </tr>
     <tr>
       <td class="style5" style="vertical-align: top;"><b>WARNING:</b> The C/C++ Files view is a view of the actual FILE SYSTEM, so anything deleted in this view is also deleted from the file system. </td>
@@ -161,7 +174,7 @@ changes making the tools unusable!</p>
       <td style="vertical-align: top;">There are known tooling issues when building for the GCCE platform under Windows Vista that can prevent a GCCE build from occurring.  If you want to build for GCCE under S60 and UIQ you will need to manually update some files under<span class="style1"> \epoc32\tools\</span>. See the article <a href="http://wiki.forum.nokia.com/index.php/Windows_Vista">Windows Vista</a> for up-to-date workaround information.</td>
     </tr>
     <tr bgcolor="#0071ff">
-      <td colspan="2" bgcolor="#CBE6C1" style="vertical-align: top;">
+      <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
       <div align="center" class="style6"><a name="bug_ide"></a><span class="style8">IDE</span></div>      </td>
     </tr>
     <tr>
@@ -234,7 +247,7 @@ Windows Explorer. This issue is known to be fixed with Synergy 6.4.</td>
 dll&gt;cmexplorer.dll</font></td>
     </tr>
     <tr bgcolor="#0071ff">
-      <td colspan="2" bgcolor="#CBE6C1" style="vertical-align: top;">
+      <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
       <div align="center" class="style6"><a name="bug_build"></a><span
  class="style8">BUILD/IMPORTER</span></div>      </td>
     </tr>
@@ -274,7 +287,7 @@ below.
       <td style="vertical-align: top;">Build system does not detect static library dependencies</td>
     <td style="vertical-align: top;">The Symbian OS build system did not detect static library changes prior to 9.2.  They have release a patch for this <a href="http://www3.symbian.com/faq.nsf/0/E0F5C56AA68C305F8025731400051166?OpenDocument">here</a>.    </tr>
     <tr bgcolor="#0071ff">
-      <td colspan="2" bgcolor="#CBE6C1" style="vertical-align: top;">
+      <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
       <div align="center" class="style6"><a name="bug_debug"></a><span
  class="style8">DEBUGGER</span></div>      </td>
     </tr>
