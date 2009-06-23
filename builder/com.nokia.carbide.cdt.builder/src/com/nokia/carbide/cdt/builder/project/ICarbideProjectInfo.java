@@ -53,7 +53,7 @@ public interface ICarbideProjectInfo {
 	public static final int ACTION_COMPILE_AND_LINK = 2;
 
 	/**
-	 * Load all the configurations associated with this project. If this is a new project
+	 * Load all the configurations associated with this project. If this is a new project,
 	 * then a dummy .settings file will be created which can be used to generate new build
 	 * configurations.
 	 * @return A list of ICarbideBuildConfiguration objects, which may be empty
@@ -61,7 +61,7 @@ public interface ICarbideProjectInfo {
 	public List<ICarbideBuildConfiguration> getBuildConfigurations();
 	
 	/**
-	 * Get an ICarbideBuildConfiguration object from a display name
+	 * Get an ICarbideBuildConfiguration object from a display name.
 	 * @param configName - The display name for the build configuration
 	 * @return - An ICarbideBuildConfiguration. Returns null if the configuration does not exist.
 	 */
@@ -75,7 +75,7 @@ public interface ICarbideProjectInfo {
 	public ICarbideBuildConfiguration getDefaultConfiguration();
 	
 	/**
-	 * Get the configuration/display name for the currently selected build configuration
+	 * Get the configuration/display name for the currently selected build configuration.
 	 * @return A String of the display name.
 	 */
 	public String getDefaultBuildConfigName();
@@ -88,7 +88,7 @@ public interface ICarbideProjectInfo {
 	public boolean isBuildingFromInf();
 	
 	/**
-	 * Return the full path to the bld.inf file for the project
+	 * Return the full path to the bld.inf file for the project.
 	 * @return IPath with the bld.inf file
 	 */
 	public IPath getAbsoluteBldInfPath();
@@ -100,7 +100,7 @@ public interface ICarbideProjectInfo {
 	public IPath getProjectRelativeBldInfPath();
 	
 	/**
-	 * Get a path to the bld.inf file that is relative to the workspace root
+	 * Get a path to the bld.inf file that is relative to the workspace root.
 	 * @return IPath
 	 */
 	public IPath getWorkspaceRelativeBldInfPath();
@@ -114,7 +114,7 @@ public interface ICarbideProjectInfo {
 	public String getMMPTargetFile();
 	
 	/**
-	 * Get the IProject for the Carbide.c++ project
+	 * Get the IProject for the Carbide.c++ project.
 	 * @return IProject object
 	 */
 	public IProject getProject();
@@ -122,7 +122,7 @@ public interface ICarbideProjectInfo {
 	/**
 	 * Get a list of the names of the bld.inf components as they come from the settings.
 	 * Test components (PRJ_TESTMMPFILES) contain a suffix (" [test component]") to identify a particular
-	 * component as being a test components.
+	 * component as being a test component.
 	 * @return A list of strings with the components names as they are from the .cproject file
 	 * @see getInfBuildComponents() for the names with test suffix cleansed.
 	 */
@@ -130,14 +130,14 @@ public interface ICarbideProjectInfo {
 	
 	/**
 	 * Get a list of all the names of the bld.inf components to be built.
-	 * @return A List of compnent names with extension.
+	 * @return A List of component names with extension.
 	 * @see isBuildingFromInf()
 	 */
 	public List<String> getInfBuildComponents();
 	
 	/**
 	 * Get the list of PRJ_MMPFILES that are currently being built for the project. This list will only be populated when
-	 * <code>ICarbideProjectInfo.isBuildingFromInf()</code> returns true, oherwise it will be an empty list.
+	 * <code>ICarbideProjectInfo.isBuildingFromInf()</code> returns true, otherwise it will be an empty list.
 	 * @return A list of Strings with the component names as they appear in the bld.inf file
 	 * @see com.nokia.carbide.cdt.builder.EpocEngineHelper.getMakMakeFiles(IPath, List<ISymbianBuildContext>, 
 		List<IPath>, List<IPath>, IProgressMonitor )
@@ -146,7 +146,7 @@ public interface ICarbideProjectInfo {
 	
 	/**
 	 * Get the list of PRJ_TESTMMPFILES that are currently being built for the project. This list will only be populated when
-	 * ICarbideProjectInfo#isBuildingFromInf() returns true, oherwise it will be an empty list.
+	 * ICarbideProjectInfo#isBuildingFromInf() returns true, otherwise it will be an empty list.
 	 * @return A list of Strings with the component names as they appear in the bld.inf file
 	 * @see com.nokia.carbide.cdt.builder.EpocEngineHelper.getMakMakeFiles(IPath, List<ISymbianBuildContext>, 
 		List<IPath>, List<IPath>, IProgressMonitor )
@@ -155,7 +155,7 @@ public interface ICarbideProjectInfo {
 		
 	/**
 	 * Get the working directory of the bld.inf file for the default configuration. This may change for a project if
-	 * a bld.inf file is on a different drive than the EPOCROOT of the SDK but only if
+	 * a bld.inf file is on a different drive than the EPOCROOT of the SDK, but only if
 	 * they only differ in the drive spec. For example, a bld.inf of "m:\myproj\group\bld.inf"
 	 * and an EPOCROOT of "x:\", the IPath will be returned as "x:\myproj\group\". Otherwise,
 	 * the original path is returned, "m:\myproj\group\".
@@ -197,7 +197,7 @@ public interface ICarbideProjectInfo {
 	
 	/**
 	 * Get the project setting that determines whether or not Carbide takes advantage of the make "-j" option
-	 * which will runs make jobs in parallel.
+	 * which will run make jobs in parallel.
 	 * @return true when enabled
 	 * 
 	 * Note that the workspace setting is returned unless it is overridden by the project setting
@@ -207,7 +207,7 @@ public interface ICarbideProjectInfo {
 	public boolean isConcurrentBuildingEnabled();
 
 	/**
-	 * Get the project setting for the maximum number or parallel make jobs
+	 * Get the project setting for the maximum number or parallel make jobs.
 	 * @return the number of jobs
 	 * 
 	 * Note that the workspace setting is returned unless it is overridden by the project setting
@@ -228,7 +228,7 @@ public interface ICarbideProjectInfo {
 	public boolean promptForMMPChangedAction();
 
 	/**
-	 * Returns int value for the mmp action type for the project
+	 * Returns int value for the mmp action type for the project.
 	 * @return {@value #ACTION_NONE}, {@value #ACTION_LINK_ONLY}, or {@value #ACTION_COMPILE_AND_LINK}
 	 * 
 	 * Note that the workspace setting is returned unless it is overridden by the project setting

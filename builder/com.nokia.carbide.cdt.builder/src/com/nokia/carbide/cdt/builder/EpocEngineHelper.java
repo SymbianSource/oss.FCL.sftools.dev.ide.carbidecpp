@@ -1227,10 +1227,18 @@ public class EpocEngineHelper {
 		if (mmps == null)
 			return;
 		
+		// get the list of all mmp files selected for the build configuration
+		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
+		List<String> buildComponents = null;
+		if (buildConfiguration != null && !EpocEngineHelper.getIndexAllPreference())
+			buildComponents = buildConfiguration.getCarbideProject().isBuildingFromInf() ? null : buildConfiguration.getCarbideProject().getInfBuildComponents();
+
 		for (IMMPReference mmp : mmps) {
 			if (buildConfiguration != null) {
-				getMMPIncludePaths(projectInfo.getProject(), 
-						mmp.getPath(), buildConfiguration, userPaths, systemPaths);
+				if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmp.getPath().lastSegment())) { 
+					getMMPIncludePaths(projectInfo.getProject(), 
+							mmp.getPath(), buildConfiguration, userPaths, systemPaths);
+				}
 			} else {
 				for (ICarbideBuildConfiguration buildConfig : projectInfo.getBuildConfigurations()) {
 					getMMPIncludePaths(projectInfo.getProject(), 
@@ -1447,11 +1455,14 @@ public class EpocEngineHelper {
 				
 			});
 		
+		// get the list of all mmp files selected for the build configuration
+		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
 		List<String> buildComponents = null;
-		if (!getIndexAllPreference()) // if indexAll, leave buildComponents as null because that will cause the same behavior
+		if (!getIndexAllPreference())
 			buildComponents = info.isBuildingFromInf() ? null : info.getInfBuildComponents();
+	
 		for (IMMPReference mmp : mmps) {
-			if (buildComponents != null && !containsIgnoreCase(buildComponents, mmp.getPath().lastSegment()))
+			if (buildComponents != null && !EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmp.getPath().lastSegment()))
 				continue;
 			
 			EpocEnginePathHelper helper = new EpocEnginePathHelper(info.getProject());
@@ -1565,7 +1576,7 @@ public class EpocEngineHelper {
 		return sourceRoots;
 	}
 	
-	private static boolean getIndexAllPreference() {
+	public static boolean getIndexAllPreference() {
 		// Can't access this pref from the project ui plugin because it would cause a circular dependency
 		Plugin plugin = Platform.getPlugin("com.nokia.carbide.cpp.project.ui"); //$NON-NLS-1$
 		if (plugin == null) {
@@ -1576,7 +1587,7 @@ public class EpocEngineHelper {
 		return plugin.getPluginPreferences().getBoolean("indexAll"); //$NON-NLS-1$
 	}
 
-	private static boolean containsIgnoreCase(List<String> list, String s) {
+	public static boolean containsStringIgnoreCase(List<String> list, String s) {
 		for (String string : list) {
 			if (string.equalsIgnoreCase(s))
 				return true;
@@ -1994,7 +2005,15 @@ public class EpocEngineHelper {
 	public static List<String> getTargetTypesForBuildConfiguration(final ICarbideBuildConfiguration buildConfig) {
 		final List<String> targetTypes = new ArrayList<String>();
 		
+		// get the list of all mmp files selected for the build configuration
+		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
+		List<String> buildComponents = null;
+		if (!EpocEngineHelper.getIndexAllPreference())
+			buildComponents = buildConfig.getCarbideProject().isBuildingFromInf() ? null : buildConfig.getCarbideProject().getInfBuildComponents();
+
 		for (IPath mmpPath : getMMPFilesForBuildConfiguration(buildConfig)) {
+			if (buildComponents != null && !containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+				continue;
 			
 			EpocEnginePlugin.runWithMMPData(mmpPath, 
 					new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 

@@ -20,13 +20,19 @@ import java.util.*;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
+import org.eclipse.cdt.core.settings.model.ICLanguageSettingEntry;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
+import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
+import org.eclipse.cdt.core.settings.model.extension.CFolderData;
+import org.eclipse.cdt.core.settings.model.extension.CLanguageData;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.Job;
 
 import com.nokia.carbide.cdt.builder.*;
 import com.nokia.carbide.cdt.builder.project.*;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -304,10 +310,41 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 		// expand macros, locate includes, etc.  we're using a set to avoid duplicates.
 		Set<IPath> pathList = new HashSet<IPath>();
 		for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()) {
+
+			// force a rebuild of the CarbideLanguageData cache
+			CLanguageData languageData = null;
+			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(config.getCarbideProject().getProject());
+			if (projDes != null) {
+				ICConfigurationDescription configDes = projDes.getConfigurationById(config.getDisplayString());
+				if (configDes != null) {
+					CConfigurationData configData = configDes.getConfigurationData();
+					if (configData != null && configData instanceof BuildConfigurationData) {
+						CFolderData rootFolderData = ((BuildConfigurationData)configData).getRootFolderData();
+						if (rootFolderData != null) {
+							CLanguageData[] languageDatas = rootFolderData.getLanguageDatas();
+							if (languageDatas != null && languageDatas.length > 0) {
+								// there's only one for Carbide anyway
+								languageData = languageDatas[0];
+								if (languageData instanceof CarbideLanguageData)
+									((CarbideLanguageData)languageData).forceRebuildCache();
+							}
+						}
+					}
+				}
+			}
+
 			EpocEngineHelper.addIncludedFilesFromBldInf(cpi, config, cpi.getAbsoluteBldInfPath(), pathList);
 
+			
+			// get the list of all mmp files selected for the build configuration
+			// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
+			List<String> buildComponents = null;
+			if (!EpocEngineHelper.getIndexAllPreference())
+				buildComponents = config.getCarbideProject().isBuildingFromInf() ? null : config.getCarbideProject().getInfBuildComponents();
+
 			for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(config)) {
-				EpocEngineHelper.addIncludedFilesFromMMP(cpi, config, mmpPath, pathList);
+				if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+					EpocEngineHelper.addIncludedFilesFromMMP(cpi, config, mmpPath, pathList);
 			}
 		}
 		

@@ -52,6 +52,7 @@ public class CarbideLanguageData extends CLanguageData {
 	private List<ICLanguageSettingEntry> macroEntries;
 	private List<File> cacheFileSource;
 	private boolean lastUseMMPMacrosValue;
+	private boolean forceRebuildCache = false;
 	private long cacheTimestamp;
 	
 	private final String CONFIG_DATA_CACHE = "configDataCache"; //$NON-NLS-1$
@@ -80,8 +81,12 @@ public class CarbideLanguageData extends CLanguageData {
 
 		synchronized (this) {
 			if (kind == ICLanguageSettingEntry.INCLUDE_PATH || kind == ICLanguageSettingEntry.MACRO) {
+				if (forceRebuildCache) {
+					buildCache();
+					forceRebuildCache = false;
+					cacheBuilt = true;
 				// see if we have the data cached or not.  if so, make sure the cache isn't stale
-				if (includeEntries == null || macroEntries == null || cacheFileSource == null) {
+				} else if (includeEntries == null || macroEntries == null || cacheFileSource == null) {
 					// try to load persisted cache
 					loadCache();
 					
@@ -255,11 +260,19 @@ public class CarbideLanguageData extends CLanguageData {
 			}
 		}
 		
-		// get the list of all mmp files applicable to our build configuration.  if the pref option
-		// is enabled then check the mmp's for MACRO's.
+		// get the list of all mmp files selected for the build configuration
+		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
+		List<String> buildComponents = null;
+		if (!EpocEngineHelper.getIndexAllPreference())
+			buildComponents = carbideBuildConfig.getCarbideProject().isBuildingFromInf() ? null : carbideBuildConfig.getCarbideProject().getInfBuildComponents();
+
+		// if the pref option is enabled, then check the mmp's for MACRO's.
 		if (cpi.shouldUseMMPMacros()) {
 			List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
 			for (IPath mmp : mmps) {
+				if (buildComponents != null && !EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmp.lastSegment()))
+					continue;
+				
 				List<String> mmpMacros = EpocEngineHelper.getMMPMacrosForBuildConfiguration(mmp, carbideBuildConfig);
 				for (String mmpMacro : mmpMacros) {
 					// Symbian docs say they are converted to upper case always
@@ -278,7 +291,8 @@ public class CarbideLanguageData extends CLanguageData {
 		EpocEngineHelper.addIncludedFilesFromBldInf(cpi, carbideBuildConfig, cpi.getAbsoluteBldInfPath(), pathList);
 
 		for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig)) {
-			EpocEngineHelper.addIncludedFilesFromMMP(cpi, carbideBuildConfig, mmpPath, pathList);
+			if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+				EpocEngineHelper.addIncludedFilesFromMMP(cpi, carbideBuildConfig, mmpPath, pathList);
 		}
 
 		cacheFileSource = new ArrayList<File>();
@@ -442,6 +456,10 @@ public class CarbideLanguageData extends CLanguageData {
 			}
 		}
 		return fContentTypes;
+	}
+	
+	public void forceRebuildCache() {
+		forceRebuildCache = true;
 	}
 
 	@Override

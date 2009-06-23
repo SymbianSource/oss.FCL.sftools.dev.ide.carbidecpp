@@ -244,8 +244,15 @@ public class BuildConfigurationData extends CConfigurationData {
 		Set<IPath> pathList = new HashSet<IPath>();
 		EpocEngineHelper.addIncludedFilesFromBldInf(cpi, carbideBuildConfig, cpi.getAbsoluteBldInfPath(), pathList);
 
+		// get the list of all mmp files selected for the build configuration
+		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
+		List<String> buildComponents = null;
+		if (!EpocEngineHelper.getIndexAllPreference())
+			buildComponents = carbideBuildConfig.getCarbideProject().isBuildingFromInf() ? null : carbideBuildConfig.getCarbideProject().getInfBuildComponents();
+
 		for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig)) {
-			EpocEngineHelper.addIncludedFilesFromMMP(cpi, carbideBuildConfig, mmpPath, pathList);
+			if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+				EpocEngineHelper.addIncludedFilesFromMMP(cpi, carbideBuildConfig, mmpPath, pathList);
 		}
 
 		cacheFileSource = new ArrayList<File>();
