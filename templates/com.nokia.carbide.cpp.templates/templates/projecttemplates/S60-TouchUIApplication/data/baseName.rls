@@ -34,6 +34,6 @@
 
 #define qtn_about_dialog_title "About"
 
-#define qtn_about_dialog_text "$(baseName) Version 1.0.0\n\nAuthor: $(author)\n\nSupport: $(supportEmail)\n\n(c) $(copyright)"
+#define qtn_about_dialog_text "$(baseName) Version 1.0.0\n\nAuthor: $(author)\n\nSupport: $(supportEmail)\n\n(c) $(copyright$c_escaped)"
 
 // End of File
