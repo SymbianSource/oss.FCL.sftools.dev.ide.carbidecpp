@@ -19,7 +19,7 @@ body, p, table {
 
 /*	Use sans-serif fonts for all title styles	*/
 h1, h2, h3, h4, h5, h6, strong, em {
-	font-family: Helvetica, sans-serif;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #000000;	
 	}
 
@@ -69,7 +69,7 @@ li	{
 .step	{
 	/* background-color: #EEE; */
 	/* margin: 10px 0px; */
-	color: #111;
+	/* color: #111; */
 	/* border-bottom:2px solid #EEE; */
 	}
 	
@@ -121,7 +121,7 @@ div ol > p, div ul > p, div li > p {
 /* Make all H4 and H5 items appear in bold gray against a light green background */
 div h5, div h4	{
 	padding:5px 0px 5px 12px;
-	background-color:#FFFF66;
+	background-color:#FDCB2F;
 	/* background-color: #EEE; */
 	font-weight:bold;
 	color: #000000;
