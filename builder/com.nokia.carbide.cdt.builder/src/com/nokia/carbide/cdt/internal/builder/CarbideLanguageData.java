@@ -36,6 +36,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 /**
  * Part of the new CDT 4.0 project model requirements.  All this class
  * really does is provide path entries for this build configuration to CDT.
@@ -270,7 +271,7 @@ public class CarbideLanguageData extends CLanguageData {
 		if (cpi.shouldUseMMPMacros()) {
 			List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
 			for (IPath mmp : mmps) {
-				if (buildComponents != null && !EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmp.lastSegment()))
+				if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmp.lastSegment()))
 					continue;
 				
 				List<String> mmpMacros = EpocEngineHelper.getMMPMacrosForBuildConfiguration(mmp, carbideBuildConfig);
@@ -291,7 +292,7 @@ public class CarbideLanguageData extends CLanguageData {
 		EpocEngineHelper.addIncludedFilesFromBldInf(cpi, carbideBuildConfig, cpi.getAbsoluteBldInfPath(), pathList);
 
 		for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig)) {
-			if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+			if (buildComponents == null || TextUtils.listContainsIgnoreCase(buildComponents, mmpPath.lastSegment()))
 				EpocEngineHelper.addIncludedFilesFromMMP(cpi, carbideBuildConfig, mmpPath, pathList);
 		}
 

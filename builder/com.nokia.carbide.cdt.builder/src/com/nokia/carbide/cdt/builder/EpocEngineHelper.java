@@ -1235,7 +1235,7 @@ public class EpocEngineHelper {
 
 		for (IMMPReference mmp : mmps) {
 			if (buildConfiguration != null) {
-				if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmp.getPath().lastSegment())) { 
+				if (buildComponents == null || TextUtils.listContainsIgnoreCase(buildComponents, mmp.getPath().lastSegment())) { 
 					getMMPIncludePaths(projectInfo.getProject(), 
 							mmp.getPath(), buildConfiguration, userPaths, systemPaths);
 				}
@@ -1462,7 +1462,7 @@ public class EpocEngineHelper {
 			buildComponents = info.isBuildingFromInf() ? null : info.getInfBuildComponents();
 	
 		for (IMMPReference mmp : mmps) {
-			if (buildComponents != null && !EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmp.getPath().lastSegment()))
+			if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmp.getPath().lastSegment()))
 				continue;
 			
 			EpocEnginePathHelper helper = new EpocEnginePathHelper(info.getProject());
@@ -1585,14 +1585,6 @@ public class EpocEngineHelper {
 			return true;
 		}
 		return plugin.getPluginPreferences().getBoolean("indexAll"); //$NON-NLS-1$
-	}
-
-	public static boolean containsStringIgnoreCase(List<String> list, String s) {
-		for (String string : list) {
-			if (string.equalsIgnoreCase(s))
-				return true;
-		}
-		return false;
 	}
 
 	/**
@@ -2012,7 +2004,7 @@ public class EpocEngineHelper {
 			buildComponents = buildConfig.getCarbideProject().isBuildingFromInf() ? null : buildConfig.getCarbideProject().getInfBuildComponents();
 
 		for (IPath mmpPath : getMMPFilesForBuildConfiguration(buildConfig)) {
-			if (buildComponents != null && !containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+			if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmpPath.lastSegment()))
 				continue;
 			
 			EpocEnginePlugin.runWithMMPData(mmpPath, 

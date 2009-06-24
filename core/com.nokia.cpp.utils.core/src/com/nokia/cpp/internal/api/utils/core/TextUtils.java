@@ -555,4 +555,20 @@ public class TextUtils {
 		}
 		return builder.toString();
 	}
+
+	/**
+	 * Returns true if s is contained in list when case is ignored.
+	 * 
+	 * @param list
+	 * @param s
+	 * @return boolean
+	 */
+	public static boolean listContainsIgnoreCase(List<String> list, String s) {
+		for (String string : list) {
+			if (string.equalsIgnoreCase(s))
+				return true;
+		}
+		return false;
+	}
+
 }

@@ -35,8 +35,7 @@ import com.nokia.carbide.cdt.builder.project.*;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
-import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher;
+import com.nokia.cpp.internal.api.utils.core.*;
 import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher.IResourceChangeHandler;
 
 /**
@@ -343,7 +342,7 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 				buildComponents = config.getCarbideProject().isBuildingFromInf() ? null : config.getCarbideProject().getInfBuildComponents();
 
 			for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(config)) {
-				if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+				if (buildComponents == null || TextUtils.listContainsIgnoreCase(buildComponents, mmpPath.lastSegment()))
 					EpocEngineHelper.addIncludedFilesFromMMP(cpi, config, mmpPath, pathList);
 			}
 		}
