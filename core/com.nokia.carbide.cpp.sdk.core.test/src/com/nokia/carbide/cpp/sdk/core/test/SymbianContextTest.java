@@ -49,7 +49,7 @@ public class SymbianContextTest extends TestCase {
 		assertNotNull(sdkList);
 		assertTrue(sdkList.size() > 0);
 		
-		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK("S60_3rd_MR", true);
+		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK("S60_5th_Edition_SDK_v1.0", true);
 		assertNotNull("SDK should exist for test", sdk);
 		SymbianBuildContext context = new SymbianBuildContext(sdk, "WINSCW", "UDEB");
 		ISymbianSDK contextSDK = context.getSDK();
