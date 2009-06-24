@@ -421,7 +421,7 @@
 		<description>SDKs and Build Configurations</description>
 		<topic label="SDKs and Build Configurations"  		href="html/reference/ProjectTypeandSDK.html" />
 		<topic label="Creating New Projects"				href="html/tasks/CreatingNewProjects.html" />
-		<topic label="SDK Support"							href="html/concepts/SDKSupport.html" />
+		<topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" />
 	</context>
 
 

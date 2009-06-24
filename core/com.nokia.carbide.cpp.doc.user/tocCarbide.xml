@@ -15,7 +15,6 @@
 		</topic>
 	
 		<topic label="Tour of the UI"				href="html/concepts/tour.html" />
-		<topic label="Project Updater"          	href="html/reference/olderproject_updater.html" />
 
 		<topic label="Application Emulator Debug Example"  	href="html/tasks/start/carbide_example.htm" >
 			<topic label="1. Creating New Projects" 		        	href="html/tasks/CreatingNewProjects.html" />
@@ -30,23 +29,20 @@
 
 	<topic label="Carbide Menus " 					href="html/reference/menus/menus.htm" >
 
-     <topic href="html/reference/trk/wnd_on_device_setup.htm" label="On-Device Connection..."/>
+     	<topic href="html/reference/trk/wnd_on_device_setup.htm" label="On-Device Connection..."/>
+		<topic label="Context menus" 				href="html/concepts/contextual_menus.htm" />
+
 		<topic label="Open Command Window"			href="html/reference/menus/open_cmd_window.htm" />
 		<topic label="Run CodeScanner"				href="html/reference/menus/run_codescanner.htm" />
 		<topic label="Run Leavescan"				href="html/reference/menus/run_leavescan.htm" />
 		<topic label="S60 UI Designer"				href="html/reference/menus/s60_ui_designer.htm" />
 		<topic label="Show in Explorer"				href="html/reference/menus/open_explorer_window.htm" />
 
-		<topic label="Symbian OS C++ Class"			href="html/reference/menus/new_symbian_class.htm" >
-      		<topic label="New Symbian OS C++ Class wizard"	href="html/tasks/projects/prj_adding_symbian_class.htm" />
-		</topic>
-
-		<topic label="Symbian OS C++ Project"		href="html/tasks/CreatingNewProjects.html" >
-			<topic label="New Symbian OS C++ Project wizard"	href="html/tasks/CreatingNewProjects.html" />
-		</topic>
-
+		<topic label="Symbian OS C++ Class"			href="html/tasks/projects/prj_adding_symbian_class.htm"  />
+		<topic label="Symbian OS C++ Project"		href="html/tasks/CreatingNewProjects.html" />
 		<topic label="Symbian OS MMP File"			href="html/reference/NewMMP_wizard.html" />
-		<topic label="Context menus" 				href="html/concepts/contextual_menus.htm" />
+
+		<topic label="Update Projects"          	href="html/reference/olderproject_updater.html" />
 
 	</topic>
 	
@@ -54,12 +50,12 @@
 	<topic label="Project management" >
 	
 		<topic label="Carbide C/C++ perspective" 		    href="html/concepts/CarbidePerspective.html" >
-			<topic label="Project Explorer view"			href="html/reference/view_cpp_projects.htm" />
-			<topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
-			<topic label="Executables view"					href="html/reference/view_executables.htm" />
-			<topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
-			<topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
 			<topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
+			<topic label="Executables view"					href="html/reference/view_executables.htm" />
+			<topic label="Project Explorer view"			href="html/reference/view_cpp_projects.htm" />
+			<topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
+			<topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
+			<topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
 		</topic>
 		
 		<topic label="Carbide.c++ preferences" 				href="html/reference/wnd_carbide_pref.htm" >
@@ -83,7 +79,7 @@
 		</topic>
 
 		<topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
-			<topic label="SDK Support"						href="html/concepts/SDKSupport.html" />
+			<topic label="SDK Preferences"					href="html/reference/SDK Preferences.html" />
 
 			<topic label="Adding an SDK"					href="html/tasks/AddinganSDK.html" >
 				<topic label="Adding SDKs"					href="html/tasks/sdks/sdk_add.htm" />
@@ -92,6 +88,7 @@
 			<topic label="Searching for SDKs"				href="html/tasks/sdks/sdk_search.htm" />
 			<topic label="Viewing SDK Properties"			href="html/tasks/sdks/sdk_view_properties.htm" />
 			<topic label="Editing SDK Properties"			href="html/tasks/RmvngandVwngPropsosSDK.html" />
+
 			<topic label="Adding Symbian Custom Kits"		href="html/tasks/sdks/sdk_add_custkits.htm" />
 		</topic>
 
