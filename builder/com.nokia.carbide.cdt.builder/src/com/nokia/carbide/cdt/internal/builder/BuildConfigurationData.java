@@ -47,6 +47,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 /**
  * Class used to supply the new CDT 4.0 project model with the data it
@@ -251,7 +252,7 @@ public class BuildConfigurationData extends CConfigurationData {
 			buildComponents = carbideBuildConfig.getCarbideProject().isBuildingFromInf() ? null : carbideBuildConfig.getCarbideProject().getInfBuildComponents();
 
 		for (IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig)) {
-			if (buildComponents == null || EpocEngineHelper.containsStringIgnoreCase(buildComponents, mmpPath.lastSegment()))
+			if (buildComponents == null || TextUtils.listContainsIgnoreCase(buildComponents, mmpPath.lastSegment()))
 				EpocEngineHelper.addIncludedFilesFromMMP(cpi, carbideBuildConfig, mmpPath, pathList);
 		}
 

@@ -58,7 +58,7 @@ public class SymbianContextTest extends TestCase {
 		
 		// test that get get the macros
 		List<String> platMacros = contextSDK.getPlatformMacros("WINSCW");
-		assertTrue(platMacros.size() > 0);
+		assertTrue("WINSCW platform macros should be > 0", platMacros.size() > 0);
 		
 		// test that we get the SDK version
 		Version sdkVer = contextSDK.getSDKVersion();
