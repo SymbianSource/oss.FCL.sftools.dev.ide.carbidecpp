@@ -62,13 +62,13 @@ public class SymbianContextTest extends TestCase {
 		
 		// test that we get the SDK version
 		Version sdkVer = contextSDK.getSDKVersion();
-		assertEquals(3,sdkVer.getMajor());
+		assertEquals(5,sdkVer.getMajor());
 		assertEquals(0,sdkVer.getMinor());
 		
 		// test that we get the OS version
 		Version osVer = contextSDK.getOSVersion();
 		assertEquals(9,osVer.getMajor());
-		assertEquals(1,osVer.getMinor());
+		assertEquals(4,osVer.getMinor());
 		
 	}
 	
