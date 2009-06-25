@@ -3,7 +3,7 @@
 
 <toc label="Introduction" topic="html/introduction/intro.htm">
 
-		<topic label="New Features" 					href="html/introduction/new_features.htm" /> 
+		<topic label="New Features & Bug Fixes"			href="html/introduction/new_features.htm" /> 
 		<topic label="Related Documentation" 			href="html/introduction/documentation.htm" /> 
 		<topic label="Verifying the Compiler Version" 	href="html/introduction/version.htm" /> 
 		<topic label="Common Conventions" 				href="html/introduction/conventions.htm" /> 
