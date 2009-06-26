@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title>Enabling Avkon View Switching</title>
-<link rel="StyleSheet" href="../../../book.css" type="text/css"/></head>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
 <body bgcolor="#FFFFFF">
 <h2>Enabling Avkon View Switching</h2>
 
@@ -16,54 +17,58 @@
 <li>Add Avkon View initialization code to &lt;<em>ProjectName</em>&gt;AppUi::ConstructL(). </li>
     <p>You must manually instantiate your view, and register it with the View Server.</p>
     <p>Adopt the following code for your view's name, and add it to the ConstructL() method of your &lt;<em>ProjectName</em>&gt;AppUi class.</p>
-    <p class="code">iMyView =  CMyView::NewL();<br />
+    <p class="listing">iMyView =  CMyView::NewL();<br />
       AddViewL( iMyView );<br />
-    <em>SetDefaultViewL(  *iMyView );  // if this  view is the default</em></p>
+    <i>SetDefaultViewL(  *iMyView );  // if this  view is the default</i></p>
     <li>Add an enumerator for your view to the view id enumeration. </li>
     <p>Open the &lt;<em>ProjectName</em>&gt;.hrh file.  It will look something like this:</p>
-    <p>/*<br />
+    <p class="listing">/*<br />
       ============================================================================<br />
       Descriptive Information <br />
       ============================================================================<br />
       */<br />
       #ifndef __LEGACYPROJ_HRH__<br />
-      #define __LEGACYPROJ_HRH__</p>
-    <p>// LegacyProj enumerate command codes<br />
+      #define __LEGACYPROJ_HRH__<br>
+      <br>
+      // LegacyProj enumerate command codes<br />
       enum TLegacyProjIds <br />
-		{ <br />
-		ECommand1 = 0x6001, // start value must not be 0 <br />
-		ECommand2 <br />
-		} </p>
-
-		<p>// LegacyProj view identifiers <br />
-		enum TLegacyProjViewUids <br />
-		{ <br />
-		ELegacyViewUid = 1 <br />
-		}; </p>
-    <p>#endif // __LEGACYPROJ_HRH__</p>
+      { <br />
+      ECommand1 = 0x6001, // start value must not be 0 <br />
+      ECommand2 <br />
+    }<br>
+    <br>
+    // LegacyProj view identifiers <br />
+	  enum TLegacyProjViewUids <br />
+	  { <br />
+	  ELegacyViewUid = 1 <br />
+    };<br>
+    #endif // __LEGACYPROJ_HRH__</p>
     <p>You must manually edit this file to add a Uid for your view to the enumeration. Add your new identifier to the end of the list. After editing the file, it could look like this: </p>
-    <p>/*<br />
+    <p class="listing">/*<br />
       ============================================================================<br />
       Descriptive Information <br />
       ============================================================================<br />
       */<br />
       #ifndef __LEGACYPROJ_HRH__<br />
-      #define __LEGACYPROJ_HRH__</p>
-    <p>// LegacyProj enumerate command codes<br />
+      #define __LEGACYPROJ_HRH__<br>
+      <br>
+      // LegacyProj enumerate command codes<br />
       enum TLegacyProjIds <br />
 		{ <br />
 		ECommand1 = 0x6001, // start value must not be 0 <br />
 		ECommand2 <br />
-		} </p>
-
-		<p>// LegacyProj view identifiers <br />
-		enum TLegacyProjViewUids <br />
-		{ <br />
-		ELegacyViewUid = 1, <br />
-		EMyDesignViewUid // UID for new view, named E<design name>ViewUid<br />
-		}; </p>
-    <p>#endif // __LEGACYPROJ_HRH__</p>
-</ol>
+	  }<br>
+	  <br>
+	  // LegacyProj view identifiers <br />
+	  enum TLegacyProjViewUids <br />
+	  { <br />
+	  ELegacyViewUid = 1, <br />
+	  EMyDesignViewUid // UID for new view, named E
+	  <design name>
+	  ViewUid<br />
+	  };<br>
+	  #endif // __LEGACYPROJ_HRH__</p>
+  </ol>
   <p>When you have completed these steps, the view-switching aspects of this design should build and operate successfully.</p>
 </div>
 <h5>Related tasks</h5>

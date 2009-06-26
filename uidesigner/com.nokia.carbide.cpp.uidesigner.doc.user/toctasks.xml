@@ -42,8 +42,8 @@
 
 	<topic label="Creating GUI Projects" 								href="html/tasks/projects/task_proj_new.htm" >
 		<topic label="Starting the New Project Wizard"					href="html/tasks/projects/task_proj_new-00.htm" />
-		<topic label="Setting the Project Name"							href="html/tasks/projects/task_proj_new-01.htm" />
 		<topic label="Selecting a Template"								href="html/tasks/projects/task_proj_new-02.htm" />
+		<topic label="Setting the Project Name"							href="html/tasks/projects/task_proj_new-01.htm" />
 		<topic label="Selecting Project SDKs"							href="html/tasks/projects/task_proj_new-03.htm" />
 		<topic label="Setting Basic Application Properties"				href="html/tasks/projects/task_proj_new-04.htm" />
 		<topic label="Selecting Initial Content"						href="html/tasks/projects/task_proj_new-05.htm" />

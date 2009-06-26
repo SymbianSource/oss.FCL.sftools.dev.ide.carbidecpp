@@ -12,7 +12,7 @@
 <p>When the multi-image file is an <span class="code">.mbmdef</span> file, a bitmap and mask are selected and composed to create an image with transparent pixels. The mask may be empty, in which case the bitmap is opaque. When the multi-image file is an <span class="code">.mifdef</span> file, an SVG-T image is selected, which has an implicit mask described by the bounding rectangle of the SVG drawing.</p>
 <p>When selecting a mask, a one-bit image defines a hard mask, where the black pixels in the mask select pixels from the bitmap and white pixels in the mask are transparent. Any other mask image depth (typically 8) defines a soft mask, seen visually as a grayscale image, where the value of each pixel is the alpha or transparency value of the pixel from the bitmap. In a soft mask, a white pixel is fully opaque, and a black pixel is fully transparent. A gray pixel is partially transparent. In this respect, a soft mask looks roughly inverted compared to a hard mask.</p>
 <p class="note"><b>NOTE</b> The MIFDEF compiler does not support <span class="code">.bmp</span> files, so S60 3.0 applications cannot use <span class="code">.mifdef</span> files to add bitmaps to <span class="code">.mif</span> files. Instead, create a different <span class="code">.mbmdef</span> file using a different basename than the <span class="code">.mifdef</span> file, to add your <span class="code">.bmp</span> files.</p>
-<p align="center"><img src="../../images/edit_image_property_dialog.png" alt="edit image property" width="495" height="370" /></p>
+<p align="center"><img src="../../images/edit_image_property_dialog.png" alt="edit image property" width="584" height="385" /></p>
 <p class="figure">Figure 1 - The Edit Image Property dialog </p>
 <h5>Table 1. <span class="figure">Edit Image Property</span> dialog&mdash;items </h5>
 <table width="94%"  border="0" cellpadding="2" cellspacing="0">
@@ -25,6 +25,10 @@
     <td>Select the project's <span class="code">.mbmdef</span> or <span class="code">.mifdef</span> file containing the image to display. </td>
   </tr>
   <tr>
+    <td><b>Edit MBM/MIF File...</b></td>
+    <td>Click to select the MBM or MIF file to use.</td>
+  </tr>
+  <tr>
     <td><b>Image</b></td>
     <td><p>Select the image in the chosen multi-image file to display in the image component. The image appears to the right of the Image dropdown with image canvas size and color depth information below. If a mask is associated with the image, it is selected in the Mask section.</p>
       <p>The combined image + mask appears in the Appearance section with canvas size and color depth information below. This is the best indicator of how the image will appear in the application.</p>
@@ -34,10 +38,6 @@
     <td><b>Mask</b></td>
     <td><p>Select the image mask from the dropdown menu. The mask image is then shown to the right of the Mask dropdown with mask canvas size and color depth information below. </p>
     <p>Choose &lt;No image&gt; to clear the selection.</p></td>
-  </tr>
-  <tr>
-    <td><b>Add Image... / Add Bitmap... </b></td>
-    <td>For <span class="code">.mbmdef</span> files, click <a href="../../tasks/properties/task_comp_mod_properties_image_add.htm">Add Icon</a> to add a new icon. For <span class="code">.mifdef</span> files, click <a href="../../tasks/properties/task_comp_mod_properties_image_add.htm">Add Bitmap</a> to add a bitmap.</td>
   </tr>
   <tr>
     <td><b>OK</b></td>
