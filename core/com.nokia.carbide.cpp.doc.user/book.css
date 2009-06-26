@@ -12,14 +12,14 @@ html {
 
 /* 	Set default font to serif style, 12-pt and plain	*/
 body, p, table {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: normal;
 }
 
 /*	Use sans-serif fonts for all title styles	*/
 h1, h2, h3, h4, h5, h6, strong, em {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Helvetica, sans-serif;
 	color: #000000;	
 	}
 
