@@ -124,6 +124,7 @@
 			<topic label="Adding/Removing Build Configurations"		href="html/tasks/projects/prj_new_build_config.htm" />
 	
 			<topic label="Preprocessing Files"						href="html/tasks/projects/prj_preprocess.htm" />
+			<topic label="Dependency Tracking"						href="html/concepts/dependency_tracking.htm" />
 
 			<topic label="Building Projects"						href="html/tasks/projects/prj_build.htm" />
 			<topic label="Cleaning Projects" 					    href="html/tasks/projects/prj_clean.htm" />
