@@ -205,8 +205,8 @@ public class BuildSettingsUI {
 		if (!projectSetting){
 			// Only a global setting
 			dontCheckForExternalDependencies = new Button(content, SWT.CHECK);
-			dontCheckForExternalDependencies.setText("Do not offer to track dependencies for projects built on command-line"); //$NON-NLS-1$
-			dontCheckForExternalDependencies.setToolTipText("When enabled, Carbide will not check abld makefiles and promt you to let Carbide manage them."); //$NON-NLS-1$
+			dontCheckForExternalDependencies.setText(Messages.getString("BuildSettingsUI.SharedPrefs.DontTrackDeps"));  //$NON-NLS-1$
+			dontCheckForExternalDependencies.setToolTipText(Messages.getString("BuildSettingsUI.SharedPrefs.DontTrackDepsToolTip")); //$NON-NLS-1$
 			dontCheckForExternalDependencies.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		}
 		
