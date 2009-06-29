@@ -53,6 +53,7 @@ public class BuildSettingsUI {
 	private Composite defaultMMPActionComposite;
 	private Label defaultMMPChangedActionLabel;
 	private Combo defaultMMPChangedActionCombo;
+	private Button dontCheckForExternalDependencies; // global setting only
 	
 	// SBS v2 Tab
 	private Label cleanCmdv2Label;
@@ -200,7 +201,15 @@ public class BuildSettingsUI {
 		defaultMMPChangedActionCombo.add(Messages.getString("SharedPrefs.ActionCompileAndLink")); //$NON-NLS-1$
 		defaultMMPChangedActionCombo.setToolTipText(Messages.getString("SharedPrefs.defaultMMPChangedActionComboToolTip")); //$NON-NLS-1$
 		defaultMMPChangedActionCombo.setLayoutData(new GridData());
-
+		
+		if (!projectSetting){
+			// Only a global setting
+			dontCheckForExternalDependencies = new Button(content, SWT.CHECK);
+			dontCheckForExternalDependencies.setText("Do not offer to track dependencies for projects built on command-line"); //$NON-NLS-1$
+			dontCheckForExternalDependencies.setToolTipText("When enabled, Carbide will not check abld makefiles and promt you to let Carbide manage them."); //$NON-NLS-1$
+			dontCheckForExternalDependencies.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		}
+		
 	}
 
 	private void createSBSv2TabComposite() {
@@ -428,5 +437,17 @@ public class BuildSettingsUI {
 		makeEngineText.setText(makeEngine);
 	}
 
+	public boolean getDontPromtTrackDeps(){
+		if (!projectSetting){
+			return dontCheckForExternalDependencies.getSelection();
+		} else {
+			return true;
+		}
+	}
+	
+	public void setDontPromtTrackDeps(boolean dontAsk){
+		dontCheckForExternalDependencies.setSelection(dontAsk);
+	}
+	
 	
 }

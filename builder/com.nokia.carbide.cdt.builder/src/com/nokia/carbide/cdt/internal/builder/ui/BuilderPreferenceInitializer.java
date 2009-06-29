@@ -44,6 +44,7 @@ public class BuilderPreferenceInitializer extends AbstractPreferenceInitializer 
 		store.setDefault(BuilderPreferenceConstants.PREF_MMP_CHANGED_ACTION_PROMPT, true);
 		store.setDefault(BuilderPreferenceConstants.PREF_DEFAULT_MMP_CHANGED_ACTION, 0);
 		store.setDefault(BuilderPreferenceConstants.PREF_MAKE_ENGINE, "make"); //$NON-NLS-1$
+		store.setDefault(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH, false);
 	}
 
 }

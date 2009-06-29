@@ -16,70 +16,38 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.cdt.make.core.makefile.ICommand;
-import org.eclipse.cdt.make.core.makefile.IMacroDefinition;
-import org.eclipse.cdt.make.core.makefile.IRule;
-import org.eclipse.cdt.make.core.makefile.ITargetRule;
+import org.eclipse.cdt.make.core.makefile.*;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.*;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import com.nokia.carbide.cdt.builder.BuilderPreferenceConstants;
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.DefaultGNUMakefileViewConfiguration;
-import com.nokia.carbide.cdt.builder.DefaultMMPViewConfiguration;
-import com.nokia.carbide.cdt.builder.DefaultViewConfiguration;
-import com.nokia.carbide.cdt.builder.EpocEngineHelper;
-import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
+import com.nokia.carbide.cdt.builder.*;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
-import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.*;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPChangedActionDialog;
+import com.nokia.carbide.cdt.internal.builder.ui.TrackDependenciesQueryDialog;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPChangedActionDialog.MMPChangedAction;
-import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
-import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
-import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.*;
 import com.nokia.carbide.cpp.epoc.engine.model.IModel;
 import com.nokia.carbide.cpp.epoc.engine.model.IModelProvider;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.IMakefileView;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.ui.QueryWithTristatePrefDialog;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 
@@ -2433,7 +2401,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		return true;
 	}
 
-	protected boolean needsAbldMakefileGeneration(ICarbideBuildConfiguration config, IPath componentPath) {
+	protected boolean needsAbldMakefileGeneration(final ICarbideBuildConfiguration config, IPath componentPath) {
 		// if this is an extension makefile then we always do the makefile step.
 		if (isExtensionMakefile(componentPath)) {
 			return true;
@@ -2479,17 +2447,37 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 		
 		// now check to see if our makefile changes are there
-		if (areWeManagingTheMakeFiles && !makeFileHasOurChanges(makefile)) {
+		final IPreferenceStore prefsStore = CarbideBuilderPlugin.getDefault().getPreferenceStore();
+		
+		if (prefsStore.getBoolean(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH) == false &&
+				areWeManagingTheMakeFiles && !makeFileHasOurChanges(makefile)) {
+			
 			// if they are not then the user must have been building from the command line.  this means that
 			// any dependency files that exist could be stale so we need to delete them.  we also need to
 			// remove any object code since the corresponding dependency info will not be available.
+			final int manageDeps[] = { IDialogConstants.OK_ID };
+			Display.getDefault().syncExec(new Runnable() {
+
+				public void run() {
+					// ask the user if they want to update now
+					TrackDependenciesQueryDialog dlg = new TrackDependenciesQueryDialog(WorkbenchUtils.getSafeShell(), config.getCarbideProject());
+					manageDeps[0] = dlg.open();
+				}
+			});
+			
 			try {
-				cleanupObjectCodeDirectory(new Path(makefile.getAbsolutePath()).removeLastSegments(1));
+				if (manageDeps[0] == IDialogConstants.OK_ID){
+					cleanupObjectCodeDirectory(new Path(makefile.getAbsolutePath()).removeLastSegments(1));
+				}
 			} catch (Exception e) {
 				CarbideBuilderPlugin.log(e);
 	    		e.printStackTrace();
 			}
-			return true;
+			if (manageDeps[0] == IDialogConstants.OK_ID){
+				return true;
+			} else {
+				return false;
+			}
 		}
 		
 		return false;

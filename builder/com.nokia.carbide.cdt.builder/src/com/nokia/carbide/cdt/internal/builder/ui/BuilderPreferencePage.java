@@ -48,6 +48,7 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 		buildSettingsUI.setPromptForMMPChangedAction(promptForMMPChangedAction());
 		buildSettingsUI.setDefaultMMPChangedAction(defaultMMPChangedAction());
 		buildSettingsUI.setUseBuiltInEnvVars(useBuiltInX86Vars());
+		buildSettingsUI.setDontPromtTrackDeps(promtDontTrackDependencies());
 		
 		if (SBSv2Utils.enableSBSv2Support()) {
 			buildSettingsUI.setDefaultCleanLevelv2(getCleanLevelv2());
@@ -83,6 +84,7 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 		store.setValue(BuilderPreferenceConstants.PREF_MMP_CHANGED_ACTION_PROMPT, buildSettingsUI.getPromptForMMPChangedAction());
 		store.setValue(BuilderPreferenceConstants.PREF_DEFAULT_MMP_CHANGED_ACTION, buildSettingsUI.getDefaultMMPChangedAction());
 		store.setValue(BuilderPreferenceConstants.PREF_USE_BUILIN_X86_VARS, buildSettingsUI.getUseBuiltInEnvVars());
+		store.setValue(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH, buildSettingsUI.getDontPromtTrackDeps()); // global setting only
 		
 		if (SBSv2Utils.enableSBSv2Support()) {
 			store.setValue(BuilderPreferenceConstants.PREF_CLEAN_LEVEL_V2, buildSettingsUI.getDefaultCleanLevelv2());
@@ -103,6 +105,7 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 		buildSettingsUI.setPromptForMMPChangedAction(true);
 		buildSettingsUI.setDefaultMMPChangedAction(0);
 		buildSettingsUI.setUseBuiltInEnvVars(true);
+		buildSettingsUI.setDontPromtTrackDeps(false);
 
 		if (SBSv2Utils.enableSBSv2Support()) {
 			buildSettingsUI.setDefaultCleanLevelv2(0);
@@ -152,7 +155,16 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 		IPreferenceStore store = CarbideBuilderPlugin.getDefault().getPreferenceStore();
 		return store.getBoolean(BuilderPreferenceConstants.PREF_MMP_CHANGED_ACTION_PROMPT);
 	}
-
+	
+	/**
+	 * For SBSv1 global preferences only
+	 * @return
+	 */
+	public static boolean promtDontTrackDependencies(){
+		IPreferenceStore store = CarbideBuilderPlugin.getDefault().getPreferenceStore();
+		return store.getBoolean(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH);
+	}
+	
 	public static int defaultMMPChangedAction() {
 		IPreferenceStore store = CarbideBuilderPlugin.getDefault().getPreferenceStore();
 		return store.getInt(BuilderPreferenceConstants.PREF_DEFAULT_MMP_CHANGED_ACTION);
