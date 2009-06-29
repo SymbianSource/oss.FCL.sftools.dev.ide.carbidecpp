@@ -111,7 +111,7 @@ public class QueryWithTristatePrefDialog  {
 		boolean confirmed = false;
 		if (type == QUERY_YES_NO) {
 			dialog = MessageDialogWithToggle.openYesNoQuestion(
-				parentShell, title, prompt, null,
+				parentShell, title, prompt, "Don't ask to manage dependencies again.",
 				initialSetting, preferences, 
 				prefName);
 			confirmed = dialog.getReturnCode() == IDialogConstants.YES_ID;
