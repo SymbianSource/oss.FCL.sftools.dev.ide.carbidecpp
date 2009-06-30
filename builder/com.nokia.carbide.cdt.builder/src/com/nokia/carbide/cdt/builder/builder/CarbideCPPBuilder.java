@@ -980,6 +980,26 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param componentPath the absolute file system path of the component
 	 * @param isTest true for test components, false otherwise
 	 * @return false if any makefile generation was necessary but failed, true otherwise
+	 * 
+	 * @deprecated use {@link #generateAbldMakefileIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, IPath, boolean, IProgressMonitor)} instead
+	 */
+	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
+		return generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, new NullProgressMonitor());
+	}
+	
+	/**
+	 * Generates the abld makefile if necessary.
+	 * Generates the makefile for the given mmp file if:
+	 * 	 1) the makefile for the mmp does not exist
+	 *   2) if the mmp or any of its includes is newer than the makefile
+	 *   3) the makefile does not have the necessary Carbide changes
+	 *   
+	 *   The command used will be 'abld [test] makefile platform mmpname'
+	 * @param config the build configuration context
+	 * @param launcher the Carbide launcher
+	 * @param componentPath the absolute file system path of the component
+	 * @param isTest true for test components, false otherwise
+	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 */
 	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, progress);
