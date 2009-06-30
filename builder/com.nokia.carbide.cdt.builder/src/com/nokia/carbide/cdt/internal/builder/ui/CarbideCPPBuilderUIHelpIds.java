@@ -32,4 +32,5 @@ public class CarbideCPPBuilderUIHelpIds {
 	public static final String CARBIDE_BUILDER_SIS_DIALOG = CarbideBuilderPlugin.PLUGIN_ID + ".builder_sis_dialog"; //$NON-NLS-1$
 	public static final String CARBIDE_BUILDER_MMP_CHANGED_ACTION_DIALOG = CarbideBuilderPlugin.PLUGIN_ID + ".builder_mmp_changed_action_dialog"; //$NON-NLS-1$
 	public static final String CARBIDE_BUILDER_MMP_SELECTION_DIALOG = CarbideBuilderPlugin.PLUGIN_ID + ".builder_mmp_selection_dialog"; //$NON-NLS-1$
+	public static final String CARBIDE_BUILDER_TRACK_DEPENDENCIES_QUERY_DIALOG = CarbideBuilderPlugin.PLUGIN_ID + ".dependency_tracking_dialog"; //$NON-NLS-1$
 }
