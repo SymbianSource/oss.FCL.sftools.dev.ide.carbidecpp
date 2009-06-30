@@ -25,6 +25,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cdt.builder.BuilderPreferenceConstants;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
@@ -57,6 +58,7 @@ public class TrackDependenciesQueryDialog extends TrayDialog {
 	public TrackDependenciesQueryDialog(Shell shell, ICarbideProjectInfo cpi) {
 		super(shell);
 		this.cpi = cpi;
+		setShellStyle(getShellStyle() | SWT.RESIZE);
 	}
 
 	/**
@@ -113,6 +115,7 @@ public class TrackDependenciesQueryDialog extends TrayDialog {
 	 */
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(shell, CarbideCPPBuilderUIHelpIds.CARBIDE_BUILDER_TRACK_DEPENDENCIES_QUERY_DIALOG);
 		shell.setText("Project rebuild notification"); //$NON-NLS-1$
 	}
 
