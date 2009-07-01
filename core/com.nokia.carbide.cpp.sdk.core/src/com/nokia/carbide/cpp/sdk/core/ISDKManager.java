@@ -132,8 +132,10 @@ public interface ISDKManager {
 	public List<BuildPlat> getPlatformList();
 	
 	/**
-	 * Get the full path to the devices.xml file. This scans first the windows registry under 'SOFTWARE\Symbian\EPOC SDKs\CommonPath'.
-	 * If  CommonPath is not defined then the system drive spec is used with the folder location at '\Program Files\Common Files\Symbian'.
+	 * Get the absolute path to the devices.xml file. 
+	 * This first scans the windows registry under 'SOFTWARE\Symbian\EPOC SDKs\CommonPath'.
+	 * If  CommonPath is not defined then the system drive spec is used with the folder location at:
+	 * '\Program Files\Common Files\Symbian'.
 	 * @return File object. Clients should check File.exists() to make sure the file exists on disk.
 	 */
 	public File getDevicesXMLFile();
