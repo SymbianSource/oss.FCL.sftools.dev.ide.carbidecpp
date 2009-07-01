@@ -174,8 +174,7 @@ public class ConnectionTypePage extends WizardPage {
 	}
 	
 	private Collection<IConnectionType> getConnectionTypes() {
-		Collection<IConnectionType> connectionTypes = 
-			RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionTypes();
+		Collection<IConnectionType> connectionTypes = getValidConnectionTypes();
 		IService serviceToRestrict = settingsWizard.getServiceToRestrict();
 		if (serviceToRestrict != null) {
 			List<IConnectionType> restrictedConnectionTypes = new ArrayList<IConnectionType>();
@@ -190,6 +189,21 @@ public class ConnectionTypePage extends WizardPage {
 			return restrictedConnectionTypes;
 		}
 		
+		return connectionTypes;
+	}
+
+	private Collection<IConnectionType> getValidConnectionTypes() {
+		// valid connection types have at least one compatible service, or are the actual connection type of the connection being edited
+		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
+		IConnectionType connectionTypeToEdit = connectionToEdit != null ? connectionToEdit.getConnectionType() : null;
+		Collection<IConnectionType> allConnectionTypes = 
+		RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionTypes();
+		Collection<IConnectionType> connectionTypes = new ArrayList<IConnectionType>();
+		for (IConnectionType connectionType : allConnectionTypes) {
+			if (!RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleServices(connectionType).isEmpty() ||
+					connectionType.equals(connectionTypeToEdit))
+				connectionTypes.add(connectionType);
+		}
 		return connectionTypes;
 	}
 
