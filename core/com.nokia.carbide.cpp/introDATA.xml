@@ -50,10 +50,10 @@
       </group>
       <group path="page-content/top-left">
          <extension id="com.nokia.carbide.cpp.doc.user-whatsnew" importance="low"/>
-         <extension id="com.nokia.carbide.cpp.uidesigner.doc.user-whatsnew" importance="low"/>
-         <extension id="com.nokia.carbide.cpp.pi.doc.user-whatsnew" importance="low"/>
       </group>
       <group path="page-content/top-right">
+         <extension id="com.nokia.carbide.cpp.uidesigner.doc.user-whatsnew" importance="low"/>
+         <extension id="com.nokia.carbide.cpp.pi.doc.user-whatsnew" importance="low"/>
          <extension id="com.nokia.carbide.cpp.codescanner-whatsnew" importance="low"/>
          <extension id="com.nokia.s60tools.appdep.help-whatsnew" importance="low"/>
          <extension id="com.nokia.carbide.epocwindDisplay-whatsnew" importance="low"/>
