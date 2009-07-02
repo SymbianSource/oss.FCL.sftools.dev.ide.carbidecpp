@@ -132,6 +132,8 @@ public class ASTTokenManager implements TokenManager, ASTParserCoreConstants {
 			return -1;
 		case IToken.PUNC:
 			return -1;
+		case IToken.CHAR:
+			return -1;
 		case IToken.RAW:
 			if (iToken.getText().length() == 0)
 				return -1;
