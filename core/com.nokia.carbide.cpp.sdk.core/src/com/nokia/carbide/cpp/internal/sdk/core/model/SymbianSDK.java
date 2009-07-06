@@ -1071,7 +1071,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
 	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
 	 */
-	protected IPath getPrefixFromVariantCfg(){
+	public IPath getPrefixFromVariantCfg(){
 		File epocRoot = new File(getEPOCROOT());
 		File variantCfg;
 		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);

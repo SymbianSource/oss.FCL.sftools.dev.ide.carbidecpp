@@ -31,7 +31,7 @@
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
        		label="Hover Help (2.0.4)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/view_carbide_news.htm" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.sysdoc.hover/resources/help%20context/dl_hover/html/getting_started.html" 
        		id="carbide-link" 
        		style-id="content-link">
           	<text>See Symbian API Reference information appear when you hover over a Symbian symbol in C/C++ editors.</text>

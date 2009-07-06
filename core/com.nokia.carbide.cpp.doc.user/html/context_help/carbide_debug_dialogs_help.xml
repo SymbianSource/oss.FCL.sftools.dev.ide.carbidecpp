@@ -267,15 +267,9 @@
 
 	<!-- WIZARD BINARY SELECTION PAGE (LAUNCH CONFIG WIZARD) -->
 
-	<context id="category_selection_page">
-		<description>Select the target device category.</description>
-		<topic label="New Launch Configuration Wizard"  	href="html/tasks/projects/wiz_new_launc_config.htm" />
-		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
-	</context>
-
 	<context id="wizard_binary_selection_page">
 		<description>Control which executables are included in the debug process.</description>
-		<topic label="New Launch Configuration Wizard"  	href="html/tasks/projects/wiz_new_launc_config.htm" />
+		<topic label="New Launch Configuration Wizard"  	href="html/tasks/projects/wiz_new_launch_config.htm" />
 		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 	
@@ -368,8 +362,14 @@
 		<topic label="On-Device Setup" 							href="html/reference/trk/wnd_on_device_setup.htm"/>
 	</context>
 	
+	<!-- Added Category Selection page (2.1) -->
+	<context id="category_selection_page">
+		<description>Select the target device category.</description>
+		<topic label="New Launch Configuration Wizard"  	href="html/tasks/projects/wiz_new_launch_config.htm" />
+		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
+	</context>
 	
-	<!-- Build Options Selection page (2.1) -->
+	<!-- Added Build Options Selection page (2.1) -->
 	<context id="build_options_selection_page" >
     <description>Select how auto build applies to this launch configuration.</description>
 	   <topic label="New Launch Configuration Wizard" 		href="html/projects/launch/wiz_new_launch_config.htm"/>

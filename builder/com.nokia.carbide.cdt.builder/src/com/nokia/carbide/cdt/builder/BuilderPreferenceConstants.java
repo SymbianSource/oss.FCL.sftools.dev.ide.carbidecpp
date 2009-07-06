@@ -104,4 +104,10 @@ public class BuilderPreferenceConstants {
 	 * @since 2.0
 	 */
 	public final static String PREF_MAKE_ENGINE = "makeEngine"; //$NON-NLS-1$
+	
+	/**
+	 * String setting for whether or not to alert user if Carbide can override abld-generated makefile dependencies.
+	 * @since 2.1
+	 */
+	public final static String PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH = "promtToTrackDependencies"; //$NON-NLS-1$
 }

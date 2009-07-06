@@ -14,6 +14,7 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.io.*;
 import java.net.*;
+import java.text.MessageFormat;
 import java.util.*;
 
 import javax.xml.parsers.*;
@@ -25,6 +26,7 @@ import org.eclipse.cdt.utils.WindowsRegistry;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.*;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.widgets.Shell;
@@ -41,8 +43,9 @@ import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.*;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public class SDKManager implements ISDKManager, ISDKManagerInternal {
@@ -50,11 +53,13 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	private static List<ISymbianSDK> sdkList = new ArrayList<ISymbianSDK>();
 	private HashMap<String,ISymbianSDK> missingSdkMap = new HashMap<String,ISymbianSDK>();
 
-	public final String SYMBIAN_COMMON_REG_PATH="SOFTWARE\\Symbian\\EPOC SDKs\\";
-	public final String SYMBIAN_COMMON_PATH = "CommonPath";
+	private static final String SYMBIAN_COMMON_REG_PATH = "SOFTWARE\\Symbian\\EPOC SDKs\\";
+	private static final String SYMBIAN_COMMON_PATH = "CommonPath";
 	
-	public final String WINDOWS_SYSTEM_ROOT_REG = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\";
-	public final String WINDOWS_SYSTEM_ROOD_KEY = "SystemRoot";
+	private static final String WINDOWS_SYSTEM_ROOT_REG = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\";
+	private static final String WINDOWS_SYSTEM_ROOT_KEY = "SystemRoot";
+
+	private static final String EMPTY_DEVICES_XML_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>";
 	
 	private static final String CARBIDE_SDK_CACHE_FILE_NAME = "carbideSDKCache.xml";
 	private static final String SDK_CACHE_ID_ATTRIB = "id";
@@ -217,7 +222,7 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	}
 
 	
-	public void updateSDK(ISymbianSDK sdk){
+	public void updateSDK(ISymbianSDK sdk) {
 		try {
 			File devicesFile = getDevicesXMLFile();
 			
@@ -225,23 +230,28 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 			DevicesLoader.updateDevice(sdk, devicesFile.toURL());
 			updateCarbideSDKCache();
 			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) { 
+			// must catch and rethrow as unchecked exception this 
+			// because no throws clause in API method
+			throw new RuntimeException(e);
 		}
 	}
 	
 	public void addSDK(ISymbianSDK sdk) {
 		synchronized(sdkList)
 		{
-			updateSDK(sdk);
-			sdkList.add(sdk);
-			SDKManagerInternalAPI.removeMissingSdk(sdk.getUniqueId());
-			// tell others about it
-			fireInstalledSdkChanged(SDKChangeEventType.eSDKAdded);
+			try {
+				updateSDK(sdk);
+				sdkList.add(sdk);
+				SDKManagerInternalAPI.removeMissingSdk(sdk.getUniqueId());
+				// tell others about it
+				fireInstalledSdkChanged(SDKChangeEventType.eSDKAdded);
+			}
+			catch (Exception e) {
+				logError("Could not add SDK", e);
+				String message = "Could not add this SDK. Your devices.xml file may be corrupt. If you remove the file from its current location and then rescan SDKs, Carbide will offer to create a new one.";
+				Logging.showErrorDialog(WorkbenchUtils.getSafeShell(), null, message, Logging.newSimpleStatus(1, e));
+			}
 		}
 	}
 	
@@ -323,41 +333,30 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 		return true;
 	}
 
-	/**
-	 * Read the devices.xml locaiton from the local machine registry.
-	 * @return String with full path to file if it exists. Empty string File (may be null) if file does not exist or regisry not read.
-	 */
-	private File getDevicesXMLFromRegistry(){
-		WindowsRegistry wr = WindowsRegistry.getRegistry();
-		String regPath = wr.getLocalMachineValue(SYMBIAN_COMMON_REG_PATH, SYMBIAN_COMMON_PATH);
-		boolean devicesFileExists = true;
+	// Read the devices.xml locaiton from the local machine registry.
+	// return IPath with absolute path to file if it exists or null if file does not exist or registry entry not found.
+	private IPath getDevicesXMLFromRegistry(){
+		String regValue = WindowsRegistry.getRegistry().getLocalMachineValue(SYMBIAN_COMMON_REG_PATH, SYMBIAN_COMMON_PATH);
+		IPath regPath = regValue != null ? new Path(regValue) : null;
 		
-		if (regPath == null || !new File(regPath).exists()){
+		if (regPath == null){
 			// No registry entry found...
-			String errMsg = "Could not read registry for local machine key: " +  SYMBIAN_COMMON_REG_PATH + " Cannot get devices.xml for installed SDKs.";
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), IStatus.ERROR, errMsg, null));
-			devicesFileExists = false;
+			String errMsg = MessageFormat.format(
+							"Could not read registry for local machine key: {0} Cannot get devices.xml for installed SDKs.",
+							SYMBIAN_COMMON_REG_PATH);
+			logError(errMsg, null);
+			return null;
+		}
+
+		// registry entry exists, check existence of file
+		regPath = regPath.append(DEVICES_FILE_NAME);
+		if (!regPath.toFile().exists()){
+			String errMsg = MessageFormat.format("Devices.xml does not exist at: {0}", regPath);
+			logError(errMsg, null);
+			return null;
 		}
 		
-		if (devicesFileExists){
-			// path exists, not try to check for fullpath + file
-			int len = regPath.length();
-			if (regPath.charAt(len-1) != '\\'){
-				regPath += "\\";
-			}
-			regPath += "devices.xml";
-			if (!new File(regPath).exists()){
-				String errMsg = "Devices.xml does not exist at: " + regPath;
-				ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), IStatus.ERROR, errMsg, null));
-				devicesFileExists = false;
-			}
-		}
-		
-		if (!devicesFileExists){
-			regPath = "";
-		}
-		
-		return new File(regPath);
+		return regPath;
 	}
 	
 	private void scanCarbideSDKCache(){
@@ -572,29 +571,19 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	}
 
 	public File getDevicesXMLFile() {
-		File devicesFile = getDevicesXMLFromRegistry();
+		IPath devicesPath = getDevicesXMLFromRegistry();
 		
-		if (!devicesFile.exists()) {
-			// Not in registry, get the OS drive from the windows registry
-			WindowsRegistry wr = WindowsRegistry.getRegistry();
-			String regPath = "";
-			if (wr != null) {
-				regPath = wr.getLocalMachineValue(WINDOWS_SYSTEM_ROOT_REG,
-						WINDOWS_SYSTEM_ROOD_KEY);
-			}
-
-			String osDriveSpec;
-			if (regPath.length() > 2 && regPath.substring(1, 2).equals(":")) {
-				osDriveSpec = regPath.substring(0, 2);
-			} else {
-				osDriveSpec = DEFAULT_DEVICES_DRIVE_SPEC; // Just use the default drive spec, some problem reading the registry
-			}
-
-			devicesFile = new File(osDriveSpec + DEFAULT_DEVICES_XML_DIR
-					+ DEVICES_FILE_NAME);
+		if (devicesPath != null && devicesPath.toFile().exists()) {
+			return devicesPath.toFile();
 		}
 
-		return devicesFile;
+		// Not in registry, get the OS drive from the windows registry
+		String regValue = WindowsRegistry.getRegistry().getLocalMachineValue(WINDOWS_SYSTEM_ROOT_REG, WINDOWS_SYSTEM_ROOT_KEY);
+
+		String osDriveSpec = regValue != null ? new Path(regValue).getDevice() : DEFAULT_DEVICES_DRIVE_SPEC;
+
+		IPath deviceDirPath = new Path(osDriveSpec, DEFAULT_DEVICES_XML_DIR);
+		return deviceDirPath.append(DEVICES_FILE_NAME).toFile();
 	}
 	
 	public String getCSLArmToolchainInstallPathAndCheckReqTools() throws SDKEnvInfoFailureException{
@@ -712,7 +701,7 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 				}
 			}
 			catch (IOException e) {
-				// armcc isnt' in this directory, ignore....
+				// armcc isn't in this directory, ignore....
 			}
 		}
 				
@@ -729,50 +718,38 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 		
 	}
 	
-	private boolean checkDevicesXMLExistAndCreate(){
-		boolean fileCreated = false;
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (sdkMgr == null){
-			return false; 
-		}
-		
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		Shell shell = null;
-		if (window != null) {
-			shell = window.getShell();
-		} else {
-			return false; 
-		}
-		
-		File devicesFile = sdkMgr.getDevicesXMLFile();
+	public boolean checkDevicesXMLExistAndCreate() {
+		Shell shell = WorkbenchUtils.getSafeShell();
+		File devicesFile = getDevicesXMLFile();
 		if (!devicesFile.exists()){
-			if (true == MessageDialog.openQuestion(shell, "Cannot find devices.xml.", "Cannot find devices.xml under:\n\n" + DEFAULT_DEVICES_XML_DIR + DEVICES_FILE_NAME + "\n or \nRegistry: HKEY_LOCAL_MACHINE\\SOFTWARE\\Symbian\\EPOC SDKs\\\n\nThis file is required for Carbide.c++ use.\n\nDo you want Carbide to create this file?\n\n")){
+			if (MessageDialog.openQuestion(shell, "Devices.xml Not Found", 
+					"Carbide.c++ requires a valid devices.xml file to manage SDKs.\n\nDo you want Carbide to create this file?")) {
 				try {
 					// First check to make sure the directory exists....
-					File devicesPath = new File(DEFAULT_DEVICES_XML_DIR);
-					if (!devicesPath.exists()){
-						devicesPath.mkdirs();
+					if (!devicesFile.getParentFile().exists()){
+						devicesFile.getParentFile().mkdirs();
 					}
 					
-					devicesFile = new File(DEFAULT_DEVICES_XML_DIR + DEVICES_FILE_NAME);
 					devicesFile.createNewFile();
+
 					FileWriter fw = new FileWriter(devicesFile);
-					fw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>");
+					fw.write(EMPTY_DEVICES_XML_CONTENT);
 					fw.close();
-					fileCreated = true;
-					MessageDialog.openInformation(shell, "Devices.xml added", "Devices.xml was created successfully. Please add an SDK under the SDK Preferences page with the \"Add\" button before you attempt to create a project.");
-					
+
+					MessageDialog.openInformation(shell, "Devices.xml File Created", 
+							MessageFormat.format(
+								"{0} was created successfully. Please add an SDK under the SDK Preferences page with the \"Add\" button before you attempt to create a project.",
+								devicesFile.getAbsolutePath()));
+					return true;
 				} catch (IOException e){
-					MessageDialog.openError(shell, "Cannot create file.", "Could not create file: " + devicesFile.toString());
-					e.printStackTrace();
+					String message = "Could not create file: " + devicesFile.getAbsolutePath();
+					MessageDialog.openError(shell, "Cannot Create File", message);
+					logError(message, e);
 				}
-				
-			} else {
-				MessageDialog.openError(shell, "File not created.", "Devices.xml not created. You will be unable to create projects in Carbide.c++ until this file exists.");
 			}
 		}
 		
-		return fileCreated;
+		return false;
 	}
 	
 	protected void checkPerlInstallation(){
@@ -935,5 +912,9 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 		} else {
 			return true;
 		}
+	}
+	
+	private void logError(String message, Throwable t) {
+		SDKCorePlugin.getDefault().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), message, t));		
 	}
 }

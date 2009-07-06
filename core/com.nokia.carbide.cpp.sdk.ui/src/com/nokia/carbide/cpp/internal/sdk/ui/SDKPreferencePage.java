@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.AddSDKDialog;
@@ -100,7 +101,7 @@ public class SDKPreferencePage
 		GRAY = shell.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 		
 		// check that devices.xml actually exists
-		checkDevicesXMLExist();
+		((SDKManager) sdkMgr).checkDevicesXMLExistAndCreate();
 		
 		Composite content = new Composite(parent, SWT.NONE);
 		setControl(content);
@@ -533,36 +534,4 @@ public class SDKPreferencePage
 	protected ISDKManager getSDKManager(){
 		return sdkMgr;
 	}
-	
-	private void checkDevicesXMLExist(){
-		if (sdkMgr == null){
-			return;
-		}
-		
-		File devicesFile = sdkMgr.getDevicesXMLFile();
-		if (!devicesFile.exists()){
-			if (true == MessageDialog.openQuestion(shell, "Cannot find devices.xml.", "Devices.xml is required for Carbide.c++ use. Do you want to create this file?\n\n" + ISDKManager.DEFAULT_DEVICES_XML_DIR + ISDKManager.DEVICES_FILE_NAME)){
-				try {
-					//First check to make sure the directory exists....
-					File devicesPath = new File(ISDKManager.DEFAULT_DEVICES_XML_DIR);
-					if (!devicesPath.exists()){
-						devicesPath.mkdirs();
-					}
-					
-					devicesFile = new File(ISDKManager.DEFAULT_DEVICES_XML_DIR + ISDKManager.DEVICES_FILE_NAME);
-					devicesFile.createNewFile();
-					FileWriter fw = new FileWriter(devicesFile);
-					fw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>");
-					fw.close();
-				} catch (IOException e){
-					MessageDialog.openError(shell, "Cannot create file.", "Could not create file: " + devicesFile.toString());
-					e.printStackTrace();
-				}
-			} else {
-				MessageDialog.openError(shell, "File not created.", "File not created. You will be unable to create project in Carbide.c++.");
-			}
-			
-		}
-	}
-	
 }

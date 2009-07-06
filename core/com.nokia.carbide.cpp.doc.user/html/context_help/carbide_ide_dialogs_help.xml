@@ -73,7 +73,11 @@
 		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/pane_build_config.htm" />
 	</context>
 
-	
+	<!-- Dependency Tracking (added v2.1) -->
+	<context id="dependency_tracking_dialog" >
+		<description>Managing makefile dependencies</description>
+		<topic label="Dependency Tracking"		href="html/concepts/dependency_tracking.htm" />
+	</context>
 	
 <!-- =============================================================================== -->
 <!-- PLUGIN: com.nokia.carbide.cdt.rombuilder                                        -->

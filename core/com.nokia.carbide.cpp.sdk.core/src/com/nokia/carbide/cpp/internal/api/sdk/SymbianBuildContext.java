@@ -21,6 +21,7 @@ import org.osgi.framework.Version;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianMissingSDKFactory;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
@@ -378,6 +379,17 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 				List<IDefine> macros = new ArrayList<IDefine>();
 				Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
 				File prefixFile = getSDK().getPrefixFile();
+				
+				if (prefixFile == null){
+					// Check that the prefix file may have become available since the SDK was scanned last.
+					// This can happen, for e.g., if the user opens the IDE _then_ does a subst on a drive that already has an SDK entry.
+					IPath prefixCheck = ((SymbianSDK)getSDK()).getPrefixFromVariantCfg();
+					if (prefixCheck != null){
+						prefixFile = prefixCheck.toFile();
+						getSDK().setPrefixFile(prefixCheck);
+					}
+				}
+				
 				if (prefixFile != null) {
 
 					// add any BSF/SBV includes so the headers are picked up from the correct location

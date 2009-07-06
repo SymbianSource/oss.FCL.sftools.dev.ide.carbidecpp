@@ -16,35 +16,73 @@
 */
 package com.nokia.carbide.cdt.builder.builder;
 
-import java.io.IOException;
-import java.util.Properties;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 
-import org.eclipse.cdt.core.CCorePlugin;
-import org.eclipse.cdt.core.CommandLauncher;
-import org.eclipse.cdt.core.ConsoleOutputStream;
-import org.eclipse.cdt.core.ErrorParserManager;
-import org.eclipse.cdt.core.IMarkerGenerator;
-import org.eclipse.cdt.core.ProblemMarkerInfo;
+import org.eclipse.cdt.core.*;
 import org.eclipse.cdt.core.model.ICModelMarker;
 import org.eclipse.cdt.core.resources.IConsole;
 import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.internal.resources.MarkerInfo;
+import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * A utility class to handle windows process execution. This utility class handles all the execution, 
  * error processing, and console output.
  */
 public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGenerator {
+
+	public class MarkerCacheElement {
+		private int line;
+		private int severity;
+		private String message;
+		
+		public MarkerCacheElement(IMarker marker) throws CoreException {
+			line = marker.getAttribute(IMarker.LINE_NUMBER, -1);
+			severity = ((Integer) marker.getAttribute(IMarker.SEVERITY)).intValue();
+			message = (String) marker.getAttribute(IMarker.MESSAGE);
+		}
+
+		public MarkerCacheElement(ProblemMarkerInfo problemMarkerInfo) {
+			line = problemMarkerInfo.lineNumber;
+			severity = mapMarkerSeverity(problemMarkerInfo.severity);
+			message = problemMarkerInfo.description;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31; 
+			int result = 1;
+			result = prime * result + line;
+			result = prime * result + severity;
+			result = prime * result
+					+ ((message == null) ? 0 : message.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof MarkerCacheElement))
+				return false;
+			MarkerCacheElement other = (MarkerCacheElement) obj;
+			if (line != other.line)
+				return false;
+			if (severity != other.severity)
+				return false;
+			if (message == null) {
+				if (other.message != null)
+					return false;
+			} 
+			else if (!message.equals(other.message))
+				return false;
+			return true;
+		}
+	}
 
 	protected IProgressMonitor monitor;
 	protected IConsole console;
@@ -56,6 +94,8 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
 	protected IProject project;
 	protected String[] errorParserIds;
 	protected IMarkerGenerator markerGen;
+	private Map<IResource, Set<MarkerCacheElement>> markerCache;
+	private long markerCreationTime;
 	
 	/**
 	 * Location of tool execution
@@ -212,6 +252,8 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
 	 * @return 0 (zero) on success. returns the actual tool return status
 	 */
 	public int executeCommand(IPath command, String[] args, String[] env, IPath workingDir){
+		markerCache = null;
+		markerCreationTime = System.currentTimeMillis();
 		int exitValue = -1;
 		String errMsg;
 		try {
@@ -299,35 +341,27 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
     }
 
 	public void addMarker(ProblemMarkerInfo problemMarkerInfo) {
-
+		if (markerCache == null)
+			markerCache = new HashMap<IResource, Set<MarkerCacheElement>>();
+		
 		try {
 			IResource markerResource = problemMarkerInfo.file ;
 			if (markerResource == null)  {
 				markerResource = stdoutStream.getProject();
 			}
-			IMarker[] cur = markerResource.findMarkers(ICModelMarker.C_MODEL_PROBLEM_MARKER, false, IResource.DEPTH_ONE);
-
-			/*
-			 * Try to find matching markers and don't put in duplicates
-			 */
-			if ((cur != null) && (cur.length > 0)) {
-				for (int i = 0; i < cur.length; i++) {
-					int line = cur[i].getAttribute(IMarker.LINE_NUMBER, -1);
-					int sev = ((Integer) cur[i].getAttribute(IMarker.SEVERITY)).intValue();
-					String mesg = (String) cur[i].getAttribute(IMarker.MESSAGE);
-					if (line == problemMarkerInfo.lineNumber && sev == mapMarkerSeverity(problemMarkerInfo.severity) && mesg.equals(problemMarkerInfo.description)) {
-						return;
-					}
+			
+			Set<MarkerCacheElement> cacheElements = markerCache.get(markerResource);
+			if (cacheElements == null) {
+				cacheElements = new HashSet<MarkerCacheElement>();
+				markerCache.put(markerResource, cacheElements);
+				IMarker[] cur = markerResource.findMarkers(ICModelMarker.C_MODEL_PROBLEM_MARKER, false, IResource.DEPTH_ONE);
+				for (IMarker marker : cur) {
+					cacheElements.add(new MarkerCacheElement(marker));
 				}
 			}
-
-			// need to pause briefly between marker creations so the creation timestamps
-			// are unique and sorting the problems view by creation time works properly.
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+			
+			if (!cacheElements.add(new MarkerCacheElement(problemMarkerInfo)))
+				return;
 
 			IMarker marker = markerResource.createMarker(ICModelMarker.C_MODEL_PROBLEM_MARKER);
 			marker.setAttribute(IMarker.MESSAGE, problemMarkerInfo.description);
@@ -356,6 +390,7 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
 				}
 				marker.setAttribute(ICModelMarker.C_MODEL_MARKER_EXTERNAL_LOCATION, absolutePath.toOSString());
 			}
+			setUniqueCreationTime(marker);
 		}
 		catch (CoreException e) {
 			CCorePlugin.log(e.getStatus());
@@ -363,6 +398,16 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
 
 	}
 	
+	private void setUniqueCreationTime(IMarker marker) {
+		// This is using internal platform APIs to avoid putting a delay into every marker creation
+		// to ensure each marker gets a unique creation time (for sorting in the problems view).
+		// The total delay could be significant when there are many problem markers
+		IResource resource = marker.getResource();
+		Workspace workspace = (Workspace) resource.getWorkspace();
+		MarkerInfo markerInfo = workspace.getMarkerManager().findMarkerInfo(resource, marker.getId());
+		markerInfo.setCreationTime(markerCreationTime++);
+	}
+
 	int mapMarkerSeverity(int severity) {
 
 		switch (severity) {

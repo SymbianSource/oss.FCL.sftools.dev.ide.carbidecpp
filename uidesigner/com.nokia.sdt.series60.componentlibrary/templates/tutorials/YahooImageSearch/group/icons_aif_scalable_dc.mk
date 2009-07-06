@@ -32,7 +32,9 @@ MAKMAKE : do_nothing
 
 BLD : do_nothing
 
-CLEAN : do_nothing
+CLEAN :
+	@echo ...Deleting $(ICONTARGETFILENAME)
+	del /q /f $(ICONTARGETFILENAME)
 
 LIB : do_nothing
 
