@@ -22,6 +22,7 @@ package com.nokia.carbide.template.engine;
  * This interface is used in {@link ILoadedTemplate#createLoadedTemplateUI()} and
  * {@link ILoadedTemplateUI#persistValues(IPersistedSettingStorage)} to read and write
  * the persisted settings to a client-implemented store. 
+ * @since 2.1
  *
  */
 public interface IPersistedSettingStorage {

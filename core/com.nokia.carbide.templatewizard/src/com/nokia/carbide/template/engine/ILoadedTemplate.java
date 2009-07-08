@@ -26,6 +26,7 @@ import java.util.Map;
 /**
  * This interface, available through {@link ITemplate#getLoadedTemplate()},
  * provides the runtime model for template XML and a way to create its UI.  
+ * @since 2.1
  */
 public interface ILoadedTemplate {
 	/**

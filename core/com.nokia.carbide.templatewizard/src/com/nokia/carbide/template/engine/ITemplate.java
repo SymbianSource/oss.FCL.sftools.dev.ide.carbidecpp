@@ -58,12 +58,14 @@ public interface ITemplate {
 	 * The wizardId attribute for this template.
 	 * 
 	 * @return identifier for an Eclipse org.eclipse.ui.newWizards extension
+	 * @since 2.1
 	 */
 	String getWizardId();
 	
 	/**
 	 * Get the name attribute for this template.  If it is not defined,
 	 * read it from the 'label' in template XML.
+	 * @since 2.1
 	 */
 	String getDisplayName();
 	
@@ -71,6 +73,7 @@ public interface ITemplate {
 	 * The groupLabel attribute for this template, used to categorize templates.
 	 * 
 	 * @return the string or unlocalized key for the group label.
+	 * @since 2.1
 	 */
 	String getGroupLabel();
 
@@ -79,12 +82,14 @@ public interface ITemplate {
 	 * of this string is up to the specific instanceof TemplateWizard. 
 	 * 
 	 * @return the string used for filtering
+	 * @since 2.1
 	 */
 	String getFilterArguments();
 	
 	/**
 	 * Get metadata for the template from the extension point definition.
 	 * @return the map of key-value pairs
+	 * @since 2.1
 	 */
 	Map<String, String> getExtensionMetadata();
 	
@@ -107,12 +112,14 @@ public interface ITemplate {
 	 * return the entry for the current language.  Otherwise, return the text itself.
 	 * @param text 
 	 * @return original text or localized string 
+	 * @since 2.1
 	 */
 	public String getLocalizedString(String text);
 	
 	/**
 	 * Get the image descriptor for the template
 	 * @return {@link ImageDescriptor}, never <code>null</code>
+	 * @since 2.1
 	 */
 	public ImageDescriptor getImageDescriptor();
 
@@ -120,11 +127,13 @@ public interface ITemplate {
 	 * Get the loaded template information, loading the XML into memory if necessary.
 	 * @return ILoadedTemplate
 	 * @throws CoreException if template.xml could not be loaded
+	 * @since 2.1
 	 */
 	ILoadedTemplate getLoadedTemplate() throws CoreException;
 
 	/**
 	 * Reset a template for use by a new wizard.  
+	 * @since 2.1
 	 */
 	void reset();
 }

@@ -49,6 +49,9 @@ public class CopyFiles extends AbstractProjectProcess {
 	protected static final String LOWER_SUFFIX = "$lower"; //$NON-NLS-1$
 	protected static final String TITLE_SUFFIX = "$title"; //$NON-NLS-1$
 	protected static final String TITLELOWER_SUFFIX = "$titlelower"; //$NON-NLS-1$
+	/**
+	 * @since 2.1
+	 */
 	protected static final String C_ESCAPED_SUFFIX = "$c_escaped"; //$NON-NLS-1$
 	protected static final String SOURCE_PATH_ATTRIBUTE = "sourcePath"; //$NON-NLS-1$
 	protected static final String TARGET_PATH_ATTRIBUTE = "targetPath"; //$NON-NLS-1$

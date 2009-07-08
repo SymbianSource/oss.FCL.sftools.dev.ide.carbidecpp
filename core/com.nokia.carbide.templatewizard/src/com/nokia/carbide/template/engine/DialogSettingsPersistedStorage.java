@@ -23,6 +23,7 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 /**
  * This class is a default implementation of {@link IPersistedSettingStorage} that
  * uses IDialogSettings to store its contents as strings.
+ * @since 2.1
  *
  */
 public class DialogSettingsPersistedStorage implements

@@ -34,6 +34,7 @@ import java.util.List;
  * <p>
  * The UI is created such that all fields have default valus, unless {@link #loadSettings(IPersistedSettingStorage)}
  * is called to initialize from persisted storage.
+ * @since 2.1
  *
  */
 public interface ILoadedTemplateUI {
