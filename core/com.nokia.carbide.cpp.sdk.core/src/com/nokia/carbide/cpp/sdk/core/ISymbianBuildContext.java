@@ -45,6 +45,7 @@ public interface ISymbianBuildContext {
 	/**
 	 * DEFAULT suffix to use for components that are specified as variant, but don't buid as variants. For example, plain ARMV5, when specified as
 	 * as a FEATUREVARIANT, will build as ARMV5.DEFAULT
+	 * @since 2.0
 	 */
 	public static final String DEFAULT_VARIANT = "DEFAULT";
 	
@@ -74,6 +75,7 @@ public interface ISymbianBuildContext {
 	 * For example, a build platform name of "armv5.myvariant" will return "armv5".
 	 * @return The base platform string.
 	 * @see isSymbianBinaryVariation()
+	 * @since 2.0
 	 */
 	public String getBasePlatformForVariation();
 	
@@ -131,12 +133,14 @@ public interface ISymbianBuildContext {
 	 * For platforms that are building with Symbian Binary Variation, this suffix will be included in the configuration name
 	 * For example, if you are building variant armv5.product1, then this will return "product1" string.
 	 * @return The name of the Symbian Binary Variation, or an empy String if the configuration is not a variation.
+	 * @since 2.0
 	 */
 	public String getBuildVariationName();
 	
 	/**
 	 * Is the current build context building as a Symbian Binary Variation? Not to be confused with BSF.
 	 * @return true if this is a binary variant build
+	 * @since 2.0
 	 */
 	public boolean isSymbianBinaryVariation();
 }

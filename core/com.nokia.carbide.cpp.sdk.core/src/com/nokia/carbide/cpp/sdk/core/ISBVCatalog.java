@@ -18,6 +18,7 @@ import com.nokia.cpp.internal.api.utils.core.*;
  * This is a catalog of all the .VAR (Symbian Binary Variation) files detected for a given SDK.
  *
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface ISBVCatalog {
 	/**

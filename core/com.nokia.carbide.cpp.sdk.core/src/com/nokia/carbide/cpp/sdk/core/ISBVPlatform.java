@@ -27,6 +27,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
  * built-in platforms (like ARMV5). 
  * 
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface ISBVPlatform {
 	/**
