@@ -240,6 +240,7 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 	 * If using the template filter checkbox, this allows you to set the
 	 * template to filter on.
 	 * @param template the template to filter on
+	 * @since 1.4
 	 */
 	public void setSelectedTemplate(ITemplate template) {
 		this.templateFilter.setTemplate(template);
