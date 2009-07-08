@@ -89,6 +89,7 @@ public class ProjectUIUtils {
 	 * Returns the preference option for whether or not to index all source files 
 	 * or just those of the build components
 	 * @return the option
+	 * @since 1.4
 	 */
 	public static boolean getIndexAllOption() {
 		return ProjectUIPlugin.getIndexAllOption();
@@ -98,6 +99,7 @@ public class ProjectUIUtils {
 	 * Sets the preference option for whether or not to index all source files 
 	 * or just those of the build components
 	 * @param option true to enable the feature, false to disable
+	 * @since 1.4
 	 */
 	public static void setIndexAllOption(boolean option) {
 		ProjectUIPlugin.setIndexAllOption(option);
