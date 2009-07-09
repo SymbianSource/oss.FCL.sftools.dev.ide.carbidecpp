@@ -27,6 +27,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.makefile.IMakefileOwnedModel;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.*;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.model.SBVModelFactory;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewDataCache;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher;
