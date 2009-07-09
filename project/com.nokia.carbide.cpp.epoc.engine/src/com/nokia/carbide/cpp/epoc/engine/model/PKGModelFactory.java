@@ -18,6 +18,7 @@
 
 package com.nokia.carbide.cpp.epoc.engine.model;
 
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGOwnedModel;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.pkg.PKGModel;
 

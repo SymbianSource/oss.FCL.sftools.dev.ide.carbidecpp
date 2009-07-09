@@ -24,6 +24,7 @@ package com.nokia.carbide.template.engine;
  * the persisted settings to a client-implemented store. 
  * @since 2.1
  *
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IPersistedSettingStorage {
 	/**

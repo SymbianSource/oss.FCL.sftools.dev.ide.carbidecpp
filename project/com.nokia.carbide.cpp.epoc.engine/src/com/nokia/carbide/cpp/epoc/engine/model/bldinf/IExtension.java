@@ -28,7 +28,8 @@ import java.util.Map;
  * It's recommended to use a utility class (like BldInfViewPathHelpers) to interpret
  * and set the paths in this extension and resolve paths to actual project or filesystem
  * files.
- *
+ * 
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IExtension {
 	/** Check whether the template path is set. */
@@ -53,10 +54,12 @@ public interface IExtension {
 	/** Access/modify the list of dependencies.  No interpretation is performed.  As in the bld.inf, no extension will be present. */
 	List<IPath> getDependencies();
 	
-	/** Get the name associated with the extension, may be null for unnamed extension */
+	/** Get the name associated with the extension, may be null for unnamed extension
+	 * @since 2.1 */
 	String getName();
 	
-	/** Set the name associated with the extension, may be null for unnamed extension */
+	/** Set the name associated with the extension, may be null for unnamed extension
+	 * @since 2.1 */
 	void setName(String name);
 	
 	/** Get the tool name, may be null */

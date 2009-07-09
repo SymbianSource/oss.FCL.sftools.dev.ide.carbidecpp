@@ -30,6 +30,8 @@ import java.util.Map;
 /**
  * Runtime access for the metadata of a single template in a 
  * <i>com.nokia.carbide.templatewizard.wizardTemplate</i> extension.
+ * 
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ITemplate {
 
