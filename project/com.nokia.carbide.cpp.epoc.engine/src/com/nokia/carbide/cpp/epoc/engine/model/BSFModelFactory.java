@@ -17,12 +17,17 @@
 
 package com.nokia.carbide.cpp.epoc.engine.model;
 
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.model.bsf.IBSFOwnedModel;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.bsf.BSFModel;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 
+/**
+ * This class is an internal implementation and will be moved to an internal package.
+ * @deprecated Use {@link EpocEnginePlugin#getBSFModelProvider()} 
+ */
 public class BSFModelFactory implements IModelFactory<IBSFOwnedModel> {
 
 	/* (non-Javadoc)

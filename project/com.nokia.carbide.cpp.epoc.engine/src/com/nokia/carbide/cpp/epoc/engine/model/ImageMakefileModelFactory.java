@@ -17,6 +17,7 @@
 
 package com.nokia.carbide.cpp.epoc.engine.model;
 
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileOwnedModel;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.makefile.image.ImageMakefileModel;
 
@@ -24,8 +25,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 
 /**
- * Model for creating image makefiles.
- *
+ * This class is an internal implementation and will be moved to an internal package.
+ * @deprecated Use {@link EpocEnginePlugin#getImageMakefileModelProvider()}
  */
 public class ImageMakefileModelFactory implements IModelFactory<IImageMakefileOwnedModel> {
 

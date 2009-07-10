@@ -17,12 +17,17 @@
 
 package com.nokia.carbide.cpp.epoc.engine.model;
 
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.IMakefileOwnedModel;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.makefile.MakefileModel;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 
+/**
+ * This class is an internal implementation and will be moved to an internal package.
+ * @deprecated Use {@link EpocEnginePlugin#getMakefileModelProvider()}
+ */
 public class MakefileModelFactory implements IModelFactory<IMakefileOwnedModel> {
 
 	/* (non-Javadoc)
