@@ -13,7 +13,7 @@
   </style>
 </head>
 <body bgcolor="#ffffff">
-<h2>	Carbide.c++ bugs fixed </h2>
+<h2>Carbide.c++ bugs fixed </h2>
 <p>This is a comprehensive list of bugs fixed by release: </p>
 <ul><li><a href="#bugs210">Bugs Fixed in 2.1.0</a></li>
   <li><a href="#bugs204">2.0.4</a>, <a href="#bugs203">2.0.3</a>, <a href="#bugs202"> 2.0.2</a>, <a href="#bugs200">2.0.0</a></li>
@@ -22,12 +22,15 @@
 <h3><a name="bugs210" id="bugs4"></a>Bugs Fixed in v2.1.0</h3>
 <ul>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9164">9164</a> - Added some diagnostic instrumentation to the Eclipse platform and Carbide to aid users in reporting resource and workspace refreshing issues. </li>
-  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9310">9310</a> - Can now properly save SBSv2 tools or gcc configurations in the Platform Filtering Preferences panel and added default Apply/Restore controls.  </li>
-</ul>
-<p><b>B1</b></p>
-<ul>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9310">9310</a> - Can now properly save SBSv2 tools or gcc configurations in the Platform Filtering Preferences panel and added default Apply/Restore controls.</li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=7351">7351</a> - Fixed an issue where cancelling &quot;Build all configurations&quot; should work and be much faster. </li>
+</ul>
+<ul><li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8500">8500</a> - Fixed an issue that when importing symbols where certain symbols contained erroneous address data. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8816">8816</a> - Bash errors should now appear in the Problems view. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8901">8901</a> - Fixed an issue in the error parser that prevented building Phone Debug builds due to Assembler warnings. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8914">8914</a> - Corrected an issue with scanning SDKs that cause the scan to repeat endlessly. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8934">8934</a> - Fixed some issues regarding missing or corrupt devices.xml files that preventing the setting of breakpoints. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8937">8937</a> - Fixed a bad assert in the MWCC compiler that was not checking for the existence of both a class and dtor. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8943">8943</a> - Fixed an issue in the error parser that caused code to be flagged as an error instead of a warning.</li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=8964">8964</a> - Modified the behavior of the &quot;SDK Update Required&quot; check to prevent alerts while building or debugging when the OS version is unknown. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9006">9006</a> - Several on-device cheat sheets have been updated for connecting and debugging on remote devices. </li>
@@ -35,10 +38,13 @@
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9021">9021</a> - Fixed a performance issue where the debugger searched for all source files every time a breakpoint was set. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9031">9031</a> - Fixed an indexing performance issue where too many unneeded source roots were indexed. Use the &quot;Window &gt; Preferences &gt; C/C++ &gt; Appearance &gt; Show source roots at top of project&quot; option to change how root sources are evaluated. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9033">9033</a> - Changed the Bld.inf import wizard behavior so that projects with three or fewer MMP files are automatically selected, while projects with more than three MMP files are left unselected by default. </li>
-  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9091">9091</a> - &lt;tags&gt; from the Raptor plugin are no longer reported as errors. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9036">9036</a> - The new operator in the compiler now zero initializes new objects as defined in C++ Standard &sect;5.3.4.15. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9092">9092</a> - Fixed a NullPointerException in the News Reader involving the FeedCacheManager. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9135">9135</a> - Added additional documentation on source lookup paths. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9164">9164</a> - Added some diagnostic instrumentation to the Eclipse platform and Carbide to aid users in reporting resource and workspace refreshing issues. </li>
   <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9218">9218</a> - Added a new Carbide Extensions category for project property pages accessible to Carbide plugins.</li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9310">9310</a> - Can now properly save SBSv2 tools or gcc configurations in the Platform Filtering Preferences panel and added default Apply/Restore controls. </li>
+  <li><a href="https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=9320">9320</a> - Fixed a problem with handling character constants in macros when importing bld.inf files that prevented some SDKs from being recognized. </li>
 </ul>
 <h3><a name="bugs204" id="bugs5"></a>Bugs Fixed in v2.0.4</h3>
 <ul>
