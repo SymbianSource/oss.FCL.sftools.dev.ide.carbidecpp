@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
@@ -62,18 +61,7 @@ public class Activator extends Plugin {
 			String pluginFilePath = pluginURL.getFile();
 			Path pluginPath = new Path(pluginFilePath);
 
-			Location installLocation = Platform.getInstallLocation();
-			URL installURL = installLocation.getURL();
-			String installFilePath = installURL.getFile();
-			Path installPath = new Path(installFilePath);
-
-			if (installPath.isPrefixOf(pluginPath)) { // Release build
-				debuggerPath = pluginPath.append("Debugger"); //$NON-NLS-1$
-			} else { // Debug build
-				IPath basePath = pluginPath.removeLastSegments(3);
-				debuggerPath = basePath
-						.append("ide").append("Output").append("IDEDebug"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			}
+			debuggerPath = pluginPath.append("Debugger"); //$NON-NLS-1$
 		}
 		TCAPIConnection api = new TCAPIConnection();
 		long err = api.nativeStartServer();
