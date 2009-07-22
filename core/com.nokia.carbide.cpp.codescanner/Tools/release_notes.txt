@@ -14,6 +14,13 @@
 Nokia CodeScanner Command Line Tool Release Notes
 =================================================
 
+Version 2.1.3
+=============
+- Updated the function parser in CodeScanner to improve check for
+leaving functions called in non-leaving functions. There should
+be less false positives now.
+
+
 Version 2.1.2
 =============
 - Added new IAD rule to check flag usage. IA must not use R&D flags 
