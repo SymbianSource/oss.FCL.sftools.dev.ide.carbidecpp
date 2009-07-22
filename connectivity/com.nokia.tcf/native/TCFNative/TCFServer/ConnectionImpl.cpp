@@ -27,7 +27,7 @@
 extern BOOL gDoLogging;
 #endif
 
-#define LOG_CONNECTION
+//#define LOG_CONNECTION
 #if defined(LOG_CONNECTION) && defined(_DEBUG)
 #define TCDEBUGOPEN() if (gDoLogging) { this->m_DebugLog->WaitForAccess(); }
 #define TCDEBUGLOGS(s) if (gDoLogging) { sprintf(this->m_DebugLogMsg,"%s", s); this->m_DebugLog->log(this->m_DebugLogMsg); }
@@ -45,6 +45,8 @@ extern BOOL gDoLogging;
 #define TCDEBUGLOGA4(s, a1, a2, a3, a4)
 #define TCDEBUGCLOSE()
 #endif
+
+//#define LOG_MPROCESSOR
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -84,8 +86,16 @@ CConnectionImpl::CConnectionImpl(ConnectData conData, DWORD connectionId)
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
+#if defined(LOG_CONNECTION)
 		m_DebugLog = new TCDebugLog("TCF_ConnectionLog", connectionId);
+#else
+		m_DebugLog = NULL;
+#endif
+#if defined(LOG_MPROCESSOR)
 		m_DebugLog2 = new TCDebugLog("TCF_ProcessorLog", connectionId);
+#else
+		m_DebugLog2 = NULL;
+#endif
 	}
 	else
 	{
@@ -394,7 +404,7 @@ long CConnectionImpl::DoSendMessage(long encodeOption, BYTE protocolVersion, BOO
 		TCDEBUGLOGS("CConnectionImpl::DoSendMessage done\n");
 		if (err == TCAPI_ERR_COMM_ERROR)
 		{
-			EnterRetryPeriod(err, true, m_BaseComm->m_lastCommError);
+//			EnterRetryPeriod(err, true, m_BaseComm->m_lastCommError);
 			m_OsError = m_BaseComm->m_lastCommError;
 		}
 	}
@@ -493,7 +503,7 @@ long CConnectionImpl::DoRetryProcessing()
 long CConnectionImpl::EnterRetryPeriod(long commErr, bool passOsErr, DWORD osErr)
 {
 	TCDEBUGOPEN();
-	TCDEBUGLOGS("CConnectionImpl::EnterRetryPeriod\n");
+	TCDEBUGLOGA3("CConnectionImpl::EnterRetryPeriod commErr=%d passOsErr=%d osErr=%d\n", commErr, passOsErr, osErr);
 	TCDEBUGCLOSE();
 
 	long err = TCAPI_ERR_NONE;
@@ -700,7 +710,6 @@ void CConnectionImpl::UnLockAllDestinations()
 	}
 }
 
-#define LOG_MPROCESSOR
 #if defined(LOG_MPROCESSOR) && defined(_DEBUG)
 #define MPLOGOPEN() if (gDoLogging) { pThis->m_DebugLog2->WaitForAccess(); }
 #define MPLOGS(s) if (gDoLogging) { sprintf(pThis->m_DebugLogMsg2,"%s", s); pThis->m_DebugLog2->log(pThis->m_DebugLogMsg2); }
@@ -754,7 +763,7 @@ DWORD WINAPI CConnectionImpl::MessageProcessor(LPVOID lpParam)
 				if (err != TCAPI_ERR_NONE)
 				{
 					MPLOGA2("MessageProcessor  err = %d osError = %d\n", err, pThis->m_BaseComm->m_lastCommError);
-					pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
+//					pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
 				}
 				else
 				{
@@ -773,7 +782,7 @@ DWORD WINAPI CConnectionImpl::MessageProcessor(LPVOID lpParam)
 						if (err == TCAPI_ERR_COMM_ERROR)
 						{
 							// for this error we have os error, but we probably caught this in PollPort already
-							pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
+//							pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
 						}
 						else if (err != TCAPI_ERR_NONE)
 						{

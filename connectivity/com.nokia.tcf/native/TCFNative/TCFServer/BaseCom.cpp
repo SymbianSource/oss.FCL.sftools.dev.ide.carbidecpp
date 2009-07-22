@@ -23,9 +23,9 @@ CBaseCom::CBaseCom()
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\basecommlog.txt", "at");
-		fprintf(f, "CBaseCom::CBaseCom() (default constructor)\n");
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\basecommlog.txt", "at");
+//		fprintf(f, "CBaseCom::CBaseCom() (default constructor)\n");
+//		fclose(f);
 	}
 #endif
 	m_isConnected = false;
@@ -44,9 +44,9 @@ CBaseCom::CBaseCom(ConnectData* connectSettings, DWORD connectionId, CBaseProtoc
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\basecommlog.txt", "at");
-		fprintf(f, "connectSettings=%x connectionId=%d, protocol=%x\n", connectSettings, connectionId, protocol);
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\basecommlog.txt", "at");
+//		fprintf(f, "connectSettings=%x connectionId=%d, protocol=%x\n", connectSettings, connectionId, protocol);
+//		fclose(f);
 	}
 #endif
 	m_isConnected = false;
@@ -63,11 +63,19 @@ CBaseCom::CBaseCom(ConnectData* connectSettings, DWORD connectionId, CBaseProtoc
 	m_ConnectSettings = new ConnectData();
 	memcpy(m_ConnectSettings, connectSettings, sizeof(ConnectData));
 
-#if (defined(LOG_COMM) || defined(LOG_PROCCOMM)) && defined(_DEBUG)
+#if defined(_DEBUG)
 	if (gDoLogging)
 	{
+#if defined(LOG_COMM)
 		m_CommDebugLog = new TCDebugLog("TCF_Comm", connectionId, 2000L);
+#else
+		m_CommDebugLog = NULL;
+#endif
+#if defined(LOG_PROCCOMM)
 		m_ProcDebugLog = new TCDebugLog("TCF_CommP", connectionId, 2000L);
+#else
+		m_ProcDebugLog = NULL;
+#endif
 	}
 #endif
 }
@@ -77,9 +85,9 @@ CBaseCom::~CBaseCom()
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\basecommlog.txt", "at");
-		fprintf(f, "CBaseCom::~CBaseCom()\n");
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\basecommlog.txt", "at");
+//		fprintf(f, "CBaseCom::~CBaseCom()\n");
+//		fclose(f);
 	}
 #endif
 	if (m_pBuffer)

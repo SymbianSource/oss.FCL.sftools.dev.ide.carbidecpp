@@ -48,7 +48,7 @@ extern BOOL gDoLogging;
 #define COMMLOGCLOSE()
 #endif
 
-#define LOG_PROCCOMM
+//#define LOG_PROCCOMM
 #if defined(LOG_PROCCOMM) && defined(_DEBUG)
 #define PROCLOGOPEN() if (gDoLogging) { m_ProcDebugLog->WaitForAccess(); }
 #define PROCLOGS(s) if (gDoLogging) { sprintf(m_ProcDebugLogMsg,"%s", s); m_ProcDebugLog->log(m_ProcDebugLogMsg); }

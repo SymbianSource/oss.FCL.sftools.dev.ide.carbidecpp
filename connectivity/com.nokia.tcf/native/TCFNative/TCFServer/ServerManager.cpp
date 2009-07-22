@@ -28,7 +28,7 @@
 extern BOOL gDoLogging;
 #endif
 
-#define LOG_SERVERMANAGER
+//#define LOG_SERVERMANAGER
 #if defined(LOG_SERVERMANAGER) && defined(_DEBUG)
 extern char TCDebugMsg[];
 #define TCDEBUGOPEN() if (gDoLogging) { m_DebugLog->WaitForAccess(); }
@@ -66,7 +66,7 @@ CServerManager::CServerManager()
 }
 CServerManager::CServerManager(const char* exeLocation)
 {
-#ifdef _DEBUG
+#if defined(LOG_SERVERMANAGER) && defined(_DEBUG)
 	if (gDoLogging)
 		m_DebugLog = new TCDebugLog("TCF_ServerLog", ::GetCurrentProcessId());
 	else

@@ -62,6 +62,7 @@ private:
 	HANDLE m_hSerial;
 	DCB m_dcb;
 	char m_serialPortName[MAX_COMPORT_SIZE];
+	char sLogMsg[3000];
 
 };
 

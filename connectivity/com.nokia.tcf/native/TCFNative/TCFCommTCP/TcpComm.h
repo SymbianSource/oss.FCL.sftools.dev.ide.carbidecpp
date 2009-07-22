@@ -56,6 +56,9 @@ public:
 	virtual long PreProcessMessage(int inMsgType, DWORD inMsgLength, BYTE* inMessage) { return TCAPI_ERR_NONE; }
 	virtual long PreProcessMessage(BYTE msgId, DWORD inMsgLength, BYTE* inMessage) { return TCAPI_ERR_NONE; }
 	bool IsConnectionEqual(ConnectData* pConn);
+	int WSAInit();
+	void WSAClose();
+
 
 private:
 	SOCKET m_socket;
@@ -63,7 +66,7 @@ private:
 	TIMEVAL m_timeOut;
 	WSAEVENT m_hSocketEvent; 
 	DWORD m_pPeekBuffer;
-
+	char sTcpLogMsg[3000];
 };
 
 #endif // !defined(AFX_TCPCOMM_H__69657421_6D37_497A_A377_12E71365EDAB__INCLUDED_)

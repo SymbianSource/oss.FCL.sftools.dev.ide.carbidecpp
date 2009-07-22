@@ -25,7 +25,7 @@
 #include "Connection.h"
 
 #ifdef _DEBUG
-static char sLogMsg[3000];
+//static char sLogMsg[3000];
 #endif
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

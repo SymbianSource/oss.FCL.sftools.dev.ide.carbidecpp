@@ -45,9 +45,9 @@ TCDebugLog::TCDebugLog(char* baseName, DWORD pid, DWORD timeout)
 	m_fLog = _fsopen(m_FileName, "at", _SH_DENYNO);
 
 #ifdef _DEBUG
-	FILE* f = fopen("c:\\tcf\\tcdebuglog.txt", "at");
-	fprintf(f, "name=%s m_FileName=%s\n", name, m_FileName);
-	fclose(f);
+//	FILE* f = fopen("c:\\tcf\\tcdebuglog.txt", "at");
+//	fprintf(f, "name=%s m_FileName=%s\n", name, m_FileName);
+//	fclose(f);
 #endif
 }
 TCDebugLog::~TCDebugLog()

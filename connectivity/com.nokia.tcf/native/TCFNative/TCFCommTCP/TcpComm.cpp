@@ -24,9 +24,6 @@
 //#include "OSTConstants.h"
 #include "Connection.h"
 
-#ifdef _DEBUG
-static char sTcpLogMsg[3000];
-#endif
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -35,9 +32,9 @@ CTcpComm::CTcpComm()
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\tcpcommlog.txt", "at");
-		fprintf(f, "CTcpComm::CTcpComm() (default constructor)\n");
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\tcpcommlog.txt", "at");
+//		fprintf(f, "CTcpComm::CTcpComm() (default constructor)\n");
+//		fclose(f);
 	}
 #endif
 	m_socket = INVALID_SOCKET;
@@ -45,6 +42,7 @@ CTcpComm::CTcpComm()
 	m_timeOut.tv_usec = TIMEOUT_USEC(DEFAULT_SOCKET_TIMEOUT);
 
 	m_hSocketEvent = WSA_INVALID_EVENT;
+
 }
 
 CTcpComm::CTcpComm(ConnectData* connectSettings, DWORD connectionId, CBaseProtocol* protocol)
@@ -52,9 +50,9 @@ CTcpComm::CTcpComm(ConnectData* connectSettings, DWORD connectionId, CBaseProtoc
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\tcpcommlog.txt", "at");
-		fprintf(f, "connectSettings=%x connectionId=%d, protocol=%x\n", connectSettings, connectionId, protocol);
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\tcpcommlog.txt", "at");
+//		fprintf(f, "connectSettings=%x connectionId=%d, protocol=%x\n", connectSettings, connectionId, protocol);
+//		fclose(f);
 	}
 #endif
 	m_connId = connectionId;
@@ -75,22 +73,27 @@ CTcpComm::CTcpComm(ConnectData* connectSettings, DWORD connectionId, CBaseProtoc
 	m_timeOut.tv_usec = TIMEOUT_USEC(DEFAULT_SOCKET_TIMEOUT);
 
 	m_hSocketEvent = WSA_INVALID_EVENT;
+
 }
 CTcpComm::~CTcpComm()
 {
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\tcpcommlog.txt", "at");
-		fprintf(f, "CTcpComm::~CTcpComm()\n");
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\tcpcommlog.txt", "at");
+//		fprintf(f, "CTcpComm::~CTcpComm()\n");
+//		fclose(f);
 	}
 #endif
 	if (IsConnected())
 	{
-		shutdown(m_socket, SD_BOTH);
-		closesocket(m_socket);
-		WSACleanup();
+		if (m_socket != INVALID_SOCKET)
+		{
+			shutdown(m_socket, SD_BOTH);
+			closesocket(m_socket);
+			WSAClose();
+		}
+		m_isConnected = false;
 	}
 	if (m_pBuffer)
 		delete[] m_pBuffer;
@@ -116,8 +119,8 @@ long CTcpComm::OpenPort()
 
 	COMMLOGA2("CTcpComm::OpenPort ipAddress=%s ipPort=%s\n", ipAddress, ipPort);
 
-	WSADATA wsaData;
-	int wsaErr = WSAStartup(MAKEWORD(2,2), &wsaData);
+	int wsaErr = 0;
+	wsaErr = WSAInit();
 	if (wsaErr != 0)
 	{
 		err = TCAPI_ERR_WHILE_CONFIGURING_MEDIA;
@@ -126,10 +129,12 @@ long CTcpComm::OpenPort()
 	else
 	{
 		m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+		COMMLOGA1("CTcpComm::OpenPort socket=%x\n", m_socket);
 		if (m_socket == INVALID_SOCKET)
 		{
 			m_lastCommError = WSAGetLastError();
-			WSACleanup();
+			WSASetLastError(0);
+			WSAClose();
 			err = TCAPI_ERR_WHILE_CONFIGURING_MEDIA;
 		}
 		else
@@ -137,25 +142,30 @@ long CTcpComm::OpenPort()
 			if (ioctlsocket(m_socket, FIONBIO, &nonblock) == SOCKET_ERROR)
 			{
 				m_lastCommError = WSAGetLastError();
+				WSASetLastError(0);
 				closesocket(m_socket);
 				m_socket = INVALID_SOCKET;
-				WSACleanup();
+				WSAClose();
 				err = TCAPI_ERR_WHILE_CONFIGURING_MEDIA;
 			}
 			else
 			{
 				int i = SO_MAX_MSG_SIZE;
 				// set socket options
-				BOOL keepAlive = TRUE;
+				BOOL keepAlive = FALSE;
 				setsockopt(m_socket, SOL_SOCKET, SO_KEEPALIVE, (const char*)&keepAlive, sizeof(BOOL));
+
+				struct linger l;
+				l.l_onoff = 0; l.l_linger = 0;
+				setsockopt(m_socket, SOL_SOCKET, SO_LINGER, (const char*)&l, sizeof(l));
+
 				int sockRecvSize = MAX_TCP_MESSAGE_BUFFER_LENGTH;//(256*1024L);
 				setsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, (const char*)&sockRecvSize, sizeof(int));
 				int sockSendSize = (64*1024L);
 				setsockopt(m_socket, SOL_SOCKET, SO_SNDBUF, (const char*)&sockSendSize, sizeof(int));
 				WSAGetLastError(); // ignore error for now
-				int gotsockRecvSize, optLen=sizeof(int);
-				getsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, (char*)&gotsockRecvSize, &optLen);
-				WSAGetLastError(); // ignore error for now
+				WSASetLastError(0);
+
 				// connect
 				WORD wPort = atoi(ipPort);
 				m_clientService.sin_family = AF_INET;
@@ -164,6 +174,9 @@ long CTcpComm::OpenPort()
 				if (connect(m_socket, (SOCKADDR*)&m_clientService, sizeof(m_clientService)) == SOCKET_ERROR)
 				{
 					int wsaErr = WSAGetLastError();
+					WSASetLastError(0);
+					COMMLOGA1("CTcpComm::OpenPort connect=wsaErr=%d\n", wsaErr);
+
 					// socket is non-blocking
 					if (wsaErr != WSAEWOULDBLOCK)
 					{
@@ -171,7 +184,7 @@ long CTcpComm::OpenPort()
 
 						closesocket(m_socket);
 						m_socket = INVALID_SOCKET;
-						WSACleanup();
+						WSAClose();
 						err = TCAPI_ERR_WHILE_CONFIGURING_MEDIA;
 					}
 					else // WSAEWOULDBLOCK error returned
@@ -192,6 +205,7 @@ long CTcpComm::OpenPort()
 							if (selRes == SOCKET_ERROR)
 							{
 								wsaErr = WSAGetLastError();
+								WSASetLastError(0);
 								if (wsaErr != WSAEWOULDBLOCK)
 								{
 									// real error
@@ -199,7 +213,7 @@ long CTcpComm::OpenPort()
 									shutdown(m_socket, SD_BOTH);
 									closesocket(m_socket);
 									m_socket = INVALID_SOCKET;
-									WSACleanup();
+									WSAClose();
 									err = TCAPI_ERR_WHILE_CONFIGURING_MEDIA;
 								}
 								// else do another select
@@ -214,10 +228,11 @@ long CTcpComm::OpenPort()
 							{
 								// timed out
 								m_lastCommError = WSAGetLastError();
+								WSASetLastError(0);
 								shutdown(m_socket, SD_BOTH);
 								closesocket(m_socket);
 								m_socket = INVALID_SOCKET;
-								WSACleanup();
+								WSAClose();
 								err = TCAPI_ERR_WHILE_CONFIGURING_MEDIA;
 							}
 						}
@@ -225,6 +240,7 @@ long CTcpComm::OpenPort()
 				}
 				else // connect return OK
 				{
+					COMMLOGS("CTcpComm::OpenPort connect OK\n");
 					m_lastCommError = 0;
 					m_isConnected = true;
 				}
@@ -248,6 +264,7 @@ long CTcpComm::OpenPort()
 #endif
 	}
 
+	COMMLOGA1("CTcpComm::OpenPort err=%d\n", err);
 	COMMLOGCLOSE();
 	return err;
 }
@@ -265,10 +282,15 @@ long CTcpComm::ClosePort()
 	}
 	else
 	{
-		shutdown(m_socket, SD_BOTH);
-		closesocket(m_socket);
-		m_socket = INVALID_SOCKET;
-		WSACleanup();
+		if (m_socket != INVALID_SOCKET)
+		{
+			shutdown(m_socket, SD_BOTH);
+			closesocket(m_socket);
+			m_socket = INVALID_SOCKET;
+
+			WSAClose();
+		}
+		m_isConnected = false;
 
 		delete[] m_pBuffer;
 		m_pBuffer = NULL;
@@ -338,6 +360,7 @@ long CTcpComm::PollPort(DWORD &outSize)
 		else if (selErr == SOCKET_ERROR)
 		{
 			m_lastCommError = WSAGetLastError();
+			WSASetLastError(0);
 			err = TCAPI_ERR_COMM_ERROR;
 		}
 	}
@@ -356,6 +379,7 @@ long CTcpComm::PollPort(DWORD &outSize)
 			else // SOCKET_ERROR
 			{
 				m_lastCommError = WSAGetLastError();
+				WSASetLastError(0);
 				err = TCAPI_ERR_COMM_ERROR;
 			}
 		}
@@ -369,6 +393,7 @@ long CTcpComm::PollPort(DWORD &outSize)
 		{
 			// SOCKET_ERROR: error on recv other than a shutdown
 			m_lastCommError = WSAGetLastError();
+			WSASetLastError(0);
 			err = TCAPI_ERR_COMM_ERROR;
 		}
 	}
@@ -392,6 +417,7 @@ long CTcpComm::ReadPort(DWORD inSize, void *outData, DWORD &outSize)
 		if (res == SOCKET_ERROR)
 		{
 			long commErr = WSAGetLastError();
+			WSASetLastError(0);
 			if ((DWORD)commErr != m_lastCommError)
 			{
 				m_lastCommError = commErr;
@@ -414,6 +440,7 @@ long CTcpComm::ReadPort(DWORD inSize, void *outData, DWORD &outSize)
 	{
 		// SOCKET_ERROR on ioctlsocket
 		m_lastCommError = WSAGetLastError();
+		WSASetLastError(0);
 		err = TCAPI_ERR_COMM_ERROR;
 	}
 	return err;
@@ -552,6 +579,7 @@ long CTcpComm::SendDataToPort(DWORD inSize, const void* inData)
 		{
 			err = TCAPI_ERR_COMM_ERROR;
 			m_lastCommError = sockErr;
+			COMMLOGA1("CTcpComm::SendDataToPort getsockopt=%d\n", sockErr);
 			COMMLOGCLOSE();
 			return err;
 		}
@@ -580,11 +608,15 @@ long CTcpComm::SendDataToPort(DWORD inSize, const void* inData)
 		else if (selErr == SOCKET_ERROR)
 		{
 			m_lastCommError = WSAGetLastError();
+			WSASetLastError(0);
+			COMMLOGA1("CTcpComm::SendDataToPort select(SOCKET_ERROR)=%d\n", m_lastCommError);
 			err = TCAPI_ERR_COMM_ERROR;
 		}
 		else if (selErr == 0) // timeout
 		{
 			m_lastCommError = WSAGetLastError();
+			WSASetLastError(0);
+			COMMLOGA1("CTcpComm::SendDataToPort select(timeout)=%d\n", m_lastCommError);
 			err = TCAPI_ERR_COMM_ERROR;
 		}
 	}
@@ -602,10 +634,12 @@ long CTcpComm::SendDataToPort(DWORD inSize, const void* inData)
 			if (nSent == SOCKET_ERROR)
 			{
 				int wsaErr = WSAGetLastError();
+				WSASetLastError(0);
 				// ignore "would block" errors
 				if (wsaErr != WSAEWOULDBLOCK)
 				{
 					// TODO: error handling
+					COMMLOGA1("CTcpComm::SendDataToPort send(SOCKET_ERROR)=%d\n", wsaErr);
 					m_lastCommError = wsaErr;
 					err = TCAPI_ERR_COMM_ERROR;
 					break;
@@ -653,14 +687,47 @@ void CTcpComm::DeleteMsg(DWORD inMsgLength)
 }
 bool CTcpComm::IsConnectionEqual(ConnectData* pConn)
 {
-	if ((strcmp(pConn->tcpSettings.ipAddress, m_ConnectSettings->tcpSettings.ipAddress) == 0) &&
-		(strcmp(pConn->tcpSettings.ipPort, m_ConnectSettings->tcpSettings.ipPort) == 0))
+	if ((strcmp(pConn->tcpSettings.ipAddress, m_ConnectSettings->tcpSettings.ipAddress) == 0))
 	{
-		return true;
+		if ((strcmp(pConn->tcpSettings.ipPort, m_ConnectSettings->tcpSettings.ipPort) == 0))
+		{
+			// same port and same IP
+			return true;
+		}
+		else
+		{
+			// different port but same IP
+			return false;
+		}
 	}
 	else
 	{
+		// different IP
 		return false;
 	}
+}
+
+int CTcpComm::WSAInit() 
+{
+	int wsaErr = 0;
+
+	COMMLOGOPEN();
+	COMMLOGS("CTcpComm::WSAInit\n");
+
+	WSADATA wsaData;
+	wsaErr = WSAStartup(MAKEWORD(2,2), &wsaData);
+
+	COMMLOGCLOSE();
+	return wsaErr;
+}
+
+void CTcpComm::WSAClose()
+{
+	COMMLOGOPEN();
+	COMMLOGS("CTcpComm::WSAClose\n");
+
+	WSACleanup();
+
+	COMMLOGCLOSE();
 }
 

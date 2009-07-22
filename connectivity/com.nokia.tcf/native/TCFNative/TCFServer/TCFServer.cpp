@@ -75,15 +75,16 @@ int main(int argc, char* argv[])
 #ifdef _DEBUG
 	if (gDoLogging)
 	{
-		FILE* f = fopen("c:\\tcf\\TCFServer_Main.txt", "at");
-		LogTime(f);
-		fprintf(f,"ExeLocation=%s\n", gServerLocation);
-		fclose(f);
+//		FILE* f = fopen("c:\\tcf\\TCFServer_Main.txt", "at");
+//		LogTime(f);
+//		fprintf(f,"ExeLocation=%s\n", gServerLocation);
+//		fclose(f);
 	}
 #endif
 	gManager = new CServerManager(gServerLocation);
 	gManager->CommandThread();
 	delete gManager;
+
 	return 0;
 }
 #ifdef _DEBUG
