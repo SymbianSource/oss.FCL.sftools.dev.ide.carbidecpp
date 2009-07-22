@@ -26,23 +26,17 @@ public class OSObjectChunk extends OSObject {
 
 	// Property Descriptors
 	static protected IPropertyDescriptor[] s_propertyDescriptors = {
-			new PropertyDescriptor(IOSObjectProperties.ID.ObjectType,
-					IOSObjectProperties.DisplayName.ObjectType),
-			new PropertyDescriptor(IOSObjectProperties.ID.Name,
-					IOSObjectProperties.DisplayName.Name),
-
-			new PropertyDescriptor(IOSObjectProperties.ID.Attribute,
-					IOSObjectProperties.DisplayName.Attribute),
-			new PropertyDescriptor(IOSObjectProperties.ID.HomeAddress,
-					IOSObjectProperties.DisplayName.HomeAddress),
-			new PropertyDescriptor(IOSObjectProperties.ID.Size,
-					IOSObjectProperties.DisplayName.Size),
-			new PropertyDescriptor(IOSObjectProperties.ID.State,
-					IOSObjectProperties.DisplayName.State),
-			new PropertyDescriptor(IOSObjectProperties.ID.Type,
-					IOSObjectProperties.DisplayName.Type),
-			new PropertyDescriptor(IOSObjectProperties.ID.OwningProcessName,
-					IOSObjectProperties.DisplayName.OwningProcessName), };
+		new PropertyDescriptor(IOSObjectProperties.ID.ObjectType,
+				IOSObjectProperties.DisplayName.ObjectType),
+		new PropertyDescriptor(IOSObjectProperties.ID.Name,
+				IOSObjectProperties.DisplayName.Name),
+		new PropertyDescriptor(IOSObjectProperties.ID.Size,
+				IOSObjectProperties.DisplayName.Size),
+		new PropertyDescriptor(IOSObjectProperties.ID.Type,
+				IOSObjectProperties.DisplayName.Type),
+		new PropertyDescriptor(IOSObjectProperties.ID.OwningProcessName,
+				IOSObjectProperties.DisplayName.OwningProcessName)
+	};
 
 	static {
 		for (int i = 0; i < s_propertyDescriptors.length; i++)
@@ -51,10 +45,11 @@ public class OSObjectChunk extends OSObject {
 	}
 
 	static private String[] s_sortableProperties = {
-			IOSObjectProperties.ID.Name, IOSObjectProperties.ID.Type,
-			IOSObjectProperties.ID.Size,
-			IOSObjectProperties.ID.OwningProcessName,
-			IOSObjectProperties.ID.State, };
+		IOSObjectProperties.ID.Name,
+		IOSObjectProperties.ID.Size,
+		IOSObjectProperties.ID.Type,
+		IOSObjectProperties.ID.OwningProcessName,
+	};
 
 	static private IPropertyDescriptor[] s_sortablePropertyDescriptors;
 	static {

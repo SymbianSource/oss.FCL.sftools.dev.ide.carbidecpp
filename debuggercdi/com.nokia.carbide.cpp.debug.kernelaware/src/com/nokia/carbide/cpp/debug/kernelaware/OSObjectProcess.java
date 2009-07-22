@@ -30,38 +30,23 @@ public class OSObjectProcess extends OSObject {
 
 	// Property Descriptors
 	static protected IPropertyDescriptor[] s_propertyDescriptors = {
-			new PropertyDescriptor(IOSObjectProperties.ID.ObjectType,
-					IOSObjectProperties.DisplayName.ObjectType),
-			new PropertyDescriptor(IOSObjectProperties.ID.Name,
-					IOSObjectProperties.DisplayName.Name),
-			new PropertyDescriptor(IOSObjectProperties.ID.ID,
-					IOSObjectProperties.DisplayName.ID),
-			new PropertyDescriptor(IOSObjectProperties.ID.Priority,
-					IOSObjectProperties.DisplayName.Priority),
-			new PropertyDescriptor(IOSObjectProperties.ID.Attribute,
-					IOSObjectProperties.DisplayName.Attribute),
-			new PropertyDescriptor(IOSObjectProperties.ID.CodeRunAddress,
-					IOSObjectProperties.DisplayName.CodeRunAddress),
-			new PropertyDescriptor(IOSObjectProperties.ID.CodeLoadAddress,
-					IOSObjectProperties.DisplayName.CodeLoadAddress),
-			new PropertyDescriptor(IOSObjectProperties.ID.TextSize,
-					IOSObjectProperties.DisplayName.TextSize),
-			new PropertyDescriptor(IOSObjectProperties.ID.DataSize,
-					IOSObjectProperties.DisplayName.DataSize),
-			new PropertyDescriptor(IOSObjectProperties.ID.BssSize,
-					IOSObjectProperties.DisplayName.BssSize),
-			new PropertyDescriptor(IOSObjectProperties.ID.DataBssRunAddress,
-					IOSObjectProperties.DisplayName.DataBssRunAddress),
-			new PropertyDescriptor(IOSObjectProperties.ID.DataRunAddress,
-					IOSObjectProperties.DisplayName.DataRunAddress),
-			new PropertyDescriptor(IOSObjectProperties.ID.DataLoadAddress,
-					IOSObjectProperties.DisplayName.DataLoadAddress),
-			new PropertyDescriptor(IOSObjectProperties.ID.DataBssStackChunk,
-					IOSObjectProperties.DisplayName.DataBssStackChunk),
-			new PropertyDescriptor(IOSObjectProperties.ID.DependencyCount,
-					IOSObjectProperties.DisplayName.DependencyCount),
-			new PropertyDescriptor(IOSObjectProperties.ID.DependencyFiles,
-					IOSObjectProperties.DisplayName.DependencyFiles), };
+		new PropertyDescriptor(IOSObjectProperties.ID.ObjectType,
+				IOSObjectProperties.DisplayName.ObjectType),
+		new PropertyDescriptor(IOSObjectProperties.ID.Name,
+				IOSObjectProperties.DisplayName.Name),
+		new PropertyDescriptor(IOSObjectProperties.ID.ID,
+				IOSObjectProperties.DisplayName.ID),
+		new PropertyDescriptor(IOSObjectProperties.ID.Priority,
+				IOSObjectProperties.DisplayName.Priority),
+		new PropertyDescriptor(IOSObjectProperties.ID.CodeRunAddress,
+				IOSObjectProperties.DisplayName.CodeRunAddress),
+		new PropertyDescriptor(IOSObjectProperties.ID.TextSize,
+				IOSObjectProperties.DisplayName.TextSize),
+		new PropertyDescriptor(IOSObjectProperties.ID.DataRunAddress,
+				IOSObjectProperties.DisplayName.DataRunAddress),
+		new PropertyDescriptor(IOSObjectProperties.ID.DataSize,
+				IOSObjectProperties.DisplayName.DataSize)
+	};
 
 	static {
 		for (int i = 0; i < s_propertyDescriptors.length; i++)
@@ -70,11 +55,14 @@ public class OSObjectProcess extends OSObject {
 	}
 
 	static private String[] s_sortableProperties = {
-			IOSObjectProperties.ID.Name, IOSObjectProperties.ID.ID,
-			IOSObjectProperties.ID.Priority,
-			IOSObjectProperties.ID.CodeRunAddress,
-			IOSObjectProperties.ID.CodeLoadAddress,
-			IOSObjectProperties.ID.TextSize, IOSObjectProperties.ID.DataSize };
+		IOSObjectProperties.ID.Name,
+		IOSObjectProperties.ID.ID,
+		IOSObjectProperties.ID.Priority,
+		IOSObjectProperties.ID.CodeRunAddress,
+		IOSObjectProperties.ID.TextSize,
+		IOSObjectProperties.ID.DataRunAddress,
+		IOSObjectProperties.ID.DataSize
+	};
 
 	static private IPropertyDescriptor[] s_sortablePropertyDescriptors;
 	static {

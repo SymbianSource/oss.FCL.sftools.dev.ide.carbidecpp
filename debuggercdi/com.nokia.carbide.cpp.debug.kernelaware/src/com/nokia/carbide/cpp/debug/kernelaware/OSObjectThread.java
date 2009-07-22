@@ -30,37 +30,19 @@ public class OSObjectThread extends OSObject {
 
 	// Property Descriptors
 	static protected IPropertyDescriptor[] s_propertyDescriptors = {
-			new PropertyDescriptor(IOSObjectProperties.ID.ObjectType,
-					IOSObjectProperties.DisplayName.ObjectType),
-			new PropertyDescriptor(IOSObjectProperties.ID.Name,
-					IOSObjectProperties.DisplayName.Name),
-
-			new PropertyDescriptor(IOSObjectProperties.ID.ContextType,
-					IOSObjectProperties.DisplayName.ContextType),
-			new PropertyDescriptor(IOSObjectProperties.ID.ID,
-					IOSObjectProperties.DisplayName.ID),
-			new PropertyDescriptor(IOSObjectProperties.ID.OwningProcessID,
-					IOSObjectProperties.DisplayName.OwningProcessID),
-			new PropertyDescriptor(IOSObjectProperties.ID.OwningProcessName,
-					IOSObjectProperties.DisplayName.OwningProcessName),
-			new PropertyDescriptor(IOSObjectProperties.ID.Priority,
-					IOSObjectProperties.DisplayName.Priority),
-			new PropertyDescriptor(IOSObjectProperties.ID.SavedStackAddr,
-					IOSObjectProperties.DisplayName.SavedStackAddr),
-			new PropertyDescriptor(IOSObjectProperties.ID.State,
-					IOSObjectProperties.DisplayName.State),
-			new PropertyDescriptor(IOSObjectProperties.ID.SupervisorStackAddr,
-					IOSObjectProperties.DisplayName.SupervisorStackAddr),
-			new PropertyDescriptor(IOSObjectProperties.ID.SupervisorStackSize,
-					IOSObjectProperties.DisplayName.SupervisorStackSize),
-			new PropertyDescriptor(IOSObjectProperties.ID.ThreadBase,
-					IOSObjectProperties.DisplayName.ThreadBase),
-			new PropertyDescriptor(IOSObjectProperties.ID.Type,
-					IOSObjectProperties.DisplayName.Type),
-			new PropertyDescriptor(IOSObjectProperties.ID.UserStackAddr,
-					IOSObjectProperties.DisplayName.UserStackAddr),
-			new PropertyDescriptor(IOSObjectProperties.ID.UserStackSize,
-					IOSObjectProperties.DisplayName.UserStackSize), };
+		new PropertyDescriptor(IOSObjectProperties.ID.ObjectType,
+				IOSObjectProperties.DisplayName.ObjectType),
+		new PropertyDescriptor(IOSObjectProperties.ID.Name,
+				IOSObjectProperties.DisplayName.Name),
+		new PropertyDescriptor(IOSObjectProperties.ID.ID,
+				IOSObjectProperties.DisplayName.ID),
+		new PropertyDescriptor(IOSObjectProperties.ID.Priority,
+				IOSObjectProperties.DisplayName.Priority),
+		new PropertyDescriptor(IOSObjectProperties.ID.State,
+				IOSObjectProperties.DisplayName.State),
+		new PropertyDescriptor(IOSObjectProperties.ID.OwningProcessName,
+				IOSObjectProperties.DisplayName.OwningProcessName)
+	};
 
 	static {
 		for (int i = 0; i < s_propertyDescriptors.length; i++)
@@ -69,10 +51,12 @@ public class OSObjectThread extends OSObject {
 	}
 
 	static private String[] s_sortableProperties = {
-			IOSObjectProperties.ID.Name, IOSObjectProperties.ID.ID,
-			IOSObjectProperties.ID.Priority,
-			IOSObjectProperties.ID.OwningProcessName,
-			IOSObjectProperties.ID.State, IOSObjectProperties.ID.ThreadBase, };
+		IOSObjectProperties.ID.Name,
+		IOSObjectProperties.ID.ID,
+		IOSObjectProperties.ID.Priority,
+		IOSObjectProperties.ID.State,
+		IOSObjectProperties.ID.OwningProcessName
+	};
 
 	static private IPropertyDescriptor[] s_sortablePropertyDescriptors;
 	static {
