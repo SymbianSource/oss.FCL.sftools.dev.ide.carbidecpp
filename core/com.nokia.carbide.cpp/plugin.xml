@@ -29,7 +29,7 @@
 			value="Carbide.c++"/>
 		<property 
 			name="versionText" 
-			value="Version 2.1.0"/>
+			value="Version 2.2.0"/>
 		<property 
 			name="preferenceCustomization" 
 			value="plugin_customization.ini"/>
@@ -40,7 +40,7 @@
 		<!-- Product attributes that support themes and universal intro -->
 		<property
 			name="introTitle"
-			value="Carbide.c++ v2.1.0 for Symbian"/>
+			value="Carbide.c++ v2.2.0 for Symbian"/>
 		<property
 			name="introBrandingImage"
 			value="product:themes/carbide/graphics/root/brandmark.gif"/>
@@ -72,7 +72,7 @@
 		<!-- Splash screen attributes -->
 		<property 
 			name="startupProgressRect" 
-			value="0,244,469,21" /> 
+			value="0,245,469,22" /> 
 		<property 
 			name="startupForegroundColor" 
 			value="777777" />
