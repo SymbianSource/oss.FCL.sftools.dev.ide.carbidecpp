@@ -190,6 +190,9 @@ public class ConnectionsView extends ViewPart {
 			}
 			else if (value instanceof IConnectedService) {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
+				IConnection connection = findConnection((IConnectedService) value);
+				if (connection != null && isConnectionInUse(connection))
+					status = EStatus.IN_USE;
 				switch (status) {
 				case DOWN:
 					return STATUS_UNAVAIL_IMG;
@@ -203,30 +206,21 @@ public class ConnectionsView extends ViewPart {
 			}
 			return null;
 		}
-
-		private boolean isConnectionInUse(IConnection connection) {
-			Collection<IConnectedService> connectedServices = 
-				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
-			// if any service is in-use, then connection is in-use
-			for (IConnectedService connectedService : connectedServices) {
-				IStatus status = connectedService.getStatus();
-				if (status.getEStatus().equals(EStatus.IN_USE))
-					return true;
-			}
-			
-			return false;
-		}
 	}
 	
 	private class StatusLabelProvider extends ColumnLabelProvider {
-
 		public String getText(Object obj) {
 			TreeNode node = (TreeNode) obj;
 			Object value = node.getValue();
 			if (value instanceof IConnectedService) {
-				IStatus status = ((IConnectedService) value).getStatus();
-				if (!status.getEStatus().equals(EStatus.IN_USE)) // if in-use, we show it in the connection row
+				IStatus status = null;
+				IConnection connection = findConnection((IConnectedService) value);
+				if (connection != null)
+					status = getFirstInUseStatus(connection);
+				if (status == null) {
+					status = ((IConnectedService) value).getStatus();
 					return status.getShortDescription();
+				}
 			}
 			else if (value instanceof IConnection) {
 				IStatus status = getFirstInUseStatus((IConnection) value);
@@ -234,19 +228,6 @@ public class ConnectionsView extends ViewPart {
 					return status.getShortDescription();
 			}
 				
-			return null;
-		}
-
-		private IStatus getFirstInUseStatus(IConnection connection) {
-			Collection<IConnectedService> connectedServices = 
-				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
-			// if any service is in-use, then connection is in-use
-			for (IConnectedService connectedService : connectedServices) {
-				IStatus status = connectedService.getStatus();
-				if (status.getEStatus().equals(EStatus.IN_USE))
-					return status;
-			}
-			
 			return null;
 		}
 
@@ -280,11 +261,18 @@ public class ConnectionsView extends ViewPart {
 			Object value = node.getValue();
 			if (value instanceof IConnectedService) {
 				IStatus status = ((IConnectedService) value).getStatus();
-				if (!status.getEStatus().equals(EStatus.IN_USE)) { // if in-use, we show it in the connection row
+				IConnection connection = findConnection((IConnectedService) value);
+				if (!status.getEStatus().equals(EStatus.IN_USE) ||
+						!(connection != null && isConnectionInUse(connection))) { // if in-use, we show it in the connection row
 					String longDescription = status.getLongDescription();
 					if (longDescription != null)
 						longDescription = TextUtils.canonicalizeNewlines(longDescription, " "); //$NON-NLS-1$
 					return longDescription;
+				}
+			}
+			else if (value instanceof IConnection) {
+				if (isConnectionInUse((IConnection) value)) {
+					return Messages.getString("ConnectionsView.InUseDesc");
 				}
 			}
 			
@@ -738,5 +726,32 @@ public class ConnectionsView extends ViewPart {
 		super.dispose();
 	}
 	
+	private static IConnection findConnection(IConnectedService cs) {
+		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
+			for (IConnectedService connectedService : RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection)) {
+				if (cs.equals(connectedService))
+					return connection;
+			}
+		}
+		return null;
+	}
+
+	private static IStatus getFirstInUseStatus(IConnection connection) {
+		Collection<IConnectedService> connectedServices = 
+			RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+		// if any service is in-use, then connection is in-use
+		for (IConnectedService connectedService : connectedServices) {
+			IStatus status = connectedService.getStatus();
+			if (status.getEStatus().equals(EStatus.IN_USE))
+				return status;
+		}
+		
+		return null;
+	}
+
+	private boolean isConnectionInUse(IConnection connection) {
+		return getFirstInUseStatus(connection) != null;
+	}
+
 }
 
