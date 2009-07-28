@@ -28,7 +28,6 @@ public class FeatureUseTrackerConsts {
 	public static final String CARBIDE_SOPHIAWTI = "Carbide_SophiaWTI";
 	public static final String CARBIDE_OST_TRACE = "Carbide_OST_Trace";
 	public static final String CARBIDE_IDE = "Carbide_IDE"; // did user launch IDE
-	public static final String CARBIDE_PLATSIM = "Carbide_Platsim";
 	public static final String CARBIDE_INTERNALONLY = "Carbide_InternalOnly"; // many carbide extensions
 
 }
