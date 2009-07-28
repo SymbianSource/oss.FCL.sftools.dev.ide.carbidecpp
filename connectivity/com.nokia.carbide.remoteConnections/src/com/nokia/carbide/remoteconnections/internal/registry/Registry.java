@@ -297,14 +297,14 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 
 	public Collection<IConnectionType> getConnectionTypes() {
-		return connectionTypeIdMap.values();
+		return new ArrayList<IConnectionType>(connectionTypeIdMap.values());
 	}
 	
 	public Collection<IService> getCompatibleServices(IConnectionType connectionType) {
 		Check.checkContract(connectionTypeToServices != null);
 		Collection<IService> services = connectionTypeToServices.get(connectionType);
 		if (services != null)
-			return services;
+			return new ArrayList<IService>(services);
 		return Collections.EMPTY_LIST;
 	}
 	
@@ -403,11 +403,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionStore#getConnections()
 	 */
 	public Collection<IConnection> getConnections() {
-		return connectionToConnectedServices.keySet();
+		return new ArrayList<IConnection>(connectionToConnectedServices.keySet());
 	}
 	
 	public Collection<IConnectedService> getConnectedServices(IConnection connection) {
-		return connectionToConnectedServices.get(connection);
+		return new ArrayList<IConnectedService>(connectionToConnectedServices.get(connection));
 	}
 
 	private File getConnectionStorageFile() {
@@ -439,7 +439,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 	
 	public Collection<IService> getServices() {
-		return services;
+		return new ArrayList<IService>(services);
 	}
 
 	public IService findServiceByID(String id) {
