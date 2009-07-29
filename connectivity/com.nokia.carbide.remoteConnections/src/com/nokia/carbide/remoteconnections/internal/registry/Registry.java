@@ -407,7 +407,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 	
 	public Collection<IConnectedService> getConnectedServices(IConnection connection) {
-		return new ArrayList<IConnectedService>(connectionToConnectedServices.get(connection));
+		List<IConnectedService> connectedServices = connectionToConnectedServices.get(connection);
+		if (connectedServices != null)
+			return new ArrayList<IConnectedService>(connectedServices);
+		
+		return null;
 	}
 
 	private File getConnectionStorageFile() {
