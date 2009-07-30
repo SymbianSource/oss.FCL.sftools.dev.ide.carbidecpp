@@ -1,0 +1,4 @@
+dev/ide/carbidecpp/carbidesdk/com.nokia.carbide.cpp.sdk-feature,features/com.nokia.carbide.cpp.sdk
+dev/ide/carbidecpp/carbidesdk/com.nokia.carbide.cpp.sdk.doc.user,plugins/com.nokia.carbide.cpp.sdk.doc.user
+dev/ide/carbidecpp/carbidesdk/com.nokia.carbide.cpp.sdk.examples,plugins/com.nokia.carbide.cpp.sdk.examples
+

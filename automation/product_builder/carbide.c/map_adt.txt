@@ -1,0 +1,15 @@
+dev/ide/carbidecppplugins/frameworkplugins/com.nokia.s60tools.extensions.framework,features/com.nokia.s60tools.extensions.framework
+dev/ide/carbidecppplugins/frameworkplugins/com.nokia.s60tools.sdk,plugins/com.nokia.s60tools.sdk
+dev/ide/carbidecppplugins/frameworkplugins/com.nokia.s60tools.ui,plugins/com.nokia.s60tools.ui
+dev/ide/carbidecppplugins/frameworkplugins/com.nokia.s60tools.util,plugins/com.nokia.s60tools.util
+dev/ide/carbidecppplugins/sftemplateswizard/com.nokia.carbide.extensions.symbianfoundationtemplates,features/com.nokia.carbide.extensions.symbianfoundationtemplates
+dev/ide/carbidecppplugins/sftemplateswizard/com.nokia.s60tools.symbianfoundationtemplates,plugins/com.nokia.s60tools.symbianfoundationtemplates
+dev/ide/carbidecppplugins/sftemplateswizard/com.nokia.s60tools.symbianfoundationtemplates.help,plugins/com.nokia.s60tools.symbianfoundationtemplates.help
+ana/staticanaapps/srcanaapps/apiquerytool/com.nokia.carbide.extensions.apiquery,features/com.nokia.carbide.extensions.apiquery
+ana/staticanaapps/srcanaapps/apiquerytool/com.nokia.s60tools.apiquery,plugins/com.nokia.s60tools.apiquery
+ana/staticanaapps/srcanaapps/apiquerytool/com.nokia.s60tools.apiquery.cache,plugins/com.nokia.s60tools.apiquery.cache
+ana/staticanaapps/srcanaapps/apiquerytool/com.nokia.s60tools.apiquery.cache.help,plugins/com.nokia.s60tools.apiquery.cache.help
+ana/staticanaapps/srcanaapps/apiquerytool/com.nokia.s60tools.apiquery.help,plugins/com.nokia.s60tools.apiquery.help
+ana/staticanaapps/srcanaapps/depexplorer/com.nokia.carbide.extensions.appdep,features/com.nokia.carbide.extensions.appdep
+ana/staticanaapps/srcanaapps/depexplorer/com.nokia.s60tools.appdep,plugins/com.nokia.s60tools.appdep
+ana/staticanaapps/srcanaapps/depexplorer/com.nokia.s60tools.appdep.help,plugins/com.nokia.s60tools.appdep.help

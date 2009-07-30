@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.4"?>
+
+<product name="Carbide.c++" id="com.nokia.carbide.cpp.product" application="org.eclipse.ui.ide.workbench" version="${CARBIDE_VERSION_3DIGITS}" useFeatures="true">
+
+   <aboutInfo>
+      <image path="icons/about.png"/>
+      <text>
+         %productBlurb
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgs>-Xms40m
+-Xmx1024m
+-XX:MaxPermSize=96M</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="icons/Carbide_c_icon_16x16.png" i32="icons/Carbide_c_icon_32x32.png" i48="icons/Carbide_c_icon_48x48.png"/>
+
+   <splash
+      location="com.nokia.carbide.cpp"
+      startupProgressRect="0,244,469,21"
+      startupMessageRect="12,190,441,15"
+      startupForegroundColor="777777" />
+   <launcher name="Carbide.c++.${CARBIDE_VERSION_2DIGITS}">
+      <solaris/>
+      <win useIco="true">
+         <ico path="/com.nokia.carbide.cpp/icons/Carbide_c_flat.ico"/>
+         <bmp/>
+      </win>
+   </launcher>
+
+   <intro introId="com.nokia.carbide.cpp.intro"/>
+
+   <vm>
+   </vm>
+
+   <plugins>
+      <plugin id="org.eclipse.ui.views.log"/>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.cdt.platform" version="0.0.0"/>
+      <feature id="org.eclipse.cdt.gnu.build" version="0.0.0"/>
+      <feature id="org.eclipse.cdt.gnu.debug" version="0.0.0"/>
+      <feature id="org.eclipse.cdt" version="0.0.0"/>
+      <feature id="com.nokia.carbide.cpp" version="0.0.0"/>
+      <feature id="com.nokia.carbide.cpp.sdk" version="0.0.0"/>
+      <feature id="com.nokia.carbide.cpp.capabilityScanner" version="0.0.0"/>
+      <feature id="com.nokia.carbide.cpp.codescanner" version="0.0.0"/>
+      <feature id="com.nokia.carbide.search.system" version="0.0.0"/>
+      <feature id="com.nokia.carbide.bugreport" version="0.0.0"/>
+      <feature id="com.nokia.carbide.cpp.pi" version="0.0.0"/>
+      <feature id="com.nokia.sdt.uidesigner" version="0.0.0"/>
+      <feature id="com.nokia.carbide.cpp.uiq.ui" version="0.0.0"/>
+      <feature id="org.eclipse.cvs" version="0.0.0"/>
+      <feature id="org.eclipse.dd.debug.memory.renderings" version="0.0.0"/>
+      <feature id="org.eclipse.platform" version="0.0.0"/>
+      <feature id="org.eclipse.rcp" version="0.0.0"/>
+      <feature id="org.eclipse.draw2d" version="0.0.0"/>
+      <feature id="org.eclipse.emf.common" version="0.0.0"/>
+      <feature id="org.eclipse.emf.common.ui" version="0.0.0"/>
+      <feature id="org.eclipse.emf.databinding" version="0.0.0"/>
+      <feature id="org.eclipse.emf.databinding.edit" version="0.0.0"/>
+      <feature id="org.eclipse.emf.ecore" version="0.0.0"/>
+      <feature id="org.eclipse.emf.ecore.edit" version="0.0.0"/>
+      <feature id="org.eclipse.emf.ecore.editor" version="0.0.0"/>
+      <feature id="org.eclipse.emf.ecore.sdo" version="0.0.0"/>
+      <feature id="org.eclipse.emf.ecore.sdo.edit" version="0.0.0"/>
+      <feature id="org.eclipse.emf.edit" version="0.0.0"/>
+      <feature id="org.eclipse.emf.edit.ui" version="0.0.0"/>
+      <feature id="org.eclipse.emf.mapping" version="0.0.0"/>
+      <feature id="org.eclipse.emf.mapping.ecore" version="0.0.0"/>
+      <feature id="org.eclipse.emf.mapping.ecore.editor" version="0.0.0"/>
+      <feature id="org.eclipse.emf.mapping.ui" version="0.0.0"/>
+      <feature id="org.eclipse.gef" version="0.0.0"/>
+      <feature id="org.eclipse.help" version="0.0.0"/>
+      <feature id="org.eclipse.xsd" version="0.0.0"/>
+      <feature id="org.eclipse.xsd.edit" version="0.0.0"/>
+      <feature id="org.eclipse.xsd.editor" version="0.0.0"/>
+      <feature id="org.eclipse.xsd.mapping" version="0.0.0"/>
+      <feature id="org.eclipse.xsd.mapping.editor" version="0.0.0"/>
+
+      <!-- Public Extensions -->
+      <feature id="com.nokia.s60tools.extensions.framework" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.appdep" version="0.0.0"/>
+
+      <!-- ADT Extensions -->
+      <feature id="com.nokia.carbide.extensions.apiquery" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.symbianfoundationtemplates" version="0.0.0"/>
+
+      <!-- PDT Extensions -->
+      <feature id="com.nokia.carbide.extensions.compatibilityanalyser" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.imaker" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.metadataeditor" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.stif" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.hticonnection" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.remotecontrol" version="0.0.0"/>
+      <feature id="com.nokia.carbide.extensions.creator" version="0.0.0"/>
+   </features>
+
+</product>
