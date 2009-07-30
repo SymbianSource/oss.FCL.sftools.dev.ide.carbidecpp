@@ -70,10 +70,6 @@ run mkdir -p $CHECKOUT_FOLDER
 if [ "yes" = "yes" ]; then
     run rm -f $CHECKOUT_FOLDER/buildtags.txt
 
-    hg_host=dacvs002.americas.nokia.com/hg/Austin
-    hg_clone $CHECKOUT_FOLDER $CHECKOUT_FOLDER/buildtags.txt $HG_USERNAME $HG_PASSWORD $hg_host default \
-        SF_build
-
     # dev/eclipseenv/buildlayout34 is too long; so, use a shorter path for this one
     hg_host=$HG_EPL_HOST/dev/eclipseenv
     hg_clone $CHECKOUT_FOLDER $CHECKOUT_FOLDER/buildtags.txt $HG_USERNAME $HG_PASSWORD $hg_host $HG_REVISION \
@@ -425,7 +421,7 @@ if [ "$DO_PUBLIC_UPDATE_SITE" = "yes" ]; then
     copy_plugins $BUILD_FOLDER/parts_carbide/update_site $BUILD_FOLDER/layout_public/update_site $thisDir/map_cdk.txt
     copy_plugins $BUILD_FOLDER/parts_eclispe_home/update_site $BUILD_FOLDER/layout_public/update_site $thisDir/map_dev_kit.txt
 
-    cat $CHECKOUT_FOLDER/SF_build/automation/product_builder/carbide.c/site.xml \
+    cat $CHECKOUT_FOLDER/dev/ide/carbidecpp/automation/product_builder/carbide.c/site.xml \
         | sed "s/\${QUALIFIER}/$BUILD_NUM/g" \
         | sed "s/\${CARBIDE_VERSION_2DIGITS}/${CARBIDE_VERSION_2DIGITS}/g" \
         | sed "s/\${CARBIDE_VERSION_3DIGITS}/${CARBIDE_VERSION_3DIGITS}/g" \
