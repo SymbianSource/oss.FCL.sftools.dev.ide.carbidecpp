@@ -14,12 +14,26 @@ rem set WORKSPACE. The path to WORKSPACE must be short (about 30 characters)
 set WORKSPACE=D:\work\build
 if not exist %WORKSPACE% mkdir %WORKSPACE%
 
-rem set Mercurial host, revision, username and password
-set HG_SFL_HOST=dacvs002.americas.nokia.com/hg/Austin/MCL/sftools
-set HG_EPL_HOST=dacvs002.americas.nokia.com/hg/Austin/MCL/sftools
-set HG_REVISION=RCL_2_1
+rem set Mercurial host
+rem
+rem Nokia Austin
+rem set HG_SFL_HOST=dacvs002.americas.nokia.com/hg/Austin/MCL/sftools
+rem set HG_EPL_HOST=dacvs002.americas.nokia.com/hg/Austin/MCL/sftools
+rem
+rem Nokia London
+rem set HG_SFL_HOST=sylgbpwe0001.symbian.intra/hg/i_hg/sfl/MCL/sftools
+rem set HG_EPL_HOST=sylgbpwe0001.symbian.intra/hg/i_hg/oss/MCL/sftools
+rem
+rem Symbian Foundation
+set HG_SFL_HOST=https://developer.symbian.org/sfl/MCL/sftools
+set HG_EPL_HOST=https://developer.symbian.org/oss/MCL/sftools
+
+rem set Mercurial username and password
 set HG_USERNAME=
 set HG_PASSWORD=
+
+rem set Mercurial revision
+set HG_REVISION=RCL_2_1
 
 chdir /D %TOP%
 hg clone -r %HG_REVISION% http://%HG_USERNAME%:%HG_PASSWORD%@%HG_EPL_HOST%/dev/ide/carbidecpp/
