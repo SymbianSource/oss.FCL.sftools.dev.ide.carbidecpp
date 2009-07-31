@@ -27,7 +27,6 @@ import com.nokia.sdt.utils.drawing.ImageDump;
 import com.nokia.sdt.utils.drawing.TextRendering;
 
 import org.eclipse.core.runtime.Path;
-import org.eclipse.osgi.framework.internal.core.PackageSource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.*;
 

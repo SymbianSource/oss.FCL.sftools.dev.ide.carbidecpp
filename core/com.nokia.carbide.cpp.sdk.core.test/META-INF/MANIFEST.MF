@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.carbide.cpp.sdk.core,
  org.eclipse.emf.common,
  com.nokia.cpp.utils.core,
- com.nokia.carbide.cpp.epoc.engine
+ com.nokia.carbide.cpp.epoc.engine,
+ org.eclipse.emf.ecore 
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.sdk.core.test
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

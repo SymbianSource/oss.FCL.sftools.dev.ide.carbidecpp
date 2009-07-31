@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.core.runtime,
  com.nokia.sdt.uimodel,
  com.nokia.cpp.utils.core,
  org.eclipse.emf.ecore.xmi,
- org.eclipse.emf.edit
+ org.eclipse.emf.edit,
+ org.eclipse.swt;bundle-version="3.5.0" 
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.nokia.sdt.emf.dm.DataModelPlugin

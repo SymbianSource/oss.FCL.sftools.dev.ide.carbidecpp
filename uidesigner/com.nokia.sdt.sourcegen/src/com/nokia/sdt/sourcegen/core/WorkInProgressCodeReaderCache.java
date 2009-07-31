@@ -17,10 +17,13 @@
 
 package com.nokia.sdt.sourcegen.core;
 
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.eclipse.cdt.core.index.IIndexFileLocation;
 import org.eclipse.cdt.core.parser.CodeReader;
 import org.eclipse.cdt.core.parser.ICodeReaderCache;
-
-import java.util.HashMap;
+import org.eclipse.core.runtime.CoreException;
 
 /**
  * ICodeReaderCache that has infinite storage.  Used during sourcegen.
@@ -78,4 +81,8 @@ public class WorkInProgressCodeReaderCache implements ICodeReaderCache {
 		map.put(key, reader);
 	}
 	
+	public CodeReader get(String key, IIndexFileLocation ifl) throws CoreException, IOException { 
+		// TODO this method added in CDT 6.0 - do we need to do anything with ifl? 
+		return get(key); 
+	}
 }
