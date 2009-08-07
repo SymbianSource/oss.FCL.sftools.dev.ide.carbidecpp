@@ -152,7 +152,7 @@ long CTcpComm::OpenPort()
 			{
 				int i = SO_MAX_MSG_SIZE;
 				// set socket options
-				BOOL keepAlive = FALSE;
+				BOOL keepAlive = TRUE;
 				setsockopt(m_socket, SOL_SOCKET, SO_KEEPALIVE, (const char*)&keepAlive, sizeof(BOOL));
 
 				struct linger l;
