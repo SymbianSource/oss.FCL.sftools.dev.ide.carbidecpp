@@ -16,7 +16,6 @@
 */
 package com.nokia.cdt.debug.cw.symbian.ui.executables;
 
-import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.cdt.debug.core.executables.ISourceFileRemapping;
 import org.eclipse.cdt.debug.core.sourcelookup.ICSourceLocator;
 import org.eclipse.cdt.debug.internal.core.sourcelookup.CSourceLookupDirector;
@@ -34,13 +33,13 @@ import com.nokia.cdt.debug.cw.symbian.SymbianSourceContainer;
 
 public class SymbianSourceFileRemapping implements ISourceFileRemapping {
 
-	public String remapSourceFile(Executable executable, String filePath) {
+	public String remapSourceFile(IPath executable, String filePath) {
 
 		String epocRoot = "";
-		String[] segs = executable.getPath().segments();
+		String[] segs = executable.segments();
 		for (int i = 0; i < segs.length; i++) {
 			if (segs[i].equalsIgnoreCase("epoc32"))
-				epocRoot = executable.getPath().removeLastSegments(segs.length - i).toOSString();				
+				epocRoot = executable.removeLastSegments(segs.length - i).toOSString();				
 		}
 		if (epocRoot.length() > 0)
 		{
