@@ -188,9 +188,6 @@ public abstract class CarbideFormEditor extends FormEditor
 		baseEditorContext.textEditorContext = undoManager.getUndoContext();
 		baseEditorContext.allContext.addMatch(baseEditorContext.textEditorContext);
 		baseEditorContext.modelOperationContext.addMatch(baseEditorContext.textEditorContext);
-		
-		// mark the buffer dirty to inhibit auto-reload. See comments on setBufferDirty
-		textEditorPage.setBufferDirty(true);
 	}
 	
 	@Override
@@ -236,6 +233,8 @@ public abstract class CarbideFormEditor extends FormEditor
 			// user must have undone everything.
 			result = true;
 		}
+		// mark the buffer dirty to inhibit auto-reload. See comments on setBufferDirty
+		textEditorPage.setBufferDirty(result);
 		return result;
 	}
 	
