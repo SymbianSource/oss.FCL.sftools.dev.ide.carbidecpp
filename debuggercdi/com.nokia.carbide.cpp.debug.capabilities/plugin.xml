@@ -25,24 +25,65 @@
 -->
 
 <!-- The following UI elements are from org.eclipse.cdt.launch -->
+ 
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.launch.localCLaunch">
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.cdi.launch.localCLaunch">
       </activityPatternBinding>
 
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.launch.localAttachCLaunch">
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.dsf.gdb/org.eclipse.cdt.dsf.gdb.launch.localCLaunch">
       </activityPatternBinding>
 
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.launch.coreFileCLaunch">
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.dsf.gdb/org.eclipse.cdt.dsf.gdb.launch.remoteCLaunch">
       </activityPatternBinding>
 
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.debug.ui.localCShortcut">
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.postmortemLaunchType">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.attachLaunchType">
+      </activityPatternBinding>
+
+     <activityPatternBinding
+           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.launch.remote/org.eclipse.rse.remotecdt.RemoteApplicationLaunch">
+      </activityPatternBinding>
+
+     <activityPatternBinding
+           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.examples.dsf.pda/org.eclipse.cdt.examples.dsf.pda.launchType">
+      </activityPatternBinding>
+
+     <activityPatternBinding
+           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.localCShortcut">
+      </activityPatternBinding>
+
+     <activityPatternBinding
+           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.applicationLaunchType">
+      </activityPatternBinding>
+
+     <activityPatternBinding
+           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.debug.gdbjtag.core/org.eclipse.cdt.debug.gdbjtag.launchConfigurationType">
       </activityPatternBinding>
 
 <!-- The following UI elements are from org.eclipse.cdt.debug.ui -->
