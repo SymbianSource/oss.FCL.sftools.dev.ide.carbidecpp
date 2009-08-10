@@ -88,6 +88,7 @@ public class SettingsData {
 	public static final int LCS_ExeTargetingRule_ExeList = 2;
 	public static final int LCS_ExeTargetingRule_All = 3;
 	public static final String LCS_ExecutableTargetingRule = PREFIX + ".LCS_ExecutableTargetingRule";
+	public static final String AttachToProcessDialog_Selection = PREFIX + ".AttachToProcessName";
 
 	// Launch Type IDs
 	private static final String LAUNCH_TYPE_PREFIX = "com.nokia.cdt.debug.launch."; //$NON-NLS-1$
