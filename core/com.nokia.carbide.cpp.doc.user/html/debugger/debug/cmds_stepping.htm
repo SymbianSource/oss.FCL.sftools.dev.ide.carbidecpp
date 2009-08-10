@@ -9,11 +9,11 @@
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Stepping Over, Into, and Out of Routines</h2>
-<p>Once you've <a href="../../tasks/debugger/work_debug_act_resume.htm">suspended</a> a program debug session, the <a href="viewing_debug.htm">Debug</a> view provides controls to walk through program code, including commands for:</p>
+<p>Once you've <a href="cmds_resuming.htm">suspended</a> a program debug session, the <a href="viewing_debug.htm">Debug</a> view provides controls to walk through program code, including commands for:</p>
 <ul>
   <li><a href="#STEP_OVER">Stepping over a routine</a></li>
   <li><a href="#STEP_INTO">Stepping into a routine</a></li>
-  <li><a href="#STEP_OUT">Stepping out of a routine</a><a href="#RESUME_PGM"></a></li>
+  <li><a href="#STEP_OUT">Stepping out of a routine</a></li>
 </ul>
 <h4><a name="STEP_OVER" id="STEP_OVER"></a>Stepping over a routine</h4>
 <p>Use the <b>Step Over</b> command  (<img src="../../images/icons/btn_stepover.png" width="19" height="14" />) to execute the current statement and advance to the next statement in the source code. If the current statement is a routine call, program execution continues until reaching one of these points:</p>
@@ -34,9 +34,9 @@
   </ul>
 <h4><a name="STEP_INTO" id="STEP_OVER2"></a>Stepping into a routine</h4>
 <p>Use the <b>Step Into</b> command (<img src="../../images/icons/btn_stepinto.png" width="18" height="14" />) to execute one source-code statement at a time and follow execution into a routine call.</p>
-<p>When stepping through a program in a debug session the IDE attempts to match the program counter (PC) location in the executable with a known project source file. If there is no source file associated with the PC the debugger displays in the Debug view the current PC address of the thread (e.g. <span class="code">0x6002CC11(EUSER.DLL)()</span>) instead of the function name. At this point you can open the Disassembly view to step through the assembler code. This most commonly happens when trying to step into Symbian OS code. We recommend that you <a href="../../tasks/debugger/work_debug_act_stepover.htm">Step Return</a> out of the OS code and back into your project to continue debugging.</p>
+<p>When stepping through a program in a debug session the IDE attempts to match the program counter (PC) location in the executable with a known project source file. If there is no source file associated with the PC the debugger displays in the Debug view the current PC address of the thread (e.g. <span class="code">0x6002CC11(EUSER.DLL)()</span>) instead of the function name. At this point you can open the Disassembly view to step through the assembler code. This most commonly happens when trying to step into Symbian OS code. We recommend that you <a href="cmds_stepping.htm">Step Return</a> out of the OS code and back into your project to continue debugging.</p>
 <ul>
-  <li>Click the <b>Step Into</b> button (<img src="../../images/icons/btn_stepinto.png" width="18" height="14" />) in the <a href="../../reference/view_debug.htm">Debug</a> view </li>
+  <li>Click the <b>Step Into</b> button (<img src="../../images/icons/btn_stepinto.png" width="18" height="14" />) in the <a href="viewing_debug.htm">Debug</a> view </li>
   <li>Right-click the thread in the <b>Debug</b> view and select <b>Step Into</b> from the  context menu</li>
   <li>Select <b>Run &gt; Step Into</b> from the  menu bar </li>
 </ul>
@@ -52,7 +52,7 @@
 <p>Use the <b>Step Return</b> command (<img src="../../images/icons/btn_stepreturn.png" width="17" height="14" />) to execute the rest of the current routine and stop program execution after the routine returns to its caller. This command causes execution to return up the calling chain.</p>
 <p>To step out of a  routine:</p>
   <ul>
-    <li>Click the <b>Step Return</b> button (<img src="../../images/icons/btn_stepreturn.png" width="17" height="14" />) in the <a href="../../reference/view_debug.htm">Debug</a> view </li>
+    <li>Click the <b>Step Return</b> button (<img src="../../images/icons/btn_stepreturn.png" width="17" height="14" />) in the <a href="viewing_debug.htm">Debug</a> view </li>
     <li>Right-click the thread in the <b>Debug</b> view, then select <b>Step Return</b> from the  context menu</li>
     <li>Select <b>Run &gt; Step Return</b> from the  menu bar </li>
 </ul>

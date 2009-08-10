@@ -15,6 +15,7 @@
 		</topic>
 	
 		<topic label="Tour of the UI"				href="html/concepts/tour.html" />
+		<topic label="Concepts" 					href="html/concepts/concepts.htm" />
 
 		<topic label="Application Emulator Debug Example"  	href="html/tasks/start/carbide_example.htm" >
 			<topic label="1. Creating New Projects" 		        	href="html/tasks/CreatingNewProjects.html" />

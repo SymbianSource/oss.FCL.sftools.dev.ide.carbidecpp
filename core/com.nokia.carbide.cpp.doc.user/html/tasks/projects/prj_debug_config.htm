@@ -10,7 +10,7 @@
 </head>
 <body bgcolor="#ffffff">
 <h2>Creating a Launch Configuration</h2>
-<p>To run or debug a project you need a <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a>. A project must have at least one launch configuration, and can have as many as necessary. When run on an emulator project the wizard simply creates an emulator launch configuration and launches the emulator. When running a device project for the first time the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a> seeks additional information required to create the launch configuration, then downloads the executable to the device and launches it. Once the emulator or device are loaded with the executable, the debug session  can commence. </p>
+<p>To run or debug a project you need a <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a>. A project must have at least one launch configuration, and can have as many as necessary. When run on an emulator project the wizard simply creates an emulator launch configuration and launches the emulator. When running a device project for the first time the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a> seeks additional information required to create the launch configuration, then downloads the executable to the device and launches it. Once the emulator or device are loaded with the executable, the debug session  can commence. </p>
 <p>There are two methods for setting up a launch configuration, including:</p>
 <ul>
   <li><b>Default launch configuration</b>&#8212;  automatically sets up a default launch configuration to run or debug the project on the first Run or Debug execution. This provides a quick and easy method to start running or debugging a new project without the hassle of setting a lot of options. The default launch configuration can always be edited later as the project launch requirements change.</li>
@@ -27,12 +27,12 @@
   <p>Carbide.c++ creates a default launch configuration for the project and begins running or debugging the project. If the project already has a defined launch configuration, clicking Run or Debug uses it instead of creating a new one. There are two possible scenarios when creating a default launch configuration: </p>
   <ul>
     <li><b>for emulator targets </b> - an emulator launch configuration is created based on the project settings </li>
-    <li><b>for target devices</b> - the <a href="wiz_new_launch_config.htm">New Launch Configuration Wizard</a> appears asking for additional information</li>
+    <li><b>for target devices</b> - the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a> appears asking for additional information</li>
   </ul>
 </ul>
 </div>
   <p class="note"><b>NOTE</b> To see if a project already has a launch configuration, open a Run or Debug window using the <b>Run &gt; Open Run Dialog...</b> or <b>Run &gt; Open Debug Dialog...</b> menu items. 
-    </blockquote>
+    
   </p>
   <p>In the event that the default launch configuration settings need to be changed, it is possible to edit them in the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window, or create a new launch configuration for the project that deviates from the default settings.</p>
 <div class="step">
@@ -55,7 +55,7 @@
   </li>
   <p align="center"><img src="images/run_config_new.png" width="787" height="489" alt="New launch configuration" /> </p>
     <p class="figure">Figure 2 - New launch configuration with name and settings filled in (emulator)</p>
-  </li>
+  
   <li>View the information to define the project and executable
   <p>Modify or fill in the following fields in the Main tab so the IDE
     can setup the configuration properly each time. Typically when creating
@@ -72,9 +72,9 @@
     for the project
     <ul>
       <li>Environment (<i>Eclipse</i>) </li>
-      <li><a href="../../reference/launch_configs/emulator_debugger.htm">Debugger</a></li>
-      <li><a href="../../reference/launch_configs/page_executables.htm">Executables</a></li>
-      <li><a href="../../reference/wnd_carbide_pref_x86.htm">x86 Exceptions</a> </li>
+      <li><a href="../../projects/launch/page_debugger.htm">Debugger</a></li>
+      <li><a href="../../projects/launch/page_executables.htm">Executables</a></li>
+      <li><a href="../../projects/launch/page_exceptions.htm">x86 Exceptions</a> </li>
       <li>Arguments (<i>Eclipse</i>) </li>
       <li>Source (<i>Eclipse</i>) </li>
       <li>Common (<i>Eclipse</i>) </li>
@@ -93,9 +93,8 @@
     <li><a href="../CreatingNewProjects.html">Creating Projects</a></li>
     <li><a href="prj_build.htm">Building Projects</a></li>
     <li><a href="prj_debug_dlls.htm">Debugging DLLs</a></li>
-    <li><a href="../../reference/view_executables.htm">Executables</a> view  </li>
 </ul>
-  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>
