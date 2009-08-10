@@ -45,7 +45,7 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		super(projDes.getProject());
 		this.projDes = projDes;
 		
-		initializeDefaults(projDes);
+		initializeDefaults();
 	}
 
 	/*
@@ -56,7 +56,7 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		// get the latest ICProjectDescription
 		super(cpi.projectTracker.getProject());
 
-		projDes = getProjectDescription();
+		projDes = getProjectDescription(true);
 		projectRelativeBldInfPath = cpi.projectRelativeBldInfPath;
 		buildFromInf = cpi.buildFromInf;
 		overrideWorkspaceSettings = cpi.overrideWorkspaceSettings;

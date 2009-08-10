@@ -42,6 +42,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
@@ -269,12 +270,12 @@ public class BuildConfigurationData extends CConfigurationData {
 	private void persistCache() {
 		// persist the cache between IDE launches.
 		try {
-			ICarbideProjectInfo cpi = carbideBuildConfig.getCarbideProject();
+			final ICarbideProjectInfo cpi = carbideBuildConfig.getCarbideProject();
 			if (cpi == null) {
 				return;
 			}
 			
-			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject());
+			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject(), false);
 			if (projDes != null) {
 				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
 				if (configDes != null) {
@@ -292,8 +293,17 @@ public class BuildConfigurationData extends CConfigurationData {
 					}
 					storage.setAttribute(FILES_CACHE, filesCacheValue);
 
-					// save the CDT project description
-					CCorePlugin.getDefault().setProjectDescription(cpi.getProject(), projDes, true, new NullProgressMonitor());
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject());
+							try {
+								// save the CDT project description
+								CCorePlugin.getDefault().setProjectDescription(cpi.getProject(), projDes, true, new NullProgressMonitor());
+							} catch (CoreException e) {
+								CarbideBuilderPlugin.log(e);
+							}
+						}
+					});
 				}
 			}
 		} catch (CoreException e) {

@@ -83,9 +83,9 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		this.projectTracker = new TrackedResource(project);
 		
 		try {
-			ICProjectDescription projDes = getProjectDescription();
+			ICProjectDescription projDes = getProjectDescription(false);
 			if (projDes != null) {
-				initializeDefaults(projDes);
+				initializeDefaults();
 
 				ICStorageElement storage = projDes.getStorage(CarbideBuilderPlugin.getCarbideBuilderExtensionID(), false);
 				if (storage != null) {
@@ -232,7 +232,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		}
 	}
 	
-	protected void initializeDefaults(ICProjectDescription projDes) {
+	protected void initializeDefaults() {
 		overrideWorkspaceSettings = false;
 
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(projectTracker.getProject())) {
@@ -260,7 +260,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		
 		List<ICarbideBuildConfiguration> configs = new ArrayList<ICarbideBuildConfiguration>();
 		
-		ICProjectDescription projectDescription = getProjectDescription();
+		ICProjectDescription projectDescription = getProjectDescription(false);
 		if (projectDescription != null) {
 			for (ICConfigurationDescription config : projectDescription.getConfigurations()) {
 				CConfigurationData data = config.getConfigurationData();
@@ -274,7 +274,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	}
 	
 	public ICarbideBuildConfiguration getNamedConfiguration(String configName) {
-		ICProjectDescription projectDescription = getProjectDescription();
+		ICProjectDescription projectDescription = getProjectDescription(false);
 		if (projectDescription != null) {
 			ICConfigurationDescription config = projectDescription.getConfigurationByName(configName);
 			if (config != null) {
@@ -289,7 +289,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	}
 	
 	public ICarbideBuildConfiguration getDefaultConfiguration() {
-		ICProjectDescription projectDescription = getProjectDescription();
+		ICProjectDescription projectDescription = getProjectDescription(false);
 		if (projectDescription == null)
 			return null;
 		ICConfigurationDescription config = projectDescription.getActiveConfiguration();
@@ -412,8 +412,8 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		return workingDir;
 	}
 	
-	protected ICProjectDescription getProjectDescription() {
-		return CoreModel.getDefault().getProjectDescription(projectTracker.getProject());
+	protected ICProjectDescription getProjectDescription(boolean writable) {
+		return CoreModel.getDefault().getProjectDescription(projectTracker.getProject(), writable);
 	}
 	
 	public int getCleanLevel() {
