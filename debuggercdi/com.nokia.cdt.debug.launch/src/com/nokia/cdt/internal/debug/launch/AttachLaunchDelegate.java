@@ -133,7 +133,7 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 								String defaultProcessName = exeFile.getPath().removeFileExtension().lastSegment();
 								OSProcess attachTarget = null;
 								String choosenProcessTarget = config.getAttribute(SettingsData.AttachToProcessDialog_Selection, "");
-								if (!choosenProcessTarget.contentEquals("")) {
+								if (choosenProcessTarget.length() > 0) {
 									attachTarget = chooseProcessTargetNoUI(processesOnTarget, choosenProcessTarget);
 								} else {
 									attachTarget = chooseProcessTarget(processesOnTarget, defaultProcessName);									
@@ -206,7 +206,7 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 		attachTarget = null;
 
 		for (OSProcess process : processesOnTarget) {
-			if (process.getName().contains(choosenProcessName)) {
+			if (process.parseProcess().getProcessName().equals(choosenProcessName)) {
 				attachTarget = process;	
 				break;
 			}
