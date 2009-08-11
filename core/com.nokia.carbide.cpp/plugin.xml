@@ -17,19 +17,13 @@
 			value="icons/Carbide_c_icon_16x16.png,icons/Carbide_c_icon_32x32.png,icons/Carbide_c_icon_48x48.png"/> 
 		<property 
 			name="aboutImage" 
-			value="icons/about.png"/> 
-		<property 
-			name="aboutTextImage" 
-			value="icons/aboutTextImage.png"/>       
+			value="icons/about.png"/>   
 		<property 
 			name="aboutText" 
 			value="%productBlurb"/> 
 		<property 
 			name="appName" 
 			value="Carbide.c++"/>
-		<property 
-			name="versionText" 
-			value="Version 2.2.0"/>
 		<property 
 			name="preferenceCustomization" 
 			value="plugin_customization.ini"/>

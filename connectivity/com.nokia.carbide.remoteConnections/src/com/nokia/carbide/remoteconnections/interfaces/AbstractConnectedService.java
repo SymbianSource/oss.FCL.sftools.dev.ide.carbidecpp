@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 
 import java.lang.reflect.InvocationTargetException;
@@ -178,7 +179,7 @@ public abstract class AbstractConnectedService implements IConnectedService {
 			return;
 			
 		final TestResult result[] = { null };
-		if (runnableContext != null) {
+		if (runnableContext != null && (!(runnableContext instanceof WizardDialog) || ((WizardDialog) runnableContext).getShell() != null)) {
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
 					try {
