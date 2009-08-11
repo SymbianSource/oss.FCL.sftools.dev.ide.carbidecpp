@@ -131,7 +131,13 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 								
 								// Ask user to choose a process
 								String defaultProcessName = exeFile.getPath().removeFileExtension().lastSegment();
-								OSProcess attachTarget = chooseProcessTarget(processesOnTarget, defaultProcessName);
+								OSProcess attachTarget = null;
+								String choosenProcessTarget = config.getAttribute(SettingsData.AttachToProcessDialog_Selection, "");
+								if (choosenProcessTarget.length() > 0) {
+									attachTarget = chooseProcessTargetNoUI(processesOnTarget, choosenProcessTarget);
+								} else {
+									attachTarget = chooseProcessTarget(processesOnTarget, defaultProcessName);									
+								}
 								
 								if (attachTarget == null) {
 									this.cancel(LaunchMessages.getString("LocalAttachLaunchDelegate.No_Process_ID_selected"), 0); //$NON-NLS-1$
@@ -192,6 +198,19 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 				}
 			}
 		});
+
+		return attachTarget;
+	}
+	
+	private OSProcess chooseProcessTargetNoUI(final OSProcess[] processesOnTarget, final String choosenProcessName) {
+		attachTarget = null;
+
+		for (OSProcess process : processesOnTarget) {
+			if (process.parseProcess().getProcessName().equals(choosenProcessName)) {
+				attachTarget = process;
+				break;
+			}
+		}
 
 		return attachTarget;
 	}
