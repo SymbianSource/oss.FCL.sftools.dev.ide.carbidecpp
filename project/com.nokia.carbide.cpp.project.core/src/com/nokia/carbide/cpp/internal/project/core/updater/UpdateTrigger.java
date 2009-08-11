@@ -34,24 +34,6 @@ public class UpdateTrigger extends AbstractUpdateTrigger implements IUpdateTrigg
 	// use the version of Carbide updating to as the trigger property
 	private static final String TRIGGER_PROPERTY = "1.2.0"; //$NON-NLS-1$
 	private static final String SYMBIAN_PERSPECTIVE_ID = "com.symbian.cdt.SymbianPerspective"; //$NON-NLS-1$
-	private static final String PROBLEM_VIEW_ID = "org.eclipse.ui.views.ProblemView"; //$NON-NLS-1$
-
-	private void resetProblemView() {
-		// Evidently, hiding and then reshowing the ProblemView seems to fix up the columns
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (window != null) {
-			IWorkbenchPage page = window.getActivePage();
-			IViewPart part = page.findView(PROBLEM_VIEW_ID);
-			if (part != null) {
-				page.hideView(part);
-				
-				try {
-					page.showView(PROBLEM_VIEW_ID);
-				} catch (PartInitException e) {
-				}
-			}
-		}
-	}
 
 	@Override
 	protected String getLocalKey() {
@@ -89,7 +71,6 @@ public class UpdateTrigger extends AbstractUpdateTrigger implements IUpdateTrigg
 						break;
 					}
 				}
-				resetProblemView();
 			}
 		});
 	}
