@@ -21,10 +21,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
@@ -133,7 +137,20 @@ public class FeedInfoManager {
 				HttpURLConnection connection = null;
 				InputStream inputStream = null;
 				try {
-					connection = (HttpURLConnection) fileUrl.openConnection();
+					Proxy proxy = null;
+					IProxyData data = CarbideNewsReaderPlugin.getProxyData(fileUrl);
+					if (data != null) {
+						String host = data.getHost();
+						int port = data.getPort();
+						SocketAddress address = new InetSocketAddress(host, port);
+						proxy = new Proxy(Proxy.Type.HTTP, address);
+					}
+					if (proxy != null) {
+						connection = (HttpURLConnection) fileUrl.openConnection(proxy);
+					}
+					else {
+						connection = (HttpURLConnection) fileUrl.openConnection();
+					}
 					setRequestHeaders(connection);
 					connection.setUseCaches(false);
 					connection.connect();

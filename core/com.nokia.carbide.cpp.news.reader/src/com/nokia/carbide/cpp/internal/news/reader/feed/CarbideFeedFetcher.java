@@ -17,11 +17,19 @@
 
 package com.nokia.carbide.cpp.internal.news.reader.feed;
 
+import java.io.IOException;
+import java.net.URL;
 import java.net.URLConnection;
 
+import org.eclipse.core.net.proxy.IProxyData;
+
+import com.nokia.carbide.cpp.internal.news.reader.CarbideNewsReaderPlugin;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.fetcher.FetcherException;
 import com.sun.syndication.fetcher.impl.FeedFetcherCache;
 import com.sun.syndication.fetcher.impl.HttpURLFeedFetcher;
 import com.sun.syndication.fetcher.impl.SyndFeedInfo;
+import com.sun.syndication.io.FeedException;
 
 /**
  * A class to retrieve feed via HTTP connection. 
@@ -34,6 +42,19 @@ public class CarbideFeedFetcher extends HttpURLFeedFetcher {
 	 */
 	public CarbideFeedFetcher() {
 		super();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.sun.syndication.fetcher.impl.HttpURLFeedFetcher#retrieveFeed(java.net.URL)
+	 */
+	public SyndFeed retrieveFeed(URL feedUrl) throws IllegalArgumentException, IOException, FeedException, FetcherException {
+		IProxyData data = CarbideNewsReaderPlugin.getProxyData(feedUrl);
+		if (data != null) {
+			System.setProperty("http.proxyHost", data.getHost());
+			System.setProperty("http.proxyPort", Integer.toString(data.getPort()));
+		}
+		return super.retrieveFeed(feedUrl);
 	}
 
 	/**
