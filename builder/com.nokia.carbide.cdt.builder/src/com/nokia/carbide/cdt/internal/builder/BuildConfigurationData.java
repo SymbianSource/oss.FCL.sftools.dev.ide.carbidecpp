@@ -275,7 +275,7 @@ public class BuildConfigurationData extends CConfigurationData {
 				return;
 			}
 			
-			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject(), false);
+			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject());
 			if (projDes != null) {
 				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
 				if (configDes != null) {
@@ -292,18 +292,6 @@ public class BuildConfigurationData extends CConfigurationData {
 						filesCacheValue += file.getAbsolutePath() + ENTRY_DELIMTER;
 					}
 					storage.setAttribute(FILES_CACHE, filesCacheValue);
-
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-							ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject());
-							try {
-								// save the CDT project description
-								CCorePlugin.getDefault().setProjectDescription(cpi.getProject(), projDes, true, new NullProgressMonitor());
-							} catch (CoreException e) {
-								CarbideBuilderPlugin.log(e);
-							}
-						}
-					});
 				}
 			}
 		} catch (CoreException e) {

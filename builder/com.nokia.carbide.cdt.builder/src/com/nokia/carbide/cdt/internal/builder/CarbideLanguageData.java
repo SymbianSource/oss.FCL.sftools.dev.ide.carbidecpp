@@ -311,7 +311,7 @@ public class CarbideLanguageData extends CLanguageData {
 		// persist the cache between IDE launches.
 		try {
 			final IProject project = carbideBuildConfig.getCarbideProject().getProject();
-			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project, false);
+			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
 				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
 				if (configDes != null) {
@@ -344,18 +344,6 @@ public class CarbideLanguageData extends CLanguageData {
 						filesCacheValue += file.getAbsolutePath() + ENTRY_DELIMTER;
 					}
 					storage.setAttribute(FILES_CACHE, filesCacheValue);
-
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-							ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
-							try {
-								// save the CDT project description
-								CCorePlugin.getDefault().setProjectDescription(project, projDes, true, new NullProgressMonitor());
-							} catch (CoreException e) {
-								CarbideBuilderPlugin.log(e);
-							}
-						}
-					});
 				}
 			}
 		} catch (CoreException e) {
