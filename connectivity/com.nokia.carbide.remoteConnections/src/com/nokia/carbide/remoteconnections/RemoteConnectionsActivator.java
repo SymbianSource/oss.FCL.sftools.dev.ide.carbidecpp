@@ -52,6 +52,7 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
  
  	/**
 	 * Returns IProxyService.
+	 * @deprecated
 	 */
 	public IProxyService getProxyService() {
 		return (IProxyService) proxyServiceTracker.getService();

@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
  org.eclipse.core.filebuffers,
  org.eclipse.jface,
- org.eclipse.core.filesystem;bundle-version="1.2.0"
+ org.eclipse.core.filesystem;bundle-version="1.2.0",
+ org.eclipse.core.net;bundle-version="1.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.cpp.internal.api.utils.core
 Bundle-ManifestVersion: 2

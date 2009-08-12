@@ -24,14 +24,12 @@ import com.nokia.carbide.installpackages.gen.InstallPackages.util.InstallPackage
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
-import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.*;
 
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.core.net.proxy.IProxyData;
-import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.*;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -174,13 +172,24 @@ public class InstallPackages {
     	
        return null;
 	}
+	
+	private static java.net.URI getURI(GetMethod getMethod) {
+		try {
+			return new java.net.URI(getMethod.getURI().toString());
+		} catch (Exception e) {
+			RemoteConnectionsActivator.logError(e);
+		}
+		
+		return null;
+	}
 
 	public static void setProxyData(HttpClient client, GetMethod getMethod) {
-		IProxyService proxyService = RemoteConnectionsActivator.getDefault().getProxyService();
-		boolean proxiesEnabled = proxyService.isProxiesEnabled();
-		if (!proxiesEnabled)
+		java.net.URI uri = getURI(getMethod);
+		if (uri == null)
 			return;
-		IProxyData proxyData = proxyService.getProxyData(IProxyData.HTTP_PROXY_TYPE);
+		IProxyData proxyData = ProxyUtils.getProxyData(uri);
+		if (proxyData == null)
+			return;
 		String host = proxyData.getHost();
 		int port = proxyData.getPort();
 		client.getHostConfiguration().setProxy(host, port);
