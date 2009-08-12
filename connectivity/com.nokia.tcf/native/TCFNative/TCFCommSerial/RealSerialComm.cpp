@@ -491,7 +491,7 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 			COMMLOGOPEN();
 			COMMLOGS("CRealSerialComm::SendDataToPort WriteFile successful\n");
 			BYTE* ptr = (BYTE*)inData;
-			long numBytes = (inSize > 20) ? 20 : inSize;
+			long numBytes = (inSize > 80) ? 80 : inSize;
 			char msg[200];
 			sprintf(msg, "CRealSerialComm::SendDataToPort = ");
 			for (int i = 0; i < numBytes; i++)
@@ -778,7 +778,12 @@ long CRealSerialComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, lo
 				}
 				else
 				{
-					done = true;
+					numberProcessed++;
+					usedLen += fullMessageLength;
+					bytesRemaining -= fullMessageLength;
+					ptr += fullMessageLength;
+					if (bytesRemaining < protocolHeaderLength)
+						done = true;
 				}
 			}
 			DeleteMsg(usedLen);
