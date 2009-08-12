@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.content.*;
+import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
@@ -309,7 +310,7 @@ public class CarbideLanguageData extends CLanguageData {
 	private void persistCache() {
 		// persist the cache between IDE launches.
 		try {
-			IProject project = carbideBuildConfig.getCarbideProject().getProject();
+			final IProject project = carbideBuildConfig.getCarbideProject().getProject();
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
 				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
@@ -343,9 +344,6 @@ public class CarbideLanguageData extends CLanguageData {
 						filesCacheValue += file.getAbsolutePath() + ENTRY_DELIMTER;
 					}
 					storage.setAttribute(FILES_CACHE, filesCacheValue);
-
-					// save the CDT project description
-					CCorePlugin.getDefault().setProjectDescription(project, projDes, true, new NullProgressMonitor());
 				}
 			}
 		} catch (CoreException e) {

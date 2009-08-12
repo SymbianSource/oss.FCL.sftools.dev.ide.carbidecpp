@@ -18,8 +18,11 @@
 package com.nokia.carbide.cpp.internal.news.reader;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.eclipse.core.net.proxy.IProxyData;
+import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -34,6 +37,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 import com.nokia.carbide.cpp.internal.news.reader.editor.NewsEditor;
 import com.nokia.carbide.cpp.internal.news.reader.feed.FeedManager;
@@ -118,6 +122,32 @@ public class CarbideNewsReaderPlugin extends AbstractUIPlugin implements IStartu
 			prefsStore = getDefault().getPreferenceStore();
 		}
 		return prefsStore;
+	}
+
+	/**
+	 * Retrieve proxy data for a given URL.
+	 * @param url - URL in question
+	 * @return proxy data associated with the URL if one is available, null otherwise
+	 */
+	public static IProxyData getProxyData(URL url) {
+		BundleContext context = getDefault().getBundle().getBundleContext();
+		if (context != null) {
+			ServiceReference reference = context.getServiceReference(IProxyService.class.getName());
+			if (reference != null) {
+				IProxyService proxyService = (IProxyService) context.getService(reference);
+				if (proxyService != null) {
+					try {
+						IProxyData[] proxyData = proxyService.select(url.toURI());
+						if (proxyData != null && proxyData.length > 0) {
+							return proxyData[0];
+						}
+					} catch (URISyntaxException e) {
+						return null;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

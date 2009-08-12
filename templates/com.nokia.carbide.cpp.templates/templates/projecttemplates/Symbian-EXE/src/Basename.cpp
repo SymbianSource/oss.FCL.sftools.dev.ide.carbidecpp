@@ -63,7 +63,10 @@ GLDEF_C TInt E32Main()
 	// Create output console
 	TRAPD(createError, console = Console::NewL(KTextConsoleTitle, TSize(KConsFullScreen,KConsFullScreen)));
 	if (createError)
+		{
+		delete cleanup;
 		return createError;
+		}
 
 	// Run application code inside TRAP harness, wait keypress when terminated
 	TRAPD(mainError, DoStartL());
