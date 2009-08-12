@@ -27,7 +27,6 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(RegistryTest.class);
 		suite.addTestSuite(SerializationTest.class);
-		suite.addTestSuite(ServiceTest.class);
 		suite.addTestSuite(FilterTest.class);
 		suite.addTestSuite(TCPIPConnectionTypeTests.class);
 		//$JUnit-END$

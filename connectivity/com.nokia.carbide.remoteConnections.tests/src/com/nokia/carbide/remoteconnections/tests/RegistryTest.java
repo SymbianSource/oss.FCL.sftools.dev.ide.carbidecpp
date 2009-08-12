@@ -62,8 +62,7 @@ public class RegistryTest extends TestCase {
 		assertEquals(RandomCycleService.class.getName(), service.getIdentifier());
 		
 		Collection<String> ctids = Registry.instance().getCompatibleConnectionTypeIds(service);
-		String id = ctids.iterator().next();
-		assertEquals(ct.getIdentifier(), id);
+		assertTrue(ctids.contains(ct.getIdentifier()));
 	}
 	
 	public void testStoreAndLoadConnections() {
