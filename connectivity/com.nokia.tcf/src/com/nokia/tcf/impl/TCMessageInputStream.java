@@ -291,7 +291,7 @@ public class TCMessageInputStream implements ITCMessageInputStream {
 			e.fillInStackTrace();
 			throw e;
 		}
-		inNumberMessages = 0; // 0 --> get all that fit in MAX_BYTES
+//		inNumberMessages = 0; // 0 --> get all that fit in MAX_BYTES
 		byte[] messageData = new byte[(int) MAX_BYTES];
 		long[] outNumberMessagesRead = new long[1];
 		outNumberMessagesRead[0] = 0;
