@@ -26,5 +26,7 @@ FATAL ERROR: ERROR: No Sources specified
 
 FATAL ERROR: ERROR: No Sources specified
 
-X:\SWATI_Symbian_Tools\Trace\TraceCore\group2\BLD.INF:59: #error test
+C:\runtime-EclipseApplication\GUIFooey\group\BLD.INF:23: #error test
+BLDMAKE ERROR: ERROR: cpp.exe returned non-zero exit status (8448)
+	cpp.EXE -undef -nostdinc -+  -I "C:\S60\devices\S60_5th_Edition_SDK_v1.0\epoc32\include" -I . -I "C:\runtime-EclipseApplication\GUIFooey\group\"  -I "C:\S60\devices\S60_5th_Edition_SDK_v1.0\EPOC32\include\variant" -include "C:\S60\devices\S60_5th_Edition_SDK_v1.0\EPOC32\include\variant\Symbian_OS.hrh" "C:\runtime-EclipseApplication\GUIFooey\group\BLD.INF"
 

@@ -1467,6 +1467,9 @@ public class EpocEngineHelper {
 			
 			EpocEnginePathHelper helper = new EpocEnginePathHelper(info.getProject());
 			final IPath workspaceRelativeMMPPath = helper.convertToWorkspace(mmp.getPath());
+			if (workspaceRelativeMMPPath == null){
+				continue;
+			}
 			EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
 					new DefaultMMPViewConfiguration(info, new AllNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
@@ -1634,7 +1637,9 @@ public class EpocEngineHelper {
 
 					for (IMMPReference mmp : data.getAllMMPReferences()) {
 						IPath workspaceRelativeMMPPath = helper.convertToWorkspace(mmp.getPath());
-						mmps.add(workspaceRelativeMMPPath);
+						if (workspaceRelativeMMPPath != null){
+							mmps.add(workspaceRelativeMMPPath);
+						}
 					}
 					return null;
 				}

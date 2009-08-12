@@ -1,4 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <root>
-<!--Error Marker at index 0-->
-<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="filePath(lineNum) : errStr" severity="3" variable_name="^EMPTY^"/>
+  <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="2" message="Unrecognised Keyword &quot;TARGE&quot;[\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP]" severity="1" variable_name="^EMPTY^" external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/group/LISTBOX.MMP" />
+  <!--Error Marker at index 1-->
+  <marker_info file="^EMPTY^" line_number="-1" message="ERROR: No Target specified" severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 2-->
+  <marker_info file="^EMPTY^" line_number="11" message="SOURCEPATH &quot;\APPS\Nokia\DDB21Nightly\workspace\ListBox\datx\&quot; not found[\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP]" severity="1" variable_name="^EMPTY^" external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/group/LISTBOX.MMP" />
+  <!--Error Marker at index 3-->
+  <marker_info file="^EMPTY^" line_number="6" message="Stack size doesn't fit expected number format[\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP]" severity="3" variable_name="^EMPTY^" external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/group/LISTBOX.MMP" />
+  <!--Error Marker at index 4-->
+  <marker_info file="^EMPTY^" line_number="42" message="BITMAP color depth &quot;listboxlistbox.cpp&quot; - unexpected format[\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP]" severity="3" variable_name="^EMPTY^" external_path_string="/APPS/Nokia/DDB21Nightly/workspace/ListBox/group/LISTBOX.MMP" />
+  <!--Error Marker at index 5-->
+  <marker_info file="^EMPTY^" line_number="-1" message="ERROR: No Sources specified" severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 6-->
+  <marker_info file="^EMPTY^" line_number="-1" message="ERROR: No Sources specified" severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 7-->
+  <marker_info file="^EMPTY^" line_number="23" message="#error test" severity="2" variable_name="^EMPTY^" external_path_string="C:/runtime-EclipseApplication/GUIFooey/group/BLD.INF" />
 </root>
+
