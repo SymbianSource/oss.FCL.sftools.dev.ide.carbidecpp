@@ -533,7 +533,12 @@ long CTcpComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, long& num
 				}
 				else
 				{
-					done = true;
+					numberProcessed++;
+					usedLen += fullMessageLength;
+					bytesRemaining -= fullMessageLength;
+					ptr += fullMessageLength;
+					if (bytesRemaining < protocolHeaderLength)
+						done = true;
 				}
 			}
 			DeleteMsg(usedLen);
