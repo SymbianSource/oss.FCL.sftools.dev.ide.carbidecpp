@@ -63,8 +63,6 @@ public class RomImageTab extends CLaunchConfigurationTab {
 	private Button epoc32DirBrowse;
 	
 	private Button logUnresolvedModules;
-	//private Button logUnresolvedSym;
-	private Button debugNonXip;
 
 
 	/* (non-Javadoc)
@@ -287,17 +285,6 @@ public class RomImageTab extends CLaunchConfigurationTab {
 			}
 		});			
 		
-		debugNonXip = createCheckButton(parseRomLogGroup.getGroup(), Messages.getString("RomLogFileTab.15")); //$NON-NLS-1$
-		data = new GridData(GridData.FILL_HORIZONTAL);
-		data.horizontalSpan = 3;
-		debugNonXip.setLayoutData(data);
-		debugNonXip.setToolTipText(Messages.getString("RomLogFileTab.16")); //$NON-NLS-1$
-		debugNonXip.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				updateLaunchConfigurationDialog();
-			}
-		});		
-
 	}
 	
 	/* (non-Javadoc)
@@ -316,7 +303,6 @@ public class RomImageTab extends CLaunchConfigurationTab {
 			romLogFilePath.setText(configuration.getAttribute( PreferenceConstants.J_PN_RomLogFilePath , "" )); //$NON-NLS-1$	
 			epoc32DirPath.setText(configuration.getAttribute( PreferenceConstants.J_PN_SymbianKitEpoc32Dir , "" )); //$NON-NLS-1$
 			logUnresolvedModules.setSelection(configuration.getAttribute( PreferenceConstants.J_PN_LogUnresolved , false ));
-			debugNonXip.setSelection(configuration.getAttribute( PreferenceConstants.J_PN_DebugNonXip , false ));
 
 			downloadImgGroup.setSelection(configuration.getAttribute( PreferenceConstants.J_PN_DownloadRomImage , false ));
 			osImagePath.setText(configuration.getAttribute( PreferenceConstants.J_PN_RomImagePath , "" )); //$NON-NLS-1$
@@ -345,7 +331,6 @@ public class RomImageTab extends CLaunchConfigurationTab {
 		}	
 		configuration.setAttribute( PreferenceConstants.J_PN_SymbianKitEpoc32Dir, epoc32Dir);
 		configuration.setAttribute( PreferenceConstants.J_PN_LogUnresolved, logUnresolvedModules.getSelection());		
-		configuration.setAttribute( PreferenceConstants.J_PN_DebugNonXip, debugNonXip.getSelection());
 		
 		configuration.setAttribute( PreferenceConstants.J_PN_DownloadRomImage, downloadImgGroup.getSelection());
 		configuration.setAttribute( PreferenceConstants.J_PN_RomImagePath, osImagePath.getText());

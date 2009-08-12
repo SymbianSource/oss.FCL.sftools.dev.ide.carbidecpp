@@ -428,7 +428,6 @@ public class SettingsData {
 	
 	public static void setRomImgTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
 
-		configuration.setAttribute( PreferenceConstants.J_PN_DebugNonXip, false);
 		configuration.setAttribute( PreferenceConstants.J_PN_DownloadRomImage, false);
 		configuration.setAttribute( PreferenceConstants.J_PN_RomImagePath, ""); //$NON-NLS-1$
 		configuration.setAttribute( PreferenceConstants.J_PN_DownloadAddress, 0);

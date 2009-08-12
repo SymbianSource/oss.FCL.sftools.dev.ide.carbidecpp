@@ -412,7 +412,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 			// ignore 'urel', 'udeb' and 'lib' directories when getting the binaries for the same target
 			// removeLastSegments(2) will strip the filename and 'urel', 'udeb' or 'lib'
 			IPath launchExeTargetPath = new Path(new File(launchExeName).getCanonicalPath()).removeLastSegments(2); 
-			for (Executable executable : ExecutablesManager.getExecutablesManager().getExecutables()) {
+			for (Executable executable : ExecutablesManager.getExecutablesManager().getExecutables(true)) {
 				IPath exePath = executable.getPath();
 				if (launchExeTargetPath.isPrefixOf(exePath))
 						files.add(new ExeFileToDebug(exePath.toOSString(), true));
