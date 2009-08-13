@@ -28,6 +28,7 @@ import org.eclipse.ltk.core.refactoring.Refactoring;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.swt.widgets.Display;
 
+import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.sdt.datamodel.IDesignerDataModel;
 import com.nokia.sdt.emf.dm.IComponentManifest;
 import com.nokia.sdt.emf.dm.IDesignerData;
@@ -36,6 +37,7 @@ import com.nokia.sdt.sourcegen.ISourceGenSession;
 import com.nokia.sdt.sourcegen.ISourceGenUpgradingProvider;
 import com.nokia.sdt.sourcegen.PatchContext;
 import com.nokia.sdt.sourcegen.SourceGenUpdatingRefactoring;
+import com.nokia.sdt.symbian.SymbianPlugin;
 import com.nokia.sdt.symbian.dm.ComponentManifestSourceGenVersionProvider;
 import com.nokia.sdt.symbian.dm.DesignerDataModel;
 import com.nokia.sdt.workspace.IProjectContext;
@@ -202,7 +204,7 @@ public class DesignRefactoring extends Refactoring {
 		 * @see org.eclipse.ltk.core.refactoring.Change#perform(org.eclipse.core.runtime.IProgressMonitor)
 		 */
 		@Override
-		public Change perform(IProgressMonitor pm) throws CoreException {
+		public Change perform(final IProgressMonitor pm) throws CoreException {
 			if (session != null) {
 				// now save any patched sources
 				session.getSourceGenProvider().saveGeneratedSources(pm);
@@ -211,12 +213,16 @@ public class DesignRefactoring extends Refactoring {
 				session.setUpgradingMode(false);
 			}
 			
-			// and save model based on patched sources
-			try {
-				model.saveModel(pm);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					// and save model based on patched sources
+					try {
+						model.saveModel(pm);
+					} catch (Exception e) {
+						Logging.log(SymbianPlugin.getDefault(), Logging.newSimpleStatus(0, e));
+					}
+				}
+			});
 			
 			// not undoable
 			return null;
