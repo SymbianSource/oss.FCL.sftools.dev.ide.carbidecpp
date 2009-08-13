@@ -2,3 +2,10 @@ arm-none-symbianelf-g++: \test\test.cpp: No such file or directory
 arm-none-symbianelf-g++: no input files
 arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect
 arm-none-symbianelf-g++: error: some message
+foo.cc:11:20: error: value with length 0 violates the length restriction: length (1 .. infinity)
+foo.cc:11:20: error: value with length 0 violates the length restriction
+/S60/devices/S60_5th_Edition_SDK_v1.0/epoc32/include/eikmenup.h:242: warning: enumeral mismatch in conditional expression: `TFalse' vs `TTrue'
+/runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp:39: error: invalid function declaration
+/runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp:39: error: expected unqualified-id before ':' token
+/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h:34: error: candidate is: virtual void CGUIFooeyAppUi::ConstructL()
+/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h:49: warning: unused variable 'j'

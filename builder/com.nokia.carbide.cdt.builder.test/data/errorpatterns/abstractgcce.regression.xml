@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <!--Error Marker at index 0-->
-  <marker_info file="^EMPTY^" line_number="0" message="\test\test.cpp: No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.cpp:" />
+ <!--Error Marker at index 0-->
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.cpp:" />
   <!--Error Marker at index 1-->
   <marker_info file="^EMPTY^" line_number="0" message="no input files" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 2-->
   <marker_info file="^EMPTY^" line_number="0" message="`-x c++' after last input file has no effect" severity="1" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 3-->
   <marker_info file="^EMPTY^" line_number="0" message="some message" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 4-->
+  <marker_info file="^EMPTY^" line_number="11" message="value with length 0 violates the length restriction: length (1 .. infinity)" severity="2" variable_name="^EMPTY^" external_path_string="foo.cc" />
+  <!--Error Marker at index 5-->
+  <marker_info file="^EMPTY^" line_number="11" message="value with length 0 violates the length restriction" severity="2" variable_name="^EMPTY^" external_path_string="foo.cc" />
+  <!--Error Marker at index 6-->
+  <marker_info file="^EMPTY^" line_number="242" message="enumeral mismatch in conditional expression: `TFalse' vs `TTrue'" severity="1" variable_name="^EMPTY^" external_path_string="/S60/devices/S60_5th_Edition_SDK_v1.0/epoc32/include/eikmenup.h" />
+  <!--Error Marker at index 7-->
+  <marker_info file="^EMPTY^" line_number="39" message="invalid function declaration" severity="2" variable_name="^EMPTY^" external_path_string="/runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp" />
+  <!--Error Marker at index 8-->
+  <marker_info file="^EMPTY^" line_number="39" message="expected unqualified-id before ':' token" severity="2" variable_name="^EMPTY^" external_path_string="/runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp" />
+  <!--Error Marker at index 9-->
+  <marker_info file="^EMPTY^" line_number="34" message="candidate is: virtual void CGUIFooeyAppUi::ConstructL()" severity="2" variable_name="^EMPTY^" external_path_string="/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h" />
+  <!--Error Marker at index 10-->
+  <marker_info file="^EMPTY^" line_number="49" message="unused variable 'j'" severity="1" variable_name="^EMPTY^" external_path_string="/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h" />
 </root>
-

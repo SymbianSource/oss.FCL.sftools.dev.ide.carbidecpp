@@ -19,12 +19,11 @@
 package com.nokia.carbide.cdt.internal.builder.error.parsers;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.ErrorParserManager;
 import org.eclipse.cdt.core.IMarkerGenerator;
-import org.eclipse.cdt.internal.errorparsers.AbstractErrorParser;
-import org.eclipse.cdt.internal.errorparsers.ErrorPattern;
+import org.eclipse.cdt.core.errorparsers.AbstractErrorParser;
+import org.eclipse.cdt.core.errorparsers.ErrorPattern;
 
 /*
  * AbstractErrorParser/ErrorPattern are going to public API in CDT 5.1

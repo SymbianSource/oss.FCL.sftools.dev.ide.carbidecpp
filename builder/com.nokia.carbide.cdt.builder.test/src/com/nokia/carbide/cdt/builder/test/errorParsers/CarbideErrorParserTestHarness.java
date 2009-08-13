@@ -222,7 +222,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		}
 		if (result.description.equals(expected.description) == false) {
 			if (expected.description.equals(EMPTY) == false) {
-				Assert.fail("Message from IDE marker is null, expected value is " + expected.description);				
+				Assert.fail("Unexpected message: EXPECTED value is: " + expected.description + ", ACTUAL: " + result.description);				
 			}
 		} else {
 			if (result.description.equals(expected.description) == false) {
