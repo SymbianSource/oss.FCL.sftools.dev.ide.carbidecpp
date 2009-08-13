@@ -19,24 +19,24 @@ package com.nokia.carbide.internal.bugreport.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.eclipse.core.net.proxy.IProxyData;
-import org.eclipse.core.net.proxy.IProxyService;
 
 import com.nokia.carbide.internal.bugreport.export.IProduct;
-import com.nokia.carbide.internal.bugreport.plugin.BugReporterPlugin;
 import com.nokia.carbide.internal.bugreport.resources.Messages;
+import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
 
 /**
  * This class provides only one static method for sending the 
@@ -153,11 +153,14 @@ public class Communication {
 	}
 
 	public static void setProxyData(HttpClient client, PostMethod postMethod) {
-		IProxyService proxyService = BugReporterPlugin.getDefault().getProxyService();
-		boolean proxiesEnabled = proxyService.isProxiesEnabled();
-		if (!proxiesEnabled)
+		URI uri = getURI(postMethod);
+		if (uri == null) {
 			return;
-		IProxyData proxyData = proxyService.getProxyData(IProxyData.HTTP_PROXY_TYPE);
+		}
+		IProxyData proxyData = ProxyUtils.getProxyData(uri);
+		if (proxyData == null) {
+			return;
+		}
 		String host = proxyData.getHost();
 		int port = proxyData.getPort();
 		client.getHostConfiguration().setProxy(host, port);
@@ -170,5 +173,14 @@ public class Communication {
 			postMethod.setDoAuthentication(true);
 		}
 	}
-	
+
+	private static URI getURI(PostMethod postMethod) {
+		try {
+			return new URI(postMethod.getURI().toString());
+		} catch (Exception e) { 
+			e.printStackTrace();
+		} 
+    	return null;
+	}
+
 }
