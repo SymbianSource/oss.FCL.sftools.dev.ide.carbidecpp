@@ -346,7 +346,8 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		try {
 			ILaunchConfiguration[] launches = launchManager.getLaunchConfigurations();
 			for (ILaunchConfiguration launchConfiguration : launches) {
-				if (launchConfiguration.getAttribute(SettingsData.ATTR_originalName, launchConfiguration.getName()).equals(defaultConfigName))
+				if (launchConfiguration.getName().equals(defaultConfigName) || 
+						launchConfiguration.getAttribute(SettingsData.ATTR_originalName, launchConfiguration.getName()).equals(defaultConfigName))
 				{
 					if (defaultExecutable != null)
 					{
