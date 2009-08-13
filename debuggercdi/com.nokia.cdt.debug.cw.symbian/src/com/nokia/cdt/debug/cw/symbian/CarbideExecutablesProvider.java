@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.SubMonitor;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 
 public class CarbideExecutablesProvider implements IProjectExecutablesProvider {
@@ -58,30 +59,33 @@ public class CarbideExecutablesProvider implements IProjectExecutablesProvider {
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideProject(project)) {
 			ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 			if (cpi != null) {
-				List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(cpi.getDefaultConfiguration());
+				ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
+				if (config != null) {
+					List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(config);
 
-				SubMonitor progress = SubMonitor.convert(monitor, mmps.size());
+					SubMonitor progress = SubMonitor.convert(monitor, mmps.size());
 
-				for (IPath mmp : mmps) {
-					if (progress.isCanceled()) {
-						break;
-					}
-					
-					progress.subTask("Parsing " + mmp.lastSegment());
+					for (IPath mmp : mmps) {
+						if (progress.isCanceled()) {
+							break;
+						}
+						
+						progress.subTask("Parsing " + mmp.lastSegment());
 
- 					IPath hp = EpocEngineHelper.getHostPathForExecutable(cpi.getDefaultConfiguration(), mmp);
-					if (hp != null) {
-						File hpFile = hp.toFile();
-						if (hpFile.exists()) {
-							try {
-								Executable exe = new Executable(new Path(hpFile.getCanonicalPath()), project, null);
-								executables.add(exe);
-							} catch (Exception e) {
+	 					IPath hp = EpocEngineHelper.getHostPathForExecutable(config, mmp);
+						if (hp != null) {
+							File hpFile = hp.toFile();
+							if (hpFile.exists()) {
+								try {
+									Executable exe = new Executable(new Path(hpFile.getCanonicalPath()), project, null);
+									executables.add(exe);
+								} catch (Exception e) {
+								}
 							}
 						}
+						
+						progress.worked(1);
 					}
-					
-					progress.worked(1);
 				}
 			}
 		}
