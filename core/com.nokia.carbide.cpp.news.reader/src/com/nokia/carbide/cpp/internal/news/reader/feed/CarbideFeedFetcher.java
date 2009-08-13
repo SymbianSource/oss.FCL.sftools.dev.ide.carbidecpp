@@ -18,12 +18,14 @@
 package com.nokia.carbide.cpp.internal.news.reader.feed;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
 import org.eclipse.core.net.proxy.IProxyData;
 
 import com.nokia.carbide.cpp.internal.news.reader.CarbideNewsReaderPlugin;
+import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.fetcher.FetcherException;
 import com.sun.syndication.fetcher.impl.FeedFetcherCache;
@@ -49,10 +51,14 @@ public class CarbideFeedFetcher extends HttpURLFeedFetcher {
 	 * @see com.sun.syndication.fetcher.impl.HttpURLFeedFetcher#retrieveFeed(java.net.URL)
 	 */
 	public SyndFeed retrieveFeed(URL feedUrl) throws IllegalArgumentException, IOException, FeedException, FetcherException {
-		IProxyData data = CarbideNewsReaderPlugin.getProxyData(feedUrl);
-		if (data != null) {
-			System.setProperty("http.proxyHost", data.getHost());
-			System.setProperty("http.proxyPort", Integer.toString(data.getPort()));
+		try {
+			IProxyData data = ProxyUtils.getProxyData(feedUrl.toURI());
+			if (data != null) {
+				System.setProperty("http.proxyHost", data.getHost());
+				System.setProperty("http.proxyPort", Integer.toString(data.getPort()));
+			}
+		} catch (URISyntaxException e) {
+			CarbideNewsReaderPlugin.log(e);
 		}
 		return super.retrieveFeed(feedUrl);
 	}

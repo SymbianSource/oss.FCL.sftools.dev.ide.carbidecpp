@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cpp.internal.news.reader.CarbideNewsReaderPlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
 
 /**
  * A class for managing feed information.
@@ -138,7 +139,7 @@ public class FeedInfoManager {
 				InputStream inputStream = null;
 				try {
 					Proxy proxy = null;
-					IProxyData data = CarbideNewsReaderPlugin.getProxyData(fileUrl);
+					IProxyData data = ProxyUtils.getProxyData(fileUrl.toURI());
 					if (data != null) {
 						String host = data.getHost();
 						int port = data.getPort();
