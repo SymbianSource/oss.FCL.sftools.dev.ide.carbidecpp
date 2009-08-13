@@ -8,13 +8,13 @@
 		id="basics" 
 		label="%basics.label">
 		<description>%basics.desc</description>
-		<textField 
+		<filenameField 
 				id="className"
 				label="%className.label"
 				mandatory="true"
 				default="$(baseName)">
 				<description>%className.desc</description>
-		</textField>
+		</filenameField>
 		<uidField 
 				id="uid3"
 				label="%uid3.label"
@@ -62,7 +62,7 @@
 			/>
 		<parameter name="file"
 			sourcePath="QWidget.ui"
-			targetPath="$(className).ui"
+			targetPath="$(baseName).ui"
 			/>
 	</process>
 

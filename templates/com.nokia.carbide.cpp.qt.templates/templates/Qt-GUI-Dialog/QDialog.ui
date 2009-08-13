@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>$(className)Class</class>
- <widget class="QDialog" name="$(className)Class" >
+ <class>$(className)</class>
+ <widget class="QDialog" name="$(className)" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>$(className)</string>
+   <string>$(baseName)</string>
   </property>
  </widget>
  <layoutdefault spacing="6" margin="11" />

@@ -32,7 +32,7 @@
 #define $(className$upper)_H
 
 #include <QtGui/$(parentClass)>
-#include "ui_$(className).h"
+#include "ui_$(baseName).h"
 
 class $(className) : public $(parentClass)
 {
@@ -43,7 +43,7 @@ public:
     ~$(className)();
 
 private:
-    Ui::$(className)Class ui;
+    Ui::$(className) ui;
 };
 
 #endif // $(className$upper)_H
