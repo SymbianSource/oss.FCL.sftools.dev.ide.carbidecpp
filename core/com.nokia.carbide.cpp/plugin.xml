@@ -570,4 +570,34 @@
     </keyword>
  </extension>
 
+<!-- =================================================================================== -->
+<!-- Enable Classic Update and disable P2 Update                                         -->
+<!-- =================================================================================== -->
+
+	<extension
+	      point="org.eclipse.ui.activities">
+	      
+		<defaultEnablement
+			id="org.eclipse.equinox.p2.ui.sdk.classicUpdate">
+		</defaultEnablement>
+
+		<activity
+	        id="org.eclipse.equinox.p2.ui.sdk.p2.update"
+	        name="P2 Update UI">
+		</activity>
+	
+		<activityPatternBinding
+			activityId="org.eclipse.equinox.p2.ui.sdk.p2.update"
+			isEqualityPattern="true"
+			pattern="org.eclipse.equinox.p2.ui.sdk/org.eclipse.equinox.p2.ui.sdk.update">
+		</activityPatternBinding>
+		
+		<activityPatternBinding
+			activityId="org.eclipse.equinox.p2.ui.sdk.p2.update"
+			isEqualityPattern="true"
+			pattern="org.eclipse.equinox.p2.ui.sdk/org.eclipse.equinox.p2.ui.sdk.install">
+		</activityPatternBinding>
+	      
+	</extension>
+
 </plugin>
