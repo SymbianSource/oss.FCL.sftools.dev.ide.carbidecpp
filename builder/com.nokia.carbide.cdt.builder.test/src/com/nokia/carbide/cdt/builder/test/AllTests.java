@@ -41,6 +41,9 @@ public class AllTests {
 		// error parser tests....
 		suite.addTestSuite(com.nokia.carbide.cdt.builder.test.errorParsers.TestMakmakeErrorParser.class);
 		suite.addTestSuite(com.nokia.carbide.cdt.builder.test.errorParsers.TestRVCTErrorParser.class);
+		suite.addTestSuite(com.nokia.carbide.cdt.builder.test.errorParsers.TestGcceErrorParser.class);
+		suite.addTestSuite(com.nokia.carbide.cdt.builder.test.errorParsers.TestSBSv2ErrorParser.class);
+		suite.addTestSuite(com.nokia.carbide.cdt.builder.test.errorParsers.TestMakeErrorParser.class);
 		
 		
 		//$JUnit-END$

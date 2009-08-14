@@ -1,11 +1,32 @@
-arm-none-symbianelf-g++: \test\test.cpp: No such file or directory
-arm-none-symbianelf-g++: no input files
-arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect
-arm-none-symbianelf-g++: error: some message
-foo.cc:11:20: error: value with length 0 violates the length restriction: length (1 .. infinity)
-foo.cc:11:20: error: value with length 0 violates the length restriction
-/S60/devices/S60_5th_Edition_SDK_v1.0/epoc32/include/eikmenup.h:242: warning: enumeral mismatch in conditional expression: `TFalse' vs `TTrue'
-/runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp:39: error: invalid function declaration
-/runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp:39: error: expected unqualified-id before ':' token
-/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h:34: error: candidate is: virtual void CGUIFooeyAppUi::ConstructL()
-/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h:49: warning: unused variable 'j'
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
+make: *** [MAKEFILELISTBOX] Error 255
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+WARNING: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(2) : Unrecognised Keyword "TARGE"
+
+FATAL ERROR: ERROR: No Target specified
+
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+WARNING: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(11) : SOURCEPATH "\APPS\Nokia\DDB21Nightly\workspace\ListBox\datx\" not found
+
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
+make: *** [MAKEFILELISTBOX] Error 255
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+FATAL ERROR: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(6) : Stack size doesn't fit expected number format
+
+MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
+Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
+make: *** [MAKEFILELISTBOX] Error 255
+perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
+FATAL ERROR: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(42) : BITMAP color depth "listboxlistbox.cpp" - unexpected format
+
+FATAL ERROR: ERROR: No Sources specified
+
+FATAL ERROR: ERROR: No Sources specified
+
+C:\runtime-EclipseApplication\GUIFooey\group\BLD.INF:23: #error test
+BLDMAKE ERROR: ERROR: cpp.exe returned non-zero exit status (8448)
+	cpp.EXE -undef -nostdinc -+  -I "C:\S60\devices\S60_5th_Edition_SDK_v1.0\epoc32\include" -I . -I "C:\runtime-EclipseApplication\GUIFooey\group\"  -I "C:\S60\devices\S60_5th_Edition_SDK_v1.0\EPOC32\include\variant" -include "C:\S60\devices\S60_5th_Edition_SDK_v1.0\EPOC32\include\variant\Symbian_OS.hrh" "C:\runtime-EclipseApplication\GUIFooey\group\BLD.INF"
+
