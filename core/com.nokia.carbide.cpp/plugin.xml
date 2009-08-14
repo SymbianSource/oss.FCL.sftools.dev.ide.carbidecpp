@@ -585,6 +585,16 @@
 	        id="org.eclipse.equinox.p2.ui.sdk.p2.update"
 	        name="P2 Update UI">
 		</activity>
+		
+		<category
+			id="org.eclipse.equinox.p2.ui.sdk.p2.update.category"
+			name="P2 Update UI">
+		</category>
+		
+		<categoryActivityBinding
+			activityId="org.eclipse.equinox.p2.ui.sdk.p2.update"
+			categoryId="org.eclipse.equinox.p2.ui.sdk.p2.update.category">
+		</categoryActivityBinding>
 	
 		<activityPatternBinding
 			activityId="org.eclipse.equinox.p2.ui.sdk.p2.update"
@@ -599,5 +609,24 @@
 		</activityPatternBinding>
 	      
 	</extension>
+
+<!--
+	<extension
+         point="org.eclipse.ui.preferencePages">
+	  	<page            
+            category="org.eclipse.ui.preferencePages.Workbench"
+            name="Capabilities"
+            id="org.eclipse.sdk.capabilities">
+            <class class="org.eclipse.ui.activities.ActivityCategoryPreferencePage">
+                <parameter name="allowAdvanced" value="true"/>
+                <parameter name="captionMessage" value="Capabilities allow you to enable or disable various product components.  These capabilities are grouped according to a set of predefined categories." />
+            	<parameter name="activityName" value="&amp;Capabilities" />
+                <parameter name="categoryName" value="&amp;Capabilities" />
+            	<parameter name="activityPromptButton" value="&amp;Prompt when enabling capabilities"/>
+            	<parameter name="activityPromptButtonTooltip" value="Prompt when a feature is first used that requires enablement of capabilities"/>
+            </class>
+      </page>   
+   </extension>
+-->
 
 </plugin>
