@@ -3,69 +3,117 @@
 <plugin>
 
    <extension
-         point="org.eclipse.debug.core.launchConfigurationTypes">
+         point="org.eclipse.debug.core.launchDelegates">
 
-      <launchConfigurationType
+       <launchDelegate
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
             sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
+            delegateDescription="Launch a classic Carbide Emulator debug session."          
             name="Symbian OS Emulation"
             delegate="com.nokia.cdt.internal.debug.launch.EmulationLaunchDelegate"
             modes="run,debug"
-            public="true"
+            type="com.nokia.cdt.debug.launch.emulationLaunch"
+            id="com.nokia.cdt.debug.launch.emulationLaunchDelegate">
+      </launchDelegate>
+
+      <launchDelegate
+            name="Symbian OS Application TRK"
+            delegateDescription="Launch a classic Symbian OS Application TRK debug session."          
+            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
+            modes="run,debug"
+            type="com.nokia.cdt.debug.launch.appTRKLaunch"
+            id="com.nokia.cdt.debug.launch.appTRKLaunchDelegate"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchDelegate>
+ 
+      <launchDelegate
+            name="Symbian OS System TRK"
+            delegateDescription="Launch a classic Symbian OS System TRK debug session."          
+            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
+            modes="run,debug"
+            type="com.nokia.cdt.debug.launch.systemTRKLaunch"
+            id="com.nokia.cdt.debug.launch.systemTRKLaunchDelegate"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchDelegate>
+ 
+      <launchDelegate
+            name="Symbian OS Attach to Process"
+            delegate="com.nokia.cdt.internal.debug.launch.AttachLaunchDelegate"
+            delegateDescription="Launch a classic Symbian OS Attach to Process debug session."          
+            modes="debug"
+            type="com.nokia.cdt.debug.launch.attachLaunch"
+            id="com.nokia.cdt.debug.launch.attachLaunchDelegate"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchDelegate>
+    
+      <launchDelegate
+            name="Symbian OS Trace32"
+            delegate="com.nokia.cdt.internal.debug.launch.Trace32LaunchDelegate"
+            delegateDescription="Launch a classic Symbian OS Trace32 debug session."          
+            modes="debug"
+            type="com.nokia.cdt.debug.launch.t32Launch"
+            id="com.nokia.cdt.debug.launch.t32LaunchDelegate"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchDelegate>
+      
+      <launchDelegate
+            name="Symbian OS Sophia"
+            delegate="com.nokia.cdt.internal.debug.launch.SophiaSTILaunchDelegate"
+            delegateDescription="Launch a classic Symbian OS Trace32 debug session."          
+            modes="debug"
+            type="com.nokia.cdt.debug.launch.stiLaunch"
+            id="com.nokia.cdt.debug.launch.stiLaunchDelegate"
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+      </launchDelegate>
+  
+   </extension>
+
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+
+      <launchConfigurationType
+            name="Symbian OS Emulation"
+             public="true"
             id="com.nokia.cdt.debug.launch.emulationLaunch">
       </launchConfigurationType>
 
       <launchConfigurationType
             name="Symbian OS Application TRK"
-            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
-            modes="run,debug"
             public="true"
-            id="com.nokia.cdt.debug.launch.appTRKLaunch"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            id="com.nokia.cdt.debug.launch.appTRKLaunch">
       </launchConfigurationType>
  
       <launchConfigurationType
             name="Symbian OS System TRK"
-            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
-            modes="run,debug"
             public="true"
-            id="com.nokia.cdt.debug.launch.systemTRKLaunch"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            id="com.nokia.cdt.debug.launch.systemTRKLaunch">
       </launchConfigurationType>
  
       <launchConfigurationType
             name="Symbian OS Attach to Process"
-            delegate="com.nokia.cdt.internal.debug.launch.AttachLaunchDelegate"
-            modes="debug"
             public="true"
-            id="com.nokia.cdt.debug.launch.attachLaunch"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            id="com.nokia.cdt.debug.launch.attachLaunch">
       </launchConfigurationType>
     
       <launchConfigurationType
             name="Symbian OS Trace32"
-            delegate="com.nokia.cdt.internal.debug.launch.Trace32LaunchDelegate"
-            modes="debug"
             public="true"
-            id="com.nokia.cdt.debug.launch.t32Launch"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            id="com.nokia.cdt.debug.launch.t32Launch">
       </launchConfigurationType>
       
       <launchConfigurationType
             name="Symbian OS Sophia"
-            delegate="com.nokia.cdt.internal.debug.launch.SophiaSTILaunchDelegate"
-            modes="debug"
             public="true"
-            id="com.nokia.cdt.debug.launch.stiLaunch"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            id="com.nokia.cdt.debug.launch.stiLaunch">
       </launchConfigurationType>
   
    </extension>
+   
   <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
