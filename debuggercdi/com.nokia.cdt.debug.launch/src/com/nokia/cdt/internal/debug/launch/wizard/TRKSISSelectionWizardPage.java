@@ -113,7 +113,7 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 			}
 
 			// listen for events so we can detect if they click on the link below and add new sis info.
-			CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(this, CProjectDescriptionEvent.DATA_APPLIED);
+			CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(this, CProjectDescriptionEvent.APPLIED);
 
 			Link link = new Link(composite, SWT.NONE);
 			link.setText("<a>" + Messages.getString("TRKSISSelectionWizardPage.4") + "...</a>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

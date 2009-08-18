@@ -259,7 +259,7 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		puLink.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// listen for events so we can detect if they click on the link below and change sis info.
-				CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(InstallationTab.this, CProjectDescriptionEvent.DATA_APPLIED);
+				CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(InstallationTab.this, CProjectDescriptionEvent.APPLIED);
 
 				PreferencesUtil.createPropertyDialogOn(getShell(), getProject(), "com.nokia.carbide.cdt.internal.builder.ui.CarbideBuildConfigurationsPage", null, null).open(); //$NON-NLS-1$
 			}
