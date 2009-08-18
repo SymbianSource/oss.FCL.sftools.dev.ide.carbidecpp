@@ -59,6 +59,11 @@ public class FileImageModel implements IFileImageModel, IImageDataProviderListen
 			this.sourceLocation = basePath != null && filePath.getDevice() == null && !filePath.isAbsolute()
 				? basePath.append(filePath) : filePath;
 		}
+		
+		if (sourceLocation.getDevice() == null){
+			sourceLocation = sourceLocation.setDevice(basePath.getDevice());
+		}
+		
 	}
 	
 	/**
