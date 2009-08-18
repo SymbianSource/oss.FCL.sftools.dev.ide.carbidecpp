@@ -141,7 +141,7 @@ public class CarbideBuilderPlugin extends AbstractUIPlugin implements ICProjectD
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		
-		CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(this, CProjectDescriptionEvent.DATA_APPLIED);
+		CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(this, CProjectDescriptionEvent.APPLIED);
 	}
 
 	/*
