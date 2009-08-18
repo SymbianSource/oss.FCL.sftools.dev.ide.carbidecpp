@@ -62,9 +62,6 @@ public class MaskedFileImageModel extends FileImageModel implements
 			else
 				maskSourceLocation = basePath.append(maskPath);
 		}
-		if (maskSourceLocation != null && maskSourceLocation.getDevice() == null){
-			maskSourceLocation = maskSourceLocation.setDevice(basePath.getDevice());
-		}
 	}
 
 	/**
@@ -83,9 +80,6 @@ public class MaskedFileImageModel extends FileImageModel implements
 				maskSourceLocation = maskPath;
 			else
 				maskSourceLocation = basePath.append(maskPath);
-		}
-		if (maskSourceLocation != null && maskSourceLocation.getDevice() == null){
-			maskSourceLocation = maskSourceLocation.setDevice(basePath.getDevice());
 		}
 	}
 
