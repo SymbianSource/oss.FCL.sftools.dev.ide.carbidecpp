@@ -60,8 +60,8 @@ public class FileImageModel implements IFileImageModel, IImageDataProviderListen
 				? basePath.append(filePath) : filePath;
 		}
 		
-		if (sourceLocation.getDevice() == null){
-			sourceLocation = sourceLocation.setDevice(basePath.getDevice());
+		if (this.sourceLocation != null && this.sourceLocation.getDevice() == null){
+			this.sourceLocation = this.sourceLocation.setDevice(basePath.getDevice());
 		}
 		
 	}
