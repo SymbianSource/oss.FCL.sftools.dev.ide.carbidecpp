@@ -74,7 +74,8 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		useDebugMode = cpi.useDebugMode;
 		overrideMakeEngine = cpi.overrideMakeEngine;
 		makeEngineToUse = cpi.makeEngineToUse;
-
+		extraSBSv2Args = cpi.extraSBSv2Args;
+		
 		// make copies of the original data because we don't want to be modifying those
 		// objects in case the save is never done on this object.
 		infBuildComponentsList = new ArrayList<String>();
@@ -216,6 +217,8 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 						}
 					} else if (settingName.equals(MAKE_ENGINE_TO_USE)) {
 						makeEngineToUse = settingValue;
+					} else if (settingName.equals(EXTRA_SBSV2_ARGS)) {
+						extraSBSv2Args = settingValue;
 					}
 					
 					// now write it to the file
@@ -304,6 +307,7 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 					storage.setAttribute(USE_DEBUG_MODE, useDebugMode ? "true" : "false");
 					storage.setAttribute(OVERRIDE_MAKE_ENGINE, overrideMakeEngine ? "true" : "false");
 					storage.setAttribute(MAKE_ENGINE_TO_USE, makeEngineToUse);
+					storage.setAttribute(EXTRA_SBSV2_ARGS, extraSBSv2Args);
 				}
 			}
 		} catch (CoreException e) {

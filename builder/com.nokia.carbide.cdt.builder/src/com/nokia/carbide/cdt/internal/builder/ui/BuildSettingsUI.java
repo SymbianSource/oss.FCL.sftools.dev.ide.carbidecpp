@@ -63,6 +63,8 @@ public class BuildSettingsUI {
 	private Button overrideDefaultMakeEngineCheck;
 	private Label makeEngineLabel;
 	private Text makeEngineText;
+	private Label extraArgsLabel;
+	private Text  extraArgsText;
 	
 	public BuildSettingsUI(Shell shell, boolean wantsSBSv2, boolean projectSetting) {
 		this.shell = shell;
@@ -244,6 +246,16 @@ public class BuildSettingsUI {
 		debugCheck.setToolTipText(Messages.getString("BuildSettingsUI.DebugToolTip")); //$NON-NLS-1$
 		debugCheck.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
+		extraArgsLabel = new Label(content, SWT.NONE);
+		extraArgsLabel.setText(Messages.getString("BuildSettingsUI.ExtraArgsText")); //$NON-NLS-1$
+		extraArgsLabel.setToolTipText(Messages.getString("BuildSettingsUI.ExtraArgsLabelToolTip"));  //$NON-NLS-1$
+		GridData argsGridData = new GridData();
+		extraArgsLabel.setLayoutData(argsGridData);
+		
+		extraArgsText = new Text(content, SWT.BORDER);
+		extraArgsText.setToolTipText(Messages.getString("BuildSettingsUI.ExtraArgsToolTipText")); //$NON-NLS-1$
+		extraArgsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
 		overrideDefaultMakeEngineCheck = new Button(content, SWT.CHECK);
 		overrideDefaultMakeEngineCheck.setText(Messages.getString("BuildSettingsUI.OverrideMakeEngineLabel")); //$NON-NLS-1$
 		overrideDefaultMakeEngineCheck.setToolTipText(Messages.getString("BuildSettingsUI.OverrideMakeEngineToolTip")); //$NON-NLS-1$
@@ -264,7 +276,7 @@ public class BuildSettingsUI {
 		makeEngineText = new Text(content, SWT.BORDER);
 		makeEngineText.setToolTipText(Messages.getString("BuildSettingsUI.MakeEngineToolTip")); //$NON-NLS-1$
 		makeEngineText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
+		
 	}
 
 	private void setConcurrentBuildsEnabledState(boolean enabled) {
@@ -437,6 +449,14 @@ public class BuildSettingsUI {
 		makeEngineText.setText(makeEngine);
 	}
 
+	public String getExtraSBSv2Args() {
+		return extraArgsText.getText();
+	}
+
+	public void setExtraSBSv2Args(String args) {
+		extraArgsText.setText(args);
+	}
+	
 	public boolean getDontPromtTrackDeps(){
 		if (!projectSetting){
 			return dontCheckForExternalDependencies.getSelection();
@@ -448,6 +468,5 @@ public class BuildSettingsUI {
 	public void setDontPromtTrackDeps(boolean dontAsk){
 		dontCheckForExternalDependencies.setSelection(dontAsk);
 	}
-	
 	
 }

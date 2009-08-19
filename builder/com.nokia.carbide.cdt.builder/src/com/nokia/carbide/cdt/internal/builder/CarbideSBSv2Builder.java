@@ -531,6 +531,14 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 			args.add(cpi.makeEngineToUse());
 		}
 		
+		// append extra sbsv2 arguments to the command
+		if (cpi.extraSBSv2Args().trim().length() > 0){
+			String[] extraArgs = cpi.extraSBSv2Args().split(" ");
+			for (String arg : extraArgs){
+				args.add(arg);
+			}
+		}
+		
 		launcher.setErrorParserManager(SBSv2Utils.getSBSBinDirectory(), buildConfig.getErrorParserList());
 
 		launcher.writeToConsole("\n***Invoking sbs command\n");

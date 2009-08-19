@@ -289,4 +289,14 @@ public interface ICarbideProjectInfo {
 	 */
 	public String makeEngineToUse();
 	
+	/**
+	 * Get arbitrary additional arguments to pass to sbs (Raptor) on the command-line
+	 * 
+	 * Note that the workspace setting is returned unless it is overridden by the project setting
+	 *  
+	 * @since 2.2
+	 */
+	public String extraSBSv2Args();
+	
+	
 }

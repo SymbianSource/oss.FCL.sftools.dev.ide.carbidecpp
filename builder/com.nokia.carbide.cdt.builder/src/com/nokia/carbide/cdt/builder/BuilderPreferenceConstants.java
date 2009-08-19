@@ -110,4 +110,11 @@ public class BuilderPreferenceConstants {
 	 * @since 2.1
 	 */
 	public final static String PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH = "promtToTrackDependencies"; //$NON-NLS-1$
+	
+	/**
+	 * String setting for arbitrary arguments to be passed to sbs.bat on build. 
+	 * @since 2.2
+	 */
+	public final static String PREF_SBSV2_EXTRA_ARGS = "sbsv2ExtraArgs"; //$NON-NLS-1$
+	
 }

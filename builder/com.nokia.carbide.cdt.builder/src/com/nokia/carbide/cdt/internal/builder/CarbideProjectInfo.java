@@ -60,6 +60,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	protected boolean useDebugMode;
 	protected boolean overrideMakeEngine;
 	protected String makeEngineToUse;
+	protected String extraSBSv2Args;
 
 	// for internal plugin use
 	public static final String OVERRIDE_WORKSPACE_SETTINGS_KEY = "overrideWorkspaceSettings"; //$NON-NLS-1$
@@ -77,6 +78,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	public static final String USE_DEBUG_MODE = "useDebugMode"; //$NON-NLS-1$
 	public static final String OVERRIDE_MAKE_ENGINE = "overrideMakeEngine"; //$NON-NLS-1$
 	public static final String MAKE_ENGINE_TO_USE = "makeEngineToUse"; //$NON-NLS-1$
+	public static final String EXTRA_SBSV2_ARGS = "extraSBSv2Args"; //$NON-NLS-1$
 
 	
 	public CarbideProjectInfo(IProject project) {
@@ -223,6 +225,11 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 					if (orig != null){
 						makeEngineToUse = orig;
 					}
+					orig = storage.getAttribute(EXTRA_SBSV2_ARGS);
+					if (orig != null){
+						extraSBSv2Args = orig;
+					}
+					 
 				}
 			}
 		}
@@ -254,6 +261,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		useDebugMode = BuilderPreferencePage.debugMode();
 		overrideMakeEngine = BuilderPreferencePage.overrideDefaultMakeEngine();
 		makeEngineToUse = BuilderPreferencePage.makeEngine();
+		extraSBSv2Args = BuilderPreferencePage.extraSBSv2ArgsTextStore();
 	}
 
 	public List<ICarbideBuildConfiguration> getBuildConfigurations() {
@@ -513,6 +521,13 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		return BuilderPreferencePage.makeEngine();
 	}
 
+	public String extraSBSv2Args() {
+		if (overrideWorkspaceSettings) {
+			return extraSBSv2Args;
+		}
+		return BuilderPreferencePage.extraSBSv2ArgsTextStore();
+	}
+	
 	/*
 	 * The following methods are non-API
 	 */
@@ -566,5 +581,9 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 
 	public String makeEngineProjectValue() {
 		return makeEngineToUse;
+	}
+	
+	public String extraSBSv2ArgsProjectValue() {
+		return extraSBSv2Args;
 	}
 }

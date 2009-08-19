@@ -56,6 +56,7 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 			buildSettingsUI.setDebugCheck(debugMode());
 			buildSettingsUI.setOverrideDefaultMakeEngine(overrideDefaultMakeEngine());
 			buildSettingsUI.setMakeEngineText(makeEngine());
+			buildSettingsUI.setExtraSBSv2Args(extraSBSv2ArgsTextStore());
 		}
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(control, CarbideCPPBuilderUIHelpIds.CARBIDE_BUILDER_PREFERENCE_PAGE);
@@ -92,6 +93,7 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 			store.setValue(BuilderPreferenceConstants.PREF_DEBUG_MODE, buildSettingsUI.getDebugMode());
 			store.setValue(BuilderPreferenceConstants.PREF_OVERRIDE_MAKE_ENGINE, buildSettingsUI.getOverrideDefaultMakeEngine());
 			store.setValue(BuilderPreferenceConstants.PREF_MAKE_ENGINE, buildSettingsUI.getMakeEngine());
+			store.setValue(BuilderPreferenceConstants.PREF_SBSV2_EXTRA_ARGS, buildSettingsUI.getExtraSBSv2Args());
 		}
 	}
 	
@@ -193,6 +195,11 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 	public static String makeEngine() {
 		IPreferenceStore store = CarbideBuilderPlugin.getDefault().getPreferenceStore();
 		return store.getString(BuilderPreferenceConstants.PREF_MAKE_ENGINE);
+	}
+	
+	public static String extraSBSv2ArgsTextStore() {
+		IPreferenceStore store = CarbideBuilderPlugin.getDefault().getPreferenceStore();
+		return store.getString(BuilderPreferenceConstants.PREF_SBSV2_EXTRA_ARGS);
 	}
 	
 }
