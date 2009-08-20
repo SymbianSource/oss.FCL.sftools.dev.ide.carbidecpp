@@ -226,7 +226,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 		return installerList;
 	}
 
-	protected Image getCachedImage(ImageDescriptor desc) {
+	protected synchronized Image getCachedImage(ImageDescriptor desc) {
 		if (imageCache == null)
 			imageCache = new HashMap<ImageDescriptor, Image>();
 		
@@ -239,7 +239,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 		return image;
 	}
 
-	public void dispose() {
+	public synchronized void dispose() {
 		if (imageCache != null) {
 			for (Image image : imageCache.values()) {
 				image.dispose();
