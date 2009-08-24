@@ -577,9 +577,8 @@
 	<extension
 	      point="org.eclipse.ui.activities">
 	      
-		<defaultEnablement
-			id="org.eclipse.equinox.p2.ui.sdk.classicUpdate">
-		</defaultEnablement>
+		<!-- please leave defaultEnablement on one line, the build script uses grep to remove this line -->
+		<defaultEnablement id="org.eclipse.equinox.p2.ui.sdk.classicUpdate" />
 
 		<activity
 	        id="org.eclipse.equinox.p2.ui.sdk.p2.update"
