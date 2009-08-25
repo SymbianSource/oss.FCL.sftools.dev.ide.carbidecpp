@@ -160,8 +160,8 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 	public void setProjectInfo(ICarbideProjectInfo newInfo) {
 		synchronized (projectInfoMap) {
 			IProject project = newInfo.getProject();
-			ICarbideProjectInfo oldInfo = projectInfoMap.get(project);
-			assert(oldInfo != null);
+//			ICarbideProjectInfo oldInfo = projectInfoMap.get(project);
+//			assert(oldInfo != null);
 			
 			projectInfoMap.put(project, newInfo);
 			addProjectListener(newInfo);
