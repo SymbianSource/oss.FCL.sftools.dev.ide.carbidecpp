@@ -3,103 +3,26 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: TCFClient - Win32 Release--------------------
-</h3>
-<h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x409 /fo"Release/resource.res" /d "NDEBUG" "C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\resource.rc"" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28AE.tmp" with contents
-[
-/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"Release/TCFClient.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\ClientManager.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\ErrorMonitorData.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\InputStream.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\ServerClient.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\shareddata.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\TCAPIConnectionJni.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\TCFClient.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\TCFCppApi.cpp"
-]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28AE.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28AF.tmp" with contents
-[
-/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"Release/TCFClient.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28AF.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B0.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib /nologo /dll /incremental:no /pdb:"Release/TCFClient.pdb" /map:"Release/TCFClient.map" /machine:I386 /out:"Release/TCFClient.dll" /implib:"Release/TCFClient.lib" 
-.\Release\ClientManager.obj
-.\Release\ErrorMonitorData.obj
-.\Release\InputStream.obj
-.\Release\mutex.obj
-.\Release\ServerClient.obj
-.\Release\shareddata.obj
-.\Release\StdAfx.obj
-.\Release\TCAPIConnectionJni.obj
-.\Release\TCDebugLog.obj
-.\Release\TCFClient.obj
-.\Release\TCFCppApi.obj
-.\Release\resource.res
-]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B0.tmp"
-<h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
-Compiling...
-ClientManager.cpp
-ErrorMonitorData.cpp
-InputStream.cpp
-mutex.cpp
-ServerClient.cpp
-shareddata.cpp
-TCAPIConnectionJni.cpp
-TCDebugLog.cpp
-TCFClient.cpp
-TCFCppApi.cpp
-Generating Code...
-Linking...
-   Creating library Release/TCFClient.lib and object Release/TCFClient.exp
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B4.bat" with contents
-[
-@echo off
-copybinaries Release
-]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B4.bat"
-copy libs
-Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-
-
-
-<h3>Results</h3>
-TCFClient.dll - 0 error(s), 0 warning(s)
-<h3>
 --------------------Configuration: TCFCommSerial - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B5.tmp" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP750.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFServer" /I "..\Common\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMSERIAL_EXPORTS" /Fp"Release/TCFCommSerial.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommSerial\RealSerialComm.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommSerial\TCFCommSerial.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommSerial\RealSerialComm.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommSerial\TCFCommSerial.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B5.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B6.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP750.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP751.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFServer" /I "..\Common\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMSERIAL_EXPORTS" /Fp"Release/TCFCommSerial.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommSerial\StdAfx.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommSerial\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B6.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B7.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP751.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP752.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/TCFCommSerial.pdb" /map:"Release/TCFCommSerial.map" /machine:I386 /out:"Release/TCFCommSerial.dll" /implib:"Release/TCFCommSerial.lib" 
 .\Release\BaseCom.obj
@@ -109,7 +32,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\TCDebugLog.obj
 .\Release\TCFCommSerial.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28B7.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP752.tmp"
 <h3>Output Window</h3>
 Compiling...
 StdAfx.cpp
@@ -122,43 +45,47 @@ TCFCommSerial.cpp
 Generating Code...
 Linking...
    Creating library Release/TCFCommSerial.lib and object Release/TCFCommSerial.exp
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BB.bat" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP756.bat" with contents
 [
 @echo off
 copyBinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BB.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP756.bat"
 copy libs
 Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFCommSerial.dll - 0 error(s), 0 warning(s)
+TCFCommSerial.dll - 1 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: TCFCommTCP - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BC.tmp" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP757.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFServer" /I "..\Common\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMTCP_EXPORTS" /Fp"Release/TCFCommTCP.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommTCP\TCFCommTCP.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommTCP\TcpComm.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommTCP\TCFCommTCP.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommTCP\TcpComm.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BC.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BD.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP757.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP758.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFServer" /I "..\Common\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMTCP_EXPORTS" /Fp"Release/TCFCommTCP.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommTCP\StdAfx.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommTCP\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BD.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BE.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP758.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP759.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib shlwapi.lib /nologo /dll /incremental:no /pdb:"Release/TCFCommTCP.pdb" /map:"Release/TCFCommTCP.map" /machine:I386 /out:"Release/TCFCommTCP.dll" /implib:"Release/TCFCommTCP.lib" 
 .\Release\BaseCom.obj
@@ -168,7 +95,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\TCFCommTCP.obj
 .\Release\TcpComm.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28BE.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP759.tmp"
 <h3>Output Window</h3>
 Compiling...
 StdAfx.cpp
@@ -181,44 +108,48 @@ TcpComm.cpp
 Generating Code...
 Linking...
    Creating library Release/TCFCommTCP.lib and object Release/TCFCommTCP.exp
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C2.bat" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP75D.bat" with contents
 [
 @echo off
 copybinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C2.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP75D.bat"
 copy libs
 Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFCommTCP.dll - 0 error(s), 0 warning(s)
+TCFCommTCP.dll - 1 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: TCFCommVirtualSerial - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C3.tmp" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP75E.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFCommSerial" /I "..\Common\Headers" /I "..\TCFServer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMVIRTUALSERIAL_EXPORTS" /Fp"Release/TCFCommVirtualSerial.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommSerial\RealSerialComm.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\TCFCommVirtualSerial.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\VirtualSerialComm.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommSerial\RealSerialComm.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\TCFCommVirtualSerial.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\VirtualSerialComm.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C3.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C4.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP75E.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP75F.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFCommSerial" /I "..\Common\Headers" /I "..\TCFServer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMVIRTUALSERIAL_EXPORTS" /Fp"Release/TCFCommVirtualSerial.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\StdAfx.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C4.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C5.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP75F.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP760.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/TCFCommVirtualSerial.pdb" /map:"Release/TCFCommVirtualSerial.map" /machine:I386 /out:"Release/TCFCommVirtualSerial.dll" /implib:"Release/TCFCommVirtualSerial.lib" 
 .\Release\BaseCom.obj
@@ -229,7 +160,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\TCFCommVirtualSerial.obj
 .\Release\VirtualSerialComm.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C5.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP760.tmp"
 <h3>Output Window</h3>
 Compiling...
 StdAfx.cpp
@@ -243,41 +174,45 @@ VirtualSerialComm.cpp
 Generating Code...
 Linking...
    Creating library Release/TCFCommVirtualSerial.lib and object Release/TCFCommVirtualSerial.exp
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C9.bat" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP764.bat" with contents
 [
 @echo off
 copyBinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28C9.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP764.bat"
 copy libs
 Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFCommVirtualSerial.dll - 0 error(s), 0 warning(s)
+TCFCommVirtualSerial.dll - 1 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: TCFProtOST - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28CA.tmp" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP765.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFServer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFPROTOST_EXPORTS" /Fp"Release/TCFProtOST.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\BaseProtocol.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFProtOST\OSTProtocol.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFProtOST\TCFProtOST.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\BaseProtocol.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFProtOST\OSTProtocol.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFProtOST\TCFProtOST.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28CA.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28CB.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP765.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP766.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFServer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFPROTOST_EXPORTS" /Fp"Release/TCFProtOST.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFProtOST\StdAfx.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFProtOST\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28CB.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28CC.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP766.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP767.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/TCFProtOST.pdb" /map:"Release/TCFProtOST.map" /machine:I386 /out:"Release/TCFProtOST.dll" /implib:"Release/TCFProtOST.lib" 
 .\Release\BaseProtocol.obj
@@ -285,7 +220,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\StdAfx.obj
 .\Release\TCFProtOST.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28CC.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP767.tmp"
 <h3>Output Window</h3>
 Compiling...
 StdAfx.cpp
@@ -296,55 +231,59 @@ TCFProtOST.cpp
 Generating Code...
 Linking...
    Creating library Release/TCFProtOST.lib and object Release/TCFProtOST.exp
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D0.bat" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76B.bat" with contents
 [
 @echo off
 copyBinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D0.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76B.bat"
 copy libs
 Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFProtOST.dll - 0 error(s), 0 warning(s)
+TCFProtOST.dll - 1 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: TCFServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x409 /fo"Release/resource.res" /d "NDEBUG" "C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\resource.rc"" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D1.tmp" with contents
+Creating command line "rc.exe /l 0x409 /fo"Release/resource.res" /d "NDEBUG" "C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\resource.rc"" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76C.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I "..\Common\Source" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/TCFServer.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\Client.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\CommRegistryItem.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\Connection.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\ConnectionImpl.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\ErrorMonitorData.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\InputStream.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\MessageFile.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\ProtocolRegistryItem.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\Registry.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\RegistryImpl.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\ServerClient.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\ServerManager.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\shareddata.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\TCFServer.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\Client.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\CommRegistryItem.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\Connection.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\ConnectionImpl.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\ErrorMonitorData.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\InputStream.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\MessageFile.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\ProtocolRegistryItem.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\Registry.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\RegistryImpl.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\ServerClient.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\ServerManager.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\shareddata.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\TCFServer.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D1.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D2.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76C.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76D.tmp" with contents
 [
 /nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I "..\Common\Source" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/TCFServer.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFServer\StdAfx.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D2.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D3.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76D.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76E.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib shlwapi.lib /nologo /subsystem:console /incremental:no /pdb:"Release/TCFServer.pdb" /machine:I386 /out:"Release/TCFServer.exe" 
 .\Release\Client.obj
@@ -366,7 +305,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\TCFServer.obj
 .\Release\resource.res
 ]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D3.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP76E.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -390,20 +329,22 @@ TCDebugLog.cpp
 TCFServer.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D5.bat" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP770.bat" with contents
 [
 @echo off
 copybinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP28D5.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP770.bat"
 copy binary
 Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFServer.exe - 0 error(s), 0 warning(s)
+TCFServer.exe - 1 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

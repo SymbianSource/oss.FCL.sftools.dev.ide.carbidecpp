@@ -8,6 +8,6 @@ Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.tcf.api,
- com.nokia.tcf.impl;x-friends:="com.nokia.tcf.test,com.nokia.tcf.legacy"
+ com.nokia.tcf.impl;x-friends:="com.nokia.tcf.test,com.nokia.tcf.legacy,com.nokia.carbide.cpp.edc.agent.trk"
 Bundle-ClassPath: tcfPlugin.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

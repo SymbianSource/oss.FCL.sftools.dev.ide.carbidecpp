@@ -7,5 +7,7 @@ Bundle-Activator: com.nokia.tcf.test.TestPlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- com.nokia.tcf
+ com.nokia.tcf,
+ org.junit
 Eclipse-LazyStart: true
+Import-Package: junit.framework

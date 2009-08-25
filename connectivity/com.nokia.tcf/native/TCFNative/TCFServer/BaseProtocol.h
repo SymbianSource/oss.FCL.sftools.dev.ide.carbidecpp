@@ -25,6 +25,10 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#define DECODE_MESSAGE_NOT_FOUND			(0)		// enough bytes, but message cannot be decoded
+#define DECODE_MESSAGE_FOUND				(1)		// enough bytes, and message found
+#define DECODE_NOT_ENOUGH_BYTES_TO_SEARCH	(2)		// not enough bytes to do compare
+
 class CBaseProtocol  
 {
 public:
@@ -32,7 +36,7 @@ public:
 	virtual ~CBaseProtocol();
 
 	// used to decode a message into header/message parts
-	virtual BOOL DecodeMessage(BYTE* fullMessage, DWORD& fullLength, BYTE& msgId, BYTE*& rawMessage, DWORD& rawLength)=0;
+	virtual int DecodeMessage(BYTE* fullMessage, DWORD& fullLength, BYTE& msgId, BYTE*& rawMessage, DWORD& rawLength)=0;
 
 	// used to encode a raw message (prefixes any protocol headers)
 	virtual DWORD EncodeMessage(BYTE* rawMessage, DWORD rawLength, BYTE protocolVersion, BYTE msgId, BYTE* fullMessage, DWORD maxFullLength)=0;

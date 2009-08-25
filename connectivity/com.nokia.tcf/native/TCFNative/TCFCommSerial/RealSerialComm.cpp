@@ -728,6 +728,7 @@ long CRealSerialComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, lo
 			long bytesRemaining = m_numberBytes;
 			long usedLen = 0;
 			bool done = false;
+			long numberSkipped=0;
 
 			while (!done)
 			{
@@ -736,48 +737,63 @@ long CRealSerialComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, lo
 				BYTE* fullMessage = ptr;
 				BYTE* rawMessage = ptr;
 				BYTE msgId = 0;
-				if (m_Protocol->DecodeMessage(fullMessage, fullMessageLength, msgId, rawMessage, rawLength))
+				int result = m_Protocol->DecodeMessage(fullMessage, fullMessageLength, msgId, rawMessage, rawLength);
+				if (result == DECODE_NOT_ENOUGH_BYTES_TO_SEARCH)
 				{
-					err = PreProcessMessage(msgId, fullMessageLength, fullMessage);
-					if (err != TCAPI_ERR_NONE)
-					{
-						// notify all clients right now 
-						pConn->NotifyClientsCommError(err, false, 0);
-						err = TCAPI_ERR_NONE;
-					}
-#ifdef _DEBUG
-					int reallen = fullMessageLength;
-					if (reallen > 50) reallen = 50;
-					char msg[6];
-					msg[0] = '\0';
-
-					sLogMsg[0] = '\0';
-					if (reallen > 0)
-					{
-						sLogMsg[0] = '\0';
-						for (int i = 0; i < reallen; i++)
-						{
-							sprintf(msg, "%02.2x ", ptr[i]);
-							strcat(sLogMsg, msg);
-						}
-					}
-#endif
-					PROCLOGOPEN();
-					PROCLOGA5("CRealSerialComm::ProcessBuffer - RouteMesssage pRegistry = %x id=%x len=%d len=%d\n  msg=%s\n", pRegistry, msgId, fullMessageLength, rawLength, sLogMsg);
-					PROCLOGCLOSE();
-
-					err = pRegistry->RouteMessage(msgId, fullMessage, fullMessageLength, rawMessage, rawLength);
-					if (err != TCAPI_ERR_NONE) routingErr = err; // saved for future
-
-					numberProcessed++;
+					done = true;
+				}
+				else if (result == DECODE_MESSAGE_NOT_FOUND)
+				{
+					numberSkipped++;
 					usedLen += fullMessageLength;
 					bytesRemaining -= fullMessageLength;
 					ptr += fullMessageLength;
 					if (bytesRemaining < protocolHeaderLength)
 						done = true;
 				}
-				else
+				else if (result == DECODE_MESSAGE_FOUND)
 				{
+					err = PreProcessMessage(msgId, fullMessageLength, fullMessage);
+					if (err != TCAPI_ERR_NONE)
+					{
+						PROCLOGOPEN();
+						PROCLOGA1("CTcpComm::ProcessBuffer Notify err = %x\n", err);
+						PROCLOGCLOSE();
+						// notify all clients right now 
+						pConn->NotifyClientsCommError(err, false, 0);
+						err = TCAPI_ERR_NONE;
+					}
+#ifdef _DEBUG
+					int reallen = fullMessageLength;
+					if (reallen > 80) reallen = 80;
+					char msg[6];
+					msg[0] = '\0';
+
+					sTcpLogMsg[0] = '\0';
+					if (reallen > 0)
+					{
+						sTcpLogMsg[0] = '\0';
+						for (int i = 0; i < reallen; i++)
+						{
+							if (isalnum(ptr[i]))
+							{
+								sprintf(msg, "%c", ptr[i]);
+							}
+							else
+							{
+								sprintf(msg, "%02.2x ", ptr[i]);
+							}
+							strcat(sTcpLogMsg, msg);
+						}
+					}
+#endif
+					PROCLOGOPEN();
+					PROCLOGA5("CTcpComm::ProcessBuffer - RouteMesssage pRegistry = %x id=%x len=%d len=%d msg=%s\n", pRegistry, msgId, fullMessageLength, rawLength, sTcpLogMsg);
+					PROCLOGCLOSE();
+
+					err = pRegistry->RouteMessage(msgId, fullMessage, fullMessageLength, rawMessage, rawLength);
+					if (err != TCAPI_ERR_NONE) routingErr = err; // saved for future
+
 					numberProcessed++;
 					usedLen += fullMessageLength;
 					bytesRemaining -= fullMessageLength;

@@ -34,9 +34,9 @@ COSTProtocol::~COSTProtocol()
 {
 
 }
-BOOL COSTProtocol::DecodeMessage(BYTE* fullMessage, DWORD& fullMessageLength, BYTE& msgId, BYTE*& rawMessage, DWORD& rawLength)
+int COSTProtocol::DecodeMessage(BYTE* fullMessage, DWORD& fullMessageLength, BYTE& msgId, BYTE*& rawMessage, DWORD& rawLength)
 {
-	BOOL found = FALSE;
+	int result = DECODE_MESSAGE_NOT_FOUND;
 
 	WORD msgLen = MAKEWORD(fullMessage[OST_LEN_BYTE_1+1], fullMessage[OST_LEN_BYTE_1]);
 	if (fullMessageLength >= (WORD)(msgLen + OST_HDR_LEN_1))
@@ -45,10 +45,14 @@ BOOL COSTProtocol::DecodeMessage(BYTE* fullMessage, DWORD& fullMessageLength, BY
 		rawMessage = &fullMessage[OST_MSG_BYTE_1];
 		rawLength = msgLen;
 		fullMessageLength = msgLen+OST_HDR_LEN_1;
-		found = TRUE;
+		result = DECODE_MESSAGE_FOUND;
+	}
+	else
+	{
+		result = DECODE_NOT_ENOUGH_BYTES_TO_SEARCH;
 	}
 
-	return found;
+	return result;
 }
 
 DWORD COSTProtocol::EncodeMessage(BYTE* rawMessage, DWORD rawLength, BYTE protocolVersion, BYTE msgId, BYTE* fullMessage, DWORD maxFullLength)

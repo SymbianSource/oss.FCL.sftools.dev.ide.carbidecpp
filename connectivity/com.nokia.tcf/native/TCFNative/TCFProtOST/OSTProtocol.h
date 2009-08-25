@@ -49,7 +49,7 @@ public:
 	COSTProtocol();
 	virtual ~COSTProtocol();
 
-	BOOL DecodeMessage(BYTE* fullMessage, DWORD& fullLength, BYTE& msgId, BYTE*& rawMessage, DWORD& rawLength);
+	int DecodeMessage(BYTE* fullMessage, DWORD& fullLength, BYTE& msgId, BYTE*& rawMessage, DWORD& rawLength);
 	DWORD EncodeMessage(BYTE* rawMessage, DWORD rawLength, BYTE protocolVersion, BYTE msgId, BYTE* fullMessage, DWORD maxFullLength);
 	DWORD GetHeaderLength() { return OST_HDR_LEN_1; }
 };

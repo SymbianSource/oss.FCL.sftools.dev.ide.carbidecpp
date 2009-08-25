@@ -21,7 +21,6 @@ import java.io.IOException;
 import org.eclipse.core.runtime.IStatus;
 
 import com.nokia.tcf.api.ITCAPIConnection;
-import com.nokia.tcf.api.ITCConnection;
 import com.nokia.tcf.api.ITCMessage;
 import com.nokia.tcf.api.ITCMessageIds;
 import com.nokia.tcf.api.ITCMessageInputStream;
