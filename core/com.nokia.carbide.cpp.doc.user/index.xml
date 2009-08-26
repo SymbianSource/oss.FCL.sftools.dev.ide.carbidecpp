@@ -380,19 +380,10 @@
 	   <topic href="html/reference/menus/run_leavescan.htm"/>
 	</entry>
 
-	<entry keyword="License">
-	   <topic href="html/license.htm" label="Carbide Licenses"/>
-	</entry>
-
-	<entry keyword="License Information">
-	   <topic href="html/legal.htm"/>
-	</entry>
-
 <!-- M -->
 
 	<entry keyword="Main pane">
-	   <topic href="html/reference/launch_configs/emulator_main.htm"/>
-	   <topic href="html/reference/launch_configs/page_trk_main.htm"/>
+	   <topic href="html/projects/launch/page_main.htm"/>
 	</entry>
 
 	<entry keyword="MBM Editor">
@@ -584,7 +575,7 @@
 	</entry>
 
 	<entry keyword="Running a Program">
-	   <topic href="html/tasks/debugger/work_debug_act_run.htm"/>
+	   <topic href="html/debugger/debug/cmds_starting.htm"/>
 	</entry>
 
 <!-- S -->
@@ -613,8 +604,8 @@
 	   <topic href="html/tasks/start/carbide_deploying.htm" label="Uploading"/>
 	</entry>
 
-	<entry keyword="Sophia Target Interface Stop Mode Debugging">
-	   <topic href="html/reference/wnd_sophia_config.htm"/>
+	<entry keyword="Sophia">
+	   <topic href="html/projects/launch/sophia.htm"/>
 	</entry>
 
 	<entry keyword="Starting the Debugger">
@@ -688,8 +679,8 @@
 	   <topic href="html/concepts/thread_cond_breakpoints.htm"/>
 	</entry>
 
-	<entry keyword="Trace32 Interface for Stop Mode Debugging">
-	   <topic href="html/reference/wnd_Trace32_config.htm"/>
+	<entry keyword="Trace32">
+	   <topic href="html/projects/launch/trace32.htm"/>
 	</entry>
 
 	<entry keyword="TRK" >
@@ -733,14 +724,21 @@
 		<topic href="html/reference/view_breakpoints.htm" />
 		<topic href="html/reference/view_log.htm" />
 		<topic href="html/reference/view_carbide_news.htm" />
-		<topic href="html/reference/view_debug.htm" />
+		<topic href="html/reference/view_cpp_projects.htm" />
+		<topic href="html/debugger/debug/debug.htm" />
 		<topic href="html/reference/view_disassembly.htm" />
 		<topic href="html/reference/view_executables.htm" />
 		<topic href="html/reference/view_expressions.htm" />
+		<topic href="html/reference/view_global_variables.htm" />
 		<topic href="html/reference/view_memory_wnd.htm" />
+		<topic href="html/reference/view_mifdef_editor.htm" />
 		<topic href="html/reference/view_module_wnd.htm" />
 	    <topic href="html/concepts/registers.htm" />
+	    <topic href="html/reference/view_signals_wnd.htm" />
 	    <topic href="html/reference/view_symbian_kernel.htm" />
+	    <topic href="html/reference/view_sym_proj_nav.htm" />
+	    <topic href="html/reference/view_symbian_kernel.htm" />
+	    <topic href="html/reference/view_system_browser.htm" />
 	    <topic href="html/reference/view_variables.htm" />
 	</entry>
 

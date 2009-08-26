@@ -95,7 +95,7 @@
 		</topic>
 
 		<topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
-			<topic label="SDK Preferences"					href="html/reference/SDK Preferences.html" />
+			<topic label="SDK Preferences"					href="html/reference/SDKPreferences.html" />
 
 			<topic label="Adding an SDK"					href="html/tasks/AddinganSDK.html" >
 				<topic label="Adding SDKs"					href="html/tasks/sdks/sdk_add.htm" />
@@ -247,12 +247,12 @@
 	
 	<topic label="Debugging projects" 				href="html/concepts/debugger_about.htm" >
 	
-		<topic label="Running a program" 			href="html/tasks/debugger/work_debug_act_run.htm" />
+		<topic label="Running a program" 			href="html/debugger/debug/cmds_starting.htm" />
 		
 		<topic label="Debug perspective" 			href="html/reference/perspective_debug.htm" >
 			<topic label="BreakPoints view" 		href="html/reference/view_breakpoints.htm" />
 			<topic label="Console view" 			href="html/reference/view_log.htm" />
-			<topic label="Debug view"				href="html/reference/view_debug.htm" />
+			<topic label="Debug view"				href="html/debugger/debug/viewing_debug.htm" />
 			<topic label="Disassembly view"			href="html/reference/view_disassembly.htm" />
 			<topic href="html/reference/view_executables.htm" label="Executables view">
    </topic>
@@ -415,25 +415,25 @@
 	
 		<topic label="Stop mode projects" 				href="html/tasks/StopModeToc.htm">
 		
-			<topic label="Stop Mode Debug Example" 		href="html/tasks/debugger/stop_mode_debug.htm" >
+			<topic label="Stop Mode Debug Example" 					href="html/tasks/debugger/stop_mode_debug.htm" >
 				<topic label="1. On-Device Debugging Preconditions" href="html/tasks/debugger/stop_mode_debug_precond.htm" />
-				<topic label="2. Symbian OS Trace32 Support" 		href="html/reference/wnd_Trace32_config.htm" >
-					<topic label="Main" 							href="html/reference/wnd_Trace32_config.htm#Main" />
-					<topic label="Connection" 						href="html/reference/wnd_Trace32_config.htm#Connection" />
-					<topic label="Debugger" 						href="html/reference/wnd_Trace32_config.htm#Debugger" />
-					<topic label="ROM Image" 						href="html/reference/wnd_Trace32_config.htm#ROM" />
-					<topic label="Executables" 						href="html/reference/wnd_Trace32_config.htm#Executables" />
-					<topic label="Source" 							href="html/reference/wnd_Trace32_config.htm#Source" />
-					<topic label="Commmon" 							href="html/reference/wnd_Trace32_config.htm#Commmon" />
+				<topic label="2. Trace32 Support" 					href="html/projects/launch/trace32.htm" >
+					<topic label="Main" 							href="html/projects/launch/page_main.htm" />
+					<topic label="Connection" 						href="html/projects/launch/page_connection.htm" />
+					<topic label="Debugger" 						href="html/projects/launch/page_debugger.htm" />
+					<topic label="ROM Image" 						href="html/projects/launch/page_rom_image.htm" />
+					<topic label="Executables" 						href="html/projects/launch/page_executables.htm" />
+					<topic label="Source" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
+					<topic label="Commmon" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm/" />
 				</topic>
-				<topic label="3. Symbian OS Sophia Target Interface Support" 	href="html/reference/wnd_sophia_config.htm" >
-					<topic label="Main" 							href="html/reference/wnd_sophia_config.htm#Main" />
-					<topic label="Connection" 						href="html/reference/wnd_sophia_config.htm#Connection" />
-					<topic label="Debugger" 						href="html/reference/wnd_sophia_config.htm#Debugger" />
-					<topic label="ROM Image" 						href="html/reference/wnd_sophia_config.htm#ROM" />
-					<topic label="Executables" 						href="html/reference/wnd_sophia_config.htm#Executables" />
-					<topic label="Source" 							href="html/reference/wnd_sophia_config.htm#Source" />
-					<topic label="Commmon" 							href="html/reference/wnd_sophia_config.htm#Commmon" />
+				<topic label="3. Sophia Target Interface Support" 	href="html/projects/launch/sophia.htm" >
+					<topic label="Main" 							href="html/projects/launch/page_main.htm" />
+					<topic label="Connection" 						href="html/projects/launch/page_connection.htm" />
+					<topic label="Debugger" 						href="html/projects/launch/page_debugger.htm" />
+					<topic label="ROM Image" 						href="html/projects/launch/page_rom_image.htm" />
+					<topic label="Executables" 						href="html/projects/launch/page_executables.htm" />
+					<topic label="Source" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
+					<topic label="Commmon" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm/" />
 				</topic>
 				<topic label="4. Using Soft Attach"	 href="html/tasks/debugger/soft_attach_debug.htm" />
 			</topic>
