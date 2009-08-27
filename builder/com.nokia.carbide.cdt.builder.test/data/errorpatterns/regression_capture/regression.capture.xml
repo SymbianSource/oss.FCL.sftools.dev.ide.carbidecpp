@@ -14,5 +14,7 @@
   <marker_info file="^EMPTY^" line_number="-1" message="ERROR: No Sources specified" severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 6-->
   <marker_info file="^EMPTY^" line_number="-1" message="ERROR: No Sources specified" severity="3" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <!--Error Marker at index 7-->
+  <marker_info file="^EMPTY^" line_number="23" message="#error test" severity="2" variable_name="^EMPTY^" external_path_string="C:/runtime-EclipseApplication/GUIFooey/group/BLD.INF" />
 </root>
 

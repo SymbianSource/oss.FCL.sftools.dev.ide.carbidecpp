@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
- <!--Error Marker at index 0-->
+  <!--Error Marker at index 0-->
   <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.cpp:" />
   <!--Error Marker at index 1-->
   <marker_info file="^EMPTY^" line_number="0" message="no input files" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
@@ -22,4 +22,13 @@
   <marker_info file="^EMPTY^" line_number="34" message="candidate is: virtual void CGUIFooeyAppUi::ConstructL()" severity="2" variable_name="^EMPTY^" external_path_string="/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h" />
   <!--Error Marker at index 10-->
   <marker_info file="^EMPTY^" line_number="49" message="unused variable 'j'" severity="1" variable_name="^EMPTY^" external_path_string="/runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h" />
+  <!--Error Marker at index 11-->
+  <marker_info file="^EMPTY^" line_number="26" message="';' expected" severity="2" variable_name="^EMPTY^" external_path_string="../src/lalaApplication.cpp" />
+  <!--Error Marker at index 12-->
+  <marker_info file="^EMPTY^" line_number="26" message="expression syntax error" severity="2" variable_name="^EMPTY^" external_path_string="../src/lalaApplication.cpp" />
+  <!--Error Marker at index 13-->
+  <marker_info file="^EMPTY^" line_number="33" message="';' expected" severity="2" variable_name="^EMPTY^" external_path_string="../src/lalaApplication.cpp" />
+  <!--Error Marker at index 14-->
+  <marker_info file="^EMPTY^" line_number="34" message="expression syntax error" severity="2" variable_name="^EMPTY^" external_path_string="../src/lalaApplication.cpp" />
 </root>
+

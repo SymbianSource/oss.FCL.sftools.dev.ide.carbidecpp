@@ -9,3 +9,7 @@ foo.cc:11:20: error: value with length 0 violates the length restriction
 /runtime-EclipseApplication/GUIFooey/src/guifooeyappui.cpp:39: error: expected unqualified-id before ':' token
 /runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h:34: error: candidate is: virtual void CGUIFooeyAppUi::ConstructL()
 /runtime-EclipseApplication/GUIFooey/inc/GUIFooeyAppUi.h:49: warning: unused variable 'j'
+..\src\lalaApplication.cpp:26: ';' expected
+..\src\lalaApplication.cpp:26: expression syntax error
+..\src\lalaApplication.cpp:33: ';' expected
+..\src\lalaApplication.cpp:34: expression syntax error
