@@ -487,6 +487,10 @@ public class ConnectionSettingsPage extends WizardPage {
 	private synchronized void initializeInstallerData() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+				Control control = installerTreeViewer.getControl();
+				if (control == null || control.isDisposed())
+					return;
+				
 				if (installerTreeViewer.getContentProvider() == null)
 					installerTreeViewer.setContentProvider(new TreeNodeContentProvider());
 				installerTreeViewer.setInput(LOADING_CONTENT_INPUT);
@@ -502,7 +506,13 @@ public class ConnectionSettingsPage extends WizardPage {
 		
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+				Control control = installerTreeViewer.getControl();
+				if (control == null || control.isDisposed())
+					return;
+				
 				// update installer tree
+				if (installerTreeViewer.getContentProvider() == null)
+					installerTreeViewer.setContentProvider(new TreeNodeContentProvider());
 				installerTreeViewer.setInput(treeNodes);
 				installerTreeViewer.refresh(true);
 				installerTreeViewer.expandAll();
