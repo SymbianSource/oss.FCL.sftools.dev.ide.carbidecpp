@@ -307,7 +307,6 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 				return ((BuildConfigurationData)data).getConfiguration();
 			}
 		}
-		assert(false);
 		return null;
 	}
 
