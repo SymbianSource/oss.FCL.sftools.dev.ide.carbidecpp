@@ -76,6 +76,7 @@ public class ConnectionSettingsPage extends WizardPage {
 
 	private final static TreeNode LOADING_CONTENT_TREENODE = 
 		new TreeNode(Messages.getString("ConnectionSettingsPage.GettingDataMessage")); //$NON-NLS-1$
+	private static final TreeNode[] LOADING_CONTENT_INPUT = new TreeNode[] { LOADING_CONTENT_TREENODE };
 	private static final String STATUS_NOT_TESTED = 
 		Messages.getString("ConnectionSettingsPage.NotTestedStatusString"); //$NON-NLS-1$
 	private final static Image FOLDER_ICON_IMG = 
@@ -486,7 +487,9 @@ public class ConnectionSettingsPage extends WizardPage {
 	private synchronized void initializeInstallerData() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				installerTreeViewer.setInput(new TreeNode[] { LOADING_CONTENT_TREENODE });
+				if (installerTreeViewer.getContentProvider() == null)
+					installerTreeViewer.setContentProvider(new TreeNodeContentProvider());
+				installerTreeViewer.setInput(LOADING_CONTENT_INPUT);
 				installerInfoText.setText(""); //$NON-NLS-1$
 				deviceOSComboViewer.setInput(Collections.EMPTY_LIST);
 			}
@@ -677,7 +680,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		return null;
 	}
 	
-	private TreeNode[] createTreeNodes() {
+	private synchronized TreeNode[] createTreeNodes() {
 		Map<String, TreeNode> sdkFamilyToNodes = new HashMap<String, TreeNode>();
 		for (IRemoteAgentInstallerProvider installerProvider : installerProviders) {
 			List<String> familyNames = installerProvider.getSDKFamilyNames(null);
@@ -738,7 +741,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		versionNode.setChildren((TreeNode[]) childList.toArray(new TreeNode[childList.size()]));
 	}
 	
-	private List<Pair<String, Version>> createDeviceOSPairs() {
+	private synchronized List<Pair<String, Version>> createDeviceOSPairs() {
 		List<Pair<String, Version>> deviceOSPairs = new ArrayList<Pair<String, Version>>();
 		for (IRemoteAgentInstallerProvider installerProvider : installerProviders) {
 			List<String> familyNames = installerProvider.getSDKFamilyNames(null);
@@ -754,7 +757,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		return deviceOSPairs;
 	}
 	
-	private void getInstallerProviders(Collection<IService> services) {
+	private synchronized void getInstallerProviders(Collection<IService> services) {
 		if (installerProviders != null) {
 			// check to see if we already have this set of installer providers
 			Set<String> serviceIds = new TreeSet<String>();
@@ -778,7 +781,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		}
 	}
 
-	private void disposeInstallerProviders() {
+	private synchronized void disposeInstallerProviders() {
 		if (installerProviders != null) {
 			for (IRemoteAgentInstallerProvider installerProvider : installerProviders) {
 				installerProvider.dispose();
