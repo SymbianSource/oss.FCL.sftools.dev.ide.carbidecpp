@@ -10,7 +10,7 @@
 		  
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
-       		label="Carbide.c++ Release Notes (2.1)" 
+       		label="Carbide.c++ Release Notes (2.2)" 
        		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
        		id="carbide-link" 
        		style-id="content-link">
@@ -21,10 +21,10 @@
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
        		label="Performance Improvements (2.1)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm#210" 
        		id="carbide-link" 
        		style-id="content-link">
-          	<text>Carbide performance improvements for large project importing, building, and other critical areas.</text>
+          	<text>Carbide performance improvements in 2.1 for large project importing, building, and other critical areas.</text>
        		</link>
        	</group>
 
