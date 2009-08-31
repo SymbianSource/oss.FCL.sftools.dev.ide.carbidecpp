@@ -8,11 +8,9 @@
 		<topic label="System Requirements" 			href="html/tasks/start/carbide_requirements.htm" />
 		<topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" />
 
-		<topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" >
-			<topic label="Supported Target Types"	href="html/concepts/build_targets.htm" />		
-			<topic label="Supported SDKs" 		    href="html/sos_references.htm" />
-			<topic label="Updating Carbide.c++" 	href="html/tasks/start/carbide_updating.htm" />
-		</topic>
+		<topic label="Supported Target Types"		href="html/concepts/build_targets.htm" />		
+		<topic label="Supported SDKs" 		    	href="html/sos_references.htm" />
+		<topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" />
 	
 		<topic label="Tour of the UI"				href="html/concepts/tour.html" />
 		<topic label="Concepts" 					href="html/concepts/concepts.htm" />
