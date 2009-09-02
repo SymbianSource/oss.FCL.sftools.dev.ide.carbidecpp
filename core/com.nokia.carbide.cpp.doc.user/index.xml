@@ -36,17 +36,15 @@
     </entry>
 
 	<entry keyword="breakpoints">
-	   <topic href="html/tasks/breakpoints/pgm_bp_disable.htm" label="Disabling"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_enable.htm" label="Enabling"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_exporting.htm" label="Export Breakpoints"/>	   
-	   <topic href="html/tasks/breakpoints/pgm_bp_importing.htm" label="Import Breakpoints"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_clearing.htm" label="Removing"/>
-	   <topic href="html/tasks/breakpoints/save_breakpoints_view.htm" label="Saving Contents of Breakpoints View"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_setting.htm" label="Setting"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_conditional.htm" label="Setting Conditional Breakpoints or Watchpoints"/>
-	   <topic href="html/tasks/breakpoints/show_breakpoints_view.htm" label="Show list of Breakpoints"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_temporary.htm" label="Temporary Breakpoints"/>
-	   <topic href="html/tasks/breakpoints/pgm_bp_view_props.htm" label="Viewing Properties"/>
+	   <topic href="html/debugger/breakpoints/breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/conditional_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/exporting_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/importing_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/properties_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/resolving_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/temporary_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/toggling_breakpoints.htm"/>
+	   <topic href="html/debugger/breakpoints/viewing_breakpoints.htm"/>
 	</entry>
 
 	<!--
@@ -272,9 +270,9 @@
 	</entry>
 
 	<entry keyword="Expressions">
-	   <topic href="html/tasks/expressions/expr_adding.htm" label="Adding"/>
-	   <topic href="html/tasks/expressions/expr_editing.htm" label="Editing"/>
-	   <topic href="html/tasks/expressions/expr_removing.htm" label="Removing"/>
+	   <topic href="html/debugger/variables/adding_expressions.htm" />
+	   <topic href="html/debugger/variables/editing_expressions.htm" />
+	   <topic href="html/debugger/variables/viewing_expressions.htm" />
 	</entry>
 
 	<entry keyword="Expressions view">
@@ -711,9 +709,9 @@
 
 	<entry keyword="variables">
 	   <topic href="html/concepts/working_with_variables.htm" />
-	   <topic href="html/tasks/variables/set_variable_formats.htm" />
-	   <topic href="html/tasks/variables/show_global_variables.htm" />
-	   <topic href="html/tasks/variables/show_variables_view.htm" />
+	   <topic href="html/debugger/variables/adding_variables.htm" />
+	   <topic href="html/debugger/variables/viewing_variables.htm" />
+	   <topic href="html/debugger/variables/variables.htm" />
 	</entry>
 
 	<entry keyword="Variables view">
@@ -746,13 +744,10 @@
 <!-- W -->
 
 	<entry keyword="watchpoints">
-	   <topic label="Watchpoints" href="html/tasks/watchpoints/pgm_watchpoints.htm" />
-	   <topic href="html/tasks/watchpoints/pgm_wpt_clearing.htm" />
-	   <topic href="html/tasks/watchpoints/pgm_wpt_conditional.htm" />
-	   <topic href="html/tasks/watchpoints/pgm_wpt_disable.htm" />
-	   <topic href="html/tasks/watchpoints/pgm_wpt_enable.htm" />
-	   <topic href="html/tasks/watchpoints/pgm_wpt_setting.htm" />
-	   <topic href="html/tasks/watchpoints/pgm_wpt_view_props.htm" />
+	   <topic href="html/debugger/watchpoints/watchpoints.htm" />
+	   <topic href="html/debugger/watchpoints/setting_watchpoints.htm" />
+	   <topic href="html/debugger/watchpoints/status_watchpoints.htm" />
+	   <topic href="html/debugger/watchpoints/toggling_watchpoints.htm" />
 	</entry>
 
     <entry keyword="workspaces">
