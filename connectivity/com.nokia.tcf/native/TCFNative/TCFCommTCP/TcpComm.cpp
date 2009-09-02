@@ -171,8 +171,12 @@ long CTcpComm::OpenPort()
 				m_clientService.sin_family = AF_INET;
 				m_clientService.sin_addr.S_un.S_addr = inet_addr(ipAddress);
 				m_clientService.sin_port = htons(wPort);
+
+				COMMLOGS("CTcpComm::OpenPort connect start\n");
+
 				if (connect(m_socket, (SOCKADDR*)&m_clientService, sizeof(m_clientService)) == SOCKET_ERROR)
 				{
+					COMMLOGS("CTcpComm::OpenPort connect SOCKET_ERROR\n");
 					int wsaErr = WSAGetLastError();
 					WSASetLastError(0);
 					COMMLOGA1("CTcpComm::OpenPort connect=wsaErr=%d\n", wsaErr);
