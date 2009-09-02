@@ -3,48 +3,48 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: TCFClient - Win32 Debug--------------------
+--------------------Configuration: TCFClient - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x409 /fo"Debug/resource.res" /d "_DEBUG" "C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\resource.rc"" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP3228.tmp" with contents
+Creating command line "rc.exe /l 0x409 /fo"Release/resource.res" /d "NDEBUG" "C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFClient\resource.rc"" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC0.tmp" with contents
 [
-/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"Debug/" /Fp"Debug/TCFClient.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\ClientManager.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\ErrorMonitorData.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\InputStream.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\ServerClient.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\shareddata.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\TCAPIConnectionJni.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\TCFClient.cpp"
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\TCFCppApi.cpp"
+/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"Release/TCFClient.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFClient\ClientManager.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\ErrorMonitorData.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\InputStream.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\ServerClient.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\shareddata.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFClient\TCAPIConnectionJni.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFClient\TCFClient.cpp"
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFClient\TCFCppApi.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP3228.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP3229.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC0.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC1.tmp" with contents
 [
-/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"Debug/" /Fp"Debug/TCFClient.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Symbian\Carbide\devspace_203_0316\com.nokia.tcf\native\TCFNative\TCFClient\StdAfx.cpp"
+/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"Release/TCFClient.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFClient\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP3229.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP322A.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC1.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC2.tmp" with contents
 [
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib /nologo /dll /incremental:yes /pdb:"Debug/TCFClient.pdb" /map:"Debug/TCFClient.map" /debug /machine:I386 /out:"Debug/TCFClient.dll" /implib:"Debug/TCFClient.lib" /pdbtype:sept 
-.\Debug\ClientManager.obj
-.\Debug\ErrorMonitorData.obj
-.\Debug\InputStream.obj
-.\Debug\mutex.obj
-.\Debug\ServerClient.obj
-.\Debug\shareddata.obj
-.\Debug\StdAfx.obj
-.\Debug\TCAPIConnectionJni.obj
-.\Debug\TCDebugLog.obj
-.\Debug\TCFClient.obj
-.\Debug\TCFCppApi.obj
-.\Debug\resource.res
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib /nologo /dll /incremental:no /pdb:"Release/TCFClient.pdb" /map:"Release/TCFClient.map" /machine:I386 /out:"Release/TCFClient.dll" /implib:"Release/TCFClient.lib" 
+.\Release\ClientManager.obj
+.\Release\ErrorMonitorData.obj
+.\Release\InputStream.obj
+.\Release\mutex.obj
+.\Release\ServerClient.obj
+.\Release\shareddata.obj
+.\Release\StdAfx.obj
+.\Release\TCAPIConnectionJni.obj
+.\Release\TCDebugLog.obj
+.\Release\TCFClient.obj
+.\Release\TCFCppApi.obj
+.\Release\resource.res
 ]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP322A.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC2.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -62,22 +62,27 @@ TCFClient.cpp
 TCFCppApi.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP322B.bat" with contents
+   Creating library Release/TCFClient.lib and object Release/TCFClient.exp
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC6.bat" with contents
 [
 @echo off
-copybinaries Debug
+copybinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSP322B.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPC6.bat"
 copy libs
 Copy binaries to ..\..\..\os\win32\x86
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+The system cannot find the path specified.
+        0 file(s) copied.
+Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFClient.dll - 0 error(s), 0 warning(s)
+TCFClient.dll - 1 error(s), 0 warning(s)
 </pre>
 </body>
 </html>
