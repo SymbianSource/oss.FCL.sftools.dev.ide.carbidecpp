@@ -769,10 +769,10 @@ long CRealSerialComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, lo
 					char msg[6];
 					msg[0] = '\0';
 
-					sTcpLogMsg[0] = '\0';
+					sLogMsg[0] = '\0';
 					if (reallen > 0)
 					{
-						sTcpLogMsg[0] = '\0';
+						sLogMsg[0] = '\0';
 						for (int i = 0; i < reallen; i++)
 						{
 							if (isalnum(ptr[i]))
@@ -783,12 +783,12 @@ long CRealSerialComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, lo
 							{
 								sprintf(msg, "%02.2x ", ptr[i]);
 							}
-							strcat(sTcpLogMsg, msg);
+							strcat(sLogMsg, msg);
 						}
 					}
 #endif
 					PROCLOGOPEN();
-					PROCLOGA5("CTcpComm::ProcessBuffer - RouteMesssage pRegistry = %x id=%x len=%d len=%d msg=%s\n", pRegistry, msgId, fullMessageLength, rawLength, sTcpLogMsg);
+					PROCLOGA5("CRealSerialComm::ProcessBuffer - RouteMesssage pRegistry = %x id=%x len=%d len=%d msg=%s\n", pRegistry, msgId, fullMessageLength, rawLength, sLogMsg);
 					PROCLOGCLOSE();
 
 					err = pRegistry->RouteMessage(msgId, fullMessage, fullMessageLength, rawMessage, rawLength);
