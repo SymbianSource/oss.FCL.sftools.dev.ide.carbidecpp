@@ -277,7 +277,7 @@ public:
 // Server command/response events
 #define SERVER_COMMAND_READY_EVENTNAME	"TCFServerCommandReadyEvent"
 #define SERVER_RESPONSE_READY_EVENTNAME	"TCFServerResponseReadyEvent"
-#define SERVER_CMDRSP_EVENT_TIMEOUT	60000L
+#define SERVER_CMDRSP_EVENT_TIMEOUT	10000L
 
 class CServerCommand
 {
