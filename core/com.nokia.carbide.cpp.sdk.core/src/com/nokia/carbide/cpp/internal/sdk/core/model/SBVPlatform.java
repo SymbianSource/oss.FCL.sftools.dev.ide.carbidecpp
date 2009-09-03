@@ -89,7 +89,15 @@ public class SBVPlatform implements ISBVPlatform {
 	 * @param customized
 	 */
 	void setExtendedPlatform(ISBVPlatform customized) {
-		Check.checkState(customized != this);
+		
+		if (customized == this) {
+			// If the platform is the same as the extension then just ignore, there is no customization.
+			// This can happen if a platform variant tries to extend itself (boog 9320)
+			String errMsg = "Platform " + this.getName() + " cannot customize itself. Ignoring extended platform for this binary variation."; //$NON-NLS-N$
+			SDKCorePlugin.getDefault().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), errMsg, null));		
+			return;
+		}
+		
 		this.extendedPlatform = customized;
 		if (customized != null) {
 			this.extendedPlatName = customized.getName();
