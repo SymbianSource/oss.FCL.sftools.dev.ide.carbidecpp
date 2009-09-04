@@ -5,20 +5,20 @@
 */
 
 body {
-	font-family: Helvetica, sans-serif;
+	font-family: Verdana, Helvetica, sans-serif;
 	color: #000000;
 	margin:20px;
 	}
 
 .intro-header h1 {
-	font-family: Helvetica, sans-serif;
+	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 20px;
 	color: #00A1D0;
 	}
 
 .bgbox {  background-image: url(images/whitebg.gif); background-repeat: repeat}
 
-.copytext {  font-family: Helvetica, sans-serif; 
+.copytext {  font-family: Verdana, Helvetica, sans-serif; 
 	font-size: x-small; 
 	color: #666666;
 	font-weight: 500; 
@@ -28,7 +28,7 @@ body {
 	}
 
 h2, h4 {
-	font-family: Helvetica, sans-serif;
+	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 16px;
 	font-weight: 600;
 	}
@@ -69,7 +69,7 @@ h4 {
 	background-position: 5 5; 
 	}
 	
-h3 {  font-family: Helvetica, sans-serif; 
+h3 {  font-family: Verdana, Helvetica, sans-serif; 
 	font-size: 12px; 
 	font-weight: 500; 
 	color: #333333
@@ -83,7 +83,7 @@ h3 {  font-family: Helvetica, sans-serif;
 	}
 	
 .titleSmall {
-	font-family: Helvetica, sans-serif;
+	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 10px;}
 	}
 
