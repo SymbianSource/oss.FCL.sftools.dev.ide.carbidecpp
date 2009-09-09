@@ -369,6 +369,7 @@ public class SDKPreferencePage
 			if (sdkPropDlg.open() == SDKPropertiesDialog.OK){
 				sdkListTableViewer.refresh();
 				setSelectedSDKInfoText(sdk);
+				rescanSDKs(false);
 			}
 		} else {
 			MessageDialog.openError(getShell(), Messages.getString("SDKPreferencePage.No_SDK_Selected"), Messages.getString("SDKPreferencePage.No_selected_SDK_detected")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -403,6 +404,10 @@ public class SDKPreferencePage
 	}
 	
 	private void rescanNowButtonAction(){
+		rescanSDKs(true);
+	}
+	
+	private void rescanSDKs(boolean scanForNewPlugins){
 		sdkListTableViewer.getTable().clearAll();
 		sdkListTableViewer.refresh();
 		sdkList.clear();
@@ -418,7 +423,9 @@ public class SDKPreferencePage
 			setSelectedSDKInfoText(sdk);
 		}
 		
-		NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
+		if (scanForNewPlugins){
+			NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
+		}
 	}
 	
 	/**
