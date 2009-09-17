@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: com.nokia.sdt.emf.dm.tests;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: runtime/com.nokia.sdt.emf.dm.tests.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin

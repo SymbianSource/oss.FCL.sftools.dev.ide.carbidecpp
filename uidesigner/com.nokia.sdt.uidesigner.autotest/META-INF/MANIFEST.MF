@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Autotest Plug-in
 Bundle-SymbolicName: com.nokia.sdt.uidesigner.autotest
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.nokia.sdt.uidesigner.autotest.AutotestPlugin
 Bundle-Vendor: NOKIA
 Bundle-Localization: plugin

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-Name: Component System Test Plug-in
 Bundle-SymbolicName: com.nokia.sdt.component.symbian.test; singleton=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: cstest.jar
 Bundle-Vendor: NOKIA
 Bundle-Localization: plugin
