@@ -17,7 +17,7 @@
       </launchDelegate>
 
       <launchDelegate
-            name="Symbian OS Application TRK"
+            name="Classic Symbian OS Application TRK"
             delegateDescription="Launch a classic Symbian OS Application TRK debug session."          
             delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
             modes="run,debug"
