@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: com.nokia.carbide.templatewizard.tests
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.internal.templatewizard.tests.TestsPlugin
 Bundle-Vendor: NOKIA
 Require-Bundle: org.eclipse.ui,
