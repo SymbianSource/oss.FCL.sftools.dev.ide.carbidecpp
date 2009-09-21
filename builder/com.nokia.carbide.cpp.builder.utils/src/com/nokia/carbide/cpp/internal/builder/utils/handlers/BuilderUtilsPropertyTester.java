@@ -22,8 +22,12 @@ import org.eclipse.cdt.ui.newui.PropertyTester;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ISelection;
+import org.osgi.framework.Version;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class BuilderUtilsPropertyTester extends PropertyTester {
 	
@@ -60,10 +64,12 @@ public class BuilderUtilsPropertyTester extends PropertyTester {
 						return false;
 					}
 					
-					// disable for SBSv2 projects for now. see
-					// http://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=7659 for details.
 					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(file.getProject())) {
-						return false;
+						Version sbsVers = SDKCorePlugin.getSDKManager().getSBSv2Version(false);
+						if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
+							return true;
+						else
+							return false;
 					}
 				}
 				return true;

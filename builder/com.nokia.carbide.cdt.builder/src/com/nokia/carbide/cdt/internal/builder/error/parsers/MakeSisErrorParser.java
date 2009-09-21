@@ -45,7 +45,7 @@ public class MakeSisErrorParser extends CarbideBaseErrorParser {
 		// OR
 		// (lineno) : Error: description
 		
-		if (   aLine.contains("makesis.exe ")) {
+		if (aLine.contains("makesis.exe ")) {
 			int packageStart = aLine.indexOf("makesis.exe ") + "makesis.exe ".length();
 			int packageEnd   = aLine.indexOf(' ', packageStart);
 			// store the name of the package file for cases above where
@@ -80,9 +80,9 @@ public class MakeSisErrorParser extends CarbideBaseErrorParser {
 		}
 		setDescription(aLine);
 		
-		if (aLine.contains(CarbideCPPBuilder.RESOLVED_PKG_PREFIX)){
-			aLine = aLine.replaceAll(CarbideCPPBuilder.RESOLVED_PKG_PREFIX, "");
-		}
+//		if (aLine.contains(CarbideCPPBuilder.RESOLVED_PKG_PREFIX)){
+//			aLine = aLine.replaceAll(CarbideCPPBuilder.RESOLVED_PKG_PREFIX, "");
+//		}
 		
 		if (!setFileNameAndLineNumber(aLine)) {
 			return false;

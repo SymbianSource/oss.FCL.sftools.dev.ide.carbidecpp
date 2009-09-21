@@ -15,6 +15,8 @@ package com.nokia.carbide.cpp.sdk.core;
 import java.io.File;
 import java.util.List;
 
+import org.osgi.framework.Version;
+
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
 
@@ -43,7 +45,6 @@ public interface ISDKManager {
 	 */
 	public static final String DEVICES_FILE_NAME = "devices.xml";
 
-	
 	/**
 	 * Scan devices.xml and build the SDK list. Call this routine clears
 	 * all current SDK entries.
@@ -176,4 +177,17 @@ public interface ISDKManager {
 	 * @since 2.0
 	 */ 
 	public boolean checkDevicesXMLSynchronized();
+	
+	/**
+	 * Get the version of SBSv2 installed on the PATH.
+	 * @param boolean forceScan - forceScan even if version already determined.
+	 * @return A Verion object of the installed SBSv2 version. Version will be 0.0.0 if not found.
+	 */
+	public Version getSBSv2Version(boolean forceScan);
+	
+	/**
+	 * Retrieve the minimum supported version of SBSv2 for Carbide.c++
+	 * @return Version
+	 */
+	public Version getMinimumSupportedSBSv2Version();
 }
