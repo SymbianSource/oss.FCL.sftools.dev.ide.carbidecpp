@@ -521,7 +521,8 @@ long CTcpComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, long& num
 					}
 #ifdef _DEBUG
 					int reallen = fullMessageLength;
-					if (reallen > 80) reallen = 80;
+					if (reallen > 100) reallen = 100;
+					bool wasAlnum = false;
 					char msg[6];
 					msg[0] = '\0';
 
@@ -531,13 +532,25 @@ long CTcpComm::ProcessBuffer(CConnection* pConn, CRegistry* pRegistry, long& num
 						sTcpLogMsg[0] = '\0';
 						for (int i = 0; i < reallen; i++)
 						{
-							if (isalnum(ptr[i]))
+							if (isgraph/*isalnum*/(ptr[i]) && i > protocolHeaderLength)
 							{
+								// string printables next to each other
 								sprintf(msg, "%c", ptr[i]);
+								wasAlnum = true;
 							}
 							else
 							{
-								sprintf(msg, "%02.2x ", ptr[i]);
+								if (wasAlnum)
+								{
+									// break from last alnum char
+									sprintf(msg, " %02.2x ", ptr[i]);
+								}
+								else
+								{
+									// no break
+									sprintf(msg, "%02.2x ", ptr[i]);
+								}
+								wasAlnum = false;
 							}
 							strcat(sTcpLogMsg, msg);
 						}
@@ -679,16 +692,53 @@ long CTcpComm::SendDataToPort(DWORD inSize, const void* inData)
 		} // end while
 		COMMLOGS("CTcpComm::SendDataToPort send done\n");
 #ifdef _DEBUG
+		DWORD protocolHeaderLength = m_Protocol->GetHeaderLength();
 		BYTE* ptr = (BYTE*)inData;
-		long numBytes = (inSize > 20) ? 20 : inSize;
-		char msg[200];
-		sprintf(msg, "CTcpComm::SendDataToPort data = ");
-		for (int i = 0; i < numBytes; i++)
+		int reallen = inSize;
+		if (reallen > 100) reallen = 100;
+		bool wasAlnum = false;
+		char msg[6];
+		msg[0] = '\0';
+
+		sTcpLogMsgSend[0] = '\0';
+		if (reallen > 0)
 		{
-			sprintf(msg, "%s %02.2x", msg, ptr[i]);
+			sTcpLogMsgSend[0] = '\0';
+			for (int i = 0; i < reallen; i++)
+			{
+				if (isgraph/*isalnum*/(ptr[i]) && i > protocolHeaderLength)
+				{
+					// string printables next to each other
+					sprintf(msg, "%c", ptr[i]);
+					wasAlnum = true;
+				}
+				else
+				{
+					if (wasAlnum)
+					{
+						// break from last alnum char
+						sprintf(msg, " %02.2x ", ptr[i]);
+					}
+					else
+					{
+						// no break
+						sprintf(msg, "%02.2x ", ptr[i]);
+					}
+					wasAlnum = false;
+				}
+				strcat(sTcpLogMsgSend, msg);
+			}
 		}
-		sprintf(msg, "%s\n", msg);
-		COMMLOGS(msg);
+//		BYTE* ptr = (BYTE*)inData;
+//		long numBytes = (inSize > 20) ? 20 : inSize;
+//		char msg[200];
+//		sprintf(msg, "CTcpComm::SendDataToPort data = ");
+//		for (int i = 0; i < numBytes; i++)
+//		{
+//			sprintf(msg, "%s %02.2x", msg, ptr[i]);
+//		}
+//		sprintf(msg, "%s\n", msg);
+		COMMLOGA2("CTcpComm::SendDataToPort len=%d msg=%s\n", inSize, sTcpLogMsgSend);
 #endif
 	}
 

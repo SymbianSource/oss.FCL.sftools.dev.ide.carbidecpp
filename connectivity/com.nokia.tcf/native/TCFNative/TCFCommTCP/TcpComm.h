@@ -67,6 +67,7 @@ private:
 	WSAEVENT m_hSocketEvent; 
 	DWORD m_pPeekBuffer;
 	char sTcpLogMsg[3000];
+	char sTcpLogMsgSend[3000];
 };
 
 #endif // !defined(AFX_TCPCOMM_H__69657421_6D37_497A_A377_12E71365EDAB__INCLUDED_)
