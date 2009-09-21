@@ -12,41 +12,72 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.eclipse.cdt.utils.WindowsRegistry;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
 import org.xml.sax.SAXException;
 
-import com.nokia.carbide.cpp.internal.api.sdk.*;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
+import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
+import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
+import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
-import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 import com.sun.org.apache.xpath.internal.XPathAPI;
+import com.sun.org.apache.xpath.internal.operations.Minus;
 
 public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	
@@ -75,6 +106,14 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	private static SymbianMacroStore macroStore;
 	
 	private static final String[] knownRVCTVersions = {"3.1", "3.0", "2.2", "2.1"};
+	private Version sbsV2Version;
+	
+	/**
+	 * Minimum SBSv2 version supported with Carbide
+	 */
+	public static final Version MINIMUM_RAPTOR_VERSION = new Version(2, 8, 6);
+
+	
 	
 	static boolean hasPromptedForDevicesXML = false; // make sure we only ask once at startup if devices.xml does not exist
 	static boolean hasScannedSDKs = false; // make sure we only scan SDKs when needed
@@ -120,7 +159,9 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 		synchronized (sdkList)
 		{
 			ArrayList<ISymbianSDK> oldSDkList = new ArrayList<ISymbianSDK>(sdkList);
-
+			
+			getSBSv2Version(true);
+			
 			if (sdkList != null){
 				sdkList.clear();
 			}
@@ -666,7 +707,7 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 				// RVCT waits for like 4 minutes trying to find a license when the computer is
 				// not connected to the network.  in such cases, the call to br.readline doesn't
 				// return for 4 minutes which is unacceptable here.  Instead we'll poll at 1/2 second
-				// intervals for 40 seconds and see if we get a response. On the first reposon we break out
+				// intervals for 40 seconds and see if we get a response. On the first response we break out
 				// of the loop and read the output. So in most normal circumstances it will take 1/2 to 1 seconds.
 				int maxTries = 80;
 				int numTries = 0;
@@ -917,4 +958,64 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	private void logError(String message, Throwable t) {
 		SDKCorePlugin.getDefault().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), message, t));		
 	}
+
+	public Version getSBSv2Version(boolean forceScan) {
+		if (sbsV2Version == null || forceScan){
+			sbsV2Version = new Version(0, 0, 0);
+			
+			Runtime rt=Runtime.getRuntime();
+			try {
+				Process p = rt.exec("sbs.bat -v");
+				
+				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				String overallOutput = null;
+				String stdErrLine = null;
+				while ((stdErrLine = br.readLine()) != null) {
+					overallOutput += stdErrLine;
+				}
+				
+				if (overallOutput != null) {
+				{
+					String[] tokens = overallOutput.split(" ");
+					if (tokens.length >= 3) {
+						if (tokens[2].split("\\.").length == 3) {
+							sbsV2Version = Version.parseVersion(tokens[2]);
+						}
+					}
+						if (sbsV2Version.compareTo(MINIMUM_RAPTOR_VERSION) < 0 && sbsV2Version.getMajor() > 0) {
+
+							String incorrectRaptorVersionStr = "SBSv2 version detected: "
+									+ sbsV2Version.toString()
+									+ ". The minimum version suggested for Carbide is: "
+									+ MINIMUM_RAPTOR_VERSION.getMajor()
+									+ "."
+									+ MINIMUM_RAPTOR_VERSION.getMinor()
+									+ "."
+									+ MINIMUM_RAPTOR_VERSION.getMicro();
+
+							ResourcesPlugin.getPlugin().getLog().log(
+									new Status(IStatus.WARNING,
+											SDKCorePlugin.PLUGIN_ID,
+											IStatus.WARNING,
+											incorrectRaptorVersionStr, null));
+						}
+					
+					p.destroy();
+				}
+			}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		return sbsV2Version;
+	}
+
+	public Version getMinimumSupportedSBSv2Version() {
+		return MINIMUM_RAPTOR_VERSION;
+	}
+	
+	
 }
