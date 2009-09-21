@@ -640,8 +640,8 @@ void CClientManager::DeleteLockFile()
 
 void CClientManager::DeleteFromLockFile(DWORD serverProcessId)
 {
-	DWORD callingId[10];
-	DWORD serverId[10];
+	DWORD creatorIds[10];
+	DWORD serverIds[10];
 	int numIds = 0;
 
 	DWORD ourProcessId = ::GetCurrentProcessId();
@@ -663,16 +663,16 @@ void CClientManager::DeleteFromLockFile(DWORD serverProcessId)
 				BOOL done = FALSE;
 				while (!done)
 				{
-					DWORD cId = 0xffffffff;
-					DWORD sId = 0xffffffff;
-					int n = fscanf(f, "%ld %ld\n", &cId, &sId);
+					DWORD creatorId = 0xffffffff;
+					DWORD serverId = 0xffffffff;
+					int n = fscanf(f, "%ld %ld\n", &creatorId, &serverId);
 					if (n == 2)
 					{
-						TCDEBUGLOGA3("CClientManager::DeleteFromLockFile numIds=%d sId=%d pId=%d\n", numIds, cId, sId);
-						if (cId != ourProcessId || sId != serverProcessId)
+						TCDEBUGLOGA3("CClientManager::DeleteFromLockFile numIds=%d creatorId=%d serverId=%d\n", numIds, creatorId, serverId);
+						if (creatorId != ourProcessId || serverId != serverProcessId)
 						{
-							callingId[numIds] = cId;
-							serverId[numIds] = sId;
+							creatorIds[numIds] = creatorId;
+							serverIds[numIds] = serverId;
 							numIds++;
 							if (numIds > 9)
 								done = TRUE;
@@ -695,7 +695,7 @@ void CClientManager::DeleteFromLockFile(DWORD serverProcessId)
 				{
 					for (int i = 0; i < numIds; i++)
 					{
-						fprintf(f, "%ld %ld\n", callingId[i], serverId[i]);
+						fprintf(f, "%ld %ld\n", creatorIds[i], serverIds[i]);
 					}
 					fclose(f);
 				}
@@ -708,8 +708,8 @@ void CClientManager::DeleteFromLockFile(DWORD serverProcessId)
 // we should not have more than a few Carbide processes connecting to the same TCFServer
 void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 {
-	DWORD callingId[10];
-	DWORD serverId[10];
+	DWORD creatorIds[10];
+	DWORD serverIds[10];
 	BOOL liveCaller[10];
 	int numIds = 0;
 	if (m_ServerLockFile != NULL)
@@ -729,14 +729,14 @@ void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 				BOOL done = FALSE;
 				while (!done)
 				{
-					DWORD cId = 0xffffffff;
-					DWORD sId = 0xffffffff;
-					int n = fscanf(f, "%ld %ld\n", &cId, &sId);
+					DWORD creatorId = 0xffffffff;
+					DWORD serverId = 0xffffffff;
+					int n = fscanf(f, "%ld %ld\n", &creatorId, &serverId);
 					if (n == 2)
 					{
-						TCDEBUGLOGA3("CClientManager::TerminateServerThroughLockFile n=%d sId=%d pId=%d\n", n, cId, sId);
-						callingId[numIds] = cId;
-						serverId[numIds] = sId;
+						TCDEBUGLOGA3("CClientManager::TerminateServerThroughLockFile n=%d creatorId=%d serverId=%d\n", n, creatorId, serverId);
+						creatorIds[numIds] = creatorId;
+						serverIds[numIds] = serverId;
 						numIds++;
 						if (numIds > 9)
 							done = TRUE;
@@ -751,20 +751,31 @@ void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 				int numDeadCallers = 0;
 				for (int i = 0; i < numIds; i++)
 				{
-					HANDLE h = ::OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, callingId[i]);
+					HANDLE h = ::OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, creatorIds[i]);
 					if (h)
 					{
 						// calling process is still alive
 						liveCaller[i] = TRUE;
+						DWORD exitCode = -5;
+						BOOL exitCall = ::GetExitCodeProcess(h, &exitCode);
+						DWORD id = ::GetCurrentProcessId();
 						::CloseHandle(h);
-						TCDEBUGLOGA1("CClientManager::TerminateServerThroughLockFile %d alive\n", callingId[i]);
+						TCDEBUGLOGA3("CClientManager::TerminateServerThroughLockFile %d alive exitCall=%d currentId=%d\n", creatorIds[i], exitCall, id);
+						if (exitCall == TRUE && exitCode != STILL_ACTIVE)
+						{
+							liveCaller[i] = FALSE;
+							numDeadCallers++;
+						}
+						{
+							TCDEBUGLOGA2("CClientManager::TerminateServerThroughLockFile exitCode=%d still_active=%d\n", exitCode, STILL_ACTIVE);
+						}
 					}
 					else
 					{
 						liveCaller[i] = FALSE;
 						numDeadCallers++;
 						DWORD err = ::GetLastError();
-						TCDEBUGLOGA3("CClientManager::TerminateServerThroughLockFile %d dead err=%d:%s\n", callingId[i], err, GetErrorText(err));
+						TCDEBUGLOGA3("CClientManager::TerminateServerThroughLockFile %d dead err=%d:%s\n", creatorIds[i], err, GetErrorText(err));
 					}
 				}
 				if (numDeadCallers == numIds)
@@ -772,7 +783,7 @@ void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 					// terminate the TCFServer, and delete lock file
 					pData->numRefs = 0;
 					::remove(m_ServerLockFile);
-					HANDLE h = ::OpenProcess(SYNCHRONIZE|PROCESS_TERMINATE, FALSE, serverId[0]);
+					HANDLE h = ::OpenProcess(SYNCHRONIZE|PROCESS_TERMINATE, FALSE, serverIds[0]);
 					if (h)
 					{
 						BOOL ret = ::TerminateProcess(h, -1);
@@ -795,7 +806,7 @@ void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 						{
 							if (liveCaller[i])
 							{
-								fprintf(f, "%ld %ld\n", callingId[i], serverId[i]);
+								fprintf(f, "%ld %ld\n", creatorIds[i], serverIds[i]);
 							}
 						}
 						fclose(f);
