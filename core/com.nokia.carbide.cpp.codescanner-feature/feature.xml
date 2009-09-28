@@ -318,9 +318,6 @@ three (3) years from the date of the distribution of this product by Nokia.
       <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide203"/>
    </url>
 
-   <includes
-         id="com.nokia.carbide.cpp.codescanner.source"
-         version="0.0.0"/>
 
    <plugin
          id="com.nokia.carbide.cpp.codescanner"
