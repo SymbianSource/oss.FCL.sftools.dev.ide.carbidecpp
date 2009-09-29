@@ -395,8 +395,6 @@ three (3) years from the date of the distribution of this product by Nokia.
          version="0.0.0"
          unpack="false"/>
 
- 	<includes
-         id="com.nokia.sdt.uidesigner.source"
-         version="0.0.0"/>
+
 
 </feature>

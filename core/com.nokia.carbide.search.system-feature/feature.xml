@@ -318,9 +318,7 @@ three (3) years from the date of the distribution of this product by Nokia.
       <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide203"/>
    </url>
 
-   <includes
-         id="com.nokia.carbide.search.system.source"
-         version="0.0.0"/>
+
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>

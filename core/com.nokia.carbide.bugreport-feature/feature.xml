@@ -338,8 +338,5 @@ three (3) years from the date of the distribution of this product by Nokia.
          version="0.0.0"
          unpack="false"/>
 
-  <includes
-         id="com.nokia.carbide.bugreport.source"
-         version="0.0.0"/>
 
 </feature>

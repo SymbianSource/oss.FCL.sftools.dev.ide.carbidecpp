@@ -2,7 +2,7 @@
 <feature
       id="com.nokia.carbide.cpp"
       label="%featureName"
-      version="3.0.0.qualifier"
+      version="2.3.0.qualifier"
       provider-name="Nokia"
       plugin="com.nokia.carbide.cpp"
       image="Carbide_Image.png">
@@ -314,8 +314,8 @@ three (3) years from the date of the distribution of this product by Nokia.
 
    <url>
       <!-- all Carbide.c++ features should use the exact same text for update label and discovery label -->
-      <update label="Carbide.c++ 3.0 Update Site" url="http://tools.ext.nokia.com/updates/carbide30"/>
-      <discovery label="Carbide.c++ 3.0 Update Site" url="http://tools.ext.nokia.com/updates/carbide30"/>
+      <update label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide22"/>
+      <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide22"/>
    </url>
 
    <requires>
@@ -680,8 +680,6 @@ three (3) years from the date of the distribution of this product by Nokia.
          version="0.0.0"
          unpack="false"/>
 
-  <includes
-         id="com.nokia.carbide.cpp.source"
-         version="0.0.0"/>
+
 
 </feature>
