@@ -468,6 +468,8 @@ public class NewsPage extends FormPage {
 	        }
 	        result += "<div class=\"itemInfo\">" + feedTitle + " (" + entryDate + ") ";
 
+	        feedTitle = feedTitle.replaceAll("\"", "&quot;");
+	        entryTitle = entryTitle.replaceAll("\"", "&quot;");
 	        if (!entry.isRead()) {
 		        result += "<a class=\"markItemRead\" href=\""
 						+ LINK_MARK_ENTRY_READ
