@@ -25,14 +25,26 @@ to develop a plugin against the Carbide.c++ development environment.</p>
 <ol>
   <li>Switch to the <strong>Plug-in Development</strong> perspective. </li>
   <li>Select the <strong>Plug-ins</strong> view. </li>
-  <li>Select the binary plug-in you want view the source of. Don't select the *source feature.</li>
-  <li>Right-click on the plug-in you want to import and select <strong>Import As &gt; Binary Project with Linked Content</strong>. For example, the <span class="style1">com.nokia.carbide.cpp.leavescan</span> plug-in as shown below. This  enables you to view the sources for the plug-in but not modify them.<br>
+  <li>Right-click on the plug-in you want to import and select <strong>Import As &gt; Binary Project with Linked Content</strong>. For example, the <span class="style1">com.nokia.carbide.cpp.leavescan</span> plug-in as shown below.<br>
     <br>
-  <img src="../img/import_source_project.jpg" width="706" height="459">  </li>
+    <img src="../img/import_source_project.jpg" width="650" height="428">  </li>
+  <li>Now you can return to the <b>Package Explorer</b> and locate the <span class="code">.source</span> reference in the project. In this example that would be the <span class="style1">com.nokia.carbide.cpp.leavescan.source</span> file.</li>
+  <li>Right-click the<span class="code"> .source</span> file (<span class="style1">com.nokia.carbide.cpp.leavescan.source</span>) and select <b>Import</b>.<br>
+      <br>
+      <img src="../img/import_project_sources.png" width="406" height="198"><br>
+  </li>
+  <li>In the <b>Select</b> page, select <b>General &gt; Archive File</b>, then click <b>Next</b>.<br>
+      <br>
+      <img src="../img/import_general_archive_file.png" width="470" height="244"><br>
+  </li>
+  <li>Navigate to the <span class="style1">com.nokia.carbide.cpp.leavescan.source</span> plug-in file, then click <b>Open</b>. Note that the source plug-ins are located in the same directory where you imported the Carbide Development Kit. By default, this is the <span class="code">/plugins</span> directory of the Carbide installation.</li>
+  <li>In the <b>Archive file</b> page, select click <b>Finish</b>.<br>
+      <br>
+    <img src="../img/import_archive_file_project.png" width="543" height="550"></li>
   <li>Now you can return to the <strong>Package Explorer</strong> view and navigate the source files for the imported plug-in. It should look like a normal plug-in project:<br>
     <br>
-  <img src="../img/source_plugin.jpg" width="361" height="392"><br>
-  <br>
+    <img src="../img/source_plugin.jpg" width="406" height="486"><br>
+    <br>
   You can now <a href="launchconfig.htm">create a launch configuration</a> and debug Carbide. </li>
 </ol>
 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
