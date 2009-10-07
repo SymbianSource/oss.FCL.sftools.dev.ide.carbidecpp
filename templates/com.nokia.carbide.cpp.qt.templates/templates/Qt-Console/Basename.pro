@@ -4,9 +4,12 @@ TARGET = $(baseName)
 $(modulesText) 
 
 HEADERS   +=
-SOURCES   += main.cpp \
-    $(baseName)_reg.rss
+SOURCES   += main.cpp
 FORMS	  +=
 RESOURCES +=
 
-symbian:TARGET.UID3 = $(uid3)
+symbian: {
+    TARGET.UID3 = $(uid3)
+
+    SOURCES += $(baseName)_reg.rss
+}
