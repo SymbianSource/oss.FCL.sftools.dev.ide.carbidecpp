@@ -12,7 +12,7 @@
 .style1 {font-family: "Courier New", Courier, mono}
 .style5 {color: #FF0000}
 .style6 {font-weight: bold}
-  .style8 {color: #000000; font-weight: bold; }
+.style8 {color: #000000; font-weight: bold; }
   </style>
 </head>
 <body bgcolor="#ffffff">
@@ -41,10 +41,8 @@ changes making the tools unusable!</p>
   <li>P2 update services now supported. Updating Carbide.c++ should be more flexible and easier than before.</li>
 </ul>
 <h4><a name="220" id="2102"></a>2.2.0</h4>
-<blockquote>
-  <p><b>Eclipse 3.5 </b>&#8212; The Eclipse 3.5 project (Galileo) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.5</a> for more information.</p>
-</blockquote>
 <ul>
+  <li><b>Eclipse 3.5 </b>&#8212; The Eclipse 3.5 project (Galileo) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.5</a> for more information.</li>
   <li><b>CDT 6.0 </b>&#8212; The final version of CDT included as part of the Galileo release. See the <a href="http://wiki.eclipse.org/CDT/User/NewIn60">CDT 6.0 News and Noteworthy</a> page for more information.</li>
   <li><b>Java 6.0 </b>&#8212; Due to the above changes Carbide has also updated to use the Java Runtime Environment (JRE) 6.0. See <a href="http://java.sun.com/javase/6/webnotes/features.html">Java SE 6 Release Notes</a> page for more information.</li>
   <li><b>SBSv2 arguments field</b> - added a text field to the <a href="reference/wnd_build_prefs.htm">Build &gt; SBSv2</a> panel to allow parameter passing to Raptor builds.</li>
@@ -52,7 +50,7 @@ changes making the tools unusable!</p>
 </ul>
 <h4><a name="210" id="210"></a>2.1.0</h4>
 <ul>
-  <li><b>Performance inprovements</b> - the following areas of Carbide have been optimized to improve performance:
+  <li><b>Performance improvements</b> - the following areas of Carbide have been optimized to improve performance:
     <ul>
       <li><b>Importing large projects</b>   - Importing large projects is one of our primary points of performance improvements. When too many project roots were used the more source and include paths were brought into the project, up to an including entire SDKs. Generally, we found that once a project root contains over 15-20K files Carbide became extremely sluggish. We have improved some edge cases where project roots were calculated incorrectly and now include only what's really needed. </li>
       <li><b>Modifying Project Settings and Build Configuration Data</b>-    This is quite a significant improvement as modifying MMP files and switching build configurations are a couple of the most common operations done by end-users and because the time spent processing project and configuration data is done on the main thread, locking the UI. With optimization in one CDT function we were able to bring most project-related and configuration switch changes from 20 seconds to less than 3 seconds. You should also see improvements when saving MMP and INF files (the &quot;Refreshing Configuration Job&quot;). </li>
@@ -90,7 +88,7 @@ changes making the tools unusable!</p>
   <li><b>Executables view improvements</b> &#8212; The <a href="reference/view_executables.htm">Executables</a> view now supports the loading of some additional DLL cases to ensure that the DLLs you want to debug are available during a debug session. In addition,  a Remove button has been added to the view's toolbar that makes it easier for you to remove any executables from the list.</li>
   <li><b>More indexer improvements </b>&#8212; Speed improvements for code completion, syntax coloring, and much more.</li>
   <li><b>Remote Connections view</b> &#8212; A visual list of <a href="reference/trk/view_remote_connection.htm">remote connections</a> and their state for managing multiple and diverse device connections.</li>
-  <li><b>Partial upgrade SIS file support</b> &#8212; Carbide now supports the generation of partial upgrade  SIS/SISX files. This increases debugger turnaround by only generating new files for changes and uploading these smaller executables to the device.</li>
+  <li><b>Partial upgrade SIS file support</b> &#8212; Carbide now supports the generation of partial upgrade SIS/SISX files. This increases debugger turnaround by only generating new files for changes and uploading these smaller executables to the device.</li>
   <li><b>More Program Counter support </b>&#8212; Added a Move to Line command for the debugger that enables you to move the PC to a new line while debugging without executing any intermediate lines or resuming execution.</li>
   <li>Multiple<b> TRK</b> improvements including:
     <ul>
@@ -240,11 +238,7 @@ changes making the tools unusable!</p>
       <td style="vertical-align: top;"> If you are in doubt about the contents select the folder in question, then hit F5 to refresh the directory from the file system.</td>
     </tr>
     <tr>
-      <td style="vertical-align: top;">Synergy 6.3 Installations will
-always crash Eclipse file navigation dialogs - The solution for this is
-to un-register cmexplorer.dll then reboot your machine. Un-registering
-this feature will only effect users that use Synergy integration to
-Windows Explorer. This issue is known to be fixed with Synergy 6.4.</td>
+      <td style="vertical-align: top;">Synergy 6.3 Installations will always crash Eclipse file navigation dialogs - The solution for this is to un-register cmexplorer.dll then reboot your machine. Un-registering this feature will only effect users that use Synergy integration to Windows Explorer. This issue is known to be fixed with Synergy 6.4.</td>
       <td style="vertical-align: top;">The un-register command is:<br />
       <br />
       <font size="-1"><span class="code"
@@ -374,9 +368,7 @@ appear. </td>
 </table>
 <h3><a name="support" id="support"></a>Technical support </h3>
 <p>The following support services are available:</p>
-<ul><li>Visit the <a href="http://discussion.forum.nokia.com/forum/forumdisplay.php?s=&amp;forumid=95">Forum Nokia Developer Discussion Board</a> for lively Carbide.c++ discussions </li>
-  <li>Forum Nokia Wiki - visit <a href="http://wiki.forum.nokia.com/index.php/Carbide.c++">wiki.forum.nokia.com/index.php/Carbide.c++</a> for updated information, downloads and tips </li>
-  <li>Customer feedback - send your comments and suggestions to <a href="mailto:feedback.carbide@nokia.com">feedback.carbide@nokia.com</a></li>
+<ul><li>Visit the <a href="http://web-dev.foundationhost.org/">Symbian Foundation</a> for Carbide.c++ and Symbian development information </li>
   <li>Read the <a href="http://sw.nokia.com/id/d11442a8-4eb1-4c01-97f2-fd8be139b93f/Carbide_cpp_On_Device_Debugging_v1_0_en.pdf">Carbide.c++ On-device Debugging</a> whitepaper or an introduction to on-device debugging for S60 3rd Edition devices<br />
   </li>
 </ul>
