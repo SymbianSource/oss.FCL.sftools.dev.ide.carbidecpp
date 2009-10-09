@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://tools.ext.nokia.com/updates/carbide20">
+      Carbide.c++ ${CARBIDE_VERSION_2DIGITS} update site.
+   </description>
+   <feature url="features/com.nokia.carbide.bugreport_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.bugreport" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt" version="5.0.1.${QUALIFIER}">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.bugreport.source_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.bugreport.source" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.capabilityScanner.source_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.capabilityScanner.source" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.capabilityScanner_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.capabilityScanner" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.codescanner.source_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.codescanner.source" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.codescanner_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.codescanner" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.pi_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.pi" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.sdk_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.sdk" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.source_${CARBIDE_VERSION_3DIGITS}.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.source" version="${CARBIDE_VERSION_3DIGITS}.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp.uiq.ui_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.cpp.uiq.ui" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.cpp_${CARBIDE_VERSION_3DIGITS}.${QUALIFIER}.jar" id="com.nokia.carbide.cpp" version="${CARBIDE_VERSION_3DIGITS}.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.apiquery_1.1.2.jar" id="com.nokia.carbide.extensions.apiquery" version="1.1.2" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.appdep_2.0.3.${QUALIFIER}.jar" id="com.nokia.carbide.extensions.appdep" version="2.0.3.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.compatibilityanalyser_1.4.1.jar" id="com.nokia.carbide.extensions.compatibilityanalyser" version="1.4.1" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.creator_1.2.0.jar" id="com.nokia.carbide.extensions.creator" version="1.2.0" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.hticonnection_1.1.0.jar" id="com.nokia.carbide.extensions.hticonnection" version="1.1.0" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.imaker_2.1.3.jar" id="com.nokia.carbide.extensions.imaker" version="2.1.3" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.metadataeditor_1.1.1.jar" id="com.nokia.carbide.extensions.metadataeditor" version="1.1.1" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.remotecontrol_1.1.0.jar" id="com.nokia.carbide.extensions.remotecontrol" version="1.1.0" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.stif_1.2.24.jar" id="com.nokia.carbide.extensions.stif" version="1.2.24" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.extensions.symbianfoundationtemplates_1.1.0.jar" id="com.nokia.carbide.extensions.symbianfoundationtemplates" version="1.1.0" os="win32">
+      <category name="Carbide.c++ PDT Features"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.search.system.source_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.search.system.source" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/com.nokia.carbide.search.system_2.0.0.${QUALIFIER}.jar" id="com.nokia.carbide.search.system" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.s60.5th.edition.migration.rules_1.0.0.jar" id="com.nokia.s60.5th.edition.migration.rules" version="1.0.0" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.s60tools.extensions.framework_1.3.1.jar" id="com.nokia.s60tools.extensions.framework" version="1.3.1" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.nokia.sdt.uidesigner_2.0.0.${QUALIFIER}.jar" id="com.nokia.sdt.uidesigner" version="2.0.0.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/com.trolltech.qtcpp.feature_1.5.0.jar" id="com.trolltech.qtcpp.feature" version="1.5.0" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt.gnu.build.source_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt.gnu.build.source" version="5.0.1.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt.gnu.build_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt.gnu.build" version="5.0.1.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt.gnu.debug.source_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt.gnu.debug.source" version="5.0.1.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt.gnu.debug_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt.gnu.debug" version="5.0.1.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt.platform.source_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt.platform.source" version="5.0.1.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.cdt.platform_5.0.1.${QUALIFIER}.jar" id="org.eclipse.cdt.platform" version="5.0.1.${QUALIFIER}" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.cvs.source_1.1.1.r34x_20080902-7C79E8N9nJD4oAW9V1938.jar" id="org.eclipse.cvs.source" version="1.1.1.r34x_20080902-7C79E8N9nJD4oAW9V1938" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.cvs_1.1.1.r34x_20080902-7C79E8N9nJD4oAW9V1938.jar" id="org.eclipse.cvs" version="1.1.1.r34x_20080902-7C79E8N9nJD4oAW9V1938">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.dd.debug.memory.renderings.source_1.1.0.v20080904.jar" id="org.eclipse.dd.debug.memory.renderings.source" version="1.1.0.v20080904" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.dd.debug.memory.renderings_1.1.0.v20080904.jar" id="org.eclipse.dd.debug.memory.renderings" version="1.1.0.v20080904" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.draw2d.sdk_3.4.1.v20080806-67718083A56B4H3F84A-__6_2A32.jar" id="org.eclipse.draw2d.sdk" version="3.4.1.v20080806-67718083A56B4H3F84A-__6_2A32" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.draw2d.source_3.4.1.v20080806-3307w31191_2102462.jar" id="org.eclipse.draw2d.source" version="3.4.1.v20080806-3307w31191_2102462" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.draw2d_3.4.1.v20080806-3307w31191_2102462.jar" id="org.eclipse.draw2d" version="3.4.1.v20080806-3307w31191_2102462" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.codegen.ecore.ui_2.4.1.v200808251517.jar" id="org.eclipse.emf.codegen.ecore.ui" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.codegen.ecore_2.4.1.v200808251517.jar" id="org.eclipse.emf.codegen.ecore" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.codegen.ui_2.4.0.v200808251517.jar" id="org.eclipse.emf.codegen.ui" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.codegen_2.4.0.v200808251517.jar" id="org.eclipse.emf.codegen" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.common.ui_2.4.0.v200808251517.jar" id="org.eclipse.emf.common.ui" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.common_2.4.0.v200808251517.jar" id="org.eclipse.emf.common" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.converter_2.4.1.v200808251517.jar" id="org.eclipse.emf.converter" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.databinding.edit_1.0.0.v200808251517.jar" id="org.eclipse.emf.databinding.edit" version="1.0.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.databinding_1.0.0.v200808251517.jar" id="org.eclipse.emf.databinding" version="1.0.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.doc_2.4.1.v200808251517.jar" id="org.eclipse.emf.doc" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.edit_2.4.1.v200808251517.jar" id="org.eclipse.emf.ecore.edit" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.editor_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.editor" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.sdo.doc_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.sdo.doc" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.sdo.edit_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.sdo.edit" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.sdo.editor_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.sdo.editor" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.sdo.sdk_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.sdo.sdk" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.sdo.source_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.sdo.source" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore.sdo_2.4.0.v200808251517.jar" id="org.eclipse.emf.ecore.sdo" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecore_2.4.1.v200808251517.jar" id="org.eclipse.emf.ecore" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.edit.ui_2.4.1.v200808251517.jar" id="org.eclipse.emf.edit.ui" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.edit_2.4.1.v200808251517.jar" id="org.eclipse.emf.edit" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.mapping.ecore.editor_2.4.0.v200808251517.jar" id="org.eclipse.emf.mapping.ecore.editor" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.mapping.ecore_2.4.0.v200808251517.jar" id="org.eclipse.emf.mapping.ecore" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.mapping.ui_2.4.0.v200808251517.jar" id="org.eclipse.emf.mapping.ui" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.mapping_2.4.0.v200808251517.jar" id="org.eclipse.emf.mapping" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.sdk_2.4.1.v200808251517.jar" id="org.eclipse.emf.sdk" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.source_2.4.1.v200808251517.jar" id="org.eclipse.emf.source" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.emf_2.4.1.v200808251517.jar" id="org.eclipse.emf" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.equinox.executable_3.3.101.R34x_v20080805-7H-ELeE8hXnkE15Wh9Rz0yu.jar" id="org.eclipse.equinox.executable" version="3.3.101.R34x_v20080805-7H-ELeE8hXnkE15Wh9Rz0yu" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.gef.sdk_3.4.1.v20080806-7B7E297OK9c7WEeDMZJfHVNDRBPX.jar" id="org.eclipse.gef.sdk" version="3.4.1.v20080806-7B7E297OK9c7WEeDMZJfHVNDRBPX" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.gef.source_3.4.1.v20080806-67718083A56B4H2A3213573.jar" id="org.eclipse.gef.source" version="3.4.1.v20080806-67718083A56B4H2A3213573" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.gef_3.4.1.v20080806-67718083A56B4H2A3213573.jar" id="org.eclipse.gef" version="3.4.1.v20080806-67718083A56B4H2A3213573" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.help.source_1.0.1.R34x_v20080827-7r7xEIxEI6Zu5nEqN7M3UBpglaat.jar" id="org.eclipse.help.source" version="1.0.1.R34x_v20080827-7r7xEIxEI6Zu5nEqN7M3UBpglaat" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.help_1.0.1.R34x_v20080827-7r7xEIxEI6Zu5nEqN7M3UBpglaat.jar" id="org.eclipse.help" version="1.0.1.R34x_v20080827-7r7xEIxEI6Zu5nEqN7M3UBpglaat" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.jdt.source_3.4.1.r341_v20080709-0800-7o7tEAfEF_U5qyUgrb2HAp539P97.jar" id="org.eclipse.jdt.source" version="3.4.1.r341_v20080709-0800-7o7tEAfEF_U5qyUgrb2HAp539P97" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.jdt_3.4.1.r341_v20080709-0800-7o7tEAfEF_U5qyUgrb2HAp539P97.jar" id="org.eclipse.jdt" version="3.4.1.r341_v20080709-0800-7o7tEAfEF_U5qyUgrb2HAp539P97" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.pde.p2.source_1.0.0.v20080522-1--7w3119171503111.jar" id="org.eclipse.pde.p2.source" version="1.0.0.v20080522-1--7w3119171503111" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.pde.p2_1.0.0.v20080522-1--7w3119171503111.jar" id="org.eclipse.pde.p2" version="1.0.0.v20080522-1--7w3119171503111" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.pde.source_3.4.1.r341_v20080731-7T7U0E9mlRIuGUYviF_VP.jar" id="org.eclipse.pde.source" version="3.4.1.r341_v20080731-7T7U0E9mlRIuGUYviF_VP" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.pde_3.4.1.r341_v20080731-7T7U0E9mlRIuGUYviF_VP.jar" id="org.eclipse.pde" version="3.4.1.r341_v20080731-7T7U0E9mlRIuGUYviF_VP" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.platform.source_3.4.1.r341_v20080731-9I96EiDElYevwz-p1bP5z-NlAaP7vtX6Utotqsu.jar" id="org.eclipse.platform.source" version="3.4.1.r341_v20080731-9I96EiDElYevwz-p1bP5z-NlAaP7vtX6Utotqsu" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.platform_3.4.1.r341_v20080731-9I96EiDElYevwz-p1bP5z-NlAaP7vtX6Utotqsu.jar" id="org.eclipse.platform" version="3.4.1.r341_v20080731-9I96EiDElYevwz-p1bP5z-NlAaP7vtX6Utotqsu" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.rcp.source_3.4.100.r341_v20080814-989JESIEdAciFYfkZZsBfSwQ2341.jar" id="org.eclipse.rcp.source" version="3.4.100.r341_v20080814-989JESIEdAciFYfkZZsBfSwQ2341" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.rcp_3.4.100.r341_v20080814-989JESIEdAciFYfkZZsBfSwQ2341.jar" id="org.eclipse.rcp" version="3.4.100.r341_v20080814-989JESIEdAciFYfkZZsBfSwQ2341" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.sdk_3.4.1.R34x_v20080827-7O7S78C2J40sK2o_ALcK8tLN_yZSJeg0P-3EtL4Ra90kv.jar" id="org.eclipse.sdk" version="3.4.1.R34x_v20080827-7O7S78C2J40sK2o_ALcK8tLN_yZSJeg0P-3EtL4Ra90kv" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.test_3.3.0.v20080507-7L7L__9oA55S5H5H02429.jar" id="org.eclipse.test" version="3.3.0.v20080507-7L7L__9oA55S5H5H02429" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.doc_2.4.0.v200808251517.jar" id="org.eclipse.xsd.doc" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.ecore.converter_2.4.0.v200808251517.jar" id="org.eclipse.xsd.ecore.converter" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.edit_2.4.0.v200808251517.jar" id="org.eclipse.xsd.edit" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.editor_2.4.0.v200808251517.jar" id="org.eclipse.xsd.editor" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.mapping.editor_2.4.0.v200808251517.jar" id="org.eclipse.xsd.mapping.editor" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.mapping_2.4.0.v200808251517.jar" id="org.eclipse.xsd.mapping" version="2.4.0.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.sdk_2.4.1.v200808251517.jar" id="org.eclipse.xsd.sdk" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.source_2.4.1.v200808251517.jar" id="org.eclipse.xsd.source" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Development Kit"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd_2.4.1.v200808251517.jar" id="org.eclipse.xsd" version="2.4.1.v200808251517" os="win32">
+      <category name="Carbide.c++ Core IDE"/>
+   </feature>
+   <category-def name="Carbide.c++ Core IDE" label="Carbide.c++ ${CARBIDE_VERSION_3DIGITS} Core IDE">
+      <description>
+         Delivers core functionality required for all Carbide developers.
+      </description>
+   </category-def>
+   <category-def name="Carbide.c++ PDT Features" label="Carbide.c++ ${CARBIDE_VERSION_3DIGITS} PDT Features">
+      <description>
+         Delivers Platform Development Features for device creators.
+      </description>
+   </category-def>
+   <category-def name="Carbide.c++ Development Kit" label="Carbide.c++ ${CARBIDE_VERSION_3DIGITS} Development Kit">
+      <description>
+         Delivers Carbide sources and Java Development Tools for Carbide plug-in.
+      </description>
+   </category-def>
+</site>
