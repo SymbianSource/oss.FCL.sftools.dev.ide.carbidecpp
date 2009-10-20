@@ -314,8 +314,8 @@ three (3) years from the date of the distribution of this product by Nokia.
 
    <url>
       <!-- all Carbide.c++ features should use the exact same text for update label and discovery label -->
-      <update label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide22"/>
-      <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide22"/>
+      <update label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide23"/>
+      <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide23"/>
    </url>
 
    <requires>
