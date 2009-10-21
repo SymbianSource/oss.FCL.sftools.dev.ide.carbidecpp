@@ -44,6 +44,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 
@@ -63,6 +64,7 @@ import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
+import com.nokia.carbide.cdt.internal.builder.ui.Messages;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
@@ -72,6 +74,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
@@ -1210,14 +1213,44 @@ public static String[] getParserIdArray(int id) {
     	monitor.done();
     }
     
-    private static void buildSisFile(ISISBuilderInfo sisInfo, ICarbideBuildConfiguration config, CarbideCommandLauncher cmdLauncher, IProgressMonitor monitor, boolean createOutputFromPKGFileName) {
+    private static void buildSisFile(final ISISBuilderInfo sisInfo, final ICarbideBuildConfiguration config, CarbideCommandLauncher cmdLauncher, IProgressMonitor monitor, boolean createOutputFromPKGFileName) {
 		IPath pkgPath = sisInfo.getPKGFullPath();
     	if (pkgPath == null) {
    			cmdLauncher.writeToConsole("PKG file does not exist.  Skipping...");
     		return;
     	} else if (!pkgPath.toFile().exists()) {
-   			cmdLauncher.writeToConsole("PKG file" + pkgPath.toOSString() + " does not exist.  Skipping...");
-    		return;
+    		
+    		try {
+    			// Check to see if this is a Qt project and if the template format could have changed.
+    			IProject project = config.getCarbideProject().getProject();
+				if (project != null && project.hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)){
+					final String currentPKGName = pkgPath.lastSegment();
+					pkgPath = pkgPath.removeLastSegments(1).append(project.getName() + "_template.pkg" ); //$NON-NLS-N$
+					if (pkgPath.toFile().exists()){
+						
+						final IPath finalPkgPath = pkgPath;
+						Display.getDefault().syncExec(new Runnable() {
+							public void run() {
+								if (true == MessageDialog.openQuestion(WorkbenchUtils.getSafeShell(), "Can not find PKG file for SIS builder", "The file \"" + currentPKGName + "\" does not exist for this Qt project. The suggested file is \"" + finalPkgPath.lastSegment() + "\".\n\nDo you want to update your build configuration to use this PKG file?")) { //$NON-NLS-1$ //$NON-NLS-2$
+									IWorkspace workspace= ResourcesPlugin.getWorkspace();
+									IFile ifile= workspace.getRoot().getFileForLocation(finalPkgPath); 
+									sisInfo.setPKGFile(ifile.getLocation().toOSString());
+									config.getSISBuilderInfoList().remove(sisInfo);
+									config.getSISBuilderInfoList().add(sisInfo);
+									config.saveConfiguration(false);
+								} 
+							}
+						});
+					} 
+				}
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+    		
+			if (!sisInfo.getPKGFullPath().toFile().exists()){
+				cmdLauncher.writeToConsole("PKG file " + pkgPath.toOSString() + " does not exist.  Skipping..."); //$NON-NLS-N$
+   				return;
+			}
     	}
     	
     	// see if we need to rebuild the sis file
