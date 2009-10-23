@@ -31,10 +31,10 @@
        <topic href="html/overview_cs.htm"/>
     </entry>
     <entry keyword="Codescanner preferences">
-       <topic href="html/pref_codescanner_01.htm"/>
-       <topic href="html/pref_codescanner_02.htm"/>
-       <topic href="html/pref_codescanner_03.htm"/>
-       <topic href="html/run_cs_cmd_line.htm"/>                     
+       <topic href="html/pref_codescanner_01.htm" label="Codescanner preferences" />
+       <topic href="html/pref_codescanner_02.htm" label="File Filter preferences" />
+       <topic href="html/pref_codescanner_03.htm" label="Rules preferences" />
+       <topic href="html/run_cs_cmd_line.htm" label="Using the Command-line" />                     
     </entry>
 
     <entry keyword="customrules element">
@@ -50,7 +50,7 @@
 	
     <entry keyword="exporting">
        <topic href="html/customizing_cs.htm"/>
-       <topic href="html/pref_codescanner_01_cs.htm"/>
+       <topic href="html/pref_codescanner_01_cs.htm" label="Codescanner preferences" />
     </entry>
 
 	<!-- FFFFFFFF -->
@@ -62,7 +62,7 @@
 	<!-- GGGGGGGG -->	
 
     <entry keyword="General tab">
-       <topic href="html/pref_codescanner_01_cs.htm"/>
+       <topic href="html/pref_codescanner_01_cs.htm" label="Codescanner preferences"/>
     </entry>
 
 	<!-- HHHHHHHH -->	
@@ -70,7 +70,7 @@
 	
     <entry keyword="importing">
        <topic href="html/customizing_cs.htm"/>
-       <topic href="html/pref_codescanner_01_cs.htm"/>
+       <topic href="html/pref_codescanner_01_cs.htm" label="Codescanner preferences" />
     </entry>
 
 
@@ -78,7 +78,7 @@
 	<!-- KKKKKKKK -->
 
     <entry keyword="Knowledgebase">
-       <topic href="html/pref_codescanner_01_cs.htm"/>
+       <topic href="html/pref_codescanner_01_cs.htm" label="Codescanner preferences"/>
     </entry>
 
 	<!-- LLLLLLLL -->
