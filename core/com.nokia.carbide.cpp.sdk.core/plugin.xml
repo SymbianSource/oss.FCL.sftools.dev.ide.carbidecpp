@@ -22,5 +22,13 @@
        class="com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.util.DevicesResourceFactoryImpl" />
   </extension>
 
+  <extension
+         point="org.eclipse.cdt.scripting.scriptableFeature">
+      <scriptableClass
+            class="com.nokia.carbide.cpp.internal.sdk.core.scripting.SDKScriptManager"
+            name="sdkScriptManager">
+      </scriptableClass>
+   </extension>
+
 </plugin>
 
