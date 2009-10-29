@@ -30,7 +30,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 
-public class ImportBldInfWrapper {
+public class SymbianProject {
 	
 	private static final String KEY_SDKID = "KEY_SDKID";
 	private static final String KEY_PLATFORM = "KEY_PLATFORM";

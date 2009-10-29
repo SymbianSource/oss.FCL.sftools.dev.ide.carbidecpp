@@ -537,8 +537,8 @@
   <extension
          point="org.eclipse.cdt.scripting.scriptableFeature">
       <scriptableClass
-            class="com.nokia.carbide.cpp.internal.scripting.ImportBldInfWrapper"
-            name="importBldInfWrapper">
+            class="com.nokia.carbide.cpp.internal.scripting.SymbianProject"
+            name="symbianProject">
       </scriptableClass>
    </extension>
 

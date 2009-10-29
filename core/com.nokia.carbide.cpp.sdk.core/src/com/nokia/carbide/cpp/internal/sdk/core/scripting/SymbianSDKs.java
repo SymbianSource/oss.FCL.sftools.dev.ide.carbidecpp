@@ -25,7 +25,7 @@ import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
-public class SDKScriptManager {
+public class SymbianSDKs {
 	
 	private static final String KEY_SDK_ID = "KEY_SDK_ID";
 	private static final String KEY_SDK_EPOCROOT = "KEY_SDK_EPOCROOT";
