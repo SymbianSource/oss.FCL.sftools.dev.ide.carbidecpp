@@ -622,29 +622,6 @@ three (3) years from the date of the distribution of this product by Nokia.
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="com.trolltech.qtcpp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.trolltech.qtcppproject"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.trolltech.qtcppproject.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="com.nokia.carbide.cpp.news.reader"
