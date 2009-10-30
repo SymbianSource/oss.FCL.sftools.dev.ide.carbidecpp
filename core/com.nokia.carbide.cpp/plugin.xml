@@ -34,7 +34,7 @@
 		<!-- Product attributes that support themes and universal intro -->
 		<property
 			name="introTitle"
-			value="Carbide.c++ v2.3.0 for Symbian"/>
+			value="Carbide.c++ v2.4.0 for Symbian"/>
 		<property
 			name="introBrandingImage"
 			value="product:themes/carbide/graphics/root/brandmark.gif"/>
