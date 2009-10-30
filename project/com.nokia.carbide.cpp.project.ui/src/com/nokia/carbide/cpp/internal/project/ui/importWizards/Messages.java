@@ -108,6 +108,8 @@ public class Messages extends NLS {
 	public static String ProjectPropertiesPage_directoryDoesNotContainSourceFiles;
 
 	public static String ProjectPropertiesPage_directoryTooLong;
+	
+	public static String ProjectPropertiesPage_directoryIsRoot;
 
 	static {
 		// initialize resource bundle
