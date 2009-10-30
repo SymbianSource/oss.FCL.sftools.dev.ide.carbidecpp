@@ -16,29 +16,43 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.importWizards;
 
-import com.nokia.carbide.cdt.builder.EpocEngineHelper;
-import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
+import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class ProjectPropertiesPage extends WizardPage implements Listener {
 	
     private Text projectName;
     private Text rootDirectory;
     private Button browseButton;
+    private long MAX_FILE_COUNT_UNDER_ROOT = 20000;
     
     String projectNameText = ""; //$NON-NLS-1$
     IPath rootDirectoryPath = null;
@@ -240,8 +254,39 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
 			return true;
 		}
 		
+		if (rootDirectoryPath.isRoot()){
+			long resCount = countFilesRecursivelyWithMax(rootDirectoryPath.toFile(), 0);
+			// Don't show warning, if by chance there's few sources under the root
+			if (resCount >= MAX_FILE_COUNT_UNDER_ROOT){
+				setMessage(Messages.ProjectPropertiesPage_directoryIsRoot, IStatus.WARNING);
+			}
+			return true;
+		}
+		
 		return true;
     }
+    
+    /**
+     * Recursively count the # of files under a given directory. Stops counting when count >= MAX_FILE_COUNT_UNDER_ROOT
+     * @param directory - Start directory
+     * @param start count, current count
+     * @return
+     */
+    private long countFilesRecursivelyWithMax(File directory, long inCount) {
+    	if (inCount >= MAX_FILE_COUNT_UNDER_ROOT) 
+    		return MAX_FILE_COUNT_UNDER_ROOT;
+    	if (directory.isDirectory()) {
+            String[] children = directory.list();
+            inCount = children.length + inCount; // increment the file count for this directory
+            for (int i=0; i<children.length; i++) {
+            	inCount = countFilesRecursivelyWithMax(new File(directory, children[i]), inCount);
+            }
+
+            return inCount; // return current file count
+        }
+    	return inCount; // return current file count
+
+	}
     
     public String getProjectName() {
     	return projectNameText;
