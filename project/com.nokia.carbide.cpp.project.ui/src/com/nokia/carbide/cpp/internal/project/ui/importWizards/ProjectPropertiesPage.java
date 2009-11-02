@@ -52,7 +52,6 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
     private Text projectName;
     private Text rootDirectory;
     private Button browseButton;
-    private long MAX_FILE_COUNT_UNDER_ROOT = 20000;
     
     String projectNameText = ""; //$NON-NLS-1$
     IPath rootDirectoryPath = null;
@@ -254,39 +253,24 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
 			return true;
 		}
 		
-		if (rootDirectoryPath.isRoot()){
-			long resCount = countFilesRecursivelyWithMax(rootDirectoryPath.toFile(), 0);
-			// Don't show warning, if by chance there's few sources under the root
-			if (resCount >= MAX_FILE_COUNT_UNDER_ROOT){
+		if (rootDirectoryPath.isRoot() || rootDirectoryPath.segmentCount() == 1){
+				
+			if (rootDirectoryPath.segmentCount() == 1){
+				for (ISymbianBuildContext context : parsedWithConfigs){
+					IPath sdkRoot = new Path(context.getSDK().getEPOCROOT());
+					if (rootDirectoryPath.isPrefixOf(sdkRoot) || sdkRoot.isPrefixOf(rootDirectoryPath)){
+						setMessage(Messages.ProjectPropertiesPage_directoryIsRoot, IStatus.WARNING);
+						break;
+					}
+				}
+			} else {
 				setMessage(Messages.ProjectPropertiesPage_directoryIsRoot, IStatus.WARNING);
 			}
-			return true;
+			
 		}
 		
 		return true;
     }
-    
-    /**
-     * Recursively count the # of files under a given directory. Stops counting when count >= MAX_FILE_COUNT_UNDER_ROOT
-     * @param directory - Start directory
-     * @param start count, current count
-     * @return
-     */
-    private long countFilesRecursivelyWithMax(File directory, long inCount) {
-    	if (inCount >= MAX_FILE_COUNT_UNDER_ROOT) 
-    		return MAX_FILE_COUNT_UNDER_ROOT;
-    	if (directory.isDirectory()) {
-            String[] children = directory.list();
-            inCount = children.length + inCount; // increment the file count for this directory
-            for (int i=0; i<children.length; i++) {
-            	inCount = countFilesRecursivelyWithMax(new File(directory, children[i]), inCount);
-            }
-
-            return inCount; // return current file count
-        }
-    	return inCount; // return current file count
-
-	}
     
     public String getProjectName() {
     	return projectNameText;
