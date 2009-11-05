@@ -16,7 +16,9 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import org.eclipse.jface.wizard.*;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.IWizardNode;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.graphics.Point;
 
 

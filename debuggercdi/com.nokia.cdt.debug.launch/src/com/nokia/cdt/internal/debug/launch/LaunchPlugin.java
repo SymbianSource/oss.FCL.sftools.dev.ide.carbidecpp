@@ -48,6 +48,7 @@ import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.debug.cw.symbian.*;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchCreationWizard;
+import com.nokia.cdt.internal.debug.launch.wizard.LaunchCreationWizardFactory;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 /**
@@ -292,12 +293,12 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 			// which non-emulator launch type,
 			// or both
 			try {
-				final LaunchCreationWizard wizard = 
-					new LaunchCreationWizard(project, defaultConfigName, mmpPaths, exePaths, defaultExecutable, isX86, useEmulatorByDefault, mode);
+				final LaunchCreationWizard wizard =
+					LaunchCreationWizardFactory.getInstance().get(project, defaultConfigName, mmpPaths, exePaths, defaultExecutable, isX86, useEmulatorByDefault, mode);
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						wizard.init(PlatformUI.getWorkbench(), null);
-						LaunchCreationWizard.openWizard(CUIPlugin.getActiveWorkbenchShell(), wizard);
+						wizard.openWizard(CUIPlugin.getActiveWorkbenchShell());
 					}
 				});
 				config = wizard.getLaunchConfiguration();

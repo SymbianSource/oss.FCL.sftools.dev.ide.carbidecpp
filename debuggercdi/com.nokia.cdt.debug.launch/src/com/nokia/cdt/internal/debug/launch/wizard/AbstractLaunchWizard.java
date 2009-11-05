@@ -16,16 +16,16 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
-import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
-import com.nokia.cpp.internal.api.utils.core.Pair;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.jface.wizard.Wizard;
 
-import java.util.List;
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 
 public abstract class AbstractLaunchWizard extends Wizard implements ILaunchWizard {
 

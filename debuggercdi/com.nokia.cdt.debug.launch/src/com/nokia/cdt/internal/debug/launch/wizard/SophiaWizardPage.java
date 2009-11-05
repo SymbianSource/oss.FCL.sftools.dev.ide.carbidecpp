@@ -95,16 +95,17 @@ public class SophiaWizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		sophiaSTIDLLLabel.setLayoutData(data);
 		sophiaSTIDLLLabel.setToolTipText(Messages.getString("SophiaWizardPage.3")); //$NON-NLS-1$
+		sophiaSTIDLLLabel.setData(".uid", "SophiaWizardPage.sophiaSTIDLLLabel");
 
 		sophiaSTIDLLPath = new Text(composite, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);	
 		data.horizontalSpan = 2;
 		sophiaSTIDLLPath.setLayoutData(data);
 		sophiaSTIDLLPath.setToolTipText(Messages.getString("SophiaWizardPage.3")); //$NON-NLS-1$
+		sophiaSTIDLLPath.setData(".uid", "SophiaWizardPage.sophiaSTIDLLPath");
 		
 		sophiaSTIDLLBrowse = ControlFactory.createPushButton(composite, Messages.getString("SophiaWizardPage.13")); //$NON-NLS-1$
 		sophiaSTIDLLBrowse.addSelectionListener(new SelectionAdapter() {
-
 			public void widgetSelected(SelectionEvent evt) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 
@@ -118,6 +119,7 @@ public class SophiaWizardPage extends WizardPage {
 				}
 			}
 		});
+		sophiaSTIDLLBrowse.setData(".uid", "SophiaWizardPage.sophiaSTIDLLBrowse");
 
 		targetInitFileLabel = new Label(composite, SWT.NONE);
 		targetInitFileLabel.setText(Messages.getString("SophiaWizardPage.7")); //$NON-NLS-1$
@@ -125,16 +127,17 @@ public class SophiaWizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		targetInitFileLabel.setLayoutData(data);
 		targetInitFileLabel.setToolTipText(Messages.getString("SophiaWizardPage.8")); //$NON-NLS-1$
+		targetInitFileLabel.setData(".uid", "SophiaWizardPage.targetInitFileLabel");
 
 		targetInitFilePath = new Text(composite, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);	
 		data.horizontalSpan = 2;
 		targetInitFilePath.setLayoutData(data);
 		targetInitFilePath.setToolTipText(Messages.getString("SophiaWizardPage.8")); //$NON-NLS-1$
+		targetInitFilePath.setData(".uid", "SophiaWizardPage.targetInitFilePath");
 		
 		targetInitFileBrowse = ControlFactory.createPushButton(composite, Messages.getString("SophiaWizardPage.13")); //$NON-NLS-1$
 		targetInitFileBrowse.addSelectionListener(new SelectionAdapter() {
-
 			public void widgetSelected(SelectionEvent evt) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 
@@ -148,6 +151,7 @@ public class SophiaWizardPage extends WizardPage {
 				}
 			}
 		});
+		targetInitFileBrowse.setData(".uid", "SophiaWizardPage.targetInitFileBrowse");
 
 		final Label processorsLabel = new Label(composite, SWT.NONE);
 		processorsLabel.setText(Messages.getString("SophiaWizardPage.11")); //$NON-NLS-1$
@@ -155,7 +159,8 @@ public class SophiaWizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		processorsLabel.setLayoutData(data);
 		processorsLabel.setToolTipText(Messages.getString("SophiaWizardPage.12")); //$NON-NLS-1$
-
+		processorsLabel.setData(".uid", "SophiaWizardPage.processorsLabel");
+		
 		processorsList = new Combo(composite, SWT.READ_ONLY);
 		processorsList.setItems(new String[] { "ARM920T", "ARM926TEJ", "ARM1136EJ-S", "OMAP3xx", "OMAP15xx", "OMAP16xx", "OMAP24xx", "OMAP34xx", "Generic" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
 		processorsList.select(8); //by default, select the generic 
@@ -163,7 +168,8 @@ public class SophiaWizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		processorsList.setLayoutData(data);
 		processorsList.setToolTipText(Messages.getString("SophiaWizardPage.12")); //$NON-NLS-1$
-
+		processorsList.setData(".uid", "SophiaWizardPage.processorsList");
+		
 		setControl(composite);
         Dialog.applyDialogFont(parent);
         setPageComplete(true);

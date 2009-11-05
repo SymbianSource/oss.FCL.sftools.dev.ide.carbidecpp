@@ -16,9 +16,8 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import com.nokia.cpp.internal.api.utils.core.Check;
-
-import cwdbg.PreferenceConstants;
+import java.io.File;
+import java.text.MessageFormat;
 
 import org.eclipse.cdt.utils.ui.controls.ControlFactory;
 import org.eclipse.core.runtime.CoreException;
@@ -30,11 +29,16 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
-import java.io.File;
-import java.text.MessageFormat;
+import com.nokia.cpp.internal.api.utils.core.Check;
+
+import cwdbg.PreferenceConstants;
 
 public class StopModeRomImageWizardPage extends WizardPage {
     		
@@ -111,6 +115,7 @@ public class StopModeRomImageWizardPage extends WizardPage {
 				checkControlState();
 			}
 		});
+		softAttachButton.setData(".uid", "StopModeRunImageWizard.softAttachButton");
         
 		debugFromStartButton = new Button(composite, SWT.RADIO);
 		debugFromStartButton.setText(Messages.getString("StopModeRomImageWizardPage.17")); //$NON-NLS-1$
@@ -124,6 +129,7 @@ public class StopModeRomImageWizardPage extends WizardPage {
 				checkControlState();
 			}
 		});
+		debugFromStartButton.setData(".uid", "StopModeRunImageWizard.debugFromStartButton");
 
 		startAddressLabel = new Label(composite, SWT.NONE);
 		startAddressLabel.setText(Messages.getString("StopModeRomImageWizardPage.3")); //$NON-NLS-1$
@@ -131,27 +137,31 @@ public class StopModeRomImageWizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		startAddressLabel.setLayoutData(data);
 		startAddressLabel.setToolTipText(Messages.getString("StopModeRomImageWizardPage.4")); //$NON-NLS-1$
-
+		startAddressLabel.setData(".uid", "StopModeRunImageWizard.startAddressLabel");
+		
 		startAddress = new Text(composite, SWT.BORDER);
 		startAddress.setText("0x0"); //$NON-NLS-1$
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 1;
 		startAddress.setLayoutData(data);
 		startAddress.setToolTipText(Messages.getString("StopModeRomImageWizardPage.4")); //$NON-NLS-1$
-
+		startAddress.setData(".uid", "StopModeRunImageWizard.startAddress");
+		
 		romImageLabel = new Label(composite, SWT.NONE);
 		romImageLabel.setText(Messages.getString("StopModeRomImageWizardPage.11")); //$NON-NLS-1$
 		data = new GridData();
 		data.horizontalSpan = 3;
 		romImageLabel.setLayoutData(data);
 		romImageLabel.setToolTipText(Messages.getString("StopModeRomImageWizardPage.12")); //$NON-NLS-1$
-
+		romImageLabel.setData(".uid", "StopModeRunImageWizard.romImageLabel");
+		
 		romImagePath = new Text(composite, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 2;
 		romImagePath.setLayoutData(data);
 		romImagePath.setToolTipText(Messages.getString("StopModeRomImageWizardPage.12")); //$NON-NLS-1$
-	
+		romImagePath.setData(".uid", "StopModeRunImageWizard.romImagePath");
+		
 		romImageBrowse = ControlFactory.createPushButton(composite, Messages.getString("StopModeRomImageWizardPage.7")); //$NON-NLS-1$
 		romImageBrowse.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
@@ -167,6 +177,7 @@ public class StopModeRomImageWizardPage extends WizardPage {
 				}
 			}
 		});
+		romImageBrowse.setData(".uid", "StopModeRunImageWizard.romImageBrowse");
 		
 		romLogFileLabel = new Label(composite, SWT.NONE);
 		romLogFileLabel.setText(Messages.getString("StopModeRomImageWizardPage.5")); //$NON-NLS-1$
@@ -174,16 +185,17 @@ public class StopModeRomImageWizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		romLogFileLabel.setLayoutData(data);
 		romLogFileLabel.setToolTipText(Messages.getString("StopModeRomImageWizardPage.6")); //$NON-NLS-1$
-
+		romLogFileLabel.setData(".uid", "StopModeRunImageWizard.romLogFileLabel");
+		
 		romLogFilePath = new Text(composite, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 2;
 		romLogFilePath.setLayoutData(data);
 		romLogFilePath.setToolTipText(Messages.getString("StopModeRomImageWizardPage.6")); //$NON-NLS-1$		
-
+		romLogFilePath.setData(".uid", "StopModeRunImageWizard.romLogFilePath");
+		
 		romLogFileBrowse = ControlFactory.createPushButton(composite, Messages.getString("StopModeRomImageWizardPage.7")); //$NON-NLS-1$
 		romLogFileBrowse.addSelectionListener(new SelectionAdapter() {
-
 			public void widgetSelected(SelectionEvent evt) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 
@@ -197,7 +209,7 @@ public class StopModeRomImageWizardPage extends WizardPage {
 				}
 			}
 		});
-
+		romLogFileBrowse.setData(".uid", "StopModeRunImageWizard.romLogFileBrowse");
 	
 		setControl(composite);
         Dialog.applyDialogFont(parent);

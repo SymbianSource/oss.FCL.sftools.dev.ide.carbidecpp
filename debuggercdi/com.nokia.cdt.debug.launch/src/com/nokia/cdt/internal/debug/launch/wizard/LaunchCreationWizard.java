@@ -16,11 +16,8 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
-import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
-import com.nokia.cdt.debug.cw.symbian.SettingsData;
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cpp.internal.api.utils.core.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -39,8 +36,13 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 
 public class LaunchCreationWizard extends Wizard {
 
@@ -134,8 +136,8 @@ public class LaunchCreationWizard extends Wizard {
     	return launchConfig;
     }
     
-	public static int openWizard(Shell shell, LaunchCreationWizard wizard) {
-		WizardDialog dialog = new WizardDialog(shell, wizard);
+	public int openWizard(Shell shell) {
+		WizardDialog dialog = new WizardDialog(shell, this);
 		dialog.create();
 		return dialog.open();
 	}

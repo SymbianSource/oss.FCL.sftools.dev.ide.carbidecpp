@@ -89,16 +89,17 @@ public class Trace32WizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		t32BootConfigLabel.setLayoutData(data);
 		t32BootConfigLabel.setToolTipText(Messages.getString("Trace32WizardPage.3")); //$NON-NLS-1$
+		t32BootConfigLabel.setData(".uid", "Trace32WizardPage.t32BootConfigLabel");
 
 		t32BootConfigFilePath = new Text(composite, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);	
 		data.horizontalSpan = 2;
 		t32BootConfigFilePath.setLayoutData(data);
 		t32BootConfigFilePath.setToolTipText(Messages.getString("Trace32WizardPage.3")); //$NON-NLS-1$
+		t32BootConfigFilePath.setData(".uid", "Trace32WizardPage.t32BootConfigFilePath");
 		
 		t32BootConfigFileBrowse = ControlFactory.createPushButton(composite, Messages.getString("Trace32WizardPage.9")); //$NON-NLS-1$
 		t32BootConfigFileBrowse.addSelectionListener(new SelectionAdapter() {
-
 			public void widgetSelected(SelectionEvent evt) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 
@@ -112,7 +113,7 @@ public class Trace32WizardPage extends WizardPage {
 				}
 			}
 		});
-
+		t32BootConfigFileBrowse.setData(".uid", "Trace32WizardPage.t32BootConfigFileBrowse");
 		
 		final Label processorsLabel = new Label(composite, SWT.NONE);
 		processorsLabel.setText(Messages.getString("Trace32WizardPage.7")); //$NON-NLS-1$
@@ -120,7 +121,8 @@ public class Trace32WizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		processorsLabel.setLayoutData(data);
 		processorsLabel.setToolTipText(Messages.getString("Trace32WizardPage.8")); //$NON-NLS-1$
-
+		processorsLabel.setData(".uid", "Trace32WizardPage.processorsLabel");
+		
 		processorsList = new Combo(composite, SWT.READ_ONLY);
 		processorsList.setItems(new String[] { "ARM920T", "ARM926TEJ", "ARM1136EJ-S", "OMAP3xx", "OMAP15xx", "OMAP16xx", "OMAP24xx", "OMAP34xx", "Generic" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
 		processorsList.select(8); //by default, select the generic 
@@ -128,7 +130,8 @@ public class Trace32WizardPage extends WizardPage {
 		data.horizontalSpan = 3;
 		processorsList.setLayoutData(data);
 		processorsList.setToolTipText(Messages.getString("Trace32WizardPage.8")); //$NON-NLS-1$
-
+		processorsList.setData(".uid", "Trace32WizardPage.processorsList");
+		
 		setControl(composite);
         Dialog.applyDialogFont(parent);
         setPageComplete(true);

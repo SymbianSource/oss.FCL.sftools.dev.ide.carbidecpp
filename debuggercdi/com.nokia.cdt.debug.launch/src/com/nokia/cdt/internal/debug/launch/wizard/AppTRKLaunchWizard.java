@@ -16,9 +16,7 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import com.nokia.cdt.debug.cw.symbian.SettingsData;
-import com.nokia.cdt.internal.debug.launch.ui.RunModeMainTab;
-import com.nokia.cdt.internal.debug.launch.wizard.MainExecutableSelectionWizardPage.IPathValidator;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -26,7 +24,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 
-import java.util.List;
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.ui.RunModeMainTab;
+import com.nokia.cdt.internal.debug.launch.wizard.MainExecutableSelectionWizardPage.IPathValidator;
 
 public class AppTRKLaunchWizard extends AbstractLaunchWizard {
     private BuildOptionsSelectionPage fBuildOptionsSelectionPage;

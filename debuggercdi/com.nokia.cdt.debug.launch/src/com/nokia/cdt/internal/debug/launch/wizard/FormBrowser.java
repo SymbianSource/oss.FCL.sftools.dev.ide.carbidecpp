@@ -44,6 +44,7 @@ class FormBrowser {
 		flayout.marginHeight = 1;
 		container.setLayout(flayout);
 		formText = new ScrolledFormText(container, SWT.V_SCROLL | SWT.H_SCROLL, false);
+		formText.setData(".uid", "FormBrowser.formText");
 		if (borderStyle == SWT.NULL) {
 			formText.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 			toolkit.paintBordersFor(container);

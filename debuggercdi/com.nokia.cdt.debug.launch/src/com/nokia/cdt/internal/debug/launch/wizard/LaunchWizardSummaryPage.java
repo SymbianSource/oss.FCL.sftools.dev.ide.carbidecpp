@@ -16,16 +16,18 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
+import java.text.MessageFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-
-import java.text.MessageFormat;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class LaunchWizardSummaryPage extends WizardPage implements ISummaryTextItemContainer {
 
@@ -68,14 +70,17 @@ public class LaunchWizardSummaryPage extends WizardPage implements ISummaryTextI
 		summaryText = new Text(container, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
 		summaryText.setEditable(false);
 		summaryText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		summaryText.setData(".uid", "LaunchWizardSummaryPage.summaryText");
 
 		youCanChangeText = new Text(container, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
 		youCanChangeText.setEditable(false);
 		youCanChangeText.setText(Messages.getString("LaunchWizardSummaryPage.3")); //$NON-NLS-1$
 		youCanChangeText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		youCanChangeText.setData(".uid", "LaunchWizardSummaryPage.youCanChangeText");
 
 		showSettingsButton = new Button(container, SWT.CHECK);
 		showSettingsButton.setText(Messages.getString("LaunchWizardSummaryPage.4")); //$NON-NLS-1$
+		showSettingsButton.setData(".uid", "LaunchWizardSummaryPage.showSettingsButton");
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), LaunchWizardHelpIds.WIZARD_SUMMARY_PAGE);
 	}

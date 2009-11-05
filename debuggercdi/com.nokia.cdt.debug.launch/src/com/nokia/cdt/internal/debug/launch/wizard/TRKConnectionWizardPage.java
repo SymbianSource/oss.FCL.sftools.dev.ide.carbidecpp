@@ -16,13 +16,7 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI.IListener;
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cpp.internal.api.utils.core.Check;
+import java.text.MessageFormat;
 
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.dialogs.Dialog;
@@ -32,7 +26,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 
-import java.text.MessageFormat;
+import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI.IListener;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.core.Check;
 
 public class TRKConnectionWizardPage extends WizardPage {
     
