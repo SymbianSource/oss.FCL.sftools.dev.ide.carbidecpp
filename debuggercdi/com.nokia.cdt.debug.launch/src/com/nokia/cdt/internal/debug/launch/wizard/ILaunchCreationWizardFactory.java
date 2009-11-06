@@ -22,7 +22,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 
 public interface ILaunchCreationWizardFactory {
-	public LaunchCreationWizard get(IProject project, String configurationName, 
+	public LaunchCreationWizard create(IProject project, String configurationName, 
 			List<IPath> mmps, List<IPath> exes, IPath defaultExecutable,  
 			boolean isEmulation, boolean emulatorOnly, String mode) throws Exception;
 }
