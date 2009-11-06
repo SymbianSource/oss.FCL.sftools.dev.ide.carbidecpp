@@ -73,9 +73,11 @@ public class LaunchWizardSummaryPage extends WizardPage implements ISummaryTextI
 		youCanChangeText.setEditable(false);
 		youCanChangeText.setText(Messages.getString("LaunchWizardSummaryPage.3")); //$NON-NLS-1$
 		youCanChangeText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		youCanChangeText.setData(".uid", "LaunchWizardSummaryPage.youCanChangeText");
 
 		showSettingsButton = new Button(container, SWT.CHECK);
 		showSettingsButton.setText(Messages.getString("LaunchWizardSummaryPage.4")); //$NON-NLS-1$
+		showSettingsButton.setData(".uid", "LaunchWizardSummaryPage.showSettingsButton");
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), LaunchWizardHelpIds.WIZARD_SUMMARY_PAGE);
 	}

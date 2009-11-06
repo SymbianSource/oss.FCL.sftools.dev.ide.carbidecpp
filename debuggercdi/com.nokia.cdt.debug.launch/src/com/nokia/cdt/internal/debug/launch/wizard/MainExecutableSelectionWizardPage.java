@@ -145,6 +145,7 @@ public class MainExecutableSelectionWizardPage extends WizardPage {
 		exeLabel.setText(getAltString("MainExecutableSelectionWizardPage.ExeLabel")); //$NON-NLS-1$
 		exeLabel.setToolTipText(getAltString("MainExecutableSelectionWizardPage.ExeToolTip")); //$NON-NLS-1$
 		exeLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		exeLabel.setData(".uid", "MainExecutableSelectionWizardPage.exeLabel");
 
 		viewer = new ComboViewer(composite, SWT.READ_ONLY);
 		Combo combo = viewer.getCombo();
@@ -152,6 +153,7 @@ public class MainExecutableSelectionWizardPage extends WizardPage {
 		combo.setToolTipText(getAltString("MainExecutableSelectionWizardPage.ExeToolTip")); //$NON-NLS-1$
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		combo.setVisibleItemCount(20);
+		combo.setData(".uid", "MainExecutableSelectionWizardPage.combo");
 		
 		viewer.setContentProvider(new ArrayContentProvider());
 		viewer.setLabelProvider(new LabelProvider());
@@ -189,6 +191,7 @@ public class MainExecutableSelectionWizardPage extends WizardPage {
 				label.setVisible(false);
 			exePathLabel = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.READ_ONLY);
 			exePathLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+			exePathLabel.setData(".uid", "MainExecutableSelectionWizardPage.exePathLabel");
 
 			if (emulatorPath == null) {
 				exePathLabel.setVisible(false);
@@ -196,6 +199,7 @@ public class MainExecutableSelectionWizardPage extends WizardPage {
 				usePathCheck.setSelection(false);
 				usePathCheck.setText(Messages.getString("MainExecutableSelectionWizardPage.UsePathLabel.device")); //$NON-NLS-1$
 				usePathCheck.setToolTipText(Messages.getString("MainExecutableSelectionWizardPage.UsePathLabel.device.ToolTip")); //$NON-NLS-1$
+				usePathCheck.setData(".uid", "MainExecutableSelectionWizardPage.usePathCheck");
 				
 				GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false);
 				gd.verticalIndent = 30;
@@ -218,6 +222,7 @@ public class MainExecutableSelectionWizardPage extends WizardPage {
 						validatePage();
 					}
 				});
+				pathText.setData(".uid", "MainExecutableSelectionWizardPage.pathText");
 				
 				if (input.isEmpty()) {
 					usePathCheck.setSelection(true);

@@ -126,6 +126,7 @@ class LaunchCategorySelectionPage extends WizardPage implements ISelectionChange
 	public void createDescriptionIn(Composite composite) {
 		descriptionBrowser.createControl(composite);
 		Control c = descriptionBrowser.getControl();
+		c.setData(".uid", "LaunchCatagorySelection.descriptionBrowser");
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.widthHint = 200;
 		c.setLayoutData(gd);
@@ -150,6 +151,7 @@ class LaunchCategorySelectionPage extends WizardPage implements ISelectionChange
 		label.setText(Messages.getString("LaunchCategorySelectionPage.categoryLabel")); //$NON-NLS-1$
 		GridData gd = new GridData();
 		label.setLayoutData(gd);
+		label.setData(".uid", "LaunchCategorySelectionPage.label");
 		
 		SashForm sashForm = new SashForm(container, SWT.VERTICAL);
 		gd = new GridData(GridData.FILL_BOTH);
@@ -179,6 +181,10 @@ class LaunchCategorySelectionPage extends WizardPage implements ISelectionChange
 		categorySelectionTableViewer.setSelection(new StructuredSelection(categorySelectionTableViewer.getElementAt(0)), true);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), LaunchWizardHelpIds.CATEGORY_SELECTION_PAGE);
+	}
+	
+	public TableViewer getViewer() {
+		return categorySelectionTableViewer;
 	}
 	
 	public void selectionChanged(SelectionChangedEvent event) {

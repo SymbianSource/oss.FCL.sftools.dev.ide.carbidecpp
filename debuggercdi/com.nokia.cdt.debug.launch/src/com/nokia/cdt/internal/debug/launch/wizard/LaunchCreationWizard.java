@@ -134,8 +134,8 @@ public class LaunchCreationWizard extends Wizard {
     	return launchConfig;
     }
     
-	public static int openWizard(Shell shell, LaunchCreationWizard wizard) {
-		WizardDialog dialog = new WizardDialog(shell, wizard);
+	public int openWizard(Shell shell) {
+		WizardDialog dialog = new WizardDialog(shell, this);
 		dialog.create();
 		return dialog.open();
 	}

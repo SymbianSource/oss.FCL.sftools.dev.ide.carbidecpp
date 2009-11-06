@@ -72,18 +72,24 @@ public class BuildOptionsSelectionPage extends WizardPage {
 		optionsGroup.setLayoutData(gridData);
 		optionsGroup.setLayout(gridLayout);
 		optionsGroup.setText(Messages.getString("BuildOptionsSelectionPage.OptionsGroupLabel"));
+		optionsGroup.setData(".uid", "BuildOptionsSelectionPage.optionsGroup");
 
 		fDisableBuildButton = new Button(optionsGroup, SWT.RADIO);
 		fDisableBuildButton.setText(Messages.getString("BuildOptionsSelectionPage.DisableButtonLabel")); //$NON-NLS-1$
 		fDisableBuildButton.setToolTipText(Messages.getString("BuildOptionsSelectionPage.DisableButtonToolTip")); //$NON-NLS-1$
+		fDisableBuildButton.setData(".uid", "BuildOptionsSelectionPage.disableBuildButton");
+		
 		new Label(optionsGroup, SWT.NONE);
 		fEnableBuildButton = new Button(optionsGroup, SWT.RADIO);
 		fEnableBuildButton.setText(Messages.getString("BuildOptionsSelectionPage.EnableButtonLabel")); //$NON-NLS-1$
 		fEnableBuildButton.setToolTipText(Messages.getString("BuildOptionsSelectionPage.EnableButtonToolTip")); //$NON-NLS-1$
+		fEnableBuildButton.setData(".uid", "BuildOptionsSelectionPage.enableBuildButon");
+		
 		new Label(optionsGroup, SWT.NONE);
 		fWorkspaceSettingsButton = new Button(optionsGroup, SWT.RADIO);
 		fWorkspaceSettingsButton.setText(Messages.getString("BuildOptionsSelectionPage.WorkspaceSettingsButtonLabel")); //$NON-NLS-1$
 		fWorkspaceSettingsButton.setToolTipText(Messages.getString("BuildOptionsSelectionPage.WorkspaceSettingsButtonToolTip")); //$NON-NLS-1$
+		fWorkspaceSettingsButton.setData(".uid", "BuildOptionsSelectionPage.workspaceSettingsButton");
 		
 		fWorkpsaceSettingsLink = new Link(optionsGroup, SWT.NONE);
 		fWorkpsaceSettingsLink.setText(Messages.getString("BuildOptionsSelectionPage.WorkspaceSettingsLinkLabel")); //$NON-NLS-1$
@@ -96,6 +102,7 @@ public class BuildOptionsSelectionPage extends WizardPage {
 						null).open();
 			}
 		});
+		fWorkpsaceSettingsLink.setData(".uid", "BuildOptionsSelectionPage.workspaceSettingsLink");
 
 		setDefaults();
 	}

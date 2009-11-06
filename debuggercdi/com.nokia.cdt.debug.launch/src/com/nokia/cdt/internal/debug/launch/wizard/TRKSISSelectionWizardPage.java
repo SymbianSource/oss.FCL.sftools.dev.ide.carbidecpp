@@ -91,6 +91,7 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 			data.horizontalSpan = 1;
 			sisLabel.setLayoutData(data);
 			sisLabel.setToolTipText(Messages.getString("TRKSISSelectionWizardPage.3")); //$NON-NLS-1$
+			sisLabel.setData(".uid", "TRKSISSelectionWizard.sisLabel");
 
 			sisFile = new Combo(composite, SWT.READ_ONLY);
 			data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
@@ -98,6 +99,7 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 			sisFile.setLayoutData(data);
 			sisFile.setToolTipText(Messages.getString("TRKSISSelectionWizardPage.3")); //$NON-NLS-1$
 			sisFile.add(Messages.getString("TRKSISSelectionWizardPage.5")); //$NON-NLS-1$
+			sisFile.setData(".uid", "TRKSISSelectionWizard.sisFile");
 			
 			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
@@ -123,6 +125,7 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 					PreferencesUtil.createPropertyDialogOn(getShell(), project, "com.nokia.carbide.cdt.internal.builder.ui.CarbideBuildConfigurationsPage", null, null).open(); //$NON-NLS-1$
 				}
 			});
+			link.setData(".uid", "TRKSISSelectionWizard.link");
 		} else {
 			// not a Carbide project, just an executable.  show a browse/edit combo
 			// to let them select a sis file if they want to.
@@ -132,6 +135,7 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 			data.horizontalSpan = 2;
 			sisLabel.setLayoutData(data);
 			sisLabel.setToolTipText(Messages.getString("TRKSISSelectionWizardPage.3")); //$NON-NLS-1$
+			sisLabel.setData(".uid", "TRKSISSelectionWizard.sisLabel");
 
 			sisEdit = new Text(composite, SWT.BORDER);
 			sisEdit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -141,12 +145,12 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 					checkValid();
 				}
 			});
+			sisEdit.setData(".uid", "TRKSISSelectionWizard.sisEdit");
 
 			sisBrowse = new Button(composite, SWT.NONE);
 			sisBrowse.setText(Messages.getString("TRKSISSelectionWizardPage.9")); //$NON-NLS-1$
 			sisBrowse.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 			sisBrowse.addSelectionListener(new SelectionAdapter() {
-
 				public void widgetSelected(SelectionEvent evt) {
 					FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 
@@ -161,6 +165,7 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 					}
 				}
 			});
+			sisBrowse.setData(".uid", "TRKSISSelectionWizard.sisBrowse");
 		}
 
 		setControl(composite);

@@ -62,6 +62,7 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 	public void createDescriptionIn(Composite composite) {
 		descriptionBrowser.createControl(composite);
 		Control c = descriptionBrowser.getControl();
+		c.setData(".uid", "LaunchWizardSelection.descriptionBrowser");
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.widthHint = 200;
 		c.setLayoutData(gd);
@@ -90,6 +91,7 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 		label.setText(getLabel());
 		GridData gd = new GridData();
 		label.setLayoutData(gd);
+		label.setData(".uid", "LaunchWizardSelectionPage.label");
 		
 		SashForm sashForm = new SashForm(container, SWT.VERTICAL);
 		gd = new GridData(GridData.FILL_BOTH);
@@ -115,6 +117,10 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 		setControl(container);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), LaunchWizardHelpIds.WIZARD_SELECTION_PAGE);
+	}
+	
+	public TableViewer getViewer() {
+		return wizardSelectionTableViewer;
 	}
 	
 	public void selectionChanged(SelectionChangedEvent event) {
