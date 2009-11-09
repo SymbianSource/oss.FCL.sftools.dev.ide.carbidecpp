@@ -240,6 +240,18 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
 			return true;
 		}
 		
+		if (rootDirectoryPath.isRoot() || rootDirectoryPath.segmentCount() == 1){ 
+			if (rootDirectoryPath.segmentCount() == 1){ 
+				for (ISymbianBuildContext context : parsedWithConfigs){ 
+					IPath sdkRoot = new Path(context.getSDK().getEPOCROOT()); 
+					if (rootDirectoryPath.isPrefixOf(sdkRoot) || sdkRoot.isPrefixOf(rootDirectoryPath)){ 
+						setMessage(Messages.ProjectPropertiesPage_directoryIsRoot, IStatus.WARNING); 
+						break;
+					}
+				}
+			}
+			
+		}
 		return true;
     }
     
