@@ -35,6 +35,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class QtUIPlugin extends AbstractUIPlugin {
 
@@ -89,12 +90,18 @@ public class QtUIPlugin extends AbstractUIPlugin {
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 		if (cpi != null) {
 			final String underscore = "_"; //$NON-NLS-1$
+			final String template = "template"; //$NON-NLS-1$ 
 			
 			for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()) {
 				IFile file = project.getFile(project.getName() + underscore + config.getPlatformString().toLowerCase() +
 						underscore + config.getTargetString().toLowerCase() + ".pkg"); //$NON-NLS-1$
 				
-				if (file != null && file.exists()) {
+				if (file == null || !file.exists() && config.getPlatformString() != ISymbianBuildContext.EMULATOR_PLATFORM) { 
+					// Qt 4.6 only creates one PKG file per project. Do not add for WINSCW 
+					file = project.getFile(project.getName() + underscore + template + ".pkg"); //$NON-NLS-1$ 
+				}
+				
+				if (file != null && file.exists()){ 
 					SISBuilderInfo2 sisInfo = new SISBuilderInfo2(project);
 					sisInfo.setPKGFile(file.getLocation().toOSString());
 					// set to self signing
