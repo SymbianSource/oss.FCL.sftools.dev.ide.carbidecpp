@@ -250,6 +250,9 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
 					}
 				}
 			}
+			else {
+				setMessage(Messages.ProjectPropertiesPage_directoryIsRoot, IStatus.WARNING);
+			}
 			
 		}
 		return true;
