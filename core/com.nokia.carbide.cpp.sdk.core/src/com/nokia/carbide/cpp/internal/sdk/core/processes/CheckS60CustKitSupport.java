@@ -14,16 +14,19 @@ package com.nokia.carbide.cpp.internal.sdk.core.processes;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Plugin;
 
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.template.engine.ITemplate;
 import com.nokia.carbide.templatewizard.process.AbstractProjectProcess;
 import com.nokia.carbide.templatewizard.process.IParameter;
-import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.core.Check;
 
 /**
  * Process used to fill in S60 specific include symbols for INF/MMP files 
@@ -42,6 +45,12 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_SF_FOLDER =  "sf";
 	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
+	private static final String BUILD_HELP_PREFIX = "buildHelpPrefix";
+	private static final String DISABLE_HELP_STRING = "//";
+	private static final String HELP_COMPILER = "epoc32/tools/cshlpcmp.bat";
+	private static final String HELP_SUPPORT_MACRO = "helpSupport";
+	private static final String HELP_SUPPORT_STRING = "MACRO _HELP_AVAILABLE_";
+
 	protected IProject project;
 
 	@Override
@@ -51,6 +60,18 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		String includesValue = "";
 		includesValue = createCustKitIncludes(template);
 		template.getTemplateValues().put(S60_50_BUILD_MACROS, includesValue);
+
+		boolean hasHelp = isHelpCompilerAvailable(template);
+		String enableHelpString = "";
+		String helpSupportString = "";
+		if (hasHelp) {
+			helpSupportString = HELP_SUPPORT_STRING;
+		}
+		else {
+			enableHelpString = DISABLE_HELP_STRING;
+		}
+		template.getTemplateValues().put(BUILD_HELP_PREFIX, enableHelpString);
+		template.getTemplateValues().put(HELP_SUPPORT_MACRO, helpSupportString);
 	}
 
 	@Override
@@ -58,6 +79,25 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		return SDKCorePlugin.getDefault();
 	}
 	
+	private boolean isHelpCompilerAvailable(ITemplate template) {
+		Object object = template.getTemplateValues().get(SELECTED_BUILD_CONFIGS_VALUE_KEY);
+		if (object instanceof List) {
+			List listOfBuildConfigs = (List) object;
+			for (Object obj : listOfBuildConfigs) {
+				Check.checkContract(obj instanceof ISymbianBuildContext);
+				ISymbianBuildContext symbianBuildContext = (ISymbianBuildContext)obj;
+				ISymbianSDK sdk = symbianBuildContext.getSDK();
+				if (sdk != null) {
+					File contextHelpCompiler = new File(sdk.getEPOCROOT() + HELP_COMPILER);
+					if (contextHelpCompiler.exists()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	@SuppressWarnings("unchecked")
 	/**
 	 * Check the SDK version and certain includes to figure out which include macros to add.

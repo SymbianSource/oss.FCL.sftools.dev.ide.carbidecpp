@@ -18,7 +18,9 @@
 
 #include <$(baseName)_$(uid3).rsg>
 
+#ifdef _HELP_AVAILABLE_
 #include "$(baseName)_$(uid3).hlp.hrh"
+#endif
 #include "$(baseName).hrh"
 #include "$(baseName).pan"
 #include "$(baseName)Application.h"
@@ -197,11 +199,15 @@ CArrayFix<TCoeHelpContext>* C$(baseName)AppUi::HelpContextL() const
 	// work. Alternatively, a patch now exists for the versions of 
 	// HTML help compiler in SDKs and can be found here along with an FAQ:
 	// http://www3.symbian.com/faq.nsf/AllByDate/E9DF3257FD565A658025733900805EA2?OpenDocument
+#ifdef _HELP_AVAILABLE_
 	CArrayFixFlat<TCoeHelpContext>* array = new(ELeave)CArrayFixFlat<TCoeHelpContext>(1);
 	CleanupStack::PushL(array);
 	array->AppendL(TCoeHelpContext(KUid$(baseName)App, KGeneral_Information));
 	CleanupStack::Pop(array);
 	return array;
+#else
+	return NULL;
+#endif
 	}
 
 // End of File
