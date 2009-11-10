@@ -16,7 +16,7 @@
   </style>
 </head>
 <body bgcolor="#ffffff">
-<h2>Carbide.c++ Release Notes 2.3.0</h2>
+<h2>Carbide.c++ Release Notes 2.4.0</h2>
 <p>The Carbide.c++  is a comprehensive development tool suite for Symbian OS that is based on the Eclipse framework. The C++ Development Toolkit (CDT), provides the foundation for project and build tools management, as well as the primary interface for the debugger to communicate with the IDE. </p>
 <p>This is a collection of important information concerning last-minute
   changes and other topics that deserve special attention.&nbsp;Please
@@ -35,8 +35,12 @@ a quick introduction to Carbide.c++.</p>
 Updating the CDT feature in Carbide.c++/Eclipse will wipe out our
 changes making the tools unusable!</p>
 <p> See the <a href="hints_tips.htm">Tips &amp; tricks</a> page for more helpful information.</p>
-<h3><a name="whatsNew" id="whatsNew2"></a>What's New in 2.3.0 </h3>
+<h3><a name="whatsNew" id="whatsNew2"></a>What's New in 2.4.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
+<ul>
+  <li>The <b>Run builds concurrently</b> option in the <a href="reference/wnd_build_prefs.htm">Builds</a> preference panel now supports up to 50 concurrent build jobs, up from 4.</li>
+</ul>
+<h4><a name="220" id="21022"></a>2.3.0</h4>
 <ul>
   <li>P2 update services now supported. Updating Carbide.c++ should be more flexible and easier than before.</li>
   <li>The official Qt code style is now included in the Code Style preference panel.</li>
@@ -176,7 +180,7 @@ changes making the tools unusable!</p>
         <p><span class="code">JVM terminated, Return code = -1 </span></p>
         <p>or when running from eclipse.exe: </p>
         <p><span class="code">Error occurred during initialization of VM  Could not reserve enough space for object heap</span> </p>
-<p>The <a href="hints_tips.htm">solution</a> is to edit your <span class="code">Carbide.c++.1.x.ini</span> (or <span class="code">eclipse.ini</span> if launching Eclipsec.exe) and use a smaller value for the <span class="code">-Xmx </span>parameter to the JVM. </p>
+<p>The <a href="hints_tips.htm">solution</a> is to edit your <span class="code">Carbide.c++.2.x.ini</span> (or <span class="code">eclipse.ini</span> if launching <span class="code">Eclipsec.exe</span>) and use a smaller value for the <span class="code">-Xmx </span>parameter to the JVM. </p>
 <p class="note"><b>NOTE</b> In this scenario, Carbide.c++ performance may degrade.</p></td>
     </tr>
     <tr>
