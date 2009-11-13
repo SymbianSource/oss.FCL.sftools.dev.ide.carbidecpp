@@ -130,4 +130,12 @@ public class MultiImageEditorDialog extends TitleAreaDialog {
 		super.create();
 		updateValidationMessage();
 	}
+
+	public MultiImageEditorContext getContext() {
+		return context;
+	}
+
+	public MultiImageListPage getPage() {
+		return page;
+	}
 }

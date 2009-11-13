@@ -18,6 +18,7 @@ package com.nokia.carbide.cpp.internal.project.ui.mmpEditor;
 
 import java.util.*;
 
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.*;
 
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.ControlHandler;
@@ -50,7 +51,9 @@ public abstract class TreePresentationModel implements ITreeContentProvider {
 		void doAdd();
 		void doEdit(Object element);
 		void doRemove(Object element);
-		
+		Dialog getDialog();
+		void setDialog(Dialog dialog);
+
 		/**
 		 * Refresh from the model. If there's no caching or mapping of
 		 * model to presentation objects then this can be a no-op.
@@ -60,6 +63,7 @@ public abstract class TreePresentationModel implements ITreeContentProvider {
 	
 	static abstract class BaseTreeNode implements ITreeNode {
 		String displayText;
+		Dialog dialog;
 		protected BaseTreeNode(String displayText) {
 			this.displayText = displayText;
 		}
@@ -99,11 +103,20 @@ public abstract class TreePresentationModel implements ITreeContentProvider {
 			return displayText;
 		}
 		
+		public Dialog getDialog() {
+			return dialog;
+		}
+
+		public void setDialog(Dialog dialog) {
+			this.dialog = dialog;
+		}
+
 		public void refreshFromModel() {
 		}
 	}
 	
 	public class Root implements ITreeNode {
+		Dialog dialog;
 		public boolean canAdd() {
 			return false;
 		}
@@ -136,6 +149,12 @@ public abstract class TreePresentationModel implements ITreeContentProvider {
 		}
 		public boolean isChild(Object element) {
 			return ObjectUtils.findEqualObject(nodes, element) >= 0;
+		}
+		public Dialog getDialog() {
+			return dialog;
+		}
+		public void setDialog(Dialog dialog) {
+			this.dialog = dialog;
 		}
 		public void refreshFromModel() {
 		}
