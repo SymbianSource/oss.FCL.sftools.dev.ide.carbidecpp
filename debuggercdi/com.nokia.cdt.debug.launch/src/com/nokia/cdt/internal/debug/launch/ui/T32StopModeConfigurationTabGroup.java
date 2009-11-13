@@ -32,6 +32,7 @@ public class T32StopModeConfigurationTabGroup extends
 				new StopModeMainTab(),				
 				new Trace32ConnectionTab(),
 				new StopModeDebuggerTab(),
+				new SymbianExceptionsTab(),
 				new RomImageTab(),	
 				new ExecutablesTab(false),
 				new SourceLookupTab(),

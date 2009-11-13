@@ -32,6 +32,7 @@ public class SophiaConfigurationTabGroup extends
 				new StopModeMainTab(),				
 				new SophiaTargetInterfaceTab(),
 				new StopModeDebuggerTab(),
+				new SymbianExceptionsTab(),
 				new RomImageTab(),
 				new ExecutablesTab(false),
 				new SourceLookupTab(),
