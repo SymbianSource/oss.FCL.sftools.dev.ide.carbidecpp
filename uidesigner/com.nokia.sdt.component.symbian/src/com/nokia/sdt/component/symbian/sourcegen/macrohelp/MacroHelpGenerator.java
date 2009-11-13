@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -25,16 +25,14 @@ import com.nokia.sdt.emf.component.MacroArgumentType;
 import com.nokia.sdt.emf.component.loader.Loader;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.MessageLocation;
-import com.sun.org.apache.html.internal.dom.HTMLDOMImplementationImpl;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.html.HTMLDOMImplementation;
-import org.w3c.dom.html.HTMLDocument;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -62,6 +61,7 @@ import javax.xml.transform.stream.StreamResult;
 public class MacroHelpGenerator {
 	private SourceGenMacroSupport macroSupport; 
 	private Map<String, List<ResolvedMacro>> macroMap;
+	private Document document;
 
 	public static void main(String[] args) {
 		MacroHelpGenerator generator = new MacroHelpGenerator();
@@ -130,22 +130,29 @@ public class MacroHelpGenerator {
 
 	}
 	private void generate(String fName) throws Exception {
-		HTMLDOMImplementation domImpl = HTMLDOMImplementationImpl.getHTMLDOMImplementation();
-		HTMLDocument document = domImpl.createHTMLDocument(
-				"Help for Macros in " + new File(fName).getName());
+		document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+		Element html = document.createElement("html");
+		document.appendChild(html);
+		html.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+		Element head = document.createElement("head");
+		html.appendChild(head);
+		Element title = document.createElement("title");
+		head.appendChild(title);
+		title.setTextContent("Help for Macros in " + new File(fName).getName());
 		
+		Element body = document.createElement("body");
+		html.appendChild(body);
 		Element tocParent = document.createElement("p");
-		document.getBody().appendChild(tocParent);
+		body.appendChild(tocParent);
 		Element tocTitle = document.createElement("h1");
 		tocTitle.setTextContent("Table of contents");
 		tocParent.appendChild(tocTitle);
 		
 		Element helpParent = document.createElement("p");
-		document.getBody().appendChild(helpParent);
+		body.appendChild(helpParent);
 
 		for (ResolvedMacro macro : macroMap.get(fName)) {
-			generateMacroHelp(document,
-					tocParent,
+			generateMacroHelp(tocParent,
 					helpParent,
 					macro);
 			tocParent.appendChild(document.createTextNode("\n"));
@@ -173,9 +180,8 @@ public class MacroHelpGenerator {
 	
 
 	private void generateMacroHelp(
-			HTMLDocument document,
 			Element tocParent,
-			Element helpParent, 
+			Element helpParent,
 			ResolvedMacro macro) {
 		
 		String id = macro.macro.getId();
@@ -201,11 +207,11 @@ public class MacroHelpGenerator {
 		helpEntry.setTextContent(id);
 		helpParent.appendChild(helpEntry);
 		
-		generateMacroDescription(document, helpParent, macro);
+		generateMacroDescription(helpParent, macro);
 	}
 
-	private void generateMacroDescription(HTMLDocument document,
-			Element helpEntry, ResolvedMacro macro) {
+	private void generateMacroDescription(Element helpEntry,
+			ResolvedMacro macro) {
 		DefineMacroType dmt = macro.macro;
 		String help = dmt.getHelp();
 		
@@ -215,7 +221,7 @@ public class MacroHelpGenerator {
 			helpEntry.appendChild(para);
 		}
 		else {
-			helpEntry.appendChild(encodeHTML(document, help));
+			helpEntry.appendChild(encodeHTML(help));
 		}
 		
 		Element header = document.createElement("h3");
@@ -223,12 +229,12 @@ public class MacroHelpGenerator {
 		helpEntry.appendChild(header);
 		
 		//Element ul = document.createElement("ul");
-		generateMacroArgumentsHelp(document, helpEntry, macro);
+		generateMacroArgumentsHelp(helpEntry, macro);
 		//helpEntry.appendChild(ul);
 	}
 
-	private void generateMacroArgumentsHelp(HTMLDocument document,
-			Element ul, ResolvedMacro macro) {
+	private void generateMacroArgumentsHelp(Element ul,
+			ResolvedMacro macro) {
 
 		// organize arguments by their origin: 
 		// these are already ordered as <imported arguments>
@@ -269,7 +275,7 @@ public class MacroHelpGenerator {
 		}
 	}
 	
-	private void emitArgumentGroup(HTMLDocument document,
+	private void emitArgumentGroup(Document document,
 			Element parent,
 			boolean isInherited,
 			ResolvedMacro fromMacro,
@@ -321,13 +327,13 @@ public class MacroHelpGenerator {
 			
 		});
 		for (MacroArgumentType argument : arguments) {
-			generateMacroArgumentHelp(document, table, fromMacro, argument);
+			generateMacroArgumentHelp(table, fromMacro, argument);
 		}
 
 		
 	}
-	private void generateMacroArgumentHelp(HTMLDocument document,
-			Element table, ResolvedMacro macro, MacroArgumentType argument) {
+	private void generateMacroArgumentHelp(Element table,
+			ResolvedMacro macro, MacroArgumentType argument) {
 		Element tr = document.createElement("tr");
 		table.appendChild(tr);
 
@@ -349,7 +355,7 @@ public class MacroHelpGenerator {
 
 		td = document.createElement("td");
 		if (argument.getHelp() != null && argument.getHelp().length() > 0)
-			td.appendChild(encodeHTML(document, argument.getHelp()));
+			td.appendChild(encodeHTML(argument.getHelp()));
 		else
 			td.setTextContent("\u00A0");
 		tr.appendChild(td);
@@ -357,7 +363,7 @@ public class MacroHelpGenerator {
 	
 	//static Pattern PARAGRAPH_PATTERN = Pattern.compile("(.*)(\r?\n)\\s*(\r?\n)", Pattern.MULTILINE);
 	
-	private Node encodeHTML(HTMLDocument document, String help) {
+	private Node encodeHTML(String help) {
 		Node el = document.createTextNode("");
 		boolean hadParagraphs = false;
 		int idx = 0;
