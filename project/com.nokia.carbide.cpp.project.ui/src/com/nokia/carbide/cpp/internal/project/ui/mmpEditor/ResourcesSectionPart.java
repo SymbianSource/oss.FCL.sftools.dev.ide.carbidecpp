@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -56,6 +57,7 @@ public class ResourcesSectionPart extends SectionPart {
 	private Button removeButton;
 	private Button editButton;
 	private Button addButton;
+	private Dialog resourceDialog;
 	
 	class TreeLabelProvider extends LabelProvider {
 		
@@ -307,6 +309,7 @@ public class ResourcesSectionPart extends SectionPart {
 		TreePresentationModel.ITreeNode container = getSelectedContainer();
 		if (container != null) {
 			container.doAdd();
+			resourceDialog = container.getDialog();
 		}
 	}
 
@@ -316,6 +319,7 @@ public class ResourcesSectionPart extends SectionPart {
 			ITreeNode container = getSelectedContainer();
 			if (container != null) {
 				container.doEdit(selection.object);
+				resourceDialog = container.getDialog();
 			}
 		}
 	}
@@ -380,4 +384,11 @@ public class ResourcesSectionPart extends SectionPart {
 		return removeButton;
 	}
 
+	public TreePresentationModel getResourcePresentationModel() {
+		return model;
+	}
+
+	public Dialog getResourceDialog() {
+		return resourceDialog;
+	}
 }

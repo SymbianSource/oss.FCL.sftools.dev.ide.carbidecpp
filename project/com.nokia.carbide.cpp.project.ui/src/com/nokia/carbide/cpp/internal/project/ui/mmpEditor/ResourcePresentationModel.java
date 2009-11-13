@@ -92,6 +92,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 			ResourceBlockDialog dialog = new ResourceBlockDialog(getViewer().getControl().getShell(),
 					editorContext.project, resourceBlock, editorContext.pathHelper,
 					editorContext.activeBuildConfig, editorContext.getSecureID());
+			setDialog(dialog);
 			if (dialog.open() == Dialog.OK) {
 				List<IMMPResource> items = new ArrayList<IMMPResource>();
 				items.add(resourceBlock);
@@ -143,6 +144,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 						editorContext.project, newValue, editorContext.pathHelper,
 						editorContext.activeBuildConfig,
 						editorContext.getSecureID());
+				setDialog(dialog);
 				if (dialog.open() == Dialog.OK) {
 					Map<Integer, Object> replaceMap = new HashMap<Integer, Object>();
 					replaceMap.put(index, newValue);
@@ -272,6 +274,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 					null, EMMPPathContext.START_RESOURCE, editorContext.pathHelper,
 					editorContext.activeBuildConfig,
 					getRSSFiles(), new String[] {"*.rss"}); //$NON-NLS-1$
+			setDialog(dialog);
 			if (dialog.open() == Dialog.OK) {
 				List<IPath> items = new ArrayList<IPath>();
 				items.add(dialog.getResultPath());
@@ -291,6 +294,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 						value, EMMPPathContext.START_RESOURCE, editorContext.pathHelper,
 						editorContext.activeBuildConfig,
 						getRSSFiles(), new String[] {"*.rss"}); //$NON-NLS-1$
+				setDialog(dialog);
 				if (dialog.open() == Dialog.OK) {
 					int index = listProvider.fetchList(editorContext.mmpView).indexOf(value);
 					Check.checkState(index >= 0);
@@ -356,6 +360,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 					editorContext.mmpView.getAifs(),
 					editorContext.pathHelper, getRSSFiles());
 			AIFEditorDialog dialog = new AIFEditorDialog(getViewer().getControl().getShell(), context);
+			setDialog(dialog);
 			if (dialog.open() == Dialog.OK && context.isDirty()) {
 				context.doSave();
 				List<IMMPAIFInfo> items = new ArrayList<IMMPAIFInfo>();
@@ -380,6 +385,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 						editorContext.mmpView.getAifs(),
 						editorContext.pathHelper, getRSSFiles());
 				AIFEditorDialog dialog = new AIFEditorDialog(getViewer().getControl().getShell(), context);
+				setDialog(dialog);
 				if (dialog.open() == Dialog.OK && context.isDirty()) {
 					IMMPAIFInfo newInfo = context.getMMPAIFInfo();
 					int index = editorContext.mmpView.getAifs().indexOf(info);
@@ -451,7 +457,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 			
 			MultiImageEditorContext context = createEditorContext(bitmap);
 			MultiImageEditorDialog dialog = new MultiImageEditorDialog(editorContext.editor.getSite().getShell(), context);
-			
+			setDialog(dialog);
 			if (dialog.open() == IDialogConstants.OK_ID) {
 				// initialize the contents of the bitmap beforehand (non-undoable)
 				// since we need to access this entry by its target file path,
@@ -494,6 +500,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 				IMMPBitmap bitmap = lookupBitmap((IPath) element);
 				MultiImageEditorContext context = createEditorContext(bitmap);
 				MultiImageEditorDialog dialog = new MultiImageEditorDialog((Shell) editorContext.editor.getAdapter(Shell.class), context);
+				setDialog(dialog);
 				if (dialog.open() == Dialog.OK && context.isDirty()) {
 					IUndoableOperation operation = context.getEditingOperation();
 					WrappedUndoableOperation editingOperation = new WrappedUndoableOperation(
@@ -597,6 +604,7 @@ public class ResourcePresentationModel extends TreePresentationModel {
 					EMMPLanguage.values(),
 					new ArrayContentProvider(), new LabelProvider(), 
 					Messages.ResourceModel_editLanguagesDialogPrompt);
+			setDialog(dialog);
 			dialog.setInitialElementSelections(listProvider.fetchList(editorContext.mmpView));
 			if (dialog.open() == Dialog.OK) {
 				Object[] selectedLanguages = dialog.getResult();
