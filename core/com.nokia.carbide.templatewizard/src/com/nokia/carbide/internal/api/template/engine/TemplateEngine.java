@@ -169,7 +169,7 @@ public class TemplateEngine {
 		for (Iterator<ITemplate> iter = templates.iterator(); iter.hasNext();) {
 			ITemplate template = iter.next();
 			if (isEnabledActivity(template.getTemplateId()) &&
-					filter.accept(template)) {
+					(filter == null || filter.accept(template))) {
 				filteredTemplates.add(template);
 			}
 		}
