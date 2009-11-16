@@ -28,6 +28,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(TemplateLoaderTest.class);
 		suite.addTestSuite(ProcessesTest.class);
+		suite.addTestSuite(TemplateCopyFilesTest.class);
 		//$JUnit-END$
 		return suite;
 	}
