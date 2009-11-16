@@ -56,6 +56,8 @@ public class LaunchTabHelpIds {
 	
 	public static final String STOP_MODE_DEBUGGER = HelpID_Prefix + "stopmode_debugger"; //$NON-NLS-1$
 	
+	public static final String STOP_MODE_EXCEPTIONS = HelpID_Prefix + "stopmode_exceptions"; //$NON-NLS-1$
+	
 	public static final String STOP_MODE_T32_CONNECTION = HelpID_Prefix + "stopmode_t32connection"; //$NON-NLS-1$
 	
 	public static final String STOP_MODE_SOPHIA_CONNECTION = HelpID_Prefix + "stopmode_sophiaconnection"; //$NON-NLS-1$
