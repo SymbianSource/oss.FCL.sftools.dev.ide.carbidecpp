@@ -1,7 +1,7 @@
 <!-- bundleentry://1111/data/s60/laf/qvga_landscape_right_3_1.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="10" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="14" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="11" />
 <font key="EditorFont" initData="s60snrc.ttf" size="10" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="16" />
@@ -25,7 +25,7 @@
 <!-- bundleentry://1111/data/s60/laf/vga_portrait.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="21" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="17" />
 <font key="EditorFont" initData="s60snrc.ttf" size="15" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
@@ -51,7 +51,7 @@
 
 <!-- bundleentry://1111/data/s60/laf/qvga_portrait.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="12" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="10" />
 <font key="EditorFont" initData="s60ssb.ttf" size="12" />
 <font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
@@ -75,7 +75,7 @@
 
 <!-- bundleentry://1111/data/s60/laf/classic_landscape_right.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="8" />
 <font key="EditorFont" initData="s60ssb.ttf" size="10" />
 <font key="NormalFont" initData="s60ssb.ttf" size="10" />
@@ -83,14 +83,14 @@
 <font key="message.font" initData="s60ssb.ttf" size="10" />
 <font key="navi.tab.font" initData="s60ssb.ttf" size="8" />
 <font key="navi.text.font" initData="s60snrc.ttf" size="8" />
-<font key="status.TitleFont" initData="Alb13.10.ttf" size="10" />
+<font key="status.TitleFont" initData="alb13.10.ttf" size="10" />
 <!-- END -->
 
 
 <!-- bundleentry://1111/data/s60/laf/qhd_landscape_right.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="21" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="17" />
 <font key="EditorFont" initData="s60snrc.ttf" size="15" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
@@ -115,7 +115,7 @@
 <!-- bundleentry://1111/data/s60/laf/qhd_portrait.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="21" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="17" />
 <font key="EditorFont" initData="s60snrc.ttf" size="15" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
@@ -141,7 +141,7 @@
 
 <!-- bundleentry://1111/data/s60/laf/classic_portrait.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="8" />
 <font key="EditorFont" initData="s60ssb.ttf" size="10" />
 <font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
@@ -165,7 +165,7 @@
 
 <!-- bundleentry://1111/data/s60/laf/dblres_landscape_right.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="16" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="16" />
 <font key="EditorFont" initData="s60ssb.ttf" size="20" />
 <font key="NormalFont" initData="s60ssb.ttf" size="20" />
@@ -180,7 +180,7 @@
 <!-- bundleentry://1111/data/s60/laf/vga_landscape.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="14" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="21" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="17" />
 <font key="EditorFont" initData="s60snrc.ttf" size="15" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="17" />
@@ -206,7 +206,7 @@
 
 <!-- bundleentry://1111/data/s60/laf/qvga_landscape_right.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="9" />
 <font key="EditorFont" initData="s60ssb.ttf" size="11" />
 <font key="NormalFont" initData="s60ssb.ttf" size="11" />
@@ -221,7 +221,7 @@
 <!-- bundleentry://1111/data/s60/laf/qvga_portrait_3_1.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="10" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="14" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="11" />
 <font key="EditorFont" initData="s60snrc.ttf" size="10" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="16" />
@@ -246,7 +246,7 @@
 
 <!-- bundleentry://1111/data/s60/laf/dblres_portrait.xml -->
 <font key="AnnotationFont" initData="s60ssb.ttf" size="16" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="16" />
 <font key="EditorFont" initData="s60ssb.ttf" size="20" />
 <font key="HalfTitleFont" initData="s60tsb.ttf" size="18" />

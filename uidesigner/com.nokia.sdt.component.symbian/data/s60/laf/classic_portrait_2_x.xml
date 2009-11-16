@@ -18,26 +18,26 @@
 
 <!-- fonts are found relative to data/s60/fonts -->
 
-<font key="AnnotationFont" initData="Alb12.9.ttf" size="9" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
-<font key="DenseFont" initData="Alp13.10.ttf" size="10" />
-<font key="EditorFont" initData="Alb13.10.ttf" size="10" />
-<font key="HalfTitleFont" initData="Alb13.10.ttf" size="10" />
-<font key="MessageFont" initData="Alb13.10.ttf" size="10" />
-<font key="NormalFont" initData="Alb13.10.ttf" size="10" />
-<font key="SymbolFont" initData="Alb12.9.ttf" size="9" />
+<font key="AnnotationFont" initData="alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
+<font key="DenseFont" initData="alp13.10.ttf" size="10" />
+<font key="EditorFont" initData="alb13.10.ttf" size="10" />
+<font key="HalfTitleFont" initData="alb13.10.ttf" size="10" />
+<font key="MessageFont" initData="alb13.10.ttf" size="10" />
+<font key="NormalFont" initData="alb13.10.ttf" size="10" />
+<font key="SymbolFont" initData="alb12.9.ttf" size="9" />
 <font key="TimeFont" initData="Acb14.11.ttf" size="11" />
-<font key="TitleFont" initData="Alb19.15.ttf" size="15" />
-<font key="control.pane.font" initData="Alb17.14.ttf" size="14" />
-<font key="menuitem.font" initData="Alb13.10.ttf" size="10" />
-<font key="menuitem.submenu.font" initData="Alb12.9.ttf" size="9" />
-<font key="message.font" initData="Alb13.10.ttf" size="10" />
+<font key="TitleFont" initData="alb19.15.ttf" size="15" />
+<font key="control.pane.font" initData="alb17.14.ttf" size="14" />
+<font key="menuitem.font" initData="alb13.10.ttf" size="10" />
+<font key="menuitem.submenu.font" initData="alb12.9.ttf" size="9" />
+<font key="message.font" initData="alb13.10.ttf" size="10" />
 <font key="navi.tab.font" initData="s60ssb.ttf" size="8" />
-<font key="navi.text.font" initData="Alp13.10.ttf" size="10" />
-<font key="standard.AnnotationFont" initData="Alb12.9.ttf" size="9" />
-<font key="standard.LegendFont" initData="Alb12.9.ttf" size="9" />
-<font key="standard.NormalFont" initData="Alb13.10.ttf" size="10" />
-<font key="status.TitleFont" initData="Alb19.15.ttf" size="15" />
+<font key="navi.text.font" initData="alp13.10.ttf" size="10" />
+<font key="standard.AnnotationFont" initData="alb12.9.ttf" size="9" />
+<font key="standard.LegendFont" initData="alb12.9.ttf" size="9" />
+<font key="standard.NormalFont" initData="alb13.10.ttf" size="10" />
+<font key="status.TitleFont" initData="alb19.15.ttf" size="15" />
 	
 	
 <color key="status.bar.color" r="0" g="0" b="150"/>

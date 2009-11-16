@@ -18,7 +18,7 @@
 <!-- fonts are found relative to data/s60/fonts -->
 
 <font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="9" />
 <font key="EditorFont" initData="s60ssb.ttf" size="11" />
 <font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />

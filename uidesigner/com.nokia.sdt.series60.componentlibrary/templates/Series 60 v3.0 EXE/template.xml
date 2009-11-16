@@ -81,15 +81,15 @@
 		<parameter name="project" projectName="$(projectName)" />
 		
 		<parameter name="file"
-			sourcePath="data/basename_reg.loc" 
+			sourcePath="data/baseName_reg.loc" 
 			targetPath="$(dataDir)/$(baseName)_reg.loc" 
 			/>
 		<parameter name="file"
-			sourcePath="data/basename_reg.rss" 
+			sourcePath="data/baseName_reg.rss" 
 			targetPath="$(dataDir)/$(baseName)_reg.rss" 
 			/>
 		<parameter name="file"
-			sourcePath="inc/basename.pan" 
+			sourcePath="inc/baseName.pan" 
 			targetPath="$(incDir)/$(baseName).pan" 
 			/>
 		<!-- provide some sample BMP images -->
@@ -114,12 +114,12 @@
 			substitute="false" 
 			/>
 		<parameter name="file"
-			sourcePath="gfx/qgn_menu_basename.svg" 
+			sourcePath="gfx/qgn_menu_baseName.svg" 
 			targetPath="$(gfxDir)/qgn_menu_$(baseName).svg" 
 			substitute="false" 
 			/>
 		<parameter name="file"
-			sourcePath="group/basename.mmp" 
+			sourcePath="group/baseName.mmp" 
 			targetPath="$(groupDir)/$(baseName).mmp" 
 			/>
 		<parameter name="file"
@@ -131,7 +131,7 @@
 			targetPath="$(groupDir)/Icons_aif_scalable_dc.mk" 
 			/>
 		<parameter name="file"
-			sourcePath="sis/basename.pkg" 
+			sourcePath="sis/baseName.pkg" 
 			targetPath="$(sisDir)/$(baseName).pkg" 
 			/>
 		<parameter name="file"

@@ -17,7 +17,7 @@
 <!-- fonts are found relative to data/s60/fonts -->
 
 <font key="AnnotationFont" initData="s60ssb.ttf" size="9" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="8" />
 <font key="EditorFont" initData="s60ssb.ttf" size="10" />
 <font key="HalfTitleFont" initData="s60tsb.ttf" size="10" />
@@ -35,7 +35,7 @@
 <font key="standard.AnnotationFont" initData="s60ssb.ttf" size="9" />
 <font key="standard.LegendFont" initData="s60ssb.ttf" size="10" />
 <font key="standard.NormalFont" initData="s60ssb.ttf" size="10" />
-<font key="status.TitleFont" initData="Alb13.10.ttf" size="10" />
+<font key="status.TitleFont" initData="alb13.10.ttf" size="10" />
 
 
 <rectangle key="control.pane.bounds" x="140" y="0" width="68" height="176"/>

@@ -27,7 +27,7 @@
 
 <font key="AnnotationFont" initData="s60ssb.ttf" size="10" />
 <font key="ButtonFont" initData="s60ssb.ttf" size="14" />
-<font key="CEikEdwin.font" initData="Alb12.9.ttf" size="9" />
+<font key="CEikEdwin.font" initData="alb12.9.ttf" size="9" />
 <font key="DenseFont" initData="s60snrc.ttf" size="11" />
 <font key="EditorFont" initData="s60snrc.ttf" size="10" />
 <font key="EditorFont.settings.list" initData="s60ssb.ttf" size="16" />

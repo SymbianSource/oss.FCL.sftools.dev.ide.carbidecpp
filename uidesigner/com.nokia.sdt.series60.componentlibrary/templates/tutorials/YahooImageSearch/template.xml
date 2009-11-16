@@ -143,8 +143,8 @@
 			targetPath="$(groupDir)/bld.inf" 
 			/>
 		<parameter name="file"
-			sourcePath="group/Icons_aif_scalable_dc.mk" 
-			targetPath="$(groupDir)/Icons_aif_scalable_dc.mk" 
+			sourcePath="group/icons_aif_scalable_dc.mk" 
+			targetPath="$(groupDir)/icons_aif_scalable_dc.mk" 
 			/>
 		<parameter name="file"
 			sourcePath="sis/YahooImageSearch.pkg" 
