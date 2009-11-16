@@ -374,17 +374,8 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 	private void enableOrDisableControls() {
 		boolean buildFromInf = buildFromBldInfButton.getSelection();
 		boolean useProjectSettings = fUseProjectSettings.getSelection();
-		boolean isQtProject = false;
 		IProject project = getProject();
-		if (project != null) {
-			try {
-				if (project.hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)) {
-					isQtProject = true;
-				}
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-		}
+		boolean isQtProject = QtCorePlugin.isQtProject(project);
 		
 		selectionUI.setEnabled(!buildFromInf);
 		optionsGroup.setEnabled(useProjectSettings);

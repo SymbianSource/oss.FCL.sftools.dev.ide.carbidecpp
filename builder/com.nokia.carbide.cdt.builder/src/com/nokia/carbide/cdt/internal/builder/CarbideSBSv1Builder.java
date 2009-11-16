@@ -28,7 +28,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.*;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import com.nokia.carbide.cdt.builder.*;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
@@ -47,7 +46,6 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
-import com.nokia.cpp.internal.api.utils.ui.QueryWithTristatePrefDialog;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 
@@ -1940,12 +1938,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// ignore this for Qt projects since the mmp will be regenerated before each build.
 		final IProject project = buildConfig.getCarbideProject().getProject();
-		try {
-			if (project.hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)) {
-				return true;
-			}
-		} catch (CoreException e) {
-			e.printStackTrace();
+		if (QtCorePlugin.isQtProject(project)) {
+			return true;
 		}
 		
 		// we used to ignore this for emulator builds, thinking everything of interest was in the .uid.cpp file.  well, a lot of
@@ -1975,12 +1969,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// ignore this for Qt projects since the mmp will be regenerated before each build.
 		final IProject project = buildConfig.getCarbideProject().getProject();
-		try {
-			if (project.hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)) {
-				return true;
-			}
-		} catch (CoreException e) {
-			e.printStackTrace();
+		if (QtCorePlugin.isQtProject(project)) {
+			return true;
 		}
 		
 		// we used to ignore this for emulator builds, thinking everything of interest was in the .uid.cpp file.  well, a lot of

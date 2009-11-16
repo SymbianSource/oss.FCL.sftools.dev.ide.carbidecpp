@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -183,13 +182,9 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			new FilteringContentProviderWrapper(treeNodeContentProvider);
 		
 		// add filters for Qt projects
-		try {
-			if (cpi.getProject().hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)) {
-				filteringContentProviderWrapper.setFilter(new QtSDKFilter());
-				filteringContentProviderWrapper.setConfigFilter(new QtConfigFilter());
-			}
-		} catch (CoreException e) {
-			e.printStackTrace();
+		if (QtCorePlugin.isQtProject(cpi.getProject())) {
+			filteringContentProviderWrapper.setFilter(new QtSDKFilter());
+			filteringContentProviderWrapper.setConfigFilter(new QtConfigFilter());
 		}
 		
 		boolean sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject());

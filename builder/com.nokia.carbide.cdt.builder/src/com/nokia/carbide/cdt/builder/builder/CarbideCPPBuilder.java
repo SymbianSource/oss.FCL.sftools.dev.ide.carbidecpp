@@ -64,7 +64,6 @@ import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
-import com.nokia.carbide.cdt.internal.builder.ui.Messages;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
@@ -1220,31 +1219,27 @@ public static String[] getParserIdArray(int id) {
     		return;
     	} else if (!pkgPath.toFile().exists()) {
     		
-    		try {
-    			// Check to see if this is a Qt project and if the template format could have changed.
-    			IProject project = config.getCarbideProject().getProject();
-				if (project != null && project.hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)){
-					final String currentPKGName = pkgPath.lastSegment();
-					pkgPath = pkgPath.removeLastSegments(1).append(project.getName() + "_template.pkg" ); //$NON-NLS-N$
-					if (pkgPath.toFile().exists()){
-						
-						final IPath finalPkgPath = pkgPath;
-						Display.getDefault().syncExec(new Runnable() {
-							public void run() {
-								if (true == MessageDialog.openQuestion(WorkbenchUtils.getSafeShell(), "Can not find PKG file for SIS builder", "The file \"" + currentPKGName + "\" does not exist for this Qt project. The suggested file is \"" + finalPkgPath.lastSegment() + "\".\n\nDo you want to update your build configuration to use this PKG file?")) { //$NON-NLS-1$ //$NON-NLS-2$
-									IWorkspace workspace= ResourcesPlugin.getWorkspace();
-									IFile ifile= workspace.getRoot().getFileForLocation(finalPkgPath); 
-									sisInfo.setPKGFile(ifile.getLocation().toOSString());
-									config.getSISBuilderInfoList().remove(sisInfo);
-									config.getSISBuilderInfoList().add(sisInfo);
-									config.saveConfiguration(false);
-								} 
-							}
-						});
-					} 
-				}
-			} catch (CoreException e) {
-				e.printStackTrace();
+			// Check to see if this is a Qt project and if the template format could have changed.
+			IProject project = config.getCarbideProject().getProject();
+			if (QtCorePlugin.isQtProject(project)) {
+				final String currentPKGName = pkgPath.lastSegment();
+				pkgPath = pkgPath.removeLastSegments(1).append(project.getName() + "_template.pkg" ); //$NON-NLS-N$
+				if (pkgPath.toFile().exists()){
+					
+					final IPath finalPkgPath = pkgPath;
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							if (true == MessageDialog.openQuestion(WorkbenchUtils.getSafeShell(), "Can not find PKG file for SIS builder", "The file \"" + currentPKGName + "\" does not exist for this Qt project. The suggested file is \"" + finalPkgPath.lastSegment() + "\".\n\nDo you want to update your build configuration to use this PKG file?")) { //$NON-NLS-1$ //$NON-NLS-2$
+								IWorkspace workspace= ResourcesPlugin.getWorkspace();
+								IFile ifile= workspace.getRoot().getFileForLocation(finalPkgPath); 
+								sisInfo.setPKGFile(ifile.getLocation().toOSString());
+								config.getSISBuilderInfoList().remove(sisInfo);
+								config.getSISBuilderInfoList().add(sisInfo);
+								config.saveConfiguration(false);
+							} 
+						}
+					});
+				} 
 			}
     		
 			if (!sisInfo.getPKGFullPath().toFile().exists()){

@@ -83,5 +83,16 @@ public class QtCorePlugin extends Plugin {
 		description.setNatureIds(newNatures);
 		project.setDescription(description, monitor);
 	}
+	
+	public static boolean isQtProject(IProject project) {
+		if (project == null)
+			return false;
+		try {
+			return project.hasNature(QT_PROJECT_NATURE_ID);
+		} catch (CoreException e) {
+			getDefault().getLog().log(e.getStatus());
+			return false;
+		}
+	}
 
 }
