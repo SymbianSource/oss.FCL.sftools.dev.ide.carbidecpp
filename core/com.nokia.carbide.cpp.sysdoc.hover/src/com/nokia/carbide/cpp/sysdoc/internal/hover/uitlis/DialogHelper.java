@@ -44,7 +44,7 @@ public class DialogHelper {
 
 			}
 		};
-		if (!HoverManager.isTestMode()) {
+		if (!HoverManager.isTestMode() && !HoverManager.isJunitRunning()) {
 			ExecutorAgent.run(mssageRunnable);
 		}
 	}

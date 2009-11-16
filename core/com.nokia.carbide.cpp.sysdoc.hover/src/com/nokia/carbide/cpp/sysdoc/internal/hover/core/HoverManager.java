@@ -16,6 +16,9 @@
  */
 package com.nokia.carbide.cpp.sysdoc.internal.hover.core;
 
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.testing.TestableObject;
+
 import com.nokia.carbide.cpp.sysdoc.hover.Activator;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.dal.devlib.DevLibProperties;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.dal.devlib.locator.DevLiblocatorFactory;
@@ -199,5 +202,14 @@ final public class HoverManager {
 
 	public static HoverManager getInstance() {
 		return instance;
+	}
+	
+	public static boolean isJunitRunning() {
+		boolean result = false;
+		TestableObject testableObject = PlatformUI.getTestableObject();
+		if (testableObject != null) {
+			result = testableObject.getTestHarness() != null;
+		}
+		return result;
 	}
 }
