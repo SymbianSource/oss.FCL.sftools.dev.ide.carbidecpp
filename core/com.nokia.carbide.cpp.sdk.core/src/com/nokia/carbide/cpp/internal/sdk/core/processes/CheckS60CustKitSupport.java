@@ -46,7 +46,9 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
 	private static final String BUILD_HELP_PREFIX = "buildHelpPrefix";
+	private static final String BUILD_HELP_SIS_PREFIX = "buildHelpSISPrefix";
 	private static final String DISABLE_HELP_STRING = "//";
+	private static final String DISABLE_HELP_PKG = ";";
 	private static final String HELP_COMPILER = "epoc32/tools/cshlpcmp.bat";
 	private static final String HELP_SUPPORT_MACRO = "helpSupport";
 	private static final String HELP_SUPPORT_STRING = "MACRO _HELP_AVAILABLE_";
@@ -63,14 +65,17 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 
 		boolean hasHelp = isHelpCompilerAvailable(template);
 		String enableHelpString = "";
+		String enableHelpSISString = "";
 		String helpSupportString = "";
 		if (hasHelp) {
 			helpSupportString = HELP_SUPPORT_STRING;
 		}
 		else {
 			enableHelpString = DISABLE_HELP_STRING;
+			enableHelpSISString = DISABLE_HELP_PKG;
 		}
 		template.getTemplateValues().put(BUILD_HELP_PREFIX, enableHelpString);
+		template.getTemplateValues().put(BUILD_HELP_SIS_PREFIX, enableHelpSISString);
 		template.getTemplateValues().put(HELP_SUPPORT_MACRO, helpSupportString);
 	}
 
