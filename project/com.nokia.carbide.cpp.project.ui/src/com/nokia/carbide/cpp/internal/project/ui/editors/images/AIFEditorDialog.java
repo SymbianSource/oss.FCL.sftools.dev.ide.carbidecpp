@@ -129,4 +129,12 @@ public class AIFEditorDialog extends TitleAreaDialog {
 		super.create();
 		updateValidationMessage();
 	}
+
+	public AIFEditorContext getContext() {
+		return context;
+	}
+
+	public AIFEditorListPage getPage() {
+		return page;
+	}
 }
