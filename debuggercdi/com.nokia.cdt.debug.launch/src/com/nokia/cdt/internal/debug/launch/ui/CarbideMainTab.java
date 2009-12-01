@@ -47,12 +47,14 @@ public class CarbideMainTab extends CMainTab {
 		mainComp.setLayoutData(gd);
 		fProgLabel = new Label(mainComp, SWT.NONE);
 		fProgLabel.setText(LaunchMessages.getString("CMainTab.C/C++_Application")); //$NON-NLS-1$
+		fProgLabel.setData(".uid", "CarbideMainTab.ProgramLabel");
 		gd = new GridData();
 		gd.horizontalSpan = 3;
 		fProgLabel.setLayoutData(gd);
 		fProgText = new Text(mainComp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fProgText.setLayoutData(gd);
+		fProgText.setData(".uid", "CarbideMainTab.ProgramText");
 		fProgText.addModifyListener(new ModifyListener() {
 	
 			public void modifyText(ModifyEvent evt) {
@@ -62,6 +64,7 @@ public class CarbideMainTab extends CMainTab {
 	
 		Button fBrowseForBinaryButton;
 		fBrowseForBinaryButton = createPushButton(mainComp, LaunchMessages.getString("Launch.common.Browse_2"), null); //$NON-NLS-1$
+		fBrowseForBinaryButton.setData(".uid", "CarbideMainTab.BrowseForBinaryButton");
 		fBrowseForBinaryButton.addSelectionListener(new SelectionAdapter() {
 	
 			public void widgetSelected(SelectionEvent evt) {
