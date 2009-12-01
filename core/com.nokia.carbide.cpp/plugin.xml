@@ -139,9 +139,11 @@
 			configId="org.eclipse.ui.intro.universalConfig"
 			content="html/intro/webresourcesExtensionContent2.xml" />
 
+		<!-- Removed 20091201 as links were outdated
 		<configExtension
             configId="org.eclipse.ui.intro.universalConfig"
 			content="html/intro/migrateExtensionContent.xml" /> 
+		-->
 			
 	</extension>
 
