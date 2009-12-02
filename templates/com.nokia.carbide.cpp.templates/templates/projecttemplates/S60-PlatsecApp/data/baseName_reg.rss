@@ -10,7 +10,7 @@
 #include "$(baseName).hrh"
 #include "$(baseName).rls"
 #include <appinfo.rh>
-#include <$(baseName)_$(uid3).rsg>
+#include <$(baseName$lower)_$(uid3).rsg>
 
 UID2 KUidAppRegistrationResourceFile
 UID3 _UID3

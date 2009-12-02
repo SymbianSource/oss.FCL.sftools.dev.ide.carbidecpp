@@ -16,7 +16,7 @@
 #include <s32file.h>
 #include <hlplch.h>
 
-#include <$(baseName)_$(uid3).rsg>
+#include <$(baseName$lower)_$(uid3).rsg>
 
 #ifdef _HELP_AVAILABLE_
 #include "$(baseName)_$(uid3).hlp.hrh"
