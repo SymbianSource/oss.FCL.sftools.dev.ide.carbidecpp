@@ -976,7 +976,7 @@ public class TestImageMakefileView extends BaseTest {
 		IImageSource source = imageMakefileData.getMultiImageSources().get(0).getSources().get(0);
 		// important to be relative
 		IPath relBase;
-		relBase = stockRootedProjectPath.makeRelative();
+		relBase = stockRootedProjectPath.makeRelative().setDevice(null);
 		assertEquals(relBase.append("/gfx/file.svg"), source.getPath());
 	}
 	

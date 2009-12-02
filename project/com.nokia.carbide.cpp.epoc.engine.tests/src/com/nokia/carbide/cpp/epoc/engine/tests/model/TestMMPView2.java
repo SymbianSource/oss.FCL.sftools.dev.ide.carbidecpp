@@ -132,11 +132,11 @@ public class TestMMPView2 extends BaseMMPViewTest {
 			IMMPView view = model.createView(mmpConfig);
 			IPath[] srcPaths = view.getEffectiveSourcePaths();
 			// important to be relative
-			assertEquals(base.makeRelative().append("symbian/9.1/S60_3rd/S60Ex/Hello/src"), srcPaths[0]);
+			assertEquals(base.makeRelative().setDevice(null).append("symbian/9.1/S60_3rd/S60Ex/Hello/src"), srcPaths[0]);
 	
 			IPath src = view.getSources().get(0);
 			// important to be relative
-			assertEquals(base.makeRelative().append("symbian/9.1/S60_3rd/S60Ex/Hello/src/foo.cpp"), src);
+			assertEquals(base.makeRelative().setDevice(null).append("symbian/9.1/S60_3rd/S60Ex/Hello/src/foo.cpp"), src);
 		}
 	}
 	
@@ -1214,8 +1214,9 @@ public class TestMMPView2 extends BaseMMPViewTest {
 		} catch (InvalidDriveInMMPPathException e) {
 			view.getUserIncludes().add(e.getPathNoDevice());
 		}
+		IPath fullpath = new Path(getTokenAbsolutePath()).setDevice(null).append("temp");
 		commitTest(view,
-				"USERINCLUDE ..\\group \\temp\n");
+				"USERINCLUDE ..\\group " + toDosPath(fullpath) + "\n");
 	}
 	
 	public void testBug2817() {

@@ -22,6 +22,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference.EMakeEn
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTProblemNode;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
 
@@ -1526,9 +1527,12 @@ public class TestBldInfView extends BaseBldInfViewTest {
 			"\r\n" + 
 			"// End of File\r\n" ; 
 			
-		parserConfig.getFilesystem().put("../MusicPlayer/group/bld.inf", musicPlayerBldInf);
-		parserConfig.getFilesystem().put("../MusicShop/group/bld.inf", musicShopBldInf);
-		parserConfig.getFilesystem().put("../MusicVisualization/group/bld.inf", musicVisualizationBldInf);
+		String musicPlayerBldInfPath = FileUtils.createPossiblyRelativePath("../MusicPlayer/group/bld.inf").toOSString();
+		parserConfig.getFilesystem().put(musicPlayerBldInfPath, musicPlayerBldInf);
+		String musicShopBldInfPath = FileUtils.createPossiblyRelativePath("../MusicShop/group/bld.inf").toOSString();
+		parserConfig.getFilesystem().put(musicShopBldInfPath, musicShopBldInf);
+		String musicVisBldInfPath = FileUtils.createPossiblyRelativePath("../MusicVisualization/group/bld.inf").toOSString();
+		parserConfig.getFilesystem().put(musicVisBldInfPath, musicVisualizationBldInf);
 			
 		makeModel(origFile);
 		
@@ -1539,10 +1543,10 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		ref.setPath(new Path("group/FMRadio.mmp"));
 		view.getMakMakeReferences().add(ref);
 		
+		assertEquals(parserConfig.getFilesystem().get(musicPlayerBldInfPath), musicPlayerBldInf);
+		assertEquals(parserConfig.getFilesystem().get(musicShopBldInfPath), musicShopBldInf);
+		assertEquals(parserConfig.getFilesystem().get(musicVisBldInfPath), musicVisualizationBldInf);
 		commitTest(view, updatedFile);
-		assertEquals(parserConfig.getFilesystem().get("../MusicPlayer/group/bld.inf"), musicPlayerBldInf);
-		assertEquals(parserConfig.getFilesystem().get("../MusicShop/group/bld.inf"), musicShopBldInf);
-		assertEquals(parserConfig.getFilesystem().get("../MusicVisualization/group/bld.inf"), musicVisualizationBldInf);
  
 	}
 	
