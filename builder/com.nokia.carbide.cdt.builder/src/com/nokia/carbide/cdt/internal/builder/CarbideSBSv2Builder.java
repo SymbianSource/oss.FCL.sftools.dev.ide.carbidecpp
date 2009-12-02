@@ -33,10 +33,9 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class CarbideSBSv2Builder implements ICarbideBuilder {
-
-    private static final IPath SBS = new Path("sbs.bat"); //$NON-NLS-1$
 
     private static final String CLEAN_CMD = "CLEAN"; //$NON-NLS-1$
     private static final String FREEZE_CMD = "FREEZE"; //$NON-NLS-1$
@@ -44,9 +43,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 
     private static final String COMPONENT_ARG = "-p"; //$NON-NLS-1$
     private static final String COMPILE_ARG = "-c"; //$NON-NLS-1$
-    
-    private static final IPath SBS_BAT = new Path("sbs.bat"); //$NON-NLS-1$
-    
     
     public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		
@@ -543,7 +539,8 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 
 		launcher.writeToConsole("\n***Invoking sbs command\n");
 		
-		int retVal = launcher.executeCommand(SBS, args.toArray(new String[args.size()]), getResolvedEnvVars(buildConfig), cpi.getINFWorkingDirectory());
+		int retVal = launcher.executeCommand(SBSv2Utils.getSBSPath(), 
+				args.toArray(new String[args.size()]), getResolvedEnvVars(buildConfig), cpi.getINFWorkingDirectory());
 		if (retVal != 0) {
 			launcher.writeToConsole("\n=== SBS command failed with error code " + retVal + " ===");
 			launcher.writeToConsole("\n***Stopping. Check the Problems view or Console output for errors.\n");
@@ -582,7 +579,9 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, buildTarget, COMPONENT_ARG, fullMMPPath.toFile().getName()};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());
 		
-		int retVal = launcher.executeCommand(SBS_BAT, sbsArgs, getResolvedEnvVars(buildConfig), workingDirectory);
+		int retVal = launcher.executeCommand(
+				SBSv2Utils.getSBSPath(),
+				sbsArgs, getResolvedEnvVars(buildConfig), workingDirectory);
 		if (retVal != 0) {
 			launcher.writeToConsole("\n=== make failed with error code " + retVal + " ===");
 			launcher.writeToConsole("\n***Stopping. Check the Problems view or Console output for errors.\n");

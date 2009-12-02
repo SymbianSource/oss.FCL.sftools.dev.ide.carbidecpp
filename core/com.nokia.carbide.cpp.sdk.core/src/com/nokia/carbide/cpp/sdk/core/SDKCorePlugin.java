@@ -16,6 +16,8 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManagerRaptorOnly;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 
 /**
@@ -31,7 +33,7 @@ public class SDKCorePlugin extends Plugin {
 	// The shared instance
 	private static SDKCorePlugin plugin;
 	
-	private static SDKManager sdkManager;
+	private static ISDKManager sdkManager;
 	
 	/**
 	 * The constructor
@@ -76,7 +78,10 @@ public class SDKCorePlugin extends Plugin {
 	 */
 	public static ISDKManager getSDKManager() {
 		if (sdkManager == null) {
-			sdkManager = new SDKManager();
+			if (HostOS.IS_WIN32)
+				sdkManager = new SDKManager();
+			else
+				sdkManager = new SDKManagerRaptorOnly();
 		}
 		return sdkManager;
 	}

@@ -101,7 +101,8 @@ public class SDKPreferencePage
 		GRAY = shell.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 		
 		// check that devices.xml actually exists
-		((SDKManager) sdkMgr).checkDevicesXMLExistAndCreate();
+		if (sdkMgr instanceof SDKManager)
+			((SDKManager) sdkMgr).checkDevicesXMLExistAndCreate();
 		
 		Composite content = new Composite(parent, SWT.NONE);
 		setControl(content);

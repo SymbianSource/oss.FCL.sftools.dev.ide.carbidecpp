@@ -29,6 +29,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 /**
@@ -42,6 +43,12 @@ public class SBSv2Utils {
 
 	private static List<String> unfilteredSBSv2ConfigNames;
 
+	protected static final String SBS_HOME = "SBS_HOME";
+	protected static String sbsHome;
+	protected static IPath sbsPath;
+
+	private static boolean scannedSbsState = false;
+	private static final String sbsScriptName = HostOS.IS_WIN32 ? "sbs.bat" : "sbs"; 
 	
 	/**
      * Get the path to the SBSv2 bin directory.  This is based on the SBS_HOME environment variable
@@ -220,6 +227,20 @@ public class SBSv2Utils {
 	}
 
 	/**
+	 * Whether or not to display SBSv1 builder UI
+	 * @return true if SBSv1 is available, false otherwise
+	 */
+	public static boolean enableSBSv1Support() {
+		if (!enableSBSv2Support())
+			return true;
+		
+		// TODO LINUX: more accurate check
+		if (HostOS.IS_WIN32)
+			return true;
+		return false;
+	}
+	
+	/**
 	 * Whether or not to display SBSv2 builder UI
 	 * @return true if SBSv2 is installed, false otherwise
 	 */
@@ -276,4 +297,35 @@ public class SBSv2Utils {
 			}
 		}
     }
+
+	/**
+	 * (Re-)scan the SBSv2 / Raptor configuration
+	 * @return message if error, else null
+	 */
+	public static String scanSBSv2() {
+		// do some basic checks
+		sbsHome = System.getenv(SBS_HOME);
+		if (sbsHome == null) {
+			return "Please define the SBS_HOME environment (e.g. /path/to/raptor) and add $SBS_HOME/bin to your PATH before running Carbide.";
+		}
+		
+		sbsPath = HostOS.findProgramOnPath(sbsScriptName, null);
+		if (sbsPath == null) {
+			return "Please add $SBS_HOME/bin to your PATH before running Carbide.";
+		}
+
+		return null;
+	}
+
+    /**
+     * Get the path to SBSv2 (sbs.bat or sbs)
+     */
+	public static IPath getSBSPath() {
+		if (!scannedSbsState) {
+			scanSBSv2();
+			scannedSbsState = true;
+		}
+		return sbsPath != null ? sbsPath : new Path(sbsScriptName);  // dummy
+	}
+
 }
