@@ -20,10 +20,16 @@ import org.eclipse.cdt.launch.internal.ui.LaunchMessages;
 import org.eclipse.cdt.launch.ui.CMainTab;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 public class CarbideMainTab extends CMainTab {
 
@@ -80,5 +86,14 @@ public class CarbideMainTab extends CMainTab {
 		
 		// forces page to get focus so that help works without having to select some control first.
 		getControl().setFocus();
+	}
+
+	@Override
+	public void createControl(Composite parent) {
+		super.createControl(parent);
+		fEnableBuildButton.setData(".uid", "CMainTab.EnableBuildButton"); //$NON-NLS-1$ //$NON-NLS-2$
+		fDisableBuildButton.setData(".uid", "CMainTab.DisableBuildButton"); //$NON-NLS-1$ //$NON-NLS-2$
+		fWorkspaceSettingsButton.setData(".uid", "CMainTab.WorkspaceSettingsButton"); //$NON-NLS-1$ //$NON-NLS-2$ 
+		fWorkpsaceSettingsLink.setData(".uid", "CMainTab.WorkspaceSettingsLink"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
