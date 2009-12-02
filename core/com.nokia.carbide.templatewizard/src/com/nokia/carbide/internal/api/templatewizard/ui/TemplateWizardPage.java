@@ -117,9 +117,10 @@ public class TemplateWizardPage extends org.eclipse.jface.wizard.WizardPage impl
 			values.put(type.getId(), value);
 			
 			if (type instanceof UidFieldType) {
+				values.put(type.getId(), value.toLowerCase());
 				// least hacky way to support this without creating a language out of templates
 				values.put(type.getId() + UIDComposite.WITHOUT_0X_PREFIX, 
-						UIDComposite.getWithout0x(value));
+						UIDComposite.getWithout0x(value).toLowerCase());
 			}
 
 		}
@@ -284,7 +285,10 @@ public class TemplateWizardPage extends org.eclipse.jface.wizard.WizardPage impl
 		
 		@Override
 		public String getValue() {
-			return UIDComposite.makeCanonicalHexString(super.getValue().trim());
+			String value = super.getValue().trim();
+			if (!UIDComposite.isValidHexString(value))
+				return value;
+			return UIDComposite.makeCanonicalHexString(value);
 		}
 		
 		@Override

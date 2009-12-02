@@ -163,7 +163,9 @@ public class UIDComposite extends Composite {
 	}
 	
 	public static String getWithout0x(String with0x) {
-		Check.checkContract(with0x.startsWith(HEX_PREFIX));
+		// may not be valid...
+		if (!with0x.startsWith(HEX_PREFIX))
+			return with0x;
 		return with0x.substring(HEX_PREFIX.length());
 	}
 
