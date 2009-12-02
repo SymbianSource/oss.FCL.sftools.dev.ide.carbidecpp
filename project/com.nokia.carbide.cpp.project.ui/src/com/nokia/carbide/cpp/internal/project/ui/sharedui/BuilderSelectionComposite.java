@@ -112,4 +112,8 @@ public class BuilderSelectionComposite extends Composite {
     public boolean useSBSv2Builder() {
     	return useSBSv2Builder;
     }
+    
+    public void setUseSBSv2Builder(boolean useSBSv2Builder) {
+		this.useSBSv2Builder = useSBSv2Builder;
+	}
 }

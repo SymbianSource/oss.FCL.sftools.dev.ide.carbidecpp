@@ -22,6 +22,7 @@ import com.nokia.carbide.cpp.internal.project.ui.Messages;
 import com.nokia.carbide.cpp.internal.project.ui.sharedui.BuilderSelectionComposite;
 import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 import org.eclipse.core.resources.IProject;
@@ -45,7 +46,8 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 
     private Map<String, Object> data;
 	private Collection<IProject> projectCache;
-	private static boolean WINDOWS = File.separatorChar == '\\';
+	
+	/** composite displayed when SBSv1 and SBSv2 are both available */
 	private BuilderSelectionComposite builderComposite;
 	
 	public NewProjectPage(String title, String description) {
@@ -73,6 +75,10 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 		
 		if (builderComposite != null) {
 			data.put(USE_SBSV2_BUILDER, new Boolean(builderComposite.useSBSv2Builder()));
+		} else if (!SBSv2Utils.enableSBSv1Support()) {
+			data.put(USE_SBSV2_BUILDER, Boolean.TRUE);
+		} else if (!SBSv2Utils.enableSBSv2Support()) {
+			data.put(USE_SBSV2_BUILDER, Boolean.FALSE);
 		}
 		
 		return data;
@@ -113,7 +119,7 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 					new Object[] { getLocationPath().toString() } ));
 			return false;
 		}
-        if (WINDOWS && !validateDeviceExists()) {
+        if (HostOS.IS_WIN32 && !validateDeviceExists()) {
 			setErrorMessage(Messages.getString("NewProjectPage.InvalidDriveError")); //$NON-NLS-1$
 			return false;
         }
@@ -129,7 +135,7 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
         }
         setErrorMessage(null);
         boolean valid = super.validatePage();
-        if (WINDOWS) {
+        if (HostOS.IS_WIN32) {
 	        if (locationGettingLong(projectName)) {
 	        	setMessage(Messages.getString("NewProjectPage.ExcessivelyLongPathError"), WARNING); //$NON-NLS-1$
 	        	return valid;
@@ -218,7 +224,8 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 
-		if (SBSv2Utils.enableSBSv2Support()) {
+		// if there is a choice to be made...
+		if (SBSv2Utils.enableSBSv1Support() && SBSv2Utils.enableSBSv2Support()) {
 			Control control = getControl();
 			if (control instanceof Composite) {
 				builderComposite = new BuilderSelectionComposite((Composite)control);
