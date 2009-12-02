@@ -26,6 +26,7 @@ import com.nokia.carbide.cpp.epoc.engine.tests.BaseTest;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.StandaloneModelProvider;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 import org.eclipse.cdt.make.core.makefile.IDirective;
 import org.eclipse.cdt.make.core.makefile.gnu.IInclude;
@@ -99,10 +100,21 @@ public class TestImageMakefileView extends BaseTest {
 	}
 	
 	protected void makeModel(String text) {
+		text = convertForOS(text);
 		IDocument document = DocumentFactory.createDocument(text);
 		model = new ImageMakefileModelFactory().createModel(path, document);
 
 		model.parse();
+	}
+
+	private String convertForOS(String text) {
+		// TODO: tests should work with both slash directions on both OSes
+		if (HostOS.IS_UNIX) {
+			text = text.replaceAll("\\\\(?!\r|\n)", "/");
+			text = text.replaceAll("(?<=\\s|^)/([A-Z])", "-$1"); 
+			text = text.replaceAll("(?<=\\s|^)/(c?(\\d|,)+)", "-$1");
+		}
+		return text;
 	}
 	
 	protected IImageMakefileView getView(IImageMakefileViewConfiguration config) {
@@ -112,7 +124,24 @@ public class TestImageMakefileView extends BaseTest {
 	}
 	
 	protected void commitTest(IImageMakefileView view, String refText) {
+		refText = convertForOS(refText);
 		commitTest(model, view, refText);
+	}
+	
+	private static IPath stockRootedProjectPath;
+	private static IPath stockRootedImgPath;
+	private static IPath stockRootedSvgPath;
+	
+	static {
+		if (HostOS.IS_WIN32) {
+			stockRootedProjectPath = new Path("c:\\symbian\\9.1\\S60_3rd\\S60Ex\\Hello");
+			stockRootedImgPath = new Path("c:\\imgs\\");
+			stockRootedSvgPath = new Path("c:\\svgs\\");
+		} else {
+			stockRootedProjectPath = new Path("/home/me/Hello");
+			stockRootedImgPath = new Path("/tmp/imgs/");
+			stockRootedSvgPath = new Path("/tmp/svgs/");
+		}
 	}
 	
 	final String TEST_1 =
@@ -570,7 +599,7 @@ public class TestImageMakefileView extends BaseTest {
 		"ICONDIR=..\\aif\r\n" + 
 		"\r\n" + 
 		"$(ICONTARGETFILENAME): $(ICONDIR)\\icon1.svg $(ICONDIR)\\icon2.svg\r\n" + 
-		"	mifconv $< /E /Bbmconv.exe /h$(HEADERDIR)/Birthdays_aif.mbg /c16 $@\r\n" + 
+		"	mifconv $< /E /Bbmconv.exe /H$(HEADERDIR)/Birthdays_aif.mbg /c16 $@\r\n" + 
 		"	mifconv extra.mif /c8,8 /Fbitmaps.txt\r\n" + 
 		"FREEZE : do_nothing\r\n" + 
 		"\r\n" + 
@@ -583,13 +612,13 @@ public class TestImageMakefileView extends BaseTest {
 		"\r\n"; 
 		
 	final String TEST_2_inc =
-		"\t../pix/bitmap1.bmp\t\nbitmap2.bmp\\\n/1,1\nc:\\test\\dot.bmp\t\n";
+		"\t../pix/bitmap1.bmp\t\nbitmap2.bmp\\\n/1,1\n"+stockRootedImgPath.append("dot.bmp")+"\t\n";
 	
 	public void testImageContainerParsing2()throws Exception {
 		File incFile = new File(projectPath.toFile(), "group/bitmaps.txt");
 		incFile.getParentFile().mkdir();
 		incFile.delete();
-		FileUtils.writeFileContents(incFile, TEST_2_inc.toCharArray(), null);
+		FileUtils.writeFileContents(incFile, convertForOS(TEST_2_inc).toCharArray(), null);
 		
 		makeModel(TEST_2);
 		IImageMakefileView view = (IImageMakefileView) model.createView(viewConfig);
@@ -608,7 +637,7 @@ public class TestImageMakefileView extends BaseTest {
 		assertEquals(EGeneratedHeaderFlags.Header, c.getHeaderFlags());
 		// default value not represented
 		assertNull(c.getGeneratedHeaderFilePath());
-		assertEquals(new Path("epoc32\\include\\Birthdays_aif.mbg"), c.getDefaultGeneratedHeaderFilePath());
+		assertEquals(new Path("epoc32/include/Birthdays_aif.mbg"), c.getDefaultGeneratedHeaderFilePath());
 		assertEquals("Birthdays_aif.mif", c.getTargetFile());
 		assertEquals(new Path("resource/apps"),
 				c.getTargetPath());
@@ -663,12 +692,12 @@ public class TestImageMakefileView extends BaseTest {
 		assertFalse(b.isColor());
 		assertEquals(1, b.getDepth());
 		assertEquals(1, b.getMaskDepth());
-		assertEquals(new Path("c:/test/dot.bmp"), b.getPath());
+		assertEquals(stockRootedImgPath.append("dot.bmp"), b.getPath());
 		assertNull(b.getMaskPath());
-		assertEquals(new Path("c:/test/dot_mask.bmp"), b.getDefaultMaskPath());
+		assertEquals(stockRootedImgPath.append("dot_mask.bmp"), b.getDefaultMaskPath());
 	}
 
-	// alternate style uses \\epoc32 directly
+	// alternate style uses /epoc32 directly
  	final String TEST_3 = 
  		"# ============================================================================\r\n" + 
  			"#  Name     : Icons_aif_scalable_dc.mk\r\n" + 
@@ -712,7 +741,7 @@ public class TestImageMakefileView extends BaseTest {
  			"CLEANLIB : do_nothing\r\n" + 
  			"\r\n" + 
  			"RESOURCE :	\r\n" + 
- 			"	mifconv $(ICONTARGETFILENAME) /h$(HEADERFILENAME) \\\r\n" + 
+ 			"	mifconv $(ICONTARGETFILENAME) /H$(HEADERFILENAME) \\\r\n" + 
  			"		/c32 $(ICONDIR)\\qgn_menu_Birthdays.svg\r\n" + 
  			"		\r\n" + 
  			"FREEZE : do_nothing\r\n" + 
@@ -742,7 +771,7 @@ public class TestImageMakefileView extends BaseTest {
 		///////
 		IMultiImageSource c = mis.get(0);
 		assertEquals(EGeneratedHeaderFlags.Header, c.getHeaderFlags());
-		assertEquals(new Path("\\epoc32\\include\\Birthdays_aif.mbg"), c.getGeneratedHeaderFilePath());
+		assertEquals(new Path("/epoc32/include/Birthdays_aif.mbg"), c.getGeneratedHeaderFilePath());
 		assertEquals("Birthdays_aif.mif", c.getTargetFile());
 		assertEquals(new Path("/epoc32/data/z/resource/apps"),
 				c.getTargetPath());
@@ -760,7 +789,7 @@ public class TestImageMakefileView extends BaseTest {
 	// no extension --> svg
  	final String TEST_4 = 
  			"ifeq (WINS,$(findstring WINS, $(PLATFORM)))\r\n" + 
- 			"ZDIR=\\epoc32\\release\\$(PLATFORM)\\$(CFG)\\Z\r\n" + 
+ 			"ZDIR=/epoc32\\release\\$(PLATFORM)\\$(CFG)\\Z\r\n" + 
  			"else\r\n" + 
  			"ZDIR=\\epoc32\\data\\z\r\n" + 
  			"endif\r\n" + 
@@ -773,7 +802,7 @@ public class TestImageMakefileView extends BaseTest {
  			"\r\n" + 
  			"ICONDIR=..\\gfx\r\n" + 
  			"RESOURCE :	\r\n" + 
- 			"	mifconv $(ICONTARGETFILENAME) /h$(HEADERFILENAME) \\\r\n" + 
+ 			"	mifconv $(ICONTARGETFILENAME) /H$(HEADERFILENAME) \\\r\n" + 
  			"		/c32 $(ICONDIR)\\qgn_menu_Birthdays\r\n" + 
  			"		\r\n" + 
  			""; 
@@ -868,7 +897,7 @@ public class TestImageMakefileView extends BaseTest {
 		
 		IMultiImageSource mis = view.createMultiImageSource();
 		mis.setHeaderFlags(EGeneratedHeaderFlags.Header);
-		mis.setTargetPath(new Path("epoc32\\release\\winscw\\udeb\\sys\\bin"));
+		mis.setTargetPath(new Path("epoc32/release/winscw/udeb/sys/bin"));
 		mis.setTargetFile("miffile.mif");
 		
 		view.getMultiImageSources().add(mis);
@@ -900,7 +929,7 @@ public class TestImageMakefileView extends BaseTest {
 		assertEquals(0, view.getMultiImageSources().size());
 		
 		IMultiImageSource mis = view.createMultiImageSource();
-		mis.setTargetPath(new Path("epoc32\\release\\winscw\\udeb\\sys\\bin"));
+		mis.setTargetPath(new Path("epoc32/release/winscw/udeb/sys/bin"));
 		mis.setTargetFile("miffile.mif");
 		
 		view.getMultiImageSources().add(mis);
@@ -929,8 +958,11 @@ public class TestImageMakefileView extends BaseTest {
 	public void testRootProject() {
 		// make sure we handle project root correctly when it's the root directory
 		for (int i = 0; i < 2; i++){
-			parserConfig.projectPath = i == 0 ? new Path("c:\\") : new Path("c:");
-			this.path = new Path("c:\\symbian\\9.1\\S60_3rd\\S60Ex\\Hello\\group\\Icons.mk");
+			if (HostOS.IS_WIN32)
+				parserConfig.projectPath = i == 0 ? new Path("c:\\") : new Path("c:");
+			else
+				parserConfig.projectPath = new Path("/");
+			this.path = stockRootedProjectPath.append("/group/Icons.mk");
 			makeModel("RESOURCE:\n"+
 					"\tmifconv hello.mif /c8,8 ../gfx/file.svg\n");
 			
@@ -943,26 +975,33 @@ public class TestImageMakefileView extends BaseTest {
 	private void _testRootProject(IImageMakefileData imageMakefileData) {
 		IImageSource source = imageMakefileData.getMultiImageSources().get(0).getSources().get(0);
 		// important to be relative
-		assertEquals(new Path("symbian/9.1/S60_3rd/S60Ex/Hello/gfx/file.svg"), source.getPath());
+		IPath relBase;
+		relBase = stockRootedProjectPath.makeRelative();
+		assertEquals(relBase.append("/gfx/file.svg"), source.getPath());
 	}
 	
 	public void testMifconvBugs() {
 		makeModel("RESOURCE:\n"+
-		"\tmifconv hello.mif /c8,8 c:\\imgs\\foo.bmp /c32 c:\\svgs\\foo.svg\n");
+		"\tmifconv hello.mif /c8,8 "+stockRootedImgPath.append("foo.bmp").toOSString()
+		+" /c32 "+stockRootedSvgPath.append("foo.svg") + "\n");
 		IImageMakefileView view =model.createView(this.viewConfig);
 
 		IImageSource source = view.getMultiImageSources().get(0).getSources().get(0);
 		// BMPs can have drive letter on input...
-		assertEquals(new Path("c:/imgs/foo.bmp"), source.getPath());
+		assertEquals(stockRootedImgPath.append("foo.bmp"), source.getPath());
 		source.setMaskDepth(1);
 
 		source = view.getMultiImageSources().get(0).getSources().get(1);
 		// SVGs can have drive letter on input...
-		assertEquals(new Path("c:/svgs/foo.svg"), source.getPath());
+		assertEquals(stockRootedSvgPath.append("foo.svg"), source.getPath());
 
 		// drop drive letters on output for bmps
-		commitTest(view, "RESOURCE:\n"+
-		"\tmifconv hello.mif \\\n\t/c8,1 \\imgs\\foo.bmp \\\n\t/c32 c:\\svgs\\foo.svg\n");
+		IPath outBmpPath = stockRootedImgPath.append("foo.bmp").setDevice(null);
+		IPath outSvgPath = stockRootedSvgPath.append("foo.svg");
+		String refText = "RESOURCE:\n"+
+		"\tmifconv hello.mif \\\n\t/c8,1 "+HostOS.convertPathToWindows(outBmpPath) + " " 
+		+ "\\\n\t/c32 " + HostOS.convertPathToWindows(outSvgPath) + "\n";
+		commitTest(view, refText);
 		
 		
 	}
@@ -1260,7 +1299,7 @@ public class TestImageMakefileView extends BaseTest {
 		File incFile = new File(projectPath.toFile(), "group/bitmaps.txt");
 		incFile.getParentFile().mkdir();
 		incFile.delete();
-		FileUtils.writeFileContents(incFile, bitmapFile.toCharArray(), null);
+		FileUtils.writeFileContents(incFile, convertForOS(bitmapFile).toCharArray(), null);
 
 		makeModel("target:\n"+
 				"\tmifconv foo.mif /X /GOO /B /Smyencode.exe /H\\noob.h /Fbitmaps.txt");
@@ -1323,12 +1362,12 @@ public class TestImageMakefileView extends BaseTest {
 		File incFile = new File(projectPath.toFile(), "inc/Icons_generic.mk");
 		incFile.getParentFile().mkdir();
 		incFile.delete();
-		FileUtils.writeFileContents(incFile, incl.toCharArray(), null);
+		FileUtils.writeFileContents(incFile, convertForOS(incl).toCharArray(), null);
 		
 		File normFile = new File(projectPath.toFile(), "group/Icons_scalable.mk");
 		normFile.getParentFile().mkdir();
 		normFile.delete();
-		FileUtils.writeFileContents(normFile, text.toCharArray(), null);
+		FileUtils.writeFileContents(normFile, convertForOS(text).toCharArray(), null);
 
 		parserConfig.fileLocator = new BasicIncludeFileLocator(
 				new File[] { projectPath.append("inc").toFile() },
@@ -1362,12 +1401,12 @@ public class TestImageMakefileView extends BaseTest {
 		File incFile = new File(projectPath.toFile(), "inc/Icons_generic.mk");
 		incFile.getParentFile().mkdir();
 		incFile.delete();
-		FileUtils.writeFileContents(incFile, incl.toCharArray(), null);
+		FileUtils.writeFileContents(incFile, convertForOS(incl).toCharArray(), null);
 		
 		File normFile = new File(projectPath.toFile(), "group/Icons_scalable.mk");
 		normFile.getParentFile().mkdir();
 		normFile.delete();
-		FileUtils.writeFileContents(normFile, text.toCharArray(), null);
+		FileUtils.writeFileContents(normFile, convertForOS(text).toCharArray(), null);
 
 		parserConfig.fileLocator = new BasicIncludeFileLocator(
 				new File[] { projectPath.append("inc").toFile() },
@@ -1417,7 +1456,7 @@ public class TestImageMakefileView extends BaseTest {
 		File normFile = new File(projectPath.toFile(), "group/Icons_scalable.mk");
 		normFile.getParentFile().mkdir();
 		normFile.delete();
-		FileUtils.writeFileContents(normFile, text.toCharArray(), null);
+		FileUtils.writeFileContents(normFile, convertForOS(text).toCharArray(), null);
 
 		parserConfig.fileLocator = new BasicIncludeFileLocator(
 				new File[] { projectPath.append("inc").toFile() },
@@ -1450,7 +1489,7 @@ public class TestImageMakefileView extends BaseTest {
 		File incFile = new File(projectPath.toFile(), "inc/Icons_generic.mk");
 		incFile.getParentFile().mkdir();
 		incFile.delete();
-		FileUtils.writeFileContents(incFile, incl.toCharArray(), null);
+		FileUtils.writeFileContents(incFile, convertForOS(incl).toCharArray(), null);
 		
 		// revert the view and be sure we can get the file now
 
@@ -1488,7 +1527,7 @@ public class TestImageMakefileView extends BaseTest {
 		File normFile = new File(projectPath.toFile(), "group/Icons_scalable.mk");
 		normFile.getParentFile().mkdir();
 		normFile.delete();
-		FileUtils.writeFileContents(normFile, text.toCharArray(), null);
+		FileUtils.writeFileContents(normFile, convertForOS(text).toCharArray(), null);
 
 		parserConfig.fileLocator = new BasicIncludeFileLocator(
 				new File[] { projectPath.append("inc").toFile() },
@@ -1524,7 +1563,7 @@ public class TestImageMakefileView extends BaseTest {
 
 		// the model should go into the main file, and the include removed
 		String newText = new String(FileUtils.readFileContents(normFile, null));
-		assertEquals("\r\n" + 
+		assertEquals(convertForOS("\r\n" + 
 				"SECURITY_FLAG=on\r\n" + 
 				"SCALABLE_FLAG=on\r\n" + 
 				"\r\n" + 
@@ -1532,11 +1571,11 @@ public class TestImageMakefileView extends BaseTest {
 				"		qgn_prop_nrtyp_date\r\n" + 
 				"	mifc$(SECURITY_FLAG)v foo.mif  \\\r\n" + 
 				"		 /c8,1 qgn_prop_nrtyp_date\r\n" + 
-				"", newText);
+				""), convertForOS(newText));
 		
 		// the include is unchanged
 		String newIncl = new String(FileUtils.readFileContents(incFile, null));
-		assertEquals(incl, newIncl);
+		assertEquals(convertForOS(incl), convertForOS(newIncl));
 		
 		referencedFiles = view.getReferencedFiles();
 		assertEquals(1, referencedFiles.length);

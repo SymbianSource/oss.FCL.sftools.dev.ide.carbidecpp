@@ -98,7 +98,7 @@ c:/Symbian/Carbide/workspace/Legacy22/|aif/Legacy22Aif.rss|untitled.mbmdef
 					// but only .mbmdef available in Carbide UI
 					String mbmdefFile = matcher.group(3);
 					IPath mbmdefPath = resolver.resolvePath(projectPath.append(mbmdefFile).toOSString());
-					if (mbmdefPath.getDevice() == null)
+					if (mbmdefPath.getDevice() == null && (!HostOS.IS_WIN32 && !mbmdefPath.isAbsolute()))
 						mbmdefPath = new Path(projectPath.removeTrailingSeparator().lastSegment()).append(mbmdefPath);
 					String mbmdefText = readFileText(mbmdefPath);
 					IMultiImageSource multiImageSource = new MbmdefFileConverter().convert(targetPath, mbmdefFile, mbmdefText, resolver);

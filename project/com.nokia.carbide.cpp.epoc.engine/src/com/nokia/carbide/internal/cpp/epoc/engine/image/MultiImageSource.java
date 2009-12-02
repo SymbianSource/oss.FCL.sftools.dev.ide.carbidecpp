@@ -102,7 +102,7 @@ public class MultiImageSource implements IMultiImageSource {
 
 	public IPath getDefaultGeneratedHeaderFilePath() {
 		String fileName = targetFile != null && targetFile.length() > 0 ? targetFile : "<unnamed>"; //$NON-NLS-1$
-		return new Path("epoc32\\include").append(fileName).removeFileExtension().addFileExtension("mbg");	 //$NON-NLS-1$ //$NON-NLS-2$
+		return new Path("epoc32/include").append(fileName).removeFileExtension().addFileExtension("mbg");	 //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/* (non-Javadoc)

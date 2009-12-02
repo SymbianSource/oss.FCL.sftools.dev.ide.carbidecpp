@@ -109,7 +109,8 @@ class ResourceBlockListConverter implements StructuredItemStatementListConverter
 				resource.setTargetFile(((IASTMMPSingleArgumentStatement) stmt).getArgument().getValue());
 			}
 			else if (EMMPStatement.TARGETPATH.matches(stmt)) {
-				resource.setTargetPath(new Path(((IASTMMPSingleArgumentStatement) stmt).getArgument().getValue()));
+				resource.setTargetPath(new Path(
+						HostOS.convertPathToUnix(((IASTMMPSingleArgumentStatement) stmt).getArgument().getValue())));
 			}
 			else if (EMMPStatement.HEADER.matches(stmt)) {
 				resource.setHeaderFlags(EGeneratedHeaderFlags.Header);

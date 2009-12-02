@@ -244,7 +244,7 @@ public class TestBldInfView4 extends BaseBldInfViewTest {
 		
 		assertEquals(new Path("base/config"), ext.getTemplatePath());
 		assertEquals("armcc", ext.getToolName());
-		assertEquals(new Path("zap_ma_ma\\"), ext.getTargetPath());
+		assertEquals(new Path("zap_ma_ma/"), ext.getTargetPath());
 		assertNotNull(ext.getSources());
 		assertEquals(2, ext.getSources().size());
 		assertEquals(new Path("src/file1.cpp"), ext.getSources().get(0));
@@ -725,9 +725,9 @@ public class TestBldInfView4 extends BaseBldInfViewTest {
 		view = getView(config);
 		assertEquals(1, view.getMakMakeReferences().size());
 		IMakMakeReference mak = view.getMakMakeReferences().get(0);
-		assertEquals(new Path("\\test\\drivers\\cpa_log_kernel.mmp"), mak.getPath());
+		assertEquals(new Path("/test/drivers/cpa_log_kernel.mmp"), mak.getPath());
 		
-		mak.setPath(new Path("\\test\\drivers\\kernel.mmp"));
+		mak.setPath(new Path("/test/drivers/kernel.mmp"));
 		commitTest(view, text2);
 	}
 	public void testBug3696() {

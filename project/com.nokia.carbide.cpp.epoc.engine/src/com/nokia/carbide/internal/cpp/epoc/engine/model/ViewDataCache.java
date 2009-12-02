@@ -164,49 +164,72 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		
 	}
 
-	static class FileTimestampCollection {
-		private static FileTimestampCollection instance;
+	static class FileTimestampSizeCollection {
+		static FileTimestampSizeCollection INSTANCE = new FileTimestampSizeCollection();
 		/** Check timestamps only once in this number of milliseconds */
 		final int QUANTUM = 0;
-		/** map of file to last queried timestamp + time of last query */
-		private Map<File, Pair<Long, Long>> timestamps;		
 		
-		public static FileTimestampCollection getInstance() {
-			if (instance == null) {
-				instance = new FileTimestampCollection();
+		static class FileInfo extends Tuple {
+			public FileInfo(long lastModified, long lastQueried, long size) {
+				super(lastModified, lastQueried, size);
 			}
-			return instance;
+			public long getLastModified() {
+				return (Long) get(0);
+			}
+			public long getLastQueried() {
+				return (Long) get(0);
+			}
+			public long getLength() { 
+				return (Long) get(2);
+			}
 		}
+		/** map of file to file size + last queried timestamp + time of last query 
+		 * (use File, not IPath, so we canonicalize for the OS) */
+		private Map<File, FileInfo> info = new HashMap<File, FileInfo>();		
 		
-		private FileTimestampCollection() {
-			timestamps = new HashMap<File, Pair<Long, Long>>();
-		}
-
+		
 		/** Tell if the file's timestamp changed in the past quantum 
 		 * and update the record */
 		public boolean changed(File file) {
 			long now = System.currentTimeMillis();
-			Pair<Long, Long> stamp = timestamps.get(file);
-			if (stamp == null) {
-				stamp = new Pair<Long, Long>(file.lastModified(), now);
-				timestamps.put(file, stamp);
+			FileInfo finfo = info.get(file);
+			if (finfo == null) {
+				finfo = new FileInfo(file.lastModified(), now, file.length());
+				info.put(file, finfo);
+				if (DEBUG) System.out.println("First info for " + file + ": " + finfo);
 				return true;
-			} else if (stamp.second + QUANTUM < now) {
+			} else if (finfo.getLastQueried() + QUANTUM < now) {
 				// don't check times more than QUANTUM
-				long origTime = stamp.first;
-				stamp = new Pair<Long, Long>(file.lastModified(), now);
-				timestamps.put(file, stamp);
-				return origTime != stamp.first;
+				long origTime = finfo.getLastModified();
+				long origSize = finfo.getLength();
+				finfo = new FileInfo(file.lastModified(), now, file.length());
+				info.put(file, finfo);
+				if (DEBUG) System.out.println("Updated info for " + file + ": " + origTime + "/" + origSize + " <=> " 
+						+ finfo.getLastModified() + "/" + finfo.getLength());
+				return origTime != finfo.getLastModified() || finfo.getLastModified() == 0 // 0 if deleted
+					|| origSize != finfo.getLength();		
 			} else {
-				// not changed
+				// not changed, as far as we assume
+				if (DEBUG) System.out.println("Assuming no change for " + file);
 				return false;
 			}
 		}
 	}
 	
-	static class ModelFileTimestampCollection {
-
-		private static final long QUANTUM = 50;
+	public static class ModelFileTimestampCollection {
+		/**
+		 * The minimum timestamp resolution for a file in ms (based on heuristics for the OS).
+		 * VFAT on Win32 uses 2 second increments.  Linux ext2/3 uses 1 second resolution, 
+		 * until ext4, where it becomes nanoseconds.
+		 * Assume the worst format in all cases.
+		 */
+		public static final long MIN_TIMESTAMP_RESOLUTION = HostOS.IS_WIN32 ? 2000 : 1000;
+		/**
+		 * Delay in ms between successive checks of the filesystem, to avoid wasting time
+		 * when such checks are slow, and in cases where it's unlikely the human will edit files
+		 * fast enough to care.
+		 */
+		public static final long QUANTUM = HostOS.IS_WIN32 ? 50 : 10;
 		private File[] files;
 		private long lastQuery;
 
@@ -217,7 +240,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 			for (IPath path : paths) {
 				files[idx] = path.toFile();
 				// prime the cache
-				FileTimestampCollection.getInstance().changed(files[idx]);
+				FileTimestampSizeCollection.INSTANCE.changed(files[idx]);
 				idx++;
 			}
 			this.lastQuery = System.currentTimeMillis();
@@ -230,11 +253,15 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		public boolean changed() {
 			long prevQuery = lastQuery;
 			lastQuery = System.currentTimeMillis();
-			if (prevQuery + QUANTUM > lastQuery)
+			
+			// don't check more often than the resolution of the file allows
+			if (prevQuery + QUANTUM > lastQuery) {
+				if (DEBUG) System.out.println("Skipping fileinfo check");
 				return false;
+			}
 			
 			for (File file : files) {
-				if (FileTimestampCollection.getInstance().changed(file)) {
+				if (FileTimestampSizeCollection.INSTANCE.changed(file)) {
 					return true;
 				}
 			}

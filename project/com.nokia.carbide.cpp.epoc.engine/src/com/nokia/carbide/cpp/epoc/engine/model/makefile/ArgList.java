@@ -38,7 +38,7 @@ public class ArgList {
 	public ArgList(String text) {
 		String trimmed = text.trim();
 		this.initial = text.substring(0, text.indexOf(trimmed));
-		this.terminal = text.substring(text.length() - this.initial.length() - trimmed.length());
+		this.terminal = text.substring(text.length() - this.initial.length());
 		this.argv = splitArguments(trimmed);
 		
 	}

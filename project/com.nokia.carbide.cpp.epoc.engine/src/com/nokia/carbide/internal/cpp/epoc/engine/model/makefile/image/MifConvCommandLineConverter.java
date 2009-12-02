@@ -22,6 +22,7 @@ import com.nokia.carbide.cpp.epoc.engine.image.*;
 import com.nokia.carbide.cpp.epoc.engine.model.EGeneratedHeaderFlags;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.ArgList;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.*;
+import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewBase;
 import com.nokia.cpp.internal.api.utils.core.*;
 
 import org.eclipse.core.runtime.*;
@@ -38,11 +39,19 @@ import java.util.regex.Pattern;
 public class MifConvCommandLineConverter implements
 		IImageBuilderCommandLineConverter {
 
-	static final Pattern HEADER_PATTERN = Pattern.compile("/H(.*)", //$NON-NLS-1$
+	// The original syntax used slash options, but these look like paths in Unix,
+	// so mifconv changed to use dash options.  We originally generated slash options
+	// so we need to support both, but generate dash options now.
+	static final String OPTION_CHARS = HostOS.IS_WIN32 ? "[/-]" : "-";
+	
+	// TODO: still prefer '/' in Win32 until we fix unit tests and templates
+	static final char OUT_OPTION_CHAR = HostOS.IS_WIN32 ? '/' : '-';
+	
+	static final Pattern HEADER_PATTERN = Pattern.compile(OPTION_CHARS + "H(.*)", //$NON-NLS-1$
 			Pattern.CASE_INSENSITIVE);
-	static final Pattern PARAM_FILE_PATTERN = Pattern.compile("/F(.*)", //$NON-NLS-1$
+	static final Pattern PARAM_FILE_PATTERN = Pattern.compile(OPTION_CHARS + "F(.*)", //$NON-NLS-1$
 			Pattern.CASE_INSENSITIVE);
-	static final Pattern EXTENSIONS_PATTERN = Pattern.compile("/E", //$NON-NLS-1$
+	static final Pattern EXTENSIONS_PATTERN = Pattern.compile(OPTION_CHARS + "E", //$NON-NLS-1$
 			Pattern.CASE_INSENSITIVE);
 	private static final Pattern SVG_EXTENSION_PATTERN = Pattern.compile("svgt?", //$NON-NLS-1$
 			Pattern.CASE_INSENSITIVE);
@@ -50,7 +59,7 @@ public class MifConvCommandLineConverter implements
 			Pattern.CASE_INSENSITIVE);
 	private static final String EPOCROOT_SUBSTITUTION = "$(EPOCROOT)"; //$NON-NLS-1$
 	private static final String ZDIR_SUBSTITUTION = "$(ZDIR)"; //$NON-NLS-1$
-	private static final String ZDIR_CONTENTS = "epoc32\\data\\z"; //$NON-NLS-1$
+	private static final String ZDIR_CONTENTS = HostOS.IS_WIN32 ? "epoc32\\data\\z" : "epoc32/data/z"; //$NON-NLS-1$ //$NON-NLS-2$
 	
 	// tracked during parsing (non-reentrant!)
 	private ImageFormat imageFormat;
@@ -161,8 +170,8 @@ public class MifConvCommandLineConverter implements
 				continue;
 			}
 
-			// unused option
-			if (arg.startsWith("/")) //$NON-NLS-1$
+			// unused option (or filename)
+			if (arg.matches(OPTION_CHARS + ".*") && !arg.toLowerCase().matches(".*\\.(bmp|svg).*")) //$NON-NLS-1$ //$NON-NLS-2$
 				continue;
 			
 			// if image format not set, unknown garbage
@@ -209,7 +218,7 @@ public class MifConvCommandLineConverter implements
 	 */
 	private List<String> readParamFile(IImageMakefileView view, String filename) {
 		IPath filePath = FileUtils.createPossiblyRelativePath(filename);
-		if (!filePath.isAbsolute() && !filePath.toString().startsWith("$")) {
+		if (!ViewBase.isAbsolutePath(filePath) && !filePath.toString().startsWith("$")) {
 			filePath = view.getModelPath().removeLastSegments(1).append(filePath);
 		}
 		File file = filePath.toFile();
@@ -222,7 +231,7 @@ public class MifConvCommandLineConverter implements
 			ArgList list = new ArgList(text);
 			return list.getArgv();
 		} catch (CoreException e) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 	}
 
@@ -277,30 +286,30 @@ public class MifConvCommandLineConverter implements
 			if (generatedHeaderFilePath == null) {
 				generatedHeaderFilePath = multiImageSource.getDefaultGeneratedHeaderFilePath();
 			}
-			if (!generatedHeaderFilePath.isAbsolute() && !generatedHeaderFilePath.toString().startsWith(EPOCROOT_SUBSTITUTION)) {
+			if (!ViewBase.isAbsolutePath(generatedHeaderFilePath) && !generatedHeaderFilePath.toString().startsWith(EPOCROOT_SUBSTITUTION)) {
 				generatedHeaderFilePath = new Path(EPOCROOT_SUBSTITUTION + generatedHeaderFilePath.toOSString());
 			}
 			file = fromProjectToMakefilePath(view, generatedHeaderFilePath);
 			
-			arg = "/H" + view.unexpandMacros(file.toOSString(), //$NON-NLS-1$
+			arg = OUT_OPTION_CHAR + "H" + view.unexpandMacros(file.toOSString(), //$NON-NLS-1$
 					true);
 			if (needNewLine)
 				addNewLine(view, args);
 			args.add(arg);
 			needNewLine = true;
 		}
-		
+
 		if (origArgv != null) {
 			// remove existing header arg if present
-			removeArgMatching(origArgv, "(?i)/H.*"); //$NON-NLS-1$
+			removeArgMatching(origArgv, "(?i)" + OPTION_CHARS + "H.*"); //$NON-NLS-1$
 			
 			// remove any /F entries: we don't update parameter files
-			removeArgMatching(origArgv, "(?i)/F.*"); //$NON-NLS-1$
+			removeArgMatching(origArgv, "(?i)" + OPTION_CHARS + "F.*"); //$NON-NLS-1$
 
-			// keep remaining arguments, except for files
+			// keep remaining arguments, except for files 
 			for (Iterator<String> iter = origArgv.iterator(); iter.hasNext();) {
 				String origArg = iter.next();
-				if (origArg.matches("(?i)/[a-bd-z].*")) { //$NON-NLS-1$
+				if (origArg.matches("(?i)" + OPTION_CHARS + "[a-bd-z].*")) { //$NON-NLS-1$
 					args.add(origArg);
 					iter.remove();
 				}
@@ -339,7 +348,7 @@ public class MifConvCommandLineConverter implements
 					explicitMaskPath ? 0 : maskDepth);
 			if (imageFormat == null || !format.equals(imageFormat)) {
 				imageFormat = format;
-				args.add("/" + format.toString()); //$NON-NLS-1$
+				args.add(OUT_OPTION_CHAR + format.toString()); //$NON-NLS-1$
 			}
 			
 			// emit source file
@@ -354,7 +363,7 @@ public class MifConvCommandLineConverter implements
 			// emit explicit mask path if needed
 			if (explicitMaskPath) {
 				file = fromProjectToMakefilePath(view, maskPath);
-				args.add("/" + maskDepth); //$NON-NLS-1$
+				args.add(OUT_OPTION_CHAR + "" + maskDepth); //$NON-NLS-1$
 				args.add(view.unexpandMacros(file.setDevice(null).toOSString(), false));
 			}
 		}

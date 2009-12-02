@@ -147,7 +147,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 	 * @return
 	 */
 	static boolean isAbsoluteLikePath(IPath mmpPath) {
-		return (mmpPath.isAbsolute() 
+		return (isAbsolutePath(mmpPath)
 				|| (mmpPath.segmentCount() > 0 && mmpPath.segment(0).equals("+")));  //$NON-NLS-1$
 	}
 	
@@ -1143,7 +1143,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 			IPath basePath = mmpPath.removeFileExtension();
 			baseName = basePath.lastSegment();
 			
-			if (basePath.isAbsolute()) {
+			if (isAbsolutePath(basePath)) {
 				dirPath = basePath.removeLastSegments(1);
 			} else {
 				dirPath = defFileBase.append(basePath.removeLastSegments(1));
@@ -1176,7 +1176,8 @@ public class MMPView extends ViewASTBase implements IMMPView {
 		} else {
 			// replace any "/~/" sequences 
 			if (dirPath.segmentCount() > 0)
-				dirPath = new Path(dirPath.addTrailingSeparator().toString().replace("/~/", "/"+implDirectory+"/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				dirPath = new Path(dirPath.addTrailingSeparator().toPortableString()
+						.replace("/~/", "/"+implDirectory+"/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		
 		// version identifier overrides unicode
@@ -1191,9 +1192,9 @@ public class MMPView extends ViewASTBase implements IMMPView {
 		
 		IPath prjPath = null;
 		IPath tempPath = dirPath.append(baseName + "." + ext); //$NON-NLS-1$
-		if (!tempPath.isAbsolute()) {
+		if (!isAbsolutePath(tempPath)) {
 			prjPath = tempPath; //convertMMPToProject(EMMPPathContext.DEFFILE, tempPath);
-		} else if (mmpPath == null || !mmpPath.isAbsolute()) {
+		} else if (mmpPath == null || !isAbsolutePath(mmpPath)) {
 			/*
 			IPath wsPath = epocHelper.convertFilesystemToWorkspace(tempPath);
 			if (wsPath != null)
@@ -1249,7 +1250,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 		if (realPath == null)
 			return null;
 
-		if (!realPath.isAbsolute()) {
+		if (!isAbsolutePath(realPath)) {
 			//realPath = ((IModel)mmpView.getModel()).getPath().removeLastSegments(1).append(realPath);
 			realPath = convertProjectToModelPath(realPath);
 		}
@@ -1280,7 +1281,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 
 		// return string value, containing literal .\ if not generic name
 		String mmpPath = pathString(dirPath.append(baseName + "." + ext)); //$NON-NLS-1$
-		if (isFixedDirectory && !dirPath.isAbsolute() && dirPath.segmentCount() == 0)
+		if (isFixedDirectory && !isAbsolutePath(dirPath) && dirPath.segmentCount() == 0)
 			mmpPath = "." + pathSeparator() + mmpPath; //$NON-NLS-1$
 		return mmpPath;
 	}

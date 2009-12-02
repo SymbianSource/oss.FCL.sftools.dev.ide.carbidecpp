@@ -60,9 +60,13 @@ public class TestViewDataCache extends BaseTest {
 	private File tmpDir;
 	private File projectDir;
 
+	// Try to wait long enough to ensure the timestamp-based check will detect a change
+	private static final long FS_TIME_RESOLUTION = ViewDataCache.ModelFileTimestampCollection.MIN_TIMESTAMP_RESOLUTION;
+	
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.epoc.engine.tests.BaseTest#setUp()
 	 */
+	@SuppressWarnings("unchecked")
 	protected void setUp() throws Exception {
 		super.setUp();
 		modelProvider = ModelProviderFactory.createModelProvider(new MMPModelFactory());
@@ -123,12 +127,12 @@ public class TestViewDataCache extends BaseTest {
 		assertEquals(new Path("group/foo.cpp"), data.getSources().get(0));
 		
 		// change foo.mmp on disk
-		Thread.sleep(50);
+		Thread.sleep(FS_TIME_RESOLUTION);
 		makeFile("group/foo.mmp",
 				"SOURCEPATH .\n"+
-				"SOURCE foo.cpp bar.cpp\n");
+				"SOURCE foo.cpp bar.cpp\n");		// note: size changes too
 		// cache throttles file timestamp checks
-		Thread.sleep(55);
+		Thread.sleep(FS_TIME_RESOLUTION);
 
 		IMMPData data2 = viewDataCache.getData(mmpPath, new DefaultMMPViewConfiguration(projectPath));
 		assertNotNull(data2);
@@ -154,12 +158,12 @@ public class TestViewDataCache extends BaseTest {
 		assertEquals("0x6000", data.getSingleArgumentSettings().get(EMMPStatement.BASEADDRESS));
 		
 		// change foo.mmh on disk
-		Thread.sleep(5);
+		Thread.sleep(FS_TIME_RESOLUTION);
 		makeFile("group/header.mmh",
-				"BASEADDRESS 0x1111");
+				"BASEADDRESS 0x1111");	// note: size does not change
 		
 		// cache throttles disk time checks
-		Thread.sleep(55);
+		Thread.sleep(FS_TIME_RESOLUTION);
 		
 		IMMPData data2 = viewDataCache.getData(mmpPath, new DefaultMMPViewConfiguration(projectPath));
 		assertNotNull(data2);
@@ -354,6 +358,7 @@ public class TestViewDataCache extends BaseTest {
 				data = viewDataCache.getData(path, config);
 				data = viewDataCache.getData(path, config);
 				data = viewDataCache.getData(path, config);
+				if (data != null) ; // read to squash warning
 			} catch (CoreException e) {
 				throw new RuntimeException(e);
 			}

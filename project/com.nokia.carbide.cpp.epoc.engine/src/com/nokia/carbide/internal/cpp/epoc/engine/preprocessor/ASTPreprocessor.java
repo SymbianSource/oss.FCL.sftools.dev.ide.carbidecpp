@@ -690,7 +690,7 @@ public class ASTPreprocessor implements IPreprocessor, IMacroProvider {
 			*/
 			return null;
 		}
-		return new Pair(isUser, fileName);
+		return new Pair<Boolean, String>(isUser, fileName);
 		
 	}
 	

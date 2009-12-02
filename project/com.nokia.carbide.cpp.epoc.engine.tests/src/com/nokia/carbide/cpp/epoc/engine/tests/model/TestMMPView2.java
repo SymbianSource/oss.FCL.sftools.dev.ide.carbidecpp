@@ -32,12 +32,14 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTNode;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTTranslationUnit;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.mmp.IASTMMPStartBlockStatement;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewASTBase;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IDocument;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -92,44 +94,49 @@ public class TestMMPView2 extends BaseMMPViewTest {
 	public void testAbsolutePaths() {
 		// don't convert absolute or absolute-like paths
 		final String MMP = 
-			"USERINCLUDE +\\include\\oem \\epoc32\\foo c:\\foo\\bar\n";
+			"USERINCLUDE +\\include\\oem \\epoc32\\foo " + getTokenAbsolutePath() + "foo\\bar\n";
 		makeModel(MMP);
 		
 		IMMPView view = model.createView(mmpConfig);
 		IPath path = view.getUserIncludes().get(0);
-		assertEquals(new Path("+\\include\\oem"), path);
+		assertEquals(new Path("+/include/oem"), path);
 		path = view.getUserIncludes().get(1);
-		assertEquals(new Path("\\epoc32\\foo"), path);
+		assertEquals(new Path("/epoc32/foo"), path);
 		path = view.getUserIncludes().get(2);
-		assertEquals(new Path("c:\\foo\\bar"), path);
+		assertEquals(new Path(getTokenAbsolutePath()).append("/foo/bar"), path);
 
-		view.getSystemIncludes().add(new Path("+\\epoc32\\data"));
-		view.getSystemIncludes().add(new Path("\\epoc32\\user"));
+		view.getSystemIncludes().add(new Path("+/epoc32/data"));
+		view.getSystemIncludes().add(new Path("/epoc32/user"));
 		// NOTE: absolute paths with drive letters not allowed, so c:\ is dropped
 		// if a normal API using MMPViewPathHelper constructs the path.
 		// We don't strip anything inside MMPView because we don't know
 		// what future enhancements may need the letter.
-		view.getSystemIncludes().add(new Path("c:\\system\\files"));
+		view.getSystemIncludes().add(new Path(getTokenAbsolutePath()).append("system/files"));
+		
+		// since the other paths are backslash, we keep this in this forward-slash path
+		String expected = toDosPath(new Path(getTokenAbsolutePath()).append("system\\files"));
 		commitTest(view, MMP +
-				"SYSTEMINCLUDE +\\epoc32\\data \\epoc32\\user c:\\system\\files\n");
+				"SYSTEMINCLUDE +\\epoc32\\data \\epoc32\\user " + expected + "\n");
 	}
 	
 	public void testRootProject() {
 		// make sure we handle project root correctly when it's the root directory
+		String root = HostOS.IS_WIN32 ? "C:" : "/"; 
 		for (int i = 0; i < 2; i++){
-			parserConfig.projectPath = i == 0 ? new Path("c:\\") : new Path("c:");
-			this.path = new Path("c:\\symbian\\9.1\\S60_3rd\\S60Ex\\Hello\\group\\hello.mmp");
+			parserConfig.projectPath = new Path(i == 0 ? root : root + File.separator);
+			IPath base = new Path(getTokenAbsolutePath());
+			this.path = base.append("symbian/9.1/S60_3rd/S60Ex/Hello/group/hello.mmp");
 			makeModel("SOURCEPATH ..\\src\n"+
 					"SOURCE foo.cpp\n");
 			
 			IMMPView view = model.createView(mmpConfig);
 			IPath[] srcPaths = view.getEffectiveSourcePaths();
 			// important to be relative
-			assertEquals(new Path("symbian/9.1/S60_3rd/S60Ex/Hello/src"), srcPaths[0]);
+			assertEquals(base.makeRelative().append("symbian/9.1/S60_3rd/S60Ex/Hello/src"), srcPaths[0]);
 	
 			IPath src = view.getSources().get(0);
 			// important to be relative
-			assertEquals(new Path("symbian/9.1/S60_3rd/S60Ex/Hello/src/foo.cpp"), src);
+			assertEquals(base.makeRelative().append("symbian/9.1/S60_3rd/S60Ex/Hello/src/foo.cpp"), src);
 		}
 	}
 	
@@ -303,7 +310,8 @@ public class TestMMPView2 extends BaseMMPViewTest {
 	 *
 	 */
 	public void testBaseDirectory() {
-		parserConfig.getFilesystem().put(new Path("c:/test/basefile.mmp").toOSString(), 
+		IPath base = new Path(getTokenAbsolutePath()).append("test/basefile.mmp");
+		parserConfig.getFilesystem().put(base.toOSString(), 
 				"SOURCEPATH .\n"+
 				"SOURCE base.cpp\n");
 
@@ -314,7 +322,7 @@ public class TestMMPView2 extends BaseMMPViewTest {
 		makeModel(
 				"SOURCEPATH .\n"+
 				"SOURCE first.cpp\n"+
-				"#include \"c:\\test\\basefile.mmp\"\n"+
+				"#include \"" + base.toOSString() + "\"\n"+
 				"#include \"../utils/helper.mmh\"\n"+
 				"SOURCEPATH ../src\n"+
 				"SOURCE last.cpp\n");
@@ -325,7 +333,7 @@ public class TestMMPView2 extends BaseMMPViewTest {
 		assertEquals(new Path("group/first.cpp"), view.getSources().get(0));
 		
 		// note: should not be relative path when outside the project
-		assertEquals(new Path("c:/test/base.cpp"), view.getSources().get(1));
+		assertEquals(base.removeLastSegments(1).append("base.cpp"), view.getSources().get(1));
 		
 		assertEquals(new Path("utils/helper.cpp"), view.getSources().get(2));
 		assertEquals(new Path("src/last.cpp"), view.getSources().get(3));
@@ -730,7 +738,7 @@ public class TestMMPView2 extends BaseMMPViewTest {
 				"*  Description : Music Collection Common project specification\r\n" + 
 				"*  Version     : 1.0\r\n" + 
 				"*\r\n" + 
-				"*  Copyright © 2004 Nokia. All rights reserved.\r\n" + 
+				"*  Copyright (c) 2004 Nokia. All rights reserved.\r\n" + 
 				"*  This material, including documentation and any related \r\n" + 
 				"*  computer programs, is protected by copyright controlled by \r\n" + 
 				"*  Nokia. All rights are reserved. Copying, including \r\n" + 
@@ -844,7 +852,7 @@ public class TestMMPView2 extends BaseMMPViewTest {
 			"*  Description : Music Collection project specification\r\n" + 
 			"*  Version     : \r\n" + 
 			"*\r\n" + 
-			"*  Copyright © 2004 Nokia. All rights reserved.\r\n" + 
+			"*  Copyright (c) 2004 Nokia. All rights reserved.\r\n" + 
 			"*  This material, including documentation and any related \r\n" + 
 			"*  computer programs, is protected by copyright controlled by \r\n" + 
 			"*  Nokia. All rights are reserved. Copying, including \r\n" + 
@@ -1183,20 +1191,25 @@ public class TestMMPView2 extends BaseMMPViewTest {
 	public void testNoDriveLettersAppear() {
 		makeModel("USERINCLUDE ..\\group\n");
 		IMMPView view = model.createView(mmpConfig);
-		view.getUserIncludes().add(new Path("c:\\temp"));
+		IPath fullpath = new Path(getTokenAbsolutePath()).append("temp");
+		view.getUserIncludes().add(fullpath);
 		// We don't strip drive letters inside the MMPView, only through the
 		// canonicalization API MMPViewPathHelper.
 		commitTest(view,
-				"USERINCLUDE ..\\group c:\\temp\n");
+				"USERINCLUDE ..\\group " + toDosPath(fullpath) + "\n");
 	}
 	public void testNoDriveLettersAppear2() {
+		// not going to have a drivey path here
+		if (HostOS.IS_UNIX)
+			return;
+		
 		makeModel("USERINCLUDE ..\\group\n");
 		IMMPView view = model.createView(mmpConfig);
 		MMPViewPathHelper helper = new MMPViewPathHelper(view, (IPath)null);
 		try {
 			// no SDK active here, so all full paths throw
 			helper.convertProjectOrFullPathToMMP(
-								EMMPPathContext.USERINCLUDE, new Path("c:\\temp"));
+								EMMPPathContext.USERINCLUDE, new Path(getTokenAbsolutePath()).append("temp"));
 			fail();
 		} catch (InvalidDriveInMMPPathException e) {
 			view.getUserIncludes().add(e.getPathNoDevice());

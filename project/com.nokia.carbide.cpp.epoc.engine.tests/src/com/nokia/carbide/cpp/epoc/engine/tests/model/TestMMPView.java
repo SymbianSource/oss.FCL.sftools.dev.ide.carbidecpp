@@ -26,6 +26,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTListNode;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTTopLevelNode;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.mmp.IASTMMPListArgumentStatement;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewASTBase;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
 
 import org.eclipse.core.runtime.IPath;
@@ -1049,7 +1050,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		assertEquals(2, resource.getDependsFiles().size());
 		assertEquals("foo1.rsg", resource.getDependsFiles().get(0));
 		assertEquals("foo2.rsg", resource.getDependsFiles().get(1));
-		assertEquals(new Path("\\sys\\bin"), resource.getTargetPath());
+		assertEquals(new Path("/sys/bin"), resource.getTargetPath());
 		assertEquals("foo.rsc", resource.getTargetFile());
 		assertEquals(2, resource.getLanguages().size());
 		assertEquals(EGeneratedHeaderFlags.Header, resource.getHeaderFlags());
@@ -1101,7 +1102,7 @@ public class TestMMPView extends BaseMMPViewTest {
 	}
 
 	private void _testNewResourcesParsing2a(IMMPData data) {
-		assertEquals(new Path("\\sys\\target\\foo"), data.getTargetFilePath());
+		assertEquals(new Path("/sys/target/foo"), data.getTargetFilePath());
 		assertEquals("0x1", data.getUid2());
 		assertEquals("0x2", data.getUid3());
 		
@@ -1111,7 +1112,7 @@ public class TestMMPView extends BaseMMPViewTest {
 
 		assertEquals("foo1.rsg", resource.getDependsFiles().get(0));
 		assertEquals("foo2.rsg", resource.getDependsFiles().get(1));
-		assertEquals(new Path("\\sys\\bin"), resource.getTargetPath());
+		assertEquals(new Path("/sys/bin"), resource.getTargetPath());
 		assertEquals("0x3", resource.getUid2());
 		assertEquals("0x4", resource.getUid3());
 	}
@@ -1142,7 +1143,7 @@ public class TestMMPView extends BaseMMPViewTest {
 
 		assertEquals("foo1.rsg", resource.getDependsFiles().get(0));
 		assertEquals("foo2.rsg", resource.getDependsFiles().get(1));
-		assertEquals(new Path("\\sys\\bin"), resource.getTargetPath());
+		assertEquals(new Path("/sys/bin"), resource.getTargetPath());
 		assertEquals("0x3", resource.getUid2());
 		assertEquals("0x4", resource.getUid3());
 	}
@@ -1202,7 +1203,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		assertEquals(1, resources.size());
 		IMMPResource resource = resources.get(0);
 		
-		resource.setTargetPath(new Path("\\sys\\data\\myapp"));
+		resource.setTargetPath(new Path("/sys/data/myapp"));
 		resource.getLanguages().add(EMMPLanguage.American);
 		
 		commitTest(view,
@@ -1221,7 +1222,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		assertNotNull(view);
 		
 		IMMPResource resource = view.createMMPResource();
-		resource.setTargetPath(new Path("\\where"));
+		resource.setTargetPath(new Path("/where"));
 		resource.setTargetFile("targ.rsc");
 		assertFalse(resource.isValid());
 		resource.setSource(new Path("/foo/bar/data/uidesign.rss"));
@@ -1379,10 +1380,10 @@ public class TestMMPView extends BaseMMPViewTest {
 		makeModel("TARGETPATH \\foo\\bar\n"+
 				"TARGET file.exe\n");
 		IMMPView view = getView(mmpConfig);
-		assertEquals(new Path("\\foo\\bar\\file.exe"), view.getTargetFilePath());
+		assertEquals(new Path("/foo/bar/file.exe"), view.getTargetFilePath());
 		
 		// keep predom slash fmt
-		view.setTargetFilePath(new Path("\\sys\\bin\\nasty.exe"));
+		view.setTargetFilePath(new Path("/sys/bin/nasty.exe"));
 		commitTest(view, "TARGETPATH \\sys\\bin\n"+
 			"TARGET nasty.exe\n");
 		
@@ -1408,7 +1409,7 @@ public class TestMMPView extends BaseMMPViewTest {
 	private void _testAIFParsing0(IMMPData data) {
 		assertEquals(1, data.getAifs().size());
 		IMMPAIFInfo info = data.getAifs().get(0);
-		assertEquals(new Path("data\\aiffile.rss"), info.getResource());
+		assertEquals(new Path("data/aiffile.rss"), info.getResource());
 		// TARGETPATH not represented
 		assertEquals(new Path("targetfile.aif"), info.getTarget());
 		
@@ -1432,7 +1433,7 @@ public class TestMMPView extends BaseMMPViewTest {
 	private void _testAIFParsing1(IMMPData data) {
 		assertEquals(1, data.getAifs().size());
 		IMMPAIFInfo info = data.getAifs().get(0);
-		assertEquals(new Path("data\\aiffile.rss"), info.getResource());
+		assertEquals(new Path("data/aiffile.rss"), info.getResource());
 		// TARGETPATH not represented
 		assertEquals(new Path("targetfile.aif"), info.getTarget());
 
@@ -1638,7 +1639,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		
 		IMMPBitmap bitmap = bitmaps.get(0);
 		assertEquals("foo.mbm", bitmap.getTargetFile());
-		assertEquals(new Path("\\sys\\pix"), bitmap.getTargetPath());
+		assertEquals(new Path("/sys/pix"), bitmap.getTargetPath());
 		assertEquals(EGeneratedHeaderFlags.Header, bitmap.getHeaderFlags());
 		assertEquals(3, bitmap.getSources().size());
 		
@@ -1673,7 +1674,10 @@ public class TestMMPView extends BaseMMPViewTest {
 		IMMPBitmap bitmap = view.createMMPBitmap();
 
 		bitmap.setTargetFile("target.mbm");
-		bitmap.setTargetPath(new Path("e:\\foo\\bar"));
+		if (HostOS.IS_WIN32)
+			bitmap.setTargetPath(new Path("e:\\foo\\bar"));
+		else
+			bitmap.setTargetPath(new Path("e:/foo/bar"));
 		bitmap.setHeaderFlags(EGeneratedHeaderFlags.Header);
 
 		IBitmapSource source = bitmap.createBitmapSource();
@@ -1701,10 +1705,15 @@ public class TestMMPView extends BaseMMPViewTest {
 	}
 	
 	public void testBitmapChanging1() {
+		String nativePath;
+		if (HostOS.IS_WIN32)
+			nativePath = "e:\\foo\\bar";
+		else
+			nativePath = "e:/foo/bar";
 		makeModel(
 				"START BITMAP target.mbm\n"+
 				"// comment 1\n"+
-				"\tTARGETPATH e:\\foo\\bar\n"+
+				"\tTARGETPATH "+ nativePath + "\n"+
 				"// comment 2\n"+
 				"\tHEADER\n"+
 				"// comment 3\n"+
@@ -1719,7 +1728,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		IMMPBitmap bitmap = view.getBitmaps().get(0);
 
 		bitmap.setTargetFile("target.mbm");
-		bitmap.setTargetPath(new Path("e:\\foo\\bar"));
+		bitmap.setTargetPath(new Path(nativePath));
 		bitmap.setHeaderFlags(EGeneratedHeaderFlags.Header);
 
 		IBitmapSource source = (IBitmapSource) bitmap.getSources().get(0);
@@ -1733,7 +1742,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		commitTest(view,
 				"START BITMAP target.mbm\n"+
 				"// comment 1\n"+
-				"\tTARGETPATH e:\\foo\\bar\n"+
+				"\tTARGETPATH " + nativePath + "\n"+
 				"// comment 2\n"+
 				"\tHEADER\n"+
 				"// comment 3\n"+
@@ -1746,11 +1755,16 @@ public class TestMMPView extends BaseMMPViewTest {
 		bitmap = view.getBitmaps().get(0);
 		bitmap.setHeaderFlags(EGeneratedHeaderFlags.HeaderOnly);
 		
-		// unfortunately we have to rewrite and lose comments here
+		// unfortunately we have to rewrite, reslash, and lose comments here 
+		String nativePix;
+		if (HostOS.IS_WIN32)
+			nativePix = "..\\data\\pix";
+		else
+			nativePix = "../data/pix";
 		commitTest(view,
 				"START BITMAP target.mbm\n"+
-				"\tTARGETPATH e:\\foo\\bar\n"+
-				"\tSOURCEPATH ..\\data\\pix\n"+
+				"\tTARGETPATH " +  nativePath + "\n"+
+				"\tSOURCEPATH " + nativePix + "\n"+
 				"\tSOURCE 8,8 icon.bmp icon_mask_soft.bmp\n"+
 				"\tHEADERONLY\n"+
 				"END\n");

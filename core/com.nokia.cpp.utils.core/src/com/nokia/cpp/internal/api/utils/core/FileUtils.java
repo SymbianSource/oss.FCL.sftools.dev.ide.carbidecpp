@@ -847,7 +847,7 @@ public class FileUtils {
 		if (path == null)
 			return null;
 		
-		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+		if (HostOS.IS_WIN32) {
 			return new Path(path.toOSString().toLowerCase());
 		}
 		

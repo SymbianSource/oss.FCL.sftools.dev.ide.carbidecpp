@@ -39,6 +39,7 @@ import com.nokia.carbide.internal.cpp.epoc.engine.parser.ProblemVisitor;
 import com.nokia.carbide.internal.cpp.epoc.engine.preprocessor.ASTPreprocessor;
 import com.nokia.carbide.internal.cpp.epoc.engine.preprocessor.IConditionalBlock;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
@@ -153,6 +154,18 @@ public abstract class BaseTest extends TestCase {
 	private HashMap<String, String> refMap;
 	protected IPath modelPath;
 	
+	protected String getTokenAbsolutePath() {
+		return HostOS.IS_WIN32 
+			 ? "c:\\tests\\" : "/tmp/";
+	}
+	
+	protected String toDosPath(IPath path) {
+		return path.toPortableString().replaceAll("/", "\\\\");
+	}
+	protected String toDosPath(String path) {
+		return path.replaceAll("/", "\\\\");
+	}
+	
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -160,7 +173,7 @@ public abstract class BaseTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		if (projectPath == null)
-			projectPath = new Path("c:/tests/project");
+			projectPath = new Path(getTokenAbsolutePath()).append("project");
 		parserConfig = new ParserConfigurationBase(projectPath) {
 
 			@Override

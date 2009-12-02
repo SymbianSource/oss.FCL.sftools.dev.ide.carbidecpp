@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IIncludeFileLocator;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 public class BasicIncludeFileLocator implements IIncludeFileLocator {
 
 	private static final File[] NO_DIRS = new File[0];
@@ -43,6 +44,10 @@ public class BasicIncludeFileLocator implements IIncludeFileLocator {
 	}
 	
 	public File findIncludeFile(String file, boolean isUser, File currentDir) {
+		if (HostOS.IS_UNIX) {
+			file = HostOS.convertPathToUnix(file);
+		}
+		
 		// see if the file exists as an absolute file
 		File theFile = new File(file);
 		if (theFile.exists() && theFile.isFile() && theFile.isAbsolute())

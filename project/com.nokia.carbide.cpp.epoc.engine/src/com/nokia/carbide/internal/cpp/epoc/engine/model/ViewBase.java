@@ -447,13 +447,13 @@ public abstract class ViewBase<Model extends IOwnedModel> implements IView<Model
 	}
 	
 	public IPath convertModelToProjectPath(IPath modelPath) {
-		if (modelPath == null || modelPath.isAbsolute())
+		if (modelPath == null || isAbsolutePath(modelPath))
 			return modelPath;
 		return fromProjectToRelativePath(getProjectPath(), model.getPath().removeLastSegments(1).append(modelPath), true);
 	}
 	
 	public IPath convertProjectToModelPath(IPath prjPath) {
-		if (prjPath == null || prjPath.isAbsolute())
+		if (prjPath == null || isAbsolutePath(prjPath))
 			return prjPath;
 		return fromProjectToRelativePath(model.getPath().removeLastSegments(1), getProjectPath().append(prjPath));
 	}
@@ -559,5 +559,26 @@ public abstract class ViewBase<Model extends IOwnedModel> implements IView<Model
 			return '/';
 		else
 			return '\\';
+	}
+
+	/**
+	 * Tell if the path is a Win32 path with drive letter or UNC.
+	 * @param path
+	 */
+	public static boolean isWin32DrivePath(IPath path) {
+		return path.getDevice() != null 
+			|| (!HostOS.IS_WIN32 && path.segmentCount() > 0 && path.segment(0).matches("[A-Za-z]:"));
+	}
+
+	/**
+	 * Tell if the path is absolute -- e.g., according to the host or to Windows conventions.
+	 * @param path
+	 */
+	public static boolean isAbsolutePath(IPath path) {
+		if (path.isAbsolute())
+			return true;
+		if (isWin32DrivePath(path))
+			return true;
+		return false;
 	}
 }

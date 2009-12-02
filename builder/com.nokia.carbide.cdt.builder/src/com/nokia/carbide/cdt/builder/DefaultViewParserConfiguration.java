@@ -27,6 +27,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProv
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IIncludeFileLocator;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.ITranslationUnitProvider;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 public class DefaultViewParserConfiguration implements IViewParserConfiguration {
 
@@ -144,6 +145,9 @@ public class DefaultViewParserConfiguration implements IViewParserConfiguration 
 					// when there's no project and it's local, we just return the drive letter.  for network
 					// paths, I assume we just return the machine name?
 					return bldInfPath.removeLastSegments(bldInfPath.segmentCount()-1);
+				} else if (HostOS.IS_UNIX) {
+					// won't be a base drive
+					return Path.ROOT;
 				}
 			}
 		}

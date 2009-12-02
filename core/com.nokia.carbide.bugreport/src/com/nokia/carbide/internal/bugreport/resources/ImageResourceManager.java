@@ -41,7 +41,7 @@ public class ImageResourceManager {
     	
     	ImageRegistry imgReg = JFaceResources.getImageRegistry();
     	
-    	Image img = new Image( disp, imagesPath + "\\bug_report_with_banner_75x66.png" );  	 //$NON-NLS-1$
+    	Image img = new Image( disp, imagesPath + "/bug_report_with_banner_75x66.png" );  	 //$NON-NLS-1$
         imgReg.put( ImageKeys.WIZARD_BANNER, img );
 	}
 	

@@ -32,11 +32,13 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.image.IAifDefFileConverter
 import com.nokia.carbide.internal.api.cpp.epoc.engine.image.IPathResolver;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.image.LegacyImageFileConverterFactory;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 
 public class TestAifdefFileConversion extends BaseTest {
 
-	private static final String BAD_PROJECT_ROOT = "c:/workspace/CarbideTest/FormTime/";
+	private static final String BAD_PROJECT_ROOT = 
+		HostOS.IS_WIN32 ? "c:/workspace/CarbideTest/FormTime/" : "/home/me/workspace/CarbideTest/FormTime/";
 	private File tmpdir;
 	private File tmpMbmdef;
 	private IPathResolver resolver;
@@ -88,7 +90,7 @@ public class TestAifdefFileConversion extends BaseTest {
 	
 	
 	static final String AIFDEF_1 =
-		BAD_PROJECT_ROOT + "|aif/formtimeaif.rss|c4,1|aif/context_pane_icon.bmp|aif/context_pane_icon_mask.bmp|aif/list_icon.bmp|aif/list_icon_mask.bmp\r\n" + 
+		BAD_PROJECT_ROOT + "|aif/FormTimeAif.rss|c4,1|aif/context_pane_icon.bmp|aif/context_pane_icon_mask.bmp|aif/list_icon.bmp|aif/list_icon_mask.bmp\r\n" + 
 		"";
 	
 	public void testAifdef1() throws CoreException {

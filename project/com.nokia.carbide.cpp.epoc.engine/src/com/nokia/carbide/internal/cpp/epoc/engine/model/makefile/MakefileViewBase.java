@@ -51,6 +51,8 @@ public class MakefileViewBase<Model extends IOwnedModel> extends ViewBase<Model>
 	private String eol;
 	private HashMap<String, IPath> directiveFilenameToPathMap;
 	private Set<IPath> referencedFiles;
+	private VariableSubstitutionEngine engine;
+	private IVariableLookupCallback engineSubstitutor;
 	
 	/**
 	 * @param model
@@ -351,7 +353,7 @@ public class MakefileViewBase<Model extends IOwnedModel> extends ViewBase<Model>
 	protected String getProgramMatcherPattern(String program) {
 		String ext = ""; //$NON-NLS-1$
 		program = makefile.expandString(program, true);
-		if (!Platform.isRunning() || Platform.getOS().equals(Platform.OS_WIN32)) {
+		if (HostOS.IS_WIN32) {
 			ext = ".exe"; //$NON-NLS-1$
 			if (program.length() > 4 && program.substring(program.length() - 4).equalsIgnoreCase(ext)) {
 				program = program.substring(0, program.length() - 4);
@@ -577,11 +579,25 @@ public class MakefileViewBase<Model extends IOwnedModel> extends ViewBase<Model>
 		return vars;
 	}
 
-	private String substituteMacros(Map<String, String> vars, String text) {
-		VariableSubstitutionEngine engine = new VariableSubstitutionEngine(null, null);
-		engine.allowRecursion(true);
-		engine.setVariableToken('(');
-		return engine.substitute(vars, text);
+	private String substituteMacros(final Map<String, String> vars, String text) {
+		if (engine == null) {
+			engine = new VariableSubstitutionEngine(null, null);
+			engine.allowRecursion(true);
+			engine.setVariableToken('(');
+			
+			engineSubstitutor = new IVariableLookupCallback() {
+				
+				public Object getValue(String var) {
+					String value = vars.get(var);
+					if (value == null)
+						return null;
+					if (HostOS.IS_UNIX)
+						value = HostOS.convertPathToUnix(value);
+					return value;
+				}
+			};
+		}
+		return engine.substitute(engineSubstitutor, text);
 	}
 
 	/* (non-Javadoc)
@@ -702,7 +718,7 @@ public class MakefileViewBase<Model extends IOwnedModel> extends ViewBase<Model>
 	 */
 	@Override
 	public IPath convertModelToProjectPath(IPath modelPath) {
-		if (modelPath.isAbsolute() || modelPath.toString().startsWith("$")) //$NON-NLS-1$
+		if (isAbsolutePath(modelPath) || modelPath.toString().startsWith("$")) //$NON-NLS-1$
 			return modelPath;
 
 		return super.convertModelToProjectPath(modelPath);
@@ -713,7 +729,7 @@ public class MakefileViewBase<Model extends IOwnedModel> extends ViewBase<Model>
 	 */
 	@Override
 	public IPath convertProjectToModelPath(IPath prjPath) {
-		if (prjPath.isAbsolute() || prjPath.toString().startsWith("$")) //$NON-NLS-1$
+		if (isAbsolutePath(prjPath) || prjPath.toString().startsWith("$")) //$NON-NLS-1$
 			return prjPath;
 
 		return super.convertProjectToModelPath(prjPath);

@@ -40,7 +40,7 @@ import javax.xml.parsers.*;
 
 public class SymbianBuildParser {
 	
-	private static final String RESOURCE_APPS = "resource\\apps"; //$NON-NLS-1$
+	private static final String RESOURCE_APPS = "resource" + File.separator + "apps"; //$NON-NLS-1$
 	private static final String CDTBUILD_FILENAME = ".cdtbuild"; //$NON-NLS-1$
 	private static final String OPTION = "option"; //$NON-NLS-1$
 	private static final String TOOL = "tool"; //$NON-NLS-1$
@@ -180,7 +180,7 @@ public class SymbianBuildParser {
 			public String convert(String value) {
 				String pathString = TextUtils.unquote(value, '"');
 				if (pathString.startsWith(EPOCROOT_VAR)) {
-					pathString = "\\" + pathString.substring(EPOCROOT_VAR.length()); //$NON-NLS-1$
+					pathString = File.separator + pathString.substring(EPOCROOT_VAR.length()); //$NON-NLS-1$
 					return pathString;
 				}
 				else if (!VARIABLE_PATTERN.matcher(pathString).matches()) // no other variables

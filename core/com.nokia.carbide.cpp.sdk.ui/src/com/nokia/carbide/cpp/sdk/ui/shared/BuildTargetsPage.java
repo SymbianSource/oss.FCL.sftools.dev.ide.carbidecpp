@@ -45,6 +45,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.carbide.template.engine.ITemplate;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * Wizard page used to select a list of Carbide.c++ build configurations.  Currently used
@@ -274,6 +275,11 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 	
 	protected void checkPathWithSDKs(IPath path) {
 		setMessage(null);
+		
+		// drives are relevant in Windows only
+		if (!HostOS.IS_WIN32)
+			return;
+		
 		for (ISymbianBuildContext context : getSelectedBuildConfigs()) {
 			Path sdkPath = new Path(context.getSDK().getEPOCROOT());
 			if (sdkPath.getDevice() != null) {

@@ -285,7 +285,7 @@ public class ProjectUpdater implements IProjectUpdater {
 	private static final String DEFAULT_PRJ_PLATFORM_COMMENT = Messages.getString("ProjectUpdater.PlatformsNotAvailableWithAllSDKsComment"); //$NON-NLS-1$
 
 	private static final String CUR_DIR = "."; //$NON-NLS-1$
-	private static final String EPOC32_INC = "\\epoc32\\include"; //$NON-NLS-1$
+	private static final String EPOC32_INC = File.separator +"epoc32" + File.separator + "include"; //$NON-NLS-1$ //$NON-NLS-2$
 	
 	private static final String[] IMPLICIT_LIB_PREFIXES = {
 		"dfpaeabi", //$NON-NLS-1$
@@ -1665,15 +1665,15 @@ public class ProjectUpdater implements IProjectUpdater {
 				"\r\n" +  //$NON-NLS-1$
 				"\r\n" +  //$NON-NLS-1$
 				"ifeq (WINS,$(findstring WINS, $(PLATFORM)))\r\n" +  //$NON-NLS-1$
-				"ZDIR=$(EPOCROOT)epoc32\\release\\$(PLATFORM)\\$(CFG)\\Z\r\n" +  //$NON-NLS-1$
+				"ZDIR=$(EPOCROOT)epoc32/release/$(PLATFORM)/$(CFG)/Z\r\n" +  //$NON-NLS-1$
 				"else\r\n" +  //$NON-NLS-1$
-				"ZDIR=$(EPOCROOT)epoc32\\data\\z\r\n" +  //$NON-NLS-1$
+				"ZDIR=$(EPOCROOT)epoc32/data/z\r\n" +  //$NON-NLS-1$
 				"endif\r\n" +  //$NON-NLS-1$
 				"\r\n" +  //$NON-NLS-1$
 				"\r\n" +  //$NON-NLS-1$
-				"TARGETDIR=$(ZDIR)\\resource\\apps\r\n" + //$NON-NLS-1$
+				"TARGETDIR=$(ZDIR)/resource/apps\r\n" + //$NON-NLS-1$
 				"\r\n" +  //$NON-NLS-1$
-				"ICONDIR=..\\gfx\r\n" +  //$NON-NLS-1$
+				"ICONDIR=../gfx\r\n" +  //$NON-NLS-1$
 				"\r\n" +  //$NON-NLS-1$
 				"do_nothing :\r\n" +  //$NON-NLS-1$
 				"\t@rem do_nothing\r\n" +  //$NON-NLS-1$
@@ -1696,8 +1696,8 @@ public class ProjectUpdater implements IProjectUpdater {
 				"#\r\n" +  //$NON-NLS-1$
 				"# NOTE 2: Usually, source paths should not be included in the bitmap\r\n" +  //$NON-NLS-1$
 				"# definitions. MifConv searches for the icons in all icon directories in a\r\n" +  //$NON-NLS-1$
-				"# predefined order, which is currently \\s60\\icons, \\s60\\bitmaps2.\r\n" +  //$NON-NLS-1$
-				"# The directory \\s60\\icons is included in the search only if the feature flag\r\n" +  //$NON-NLS-1$
+				"# predefined order, which is currently /s60/icons, /s60/bitmaps2.\r\n" +  //$NON-NLS-1$
+				"# The directory /s60/icons is included in the search only if the feature flag\r\n" +  //$NON-NLS-1$
 				"# __SCALABLE_ICONS is defined.\r\n" +  //$NON-NLS-1$
 				"# ----------------------------------------------------------------------------\r\n" +  //$NON-NLS-1$
 				"# NOTE: if you have JUSTINTIME enabled for your S60 3rd FP1 or newer SDK\r\n"+  //$NON-NLS-1$

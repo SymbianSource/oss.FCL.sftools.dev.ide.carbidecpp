@@ -27,6 +27,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.tests.BaseTest;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
 
 import org.eclipse.cdt.make.core.makefile.ICommand;
@@ -86,6 +87,9 @@ public class TestMakefileView extends BaseTest {
 	}
 	
 	protected void makeModel(String text) {
+		// TODO: tests should work with both slash directions on both OSes
+		if (HostOS.IS_UNIX)
+			text = text.replaceAll("\\\\(?!\r|\n)", "/");
 		IDocument document = DocumentFactory.createDocument(text);
 		model = new MakefileModelFactory().createModel(path, document);
 
@@ -99,6 +103,9 @@ public class TestMakefileView extends BaseTest {
 	}
 	
 	protected void commitTest(IMakefileView view, String refText) {
+		// TODO: tests should work with both slash directions on both OSes
+		if (HostOS.IS_UNIX)
+			refText = refText.replaceAll("\\\\(?!\r|\n)", "/");
 		commitTest(model, view, refText);
 	}
 	
@@ -182,8 +189,9 @@ public class TestMakefileView extends BaseTest {
 		assertEquals(1, commands.length);
 		assertNotNull(commands[0].getParent());
 	
+		String mifconvEXELine = "MIFCONV=$(TOOLDIR)\\mifconv"+ (HostOS.IS_WIN32 ? ".exe" : "") + "\n";  
 		makeModel("TOOLSDIR=c:\\my\\tools\n"+
-				"MIFCONV=$(TOOLDIR)\\mifconv.exe\n"+
+				mifconvEXELine +
 				"\n"+
 				"all: mytool\n"+
 				"\n"+
@@ -206,7 +214,7 @@ public class TestMakefileView extends BaseTest {
 		view.replaceDirective(oldRule, newRule);
 
 		commitTest(view, "TOOLSDIR=c:\\my\\tools\n"+
-				"MIFCONV=$(TOOLDIR)\\mifconv.exe\n"+
+				mifconvEXELine +
 				"\n"+
 				"all: mytool\n"+
 				"\n"+
@@ -365,34 +373,48 @@ public class TestMakefileView extends BaseTest {
 
 	}
 	
-	public void testUnexpand() {
+	public void testUnexpand1() {
 		makeModel("ZDIR=$(EPOCROOT)\\release\\winscw\n"+
 				"TARGETDIR=$(ZDIR)\\data\n"+
 				"ICONTARGETFILENAME=$(TARGETDIR)\\foo.mif\n");
 		IMakefileView view = getView(viewConfig);
 
-		String repl = view.unexpandMacros("$(EPOCROOT)\\release\\winscw\\data\\more.mif", 
-				new String[] {  "TARGETDIR", "ZDIR" });
-		assertEquals("$(TARGETDIR)\\more.mif", repl);
+		doUnexpandTest(view, "$(EPOCROOT)\\release\\winscw\\data\\more.mif", 
+				"$(TARGETDIR)\\more.mif");
 
-		String repl1 = view.unexpandMacros("1 2 $(EPOCROOT)\\release\\winscw\\data\\more.mif 3 4", 
-				new String[] {  "TARGETDIR", "ZDIR" });
-		assertEquals("1 2 $(TARGETDIR)\\more.mif 3 4", repl1);
+		doUnexpandTest(view, "1 2 $(EPOCROOT)\\release\\winscw\\data\\more.mif 3 4", 
+			"1 2 $(TARGETDIR)\\more.mif 3 4");
 
-		String repl2 = view.unexpandMacros("$(EPOCROOT)\\release\\winscw\\more.mif", 
-				new String[] {  "TARGETDIR", "ZDIR" });
-		assertEquals("$(ZDIR)\\more.mif", repl2);
+		doUnexpandTest(view, "$(EPOCROOT)\\release\\winscw\\more.mif", 
+			"$(ZDIR)\\more.mif");
 
-		String repl3 = view.unexpandMacros("$(EPOCROOT)\\release\\foo\\data\\more.mif", 
-				new String[] {  "TARGETDIR", "ZDIR" });
-		assertEquals("$(EPOCROOT)\\release\\foo\\data\\more.mif", repl3);
+		doUnexpandTest(view, "$(EPOCROOT)\\release\\foo\\data\\more.mif", 
+			"$(EPOCROOT)\\release\\foo\\data\\more.mif");
 
-		String repl4 = view.unexpandMacros("\\release\\winscw\\data\\more.mif", 
-				new String[] {  "TARGETDIR", "ZDIR" });
-		assertEquals("\\release\\winscw\\data\\more.mif", repl4);
+		doUnexpandTest(view, "\\release\\winscw\\data\\more.mif", 
+			"\\release\\winscw\\data\\more.mif");
 
 	}
 	
+	
+	private void doUnexpandTest(IMakefileView view, String expanded,
+			String unexpanded) {
+
+		// TODO: tests should ideally work with both slash directions on both OSes
+		if (HostOS.IS_WIN32) {
+			String repl = view.unexpandMacros(expanded, 
+					new String[] {  "TARGETDIR", "ZDIR" });
+			assertEquals(unexpanded, repl);
+		} else {
+			expanded = HostOS.convertPathToUnix(expanded);
+			unexpanded = HostOS.convertPathToUnix(unexpanded);
+			String repl = view.unexpandMacros(expanded, 
+					new String[] {  "TARGETDIR", "ZDIR" });
+			assertEquals(unexpanded, repl);
+		}
+		
+	}
+
 	public void testProblems() {
 		makeModel("\n\n)ZDIR@foo{\n"+
 				"^^ placate ^^\n");

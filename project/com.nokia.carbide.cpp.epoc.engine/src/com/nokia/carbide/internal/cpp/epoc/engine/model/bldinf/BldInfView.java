@@ -41,7 +41,7 @@ public class BldInfView extends ViewASTBase implements IBldInfView {
 	/**
 	 * 
 	 */
-	public static final String EPOC32_INCLUDE = "\\epoc32\\include"; //$NON-NLS-1$
+	public static final String EPOC32_INCLUDE = "/epoc32/include"; //$NON-NLS-1$
 	public static final String ZIP_MODIFIER = ":zip"; //$NON-NLS-1$
 	public static final String PRJ_EXPORTS_KEYWORD = "PRJ_EXPORTS"; //$NON-NLS-1$
 	public static final String PRJ_TESTEXPORTS_KEYWORD = "PRJ_TESTEXPORTS"; //$NON-NLS-1$
@@ -105,7 +105,11 @@ public class BldInfView extends ViewASTBase implements IBldInfView {
 	 * @return
 	 */
 	private IPath fromBldInfToProjectPath(IPath bldinfPath) {
-		IPath path = currentDirectory != null && !bldinfPath.isAbsolute() ? currentDirectory.append(bldinfPath) : bldinfPath;
+		IPath path;
+		if (currentDirectory != null && !isAbsolutePath(bldinfPath))
+			path = currentDirectory.append(bldinfPath);
+		else
+			path = bldinfPath;
 		if (FileUtils.isPathInParent(path)) {
 			path = getProjectPath().append(path);
 		}
@@ -136,7 +140,7 @@ public class BldInfView extends ViewASTBase implements IBldInfView {
 	 * @return BldInf-relative directory 
 	 */
 	IPath fromProjectToBldInfPath(IPath projectPath) {
-		if (projectPath.isAbsolute())
+		if (isAbsolutePath(projectPath))
 			return projectPath;
 		return fromProjectToRelativePath(currentDirectory, projectPath);
 	}
@@ -277,7 +281,7 @@ public class BldInfView extends ViewASTBase implements IBldInfView {
 				path = fromBldInfToProjectPath(pathName.substring(1));
 			} else {
 				path = FileUtils.createPossiblyRelativePath(pathName);
-				if (!path.isAbsolute())
+				if (!isAbsolutePath(path))
 					path = new Path(EPOC32_INCLUDE).append(path);
 			}
 		}
@@ -311,7 +315,7 @@ public class BldInfView extends ViewASTBase implements IBldInfView {
 				} else {
 					return epocIncludeRelPath;
 				}
-			} else if (!projectPath.isAbsolute()) {
+			} else if (!isAbsolutePath(projectPath)) {
 				// project-relative
 				return new Path("|" + fromProjectToBldInfPath(projectPath).toString());
 			}

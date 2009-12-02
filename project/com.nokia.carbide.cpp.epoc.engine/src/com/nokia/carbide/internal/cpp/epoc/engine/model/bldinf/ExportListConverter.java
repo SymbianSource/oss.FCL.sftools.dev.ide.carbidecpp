@@ -25,6 +25,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTStatement;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.bldinf.ASTBldInfFactory;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.bldinf.IASTBldInfExportStatement;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.StructuredItemStatementListConverter;
+import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewBase;
 import com.nokia.cpp.internal.api.utils.core.*;
 
 import org.eclipse.core.runtime.IPath;
@@ -90,9 +91,9 @@ class ExportListConverter implements StructuredItemStatementListConverter<IASTBl
 		if (targetPath != null) {
 			// need the backslashes for an export to a drive, else the build rules are broken
 			// (they use 'copy' in DOS which doesn't like forward slashes)
-			if (targetPath.getDevice() != null) {
-				target = targetPath.toOSString();
-				source = sourcePath.toOSString();
+			if (ViewBase.isWin32DrivePath(targetPath)) {
+				target = HostOS.convertPathToWindows(targetPath.toOSString());
+				source = HostOS.convertPathToWindows(sourcePath.toOSString());
 			}
 			else
 				target = bldInfView.pathString(targetPath);

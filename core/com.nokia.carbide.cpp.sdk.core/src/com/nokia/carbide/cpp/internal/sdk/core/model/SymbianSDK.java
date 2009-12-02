@@ -20,6 +20,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -68,7 +69,7 @@ public class SymbianSDK implements ISymbianSDK {
 	private static final String BUILD_INFO_TXT_FILE = "epoc32/data/buildinfo.txt"; //$NON-NLS-1$
 	private static final String BUILD_INFO_KEYWORD = "ManufacturerSoftwareBuild";
 	
-	private static final String WINSCW_UREL_DIR = "epoc32\\release\\winscw\\urel";
+	private static final String WINSCW_UREL_DIR = "epoc32/release/winscw/urel";
 	
 	protected DeviceType deviceEntry = null;
 	private boolean enabled = true;
@@ -350,7 +351,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	public IPath getIncludePath() {
 		String epocRoot = getEPOCROOT();
 		if (epocRoot.length() > 0) {
-			IPath epoc32IncPath = new Path(epocRoot).append("epoc32\\include");
+			IPath epoc32IncPath = new Path(epocRoot).append("epoc32/include");
 			// try to canonicalize it so it matches actual file system case
 			try {
 				epoc32IncPath = new Path(epoc32IncPath.toFile().getCanonicalPath());
@@ -414,7 +415,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	public IPath getReleaseRoot() {
 		String epocRoot = getEPOCROOT();
 		if (epocRoot.length() > 0) {
-			IPath epoc32RelPath = new Path(epocRoot).append("epoc32\\release");
+			IPath epoc32RelPath = new Path(epocRoot).append("epoc32/release");
 			// try to canonicalize it so it matches actual file system case
 			try {
 				epoc32RelPath = new Path(epoc32RelPath.toFile().getCanonicalPath());
@@ -443,7 +444,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	public IPath getToolsPath() {
 		String epocRoot = getEPOCROOT();
 		if (epocRoot.length() > 0) {
-			IPath epoc32ToolsPath = new Path(epocRoot).append("epoc32\\tools");
+			IPath epoc32ToolsPath = new Path(epocRoot).append("epoc32/tools");
 			// try to canonicalize it so it matches actual file system case
 			try {
 				epoc32ToolsPath = new Path(epoc32ToolsPath.toFile().getCanonicalPath());
@@ -1102,7 +1103,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 					variantDir = matcher.group(1);
 					variantFile = matcher.group(3); 
 					File variantFullPathFile = new File(epocRoot, variantDir + File.separator + variantFile);
-					IPath variantFilePath = new Path(variantFullPathFile.getAbsolutePath());
+					IPath variantFilePath = new Path(HostOS.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
 					return variantFilePath;
 				}
 			}

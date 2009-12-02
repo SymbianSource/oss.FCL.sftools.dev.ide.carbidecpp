@@ -24,6 +24,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
@@ -36,6 +37,9 @@ import java.io.File;
 import java.util.*;
 
 public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
+
+	// NOTE: all the paths below use Win32 paths.  We convert these to Unix format at the end of the
+	// #getResolved...() and #getModified...() methods.
 	
 	private static final String X86_COMP_LINK_FOLDER = "Symbian_Tools\\Command_Line_Tools";
 	
@@ -43,11 +47,12 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 	private static final String X86_WIN32SDK_FOLDER = "Symbian_Support\\Win32-x86 Support\\Libraries\\Win32 SDK";
 
 	private static final String X86_LINK_LIB_LIST = "MSL_All_MSE_Symbian_D.lib;gdi32.lib;user32.lib;kernel32.lib;";
-	                                                 
-	private static final String MWCSYM2INCLUDES = "MWCSYM2INCLUDES";
-	private static final String MWSYM2LIBRARIES = "MWSYM2LIBRARIES";
-	private static final String MWSYM2LIBRARYFILES = "MWSYM2LIBRARYFILES";
-	private static final String MWCINCLUDES = "MWCINCLUDES";
+	                        
+	// use host-independent case
+	private static final String MWCSYM2INCLUDES = "MWCSym2Includes";
+	private static final String MWSYM2LIBRARIES = "MWSym2Libraries";
+	private static final String MWSYM2LIBRARYFILES = "MWSym2LibraryFiles";
+	private static final String MWCINCLUDES = "MWCIncludes";
 	private static final String PATH = "PATH";
 	private static final String EPOCROOT = "EPOCROOT";
 	
@@ -123,7 +128,7 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 	public IEnvironmentVariable getEnvVarFromConfiguration(String varName) {
 		
 		for (IEnvironmentVariable currVar : envVarsList) {
-			if (currVar.getName().toUpperCase().equals(varName.toUpperCase())) {
+			if (currVar.getName().equalsIgnoreCase(varName)) {
 				return currVar;
 			}
 		}
@@ -229,13 +234,13 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 
 					prependValue += currEnvVar.substring(PATH.length() + 1);
 					returnEnvArray[i] = prependValue;
-				} else if ((currEnvVar.toUpperCase() + EQUALS).startsWith(MWCSYM2INCLUDES + EQUALS)) {
+				} else if ((currEnvVar.toUpperCase() + EQUALS).startsWith(MWCSYM2INCLUDES.toUpperCase() + EQUALS)) {
 						returnEnvArray[i] = MWCSYM2INCLUDES + EQUALS + getMWIncludesEnvString(); 
 					//}
-				} else if ((currEnvVar.toUpperCase() + EQUALS).startsWith(MWSYM2LIBRARIES + EQUALS)) {
+				} else if ((currEnvVar.toUpperCase() + EQUALS).startsWith(MWSYM2LIBRARIES.toUpperCase() + EQUALS)) {
 						returnEnvArray[i] = MWSYM2LIBRARIES + EQUALS + getMWLibraryIncludesEnvString();
 					
-				} else if ((currEnvVar.toUpperCase() + EQUALS).startsWith(MWSYM2LIBRARYFILES + EQUALS)) {
+				} else if ((currEnvVar.toUpperCase() + EQUALS).startsWith(MWSYM2LIBRARYFILES.toUpperCase() + EQUALS)) {
 						returnEnvArray[i] = MWSYM2LIBRARYFILES + EQUALS + getMWLibraryFilesEnvString();
 				}
 				
@@ -352,6 +357,13 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 				returnEnvArray = mapToStringArray(varsMap);
 			}
 		}
+		
+		// Fix up the notation in the environment (convert Win32-type variables to Unix-type)
+		if (HostOS.IS_UNIX) {
+			for (int i = 0; i < returnEnvArray.length; i++) {
+				returnEnvArray[i] = HostOS.convertPathListToUnix(returnEnvArray[i]);
+			}
+		}
 
 		return returnEnvArray;
 	}
@@ -369,6 +381,13 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 				}
 			} else if (!systemVar.equals(currVar.substring(currVar.indexOf("=")+1))) {
 				modifiedVars = addToArray(modifiedVars, currVar);
+			}
+		}
+		
+		// Fix up the notation in the environment (convert Win32-type variables to Unix-type)
+		if (HostOS.IS_UNIX) {
+			for (int i = 0; i < modifiedVars.length; i++) {
+				modifiedVars[i] = HostOS.convertPathListToUnix(modifiedVars[i]);
 			}
 		}
 		

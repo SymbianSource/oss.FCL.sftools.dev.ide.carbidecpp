@@ -22,8 +22,10 @@ import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference.EMakeEn
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTProblemNode;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import java.util.ArrayList;
@@ -446,13 +448,13 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		
 		exp = view.createExport();
 		exp.setSourcePath(new Path("gfx/myfile.mbm"));
-		exp.setTargetPath(new Path("\\sys\\resources\\MyApp\\myfile.mbm"));
-		assertEquals(new Path("\\sys\\resources\\MyApp\\myfile.mbm"), exp.getTargetPath());
+		exp.setTargetPath(new Path("/sys/resources/MyApp/myfile.mbm"));
+		assertEquals(new Path("/sys/resources/MyApp/myfile.mbm"), exp.getTargetPath());
 		view.getExports().add(exp);
 
 		exp = view.createExport();
 		exp.setSourcePath(new Path("inc/header2.h"));
-		exp.setTargetPath(new Path("\\epoc32\\include\\header2.h"));
+		exp.setTargetPath(new Path("/epoc32/include/header2.h"));
 		view.getExports().add(exp);
 
 		exp = view.createExport();
@@ -509,7 +511,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		IBldInfView view = getView(config);
 		assertNotNull(view);
 	
-		view.getExports().get(1).setTargetPath(new Path("\\sys\\resources\\MyApp\\myfile.mbm"));
+		view.getExports().get(1).setTargetPath(new Path("/sys/resources/MyApp/myfile.mbm"));
 		
 		commitTest(view,
 				"PRJ_EXPORTS\n"+
@@ -565,11 +567,19 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		assertEquals(2, view.getMessages().length);
 	}
 	
+	private static IPath insideSDKPath;
+	static {
+		if (HostOS.IS_WIN32) {
+			insideSDKPath = new Path("c:\\symbian\\9.1\\S60_3rd\\S60Ex\\Hello\\group\\bld.inf");
+		} else {
+			insideSDKPath = new Path("/home/user/symbian/9.1/S60_3rd/S60Ex/Hello/group/bld.inf");
+		}
+	}
 	public void testRootProject() {
 		// make sure we handle project root correctly when it's the root directory
 		for (int i = 0; i < 2; i++){
 			parserConfig.projectPath = i == 0 ? new Path("c:\\") : new Path("c:");
-			this.path = new Path("c:\\symbian\\9.1\\S60_3rd\\S60Ex\\Hello\\group\\bld.inf");
+			this.path = insideSDKPath;
 			makeModel("PRJ_MMPFILES\n"+
 					"test.mmp\n");
 			
@@ -581,16 +591,24 @@ public class TestBldInfView extends BaseBldInfViewTest {
 
 	private void _testRootProject(IBldInfData bldInfData) {
 		IMMPReference mmp = bldInfData.getAllMMPReferences()[0];
-		// important to be relative
-		assertEquals(new Path("symbian/9.1/S60_3rd/S60Ex/Hello/group/test.mmp"), mmp.getPath());
+		// important to be relative and with no drive
+		if (HostOS.IS_WIN32)
+			assertEquals(insideSDKPath.makeRelative().setDevice(null).removeLastSegments(1).append("test.mmp"), mmp.getPath());
+		else
+			assertEquals(insideSDKPath.removeLastSegments(1).append("test.mmp"), mmp.getPath());
 	}
 	
 	/**
 	 * The base directory changes as files are #included
 	 *
 	 */
+	private static IPath basePath;
 	public void testBaseDirectory() {
-		parserConfig.getFilesystem().put(new Path("c:/test/bld.inf").toOSString(), 
+		if (HostOS.IS_WIN32)
+			basePath = new Path("c:/test/");
+		else
+			basePath = new Path("/tmp/test/");
+		parserConfig.getFilesystem().put(basePath.append("bld.inf").toOSString(), 
 				"PRJ_MMPFILES\n"+
 				"base.mmp\n"+
 				"gnumakefile sub\\base.mk\n"+
@@ -607,7 +625,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		makeModel(
 				"PRJ_MMPFILES\n"+
 				"first.mmp\n"+
-				"#include \"c:\\test\\bld.inf\"\n"+
+				"#include \"" + basePath.toOSString() + "bld.inf\"\n"+
 				"#include \"../utils/bld.inf\"\n"+
 				"PRJ_MMPFILES\n"+
 				"last.mmp\n" +
@@ -626,8 +644,8 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		assertEquals(new Path("group/first.mmp"), bldInfData.getMakMakeReferences().get(0).getPath());
 		
 		// note: should not be relative path when outside the project
-		assertEquals(new Path("c:/test/base.mmp"), bldInfData.getMakMakeReferences().get(1).getPath());
-		assertEquals(new Path("c:/test/sub/base.mk"), bldInfData.getMakMakeReferences().get(2).getPath());
+		assertEquals(basePath.append("base.mmp"), bldInfData.getMakMakeReferences().get(1).getPath());
+		assertEquals(basePath.append("sub/base.mk"), bldInfData.getMakMakeReferences().get(2).getPath());
 		
 		assertEquals(new Path("utils/utils.mmp"), bldInfData.getMakMakeReferences().get(3).getPath());
 		assertEquals(new Path("utils.mk"), bldInfData.getMakMakeReferences().get(4).getPath());
@@ -635,7 +653,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		assertEquals(new Path("group/last.mmp"), bldInfData.getMakMakeReferences().get(5).getPath());
 
 		assertEquals(3, bldInfData.getExports().size());
-		assertEquals(new Path("c:/test/base.txt"), bldInfData.getExports().get(0).getSourcePath());
+		assertEquals(basePath.append("base.txt"), bldInfData.getExports().get(0).getSourcePath());
 		assertEquals(new Path("utils/utils.txt"), bldInfData.getExports().get(1).getSourcePath());
 		assertEquals(new Path("group/last.txt"), bldInfData.getExports().get(2).getSourcePath());
 	}
@@ -978,7 +996,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 				"//  End of File  \r\n"; 
 				
 		Map<String, String> originalFiles = new HashMap<String, String>();
-		originalFiles.put("..\\Speeddial\\group\\bld.inf", spdiaText);
+		originalFiles.put(new Path("../Speeddial/group/bld.inf").toOSString(), spdiaText);
 		// this fails
 		originalFiles.put("platform_paths.hrh", "\n"+"#ifndef MACRO\n"+"#define MACRO\n"+"\n"+"#endif\n"+"\n");
 		// this passes
@@ -1270,7 +1288,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 			"*  Description : \r\n" + 
 			"*  Version     : \r\n" + 
 			"*\r\n" + 
-			"*  Copyright © 2006 Nokia. All rights reserved.\r\n" + 
+			"*  Copyright (c) 2006 Nokia. All rights reserved.\r\n" + 
 			"*  This material, including documentation and any related\r\n" + 
 			"*  computer programs, is protected by copyright controlled by\r\n" + 
 			"*  Nokia Corporation. All rights are reserved. Copying,\r\n" + 
@@ -1329,7 +1347,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 			"*    whole MusicPlayer application including all related libraries.\r\n" + 
 			"*  Version     : \r\n" + 
 			"*\r\n" + 
-			"*  Copyright © 2002-2006 Nokia Corporation.\r\n" + 
+			"*  Copyright (c) 2002-2006 Nokia Corporation.\r\n" + 
 			"*  This material, including documentation and any related \r\n" + 
 			"*  computer programs, is protected by copyright controlled by \r\n" + 
 			"*  Nokia Corporation. All rights are reserved. Copying, \r\n" + 
@@ -1430,7 +1448,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 			"*                that make up the MusicShopEmbed, MusicShopApp and MusicShopLib\r\n" + 
 			"*  Version	: %version: da1mmcf#15 %\r\n" + 
 			"*\r\n" + 
-			"*  Copyright © 2006 Nokia. All rights reserved.\r\n" + 
+			"*  Copyright (c) 2006 Nokia. All rights reserved.\r\n" + 
 			"*  This material, including documentation and any related\r\n" + 
 			"*  computer programs, is protected by copyright controlled by\r\n" + 
 			"*  Nokia Corporation. All rights are reserved. Copying,\r\n" + 
@@ -1477,7 +1495,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 			"*    all MusicVisualization projects including plugins.\r\n" + 
 			"*  Version     : \r\n" + 
 			"*\r\n" + 
-			"*  Copyright © 2005 Nokia Corporation.\r\n" + 
+			"*  Copyright (c) 2005 Nokia Corporation.\r\n" + 
 			"*  This material, including documentation and any related \r\n" + 
 			"*  computer programs, is protected by copyright controlled by \r\n" + 
 			"*  Nokia Corporation. All rights are reserved. Copying, \r\n" + 
@@ -1508,9 +1526,9 @@ public class TestBldInfView extends BaseBldInfViewTest {
 			"\r\n" + 
 			"// End of File\r\n" ; 
 			
-		parserConfig.getFilesystem().put("..\\MusicPlayer\\group\\bld.inf", musicPlayerBldInf);
-		parserConfig.getFilesystem().put("..\\MusicShop\\group\\bld.inf", musicShopBldInf);
-		parserConfig.getFilesystem().put("..\\MusicVisualization\\group\\bld.inf", musicVisualizationBldInf);
+		parserConfig.getFilesystem().put("../MusicPlayer/group/bld.inf", musicPlayerBldInf);
+		parserConfig.getFilesystem().put("../MusicShop/group/bld.inf", musicShopBldInf);
+		parserConfig.getFilesystem().put("../MusicVisualization/group/bld.inf", musicVisualizationBldInf);
 			
 		makeModel(origFile);
 		
@@ -1518,13 +1536,13 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		assertNotNull(view);
 		
 		IMMPReference ref = view.createMMPReference();
-		ref.setPath(new Path("group\\FMRadio.mmp"));
+		ref.setPath(new Path("group/FMRadio.mmp"));
 		view.getMakMakeReferences().add(ref);
 		
 		commitTest(view, updatedFile);
-		assertEquals(parserConfig.getFilesystem().get("..\\MusicPlayer\\group\\bld.inf"), musicPlayerBldInf);
-		assertEquals(parserConfig.getFilesystem().get("..\\MusicShop\\group\\bld.inf"), musicShopBldInf);
-		assertEquals(parserConfig.getFilesystem().get("..\\MusicVisualization\\group\\bld.inf"), musicVisualizationBldInf);
+		assertEquals(parserConfig.getFilesystem().get("../MusicPlayer/group/bld.inf"), musicPlayerBldInf);
+		assertEquals(parserConfig.getFilesystem().get("../MusicShop/group/bld.inf"), musicShopBldInf);
+		assertEquals(parserConfig.getFilesystem().get("../MusicVisualization/group/bld.inf"), musicVisualizationBldInf);
  
 	}
 	

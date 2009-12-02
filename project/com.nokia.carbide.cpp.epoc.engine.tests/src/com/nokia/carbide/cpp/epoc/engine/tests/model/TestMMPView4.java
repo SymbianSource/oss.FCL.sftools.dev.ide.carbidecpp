@@ -1009,7 +1009,7 @@ public class TestMMPView4 extends BaseMMPViewTest {
 		makeModel(text);
 		view = getView(mmpConfig);
 		
-		view.getSystemIncludes().set(1, new Path("\\epoc32\\foo"));
+		view.getSystemIncludes().set(1, new Path("/epoc32/foo"));
 		commitTest(view, text5);
 		
 	}
@@ -1065,7 +1065,7 @@ public class TestMMPView4 extends BaseMMPViewTest {
 		makeModel(text);
 		view = getView(mmpConfig);
 		
-		view.getSystemIncludes().set(1, new Path("\\epoc32\\arglebargle"));
+		view.getSystemIncludes().set(1, new Path("/epoc32/arglebargle"));
 		commitTest(view, text4);
 		
 	}
@@ -1122,7 +1122,7 @@ public class TestMMPView4 extends BaseMMPViewTest {
 		makeModel(text);
 		view = getView(mmpConfig);
 		
-		view.getSystemIncludes().set(1, new Path("\\epoc32\\arglebargle"));
+		view.getSystemIncludes().set(1, new Path("/epoc32/arglebargle"));
 		commitTest(view, text4);
 		
 	}
@@ -1181,7 +1181,7 @@ public class TestMMPView4 extends BaseMMPViewTest {
 			checkNoProblems(view);
 			
 			IPath path = view.getSystemIncludes().get(0);
-			assertEquals(new Path("\\src\\cedar\\generic\\base\\e32\\drivers\\pbus\\mmc\\sdcard\\sdcard3c"), 
+			assertEquals(new Path("/src/cedar/generic/base/e32/drivers/pbus/mmc/sdcard/sdcard3c"), 
 					path);
 			
 			

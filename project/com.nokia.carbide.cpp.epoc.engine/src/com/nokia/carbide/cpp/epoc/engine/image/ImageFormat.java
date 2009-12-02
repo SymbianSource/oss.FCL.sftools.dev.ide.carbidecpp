@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  */
 public class ImageFormat {
 	// tolerate but ignore extra 'c'
-	private static final Pattern FORMAT_PATTERN = Pattern.compile("/?(c?)(\\d+)(,c?(\\d+))?", //$NON-NLS-1$
+	private static final Pattern FORMAT_PATTERN = Pattern.compile("[/-]?(c?)(\\d+)(,c?(\\d+))?", //$NON-NLS-1$
 			Pattern.CASE_INSENSITIVE);
 	public boolean isColor;
 	public int depth;

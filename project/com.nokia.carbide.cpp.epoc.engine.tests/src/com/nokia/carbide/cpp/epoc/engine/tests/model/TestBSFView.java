@@ -43,7 +43,7 @@ public class TestBSFView extends BaseViewTests {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		this.path = new Path("c:\\symbian\\9.5\\epoc32\\tools\\Test.bsf");
+		this.path = new Path("c:/symbian/9.5/epoc32/tools/Test.bsf");
 	
 		config = new IViewConfiguration() {
 	
