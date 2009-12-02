@@ -348,7 +348,7 @@ public class ViewWizardManager {
 		Check.checkState(template != null);
 		String appUID = (String) template.getTemplateValues().get("uid3"); //$NON-NLS-1$
 		Check.checkState(appUID != null);
-		return appUID;
+		return appUID.toLowerCase();
 	}
 
 	private void createViewModelFromWizardData(Language language) throws Exception {
