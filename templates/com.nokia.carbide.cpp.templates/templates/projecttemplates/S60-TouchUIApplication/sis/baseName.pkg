@@ -28,7 +28,7 @@
 "$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_$(uid3).rsc"		-"!:\resource\apps\$(baseName)_$(uid3).rsc"
 "$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_$(uid3)_reg.rsc"	-"!:\private\10003a3f\import\apps\$(baseName)_$(uid3)_reg.rsc"
 "$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_$(uid3).mif" -"!:\resource\apps\$(baseName)_$(uid3).mif"
-"..\$(helpDir)\$(baseName)_$(uid3).hlp"							 -"!:\resource\help\$(baseName)_$(uid3).hlp"
+$(buildHelpSISPrefix)"..\$(helpDir)\$(baseName)_$(uid3).hlp"							 -"!:\resource\help\$(baseName)_$(uid3).hlp"
 
 ; Add any installation notes if applicable
 ;"$(baseName).txt"		-"!:\private\$(uid3-WITHOUT_0X)\$(baseName).txt"
