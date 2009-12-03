@@ -109,11 +109,13 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		gd.horizontalSpan = 2;
 		hostLabel.setLayoutData(gd);
 		hostLabel.setToolTipText(Messages.getString("EmulationMainTab.3")); //$NON-NLS-1$
+		hostLabel.setData(".uid", "EmulatorMainTab.hostLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 
 		hostText = new Text(projComp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		hostText.setLayoutData(gd);
 		hostText.setToolTipText(Messages.getString("EmulationMainTab.3")); //$NON-NLS-1$
+		hostText.setData(".uid", "EmulatorMainTab.hostText");  //$NON-NLS-1$ //$NON-NLS-2$
 		hostText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent evt) {
@@ -122,6 +124,7 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		});
 
 		hostBrowse = createPushButton(projComp, Messages.getString("EmulationMainTab.4"), null); //$NON-NLS-1$
+		hostBrowse.setData(".uid", "EmulatorMainTab.hostBrowse");  //$NON-NLS-1$ //$NON-NLS-2$
 		hostBrowse.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent evt) {
