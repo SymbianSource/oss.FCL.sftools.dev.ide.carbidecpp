@@ -16,7 +16,7 @@ PRJ_MMPFILES
 
 gnumakefile icons_scalable_dc.mk
 
-$(buildHelpPrefix)gnumakefile ..\$(helpDir)\build_help.mk
+$(buildHelpPrefix)gnumakefile ../$(helpDir)/build_help.mk
 
 $(baseName).mmp
 

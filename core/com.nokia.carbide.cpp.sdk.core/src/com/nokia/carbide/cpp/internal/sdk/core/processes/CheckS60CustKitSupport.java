@@ -26,7 +26,7 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.template.engine.ITemplate;
 import com.nokia.carbide.templatewizard.process.AbstractProjectProcess;
 import com.nokia.carbide.templatewizard.process.IParameter;
-import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * Process used to fill in S60 specific include symbols for INF/MMP files 
@@ -49,7 +49,11 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String BUILD_HELP_SIS_PREFIX = "buildHelpSISPrefix";
 	private static final String DISABLE_HELP_STRING = "//";
 	private static final String DISABLE_HELP_PKG = ";";
-	private static final String HELP_COMPILER = "epoc32/tools/cshlpcmp.bat";
+	
+	private static final String HELP_COMPILER_VARIABLE = "cshlpcmp";
+	private static final String HELP_COMPILER_WIN32 = "cshlpcmp.bat";
+	private static final String HELP_COMPILER_PERL = "cshlpcmp.pl";
+	
 	private static final String HELP_SUPPORT_MACRO = "helpSupport";
 	private static final String HELP_SUPPORT_STRING = "MACRO _HELP_AVAILABLE_";
 
@@ -63,17 +67,18 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		includesValue = createCustKitIncludes(template);
 		template.getTemplateValues().put(S60_50_BUILD_MACROS, includesValue);
 
-		boolean hasHelp = isHelpCompilerAvailable(template);
+		String helpCompiler = findHelpCompiler(template);
 		String enableHelpString = "";
 		String enableHelpSISString = "";
 		String helpSupportString = "";
-		if (hasHelp) {
+		if (helpCompiler != null) {
 			helpSupportString = HELP_SUPPORT_STRING;
 		}
 		else {
 			enableHelpString = DISABLE_HELP_STRING;
 			enableHelpSISString = DISABLE_HELP_PKG;
 		}
+		template.getTemplateValues().put(HELP_COMPILER_VARIABLE, helpCompiler != null ? helpCompiler : "cshlpcmp"); //$NON-NLS-1$
 		template.getTemplateValues().put(BUILD_HELP_PREFIX, enableHelpString);
 		template.getTemplateValues().put(BUILD_HELP_SIS_PREFIX, enableHelpSISString);
 		template.getTemplateValues().put(HELP_SUPPORT_MACRO, helpSupportString);
@@ -84,26 +89,45 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		return SDKCorePlugin.getDefault();
 	}
 	
-	private boolean isHelpCompilerAvailable(ITemplate template) {
+	@SuppressWarnings("unchecked")
+	private ISymbianBuildContext[] getBuildContexts(ITemplate template) {
 		Object object = template.getTemplateValues().get(SELECTED_BUILD_CONFIGS_VALUE_KEY);
 		if (object instanceof List) {
-			List listOfBuildConfigs = (List) object;
-			for (Object obj : listOfBuildConfigs) {
-				Check.checkContract(obj instanceof ISymbianBuildContext);
-				ISymbianBuildContext symbianBuildContext = (ISymbianBuildContext)obj;
-				ISymbianSDK sdk = symbianBuildContext.getSDK();
-				if (sdk != null) {
-					File contextHelpCompiler = new File(sdk.getEPOCROOT() + HELP_COMPILER);
+			List<ISymbianBuildContext> listOfBuildConfigs = (List<ISymbianBuildContext>) object;
+			return (ISymbianBuildContext[]) listOfBuildConfigs
+					.toArray(new ISymbianBuildContext[listOfBuildConfigs.size()]);
+		}
+		return new ISymbianBuildContext[0];
+	}
+	
+	/**
+	 * Check whether the help compiler is available, and what its name is.
+	 * @param template
+	 * @return
+	 */
+	private String findHelpCompiler(ITemplate template) {
+		String[] helpCompilerNames;
+		
+		if (HostOS.IS_WIN32) {
+			helpCompilerNames = new String[] { HELP_COMPILER_WIN32, HELP_COMPILER_PERL };
+		} else {
+			helpCompilerNames = new String[] { HELP_COMPILER_PERL };
+		}
+		for (ISymbianBuildContext symbianBuildContext : getBuildContexts(template)) {
+			ISymbianSDK sdk = symbianBuildContext.getSDK();
+			if (sdk != null) {
+				File tools = new File(sdk.getEPOCROOT(), "epoc32/tools");
+				for (String filename : helpCompilerNames) {
+					File contextHelpCompiler = new File(tools, filename);
 					if (contextHelpCompiler.exists()) {
-						return true;
+						return contextHelpCompiler.getName();
 					}
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	/**
 	 * Check the SDK version and certain includes to figure out which include macros to add.
 	 * Starting with S60 5.0 CustKits (2007 WK 24), many source bases are using macros for include paths.
@@ -111,45 +135,39 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	 * values/logic here.
 	 */
 	private String createCustKitIncludes(ITemplate template){
-		Object object = template.getTemplateValues().get(SELECTED_BUILD_CONFIGS_VALUE_KEY);
 		String S60_50_Macros_String = "";
-		if (object instanceof List) {
-			List listOfBuildConfigs = (List) object;
-			for (Object obj : listOfBuildConfigs) {
-				Check.checkContract(obj instanceof ISymbianBuildContext);
-				ISymbianBuildContext symbianBuildContext = (ISymbianBuildContext)obj;
-				ISymbianSDK sdk = symbianBuildContext.getSDK();
-				if (sdk != null) {
-					File middleWareInclude = new File(sdk.getEPOCROOT() + S60_MIDDWARE_INC);
-					
-					// NOTE: Here we need to check the SDK major version becuase
-					// the 3.2 CustKit
-					// has the middleware folder but doesn't use the new build
-					// macros for include paths
-					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
-						// add symbol as at least one build config is a CustKit
-						S60_50_Macros_String = S60_INC_MACROS;
-						break;
-					}
-					
-					middleWareInclude = new File(sdk.getEPOCROOT() + S60_MIDDWARE_INC2);
-					File sfoPath = new File(sdk.getEPOCROOT() + S60_SF_FOLDER);
-					// check for middleware paths and /sf path (if SFO kit)
-					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists() && sfoPath.exists()) {
-						// add symbol as at least one build config is a CustKit
-						S60_50_Macros_String = S60_INC_MACROS_SF;
-						break;
-					}
-					
-					// try newer middleware paths moved to app layer includes
-					
-					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
-						// add symbol as at least one build config is a CustKit
-						S60_50_Macros_String = S60_INC_MACROS2;
-						break;
-					}
-
+		for (ISymbianBuildContext symbianBuildContext : getBuildContexts(template)) {
+			ISymbianSDK sdk = symbianBuildContext.getSDK();
+			if (sdk != null) {
+				File middleWareInclude = new File(sdk.getEPOCROOT(), S60_MIDDWARE_INC);
+				
+				// NOTE: Here we need to check the SDK major version becuase
+				// the 3.2 CustKit
+				// has the middleware folder but doesn't use the new build
+				// macros for include paths
+				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
+					// add symbol as at least one build config is a CustKit
+					S60_50_Macros_String = S60_INC_MACROS;
+					break;
 				}
+				
+				middleWareInclude = new File(sdk.getEPOCROOT(), S60_MIDDWARE_INC2);
+				File sfoPath = new File(sdk.getEPOCROOT(), S60_SF_FOLDER);
+				// check for middleware paths and /sf path (if SFO kit)
+				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists() && sfoPath.exists()) {
+					// add symbol as at least one build config is a CustKit
+					S60_50_Macros_String = S60_INC_MACROS_SF;
+					break;
+				}
+				
+				// try newer middleware paths moved to app layer includes
+				
+				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
+					// add symbol as at least one build config is a CustKit
+					S60_50_Macros_String = S60_INC_MACROS2;
+					break;
+				}
+
 			}
 		}
 		
