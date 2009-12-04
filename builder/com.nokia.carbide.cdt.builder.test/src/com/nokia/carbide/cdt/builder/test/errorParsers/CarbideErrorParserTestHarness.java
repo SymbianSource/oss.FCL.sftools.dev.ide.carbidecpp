@@ -245,7 +245,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		} else {
 			if (result.externalPath.equals(expected.externalPath) == false) {
 				// note: for some reason, on Unix, relative paths become full paths
-				if (HostOS.IS_UNIX && result.externalPath.makeRelative().equals(expected.externalPath.makeRelative())) {
+				if (result.externalPath.makeRelative().equals(expected.externalPath.makeRelative())) {
 					// fine
 				} else {
 					Assert.assertEquals("External path string from IDE marker", expected.externalPath, result.externalPath);

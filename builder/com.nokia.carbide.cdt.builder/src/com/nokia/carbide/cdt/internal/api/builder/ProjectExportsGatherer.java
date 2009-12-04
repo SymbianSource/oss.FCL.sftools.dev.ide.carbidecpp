@@ -338,9 +338,7 @@ public class ProjectExportsGatherer {
 	 * @param path
 	 */
 	protected boolean isAbsoluteDrivePath(IPath path) {
-		if (path.isAbsolute())
-			return true;
-		if (isWin32DrivePath(path))
+		if ((HostOS.IS_WIN32 && path.isAbsolute()) || isWin32DrivePath(path))
 			return true;
 		return false;
 	}

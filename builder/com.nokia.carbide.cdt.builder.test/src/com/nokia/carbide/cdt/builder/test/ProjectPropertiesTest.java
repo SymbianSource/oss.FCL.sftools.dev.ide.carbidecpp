@@ -101,7 +101,7 @@ public class ProjectPropertiesTest extends TestCase {
 		
 		// get a new copy of the info to make sure the changes we really applied
         ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
-		assertEquals(BLD_INF_PATH, cpi.getProjectRelativeBldInfPath().toOSString());
+		assertEquals(BLD_INF_PATH, cpi.getProjectRelativeBldInfPath().toPortableString());
 		assertEquals(stockBuildConfigs.get(0).getDisplayString(), cpi.getDefaultBuildConfigName());
 		assertTrue(cpi.isBuildingFromInf());
 		assertEquals(2, cpi.getInfBuildComponents().size());
