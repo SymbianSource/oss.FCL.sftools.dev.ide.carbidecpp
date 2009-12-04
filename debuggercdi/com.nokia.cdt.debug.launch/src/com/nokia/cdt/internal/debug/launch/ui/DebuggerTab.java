@@ -76,6 +76,7 @@ public class DebuggerTab extends CLaunchConfigurationTab {
 		breakAtMain.setLayoutData(data);
 		breakAtMain.setFont(parent.getFont());
 		breakAtMain.setToolTipText(Messages.getString("DebuggerTab.7")); //$NON-NLS-1$
+		breakAtMain.setData(".uid", "DebuggerTab.breakAtMain");  //$NON-NLS-1$ //$NON-NLS-2$
 		breakAtMain.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();
@@ -88,6 +89,7 @@ public class DebuggerTab extends CLaunchConfigurationTab {
 		data.horizontalSpan = 1;
 		mainBreakSymbol.setLayoutData(data);
 		mainBreakSymbol.setToolTipText(Messages.getString("DebuggerTab.7")); //$NON-NLS-1$
+		mainBreakSymbol.setData(".uid", "DebuggerTab.mainBreakSymbol");  //$NON-NLS-1$ //$NON-NLS-2$
 		mainBreakSymbol.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
@@ -100,6 +102,7 @@ public class DebuggerTab extends CLaunchConfigurationTab {
 		viewOutput.setLayoutData(data);
 		viewOutput.setFont(parent.getFont());
 		viewOutput.setToolTipText(Messages.getString("DebuggerTab.10")); //$NON-NLS-1$
+		viewOutput.setData(".uid", "DebuggerTab.viewOutput");  //$NON-NLS-1$ //$NON-NLS-2$
 		viewOutput.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();
@@ -112,6 +115,7 @@ public class DebuggerTab extends CLaunchConfigurationTab {
 		viewDebugTrace.setLayoutData(data);
 		viewDebugTrace.setFont(parent.getFont());
 		viewDebugTrace.setToolTipText(Messages.getString("DebuggerTab.17")); //$NON-NLS-1$
+		viewDebugTrace.setData(".uid", "DebuggerTab.viewDebugTrace");  //$NON-NLS-1$ //$NON-NLS-2$
 		viewDebugTrace.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();
@@ -124,6 +128,7 @@ public class DebuggerTab extends CLaunchConfigurationTab {
 		viewMessages.setLayoutData(data);
 		viewMessages.setFont(parent.getFont());
 		viewMessages.setToolTipText(Messages.getString("DebuggerTab.12")); //$NON-NLS-1$
+		viewMessages.setData(".uid", "DebuggerTab.viewMessages");  //$NON-NLS-1$ //$NON-NLS-2$
 		viewMessages.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();
