@@ -42,6 +42,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class SDKManager extends AbstractSDKManager {
@@ -240,9 +241,9 @@ public class SDKManager extends AbstractSDKManager {
 
 		String gcceToolDir = installPath + "\\bin";
 		
-		String[] gccBinToolList = { "arm-none-symbianelf-nm.exe",
-									"arm-none-symbianelf-readelf.exe",
-									"arm-none-symbianelf-c++filt.exe"
+		String[] gccBinToolList = { "arm-none-symbianelf-nm" + HostOS.EXE_EXT,
+									"arm-none-symbianelf-readelf" + HostOS.EXE_EXT,
+									"arm-none-symbianelf-c++filt" + HostOS.EXE_EXT
 									};
 		String toolName = null;
 		String toolPathName = null;

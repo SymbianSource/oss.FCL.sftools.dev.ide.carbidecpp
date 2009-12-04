@@ -22,6 +22,7 @@ import org.eclipse.cdt.core.settings.model.ICStorageElement;
 
 import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 
 public class ROMBuilderInfo implements IROMBuilderInfo {
@@ -37,11 +38,11 @@ public class ROMBuilderInfo implements IROMBuilderInfo {
 	public ROMBuilderInfo(ISymbianSDK sdk) {
 
 		this.romBuildCommandLine = ""; //$NON-NLS-1$
-		this.romBuildWorkingDirectory = "C:\\"; //$NON-NLS-1$
+		this.romBuildWorkingDirectory = HostOS.IS_WIN32 ? "C:\\" : "/tmp"; //$NON-NLS-1$ //$NON-NLS-2$
 		
 		// now set epoc32\rom folder in the sdk as the default working dir 
 		// this is most common folder that rom images are built from for most symbian kits..
-		String dir = sdk.getEPOCROOT() + "epoc32\\rom\\";  //$NON-NLS-1$
+		String dir = sdk.getEPOCROOT() + "epoc32/rom/";  //$NON-NLS-1$
 		if (new File(dir).exists())
 			romBuildWorkingDirectory = dir;
 	}

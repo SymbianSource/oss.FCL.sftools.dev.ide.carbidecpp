@@ -30,6 +30,8 @@ public class HostOS {
 	public static boolean IS_WIN32 = File.separatorChar == '\\';
 	/** Is the host some Unix variant? */
 	public static boolean IS_UNIX = File.separatorChar == '/';
+	/** Executable file extension */
+	public static final String EXE_EXT = IS_WIN32 ? ".exe" : "";
 	
 	/** The name of the PATH variable in the environment.  Capitalized differently per OS. */
 	public static String PATH_VARIABLE_NAME = IS_WIN32 ? "Path" : "PATH";
@@ -104,7 +106,7 @@ public class HostOS {
 			IPath executablePath = new Path(executable);
 			String ext = executablePath.getFileExtension();
 			if (ext == null) {
-				executable += ".exe";
+				executable += EXE_EXT;
 			}
 		}
 		return executable;

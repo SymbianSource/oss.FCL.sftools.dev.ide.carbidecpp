@@ -83,6 +83,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGInstallFile;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.PKGModelHelper;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
@@ -110,10 +111,10 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
     private static final String DEFAULT_KEY_NAME = "key-gen.key"; //$NON-NLS-1$
     private static final String DEFAULT_CERT_NAME = "cert-gen.cer"; //$NON-NLS-1$
     private static final String DEAULT_PASSWORD = "DefaultPassword"; //$NON-NLS-1$
-    private static final String MAKEKEYS_EXE = "makekeys.exe"; //$NON-NLS-1$
-    private static final String MAKESIS_EXE = "makesis.exe"; //$NON-NLS-1$
+    private static final String MAKEKEYS_EXE = "makekeys" + HostOS.EXE_EXT; //$NON-NLS-1$
+    private static final String MAKESIS_EXE = "makesis" + HostOS.EXE_EXT; //$NON-NLS-1$
     
-    private static final String SIGNSIS_EXE = "signsis.exe"; //$NON-NLS-1$
+    private static final String SIGNSIS_EXE = "signsis" + HostOS.EXE_EXT; //$NON-NLS-1$
     
 	private static List<IPath> normalMakMakePaths = Collections.synchronizedList(new ArrayList<IPath>());
 	private static List<IPath> testMakMakePaths = Collections.synchronizedList(new ArrayList<IPath>());

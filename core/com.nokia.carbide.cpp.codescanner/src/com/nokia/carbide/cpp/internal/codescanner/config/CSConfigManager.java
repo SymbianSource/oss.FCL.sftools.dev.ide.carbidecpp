@@ -36,6 +36,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.nokia.carbide.cpp.internal.codescanner.CSPlugin;
 import com.nokia.carbide.cpp.internal.codescanner.ui.CSPreferenceConstants;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * A class for handling global and project specific Codescanner configuration settings.
@@ -46,7 +47,7 @@ public class CSConfigManager implements IResourceChangeListener {
 	public static final String CS_CONFIG_SETTINGS_FILE = "carbide_cs_config.xml";
 
 	// name of CodeScanner commandline tool
-	public static final String CS_CMDLINE_TOOL = "codescanner.exe";
+	public static final String CS_CMDLINE_TOOL = "codescanner" + HostOS.EXE_EXT;
 
 	// private members
 	private static CSConfigSettings defaultConfig;

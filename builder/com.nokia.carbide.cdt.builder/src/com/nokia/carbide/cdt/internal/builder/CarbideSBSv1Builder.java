@@ -46,6 +46,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 
@@ -65,8 +66,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
     private static final String FINAL_CMD = "final"; //$NON-NLS-1$
     private static final String TEST_CMD = "test"; //$NON-NLS-1$
 
-    private static final IPath MAKE = new Path("make.exe"); //$NON-NLS-1$
-    private static final IPath PERL = new Path("perl.exe"); //$NON-NLS-1$
+    private static final IPath MAKE = new Path("make" + HostOS.EXE_EXT); //$NON-NLS-1$
+    private static final IPath PERL = new Path("perl" + HostOS.EXE_EXT); //$NON-NLS-1$
 
 	private static final String ABLD_BAT_NAME = "abld.bat"; //$NON-NLS-1$
 
@@ -2738,10 +2739,10 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		
 		// now add preprocess commands to the resource file rules.  if ALT_PRE env variable is set then
 		// use scpp.exe, otherwise use cpp.exe.  pipe the output to a dependency file in the makefile directory.
-		String cpp = "cpp.exe";
+		String cpp = "cpp" + HostOS.EXE_EXT;
 		for (String var : getResolvedEnvVars(config)) {
 			if (var.compareTo("ALT_PRE") == 0 || var.startsWith("ALT_PRE=")) {
-				cpp = "rcpp.exe";
+				cpp = "rcpp" + HostOS.EXE_EXT;
 				break;
 			}
 		}

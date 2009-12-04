@@ -84,6 +84,7 @@ import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.LanguageSelectionDialog;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class PreprocessHandler extends AbstractHandler {
@@ -130,10 +131,10 @@ public class PreprocessHandler extends AbstractHandler {
 			        		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, CarbideCPPBuilder.getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
 							launcher.showCommand(true);
 
-							String cppTool = "cpp.exe"; //$NON-NLS-1$
+							String cppTool = "cpp" + HostOS.EXE_EXT; //$NON-NLS-1$
 							for (String var : CarbideCPPBuilder.getResolvedEnvVars(buildConfig)) {
 								if (var.compareTo("ALT_PRE") == 0 || var.startsWith("ALT_PRE=")) { //$NON-NLS-1$ //$NON-NLS-2$
-									cppTool = "rcpp.exe"; //$NON-NLS-1$
+									cppTool = "rcpp" + HostOS.EXE_EXT; //$NON-NLS-1$
 									break;
 								}
 							}
