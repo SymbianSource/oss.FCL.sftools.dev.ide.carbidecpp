@@ -35,7 +35,7 @@ public class HostOS {
 	
 	/** The name of the PATH variable in the environment.  Capitalized differently per OS. */
 	public static String PATH_VARIABLE_NAME = IS_WIN32 ? "Path" : "PATH";
-	
+
 	/**
 	 * Convert a variable constructed blindly for a Win32 environment into
 	 * Unix-like syntax.  This is typically used for PATH or lists
@@ -95,6 +95,21 @@ public class HostOS {
 		return convertPathToWindows(path.toPortableString());
 	}
 
+	/**
+	 * Create an IPath from a string which may be a Win32 path. <p>
+	 * (This won't work in Unix when using a Win32 path.)
+	 * @param path
+	 * @return converted string
+	 */
+	public static IPath createPathFromString(String path) {
+		if (path == null) return null;
+		// handle Windows slashes and canonicalize
+		path = path.replaceAll("\\\\", "/");
+		return new Path(path);
+	}
+	
+
+	
 	/**
 	 * Ensure that the executable name mentioned is canonical for the machine.
 	 * This only affects Windows, currently, ensuring that an ".exe" is attached.
@@ -158,6 +173,4 @@ public class HostOS {
 		
 		return path;
 	}
-	
-	
 }
