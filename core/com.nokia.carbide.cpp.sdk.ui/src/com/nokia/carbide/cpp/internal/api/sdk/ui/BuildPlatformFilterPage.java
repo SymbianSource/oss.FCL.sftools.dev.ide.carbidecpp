@@ -53,14 +53,16 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 		GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		tabFolder.setLayoutData(tabFolderGridData);
 		
-		TabItem sbsv1TabItem = new TabItem(tabFolder, SWT.NONE);
-		sbsv1TabItem.setText(Messages.getString("BuildPlatformFilterPage.SBSv1TabText")); //$NON-NLS-1$
-		sbsv1TabItem.setToolTipText(Messages.getString("BuildPlatformFilterPage.SBSv1TabToolTip")); //$NON-NLS-1$
-
-		sbsv1Tab = new SBSv1PlatformFilterComposite(tabFolder);
-		sbsv1Tab.createControls();
-		sbsv1TabItem.setControl(sbsv1Tab);
-
+		if (SBSv2Utils.enableSBSv1Support()) {
+			TabItem sbsv1TabItem = new TabItem(tabFolder, SWT.NONE);
+			sbsv1TabItem.setText(Messages.getString("BuildPlatformFilterPage.SBSv1TabText")); //$NON-NLS-1$
+			sbsv1TabItem.setToolTipText(Messages.getString("BuildPlatformFilterPage.SBSv1TabToolTip")); //$NON-NLS-1$
+	
+			sbsv1Tab = new SBSv1PlatformFilterComposite(tabFolder);
+			sbsv1Tab.createControls();
+			sbsv1TabItem.setControl(sbsv1Tab);
+		}
+		
 		if (SBSv2Utils.enableSBSv2Support()) {
 			TabItem sbsv2TabItem = new TabItem(tabFolder, SWT.NONE);
 			sbsv2TabItem.setText(Messages.getString("BuildPlatformFilterPage.SBSv2TabText")); //$NON-NLS-1$
@@ -81,7 +83,9 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 	}
 	
 	public boolean performOk() {
-		sbsv1Tab.performOk();
+		if (sbsv1Tab != null) {
+			sbsv1Tab.performOk();
+		}
 		
 		if (sbsv2Tab != null) {
 			sbsv2Tab.performOk();
@@ -98,8 +102,12 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 
 	@Override
 	protected void performDefaults() {
-		sbsv1Tab.setDefaults();
-		sbsv2Tab.setDefaults();
+		if (sbsv1Tab != null) {
+			sbsv1Tab.setDefaults();
+		}
+		if (sbsv2Tab != null) {
+			sbsv2Tab.setDefaults();
+		}
 		super.performDefaults();
 	}
 	

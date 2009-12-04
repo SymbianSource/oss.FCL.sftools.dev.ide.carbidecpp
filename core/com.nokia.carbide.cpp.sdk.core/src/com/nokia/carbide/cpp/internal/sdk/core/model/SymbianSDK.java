@@ -14,6 +14,7 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
@@ -236,7 +237,7 @@ public class SymbianSDK implements ISymbianSDK {
 		List <String>buildPlats =  getAvailablePlatforms();
 		
 		if (buildPlats.size() == 0){
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 		
 		buildTargets.add(new SymbianBuildContext(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
@@ -313,15 +314,30 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	}
  	
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
-		
-		 List<ISymbianBuildContext> buildContexts =  getUnfilteredBuildConfigurations();
+		// This is probably a bug, but the filtering only uses SBSv1 preferences if SBSv1 is enabled...
+		List<ISymbianBuildContext> filteredContexts;
+		if (SBSv2Utils.enableSBSv1Support()) {
+			filteredContexts = getSBSv1FilteredBuildConfigurations();
+		} else {
+			if (SBSv2Utils.enableSBSv2Support()) {
+				filteredContexts = SBSv2Utils.getFilteredSBSv2BuildContexts(this);
+			} else {
+				// be optimistic in this case... SBSv3? ;)
+				filteredContexts = getUnfilteredBuildConfigurations();
+			}
+		}
+		return filteredContexts;
+	}
+
+	protected List<ISymbianBuildContext> getSBSv1FilteredBuildConfigurations() {
+		List<ISymbianBuildContext> buildContexts =  getUnfilteredBuildConfigurations();
 		
 		if (buildContexts.size() == 0){
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		 List<BuildPlat> platFilterList = sdkMgr.getPlatformList();
+		List<BuildPlat> platFilterList = sdkMgr.getPlatformList();
 		
 		Iterator<ISymbianBuildContext> li = buildContexts.iterator();
 
@@ -343,9 +359,8 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 				
 			}
 		}
-
-		return buildContexts;
 		
+		return buildContexts;
 	}
 
 	public IPath getIncludePath() {
