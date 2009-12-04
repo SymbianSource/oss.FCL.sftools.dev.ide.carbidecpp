@@ -212,12 +212,13 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		}
 		if (result.description.equals(expected.description) == false) {
 			if (expected.description.equals(EMPTY) == false) {
-				Assert.fail("Unexpected message: EXPECTED value is: " + expected.description + ", ACTUAL: " + result.description);				
+				Assert.assertEquals("Unexpected message",
+						expected.description, result.description);				
 			}
 		} else {
 			if (result.description.equals(expected.description) == false) {
-				Assert.fail("Message from IDE marker is " + result.description +
-						", expected value is " + expected.description);
+				Assert.assertEquals("Message from IDE marker does not match",
+						expected.description, result.description);
 				return false;
 			}
 		}
@@ -247,8 +248,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 				if (HostOS.IS_UNIX && result.externalPath.makeRelative().equals(expected.externalPath.makeRelative())) {
 					// fine
 				} else {
-					Assert.fail("External path string from IDE marker is " + result.externalPath +
-									", expected value is " + expected.externalPath);
+					Assert.assertEquals("External path string from IDE marker", expected.externalPath, result.externalPath);
 					return false;
 				}
 			}			

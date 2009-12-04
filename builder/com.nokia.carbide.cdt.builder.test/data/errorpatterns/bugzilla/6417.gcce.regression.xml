@@ -21,9 +21,9 @@
   <!--Error Marker at index 9-->
   <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp" />
   <!--Error Marker at index 10-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x0): multiple definition of `vtable for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `vtable for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o" />
   <!--Error Marker at index 11-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x0): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o" />
   <!--Error Marker at index 12-->
   <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `COvertimeHandler::~COvertimeHandler()'" severity="2" variable_name="^EMPTY^" external_path_string="Overtimehandler.cpp" />
   <!--Error Marker at index 13-->
@@ -161,21 +161,21 @@
   <!--Error Marker at index 79-->
   <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/OvertimeHandler.o:Overtimehandler.cpp" />
   <!--Error Marker at index 80-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x64): multiple definition of `typeinfo for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `typeinfo for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o" />
   <!--Error Marker at index 81-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x64): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o" />
   <!--Error Marker at index 82-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x50): multiple definition of `typeinfo name for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `typeinfo name for COvertimeHandler'" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o" />
   <!--Error Marker at index 83-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o:(.rodata+0x50): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\OvertimeHandler.o" />
   <!--Error Marker at index 84-->
   <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `CMyContainer::CMyContainer(CDataKeeper*)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp" />
   <!--Error Marker at index 85-->
   <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp" />
   <!--Error Marker at index 86-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x0): multiple definition of `vtable for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `vtable for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o" />
   <!--Error Marker at index 87-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x0): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o" />
   <!--Error Marker at index 88-->
   <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `CMyContainer::CMyContainer(CDataKeeper*)'" severity="2" variable_name="^EMPTY^" external_path_string="Mycontainer.cpp" />
   <!--Error Marker at index 89-->
@@ -233,12 +233,12 @@
   <!--Error Marker at index 115-->
   <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="../../../../../Symbian/9.1/S60_3rd_MR/EPOC32/BUILD/Carb13rc2/Workspace-P2G-3/Punch2Go-S60-3/Punch2Go/CS60-3/P2GDATACLASSES/GCCE/UREL/MyContainer.o:Mycontainer.cpp" />
   <!--Error Marker at index 116-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x118): multiple definition of `typeinfo for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `typeinfo for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o" />
   <!--Error Marker at index 117-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x118): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o" />
   <!--Error Marker at index 118-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x108): multiple definition of `typeinfo name for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="multiple definition of `typeinfo name for CMyContainer'" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o" />
   <!--Error Marker at index 119-->
-  <marker_info file="^EMPTY^" line_number="0" message="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o:(.rodata+0x108): first defined here" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
+  <marker_info file="^EMPTY^" line_number="0" message="first defined here" severity="2" variable_name="^EMPTY^" external_path_string="..\..\..\..\..\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Carb13rc2\Workspace-P2G-3\Punch2Go-S60-3\Punch2Go\CS60-3\P2GDATACLASSES\GCCE\UREL\MyContainer.o" />
 </root>
 
