@@ -49,6 +49,9 @@ public class BSFCatalog implements IBSFCatalog {
 			return;
 		}
 		
+		// sort by alphabetical order
+		Arrays.sort(bsfFiles); 
+		
 		// gather the individual BSF platforms
 		for (File bsfFile : bsfFiles) {
 			IPath bsfPath = new Path(bsfFile.getAbsolutePath());

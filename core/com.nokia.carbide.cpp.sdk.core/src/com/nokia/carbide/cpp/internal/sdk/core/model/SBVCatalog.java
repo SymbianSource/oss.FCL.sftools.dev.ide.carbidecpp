@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
@@ -49,6 +50,9 @@ public class SBVCatalog implements ISBVCatalog {
 		if (sbvFiles == null){
 			return;
 		}
+		
+		// sort alphabetically
+		Arrays.sort(sbvFiles);
 		
 		// gather the individual SBV platforms
 		for (File sbvFile : sbvFiles) {
