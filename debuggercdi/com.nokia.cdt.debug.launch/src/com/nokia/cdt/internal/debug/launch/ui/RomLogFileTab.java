@@ -100,6 +100,7 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 		parseRomLogGroup.setText(Messages.getString("RomLogFileTab.1")); //$NON-NLS-1$
 		parseRomLogGroup.setFont(parent.getFont());
 		parseRomLogGroup.setToolTipText(Messages.getString("RomLogFileTab.2")); //$NON-NLS-1$
+		parseRomLogGroup.setData(".uid", "RomLogFileTab.parseRomLogGroup");  //$NON-NLS-1$ //$NON-NLS-2$
 		parseRomLogGroup.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();
@@ -111,12 +112,15 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 		data.horizontalSpan = 2;
 		romLogFileLabel.setLayoutData(data);
 		romLogFileLabel.setToolTipText(Messages.getString("RomLogFileTab.4")); //$NON-NLS-1$
+		romLogFileLabel.setData(".uid", "RomLogFileTab.romLogFileLabel");  //$NON-NLS-1$ //$NON-NLS-2$
+
 
 		romLogFilePath = new Text(parseRomLogGroup.getGroup(), SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 1;
 		romLogFilePath.setLayoutData(data);
 		romLogFilePath.setToolTipText(Messages.getString("RomLogFileTab.4")); //$NON-NLS-1$
+		romLogFilePath.setData(".uid", "RomLogFileTab.romLogFilePath");  //$NON-NLS-1$ //$NON-NLS-2$
 		romLogFilePath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
@@ -124,6 +128,7 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 		});
 
 		romLogFileBrowse = createPushButton(parseRomLogGroup.getGroup(), Messages.getString("RomLogFileTab.5"), null); //$NON-NLS-1$
+		romLogFileBrowse.setData(".uid", "RomLogFileTab.romLogFileBrowse");  //$NON-NLS-1$ //$NON-NLS-2$
 		romLogFileBrowse.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent evt) {
@@ -147,11 +152,13 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 		data.horizontalSpan = 2;
 		epoc32DirLabel.setLayoutData(data);
 		epoc32DirLabel.setToolTipText(Messages.getString("RomLogFileTab.10")); //$NON-NLS-1$
+		epoc32DirLabel.setData(".uid", "RomLogFileTab.epoc32DirLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 
 		epoc32DirPath = new Text(parseRomLogGroup.getGroup(), SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		epoc32DirPath.setLayoutData(data);
 		epoc32DirPath.setToolTipText(Messages.getString("RomLogFileTab.10")); //$NON-NLS-1$
+		epoc32DirPath.setData(".uid", "RomLogFileTab.epoc32DirPath");  //$NON-NLS-1$ //$NON-NLS-2$
 		epoc32DirPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
@@ -159,6 +166,7 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 		});
 
 		epoc32DirBrowse = createPushButton(parseRomLogGroup.getGroup(), Messages.getString("RomLogFileTab.5"), null); //$NON-NLS-1$
+		epoc32DirBrowse.setData(".uid", "RomLogFileTab.epoc32DirBrowse");  //$NON-NLS-1$ //$NON-NLS-2$
 		epoc32DirBrowse.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent evt) {
@@ -181,6 +189,7 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 		data.horizontalSpan = 2;
 		logUnresolvedModules.setLayoutData(data);
 		logUnresolvedModules.setToolTipText(Messages.getString("RomLogFileTab.14")); //$NON-NLS-1$
+		logUnresolvedModules.setData(".uid", "RomLogFileTab.logUnresolvedModules");  //$NON-NLS-1$ //$NON-NLS-2$
 		logUnresolvedModules.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();

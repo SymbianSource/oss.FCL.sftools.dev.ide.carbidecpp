@@ -119,6 +119,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 
 		remoteLabel = new Label(projComp, SWT.NONE);
 		remoteLabel.setText(Messages.getString("RunModeMainTab.2")); //$NON-NLS-1$
+		remoteLabel.setData(".uid", "RunModeMainTab.remoteLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 		gd = new GridData();
 		gd.horizontalSpan = 2;
 		remoteLabel.setLayoutData(gd);
@@ -128,6 +129,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		remoteText.setLayoutData(gd);
 		remoteText.setToolTipText(Messages.getString("RunModeMainTab.3")); //$NON-NLS-1$
+		remoteText.setData(".uid", "RunModeMainTab.remoteText");  //$NON-NLS-1$ //$NON-NLS-2$
 		remoteText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent evt) {
