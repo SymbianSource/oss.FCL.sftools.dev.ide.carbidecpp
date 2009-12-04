@@ -20,10 +20,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
-import com.nokia.carbide.automation.utils.UITestCase;
 import com.nokia.carbide.automation.utils.debugger.DebuggerTestCaseParameters;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
@@ -36,7 +37,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
-public class TestGcceErrorParser extends UITestCase implements DebuggerTestCaseParameters {
+public class TestGcceErrorParser extends TestCase implements DebuggerTestCaseParameters {
 
 	public TestGcceErrorParser(String name) {
 		super(name);

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <!--Error Marker at index 0-->
-  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Main.cpp:" />
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Main.cpp" />
   <!--Error Marker at index 1-->
   <marker_info file="^EMPTY^" line_number="0" message="`-x c++' after last input file has no effect" severity="1" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 2-->
   <marker_info file="^EMPTY^" line_number="0" message="no input files" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 3-->
-  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Dbg_breakpoints.cpp:" />
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Dbg_breakpoints.cpp" />
   <!--Error Marker at index 4-->
   <marker_info file="^EMPTY^" line_number="0" message="`-x c++' after last input file has no effect" severity="1" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 5-->
   <marker_info file="^EMPTY^" line_number="0" message="no input files" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 6-->
-  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Dbg_debug_menu.cpp:" />
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Dbg_debug_menu.cpp" />
   <!--Error Marker at index 7-->
   <marker_info file="^EMPTY^" line_number="0" message="`-x c++' after last input file has no effect" severity="1" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 8-->
   <marker_info file="^EMPTY^" line_number="0" message="no input files" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 9-->
-  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Dbg_derived_types.cpp:" />
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="../../SRC/Dbg_derived_types.cpp" />
   <!--Error Marker at index 10-->
   <marker_info file="^EMPTY^" line_number="0" message="`-x c++' after last input file has no effect" severity="1" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 11-->

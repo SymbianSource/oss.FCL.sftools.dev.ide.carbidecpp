@@ -23,7 +23,6 @@ package com.nokia.carbide.cdt.builder.test.errorParsers;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -53,6 +52,7 @@ import org.jdom.output.XMLOutputter;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.test.TestPlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	static final String EMPTY = "^EMPTY^";
@@ -85,23 +85,12 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	}
 	
 	private String readFile(java.io.File consoleOutput) {
-		FileReader consoleReader;
-		StringBuffer sb = new StringBuffer();
 		try {
-			consoleReader = new FileReader(consoleOutput);
-			char[] buf = new char[1024];
-	        int len;
-	        while ((len = consoleReader.read(buf)) > 0) {
-	            sb.append(buf, 0, len);
-	        }
-	        consoleReader.close();
-
-		} catch (FileNotFoundException e) {
-			Assert.fail();
-		} catch (IOException e) {
-			Assert.fail();
+			return new String(FileUtils.readFileContents(consoleOutput, null));
+		} catch (CoreException e) {
+			Assert.fail(e.toString());
+			return null;
 		}
-        return sb.toString();
 	}
 	
 	public void writeFileContentsToStdout(java.io.File consoleOutput) {
@@ -110,18 +99,16 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 
 	// Drive the whole parsing mechanism, stdout is output normally came from console outout
 	public void writeStringToStdout(String consoleOutput) {
-		// pick out the stdout stream directly, where CDT error parser sniff
-		// for error messages from build console
 		try {
+			// pick out the stdout stream directly, where CDT error parser sniff
+			// for error messages from build console
 			stdoutStream.getProject().deleteMarkers(ICModelMarker.C_MODEL_PROBLEM_MARKER, true, IResource.DEPTH_INFINITE); // clear UI list before we start
 			stdoutStream.clearScratchBuffer();	// some error parser do multiple lines
 			consoleOutput += "\n";	// force the input file to flush all lines
 			stdoutStream.write(consoleOutput.getBytes());
 			stdoutStream.flush();
-		} catch (IOException e) {
-			Assert.fail();
-		} catch (CoreException e) {
-			Assert.fail();
+		} catch (Exception e) {
+			Assert.fail(e.toString());
 		}
 	}
 	
@@ -151,7 +138,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		try {
 			return parseStringAndTestAgainstXML(readFile(consoleOutput), new FileInputStream(controlXml));
 		} catch (FileNotFoundException e) {
-			Assert.fail();
+			Assert.fail(e.toString());
 		}
 		return false;
 	}
@@ -163,6 +150,9 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	 * @return
 	 */
 	public boolean parseStringAndTestAgainstXML (String consoleOutput, InputStream xmlInputStream) {
+        // make slashes match what the tool would really generate
+		if (HostOS.IS_UNIX)
+			consoleOutput = consoleOutput.replaceAll("\\\\(?!\r|\n)", "/");
 		writeStringToStdout(consoleOutput);
 		return testIdeMarkerAgainstXML (xmlInputStream);
 	}
@@ -253,9 +243,14 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 			}			
 		} else {
 			if (result.externalPath.equals(expected.externalPath) == false) {
-				Assert.fail("External path string from IDE marker is " + result.externalPath +
-								", expected value is " + expected.externalPath);
-				return false;
+				// note: for some reason, on Unix, relative paths become full paths
+				if (HostOS.IS_UNIX && result.externalPath.makeRelative().equals(expected.externalPath.makeRelative())) {
+					// fine
+				} else {
+					Assert.fail("External path string from IDE marker is " + result.externalPath +
+									", expected value is " + expected.externalPath);
+					return false;
+				}
 			}			
 		}
 		return true;
@@ -293,6 +288,10 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 
 		        Attribute messageNode = markerInfo.getAttribute(MESSAGE);
 		        description = messageNode.getValue();
+		        // make slashes match what the tool would really generate
+		        if (HostOS.IS_UNIX) {
+		        	description = description.replaceAll("\\\\(?!\r|\n)", "/");	
+		        }
 		        
 		        Attribute severityNode = markerInfo.getAttribute(SEVERITY);
 		        severity = Integer.parseInt(severityNode.getValue());
@@ -301,7 +300,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		        variableName = variableNameNode.getValue();
 		        
 		        Attribute externalPathStringNode = markerInfo.getAttribute(EXTERNAL_PATH_STRING);
-		        externalPath = new org.eclipse.core.runtime.Path(externalPathStringNode.getValue());		        
+		        externalPath = HostOS.createPathFromString(externalPathStringNode.getValue());		        
 
 	        	ProblemMarkerInfo details = new ProblemMarkerInfo(file, lineNumber, description, severity, variableName, externalPath);
 	        	xmlFilePromblemMarkerInfoList.add(details);
@@ -361,7 +360,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 				if (marker.externalPath == null || marker.externalPath.equals("")) {
 					externalPathString = EMPTY;
 				} else {
-					externalPathString = marker.externalPath.toString();
+					externalPathString = marker.externalPath.toPortableString();
 				}
 				child.setAttribute(EXTERNAL_PATH_STRING, externalPathString);
 				
