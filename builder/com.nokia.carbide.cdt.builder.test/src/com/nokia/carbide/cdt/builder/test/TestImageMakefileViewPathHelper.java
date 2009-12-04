@@ -17,6 +17,18 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+
 import com.nokia.carbide.cdt.builder.DefaultImageMakefileViewConfiguration;
 import com.nokia.carbide.cdt.builder.ImageMakefileViewPathHelper;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
@@ -27,15 +39,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-
-import junit.framework.TestCase;
-
-public class TestImageMakefileViewPathHelper extends TestCase {
+public class TestImageMakefileViewPathHelper extends BaseTest {
 	final static String PROJECT1_NAME = "TestMk";
 	final static String PROJECT2_NAME = "TestMkImported";
 	private static final IPath IMAGE1_MAKEFILE_PATH = new Path("gfx/Images1.mk");

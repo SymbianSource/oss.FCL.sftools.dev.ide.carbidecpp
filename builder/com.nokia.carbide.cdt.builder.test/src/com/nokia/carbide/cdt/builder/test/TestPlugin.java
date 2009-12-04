@@ -74,17 +74,18 @@ public class TestPlugin extends AbstractUIPlugin {
 	}
 	
 	/**
-	 * Get build configurations for the first non-empty SDK we find
-	 * @return
+	 * Get some build configurations for the first non-empty SDK we find.
+	 * @return a list of contexts, maximum 8
 	 */
 	public static List<ISymbianBuildContext> getUsableBuildConfigs() {
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
 			List<ISymbianBuildContext> contexts = sdk.getUnfilteredBuildConfigurations();
-			if (contexts.size() > 0)
-				return contexts;
+			if (contexts.size() > 0) {
+				return contexts.subList(0, Math.min(contexts.size(), 8));
+			}
 		}
 		TestCase.fail("No installed SDKs provide build configurations");
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 }

@@ -900,4 +900,67 @@ public class FileUtils {
 		}
 		return res;
 	}
+
+	/**
+	 * Locate the file on the filesystem which has the same path, but with
+	 * only case sensitivity differences.  This is only meaningful for fully
+	 * case sensitive and case-preserving filesystems.
+	 * @param path 
+	 * @return path pointing to existing file (possibly with different case in components) or
+	 * original path if there is no match
+	 */
+	public static IPath findMatchingPathCaseInsensitive(IPath path) {
+		// case is insensitive already
+		if (HostOS.IS_WIN32)
+			return path;
+		
+		if (path == null || !path.isAbsolute() || path.toFile().exists())
+			return path;
+		
+		StringBuilder builder = new StringBuilder();
+		
+		if (path.getDevice() != null) {
+			builder.append(path.getDevice());
+		}
+		
+		builder.append('/');
+		
+		boolean failedLookup = false;
+		
+		for (int seg = 0; seg < path.segmentCount(); seg++) {
+			final String segment = path.segment(seg);
+			
+			final String[] matches = { segment };
+			
+			if (!failedLookup) {
+				File dir = new File(builder.toString());
+				if (!new File(dir, matches[0]).exists()) {
+					// component has wrong case; find the first one matching case-insensitively
+					String[] names = dir.list(new FilenameFilter() {
+						
+						public boolean accept(File dir, String name) {
+							if (name.equalsIgnoreCase(segment)) {
+								matches[0] = name;
+								return true;
+							}
+							return false;
+						}
+					});
+					
+					if (names.length == 0) {
+						// no matches!  the rest of the path won't match either
+						failedLookup = true;
+					}
+				}
+			}
+			builder.append(matches[0]);
+			builder.append('/');
+		}
+		
+		if (!path.hasTrailingSeparator() && builder.length() > 0 && builder.charAt(builder.length() - 1) == '/') {
+			builder.setLength(builder.length() - 1);
+		}
+		return new Path(builder.toString());
+	}	
+
 }

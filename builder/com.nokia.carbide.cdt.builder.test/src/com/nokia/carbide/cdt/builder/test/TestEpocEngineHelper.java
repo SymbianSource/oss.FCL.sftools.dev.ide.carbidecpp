@@ -48,11 +48,9 @@ import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
-import junit.framework.TestCase;
+public class TestEpocEngineHelper extends BaseTest {
 
-public class TestEpocEngineHelper extends TestCase {
-
-	private static final String BASE_DIR = "Data/TestProject/";
+	private static final String BASE_DIR = "data/TestProject/";
 	private static final String CARBIDE_PROJECT_NAME = "CarbideProject";
 	private static final String NON_CARBIDE_PROJECT_NAME = "NonCarbideProject";
 	private static final String PROJECT_RELATIVE_BLDINF_PATH = "group/bld.inf";

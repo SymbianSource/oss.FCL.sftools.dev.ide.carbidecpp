@@ -133,6 +133,7 @@ public class EpocEnginePathHelper {
 	 * @return workspace-relative non-absolute path, or null if not resolvable to workspace
 	 */
 	public IPath convertFilesystemToWorkspace(IPath fullPath) {
+		fullPath = FileUtils.findMatchingPathCaseInsensitive(fullPath);
 		IPath wsPath = FileUtils.convertToWorkspacePath(fullPath, true);
 		if (wsPath != null && wsPath.isAbsolute())
 			wsPath = wsPath.makeRelative();
@@ -191,7 +192,8 @@ public class EpocEnginePathHelper {
 	
 	/**
 	 * Convert the given path (from an IView API) into a 
-	 * canonical full path in the local filesystem.
+	 * canonical full path in the local filesystem.  This will resolve differences
+	 * in case sensitivity.
 	 * @param path relative or absolute path
 	 * @return absolute path, never null unless it came in null
 	 */
@@ -216,7 +218,11 @@ public class EpocEnginePathHelper {
 				// in case the path is absolute without a drive letter
 				device = projectRoot.getDevice();
 			}
+			
+			// canonicalize (to remove .. , resolve links, etc)
 			fullPath = new Path(fullPath.toFile().getCanonicalPath()).setDevice(device);
+			fullPath = FileUtils.findMatchingPathCaseInsensitive(fullPath);
+			
 		} catch (IOException e) {
 		}
 

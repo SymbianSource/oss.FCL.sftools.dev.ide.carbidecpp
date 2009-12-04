@@ -29,7 +29,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-public class TestProjectExportsGatherer extends TestCase {
+public class TestProjectExportsGatherer extends BaseTest {
 	private IPath projectDataPath;
 	private IPath epocRoot;
     
@@ -81,7 +81,7 @@ public class TestProjectExportsGatherer extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		epocRoot = new Path("C:\\symbian\\9.4\\S60_5th");
+		epocRoot = getStockFullPath().append("symbian/9.4/S60_5th");
 				
 	}
 
@@ -111,8 +111,8 @@ public class TestProjectExportsGatherer extends TestCase {
 		ProjectExportsGatherer gatherer = createGatherer();
 		IPath src1 = projectDataPath.append("gfx/foo.svg");
 		IPath src2 = projectDataPath.append("doc/README.txt");
-		IPath epoc1 = new Path("c:\\private\\12345678\\foo.svg");
-		IPath epoc2 = new Path("c:\\sys\\readmes\\README.txt");
+		IPath epoc1 = new Path("c:/private/12345678/foo.svg");
+		IPath epoc2 = new Path("c:/sys/readmes/README.txt");
 		
 		Map<IPath, IPath> filesystemToEpocExportMap = gatherer.getFilesystemToEpocExportMap();
 		assertEquals(2, filesystemToEpocExportMap.size());
@@ -136,15 +136,15 @@ public class TestProjectExportsGatherer extends TestCase {
 		projectDataPath = getProjectData("pkgOnly");
 		ProjectExportsGatherer gatherer = createGatherer();
 		
-		IPath epoc1a = projectDataPath.append("sis\\text\\englishfile.txt");
-		IPath epoc1b = epocRoot.append("text\\frenchfile.txt");
-		IPath dev1 = new Path("$:\\private\\10000005\\import\\InstTest\\lang.txt");
+		IPath epoc1a = projectDataPath.append("sis/text/englishfile.txt");
+		IPath epoc1b = epocRoot.append("text/frenchfile.txt");
+		IPath dev1 = new Path("$:/private/10000005/import/InstTest/lang.txt");
 		
-		IPath epoc2 = epocRoot.append("epoc32\\text\\file1.txt");
-		IPath dev2 = new Path("!:\\private\\10000005\\import\\InstTest\\file1.txt");
+		IPath epoc2 = epocRoot.append("epoc32/text/file1.txt");
+		IPath dev2 = new Path("!:/private/10000005/import/InstTest/file1.txt");
 
-		IPath epoc3 = epocRoot.append("epoc32\\files\\option1.txt");
-		IPath dev3 = new Path("!:\\private\\10000005\\import\\InstTest\\option1.txt");
+		IPath epoc3 = epocRoot.append("epoc32/files/option1.txt");
+		IPath dev3 = new Path("!:/private/10000005/import/InstTest/option1.txt");
 
 		Map<IPath, IPath> filesystemToEpocExportMap = gatherer.getFilesystemToEpocExportMap();
 		assertEquals(0, filesystemToEpocExportMap.size());
@@ -174,21 +174,21 @@ public class TestProjectExportsGatherer extends TestCase {
 		projectDataPath = getProjectData("exportAndPkg");
 		ProjectExportsGatherer gatherer = createGatherer();
 		
-		IPath src1a = projectDataPath.append("sis\\text\\englishfile.txt");
-		//IPath epoc1a = projectDataPath.append("sis\\text\\englishfile.txt");
-		//IPath src1b = projectDataPath.append("sis\\text\\frenchfile.txt");
-		IPath epoc1b = epocRoot.append("epoc32\\text\\frenchfile.txt");
-		IPath dev1 = new Path("$:\\private\\10000005\\import\\InstTest\\lang.txt");
+		IPath src1a = projectDataPath.append("sis/text/englishfile.txt");
+		//IPath epoc1a = projectDataPath.append("sis/text/englishfile.txt");
+		//IPath src1b = projectDataPath.append("sis/text/frenchfile.txt");
+		IPath epoc1b = epocRoot.append("epoc32/text/frenchfile.txt");
+		IPath dev1 = new Path("$:/private/10000005/import/InstTest/lang.txt");
 		
-		IPath src2 = projectDataPath.append("gfx\\foo.svg");
-		IPath epocTarget2 = new Path("c:\\private\\12345678\\foo.svg");
-		IPath epocHost2 = epocRoot.append("epoc32\\data\\c\\private\\12345678\\foo.svg");
-		IPath dev2 = new Path("!:\\private\\10000005\\foo.svg");
+		IPath src2 = projectDataPath.append("gfx/foo.svg");
+		IPath epocTarget2 = new Path("c:/private/12345678/foo.svg");
+		IPath epocHost2 = epocRoot.append("epoc32/data/c/private/12345678/foo.svg");
+		IPath dev2 = new Path("!:/private/10000005/foo.svg");
 
-		IPath src3 = projectDataPath.append("doc\\README.txt");
-		IPath epocHost3 = epocRoot.append("epoc32\\release\\armv5\\udeb\\z\\sys\\readmes\\README.txt");
-		IPath epoc3 = new Path("z:\\sys\\readmes\\README.txt");
-		IPath dev3 = new Path("!:\\private\\10000005\\import\\InstTest\\README.txt");
+		IPath src3 = projectDataPath.append("doc/README.txt");
+		IPath epocHost3 = epocRoot.append("epoc32/release/armv5/udeb/z/sys/readmes/README.txt");
+		IPath epoc3 = new Path("z:/sys/readmes/README.txt");
+		IPath dev3 = new Path("!:/private/10000005/import/InstTest/README.txt");
 
 		IPath src4 = projectDataPath.append("inc/Test.h");
 		IPath epoc4 = new Path("/epoc32/include/Test.h");

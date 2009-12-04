@@ -23,6 +23,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.pkg.PKGView;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 import org.eclipse.core.runtime.*;
@@ -67,7 +68,7 @@ public class TestPKGView extends BaseViewTests {
 		"{\"c:\\users\\E0192828\\back.txt\", \"c:\\users\\E0FG\\front.txt\"}-\"sp ac es.txt\"\r\n" +
 		"\"c:\\users\\E0192828\\back.txt\" - \"sp ac es.txt\"";
 	
-	private static final Map<String, String> lang2SrcFileMap = new HashMap();
+	private static final Map<String, String> lang2SrcFileMap = new HashMap<String, String>();
 	static {
 		for (String[] lang2SrcFileSpec : LANG_TO_SRC_FILES) {
 			lang2SrcFileMap.put(lang2SrcFileSpec[0], lang2SrcFileSpec[1]);
@@ -85,7 +86,7 @@ public class TestPKGView extends BaseViewTests {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		this.path = new Path("c:\\symbian\\9.4\\epoc32\\tools\\Test.PKG");
+		this.path = new Path(getTokenAbsolutePath()).append("/symbian/9.4/epoc32/tools/Test.PKG");
 	
 		config = new IViewConfiguration() {
 	
@@ -94,7 +95,7 @@ public class TestPKGView extends BaseViewTests {
 			}
 	
 			public Collection<IDefine> getMacros() {
-				return Collections.EMPTY_LIST ;
+				return Collections.emptyList() ;
 			}
 			
 			public IViewParserConfiguration getViewParserConfiguration() {
@@ -139,24 +140,24 @@ public class TestPKGView extends BaseViewTests {
 		
 		// first install file is language dependent
 		IPKGInstallFile installFile = installFileList.get(0);
-		assertEquals(new Path(LANG_DEST_FILE), installFile.getDestintationFile());
+		assertEquals(HostOS.createPathFromString(LANG_DEST_FILE), installFile.getDestintationFile());
 		List<EPKGLanguage> langs = view.getLanguages();
 		assertEquals(2, langs.size());
 		Map<EPKGLanguage, IPath> sourceFiles = installFile.getSourceFiles();
 		for (EPKGLanguage lang : langs) {
 			IPath srcFilePath = sourceFiles.get(lang);
 			String srcFile = lang2SrcFileMap.get(lang.getCode());
-			assertEquals(new Path(srcFile), srcFilePath);
+			assertEquals(HostOS.createPathFromString(srcFile), srcFilePath);
 		}
 		
 		// second install file is language independent
 		installFile = installFileList.get(1);
-		assertEquals(new Path(NO_LANG_DEST_FILE), installFile.getDestintationFile());
+		assertEquals(HostOS.createPathFromString(NO_LANG_DEST_FILE), installFile.getDestintationFile());
 		sourceFiles = installFile.getSourceFiles();
 		assertEquals(1, sourceFiles.size());
 		assertTrue(sourceFiles.containsKey(EPKGLanguage.INDEPENDENT));
 		IPath srcFilePath = sourceFiles.get(EPKGLanguage.INDEPENDENT);
-		assertEquals(new Path(NO_LANG_SRC_FILE), srcFilePath);
+		assertEquals(HostOS.createPathFromString(NO_LANG_SRC_FILE), srcFilePath);
 		assertEquals(1, installFile.getOptions().size());
 		assertEquals(NO_LANG_OPTION, installFile.getOptions().get(0));
 		
@@ -186,7 +187,7 @@ public class TestPKGView extends BaseViewTests {
 		IPath destintationFile = conditionalInstallFile.getDestintationFile();
 		assertTrue(destintationFile.isEmpty());
 		assertEquals(1, conditionalInstallFile.getSourceFiles().size());
-		assertEquals(new Path(CONDITIONAL_SRC_FILE), conditionalInstallFile.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
+		assertEquals(HostOS.createPathFromString(CONDITIONAL_SRC_FILE), conditionalInstallFile.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
 		assertEquals(2, conditionalInstallFile.getOptions().size());
 		
 		commitTest(view, modelText);
@@ -199,9 +200,9 @@ public class TestPKGView extends BaseViewTests {
 		
 		// fully create and add a language independent install file statement
 		IPKGInstallFile installFile1 = view.createInstallFile(null);
-		installFile1.getSourceFiles().put(EPKGLanguage.INDEPENDENT, new Path(NO_LANG_SRC_FILE));
+		installFile1.getSourceFiles().put(EPKGLanguage.INDEPENDENT, HostOS.createPathFromString(NO_LANG_SRC_FILE));
 		installFile1.getOptions().add(NO_LANG_OPTION);
-		installFile1.setDestinationFile(new Path(NO_LANG_DEST_FILE));
+		installFile1.setDestinationFile(HostOS.createPathFromString(NO_LANG_DEST_FILE));
 		view.addInstallFile(installFile1);
 		
 		// create a language dependent install file and modify after add
@@ -209,9 +210,9 @@ public class TestPKGView extends BaseViewTests {
 		view.addInstallFile(installFile2);
 		for (String[] lang2SrcFileArray : LANG_TO_SRC_FILES) {
 			installFile2.getSourceFiles().put(
-					EPKGLanguage.forLangCode(lang2SrcFileArray[0]), new Path(lang2SrcFileArray[1]));
+					EPKGLanguage.forLangCode(lang2SrcFileArray[0]), HostOS.createPathFromString(lang2SrcFileArray[1]));
 		}
-		installFile2.setDestinationFile(new Path(LANG_DEST_FILE));
+		installFile2.setDestinationFile(HostOS.createPathFromString(LANG_DEST_FILE));
 		
 		// NOTE: the newlines are lost and shouldn't be
 		//String modifiedModelText = modelText + NO_LANG_INSTALL_FILE_STATEMENT + "\n" + LANG_INSTALL_FILE_STATEMENT;
@@ -244,13 +245,13 @@ public class TestPKGView extends BaseViewTests {
 		
 		IPKGInstallFile file = installFiles[0];
 		assertEquals(2, file.getSourceFiles().size());
-		assertEquals(new Path("c:\\users\\E0192828\\back.txt"), file.getSourceFiles().get(EPKGLanguage.EN));
-		assertEquals(new Path("c:\\users\\E0FG\\front.txt"), file.getSourceFiles().get(EPKGLanguage.FR));
+		assertEquals(new Path("c:/users/E0192828/back.txt"), file.getSourceFiles().get(EPKGLanguage.EN));
+		assertEquals(new Path("c:/users/E0FG/front.txt"), file.getSourceFiles().get(EPKGLanguage.FR));
 		assertEquals(new Path("sp ac es.txt"), file.getDestintationFile());
 		
 		file = installFiles[1];
 		assertEquals(1, file.getSourceFiles().size());
-		assertEquals(new Path("c:\\users\\E0192828\\back.txt"), file.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
+		assertEquals(new Path("c:/users/E0192828/back.txt"), file.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
 		assertEquals(new Path("sp ac es.txt"), file.getDestintationFile());
 		
 		commitTest(view, ESCAPABLE_FILES);

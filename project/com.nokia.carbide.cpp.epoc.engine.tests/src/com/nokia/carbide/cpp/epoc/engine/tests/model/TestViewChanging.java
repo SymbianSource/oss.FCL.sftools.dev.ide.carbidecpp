@@ -62,7 +62,7 @@ public class TestViewChanging extends BaseViewTests {
 			}
 
 			public Collection<IDefine> getMacros() {
-				return Collections.EMPTY_LIST;
+				return Collections.emptyList();
 			}
 			
 			public IViewParserConfiguration getViewParserConfiguration() {

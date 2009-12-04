@@ -471,7 +471,7 @@ public class TestWorkspaceModelProvider extends BaseProjectTests {
 	 */
 	public void testExternalModification_bug3557() throws Exception {
 		// make the mmp
-		IPath fullMmpPath = new Path("c:/tempmodel.mmp");
+		IPath fullMmpPath = new Path(getTokenAbsolutePath()).append("tempmodel.mmp");
 		
 		String text = 
 			"START BITMAP foo.mbm\n"+

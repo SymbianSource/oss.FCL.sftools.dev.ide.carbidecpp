@@ -43,7 +43,7 @@ public class SDKCreationTest extends BaseDeviceModifierTest {
 	    FileUtils.writeFileContents(devicesFile, devicesSkeleton.toCharArray(), null);
 		assertTrue(devicesFile.exists());
 		
-			DevicesType devicesType = DevicesLoader.loadDevices(devicesFile.toURL());
+			DevicesType devicesType = DevicesLoader.loadDevices(devicesFile.toURI().toURL());
 			EList devices = devicesType.getDevice();
 			for (Iterator iter = devices.iterator(); iter.hasNext();) {
 				SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());

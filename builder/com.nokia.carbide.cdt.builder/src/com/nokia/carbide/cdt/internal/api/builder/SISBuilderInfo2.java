@@ -25,6 +25,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
 public class SISBuilderInfo2 implements ISISBuilderInfo {
@@ -234,15 +235,18 @@ public class SISBuilderInfo2 implements ISISBuilderInfo {
 		return searchLocation;
 	}
 	
-	public IPath getPKGFullPath() {
-		IPath fullPath;
-		if (getPKGFileString().indexOf(":") > 0) { //$NON-NLS-1$
-			fullPath = new Path(getPKGFileString());
-		} else {		
-			fullPath = CarbideBuilderPlugin.getProjectRoot(projectTracker.getProject());
-			if (fullPath != null)
-				fullPath = fullPath.append(getPKGFileString());
+	protected IPath createFullPath(String path) {
+		IPath fullPath = new Path(path);
+		if (!fullPath.isAbsolute()) {
+			IPath projectPath = CarbideBuilderPlugin.getProjectRoot(projectTracker.getProject());
+			if (projectPath != null)
+				fullPath = projectPath.append(fullPath);
 		}
+		return fullPath;
+		
+	}
+	public IPath getPKGFullPath() {
+		IPath fullPath = createFullPath(getPKGFileString());
 		return fullPath;
 	}
 	
@@ -251,13 +255,7 @@ public class SISBuilderInfo2 implements ISISBuilderInfo {
 	}
 	
 	public IPath getCertificateFullPath() {
-		IPath fullPath;
-		if (getCertificate().indexOf(":") > 0) { //$NON-NLS-1$
-			fullPath = new Path(getCertificate());
-		} else {		
-			fullPath = CarbideBuilderPlugin.getProjectRoot(projectTracker.getProject());
-			fullPath = fullPath.append(getCertificate());
-		}
+		IPath fullPath = createFullPath(getCertificate());
 		return fullPath;
 	}
 
@@ -266,13 +264,7 @@ public class SISBuilderInfo2 implements ISISBuilderInfo {
 	}
 	
 	public IPath getKeyFullPath() {
-		IPath fullPath;
-		if (getKey().indexOf(":") > 0) { //$NON-NLS-1$
-			fullPath = new Path(getKey());
-		} else {		
-			fullPath = CarbideBuilderPlugin.getProjectRoot(projectTracker.getProject());
-			fullPath = fullPath.append(getKey());
-		}
+		IPath fullPath = createFullPath(getKey());
 		return fullPath;
 	}
 
@@ -280,23 +272,30 @@ public class SISBuilderInfo2 implements ISISBuilderInfo {
 		return outputFilename;
 	}
 	
-	public IPath getUnsignedSISFullPath() {
+	protected IPath getSISRelativeFullPath(String fileName, String extension) {
 		IPath fullPath;
-		if (getUnsignedSISFileName().length() == 0) {
+		if (fileName.length() == 0) {
 			// Use default PKG file name
 			fullPath = getPKGFullPath();
 			fullPath = fullPath.removeFileExtension();
-			fullPath = fullPath.addFileExtension("sis"); //$NON-NLS-1$
-		} else if (getUnsignedSISFileName().indexOf(":") > 0) { //$NON-NLS-1$
-			// SIS already a full path
-			fullPath = new Path(getUnsignedSISFileName());
+			fullPath = fullPath.addFileExtension(extension);
 		} else {
-			// probably a relative path, make relative to PKG file
-			fullPath = getPKGFullPath();
-			fullPath = fullPath.removeLastSegments(1);
-			fullPath = fullPath.append(getUnsignedSISFileName());
+			IPath fileNamePath = HostOS.createPathFromString(fileName);
+			if (fileNamePath.isAbsolute()) {
+				// SIS already a full path
+				fullPath = fileNamePath;
+			} else {
+				// probably a relative path, make relative to PKG file
+				fullPath = getPKGFullPath();
+				fullPath = fullPath.removeLastSegments(1);
+				fullPath = fullPath.append(fileNamePath);
+			}
 		}
 		return fullPath;
+	}
+
+	public IPath getUnsignedSISFullPath() {
+		return getSISRelativeFullPath(getUnsignedSISFileName(), "sis"); //$NON-NLS-1$
 	}
 
 	public String getPassword() {
@@ -308,22 +307,7 @@ public class SISBuilderInfo2 implements ISISBuilderInfo {
 	}
 	
 	public IPath getSignedSISFullPath() {
-		IPath fullPath;
-		if (getSignedSISFileName().length() == 0) {
-			// Use default PKG file name
-			fullPath = getPKGFullPath();
-			fullPath = fullPath.removeFileExtension();
-			fullPath = fullPath.addFileExtension("sisx"); //$NON-NLS-1$
-		} else if (getSignedSISFileName().indexOf(":") > 0) { //$NON-NLS-1$
-			// SIS already a full path
-			fullPath = new Path(getSignedSISFileName());
-		} else {
-			// probably a relative path, make relative to PKG file
-			fullPath = getPKGFullPath();
-			fullPath = fullPath.removeLastSegments(1);
-			fullPath = fullPath.append(getSignedSISFileName());
-		}
-		return fullPath;
+		return getSISRelativeFullPath(getSignedSISFileName(), "sisx"); //$NON-NLS-1$
 	}
 
 	public void setCertificate(String certString) {
