@@ -218,13 +218,6 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 	
 	public static class ModelFileTimestampCollection {
 		/**
-		 * The minimum timestamp resolution for a file in ms (based on heuristics for the OS).
-		 * VFAT on Win32 uses 2 second increments.  Linux ext2/3 uses 1 second resolution, 
-		 * until ext4, where it becomes nanoseconds.
-		 * Assume the worst format in all cases.
-		 */
-		public static final long MIN_TIMESTAMP_RESOLUTION = HostOS.IS_WIN32 ? 2000 : 1000;
-		/**
 		 * Delay in ms between successive checks of the filesystem, to avoid wasting time
 		 * when such checks are slow, and in cases where it's unlikely the human will edit files
 		 * fast enough to care.
@@ -424,6 +417,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 	 * @return
 	 * @throws CoreException
 	 */
+	@SuppressWarnings("unchecked")
 	private Data getViewData(IPath modelPath, IViewConfiguration configuration,
 			ViewConfigState state, ViewConfigKey key) throws CoreException {
 		Data data;

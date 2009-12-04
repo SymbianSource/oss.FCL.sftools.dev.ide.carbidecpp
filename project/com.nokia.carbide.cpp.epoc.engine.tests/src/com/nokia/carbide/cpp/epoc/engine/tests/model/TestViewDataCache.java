@@ -61,7 +61,7 @@ public class TestViewDataCache extends BaseTest {
 	private File projectDir;
 
 	// Try to wait long enough to ensure the timestamp-based check will detect a change
-	private static final long FS_TIME_RESOLUTION = ViewDataCache.ModelFileTimestampCollection.MIN_TIMESTAMP_RESOLUTION;
+	private static final long FS_TIME_RESOLUTION = FileUtils.getMinimumFileTimestampResolution(null);
 	
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.epoc.engine.tests.BaseTest#setUp()

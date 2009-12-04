@@ -297,7 +297,8 @@ public class FileUtils {
      * the workspace via links (very slow)
      * @return new path (workspace-relative) or null if not resolvable to workspace
      */
-    static public IPath convertToWorkspacePath(IPath cpath, boolean makeCanonical, boolean resolveLinks) {
+    @SuppressWarnings("deprecation")
+	static public IPath convertToWorkspacePath(IPath cpath, boolean makeCanonical, boolean resolveLinks) {
         if (!Platform.isRunning() || cpath == null)
             return null;
         
@@ -882,5 +883,21 @@ public class FileUtils {
 	
 	private static IStatus createErrorStatus(Exception e) {
 		return new Status(IStatus.ERROR, UtilsCorePlugin.ID, null, e);
+	}
+	
+	/**
+	 * Get the minimum timestamp resolution for a file in ms (based on heuristics for the OS).
+	 * @param path path to file of interest, or <code>null</code> for worst case
+	 * @return number of ms of resolution.  E.g., 50 means only changes in 50ms increments are stored
+	 */
+	public static long getMinimumFileTimestampResolution(IPath path) {
+		// VFAT on Win32 uses 2 second increments.  Linux ext2/3 uses 1 second resolution,
+		// until ext4, where it becomes nanoseconds.
+		// Assume the worst format in all cases.
+		long res = HostOS.IS_WIN32 ? 2000 : 1000;
+		if (path != null) {
+			// todo
+		}
+		return res;
 	}
 }
