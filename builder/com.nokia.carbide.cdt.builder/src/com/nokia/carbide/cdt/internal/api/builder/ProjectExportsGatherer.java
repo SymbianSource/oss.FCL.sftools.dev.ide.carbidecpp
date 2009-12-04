@@ -252,7 +252,7 @@ public class ProjectExportsGatherer {
 			
 			// we only support exports which might reasonably make it onto the device,
 			// which means ones either explictly or implicitly targeting a drive.
-			if (isAbsoluteDrivePath(targetPath)) {
+			if (isWin32DrivePath(targetPath)) {
 				// accept
 			}
 			else if (targetPath.isAbsolute() && targetPath.getDevice() == null
@@ -334,22 +334,12 @@ public class ProjectExportsGatherer {
 	}
 
 	/**
-	 * Tell if the path is absolute -- e.g., according to the host or to Windows conventions.
-	 * @param path
-	 */
-	protected boolean isAbsoluteDrivePath(IPath path) {
-		if ((HostOS.IS_WIN32 && path.isAbsolute()) || isWin32DrivePath(path))
-			return true;
-		return false;
-	}
-	
-	/**
 	 * Convert a path like c:\private\foo.svg to $(EPOCROOT)data\c\private\foo.svg 
 	 * @param host
 	 * @return converted path or original
 	 */
 	private IPath epocHostToEPOCROOTData(IPath host) {
-		if (!isAbsoluteDrivePath(host))
+		if (!isWin32DrivePath(host))
 			return host;
 		IPath nativ = epocRoot.append("epoc32").append("data") //$NON-NLS-1$ //$NON-NLS-2$
 			.append(convertDriveToPathSegment(host));
@@ -361,7 +351,7 @@ public class ProjectExportsGatherer {
 	 * @return
 	 */
 	private IPath convertDriveToPathSegment(IPath host) {
-		if (HostOS.IS_WIN32)
+		if (host.getDevice() != null)
 			return new Path(host.getDevice().substring(0, 1)).append(host.setDevice(null));
 		else
 			return new Path(host.segment(0).substring(0, 1)).append(host.removeFirstSegments(1)); 
@@ -373,7 +363,7 @@ public class ProjectExportsGatherer {
 	 * @return converted path or original
 	 */
 	private IPath epocHostToEPOCPlatformData(IPath host) {
-		if (!isAbsoluteDrivePath(host))
+		if (!isWin32DrivePath(host))
 			return host;
 		IPath nativ = epocRoot.append("epoc32").append("release").append(platform).append(target) //$NON-NLS-1$ //$NON-NLS-2$
 			.append(convertDriveToPathSegment(host));
