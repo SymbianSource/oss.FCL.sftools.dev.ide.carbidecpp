@@ -95,6 +95,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 				targetingRulesCombo.add(Messages.getString("ExecutablesTab.4")); //$NON-NLS-1$
 			}
 			targetingRulesCombo.setText(Messages.getString("ExecutablesTab.5")); //$NON-NLS-1$
+			targetingRulesCombo.setData(".uid", "ExecutablesTab.targetingRulesCombo");  //$NON-NLS-1$ //$NON-NLS-2$
 			final GridData gd_targetingRulesCombo = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 			targetingRulesCombo.setLayoutData(gd_targetingRulesCombo);
 			targetingRulesCombo.addListener(SWT.Selection, new Listener() {
@@ -156,6 +157,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 
 		addButton = new Button(buttonComp, SWT.PUSH);
 		addButton.setText(Messages.getString("ExecutablesTab.6")); //$NON-NLS-1$
+		addButton.setData(".uid", "ExecutablesTab.addButton");  //$NON-NLS-1$ //$NON-NLS-2$
 		addButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
@@ -177,6 +179,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 
 		selectAllButton = new Button(buttonComp, SWT.PUSH);
 		selectAllButton.setText(Messages.getString("ExecutablesTab.9")); //$NON-NLS-1$
+		selectAllButton.setData(".uid", "ExecutablesTab.selectAllButton");  //$NON-NLS-1$ //$NON-NLS-2$
 		selectAllButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				executablesBlock.setAllChecked(true);
@@ -185,6 +188,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 
 		unselectAllButton = new Button(buttonComp, SWT.PUSH);
 		unselectAllButton.setText(Messages.getString("ExecutablesTab.10")); //$NON-NLS-1$
+		unselectAllButton.setData(".uid", "ExecutablesTab.unselectAllButton");  //$NON-NLS-1$ //$NON-NLS-2$
 		unselectAllButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				executablesBlock.setAllChecked(false);
