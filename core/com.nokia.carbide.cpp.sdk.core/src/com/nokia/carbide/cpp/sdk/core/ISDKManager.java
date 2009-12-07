@@ -23,7 +23,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
 /**
  * Interface to Symbian OS SDK's. Use this interface to get the list of all SDKs.
  * @see ISymianSDK
- *
+ * @noimplement
  */
 
 public interface ISDKManager {
@@ -182,12 +182,14 @@ public interface ISDKManager {
 	 * Get the version of SBSv2 installed on the PATH.
 	 * @param boolean forceScan - forceScan even if version already determined.
 	 * @return A Verion object of the installed SBSv2 version. Version will be 0.0.0 if not found.
+	 * @since 2.3
 	 */
 	public Version getSBSv2Version(boolean forceScan);
 	
 	/**
 	 * Retrieve the minimum supported version of SBSv2 for Carbide.c++
 	 * @return Version
+	 * @since 2.3
 	 */
 	public Version getMinimumSupportedSBSv2Version();
 }
