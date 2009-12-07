@@ -22,7 +22,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.Version;
+import org.osgi.service.prefs.BackingStoreException;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
@@ -114,16 +117,21 @@ public class SBSv2Utils {
      */
     public static List<ISymbianSDK> getSupportedSDKs(List<ISymbianSDK> sdks) {
     	List<ISymbianSDK> supportedSDKs = new ArrayList<ISymbianSDK>();
-    	
-    	//TODO need a better way to do this from Symbian.
-    	// For now, just filter out anything older than 9.4
-    	for (ISymbianSDK sdk : sdks) {
-    		Version osVersion = sdk.getOSVersion();
-    		if (osVersion.getMajor() > 8 && osVersion.getMinor() > 3) {
-    			supportedSDKs.add(sdk);
-    		}
+
+    	// If there is no SBSv1 builder, then assume all SDKs are SBSv2 capable
+    	if (!enableSBSv1Support()) {
+    		supportedSDKs.addAll(sdks);
+    	} else {
+	    	//TODO need a better way to do this from Symbian.
+	    	// For now, just filter out anything older than 9.4
+	    	for (ISymbianSDK sdk : sdks) {
+	    		Version osVersion = sdk.getOSVersion();
+	    		if (osVersion.getMajor() > 8 ||
+	    				(osVersion.getMajor() == 8 && osVersion.getMinor() > 3)) {
+	    			supportedSDKs.add(sdk);
+	    		}
+	    	}
     	}
-    	
     	return supportedSDKs;
     }
     
@@ -132,9 +140,9 @@ public class SBSv2Utils {
 	 * be filtered out of any UI
 	 */
 	public static String[] getSBSv2ConfigurationsToFilter() {
-		Preferences prefs = SDKCorePlugin.getDefault().getPluginPreferences();
+		IEclipsePreferences prefs = new InstanceScope().getNode(SDKCorePlugin.PLUGIN_ID);
 		if (prefs != null) {
-			String configs = prefs.getString(SBSV2_FILTERED_CONFIGS_STORE);
+			String configs = prefs.get(SBSV2_FILTERED_CONFIGS_STORE, "");
 			return configs.split(SBSV2_FILTERED_CONFIGS_DELIMETER);
 		}
 		return new String[0];
@@ -146,7 +154,7 @@ public class SBSv2Utils {
 	 * @param configs configs to be filtered
 	 */
 	public static void setSBSv2ConfigurationsToFilter(String[] configs) {
-		Preferences prefs = SDKCorePlugin.getDefault().getPluginPreferences();
+		IEclipsePreferences prefs = new InstanceScope().getNode(SDKCorePlugin.PLUGIN_ID);
 		if (prefs != null) {
 			String store = ""; //$NON-NLS-1$
 			for (String config : configs) {
@@ -159,8 +167,13 @@ public class SBSv2Utils {
 			}
 			if (store.length() >= 0){
 				// lenght of zero means there are not configs to filter (or show them all)
-				prefs.setValue(SBSV2_FILTERED_CONFIGS_STORE, store);
-				SDKCorePlugin.getDefault().savePluginPreferences();
+				prefs.put(SBSV2_FILTERED_CONFIGS_STORE, store);
+				try {
+					prefs.flush();
+				} catch (BackingStoreException e) {
+					Logging.log(SDKCorePlugin.getDefault(),
+							Logging.newStatus(SDKCorePlugin.getDefault(), e));
+				}
 			}
 		}
 	}

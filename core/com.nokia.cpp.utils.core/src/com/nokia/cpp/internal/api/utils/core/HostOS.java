@@ -30,10 +30,12 @@ public class HostOS {
 	public static boolean IS_WIN32 = File.separatorChar == '\\';
 	/** Is the host some Unix variant? */
 	public static boolean IS_UNIX = File.separatorChar == '/';
+	/** Executable file extension */
+	public static final String EXE_EXT = IS_WIN32 ? ".exe" : "";
 	
 	/** The name of the PATH variable in the environment.  Capitalized differently per OS. */
 	public static String PATH_VARIABLE_NAME = IS_WIN32 ? "Path" : "PATH";
-	
+
 	/**
 	 * Convert a variable constructed blindly for a Win32 environment into
 	 * Unix-like syntax.  This is typically used for PATH or lists
@@ -94,6 +96,21 @@ public class HostOS {
 	}
 
 	/**
+	 * Create an IPath from a string which may be a Win32 path. <p>
+	 * (This won't work in Unix when using a Win32 path.)
+	 * @param path
+	 * @return converted string
+	 */
+	public static IPath createPathFromString(String path) {
+		if (path == null) return null;
+		// handle Windows slashes and canonicalize
+		path = path.replaceAll("\\\\", "/");
+		return new Path(path);
+	}
+	
+
+	
+	/**
 	 * Ensure that the executable name mentioned is canonical for the machine.
 	 * This only affects Windows, currently, ensuring that an ".exe" is attached.
 	 * @param executablePath
@@ -104,7 +121,7 @@ public class HostOS {
 			IPath executablePath = new Path(executable);
 			String ext = executablePath.getFileExtension();
 			if (ext == null) {
-				executable += ".exe";
+				executable += EXE_EXT;
 			}
 		}
 		return executable;
@@ -156,6 +173,4 @@ public class HostOS {
 		
 		return path;
 	}
-	
-	
 }

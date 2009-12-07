@@ -192,7 +192,7 @@ public class TestViewDOMSynchronizer extends BaseMMPViewTest {
 			}
 			
 			public Pair<IASTNode, IASTNode> getInsertAnchors() {
-				return new Pair(null, null);
+				return new Pair<IASTNode, IASTNode>(null, null);
 			}
 		};
 	}
@@ -212,7 +212,7 @@ public class TestViewDOMSynchronizer extends BaseMMPViewTest {
 			}
 			
 			public Pair<IASTNode, IASTNode> getInsertAnchors() {
-				return new Pair(before, after);
+				return new Pair<IASTNode, IASTNode>(before, after);
 			}
 		};
 	}

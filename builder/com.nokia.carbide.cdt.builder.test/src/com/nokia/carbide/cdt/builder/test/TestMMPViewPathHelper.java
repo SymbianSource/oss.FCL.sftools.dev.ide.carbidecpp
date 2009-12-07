@@ -17,21 +17,26 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
-import com.nokia.carbide.cdt.builder.*;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
-
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-
 import java.io.File;
 import java.io.FileFilter;
 
-import junit.framework.TestCase;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 
-public class TestMMPViewPathHelper extends TestCase {
+import com.nokia.carbide.cdt.builder.EMMPPathContext;
+import com.nokia.carbide.cdt.builder.InvalidDriveInMMPPathException;
+import com.nokia.carbide.cdt.builder.MMPViewPathHelper;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
+
+public class TestMMPViewPathHelper extends BaseTest {
 	final static String PROJECT1_NAME = "TestMmp";
 	final static String PROJECT2_NAME = "TestMmpImported";
 	private IPath epocRoot;
@@ -49,7 +54,7 @@ public class TestMMPViewPathHelper extends TestCase {
 		super.setUp();
 		tmpDir = FileUtils.getTemporaryDirectory();
 		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDKList().get(0);
-		//epocRoot = new Path("c:\\symbian\\9.1\\S60_3rd\\");
+		//epocRoot = new Path("c:/symbian/9.1/S60_3rd/");
 		epocRoot = new Path(sdk.getEPOCROOT());
 		project1 = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT1_NAME);
 		if (project1.exists())
@@ -117,15 +122,15 @@ public class TestMMPViewPathHelper extends TestCase {
 		assertEquals(new Path(projectName).append("foo.cpp"), path);
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.USERINCLUDE, 
-				new Path("\\sys\\bin"));
+				new Path("/sys/bin"));
 		assertNull(path);
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.AIF_SOURCE, 
-				new Path("c:\\data\\aif.rss"));
+				getStockFullPath().append("data/aif.rss"));
 		assertNull(path);
 		
 		path = helper.convertMMPToWorkspace(EMMPPathContext.SYSTEMINCLUDE, 
-				new Path("+\\include\\oem"));
+				new Path("+/include/oem"));
 		assertNull(path);
 
 	}
@@ -171,19 +176,19 @@ public class TestMMPViewPathHelper extends TestCase {
 		assertEquals(new Path("foo.cpp"), path);
 		
 		path = helper.convertMMPToProject(EMMPPathContext.USERINCLUDE, 
-				new Path("\\sys\\bin"));
+				new Path("/sys/bin"));
 		assertNull(path);
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.AIF_SOURCE, 
-				new Path("c:\\data\\aif.rss"));
+				getStockFullPath().append("data/aif.rss"));
 		assertNull(path);
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.USERINCLUDE, 
-				new Path("\\epoc32\\include\\oem"));
+				new Path("/epoc32/include/oem"));
 		assertNull(path);
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.SYSTEMINCLUDE, 
-				new Path("+\\include\\oem"));
+				new Path("+/include/oem"));
 		assertNull(path);
 		
 	}
@@ -218,16 +223,16 @@ public class TestMMPViewPathHelper extends TestCase {
 		
 		// this is not a valid path so it will get a drive letter from the project 
 		path = helper.convertMMPToFilesystem(EMMPPathContext.USERINCLUDE, 
-				new Path("\\sys\\bin"));
+				new Path("/sys/bin"));
 		assertNotNull(path);
 		assertTrue(path.isAbsolute());
-		assertEquals(new Path("\\sys\\bin").setDevice(projectRoot.getDevice()), path);
+		assertEquals(new Path("/sys/bin").setDevice(projectRoot.getDevice()), path);
 	
 		path = helper.convertMMPToFilesystem(EMMPPathContext.AIF_SOURCE, 
-				new Path("c:\\data\\aif.rss"));
+				getStockFullPath().append("data/aif.rss"));
 		assertNotNull(path);
 		assertTrue(path.isAbsolute());
-		assertEquals(new Path("c:\\data\\aif.rss"), path);
+		assertEquals(getStockFullPath().append("data/aif.rss"), path);
 	}
 
 	private void __testToFilesystemPaths(IProject project, IPath projectRoot) {
@@ -239,19 +244,19 @@ public class TestMMPViewPathHelper extends TestCase {
 		baseFilesystemPathTests(projectRoot, helper);
 		
 		path = helper.convertMMPToFilesystem(EMMPPathContext.USERINCLUDE, 
-				new Path("\\epoc32\\include\\oem"));
+				new Path("/epoc32/include/oem"));
 		assertNotNull(path);
 		assertTrue(path.isAbsolute());
 		// the caps may change for the real FS
-		//assertEquals(epocRoot.append("\\epoc32\\include\\oem"), path);
-		assertEquals(epocRoot.append("\\epoc32\\include\\oem").toOSString().toLowerCase(), path.toOSString().toLowerCase());
+		//assertEquals(epocRoot.append("/epoc32/include/oem"), path);
+		assertEquals(epocRoot.append("/epoc32/include/oem").toOSString().toLowerCase(), path.toOSString().toLowerCase());
 		
 		path = helper.convertMMPToFilesystem(EMMPPathContext.SYSTEMINCLUDE, 
-				new Path("+\\include\\oem"));
+				new Path("+/include/oem"));
 		assertNotNull(path);
 		assertTrue(path.isAbsolute());
-		//assertEquals(epocRoot.append("\\epoc32\\include\\oem"), path);
-		assertEquals(epocRoot.append("\\epoc32\\include\\oem").toOSString().toLowerCase(), path.toOSString().toLowerCase());
+		//assertEquals(epocRoot.append("/epoc32/include/oem"), path);
+		assertEquals(epocRoot.append("/epoc32/include/oem").toOSString().toLowerCase(), path.toOSString().toLowerCase());
 		
 	}
 	public void testToFilesystemPaths() {
@@ -270,11 +275,11 @@ public class TestMMPViewPathHelper extends TestCase {
 
 		// no EPOCROOT, so no answers
 		path = helper.convertMMPToFilesystem(EMMPPathContext.USERINCLUDE, 
-				new Path("\\epoc32\\include\\oem"));
+				new Path("/epoc32/include/oem"));
 		assertNull(path);
 
 		path = helper.convertMMPToFilesystem(EMMPPathContext.SYSTEMINCLUDE, 
-				new Path("+\\include\\oem"));
+				new Path("+/include/oem"));
 		assertNull(path);
 	}
 	
@@ -314,7 +319,7 @@ public class TestMMPViewPathHelper extends TestCase {
 		try {
 			path = helper.convertProjectOrFullPathToMMP(EMMPPathContext.SOURCEPATH, 
 					epocRoot.append("epoc32").append("include").append("oem"));
-			assertEquals(new Path("\\epoc32\\include\\oem"), path);
+			assertEquals(new Path("/epoc32/include/oem"), path);
 		} catch (InvalidDriveInMMPPathException e) {
 			fail();
 		}
@@ -327,13 +332,15 @@ public class TestMMPViewPathHelper extends TestCase {
 			fail();
 		}
 
-		try {
-			path = helper.convertProjectOrFullPathToMMP(EMMPPathContext.AIF_SOURCE, 
-					new Path("f:/schnozz/foo.rss"));
-			fail();
-		} catch (InvalidDriveInMMPPathException e) {
-			assertEquals(new Path("f:/schnozz/foo.rss"), e.getPath());
-			assertEquals(new Path("/schnozz/foo.rss"), e.getPathNoDevice());
+		if (HostOS.IS_WIN32) {
+			try {
+				path = helper.convertProjectOrFullPathToMMP(EMMPPathContext.AIF_SOURCE, 
+						new Path("f:/schnozz/foo.rss"));
+				fail();
+			} catch (InvalidDriveInMMPPathException e) {
+				assertEquals(new Path("f:/schnozz/foo.rss"), e.getPath());
+				assertEquals(new Path("/schnozz/foo.rss"), e.getPathNoDevice());
+			}
 		}
 		
 	}
@@ -351,11 +358,11 @@ public class TestMMPViewPathHelper extends TestCase {
 		twoWayTest(helper, EMMPPathContext.SOURCE, new Path("src/file/../../foo.cpp"));
 		twoWayTest(helper, EMMPPathContext.START_BITMAP_SOURCE, new Path("src/file/../../foo.cpp"));
 		
-		twoWayTest(helper, EMMPPathContext.USERINCLUDE, new Path("\\sys\\bin"));
+		twoWayTest(helper, EMMPPathContext.USERINCLUDE, new Path("/sys/bin"));
 		// this case won't pass since drive letters are dropped.
-		//twoWayTest(helper, EMMPPathContext.AIF_SOURCE, new Path("c:\\data\\aif.rss"));
-		twoWayTest(helper, EMMPPathContext.AIF_SOURCE, new Path("\\data\\aif.rss"));
-		twoWayTest(helper, EMMPPathContext.SYSTEMINCLUDE, new Path("epoc32\\include\\oem"));
+		//twoWayTest(helper, EMMPPathContext.AIF_SOURCE, new Path("c:/data/aif.rss"));
+		twoWayTest(helper, EMMPPathContext.AIF_SOURCE, new Path("/data/aif.rss"));
+		twoWayTest(helper, EMMPPathContext.SYSTEMINCLUDE, new Path("epoc32/include/oem"));
 	}
 
 	private void twoWayTest(MMPViewPathHelper helper, EMMPPathContext context, IPath path) {
@@ -462,19 +469,19 @@ public class TestMMPViewPathHelper extends TestCase {
 		assertNotNull(root.findMember(path));
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.USERINCLUDE, 
-				new Path("\\sys\\bin"));
+				new Path("/sys/bin"));
 		assertNull(path);
 
 		path = helper.convertMMPToWorkspace(EMMPPathContext.AIF_SOURCE, 
-				new Path("c:\\data\\aif.rss"));
+				getStockFullPath().append("data/aif.rss"));
 		assertNull(path);
 		
 		path = helper.convertMMPToWorkspace(EMMPPathContext.SYSTEMINCLUDE, 
-				new Path("+\\include\\oem"));
+				new Path("+/include/oem"));
 		assertNull(path);
 		
 		/////
-		//test full paths
+		//test full paths.  
 		path = helper.convertMMPToWorkspace(EMMPPathContext.START_BITMAP_SOURCE, 
 				projectRoot.append("base.mmp"));
 		assertNotNull(path);

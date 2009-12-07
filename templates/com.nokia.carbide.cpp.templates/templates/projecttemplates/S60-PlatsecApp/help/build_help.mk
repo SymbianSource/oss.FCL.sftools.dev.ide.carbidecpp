@@ -18,7 +18,7 @@ do_nothing :
 
 MAKMAKE : $(baseName)_$(uid3).hlp
 $(baseName)_$(uid3).hlp : $(baseName).xml $(baseName).cshlp Custom.xml
-	cshlpcmp $(baseName).cshlp
+	$(cshlpcmp) $(baseName).cshlp
 ifeq (WINSCW,$(findstring WINSCW, $(PLATFORM)))
 	md $(EPOCROOT)epoc32\$(PLATFORM)\c\resource\help
 	copy $(baseName)_$(uid3).hlp $(EPOCROOT)epoc32\$(PLATFORM)\c\resource\help

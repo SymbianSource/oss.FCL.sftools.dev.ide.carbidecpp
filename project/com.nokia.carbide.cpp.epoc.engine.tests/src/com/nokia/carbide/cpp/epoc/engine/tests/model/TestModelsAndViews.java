@@ -28,7 +28,6 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.tests.model.dummy.DummyModel;
-import com.nokia.carbide.cpp.epoc.engine.tests.model.dummy.IDummyModel;
 import com.nokia.carbide.cpp.epoc.engine.tests.model.dummy.IDummyView;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTTranslationUnit;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewASTBase;
@@ -67,7 +66,7 @@ public class TestModelsAndViews extends BaseViewTests {
 			}
 
 			public Collection<IDefine> getMacros() {
-				return Collections.EMPTY_LIST;
+				return Collections.emptyList();
 			}
 			
 			public IViewParserConfiguration getViewParserConfiguration() {
@@ -148,7 +147,7 @@ public class TestModelsAndViews extends BaseViewTests {
 		assertEquals(model, view.getModel());
 		
 		// ensure model knows
-		IView<IDummyModel>[] views = model.getViews();
+		IView[] views = model.getViews();
 		assertEquals(1, views.length);
 		assertEquals(view, views[0]);
 		

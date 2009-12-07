@@ -119,11 +119,13 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		data.horizontalSpan = 2;
 		hostLabel.setLayoutData(data);
 		hostLabel.setToolTipText(Messages.getString("InstallationTab.2")); //$NON-NLS-1$
+		hostLabel.setData(".uid", "InstallationTab.hostLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 
 		hostPath = new Text(projComp, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		hostPath.setLayoutData(data);
 		hostPath.setToolTipText(Messages.getString("InstallationTab.2")); //$NON-NLS-1$
+		hostPath.setData(".uid", "InstallationTab.hostPath");  //$NON-NLS-1$ //$NON-NLS-2$
 		hostPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updatePULabel();
@@ -132,6 +134,7 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		});
 
 		hostBrowse = createPushButton(projComp, Messages.getString("InstallationTab.3"), null); //$NON-NLS-1$
+		hostBrowse.setData(".uid", "InstallationTab.hostBrowse");  //$NON-NLS-1$ //$NON-NLS-2$
 		hostBrowse.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent evt) {
@@ -156,11 +159,13 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		data.horizontalSpan = 2;
 		targetLabel.setLayoutData(data);
 		targetLabel.setToolTipText(Messages.getString("InstallationTab.6")); //$NON-NLS-1$
+		targetLabel.setData(".uid", "InstallationTab.targetLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 
 		targetPath = new Text(projComp, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		targetPath.setLayoutData(data);
 		targetPath.setToolTipText(Messages.getString("InstallationTab.6")); //$NON-NLS-1$
+		targetPath.setData(".uid", "InstallationTab.targetPath");  //$NON-NLS-1$ //$NON-NLS-2$
 		targetPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
@@ -174,6 +179,7 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		data.horizontalSpan = 2;
 		forceInstall.setLayoutData(data);
 		forceInstall.setToolTipText(Messages.getString("InstallationTab.8")); //$NON-NLS-1$
+		forceInstall.setData(".uid", "InstallationTab.forceInstall");  //$NON-NLS-1$ //$NON-NLS-2$
 		forceInstall.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateLaunchConfigurationDialog();
@@ -211,7 +217,7 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		data.horizontalSpan = 1;
 		driveLabel.setLayoutData(data);
 		driveLabel.setToolTipText(Messages.getString("InstallationTab.12")); //$NON-NLS-1$
-
+		driveLabel.setData(".uid", "InstallationTab.driveLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 		drive = new Combo(installerUIGroup.getGroup(), SWT.READ_ONLY);
 		for (int i=0; i<driveLetterArray.length; i++) {
 			drive.add(driveLetterArray[i]);
@@ -220,6 +226,7 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 		data.horizontalSpan = 1;
 		drive.setLayoutData(data);
 		drive.setToolTipText(Messages.getString("InstallationTab.12")); //$NON-NLS-1$
+		
 		drive.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();

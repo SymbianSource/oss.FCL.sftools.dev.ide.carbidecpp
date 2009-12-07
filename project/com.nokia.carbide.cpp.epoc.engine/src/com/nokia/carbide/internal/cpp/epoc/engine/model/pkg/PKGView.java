@@ -366,7 +366,7 @@ public class PKGView extends ViewBase<IPKGOwnedModel> implements IPKGView {
 		IASTPKGInstallFileStatement installFileStmt = (IASTPKGInstallFileStatement) node;
 		PKGInstallFile installFile = new PKGInstallFile(installFileStmt, parentNode);
 		IASTLiteralTextNode targetFile = installFileStmt.getTargetFile();
-		installFile.setDestinationFile(new Path(TextUtils.unquote(targetFile
+		installFile.setDestinationFile(HostOS.createPathFromString(TextUtils.unquote(targetFile
 				.getStringValue(), '"')));
 		IASTListNode<IASTLiteralTextNode> optionNodes = installFileStmt
 				.getOptions();
@@ -388,7 +388,7 @@ public class PKGView extends ViewBase<IPKGOwnedModel> implements IPKGView {
 			} else {
 				for (IASTLiteralTextNode sourceNode : sourceNodes) {
 					sourceFiles.put(languages.get(languageIndex++),
-							new Path(TextUtils.unquote(sourceNode
+							HostOS.createPathFromString(TextUtils.unquote(sourceNode
 									.getStringValue(), '"')));
 				}
 			}
@@ -397,7 +397,7 @@ public class PKGView extends ViewBase<IPKGOwnedModel> implements IPKGView {
 			// always return
 			// single source
 			// node
-			sourceFiles.put(EPKGLanguage.INDEPENDENT, new Path(TextUtils
+			sourceFiles.put(EPKGLanguage.INDEPENDENT, HostOS.createPathFromString(TextUtils
 					.unquote(sourceNodes.get(0).getStringValue(), '"')));
 		}
 		if (parentNode == null)
@@ -460,13 +460,13 @@ public class PKGView extends ViewBase<IPKGOwnedModel> implements IPKGView {
 				for (IASTLiteralTextNode sourceNode : sourceNodes) {
 					// remove the leading '@'
 					sourceFiles.put(languages.get(languageIndex++),
-							new Path(TextUtils.unquote(sourceNode.getStringValue().substring(1), '"')));
+							HostOS.createPathFromString(TextUtils.unquote(sourceNode.getStringValue().substring(1), '"')));
 				}
 			}
 		} else { // language independent
 			Check.checkContract(sourceNodes.size() == 1); // parser should
 			// always return single source node.  remove the leading '@'.
-			sourceFiles.put(EPKGLanguage.INDEPENDENT, new Path(TextUtils
+			sourceFiles.put(EPKGLanguage.INDEPENDENT, HostOS.createPathFromString(TextUtils
 					.unquote(sourceNodes.get(0).getStringValue().substring(1), '"')));
 		}
 		

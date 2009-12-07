@@ -252,7 +252,7 @@ public class ProjectExportsGatherer {
 			
 			// we only support exports which might reasonably make it onto the device,
 			// which means ones either explictly or implicitly targeting a drive.
-			if (targetPath.isAbsolute() && targetPath.getDevice() != null) {
+			if (isWin32DrivePath(targetPath)) {
 				// accept
 			}
 			else if (targetPath.isAbsolute() && targetPath.getDevice() == null
@@ -325,32 +325,48 @@ public class ProjectExportsGatherer {
 	}
 
 	/**
+	 * Tell if the path is a Win32 path with drive letter or UNC.
+	 * @param path
+	 */
+	protected boolean isWin32DrivePath(IPath path) {
+		return (path.getDevice() != null && path.getDevice().length() == 2) 
+			|| (!HostOS.IS_WIN32 && path.segmentCount() > 0 && path.segment(0).matches("[A-Za-z]:"));
+	}
+
+	/**
 	 * Convert a path like c:\private\foo.svg to $(EPOCROOT)data\c\private\foo.svg 
 	 * @param host
 	 * @return converted path or original
 	 */
 	private IPath epocHostToEPOCROOTData(IPath host) {
-		if (host.getDevice() == null || host.getDevice().length() > 2)
-			return host;
-		if (!host.isAbsolute())
+		if (!isWin32DrivePath(host))
 			return host;
 		IPath nativ = epocRoot.append("epoc32").append("data") //$NON-NLS-1$ //$NON-NLS-2$
-			.append(host.getDevice().substring(0, 1)).append(host.setDevice(null));
+			.append(convertDriveToPathSegment(host));
 		return nativ;
 	}
 	
+	/**
+	 * @param host
+	 * @return
+	 */
+	private IPath convertDriveToPathSegment(IPath host) {
+		if (host.getDevice() != null)
+			return new Path(host.getDevice().substring(0, 1)).append(host.setDevice(null));
+		else
+			return new Path(host.segment(0).substring(0, 1)).append(host.removeFirstSegments(1)); 
+	}
+
 	/**
 	 * Convert a path like c:\private\foo.svg to $(EPOCROOT)release\<platform>\<target>\<drive>\<path>
 	 * @param host
 	 * @return converted path or original
 	 */
 	private IPath epocHostToEPOCPlatformData(IPath host) {
-		if (host.getDevice() == null || host.getDevice().length() > 2)
-			return host;
-		if (!host.isAbsolute())
+		if (!isWin32DrivePath(host))
 			return host;
 		IPath nativ = epocRoot.append("epoc32").append("release").append(platform).append(target) //$NON-NLS-1$ //$NON-NLS-2$
-			.append(host.getDevice().substring(0, 1)).append(host.setDevice(null));
+			.append(convertDriveToPathSegment(host));
 		return nativ;
 	}
 }

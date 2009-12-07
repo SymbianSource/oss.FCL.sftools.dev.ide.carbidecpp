@@ -21,6 +21,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 
 import java.io.File;
 
@@ -56,7 +57,7 @@ public class TestDefaultTranslationUnitProvider extends TestCase {
 			assertSame(tu, tu2);
 			
 			// detect change
-			Thread.sleep(500);
+			Thread.sleep(FileUtils.getMinimumFileTimestampResolution(new Path(file1.getAbsolutePath())));
 			FileUtils.writeFileContents(file1, "text2".toCharArray(), null);
 			tu2 = tuProvider.getTranslationUnit(file1, cachingModelDocumentProvider);
 			assertNotNull(tu2);

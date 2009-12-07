@@ -3,7 +3,7 @@
   <!--Error Marker at index 0-->
   <marker_info file="^EMPTY^" line_number="0" message="\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\ARMV5\LIB\foo.dso: No such file: No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="^EMPTY^" />
   <!--Error Marker at index 1-->
-  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.cpp:" />
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.cpp" />
   <!--Error Marker at index 2-->
-  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.s:" />
+  <marker_info file="^EMPTY^" line_number="0" message="No such file or directory" severity="2" variable_name="^EMPTY^" external_path_string="test/test.s" />
 </root>

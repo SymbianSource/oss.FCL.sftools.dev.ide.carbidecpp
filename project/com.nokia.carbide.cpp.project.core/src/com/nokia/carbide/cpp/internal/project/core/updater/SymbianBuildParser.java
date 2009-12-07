@@ -73,7 +73,7 @@ public class SymbianBuildParser {
 	private static final String MACROS = "macros"; //$NON-NLS-1$
 	private static final String MBM = "mbm"; //$NON-NLS-1$
 	private static final String MIF = "mif"; //$NON-NLS-1$
-	private static final String DEFAULT_TARGET = "untitled.exe"; //$NON-NLS-1$
+	private static final String DEFAULT_TARGET = HostOS.IS_WIN32 ? "untitled.exe" : "untitled"; //$NON-NLS-1$ //$NON-NLS-2$
 	private static final String DEFAULT_TARGETTYPE = "exe"; //$NON-NLS-1$
 	private static final String[] plaformMacros = {
 		"GCC32", "EPOC32", "MARM", "EABI", "GENERIC_MARM",  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$

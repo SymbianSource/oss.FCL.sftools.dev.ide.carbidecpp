@@ -43,6 +43,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.leavescan.LeavescanPlugin;
 import com.nokia.carbide.cpp.internal.leavescan.ui.LeavescanPreferenceConstants;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 public class LeavescanAction implements IObjectActionDelegate {
 	
@@ -164,9 +165,9 @@ public class LeavescanAction implements IObjectActionDelegate {
 						leaveScanArgList.add("/c");
 						
 						if (leaveScanFolder.length() > 0){
-							leaveScanArgList.add(leaveScanFolder + "leavescan.exe");
+							leaveScanArgList.add(leaveScanFolder + "leavescan" + HostOS.EXE_EXT);
 						} else {
-							leaveScanArgList.add("leavescan.exe");
+							leaveScanArgList.add("leavescan" + HostOS.EXE_EXT);
 						}
 
 						if (noisyOutput) {
@@ -273,9 +274,9 @@ public class LeavescanAction implements IObjectActionDelegate {
 					leaveScanArgList.add("/c");
 					
 					if (leaveScanFolder.length() > 0){
-						leaveScanArgList.add(leaveScanFolder + "leavescan.exe");
+						leaveScanArgList.add(leaveScanFolder + "leavescan" + HostOS.EXE_EXT);
 					} else {
-						leaveScanArgList.add("leavescan.exe");
+						leaveScanArgList.add("leavescan" + HostOS.EXE_EXT);
 					}
 
 					if (noisyOutput) {

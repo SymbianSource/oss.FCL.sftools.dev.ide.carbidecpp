@@ -27,6 +27,7 @@ import org.osgi.framework.Bundle;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.*;
 
 /**
@@ -66,6 +67,9 @@ public class TestDevicesXMLListener extends TestCase {
 	// Here we just rescan the sdks and the listener will perform the test
 	public void testCarbideConfigurationChangedListener() throws Exception{
 		 
+		if (!SBSv2Utils.enableSBSv1Support())
+			return;
+		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		
 		// get devics.xml and make a backup copy

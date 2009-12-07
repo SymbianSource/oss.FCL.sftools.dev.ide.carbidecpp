@@ -39,7 +39,6 @@ public class SymbianContextTest extends TestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-		// TODO Auto-generated method stub
 		super.tearDown();
 	}
 
@@ -49,26 +48,28 @@ public class SymbianContextTest extends TestCase {
 		assertNotNull(sdkList);
 		assertTrue(sdkList.size() > 0);
 		
-		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK("S60_5th_Edition_SDK_v1.0", true);
-		assertNotNull("SDK should exist for test", sdk);
-		SymbianBuildContext context = new SymbianBuildContext(sdk, "WINSCW", "UDEB");
-		ISymbianSDK contextSDK = context.getSDK();
-		
-		assertTrue(contextSDK.equals(sdk));
-		
-		// test that get get the macros
-		List<String> platMacros = contextSDK.getPlatformMacros("WINSCW");
-		assertTrue("WINSCW platform macros should be > 0", platMacros.size() > 0);
-		
-		// test that we get the SDK version
-		Version sdkVer = contextSDK.getSDKVersion();
-		assertEquals(5,sdkVer.getMajor());
-		assertEquals(0,sdkVer.getMinor());
-		
-		// test that we get the OS version
-		Version osVer = contextSDK.getOSVersion();
-		assertEquals(9,osVer.getMajor());
-		assertEquals(4,osVer.getMinor());
+		for (ISymbianSDK sdk : sdkList) {
+			if (sdk.getName().equals("S60_5th_Edition_SDK_v1.0")) {
+				// test that we get the SDK version
+				Version sdkVer = sdk.getSDKVersion();
+				assertEquals(5,sdkVer.getMajor());
+				assertEquals(0,sdkVer.getMinor());
+				
+				// test that we get the OS version
+				Version osVer = sdk.getOSVersion();
+				assertEquals(9,osVer.getMajor());
+				assertEquals(4,osVer.getMinor());
+			}
+			
+			SymbianBuildContext context = new SymbianBuildContext(sdk, "WINSCW", "UDEB");
+			ISymbianSDK contextSDK = context.getSDK();
+			
+			assertEquals(sdk, contextSDK);
+			
+			// test that get get the macros
+			List<String> platMacros = contextSDK.getPlatformMacros("WINSCW");
+			assertTrue("WINSCW platform macros should be > 0", platMacros.size() > 0);
+		}
 		
 	}
 	

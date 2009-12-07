@@ -17,19 +17,21 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
-import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
-
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-
 import java.io.File;
 import java.io.FileFilter;
 
-import junit.framework.TestCase;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 
-public class TestEpocEnginePathHelper extends TestCase {
+import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+
+public class TestEpocEnginePathHelper extends BaseTest {
 	final static String PROJECT1_NAME = "TestEngine";
 	final static String PROJECT2_NAME = "TestEngineImported";
 	private IProject project1;
@@ -110,10 +112,10 @@ public class TestEpocEnginePathHelper extends TestCase {
 		assertFalse(path.isAbsolute());
 		assertEquals(new Path(projectName).append("foo.cpp"), path);
 
-		path = helper.convertToWorkspace(new Path("\\sys\\bin"));
+		path = helper.convertToWorkspace(new Path("/sys/bin"));
 		assertNull(path);
 
-		path = helper.convertToWorkspace(new Path("c:\\data\\aif.rss"));
+		path = helper.convertToWorkspace(getStockFullPath().append("data/aif.rss"));
 		assertNull(path);
 
 	}
@@ -152,13 +154,13 @@ public class TestEpocEnginePathHelper extends TestCase {
 		assertFalse(path.isAbsolute());
 		assertEquals(new Path("foo.cpp"), path);
 		
-		path = helper.convertToProject(new Path("\\sys\\bin"));
+		path = helper.convertToProject(new Path("/sys/bin"));
 		assertNull(path);
 
-		path = helper.convertToProject(new Path("c:\\data\\aif.rss"));
+		path = helper.convertToProject(getStockFullPath().append("data/aif.rss"));
 		assertNull(path);
 
-		path = helper.convertToProject(new Path("\\epoc32\\include\\oem"));
+		path = helper.convertToProject(new Path("/epoc32/include/oem"));
 		assertNull(path);
 	}
 
@@ -188,15 +190,15 @@ public class TestEpocEnginePathHelper extends TestCase {
 		assertEquals(projectRoot.append("foo.cpp"), path);
 		
 		// not a real EPOCROOT filesystem path, so it gets the drive letter
-		path = helper.convertToFilesystem(new Path("\\sys\\bin"));
+		path = helper.convertToFilesystem(new Path("/sys/bin"));
 		assertNotNull(path);
 		assertTrue(path.isAbsolute());
-		assertEquals(new Path("\\sys\\bin").setDevice(projectRoot.getDevice()), path);
+		assertEquals(new Path("/sys/bin").setDevice(projectRoot.getDevice()), path);
 	
-		path = helper.convertToFilesystem(new Path("c:\\data\\aif.rss"));
+		path = helper.convertToFilesystem(getStockFullPath().append("data/aif.rss"));
 		assertNotNull(path);
 		assertTrue(path.isAbsolute());
-		assertEquals(new Path("c:\\data\\aif.rss"), path);
+		assertEquals(getStockFullPath().append("data/aif.rss"), path);
 	}
 
 	private void __testToFilesystemPaths(IProject project, IPath projectRoot) {
@@ -286,10 +288,10 @@ public class TestEpocEnginePathHelper extends TestCase {
 		assertEquals(new Path(project.getName()).append("Base.Mmp"), path);
 		assertNotNull(root.findMember(path));
 
-		path = helper.convertToWorkspace(new Path("\\sys\\bin"));
+		path = helper.convertToWorkspace(new Path("/sys/bin"));
 		assertNull(path);
 
-		path = helper.convertToWorkspace(new Path("c:\\data\\aif.rss"));
+		path = helper.convertToWorkspace(getStockFullPath().append("data/aif.rss"));
 		assertNull(path);
 		
 		/////
@@ -308,7 +310,7 @@ public class TestEpocEnginePathHelper extends TestCase {
 		
 		////////
 		
-		path = helper.convertFilesystemToWorkspace(new Path("c:/not/in/workspace"));
+		path = helper.convertFilesystemToWorkspace(getStockFullPath().append("not/in/workspace"));
 		assertNull(path);
 		
 		/*

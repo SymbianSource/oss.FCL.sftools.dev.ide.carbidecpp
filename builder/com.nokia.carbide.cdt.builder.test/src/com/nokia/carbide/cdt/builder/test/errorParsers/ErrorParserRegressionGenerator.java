@@ -42,7 +42,7 @@ public class ErrorParserRegressionGenerator extends UITestCase {
 		// TODO Auto-generated constructor stub
 	}
 
-	private static final String PROJECT_NAME = "TestErrorParser";
+	//private static final String PROJECT_NAME = "TestErrorParser";
 	// Platform matters, set this before you build
 	private static final String PLATFORM_STRING = ISymbianBuildContext.GCCE_PLATFORM;
 

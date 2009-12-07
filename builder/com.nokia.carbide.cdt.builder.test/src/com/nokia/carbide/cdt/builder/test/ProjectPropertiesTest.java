@@ -39,18 +39,18 @@ import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 
+@SuppressWarnings({ "deprecation" })
 public class ProjectPropertiesTest extends TestCase {
 	static IProject project;
 	
 	protected static final String PROJECT_NAME = "test-properties-project";
 	
-	private final String BLD_INF_PATH = "group\\";
-	private final String BUILD_CONFIG_NAME1 = "Emulator Debug (WINSCW) [S60_3rd]";
-	private final String BUILD_CONFIG_NAME2 = "Phone Debug (GCCE) [S60_3rd]";
-	private final String BUILD_CONFIG_NAME3 = "Phone Release (ARMV5) [S60_3rd]";
+	private final String BLD_INF_PATH = "group/";
 	private final String TRUE = "true";
 	private final String INF_COMPONENTS = "icons_scalable_dc.mk;HelloWorld.mmp";
-	
+
+	private List<ISymbianBuildContext> stockBuildConfigs;
+
 	private final String PKG_FILE1 = "\\sis\\test.pkg";
 	private final String KEY_FILE1 = "C:\\mycerts\\mykey.key";
 	private final String CER_FILE1 = "C:\\mycerts\\mycert.cer";
@@ -61,16 +61,19 @@ public class ProjectPropertiesTest extends TestCase {
 	
 	// First thing we have to do is actually create a project in a workspace...
 	protected void setUp() throws Exception {
+		stockBuildConfigs = TestPlugin.getUsableBuildConfigs();
+		
 		if (project == null){
 			// turn off the indexer
 			CCorePlugin.getIndexManager().setDefaultIndexerId(IPDOMManager.ID_NO_INDEXER);
 
 			// there must be at least one build config to start with
-			List<ISymbianBuildContext> configs = new ArrayList<ISymbianBuildContext>();
-			configs.add(SymbianBuildContext.getBuildContextFromDisplayName(BUILD_CONFIG_NAME1));
-			
+			assertTrue("Some SDK needs at least 3 usable build configs", 
+					stockBuildConfigs.size() >= 3);
 			project = ProjectCorePlugin.createProject(PROJECT_NAME, null);
-			ProjectCorePlugin.postProjectCreatedActions(project, "group/bld.inf", configs, new ArrayList<String>(), "Debug MMP", null, new NullProgressMonitor());
+			ProjectCorePlugin.postProjectCreatedActions(project, "group/bld.inf", 
+					stockBuildConfigs.subList(0, 1), 
+					new ArrayList<String>(), "Debug MMP", null, new NullProgressMonitor());
 		}
 		super.setUp();
 	}
@@ -98,8 +101,8 @@ public class ProjectPropertiesTest extends TestCase {
 		
 		// get a new copy of the info to make sure the changes we really applied
         ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
-		assertEquals(BLD_INF_PATH, cpi.getProjectRelativeBldInfPath().toOSString());
-		assertEquals(BUILD_CONFIG_NAME1, cpi.getDefaultBuildConfigName());
+		assertEquals(BLD_INF_PATH, cpi.getProjectRelativeBldInfPath().toPortableString());
+		assertEquals(stockBuildConfigs.get(0).getDisplayString(), cpi.getDefaultBuildConfigName());
 		assertTrue(cpi.isBuildingFromInf());
 		assertEquals(2, cpi.getInfBuildComponents().size());
 	}
@@ -117,8 +120,9 @@ public class ProjectPropertiesTest extends TestCase {
 		// Create a new configuration (which gets written to disk).
 		// WARNING: This test will only pass when you have an SDK that is installed that
 		// corresponds to the SDK specified in the build config display name
-		ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(BUILD_CONFIG_NAME2);
-		assertNotNull(context);
+		if (stockBuildConfigs.size() == 1)
+			return;
+		ISymbianBuildContext context = stockBuildConfigs.get(1);
 		
 		ICarbideBuildConfiguration newConfig = cpm.createNewConfiguration(context, true);
 		
@@ -126,7 +130,7 @@ public class ProjectPropertiesTest extends TestCase {
 		
 		assertNotNull(newConfig);
 		// Check that the config name was set correctly in the object
-		assertEquals(BUILD_CONFIG_NAME2, newConfig.getDisplayString());
+		assertEquals(context.getDisplayString(), newConfig.getDisplayString());
 		
 		// check that we can get back to the project from the config...
 		assertEquals(cpm, newConfig.getCarbideProject());
@@ -135,7 +139,6 @@ public class ProjectPropertiesTest extends TestCase {
 	}
 	
 	public void testReadConfigurationData() throws Exception {
-		
 		//TODO: Here need to read all config data on this call...
 		// Right now we're just dealing with a single config property.
         ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
@@ -144,15 +147,15 @@ public class ProjectPropertiesTest extends TestCase {
 		List<ICarbideBuildConfiguration> configList = cpi.getBuildConfigurations();
 		assertEquals(2, configList.size());
 		
-		ICarbideBuildConfiguration config = cpi.getNamedConfiguration(BUILD_CONFIG_NAME1);
-		assertEquals(BUILD_CONFIG_NAME1, config.getDisplayString());
+		ICarbideBuildConfiguration config = cpi.getNamedConfiguration(stockBuildConfigs.get(0).getDisplayString());
+		assertEquals(stockBuildConfigs.get(0).getDisplayString(), config.getDisplayString());
 	}
 	
 	public void testDeleteConfigurationData() throws Exception {
         ICarbideProjectModifier cpm = CarbideBuilderPlugin.getBuildManager().getProjectModifier(project);
 		assertNotNull(cpm);
 		
-		ICarbideBuildConfiguration config = cpm.getNamedConfiguration(BUILD_CONFIG_NAME2);
+		ICarbideBuildConfiguration config = cpm.getNamedConfiguration(stockBuildConfigs.get(1).getDisplayString());
 		assertNotNull(config);
 		cpm.deleteConfiguration(config);
 		cpm.saveChanges();
@@ -168,11 +171,11 @@ public class ProjectPropertiesTest extends TestCase {
         ICarbideProjectModifier cpm = CarbideBuilderPlugin.getBuildManager().getProjectModifier(project);
 		assertEquals(1, cpm.getBuildConfigurations().size());
 		
-		ISymbianBuildContext context2 = SymbianBuildContext.getBuildContextFromDisplayName(BUILD_CONFIG_NAME2);
+		ISymbianBuildContext context2 = SymbianBuildContext.getBuildContextFromDisplayName(stockBuildConfigs.get(1).getDisplayString());
 		assertNotNull(context2);
 		cpm.createNewConfiguration(context2, true);
 
-		ISymbianBuildContext context3 = SymbianBuildContext.getBuildContextFromDisplayName(BUILD_CONFIG_NAME3);
+		ISymbianBuildContext context3 = SymbianBuildContext.getBuildContextFromDisplayName(stockBuildConfigs.get(2).getDisplayString());
 		assertNotNull(context3);
 		cpm.createNewConfiguration(context3, false);
 		
@@ -184,7 +187,7 @@ public class ProjectPropertiesTest extends TestCase {
 		assertEquals(3, cpi.getBuildConfigurations().size());
 		
 		ICarbideBuildConfiguration defConfig = cpi.getDefaultConfiguration();
-		assertEquals(BUILD_CONFIG_NAME2, defConfig.getDisplayString());
+		assertEquals(stockBuildConfigs.get(1).getDisplayString(), defConfig.getDisplayString());
 	}
 	
 	// Test the reading and writing of the default configuration
@@ -193,10 +196,10 @@ public class ProjectPropertiesTest extends TestCase {
 		assertEquals(3, cpm.getBuildConfigurations().size());
 		
 		ICarbideBuildConfiguration defConfig = cpm.getDefaultConfiguration();
-		assertEquals(BUILD_CONFIG_NAME2, defConfig.getDisplayString());
+		assertEquals(stockBuildConfigs.get(1).getDisplayString(), defConfig.getDisplayString());
 		
 		// make another configuration the default one...
-		ICarbideBuildConfiguration newDefaultConfig = cpm.getNamedConfiguration(BUILD_CONFIG_NAME3);
+		ICarbideBuildConfiguration newDefaultConfig = cpm.getNamedConfiguration(stockBuildConfigs.get(2).getDisplayString());
 		assertNotNull(newDefaultConfig);
 		cpm.setDefaultConfiguration(newDefaultConfig);
 		cpm.saveChanges();
@@ -206,7 +209,7 @@ public class ProjectPropertiesTest extends TestCase {
 
 		// Check to see that we got the new default config
 		defConfig = cpi.getDefaultConfiguration();
-		assertEquals(BUILD_CONFIG_NAME3, defConfig.getDisplayString());
+		assertEquals(stockBuildConfigs.get(2).getDisplayString(), defConfig.getDisplayString());
 	}
 	
 	public void testWritePKGData(){
@@ -253,7 +256,6 @@ public class ProjectPropertiesTest extends TestCase {
 	}
 	
 	public void testSBSv1BuildArgsReadWrite(){
-		
 		final String build_ARG = "-testbuild";
 		final String clean_ARG = "-testclean";
 		final String export_ARG = "-testexport";
@@ -273,7 +275,7 @@ public class ProjectPropertiesTest extends TestCase {
 		
 		// Just sanity check to make sure deprecated methods still exist.
 		IBuildArgumentsInfo testDeprecation = defaultConfig.getBuildArgumentsInfo();
-		String test = testDeprecation.getAbldBuildArgs();
+		/*String test =*/ testDeprecation.getAbldBuildArgs();
 		
 		
 		// read the arguments
@@ -311,15 +313,15 @@ public class ProjectPropertiesTest extends TestCase {
 		BuildArgumentsInfo argInfoFromDisk = defaultConfig.getBuildArgumentsInfoCopy();
 		
 		// read the args now that were pulled from disk, make sure it's OK
-		assertTrue("Failed to re-read build args", argInfoCopyVerify.abldBuildArgs.contains(build_ARG));
-		assertTrue("Failed to re-read clean args", argInfoCopyVerify.abldCleanArgs.contains(clean_ARG));
-		assertTrue("Failed to re-read export args", argInfoCopyVerify.abldExportArgs.contains(export_ARG));
-		assertTrue("Failed to re-read final args", argInfoCopyVerify.abldFinalArgs.contains(final_ARG));
-		assertTrue("Failed to re-read freeze args", argInfoCopyVerify.abldFreezeArgs.contains(freeze_ARG));
-		assertTrue("Failed to re-read library args", argInfoCopyVerify.abldLibraryArgs.contains(library_ARG));
-		assertTrue("Failed to re-read makefile args", argInfoCopyVerify.abldMakefileArgs.contains(makefile_ARG));
-		assertTrue("Failed to re-read resource args", argInfoCopyVerify.abldResourceArgs.contains(resource_ARG));
-		assertTrue("Failed to re-read target args", argInfoCopyVerify.abldTargetArgs.contains(target_ARG));
+		assertTrue("Failed to re-read build args", argInfoFromDisk.abldBuildArgs.contains(build_ARG));
+		assertTrue("Failed to re-read clean args", argInfoFromDisk.abldCleanArgs.contains(clean_ARG));
+		assertTrue("Failed to re-read export args", argInfoFromDisk.abldExportArgs.contains(export_ARG));
+		assertTrue("Failed to re-read final args", argInfoFromDisk.abldFinalArgs.contains(final_ARG));
+		assertTrue("Failed to re-read freeze args", argInfoFromDisk.abldFreezeArgs.contains(freeze_ARG));
+		assertTrue("Failed to re-read library args", argInfoFromDisk.abldLibraryArgs.contains(library_ARG));
+		assertTrue("Failed to re-read makefile args", argInfoFromDisk.abldMakefileArgs.contains(makefile_ARG));
+		assertTrue("Failed to re-read resource args", argInfoFromDisk.abldResourceArgs.contains(resource_ARG));
+		assertTrue("Failed to re-read target args", argInfoFromDisk.abldTargetArgs.contains(target_ARG));
 		
 		// Now restore the settings, write to disk and verify
 		defaultConfig.setBuildArgumentsInfo(argInfoCopyOrig);

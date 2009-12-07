@@ -36,7 +36,7 @@ import com.nokia.carbide.internal.cpp.epoc.engine.parser.ParserFactory;
 import com.nokia.cpp.internal.api.utils.core.*;
 public class DefaultTranslationUnitProvider implements ITranslationUnitProvider {
 
-	private static DefaultTranslationUnitProvider instance;
+	private static DefaultTranslationUnitProvider instance = new DefaultTranslationUnitProvider();
 
 	// not final or static for debugging
 	private boolean DUMP = false;
@@ -62,9 +62,6 @@ public class DefaultTranslationUnitProvider implements ITranslationUnitProvider 
 	 * @return instance, never null
 	 */
 	public static DefaultTranslationUnitProvider getInstance() {
-		if (instance == null) {
-			instance = new DefaultTranslationUnitProvider();
-		}
 		return instance;
 	}
 	

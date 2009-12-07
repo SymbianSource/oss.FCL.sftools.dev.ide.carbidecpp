@@ -70,6 +70,7 @@ public class TestStandaloneModelProvider extends BaseTest {
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.epoc.engine.tests.BaseTest#setUp()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();

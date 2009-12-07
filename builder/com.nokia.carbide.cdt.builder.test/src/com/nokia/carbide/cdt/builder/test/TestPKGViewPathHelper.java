@@ -17,25 +17,36 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
-import com.nokia.carbide.cdt.builder.*;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.dom.IPDOMManager;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 
-import java.io.ByteArrayInputStream;
-import java.util.*;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.DefaultViewConfiguration;
+import com.nokia.carbide.cdt.builder.PKGViewPathHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGInstallFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGModel;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.PKGModelHelper;
 
-import junit.framework.TestCase;
-
-public class TestPKGViewPathHelper extends TestCase {
+public class TestPKGViewPathHelper extends BaseTest {
 	
 	private static final String PROJECT_NAME = "TestPKG";
 	private static final IPath PKG_PATH = new Path("sis/test.pkg");
@@ -125,7 +136,7 @@ public class TestPKGViewPathHelper extends TestCase {
 
 		IPath path1 = new Path(config.getSDK().getEPOCROOT()).append("epoc32/release").append(config.getPlatformString()).append(config.getTargetString()).append("test.exe");
 		IPath path2 = project.getLocation().append("sis/test.txt");
-		IPath path3 = new Path("\\Symbian\\9.1\\S60_3rd\\file.txt");
+		IPath path3 = new Path("/Symbian/9.1/S60_3rd/file.txt");
 		
 		List<IPath> paths = new ArrayList<IPath>();
 		

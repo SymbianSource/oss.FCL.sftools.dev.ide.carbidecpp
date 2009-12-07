@@ -148,17 +148,4 @@ public class SBVCatalogTest extends TestCase {
 		
 		
 	}
-	
-	/**
-	 * @param built
-	 * @param string
-	 * @return
-	 */
-	private boolean findPlatform(ISBVPlatform[] platforms, String string) {
-		for (ISBVPlatform platform : platforms)
-			if (platform.getName().equalsIgnoreCase(string))
-				return true;
-		return false;
-	}
-
 }

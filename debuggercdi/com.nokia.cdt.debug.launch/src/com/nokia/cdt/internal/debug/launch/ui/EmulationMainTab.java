@@ -109,13 +109,13 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		gd.horizontalSpan = 2;
 		hostLabel.setLayoutData(gd);
 		hostLabel.setToolTipText(Messages.getString("EmulationMainTab.3")); //$NON-NLS-1$
-		hostLabel.setData(".uid", "EmulationMainTab.hostLabel");
+		hostLabel.setData(".uid", "EmulationMainTab.hostLabel");  //$NON-NLS-1$ //$NON-NLS-2$
 
 		hostText = new Text(projComp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		hostText.setLayoutData(gd);
 		hostText.setToolTipText(Messages.getString("EmulationMainTab.3")); //$NON-NLS-1$
-		hostText.setData(".uid", "EmulationMainTab.hostText");
+		hostText.setData(".uid", "EmulationMainTab.hostText");  //$NON-NLS-1$ //$NON-NLS-2$
 		hostText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent evt) {
@@ -124,7 +124,7 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		});
 
 		hostBrowse = createPushButton(projComp, Messages.getString("EmulationMainTab.4"), null); //$NON-NLS-1$
-		hostBrowse.setData(".uid", "EmulationMainTab.hostBrowse");
+		hostBrowse.setData(".uid", "EmulationMainTab.hostBrowse");  //$NON-NLS-1$ //$NON-NLS-2$
 		hostBrowse.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);

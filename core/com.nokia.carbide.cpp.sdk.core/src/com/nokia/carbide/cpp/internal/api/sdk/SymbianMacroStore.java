@@ -13,7 +13,6 @@
 
 package com.nokia.carbide.cpp.internal.api.sdk;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -25,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.osgi.framework.Bundle;
@@ -53,10 +51,10 @@ import com.nokia.carbide.cpp.sdk.core.*;
 
 public class SymbianMacroStore {
 	
-	private static final String PLUGIN_DATA_FOLDER = "data";
-	private static final String MACRO_STORE_FILE = "symbianMacroStore.xml";
-	private static final String BEECH_BRANCH_ID = "a";
-	private static final String CEDAR_BRANCH_ID = "b";
+	//private static final String PLUGIN_DATA_FOLDER = "data";
+	//private static final String MACRO_STORE_FILE = "symbianMacroStore.xml";
+	//private static final String BEECH_BRANCH_ID = "a";
+	//private static final String CEDAR_BRANCH_ID = "b";
 	private static final String MACRO_STORE_LOCATION ="/data/symbianMacroStore.xml";
 	private static SymbianMacroStore instance;
 	
@@ -157,6 +155,7 @@ public class SymbianMacroStore {
 			}
 	} 
 	
+	/*
     private File getMacroStoreFile() throws IOException {
     	String location = "";
 		try {
@@ -170,6 +169,7 @@ public class SymbianMacroStore {
 		}
 		return new File (location + File.separator + MACRO_STORE_FILE);
 	}
+	*/
 	
     private void initData(){
     	osMacros = new HashMap<String, List<String>>();
@@ -284,7 +284,7 @@ public class SymbianMacroStore {
     		}
     		
     		if (macroList == null) {
-    			macroList = Collections.EMPTY_LIST;
+    			macroList = Collections.emptyList();
     		}
 		}
     	
@@ -325,7 +325,7 @@ public class SymbianMacroStore {
     	}
     	
     	if (supportedOSVersionList == null){
-    		return Collections.EMPTY_LIST;
+    		return Collections.emptyList();
     	}
     	
     	Collections.sort(supportedOSVersionList, new Comparator<String>() {
