@@ -112,7 +112,7 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
     	
 		setButtonLayoutData(browseButton);
 		
-		if (SBSv2Utils.enableSBSv2Support()) {
+		if (SBSv2Utils.enableSBSv1Support() && SBSv2Utils.enableSBSv2Support()) {
 	        builderComposite = new BuilderSelectionComposite(parent);
 	        builderComposite.createControls();
 		}
@@ -210,8 +210,11 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
     public boolean useSBSv2Builder() {
     	if (builderComposite != null) {
         	return builderComposite.useSBSv2Builder();
+    	} else if (SBSv2Utils.enableSBSv1Support()) { 
+    		return false;
+    	} else {
+    		return SBSv2Utils.enableSBSv2Support();
     	}
-    	return false;
     }
 
     public void saveDialogSettings() {
