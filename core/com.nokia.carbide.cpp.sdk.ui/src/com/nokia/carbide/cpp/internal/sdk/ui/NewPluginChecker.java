@@ -41,6 +41,11 @@ public class NewPluginChecker {
 	private static final String SDK_FEATURE_SUBDIR = "epoc32/kit/feature";  //$NON-NLS-1$
 	
 	public static void checkForNewlyInstalledPlugins(final IWorkbench workbench){
+		
+		if (WorkbenchUtils.isJUnitRunning()){
+			return;
+		}
+		
 		final List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
 		Job job = new Job("Checking installed SDKs for plugins") { 
 			@Override
