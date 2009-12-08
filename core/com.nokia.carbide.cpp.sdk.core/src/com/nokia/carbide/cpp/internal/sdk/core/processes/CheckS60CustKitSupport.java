@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -111,6 +112,13 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		if (HostOS.IS_WIN32) {
 			helpCompilerNames = new String[] { HELP_COMPILER_WIN32, HELP_COMPILER_PERL };
 		} else {
+			
+			// TODO: the infrastructure for the techview/bldhelp.mk is a total mess 
+			// currently, and it also appears that help is obsolete in recent devkits,
+			// so just drop this
+			if (!SBSv2Utils.enableSBSv1Support())
+				return null;
+			
 			helpCompilerNames = new String[] { HELP_COMPILER_PERL };
 		}
 		for (ISymbianBuildContext symbianBuildContext : getBuildContexts(template)) {
