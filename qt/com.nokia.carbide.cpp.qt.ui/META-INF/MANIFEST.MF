@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.carbide.cdt.builder,
  org.eclipse.cdt.core,
  org.eclipse.ui.ide,
- com.trolltech.qtcppproject;bundle-version="1.5.0";resolution:=optional
+ com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: com.trolltech.qtcppproject,
