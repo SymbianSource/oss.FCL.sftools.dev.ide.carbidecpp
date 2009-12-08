@@ -154,12 +154,14 @@ public interface ISymbianSDK {
 	List<String> getAvailablePlatforms();
 	
 	/**
-	 * Returns the (SBSv1) filtered list of build configurations for this SDK.
+	 * Returns the filtered list of build configurations for this SDK.
 	 * <p>
-	 * Build configs to display can be filtered by the user using the SBSv1
-	 * pane of the Platform Filtering Preferences global preference page.
+	 * Build configs to display can be filtered by the user using the SBSv1 or SBSv2
+	 * panes of the Platform Filtering Preferences global preference page.
 	 * </p><p>
-	 * SBSv2 filtered configurations can only be retrieved using internal APIs (SBSv2Utils), currently.
+	 * If SBSv1 building is supported, the platforms are filtered with SBSv1 preferences.
+	 * If SBSv2 building but not SBSv1 is supported, the platforms are filtered with SBSv2 preferences.
+	 * If both builders are supported, SBSv1 preferences are used.
 	 * </p>
 	 *
 	 * @return a list build configuration names which may be empty.
