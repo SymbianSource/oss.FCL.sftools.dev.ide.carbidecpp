@@ -62,6 +62,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 import cwdbg.PreferenceConstants;
 
@@ -382,7 +383,7 @@ public class SettingsData {
 				// otherwise warn them that we can't set default values.
 				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
-					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, mainExeTargetPath == null ? "" : mainExeTargetPath.toOSString());
+					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, mainExeTargetPath == null ? "" : HostOS.convertPathToWindows(mainExeTargetPath));
 				} else {
 					displayWarningDialog(Messages.getString("SettingsData.37")); //$NON-NLS-1$
 				}
@@ -528,9 +529,9 @@ public class SettingsData {
 					if (hp != null) {
 						IPath tp = EpocEngineHelper.getTargetPathForExecutable(buildConfig, mmp);
 						if (tp == null) {
-							tp = new Path(defaultTargetPath).append(hp.lastSegment());
+							tp = HostOS.createPathFromString(defaultTargetPath).append(hp.lastSegment());
 						}
-						prefsData += hp.toOSString() + "," + tp.toOSString() + enabled; //$NON-NLS-1$
+						prefsData += hp.toOSString() + "," + HostOS.convertPathToWindows(tp) + enabled; //$NON-NLS-1$
 					}
 					
 					HashMap<String, String> hostTargetRSRCMap = EpocEngineHelper.getHostAndTargetResources(buildConfig, mmp);
@@ -687,7 +688,8 @@ public class SettingsData {
 				if (cpi != null) {			
 					ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 
-					mainExeTargetPath = getCanonicalPath(EpocEngineHelper.getTargetPathForExecutable(buildConfig, workspaceRelativeMMPPath));
+					// do not canonicalize
+					mainExeTargetPath = EpocEngineHelper.getTargetPathForExecutable(buildConfig, workspaceRelativeMMPPath);
 				}
 			}
 		}
@@ -1018,7 +1020,7 @@ public class SettingsData {
 	}
 	
 	public static void setProcessToLaunch(ILaunchConfigurationWorkingCopy configuration, IPath path) {
-		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, path.toOSString());
+		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, HostOS.convertPathToWindows(path));
 	}
 	
 }

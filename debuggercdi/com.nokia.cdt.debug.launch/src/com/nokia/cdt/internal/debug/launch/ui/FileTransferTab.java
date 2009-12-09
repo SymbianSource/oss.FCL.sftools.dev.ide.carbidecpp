@@ -18,6 +18,7 @@ package com.nokia.cdt.internal.debug.launch.ui;
 
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 import cwdbg.PreferenceConstants;
 
@@ -90,7 +91,7 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 					StringTokenizer tokenizer = new StringTokenizer(filesString, ","); //$NON-NLS-1$
 					while (tokenizer.hasMoreTokens()) {
 						IPath hp = new Path(tokenizer.nextToken());
-						IPath tp = new Path(tokenizer.nextToken());
+						IPath tp = HostOS.createPathFromString(tokenizer.nextToken());
 						// ensure there was no filename before
 						if (tp.getFileExtension() == null) {
 							tp = tp.append(hp.lastSegment());

@@ -144,6 +144,9 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 				dialog.setFilterExtensions(new String[] {"*.sis*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("InstallationTab.27"), Messages.getString("InstallationTab.28")}); //$NON-NLS-1$ //$NON-NLS-2$
 
+				dialog.setFilterPath(new File(hostPath.getText()).getParent());
+				dialog.setFileName(new File(hostPath.getText()).getName());
+				
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {
 					hostPath.setText(result);

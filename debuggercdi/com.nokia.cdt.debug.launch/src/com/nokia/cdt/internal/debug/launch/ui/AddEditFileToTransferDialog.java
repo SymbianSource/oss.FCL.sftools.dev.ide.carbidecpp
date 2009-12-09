@@ -38,6 +38,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
+import com.nokia.cpp.internal.api.utils.core.HostOS;
+
 public class AddEditFileToTransferDialog extends StatusDialog {
 
 	private FileToTransfer fFile;
