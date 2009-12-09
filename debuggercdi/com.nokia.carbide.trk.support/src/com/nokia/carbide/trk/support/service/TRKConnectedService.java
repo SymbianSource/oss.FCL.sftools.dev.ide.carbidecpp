@@ -67,6 +67,7 @@ public class TRKConnectedService extends AbstractConnectedService {
 	
 	private Pair<String, Version> deviceOS;
 	private TRKService trkService;
+	static Class<?> startTCFServer = TCFClassFactory.class; // force the tcf plugin to load
 
 	public TRKConnectedService(IService service, AbstractSynchronizedConnection connection) {
 		super(service, connection);
