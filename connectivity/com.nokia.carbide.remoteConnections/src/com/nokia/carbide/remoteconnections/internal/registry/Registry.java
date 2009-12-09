@@ -131,6 +131,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return true;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private <T> void loadExtensions(String extensionId, String loadError, Collection<T> extensionObjects, IFilter filter) {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(extensionId);
@@ -235,7 +236,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		List<IConnectedService> connectedServices = new ArrayList<IConnectedService>();
 		for (IService service : getCompatibleServices(connection.getConnectionType())) {
 			IConnectedService connectedService = createConnectedService(service, connection);
-			connectedServices.add(connectedService);
+			if (connectedService != null)
+				connectedServices.add(connectedService);
 		}
 		return connectedServices;
 	}
@@ -305,7 +307,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		Collection<IService> services = connectionTypeToServices.get(connectionType);
 		if (services != null)
 			return new ArrayList<IService>(services);
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 	
 	/* (non-Javadoc)
