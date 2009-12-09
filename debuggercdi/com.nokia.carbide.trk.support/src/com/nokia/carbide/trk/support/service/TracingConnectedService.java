@@ -46,6 +46,7 @@ public class TracingConnectedService extends AbstractConnectedService {
 	
 	private static final byte[] TC_REQ_OST = {0x0, 0x0, 0x0, 0x3, 0x0, 0x0, 0x1};
 	private static final byte[] TC_RESP_OST = {0x0, 0x0, 0x0, 0x5, 0x0, 0x1, 0x0, 0x0, 0x1};
+	static Class<?> startTCFServer = TCFClassFactory.class; // force the tcf plugin to load
 
 	public interface IMessageValidator {
 		boolean isValidMessage(byte[] message);
