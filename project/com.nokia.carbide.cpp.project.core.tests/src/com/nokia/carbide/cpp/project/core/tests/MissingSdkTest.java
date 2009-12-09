@@ -30,6 +30,7 @@ import org.osgi.framework.Bundle;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
@@ -48,23 +49,30 @@ public class MissingSdkTest extends TestCase {
 	}
 	
 	public void testMissingSdk () throws Exception {
-		File devicesFile = SDKCorePlugin.getSDKManager().getDevicesXMLFile(); 
-		assertNotNull("Devices.xml file is NULL!", devicesFile);
-		assertTrue(devicesFile.toString() + "file doesn't exist", devicesFile.exists());
-		File backupFile = new File(devicesFile.toString() + ".backup");
+		
+		File devicesFile = null;
+		File backupFile = null;
+		if (SBSv2Utils.enableSBSv1Support()) {
+			devicesFile = SDKCorePlugin.getSDKManager().getDevicesXMLFile(); 
+			assertNotNull("Devices.xml file is NULL!", devicesFile);
+			assertTrue(devicesFile.toString() + " file doesn't exist", devicesFile.exists());
+			backupFile = new File(devicesFile.toString() + ".backup");
+		}
 		
 		try {
 			ISDKManager sdkManager = SDKCorePlugin.getSDKManager();
 			List<ISymbianSDK> sdkList = sdkManager.getSDKList();
 			assertNotNull(sdkList);
 	
-			if (backupFile.exists()) {
-				backupFile.delete();
-			}
-			backupFile.createNewFile();
+			if (devicesFile != null && backupFile != null) {
+				if (backupFile.exists()) {
+					backupFile.delete();
+				}
+				backupFile.createNewFile();
 			
-			// backup devices.xml
-			copyFile(devicesFile, backupFile);
+				// backup devices.xml
+				copyFile(devicesFile, backupFile);
+			}
 			
 			IProject project = null;
 			ISymbianSDK lastSdkFound = null;
