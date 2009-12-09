@@ -660,7 +660,7 @@ public class EpocEngineHelper {
 										}
 
 										String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
-										IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform).append(buildConfig.getTargetString());
+										IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 
 										// if targetpath is non-null and this is an EKA1 emulator config then add it
 										if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
@@ -749,9 +749,9 @@ public class EpocEngineHelper {
 										} else {
 											// if the target path is not set then by default it will usually
 											// be left blank.  for EKA2 though binaries need to go in \sys\bin\
-											exePath = new Path("C:\\"); //$NON-NLS-1$
+											exePath = Path.ROOT.setDevice("C:"); //$NON-NLS-1$
 											if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-												exePath = exePath.append("sys\\bin\\"); //$NON-NLS-1$
+												exePath = exePath.append("sys/bin/"); //$NON-NLS-1$
 											}
 											String targetName = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGET);
 											if  (targetName != null) {
@@ -815,7 +815,7 @@ public class EpocEngineHelper {
 					}
 					
 					String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getBasePlatformForVariation());
-					IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform).append(buildConfig.getTargetString());
+					IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 
 					// if targetpath is non-null and this is an EKA1 emulator config then add it
 					if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
@@ -862,9 +862,9 @@ public class EpocEngineHelper {
 					} else {
 						// if the target path is not set then by default it will usually
 						// be left blank.  for EKA2 though binaries need to go in \sys\bin\
-						exePath = new Path("C:\\"); //$NON-NLS-1$
+						exePath = Path.ROOT.setDevice("C:"); //$NON-NLS-1$
 						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							exePath = exePath.append("sys\\bin\\"); //$NON-NLS-1$
+							exePath = exePath.append("sys/bin/"); //$NON-NLS-1$
 						}
 						String targetName = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGET);
 						if  (targetName != null) {
@@ -909,7 +909,7 @@ public class EpocEngineHelper {
 		}
 		for (EMMPLanguage language : languages) {
 			String extension = ".R" + language.getCodeString(); //$NON-NLS-1$
-			resources.put(baseGeneratedPath + extension, targetPath);
+			resources.put(HostOS.convertPathToNative(baseGeneratedPath + extension), HostOS.convertPathToWindows(targetPath));
 		}
 	}
 	
@@ -953,39 +953,43 @@ public class EpocEngineHelper {
 									} else {
 										// for EKA1 just leave empty.  for EKA2 use sys\bin\
 										if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-											targetPath = "sys\\bin\\"; //$NON-NLS-1$
+											targetPath = "sys/bin/"; //$NON-NLS-1$
 										} else {
 											targetPath = ""; //$NON-NLS-1$
 										}
 									}
 
-									String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
+									String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toPortableString() + "/data/z/"; //$NON-NLS-1$
 									// get the aifs
 									List<IMMPAIFInfo> aifs = mmpData.getAifs();
 									for (IMMPAIFInfo aif : aifs) {
 										IPath aifPath = aif.getTarget().makeAbsolute();
-										resources.put(dataZDir + targetPath + aifPath.lastSegment(), "C:\\" + targetPath); //$NON-NLS-1$
+										resources.put(HostOS.convertPathToNative(dataZDir + targetPath + aifPath.lastSegment().toLowerCase()), 
+												HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
 									}
 
 									// get the bitmaps
 									List<IMMPBitmap> bmps = mmpData.getBitmaps();
 									for (IMMPBitmap bmp : bmps) {
 										IPath mbmPath = bmp.getTargetFilePath().makeRelative();
-										resources.put(dataZDir + mbmPath.toOSString(), "C:\\" + mbmPath.removeLastSegments(1).addTrailingSeparator().toOSString()); //$NON-NLS-1$
+										resources.put(HostOS.convertPathToNative(dataZDir + mbmPath.toOSString().toLowerCase()), 
+												HostOS.convertPathToWindows("C:\\" + mbmPath.removeLastSegments(1).addTrailingSeparator().toOSString())); //$NON-NLS-1$
 									}
 
 									// get the user resources
 									List<IPath> userResources = mmpData.getUserResources();
 									for (IPath userRes : userResources) {
 										addResourceLanguageTargets(resources, mmpData, null, 
-												dataZDir + targetPath + userRes.removeFileExtension().lastSegment(), "C:\\" + targetPath); //$NON-NLS-1$ //$NON-NLS-2$
+												HostOS.convertPathToNative(dataZDir + targetPath + userRes.removeFileExtension().lastSegment().toLowerCase()), 
+												HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
 									}
 
 									// get the system resources
 									List<IPath> systemResources = mmpData.getSystemResources();
 									for (IPath systemRes : systemResources) {
 										addResourceLanguageTargets(resources, mmpData, null,
-												dataZDir + targetPath + systemRes.removeFileExtension().lastSegment(), "C:\\" + targetPath); //$NON-NLS-1$ //$NON-NLS-2$
+												HostOS.convertPathToNative(dataZDir + targetPath + systemRes.removeFileExtension().lastSegment().toLowerCase()), 
+												HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
 									}
 
 									// get the resource blocks
@@ -1004,17 +1008,18 @@ public class EpocEngineHelper {
 											resPath = resPath.makeRelative().addTrailingSeparator();
 											String filename = resourceBlock.getTargetFile();
 											if (filename == null) {
-												filename = resourceBlock.getSource().removeFileExtension().lastSegment();
+												filename = resourceBlock.getSource().removeFileExtension().lastSegment().toLowerCase();
 											} else {
-												filename = new Path(filename).removeFileExtension().toOSString();
+												filename = HostOS.createPathFromString(filename).removeFileExtension().toPortableString().toLowerCase();
 											}
 											// adjust the path if necessary as it's different on the phone for the *_.reg file
 											IPath adjustedTargetPath = resPath;
-											if (adjustedTargetPath.toOSString().equalsIgnoreCase("private\\10003a3f\\apps\\")) { //$NON-NLS-1$
-												adjustedTargetPath = new Path("private\\10003a3f\\import\\apps\\"); //$NON-NLS-1$
+											if (adjustedTargetPath.toPortableString().equalsIgnoreCase("private/10003a3f/apps/")) { //$NON-NLS-1$
+												adjustedTargetPath = new Path("private/10003a3f/import/apps/"); //$NON-NLS-1$
 											}
 											addResourceLanguageTargets(resources, mmpData, resourceBlock,
-													dataZDir + resPath.toOSString() + filename, "C:\\" + adjustedTargetPath.toOSString()); //$NON-NLS-1$
+													HostOS.convertPathToNative(dataZDir + resPath.toOSString() + filename), 
+													HostOS.convertPathToWindows("C:\\" + HostOS.convertPathToWindows(adjustedTargetPath))); //$NON-NLS-1$
 										}
 									}
 									return null;
@@ -1058,13 +1063,14 @@ public class EpocEngineHelper {
 						}
 					}
 
-					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
+					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toPortableString() + "/data/z/"; //$NON-NLS-1$
 					
 					// get the aifs
 					List<IMMPAIFInfo> aifs = mmpData.getAifs();
 					for (IMMPAIFInfo aif : aifs) {
 						IPath aifPath = aif.getTarget().makeAbsolute();
-						resources.put(dataZDir + targetPath + aifPath.lastSegment(), "C:\\" + targetPath); //$NON-NLS-1$
+						resources.put(HostOS.convertPathToNative(dataZDir + targetPath + aifPath.lastSegment()), 
+								HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
 					}
 
 					// for resources and bitmaps, the target path may be based on the target type if not explicitly
@@ -1073,9 +1079,9 @@ public class EpocEngineHelper {
 					if (targetType != null) {
 						// could be PLUGIN or PLUGIN3
 						if (targetType.toUpperCase().startsWith("PLUGIN")) { //$NON-NLS-1$
-							targetPath = "resource\\plugins\\"; //$NON-NLS-1$
+							targetPath = "resource/plugins/"; //$NON-NLS-1$
 						} else if (targetType.compareToIgnoreCase("PDL") == 0) { //$NON-NLS-1$
-							targetPath = "resource\\printers\\"; //$NON-NLS-1$
+							targetPath = "resource/printers/"; //$NON-NLS-1$
 						}
 					}
 
@@ -1087,21 +1093,24 @@ public class EpocEngineHelper {
 						if (mbmPath.segmentCount() == 1) {
 							mbmPath = new Path(targetPath).append(mbmPath);
 						}
-						resources.put(dataZDir + mbmPath.toOSString(), "C:\\" + mbmPath.removeLastSegments(1).addTrailingSeparator().toOSString()); //$NON-NLS-1$
+						resources.put(HostOS.convertPathToNative(dataZDir + mbmPath.toOSString()), 
+								HostOS.convertPathToWindows("C:\\" + mbmPath.removeLastSegments(1).addTrailingSeparator().toOSString())); //$NON-NLS-1$
 					}
 
 					// get the user resources
 					List<IPath> userResources = mmpData.getUserResources();
 					for (IPath userRes : userResources) {
 						addResourceLanguageTargets(resources, mmpData, null, 
-								dataZDir + targetPath + userRes.removeFileExtension().lastSegment(), "C:\\" + targetPath); //$NON-NLS-1$ //$NON-NLS-2$
+								HostOS.convertPathToNative(dataZDir + targetPath + userRes.removeFileExtension().lastSegment()), 
+								HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 
 					// get the system resources
 					List<IPath> systemResources = mmpData.getSystemResources();
 					for (IPath systemRes : systemResources) {
 						addResourceLanguageTargets(resources, mmpData, null,
-								dataZDir + targetPath + systemRes.removeFileExtension().lastSegment(), "C:\\" + targetPath); //$NON-NLS-1$ //$NON-NLS-2$
+								HostOS.convertPathToNative(dataZDir + targetPath + systemRes.removeFileExtension().lastSegment()), 
+								HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 
 					// get the resource blocks
@@ -1117,18 +1126,19 @@ public class EpocEngineHelper {
 						if (filename == null) {
 							filename = resourceBlock.getSource().removeFileExtension().lastSegment();
 						} else {
-							filename = new Path(filename).removeFileExtension().toOSString();
+							filename = HostOS.createPathFromString(filename).removeFileExtension().toOSString();
 						}
 						
 						if (resPath != null) {
 							resPath = resPath.makeRelative().addTrailingSeparator();
 							// adjust the path if necessary as it's different on the phone for the *_.reg file
 							IPath adjustedTargetPath = resPath;
-							if (adjustedTargetPath.toOSString().equalsIgnoreCase("private\\10003a3f\\apps\\")) { //$NON-NLS-1$
-								adjustedTargetPath = new Path("private\\10003a3f\\import\\apps\\"); //$NON-NLS-1$
+							if ((adjustedTargetPath.toPortableString()).equalsIgnoreCase("private/10003a3f/apps/")) { //$NON-NLS-1$
+								adjustedTargetPath = new Path("private/10003a3f/import/apps/"); //$NON-NLS-1$
 							}
 							addResourceLanguageTargets(resources, mmpData, resourceBlock,
-									dataZDir + resPath.toOSString() + filename, "C:\\" + adjustedTargetPath.toOSString()); //$NON-NLS-1$
+									HostOS.convertPathToNative(dataZDir + resPath.toOSString() + filename), 
+									HostOS.convertPathToWindows("C:\\" + adjustedTargetPath)); //$NON-NLS-1$
 						} else {
 							CarbideBuilderPlugin.log(Logging.newStatus(CarbideBuilderPlugin.getDefault(), 
 									IStatus.WARNING,
@@ -1158,7 +1168,7 @@ public class EpocEngineHelper {
 					public Object run(IBldInfView view) {
 						EpocEnginePathHelper helper = new EpocEnginePathHelper(buildConfig);
 						
-						final String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
+						final String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\data\\z\\"; //$NON-NLS-1$
 
 						for (IMakefileReference ref : view.getAllMakefileReferences()) {
 							final IPath workspaceRelativeMakefilePath = helper.convertToWorkspace(ref.getPath());
@@ -1181,7 +1191,8 @@ public class EpocEngineHelper {
 												if (targetPath != null && targetPath.segment(0).equalsIgnoreCase("epoc32")) {
 													targetPath = targetPath.removeFirstSegments(3);
 												}
-												resources.put(dataZDir + targetPath.toOSString(), "C:\\" + targetPath.toOSString()); //$NON-NLS-1$
+												resources.put(HostOS.convertPathToNative(dataZDir + targetPath.toOSString()), 
+														HostOS.convertPathToWindows("C:\\" + targetPath.toOSString())); //$NON-NLS-1$
 											}
 											
 											return null;
@@ -1726,7 +1737,7 @@ public class EpocEngineHelper {
 					String targetType = data.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
 					if (targetType != null) {
 						if (targetType.toUpperCase().matches("STDLIB|STDDLL|STDEXE")) { //$NON-NLS-1$
-							File resolved = epocRoot.append("epoc32\\include\\stdapis").toFile(); //$NON-NLS-1$
+							File resolved = epocRoot.append("epoc32/include/stdapis").toFile(); //$NON-NLS-1$
 							if (!systemPaths.contains(resolved))
 								systemPaths.add(resolved);
 						}
@@ -1752,21 +1763,21 @@ public class EpocEngineHelper {
 		boolean isGCCE = ISymbianBuildContext.GCCE_PLATFORM.equals(platformString);
 		if (isARMv5 || isGCCE) {
 			if (isDebug) {
-				dirList.add(releaseRoot.append("ARMv5\\UDEB\\")); //$NON-NLS-1$
-				dirList.add(releaseRoot.append("ARMv5\\UREL\\")); //$NON-NLS-1$
-				dirList.add(releaseRoot.append("ARMv5\\LIB\\")); //$NON-NLS-1$
+				dirList.add(releaseRoot.append("armv5/udeb/")); //$NON-NLS-1$
+				dirList.add(releaseRoot.append("armv5/urel/")); //$NON-NLS-1$
+				dirList.add(releaseRoot.append("armv5/lib/")); //$NON-NLS-1$
 			}
 			else {
-				dirList.add(releaseRoot.append("ARMv5\\UREL\\"));			 //$NON-NLS-1$
-				dirList.add(releaseRoot.append("ARMv5\\LIB\\")); //$NON-NLS-1$
+				dirList.add(releaseRoot.append("armv5/urel/"));			 //$NON-NLS-1$
+				dirList.add(releaseRoot.append("armv5/lib/")); //$NON-NLS-1$
 			} 
 		} else {
 			if (isDebug) {
-				dirList.add(releaseRoot.append(platformString + "\\UDEB\\")); //$NON-NLS-1$
-				dirList.add(releaseRoot.append(platformString + "\\UREL\\")); //$NON-NLS-1$
+				dirList.add(releaseRoot.append(platformString + "/udeb/")); //$NON-NLS-1$
+				dirList.add(releaseRoot.append(platformString + "/urel/")); //$NON-NLS-1$
 			}
 			else {
-				dirList.add(releaseRoot.append(platformString + "\\UREL\\"));			 //$NON-NLS-1$
+				dirList.add(releaseRoot.append(platformString + "/urel/"));			 //$NON-NLS-1$
 			} 
 		}
 		return dirList.toArray(new IPath[dirList.size()]);
