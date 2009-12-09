@@ -96,8 +96,23 @@ public class HostOS {
 	}
 
 	/**
+	 * Convert a path which may be in the opposite slash format to the local slash format.
+	 * NOTE: we assume that the path is already a legal path, 
+	 * but just with the wrong slash.
+	 * @param file
+	 * @return converted string
+	 */
+	public static String convertPathToNative(String path) {
+		if (path == null) return null;
+		if (IS_UNIX)
+			return path.replaceAll("\\\\", "/");
+		else
+			return path.replaceAll("/", "\\\\");
+	}
+
+	/**
 	 * Create an IPath from a string which may be a Win32 path. <p>
-	 * (This won't work in Unix when using a Win32 path.)
+	 * ("new Path(...)" won't work in Unix when using a Win32 path.)
 	 * @param path
 	 * @return converted string
 	 */
