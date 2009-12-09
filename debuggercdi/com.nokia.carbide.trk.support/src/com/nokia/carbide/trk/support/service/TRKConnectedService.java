@@ -41,7 +41,12 @@ import java.util.List;
 public class TRKConnectedService extends AbstractConnectedService {
 	
 	static {
-		System.loadLibrary("GetTRKVersion"); //$NON-NLS-1$
+		try {
+			System.loadLibrary("GetTRKVersion"); //$NON-NLS-1$
+		} catch (UnsatisfiedLinkError e) {
+			// no such library, e.g., not on Windows or in a misconfigured dev layout
+			e.printStackTrace();
+		}
 	}
 	
 	public native static void getTRKVersionFromSerial(String portName, 

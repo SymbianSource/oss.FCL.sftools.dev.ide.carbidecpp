@@ -46,7 +46,12 @@ public class TCAPIConnection implements ITCAPIConnection {
 			} catch (UnsatisfiedLinkError e) {
 				// if Carbide DLL is not found in DE, 
 				// try to load one from the plugin itself
-				System.loadLibrary("TCFClient");
+				try {
+					System.loadLibrary("TCFClient");
+				} catch (UnsatisfiedLinkError e2) {
+					// no native TCF, e.g., not on Windows or in a misconfigured dev layout
+					e2.printStackTrace();
+				}
 			}
 		}
 	}
