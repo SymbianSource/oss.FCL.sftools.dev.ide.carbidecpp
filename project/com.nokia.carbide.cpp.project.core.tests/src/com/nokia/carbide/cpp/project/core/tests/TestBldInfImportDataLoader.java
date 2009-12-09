@@ -61,7 +61,7 @@ public class TestBldInfImportDataLoader extends TestCase {
 		File testDataFile = pluginRelativeFile("Data/infImportData/infImportTestData.xml");
 		assertTrue("infImportTestData.xml file does not exist! Can't do test.", testDataFile.exists());
 		
-		BldInfFilesType bldInfData = BldInfImportDataLoader.loadBldInfImportData(testDataFile.toURL());
+		BldInfFilesType bldInfData = BldInfImportDataLoader.loadBldInfImportData(testDataFile.toURI().toURL());
 		assertNotNull("Error loading test bld.inf xml data.", bldInfData);
 		
 		EList<BldInfFileType> infList = bldInfData.getBldInfFile();

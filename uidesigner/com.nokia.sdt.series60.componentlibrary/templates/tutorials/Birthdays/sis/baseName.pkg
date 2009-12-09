@@ -19,7 +19,7 @@
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
 "$(EPOCROOT)\Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		-"!:\sys\bin\$(baseName).exe"
-"$(EPOCROOT)\Epoc32\data\z\resource\apps\$(baseName).r01"		-"!:\resource\apps\$(baseName).r01"
-"$(EPOCROOT)\Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.r01"	-"!:\private\10003a3f\import\apps\$(baseName)_reg.r01"
+"$(EPOCROOT)\Epoc32\data\z\resource\apps\$(baseName$lower).r01"		-"!:\resource\apps\$(baseName).r01"
+"$(EPOCROOT)\Epoc32\data\z\private\10003a3f\apps\$(baseName$lower)_reg.r01"	-"!:\private\10003a3f\import\apps\$(baseName)_reg.r01"
 "$(EPOCROOT)\epoc32\data\z\resource\apps\$(baseName)_aif.mif" -"!:\resource\apps\$(baseName)_aif.mif"
 

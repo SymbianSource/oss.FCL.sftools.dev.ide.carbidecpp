@@ -206,11 +206,11 @@ public class PKGViewPathHelper {
 		}
 		
 		if (pathStr.contains(PKG_SYMBOL_PLATFORM)) {
-			pathStr = pathStr.replace(PKG_SYMBOL_PLATFORM, platform);
+			pathStr = pathStr.replace(PKG_SYMBOL_PLATFORM, platform.toLowerCase());
 		}
 		
 		if (pathStr.contains(PKG_SYMBOL_TARGET)) {
-			pathStr = pathStr.replace(PKG_SYMBOL_TARGET, target);
+			pathStr = pathStr.replace(PKG_SYMBOL_TARGET, target.toLowerCase());
 		}
 		
 		return new Path(pathStr);

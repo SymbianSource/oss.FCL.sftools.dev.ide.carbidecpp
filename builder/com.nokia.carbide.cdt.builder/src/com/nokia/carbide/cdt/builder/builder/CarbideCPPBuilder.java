@@ -1915,8 +1915,8 @@ public static String[] getParserIdArray(int id) {
     			pkgFileStr.contains(PKG_SYMBOL_TARGET) ) {
     				// need to create a new PKG file, resolved...
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_EPOCROOT, context.getSDK().getEPOCROOT());
-    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, context.getPlatformString());
-    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_TARGET, context.getTargetString());
+    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, context.getPlatformString().toLowerCase());
+    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_TARGET, context.getTargetString().toLowerCase());
     				
     				IPath tmpPKGPath = pkgFile.removeLastSegments(1);
     				if (tempPKGFileName == null){

@@ -134,7 +134,7 @@ public class TestPKGViewPathHelper extends BaseTest {
 		assertNotNull(files);
 		assertEquals(files.length, NUMBER_OF_FILES);
 
-		IPath path1 = new Path(config.getSDK().getEPOCROOT()).append("epoc32/release").append(config.getPlatformString()).append(config.getTargetString()).append("test.exe");
+		IPath path1 = new Path(config.getSDK().getEPOCROOT()).append("epoc32/release").append(config.getPlatformString().toLowerCase()).append(config.getTargetString().toLowerCase()).append("test.exe");
 		IPath path2 = project.getLocation().append("sis/test.txt");
 		IPath path3 = new Path("/Symbian/9.1/S60_3rd/file.txt");
 		

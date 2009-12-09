@@ -26,7 +26,7 @@
 ; Files to install
 ; Symbols set up for the source location are Carbide.c++ specific symbols
 "$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"             -"!:\sys\bin\$(baseName).exe"
-"$(EPOCROOT)epoc32\data\z\private\10003a3f\import\apps\$(baseName)_reg.rsc"   -"!:\private\10003a3f\import\apps\$(baseName)_reg.rsc"
+"$(EPOCROOT)epoc32\data\z\private\10003a3f\import\apps\$(baseName$lower)_reg.rsc"   -"!:\private\10003a3f\import\apps\$(baseName$lower)_reg.rsc"
 
 ; required for application to be covered by backup/restore facility 
 "..\$(sisDir)\backup_registration.xml"    -"!:\private\$(uid3-WITHOUT_0X)\backup_registration.xml"

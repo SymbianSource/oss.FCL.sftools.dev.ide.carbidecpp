@@ -26,15 +26,15 @@
 ;Files to install
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"        -"!:\sys\bin\$(baseName).exe"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName).r$(LANGUAGE_ID)"        -"!:\resource\apps\$(baseName).r$(LANGUAGE_ID)"
-;"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_loc.rsc"        -"!:\resource\apps\$(baseName)_loc.rsc"
-"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.rsc"    -"!:\private\10003a3f\import\apps\$(baseName)_reg.rsc"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"        -"!:\sys\bin\$(baseName).exe"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName$lower).r$(LANGUAGE_ID)"        -"!:\resource\apps\$(baseName).r$(LANGUAGE_ID)"
+;"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName$lower)_loc.rsc"        -"!:\resource\apps\$(baseName)_loc.rsc"
+"$(EPOCROOT)epoc32\data\z\private\10003a3f\apps\$(baseName$lower)_reg.rsc"    -"!:\private\10003a3f\import\apps\$(baseName)_reg.rsc"
 "$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName).mbm" -"!:\resource\apps\$(baseName).mbm"
 ; Add any installation notes if applicable
 ;"$(baseName).txt"        		      -"!:\private\$(uid3)\$(baseName).txt"
 
 
-;"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName).r$(LANGUAGE_ID)"        -"!:\resource\apps\$(baseName).r$(LANGUAGE_ID)"
-;"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.r$(LANGUAGE_ID)"    -"!:\private\10003a3f\import\apps\$(baseName)_reg.r$(LANGUAGE_ID)"
+;"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName$lower).r$(LANGUAGE_ID)"        -"!:\resource\apps\$(baseName).r$(LANGUAGE_ID)"
+;"$(EPOCROOT)epoc32\data\z\private\10003a3f\apps\$(baseName$lower)_reg.r$(LANGUAGE_ID)"    -"!:\private\10003a3f\import\apps\$(baseName)_reg.r$(LANGUAGE_ID)"
 ;"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName)_aif.mif" -"!:\resource\apps\$(baseName)_aif.mif"

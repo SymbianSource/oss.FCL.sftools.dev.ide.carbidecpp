@@ -27,9 +27,9 @@
 ;Files to install
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		-"!:\sys\bin\$(baseName).exe"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName).rsc"		-"!:\resource\apps\$(baseName).rsc"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_loc.rsc"		-"!:\resource\apps\$(baseName)_loc.rsc"
-"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_reg.rsc"	-"!:\private\10003a3f\import\apps\$(baseName)_reg.rsc"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)AppIcon.mbm" -"!:\resource\apps\$(baseName)AppIcon.mbm"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		-"!:\sys\bin\$(baseName).exe"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName$lower).rsc"		-"!:\resource\apps\$(baseName).rsc"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName$lower)_loc.rsc"		-"!:\resource\apps\$(baseName)_loc.rsc"
+"$(EPOCROOT)epoc32\data\z\private\10003a3f\apps\$(baseName$lower)_reg.rsc"	-"!:\private\10003a3f\import\apps\$(baseName)_reg.rsc"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName)AppIcon.mbm" -"!:\resource\apps\$(baseName)AppIcon.mbm"
 

@@ -24,10 +24,10 @@
 ;Files to install
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName)_$(uid3).exe"		-"!:\sys\bin\$(baseName)_$(uid3).exe"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_$(uid3).rsc"		-"!:\resource\apps\$(baseName)_$(uid3).rsc"
-"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\$(baseName)_$(uid3)_reg.rsc"	-"!:\private\10003a3f\import\apps\$(baseName)_$(uid3)_reg.rsc"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\$(baseName)_$(uid3).mif" -"!:\resource\apps\$(baseName)_$(uid3).mif"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName)_$(uid3).exe"		-"!:\sys\bin\$(baseName)_$(uid3).exe"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName$lower)_$(uid3).rsc"		-"!:\resource\apps\$(baseName)_$(uid3).rsc"
+"$(EPOCROOT)epoc32\data\z\private\10003a3f\apps\$(baseName$lower)_$(uid3)_reg.rsc"	-"!:\private\10003a3f\import\apps\$(baseName)_$(uid3)_reg.rsc"
+"$(EPOCROOT)epoc32\data\z\resource\apps\$(baseName)_$(uid3).mif" -"!:\resource\apps\$(baseName)_$(uid3).mif"
 $(buildHelpSISPrefix)"..\$(helpDir)\$(baseName)_$(uid3).hlp"							 -"!:\resource\help\$(baseName)_$(uid3).hlp"
 
 ; Add any installation notes if applicable

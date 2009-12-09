@@ -18,4 +18,4 @@
 ;Unique Vendor name
 :"Vendor"
 
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).dll"		  -"!:\sys\bin\$(baseName).dll"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).dll"		  -"!:\sys\bin\$(baseName).dll"

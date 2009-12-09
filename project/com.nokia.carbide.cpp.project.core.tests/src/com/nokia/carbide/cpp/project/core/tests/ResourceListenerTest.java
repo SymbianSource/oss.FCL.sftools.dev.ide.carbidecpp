@@ -46,8 +46,8 @@ public class ResourceListenerTest extends TestCase {
 	private static final String PROJECT_NAME = "TestProject1";
 	private static final String WORKSPACE_RELATIVE_BLDINF_PATH = "TestProject1/Group/bld.inf";
 	private static final String PROJECT_RELATIVE_BLDINF_PATH = "Group/bld.inf";
-	private static final String WORKSPACE_RELATIVE_MMP1_PATH = "TestProject1/Group/Test1.mmp";
-	private static final String WORKSPACE_RELATIVE_MMP2_PATH = "TestProject1/Group/Test2.mmp";
+	private static final String WORKSPACE_RELATIVE_MMP1_PATH = "TestProject1/Group/test1.mmp";
+	private static final String WORKSPACE_RELATIVE_MMP2_PATH = "TestProject1/Group/test2.mmp";
 	
 	private IProject project;
 	

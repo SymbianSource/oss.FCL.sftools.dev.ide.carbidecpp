@@ -20,5 +20,5 @@
 ;Unique Vendor name
 :"Vendor"
 
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		  -"!:\sys\bin\$(baseName).exe"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\$(baseName).exe"		  -"!:\sys\bin\$(baseName).exe"
 
