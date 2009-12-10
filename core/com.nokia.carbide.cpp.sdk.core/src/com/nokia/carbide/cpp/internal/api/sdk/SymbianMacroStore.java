@@ -391,6 +391,7 @@ public class SymbianMacroStore {
     public List<String> getSDKVersions(){
     	List<String> verList = new ArrayList<String>();
     	
+    	verList.add("5.2");
     	verList.add("5.1");
     	verList.add("5.0");
     	verList.add("3.2");
