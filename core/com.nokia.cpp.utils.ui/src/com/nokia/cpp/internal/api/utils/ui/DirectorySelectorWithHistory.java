@@ -96,11 +96,7 @@ public class DirectorySelectorWithHistory extends Composite {
 
 			public void widgetSelected(SelectionEvent e) {
 				DirectoryDialog dlg = new DirectoryDialog(parent.getShell());
-				String curPath = directoryCombo.getText(); 
-				if (curPath.length() > 0)
-					dlg.setFilterPath(curPath);
-				else
-					dlg.setFilterPath("."); //$NON-NLS-1$
+				BrowseDialogUtils.initializeFrom(dlg, directoryCombo.getText());
 				String dir = dlg.open();
 				if (dir != null) {
 					directoryCombo.setText(dir);

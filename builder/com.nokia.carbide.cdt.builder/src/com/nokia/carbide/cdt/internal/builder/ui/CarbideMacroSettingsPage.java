@@ -41,6 +41,7 @@ import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.builder.CarbideProjectModifier;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class CarbideMacroSettingsPage extends PropertyPage {
 	
@@ -76,6 +77,8 @@ public class CarbideMacroSettingsPage extends PropertyPage {
 				FileDialog fileDialog = new FileDialog(getShell(), SWT.OPEN);
 		        fileDialog.setFilterExtensions(new String[] {"*.*"});
 		        fileDialog.setText(Messages.getString("CarbideMacroSettingsPage.BrowseDialogTitle")); //$NON-NLS-1$
+		        
+		        BrowseDialogUtils.initializeFrom(fileDialog, fMacroFileEdit);
 		        
 		        String path = fileDialog.open();
 		        if (path != null) {

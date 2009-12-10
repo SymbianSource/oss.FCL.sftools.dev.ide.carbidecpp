@@ -17,6 +17,7 @@
 package com.nokia.cdt.internal.debug.launch.wizard;
 
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -167,6 +168,8 @@ public class StopModeRomImageWizardPage extends WizardPage {
 				dialog.setFilterExtensions(new String[] {"*.img*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("StopModeRomImageWizardPage.14"), Messages.getString("StopModeRomImageWizardPage.10")}); //$NON-NLS-1$ //$NON-NLS-2$
 
+				BrowseDialogUtils.initializeFrom(dialog, romImagePath);
+
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {
 					romImagePath.setText(result);					
@@ -198,6 +201,8 @@ public class StopModeRomImageWizardPage extends WizardPage {
 				dialog.setText(Messages.getString("StopModeRomImageWizardPage.8")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*.log*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("StopModeRomImageWizardPage.9"), Messages.getString("StopModeRomImageWizardPage.10")}); //$NON-NLS-1$ //$NON-NLS-2$
+
+				BrowseDialogUtils.initializeFrom(dialog, romLogFilePath);
 
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {

@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
-import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class AddEditFileToTransferDialog extends StatusDialog {
 
@@ -107,7 +107,9 @@ public class AddEditFileToTransferDialog extends StatusDialog {
 				dialog.setText(Messages.getString("AddEditFileToTransferDialog.4")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*"}); //$NON-NLS-1$
 				dialog.setFilterNames(new String[] {Messages.getString("AddEditFileToTransferDialog.11")}); //$NON-NLS-1$
-
+				
+				BrowseDialogUtils.initializeFrom(dialog, hostPath);
+				
 				String result = dialog.open();
 				if (result != null) {
 					IPath path = new Path(result);

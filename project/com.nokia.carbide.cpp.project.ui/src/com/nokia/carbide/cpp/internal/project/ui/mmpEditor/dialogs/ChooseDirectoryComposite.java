@@ -20,6 +20,7 @@ import com.nokia.carbide.cdt.builder.EMMPPathContext;
 import com.nokia.carbide.cdt.builder.MMPViewPathHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -157,6 +158,17 @@ public class ChooseDirectoryComposite extends Composite {
 	private void doBrowse() {
 		DirectoryDialog dialog = new DirectoryDialog(getShell());
 		dialog.setMessage(Messages.getString("IncludeDirectoryDialog.browseForDirectoryPrompt")); //$NON-NLS-1$
+		
+		IPath currentPath = new Path(pathViewer.getCombo().getText());
+		if (!currentPath.isEmpty()) {
+			currentPath = pathHelper.convertMMPToFilesystem(pathContext, currentPath);
+		} else if (pathContext == EMMPPathContext.SYSTEMINCLUDE 
+				|| pathContext == EMMPPathContext.SYSTEMRESOURCE
+				|| pathContext == EMMPPathContext.TARGETPATH) {
+			currentPath = new Path(buildConfiguration.getSDK().getEPOCROOT());
+		}
+		BrowseDialogUtils.initializeFrom(dialog, currentPath);
+		
 		String fullPath = dialog.open();
 		if (fullPath != null) {
 			setViewerPath(new Path(fullPath));

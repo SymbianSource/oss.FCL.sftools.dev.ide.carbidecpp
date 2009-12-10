@@ -40,6 +40,7 @@ import com.nokia.carbide.internal.bugreport.export.IProduct;
 import com.nokia.carbide.internal.bugreport.model.*;
 import com.nokia.carbide.internal.bugreport.resources.HelpContextIDs;
 import com.nokia.carbide.internal.bugreport.resources.Messages;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 
 /**
@@ -196,6 +197,7 @@ public class BugDescriptionPage extends WizardPage implements SelectionListener,
 		if (event.widget == browseButton) {
 			FileDialog dialog = new FileDialog(this.getShell(), SWT.OPEN);
 			dialog.setText(Messages.getString("BugDescriptionPage.SelectAttachmentFile")); //$NON-NLS-1$
+			BrowseDialogUtils.initializeFrom(dialog, attachmentText);
 			String result = dialog.open();
 			attachmentText.setText(result);
 		} else if (event.widget == uiServiceLink) {

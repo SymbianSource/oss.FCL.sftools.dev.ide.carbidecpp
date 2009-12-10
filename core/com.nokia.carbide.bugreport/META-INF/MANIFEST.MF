@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.console,
  org.eclipse.jface.text,
  org.eclipse.core.net,
- com.nokia.cpp.utils.core
+ com.nokia.cpp.utils.core,
+ com.nokia.cpp.utils.ui;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.internal.bugreport.export
 Bundle-ClassPath: lib/commons-httpclient-3.1.jar,

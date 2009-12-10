@@ -47,6 +47,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 import com.nokia.sdt.utils.ProjectFileResourceProxyVisitor;
 
 public class AddEditSisFileToBuildDialog extends StatusDialog {
@@ -384,7 +385,7 @@ public class AddEditSisFileToBuildDialog extends StatusDialog {
 		
 		DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN);
 		dialog.setText("Choose a folder...");
-		dialog.setFilterPath(contentSearchLocationEdit.getText());
+		BrowseDialogUtils.initializeFrom(dialog, contentSearchLocationEdit);
 		String selectedDir = dialog.open();
 		
 		if (selectedDir != null && selectedDir.length() > 0) {
@@ -530,11 +531,11 @@ public class AddEditSisFileToBuildDialog extends StatusDialog {
         FileDialog fileDialog = new FileDialog(getShell(), SWT.OPEN);
         fileDialog.setFilterExtensions(extFilter);
         fileDialog.setText(title);
-
-        int lastSeparatorIndex = startDir.lastIndexOf(File.separator);
-        if (lastSeparatorIndex != -1) {
-        	fileDialog.setFilterPath(startDir.substring(0, lastSeparatorIndex));
-        }
+        
+        IPath startPath = new Path(startDir);
+        if (!startPath.isAbsolute() && project != null)
+        	startPath = project.getLocation().append(startPath);
+        BrowseDialogUtils.initializeFrom(fileDialog, startPath);
 
         return fileDialog.open();
     }

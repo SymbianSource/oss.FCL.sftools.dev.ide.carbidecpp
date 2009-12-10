@@ -38,6 +38,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -113,6 +114,8 @@ public class SophiaWizardPage extends WizardPage {
 				dialog.setFilterExtensions(new String[] {"*.dll*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("SophiaWizardPage.5"), Messages.getString("SophiaWizardPage.6")}); //$NON-NLS-1$ //$NON-NLS-2$
 
+				BrowseDialogUtils.initializeFrom(dialog, sophiaSTIDLLPath);
+
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {
 					sophiaSTIDLLPath.setText(result);					
@@ -144,6 +147,8 @@ public class SophiaWizardPage extends WizardPage {
 				dialog.setText(Messages.getString("SophiaWizardPage.9")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*.cfg*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("SophiaWizardPage.10"), Messages.getString("SophiaWizardPage.6")}); //$NON-NLS-1$ //$NON-NLS-2$
+
+				BrowseDialogUtils.initializeFrom(dialog, targetInitFilePath);
 
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {
