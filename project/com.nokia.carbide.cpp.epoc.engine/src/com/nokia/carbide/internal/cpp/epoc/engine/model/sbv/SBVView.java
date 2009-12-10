@@ -17,22 +17,31 @@
 
 package com.nokia.carbide.internal.cpp.epoc.engine.model.sbv;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
 
-import com.nokia.carbide.cpp.epoc.engine.model.*;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.model.IData;
+import com.nokia.carbide.cpp.epoc.engine.model.IViewConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVOwnedModel;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.ASTFactory;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTTopLevelNode;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.sbv.*;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.sbv.IASTSBVArgumentStatement;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.sbv.IASTSBVFlagStatement;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.sbv.IASTSBVTranslationUnit;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ModelBase;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewBase;
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.IDocumentParser;
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.ParserFactory;
-import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.core.IMessage;
+import com.nokia.cpp.internal.api.utils.core.MessageLocation;
 
 
 public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
@@ -92,7 +101,11 @@ public class SBVView extends ViewBase<ISBVOwnedModel> implements ISBVView {
 				String value = ((IASTSBVArgumentStatement) stmt).getArgument().getValue();
 				handleStatement(option, value);
 			} else { 
-				Check.checkState(false);
+				if (!stmt.getOriginalText().startsWith("#")){
+					// Not a comment or known keyword
+					String errMsg = "Ignoring unknown statement: " + stmt.getOriginalText() + " in " + stmt.getSourceReference(); //$NON-NLS-N$ 
+					EpocEnginePlugin.getDefault().getLog().log(new Status(IStatus.ERROR, EpocEnginePlugin.EPOC_ENGINE_PLUGIN_ID, errMsg, null));
+				}
 			}
 		}
 	}

@@ -1,3 +1,4 @@
+# dino.var
 VARIANT			  				dino79
 
 EXTENDS								flintstone500
@@ -8,5 +9,5 @@ BUILD_INCLUDE	prepend /epoc32/include/config/flintstone500/dino79
 
 ROM_INCLUDE	prepend   /epoc32/include/config/flintstone500/dino79
 ROM_INCLUDE	prepend   /epoc32/rom/config/flintstone500/dino79
-
+# comment
 
