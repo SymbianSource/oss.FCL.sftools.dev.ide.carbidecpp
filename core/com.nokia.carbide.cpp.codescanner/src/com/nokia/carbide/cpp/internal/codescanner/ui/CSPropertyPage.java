@@ -47,6 +47,7 @@ import com.nokia.carbide.cpp.internal.codescanner.CSBuilder;
 import com.nokia.carbide.cpp.internal.codescanner.CSPlugin;
 import com.nokia.carbide.cpp.internal.codescanner.Messages;
 import com.nokia.carbide.cpp.internal.codescanner.config.CSProjectSettings;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 
 /**
@@ -406,7 +407,7 @@ public class CSPropertyPage extends PropertyPage {
         }
         String[] extensions = new String[] {"*.xml"};
         dialog.setFilterExtensions(extensions);
-		dialog.setFilterPath(dialogFilterPath);
+        BrowseDialogUtils.initializeFrom(dialog, dialogFilterPath != null ? dialogFilterPath + File.separator : null);
 		String configFilePath = dialog.open();
 		dialogFilterPath = dialog.getFilterPath();
         return configFilePath;

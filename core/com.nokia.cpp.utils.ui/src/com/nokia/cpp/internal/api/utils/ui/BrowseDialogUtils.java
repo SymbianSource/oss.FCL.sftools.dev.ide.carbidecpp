@@ -25,25 +25,53 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * Utilities to make it easier to use file dialogs.
+ * Utilities to make it easier to use file and directory dialogs which are associated
+ * with text entry fields.
+ * <p>
+ * First, promote UI where Browse... starts from the current textual entry rather than
+ * some random place.
+ * <p>
+ * Second, overcome terrible SWT behavior:  even if you do set the filter path, then if it 
+ * is not 100% correct, it will again revert to the home directory.  So, find the nearest
+ * directory that <i>does</i> exist.
  */
 public class BrowseDialogUtils {
 	/**
 	 * When issuing a "Browse..." command next to a text entry field, initialize
-	 * the dialog with the existing path in that text field.
+	 * the dialog with the nearest existing file or directory in that text field.
+	 * @param dialog
+	 * @param textEntry
+	 * @pathm defaultPath the path to use when the text entry is empty 
+	 */
+	public static void initializeFrom(FileDialog dialog, Text textEntry, IPath defaultPath) {
+		if (textEntry != null) {
+			String existing = textEntry.getText().trim();
+			if (existing.length() > 0) {
+				initializeFrom(dialog, existing);
+				return;
+			}
+		}
+		if (defaultPath != null) {
+			initializeFrom(dialog, defaultPath);
+		}
+	}
+
+	/**
+	 * When issuing a "Browse..." command next to a text entry field, initialize
+	 * the dialog with the nearest existing file or directory in that text field.
 	 * @param dialog
 	 * @param textEntry
 	 */
 	public static void initializeFrom(FileDialog dialog, Text textEntry) {
 		if (textEntry == null)
 			return;
-		String existing = textEntry.getText();
+		String existing = textEntry.getText().trim();
 		initializeFrom(dialog, existing);
 	}
 
 	/**
-	 * When issuing a "Browse..." command with an expected path, initialize
-	 * the dialog with the existing path.
+	 * When issuing a "Browse..." command with an expected file, initialize
+	 * the dialog with the nearest existing file or directory.
 	 * @param dialog
 	 * @param path
 	 */
@@ -54,19 +82,26 @@ public class BrowseDialogUtils {
 	}
 	
 	/**
-	 * When issuing a "Browse..." command with an expected path, initialize
-	 * the dialog with the existing path.
+	 * When issuing a "Browse..." command with an expected file, initialize
+	 * the dialog with the nearest existing file or directory.
 	 * @param dialog
 	 * @param path
 	 */
 	public static void initializeFrom(FileDialog dialog, String path) {
 		if (path != null && path.length() > 0) {
+			boolean isDirectory = path.endsWith("/") || path.endsWith("\\");
 			File file = new File(path);
-			if (file.exists()) {
-				if (file.isAbsolute()) {
-					dialog.setFilterPath(file.getParent());
-				}
+			boolean exists = file.exists();
+			if (exists) {
+				isDirectory = file.isDirectory();
+			}
+			if (!isDirectory) {
 				dialog.setFileName(file.getName());
+			}
+			if (exists) {
+				if (file.isAbsolute()) {
+					dialog.setFilterPath(isDirectory ? file.getAbsolutePath() : file.getParent());
+				}
 			} else {
 				if (!file.isAbsolute())
 					return;
@@ -83,20 +118,40 @@ public class BrowseDialogUtils {
 	
 	/**
 	 * When issuing a "Browse..." command next to a text entry field, initialize
-	 * the dialog with the existing path in that text field.
+	 * the dialog with the nearest existing directory in that text field.
+	 * @param dialog
+	 * @param textEntry
+	 * @param defaultPath the default path if the text entry is empty
+	 */
+	public static void initializeFrom(DirectoryDialog dialog, Text textEntry, IPath defaultPath) {
+		if (textEntry != null) {
+			String existing = textEntry.getText().trim();
+			if (existing.length() > 0) {
+				initializeFrom(dialog, existing);
+				return;
+			}
+		}
+		if (defaultPath != null) {
+			initializeFrom(dialog, defaultPath);
+		}
+	}
+
+	/**
+	 * When issuing a "Browse..." command next to a text entry field, initialize
+	 * the dialog with the nearest existing directory in that text field.
 	 * @param dialog
 	 * @param textEntry
 	 */
 	public static void initializeFrom(DirectoryDialog dialog, Text textEntry) {
 		if (textEntry == null)
 			return;
-		String existing = textEntry.getText();
+		String existing = textEntry.getText().trim();
 		initializeFrom(dialog, existing);
 	}
 
 	/**
-	 * When issuing a "Browse..." command with an expected path, initialize
-	 * the dialog with the existing path.
+	 * When issuing a "Browse..." command with an expected directory, initialize
+	 * the dialog with the nearest existing path.
 	 * @param dialog
 	 * @param path
 	 */
@@ -107,8 +162,8 @@ public class BrowseDialogUtils {
 	}
 	
 	/**
-	 * When issuing a "Browse..." command with an expected path, initialize
-	 * the dialog with the existing path.
+	 * When issuing a "Browse..." command with an expected directory, initialize
+	 * the dialog with the nearest existing path.
 	 * @param dialog
 	 * @param path
 	 */

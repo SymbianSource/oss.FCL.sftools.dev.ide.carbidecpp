@@ -46,6 +46,7 @@ import org.eclipse.ui.PlatformUI;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.project.ui.sharedui.BuilderSelectionComposite;
 import com.nokia.carbide.cpp.internal.qt.ui.QtUIHelpIds;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 
 public class QtProFileSelectionPage extends WizardPage implements Listener {
@@ -143,11 +144,7 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
         fileDialog.setFilterExtensions(new String[] {"*.pro", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
         fileDialog.setText(Messages.QtProFileSelectionPage_browseDialogTitle);
 
-        String currentSourceString = proFileCombo.getText();
-        int lastSeparatorIndex = currentSourceString.lastIndexOf(File.separator);
-        if (lastSeparatorIndex != -1) {
-        	fileDialog.setFilterPath(currentSourceString.substring(0, lastSeparatorIndex));
-        }
+        BrowseDialogUtils.initializeFrom(fileDialog, proFileCombo.getText());
 
         return fileDialog.open();
     }

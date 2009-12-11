@@ -385,7 +385,7 @@ public class AddEditSisFileToBuildDialog extends StatusDialog {
 		
 		DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN);
 		dialog.setText("Choose a folder...");
-		BrowseDialogUtils.initializeFrom(dialog, contentSearchLocationEdit);
+		BrowseDialogUtils.initializeFrom(dialog, contentSearchLocationEdit, project.getLocation());
 		String selectedDir = dialog.open();
 		
 		if (selectedDir != null && selectedDir.length() > 0) {

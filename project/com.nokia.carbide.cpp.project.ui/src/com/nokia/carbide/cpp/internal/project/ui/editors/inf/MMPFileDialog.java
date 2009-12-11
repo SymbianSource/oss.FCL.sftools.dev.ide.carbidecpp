@@ -20,6 +20,7 @@ import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMMPReference;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.StatusInfo;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 import org.eclipse.core.runtime.IPath;
@@ -146,12 +147,7 @@ public class MMPFileDialog extends StatusDialog implements IMakMakeFileDialog {
 				dialog.setFilterNames(new String[] {Messages.MMPFileDialog_MMPFiles, Messages.MMPFileDialog_AllFiles});
 				
 				// set the initial directory
-				String currentFile = filePath.getText().trim();
-				if (currentFile.length() == 0) {
-					dialog.setFilterPath(editorContext.project.getLocation().toOSString());
-				} else {
-					dialog.setFileName(currentFile);
-				}
+				BrowseDialogUtils.initializeFrom(dialog, filePath, editorContext.project.getLocation());
 				
 				String result = dialog.open();
 				if (result != null) {

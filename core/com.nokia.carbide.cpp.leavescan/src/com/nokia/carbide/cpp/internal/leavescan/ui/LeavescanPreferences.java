@@ -33,6 +33,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.leavescan.LeavescanPlugin;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class LeavescanPreferences extends PreferencePage implements
 		IWorkbenchPreferencePage,Listener {
@@ -153,7 +154,7 @@ public class LeavescanPreferences extends PreferencePage implements
     private String showBrowseDialog() {
         DirectoryDialog dialog = new DirectoryDialog(leaveScanDirEditText.getShell(), SWT.OPEN);
         dialog.setText("Choose a folder...");
-        dialog.setFilterPath(leaveScanDirEditText.getText());
+        BrowseDialogUtils.initializeFrom(dialog, leaveScanDirEditText);
         return dialog.open();
     }
 

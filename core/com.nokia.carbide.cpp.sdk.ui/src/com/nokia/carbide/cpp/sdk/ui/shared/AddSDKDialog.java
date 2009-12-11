@@ -48,6 +48,7 @@ import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
  * Dialog that allows the user to add a new Symbian OS SDK or custkit
@@ -360,11 +361,7 @@ public class AddSDKDialog extends TrayDialog {
 	private void browseEPOCROOT(){
         DirectoryDialog browseDir = new DirectoryDialog(getShell(), SWT.OPEN);
         browseDir.setMessage(Messages.getString("AddSDKDialog.Choose_location_for_EPOCROOT")); //$NON-NLS-1$
-        File symbianFolder = new File("C:/Symbian/"); //$NON-NLS-1$
-        if (symbianFolder.exists()){
-        	browseDir.setFilterPath(symbianFolder.toString());
-        }
-        
+        BrowseDialogUtils.initializeFrom(browseDir, "C:/Symbian/"); //$NON-NLS-1$
         String dirText = browseDir.open();
         if (dirText != null){
         	epocRootText.setText(dirText);

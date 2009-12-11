@@ -21,6 +21,7 @@ import com.nokia.sdt.component.symbian.ComponentProvider;
 import com.nokia.sdt.component.symbian.ComponentSystemPlugin;
 import com.nokia.sdt.component.symbian.sourcegen.SourceGenAdapterFactory;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.action.IAction;
@@ -168,7 +169,7 @@ public class EnableSourceGenDebugAction implements IWorkbenchWindowActionDelegat
 				@Override
 				public void widgetSelected(SelectionEvent arg0) {
 					DirectoryDialog dlg = new DirectoryDialog(getShell());
-					dlg.setFilterPath(text.getText());
+					BrowseDialogUtils.initializeFrom(dlg, text);
 					dlg.setText("Select Output Directory");
 					dlg.setMessage("Select output directory");
 					String newDir = dlg.open();

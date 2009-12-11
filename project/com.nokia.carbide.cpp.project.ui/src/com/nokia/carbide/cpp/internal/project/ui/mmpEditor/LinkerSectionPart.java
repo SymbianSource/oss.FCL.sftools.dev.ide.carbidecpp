@@ -59,6 +59,7 @@ import com.nokia.carbide.cdt.builder.InvalidDriveInMMPPathException;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.sdt.utils.ProjectFileResourceProxyVisitor;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 import com.nokia.cpp.internal.api.utils.ui.editor.FormEditorEditingContext;
 
 public class LinkerSectionPart extends SectionPart {
@@ -221,13 +222,7 @@ public class LinkerSectionPart extends SectionPart {
 		IPath curDefFile = editorContext.mmpView.getDefFile();
 		if (curDefFile != null) {
 			curDefFile = editorContext.pathHelper.convertMMPToFilesystem(EMMPPathContext.DEFFILE, curDefFile);
-			if (!curDefFile.hasTrailingSeparator()) {
-				dialog.setFileName(curDefFile.lastSegment());
-			}
-			while (curDefFile.segmentCount() > 0 && !curDefFile.toFile().exists()) {
-				curDefFile = curDefFile.removeLastSegments(1);
-			}
-			dialog.setFilterPath(curDefFile.toOSString());
+			BrowseDialogUtils.initializeFrom(dialog, curDefFile);
 		}
 		
 		dialog.setFilterNames(new String[] {Messages.LinkerSectionPart_defFileBrowseFilterName});

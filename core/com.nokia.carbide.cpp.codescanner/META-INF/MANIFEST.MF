@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.expressions,
  com.nokia.carbide.cpp.sdk.core,
  com.nokia.carbide.cpp.epoc.engine,
  com.nokia.cpp.utils.core,
- com.nokia.carbide.cpp.featureTracker
+ com.nokia.carbide.cpp.featureTracker,
+ com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.codescanner;x-friends:="com.nokia.carbide.cpp.codescanner.tests",
  com.nokia.carbide.cpp.internal.codescanner.config;x-friends:="com.nokia.carbide.cpp.codescanner.tests",

@@ -28,6 +28,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValida
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
 import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -652,8 +653,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			dialog.setText(Messages.getString("ConnectionSettingsPage.SaveAsDialogTitle"));  //$NON-NLS-1$
 			if (saveAsParent == null)
 				saveAsParent = System.getProperty("user.home");  //$NON-NLS-1$
-			dialog.setFilterPath(saveAsParent);
-			dialog.setFileName(packageContents.getDefaultNameFileName());
+			BrowseDialogUtils.initializeFrom(dialog, new Path(saveAsParent).append(packageContents.getDefaultNameFileName()));
 			dialog.setOverwrite(true); // prompt for overwrite
 			String path = dialog.open();
 			if (path != null) {
@@ -758,7 +758,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			for (String familyName : familyNames) {
 				List<Version> versions = installerProvider.getVersions(familyName);
 				for (Version version : versions) {
-					Pair<String, Version> pair = new Pair(familyName, version);
+					Pair<String, Version> pair = new Pair<String, Version>(familyName, version);
 					if (!deviceOSPairs.contains(pair))
 						deviceOSPairs.add(pair);
 				}

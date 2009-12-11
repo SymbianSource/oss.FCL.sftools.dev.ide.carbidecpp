@@ -21,6 +21,7 @@ package com.nokia.carbide.remoteconnections.wizard;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -72,7 +73,7 @@ public class ExportPage extends AbstractImportExportPage {
 			tableColumn.pack();
 		}
 		viewer.setAllChecked(true);
-		connections = new ArrayList(RemoteConnectionsActivator.getConnectionsManager().getConnections());
+		connections = new ArrayList<IConnection>(RemoteConnectionsActivator.getConnectionsManager().getConnections());
 
 		createBrowseGroup(composite, Messages.getString("ExportPage.BrowseGroupLabel")); //$NON-NLS-1$
         browseButton.addSelectionListener(new SelectionAdapter() {
@@ -82,8 +83,7 @@ public class ExportPage extends AbstractImportExportPage {
 				dialog.setText(Messages.getString("ExportPage.FileDialogTitle")); //$NON-NLS-1$
 				if (saveAsParent == null)
 					saveAsParent = System.getProperty("user.home"); //$NON-NLS-1$
-				dialog.setFilterPath(saveAsParent);
-				dialog.setFileName("exportedConnections.xml"); //$NON-NLS-1$
+				BrowseDialogUtils.initializeFrom(dialog, new Path(saveAsParent).append("exportedConnections.xml")); //$NON-NLS-1$
 				dialog.setOverwrite(true); // prompt for overwrite
 				String path = dialog.open();
 				if (path != null) {

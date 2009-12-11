@@ -42,6 +42,7 @@ import org.eclipse.ui.PlatformUI;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
 import com.nokia.carbide.cpp.internal.project.ui.sharedui.BuilderSelectionComposite;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class BldInfSelectionPage extends WizardPage implements Listener {
 	
@@ -141,11 +142,7 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
         fileDialog.setFileName("bld.inf"); //$NON-NLS-1$
         fileDialog.setText(Messages.BldInfSelectionPage_browseDialogTitle);
 
-        String currentSourceString = bldInfCombo.getText();
-        int lastSeparatorIndex = currentSourceString.lastIndexOf(File.separator);
-        if (lastSeparatorIndex != -1) {
-        	fileDialog.setFilterPath(currentSourceString.substring(0, lastSeparatorIndex));
-        }
+        BrowseDialogUtils.initializeFrom(fileDialog, bldInfCombo.getText());
 
         return fileDialog.open();
     }
