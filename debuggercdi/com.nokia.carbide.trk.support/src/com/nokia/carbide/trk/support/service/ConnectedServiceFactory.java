@@ -36,13 +36,13 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 		if (service instanceof TracingService &&
 				isCompatibleConnection(getCompatibleTracingConnectionTypeIds(), connection)) {
 			if (HostOS.IS_UNIX)
-				return null;		// TODO: not ported
+				return new RemoteConnectedService(service);		// TODO: not ported
 			return new TracingConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
 		else if (service instanceof TRKService &&
 				isCompatibleConnection(getCompatibleTRKConnectionTypeIds(), connection)) {
 			if (HostOS.IS_UNIX)
-				return null;		// TODO: not ported
+				return new RemoteConnectedService(service);	// TODO: not ported
 			return new TRKConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
 		

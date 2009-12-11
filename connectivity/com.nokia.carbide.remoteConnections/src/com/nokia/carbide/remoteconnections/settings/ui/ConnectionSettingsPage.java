@@ -166,6 +166,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		gd_sdkcombo.widthHint = 150;
 		deviceOSComboViewer.getCombo().setLayoutData(gd_sdkcombo);
 		deviceOSComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@SuppressWarnings("unchecked")
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
 				Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
@@ -519,8 +520,14 @@ public class ConnectionSettingsPage extends WizardPage {
 				installerTreeViewer.expandAll();
 				
 				if (treeNodes.length == 0) {
-					String errorText = Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString"); //$NON-NLS-1$
-					errorText += "\n" + Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString2"); //$NON-NLS-1$ //$NON-NLS-2$
+					String errorText;
+					// TODO: the actual error condition needs to be recorded... 
+					if (HostOS.IS_UNIX) {
+						errorText = Messages.getString("ConnectionSettingsPage.NoInstallerSupport"); //$NON-NLS-1$
+					} else {
+						errorText = Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString"); //$NON-NLS-1$
+						errorText += "\n" + Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString2"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 					installerInfoText.setText(errorText);
 				}
 				
@@ -557,6 +564,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private TreeNode findTreeNodeForPair(TreeNode[] treeNodes, Pair<String, Version> pair) {
 		for (TreeNode treeNode : treeNodes) {
 			Object value = treeNode.getValue();
@@ -576,6 +584,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void testService() {
 		Map<String, String> settings = connectionFactory.getSettingsFromUI();
 		boolean newConnection = connection == null || !connectionType.equals(connection.getConnectionType());
