@@ -27,6 +27,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTTranslationUnit;
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.IDocumentParser;
 import com.nokia.carbide.internal.cpp.epoc.engine.parser.ParserFactory;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -107,7 +108,7 @@ public abstract class ParserConfigurationBase implements IViewParserConfiguratio
 		
 			public File findIncludeFile(String file, boolean isUser, File currentDir) {
 				if (HostOS.IS_UNIX) {
-					file = HostOS.convertPathToUnix(file);
+					file = PathUtils.convertPathToUnix(file);
 				}
 				
 				if (fs.containsKey(file))

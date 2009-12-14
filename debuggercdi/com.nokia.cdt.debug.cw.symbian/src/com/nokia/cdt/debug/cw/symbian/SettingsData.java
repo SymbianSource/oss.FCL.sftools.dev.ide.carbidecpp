@@ -62,7 +62,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -383,7 +383,7 @@ public class SettingsData {
 				// otherwise warn them that we can't set default values.
 				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
-					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, mainExeTargetPath == null ? "" : HostOS.convertPathToWindows(mainExeTargetPath));
+					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, mainExeTargetPath == null ? "" : PathUtils.convertPathToWindows(mainExeTargetPath));
 				} else {
 					displayWarningDialog(Messages.getString("SettingsData.37")); //$NON-NLS-1$
 				}
@@ -529,9 +529,9 @@ public class SettingsData {
 					if (hp != null) {
 						IPath tp = EpocEngineHelper.getTargetPathForExecutable(buildConfig, mmp);
 						if (tp == null) {
-							tp = HostOS.createPathFromString(defaultTargetPath).append(hp.lastSegment());
+							tp = PathUtils.createPath(defaultTargetPath).append(hp.lastSegment());
 						}
-						prefsData += hp.toOSString() + "," + HostOS.convertPathToWindows(tp) + enabled; //$NON-NLS-1$
+						prefsData += hp.toOSString() + "," + PathUtils.convertPathToWindows(tp) + enabled; //$NON-NLS-1$
 					}
 					
 					HashMap<String, String> hostTargetRSRCMap = EpocEngineHelper.getHostAndTargetResources(buildConfig, mmp);
@@ -1020,7 +1020,7 @@ public class SettingsData {
 	}
 	
 	public static void setProcessToLaunch(ILaunchConfigurationWorkingCopy configuration, IPath path) {
-		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, HostOS.convertPathToWindows(path));
+		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, PathUtils.convertPathToWindows(path));
 	}
 	
 }

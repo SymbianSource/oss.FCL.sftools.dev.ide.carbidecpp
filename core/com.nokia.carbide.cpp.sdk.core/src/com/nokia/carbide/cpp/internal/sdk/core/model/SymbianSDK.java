@@ -21,7 +21,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -1118,7 +1118,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 					variantDir = matcher.group(1);
 					variantFile = matcher.group(3); 
 					File variantFullPathFile = new File(epocRoot, variantDir + File.separator + variantFile);
-					IPath variantFilePath = new Path(HostOS.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
+					IPath variantFilePath = new Path(PathUtils.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
 					return variantFilePath;
 				}
 			}

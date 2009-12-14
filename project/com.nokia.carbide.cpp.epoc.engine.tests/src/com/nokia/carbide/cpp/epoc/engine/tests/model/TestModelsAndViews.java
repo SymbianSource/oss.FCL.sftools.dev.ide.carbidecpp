@@ -31,6 +31,7 @@ import com.nokia.carbide.cpp.epoc.engine.tests.model.dummy.DummyModel;
 import com.nokia.carbide.cpp.epoc.engine.tests.model.dummy.IDummyView;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTTranslationUnit;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewASTBase;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -638,8 +639,8 @@ public class TestModelsAndViews extends BaseViewTests {
 				view.convertProjectToModelPath(null));
 		assertEquals(new Path("/foo/bar/baz.txt"), 
 				view.convertProjectToModelPath(new Path("/foo/bar/baz.txt")));
-		assertEquals(new Path("x:/foo/bar/baz.txt"), 
-				view.convertProjectToModelPath(new Path("x:/foo/bar/baz.txt")));
+		assertEquals(PathUtils.createPath("x:/foo/bar/baz.txt"), 
+				view.convertProjectToModelPath(PathUtils.createPath("x:/foo/bar/baz.txt")));
 		
 		assertEquals(new Path("path/to/mymodel.mdl"),
 				view.convertModelToProjectPath(new Path("mymodel.mdl")));
@@ -653,8 +654,8 @@ public class TestModelsAndViews extends BaseViewTests {
 				view.convertProjectToModelPath(null));
 		assertEquals(new Path("/foo/bar/baz.txt"), 
 				view.convertProjectToModelPath(new Path("/foo/bar/baz.txt")));
-		assertEquals(new Path("x:/foo/bar/baz.txt"), 
-				view.convertProjectToModelPath(new Path("x:/foo/bar/baz.txt")));
+		assertEquals(PathUtils.createPath("x:/foo/bar/baz.txt"), 
+				view.convertProjectToModelPath(PathUtils.createPath("x:/foo/bar/baz.txt")));
 		
 	}
 }

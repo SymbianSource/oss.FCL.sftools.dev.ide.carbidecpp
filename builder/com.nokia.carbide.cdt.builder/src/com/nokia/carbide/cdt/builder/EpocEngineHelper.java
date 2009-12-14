@@ -63,7 +63,7 @@ public class EpocEngineHelper {
 			absolutePath = new File(absolutePath).getCanonicalPath();
 		} catch (IOException e) {
 		}
-		return new Path(absolutePath);
+		return PathUtils.createPath(absolutePath);
 	}
 
 	/**
@@ -809,7 +809,7 @@ public class EpocEngineHelper {
 					// adapt the exe filename to the variant, if any
 					IPath tempPath = null;
 					if (isVariantBldInf(cpi.getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, cpi.getProject())) {
-						tempPath = getBinaryVariantTargetName(mmpData, new Path(exePath), cpi.getProject());
+						tempPath = getBinaryVariantTargetName(mmpData, PathUtils.createPath(exePath), cpi.getProject());
 						if (tempPath == null){
 							return null; 
 						}
@@ -912,7 +912,7 @@ public class EpocEngineHelper {
 		for (EMMPLanguage language : languages) {
 			String extension = ".R" + language.getCodeString(); //$NON-NLS-1$
 			resources.put(baseGeneratedPath.toOSString() + extension.toLowerCase(), 
-					HostOS.convertPathToWindows(targetPath));
+					PathUtils.convertPathToWindows(targetPath));
 		}
 	}
 	
@@ -992,7 +992,7 @@ public class EpocEngineHelper {
 		IPath targetPath;
 		
 		if (targetPathStr != null) {
-			targetPath = new Path(targetPathStr).makeAbsolute();
+			targetPath = PathUtils.createPath(targetPathStr).makeAbsolute();
 		} else {
 			// for EKA1 just leave empty.  for EKA2 use sys\bin\
 			if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
@@ -1009,7 +1009,7 @@ public class EpocEngineHelper {
 		for (IMMPAIFInfo aif : aifs) {
 			IPath aifPath = aif.getTarget().makeAbsolute();
 			resources.put(dataZDir.append(targetPath).append(aifPath.lastSegment()).toOSString(), 
-					HostOS.convertPathToWindows(targetPath.setDevice("C:"))); //$NON-NLS-1$
+					PathUtils.convertPathToWindows(targetPath.setDevice("C:"))); //$NON-NLS-1$
 		}
 	
 		///////////
@@ -1036,7 +1036,7 @@ public class EpocEngineHelper {
 			}
 			IPath mbmDir = mbmPath.removeLastSegments(1).addTrailingSeparator().setDevice("C:"); //$NON-NLS-1$
 			resources.put(dataZDir.append(mbmPath).toOSString(), 
-					HostOS.convertPathToWindows(mbmDir.toOSString()));
+					PathUtils.convertPathToWindows(mbmDir.toOSString()));
 		}
 	
 		// get the user resources
@@ -1068,7 +1068,7 @@ public class EpocEngineHelper {
 			if (filename == null) {
 				filename = resourceBlock.getSource().removeFileExtension().lastSegment();
 			} else {
-				filename = HostOS.createPathFromString(filename).removeFileExtension().toOSString();
+				filename = PathUtils.createPath(filename).removeFileExtension().toOSString();
 			}
 			filename = filename.toLowerCase();
 			
@@ -1129,8 +1129,8 @@ public class EpocEngineHelper {
 												if (targetPath != null && targetPath.segment(0).equalsIgnoreCase("epoc32")) {
 													targetPath = targetPath.removeFirstSegments(3);
 												}
-												resources.put(HostOS.convertPathToNative(dataZDir + targetPath.toOSString()), 
-														HostOS.convertPathToWindows("C:\\" + targetPath.toOSString())); //$NON-NLS-1$
+												resources.put(PathUtils.convertPathToNative(dataZDir + targetPath.toOSString()), 
+														PathUtils.convertPathToWindows("C:\\" + targetPath.toOSString())); //$NON-NLS-1$
 											}
 											
 											return null;

@@ -18,6 +18,7 @@
 package com.nokia.carbide.cpp.internal.ui.images;
 
 import com.nokia.carbide.cpp.ui.images.*;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.swt.graphics.ImageData;
@@ -130,7 +131,7 @@ public class CachingImageLoader implements IImageLoader {
 	 */
 	private IPath canonicalizePath(IPath path) {
 		try {
-			return new Path(path.toFile().getCanonicalPath());
+			return PathUtils.createPath(path.toFile().getCanonicalPath());
 		} catch (IOException e) {
 			return path;
 		}

@@ -25,7 +25,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
 public class SISBuilderInfo2 implements ISISBuilderInfo {
@@ -280,7 +280,7 @@ public class SISBuilderInfo2 implements ISISBuilderInfo {
 			fullPath = fullPath.removeFileExtension();
 			fullPath = fullPath.addFileExtension(extension);
 		} else {
-			IPath fileNamePath = HostOS.createPathFromString(fileName);
+			IPath fileNamePath = PathUtils.createPath(fileName);
 			if (fileNamePath.isAbsolute()) {
 				// SIS already a full path
 				fullPath = fileNamePath;

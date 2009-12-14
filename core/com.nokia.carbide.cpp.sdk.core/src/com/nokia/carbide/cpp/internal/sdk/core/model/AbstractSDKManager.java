@@ -60,9 +60,9 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
@@ -511,7 +511,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		Runtime rt=Runtime.getRuntime();
 		List<IRVCTToolChainInfo> rvctToolList = new ArrayList<IRVCTToolChainInfo>();
 		
-		IPath[] pathEntries = HostOS.getPathEntries(null);
+		IPath[] pathEntries = PathUtils.getPathEntries(null);
 		
 		for(IPath path : pathEntries) {
 			try {

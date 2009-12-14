@@ -18,6 +18,7 @@
 package com.nokia.carbide.cdt.builder.test;
 
 import com.nokia.carbide.cdt.internal.api.builder.ProjectExportsGatherer;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.*;
 import org.osgi.framework.Bundle;
@@ -111,8 +112,8 @@ public class TestProjectExportsGatherer extends BaseTest {
 		ProjectExportsGatherer gatherer = createGatherer();
 		IPath src1 = projectDataPath.append("gfx/foo.svg");
 		IPath src2 = projectDataPath.append("doc/README.txt");
-		IPath epoc1 = new Path("c:/private/12345678/foo.svg");
-		IPath epoc2 = new Path("c:/sys/readmes/README.txt");
+		IPath epoc1 = PathUtils.createPath("c:/private/12345678/foo.svg");
+		IPath epoc2 = PathUtils.createPath("c:/sys/readmes/README.txt");
 		
 		Map<IPath, IPath> filesystemToEpocExportMap = gatherer.getFilesystemToEpocExportMap();
 		assertEquals(2, filesystemToEpocExportMap.size());
@@ -138,13 +139,13 @@ public class TestProjectExportsGatherer extends BaseTest {
 		
 		IPath epoc1a = projectDataPath.append("sis/text/englishfile.txt");
 		IPath epoc1b = epocRoot.append("text/frenchfile.txt");
-		IPath dev1 = new Path("$:/private/10000005/import/InstTest/lang.txt");
+		IPath dev1 = PathUtils.createPath("$:/private/10000005/import/InstTest/lang.txt");
 		
 		IPath epoc2 = epocRoot.append("epoc32/text/file1.txt");
-		IPath dev2 = new Path("!:/private/10000005/import/InstTest/file1.txt");
+		IPath dev2 = PathUtils.createPath("!:/private/10000005/import/InstTest/file1.txt");
 
 		IPath epoc3 = epocRoot.append("epoc32/files/option1.txt");
-		IPath dev3 = new Path("!:/private/10000005/import/InstTest/option1.txt");
+		IPath dev3 = PathUtils.createPath("!:/private/10000005/import/InstTest/option1.txt");
 
 		Map<IPath, IPath> filesystemToEpocExportMap = gatherer.getFilesystemToEpocExportMap();
 		assertEquals(0, filesystemToEpocExportMap.size());
@@ -178,22 +179,22 @@ public class TestProjectExportsGatherer extends BaseTest {
 		//IPath epoc1a = projectDataPath.append("sis/text/englishfile.txt");
 		//IPath src1b = projectDataPath.append("sis/text/frenchfile.txt");
 		IPath epoc1b = epocRoot.append("epoc32/text/frenchfile.txt");
-		IPath dev1 = new Path("$:/private/10000005/import/InstTest/lang.txt");
+		IPath dev1 = PathUtils.createPath("$:/private/10000005/import/InstTest/lang.txt");
 		
 		IPath src2 = projectDataPath.append("gfx/foo.svg");
-		IPath epocTarget2 = new Path("c:/private/12345678/foo.svg");
+		IPath epocTarget2 = PathUtils.createPath("c:/private/12345678/foo.svg");
 		IPath epocHost2 = epocRoot.append("epoc32/data/c/private/12345678/foo.svg");
-		IPath dev2 = new Path("!:/private/10000005/foo.svg");
+		IPath dev2 = PathUtils.createPath("!:/private/10000005/foo.svg");
 
 		IPath src3 = projectDataPath.append("doc/README.txt");
 		IPath epocHost3 = epocRoot.append("epoc32/release/armv5/udeb/z/sys/readmes/README.txt");
-		IPath epoc3 = new Path("z:/sys/readmes/README.txt");
-		IPath dev3 = new Path("!:/private/10000005/import/InstTest/README.txt");
+		IPath epoc3 = PathUtils.createPath("z:/sys/readmes/README.txt");
+		IPath dev3 = PathUtils.createPath("!:/private/10000005/import/InstTest/README.txt");
 
 		IPath src4 = projectDataPath.append("inc/Test.h");
-		IPath epoc4 = new Path("/epoc32/include/Test.h");
+		IPath epoc4 = PathUtils.createPath("/epoc32/include/Test.h");
 		IPath src5 = projectDataPath.append("inc/Test00.h");
-		IPath epoc5 = new Path("/epoc32/include/TestPrefix.h");
+		IPath epoc5 = PathUtils.createPath("/epoc32/include/TestPrefix.h");
 		
 		Map<IPath, IPath> filesystemToEpocExportMap = gatherer.getFilesystemToEpocExportMap();
 		assertEquals(4, filesystemToEpocExportMap.size());

@@ -28,7 +28,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.*;
 import org.osgi.framework.Version;
@@ -116,7 +116,7 @@ public class TestMMPView3 extends BaseMMPViewTest {
 		// if we got here, now try converting back 
 		boolean isFixedDirectory = false;
 		String origDefFile = mmpView.getSingleArgumentSettings().get(EMMPStatement.DEFFILE);
-		if (origDefFile != null && new Path(HostOS.convertPathToUnix(origDefFile)).segmentCount() > 1)
+		if (origDefFile != null && new Path(PathUtils.convertPathToUnix(origDefFile)).segmentCount() > 1)
 			isFixedDirectory = true;
 		mmpView.setDefFile(realPath, isFixedDirectory);
 		IPath convPath = mmpView.getDefFile();

@@ -592,7 +592,7 @@ public class MakefileViewBase<Model extends IOwnedModel> extends ViewBase<Model>
 					if (value == null)
 						return null;
 					if (HostOS.IS_UNIX)
-						value = HostOS.convertPathToUnix(value);
+						value = PathUtils.convertPathToUnix(value);
 					return value;
 				}
 			};

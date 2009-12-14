@@ -28,6 +28,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.mmp.IASTMMPListArgumen
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewASTBase;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -1674,10 +1675,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		IMMPBitmap bitmap = view.createMMPBitmap();
 
 		bitmap.setTargetFile("target.mbm");
-		if (HostOS.IS_WIN32)
-			bitmap.setTargetPath(new Path("e:\\foo\\bar"));
-		else
-			bitmap.setTargetPath(new Path("e:/foo/bar"));
+		bitmap.setTargetPath(PathUtils.createPath("e:/foo/bar"));
 		bitmap.setHeaderFlags(EGeneratedHeaderFlags.Header);
 
 		IBitmapSource source = bitmap.createBitmapSource();
@@ -1728,7 +1726,7 @@ public class TestMMPView extends BaseMMPViewTest {
 		IMMPBitmap bitmap = view.getBitmaps().get(0);
 
 		bitmap.setTargetFile("target.mbm");
-		bitmap.setTargetPath(new Path(nativePath));
+		bitmap.setTargetPath(PathUtils.createPath(nativePath));
 		bitmap.setHeaderFlags(EGeneratedHeaderFlags.Header);
 
 		IBitmapSource source = (IBitmapSource) bitmap.getSources().get(0);

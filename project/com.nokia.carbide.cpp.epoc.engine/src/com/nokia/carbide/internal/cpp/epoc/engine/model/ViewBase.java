@@ -563,6 +563,9 @@ public abstract class ViewBase<Model extends IOwnedModel> implements IView<Model
 
 	/**
 	 * Tell if the path is a Win32 path with drive letter or UNC.
+	 * NOTE: this is for backward compatibility only!  If this triggers true,
+	 * then likely there is a bug somewhere, where "PathUtils.createPath()" should
+	 * have been used instead of "new Path()".
 	 * @param path
 	 */
 	public static boolean isWin32DrivePath(IPath path) {

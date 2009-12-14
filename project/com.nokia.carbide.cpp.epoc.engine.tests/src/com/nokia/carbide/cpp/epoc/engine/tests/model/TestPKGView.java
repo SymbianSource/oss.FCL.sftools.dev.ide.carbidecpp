@@ -23,8 +23,8 @@ import com.nokia.carbide.cpp.epoc.engine.model.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.pkg.PKGView;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.text.IDocument;
@@ -140,24 +140,24 @@ public class TestPKGView extends BaseViewTests {
 		
 		// first install file is language dependent
 		IPKGInstallFile installFile = installFileList.get(0);
-		assertEquals(HostOS.createPathFromString(LANG_DEST_FILE), installFile.getDestintationFile());
+		assertEquals(PathUtils.createPath(LANG_DEST_FILE), installFile.getDestintationFile());
 		List<EPKGLanguage> langs = view.getLanguages();
 		assertEquals(2, langs.size());
 		Map<EPKGLanguage, IPath> sourceFiles = installFile.getSourceFiles();
 		for (EPKGLanguage lang : langs) {
 			IPath srcFilePath = sourceFiles.get(lang);
 			String srcFile = lang2SrcFileMap.get(lang.getCode());
-			assertEquals(HostOS.createPathFromString(srcFile), srcFilePath);
+			assertEquals(PathUtils.createPath(srcFile), srcFilePath);
 		}
 		
 		// second install file is language independent
 		installFile = installFileList.get(1);
-		assertEquals(HostOS.createPathFromString(NO_LANG_DEST_FILE), installFile.getDestintationFile());
+		assertEquals(PathUtils.createPath(NO_LANG_DEST_FILE), installFile.getDestintationFile());
 		sourceFiles = installFile.getSourceFiles();
 		assertEquals(1, sourceFiles.size());
 		assertTrue(sourceFiles.containsKey(EPKGLanguage.INDEPENDENT));
 		IPath srcFilePath = sourceFiles.get(EPKGLanguage.INDEPENDENT);
-		assertEquals(HostOS.createPathFromString(NO_LANG_SRC_FILE), srcFilePath);
+		assertEquals(PathUtils.createPath(NO_LANG_SRC_FILE), srcFilePath);
 		assertEquals(1, installFile.getOptions().size());
 		assertEquals(NO_LANG_OPTION, installFile.getOptions().get(0));
 		
@@ -187,7 +187,7 @@ public class TestPKGView extends BaseViewTests {
 		IPath destintationFile = conditionalInstallFile.getDestintationFile();
 		assertTrue(destintationFile.isEmpty());
 		assertEquals(1, conditionalInstallFile.getSourceFiles().size());
-		assertEquals(HostOS.createPathFromString(CONDITIONAL_SRC_FILE), conditionalInstallFile.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
+		assertEquals(PathUtils.createPath(CONDITIONAL_SRC_FILE), conditionalInstallFile.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
 		assertEquals(2, conditionalInstallFile.getOptions().size());
 		
 		commitTest(view, modelText);
@@ -200,9 +200,9 @@ public class TestPKGView extends BaseViewTests {
 		
 		// fully create and add a language independent install file statement
 		IPKGInstallFile installFile1 = view.createInstallFile(null);
-		installFile1.getSourceFiles().put(EPKGLanguage.INDEPENDENT, HostOS.createPathFromString(NO_LANG_SRC_FILE));
+		installFile1.getSourceFiles().put(EPKGLanguage.INDEPENDENT, PathUtils.createPath(NO_LANG_SRC_FILE));
 		installFile1.getOptions().add(NO_LANG_OPTION);
-		installFile1.setDestinationFile(HostOS.createPathFromString(NO_LANG_DEST_FILE));
+		installFile1.setDestinationFile(PathUtils.createPath(NO_LANG_DEST_FILE));
 		view.addInstallFile(installFile1);
 		
 		// create a language dependent install file and modify after add
@@ -210,9 +210,9 @@ public class TestPKGView extends BaseViewTests {
 		view.addInstallFile(installFile2);
 		for (String[] lang2SrcFileArray : LANG_TO_SRC_FILES) {
 			installFile2.getSourceFiles().put(
-					EPKGLanguage.forLangCode(lang2SrcFileArray[0]), HostOS.createPathFromString(lang2SrcFileArray[1]));
+					EPKGLanguage.forLangCode(lang2SrcFileArray[0]), PathUtils.createPath(lang2SrcFileArray[1]));
 		}
-		installFile2.setDestinationFile(HostOS.createPathFromString(LANG_DEST_FILE));
+		installFile2.setDestinationFile(PathUtils.createPath(LANG_DEST_FILE));
 		
 		// NOTE: the newlines are lost and shouldn't be
 		//String modifiedModelText = modelText + NO_LANG_INSTALL_FILE_STATEMENT + "\n" + LANG_INSTALL_FILE_STATEMENT;
@@ -245,14 +245,14 @@ public class TestPKGView extends BaseViewTests {
 		
 		IPKGInstallFile file = installFiles[0];
 		assertEquals(2, file.getSourceFiles().size());
-		assertEquals(new Path("c:/users/E0192828/back.txt"), file.getSourceFiles().get(EPKGLanguage.EN));
-		assertEquals(new Path("c:/users/E0FG/front.txt"), file.getSourceFiles().get(EPKGLanguage.FR));
-		assertEquals(new Path("sp ac es.txt"), file.getDestintationFile());
+		assertEquals(PathUtils.createPath("c:/users/E0192828/back.txt"), file.getSourceFiles().get(EPKGLanguage.EN));
+		assertEquals(PathUtils.createPath("c:/users/E0FG/front.txt"), file.getSourceFiles().get(EPKGLanguage.FR));
+		assertEquals(PathUtils.createPath("sp ac es.txt"), file.getDestintationFile());
 		
 		file = installFiles[1];
 		assertEquals(1, file.getSourceFiles().size());
-		assertEquals(new Path("c:/users/E0192828/back.txt"), file.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
-		assertEquals(new Path("sp ac es.txt"), file.getDestintationFile());
+		assertEquals(PathUtils.createPath("c:/users/E0192828/back.txt"), file.getSourceFiles().get(EPKGLanguage.INDEPENDENT));
+		assertEquals(PathUtils.createPath("sp ac es.txt"), file.getDestintationFile());
 		
 		commitTest(view, ESCAPABLE_FILES);
 	}

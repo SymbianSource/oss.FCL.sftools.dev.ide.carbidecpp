@@ -784,7 +784,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 		String dir = singleArgumentSettings.get(EMMPStatement.TARGETPATH);
 		if (dir == null)
 			return null;
-		IPath path = new Path(FileUtils.createPossiblyRelativePath(dir).append(name).toOSString());
+		IPath path = PathUtils.createPath(FileUtils.createPossiblyRelativePath(dir).append(name).toOSString());
 		if (FileUtils.isPathInParent(path)) {
 			path = getProjectPath().append(path);
 		}

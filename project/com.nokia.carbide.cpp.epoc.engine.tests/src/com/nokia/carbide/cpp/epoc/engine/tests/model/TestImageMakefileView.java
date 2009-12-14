@@ -27,6 +27,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeF
 import com.nokia.carbide.internal.cpp.epoc.engine.model.StandaloneModelProvider;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.cdt.make.core.makefile.IDirective;
 import org.eclipse.cdt.make.core.makefile.gnu.IInclude;
@@ -999,8 +1000,8 @@ public class TestImageMakefileView extends BaseTest {
 		IPath outBmpPath = stockRootedImgPath.append("foo.bmp").setDevice(null);
 		IPath outSvgPath = stockRootedSvgPath.append("foo.svg");
 		String refText = "RESOURCE:\n"+
-		"\tmifconv hello.mif \\\n\t/c8,1 "+HostOS.convertPathToWindows(outBmpPath) + " " 
-		+ "\\\n\t/c32 " + HostOS.convertPathToWindows(outSvgPath) + "\n";
+		"\tmifconv hello.mif \\\n\t/c8,1 "+PathUtils.convertPathToWindows(outBmpPath) + " " 
+		+ "\\\n\t/c32 " + PathUtils.convertPathToWindows(outSvgPath) + "\n";
 		commitTest(view, refText);
 		
 		

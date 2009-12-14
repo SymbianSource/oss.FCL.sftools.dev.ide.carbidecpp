@@ -22,8 +22,11 @@ import java.io.File;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+
 /**
  * Utilities used for portability between hosts.
+ * <p>
+ * NOTE: please keep this in sync with the org.eclipse.cdt.debug.edc version of this class!
  */
 public class HostOS {
 	/** Is the host Windows? */
@@ -32,98 +35,6 @@ public class HostOS {
 	public static boolean IS_UNIX = File.separatorChar == '/';
 	/** Executable file extension */
 	public static final String EXE_EXT = IS_WIN32 ? ".exe" : "";
-	
-	/** The name of the PATH variable in the environment.  Capitalized differently per OS. */
-	public static String PATH_VARIABLE_NAME = IS_WIN32 ? "Path" : "PATH";
-
-	/**
-	 * Convert a variable constructed blindly for a Win32 environment into
-	 * Unix-like syntax.  This is typically used for PATH or lists
-	 * of paths where ';' is the entry separator and '\' is the 
-	 * path component separator.
-	 * <p>
-	 * NOTE: we assume that the entries in the
-	 * path list are already legal Unix paths, but just with the
-	 * wrong slash.
-	 * @param env
-	 * @return converted string
-	 */
-	public static String convertPathListToUnix(String env) {
-		if (env == null) return null;
-		env = env.replaceAll(";", ":");  // entry separators
-		env = env.replaceAll("\\\\", "/");  // path separators
-		return env;
-	}
-
-	/**
-	 * Convert a path constructed blindly for a Win32 environment into
-	 * Unix-like syntax.  <p>
-	 * NOTE: we assume that the path is already a legal Unix path, 
-	 * but just with the wrong slash.
-	 * @param file
-	 * @return converted string
-	 */
-	public static String convertPathToUnix(String file) {
-		if (file == null) return null;
-		// handle Windows slashes and canonicalize
-		file = file.replaceAll("\\\\", "/");
-		return file;
-	}
-	
-
-	/**
-	 * Convert a path which may be in Windows or Unix format to Windows format.
-	 * NOTE: we assume that the path is already a legal path, 
-	 * but just with the wrong slash.
-	 * @param file
-	 * @return converted string
-	 */
-	public static String convertPathToWindows(String file) {
-		if (file == null) return null;
-		file = file.replaceAll("/", "\\\\");
-		return file;
-	}
-	
-	/**
-	 * Convert a path which may be in Windows or Unix format to Windows format.
-	 * NOTE: we assume that the path is already a legal path, 
-	 * but just with the wrong slash.
-	 * @param file
-	 * @return converted string
-	 */
-	public static String convertPathToWindows(IPath path) {
-		return convertPathToWindows(path.toPortableString());
-	}
-
-	/**
-	 * Convert a path which may be in the opposite slash format to the local slash format.
-	 * NOTE: we assume that the path is already a legal path, 
-	 * but just with the wrong slash.
-	 * @param file
-	 * @return converted string
-	 */
-	public static String convertPathToNative(String path) {
-		if (path == null) return null;
-		if (IS_UNIX)
-			return path.replaceAll("\\\\", "/");
-		else
-			return path.replaceAll("/", "\\\\");
-	}
-
-	/**
-	 * Create an IPath from a string which may be a Win32 path. <p>
-	 * ("new Path(...)" won't work in Unix when using a Win32 path.)
-	 * @param path
-	 * @return converted string
-	 */
-	public static IPath createPathFromString(String path) {
-		if (path == null) return null;
-		// handle Windows slashes and canonicalize
-		path = path.replaceAll("\\\\", "/");
-		return new Path(path);
-	}
-	
-
 	
 	/**
 	 * Ensure that the executable name mentioned is canonical for the machine.
@@ -143,27 +54,6 @@ public class HostOS {
 	}
 
 	/**
-	 * Get the PATH entries from the given path environment value or the
-	 * system environment.
-	 * @param pathValue the expected PATH/Path value, or <code>null</code> for the system value
-	 * @return array of IPath, never <code>null</code>
-	 */
-	public static IPath[] getPathEntries(String pathValue) {
-		String pathVar = pathValue != null ? pathValue : System.getenv(PATH_VARIABLE_NAME);
-		
-		if (pathVar == null)
-			pathVar = "";
-		
-		String pathSeparator = System.getProperty("path.separator");
-		String[] pathEntries = pathVar.split(pathSeparator);
-		IPath[] paths = new IPath[pathEntries.length];
-		for (int i = 0; i < pathEntries.length; i++) {
-			paths[i] = new Path(pathEntries[i]);
-		}
-		return paths;
-	}
-	
-	/**
 	 * Scan the PATH variable and see if the given binary is visible on
 	 * the PATH that will be used at runtime (with the default environment and overrides).
 	 * @param pathValue the expected Path 
@@ -173,11 +63,11 @@ public class HostOS {
 	public static IPath findProgramOnPath(String program, String pathValue) {
 		
 		// be sure proper path/extension are present
-		program = canonicalizeExecutableName(program);
+		program = HostOS.canonicalizeExecutableName(program);
 		
 		IPath path = null;
 		
-		IPath[] pathEntries = getPathEntries(pathValue);
+		IPath[] pathEntries = PathUtils.getPathEntries(pathValue);
 		for (IPath pathEntry : pathEntries) {
 			IPath testPath = pathEntry.append(program);
 			if (testPath.toFile().exists()) {

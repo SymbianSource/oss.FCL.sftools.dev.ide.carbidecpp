@@ -33,6 +33,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.IData;
 import com.nokia.carbide.cpp.epoc.engine.model.IView;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -133,7 +134,7 @@ public class EpocEnginePathHelper {
 	 * @return workspace-relative non-absolute path, or null if not resolvable to workspace
 	 */
 	public IPath convertFilesystemToWorkspace(IPath fullPath) {
-		fullPath = FileUtils.findMatchingPathCaseInsensitive(fullPath);
+		fullPath = PathUtils.findExistingPathIfCaseSensitive(fullPath);
 		IPath wsPath = FileUtils.convertToWorkspacePath(fullPath, true);
 		if (wsPath != null && wsPath.isAbsolute())
 			wsPath = wsPath.makeRelative();
@@ -220,8 +221,8 @@ public class EpocEnginePathHelper {
 			}
 			
 			// canonicalize (to remove .. , resolve links, etc)
-			fullPath = new Path(fullPath.toFile().getCanonicalPath()).setDevice(device);
-			fullPath = FileUtils.findMatchingPathCaseInsensitive(fullPath);
+			fullPath = PathUtils.createPath(fullPath.toFile().getCanonicalPath()).setDevice(device);
+			fullPath = PathUtils.findExistingPathIfCaseSensitive(fullPath);
 			
 		} catch (IOException e) {
 		}

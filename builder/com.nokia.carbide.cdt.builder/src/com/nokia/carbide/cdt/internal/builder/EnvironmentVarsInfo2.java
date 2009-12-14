@@ -25,6 +25,7 @@ import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
@@ -361,7 +362,7 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 		// Fix up the notation in the environment (convert Win32-type variables to Unix-type)
 		if (HostOS.IS_UNIX) {
 			for (int i = 0; i < returnEnvArray.length; i++) {
-				returnEnvArray[i] = HostOS.convertPathListToUnix(returnEnvArray[i]);
+				returnEnvArray[i] = PathUtils.convertPathListToUnix(returnEnvArray[i]);
 			}
 		}
 
@@ -387,7 +388,7 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 		// Fix up the notation in the environment (convert Win32-type variables to Unix-type)
 		if (HostOS.IS_UNIX) {
 			for (int i = 0; i < modifiedVars.length; i++) {
-				modifiedVars[i] = HostOS.convertPathListToUnix(modifiedVars[i]);
+				modifiedVars[i] = PathUtils.convertPathListToUnix(modifiedVars[i]);
 			}
 		}
 		

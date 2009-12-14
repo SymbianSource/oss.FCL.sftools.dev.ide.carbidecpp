@@ -25,6 +25,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.dom.IASTProblemNode;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -425,7 +426,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 		
 		exp = exports.get(2);
 		assertEquals(new Path("group/here.exe"), exp.getSourcePath());
-		assertEquals(new Path("c:/sys/bin/virus.exe"), exp.getTargetPath());
+		assertEquals(PathUtils.createPath("c:/sys/bin/virus.exe"), exp.getTargetPath());
 		assertFalse(exp.isZipped());
 
 		exp = exports.get(3);
@@ -460,7 +461,7 @@ public class TestBldInfView extends BaseBldInfViewTest {
 
 		exp = view.createExport();
 		exp.setSourcePath(new Path("group/here.exe"));
-		exp.setTargetPath(new Path("c:/sys/bin/virus.exe"));
+		exp.setTargetPath(PathUtils.createPath("c:/sys/bin/virus.exe"));
 		assertFalse(exp.isZipped());
 		view.getExports().add(exp);
 		

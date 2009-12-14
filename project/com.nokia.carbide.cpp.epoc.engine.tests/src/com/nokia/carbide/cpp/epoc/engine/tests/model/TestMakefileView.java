@@ -29,6 +29,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.tests.BaseTest;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.IMessage;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import org.eclipse.cdt.make.core.makefile.ICommand;
 import org.eclipse.cdt.make.core.makefile.IMacroDefinition;
@@ -406,8 +407,8 @@ public class TestMakefileView extends BaseTest {
 					new String[] {  "TARGETDIR", "ZDIR" });
 			assertEquals(unexpanded, repl);
 		} else {
-			expanded = HostOS.convertPathToUnix(expanded);
-			unexpanded = HostOS.convertPathToUnix(unexpanded);
+			expanded = PathUtils.convertPathToUnix(expanded);
+			unexpanded = PathUtils.convertPathToUnix(unexpanded);
 			String repl = view.unexpandMacros(expanded, 
 					new String[] {  "TARGETDIR", "ZDIR" });
 			assertEquals(unexpanded, repl);

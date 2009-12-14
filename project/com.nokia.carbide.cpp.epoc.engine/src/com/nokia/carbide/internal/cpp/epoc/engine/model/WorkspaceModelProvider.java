@@ -88,7 +88,7 @@ public class WorkspaceModelProvider<Model, SharedModel> extends ModelProviderBas
 				return path;
 		}
 		try {
-			return FileUtils.findMatchingPathCaseInsensitive(new Path(file.getCanonicalPath()));
+			return PathUtils.findExistingPathIfCaseSensitive(new Path(file.getCanonicalPath()));
 		} catch (IOException e) {
 			EpocEnginePlugin.log(e);
 			return new Path(file.getAbsolutePath());

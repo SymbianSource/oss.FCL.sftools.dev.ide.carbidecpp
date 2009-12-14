@@ -38,6 +38,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.jdom.Attribute;
 import org.jdom.Comment;
 import org.jdom.DefaultJDOMFactory;
@@ -244,7 +245,8 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 			}			
 		} else {
 			if (result.externalPath.equals(expected.externalPath) == false) {
-				// note: for some reason, on Unix, relative paths become full paths
+				// note: since we're processing Win32-style paths in our input, these
+				// get mangled on Unix.  Ignore differences in relative vs. absolute
 				if (result.externalPath.makeRelative().equals(expected.externalPath.makeRelative())) {
 					// fine
 				} else {
@@ -300,7 +302,8 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		        variableName = variableNameNode.getValue();
 		        
 		        Attribute externalPathStringNode = markerInfo.getAttribute(EXTERNAL_PATH_STRING);
-		        externalPath = HostOS.createPathFromString(externalPathStringNode.getValue());		        
+		        // need to regress to non-portability here, since CDT doesn't have the Win32 device hack that we do
+		        externalPath = new Path(externalPathStringNode.getValue().replaceAll("\\\\", "/"));
 
 	        	ProblemMarkerInfo details = new ProblemMarkerInfo(file, lineNumber, description, severity, variableName, externalPath);
 	        	xmlFilePromblemMarkerInfoList.add(details);

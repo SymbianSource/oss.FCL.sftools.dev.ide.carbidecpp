@@ -91,9 +91,9 @@ class ExportListConverter implements StructuredItemStatementListConverter<IASTBl
 		if (targetPath != null) {
 			// need the backslashes for an export to a drive, else the build rules are broken
 			// (they use 'copy' in DOS which doesn't like forward slashes)
-			if (ViewBase.isWin32DrivePath(targetPath)) {
-				target = HostOS.convertPathToWindows(targetPath.toOSString());
-				source = HostOS.convertPathToWindows(sourcePath.toOSString());
+			if (targetPath.getDevice() != null) {
+				target = PathUtils.convertPathToWindows(targetPath.toOSString());
+				source = PathUtils.convertPathToWindows(sourcePath.toOSString());
 			}
 			else
 				target = bldInfView.pathString(targetPath);

@@ -33,6 +33,7 @@ import com.nokia.carbide.internal.api.cpp.epoc.engine.image.IMbmMifDefFileConver
 import com.nokia.carbide.internal.api.cpp.epoc.engine.image.IPathResolver;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.image.LegacyImageFileConverterFactory;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 
 public class TestLegacyImageFileConversion extends BaseTest {
@@ -115,7 +116,7 @@ public class TestLegacyImageFileConversion extends BaseTest {
 		assertEquals(true, src.isColor());
 		assertEquals(12, src.getDepth());
 		assertEquals(1, src.getMaskDepth());
-		assertEquals(new Path("c:/pix/aif/list_icon.bmp"), src.getPath());
+		assertEquals(PathUtils.createPath("c:/pix/aif/list_icon.bmp"), src.getPath());
 		assertEquals(new Path("list_icon_mask.bmp"), ((IBitmapSource) src).getMaskPath());
 		
 		src = sources.get(1);
