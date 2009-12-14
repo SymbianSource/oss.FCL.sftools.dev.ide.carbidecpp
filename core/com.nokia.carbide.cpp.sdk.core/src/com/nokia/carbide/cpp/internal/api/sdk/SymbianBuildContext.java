@@ -305,7 +305,14 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		if (installedRVCTTools.length > 0) {
 			rvctFragment = getRVCTFragment(installedRVCTTools[0]);
 		}
-		return getSDK().getIncludePath().append(rvctFragment).append(rvctFragment + ".h"); //$NON-NLS-1$
+		IPath prefixFilePath = getSDK().getIncludePath().append(rvctFragment).append(rvctFragment + ".h"); //$NON-NLS-1$
+		if (prefixFilePath.toFile().exists()){
+			return prefixFilePath;
+		} else {
+			// SF kits around SF^3 started to only use a single rvct.h header instead of specific versioned ones
+			// based on the default installation
+			return getSDK().getIncludePath().append("rvct").append("rvct" + ".h"); //$NON-NLS-1$
+		}
 	}
 
 	private String getRVCTFragment(IRVCTToolChainInfo info) {
