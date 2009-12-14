@@ -229,12 +229,6 @@ public class CarbideLanguageData extends CLanguageData {
 			includeEntries.add(new CIncludePathEntry(new Path(oemDir.getAbsolutePath()), 0));
 		}
 		
-		// add the compiler include
-		IPath compilerPrefixPath = carbideBuildConfig.getCompilerPrefixFile();
-		if (compilerPrefixPath != null){
-			includeEntries.add(new CIncludePathEntry(new Path(compilerPrefixPath.removeLastSegments(1).toOSString()), 0));
-		}
-		
 		// cache the macros
 		macroEntries = new ArrayList<ICLanguageSettingEntry>(0);
 
