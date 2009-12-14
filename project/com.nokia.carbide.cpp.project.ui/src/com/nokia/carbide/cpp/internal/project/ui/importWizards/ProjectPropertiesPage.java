@@ -46,6 +46,7 @@ import org.eclipse.ui.PlatformUI;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class ProjectPropertiesPage extends WizardPage implements Listener {
 	
@@ -167,8 +168,7 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
     private String showBrowseDialog() {
         DirectoryDialog dialog = new DirectoryDialog(rootDirectory.getShell(), SWT.OPEN);
         dialog.setText(Messages.ProjectPropertiesPage_browseDialogTitle);
-
-        dialog.setFilterPath(rootDirectory.getText());
+		BrowseDialogUtils.initializeFrom(dialog, rootDirectory);
 
         return dialog.open();
     }

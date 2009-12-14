@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import com.freescale.swt.widgets.CheckboxGroup;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -138,7 +139,9 @@ public class RomImageTab extends CLaunchConfigurationTab {
 				dialog.setText(Messages.getString("RomImageTab.14")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*.img*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("RomImageTab.15"), Messages.getString("RomImageTab.16")}); //$NON-NLS-1$ //$NON-NLS-2$
-
+				
+				BrowseDialogUtils.initializeFrom(dialog, osImagePath);
+				
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {
 					osImagePath.setText(result);
@@ -232,7 +235,9 @@ public class RomImageTab extends CLaunchConfigurationTab {
 				dialog.setText(Messages.getString("RomLogFileTab.6")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*.log*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("RomLogFileTab.7"), Messages.getString("RomLogFileTab.8")}); //$NON-NLS-1$ //$NON-NLS-2$
-
+				
+				BrowseDialogUtils.initializeFrom(dialog, romLogFilePath);
+				
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {
 					romLogFilePath.setText(result);
@@ -263,6 +268,7 @@ public class RomImageTab extends CLaunchConfigurationTab {
 
 			public void widgetSelected(SelectionEvent evt) {
 				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
+				BrowseDialogUtils.initializeFrom(dialog, epoc32DirPath);
 
 				dialog.setText(Messages.getString("RomLogFileTab.11")); //$NON-NLS-1$
 				String result = dialog.open();

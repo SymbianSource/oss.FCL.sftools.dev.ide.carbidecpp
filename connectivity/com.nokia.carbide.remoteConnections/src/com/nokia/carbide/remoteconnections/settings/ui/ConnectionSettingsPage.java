@@ -28,6 +28,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValida
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
 import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -165,6 +166,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		gd_sdkcombo.widthHint = 150;
 		deviceOSComboViewer.getCombo().setLayoutData(gd_sdkcombo);
 		deviceOSComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@SuppressWarnings("unchecked")
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
 				Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
@@ -518,8 +520,14 @@ public class ConnectionSettingsPage extends WizardPage {
 				installerTreeViewer.expandAll();
 				
 				if (treeNodes.length == 0) {
-					String errorText = Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString"); //$NON-NLS-1$
-					errorText += "\n" + Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString2"); //$NON-NLS-1$ //$NON-NLS-2$
+					String errorText;
+					// TODO: the actual error condition needs to be recorded... 
+					if (HostOS.IS_UNIX) {
+						errorText = Messages.getString("ConnectionSettingsPage.NoInstallerSupport"); //$NON-NLS-1$
+					} else {
+						errorText = Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString"); //$NON-NLS-1$
+						errorText += "\n" + Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString2"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 					installerInfoText.setText(errorText);
 				}
 				
@@ -556,6 +564,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private TreeNode findTreeNodeForPair(TreeNode[] treeNodes, Pair<String, Version> pair) {
 		for (TreeNode treeNode : treeNodes) {
 			Object value = treeNode.getValue();
@@ -575,6 +584,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void testService() {
 		Map<String, String> settings = connectionFactory.getSettingsFromUI();
 		boolean newConnection = connection == null || !connectionType.equals(connection.getConnectionType());
@@ -652,8 +662,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			dialog.setText(Messages.getString("ConnectionSettingsPage.SaveAsDialogTitle"));  //$NON-NLS-1$
 			if (saveAsParent == null)
 				saveAsParent = System.getProperty("user.home");  //$NON-NLS-1$
-			dialog.setFilterPath(saveAsParent);
-			dialog.setFileName(packageContents.getDefaultNameFileName());
+			BrowseDialogUtils.initializeFrom(dialog, new Path(saveAsParent).append(packageContents.getDefaultNameFileName()));
 			dialog.setOverwrite(true); // prompt for overwrite
 			String path = dialog.open();
 			if (path != null) {
@@ -758,7 +767,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			for (String familyName : familyNames) {
 				List<Version> versions = installerProvider.getVersions(familyName);
 				for (Version version : versions) {
-					Pair<String, Version> pair = new Pair(familyName, version);
+					Pair<String, Version> pair = new Pair<String, Version>(familyName, version);
 					if (!deviceOSPairs.contains(pair))
 						deviceOSPairs.add(pair);
 				}

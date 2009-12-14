@@ -21,6 +21,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference.EMakeEngine;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.StatusInfo;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 import org.eclipse.core.runtime.IPath;
@@ -167,12 +168,7 @@ public class MakeFileDialog extends StatusDialog implements IMakMakeFileDialog {
 				dialog.setFilterNames(new String[] {Messages.MakeFileDialog_MakeFiles, Messages.MakeFileDialog_AllFiles});
 
 				// set the initial directory
-				String currentFile = filePath.getText().trim();
-				if (currentFile.length() == 0) {
-					dialog.setFilterPath(editorContext.project.getLocation().toOSString());
-				} else {
-					dialog.setFileName(currentFile);
-				}
+				BrowseDialogUtils.initializeFrom(dialog, filePath, editorContext.project.getLocation());
 
 				String result = dialog.open();
 				if (result != null) {

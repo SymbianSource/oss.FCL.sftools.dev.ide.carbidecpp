@@ -18,6 +18,7 @@ package com.nokia.cdt.internal.debug.launch.ui;
 
 import com.freescale.cdt.debug.cw.core.settings.DebuggerCommonData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
@@ -128,7 +129,9 @@ public class EmulationMainTab extends CarbideMainTab implements IResourceChangeL
 		hostBrowse.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
-
+				
+				BrowseDialogUtils.initializeFrom(dialog, hostText);
+				
 				dialog.setText(Messages.getString("EmulationMainTab.5")); //$NON-NLS-1$
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {

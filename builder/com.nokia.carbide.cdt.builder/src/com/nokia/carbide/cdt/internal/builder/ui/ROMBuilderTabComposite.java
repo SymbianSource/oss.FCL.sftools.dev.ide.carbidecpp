@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Text;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
  * Arguments tab for the Carbide Build Configurations page
@@ -73,6 +74,7 @@ public class ROMBuilderTabComposite extends Composite {
 		workingDirBrowse.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
+				BrowseDialogUtils.initializeFrom(dialog, workingDirEdit);
 
 				dialog.setText(Messages.getString("CarbideRomBuilderTab.Rom_Dir_Dialog_Title")); //$NON-NLS-1$
 				String result = dialog.open();

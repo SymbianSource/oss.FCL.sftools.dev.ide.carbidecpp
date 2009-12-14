@@ -19,6 +19,7 @@ package com.nokia.carbide.cpp.internal.project.ui.editors.inf;
 import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExport;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.StatusInfo;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 import org.eclipse.core.resources.IProject;
@@ -137,9 +138,9 @@ public class ExportFileDialog extends StatusDialog {
 				// set the initial directory
 				String currentFile = sourcePath.getText().trim();
 				if (currentFile.length() == 0) {
-					dialog.setFilterPath(project.getLocation().toOSString());
+					BrowseDialogUtils.initializeFrom(dialog, project.getLocation());
 				} else {
-					dialog.setFileName(currentFile);
+					BrowseDialogUtils.initializeFrom(dialog, currentFile);
 				}
 
 				String result = dialog.open();

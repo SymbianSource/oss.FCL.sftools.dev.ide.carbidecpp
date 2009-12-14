@@ -35,6 +35,8 @@ import com.nokia.cpp.internal.api.utils.core.*;
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 
 import java.io.*;
 import java.util.*;
@@ -892,7 +894,7 @@ public class EpocEngineHelper {
 	 * @param targetPath full path to device-side .rsc directory
 	 */
 	private static void addResourceLanguageTargets(Map<String, String> resources, IMMPData data, IMMPResource resource, 
-			String baseGeneratedPath, String targetPath) {
+			IPath baseGeneratedPath, IPath targetPath) {
 		List<EMMPLanguage> languages = null;
 		// block resource can override languages (entirely)
 		if (resource != null) {
@@ -909,7 +911,8 @@ public class EpocEngineHelper {
 		}
 		for (EMMPLanguage language : languages) {
 			String extension = ".R" + language.getCodeString(); //$NON-NLS-1$
-			resources.put(HostOS.convertPathToNative(baseGeneratedPath + extension), HostOS.convertPathToWindows(targetPath));
+			resources.put(baseGeneratedPath.toOSString() + extension.toLowerCase(), 
+					HostOS.convertPathToWindows(targetPath));
 		}
 	}
 	
@@ -944,84 +947,7 @@ public class EpocEngineHelper {
 								new MMPDataRunnableAdapter() {
 
 								public Object run(IMMPData mmpData) {
-									// read the project-wide target path
-									String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-									if (targetPath != null) {
-										// make sure it doesn't start with a "\" but ends with one
-										IPath targetP = new Path(targetPath).makeRelative().addTrailingSeparator();
-										targetPath = targetP.toOSString();
-									} else {
-										// for EKA1 just leave empty.  for EKA2 use sys\bin\
-										if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-											targetPath = "sys/bin/"; //$NON-NLS-1$
-										} else {
-											targetPath = ""; //$NON-NLS-1$
-										}
-									}
-
-									String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toPortableString() + "/data/z/"; //$NON-NLS-1$
-									// get the aifs
-									List<IMMPAIFInfo> aifs = mmpData.getAifs();
-									for (IMMPAIFInfo aif : aifs) {
-										IPath aifPath = aif.getTarget().makeAbsolute();
-										resources.put(HostOS.convertPathToNative(dataZDir + targetPath + aifPath.lastSegment().toLowerCase()), 
-												HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
-									}
-
-									// get the bitmaps
-									List<IMMPBitmap> bmps = mmpData.getBitmaps();
-									for (IMMPBitmap bmp : bmps) {
-										IPath mbmPath = bmp.getTargetFilePath().makeRelative();
-										resources.put(HostOS.convertPathToNative(dataZDir + mbmPath.toOSString().toLowerCase()), 
-												HostOS.convertPathToWindows("C:\\" + mbmPath.removeLastSegments(1).addTrailingSeparator().toOSString())); //$NON-NLS-1$
-									}
-
-									// get the user resources
-									List<IPath> userResources = mmpData.getUserResources();
-									for (IPath userRes : userResources) {
-										addResourceLanguageTargets(resources, mmpData, null, 
-												HostOS.convertPathToNative(dataZDir + targetPath + userRes.removeFileExtension().lastSegment().toLowerCase()), 
-												HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
-									}
-
-									// get the system resources
-									List<IPath> systemResources = mmpData.getSystemResources();
-									for (IPath systemRes : systemResources) {
-										addResourceLanguageTargets(resources, mmpData, null,
-												HostOS.convertPathToNative(dataZDir + targetPath + systemRes.removeFileExtension().lastSegment().toLowerCase()), 
-												HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
-									}
-
-									// get the resource blocks
-									List<IMMPResource> resourceBlocks = mmpData.getResourceBlocks();
-									for (IMMPResource resourceBlock : resourceBlocks) {
-										IPath resPath = resourceBlock.getTargetPath();
-										if (resPath == null) {
-											// if not specified in the resource block then get the global
-											// target path
-											String targetP = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-											if (targetP != null) {
-												resPath = new Path(targetP);
-											}
-										}
-										if (resPath != null) {
-											resPath = resPath.makeRelative().addTrailingSeparator();
-											String filename = resourceBlock.getTargetFile();
-											if (filename == null) {
-												filename = resourceBlock.getSource().removeFileExtension().lastSegment().toLowerCase();
-											} else {
-												filename = HostOS.createPathFromString(filename).removeFileExtension().toPortableString().toLowerCase();
-											}
-											// adjust the path if necessary as it's different on the phone for the *_.reg file
-											IPath adjustedTargetPath = resPath;
-											if (adjustedTargetPath.toPortableString().equalsIgnoreCase("private/10003a3f/apps/")) { //$NON-NLS-1$
-												adjustedTargetPath = new Path("private/10003a3f/import/apps/"); //$NON-NLS-1$
-											}
-											addResourceLanguageTargets(resources, mmpData, resourceBlock,
-													HostOS.convertPathToNative(dataZDir + resPath.toOSString() + filename), 
-													HostOS.convertPathToWindows("C:\\" + HostOS.convertPathToWindows(adjustedTargetPath))); //$NON-NLS-1$
-										}
-									}
+									gatherMMPResourceMappings(buildConfig, resources, mmpData);
 									return null;
 								}
 						});
@@ -1048,103 +974,7 @@ public class EpocEngineHelper {
 				new MMPDataRunnableAdapter() {
 
 				public Object run(IMMPData mmpData) {
-					// read the project-wide target path
-					String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-					if (targetPath != null) {
-						// make sure it doesn't start with a "\" but ends with one
-						IPath targetP = new Path(targetPath).makeRelative().addTrailingSeparator();
-						targetPath = targetP.toOSString();
-					} else {
-						// for EKA1 just leave empty.  for EKA2 use sys\bin\
-						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							targetPath = "sys\\bin\\"; //$NON-NLS-1$
-						} else {
-							targetPath = ""; //$NON-NLS-1$
-						}
-					}
-
-					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toPortableString() + "/data/z/"; //$NON-NLS-1$
-					
-					// get the aifs
-					List<IMMPAIFInfo> aifs = mmpData.getAifs();
-					for (IMMPAIFInfo aif : aifs) {
-						IPath aifPath = aif.getTarget().makeAbsolute();
-						resources.put(HostOS.convertPathToNative(dataZDir + targetPath + aifPath.lastSegment()), 
-								HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$
-					}
-
-					// for resources and bitmaps, the target path may be based on the target type if not explicitly
-					// set for the resource or bitmap.
-					String targetType = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
-					if (targetType != null) {
-						// could be PLUGIN or PLUGIN3
-						if (targetType.toUpperCase().startsWith("PLUGIN")) { //$NON-NLS-1$
-							targetPath = "resource/plugins/"; //$NON-NLS-1$
-						} else if (targetType.compareToIgnoreCase("PDL") == 0) { //$NON-NLS-1$
-							targetPath = "resource/printers/"; //$NON-NLS-1$
-						}
-					}
-
-					// get the bitmaps
-					List<IMMPBitmap> bmps = mmpData.getBitmaps();
-					for (IMMPBitmap bmp : bmps) {
-						IPath mbmPath = bmp.getTargetFilePath().makeRelative();
-						// if there's no target path then use the main target path
-						if (mbmPath.segmentCount() == 1) {
-							mbmPath = new Path(targetPath).append(mbmPath);
-						}
-						resources.put(HostOS.convertPathToNative(dataZDir + mbmPath.toOSString()), 
-								HostOS.convertPathToWindows("C:\\" + mbmPath.removeLastSegments(1).addTrailingSeparator().toOSString())); //$NON-NLS-1$
-					}
-
-					// get the user resources
-					List<IPath> userResources = mmpData.getUserResources();
-					for (IPath userRes : userResources) {
-						addResourceLanguageTargets(resources, mmpData, null, 
-								HostOS.convertPathToNative(dataZDir + targetPath + userRes.removeFileExtension().lastSegment()), 
-								HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-
-					// get the system resources
-					List<IPath> systemResources = mmpData.getSystemResources();
-					for (IPath systemRes : systemResources) {
-						addResourceLanguageTargets(resources, mmpData, null,
-								HostOS.convertPathToNative(dataZDir + targetPath + systemRes.removeFileExtension().lastSegment()), 
-								HostOS.convertPathToWindows("C:\\" + targetPath)); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-
-					// get the resource blocks
-					List<IMMPResource> resourceBlocks = mmpData.getResourceBlocks();
-					for (IMMPResource resourceBlock : resourceBlocks) {
-						IPath resPath = resourceBlock.getTargetPath();
-						if (resPath == null) {
-							// not specified in the resource block so use existing
-							resPath = new Path(targetPath);
-						}
-
-						String filename = resourceBlock.getTargetFile();
-						if (filename == null) {
-							filename = resourceBlock.getSource().removeFileExtension().lastSegment();
-						} else {
-							filename = HostOS.createPathFromString(filename).removeFileExtension().toOSString();
-						}
-						
-						if (resPath != null) {
-							resPath = resPath.makeRelative().addTrailingSeparator();
-							// adjust the path if necessary as it's different on the phone for the *_.reg file
-							IPath adjustedTargetPath = resPath;
-							if ((adjustedTargetPath.toPortableString()).equalsIgnoreCase("private/10003a3f/apps/")) { //$NON-NLS-1$
-								adjustedTargetPath = new Path("private/10003a3f/import/apps/"); //$NON-NLS-1$
-							}
-							addResourceLanguageTargets(resources, mmpData, resourceBlock,
-									HostOS.convertPathToNative(dataZDir + resPath.toOSString() + filename), 
-									HostOS.convertPathToWindows("C:\\" + adjustedTargetPath)); //$NON-NLS-1$
-						} else {
-							CarbideBuilderPlugin.log(Logging.newStatus(CarbideBuilderPlugin.getDefault(), 
-									IStatus.WARNING,
-									"No TARGETPATH specified for resource " + filename + ".  Skipping..."));
-						}
-					}
+					gatherMMPResourceMappings(buildConfig, resources, mmpData);
 					return null;
 				}
 		});
@@ -1152,6 +982,114 @@ public class EpocEngineHelper {
 		return resources;
 	}
 	
+	private static void gatherMMPResourceMappings(
+			final ICarbideBuildConfiguration buildConfig,
+			final HashMap<String, String> resources, IMMPData mmpData) {
+		// read the project-wide target path
+		String targetPathStr = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
+		
+		// the target path, should always be absolute and deviceless
+		IPath targetPath;
+		
+		if (targetPathStr != null) {
+			targetPath = new Path(targetPathStr).makeAbsolute();
+		} else {
+			// for EKA1 just leave empty.  for EKA2 use sys\bin\
+			if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
+				targetPath = new Path("/sys/bin/"); //$NON-NLS-1$
+			} else {
+				targetPath = Path.ROOT; //$NON-NLS-1$
+			}
+		}
+	
+		IPath dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).append("/data/z/"); //$NON-NLS-1$
+		
+		// get the aifs
+		List<IMMPAIFInfo> aifs = mmpData.getAifs();
+		for (IMMPAIFInfo aif : aifs) {
+			IPath aifPath = aif.getTarget().makeAbsolute();
+			resources.put(dataZDir.append(targetPath).append(aifPath.lastSegment()).toOSString(), 
+					HostOS.convertPathToWindows(targetPath.setDevice("C:"))); //$NON-NLS-1$
+		}
+	
+		///////////
+		
+		// for resources and bitmaps, the target path may be based on the target type if not explicitly
+		// set for the resource or bitmap.
+		String targetType = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
+		if (targetType != null) {
+			// could be PLUGIN or PLUGIN3
+			if (targetType.toUpperCase().startsWith("PLUGIN")) { //$NON-NLS-1$
+				targetPath = new Path("/resource/plugins"); //$NON-NLS-1$
+			} else if (targetType.compareToIgnoreCase("PDL") == 0) { //$NON-NLS-1$
+				targetPath = new Path("/resource/printers"); //$NON-NLS-1$
+			}
+		}
+	
+		// get the bitmaps
+		List<IMMPBitmap> bmps = mmpData.getBitmaps();
+		for (IMMPBitmap bmp : bmps) {
+			IPath mbmPath = bmp.getTargetFilePath().makeRelative();
+			// if there's no target path then use the main target path
+			if (mbmPath.segmentCount() == 1) {
+				mbmPath = targetPath.append(mbmPath);
+			}
+			IPath mbmDir = mbmPath.removeLastSegments(1).addTrailingSeparator().setDevice("C:"); //$NON-NLS-1$
+			resources.put(dataZDir.append(mbmPath).toOSString(), 
+					HostOS.convertPathToWindows(mbmDir.toOSString()));
+		}
+	
+		// get the user resources
+		List<IPath> userResources = mmpData.getUserResources();
+		for (IPath userRes : userResources) {
+			addResourceLanguageTargets(resources, mmpData, null, 
+					dataZDir.append(targetPath).append(userRes.removeFileExtension().lastSegment().toLowerCase()), 
+					targetPath.setDevice("C:")); //$NON-NLS-1$
+		}
+	
+		// get the system resources
+		List<IPath> systemResources = mmpData.getSystemResources();
+		for (IPath systemRes : systemResources) {
+			addResourceLanguageTargets(resources, mmpData, null,
+					dataZDir.append(targetPath).append(systemRes.removeFileExtension().lastSegment().toLowerCase()), 
+					targetPath.setDevice("C:")); //$NON-NLS-1$
+		}
+	
+		// get the resource blocks
+		List<IMMPResource> resourceBlocks = mmpData.getResourceBlocks();
+		for (IMMPResource resourceBlock : resourceBlocks) {
+			IPath resPath = resourceBlock.getTargetPath();
+			if (resPath == null) {
+				// not specified in the resource block so use existing
+				resPath = targetPath;
+			}
+	
+			String filename = resourceBlock.getTargetFile();
+			if (filename == null) {
+				filename = resourceBlock.getSource().removeFileExtension().lastSegment();
+			} else {
+				filename = HostOS.createPathFromString(filename).removeFileExtension().toOSString();
+			}
+			filename = filename.toLowerCase();
+			
+			if (resPath != null) {
+				resPath = resPath.makeAbsolute().addTrailingSeparator();
+				// adjust the path if necessary as it's different on the phone for the *_.reg file
+				IPath adjustedTargetPath = resPath;
+				if ((adjustedTargetPath.toPortableString()).equalsIgnoreCase("/private/10003a3f/apps/")) { //$NON-NLS-1$
+					adjustedTargetPath = new Path("/private/10003a3f/import/apps/"); //$NON-NLS-1$
+				}
+				addResourceLanguageTargets(resources, mmpData, resourceBlock,
+						dataZDir.append(resPath).append(filename), 
+						adjustedTargetPath.setDevice("C:")); //$NON-NLS-1$
+			} else {
+				CarbideBuilderPlugin.log(Logging.newStatus(CarbideBuilderPlugin.getDefault(), 
+						IStatus.WARNING,
+						"No TARGETPATH specified for resource " + filename + ".  Skipping..."));
+			}
+		}
+	}
+
 	/**
 	 * Get a map of the generated images from image makefiles for the project. 
 	 * @param buildConfig the build configuration
@@ -1592,13 +1530,13 @@ public class EpocEngineHelper {
 	
 	public static boolean getIndexAllPreference() {
 		// Can't access this pref from the project ui plugin because it would cause a circular dependency
-		Plugin plugin = Platform.getPlugin("com.nokia.carbide.cpp.project.ui"); //$NON-NLS-1$
-		if (plugin == null) {
+		IEclipsePreferences prefs = new InstanceScope().getNode("com.nokia.carbide.cpp.project.ui");
+		if (prefs == null) {
 			CarbideBuilderPlugin.log(Logging.newStatus(CarbideBuilderPlugin.getDefault(), 
 					IStatus.WARNING, "Could not find project UI plugin!"));
 			return true;
 		}
-		return plugin.getPluginPreferences().getBoolean("indexAll"); //$NON-NLS-1$
+		return prefs.getBoolean("indexAll", false); //$NON-NLS-1$
 	}
 
 	/**
@@ -2156,26 +2094,6 @@ public class EpocEngineHelper {
 				}
 		});
 		return result;
-	}
-	
-	/**
-	 * Get the target name with a variant suffix inserted.
-	 * @param mmpData
-	 * @param target
-	 * @return updated target name
-	 * 
-	 * @deprecated Deprecated in 2.1. Use {@link #getBinaryVariantTargetName(IMMPData mmpData, IPath target, IProject project)} instead.
-	 */
-	private static IPath getVariantTargetName(IMMPData mmpData, IPath target) {
-		if (target == null)
-			return null;
-		
-		String suffix = mmpData.getSingleArgumentSettings().get(EMMPStatement.VAR);
-		if (suffix != null) {
-			target = target.removeFileExtension().addFileExtension(suffix + "." + FileUtils.getSafeFileExtension(target)); //$NON-NLS-1$
-		}
-		
-		return target;
 	}
 	
 	/**

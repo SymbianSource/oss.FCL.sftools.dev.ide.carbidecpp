@@ -63,6 +63,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.NokiaAbstractLaunchDelegate;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -162,6 +163,9 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 				dialog.setText(Messages.getString("ExecutablesTab.7")); //$NON-NLS-1$
+				if (executablesToTarget != null && executablesToTarget.size() > 0) {
+					BrowseDialogUtils.initializeFrom(dialog, executablesToTarget.get(executablesToTarget.size() - 1).getExePath());
+				}
 				final String res = dialog.open();
 				if (res != null) {
 					Job importJob = new Job(Messages.getString("ExecutablesTab.8")) { //$NON-NLS-1$

@@ -55,6 +55,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -143,9 +144,8 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 				dialog.setText(Messages.getString("InstallationTab.4")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*.sis*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("InstallationTab.27"), Messages.getString("InstallationTab.28")}); //$NON-NLS-1$ //$NON-NLS-2$
-
-				dialog.setFilterPath(new File(hostPath.getText()).getParent());
-				dialog.setFileName(new File(hostPath.getText()).getName());
+				
+				BrowseDialogUtils.initializeFrom(dialog, hostPath);
 				
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {

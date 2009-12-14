@@ -38,6 +38,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -106,6 +107,8 @@ public class Trace32WizardPage extends WizardPage {
 				dialog.setText(Messages.getString("Trace32WizardPage.4")); //$NON-NLS-1$
 				dialog.setFilterExtensions(new String[] {"*.cmm*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 				dialog.setFilterNames(new String[] {Messages.getString("Trace32WizardPage.5"), Messages.getString("Trace32WizardPage.6")}); //$NON-NLS-1$ //$NON-NLS-2$
+
+				BrowseDialogUtils.initializeFrom(dialog, t32BootConfigFilePath);
 
 				String result = dialog.open();
 				if (result != null && new File(result).exists()) {

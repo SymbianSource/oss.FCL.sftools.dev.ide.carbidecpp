@@ -19,6 +19,7 @@
  */
 package com.nokia.sdt.component.symbian.actions;
 
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 import com.nokia.sdt.component.ComponentSystemException;
 import com.nokia.sdt.component.symbian.ComponentSystemPlugin;
 
@@ -68,7 +69,7 @@ public class AddComponentLibraryAction implements
         try {
             DirectoryDialog dlg = new DirectoryDialog(window.getShell());
             dlg.setMessage("Add a component library plugin"); //$NON-NLS-1$
-            dlg.setFilterPath("c:/work/dynamicplugins/com.nokia.uidesigner.user0.componentlibrary"); //$NON-NLS-1$
+            BrowseDialogUtils.initializeFrom(dlg, "c:/work/dynamicplugins/com.nokia.uidesigner.user0.componentlibrary"); //$NON-NLS-1$
             dlg.open();
             String dir = dlg.open();
             if (dir == null) {

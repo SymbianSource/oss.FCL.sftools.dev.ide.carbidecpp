@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.nokia.carbide.cpp.internal.codescanner.CSPlugin;
 import com.nokia.carbide.cpp.internal.codescanner.Messages;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
  * A class to create and control the CodeScanner General Options tab page.
@@ -421,7 +422,7 @@ public class CSGeneralTabPage extends Composite {
         DirectoryDialog dialog = new DirectoryDialog(csDirEditText.getShell(), SWT.OPEN);
         dialog.setText(Messages.getString("CSGeneralTabPage.SelectDirTitle"));
         dialog.setMessage(Messages.getString("CSGeneralTabPage.SelectCSDirMessage"));
-        dialog.setFilterPath(csDirEditText.getText());
+        BrowseDialogUtils.initializeFrom(dialog, csDirEditText);
         return dialog.open();
     }
 
@@ -433,7 +434,7 @@ public class CSGeneralTabPage extends Composite {
         DirectoryDialog dialog = new DirectoryDialog(resultsDirEditText.getShell(), SWT.OPEN);
         dialog.setText(Messages.getString("CSGeneralTabPage.SelectDirTitle"));
         dialog.setMessage(Messages.getString("CSGeneralTabPage.SelectResultsDirMessage"));
-        dialog.setFilterPath(resultsDirEditText.getText());
+        BrowseDialogUtils.initializeFrom(dialog, resultsDirEditText);
         return dialog.open();
     }
 

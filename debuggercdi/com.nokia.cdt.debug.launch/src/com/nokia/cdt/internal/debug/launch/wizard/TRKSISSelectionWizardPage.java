@@ -19,6 +19,7 @@ package com.nokia.cdt.internal.debug.launch.wizard;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.*;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import cwdbg.PreferenceConstants;
 
@@ -157,6 +158,8 @@ public class TRKSISSelectionWizardPage extends WizardPage implements ICProjectDe
 					dialog.setText(Messages.getString("TRKSISSelectionWizardPage.6")); //$NON-NLS-1$
 					dialog.setFilterExtensions(new String[] {"*.sis*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 					dialog.setFilterNames(new String[] {Messages.getString("TRKSISSelectionWizardPage.7"), Messages.getString("TRKSISSelectionWizardPage.8")}); //$NON-NLS-1$ //$NON-NLS-2$
+
+					BrowseDialogUtils.initializeFrom(dialog, sisEdit);
 
 					String result = dialog.open();
 					if (result != null && new File(result).exists()) {

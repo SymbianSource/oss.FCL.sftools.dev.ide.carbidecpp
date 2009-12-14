@@ -97,7 +97,7 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 							tp = tp.append(hp.lastSegment());
 						}
 						String enabled = tokenizer.nextToken();
-						files.add(new FileToTransfer(hp.toOSString(), tp.toOSString(), enabled.compareTo("1") == 0)); //$NON-NLS-1$
+						files.add(new FileToTransfer(hp.toOSString(), HostOS.convertPathToWindows(tp), enabled.compareTo("1") == 0)); //$NON-NLS-1$
 					}
 				}
 			} else {

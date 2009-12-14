@@ -23,6 +23,7 @@ import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 
 import java.util.Arrays;
@@ -58,6 +59,8 @@ public class TracingService implements IService {
 	}
 
 	public IRemoteAgentInstallerProvider getInstallerProvider() {
+		if (HostOS.IS_UNIX)
+			return null;		// TODO: implement
 		return new TracingInstallerProvider(this);
 	}
 

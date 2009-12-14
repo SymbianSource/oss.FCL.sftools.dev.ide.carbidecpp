@@ -47,6 +47,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 
 import com.nokia.carbide.cpp.internal.codescanner.CSPlugin;
 import com.nokia.carbide.cpp.internal.codescanner.Messages;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
  * A class to create and control the CodeScanner preference page.
@@ -326,7 +327,7 @@ public class CSPreferencePage extends PreferencePage
         }
         String[] extensions = new String[] {"*.xml"};
         dialog.setFilterExtensions(extensions);
-		dialog.setFilterPath(dialogFilterPath);
+        BrowseDialogUtils.initializeFrom(dialog, dialogFilterPath != null ? dialogFilterPath + File.separator : null);
 		String configFilePath = dialog.open();
 		dialogFilterPath = dialog.getFilterPath();
         return configFilePath;

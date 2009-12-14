@@ -17,6 +17,7 @@
 package com.nokia.cdt.internal.debug.launch.wizard;
 
 import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -237,7 +238,7 @@ public class MainExecutableSelectionWizardPage extends WizardPage {
 					if (item.equals(BROWSE_ITEM)) {
 						FileDialog fileDialog = new FileDialog(getShell(), SWT.OPEN);
 						fileDialog.setText(Messages.getString("MainExecutableSelectionWizardPage.SelectExectuableTitle")); //$NON-NLS-1$
-						fileDialog.setFilterPath(emulatorPath.removeLastSegments(1).toOSString());
+						BrowseDialogUtils.initializeFrom(fileDialog, emulatorPath);
 						fileDialog.setFilterExtensions(FILTER_EXTS);
 						fileDialog.setFilterNames(FILTER_EXT_NAMES);
 						String pathstr = fileDialog.open();

@@ -22,6 +22,7 @@ package com.nokia.carbide.remoteconnections.wizard;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.internal.registry.Reader;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -68,6 +69,7 @@ public class ImportPage extends AbstractImportExportPage {
 				fileDialog.setText(Messages.getString("ImportPage.FileDialogTitle")); //$NON-NLS-1$
 				fileDialog.setFilterExtensions(FILTER_EXTS);
 				fileDialog.setFilterNames(FILTER_EXT_NAMES);
+				BrowseDialogUtils.initializeFrom(fileDialog, pathText);
 				String pathstr = fileDialog.open();
 				if (pathstr != null) {
 					pathText.setText(pathstr);
