@@ -27,6 +27,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.*;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
@@ -458,7 +459,7 @@ public class ConnectionSettingsPage extends WizardPage {
 	
 			// update services list
 			Collection<IService> compatibleServices = 
-				RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleServices(connectionType);
+				Registry.instance().getCompatibleServices(connectionType);
 			servicesListViewer.setInput(compatibleServices);
 			if (!compatibleServices.isEmpty()) {
 				servicesListViewer.getList().select(0);
@@ -600,7 +601,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		if (newConnection || connectedService == null || !connectedService.getService().equals(service)) {
 			disposeConnectedService();
 			connectedService = 
-				RemoteConnectionsActivator.getConnectionsManager().createConnectedService(service, connection);
+				Registry.instance().createConnectedService(service, connection);
 			IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
 			Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
 			if (pair != null)

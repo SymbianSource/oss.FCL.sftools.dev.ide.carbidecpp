@@ -21,6 +21,7 @@ package com.nokia.carbide.remoteconnections.settings.ui;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 
 import org.eclipse.jface.wizard.*;
 import org.eclipse.swt.widgets.Shell;
@@ -96,23 +97,23 @@ public class SettingsWizard extends Wizard {
 			String id = null;
 			if (connectionToEdit != null) {
 				id = connectionToEdit.getIdentifier();
-				RemoteConnectionsActivator.getConnectionsManager().removeConnection(connectionToEdit);
+				Registry.instance().removeConnection(connectionToEdit);
 			}
 			connectionToEdit = newConnectionType.getConnectionFactory().createConnection(newSettings);
 			if (id != null)
 				connectionToEdit.setIdentifier(id);
-			RemoteConnectionsActivator.getConnectionsManager().addConnection(connectionToEdit);
+			Registry.instance().addConnection(connectionToEdit);
 		}
 		else if (newSettings != null) {
 			connectionToEdit.updateSettings(newSettings);
 		}
 		if (!newName.equals(connectionToEdit.getDisplayName())) {
 			connectionToEdit.setDisplayName(newName);
-			RemoteConnectionsActivator.getConnectionsManager().updateDisplays();
+			Registry.instance().updateDisplays();
 		}
 		
 		enableConnectedServices(true);
-		RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+		Registry.instance().storeConnections();
 		return true;
 	}
 	
@@ -123,7 +124,7 @@ public class SettingsWizard extends Wizard {
 	}
 
 	private void saveConnectedServicesEnabledState() {
-		Collection<IConnectedService> connectedServices = RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connectionToEdit);
+		Collection<IConnectedService> connectedServices = Registry.instance().getConnectedServices(connectionToEdit);
 		if (connectedServices == null)
 			return;
 		if (savedEnabledStates == null)
@@ -134,7 +135,7 @@ public class SettingsWizard extends Wizard {
 	}
 
 	private void enableConnectedServices(boolean enabled) {
-		Collection<IConnectedService> connectedServices = RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connectionToEdit);
+		Collection<IConnectedService> connectedServices = Registry.instance().getConnectedServices(connectionToEdit);
 		if (connectedServices == null || savedEnabledStates == null)
 			return;
 		for (IConnectedService connectedService : connectedServices) {

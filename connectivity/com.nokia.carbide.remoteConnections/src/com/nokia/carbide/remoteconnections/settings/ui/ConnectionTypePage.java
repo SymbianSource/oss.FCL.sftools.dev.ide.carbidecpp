@@ -21,6 +21,7 @@ package com.nokia.carbide.remoteconnections.settings.ui;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
 import org.eclipse.jface.viewers.*;
@@ -141,7 +142,7 @@ public class ConnectionTypePage extends WizardPage {
 	private String getServicesString() {
 		StringBuilder servicesString = new StringBuilder();
 		Collection<IService> services = 
-			RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleServices(getConnectionType());
+			Registry.instance().getCompatibleServices(getConnectionType());
 		if (services == null || services.isEmpty())
 			return ""; //$NON-NLS-1$
 		for (Iterator<IService> iterator = services.iterator(); iterator.hasNext();) {
@@ -179,10 +180,10 @@ public class ConnectionTypePage extends WizardPage {
 		if (serviceToRestrict != null) {
 			List<IConnectionType> restrictedConnectionTypes = new ArrayList<IConnectionType>();
 			Collection<String> compatibleConnectionTypeIds = 
-				RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleConnectionTypeIds(serviceToRestrict);
+				Registry.instance().getCompatibleConnectionTypeIds(serviceToRestrict);
 			for (String connectionTypeId : compatibleConnectionTypeIds) {
 				IConnectionType connectionType = 
-					RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(connectionTypeId);
+					Registry.instance().getConnectionType(connectionTypeId);
 				if (connectionTypes.contains(connectionType))
 					restrictedConnectionTypes.add(connectionType);
 			}
@@ -197,10 +198,10 @@ public class ConnectionTypePage extends WizardPage {
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 		IConnectionType connectionTypeToEdit = connectionToEdit != null ? connectionToEdit.getConnectionType() : null;
 		Collection<IConnectionType> allConnectionTypes = 
-		RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionTypes();
+		Registry.instance().getConnectionTypes();
 		Collection<IConnectionType> connectionTypes = new ArrayList<IConnectionType>();
 		for (IConnectionType connectionType : allConnectionTypes) {
-			if (!RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleServices(connectionType).isEmpty() ||
+			if (!Registry.instance().getCompatibleServices(connectionType).isEmpty() ||
 					connectionType.equals(connectionTypeToEdit))
 				connectionTypes.add(connectionType);
 		}
@@ -219,7 +220,7 @@ public class ConnectionTypePage extends WizardPage {
 	}
 	
 	private boolean isNameUnique(String name) {
-		boolean inUse = RemoteConnectionsActivator.getConnectionsManager().connectionNameInUse(name);
+		boolean inUse = Registry.instance().connectionNameInUse(name);
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 		if (connectionToEdit != null && inUse)
 			inUse = !name.equals(connectionToEdit.getDisplayName());
