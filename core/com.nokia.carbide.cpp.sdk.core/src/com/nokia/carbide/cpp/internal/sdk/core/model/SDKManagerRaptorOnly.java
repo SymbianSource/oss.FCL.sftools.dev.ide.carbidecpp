@@ -44,7 +44,9 @@ public class SDKManagerRaptorOnly extends AbstractSDKManager {
 		String message = SBSv2Utils.scanSBSv2();
 		if (message != null) {
 			reportError(message);
-			return false;
+			
+			// no good will come from checking over and over...
+			return true;
 		}
 		
 		// TODO LINUX: real configuration
