@@ -34,6 +34,7 @@ public class CarbideMakeErrorParser extends CarbideBaseErrorParser {
 	private static String cantLaunchProcess = "CreateProcess((null)";
 	private static String rvctNotInstalled = "RVCT0_0.H: No such file or directory";
 	
+	private static Pattern PERL_ERROR_PATTERNS = Pattern.compile("Can't locate .*\\.pm in.*|BEGIN failed--.*"); //$NON-NLS-1$
 	
 	public boolean processLine(String line, ErrorParserManager eoParser) {
 		
@@ -116,6 +117,15 @@ public class CarbideMakeErrorParser extends CarbideBaseErrorParser {
 			return true;
 		}
 		
+		// Detect problems with Symbian build scripts, most of which use Perl
+		matcher = PERL_ERROR_PATTERNS.matcher(line);
+		if (matcher.matches()) {
+			msgSeverity = IMarkerGenerator.SEVERITY_ERROR_BUILD;
+			msgLineNumber = -1;
+			eoParser.generateMarker(rsrc, msgLineNumber, line, msgSeverity, null);
+			return true;
+		}
+
 		return false;
 	}
 	
