@@ -85,7 +85,7 @@ public class ProjectCreatedTasks extends AbstractProjectProcess {
 			}
 			
 			project.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder));
-			
+		
 			ProjectCorePlugin.postProjectCreatedActions(project, bldInfPath, buildConfigs, new ArrayList<String>(), targetMMPFileName, pkgMappings, monitor);
 		}
 	}
