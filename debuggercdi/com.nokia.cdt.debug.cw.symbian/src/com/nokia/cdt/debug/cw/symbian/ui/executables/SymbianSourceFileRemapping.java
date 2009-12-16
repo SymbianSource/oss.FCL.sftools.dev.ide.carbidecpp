@@ -16,9 +16,11 @@
 */
 package com.nokia.cdt.debug.cw.symbian.ui.executables;
 
+import org.eclipse.cdt.debug.core.CDebugCorePlugin;
 import org.eclipse.cdt.debug.core.executables.ISourceFileRemapping;
 import org.eclipse.cdt.debug.core.sourcelookup.ICSourceLocator;
 import org.eclipse.cdt.debug.internal.core.sourcelookup.CSourceLookupDirector;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -35,6 +37,16 @@ public class SymbianSourceFileRemapping implements ISourceFileRemapping {
 
 	public String remapSourceFile(IPath executable, String filePath) {
 
+		try {
+			// handle the case where the common lookup finds the file in the workspace
+			Object[] foundElements = CDebugCorePlugin.getDefault().getCommonSourceLookupDirector().findSourceElements(filePath);
+			if (foundElements.length == 1 && foundElements[0] instanceof IFile) {
+				IFile newLocation = (IFile) foundElements[0];
+				return newLocation.getLocation().toOSString();
+			}
+		} catch (CoreException e1) {
+		}
+		
 		String epocRoot = "";
 		String[] segs = executable.segments();
 		for (int i = 0; i < segs.length; i++) {
