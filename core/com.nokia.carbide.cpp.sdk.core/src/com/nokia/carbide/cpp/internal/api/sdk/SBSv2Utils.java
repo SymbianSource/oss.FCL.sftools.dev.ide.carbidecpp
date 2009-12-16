@@ -14,6 +14,7 @@ package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.text.MessageFormat;
 import java.util.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -319,14 +320,21 @@ public class SBSv2Utils {
 		// do some basic checks
 		sbsHome = System.getenv(SBS_HOME);
 		if (sbsHome == null) {
-			return "Please define the SBS_HOME environment (e.g. /path/to/raptor) and add $SBS_HOME/bin to your PATH before running Carbide.";
+			return Messages.getString("SBSv2Utils.DefineSBS_HOMEMessage"); //$NON-NLS-1$
 		}
 		
-		sbsPath = HostOS.findProgramOnPath(sbsScriptName, null);
-		if (sbsPath == null) {
-			return "Please add $SBS_HOME/bin to your PATH before running Carbide.";
+		IPath expectedPath = new Path(sbsHome).append("bin").append(sbsScriptName);
+		if (expectedPath.toFile().exists()) {
+			sbsPath = expectedPath;
+		} else {
+			sbsPath = HostOS.findProgramOnPath(sbsScriptName, null);
+			if (sbsPath == null) {
+				return MessageFormat.format(
+								Messages.getString("SBSv2Utils.CannotFindSBSScriptError"), //$NON-NLS-1$
+								sbsScriptName);
+			}
 		}
-
+		
 		return null;
 	}
 
