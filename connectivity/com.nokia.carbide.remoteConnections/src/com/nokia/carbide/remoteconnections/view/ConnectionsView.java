@@ -25,6 +25,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
@@ -100,14 +101,14 @@ public class ConnectionsView extends ViewPart {
 		removeServiceListeners();
 		List<TreeNode> connectionNodes = new ArrayList<TreeNode>();
 		Collection<IConnection> connections = 
-			RemoteConnectionsActivator.getConnectionsManager().getConnections();
+			Registry.instance().getConnections();
 		for (IConnection connection : connections) {
 			// create a node for the connection
 			TreeNode connectionNode = new TreeNode(connection);
 			// create subnodes for the connected services
 			List<TreeNode> serviceNodes = new ArrayList<TreeNode>();
 			Collection<IConnectedService> connectedServicesForConnection = 
-				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+				Registry.instance().getConnectedServices(connection);
 			for (IConnectedService connectedService : connectedServicesForConnection) {
 				final TreeNode treeNode = new TreeNode(connectedService);
 				IStatusChangedListener statusChangedListener = new IStatusChangedListener() {
@@ -169,7 +170,7 @@ public class ConnectionsView extends ViewPart {
 			connection.setDisplayName(value.toString());
 			viewer.refresh(true);
 			packColumns();
-			RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+			Registry.instance().storeConnections();
 		}
 	}
 
@@ -455,7 +456,7 @@ public class ConnectionsView extends ViewPart {
 				});
 			}
 		};
-		RemoteConnectionsActivator.getConnectionsManager().addConnectionStoreChangedListener(connectionStoreChangedListener);
+		Registry.instance().addConnectionStoreChangedListener(connectionStoreChangedListener);
 
 		RemoteConnectionsActivator.setHelp(parent, ".connections_view"); //$NON-NLS-1$
 	}
@@ -538,7 +539,7 @@ public class ConnectionsView extends ViewPart {
 		};
 		action.setId(NEW_ACTION);
 		actions.add(action);
-		action.setEnabled(!RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionTypes().isEmpty());
+		action.setEnabled(!Registry.instance().getConnectionTypes().isEmpty());
 		
 		action = new Action(Messages.getString("ConnectionsView.EditActionLabel"), CONNECTION_EDIT_IMGDESC) { //$NON-NLS-1$
 			@Override
@@ -587,7 +588,7 @@ public class ConnectionsView extends ViewPart {
 		action = new Action(Messages.getString("ConnectionsView.RefreshActionLabel"), CONNECTION_REFRESH_IMGDESC) { //$NON-NLS-1$
 			@Override
 			public void run() {
-				IConnectionsManager connectionsManager = RemoteConnectionsActivator.getConnectionsManager();
+				IConnectionsManager connectionsManager = Registry.instance();
 				for (IConnection connection : connectionsManager.getConnections()) {
 					Collection<IConnectedService> connectedServices = connectionsManager.getConnectedServices(connection);
 					for (IConnectedService connectedService : connectedServices) {
@@ -612,8 +613,8 @@ public class ConnectionsView extends ViewPart {
 				TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
 				Object value = node.getValue();
 				if (value instanceof IConnection) {
-					RemoteConnectionsActivator.getConnectionsManager().removeConnection((IConnection) value);
-					RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+					Registry.instance().removeConnection((IConnection) value);
+					Registry.instance().storeConnections();
 				}
 			}
 		};
@@ -707,10 +708,10 @@ public class ConnectionsView extends ViewPart {
 	
 	private void disableAllConnectedServices() {
 		Collection<IConnection> connections = 
-			RemoteConnectionsActivator.getConnectionsManager().getConnections();
+			Registry.instance().getConnections();
 		for (IConnection connection : connections) {
 			Collection<IConnectedService> connectedServicesForConnection = 
-				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+				Registry.instance().getConnectedServices(connection);
 			for (IConnectedService connectedService : connectedServicesForConnection) {
 				connectedService.setEnabled(false);
 			}
@@ -720,15 +721,15 @@ public class ConnectionsView extends ViewPart {
 	@Override
 	public void dispose() {
 		removeServiceListeners();
-		RemoteConnectionsActivator.getConnectionsManager().removeConnectionStoreChangedListener(connectionStoreChangedListener);
+		Registry.instance().removeConnectionStoreChangedListener(connectionStoreChangedListener);
 		disableAllConnectedServices();
 		isDisposed = true;
 		super.dispose();
 	}
 	
 	private static IConnection findConnection(IConnectedService cs) {
-		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
-			for (IConnectedService connectedService : RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection)) {
+		for (IConnection connection : Registry.instance().getConnections()) {
+			for (IConnectedService connectedService : Registry.instance().getConnectedServices(connection)) {
 				if (cs.equals(connectedService))
 					return connection;
 			}
@@ -738,7 +739,7 @@ public class ConnectionsView extends ViewPart {
 
 	private static IStatus getFirstInUseStatus(IConnection connection) {
 		Collection<IConnectedService> connectedServices = 
-			RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+			Registry.instance().getConnectedServices(connection);
 		// if any service is in-use, then connection is in-use
 		for (IConnectedService connectedService : connectedServices) {
 			IStatus status = connectedService.getStatus();

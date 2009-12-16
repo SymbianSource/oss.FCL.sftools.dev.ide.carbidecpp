@@ -21,6 +21,7 @@ package com.nokia.carbide.remoteconnections.wizard;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 import org.eclipse.core.runtime.IPath;
@@ -67,13 +68,13 @@ public class ExportPage extends AbstractImportExportPage {
 				}
 			}
 		});
-		viewer.setInput(RemoteConnectionsActivator.getConnectionsManager().getConnections());
+		viewer.setInput(Registry.instance().getConnections());
 		TableColumn[] columns = viewer.getTable().getColumns();
 		for (TableColumn tableColumn : columns) {
 			tableColumn.pack();
 		}
 		viewer.setAllChecked(true);
-		connections = new ArrayList<IConnection>(RemoteConnectionsActivator.getConnectionsManager().getConnections());
+		connections = new ArrayList<IConnection>(Registry.instance().getConnections());
 
 		createBrowseGroup(composite, Messages.getString("ExportPage.BrowseGroupLabel")); //$NON-NLS-1$
         browseButton.addSelectionListener(new SelectionAdapter() {

@@ -56,6 +56,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private Map<IConnection, List<IConnectedService>> connectionToConnectedServices;
 	private ListenerList<IConnectionsManagerListener> listeners;
 	private List<IConnectedServiceFactory> connectedServiceFactories;
+	private ListenerList<IConnectionListener> connectionListeners;
 
 	public static Registry instance() {
 		if (instance == null) {
@@ -454,5 +455,41 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 				return service;
 		}
 		return null;
+	}
+
+	public void addConnectionListener(IConnectionListener listener) {
+		if (connectionListeners == null)
+			connectionListeners = new ListenerList<IConnectionListener>();
+		connectionListeners.add(listener);
+	}
+
+	public void removeConnectionListener(IConnectionListener listener) {
+		if (connectionListeners != null)
+			connectionListeners.remove(listener);
+	}
+	
+	public void setDefaultConnection(IConnection connection, Object source) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public IConnection ensureConnection(String id, IService service) throws CoreException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setDefaultConnection(IConnection connection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void disconnect(IConnection connection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean reconnect(IConnection connection) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

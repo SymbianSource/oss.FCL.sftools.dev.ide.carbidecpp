@@ -5,6 +5,7 @@
    <extension-point id="service" name="Service" schema="schema/service.exsd"/>
    <extension-point id="extensionFilter" name="Extension Filter" schema="schema/extensionFilter.exsd"/>
    <extension-point id="connectedServiceFactory" name="Connected Service Factory" schema="schema/connectedServiceFactory.exsd"/>
+   <extension-point id="deviceDiscoveryAgent" name="Device Discovery Agent" schema="schema/deviceDiscoveryAgent.exsd"/>
 
    <extension
          point="org.eclipse.ui.views">

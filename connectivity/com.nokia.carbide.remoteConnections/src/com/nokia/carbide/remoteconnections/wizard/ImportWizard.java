@@ -21,6 +21,7 @@ package com.nokia.carbide.remoteconnections.wizard;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -46,9 +47,9 @@ public class ImportWizard extends Wizard implements IImportWizard {
 	public boolean performFinish() {
 		List<IConnection> connections = importPage.getSelectedConnections();
 		for (IConnection connection : connections) {
-			RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+			Registry.instance().addConnection(connection);
 		}
-		RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+		Registry.instance().storeConnections();
 		return true;
 	}
 
