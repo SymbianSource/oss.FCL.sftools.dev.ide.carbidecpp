@@ -19,7 +19,6 @@
 package com.nokia.carbide.remoteconnections.ui;
 
 import com.nokia.carbide.remoteconnections.Messages;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
@@ -205,14 +204,16 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 		viewer.setSelection(new StructuredSelection(connection));
 	}
 	
+	@SuppressWarnings("unchecked")
 	private boolean viewerInputContainsConnection(IConnection connection) {
 		Object input = viewer.getInput();
-		if (input instanceof List) {
-			return ((List) input).contains(connection);
+		if (input instanceof Collection) {
+			return ((Collection) input).contains(connection);
 		}
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void addConnectionToViewerInput(IConnection connection) {
 		Object input = viewer.getInput();
 		if (input instanceof Collection) {

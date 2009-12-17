@@ -159,6 +159,13 @@ public interface IConnectionsManager {
 	void setDefaultConnection(IConnection connection);
 	
 	/**
+	 * Returns the default connection.
+	 * @return IConnection
+	 * @since 3.0
+	 */
+	IConnection getDefaultConnection();
+	
+	/**
 	 * Can be called by specific service implementors (e.g., debugger) to ensure some connection
 	 * exists and supports this service. If the connection does not exist or does not support
 	 * the service, a CoreException may be thrown after the framework attempts to allow the user

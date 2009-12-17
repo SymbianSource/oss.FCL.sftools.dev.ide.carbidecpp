@@ -16,18 +16,25 @@
 */
 package com.nokia.carbide.remoteconnections;
 
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.internal.registry.Registry;
-import com.nokia.cpp.internal.api.utils.core.Logging;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
+
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
+import com.nokia.carbide.remoteconnections.internal.IDeviceDiscoveryAgent;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -37,51 +44,35 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.remoteConnections"; //$NON-NLS-1$
 
+	private static final String DISCOVERY_AGENT_EXTENSION = 
+		PLUGIN_ID + ".deviceDiscoveryAgent"; //$NON-NLS-1$
+
 	// The shared instance
 	private static RemoteConnectionsActivator plugin;
-	
-	// A service tracker for the proxy service
-	private ServiceTracker proxyServiceTracker;
-	
+
+	private Collection<IDeviceDiscoveryAgent> discoveryAgents;
+
 	/**
 	 * The constructor
 	 */
 	public RemoteConnectionsActivator() {
 	}
-
  
- 	/**
-	 * Returns IProxyService.
-	 * @deprecated
-	 */
-	public IProxyService getProxyService() {
-		return (IProxyService) proxyServiceTracker.getService();
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		Registry instance = Registry.instance();
 		instance.loadExtensions();
 		instance.loadConnections();
-		this.proxyServiceTracker = new ServiceTracker(context, IProxyService.class.getName(), null);
-		this.proxyServiceTracker.open();
+		loadAndStartDeviceDiscoveryAgents();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
 	public void stop(BundleContext context) throws Exception {
+		stopDeviceDiscoveryAgents();
 		Registry.instance().storeConnections();
 		Registry.instance().disposeConnections();
 		plugin = null;
 		super.stop(context);
-		this.proxyServiceTracker.close();
 	}
 
 	/**
@@ -130,5 +121,63 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 
 	public static void setHelp(Control control, String id) {
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(control, PLUGIN_ID + id);		 //$NON-NLS-1$
+	}
+	
+	private void loadAndStartDeviceDiscoveryAgents() {
+		String loadError = Messages.getString("RemoteConnectionsActivator.DiscoveryAgentLoadError");
+		discoveryAgents = new ArrayList<IDeviceDiscoveryAgent>();
+		loadExtensions(DISCOVERY_AGENT_EXTENSION, loadError, discoveryAgents, new IFilter() {
+			public boolean select(Object toTest) {
+				if (toTest instanceof IDeviceDiscoveryAgent) {
+					try {
+						((IDeviceDiscoveryAgent) toTest).start();
+						return true;
+					} catch (CoreException e) {
+						logError(e);
+					}
+				}
+				return false;
+			}
+		});
+		
+	}
+
+	private void stopDeviceDiscoveryAgents() {
+		for (IDeviceDiscoveryAgent agent : discoveryAgents) {
+			try {
+				agent.stop();
+			} catch (CoreException e) {
+				logError(e);
+			}
+		}
+		
+	}
+
+	public static void log(String errorStr, Throwable t) {
+		RemoteConnectionsActivator p = RemoteConnectionsActivator.getDefault();
+		String error = errorStr;
+		if (t != null) {
+			error += " : " + t.getLocalizedMessage(); //$NON-NLS-1$
+		}
+		Logging.log(p, Logging.newStatus(p, IStatus.ERROR, error));
+		if (t instanceof CoreException)
+			Logging.log(p, ((CoreException) t).getStatus());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> void loadExtensions(String extensionId, String loadError, Collection<T> extensionObjects, IFilter filter) {
+		IConfigurationElement[] elements = 
+			Platform.getExtensionRegistry().getConfigurationElementsFor(extensionId);
+		for (IConfigurationElement element : elements) {
+			try {
+				T extObject = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
+				if (filter == null || filter.select(extObject))
+					extensionObjects.add(extObject);
+			} 
+			catch (CoreException e) {
+				if (loadError != null)
+					RemoteConnectionsActivator.log(loadError, e);
+			}
+		}
 	}
 }

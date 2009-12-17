@@ -18,6 +18,7 @@ package com.nokia.carbide.remoteconnections.interfaces;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.internal.IConnectedService2;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
@@ -30,8 +31,10 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class AbstractConnectedService implements IConnectedService {
+public abstract class AbstractConnectedService implements IConnectedService2 {
 	
 	public final static int TIMEOUT = 2000;
 	
@@ -124,10 +127,12 @@ public abstract class AbstractConnectedService implements IConnectedService {
 	protected Status currentStatus;
 	protected Tester tester;
 	protected boolean manualTesting;
+	private Map<String, String> properties;
 
 	public AbstractConnectedService(IService service, AbstractSynchronizedConnection connection) {
 		this.service = service;
 		this.connection = connection;
+		properties = new HashMap<String, String>();
 	}
 	
 	public void setRunnableContext(IRunnableContext runnableContext) {
@@ -228,5 +233,9 @@ public abstract class AbstractConnectedService implements IConnectedService {
 					Messages.getString("AbstractConnectedService.NoTestingLabel"), //$NON-NLS-1$
 					Messages.getString("AbstractConnectedService.UserDisabledMessage")); //$NON-NLS-1$
 		}
+	}
+	
+	public Map<String, String> getProperties() {
+		return properties;
 	}
 }
