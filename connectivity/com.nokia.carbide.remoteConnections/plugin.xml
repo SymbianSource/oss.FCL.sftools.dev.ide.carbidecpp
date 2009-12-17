@@ -77,4 +77,17 @@
     </actionSet>
  </extension>
 
+<extension point="org.eclipse.ui.menus">
+	<!-- Defines a new menu contribution to the Eclipse trim area -->
+	<menuContribution
+		locationURI="toolbar:org.eclipse.ui.trim.status">
+        <toolbar
+			id="com.nokia.carbide.cpp.news.contributions.toolbar.trim">
+			<control
+				class="com.nokia.carbide.internal.remoteconnections.settings.ui.DeviceStatusSelectorContribution"
+				id="controlContribtion">
+			</control>
+        </toolbar>
+	</menuContribution>
+</extension>
 </plugin>

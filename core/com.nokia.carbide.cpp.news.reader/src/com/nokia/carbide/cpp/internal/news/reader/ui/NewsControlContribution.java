@@ -45,6 +45,7 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 	private static NewsControlContribution sharedInstance;
 	private Label label;
 	private boolean alert;
+	private Composite container;
 
 	/**
 	 * The constructor.
@@ -61,12 +62,12 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 	 */
 	@Override
 	protected Control createControl(Composite parent) {
-		Composite container = new Composite(parent, SWT.NONE);
+		container = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().margins(2, 2).applyTo(container);
 
 		// Create a label for the trim.
-		label = new Label(container, SWT.CENTER);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(label);
+		label = new Label(container, SWT.BOTTOM);
+		GridDataFactory.swtDefaults().grab(false, true).applyTo(label);
 		String text = CarbideNewsReaderPlugin.getFeedManager().getUnreadEntriesCount() + " unread";
 		label.setText(text);
 		if (alert) {
@@ -74,7 +75,7 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 			label.setFont(font);
 			alert = false;
 		}
-
+		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NewsUIHelpIDs.NEWSREADER_TRIM_COMMAND);
 		return container;
 	}

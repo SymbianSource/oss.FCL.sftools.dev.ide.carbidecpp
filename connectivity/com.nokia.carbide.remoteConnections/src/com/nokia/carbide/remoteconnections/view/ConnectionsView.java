@@ -49,6 +49,7 @@ import java.util.List;
  * The view part for Remote connections
  */
 public class ConnectionsView extends ViewPart {
+	public static final String VIEW_ID = "com.nokia.carbide.remoteconnections.view.ConnectionsView"; //$NON-NLS-1$
 
 	private TreeViewer viewer;
 	private IConnectionsManagerListener connectionStoreChangedListener;
