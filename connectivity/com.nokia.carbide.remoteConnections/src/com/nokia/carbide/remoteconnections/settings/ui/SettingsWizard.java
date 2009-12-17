@@ -18,16 +18,23 @@
 
 package com.nokia.carbide.remoteconnections.settings.ui;
 
-import com.nokia.carbide.remoteconnections.Messages;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jface.wizard.*;
+import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import java.text.MessageFormat;
-import java.util.*;
+import com.nokia.carbide.remoteconnections.Messages;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.internal.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 
 /**
  * Main wizard class for hosting new and edit connection settings UI
@@ -79,6 +86,11 @@ public class SettingsWizard extends Wizard {
     public IConnection getConnectionToEdit() {
 		return connectionToEdit;
 	}
+    
+    public boolean isConnectionToEditDynamic() {
+    	return connectionToEdit instanceof IConnection2 &&
+    		((IConnection2) connectionToEdit).isDynamic();
+    }
 
 	public IService getServiceToRestrict() {
 		return serviceToRestrict;		

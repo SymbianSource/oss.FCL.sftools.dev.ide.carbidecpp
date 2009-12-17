@@ -75,6 +75,8 @@ public class ConnectionTypePage extends WizardPage {
 				setPageComplete(validatePage());
 			}
 		});
+		boolean canEditConnection = !settingsWizard.isConnectionToEditDynamic();
+		nameText.setEnabled(canEditConnection);
 
 		Label label = new Label(container, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
@@ -120,6 +122,7 @@ public class ConnectionTypePage extends WizardPage {
 			}
 		});
 		viewer.getList().select(getCurrentTypeIndex());
+		viewer.getList().setEnabled(canEditConnection);
 		
 		connectionTypeDescLabel = new Label(container, SWT.WRAP);
 		connectionTypeDescLabel.setText(getConnectionTypeDescription());
@@ -158,12 +161,13 @@ public class ConnectionTypePage extends WizardPage {
 		return getConnectionType().getDescription();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private int getCurrentTypeIndex() {
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 		if (connectionToEdit != null) {
 			Object input = viewer.getInput();
 			if (input != null) {
-				Collection<IConnectionType> connectionTypes = (Collection<IConnectionType>) input;
+				Collection<IConnectionType> connectionTypes = (Collection) input;
 				for (int i = 0; i < connectionTypes.size(); i++) {
 					IConnectionType connectionType = (IConnectionType) viewer.getElementAt(i);
 					if (connectionToEdit.getConnectionType().equals(connectionType))
