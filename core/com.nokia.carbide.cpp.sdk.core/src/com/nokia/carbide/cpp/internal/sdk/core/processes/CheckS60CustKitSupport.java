@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.Messages;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -52,13 +53,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
 	private static final String UNDEF_SBSV2 = "undefSBSV2";
-	private static final String UNDEF_SBSV2_CODE = 
-		"// When building with Raptor, \"gnumakefile\" builds are no longer recommended.\n"+
-		"// But the extension Makefiles referenced here are only available in OS 9.5+.\n"+
-		"// Uncomment this to always perform Raptor builds using PRJ_EXTENSIONS.\n"+
-		"#undef SBSV2\n"+
-		"\n";
-
+	private static final String UNDEF_SBSV2_CODE = Messages.getString("CheckS60CustKitSupport.undefSBSV2Code"); //$NON-NLS-1$
 
 	private static final String BUILD_HELP_PREFIX = "buildHelpPrefix";
 	private static final String BUILD_HELP_SIS_PREFIX = "buildHelpSISPrefix";
