@@ -63,5 +63,11 @@
             class="com.nokia.carbide.remoteconnections.tests.extensions.DefaultProvidingTCPIPService">
       </service>
    </extension>
+   <extension
+         point="com.nokia.carbide.remoteConnections.deviceDiscoveryAgent">
+      <deviceDiscoveryAgent
+            class="com.nokia.carbide.remoteconnections.tests.discovery.RandomDiscoveryAgent">
+      </deviceDiscoveryAgent>
+   </extension>
 
 </plugin>

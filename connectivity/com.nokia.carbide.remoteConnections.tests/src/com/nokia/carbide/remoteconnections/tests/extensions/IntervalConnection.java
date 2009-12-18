@@ -18,75 +18,22 @@
 
 package com.nokia.carbide.remoteconnections.tests.extensions;
 
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
-import java.util.Collections;
-import java.util.Map;
-
-public class IntervalConnection implements IConnection {
+public class IntervalConnection extends AbstractConnection {
 
 	private int msInterval;
-	private String id;
-	private String name;
-	private IConnectionType connectionType;
 	
 	public IntervalConnection(IConnectionType connectionType) {
-		this.connectionType = connectionType;
+		super(connectionType, new HashMap<String, String>());
+		getSettings().put(IntervalConnectionType.KEY, Integer.toString(msInterval));
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.extensions.IConnection#dispose()
-	 */
-	public void dispose() {
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.extensions.IConnection#getConnectionType()
-	 */
-	public IConnectionType getConnectionType() {
-		return connectionType;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.extensions.IConnection#getIdentifier()
-	 */
-	public String getIdentifier() {
-		return id;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnection#getDisplayName()
-	 */
-	public String getDisplayName() {
-		return name;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnection#setDisplayName(java.lang.String)
-	 */
-	public void setDisplayName(String name) {
-		this.name = name;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.extensions.IConnection#getSettings()
-	 */
-	public Map<String, String> getSettings() {
-		return Collections.singletonMap(IntervalConnectionType.KEY, Integer.toString(msInterval));
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.extensions.IConnection#setIdentifier(java.lang.String)
-	 */
-	public void setIdentifier(String id) {
-		this.id = id;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.extensions.IConnection#updateSettings(java.util.Map)
-	 */
 	public void updateSettings(Map<String, String> newSettings) {
 		Check.checkContract(newSettings.containsKey(IntervalConnectionType.KEY));
 		String string = newSettings.get(IntervalConnectionType.KEY);
@@ -103,9 +50,10 @@ public class IntervalConnection implements IConnection {
 	
 	@Override
 	public String toString() {
-		return name;
+		return getDisplayName();
 	}
 
 	public void useConnection(boolean use) {
+		// TODO Auto-generated method stub
 	}
 }
