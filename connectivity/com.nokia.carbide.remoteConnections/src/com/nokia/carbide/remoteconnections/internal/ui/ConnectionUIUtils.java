@@ -28,6 +28,8 @@ import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 
 /**
@@ -68,7 +70,7 @@ public class ConnectionUIUtils {
 	private static final ImageDescriptor CONNECTION_NOT_READY_IMGDESC = 
 		RemoteConnectionsActivator.getImageDescriptor("icons/connectionStatusNotReady.png"); //$NON-NLS-1$
 	private static final ImageDescriptor CONNECTION_IN_USE_DISCONNECTED_IMGDESC =
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionStatusDisconnected.png"); //$NON-NLS-1$
+		RemoteConnectionsActivator.getImageDescriptor("icons/connectionStatusInUseDisconnected.png"); //$NON-NLS-1$
 	
 	private static final ImageDescriptor CONNECTION_IMGDESC = 
 		RemoteConnectionsActivator.getImageDescriptor("icons/connection.png"); //$NON-NLS-1$
@@ -95,9 +97,9 @@ public class ConnectionUIUtils {
 	 * @param connection
 	 * @return Image, not to be disposed
 	 */
-	public static Image getConnectionStatusImage(IConnection2.IStatus status) {
+	public static Image getConnectionStatusImage(IConnectionStatus status) {
 		if (status != null) {
-			IConnection2.IStatus.EStatus severity = status.getEStatus();
+			EConnectionStatus severity = status.getEConnectionStatus();
 			
 			switch (severity) {
 			case READY:
@@ -120,7 +122,7 @@ public class ConnectionUIUtils {
 	 */
 	public static Image getConnectionImage(IConnection connection) {
 		if (connection instanceof IConnection2) {
-			IConnection2.IStatus status = ((IConnection2) connection).getStatus();
+			IConnectionStatus status = ((IConnection2) connection).getStatus();
 			return getConnectionStatusImage(status);
 		}
 		if (isConnectionInUse(connection)) {

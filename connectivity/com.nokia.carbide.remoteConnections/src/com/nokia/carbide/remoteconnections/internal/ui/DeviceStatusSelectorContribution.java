@@ -51,8 +51,8 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
-import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IStatus;
-import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.view.ConnectionsView;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -63,12 +63,11 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
  * "default" device connection and also see its status at a glance. 
  */
 public class DeviceStatusSelectorContribution extends WorkbenchWindowControlContribution
-		implements IConnectionListener, IStatusChangedListener {
+		implements IConnectionListener, IConnectionStatusChangedListener {
 
 	private Composite container;
 	private CLabel deviceInfo;
 	private IConnectionsManager manager;
-	private Image deviceImage;
 	private IConnection defaultConnection;
 	
 	public DeviceStatusSelectorContribution() {
@@ -104,7 +103,7 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 		
 		deviceInfo.setText(text);
 		
-		updateDeviceStatus(getDeviceStatus(defaultConnection));
+		updateConnectionStatus(getConnectionStatus(defaultConnection));
 		
 		deviceInfo.addMouseListener (new MouseAdapter() {
 			public void mouseDown(MouseEvent event) {
@@ -136,7 +135,7 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 			}
 		});
 		
-		// TODO PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, null);
+		RemoteConnectionsActivator.setHelp(container, "DeviceStatusSelector");
 		return container;
 	}
 
@@ -158,7 +157,7 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 	 * @return
 	 */
 	private String createDeviceStatusTooltip(IConnection defaultConnection,
-			IStatus status) {
+			IConnectionStatus status) {
 		if (defaultConnection == null) {
 			return Messages.getString("DeviceStatusSelectorContribution.NoDynamicOrManualConnectionsTooltip"); //$NON-NLS-1$
 		}
@@ -175,11 +174,11 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 	}
 
 	/**
-	 * Get the image representing the device status.
+	 * Get the image representing the connection status.
 	 * @param connection
 	 * @return Image, to be disposed
 	 */
-	private IStatus getDeviceStatus(IConnection connection) {
+	private IConnectionStatus getConnectionStatus(IConnection connection) {
 		if (!(connection instanceof IConnection2)) {
 			return null;
 		} else {
@@ -270,10 +269,6 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 	 * @see org.eclipse.jface.action.ContributionItem#dispose()
 	 */
 	public void dispose() {
-		if (deviceImage != null) {
-			deviceImage.dispose();
-			deviceImage = null;
-		}
 		if (defaultConnection instanceof IConnection2)
 			((IConnection2) defaultConnection).removeStatusChangedListener(this);
 		
@@ -298,24 +293,22 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#defaultConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
 	 */
 	public void defaultConnectionSet(IConnection connection) {
+		defaultConnection = connection;
 		updateUI();
 	}
 
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.remoteconnections.internal.IConnection2.IStatusChangedListener#statusChanged(com.nokia.carbide.remoteconnections.internal.IConnection2.IStatus)
 	 */
-	public void statusChanged(IStatus status) {
-		updateDeviceStatus(status);
+	public void statusChanged(IConnectionStatus status) {
+		updateConnectionStatus(status);
 	}
 	
 	/**
 	 * @param status
 	 */
-	private void updateDeviceStatus(IStatus status) {
-		if (deviceImage != null)
-			deviceImage.dispose();
-		
-		deviceImage = ConnectionUIUtils.getConnectionStatusImage(status);
+	private void updateConnectionStatus(IConnectionStatus status) {
+		Image deviceImage = ConnectionUIUtils.getConnectionStatusImage(status);
 		deviceInfo.setImage(deviceImage);
 		deviceInfo.setToolTipText(createDeviceStatusTooltip(defaultConnection, status));
 	}
