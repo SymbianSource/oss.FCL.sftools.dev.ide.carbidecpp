@@ -44,6 +44,7 @@ import org.eclipse.jface.viewers.IFilter;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedServiceFactory;
@@ -54,6 +55,10 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
@@ -83,6 +88,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private List<IConnectedServiceFactory> connectedServiceFactories;
 	private ListenerList<IConnectionListener> connectionListeners;
 	private IConnection defaultConnection;
+	private Map<IConnection, IConnectionStatusChangedListener> connectionListenerMap;
 
 	public static Registry instance() {
 		return instance;
@@ -91,6 +97,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private Registry() {
 		// private because is singleton
 		connectionToConnectedServices = new HashMap<IConnection, List<IConnectedService>>();
+		connectionListenerMap = new HashMap<IConnection, IConnectionStatusChangedListener>();
 	}
 
 	public void loadExtensions() {
@@ -530,17 +537,59 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return defaultConnection;
 	}
 
-	public void disconnect(IConnection2 connection) {
+	public void disconnect(final IConnection2 connection) {
+		if (!connection.isDynamic())
+			return;
 		
-		// TODO transition to disconnected state and wait:
-		// if not in-use, remove and stop waiting
-		// if reconnected, stop waiting
-		
+		// transition to disconnected state and wait:
+		// 	if not in-use, remove and stop waiting
+		// 	if reconnected, stop waiting
+		if (connection.getStatus().getEConnectionStatus().equals(EConnectionStatus.IN_USE)) {
+			IConnectionStatus status = new ConnectionStatus(EConnectionStatus.IN_USE_DISCONNECTED, 
+						"connection has been disconnected while in use, please reconnect");
+			connection.setStatus(status);
+			IConnectionStatusChangedListener listener = new IConnectionStatusChangedListener() {
+				public void statusChanged(IConnectionStatus status) {
+					if (notInUse(status)) {
+						IConnectionStatusChangedListener listener = 
+							connectionListenerMap.remove(connection);
+						connection.removeStatusChangedListener(listener);
+						removeConnection(connection);
+					}
+				}
+
+				private boolean notInUse(IConnectionStatus status) {
+					EConnectionStatus eStatus = status.getEConnectionStatus();
+					return !eStatus.equals(EConnectionStatus.IN_USE) &&
+						!eStatus.equals(EConnectionStatus.IN_USE_DISCONNECTED);
+				}
+			};
+			connectionListenerMap.put(connection, listener);
+			connection.addStatusChangedListener(listener);
+		}
 	}
 
 	public boolean reconnect(IConnection2 connection) {
-		// TODO if not removed, transition out of disconnected state
+		if (!connection.isDynamic())
+			return false;
+		
+		// if not removed, transition out of disconnected state 
 		// return not removed
+		IConnectionStatusChangedListener listener = connectionListenerMap.remove(connection);
+		if (listener != null)
+			connection.removeStatusChangedListener(listener);
+		if (connectionToConnectedServices.containsKey(connection)) {
+			IConnectionStatus status;
+			if (ConnectionUIUtils.isSomeServiceInUse(connection)) {
+				status = new ConnectionStatus(EConnectionStatus.IN_USE, 
+						Messages.getString("ConnectionsView.InUseDesc")); //$NON-NLS-1$
+			}
+			else {
+				status = new ConnectionStatus(EConnectionStatus.NOT_READY, ""); //$NON-NLS-1$
+			}
+			connection.setStatus(status);
+			return true;
+		}
 		return false;
 	}
 }

@@ -211,7 +211,7 @@ public class ConnectionsView extends ViewPart {
 			else if (value instanceof IConnectedService) {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
 				IConnection connection = findConnection((IConnectedService) value);
-				if (connection != null && isConnectionInUse(connection))
+				if (connection != null && ConnectionUIUtils.isSomeServiceInUse(connection))
 					status = EStatus.IN_USE;
 				return ConnectionUIUtils.getConnectedServiceStatusImage(status);
 			}
@@ -227,14 +227,14 @@ public class ConnectionsView extends ViewPart {
 				IStatus status = null;
 				IConnection connection = findConnection((IConnectedService) value);
 				if (connection != null)
-					status = getFirstInUseStatus(connection);
+					status = ConnectionUIUtils.getFirstInUseServiceStatus(connection);
 				if (status == null) {
 					status = ((IConnectedService) value).getStatus();
 					return status.getShortDescription();
 				}
 			}
 			else if (value instanceof IConnection) {
-				IStatus status = getFirstInUseStatus((IConnection) value);
+				IStatus status = ConnectionUIUtils.getFirstInUseServiceStatus((IConnection) value);
 				if (status != null)
 					return status.getShortDescription();
 			}
@@ -274,7 +274,7 @@ public class ConnectionsView extends ViewPart {
 				IStatus status = ((IConnectedService) value).getStatus();
 				IConnection connection = findConnection((IConnectedService) value);
 				if (!status.getEStatus().equals(EStatus.IN_USE) ||
-						!(connection != null && isConnectionInUse(connection))) { // if in-use, we show it in the connection row
+						!(connection != null && ConnectionUIUtils.isSomeServiceInUse(connection))) { // if in-use, we show it in the connection row
 					String longDescription = status.getLongDescription();
 					if (longDescription != null)
 						longDescription = TextUtils.canonicalizeNewlines(longDescription, " "); //$NON-NLS-1$
@@ -282,7 +282,7 @@ public class ConnectionsView extends ViewPart {
 				}
 			}
 			else if (value instanceof IConnection) {
-				if (isConnectionInUse((IConnection) value)) {
+				if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
 					return Messages.getString("ConnectionsView.InUseDesc");
 				}
 			}
@@ -756,23 +756,6 @@ public class ConnectionsView extends ViewPart {
 			}
 		}
 		return null;
-	}
-
-	private static IStatus getFirstInUseStatus(IConnection connection) {
-		Collection<IConnectedService> connectedServices = 
-			Registry.instance().getConnectedServices(connection);
-		// if any service is in-use, then connection is in-use
-		for (IConnectedService connectedService : connectedServices) {
-			IStatus status = connectedService.getStatus();
-			if (status.getEStatus().equals(EStatus.IN_USE))
-				return status;
-		}
-		
-		return null;
-	}
-
-	private boolean isConnectionInUse(IConnection connection) {
-		return getFirstInUseStatus(connection) != null;
 	}
 
 	private boolean isDynamicConnection(Object object) {
