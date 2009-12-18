@@ -15,7 +15,7 @@
 *
 */
 
-package com.nokia.carbide.internal.remoteconnections.settings.ui;
+package com.nokia.carbide.remoteconnections.internal.ui;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.MouseAdapter;
@@ -189,38 +188,6 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 	}
 	
 	/**
-	 * Get the image representing the device status.
-	 * @param connection
-	 * @return Image, to be disposed
-	 */
-	private Image createDeviceStatusImage(IStatus status) {
-		Image statusImage = null;
-		
-		String file = null;
-		if (status != null) {
-			IStatus.EStatus severity = status.getEStatus();
-			
-			if (severity == IStatus.EStatus.READY)
-				file = "statusReady.png"; 
-			else if (severity == IStatus.EStatus.IN_USE)
-				file = "statusInUse.png";
-			else if (severity == IStatus.EStatus.NOT_READY)
-				file = "statusUnknown.png";			// <--- 		
-			else if (severity == IStatus.EStatus.IN_USE_DISCONNECTED)
-				file = "statusUnavailable.png";
-		}
-		
-		if (file != null) {
-			ImageDescriptor descriptor;
-			descriptor = RemoteConnectionsActivator.getImageDescriptor("icons/" + file);
-			if (descriptor != null) {
-				statusImage = descriptor.createImage();
-			}
-		}
-		return statusImage;
-	}
-
-	/**
 	 * @return
 	 */
 	protected void populateConnectionMenu(Menu menu) {
@@ -348,7 +315,7 @@ public class DeviceStatusSelectorContribution extends WorkbenchWindowControlCont
 		if (deviceImage != null)
 			deviceImage.dispose();
 		
-		deviceImage = createDeviceStatusImage(status);
+		deviceImage = ConnectionUIUtils.getConnectionStatusImage(status);
 		deviceInfo.setImage(deviceImage);
 		deviceInfo.setToolTipText(createDeviceStatusTooltip(defaultConnection, status));
 	}

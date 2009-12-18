@@ -80,6 +80,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
@@ -99,33 +100,11 @@ public class ConnectionsView extends ViewPart {
 	private List<Action> serviceSelectedActions;
 	private static final String UID = ".uid"; //$NON-NLS-1$
 
-	private static final ImageDescriptor STATUS_AVAIL_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusAvailable.png"); //$NON-NLS-1$
-	private static final ImageDescriptor STATUS_UNAVAIL_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusUnavailable.png"); //$NON-NLS-1$
-	private static final ImageDescriptor STATUS_UNK_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusUnknown.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connection.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_EDIT_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionEdit.png"); //$NON-NLS-1$
-	private static final ImageDescriptor SERVICE_TEST_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest.png"); //$NON-NLS-1$
-	private static final ImageDescriptor STATUS_INUSE_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusInUse.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_REFRESH_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionRefresh.png"); //$NON-NLS-1$
-	private static final Image STATUS_AVAIL_IMG = STATUS_AVAIL_IMGDESC.createImage();
-	private static final Image STATUS_UNAVAIL_IMG = STATUS_UNAVAIL_IMGDESC.createImage();
-	private static final Image STATUS_INUSE_IMG = STATUS_INUSE_IMGDESC.createImage();
-	private static final Image STATUS_UNK_IMG = STATUS_UNK_IMGDESC.createImage();
-	private static final Image CONNECTION_IMG = CONNECTION_IMGDESC.createImage();
-	private static final Color COLOR_RED = new Color(Display.getDefault(), 192, 0, 0);
-	private static final Color COLOR_GREEN = new Color(Display.getDefault(), 0, 128, 0);
-	private static final Color COLOR_ELECTRIC = new Color(Display.getDefault(), 0, 0, 255);
-	private static final Color COLOR_GREY = new Color(Display.getDefault(), 96, 96, 96);
+	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
+	private static final ImageDescriptor CONNECTION_EDIT_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionEdit.png"); //$NON-NLS-1$
+	private static final ImageDescriptor SERVICE_TEST_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest.png"); //$NON-NLS-1$
+	private static final ImageDescriptor CONNECTION_REFRESH_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionRefresh.png"); //$NON-NLS-1$
+
 	private static final String NEW_ACTION = "ConnectionsView.new"; //$NON-NLS-1$
 	private static final String EDIT_ACTION = "ConnectionsView.edit"; //$NON-NLS-1$
 	private static final String RENAME_ACTION = "ConnectionsView.rename"; //$NON-NLS-1$
@@ -226,26 +205,14 @@ public class ConnectionsView extends ViewPart {
 			TreeNode node = (TreeNode) obj;
 			Object value = node.getValue();
 			if (value instanceof IConnection) {
-				if (isConnectionInUse((IConnection) value)) {
-					return STATUS_INUSE_IMG;
-				}
-				return CONNECTION_IMG;
+				return ConnectionUIUtils.getConnectionImage((IConnection) value);
 			}
 			else if (value instanceof IConnectedService) {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
 				IConnection connection = findConnection((IConnectedService) value);
 				if (connection != null && isConnectionInUse(connection))
 					status = EStatus.IN_USE;
-				switch (status) {
-				case DOWN:
-					return STATUS_UNAVAIL_IMG;
-				case UP:
-					return STATUS_AVAIL_IMG;
-				case IN_USE:
-					return CONNECTION_IMG;
-				case UNKNOWN:
-					return STATUS_UNK_IMG;
-				}
+				return ConnectionUIUtils.getConnectedServiceStatusImage(status);
 			}
 			return null;
 		}
@@ -282,15 +249,15 @@ public class ConnectionsView extends ViewPart {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
 				switch (status) {
 				case DOWN:
-					return COLOR_RED;
+					return ConnectionUIUtils.COLOR_RED;
 				case UP:
-					return COLOR_GREEN;
+					return ConnectionUIUtils.COLOR_GREEN;
 				case UNKNOWN:
-					return COLOR_GREY;
+					return ConnectionUIUtils.COLOR_GREY;
 				}
 			}
 			else if (value instanceof IConnection) // only showing in-use for connections
-				return COLOR_ELECTRIC;
+				return ConnectionUIUtils.COLOR_ELECTRIC;
 			
 			return null;
 		}
