@@ -55,7 +55,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":com.nokia.carbide.remoteconnections.internal.IDeviceDiscoveryAgent"/>
+                  <meta.attribute kind="java" basedOn=":com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent"/>
                </appInfo>
             </annotation>
          </attribute>
