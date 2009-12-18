@@ -19,7 +19,7 @@ Export-Package: com.nokia.carbide.installpackages,
  com.nokia.carbide.installpackages.gen.InstallPackages,
  com.nokia.carbide.remoteconnections,
  com.nokia.carbide.remoteconnections.interfaces,
- com.nokia.carbide.remoteconnections.internal,
+ com.nokia.carbide.remoteconnections.internal.api,
  com.nokia.carbide.remoteconnections.internal.registry;x-friends:="com.nokia.carbide.remoteConnections.tests,com.nokia.carbide.tests.debug",
  com.nokia.carbide.remoteconnections.settings.ui;x-friends:="com.nokia.carbide.tests.debug"
 Bundle-ClassPath: .,

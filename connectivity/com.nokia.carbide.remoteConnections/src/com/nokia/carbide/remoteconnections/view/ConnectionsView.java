@@ -18,36 +18,76 @@
 
 package com.nokia.carbide.remoteconnections.view;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.LegacyActionTools;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.TreeColumnViewerLabelProvider;
+import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jface.viewers.TreeNodeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.TreeViewerEditor;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
-
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.part.ViewPart;
-
-import java.util.*;
-import java.util.List;
 
 
 /**
  * The view part for Remote connections
  */
+@SuppressWarnings("deprecation")
 public class ConnectionsView extends ViewPart {
 	public static final String VIEW_ID = "com.nokia.carbide.remoteconnections.view.ConnectionsView"; //$NON-NLS-1$
 
@@ -146,10 +186,11 @@ public class ConnectionsView extends ViewPart {
 			super(viewer);
 			editor = new TextCellEditor((Composite) viewer.getControl(), SWT.BORDER);
 		}
-
+		
 		@Override
 		protected boolean canEdit(Object element) {
-			if (((TreeNode) element).getValue() instanceof IConnection)
+			Object object = ((TreeNode) element).getValue();
+			if (object instanceof IConnection && !isDynamicConnection(object))
 				return true;
 			return false;
 		}
@@ -542,7 +583,8 @@ public class ConnectionsView extends ViewPart {
 		actions.add(action);
 		action.setEnabled(!Registry.instance().getConnectionTypes().isEmpty());
 		
-		action = new Action(Messages.getString("ConnectionsView.EditActionLabel"), CONNECTION_EDIT_IMGDESC) { //$NON-NLS-1$
+		String editLabel = Messages.getString("ConnectionsView.EditActionLabel");
+		action = new Action(editLabel, CONNECTION_EDIT_IMGDESC) { //$NON-NLS-1$
 			@Override
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -571,6 +613,11 @@ public class ConnectionsView extends ViewPart {
 				if (value instanceof IConnection) {
 					viewer.editElement(node, 0);
 				}
+			}
+
+			@Override
+			public boolean isEnabled() {
+				return selectionCanBeEdited();
 			}
 		};
 		action.setId(RENAME_ACTION);
@@ -617,6 +664,11 @@ public class ConnectionsView extends ViewPart {
 					Registry.instance().removeConnection((IConnection) value);
 					Registry.instance().storeConnections();
 				}
+			}
+
+			@Override
+			public boolean isEnabled() {
+				return selectionCanBeEdited();
 			}
 		};
 		action.setAccelerator(SWT.DEL);
@@ -755,5 +807,16 @@ public class ConnectionsView extends ViewPart {
 		return getFirstInUseStatus(connection) != null;
 	}
 
+	private boolean isDynamicConnection(Object object) {
+		return object instanceof IConnection2 && ((IConnection2) object).isDynamic();
+	}
+
+	private boolean selectionCanBeEdited() {
+		ISelection selection = viewer.getSelection();
+		if (selection.isEmpty())
+			return false;
+		TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
+		return !isDynamicConnection(node.getValue());
+	}
 }
 

@@ -18,9 +18,73 @@
 
 package com.nokia.carbide.remoteconnections.settings.ui;
 
+import java.io.File;
+import java.io.InputStream;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jface.viewers.TreeNodeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.IWizardContainer2;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Version;
+
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IService2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
@@ -28,34 +92,11 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValida
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
-import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.wizard.IWizardContainer2;
-import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.program.Program;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
-import org.osgi.framework.Version;
-
-import java.io.File;
-import java.io.InputStream;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.List;
 
 public class ConnectionSettingsPage extends WizardPage {
 	
@@ -178,10 +219,11 @@ public class ConnectionSettingsPage extends WizardPage {
 		});
 		deviceOSComboViewer.setContentProvider(new ArrayContentProvider());
 		deviceOSComboViewer.setLabelProvider(new LabelProvider() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public String getText(Object element) {
 				Check.checkState(element instanceof Pair);
-				Pair pair = (Pair) element;
+				Pair<String, Version> pair = (Pair) element;
 				return MessageFormat.format("{0} {1}", pair.first, pair.second); //$NON-NLS-1$
 			}
 		});
@@ -456,6 +498,9 @@ public class ConnectionSettingsPage extends WizardPage {
 				GridData gd = new GridData(SWT.LEFT, SWT.TOP, true, true);
 				label.setLayoutData(gd);
 			}
+			else if (settingsWizard.isConnectionToEditDynamic()) {
+				disableControls(settingsUI);
+			}
 	
 			// update services list
 			Collection<IService> compatibleServices = 
@@ -485,6 +530,14 @@ public class ConnectionSettingsPage extends WizardPage {
 		
 		if (getControl().isVisible())
 			((IWizardContainer2) getWizard().getContainer()).updateSize();
+	}
+
+	private void disableControls(Control[] controls) {
+		for (Control control : controls) {
+			if (control instanceof Composite)
+				disableControls(((Composite) control).getChildren());
+			control.setEnabled(false);
+		}
 	}
 
 	private synchronized void initializeInstallerData() {

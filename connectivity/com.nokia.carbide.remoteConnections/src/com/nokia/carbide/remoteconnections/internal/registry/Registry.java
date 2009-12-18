@@ -53,7 +53,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.internal.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
@@ -250,19 +250,26 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionStore#storeConnections()
-	 */
 	public void storeConnections() {
 		try {
 			OutputStream os = new FileOutputStream(getConnectionStorageFile());
-			Writer.writeToXML(os, connectionToConnectedServices.keySet());
+			Writer.writeToXML(os, getNonDynamicConnections());
 		} 
 		catch (Exception e) {
 			RemoteConnectionsActivator.log(Messages.getString("Registry.ConnectionStoreError"), e); //$NON-NLS-1$
 		}
 	}
 	
+	private Collection<IConnection> getNonDynamicConnections() {
+		List<IConnection> nonDynamicConnections = new ArrayList<IConnection>();
+		for (IConnection connection : connectionToConnectedServices.keySet()) {
+			if (!(connection instanceof IConnection2) ||
+					!((IConnection2) connection).isDynamic())
+				nonDynamicConnections.add(connection);
+		}
+		return nonDynamicConnections;
+	}
+
 	public void addConnectionStoreChangedListener(IConnectionsManagerListener listener) {
 		if (listeners == null)
 			listeners = new ListenerList<IConnectionsManagerListener>();
@@ -522,6 +529,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 
 	public IConnection getDefaultConnection() {
+		if (defaultConnection == null)
+			pickNewDefaultConnection();
 		return defaultConnection;
 	}
 

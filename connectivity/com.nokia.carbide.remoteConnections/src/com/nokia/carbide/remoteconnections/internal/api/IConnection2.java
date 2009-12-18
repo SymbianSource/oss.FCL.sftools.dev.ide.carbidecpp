@@ -15,7 +15,7 @@
 *
 */
 
-package com.nokia.carbide.remoteconnections.internal;
+package com.nokia.carbide.remoteconnections.internal.api;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 
