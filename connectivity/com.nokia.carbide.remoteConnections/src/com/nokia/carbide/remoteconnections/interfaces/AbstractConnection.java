@@ -23,8 +23,8 @@ import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 
-import com.nokia.carbide.remoteconnections.internal.IConnection2;
-import com.nokia.carbide.remoteconnections.internal.IConnection2.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IStatus.EStatus;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 

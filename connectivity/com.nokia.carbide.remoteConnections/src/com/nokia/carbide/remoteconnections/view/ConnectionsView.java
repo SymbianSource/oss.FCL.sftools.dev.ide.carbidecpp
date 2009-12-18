@@ -78,7 +78,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
-import com.nokia.carbide.remoteconnections.internal.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;

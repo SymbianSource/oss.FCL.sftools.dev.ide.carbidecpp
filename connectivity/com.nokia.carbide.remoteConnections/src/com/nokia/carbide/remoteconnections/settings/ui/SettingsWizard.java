@@ -33,7 +33,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.internal.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 
 /**

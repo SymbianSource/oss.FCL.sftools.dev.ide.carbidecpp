@@ -53,7 +53,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.internal.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;

@@ -32,7 +32,7 @@ import org.osgi.framework.BundleContext;
 
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.internal.IDeviceDiscoveryAgent;
+import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 

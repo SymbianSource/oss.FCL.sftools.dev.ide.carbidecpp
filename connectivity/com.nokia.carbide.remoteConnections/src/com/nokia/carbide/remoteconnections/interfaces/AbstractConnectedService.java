@@ -18,7 +18,7 @@ package com.nokia.carbide.remoteconnections.interfaces;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.remoteconnections.internal.IConnectedService2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
