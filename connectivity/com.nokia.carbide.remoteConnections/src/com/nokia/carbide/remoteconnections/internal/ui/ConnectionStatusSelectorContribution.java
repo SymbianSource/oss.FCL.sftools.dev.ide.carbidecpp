@@ -130,7 +130,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener#statusChanged(com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus)
 		 */
 		public void statusChanged(IStatus status) {
-			updateUI();
+			updateConnectionStatus(null);
 		}
 
 		/* (non-Javadoc)
@@ -274,8 +274,13 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 			statusString = status.getDescription();
 		}
 		
-		if (TextUtils.isEmpty(statusString))
-			statusString = Messages.getString("ConnectionStatusSelectorContribution.NotInUse"); //$NON-NLS-1$
+		if (TextUtils.isEmpty(statusString)) {
+			// fallback string; the status should not be empty
+			if (ConnectionUIUtils.isSomeServiceInUse(defaultConnection))
+				statusString = Messages.getString("ConnectionStatusSelectorContribution.InUse"); //$NON-NLS-1$
+			else
+				statusString = Messages.getString("ConnectionStatusSelectorContribution.NotInUse"); //$NON-NLS-1$
+		}
 		
 		return MessageFormat.format(Messages.getString("ConnectionStatusSelectorContribution.ConnectionStatusFormat"), defaultConnection.getDisplayName(), statusString); //$NON-NLS-1$
 	}
@@ -377,10 +382,23 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	/**
 	 * @param status
 	 */
-	private void updateConnectionStatus(IConnectionStatus status) {
-		Image statusImage = ConnectionUIUtils.getConnectionStatusImage(status);
-		connectionInfo.setImage(statusImage);
-		connectionInfo.setToolTipText(createConnectionStatusTooltip(defaultConnection, status));
+	private void updateConnectionStatus(final IConnectionStatus status) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				if (connectionInfo.isDisposed())
+					return;
+				
+				Image statusImage;
+				if (status != null)
+					statusImage = ConnectionUIUtils.getConnectionStatusImage(status);
+				else
+					statusImage = ConnectionUIUtils.getConnectionImage(defaultConnection);
+				
+				connectionInfo.setImage(statusImage);
+				connectionInfo.setToolTipText(createConnectionStatusTooltip(defaultConnection, status));		
+			}
+		});
+		
 	}
 
 	/**

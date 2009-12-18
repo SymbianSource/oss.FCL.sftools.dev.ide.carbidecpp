@@ -106,10 +106,15 @@ public class ConnectionUIUtils {
 	 * @return Image, not to be disposed
 	 */
 	public static Image getConnectionImage(IConnection connection) {
+		// TODO: remove this when we have real statuses from a connection
+		if (isSomeServiceInUse(connection)) {
+			return ConnectionUIUtils.STATUS_INUSE_IMG;
+		}
 		if (connection instanceof IConnection2) {
 			IConnectionStatus status = ((IConnection2) connection).getStatus();
 			return getConnectionStatusImage(status);
 		} else {
+			// old connection logic
 			if (isSomeServiceInUse(connection)) {
 				return ConnectionUIUtils.STATUS_INUSE_IMG;
 			}
@@ -139,6 +144,9 @@ public class ConnectionUIUtils {
 		Collection<IConnectedService> connectedServices = 
 			Registry.instance().getConnectedServices(connection);
 		// if any service is in-use, then connection is in-use
+		if (connectedServices == null)
+			return null;
+		
 		for (IConnectedService connectedService : connectedServices) {
 			IStatus status = connectedService.getStatus();
 			if (status.getEStatus().equals(EStatus.IN_USE))
