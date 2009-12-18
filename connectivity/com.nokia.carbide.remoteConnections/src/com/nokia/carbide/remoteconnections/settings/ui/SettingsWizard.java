@@ -114,6 +114,8 @@ public class SettingsWizard extends Wizard {
 			connectionToEdit = newConnectionType.getConnectionFactory().createConnection(newSettings);
 			if (id != null)
 				connectionToEdit.setIdentifier(id);
+			
+			connectionToEdit.setDisplayName(newName);
 			Registry.instance().addConnection(connectionToEdit);
 		}
 		else if (newSettings != null) {
