@@ -83,7 +83,7 @@
         <toolbar
 			id="com.nokia.carbide.cpp.news.contributions.toolbar.trim">
 			<control
-				class="com.nokia.carbide.remoteconnections.internal.ui.DeviceStatusSelectorContribution"
+				class="com.nokia.carbide.remoteconnections.internal.ui.ConnectionStatusSelectorContribution"
 				id="deviceStatusSelectorContribution">
 			</control>
         </toolbar>

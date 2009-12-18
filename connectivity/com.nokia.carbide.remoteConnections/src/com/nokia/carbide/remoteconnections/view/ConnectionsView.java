@@ -189,8 +189,9 @@ public class ConnectionsView extends ViewPart {
 		protected void setValue(Object element, Object value) {
 			IConnection connection = (IConnection) ((TreeNode) element).getValue();
 			connection.setDisplayName(value.toString());
-			viewer.refresh(true);
-			packColumns();
+			//viewer.refresh(true);
+			//packColumns();
+			Registry.instance().updateDisplays();
 			Registry.instance().storeConnections();
 		}
 	}

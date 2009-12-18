@@ -124,11 +124,12 @@ public class ConnectionUIUtils {
 		if (connection instanceof IConnection2) {
 			IConnectionStatus status = ((IConnection2) connection).getStatus();
 			return getConnectionStatusImage(status);
+		} else {
+			if (isConnectionInUse(connection)) {
+				return ConnectionUIUtils.STATUS_INUSE_IMG;
+			}
+			return ConnectionUIUtils.CONNECTION_IMG;
 		}
-		if (isConnectionInUse(connection)) {
-			return ConnectionUIUtils.STATUS_INUSE_IMG;
-		}
-		return ConnectionUIUtils.CONNECTION_IMG;
 	}
 
 	/**
