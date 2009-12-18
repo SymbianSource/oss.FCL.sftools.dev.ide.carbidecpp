@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -47,8 +48,11 @@ import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
@@ -64,16 +68,83 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
  * This widget appears in the Eclipse trim and allows the user to select the
  * "default" device connection and also see its status at a glance. 
  */
-public class ConnectionStatusSelectorContribution extends WorkbenchWindowControlContribution
-		implements IConnectionListener, IConnectionStatusChangedListener, IConnectionsManagerListener {
+@SuppressWarnings("deprecation")
+public class ConnectionStatusSelectorContribution extends WorkbenchWindowControlContribution {
 
 	private Composite container;
 	private CLabel connectionInfo;
 	private IConnectionsManager manager;
 	private IConnection defaultConnection;
+	private ListenerBlock listenerBlock;
+	private ToolTip tooltip;
+
+	/**
+	 * Contains all the listeners.  In most cases we just recreate the contribution status item.
+	 */
+	class ListenerBlock implements IConnectionListener, IConnectionsManagerListener, IStatusChangedListener, IConnectionStatusChangedListener {
+
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionAdded(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+		 */
+		public void connectionAdded(IConnection connection) {
+			updateUI();
+			if (connection instanceof IConnection2 && ((IConnection2) connection).isDynamic())
+				launchBubble(MessageFormat.format(
+						Messages.getString("ConnectionStatusSelectorContribution.AddedConnectionFormat"),  //$NON-NLS-1$
+						connection.getDisplayName()));
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionRemoved(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+		 */
+		public void connectionRemoved(IConnection connection) {
+			updateUI();
+			if (connection instanceof IConnection2 && ((IConnection2) connection).isDynamic())
+				launchBubble(MessageFormat.format(
+						Messages.getString("ConnectionStatusSelectorContribution.RemovedConnectionFormat"),  //$NON-NLS-1$
+						connection.getDisplayName()));
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#defaultConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+		 */
+		public void defaultConnectionSet(IConnection connection) {
+			updateUI();
+		}
+
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener#connectionStoreChanged()
+		 */
+		public void connectionStoreChanged() {
+			updateUI();
+		}
+
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener#displayChanged()
+		 */
+		public void displayChanged() {
+			updateUI();
+		}
+
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener#statusChanged(com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus)
+		 */
+		public void statusChanged(IStatus status) {
+			updateUI();
+		}
+
+		/* (non-Javadoc)
+		 * @see com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener#statusChanged(com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus)
+		 */
+		public void statusChanged(IConnectionStatus status) {
+			updateConnectionStatus(status);
+		}
+
+	}
 	
 	public ConnectionStatusSelectorContribution() {
 		manager = RemoteConnectionsActivator.getConnectionsManager();
+		listenerBlock = new ListenerBlock();
 	}
 	
 	/*
@@ -85,26 +156,21 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		
 		// This UI is recreated whenever the default connection changes.
 		
-		manager.addConnectionListener(this);
-		Registry.instance().addConnectionStoreChangedListener(this);
-		
 		container = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().margins(2, 0).applyTo(container);
 
 		// Create a label for the trim.
 		connectionInfo = new CLabel(container, SWT.FLAT);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(connectionInfo);
-		
-		String text = Messages.getString("DeviceStatusSelectorContribution_NoDefaultConnectionMessage"); //$NON-NLS-1$
+
+		String text = Messages.getString("ConnectionStatusSelectorContribution_NoDefaultConnectionMessage"); //$NON-NLS-1$
 		defaultConnection = manager.getDefaultConnection();
-		if (defaultConnection != null) {
+		if (defaultConnection != null)
 			text = defaultConnection.getDisplayName();
-			if (defaultConnection instanceof IConnection2) {
-				((IConnection2) defaultConnection).addStatusChangedListener(ConnectionStatusSelectorContribution.this);
-			}
-		}
 		
 		connectionInfo.setText(text);
+
+		attachListeners();
 		
 		updateConnectionStatus(getConnectionStatus(defaultConnection));
 		
@@ -138,8 +204,46 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 			}
 		});
 		
-		RemoteConnectionsActivator.setHelp(container, "DeviceStatusSelector");
+		RemoteConnectionsActivator.setHelp(container, "ConnectionStatusSelector"); //$NON-NLS-1$
 		return container;
+	}
+
+	private void attachListeners() {
+		manager.addConnectionListener(listenerBlock);
+		Registry.instance().addConnectionStoreChangedListener(listenerBlock);
+		
+		if (defaultConnection != null) {
+			if (defaultConnection instanceof IConnection2) {
+				((IConnection2) defaultConnection).addStatusChangedListener(listenerBlock);
+			}
+			for (IConnectedService service : manager.getConnectedServices(defaultConnection)) {
+				service.addStatusChangedListener(listenerBlock);
+			}
+		}
+	}
+
+	private void removeListeners() {
+		if (defaultConnection != null) {
+			if (defaultConnection instanceof IConnection2) {
+				((IConnection2) defaultConnection).removeStatusChangedListener(listenerBlock);
+			}
+			for (IConnectedService service : manager.getConnectedServices(defaultConnection)) {
+				service.removeStatusChangedListener(listenerBlock);
+			}
+		}
+		manager.removeConnectionListener(listenerBlock);
+		Registry.instance().removeConnectionStoreChangedListener(listenerBlock);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.action.ContributionItem#dispose()
+	 */
+	public void dispose() {
+		removeListeners();
+		if (connectionInfo != null)
+			connectionInfo.dispose();
+		super.dispose();
 	}
 
 	/**
@@ -159,10 +263,10 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 * @param status
 	 * @return
 	 */
-	private String createDeviceStatusTooltip(IConnection defaultConnection,
+	private String createConnectionStatusTooltip(IConnection defaultConnection,
 			IConnectionStatus status) {
 		if (defaultConnection == null) {
-			return Messages.getString("DeviceStatusSelectorContribution.NoDynamicOrManualConnectionsTooltip"); //$NON-NLS-1$
+			return Messages.getString("ConnectionStatusSelectorContribution.NoDynamicOrManualConnectionsTooltip"); //$NON-NLS-1$
 		}
 		
 		String statusString = null;
@@ -171,9 +275,9 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		}
 		
 		if (TextUtils.isEmpty(statusString))
-			statusString = Messages.getString("DeviceStatusSelectorContribution.NotInUse"); //$NON-NLS-1$
+			statusString = Messages.getString("ConnectionStatusSelectorContribution.NotInUse"); //$NON-NLS-1$
 		
-		return MessageFormat.format(Messages.getString("DeviceStatusSelectorContribution.DeviceStatusFormat"), defaultConnection.getDisplayName(), statusString); //$NON-NLS-1$
+		return MessageFormat.format(Messages.getString("ConnectionStatusSelectorContribution.ConnectionStatusFormat"), defaultConnection.getDisplayName(), statusString); //$NON-NLS-1$
 	}
 
 	/**
@@ -193,8 +297,6 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 * @return
 	 */
 	protected void populateConnectionMenu(Menu menu) {
-		IConnection defaultConnection = manager.getDefaultConnection();
-
 		// Display the connections with dynamic ones first, 
 		// then static ones, separated by a separator
 
@@ -218,22 +320,27 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 
 		MenuItem label = new MenuItem(menu, SWT.NONE);
 		label.setEnabled(false);
-		label.setText(Messages.getString("DeviceStatusSelectorContribution_SelectTheDefaultConnectionMessage")); //$NON-NLS-1$
 		
-		for (IConnection connection : dynamicConnections) {
-			createConnectionMenuItem(menu, connection, defaultConnection);
-		}
-		
-		new MenuItem(menu, SWT.SEPARATOR);
-		
-		for (IConnection connection : staticConnections) {
-			createConnectionMenuItem(menu, connection, defaultConnection);
+		if (dynamicConnections.size() + staticConnections.size() == 0) {
+			label.setText(Messages.getString("ConnectionStatusSelectorContribution.NoConnectionsDefinedOrDetected")); //$NON-NLS-1$
+		} else {
+			label.setText(Messages.getString("ConnectionStatusSelectorContribution_SelectTheDefaultConnectionMessage")); //$NON-NLS-1$
+			
+			for (IConnection connection : dynamicConnections) {
+				createConnectionMenuItem(menu, connection, defaultConnection);
+			}
+			
+			new MenuItem(menu, SWT.SEPARATOR);
+			
+			for (IConnection connection : staticConnections) {
+				createConnectionMenuItem(menu, connection, defaultConnection);
+			}
 		}
 		
 		new MenuItem(menu, SWT.SEPARATOR);
 		
 		MenuItem openView = new MenuItem(menu, SWT.PUSH);
-		openView.setText("Open Remote Connections view");
+		openView.setText(Messages.getString("ConnectionStatusSelectorContribution.OpenRemoteConnectionsView")); //$NON-NLS-1$
 		openView.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -267,53 +374,13 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		return item;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.action.ContributionItem#dispose()
-	 */
-	public void dispose() {
-		if (defaultConnection instanceof IConnection2)
-			((IConnection2) defaultConnection).removeStatusChangedListener(this);
-		
-		manager.removeConnectionListener(this);
-		super.dispose();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionAdded(com.nokia.carbide.remoteconnections.interfaces.IConnection)
-	 */
-	public void connectionAdded(IConnection connection) {
-		updateUI();
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionRemoved(com.nokia.carbide.remoteconnections.interfaces.IConnection)
-	 */
-	public void connectionRemoved(IConnection connection) {
-		updateUI();
-	}
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#defaultConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
-	 */
-	public void defaultConnectionSet(IConnection connection) {
-		defaultConnection = connection;
-		updateUI();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.internal.IConnection2.IStatusChangedListener#statusChanged(com.nokia.carbide.remoteconnections.internal.IConnection2.IStatus)
-	 */
-	public void statusChanged(IConnectionStatus status) {
-		updateConnectionStatus(status);
-	}
-	
 	/**
 	 * @param status
 	 */
 	private void updateConnectionStatus(IConnectionStatus status) {
-		Image deviceImage = ConnectionUIUtils.getConnectionStatusImage(status);
-		connectionInfo.setImage(deviceImage);
-		connectionInfo.setToolTipText(createDeviceStatusTooltip(defaultConnection, status));
+		Image statusImage = ConnectionUIUtils.getConnectionStatusImage(status);
+		connectionInfo.setImage(statusImage);
+		connectionInfo.setToolTipText(createConnectionStatusTooltip(defaultConnection, status));
 	}
 
 	/**
@@ -349,19 +416,31 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	public void update() {
 		getParent().update(true);
 	}
-
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener#connectionStoreChanged()
+	
+	/**
+	 * Show a status bubble for important changes.
+	 * @param string
 	 */
-	public void connectionStoreChanged() {
-		updateUI();
+	public void launchBubble(final String string) {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				if (tooltip != null)
+					tooltip.dispose();
+				
+				if (connectionInfo == null || connectionInfo.isDisposed())
+					return;
+				
+				tooltip = new ToolTip(connectionInfo.getShell(), SWT.BALLOON | SWT.ICON_INFORMATION);
+				tooltip.setMessage(string);
+				Point center = connectionInfo.getSize();
+				center.x /= 2;
+				Point location = connectionInfo.toDisplay(center);
+				//System.out.println(connectionInfo.hashCode() + ": " + connectionInfo.getLocation() + " : " + location);
+				tooltip.setLocation(location);
+				tooltip.setVisible(true);
+			}
+		});
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener#displayChanged()
-	 */
-	public void displayChanged() {
-		updateUI();
-	}
 
 }
