@@ -23,6 +23,8 @@ import java.util.Collection;
 
 import org.eclipse.core.runtime.CoreException;
 
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+
 /**
  * An interface encapsulating the manager of connection objects
  * @noimplement
@@ -184,17 +186,17 @@ public interface IConnectionsManager {
 	 * If a dynamic connection is disconnected, it is transitioned to a disconnected state while it
 	 * is in use by some client service, and is eventually removed from the system once it is 
 	 * no longer in use. 
-	 * @param connection IConnection
+	 * @param connection IConnection2
 	 * @since 3.0
 	 */
-	void disconnect(IConnection connection);
+	void disconnect(IConnection2 connection);
 	
 	/**
 	 * Attempts to set a disconnected dynamic connection back to its in-use state. 
 	 * If the connection has not been removed from the system, and is still in-use, 
 	 * it will be restored. Returns true if successful in restoring the connection.
-	 * @param connection IConnection
+	 * @param connection IConnection2
 	 * @since 3.0
 	 */
-	boolean reconnect(IConnection connection);
+	boolean reconnect(IConnection2 connection);
 }
