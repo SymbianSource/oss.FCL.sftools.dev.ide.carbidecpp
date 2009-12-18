@@ -8,30 +8,13 @@
 ============================================================================
 */
 
-// When building with Raptor, "gnumakefile" builds are no longer recommended.
-// But, the extensions referenced here are not available in SDKs, only devkits.
-#define USE_PRJ_EXTENSIONS $(usePrjExtensionsValue)
-
 PRJ_PLATFORMS
 WINSCW ARMV5 GCCE
 
-PRJ_MMPFILES
+$(undefSBSV2)
+#ifdef SBSV2
 
-#if !USE_PRJ_EXTENSIONS
-
-	gnumakefile icons_scalable_dc.mk
-
-	// help compiler is not always available; see similar comment in *.pkg file
-	$(buildHelpPrefix)gnumakefile ../$(helpDir)/build_help.mk
-
-#endif
-
-$(baseName).mmp
-
-
-#if USE_PRJ_EXTENSIONS
-
-	PRJ_EXTENSIONS
+PRJ_EXTENSIONS
 	
 	START EXTENSION s60/mifconv
 	OPTION TARGETFILE $(baseName$lower)_$(uid3).mif
@@ -46,6 +29,17 @@ $(baseName).mmp
 	$(buildHelpPrefix)OPTION HELPTOOLTARGETNAME $(baseName$lower)_$(uid3).hlp
 	$(buildHelpPrefix)END
 
+#else
+
+PRJ_MMPFILES
+
+	gnumakefile icons_scalable_dc.mk
+
+	// help compiler is not always available; see similar comment in *.pkg file
+	$(buildHelpPrefix)gnumakefile ../$(helpDir)/build_help.mk
+
 #endif
 
+PRJ_MMPFILES
 
+$(baseName).mmp

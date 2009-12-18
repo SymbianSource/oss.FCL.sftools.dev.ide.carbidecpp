@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.core.runtime.QualifiedName;
+import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -51,7 +51,14 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_SF_FOLDER =  "sf";
 	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
-	private static final String USE_PRJ_EXTENSIONS_VALUE = "usePrjExtensionsValue";
+	private static final String UNDEF_SBSV2 = "undefSBSV2";
+	private static final String UNDEF_SBSV2_CODE = 
+		"// When building with Raptor, \"gnumakefile\" builds are no longer recommended.\n"+
+		"// But the extension Makefiles referenced here are only available in OS 9.5+.\n"+
+		"// Uncomment this to always perform Raptor builds using PRJ_EXTENSIONS.\n"+
+		"#undef SBSV2\n"+
+		"\n";
+
 
 	private static final String BUILD_HELP_PREFIX = "buildHelpPrefix";
 	private static final String BUILD_HELP_SIS_PREFIX = "buildHelpSISPrefix";
@@ -64,6 +71,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	
 	private static final String HELP_SUPPORT_MACRO = "helpSupport";
 	private static final String HELP_SUPPORT_STRING = "MACRO _HELP_AVAILABLE_";
+	private static final Version VERSION_9_5 = new Version(9, 5, 0);
 
 	protected IProject project;
 
@@ -91,8 +99,11 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		template.getTemplateValues().put(BUILD_HELP_SIS_PREFIX, enableHelpSISString);
 		template.getTemplateValues().put(HELP_SUPPORT_MACRO, helpSupportString);
 		
-		String usePrjExtensionsValue = usePrjExtensionsRequired(template) ? "1" : "0";
-		template.getTemplateValues().put(USE_PRJ_EXTENSIONS_VALUE, usePrjExtensionsValue);
+		if (usePrjExtensionsRequired(template)) {
+			template.getTemplateValues().put(UNDEF_SBSV2, UNDEF_SBSV2_CODE);
+		} else {
+			template.getTemplateValues().put(UNDEF_SBSV2, ""); //$NON-NLS-1$
+		}
 	}
 
 	@Override
@@ -204,7 +215,9 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		// look for the directory housing the extension templates;
 		// if this doesn't exist, then PRJ_EXTENSIONS won't work
 		boolean makefileTemplatesAlwaysAvailable = true;
-		
+
+		boolean allPostSDK9_5 = true;
+
 		for (ISymbianBuildContext symbianBuildContext : getBuildContexts(template)) {
 			ISymbianSDK sdk = symbianBuildContext.getSDK();
 			if (sdk != null) {
@@ -216,20 +229,21 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 						makefileTemplatesAlwaysAvailable = false;
 						break;
 					}
-				}				
+				}
+				
+				if (sdk.getOSVersion().compareTo(VERSION_9_5) < 0) {
+					allPostSDK9_5 = false;
+				}
 			}
 		}
 		
 		if (!makefileTemplatesAlwaysAvailable)
 			return false;
 		
-		// Ok, now, even if we DO find the templates, they may be suboptimal.
-		// PRJ_EXTENSIONS mifconv builds causes really messy output 
-		// (tons of spurious warnings), and we don't want to use it unless it's
-		// absolutely necessary.
+		// OS 9.5+ kits are supposed to be Raptorized.  Don't recommend extensions
+		// unless we think they'll be present.
 		//
-		// If it seems at all likely that gnumakefiles will still work, just use them. 
-		if (!isSBSv2Project(template))
+		if (!allPostSDK9_5)
 			return false;
 		
 		return true;
