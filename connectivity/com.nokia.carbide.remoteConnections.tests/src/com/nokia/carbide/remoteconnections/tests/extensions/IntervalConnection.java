@@ -31,6 +31,7 @@ public class IntervalConnection extends AbstractConnection {
 	
 	public IntervalConnection(IConnectionType connectionType) {
 		super(connectionType, new HashMap<String, String>());
+		msInterval = Integer.parseInt(IntervalConnectionType.VALUE);
 		getSettings().put(IntervalConnectionType.KEY, Integer.toString(msInterval));
 	}
 
