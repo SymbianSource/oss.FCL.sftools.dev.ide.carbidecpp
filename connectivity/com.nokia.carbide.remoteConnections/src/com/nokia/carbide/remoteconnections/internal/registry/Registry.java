@@ -534,14 +534,15 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return defaultConnection;
 	}
 
-	public void disconnect(IConnection connection) {
+	public void disconnect(IConnection2 connection) {
+		
 		// TODO transition to disconnected state and wait:
 		// if not in-use, remove and stop waiting
 		// if reconnected, stop waiting
 		
 	}
 
-	public boolean reconnect(IConnection connection) {
+	public boolean reconnect(IConnection2 connection) {
 		// TODO if not removed, transition out of disconnected state
 		// return not removed
 		return false;
