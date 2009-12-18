@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Display;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
@@ -36,23 +38,6 @@ import com.nokia.carbide.remoteconnections.internal.registry.Registry;
  * 
  */
 public class ConnectionUIUtils {
-
-	public static IConnectedService.IStatus getFirstInUseStatus(IConnection connection) {
-		Collection<IConnectedService> connectedServices = 
-			Registry.instance().getConnectedServices(connection);
-		// if any service is in-use, then connection is in-use
-		for (IConnectedService connectedService : connectedServices) {
-			IConnectedService.IStatus status = connectedService.getStatus();
-			if (status.getEStatus().equals(IConnectedService.IStatus.EStatus.IN_USE))
-				return status;
-		}
-		
-		return null;
-	}
-
-	public static boolean isConnectionInUse(IConnection connection) {
-		return getFirstInUseStatus(connection) != null;
-	}
 
 	private static final ImageDescriptor STATUS_AVAIL_IMGDESC = 
 	RemoteConnectionsActivator.getImageDescriptor("icons/statusAvailable.png"); //$NON-NLS-1$
@@ -125,7 +110,7 @@ public class ConnectionUIUtils {
 			IConnectionStatus status = ((IConnection2) connection).getStatus();
 			return getConnectionStatusImage(status);
 		} else {
-			if (isConnectionInUse(connection)) {
+			if (isSomeServiceInUse(connection)) {
 				return ConnectionUIUtils.STATUS_INUSE_IMG;
 			}
 			return ConnectionUIUtils.CONNECTION_IMG;
@@ -150,4 +135,20 @@ public class ConnectionUIUtils {
 		return null;
 	}
 
+	public static IStatus getFirstInUseServiceStatus(IConnection connection) {
+		Collection<IConnectedService> connectedServices = 
+			Registry.instance().getConnectedServices(connection);
+		// if any service is in-use, then connection is in-use
+		for (IConnectedService connectedService : connectedServices) {
+			IStatus status = connectedService.getStatus();
+			if (status.getEStatus().equals(EStatus.IN_USE))
+				return status;
+		}
+		
+		return null;
+	}
+
+	public static boolean isSomeServiceInUse(IConnection connection) {
+		return getFirstInUseServiceStatus(connection) != null;
+	}
 }
