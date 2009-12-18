@@ -24,7 +24,7 @@ import java.util.Map;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
-import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 
@@ -33,16 +33,16 @@ import com.nokia.cpp.internal.api.utils.core.ListenerList;
  */
 public abstract class AbstractConnection implements IConnection2 {
 	
-	public class Status implements IStatus {
-		private EStatus estatus;
+	public static class ConnectionStatus implements IConnectionStatus {
+		private EConnectionStatus estatus;
 		private String description;
 		
-		public Status(EStatus estatus, String description) {
+		public ConnectionStatus(EConnectionStatus estatus, String description) {
 			this.estatus = estatus;
 			this.description = description;
 		}
 
-		public EStatus getEStatus() {
+		public EConnectionStatus getEConnectionStatus() {
 			return estatus;
 		}
 		
@@ -50,7 +50,7 @@ public abstract class AbstractConnection implements IConnection2 {
 			return description;
 		}
 
-		public void setEStatus(EStatus estatus) {
+		public void setEStatus(EConnectionStatus estatus) {
 			this.estatus = estatus;
 		}
 
@@ -64,14 +64,14 @@ public abstract class AbstractConnection implements IConnection2 {
 	private String name;
 	private String id;
 	private boolean dynamic;
-	private IStatus status;
+	private IConnectionStatus status;
 	private ImageDescriptor imageDescriptor;
-	private ListenerList<IStatusChangedListener> listeners;
+	private ListenerList<IConnectionStatusChangedListener> listeners;
 
 	public AbstractConnection(IConnectionType connectionType, Map<String, String> settings) {
 		this.connectionType = connectionType;
 		this.settings = new HashMap<String, String>(settings);
-		status = new Status(EStatus.NOT_READY, ""); //$NON-NLS-1$
+		status = new ConnectionStatus(EConnectionStatus.NOT_READY, ""); //$NON-NLS-1$
 	}
 
 	public void dispose() {
@@ -114,22 +114,22 @@ public abstract class AbstractConnection implements IConnection2 {
 		this.dynamic = dynamic;
 	}
 	
-	public IStatus getStatus() {
+	public IConnectionStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(IStatus status) {
+	public void setStatus(IConnectionStatus status) {
 		Check.checkArg(status);
 		this.status = status;
 	}
 	
-	public void addStatusChangedListener(IStatusChangedListener listener) {
+	public void addStatusChangedListener(IConnectionStatusChangedListener listener) {
 		if (listeners == null)
-			listeners = new ListenerList<IStatusChangedListener>();
+			listeners = new ListenerList<IConnectionStatusChangedListener>();
 		listeners.add(listener);
 	}
 	
-	public void removeStatusChangedListener(IStatusChangedListener listener) {
+	public void removeStatusChangedListener(IConnectionStatusChangedListener listener) {
 		if (listeners != null)
 			listeners.remove(listener);
 	}
@@ -137,7 +137,7 @@ public abstract class AbstractConnection implements IConnection2 {
 	public void fireStatusChanged() {
 		if (listeners == null)
 			return;
-		for (IStatusChangedListener listener : listeners) {
+		for (IConnectionStatusChangedListener listener : listeners) {
 			listener.statusChanged(status);
 		}
 	}

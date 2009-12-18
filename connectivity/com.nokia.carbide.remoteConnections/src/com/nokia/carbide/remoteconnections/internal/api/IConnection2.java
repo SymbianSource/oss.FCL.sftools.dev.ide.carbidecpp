@@ -44,12 +44,12 @@ public interface IConnection2 extends IConnection {
 	/**
 	 * The status of a connection
 	 */
-	public interface IStatus {
-		enum EStatus {
+	public interface IConnectionStatus {
+		enum EConnectionStatus {
 			READY, NOT_READY, IN_USE, IN_USE_DISCONNECTED
 		};
 		
-		EStatus getEStatus();
+		EConnectionStatus getEConnectionStatus();
 		
 		String getDescription();
 	}
@@ -58,33 +58,33 @@ public interface IConnection2 extends IConnection {
 	 * Gets this connection's status
 	 * @return IStatus
 	 */
-	IStatus getStatus();
+	IConnectionStatus getStatus();
 
 	/**
 	 * Sets this connection's status
 	 * @see IConnection2#getStatus()
 	 * @param status IStatus
 	 */
-	void setStatus(IStatus status);
+	void setStatus(IConnectionStatus status);
 	
 	/**
 	 * A listener for status changes
 	 */
-	public interface IStatusChangedListener {
-		void statusChanged(IStatus status);
+	public interface IConnectionStatusChangedListener {
+		void statusChanged(IConnectionStatus status);
 	}
 
 	/**
 	 * Adds a listener for status changes
 	 * @param listener IStatusChangedListener
 	 */
-	void addStatusChangedListener(IStatusChangedListener listener);
+	void addStatusChangedListener(IConnectionStatusChangedListener listener);
 	
 	/**
 	 * Removes a listener for status changes
 	 * @param listener IStatusChangedListener
 	 */
-	void removeStatusChangedListener(IStatusChangedListener listener);
+	void removeStatusChangedListener(IConnectionStatusChangedListener listener);
 
 	/**
 	 * An optional icon representing this connection.
