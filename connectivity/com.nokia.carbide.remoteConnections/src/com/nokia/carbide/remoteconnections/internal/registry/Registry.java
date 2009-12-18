@@ -542,8 +542,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			return;
 		
 		// transition to disconnected state and wait:
-		// 	if not in-use, remove and stop waiting
-		// 	if reconnected, stop waiting
+		// 	when not in-use, remove and stop waiting
 		if (connection.getStatus().getEConnectionStatus().equals(EConnectionStatus.IN_USE)) {
 			IConnectionStatus status = new ConnectionStatus(EConnectionStatus.IN_USE_DISCONNECTED, 
 						"connection has been disconnected while in use, please reconnect");
@@ -566,6 +565,9 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			};
 			connectionListenerMap.put(connection, listener);
 			connection.addStatusChangedListener(listener);
+		}
+		else {
+			removeConnection(connection);
 		}
 	}
 
