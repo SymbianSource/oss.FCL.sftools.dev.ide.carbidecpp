@@ -72,7 +72,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private static final String CONNECTION_DATA_XML = "connectionData.xml"; //$NON-NLS-1$
 	private static final String NAME_SUFFIX_PATTERN = "(.+) \\((\\d+)\\)"; //$NON-NLS-1$
 	private static final String NAME_FMT = "{0} ({1})"; //$NON-NLS-1$
-	private static Registry instance;
+	private static Registry instance = new Registry();
 	
 	private List<IExtensionFilter> extensionFilters;
 	private Map<String, IConnectionType> connectionTypeIdMap;
@@ -85,10 +85,6 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private IConnection defaultConnection;
 
 	public static Registry instance() {
-		if (instance == null) {
-			instance = new Registry();
-		}
-		
 		return instance;
 	}
 	
@@ -480,7 +476,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 	
 	private void fireConnectionAdded(IConnection connection) {
-		if (listeners == null)
+		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
 			listener.connectionAdded(connection);
@@ -488,7 +484,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 	
 	private void fireConnectionRemoved(IConnection connection) {
-		if (listeners == null)
+		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
 			listener.connectionRemoved(connection);
@@ -496,7 +492,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 	
 	private void fireDefaultConnectionSet(IConnection connection) {
-		if (listeners == null)
+		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
 			listener.defaultConnectionSet(connection);
