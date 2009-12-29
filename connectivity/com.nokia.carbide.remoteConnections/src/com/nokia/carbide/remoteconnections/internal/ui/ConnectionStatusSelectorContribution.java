@@ -80,10 +80,10 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 public class ConnectionStatusSelectorContribution extends WorkbenchWindowControlContribution {
 
 	/**
-	 * This is a portion of the ICommand id used for the icon in the
+	 * This is the id on the command in the toolbar contribution associated with this 
 	 * widget.  Keep this in sync with the extension point!
 	 */
-	private static final String OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_SUFFIX = "openRemoteConnectionsView";
+	private static final String OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_ID = "openRemoteConnectionsView";
 	private Composite container;
 	private CLabel connectionInfo;
 	private ToolItem connectionIcon;
@@ -92,6 +92,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	private ListenerBlock listenerBlock;
 	private ToolTip tooltip;
 	private MouseAdapter toolbarListener;
+	private ToolBar toolbar;
 
 	/**
 	 * Contains all the listeners.  In most cases we just recreate the contribution status item.
@@ -186,14 +187,13 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		// to find the expected Eclipse-generated toolitem.  Unfortunately,
 		// controlling all this ourselves is even uglier (I tried).
 
-		final ToolBar toolbar; 
 		if (parent instanceof ToolBar) {
 			toolbar = (ToolBar) parent;
 			ToolItem[] items = toolbar.getItems();
 			for (ToolItem item : items) {
 				Object data = item.getData();
 				if (data instanceof CommandContributionItem &&
-						((CommandContributionItem) data).getId().contains(OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_SUFFIX)) {
+						((CommandContributionItem) data).getId().contains(OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_ID)) {
 					connectionIcon = item;
 					break;
 				}
@@ -402,12 +402,11 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		removeListeners();
 		if (connectionIcon != null)
 			connectionIcon.dispose();
-		if (connectionInfo != null && !connectionInfo.isDisposed()) {
-			if (toolbarListener != null && !connectionInfo.getParent().isDisposed())
-				connectionInfo.getParent().removeMouseListener(toolbarListener);
-			toolbarListener = null;
+		if (toolbarListener != null && !toolbar.isDisposed())
+			toolbar.removeMouseListener(toolbarListener);
+		if (connectionInfo != null)
 			connectionInfo.dispose();
-		}
+		
 		super.dispose();
 	}
 

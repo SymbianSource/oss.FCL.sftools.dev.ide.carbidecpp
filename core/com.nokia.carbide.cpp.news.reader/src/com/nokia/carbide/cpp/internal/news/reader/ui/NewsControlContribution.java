@@ -35,9 +35,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import com.nokia.carbide.cpp.internal.news.reader.CarbideNewsReaderPlugin;
@@ -53,11 +56,21 @@ import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.IFeedCacheChange
 public class NewsControlContribution extends WorkbenchWindowControlContribution
 		implements IFeedCacheChangedlistener {
 
+	/** This is the id on the command in the toolbar contribution associated with this 
+	 * widget.  Keep this in sync with the extension point! */
+	private static final CharSequence NEWS_TRIM_COMMAND_ID = "newsTrimCommand"; //$NON-NLS-1$
+	
 	// private data
 	private static NewsControlContribution sharedInstance;
 	private Label label;
 	private boolean alert;
 	private Composite container;
+
+	private ToolItem newsIconItem;
+
+	private MouseAdapter toolbarListener;
+
+	private ToolBar toolbar;
 
 	/**
 	 * The constructor.
@@ -74,6 +87,22 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 	 */
 	@Override
 	protected Control createControl(Composite parent) {
+		
+		if (parent instanceof ToolBar) {
+			toolbar = (ToolBar) parent;
+			ToolItem[] items = toolbar.getItems();
+			for (ToolItem item : items) {
+				Object data = item.getData();
+				if (data instanceof CommandContributionItem &&
+						((CommandContributionItem) data).getId().contains(NEWS_TRIM_COMMAND_ID)) {
+					newsIconItem = item;
+					break;
+				}
+			}
+		} else {
+			toolbar = null;
+		}
+		
 		container = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().margins(2, 2).applyTo(container);
 
@@ -88,11 +117,44 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 			alert = false;
 		}
 		
+		if (newsIconItem != null) {
+			// Yuck, toolbars and items have a wonky UI.  We need to do these events on the parent,
+			// since the ToolItem itself is just an area inside the parent.  (#getControl() is only for separators ?!)
+
+			// On icon: left click = open view, right click = menu
+			if (toolbar != null) {
+				if (toolbarListener != null)
+					toolbar.removeMouseListener(toolbarListener);
+				
+				toolbarListener = new MouseAdapter() {
+					/* (non-Javadoc)
+					 * @see org.eclipse.swt.events.MouseAdapter#mouseDown(org.eclipse.swt.events.MouseEvent)
+					 */
+					@Override
+					public void mouseDown(MouseEvent event) {
+						ToolItem item = toolbar.getItem(new Point(event.x, event.y));
+						if (item == newsIconItem) {
+							if (event.button == 1) {
+								NewsEditor.openEditor();
+							} else if (event.button == 3) {
+								Point screenLoc = toolbar.toDisplay(event.x, event.y);
+								handleNewsMenu(screenLoc);
+							}
+						}
+					}
+				};
+				toolbar.addMouseListener(toolbarListener);
+			}
+		}
+		
+		// On label: left or right click = menu
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				Point screenLoc = label.toDisplay(e.x, e.y);
-				handleNewsMenu(screenLoc);
+				if (e.button == 1 || e.button == 3) {
+					Point screenLoc = label.toDisplay(e.x, e.y);
+					handleNewsMenu(screenLoc);
+				}
 			}
 		});
 		
@@ -106,6 +168,10 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 	 */
 	public void dispose() {
 		FeedCacheManager.removeFeedCacheChangedListener(this);
+		if (toolbarListener != null && toolbar != null && !toolbar.isDisposed()) {
+			toolbar.removeMouseListener(toolbarListener);
+			toolbarListener = null;
+		}
 		super.dispose();
 	}
 
