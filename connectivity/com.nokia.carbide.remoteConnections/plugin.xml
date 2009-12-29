@@ -77,11 +77,42 @@
     </actionSet>
  </extension>
 
+<!-- We use an Eclipse toolbar command to show the ToolItem icon for the 
+current connection status.  This is required to get the same kind of
+UI as a toolbar item, without resorting to exorbant recreation of
+the platform UI.  But this also means we directly depend on being
+able to find the ToolItem at runtime.  Thus, this command id 
+should not change without syncing with the ConnectionStatusSelectorContribution
+class. -->
+
+<extension point="org.eclipse.ui.commands">
+	<command
+		id="com.nokia.carbide.remoteConnections.commands.openRemoteConnectionsView"
+		name="Open Remote Connections View">
+	</command>
+</extension>
+
+<extension point="org.eclipse.ui.handlers">
+	<handler
+		class="com.nokia.carbide.remoteconnections.internal.ui.OpenConnectionViewCommandHandler"
+		commandId="com.nokia.carbide.remoteConnections.commands.openRemoteConnectionsView">
+	</handler>
+</extension>
+
 <extension point="org.eclipse.ui.menus">
 	<menuContribution
 		locationURI="toolbar:org.eclipse.ui.trim.status">
         <toolbar
 			id="com.nokia.carbide.remoteConnections.contributions.toolbar.trim">
+			<command
+				commandId="com.nokia.carbide.remoteConnections.commands.openRemoteConnectionsView"
+				icon="icons/connection.png"
+				label=""
+				id="openRemoteConnectionsView"
+				
+				tooltip="Current connection status">
+			</command>
+			
 			<control
 				class="com.nokia.carbide.remoteconnections.internal.ui.ConnectionStatusSelectorContribution"
 				id="deviceStatusSelectorContribution">

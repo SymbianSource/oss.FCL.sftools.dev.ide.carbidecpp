@@ -17,20 +17,32 @@
 
 package com.nokia.carbide.cpp.internal.news.reader.ui;
 
+import java.text.MessageFormat;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import com.nokia.carbide.cpp.internal.news.reader.CarbideNewsReaderPlugin;
+import com.nokia.carbide.cpp.internal.news.reader.Messages;
+import com.nokia.carbide.cpp.internal.news.reader.editor.NewsEditor;
 import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.FeedCacheManager;
 import com.nokia.carbide.cpp.internal.news.reader.gen.FeedCache.IFeedCacheChangedlistener;
 
@@ -68,13 +80,21 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 		// Create a label for the trim.
 		label = new Label(container, SWT.BOTTOM);
 		GridDataFactory.swtDefaults().grab(false, true).applyTo(label);
-		String text = CarbideNewsReaderPlugin.getFeedManager().getUnreadEntriesCount() + " unread";
+		String text = MessageFormat.format(Messages.NewsControlContribution_UnreadMessageFormat, CarbideNewsReaderPlugin.getFeedManager().getUnreadEntriesCount()); 
 		label.setText(text);
 		if (alert) {
 			Font font = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
 			label.setFont(font);
 			alert = false;
 		}
+		
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				Point screenLoc = label.toDisplay(e.x, e.y);
+				handleNewsMenu(screenLoc);
+			}
+		});
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NewsUIHelpIDs.NEWSREADER_TRIM_COMMAND);
 		return container;
@@ -89,6 +109,36 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 		super.dispose();
 	}
 
+	private void handleNewsMenu(Point screenLoc) {
+		Shell shell = label.getParent().getShell();
+		final Display display = shell.getDisplay();
+		
+		final Menu menu = new Menu(shell, SWT.POP_UP);
+		populateMenu(menu);
+		
+		menu.setLocation(screenLoc.x, screenLoc.y);
+		menu.setVisible(true);
+		
+		while (!menu.isDisposed() && menu.isVisible()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+		menu.dispose();
+
+	}
+
+	private void populateMenu(Menu menu) {
+		MenuItem openNews = new MenuItem(menu, SWT.PUSH);
+		openNews.setText(Messages.NewsControlContribution_OpenNewsReaderMenuItem);
+		openNews.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				NewsEditor.openEditor();
+			}
+		});
+	}
+
+	
 	/**
 	 * Perform the necessary updates in response to local feed cache changes.
 	 */

@@ -33,17 +33,21 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import com.nokia.carbide.remoteconnections.Messages;
@@ -66,17 +70,28 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * This widget appears in the Eclipse trim and allows the user to select the
- * "default" device connection and also see its status at a glance. 
+ * "default" device connection and also see its status at a glance.
+ * <p>
+ * Note: the UI for this control should behave similarly to that of the News Reader
+ * trim.  Due to the way we're modifying the icon and the state dynamically
+ * for this contribution, they can't be implemented the same way, however.
  */
 @SuppressWarnings("deprecation")
 public class ConnectionStatusSelectorContribution extends WorkbenchWindowControlContribution {
 
+	/**
+	 * This is a portion of the ICommand id used for the icon in the
+	 * widget.  Keep this in sync with the extension point!
+	 */
+	private static final String OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_SUFFIX = "openRemoteConnectionsView";
 	private Composite container;
 	private CLabel connectionInfo;
+	private ToolItem connectionIcon;
 	private IConnectionsManager manager;
 	private IConnection defaultConnection;
 	private ListenerBlock listenerBlock;
 	private ToolTip tooltip;
+	private MouseAdapter toolbarListener;
 
 	/**
 	 * Contains all the listeners.  In most cases we just recreate the contribution status item.
@@ -88,7 +103,8 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		 */
 		public void connectionAdded(IConnection connection) {
 			updateUI();
-			if (connection instanceof IConnection2 && ((IConnection2) connection).isDynamic())
+			boolean display = (connection instanceof IConnection2 && ((IConnection2) connection).isDynamic());
+			if (display)
 				launchBubble(MessageFormat.format(
 						Messages.getString("ConnectionStatusSelectorContribution.AddedConnectionFormat"),  //$NON-NLS-1$
 						connection.getDisplayName()));
@@ -99,7 +115,8 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		 */
 		public void connectionRemoved(IConnection connection) {
 			updateUI();
-			if (connection instanceof IConnection2 && ((IConnection2) connection).isDynamic())
+			boolean display = (connection instanceof IConnection2 && ((IConnection2) connection).isDynamic());
+			if (display) 
 				launchBubble(MessageFormat.format(
 						Messages.getString("ConnectionStatusSelectorContribution.RemovedConnectionFormat"),  //$NON-NLS-1$
 						connection.getDisplayName()));
@@ -156,11 +173,40 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		
 		// This UI is recreated whenever the default connection changes.
 		
+		// This is gross.  The normal parent of this is a toolbar,
+		// but we cannot add arbitrary stuff to the toolbar besides
+		// this control.  (If you try, it will usually show up
+		// out of order!)
+		//
+		// But we want to have a toolbar button for the connection icon
+		// for which we can change the tooltip and image, and attach 
+		// a mouse listener responds to left and right clicking.
+		//
+		// In order to do this, we need to poke around in the widget tree
+		// to find the expected Eclipse-generated toolitem.  Unfortunately,
+		// controlling all this ourselves is even uglier (I tried).
+
+		final ToolBar toolbar; 
+		if (parent instanceof ToolBar) {
+			toolbar = (ToolBar) parent;
+			ToolItem[] items = toolbar.getItems();
+			for (ToolItem item : items) {
+				Object data = item.getData();
+				if (data instanceof CommandContributionItem &&
+						((CommandContributionItem) data).getId().contains(OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_SUFFIX)) {
+					connectionIcon = item;
+					break;
+				}
+			}
+		} else {
+			toolbar = null;
+		}
+		
 		container = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().margins(2, 0).applyTo(container);
 
-		// Create a label for the trim.
-		connectionInfo = new CLabel(container, SWT.FLAT);
+		// Create a label for the trim, outside the toolbar.
+		connectionInfo = new CLabel(container, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(connectionInfo);
 
 		String text = Messages.getString("ConnectionStatusSelectorContribution_NoDefaultConnectionMessage"); //$NON-NLS-1$
@@ -174,38 +220,151 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		
 		updateConnectionStatus(getConnectionStatus(defaultConnection));
 		
-		connectionInfo.addMouseListener (new MouseAdapter() {
-			public void mouseDown(MouseEvent event) {
-				Shell shell = connectionInfo.getShell();
-				final Display display = shell.getDisplay();
-				
-				final Menu menu = new Menu(shell, SWT.POP_UP);
-				populateConnectionMenu(menu);
-				
-				Point screenLoc = connectionInfo.toDisplay(event.x, event.y);
-				menu.setLocation(screenLoc.x, screenLoc.y);
-				menu.setVisible(true);
-				
-				while (!menu.isDisposed() && menu.isVisible()) {
-					if (!display.readAndDispatch())
-						display.sleep();
+
+		// Yuck, toolbars and items have a wonky UI.  We need to do these events on the parent,
+		// since the ToolItem itself is just an area inside the parent.  (#getControl() is only for separators ?!)
+			
+		// On icon: left click = open view, right click = menu
+		
+		if (toolbar != null) {
+			if (toolbarListener != null)
+				toolbar.removeMouseListener(toolbarListener);
+			
+			toolbarListener = new MouseAdapter() {
+				/* (non-Javadoc)
+				 * @see org.eclipse.swt.events.MouseAdapter#mouseDown(org.eclipse.swt.events.MouseEvent)
+				 */
+				@Override
+				public void mouseDown(MouseEvent event) {
+					ToolItem item = toolbar.getItem(new Point(event.x, event.y));
+					if (item == connectionIcon) {
+						if (event.button == 1) {
+							openConnectionsView();
+						} else if (event.button == 3) {
+							Point screenLoc = toolbar.toDisplay(event.x, event.y);
+							handleConnectionMenu(screenLoc);
+						}
+					}
 				}
-				menu.dispose();
-			}
-			/* (non-Javadoc)
-			 * @see org.eclipse.swt.events.MouseAdapter#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
-			 */
-			@Override
-			public void mouseDoubleClick(MouseEvent ev) {
-				// NOTE: the menu usually comes up before double-click is seen
-				if (ev.button == 1) {
-					openConnectionsView();
+			};
+			toolbar.addMouseListener(toolbarListener);
+			
+			// On label: left or right click = menu
+			connectionInfo.addMouseListener(new MouseAdapter() {
+				public void mouseDown(MouseEvent event) {
+					if (event.button == 1 || event.button == 3) {
+						Point screenLoc = toolbar.toDisplay(event.x, event.y);
+						handleConnectionMenu(screenLoc);
+					}
 				}
-			}
-		});
+			});
+		}
 		
 		RemoteConnectionsActivator.setHelp(container, "ConnectionStatusSelector"); //$NON-NLS-1$
 		return container;
+	}
+
+	private void handleConnectionMenu(Point screenLoc) {
+		Shell shell = connectionInfo.getParent().getShell();
+		final Display display = shell.getDisplay();
+		
+		final Menu menu = new Menu(shell, SWT.POP_UP);
+		populateConnectionMenu(menu);
+		
+		menu.setLocation(screenLoc.x, screenLoc.y);
+		menu.setVisible(true);
+		
+		while (!menu.isDisposed() && menu.isVisible()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+		menu.dispose();
+	
+	}
+
+	/**
+	 * @return
+	 */
+	protected void populateConnectionMenu(Menu menu) {
+		// Display the connections with dynamic ones first, 
+		// then static ones, separated by a separator
+	
+		List<IConnection> dynamicConnections = new ArrayList<IConnection>();
+		List<IConnection> staticConnections = new ArrayList<IConnection>();
+		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
+			if (connection instanceof IConnection2 && ((IConnection2)connection).isDynamic()) 
+				dynamicConnections.add(connection);
+			else
+				staticConnections.add(connection);
+		}
+		
+	
+		Comparator<IConnection> connectionComparator = new Comparator<IConnection>() {
+			public int compare(IConnection o1, IConnection o2) {
+				return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
+			}
+		};
+		Collections.sort(dynamicConnections, connectionComparator);
+		Collections.sort(staticConnections, connectionComparator);
+	
+		MenuItem label = new MenuItem(menu, SWT.NONE);
+		label.setEnabled(false);
+		
+		int number = 1;
+		if (dynamicConnections.size() + staticConnections.size() == 0) {
+			label.setText(Messages.getString("ConnectionStatusSelectorContribution.NoConnectionsDefinedOrDetected")); //$NON-NLS-1$
+		} else {
+			label.setText(Messages.getString("ConnectionStatusSelectorContribution_SelectTheDefaultConnectionMessage")); //$NON-NLS-1$
+			
+			for (IConnection connection : dynamicConnections) {
+				createConnectionMenuItem(menu, connection, defaultConnection, number++);
+			}
+			
+			new MenuItem(menu, SWT.SEPARATOR);
+			
+			for (IConnection connection : staticConnections) {
+				createConnectionMenuItem(menu, connection, defaultConnection, number++);
+			}
+		}
+		
+		new MenuItem(menu, SWT.SEPARATOR);
+		
+		MenuItem openView = new MenuItem(menu, SWT.PUSH);
+		openView.setText(Messages.getString("ConnectionStatusSelectorContribution.OpenRemoteConnectionsView")); //$NON-NLS-1$
+		openView.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openConnectionsView();
+			}
+		});
+	}
+
+	/**
+	 * @param menu
+	 * @param connection
+	 * @param defaultConnection 
+	 */
+	private MenuItem createConnectionMenuItem(Menu menu, 
+			final IConnection connection, 
+			IConnection defaultConnection,
+			int number) {
+		MenuItem item = new MenuItem(menu, SWT.CHECK);
+		
+		boolean isDefault = false;
+		isDefault = connection.equals(defaultConnection);
+		
+		item.setSelection(isDefault);
+		
+		item.setText("&" + number + " - " + connection.getDisplayName());
+		
+		item.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				manager.setDefaultConnection(connection);
+			}
+		});		
+		
+		return item;
 	}
 
 	private void attachListeners() {
@@ -241,8 +400,14 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 */
 	public void dispose() {
 		removeListeners();
-		if (connectionInfo != null)
+		if (connectionIcon != null)
+			connectionIcon.dispose();
+		if (connectionInfo != null && !connectionInfo.isDisposed()) {
+			if (toolbarListener != null && !connectionInfo.getParent().isDisposed())
+				connectionInfo.getParent().removeMouseListener(toolbarListener);
+			toolbarListener = null;
 			connectionInfo.dispose();
+		}
 		super.dispose();
 	}
 
@@ -299,93 +464,12 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	}
 	
 	/**
-	 * @return
-	 */
-	protected void populateConnectionMenu(Menu menu) {
-		// Display the connections with dynamic ones first, 
-		// then static ones, separated by a separator
-
-		List<IConnection> dynamicConnections = new ArrayList<IConnection>();
-		List<IConnection> staticConnections = new ArrayList<IConnection>();
-		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
-			if (connection instanceof IConnection2 && ((IConnection2)connection).isDynamic()) 
-				dynamicConnections.add(connection);
-			else
-				staticConnections.add(connection);
-		}
-		
-
-		Comparator<IConnection> connectionComparator = new Comparator<IConnection>() {
-			public int compare(IConnection o1, IConnection o2) {
-				return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
-			}
-		};
-		Collections.sort(dynamicConnections, connectionComparator);
-		Collections.sort(staticConnections, connectionComparator);
-
-		MenuItem label = new MenuItem(menu, SWT.NONE);
-		label.setEnabled(false);
-		
-		if (dynamicConnections.size() + staticConnections.size() == 0) {
-			label.setText(Messages.getString("ConnectionStatusSelectorContribution.NoConnectionsDefinedOrDetected")); //$NON-NLS-1$
-		} else {
-			label.setText(Messages.getString("ConnectionStatusSelectorContribution_SelectTheDefaultConnectionMessage")); //$NON-NLS-1$
-			
-			for (IConnection connection : dynamicConnections) {
-				createConnectionMenuItem(menu, connection, defaultConnection);
-			}
-			
-			new MenuItem(menu, SWT.SEPARATOR);
-			
-			for (IConnection connection : staticConnections) {
-				createConnectionMenuItem(menu, connection, defaultConnection);
-			}
-		}
-		
-		new MenuItem(menu, SWT.SEPARATOR);
-		
-		MenuItem openView = new MenuItem(menu, SWT.PUSH);
-		openView.setText(Messages.getString("ConnectionStatusSelectorContribution.OpenRemoteConnectionsView")); //$NON-NLS-1$
-		openView.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				openConnectionsView();
-			}
-		});
-	}
-
-	/**
-	 * @param menu
-	 * @param connection
-	 * @param defaultConnection 
-	 */
-	private MenuItem createConnectionMenuItem(Menu menu, final IConnection connection, IConnection defaultConnection) {
-		MenuItem item = new MenuItem(menu, SWT.CHECK);
-		
-		boolean isDefault = false;
-		isDefault = connection.equals(defaultConnection);
-		
-		item.setSelection(isDefault);
-		
-		item.setText(connection.getDisplayName());
-		
-		item.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				manager.setDefaultConnection(connection);
-			}
-		});		
-		
-		return item;
-	}
-
-	/**
 	 * @param status
 	 */
 	private void updateConnectionStatus(final IConnectionStatus status) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				if (connectionInfo.isDisposed())
+				if (connectionIcon == null || connectionIcon.isDisposed())
 					return;
 				
 				Image statusImage;
@@ -394,8 +478,12 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 				else
 					statusImage = ConnectionUIUtils.getConnectionImage(defaultConnection);
 				
-				connectionInfo.setImage(statusImage);
-				connectionInfo.setToolTipText(createConnectionStatusTooltip(defaultConnection, status));		
+				connectionIcon.setImage(statusImage);
+				String tip = createConnectionStatusTooltip(defaultConnection, status);
+				connectionInfo.setToolTipText(tip);
+				
+				String preamble = "Click to open the Remote Connections View.\n\n";
+				connectionIcon.setToolTipText(preamble + tip);		
 			}
 		});
 		
@@ -448,11 +536,12 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 				if (connectionInfo == null || connectionInfo.isDisposed())
 					return;
 				
-				tooltip = new ToolTip(connectionInfo.getShell(), SWT.BALLOON | SWT.ICON_INFORMATION);
+				tooltip = new ToolTip(connectionInfo.getParent().getShell(), SWT.BALLOON | SWT.ICON_INFORMATION);
 				tooltip.setMessage(string);
-				Point center = connectionInfo.getSize();
-				center.x /= 2;
-				Point location = connectionInfo.toDisplay(center);
+				Rectangle bounds = connectionInfo.getBounds();
+				Point center = new Point(bounds.x + bounds.width / 2, 
+						bounds.y + bounds.height);
+				Point location = connectionInfo.getParent().toDisplay(center);
 				//System.out.println(connectionInfo.hashCode() + ": " + connectionInfo.getLocation() + " : " + location);
 				tooltip.setLocation(location);
 				tooltip.setVisible(true);

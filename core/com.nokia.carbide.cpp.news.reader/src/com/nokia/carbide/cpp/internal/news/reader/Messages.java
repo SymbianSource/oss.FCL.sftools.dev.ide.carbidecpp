@@ -23,6 +23,10 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "com.nokia.carbide.cpp.internal.news.reader.messages"; //$NON-NLS-1$
 
+	public static String NewsControlContribution_OpenNewsReaderMenuItem;
+
+	public static String NewsControlContribution_UnreadMessageFormat;
+
 	public static String NewsPage_GettingStartedSectionTitle;
 
 	public static String NewsPage_NewsContentsSectionTitle;
