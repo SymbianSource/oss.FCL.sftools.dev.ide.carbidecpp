@@ -104,7 +104,7 @@ public class NewsControlContribution extends WorkbenchWindowControlContribution
 		}
 		
 		container = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().margins(2, 2).applyTo(container);
+		GridLayoutFactory.fillDefaults().margins(2, 0).applyTo(container);
 
 		// Create a label for the trim.
 		label = new Label(container, SWT.BOTTOM);
