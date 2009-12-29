@@ -73,6 +73,8 @@ public class NewsPage extends FormPage {
 	public final static String NEWS_PAGE_TITLE = "Carbide.c++ News Page";
 	public final static String NEWS_SUMMARY_TITLE = "All News";
 	private final static String ECLIPSE_NETWORK_PREFERENCES_ID = "org.eclipse.ui.net.NetPreferences";
+	
+	// note: the synthetic links must use "http://" as a prefix for portability (#10381)
 	private final static String FAKE_URL_PREFIX = "http://localhost/news/";
 	private final static String LINK_MARK_ALL_ENTRIES_READ = FAKE_URL_PREFIX + "removeAll";
 	private final static String LINK_MARK_ENTRY_READ = FAKE_URL_PREFIX + "removeEntry";
@@ -275,7 +277,6 @@ public class NewsPage extends FormPage {
 			CarbideNewsReaderPlugin.log(e);
 		}
 		
-		// note: the non-navigable links do not work on all hosts, hence the mouse listener 
 		newsBrowser.addLocationListener(new LocationListener() {
 			public void changing(LocationEvent event) {
 				handleChangingLocation(event);
