@@ -127,6 +127,7 @@ public interface IConnectionsManager {
 	 * are supported by the service. Connection list UI as well as new and edit wizards are filtered.
 	 * @param service IService
 	 * @return IClientServiceSiteUI
+	 * @deprecated use {@link #getClientSiteUI2(IService)}
 	 */
 	IClientServiceSiteUI getClientSiteUI(IService service);
 	
@@ -166,6 +167,17 @@ public interface IConnectionsManager {
 	 * @since 3.0
 	 */
 	IConnection getDefaultConnection();
+	
+	/**
+	 * Returns the IClientServiceSiteUI2 for a service. Filters connection types to those that
+	 * are supported by the service. Connection list UI as well as new and edit wizards are filtered.
+	 * Allows selecting a "default" connection which maps to #getDefaultConnection()
+	 * when you use #ensureConenction().
+	 * @param service IService
+	 * @return IClientServiceSiteUI2
+	 * @since 3.0
+	 */
+	IClientServiceSiteUI2 getClientSiteUI2(IService service);
 	
 	/**
 	 * Can be called by specific service implementors (e.g., debugger) to ensure some connection

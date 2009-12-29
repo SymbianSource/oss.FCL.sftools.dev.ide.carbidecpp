@@ -70,7 +70,7 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 	        	config = RemoteConnectionsTRKHelper.attemptUpdateLaunchConfiguration(config.getWorkingCopy());
 	        }
 	        
-	        final IConnection connection = RemoteConnectionsTRKHelper.getConnectionFromConfig(config);
+	        final IConnection connection = RemoteConnectionsTRKHelper.ensureConnectionFromConfig(config);
 			if (connection == null) {
 				IStatus status = new Status(Status.ERROR, LaunchPlugin.PLUGIN_ID, 
 					LaunchMessages.getString("TRKLaunchDelegate.NoConnectionErrorMsg")); //$NON-NLS-1$

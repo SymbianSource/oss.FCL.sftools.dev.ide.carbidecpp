@@ -16,10 +16,13 @@
 */
 
 
-package com.nokia.carbide.remoteconnections.ui;
+package com.nokia.carbide.remoteconnections.internal.ui;
 
 import com.nokia.carbide.remoteconnections.Messages;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -30,6 +33,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.*;
@@ -37,14 +42,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
 
 /**
- * Implementation of IClientServiceSiteUI
- * @deprecated
+ * Implementation of IClientServiceSiteUI2
  */
-public class ClientServiceSiteUI implements IClientServiceSiteUI {
+@SuppressWarnings("deprecation")
+public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionListener, IConnectionsManagerListener {
 
 	private IService service;
 	private ComboViewer viewer;
@@ -52,16 +58,16 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 	private Set<IConnectionType> compatibleConnectionTypes;
 	private Button editButton;
 	private Button newButton;
-	private IConnection connection;
+	private String connection;
 	private ListenerList<IListener> listenerList;
 	private static final String UID = ".uid"; //$NON-NLS-1$
-	
+	private Map<String, String> connectionNames;
 
-	public ClientServiceSiteUI(IService service) {
+	public ClientServiceSiteUI2(IService service) {
 		Check.checkArg(service);
 		this.service = service;
 	}
-
+	
 	public void createComposite(Composite parent) {
 		initializeDialogUnits(parent);
 		Group group = new Group(parent, SWT.NONE);
@@ -74,8 +80,9 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 		viewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(Object element) {
-				Check.checkContract(element instanceof IConnection);
-				return ((IConnection) element).getDisplayName();
+				Check.checkContract(element instanceof String);
+				String id = (String) element;
+				return connectionNames.get(id);
 			}
 		});
 		viewer.setContentProvider(new ArrayContentProvider());
@@ -85,9 +92,9 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-				IConnection connection = (IConnection) selection.getFirstElement();
-				if (!connection.equals(ClientServiceSiteUI.this.connection)) {
-					ClientServiceSiteUI.this.connection = connection;
+				String connection = (String) selection.getFirstElement();
+				if (!connection.equals(ClientServiceSiteUI2.this.connection)) {
+					ClientServiceSiteUI2.this.connection = connection;
 					fireConnectionSelected();
 				}
 			}
@@ -120,7 +127,11 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 			public void widgetSelected(SelectionEvent e) {
 				SettingsWizard wizard = new SettingsWizard(null, service);
 				wizard.open(composite.getShell());
-				setViewerInput(wizard.getConnectionToEdit());
+				IConnection connection = wizard.getConnectionToEdit();
+				// note: refresh ASAP so the selection will be valid; but endure a listener event
+				// which will redo this
+				refreshUI();
+				setViewerInput(connection);
 			}
 		});
 		
@@ -138,21 +149,71 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 			public void widgetSelected(SelectionEvent e) {
 				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 				Object value = selection.getFirstElement();
-				if (value instanceof IConnection) {
-					SettingsWizard wizard = new SettingsWizard((IConnection) value, service);
+				if (value instanceof String) {
+					IConnection editConnection = getActualConnection((String) value);
+					SettingsWizard wizard = new SettingsWizard(editConnection, service);
 					wizard.open(composite.getShell());
-					setViewerInput(wizard.getConnectionToEdit());
+					
+					// leave the viewer the same, callback will refresh anything needed
 				}
 			}
 		});
 
+		// attach listeners
+		RemoteConnectionsActivator.getConnectionsManager().addConnectionListener(this);
+		RemoteConnectionsActivator.getConnectionsManager().addConnectionStoreChangedListener(this);
+
+		// remove listeners on dispose
+		group.addDisposeListener(new DisposeListener() {
+			
+			public void widgetDisposed(DisposeEvent e) {
+				RemoteConnectionsActivator.getConnectionsManager().addConnectionListener(ClientServiceSiteUI2.this);
+				RemoteConnectionsActivator.getConnectionsManager().addConnectionStoreChangedListener(ClientServiceSiteUI2.this);
+			}
+		});
+		
 		setViewerInput(null);
 	}
 
+	/**
+	 * Get the actual connection for an identifier.
+	 * This is not {@link IConnectionsManager#ensureConnection(String, IService)} because we don't
+	 * want to actually validate the connection now.
+	 * @param id
+	 * @return {@link IConnection} or <code>null</code>
+	 */
+	protected IConnection getActualConnection(String id) {
+		if (id.equals(Registry.DEFAULT_CONNECTION_ID)) {
+			return RemoteConnectionsActivator.getConnectionsManager().getDefaultConnection();
+		}
+		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
+			if (connection.getIdentifier().equals(id)) {
+				return connection;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Set the selected input.  
+	 * @param connection existing connection or <code>null</code> for the default   
+	 */
 	private void setViewerInput(IConnection connection) {
-		List<IConnection> input = getCompatibleConnections();
-		viewer.setInput(input);
-		if (input.isEmpty())
+		List<IConnection> compatible = getCompatibleConnections();
+		connectionNames = new LinkedHashMap<String, String>();
+		
+		// update the default
+		IConnection defaultConnection = RemoteConnectionsActivator.getConnectionsManager().getDefaultConnection();
+		
+		connectionNames.put(Registry.DEFAULT_CONNECTION_ID, createDefaultConnectionName(defaultConnection));
+		
+		for (IConnection conn : compatible) {
+			connectionNames.put(conn.getIdentifier(), conn.getDisplayName());
+		}
+		
+		viewer.setInput(connectionNames.keySet());
+		
+		if (connectionNames.isEmpty())
 			viewer.getCombo().setEnabled(false);
 		else {
 			viewer.getCombo().setEnabled(true);
@@ -161,9 +222,27 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 				viewer.setSelection(viewer.getSelection());
 			}
 			else
-				selectConnection(connection);
+				selectConnection(connection.getIdentifier());
 		}
 		editButton.setEnabled(!viewer.getSelection().isEmpty());
+	}
+
+	private void refreshUI() {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				setViewerInput(null);
+			}
+		});
+	}
+	
+	/**
+	 * @param defaultConnection
+	 * @return
+	 */
+	private String createDefaultConnectionName(IConnection defaultConnection) {
+		return MessageFormat.format("Default connection ({0})",
+				defaultConnection != null ? defaultConnection.getDisplayName() : 
+					"when defined");
 	}
 
 	private void initializeDialogUnits(Composite parent) {
@@ -198,34 +277,22 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 		}
 	}
 
-	public void selectConnection(IConnection connection) {
-		if (!viewerInputContainsConnection(connection)) {
-			addConnectionToViewerInput(connection);
-		}
+	public void selectConnection(String connection) {
 		viewer.setSelection(new StructuredSelection(connection));
 	}
 	
-	@SuppressWarnings("unchecked")
-	private boolean viewerInputContainsConnection(IConnection connection) {
-		Object input = viewer.getInput();
-		if (input instanceof Collection) {
-			return ((Collection) input).contains(connection);
-		}
-		return false;
-	}
-
-	@SuppressWarnings("unchecked")
-	private void addConnectionToViewerInput(IConnection connection) {
-		Object input = viewer.getInput();
-		if (input instanceof Collection) {
-			List<IConnection> newInput = new ArrayList<IConnection>((Collection) input);
-			newInput.add(connection);
-			viewer.setInput(newInput);
-		}
+	public String getSelectedConnection() {
+		return connection;
 	}
 	
-	public IConnection getSelectedConnection() {
-		return connection;
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2#getConnectionDisplayName(java.lang.String)
+	 */
+	public String getConnectionDisplayName(String connection) {
+		String display = connectionNames.get(connection);
+		if (display == null)
+			display = MessageFormat.format("<<nonexistent connection {0}>>", connection);
+		return display;
 	}
 
 	public void addListener(IListener listener) {
@@ -245,5 +312,40 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 				listener.connectionSelected();
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionAdded(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+	 */
+	public void connectionAdded(IConnection connection) {
+		refreshUI();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionRemoved(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+	 */
+	public void connectionRemoved(IConnection connection) {
+		refreshUI();		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#defaultConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+	 */
+	public void defaultConnectionSet(IConnection connection) {
+		refreshUI();		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener#connectionStoreChanged()
+	 */
+	public void connectionStoreChanged() {
+		refreshUI();		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener#displayChanged()
+	 */
+	public void displayChanged() {
+		refreshUI();		
 	}
 }

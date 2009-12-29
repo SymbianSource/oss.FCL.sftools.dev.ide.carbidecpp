@@ -46,6 +46,7 @@ import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedServiceFactory;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
@@ -58,6 +59,7 @@ import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.ui.ClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -77,6 +79,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private static final String CONNECTION_DATA_XML = "connectionData.xml"; //$NON-NLS-1$
 	private static final String NAME_SUFFIX_PATTERN = "(.+) \\((\\d+)\\)"; //$NON-NLS-1$
 	private static final String NAME_FMT = "{0} ({1})"; //$NON-NLS-1$
+	
+	// this is exposed to other clients inside this plugin but it is not public knowledge
+	public static final String DEFAULT_CONNECTION_ID = RemoteConnectionsActivator.PLUGIN_ID + ".defaultConnection"; //$NON-NLS-1$
+	
 	private static Registry instance = new Registry();
 	
 	private List<IExtensionFilter> extensionFilters;
@@ -457,6 +463,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 
 	public IClientServiceSiteUI getClientSiteUI(IService service) {
 		return new ClientServiceSiteUI(service);
+	}
+	
+	public IClientServiceSiteUI2 getClientSiteUI2(IService service) {
+		return new ClientServiceSiteUI2(service);
 	}
 	
 	public Collection<IService> getServices() {

@@ -18,9 +18,8 @@ package com.nokia.cdt.internal.debug.launch.ui;
 
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI.IListener;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 import org.eclipse.core.runtime.CoreException;
@@ -36,8 +35,8 @@ public class AttachMainTab extends CarbideMainTab {
 	protected Text remoteText;
 	protected Label argsLabel;
 	protected Text argsText;
-	protected IConnection connection;
-	protected IClientServiceSiteUI clientSiteUI;
+	protected String connection;
+	protected IClientServiceSiteUI2 clientSiteUI;
 	
 	public AttachMainTab() {
 		super(DONT_CHECK_PROGRAM);
@@ -59,7 +58,7 @@ public class AttachMainTab extends CarbideMainTab {
 		fProjText.setToolTipText(Messages.getString("RunModeMainTab.8")); //$NON-NLS-1$
 
 		createVerticalSpacer(comp, 1);
-		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI(LaunchPlugin.getTRKService());
+		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(LaunchPlugin.getTRKService());
 		clientSiteUI.createComposite(comp);
 		clientSiteUI.addListener(new IListener() {
 			public void connectionSelected() {
@@ -85,7 +84,7 @@ public class AttachMainTab extends CarbideMainTab {
 	        if (!RemoteConnectionsTRKHelper.configUsesConnectionAttribute(config)) {
 	        	config = RemoteConnectionsTRKHelper.attemptUpdateLaunchConfiguration(config.getWorkingCopy());
 	        }
-			connection = RemoteConnectionsTRKHelper.getConnectionFromConfig(config);
+			connection = RemoteConnectionsTRKHelper.getConnectionIdFromConfig(config);
 		} catch (CoreException e) {
 		}
 		if (connection != null)
@@ -98,7 +97,7 @@ public class AttachMainTab extends CarbideMainTab {
 	public void performApply(ILaunchConfigurationWorkingCopy config) {
 		super.performApply(config);
 		if (connection != null) {
-			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection.getIdentifier());
+			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection);
 		}
 	}
 
