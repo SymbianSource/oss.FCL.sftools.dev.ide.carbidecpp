@@ -73,25 +73,26 @@ public class NewsPage extends FormPage {
 	public final static String NEWS_PAGE_TITLE = "Carbide.c++ News Page";
 	public final static String NEWS_SUMMARY_TITLE = "All News";
 	private final static String ECLIPSE_NETWORK_PREFERENCES_ID = "org.eclipse.ui.net.NetPreferences";
-	private final static String LINK_MARK_ALL_ENTRIES_READ = "about:removeAll";
-	private final static String LINK_MARK_ENTRY_READ = "about:removeEntry";
-	private final static String LINK_NEWS_PREFERENCES = "about:newsPreferences";
-	private final static String LINK_NETWORK_PREFERENCES = "about:networkPreferences";
-	private final static String LINK_SHOW_ALL_ENTRIES = "about:showAll";
-	private final static String LINK_SHOW_UNREAD_ENTRIES = "about:showUnreadOnly";
-	private final static String LINK_UPDATE_FEEDS = "about:updateFeeds";
+	private final static String FAKE_URL_PREFIX = "http://localhost/news/";
+	private final static String LINK_MARK_ALL_ENTRIES_READ = FAKE_URL_PREFIX + "removeAll";
+	private final static String LINK_MARK_ENTRY_READ = FAKE_URL_PREFIX + "removeEntry";
+	private final static String LINK_NEWS_PREFERENCES = FAKE_URL_PREFIX + "newsPreferences";
+	private final static String LINK_NETWORK_PREFERENCES = FAKE_URL_PREFIX + "networkPreferences";
+	private final static String LINK_SHOW_ALL_ENTRIES = FAKE_URL_PREFIX + "showAll";
+	private final static String LINK_SHOW_UNREAD_ENTRIES = FAKE_URL_PREFIX + "showUnreadOnly";
+	private final static String LINK_UPDATE_FEEDS = FAKE_URL_PREFIX + "updateFeeds";
 	private final static String DELIMETER = "::";
 	private final static String HTML_BODY_HEADER = "<html><head><title></title><style type=\"text/css\">div.item {font-family : sans-serif; font-size : 12px; margin-bottom : 16px;} div.itemBody {padding-top : 3px; padding-bottom : 3px;} div.itemInfo {background-color : #EEEEEE; color : #333333;} div.feedflare {display: none;} a.itemTitle {font-size : 12px; font-weight : bold;} a.markItemRead {font-size : 10px; color : #333333;}</style></head><body>";
 	private final static String HTML_BODY_FOOTER = "</body></html>";
 	private final static String HTML_CONTROLS_HEADER_START = "<div class=\"item\"><div class=\"itemInfo\">";
 	private final static String HTML_CONTROLS_HEADER_END = "</div></div>";
 	private final static String HTML_CONTROLS_DIVIDER = " | ";
-	private final static String HTML_MARK_ALL_ENTRIES_READ_CONTROL = "<a class=\"markItemRead\" href=\"about:removeAll\">Mark All Read</a>";
-	private final static String HTML_NEWS_PREFERENCES_CONTROL = "<a class=\"markItemRead\" href=\"about:newsPreferences\">Preferences</a>";
-	private final static String HTML_NETWORK_PREFERENCES_CONTROL = "<a href=\"about:networkPreferences\">Network Connections Preferences</a>";
-	private final static String HTML_SHOW_ALL_ENTIES_CONTROL = "<a class=\"markItemRead\" href=\"about:showAll\">All Items</a>";
-	private final static String HTML_SHOW_UNREAD_ENTIES_CONTROL = "<a class=\"markItemRead\" href=\"about:showUnreadOnly\">Unread Items Only</a>";
-	private final static String HTML_UPDATE_FEEDS_CONTROL = "<a class=\"markItemRead\" href=\"about:updateFeeds\">Update</a>";
+	private final static String HTML_MARK_ALL_ENTRIES_READ_CONTROL = "<a class=\"markItemRead\" href=\"" + LINK_MARK_ALL_ENTRIES_READ + "\">Mark All Read</a>";
+	private final static String HTML_NEWS_PREFERENCES_CONTROL = "<a class=\"markItemRead\" href=\"" + LINK_NEWS_PREFERENCES + "\">Preferences</a>";
+	private final static String HTML_NETWORK_PREFERENCES_CONTROL = "<a href=\"" + LINK_NETWORK_PREFERENCES + "\">Network Connections Preferences</a>";
+	private final static String HTML_SHOW_ALL_ENTIES_CONTROL = "<a class=\"markItemRead\" href=\"" + LINK_SHOW_ALL_ENTRIES + "\">All Items</a>";
+	private final static String HTML_SHOW_UNREAD_ENTIES_CONTROL = "<a class=\"markItemRead\" href=\"" + LINK_SHOW_UNREAD_ENTRIES + "\">Unread Items Only</a>";
+	private final static String HTML_UPDATE_FEEDS_CONTROL = "<a class=\"markItemRead\" href=\"" + LINK_UPDATE_FEEDS + "\">Update</a>";
 	private Pattern MarkEntryReadPattern = Pattern.compile("about:removeEntry::(.*)::(.*)");
 	private List<CarbideSyndFeed> newsFeeds;
 	private int currentFeed;
@@ -273,6 +274,8 @@ public class NewsPage extends FormPage {
 		} catch (Exception e) {
 			CarbideNewsReaderPlugin.log(e);
 		}
+		
+		// note: the non-navigable links do not work on all hosts, hence the mouse listener 
 		newsBrowser.addLocationListener(new LocationListener() {
 			public void changing(LocationEvent event) {
 				handleChangingLocation(event);
@@ -499,36 +502,40 @@ public class NewsPage extends FormPage {
 	private void handleChangingLocation(LocationEvent event) {
 		try {
 			String targetLocation = event.location;
-			if (targetLocation.startsWith("http")) {
+			if (targetLocation.startsWith(FAKE_URL_PREFIX)) {
 				event.doit = false;
-				URL url = new URL(event.location);
-				PlatformUI.getWorkbench().getBrowserSupport().createBrowser(null).openURL(url);
-			}
-			else if (targetLocation.startsWith(LINK_MARK_ALL_ENTRIES_READ)) {
-				handleMarkAllRead();
-			}
-			else if (targetLocation.startsWith(LINK_MARK_ENTRY_READ)) {
-				Matcher matcher = MarkEntryReadPattern.matcher(targetLocation);
-				if (matcher.matches()) {
-					String feedTitle = matcher.group(1).replaceAll("%20", " ");
-					String entryTitle = matcher.group(2).replaceAll("%20", " ");
-					handleMarkEntryRead(feedTitle, entryTitle);
+				if (targetLocation.startsWith(LINK_MARK_ALL_ENTRIES_READ)) {
+					handleMarkAllRead();
 				}
-			}
-			else if (targetLocation.startsWith(LINK_NEWS_PREFERENCES)) {
-				handleOpenNewsPreferencePage();
-			}
-			else if (targetLocation.startsWith(LINK_NETWORK_PREFERENCES)) {
-				handleOpenNetworkPreferencePage();
-			}
-			else if (targetLocation.startsWith(LINK_SHOW_ALL_ENTRIES)) {
-				handleShowAll();
-			}
-			else if (targetLocation.startsWith(LINK_SHOW_UNREAD_ENTRIES)) {
-				handleShowUnreadOnly();
-			}
-			else if (targetLocation.startsWith(LINK_UPDATE_FEEDS)) {
-				handleUpdateFeeds();
+				else if (targetLocation.startsWith(LINK_MARK_ENTRY_READ)) {
+					Matcher matcher = MarkEntryReadPattern.matcher(targetLocation);
+					if (matcher.matches()) {
+						String feedTitle = matcher.group(1).replaceAll("%20", " ");
+						String entryTitle = matcher.group(2).replaceAll("%20", " ");
+						handleMarkEntryRead(feedTitle, entryTitle);
+					}
+				}
+				else if (targetLocation.startsWith(LINK_NEWS_PREFERENCES)) {
+					handleOpenNewsPreferencePage();
+				}
+				else if (targetLocation.startsWith(LINK_NETWORK_PREFERENCES)) {
+					handleOpenNetworkPreferencePage();
+				}
+				else if (targetLocation.startsWith(LINK_SHOW_ALL_ENTRIES)) {
+					handleShowAll();
+				}
+				else if (targetLocation.startsWith(LINK_SHOW_UNREAD_ENTRIES)) {
+					handleShowUnreadOnly();
+				}
+				else if (targetLocation.startsWith(LINK_UPDATE_FEEDS)) {
+					handleUpdateFeeds();
+				}
+			} else {
+				if (targetLocation.startsWith("http")) {
+					event.doit = false;
+					URL url = new URL(event.location);
+					PlatformUI.getWorkbench().getBrowserSupport().createBrowser(null).openURL(url);
+				}
 			}
 		} catch (Exception e) {
 			CarbideNewsReaderPlugin.log(e);
