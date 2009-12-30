@@ -497,6 +497,7 @@ public class ConnectionsView extends ViewPart {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						viewer.refresh(true);
+						packColumns();	// not normally needed, but boldface is wider, and applied to entire row in Windows
 					}
 				});				
 			}
