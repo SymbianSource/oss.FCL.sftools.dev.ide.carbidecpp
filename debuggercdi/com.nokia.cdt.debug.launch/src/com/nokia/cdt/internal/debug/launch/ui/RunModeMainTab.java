@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -236,10 +237,11 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 			else {
 				if (clientSiteUI != null)
 				{
-					connection = clientSiteUI.getSelectedConnection();
-					if (connection == null) {
-						setErrorMessage(Messages.getString("RunModeMainTab.NoConnectionError")); //$NON-NLS-1$
-						result = false;
+					IStatus status = clientSiteUI.getSelectionStatus();
+					if (!status.isOK()) {
+						// unfortunately, no way to display a warning here...
+						setErrorMessage(status.getMessage());
+						result = status.getSeverity() != IStatus.ERROR;
 					}
 				}
 			}

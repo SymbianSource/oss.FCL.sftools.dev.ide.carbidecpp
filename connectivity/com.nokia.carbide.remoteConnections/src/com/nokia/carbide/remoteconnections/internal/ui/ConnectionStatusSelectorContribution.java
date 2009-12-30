@@ -355,7 +355,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		
 		item.setSelection(isDefault);
 		
-		item.setText("&" + number + " - " + connection.getDisplayName());
+		item.setText(MessageFormat.format("&{0} - {1}", number, connection.getDisplayName())); //$NON-NLS-1$
 		
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -466,7 +466,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 * @param status
 	 */
 	private void updateConnectionStatus(final IConnectionStatus status) {
-		Display.getDefault().syncExec(new Runnable() {
+		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				if (connectionIcon == null || connectionIcon.isDisposed())
 					return;
@@ -481,7 +481,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 				String tip = createConnectionStatusTooltip(defaultConnection, status);
 				connectionInfo.setToolTipText(tip);
 				
-				String preamble = "Click to open the Remote Connections View.\n\n";
+				String preamble = Messages.getString("ConnectionStatusSelectorContribution.IconTooltipPrefixMessage"); //$NON-NLS-1$
 				connectionIcon.setToolTipText(preamble + tip);		
 			}
 		});

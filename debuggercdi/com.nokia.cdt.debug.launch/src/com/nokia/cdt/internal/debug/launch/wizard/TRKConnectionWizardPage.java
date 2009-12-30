@@ -23,6 +23,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.ILis
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
@@ -87,11 +88,17 @@ public class TRKConnectionWizardPage extends WizardPage {
     
     protected void validatePage() {
     	setErrorMessage(null);
+    	setMessage(null);
     	setPageComplete(true);
-		connection = clientSiteUI.getSelectedConnection();
-		if (connection == null) {
-			setErrorMessage(Messages.getString("TRKConnectionWizardPage.NoConnectionError")); //$NON-NLS-1$
-			setPageComplete(false);
+		IStatus status = clientSiteUI.getSelectionStatus();
+		if (!status.isOK()) {
+			if (status.getSeverity() == IStatus.ERROR) {
+				setErrorMessage(status.getMessage());
+				setPageComplete(false);
+			} else {
+				setMessage(status.getMessage(), 
+						status.getSeverity() == IStatus.WARNING ? WARNING : INFORMATION); 
+			}
 		}
     }
     

@@ -23,6 +23,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.ILis
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.swt.SWT;
@@ -109,10 +110,11 @@ public class AttachMainTab extends CarbideMainTab {
 	public boolean isValid(ILaunchConfiguration config) {
 		boolean result = super.isValid(config);
 		if (result) {
-			connection = clientSiteUI.getSelectedConnection();
-			if (connection == null) {
-				setErrorMessage(Messages.getString("AttachMainTab.NoConnectionError")); //$NON-NLS-1$
-				result = false;
+			IStatus status = clientSiteUI.getSelectionStatus();
+			if (!status.isOK()) {
+				// unfortunately, no way to display a warning here...
+				setErrorMessage(status.getMessage());
+				result = status.getSeverity() != IStatus.ERROR;
 			}
 		}
 		return result;

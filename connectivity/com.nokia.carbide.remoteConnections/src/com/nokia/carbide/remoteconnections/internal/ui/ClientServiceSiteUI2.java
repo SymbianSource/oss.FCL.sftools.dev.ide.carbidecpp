@@ -28,6 +28,8 @@ import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.JFaceResources;
@@ -71,7 +73,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	public void createComposite(Composite parent) {
 		initializeDialogUnits(parent);
 		Group group = new Group(parent, SWT.NONE);
-		group.setText(Messages.getString("ClientServiceSiteUI.UseConnectionGroupLabel")); //$NON-NLS-1$
+		group.setText(Messages.getString("ClientServiceSiteUI2.UseConnectionGroupLabel")); //$NON-NLS-1$
 		group.setLayout(new GridLayout());
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setData(UID, "useConnectionGroup"); //$NON-NLS-1$
@@ -114,7 +116,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		composite.setFont(parent.getFont());
 		
 		newButton = new Button(composite, SWT.PUSH);
-		newButton.setText(Messages.getString("ClientServiceSiteUI.NewButtonLabel")); //$NON-NLS-1$
+		newButton.setText(Messages.getString("ClientServiceSiteUI2.NewButtonLabel")); //$NON-NLS-1$
 		newButton.setFont(JFaceResources.getDialogFont());
 		gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		int widthHint = Dialog.convertHorizontalDLUsToPixels(fm, IDialogConstants.BUTTON_WIDTH);
@@ -136,7 +138,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		});
 		
 		editButton = new Button(composite, SWT.PUSH);
-		editButton.setText(Messages.getString("ClientServiceSiteUI.EditButtonLabel")); //$NON-NLS-1$
+		editButton.setText(Messages.getString("ClientServiceSiteUI2.EditButtonLabel")); //$NON-NLS-1$
 		editButton.setFont(JFaceResources.getDialogFont());
 		gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		widthHint = Dialog.convertHorizontalDLUsToPixels(fm, IDialogConstants.BUTTON_WIDTH);
@@ -183,6 +185,9 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	 * @return {@link IConnection} or <code>null</code>
 	 */
 	protected IConnection getActualConnection(String id) {
+		if (id == null) {
+			return null;
+		}
 		if (id.equals(Registry.DEFAULT_CONNECTION_ID)) {
 			return RemoteConnectionsActivator.getConnectionsManager().getDefaultConnection();
 		}
@@ -225,12 +230,29 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 				selectConnection(connection.getIdentifier());
 		}
 		editButton.setEnabled(!viewer.getSelection().isEmpty());
+		
+		// fire listener in case we selected anew or the default connection changed
+		fireConnectionSelected();
 	}
 
 	private void refreshUI() {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				setViewerInput(null);
+				if (viewer != null && viewer.getContentProvider() != null) {
+					
+					// try to preserve the currently selected item, if it's a concrete
+					// connection; if it's default, allow for the new default to be chosen.
+					IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+					Object value = selection.getFirstElement();
+					String current = null;
+					if (value instanceof String) {
+						current = (String) value;
+					}
+					if (Registry.DEFAULT_CONNECTION_ID.equals(current)) {
+						current = null;
+					}
+					setViewerInput(getActualConnection(current));
+				}
 			}
 		});
 	}
@@ -283,6 +305,56 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	
 	public String getSelectedConnection() {
 		return connection;
+	}
+	
+	public IStatus getSelectionStatus() {
+		// no selection yet...?
+		if (connection == null) {
+			return new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID,
+					Messages.getString("ClientServiceSiteUI2.NoConnectionError"));
+		}
+		
+		// check whether the default is compatible with the service and connection type
+		if (Registry.DEFAULT_CONNECTION_ID.equals(connection)) {
+			IConnection actual = getActualConnection(connection);
+			if (actual != null) {
+				// is the service supported?
+				boolean found = false;
+				for (IConnectedService aService : Registry.instance().getConnectedServices(actual)) {
+					if (service.getIdentifier().equals(aService.getService().getIdentifier())) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
+							MessageFormat.format(
+									Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionService"),
+									actual.getDisplayName(),
+									service.getDisplayName()));
+				}
+				
+				// is the hardware type supported by the service?
+				if (!isCompatibleConnection(actual)) {
+					String requiredConnectionTypes  = "";
+					for (IConnectionType type : compatibleConnectionTypes) {
+						if (requiredConnectionTypes.length() > 0)
+							requiredConnectionTypes += ", ";
+						requiredConnectionTypes += type.getDisplayName();
+					}
+					return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
+							MessageFormat.format(
+									Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionType"),
+									actual.getDisplayName(),
+									requiredConnectionTypes));
+			
+				}
+				
+			}
+		}
+		
+		// otherwise, it's okay!
+		return Status.OK_STATUS;
 	}
 	
 	/* (non-Javadoc)

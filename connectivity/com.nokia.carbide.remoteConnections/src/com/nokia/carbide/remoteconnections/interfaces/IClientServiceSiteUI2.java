@@ -18,6 +18,7 @@
 
 package com.nokia.carbide.remoteconnections.interfaces;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -81,4 +82,21 @@ public interface IClientServiceSiteUI2 {
 	 * @param listener IListener
 	 */
 	void removeListener(IListener listener);
+
+	/**
+	 * Validate the selected connection and return a status.
+	 * <p>
+	 * @return IStatus for the state of the selection:
+	 * <ol>
+	 * <li>If a connection is selected and it's compatible, return OK.
+	 * <li>If no connection is selected, return ERROR.
+	 * <li>If selected connection is a default, but the current default is incompatible,
+	 * return WARNING.
+	 * (Normally, the concrete connections are already filtered to show only
+	 * compatible ones, but the default may be anything.)  This is only a warning
+	 * because the default connection can be changed externally to this UI, thus
+	 * isn't a fatal error.
+	 * </ol>
+	 */
+	IStatus getSelectionStatus();
 }
