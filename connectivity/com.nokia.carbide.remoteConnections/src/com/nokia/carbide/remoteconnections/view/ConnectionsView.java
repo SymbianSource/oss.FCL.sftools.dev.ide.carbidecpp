@@ -283,6 +283,15 @@ public class ConnectionsView extends ViewPart {
 			
 			return null;
 		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			// we need this to avoid letting the bold name column influence the others 
+			return JFaceResources.getDefaultFont();
+		}
 	}
 	
 	public class DescriptionLabelProvider extends ColumnLabelProvider {
@@ -310,6 +319,15 @@ public class ConnectionsView extends ViewPart {
 			
 			return null;
 		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			// we need this to avoid letting the bold name column influence the others 
+			return JFaceResources.getDefaultFont();
+		}
 	}
 
 	private class TypeLabelProvider extends ColumnLabelProvider {
@@ -321,6 +339,15 @@ public class ConnectionsView extends ViewPart {
 				return ((IConnection) value).getConnectionType().getDisplayName();
 			}
 			return null;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			// we need this to avoid letting the bold name column influence the others 
+			return JFaceResources.getDefaultFont();
 		}
 	}
 	
@@ -497,7 +524,7 @@ public class ConnectionsView extends ViewPart {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						viewer.refresh(true);
-						packColumns();	// not normally needed, but boldface is wider, and applied to entire row in Windows
+						packColumns();
 					}
 				});				
 			}
