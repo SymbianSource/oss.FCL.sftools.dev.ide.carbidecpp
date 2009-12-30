@@ -34,6 +34,8 @@ import java.util.TreeSet;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -184,9 +186,14 @@ public class ConnectionSettingsPage extends WizardPage {
 
 		createSettingsGroup(agentTestTabComposite);
 		
-		createDeviceOSCombo(agentTestTabComposite);
+		Group group = new Group(agentTestTabComposite, SWT.NONE);
+		group.setText(Messages.getString("ConnectionSettingsPage.ConnectionTestingLabel")); //$NON-NLS-1$
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(group);
+		GridDataFactory.fillDefaults().span(2, 1).grab(true, true).applyTo(group);
+		
+		createDeviceOSCombo(group);
 
-		createServiceTestComposite(agentTestTabComposite);
+		createServiceTestComposite(group);
 	}
 
 	private void createDeviceOSCombo(Composite parent) {
