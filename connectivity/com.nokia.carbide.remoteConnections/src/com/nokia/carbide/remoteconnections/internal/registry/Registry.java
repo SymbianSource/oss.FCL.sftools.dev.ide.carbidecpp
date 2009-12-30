@@ -416,8 +416,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 
 	private void disposeConnection(IConnection connection) {
 		List<IConnectedService> connectedServices = connectionToConnectedServices.get(connection);
-		for (IConnectedService connectedService : connectedServices) {
-			connectedService.dispose();
+		if (connectedServices != null) {
+			for (IConnectedService connectedService : connectedServices) {
+				connectedService.dispose();
+			}
 		}
 		connection.dispose();
 	}

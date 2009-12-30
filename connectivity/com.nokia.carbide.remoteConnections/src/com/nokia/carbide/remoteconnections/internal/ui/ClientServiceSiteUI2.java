@@ -262,9 +262,9 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	 * @return
 	 */
 	private String createDefaultConnectionName(IConnection defaultConnection) {
-		return MessageFormat.format("Default connection ({0})",
+		return MessageFormat.format(Messages.getString("ClientServiceSiteUI2.DefaultConnectionFormat"), //$NON-NLS-1$
 				defaultConnection != null ? defaultConnection.getDisplayName() : 
-					"when defined");
+					Messages.getString("ClientServiceSiteUI2.DefaultConnection_NoneDetected")); //$NON-NLS-1$
 	}
 
 	private void initializeDialogUnits(Composite parent) {
@@ -308,53 +308,76 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	}
 	
 	public IStatus getSelectionStatus() {
+		String requiredConnectionTypes = getAllowedConnectionTypesString();
+		
 		// no selection yet...?
 		if (connection == null) {
 			return new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID,
-					Messages.getString("ClientServiceSiteUI2.NoConnectionError"));
+					MessageFormat.format(
+							Messages.getString("ClientServiceSiteUI2.NoConnectionError"), //$NON-NLS-1$
+							service.getDisplayName(),
+							requiredConnectionTypes));
 		}
 		
 		// check whether the default is compatible with the service and connection type
 		if (Registry.DEFAULT_CONNECTION_ID.equals(connection)) {
 			IConnection actual = getActualConnection(connection);
-			if (actual != null) {
-				// is the service supported?
-				boolean found = false;
-				for (IConnectedService aService : Registry.instance().getConnectedServices(actual)) {
-					if (service.getIdentifier().equals(aService.getService().getIdentifier())) {
-						found = true;
-						break;
-					}
-				}
-				if (!found) {
-					return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
-							MessageFormat.format(
-									Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionService"),
-									actual.getDisplayName(),
-									service.getDisplayName()));
-				}
-				
-				// is the hardware type supported by the service?
-				if (!isCompatibleConnection(actual)) {
-					String requiredConnectionTypes  = "";
-					for (IConnectionType type : compatibleConnectionTypes) {
-						if (requiredConnectionTypes.length() > 0)
-							requiredConnectionTypes += ", ";
-						requiredConnectionTypes += type.getDisplayName();
-					}
-					return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
-							MessageFormat.format(
-									Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionType"),
-									actual.getDisplayName(),
-									requiredConnectionTypes));
+			if (actual == null) {
+				return new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID,
+						MessageFormat.format(
+							Messages.getString("ClientServiceSiteUI2.NoDefaultConnection"), //$NON-NLS-1$
+							service.getDisplayName(),
+							requiredConnectionTypes));
+			}
 			
+			// is the service supported?
+			boolean found = false;
+			for (IConnectedService aService : Registry.instance().getConnectedServices(actual)) {
+				if (service.getIdentifier().equals(aService.getService().getIdentifier())) {
+					found = true;
+					break;
 				}
-				
+			}
+			if (!found) {
+				return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
+						MessageFormat.format(
+								Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionService") //$NON-NLS-1$
+								+ "\n"  //$NON-NLS-1$
+								+ Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionFixupAdvice"), //$NON-NLS-1$
+								actual.getDisplayName(),
+								service.getDisplayName()));
+			}
+			
+			// is the hardware type supported by the service?
+			if (!isCompatibleConnection(actual)) {
+				return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
+						MessageFormat.format(
+								Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionType") //$NON-NLS-1$
+								+ "\n"  //$NON-NLS-1$
+								+ Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionFixupAdvice"), //$NON-NLS-1$
+								actual.getDisplayName(),
+								requiredConnectionTypes));
+		
 			}
 		}
 		
 		// otherwise, it's okay!
 		return Status.OK_STATUS;
+	}
+
+	private String getAllowedConnectionTypesString() {
+		StringBuilder requiredConnectionTypes = new StringBuilder();
+		IConnectionType[] connectionTypes = 
+			(IConnectionType[]) compatibleConnectionTypes.toArray(new IConnectionType[compatibleConnectionTypes.size()]);
+		for (int i = 0; i < connectionTypes.length; i++) {
+			IConnectionType type = connectionTypes[i];
+			if (requiredConnectionTypes.length() > 0)
+				requiredConnectionTypes.append(", "); //$NON-NLS-1$
+			if (i == connectionTypes.length - 1)
+				requiredConnectionTypes.append(Messages.getString("ClientServiceSiteUI2.Or")); //$NON-NLS-1$
+			requiredConnectionTypes.append(type.getDisplayName());
+		}
+		return requiredConnectionTypes.toString();
 	}
 	
 	/* (non-Javadoc)
@@ -363,7 +386,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	public String getConnectionDisplayName(String connection) {
 		String display = connectionNames.get(connection);
 		if (display == null)
-			display = MessageFormat.format("<<nonexistent connection {0}>>", connection);
+			display = MessageFormat.format(Messages.getString("ClientServiceSiteUI2.DeletedConnectionDisplayName"), connection); //$NON-NLS-1$
 		return display;
 	}
 
