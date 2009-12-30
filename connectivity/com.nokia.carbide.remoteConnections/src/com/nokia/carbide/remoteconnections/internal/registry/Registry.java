@@ -518,7 +518,12 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	
 	public IConnection ensureConnection(String id, IService service) throws CoreException {
 		Check.checkArg(service);
-		IConnection connection = findConnectionById(id);
+		IConnection connection;
+		if (DEFAULT_CONNECTION_ID.equals(id)) {
+			connection = getDefaultConnection();
+		} else {
+			connection = findConnectionById(id);
+		}
 		if (!isCompatibleConnection(connection, service)) {
 			// TODO ask user to connect a device or cancel
 			throw new CoreException(
