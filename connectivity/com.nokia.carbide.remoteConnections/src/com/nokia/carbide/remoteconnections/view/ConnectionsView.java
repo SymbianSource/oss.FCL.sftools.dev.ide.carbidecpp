@@ -58,6 +58,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -77,11 +78,13 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
+import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 
@@ -94,6 +97,7 @@ public class ConnectionsView extends ViewPart {
 
 	private TreeViewer viewer;
 	private IConnectionsManagerListener connectionStoreChangedListener;
+	private IConnectionListener connectionListener;
 	private Map<IConnectedService, IStatusChangedListener> serviceToListenerMap;
 	private List<Action> actions;
 	private List<Action> connectionSelectedActions;
@@ -112,8 +116,12 @@ public class ConnectionsView extends ViewPart {
 	private static final String REFRESH_ACTION = "ConnectionsView.refresh"; //$NON-NLS-1$
 	private static final String DELETE_ACTION = "ConnectionsView.delete"; //$NON-NLS-1$
 	private static final String HELP_ACTION = "ConnectionsView.help"; //$NON-NLS-1$
+	private static final String SET_DEFAULT_ACTION = "ConnectionsView.makeDefault"; //$NON-NLS-1$
 	private KeyAdapter keyListener;
 	private boolean isDisposed;
+
+	// handle, do not dispose
+	private Font boldViewerFont;
 	
 	private TreeNode[] loadConnections() {
 		if (serviceToListenerMap == null)
@@ -200,6 +208,19 @@ public class ConnectionsView extends ViewPart {
 
 		public String getText(Object obj) {
 			return getNodeDisplayName(obj);
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			if (element instanceof TreeNode) {
+				if (((TreeNode)element).getValue().equals(Registry.instance().getDefaultConnection())) {
+					return boldViewerFont;
+				}
+			}
+			return super.getFont(element);
 		}
 
 		public Image getImage(Object obj) {
@@ -369,6 +390,8 @@ public class ConnectionsView extends ViewPart {
 			}
 		};
 		TreeViewerEditor.create(viewer, activationStrategy, ColumnViewerEditor.DEFAULT);
+		
+		boldViewerFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
 
 		TreeViewerColumn typeColumn = new TreeViewerColumn(viewer, SWT.LEFT);
 		typeColumn.setLabelProvider(new TypeLabelProvider());
@@ -467,6 +490,26 @@ public class ConnectionsView extends ViewPart {
 			}
 		};
 		Registry.instance().addConnectionStoreChangedListener(connectionStoreChangedListener);
+		
+		connectionListener = new IConnectionListener() {
+			
+			public void defaultConnectionSet(IConnection connection) {
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						viewer.refresh(true);
+					}
+				});				
+			}
+			
+			public void connectionRemoved(IConnection connection) {
+				// presumably the viewer itself handles this...
+			}
+			
+			public void connectionAdded(IConnection connection) {
+				// presumably the viewer itself handles this...
+			}
+		};
+		Registry.instance().addConnectionListener(connectionListener);
 
 		RemoteConnectionsActivator.setHelp(parent, ".connections_view"); //$NON-NLS-1$
 	}
@@ -525,6 +568,9 @@ public class ConnectionsView extends ViewPart {
 			manager.add(getAction(EDIT_ACTION));
 			manager.add(getAction(DELETE_ACTION));
 			manager.add(getAction(HELP_ACTION));
+		}
+		if (value instanceof IConnection) {
+			manager.add(getAction(SET_DEFAULT_ACTION));
 		}
 	}
 	
@@ -673,6 +719,36 @@ public class ConnectionsView extends ViewPart {
 		action.setId(HELP_ACTION);
 		actions.add(action);
 		connectionSelectedActions.add(action);
+		
+		desc = ConnectionUIUtils.CONNECTION_IMGDESC;
+		action = new Action(Messages.getString("ConnectionsView.SetDefaultActionLabel"), desc) { //$NON-NLS-1$
+			
+			private IConnection getConnectionFromSelection() {
+				ISelection selection = viewer.getSelection();
+				if (!selection.isEmpty()) {
+					TreeNode treeNode = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
+					Object value = treeNode.getValue();
+					if (value instanceof IConnection) {
+						return ((IConnection) value);
+					}
+				}
+				return null;
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				return !ObjectUtils.equals(Registry.instance().getDefaultConnection(), getConnectionFromSelection());
+			}
+
+			@Override
+			public void run() {
+				Registry.instance().setDefaultConnection(getConnectionFromSelection());
+			}
+		};
+		action.setId(SET_DEFAULT_ACTION);
+		actions.add(action);
+		connectionSelectedActions.add(action);		
+		
 		enableConnectionSelectedActions(false);
 		enableServiceSelectedActions(false);
 	}
@@ -743,6 +819,7 @@ public class ConnectionsView extends ViewPart {
 	public void dispose() {
 		removeServiceListeners();
 		Registry.instance().removeConnectionStoreChangedListener(connectionStoreChangedListener);
+		Registry.instance().removeConnectionListener(connectionListener);
 		disableAllConnectedServices();
 		isDisposed = true;
 		super.dispose();

@@ -57,7 +57,7 @@ public class ConnectionUIUtils {
 	private static final ImageDescriptor CONNECTION_IN_USE_DISCONNECTED_IMGDESC =
 		RemoteConnectionsActivator.getImageDescriptor("icons/connectionStatusInUseDisconnected.png"); //$NON-NLS-1$
 	
-	private static final ImageDescriptor CONNECTION_IMGDESC = 
+	public static final ImageDescriptor CONNECTION_IMGDESC = 
 		RemoteConnectionsActivator.getImageDescriptor("icons/connection.png"); //$NON-NLS-1$
 	
 	private static final Image STATUS_AVAIL_IMG = STATUS_AVAIL_IMGDESC.createImage();
