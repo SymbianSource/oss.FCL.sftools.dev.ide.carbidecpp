@@ -18,6 +18,7 @@
 
 package com.nokia.carbide.remoteconnections.view;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,11 +26,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.LegacyActionTools;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
@@ -74,6 +77,7 @@ import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
@@ -589,15 +593,20 @@ public class ConnectionsView extends ViewPart {
 			return;
 		TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
 		Object value = node.getValue();
-		if (value instanceof IConnectedService)
+		if (value instanceof IConnectedService) {
+			manager.add(new Separator());
 			manager.add(getAction(ENABLE_SERVICE_ACTION));
-		else {
+		}
+		else if (value instanceof IConnection) {
+			manager.add(new Separator());
 			manager.add(getAction(RENAME_ACTION));
 			manager.add(getAction(EDIT_ACTION));
 			manager.add(getAction(DELETE_ACTION));
-			manager.add(getAction(HELP_ACTION));
-		}
-		if (value instanceof IConnection) {
+			IAction helpAction = getAction(HELP_ACTION);
+			if (helpAction.isEnabled()) {
+				helpAction.setText(helpAction.getText());
+				manager.add(helpAction);
+			}
 			manager.add(getAction(SET_DEFAULT_ACTION));
 		}
 	}
@@ -720,18 +729,26 @@ public class ConnectionsView extends ViewPart {
 		
 		Image image = JFaceResources.getImage(org.eclipse.jface.dialogs.Dialog.DLG_IMG_HELP);
 		ImageDescriptor desc = ImageDescriptor.createFromImage(image);
-		action = new Action(Messages.getString("ConnectionsView.HelpActionLabel"), desc) { //$NON-NLS-1$
+		action = new Action(Messages.getString("ConnectionsView.NoHelpActionLabel"), desc) { //$NON-NLS-1$
 			
 			private String getHelpContextFromSelection() {
-				ISelection selection = viewer.getSelection();
-				if (!selection.isEmpty()) {
-					TreeNode treeNode = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
-					Object value = treeNode.getValue();
-					if (value instanceof IConnection) {
-						return ((IConnection) value).getConnectionType().getHelpContext();
-					}
+				IConnection connection = getSelectedConnection();
+				if (connection != null) {
+					return connection.getConnectionType().getHelpContext();
 				}
 				return null;
+			}
+			
+			@Override
+			public String getText() {
+				if (isEnabled()) {
+					IConnection connection = getSelectedConnection();
+					IConnectionType connectionType = connection.getConnectionType();
+					String displayName = connectionType.getDisplayName();
+					String pattern = Messages.getString("ConnectionsView.HelpActionLabel"); //$NON-NLS-1$
+					return MessageFormat.format(pattern, displayName);
+				}
+				return super.getText();
 			}
 			
 			@Override
@@ -751,26 +768,14 @@ public class ConnectionsView extends ViewPart {
 		desc = ConnectionUIUtils.CONNECTION_IMGDESC;
 		action = new Action(Messages.getString("ConnectionsView.SetDefaultActionLabel"), desc) { //$NON-NLS-1$
 			
-			private IConnection getConnectionFromSelection() {
-				ISelection selection = viewer.getSelection();
-				if (!selection.isEmpty()) {
-					TreeNode treeNode = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
-					Object value = treeNode.getValue();
-					if (value instanceof IConnection) {
-						return ((IConnection) value);
-					}
-				}
-				return null;
-			}
-			
 			@Override
 			public boolean isEnabled() {
-				return !ObjectUtils.equals(Registry.instance().getDefaultConnection(), getConnectionFromSelection());
+				return !ObjectUtils.equals(Registry.instance().getDefaultConnection(), getSelectedConnection());
 			}
 
 			@Override
 			public void run() {
-				Registry.instance().setDefaultConnection(getConnectionFromSelection());
+				Registry.instance().setDefaultConnection(getSelectedConnection());
 			}
 		};
 		action.setId(SET_DEFAULT_ACTION);
@@ -874,5 +879,18 @@ public class ConnectionsView extends ViewPart {
 		TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
 		return !isDynamicConnection(node.getValue());
 	}
+
+	private IConnection getSelectedConnection() {
+		ISelection selection = viewer.getSelection();
+		if (!selection.isEmpty()) {
+			TreeNode treeNode = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
+			Object value = treeNode.getValue();
+			if (value instanceof IConnection) {
+				return (IConnection) value;
+			}
+		}
+		return null;
+	}
+	
 }
 
