@@ -48,6 +48,7 @@ import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
@@ -106,7 +107,7 @@ public class AddSDKDialog extends TrayDialog {
 		}
 		
 		if (epocRootText.getText().length() > 1){
-			if (epocRootText.getText().charAt(1) != ':'){
+			if (HostOS.IS_WIN32 && epocRootText.getText().charAt(1) != ':'){
 				MessageDialog.openError(getShell(), Messages.getString("AddSDKDialog.Malformed_EPOCROOT"), Messages.getString("AddSDKDialog.EPOCROOT_drive_spec")); //$NON-NLS-1$ //$NON-NLS-2$
 				return;
 			}
@@ -361,7 +362,7 @@ public class AddSDKDialog extends TrayDialog {
 	private void browseEPOCROOT(){
         DirectoryDialog browseDir = new DirectoryDialog(getShell(), SWT.OPEN);
         browseDir.setMessage(Messages.getString("AddSDKDialog.Choose_location_for_EPOCROOT")); //$NON-NLS-1$
-        BrowseDialogUtils.initializeFrom(browseDir, "C:/Symbian/"); //$NON-NLS-1$
+        BrowseDialogUtils.initializeFrom(browseDir, HostOS.IS_WIN32 ? "C:/Symbian/" : null); //$NON-NLS-1$
         String dirText = browseDir.open();
         if (dirText != null){
         	epocRootText.setText(dirText);
