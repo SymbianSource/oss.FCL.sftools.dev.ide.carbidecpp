@@ -29,6 +29,8 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.*;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.SBVModelFactory;
 import com.nokia.carbide.internal.cpp.epoc.engine.model.ViewDataCache;
+import com.nokia.cpp.internal.api.utils.core.ExternalFileInfoCache;
+import com.nokia.cpp.internal.api.utils.core.ExternalFileInfoCollection;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher;
 
@@ -61,6 +63,10 @@ public class EpocEnginePlugin extends Plugin {
 	private static ViewDataCache<IBldInfOwnedModel, IBldInfModel, IBldInfView, IBldInfData> bldInfViewDataCache;
 
 	private static ViewDataCache<IImageMakefileOwnedModel, IImageMakefileModel, IImageMakefileView, IImageMakefileData> imageMakefileViewDataCache;
+
+	private static ExternalFileInfoCache externalFileTimestampSizeCache = 
+		new ExternalFileInfoCache();
+	
 	/**
 	 * The constructor.
 	 */
@@ -505,6 +511,16 @@ public class EpocEnginePlugin extends Plugin {
 		}
 		
 		return runnable.run(data);
+	}
+
+	/**
+	 * Get the global cache of file timestamps and sizes associated with the EPOC engine.
+	 * This is used to track the status of files in SDKs which are unlikely to change
+	 * often and for which we don't want to waste OS time checking over and over. 
+	 * @return {@link ExternalFileInfoCache}
+	 */
+	public static ExternalFileInfoCache getExternalFileInfoCache() {
+		return externalFileTimestampSizeCache;
 	}
 	
 

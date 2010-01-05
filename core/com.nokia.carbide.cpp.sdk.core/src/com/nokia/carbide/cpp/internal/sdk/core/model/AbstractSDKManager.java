@@ -52,6 +52,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
@@ -122,7 +123,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	public void scanSDKs() {
 		synchronized (sdkList)
 		{
-			ArrayList<ISymbianSDK> oldSDkList = new ArrayList<ISymbianSDK>(sdkList);
+			ArrayList<ISymbianSDK> oldSDKList = new ArrayList<ISymbianSDK>(sdkList);
 			
 			getSBSv2Version(true);
 			
@@ -143,7 +144,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 
 			// now these SDK's are removed from the old list, add to
 			// internal list
-			for (ISymbianSDK oldSdk : oldSDkList) {
+			for (ISymbianSDK oldSdk : oldSDKList) {
 				boolean found = false;
 				for (ISymbianSDK sdk : sdkList) {
 					if (sdk.getUniqueId().equals(oldSdk.getUniqueId())) {
@@ -154,6 +155,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				if (found == false) {
 					SDKManagerInternalAPI.addMissingSdk(oldSdk
 							.getUniqueId());
+					// flush cache
+					SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { oldSdk });
 				}
 			}
 
@@ -172,7 +175,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	 * Actually scan the SDKs available and populate sdkList.   
 	 * @param oldSDkList old list of SDKs available for reference, e.g., detecting
 	 * when SDKs are newly missing
-	 * @return
+	 * @return true if scan succeeded
 	 */
 	abstract protected boolean doScanSDKs();
 	

@@ -18,13 +18,9 @@ import java.util.*;
 import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianMissingSDKFactory;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.*;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
 
 public class SymbianBuildContext implements ISymbianBuildContext {
 
@@ -43,22 +39,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	// a copy of bad SDK default to fall back
 	private static ISymbianSDK fallbackForBadSdk = SymbianMissingSDKFactory.createInstance("dummy_ID"); //$NON-NLS-1$
 	
-	// last time we checked the hrh file mod dates - only check if changed in last second
-	private static final long HRH_TIMESTAMP_CHECK_QUANTUM = 1000; // 1 sec
-	private static long lastHrhTimestampCheck;
-	
-	private File prefixFileParsed;
-	private List<File> hrhFilesParsed = new ArrayList<File>();
-	private List<IDefine> variantHRHMacros = new ArrayList<IDefine>();
-	private long hrhCacheTimestamp;
-	private List<IDefine> compilerPrefixMacros = new ArrayList<IDefine>();
-	private long compilerCacheTimestamp;
-	
-	
 	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget) {
 		sdkId = theSDK.getUniqueId();
 		platform = thePlatform;
 		target = theTarget;
+		
 		getDisplayString();
 	}
 
@@ -329,150 +314,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 
 	public List<IDefine> getVariantHRHDefines() {
 
-		// we parse the variant hrh file to gather macros.  this can be time consuming so do it
-		// once and cache the values.  only reset the cache when the hrh or any of its includes
-		// has changed.
-		
-		boolean buildCache = false;
-		
-		if (hrhCacheTimestamp == 0) {
-			// hasn't been built yet
-			buildCache = true;
-		} else {
-			// cache exists.  see if any of the files have changed
-			ISymbianSDK sdk = getSDK();
-			if (sdk != null) {
-				// the prefix may have been added, removed, or changed.  in any case,
-				// we would need to reset the cache
-				File currentPrefixFile = sdk.getPrefixFile();
-				if (currentPrefixFile == null) {
-					if (prefixFileParsed != null) {
-						// prefix file was removed from the SDK
-						buildCache = true;
-					}
-				} else {
-					if (prefixFileParsed == null) {
-						// prefix file was added to the SDK
-						buildCache = true;
-					} else {
-						// there was a prefix file before and now.  see if it's the same file
-						// and if so, has it been modified?
-						if (!currentPrefixFile.equals(prefixFileParsed) || currentPrefixFile.lastModified() > hrhCacheTimestamp) {
-							buildCache = true;
-						}
-					}
-				}
-			}
-			
-			// now check to see if any of the included hrh files have changed
-			// we will do this at most once per quantum, because it is expensive and during import it was done 100 times per second
-			if (!buildCache && (System.currentTimeMillis() - lastHrhTimestampCheck) > HRH_TIMESTAMP_CHECK_QUANTUM) {
-				for (File file : hrhFilesParsed) {
-					if (file.lastModified() > hrhCacheTimestamp) {
-						buildCache = true;
-						break;
-					}
-				}
-				lastHrhTimestampCheck = System.currentTimeMillis();
-			}
-		}
-		
-		if (buildCache) {
-
-			variantHRHMacros.clear();
-			
-			synchronized (this) {
-
-				List<IDefine> macros = new ArrayList<IDefine>();
-				Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
-				File prefixFile = getSDK().getPrefixFile();
-				
-				if (prefixFile == null){
-					// Check that the prefix file may have become available since the SDK was scanned last.
-					// This can happen, for e.g., if the user opens the IDE _then_ does a subst on a drive that already has an SDK entry.
-					IPath prefixCheck = ((SymbianSDK)getSDK()).getPrefixFromVariantCfg();
-					if (prefixCheck != null){
-						prefixFile = prefixCheck.toFile();
-						getSDK().setPrefixFile(prefixCheck);
-					}
-				}
-				
-				if (prefixFile != null) {
-
-					// add any BSF/SBV includes so the headers are picked up from the correct location
-					List<File> systemPaths = new ArrayList<File>();
-					IBSFPlatform bsfPlat = getSDK().getBSFCatalog().findPlatform(platform);
-					ISBVPlatform sbvPlat = getSDK().getSBVCatalog().findPlatform(platform);
-					if (bsfPlat != null) {
-						for (IPath path : bsfPlat.getSystemIncludePaths()) {
-							systemPaths.add(path.toFile());
-						}
-					} else if (sbvPlat != null) {
-						LinkedHashMap<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
-						Set<IPath> set = platPaths.keySet();
-						for (IPath path : set) {
-							String pathType = platPaths.get(path);
-							if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
-								systemPaths.add(path.toFile());
-							}
-						}
-					}
-					
-					MacroScanner scanner = new MacroScanner(
-							new BasicIncludeFileLocator(null, systemPaths.toArray(new File[systemPaths.size()])),
-							DefaultModelDocumentProvider.getInstance(),
-							DefaultTranslationUnitProvider.getInstance());
-					scanner.scanFile(prefixFile);
-		
-					List<IDefine> scannedMacros = (List<IDefine>)scanner.getMacroDefinitions();
-					for (IDefine scannedMacro : scannedMacros){
-						// we don't want duplicate macros, so check to see if it's already there.
-						// if it is, remove it and then add the newer one.  this is consistent with
-						// how it would be from a compiler standpoint.
-						IDefine macro = namedMacros.get(scannedMacro.getName());
-						if (macro != null) {
-							macros.remove(macro);
-						}
-						
-						macros.add(scannedMacro);
-						namedMacros.put(scannedMacro.getName(), scannedMacro);
-					}
-					
-					hrhFilesParsed.clear();
-					for (File inc : scanner.getIncludedFiles()) {
-						hrhFilesParsed.add(inc);
-					}
-					
-					List<String> variantCFGMacros = new ArrayList<String>();
-					variantCFGMacros = getSDK().getVariantCFGMacros();
-					for (String cfgMacros : variantCFGMacros){
-						// we don't want duplicate macros, so check to see if it's already there.
-						IDefine existingMacro = namedMacros.get(cfgMacros);
-						if (existingMacro != null) {
-							macros.remove(existingMacro);
-						}
-						
-						IDefine macro = DefineFactory.createSimpleFreeformDefine(cfgMacros);
-						macros.add(macro);
-						namedMacros.put(macro.getName(), macro);
-					}
-
-					// store off the time when we created the cache
-					hrhCacheTimestamp = System.currentTimeMillis();
-				}
-				
-				// save the prefix file (which may be null)
-				prefixFileParsed = prefixFile;
-
-				variantHRHMacros = macros;
-			}
-		}
-			
-		return variantHRHMacros;
+		return getCachedData().getVariantHRHDefines();
 	}
 
 	public List<File> getPrefixFileIncludes() {
-		return hrhFilesParsed;
+		return getCachedData().getPrefixFileIncludes();
 	}
 
 
@@ -481,54 +327,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		// once and cache the values.  only reset the cache when the compiler prefix has changed.
 		
 		IPath prefixFile = getCompilerPrefixFile();
-		if (prefixFile == null || !prefixFile.toFile().exists()) {
-			compilerPrefixMacros.clear();
-			return compilerPrefixMacros;
+		if (prefixFile == null) {
+			return Collections.emptyList();
 		}
-
-		if ((compilerCacheTimestamp == 0) ||
-				(prefixFile.toFile().lastModified() > compilerCacheTimestamp)) {
-
-			compilerPrefixMacros.clear();
-			
-			synchronized (this) {
-
-				List<IDefine> macros = new ArrayList<IDefine>();
-				if (prefixFile != null) {
-
-					List<File> userPaths = new ArrayList<File>();
-					List<File> systemPaths = new ArrayList<File>();
-					
-					userPaths.add(prefixFile.removeLastSegments(1).toFile());
-					systemPaths.add(prefixFile.removeLastSegments(1).toFile());
-					IPath includePath = getSDK().getIncludePath();
-					if (includePath != null) {
-						File includeDir = includePath.toFile().getAbsoluteFile();
-						userPaths.add(includeDir);
-						systemPaths.add(includeDir);
-					}
-
-					
-					// get macros from the compiler prefix file: note, this is a stupid
-					// scan that will get the last version #defined, even if inside an #if.
-					MacroScanner scanner = new MacroScanner(
-							new BasicIncludeFileLocator(userPaths.toArray(new File[userPaths.size()]), systemPaths.toArray(new File[systemPaths.size()])),
-							DefaultModelDocumentProvider.getInstance(), 
-							DefaultTranslationUnitProvider.getInstance());
-					scanner.scanFile(prefixFile.toFile());
-					for (IDefine define : scanner.getMacroDefinitions()) {
-						macros.add(define);
-					}
-
-					// store off the time when we created the cache
-					compilerCacheTimestamp = System.currentTimeMillis();
-				}
-				
-				compilerPrefixMacros = macros;
-			}
-		}
-			
-		return compilerPrefixMacros;
+		
+		return getCachedData().getCompilerMacros(prefixFile);
 	}
 
 
@@ -552,6 +355,16 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		}
 	}
 
+	/**
+	 * Get the cache holding the data that applies to this build context globally.
+	 * A build context is subclassed by CarbideBuildConfiguration, which has multiple
+	 * instances at runtime, thus, a SymbianBuildContext instance should not hold a cache itself.
+	 * @return cache, never <code>null</code>
+	 */
+	private SymbianBuildContextDataCache getCachedData() {
+		return SymbianBuildContextDataCache.getCache(this);
+	}
+	
 
 	public String getBasePlatformForVariation() {
 		String plat = "";
@@ -565,6 +378,14 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		
 		return plat;
 	}
-	
-	
+
+
+	/**
+	 * Get the list of #include paths detected for this context.
+	 * @return List or <code>null</code>
+	 */
+	public List<File> getCachedSystemIncludePaths() {
+		return getCachedData().getSystemIncludePaths();
+	}
+
 }

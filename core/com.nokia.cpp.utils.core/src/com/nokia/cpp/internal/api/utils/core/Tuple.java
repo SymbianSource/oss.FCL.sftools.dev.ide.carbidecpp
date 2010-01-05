@@ -16,13 +16,20 @@
 */
 package com.nokia.cpp.internal.api.utils.core;
 
+import java.io.Serializable;
+
 /**
  * A tuple of zero or more items.
  *
  */
-public class Tuple {
+public class Tuple implements Serializable {
+	private static final long serialVersionUID = -3117335085610864101L;
+	
 	private Object[] args;
 
+	protected Tuple() {
+		// for serialization
+	}
 	public Tuple(Object... args) {
 		this.args = args;
 	}

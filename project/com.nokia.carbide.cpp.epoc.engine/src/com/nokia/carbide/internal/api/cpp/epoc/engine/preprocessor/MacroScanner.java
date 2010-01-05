@@ -96,13 +96,16 @@ public class MacroScanner {
 		if (DUMP)
 			System.out.println("Scanning #defines for " + file); //$NON-NLS-1$
 		
-		includes.add(file);
-		
 		ITranslationUnit tu_ = tuProvider.getTranslationUnit(file, documentProvider);
 		if (!(tu_ instanceof IASTTranslationUnit)) {
 			EpocEnginePlugin.log(new FileNotFoundException("Failed to scan #defines for " + file)); //$NON-NLS-1$
 			return;
 		}
+
+		// only add file if it exists, otherwise, its absence makes clients
+		// think something has changed
+		includes.add(file);
+
 		IASTTranslationUnit tu = (IASTTranslationUnit) tu_;
 		for (IASTTopLevelNode node : tu.getNodes()) {
 			if (node instanceof IASTPreprocessorDefineStatement) {
@@ -163,8 +166,9 @@ public class MacroScanner {
 	}
 	
 	/**
-	 * Get the list of all header files that were scanned
-	 * @return
+	 * Get the list of all header files that were scanned (includes the
+	 * top level file)
+	 * @return non-<code>null</code> array of files
 	 */
 	public File[] getIncludedFiles() {
 		return includes.toArray(new File[includes.size()]);

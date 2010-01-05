@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
@@ -370,6 +371,8 @@ public class SDKPreferencePage
 			if (sdkPropDlg.open() == SDKPropertiesDialog.OK){
 				sdkListTableViewer.refresh();
 				setSelectedSDKInfoText(sdk);
+				// forcible rescan; dump cache
+				SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { sdk });
 				rescanSDKs(false);
 			}
 		} else {
@@ -405,6 +408,8 @@ public class SDKPreferencePage
 	}
 	
 	private void rescanNowButtonAction(){
+		// forcible rescan; dump cache
+		SymbianBuildContextDataCache.refreshForSDKs(null);
 		rescanSDKs(true);
 	}
 	

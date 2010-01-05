@@ -17,11 +17,13 @@
 
 package com.nokia.carbide.cpp.epoc.engine.preprocessor;
 
+import java.io.Serializable;
+
 /**
  * High-level information about a macro definition.
  *
  */
-public interface IDefine {
+public interface IDefine extends Serializable {
 	/** 
 	 * Get the macro name (never null)
 	 */

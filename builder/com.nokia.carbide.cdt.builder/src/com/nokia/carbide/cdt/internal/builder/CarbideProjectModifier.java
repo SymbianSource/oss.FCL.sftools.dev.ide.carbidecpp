@@ -20,6 +20,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
@@ -255,8 +256,17 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 			CarbideBuilderPlugin.getBuildManager().setProjectInfo(this);
 			
 			// save the CDT project description
-			CCorePlugin.getDefault().setProjectDescription(projectTracker.getProject(), projDes, true, new NullProgressMonitor());
 			
+			try {
+				// let the build context caches know we may be iterating them all
+				SymbianBuildContextDataCache.startProjectOperation();
+				
+				// TODO PERFORMANCE: this can lead to CarbideLanguageData#buildCache(), which is an enormously expensive operation. 
+				// So use a real progress monitor, say from a Job, so UI will be updated
+				CCorePlugin.getDefault().setProjectDescription(projectTracker.getProject(), projDes, true, new NullProgressMonitor());
+			} finally {
+				SymbianBuildContextDataCache.endProjectOperation();
+			}
 			if (rebuildCacheAndReindex) {
 				ICProject cproject = CoreModel.getDefault().create(projectTracker.getProject());
 				if (cproject != null)

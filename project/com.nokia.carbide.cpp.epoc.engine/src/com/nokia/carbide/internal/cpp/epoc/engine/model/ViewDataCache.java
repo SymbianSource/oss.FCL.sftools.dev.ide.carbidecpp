@@ -17,6 +17,7 @@
 
 package com.nokia.carbide.internal.cpp.epoc.engine.model;
 
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.model.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
 import com.nokia.cpp.internal.api.utils.core.*;
@@ -38,6 +39,7 @@ import java.util.*;
 public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel, View extends IView, Data extends IData<View>> {
 
 	public static boolean DEBUG = false;
+	public static boolean DEBUG_VERBOSE = false;
 	
 	/** A key which can retrieve the current state of a model for a given filter. */
 	static class ViewConfigKey extends Pair<IPath, IViewFilter> {
@@ -60,7 +62,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		 */
 		/*private*/ Object getMD5(String uniqueKey) {
 			try {
-				MessageDigest md = MessageDigest.getInstance("MD5");
+				MessageDigest md = MessageDigest.getInstance("MD5"); //$NON-NLS-1$
 				return md.digest(uniqueKey.getBytes());
 			} catch (NoSuchAlgorithmException e) {
 				return uniqueKey;
@@ -114,7 +116,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 			IViewParserConfiguration parserConfig = viewConfiguration.getViewParserConfiguration();
 			String includeState = getIncludeState(parserConfig.getIncludeFileLocator());
 			String projectState = parserConfig.getProjectLocation().toOSString();
-			return filterState + "/" + projectState + "/" + includeState + "/" + macroState;
+			return filterState + "/" + projectState + "/" + includeState + "/" + macroState; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 
 		/**
@@ -164,110 +166,12 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		
 	}
 
-	static class FileTimestampSizeCollection {
-		static FileTimestampSizeCollection INSTANCE = new FileTimestampSizeCollection();
-		/** Check timestamps only once in this number of milliseconds */
-		final int QUANTUM = 0;
-		
-		static class FileInfo extends Tuple {
-			public FileInfo(long lastModified, long lastQueried, long size) {
-				super(lastModified, lastQueried, size);
-			}
-			public long getLastModified() {
-				return (Long) get(0);
-			}
-			public long getLastQueried() {
-				return (Long) get(0);
-			}
-			public long getLength() { 
-				return (Long) get(2);
-			}
-		}
-		/** map of file to file size + last queried timestamp + time of last query 
-		 * (use File, not IPath, so we canonicalize for the OS) */
-		private Map<File, FileInfo> info = new HashMap<File, FileInfo>();		
-		
-		
-		/** Tell if the file's timestamp changed in the past quantum 
-		 * and update the record */
-		public boolean changed(File file) {
-			long now = System.currentTimeMillis();
-			FileInfo finfo = info.get(file);
-			if (finfo == null) {
-				finfo = new FileInfo(file.lastModified(), now, file.length());
-				info.put(file, finfo);
-				if (DEBUG) System.out.println("First info for " + file + ": " + finfo);
-				return true;
-			} else if (finfo.getLastQueried() + QUANTUM < now) {
-				// don't check times more than QUANTUM
-				long origTime = finfo.getLastModified();
-				long origSize = finfo.getLength();
-				finfo = new FileInfo(file.lastModified(), now, file.length());
-				info.put(file, finfo);
-				if (DEBUG) System.out.println("Updated info for " + file + ": " + origTime + "/" + origSize + " <=> " 
-						+ finfo.getLastModified() + "/" + finfo.getLength());
-				return origTime != finfo.getLastModified() || finfo.getLastModified() == 0 // 0 if deleted
-					|| origSize != finfo.getLength();		
-			} else {
-				// not changed, as far as we assume
-				if (DEBUG) System.out.println("Assuming no change for " + file);
-				return false;
-			}
-		}
-	}
-	
-	public static class ModelFileTimestampCollection {
-		/**
-		 * Delay in ms between successive checks of the filesystem, to avoid wasting time
-		 * when such checks are slow, and in cases where it's unlikely the human will edit files
-		 * fast enough to care.
-		 */
-		public static final long QUANTUM = HostOS.IS_WIN32 ? 50 : 10;
-		private File[] files;
-		private long lastQuery;
-
-		public ModelFileTimestampCollection(IView view) {
-			IPath[] paths = view.getReferencedFiles();
-			this.files = new File[paths.length];
-			int idx = 0;
-			for (IPath path : paths) {
-				files[idx] = path.toFile();
-				// prime the cache
-				FileTimestampSizeCollection.INSTANCE.changed(files[idx]);
-				idx++;
-			}
-			this.lastQuery = System.currentTimeMillis();
-		}
-
-		/**
-		 * Tell if any of the files have changed
-		 * @return
-		 */
-		public boolean changed() {
-			long prevQuery = lastQuery;
-			lastQuery = System.currentTimeMillis();
-			
-			// don't check more often than the resolution of the file allows
-			if (prevQuery + QUANTUM > lastQuery) {
-				if (DEBUG) System.out.println("Skipping fileinfo check");
-				return false;
-			}
-			
-			for (File file : files) {
-				if (FileTimestampSizeCollection.INSTANCE.changed(file)) {
-					return true;
-				}
-			}
-			return false;
-		}
-	}
-	
 	/** the minimum number of hits (accesses) to the entry to keep it when flushing cache. */
 	private static final int DEFAULT_MINIMUM_HITS_TO_KEEP = 8;
 
 	private IModelProvider<OwnedModel, Model> modelProvider;
 	private Map<ViewConfigKey, Pair<ViewConfigState, Data>> cachedData;
-	private Map<ViewConfigKey, ModelFileTimestampCollection> cachedTimestamps;
+	private Map<ViewConfigKey, ExternalFileInfoCollection> cachedFileInfo;
 	private Map<ViewConfigKey, Integer> cacheHits;
 	private List<ViewConfigKey> cacheOrder;
 
@@ -281,7 +185,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		
 		this.modelProvider = provider;
 		this.cachedData = new HashMap<ViewConfigKey, Pair<ViewConfigState,Data>>();
-		this.cachedTimestamps = new HashMap<ViewConfigKey, ModelFileTimestampCollection>();
+		this.cachedFileInfo = new HashMap<ViewConfigKey, ExternalFileInfoCollection>();
 		this.cacheHits = new HashMap<ViewConfigKey, Integer>();
 		this.cacheOrder = new LinkedList<ViewConfigKey>();
 	}
@@ -366,11 +270,11 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		}
 		statefulData = cachedData.get(key);
 		if (statefulData != null) {
-			// now check that the file timestamps are valid.
-			ModelFileTimestampCollection timestamps = cachedTimestamps.get(key);
-			if (timestamps.changed()) {
+			// now check that the file info is valid.
+			ExternalFileInfoCollection fileinfo = cachedFileInfo.get(key);
+			if (fileinfo.anyChanged()) {
 				if (DEBUG) {
-					System.out.println("One or more relevant files changed for " + modelPath);
+					System.out.println("One or more relevant files changed for " + modelPath); //$NON-NLS-1$
 				}
 				removeAllEntriesForModel(modelPath);
 				statefulData = null;
@@ -380,9 +284,9 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 					if (DEBUG) {
 						String orig = statefulData.first.toString();
 						String curr = state.toString();
-						System.out.println("State changed (from:\n" 
-								+ orig.substring(0, Math.min(100, orig.length())) + "\nto:\n" + 
-								curr.substring(0, Math.min(100, curr.length())) + ")\n");
+						System.out.println("State changed (from:\n" //$NON-NLS-1$
+								+ orig.substring(0, Math.min(100, orig.length())) + "\nto:\n" + //$NON-NLS-1$ 
+								curr.substring(0, Math.min(100, curr.length())) + ")\n"); //$NON-NLS-1$
 					}
 					removeEntry(key);
 					cachedData.remove(key);
@@ -392,8 +296,8 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 		}
 		
 		if (statefulData != null) {
-			if (DEBUG) {
-				System.out.println("Found entry for " + key);
+			if (DEBUG_VERBOSE) {
+				System.out.println("Found entry for " + key); //$NON-NLS-1$
 			}
 			cacheHits.put(key, cacheHits.get(key) + 1);
 			data = statefulData.second;
@@ -422,7 +326,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 			ViewConfigState state, ViewConfigKey key) throws CoreException {
 		Data data;
 		if (DEBUG) {
-			System.out.println("Fetching view data for " + key);
+			System.out.println("Fetching view data for " + key); //$NON-NLS-1$
 		}
 		Model model = modelProvider.getSharedModel(modelPath);
 		if (model == null)
@@ -437,11 +341,21 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 				if (data == null)
 					return null;
 				
-				ModelFileTimestampCollection timestamps = new ModelFileTimestampCollection(view);
+				IPath[] referencedFiles = view.getReferencedFiles();
+				File[] files = new File[referencedFiles.length];
+				for (int idx = 0; idx < referencedFiles.length; idx++) {
+					files[idx] = referencedFiles[idx].toFile();
+				}
+				
+				ExternalFileInfoCollection fileinfo = 
+					new ExternalFileInfoCollection(
+							EpocEnginePlugin.getExternalFileInfoCache(),
+							files,
+							FileUtils.getMinimumFileTimestampResolution(modelPath));
 				synchronized (cachedData) {
 					// the data may have already been registered... oh well
 					cachedData.put(key, new Pair<ViewConfigState, Data>(state, data));
-					cachedTimestamps.put(key, timestamps);
+					cachedFileInfo.put(key, fileinfo);
 					cacheOrder.add(0, key);
 					cacheHits.put(key, 0);
 				}
@@ -470,8 +384,10 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 	 * @param key
 	 */
 	private void removeEntry(ViewConfigKey key) {
-		cachedTimestamps.remove(key);
-		cacheHits.remove(key);
+		cachedFileInfo.remove(key);
+		
+		// do not lose info about file importance
+		//cacheHits.remove(key);
 		cacheOrder.remove(key);
 		cachedData.remove(key);
 	}
@@ -497,7 +413,7 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 			Integer hits = cacheHits.get(key);
 			if (hits == null || hits < minimumHitsToKeep) {
 				if (DEBUG) {
-					System.out.println("*** Flushing " + key);
+					System.out.println("*** Flushing " + key); //$NON-NLS-1$
 				}
 				removeEntry(key);
 				toRemove--;
@@ -512,12 +428,11 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 			if (key.equals(retainKey))
 				continue;
 			if (DEBUG) {
-				System.out.println("*** Flushing " + key);
+				System.out.println("*** Flushing " + key); //$NON-NLS-1$
 			}
 			removeEntry(key);
 			toRemove--;
 		}
 
 	}
-	
 }

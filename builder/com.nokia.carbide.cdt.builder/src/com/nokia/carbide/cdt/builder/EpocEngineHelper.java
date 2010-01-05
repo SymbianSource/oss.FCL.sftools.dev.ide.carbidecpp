@@ -27,6 +27,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
@@ -88,35 +89,41 @@ public class EpocEngineHelper {
 		
 		monitor.beginTask("Scanning bld.inf for mmp and make files", buildConfigs.size());
 
-		for (final ISymbianBuildContext context : buildConfigs) {
-			EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
-					new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
-					new BldInfDataRunnableAdapter() {
-						public Object run(IBldInfData data) {
-							for (IMakMakeReference ref : data.getMakMakeReferences()) {
-								normalFiles.add(getFullPath(data, ref.getPath()));
-							}
-							for (IMakMakeReference ref : data.getTestMakMakeReferences()) {
-								boolean ignore = false;
-								for (String att : ref.getAttributes()) {
-									if (att.equalsIgnoreCase("ignore")) { //$NON-NLS-1$
-										ignore = true;
-										break;
+		try {
+			// let cache know we're iterating a lot
+			SymbianBuildContextDataCache.startProjectOperation();
+			
+			for (final ISymbianBuildContext context : buildConfigs) {
+				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
+						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
+						new BldInfDataRunnableAdapter() {
+							public Object run(IBldInfData data) {
+								for (IMakMakeReference ref : data.getMakMakeReferences()) {
+									normalFiles.add(getFullPath(data, ref.getPath()));
+								}
+								for (IMakMakeReference ref : data.getTestMakMakeReferences()) {
+									boolean ignore = false;
+									for (String att : ref.getAttributes()) {
+										if (att.equalsIgnoreCase("ignore")) { //$NON-NLS-1$
+											ignore = true;
+											break;
+										}
+									}
+									if (!ignore) {
+										testFiles.add(getFullPath(data, ref.getPath()));
 									}
 								}
-								if (!ignore) {
-									testFiles.add(getFullPath(data, ref.getPath()));
-								}
+								return null;
 							}
-							return null;
-						}
-				});
-
-			monitor.worked(1);
+					});
+	
+				monitor.worked(1);
+			}
+				
+			monitor.done();
+		} finally {
+			SymbianBuildContextDataCache.endProjectOperation();
 		}
-		
-		monitor.done();
-		
 		for (IPath normalPath : normalFiles){
 			normalMakMakePaths.add(normalPath);
 		}
@@ -145,28 +152,34 @@ public class EpocEngineHelper {
 		
 		monitor.beginTask("Scanning bld.inf project extensions", buildConfigs.size());
 
-		for (final ISymbianBuildContext context : buildConfigs) {
-			EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
-					new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
-					new BldInfDataRunnableAdapter() {
-						public Object run(IBldInfData data) {
-							BldInfViewPathHelper helper = new BldInfViewPathHelper(data, context);
-							for (IExtension extension : data.getExtensions()) {
-								IPath extensionMakefileBase = helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath());
-								normalFiles.add(extensionMakefileBase.addFileExtension("mk")); //$NON-NLS-1$
+		try {
+			// let cache know we're iterating a lot
+			SymbianBuildContextDataCache.startProjectOperation();
+			
+			for (final ISymbianBuildContext context : buildConfigs) {
+				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
+						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
+						new BldInfDataRunnableAdapter() {
+							public Object run(IBldInfData data) {
+								BldInfViewPathHelper helper = new BldInfViewPathHelper(data, context);
+								for (IExtension extension : data.getExtensions()) {
+									IPath extensionMakefileBase = helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath());
+									normalFiles.add(extensionMakefileBase.addFileExtension("mk")); //$NON-NLS-1$
+								}
+								for (IExtension extension : data.getTestExtensions()) {
+									IPath extensionMakefileBase = helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath());
+									testFiles.add(extensionMakefileBase.addFileExtension("mk")); //$NON-NLS-1$
+								}
+								return null;
 							}
-							for (IExtension extension : data.getTestExtensions()) {
-								IPath extensionMakefileBase = helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath());
-								testFiles.add(extensionMakefileBase.addFileExtension("mk")); //$NON-NLS-1$
-							}
-							return null;
-						}
-				});
-
-			monitor.worked(1);
+					});
+	
+				monitor.worked(1);
+			}
+		} finally {
+			SymbianBuildContextDataCache.endProjectOperation();
+			monitor.done();
 		}
-		
-		monitor.done();
 		
 		for (IPath normalPath : normalFiles){
 			normalExtensionPaths.add(normalPath);
@@ -195,29 +208,36 @@ public class EpocEngineHelper {
 		
 		monitor.beginTask("Scanning bld.inf project extensions", buildConfigs.size());
 
-		for (final ISymbianBuildContext context : buildConfigs) {
-			EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
-					new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
-					new BldInfDataRunnableAdapter() {
-						public Object run(IBldInfData data) {
-							for (IExtension extension : data.getExtensions()) {
-								if (extension.getName() != null) {
-									normalFiles.add(extension);
+		try {
+			// let cache know we're iterating a lot
+			SymbianBuildContextDataCache.startProjectOperation();
+			
+			for (final ISymbianBuildContext context : buildConfigs) {
+				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
+						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
+						new BldInfDataRunnableAdapter() {
+							public Object run(IBldInfData data) {
+								for (IExtension extension : data.getExtensions()) {
+									if (extension.getName() != null) {
+										normalFiles.add(extension);
+									}
 								}
-							}
-							for (IExtension extension : data.getTestExtensions()) {
-								if (extension.getName() != null) {
-									testFiles.add(extension);
+								for (IExtension extension : data.getTestExtensions()) {
+									if (extension.getName() != null) {
+										testFiles.add(extension);
+									}
 								}
+								return null;
 							}
-							return null;
-						}
-				});
-
-			monitor.worked(1);
+					});
+	
+				monitor.worked(1);
+			}
+		} finally {		
+			monitor.done();
+			
+			SymbianBuildContextDataCache.endProjectOperation();
 		}
-		
-		monitor.done();
 		
 		for (IExtension normal : normalFiles){
 			normalExtensions.add(normal);
@@ -240,29 +260,36 @@ public class EpocEngineHelper {
 
 		monitor.beginTask("Scanning bld.inf project extensions", buildConfigs.size());
 
-		for (final ISymbianBuildContext context : buildConfigs) {
-			EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
-					new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
-					new BldInfDataRunnableAdapter() {
-						public Object run(IBldInfData data) {
-							for (IExtension extension : data.getExtensions()) {
-								if (extension.getName() == null) {
-									extensions.add(extension);
+		try {
+			// let cache know we're iterating a lot
+			SymbianBuildContextDataCache.startProjectOperation();
+			
+			for (final ISymbianBuildContext context : buildConfigs) {
+				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
+						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
+						new BldInfDataRunnableAdapter() {
+							public Object run(IBldInfData data) {
+								for (IExtension extension : data.getExtensions()) {
+									if (extension.getName() == null) {
+										extensions.add(extension);
+									}
 								}
-							}
-							for (IExtension extension : data.getTestExtensions()) {
-								if (extension.getName() == null) {
-									extensions.add(extension);
+								for (IExtension extension : data.getTestExtensions()) {
+									if (extension.getName() == null) {
+										extensions.add(extension);
+									}
 								}
+								return null;
 							}
-							return null;
-						}
-				});
+					});
+	
+				monitor.worked(1);
+			}
+		} finally {		
+			monitor.done();
 
-			monitor.worked(1);
+			SymbianBuildContextDataCache.endProjectOperation();
 		}
-		
-		monitor.done();
 
 		return extensions.size() > 0;
 	}

@@ -42,7 +42,7 @@ public class DefaultTranslationUnitProvider implements ITranslationUnitProvider 
 	private boolean DUMP = false;
 	
 	/** count of entries allowed */
-	private static final int DEFAULT_MAX_CACHE_SIZE = 32;
+	private static final int DEFAULT_MAX_CACHE_SIZE = 256;
 	/** the minimum number of hits (accesses) to the TU to keep it when flushing cache. */
 	private static final int DEFAULT_MINIMUM_HITS_TO_KEEP = 8;
 	
@@ -156,7 +156,8 @@ public class DefaultTranslationUnitProvider implements ITranslationUnitProvider 
 		if (DUMP)
 			System.out.println("Releasing TU for " + file); //$NON-NLS-1$
 		tuCache.remove(file);
-		cacheHits.remove(file);
+		// do not lose info about file importance
+		//cacheHits.remove(file);
 		cacheTimes.remove(file);
 		cacheOrder.remove(file);
 	}
