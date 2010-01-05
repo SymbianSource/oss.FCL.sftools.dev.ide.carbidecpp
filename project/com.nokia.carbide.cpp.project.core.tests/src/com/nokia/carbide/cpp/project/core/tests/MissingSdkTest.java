@@ -17,7 +17,6 @@
 package com.nokia.carbide.cpp.project.core.tests;
 
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.*;
-import org.osgi.framework.Bundle;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -76,21 +74,25 @@ public class MissingSdkTest extends TestCase {
 			
 			IProject project = null;
 			ISymbianSDK lastSdkFound = null;
+			int lastSdkConfigurations = 0;
 			try {
 				project = ProjectCorePlugin.createProject("missingsdk", null);
 			
 				assertNotNull(project);
 				
-				// put all configs among SDKs in devices.xml				
+				// put up to 4 configs among each SDK in devices.xml (to improve speed with custkits)		
 				List<ISymbianBuildContext> allConfigs = new ArrayList<ISymbianBuildContext>();
 				for (ISymbianSDK sdk : sdkList) {
-					List<ISymbianBuildContext> projectConfigs = sdk.getFilteredBuildConfigurations();
-					if (projectConfigs == null)
+					List<ISymbianBuildContext> sdkConfigs = sdk.getFilteredBuildConfigurations();
+					if (sdkConfigs == null)
 						continue;
-					if (projectConfigs.size() <= 0)
+					if (sdkConfigs.size() <= 0)
 						continue;
-					allConfigs.addAll(projectConfigs);
+					List<ISymbianBuildContext> subConfigs = sdkConfigs.subList(0, 
+							Math.min(4, sdkConfigs.size()));
+					allConfigs.addAll(subConfigs);
 					lastSdkFound = sdk;
+					lastSdkConfigurations = subConfigs.size();
 				}
 				assertTrue(allConfigs.size() > 0);
 				ProjectCorePlugin.postProjectCreatedActions(project, BLD_INF, allConfigs, new ArrayList<String>(), "Debug MMP", null, new NullProgressMonitor());
@@ -111,8 +113,8 @@ public class MissingSdkTest extends TestCase {
 					badCount++;
 				}
 			}
-			// we only remove the first
-			assertTrue(badCount == lastSdkFound.getFilteredBuildConfigurations().size());
+			// we only remove the last
+			assertTrue(badCount == lastSdkConfigurations);
 				
 		} finally {
 			if (backupFile != null) {
@@ -128,17 +130,6 @@ public class MissingSdkTest extends TestCase {
 		
 	}
 
-	private File pluginRelativeFile(String file) throws IOException {
-		Bundle bundle = TestsPlugin.getDefault().getBundle();
-		URL url = FileLocator.find(bundle, new Path("."), null);
-		if (url == null)
-			fail("could not make URL from bundle " + bundle + " and path " + file);
-		url = FileLocator.resolve(url);
-		TestCase.assertEquals("file", url.getProtocol());
-		return new File(url.getPath(), file);
-	}
-	
-	
 	public void copyFile(File in, File out) throws Exception {
 		FileInputStream fis  = new FileInputStream(in);
 		FileOutputStream fos = new FileOutputStream(out);
