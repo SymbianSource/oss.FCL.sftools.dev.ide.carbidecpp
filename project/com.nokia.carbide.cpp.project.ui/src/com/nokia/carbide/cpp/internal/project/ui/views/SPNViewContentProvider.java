@@ -2535,7 +2535,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 
 		IMemento childMem = memento.getChild(TAG_EXPANDED);
 		if (childMem != null) {
-			List<Object> elements = new ArrayList<Object>();
+			final List<Object> elements = new ArrayList<Object>();
 			for (IMemento project : childMem.getChildren(TAG_IPROJECT)) {
 				String path = project.getString(TAG_PATH);
 				if (path != null) {
@@ -2576,12 +2576,16 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 				}
 			}
 
-			viewer.setExpandedElements(elements.toArray());
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					viewer.setExpandedElements(elements.toArray());
+				}
+			});
 		}
 		
 		childMem = memento.getChild(TAG_SELECTION);
 		if (childMem != null) {
-			List<Object> list = new ArrayList<Object>();
+			final List<Object> list = new ArrayList<Object>();
 			for (IMemento project : childMem.getChildren(TAG_IPROJECT)) {
 				String path = project.getString(TAG_PATH);
 				if (path != null) {
@@ -2622,7 +2626,11 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 				}
 			}
 
-			viewer.setSelection(new StructuredSelection(list));
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					viewer.setSelection(new StructuredSelection(list));
+				}
+			});
 		}
 
 		Integer i = memento.getInteger(TAG_FILTERING_ENABLED);

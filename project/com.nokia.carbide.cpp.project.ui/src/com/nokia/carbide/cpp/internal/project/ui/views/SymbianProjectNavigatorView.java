@@ -29,6 +29,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -57,6 +61,7 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ScrollBar;
@@ -169,7 +174,21 @@ public class SymbianProjectNavigatorView extends ViewPart implements IShowInSour
 		viewer.setInput(getViewSite());
 		
 		if (memento != null) {
-			restoreState(memento);
+			final IMemento theMemento = memento;
+			// this takes a heckuva long time at startup since it leads to loading
+			// all the CDT metadata, possibly re-parsing bld.inf/mmps, etc...
+			Job job = new Job("Restoring Symbian Project Navigator") {
+				/* (non-Javadoc)
+				 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
+				 */
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					restoreState(theMemento);
+					return Status.OK_STATUS;
+				}
+			};
+			job.setUser(false);
+			job.schedule();
 		}
 		memento = null;
 
@@ -460,28 +479,32 @@ public class SymbianProjectNavigatorView extends ViewPart implements IShowInSour
 		viewer.getControl().setRedraw(true);
 	}
 
-	void restoreState(IMemento memento) {
+	void restoreState(final IMemento memento) {
 		contentProvider.restoreTreeStateAndSelection(memento);
 		
-		Tree tree = viewer.getTree();
-		ScrollBar bar = tree.getVerticalBar();
-		if (bar != null) {
-			try {
-				String posStr = memento.getString(TAG_VERTICAL_POSITION);
-				int position = new Integer(posStr).intValue();
-				bar.setSelection(position);
-			} catch (NumberFormatException e) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				Tree tree = viewer.getTree();
+				ScrollBar bar = tree.getVerticalBar();
+				if (bar != null) {
+					try {
+						String posStr = memento.getString(TAG_VERTICAL_POSITION);
+						int position = new Integer(posStr).intValue();
+						bar.setSelection(position);
+					} catch (NumberFormatException e) {
+					}
+				}
+				bar = tree.getHorizontalBar();
+				if (bar != null) {
+					try {
+						String posStr = memento.getString(TAG_HORIZONTAL_POSITION);
+						int position = new Integer(posStr).intValue();
+						bar.setSelection(position);
+					} catch (NumberFormatException e) {
+					}
+				}
 			}
-		}
-		bar = tree.getHorizontalBar();
-		if (bar != null) {
-			try {
-				String posStr = memento.getString(TAG_HORIZONTAL_POSITION);
-				int position = new Integer(posStr).intValue();
-				bar.setSelection(position);
-			} catch (NumberFormatException e) {
-			}
-		}
+		});
 	}
 
 	public void saveState(IMemento memento) {
