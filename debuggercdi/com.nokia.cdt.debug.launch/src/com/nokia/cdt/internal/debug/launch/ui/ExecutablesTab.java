@@ -284,7 +284,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 			// which causes the apply button to become enabled which is not expected behavior.  this will
 			// be called later if/when they do specify the main program, so we'll make sure then that it's
 			// actually being targeted.
-			if (programName.length() > 0) {
+			if (programName != null && programName.length() > 0) {
 				boolean resetProgramName = true;
 				// check to see if the current program name is one of the executables to target
 				for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
