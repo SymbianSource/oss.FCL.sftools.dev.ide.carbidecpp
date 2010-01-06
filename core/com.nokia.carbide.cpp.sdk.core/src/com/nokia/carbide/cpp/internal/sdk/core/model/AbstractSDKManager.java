@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -636,17 +637,29 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			sbsV2Version = new Version(0, 0, 0);
 			
 			Runtime rt=Runtime.getRuntime();
+			IPath sbsPath = SBSv2Utils.getSBSPath();
+			Process p = null;
 			try {
-				IPath sbsPath = SBSv2Utils.getSBSPath();
-				Process p = rt.exec(new String[] { sbsPath.toOSString(), "-v" });
-				
+				p = rt.exec(new String[] { sbsPath.toOSString(), "-v" });
+			} catch (IOException e) {
+				// no such process, SBSv2 not available
+				Logging.log(SDKCorePlugin.getDefault(), Logging.newSimpleStatus(
+						0, IStatus.WARNING, 
+						MessageFormat.format(
+							"Could not find or launch Raptor script ''{0}''; SBSv2 support will not be available",
+							sbsPath), e));
+			}
+			if (p != null) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String overallOutput = null;
 				String stdErrLine = null;
-				while ((stdErrLine = br.readLine()) != null) {
-					overallOutput += stdErrLine;
+				try {
+					while ((stdErrLine = br.readLine()) != null) {
+						overallOutput += stdErrLine;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				
 				if (overallOutput != null) {
 				{
 					String[] tokens = overallOutput.split(" ");
@@ -674,14 +687,9 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						}
 					
 					p.destroy();
+					}
 				}
 			}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-			
 		}
 		return sbsV2Version;
 	}
