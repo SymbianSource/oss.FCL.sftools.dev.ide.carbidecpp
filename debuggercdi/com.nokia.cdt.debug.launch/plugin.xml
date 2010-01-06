@@ -9,7 +9,7 @@
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
             sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
             delegateDescription="Launch a classic Carbide Emulator debug session."          
-            name="Symbian OS Emulation"
+            name="Classic Symbian OS Emulation"
             delegate="com.nokia.cdt.internal.debug.launch.EmulationLaunchDelegate"
             modes="run,debug"
             type="com.nokia.cdt.debug.launch.emulationLaunch"
@@ -28,7 +28,7 @@
       </launchDelegate>
  
       <launchDelegate
-            name="Symbian OS System TRK"
+            name="Classic Symbian OS System TRK"
             delegateDescription="Launch a classic Symbian OS System TRK debug session."          
             delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
             modes="run,debug"
@@ -39,7 +39,7 @@
       </launchDelegate>
  
       <launchDelegate
-            name="Symbian OS Attach to Process"
+            name="Classic Symbian OS Attach to Process"
             delegate="com.nokia.cdt.internal.debug.launch.AttachLaunchDelegate"
             delegateDescription="Launch a classic Symbian OS Attach to Process debug session."          
             modes="debug"
@@ -50,7 +50,7 @@
       </launchDelegate>
     
       <launchDelegate
-            name="Symbian OS Trace32"
+            name="Classic Symbian OS Trace32"
             delegate="com.nokia.cdt.internal.debug.launch.Trace32LaunchDelegate"
             delegateDescription="Launch a classic Symbian OS Trace32 debug session."          
             modes="debug"
@@ -61,7 +61,7 @@
       </launchDelegate>
       
       <launchDelegate
-            name="Symbian OS Sophia"
+            name="Classic Symbian OS Sophia"
             delegate="com.nokia.cdt.internal.debug.launch.SophiaSTILaunchDelegate"
             delegateDescription="Launch a classic Symbian OS Trace32 debug session."          
             modes="debug"
