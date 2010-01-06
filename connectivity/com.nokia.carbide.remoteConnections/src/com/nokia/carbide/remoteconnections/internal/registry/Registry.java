@@ -530,7 +530,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			// TODO ask user to connect a device or cancel
 			throw new CoreException(
 					Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
-							"No compatible connection found for this id"));
+							Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
 		}
 		return connection;
 	}

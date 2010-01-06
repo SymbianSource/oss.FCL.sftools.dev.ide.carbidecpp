@@ -124,7 +124,7 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	}
 	
 	private void loadAndStartDeviceDiscoveryAgents() {
-		String loadError = Messages.getString("RemoteConnectionsActivator.DiscoveryAgentLoadError");
+		String loadError = Messages.getString("RemoteConnectionsActivator.DiscoveryAgentLoadError"); //$NON-NLS-1$
 		discoveryAgents = new ArrayList<IDeviceDiscoveryAgent>();
 		loadExtensions(DISCOVERY_AGENT_EXTENSION, loadError, discoveryAgents, new IFilter() {
 			public boolean select(Object toTest) {

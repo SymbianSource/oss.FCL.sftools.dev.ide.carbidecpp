@@ -80,7 +80,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 * This is the id on the command in the toolbar contribution associated with this 
 	 * widget.  Keep this in sync with the extension point!
 	 */
-	private static final String OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_ID = "openRemoteConnectionsView";
+	private static final String OPEN_REMOTE_CONNECTIONS_VIEW_COMMAND_ID = "openRemoteConnectionsView"; //$NON-NLS-1$
 	private Composite container;
 	private CLabel connectionInfo;
 	private ToolItem connectionIcon;

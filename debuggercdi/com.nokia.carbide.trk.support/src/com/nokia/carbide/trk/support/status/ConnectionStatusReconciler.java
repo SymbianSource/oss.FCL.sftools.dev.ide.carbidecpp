@@ -31,6 +31,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.carbide.trk.support.service.TRKConnectedService;
 import com.nokia.carbide.trk.support.service.TracingConnectedService;
@@ -145,10 +146,10 @@ public class ConnectionStatusReconciler {
 		}
 
 		String shortDesc = getShortDescriptionForStatus(connectionStatus);
-		StringBuilder longDesc = new StringBuilder("TRK service ");
+		StringBuilder longDesc = new StringBuilder(Messages.getString("ConnectionStatusReconciler_TRKServicePrefix")); //$NON-NLS-1$
 		longDesc.append(getServiceStatusString(trkStatus));
 		if (isSysTRK) {
-			longDesc.append(", Tracing service ");
+			longDesc.append(Messages.getString("ConnectionStatusReconciler_TracingServicePrefix")); //$NON-NLS-1$
 			longDesc.append(getServiceStatusString(traceStatus));
 		}
 		
@@ -158,27 +159,27 @@ public class ConnectionStatusReconciler {
 	private String getShortDescriptionForStatus(EConnectionStatus connectionStatus) {
 		switch (connectionStatus) {
 			case READY:
-				return "Ready";
+				return Messages.getString("ConnectionStatusReconciler_ReadyLabel"); //$NON-NLS-1$
 			case NOT_READY:
-				return "Not Ready";
+				return Messages.getString("ConnectionStatusReconciler_NotReadyLabel"); //$NON-NLS-1$
 			case IN_USE:
-				return "In Use";
+				return Messages.getString("ConnectionStatusReconciler_InUseLabel"); //$NON-NLS-1$
 			case IN_USE_DISCONNECTED:
-				return "Disconnected";
+				return Messages.getString("ConnectionStatusReconciler_DisconnectedLabel"); //$NON-NLS-1$
 			}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	private String getServiceStatusString(EStatus status) {
 		switch (status) {
 			case UP:
-				return "available";
+				return Messages.getString("ConnectionStatusReconciler_availableLabel"); //$NON-NLS-1$
 			case DOWN:
-				return "unavailable";
+				return Messages.getString("ConnectionStatusReconciler_unavailableLabel"); //$NON-NLS-1$
 			case IN_USE:
-				return "in use";
+				return Messages.getString("ConnectionStatusReconciler_inUseLabel_lower"); //$NON-NLS-1$
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	private EConnectionStatus service2ConnectionStatus(EStatus serviceStatus) {

@@ -22,6 +22,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.PartInitException;
 
+import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.view.ConnectionsView;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -37,7 +38,7 @@ public class OpenConnectionViewCommandHandler extends AbstractHandler {
 		try {
 			WorkbenchUtils.getView(ConnectionsView.VIEW_ID);
 		} catch (PartInitException e) {
-			throw new ExecutionException("Failed to open view", e);
+			throw new ExecutionException(Messages.getString("OpenConnectionViewCommandHandler_FailedToOpenMsg"), e); //$NON-NLS-1$
 		}
 		return null;
 	}

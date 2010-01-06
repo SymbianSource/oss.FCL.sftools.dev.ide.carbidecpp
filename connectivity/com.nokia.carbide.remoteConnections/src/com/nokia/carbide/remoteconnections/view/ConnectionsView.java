@@ -330,7 +330,7 @@ public class ConnectionsView extends ViewPart {
 						return status.getLongDescription();
 				}
 				else if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
-					return Messages.getString("ConnectionsView.InUseDesc");
+					return Messages.getString("ConnectionsView.InUseDesc"); //$NON-NLS-1$
 				}
 			}
 			
@@ -647,7 +647,7 @@ public class ConnectionsView extends ViewPart {
 		actions.add(action);
 		action.setEnabled(!Registry.instance().getConnectionTypes().isEmpty());
 		
-		String editLabel = Messages.getString("ConnectionsView.EditActionLabel");
+		String editLabel = Messages.getString("ConnectionsView.EditActionLabel"); //$NON-NLS-1$
 		action = new Action(editLabel, CONNECTION_EDIT_IMGDESC) { //$NON-NLS-1$
 			@Override
 			public void run() {

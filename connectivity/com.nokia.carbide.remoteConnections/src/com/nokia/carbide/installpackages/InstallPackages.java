@@ -215,7 +215,7 @@ public class InstallPackages {
 
 	private String getRelativePath(String installFilePath) {
 		String path = getServerPath();
-		return path + "/" + installFilePath;
+		return path + "/" + installFilePath; //$NON-NLS-1$
 	}
 
 	private String getServerPath() {
