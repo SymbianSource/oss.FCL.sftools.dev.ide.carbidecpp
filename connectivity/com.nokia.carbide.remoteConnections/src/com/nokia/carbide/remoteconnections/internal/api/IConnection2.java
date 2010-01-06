@@ -46,12 +46,14 @@ public interface IConnection2 extends IConnection {
 	 */
 	public interface IConnectionStatus {
 		enum EConnectionStatus {
-			READY, NOT_READY, IN_USE, IN_USE_DISCONNECTED
+			READY, NOT_READY, IN_USE, IN_USE_DISCONNECTED, NONE
 		};
 		
 		EConnectionStatus getEConnectionStatus();
 		
-		String getDescription();
+		String getShortDescription();
+		
+		String getLongDescription();
 	}
 	
 	/**

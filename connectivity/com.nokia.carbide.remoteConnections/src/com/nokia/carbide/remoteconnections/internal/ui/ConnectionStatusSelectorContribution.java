@@ -52,11 +52,8 @@ import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
@@ -97,7 +94,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	/**
 	 * Contains all the listeners.  In most cases we just recreate the contribution status item.
 	 */
-	class ListenerBlock implements IConnectionListener, IConnectionsManagerListener, IStatusChangedListener, IConnectionStatusChangedListener {
+	class ListenerBlock implements IConnectionListener, IConnectionsManagerListener, IConnectionStatusChangedListener {
 
 		/* (non-Javadoc)
 		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#connectionAdded(com.nokia.carbide.remoteconnections.interfaces.IConnection)
@@ -142,13 +139,6 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		 */
 		public void displayChanged() {
 			updateUI();
-		}
-
-		/* (non-Javadoc)
-		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener#statusChanged(com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus)
-		 */
-		public void statusChanged(IStatus status) {
-			updateConnectionStatus(null);
 		}
 
 		/* (non-Javadoc)
@@ -320,7 +310,8 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 				createConnectionMenuItem(menu, connection, defaultConnection, number++);
 			}
 			
-			new MenuItem(menu, SWT.SEPARATOR);
+			if (!staticConnections.isEmpty())
+				new MenuItem(menu, SWT.SEPARATOR);
 			
 			for (IConnection connection : staticConnections) {
 				createConnectionMenuItem(menu, connection, defaultConnection, number++);
@@ -375,9 +366,6 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 			if (defaultConnection instanceof IConnection2) {
 				((IConnection2) defaultConnection).addStatusChangedListener(listenerBlock);
 			}
-			for (IConnectedService service : manager.getConnectedServices(defaultConnection)) {
-				service.addStatusChangedListener(listenerBlock);
-			}
 		}
 	}
 
@@ -385,9 +373,6 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		if (defaultConnection != null) {
 			if (defaultConnection instanceof IConnection2) {
 				((IConnection2) defaultConnection).removeStatusChangedListener(listenerBlock);
-			}
-			for (IConnectedService service : manager.getConnectedServices(defaultConnection)) {
-				service.removeStatusChangedListener(listenerBlock);
 			}
 		}
 		manager.removeConnectionListener(listenerBlock);
@@ -435,7 +420,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		
 		String statusString = null;
 		if (status != null) {
-			statusString = status.getDescription();
+			statusString = createStatusString(status);
 		}
 		
 		if (TextUtils.isEmpty(statusString)) {
@@ -447,6 +432,16 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		}
 		
 		return MessageFormat.format(Messages.getString("ConnectionStatusSelectorContribution.ConnectionStatusFormat"), defaultConnection.getDisplayName(), statusString); //$NON-NLS-1$
+	}
+
+	private String createStatusString(IConnectionStatus status) {
+		String shortDescription = status.getShortDescription();
+		if (shortDescription == null || shortDescription.length() == 0)
+			return ""; //$NON-NLS-1$
+		String pattern = Messages.getString("ConnectionStatusSelectorContribution.StatusFormat"); //$NON-NLS-1$
+		if (shortDescription != null)
+			shortDescription = shortDescription.toLowerCase();
+		return MessageFormat.format(pattern, shortDescription, status.getLongDescription());
 	}
 
 	/**

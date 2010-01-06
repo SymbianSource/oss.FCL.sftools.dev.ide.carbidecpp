@@ -40,6 +40,8 @@ import java.util.List;
  */
 public class TRKConnectedService extends AbstractConnectedService {
 	
+	public static final String PROP_SYS_TRK = "is-system-trk"; //$NON-NLS-1$
+	
 	static {
 		try {
 			System.loadLibrary("GetTRKVersion"); //$NON-NLS-1$

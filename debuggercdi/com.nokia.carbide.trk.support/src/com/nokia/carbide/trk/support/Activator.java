@@ -18,23 +18,16 @@
 
 package com.nokia.carbide.trk.support;
 
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
-import com.nokia.cpp.internal.api.utils.core.Logging;
-
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-public class Activator extends AbstractUIPlugin {
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
+import com.nokia.carbide.trk.support.status.ConnectionStatusReconciler;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 
-	private static final String INTERNAL_ONLY_FEATURE = "Carbide_InternalOnly"; //$NON-NLS-1$
-	private static final String INTERNAL_ONLY_DESC = "Internal Only Feature"; //$NON-NLS-1$
-	private static final String INTERNAL_ONLY_VERSION = "2.0"; //$NON-NLS-1$
-	private static final String TRACE_FEATURE = "Carbide_OST_Trace"; //$NON-NLS-1$
-	private static final String TRACE_DESC = "Carbide Trace Feature"; //$NON-NLS-1$
-	private static final String TRACE_VERSION = "2.0"; //$NON-NLS-1$
+public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.trk.support"; //$NON-NLS-1$
@@ -55,6 +48,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		ConnectionStatusReconciler.getInstance();
 	}
 
 	/*
@@ -62,6 +56,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		ConnectionStatusReconciler.getInstance().dispose();
 		plugin = null;
 		super.stop(context);
 	}

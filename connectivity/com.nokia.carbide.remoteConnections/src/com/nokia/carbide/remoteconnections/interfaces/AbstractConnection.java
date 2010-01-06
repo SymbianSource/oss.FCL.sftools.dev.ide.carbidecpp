@@ -35,27 +35,34 @@ public abstract class AbstractConnection implements IConnection2 {
 	
 	public static class ConnectionStatus implements IConnectionStatus {
 		private EConnectionStatus estatus;
-		private String description;
+		private String shortDescription;
+		private String longDescription;
 		
-		public ConnectionStatus(EConnectionStatus estatus, String description) {
+		public ConnectionStatus(EConnectionStatus estatus, String shortDescription, String longDescription) {
 			this.estatus = estatus;
-			this.description = description;
+			this.shortDescription = shortDescription;
+			this.longDescription = longDescription;
 		}
 
 		public EConnectionStatus getEConnectionStatus() {
 			return estatus;
 		}
 		
-		public String getDescription() {
-			return description;
+		public String getShortDescription() {
+			return shortDescription;
 		}
 
+		public String getLongDescription() {
+			return longDescription;
+		}
+		
 		public void setEStatus(EConnectionStatus estatus) {
 			this.estatus = estatus;
 		}
 
-		public void setDescription(String description) {
-			this.description = description;
+		public void setDescriptions(String shortDescription, String longDescription) {
+			this.shortDescription = shortDescription;
+			this.longDescription = longDescription;
 		}
 	}
 
@@ -71,7 +78,7 @@ public abstract class AbstractConnection implements IConnection2 {
 	public AbstractConnection(IConnectionType connectionType, Map<String, String> settings) {
 		this.connectionType = connectionType;
 		this.settings = new HashMap<String, String>(settings);
-		status = new ConnectionStatus(EConnectionStatus.NOT_READY, ""); //$NON-NLS-1$
+		status = new ConnectionStatus(EConnectionStatus.NONE, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void dispose() {
@@ -121,6 +128,7 @@ public abstract class AbstractConnection implements IConnection2 {
 	public void setStatus(IConnectionStatus status) {
 		Check.checkArg(status);
 		this.status = status;
+		fireStatusChanged();
 	}
 	
 	public void addStatusChangedListener(IConnectionStatusChangedListener listener) {

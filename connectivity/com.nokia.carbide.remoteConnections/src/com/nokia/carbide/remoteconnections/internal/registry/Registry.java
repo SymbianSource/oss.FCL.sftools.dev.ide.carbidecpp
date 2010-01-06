@@ -562,7 +562,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		// 	when not in-use, remove and stop waiting
 		if (connection.getStatus().getEConnectionStatus().equals(EConnectionStatus.IN_USE)) {
 			IConnectionStatus status = new ConnectionStatus(EConnectionStatus.IN_USE_DISCONNECTED, 
-						"connection has been disconnected while in use, please reconnect");
+					Messages.getString("ConnectionsView.DisconnectedLabel"), //$NON-NLS-1$
+					Messages.getString("ConnectionsView.DisconnectedDesc")); //$NON-NLS-1$
 			connection.setStatus(status);
 			IConnectionStatusChangedListener listener = new IConnectionStatusChangedListener() {
 				public void statusChanged(IConnectionStatus status) {
@@ -601,10 +602,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			IConnectionStatus status;
 			if (ConnectionUIUtils.isSomeServiceInUse(connection)) {
 				status = new ConnectionStatus(EConnectionStatus.IN_USE, 
+						Messages.getString("ConnectionsView.InUseLabel"), //$NON-NLS-1$
 						Messages.getString("ConnectionsView.InUseDesc")); //$NON-NLS-1$
 			}
 			else {
-				status = new ConnectionStatus(EConnectionStatus.NOT_READY, ""); //$NON-NLS-1$
+				status = new ConnectionStatus(EConnectionStatus.NOT_READY, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			connection.setStatus(status);
 			return true;

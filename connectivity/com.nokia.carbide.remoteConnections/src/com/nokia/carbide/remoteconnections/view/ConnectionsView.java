@@ -85,6 +85,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
@@ -259,9 +260,16 @@ public class ConnectionsView extends ViewPart {
 				}
 			}
 			else if (value instanceof IConnection) {
-				IStatus status = ConnectionUIUtils.getFirstInUseServiceStatus((IConnection) value);
-				if (status != null)
-					return status.getShortDescription();
+				if (isDynamicConnection(value)) {
+					IConnectionStatus status = ((IConnection2) value).getStatus();
+					if (status != null)
+						return status.getShortDescription();
+				}
+				else {	
+					IStatus status = ConnectionUIUtils.getFirstInUseServiceStatus((IConnection) value);
+					if (status != null)
+						return status.getShortDescription();
+				}
 			}
 				
 			return null;
@@ -316,7 +324,12 @@ public class ConnectionsView extends ViewPart {
 				}
 			}
 			else if (value instanceof IConnection) {
-				if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
+				if (isDynamicConnection(value)) {
+					IConnectionStatus status = ((IConnection2) value).getStatus();
+					if (status != null)
+						return status.getLongDescription();
+				}
+				else if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
 					return Messages.getString("ConnectionsView.InUseDesc");
 				}
 			}
@@ -707,7 +720,7 @@ public class ConnectionsView extends ViewPart {
 			@Override
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				if (selection.isEmpty())
+				if (selection.isEmpty() || !canBeEdited(selection))
 					return;
 				TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
 				Object value = node.getValue();
@@ -776,6 +789,7 @@ public class ConnectionsView extends ViewPart {
 			@Override
 			public void run() {
 				Registry.instance().setDefaultConnection(getSelectedConnection());
+				setEnabled(false);
 			}
 		};
 		action.setId(SET_DEFAULT_ACTION);
@@ -868,12 +882,16 @@ public class ConnectionsView extends ViewPart {
 		return null;
 	}
 
-	private boolean isDynamicConnection(Object object) {
+	private static boolean isDynamicConnection(Object object) {
 		return object instanceof IConnection2 && ((IConnection2) object).isDynamic();
 	}
 
 	private boolean selectionCanBeEdited() {
 		ISelection selection = viewer.getSelection();
+		return canBeEdited(selection);
+	}
+
+	private static boolean canBeEdited(ISelection selection) {
 		if (selection.isEmpty())
 			return false;
 		TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
