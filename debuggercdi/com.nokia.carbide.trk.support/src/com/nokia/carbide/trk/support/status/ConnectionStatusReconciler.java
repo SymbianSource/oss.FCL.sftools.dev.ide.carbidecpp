@@ -92,19 +92,17 @@ public class ConnectionStatusReconciler {
 		}
 	}
 
-	private boolean handlesConnection(IConnection connection) {
-		// only manage status for USBConnectionTypes for now
-		// in future other IConnection2 types may also be managed
-		return connection.getConnectionType() instanceof USBConnectionType;
+	private boolean isDynamic(IConnection connection) {
+		return connection instanceof IConnection2 && ((IConnection2) connection).isDynamic();
 	}
 
 	private boolean isSysTRK(TRKConnectedService service) {
 		String value = service.getProperties().get(TRKConnectedService.PROP_SYS_TRK);
-		return value != null && Boolean.getBoolean(value);
+		return Boolean.parseBoolean(value);
 	}
 	
 	private void addConnection(IConnection connection) {
-		if (!handlesConnection(connection))
+		if (!isDynamic(connection))
 			return;
 		
 		handledConnections.add((IConnection2) connection);

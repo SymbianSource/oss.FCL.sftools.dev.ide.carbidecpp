@@ -18,22 +18,35 @@
 
 package com.nokia.carbide.trk.support.service;
 
-import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
-import com.nokia.carbide.trk.support.Messages;
-import com.nokia.carbide.trk.support.connection.*;
-import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.cpp.internal.api.utils.core.Pair;
-import com.nokia.tcf.api.*;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.osgi.framework.Version;
 
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.List;
+import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
+import com.nokia.carbide.trk.support.Messages;
+import com.nokia.carbide.trk.support.connection.SerialConnectionType;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
+import com.nokia.carbide.trk.support.connection.USBConnectionType;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.Pair;
+import com.nokia.tcf.api.ITCAPIConnection;
+import com.nokia.tcf.api.ITCConnection;
+import com.nokia.tcf.api.ITCMessage;
+import com.nokia.tcf.api.ITCMessageIds;
+import com.nokia.tcf.api.ITCMessageInputStream;
+import com.nokia.tcf.api.ITCMessageOptions;
+import com.nokia.tcf.api.TCFClassFactory;
 
 /**
  *
@@ -69,8 +82,12 @@ public class TRKConnectedService extends AbstractConnectedService {
 	private static final String TCPIP_IN_USE =
 		Messages.getString("TRKConnectedService.TCPIPInUseStatus"); //$NON-NLS-1$
 	
+	private static final Version VERSIONS3_VERSION = new Version(3, 2, 4);
 	private static final byte[] TRK_PING = {0x7e, 0x0, 0x0, (byte) 0xff, 0x7e};
 	private static final byte[] TRK_VERSION = {0x7e, 0x08, 0x01, (byte) 0xf6, 0x7e};
+	private static final byte[] TRK_VERSIONS3 = {0x7e, 0x51, 0x02, (byte) 0xac, 0x7e};
+	private static final byte[] SYS_TRK_RESPONSE = 
+		{0x7e, (byte) 0x80, 0x02, 0x00, 0x03, 0x02, 0x03, 0x06, 0x04, 0x00, 0x0a, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x20, 0x54, 0x52, 0x4b, (byte) 0xcb, 0x7e};
 	
 	private Pair<String, Version> deviceOS;
 	private TRKService trkService;
@@ -147,6 +164,9 @@ public class TRKConnectedService extends AbstractConnectedService {
 		ITCMessage tcMsgVersion = TCFClassFactory.createITCMessage(TRK_VERSION);
 		tcMsgVersion.setUseMyMessageId(true, trkRequestId);
 		
+		ITCMessage tcMsgVersions3 = TCFClassFactory.createITCMessage(TRK_VERSIONS3);
+		tcMsgVersions3.setUseMyMessageId(true, trkRequestId);
+		
 		// connect
 		ITCAPIConnection api = TCFClassFactory.createITCAPIConnection();
 		org.eclipse.core.runtime.IStatus connStatus = api.connect(conn, options, ids);
@@ -176,6 +196,19 @@ public class TRKConnectedService extends AbstractConnectedService {
 //						printMessage(message);
 						if (message != null && message.length == 11) {
 							version = new Version(message[4], message[5], message[8]);
+							if (version.compareTo(VERSIONS3_VERSION) >= 0) {
+								// send trk versions3
+								sendStatus = api.sendMessage(tcMsgVersions3);
+								
+								waitForSingleTCMessage(stream);
+								if (stream.peekMessages() > 0) {
+									tcMessage = stream.readMessage(); // version response
+									message = tcMessage.getMessage();
+//									printMessage(message);
+									boolean isSysTrk = Arrays.equals(message, SYS_TRK_RESPONSE);
+									getProperties().put(PROP_SYS_TRK, Boolean.valueOf(isSysTrk).toString());
+								}
+							}
 						}
 						else
 							throw new ConnectionFailException(Messages.getString("TRKConnectedService.BadVersionResponseError")); //$NON-NLS-1$
@@ -201,18 +234,18 @@ public class TRKConnectedService extends AbstractConnectedService {
 	}
 
 //	private void printMessage(byte[] message) {
-//	for (int i = 0; i < message.length; i++) {
-//		String hexString = Integer.toHexString(message[i]);
-//		if (hexString.length() == 1)
-//			hexString = "0" + hexString;
-//		else if (hexString.length() > 2)
-//			hexString = hexString.substring(hexString.length() - 2);
-//		System.out.print(hexString);
-//		if (i + 1 < message.length)
-//			System.out.print('-');
+//		for (int i = 0; i < message.length; i++) {
+//			String hexString = Integer.toHexString(message[i]);
+//			if (hexString.length() == 1)
+//				hexString = "0" + hexString;
+//			else if (hexString.length() > 2)
+//				hexString = hexString.substring(hexString.length() - 2);
+//			System.out.print(hexString);
+//			if (i + 1 < message.length)
+//				System.out.print('-');
+//		}
+//		System.out.println();
 //	}
-//	System.out.println();
-//}
 
 	private void waitForSingleTCMessage(ITCMessageInputStream stream) throws IOException {
 		int timeout = TIMEOUT;
@@ -285,10 +318,17 @@ public class TRKConnectedService extends AbstractConnectedService {
 						estatus = EStatus.UP;
 						Version serverVersion = getLatestVersionFromServer();
 						if (serverVersion == null) {
-							message = MessageFormat.format(OK_STATUS, deviceVersion);
+							StringBuilder trkVersionString = new StringBuilder();
+							String sysTrkProp = getProperties().get(PROP_SYS_TRK);
+							if (sysTrkProp != null)
+								trkVersionString.append(Boolean.parseBoolean(sysTrkProp) ? 
+										Messages.getString("TRKConnectedService.SysTRKName") : //$NON-NLS-1$
+											Messages.getString("TRKConnectedService.AppTRKName")); //$NON-NLS-1$
+							trkVersionString.append(deviceVersion.toString());
+							message = MessageFormat.format(OK_STATUS, trkVersionString);
 						}
 						else if (deviceVersion.compareTo(serverVersion) >= 0) {
-							message = MessageFormat.format(IS_LASTEST, deviceVersion);
+							message = MessageFormat.format(IS_LASTEST, deviceVersion.toString());
 						}
 						else {
 							message = MessageFormat.format(NEEDS_INSTALL,
@@ -310,7 +350,7 @@ public class TRKConnectedService extends AbstractConnectedService {
 		
 		return new TestResult(estatus, getShortDescription(estatus), message);
 	}
-
+	
 	public void setDeviceOS(String familyName, Version version) {
 		deviceOS = new Pair<String, Version>(familyName, version);
 	}
