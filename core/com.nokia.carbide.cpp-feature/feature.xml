@@ -589,6 +589,13 @@ three (3) years from the date of the distribution of this product by Nokia.
          unpack="false"/>
 
    <plugin
+         id="com.nokia.carbide.remoteConnections.discovery.pccs"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="true"/>
+
+   <plugin
          id="com.nokia.tcf"
          download-size="0"
          install-size="0"
