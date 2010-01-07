@@ -44,24 +44,20 @@ public class ConnectionStatusReconciler {
 	
 	private class ConnectionListener implements IConnectionListener {
 
-		@Override
 		public void connectionAdded(IConnection connection) {
 			addConnection(connection);
 		}
 
-		@Override
 		public void connectionRemoved(IConnection connection) {
 			removeConnection(connection);
 		}
 		
-		@Override
 		public void defaultConnectionSet(IConnection connection) {}
 		
 	}
 	
 	private class ServiceStatusListener implements IStatusChangedListener {
 
-		@Override
 		public void statusChanged(IStatus status) {
 			handleServiceStatusChange(status);
 		}
