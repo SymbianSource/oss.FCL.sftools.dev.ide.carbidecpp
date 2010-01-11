@@ -100,6 +100,9 @@ public class TRKConnectionWizardPage extends WizardPage {
 						status.getSeverity() == IStatus.WARNING ? WARNING : INFORMATION); 
 			}
 		}
+		else {
+			connection = clientSiteUI.getSelectedConnection();
+		}
     }
     
     @Override
