@@ -132,7 +132,8 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 					try {
 						((IDeviceDiscoveryAgent) toTest).start();
 						return true;
-					} catch (CoreException e) {
+					} catch (Throwable e) {
+						// since we launch arbitrary code, catch any exception to prevent killing the view
 						logError(e);
 					}
 				}
