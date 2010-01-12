@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.ToolTip;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -400,7 +401,10 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 */
 	protected void openConnectionsView() {
 		try {
-			WorkbenchUtils.getView(ConnectionsView.VIEW_ID);
+			IViewPart view = WorkbenchUtils.getView(ConnectionsView.VIEW_ID);
+			if (defaultConnection != null && view instanceof ConnectionsView) {
+				((ConnectionsView) view).setSelectedConnection(defaultConnection);
+			}
         } 
         catch (PartInitException e) {
         	RemoteConnectionsActivator.logError(e);
