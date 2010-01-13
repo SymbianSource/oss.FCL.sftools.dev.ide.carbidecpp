@@ -329,7 +329,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	
 	private void ensureUniqueId(IConnection connection) {
 		String id = connection.getIdentifier();
-		if (id == null || id.length() == 0 || findConnectionById(id) != null)
+		if (id == null || id.length() == 0 || findConnection(id) != null)
 			connection.setIdentifier(getUniqueConnectionId());
 	}
 	
@@ -337,9 +337,12 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return UUID.randomUUID().toString();
 	}
 	
-	public IConnection findConnectionById(String id) {
+	public IConnection findConnection(String connectionId) {
+		if (DEFAULT_CONNECTION_ID.equals(connectionId))
+			return getDefaultConnection();
+		
 		for (IConnection connection : connectionToConnectedServices.keySet()) {
-			if (connection.getIdentifier().equals(id)) {
+			if (connection.getIdentifier().equals(connectionId)) {
 				return connection;
 			}
 		}
@@ -520,12 +523,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	
 	public IConnection ensureConnection(String id, IService service) throws CoreException {
 		Check.checkArg(service);
-		IConnection connection;
-		if (DEFAULT_CONNECTION_ID.equals(id)) {
-			connection = getDefaultConnection();
-		} else {
-			connection = findConnectionById(id);
-		}
+		IConnection connection = findConnection(id);
 		if (!isCompatibleConnection(connection, service)) {
 			// TODO ask user to connect a device or cancel
 			throw new CoreException(

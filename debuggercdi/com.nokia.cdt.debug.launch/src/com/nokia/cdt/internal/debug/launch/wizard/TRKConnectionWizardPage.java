@@ -19,6 +19,7 @@ package com.nokia.cdt.internal.debug.launch.wizard;
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -38,7 +39,7 @@ public class TRKConnectionWizardPage extends WizardPage {
     
 	private final ISummaryTextItemContainer summaryTextItemContainer;
 	private IClientServiceSiteUI2 clientSiteUI;
-	private String connection;
+	private String connectionId;
 	
     
     public TRKConnectionWizardPage(ISummaryTextItemContainer summaryTextItemContainer) {
@@ -72,17 +73,18 @@ public class TRKConnectionWizardPage extends WizardPage {
     }
     
     void updateConfiguration(ILaunchConfigurationWorkingCopy config) {
-		if (connection != null) {
-			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection);
+		if (connectionId != null) {
+			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connectionId);
 		}
     }
 
     public void setVisible(boolean visible) {
     	super.setVisible(visible);
+    	IConnection connection = RemoteConnectionsActivator.getConnectionsManager().findConnection(connectionId);
     	if (!visible && connection != null) {
     		summaryTextItemContainer.putSummaryTextItem("Connection", //$NON-NLS-1$
     				MessageFormat.format("{0} {1}", Messages.getString("TRKConnectionWizardPage.ConnectionSummaryLabel"), //$NON-NLS-1$ //$NON-NLS-2$
-    						clientSiteUI.getConnectionDisplayName(connection)));
+    						connection.getDisplayName()));
     	}
     }
     
@@ -101,7 +103,7 @@ public class TRKConnectionWizardPage extends WizardPage {
 			}
 		}
 		else {
-			connection = clientSiteUI.getSelectedConnection();
+			connectionId = clientSiteUI.getSelectedConnection();
 		}
     }
     

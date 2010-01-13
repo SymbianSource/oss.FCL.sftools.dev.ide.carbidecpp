@@ -65,13 +65,6 @@ public interface IClientServiceSiteUI2 {
 	String getSelectedConnection();
 	
 	/**
-	 * Get the display name of the selected connection id
-	 * @param connection the connection id
-	 * @return String, never <code>null</code>
-	 */
-	String getConnectionDisplayName(String connection);
-	
-	/**
 	 * Adds a listener to the client site UI
 	 * @param listener IListener
 	 */

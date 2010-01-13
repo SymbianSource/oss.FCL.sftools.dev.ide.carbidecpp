@@ -104,7 +104,12 @@ span.attr
 <p>Since Carbide 3.0.0</p>
 <ul>
 	<li>IConnectionsManager was updated to indicate it is not intended to be implemented by clients.
-	<li>Added several new methods to support automated connection/device discovery agents.</li>
+	<li>Added several new methods to support automated connection/device discovery agents and default connections.</li>
+	<li>Deprecated IClientServiceSiteUI and adding new IClientServiceSiteUI2 to support concept of default connection
+	<ul>
+		<li>getSelectedConnection() and selectConnection() now use connection ids rather than connection objects
+		<li>Exposing new selection status to allow reporting when default connection is not supported by client service
+	</ul>
 </ul>
 
 

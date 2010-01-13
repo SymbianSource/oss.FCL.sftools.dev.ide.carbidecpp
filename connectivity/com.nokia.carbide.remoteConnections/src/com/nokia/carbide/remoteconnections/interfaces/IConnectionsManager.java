@@ -194,6 +194,16 @@ public interface IConnectionsManager {
 	IConnection ensureConnection(String connectionId, IService service) throws CoreException;
 	
 	/**
+	 * Returns a connection from an id (including the default connection id) or null if none found.
+	 * @param connectionId String
+	 * @param service IService
+	 * @return IConnection
+	 * @throws CoreException
+	 * @since 3.0
+	 */
+	IConnection findConnection(String connectionId);
+	
+	/**
 	 * Sets a dynamic connection as disconnected. Is no-op on user generated connections.
 	 * If a dynamic connection is disconnected, it is transitioned to a disconnected state while it
 	 * is in use by some client service, and is eventually removed from the system once it is 
