@@ -105,6 +105,8 @@ public class ConnectionStatusReconciler {
 		if (!isDynamic(connection))
 			return;
 		
+		reconcileAsDefault(connection);
+		
 		handledConnections.add((IConnection2) connection);
 		for (IConnectedService service : manager.getConnectedServices(connection)) {
 			if (service instanceof TRKConnectedService ||
@@ -115,6 +117,12 @@ public class ConnectionStatusReconciler {
 		reconcileConnection((IConnection2) connection);
 	}
 	
+	private void reconcileAsDefault(IConnection connection) {
+		// USB connections become default when added
+		if (USBConnectionType.ID.equals(connection.getConnectionType().getIdentifier()))
+			manager.setDefaultConnection(connection);
+	}
+
 	private void reconcileConnection(IConnection2 connection) {
 		boolean isSysTRK = false;
 		EStatus trkStatus = EStatus.UNKNOWN;
