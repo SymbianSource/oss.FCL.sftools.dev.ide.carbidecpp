@@ -92,7 +92,7 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 		connection.setDynamic(true);
 		connections.add(connection);
 		manager.addConnection(connection);
-		manager.setDefaultConnection(connection);
+		manager.setCurrentConnection(connection);
 	}
 
 	private String getRandomIntervalString() {
