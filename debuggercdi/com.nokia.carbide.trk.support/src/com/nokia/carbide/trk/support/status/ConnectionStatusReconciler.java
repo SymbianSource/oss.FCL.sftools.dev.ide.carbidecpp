@@ -30,6 +30,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusC
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
@@ -52,7 +53,7 @@ public class ConnectionStatusReconciler {
 			removeConnection(connection);
 		}
 		
-		public void defaultConnectionSet(IConnection connection) {}
+		public void currentConnectionSet(IConnection connection) {}
 		
 	}
 	
@@ -67,14 +68,14 @@ public class ConnectionStatusReconciler {
 	private static ConnectionStatusReconciler instance;
 	private IConnectionsManager manager;
 	private IConnectionListener connectionListener;
-	private List<IConnection2> handledConnections;
+	private List<IConnection> handledConnections;
 	private ServiceStatusListener serviceStatusListener;
 	
 	private ConnectionStatusReconciler() {
 		connectionListener = new ConnectionListener();
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 		manager.addConnectionListener(connectionListener);
-		handledConnections = new ArrayList<IConnection2>();
+		handledConnections = new ArrayList<IConnection>();
 		serviceStatusListener = new ServiceStatusListener();
 	}
 	
@@ -87,7 +88,7 @@ public class ConnectionStatusReconciler {
 
 	public void dispose() {
 		manager.removeConnectionListener(connectionListener);
-		for (IConnection2 connection : new ArrayList<IConnection2>(handledConnections)) {
+		for (IConnection connection : new ArrayList<IConnection>(handledConnections)) {
 			removeConnection(connection);
 		}
 	}
@@ -102,28 +103,39 @@ public class ConnectionStatusReconciler {
 	}
 	
 	private void addConnection(IConnection connection) {
-		if (!isDynamic(connection))
-			return;
-		
-		reconcileAsDefault(connection);
-		
-		handledConnections.add((IConnection2) connection);
+		handledConnections.add(connection);
 		for (IConnectedService service : manager.getConnectedServices(connection)) {
 			if (service instanceof TRKConnectedService ||
 					service instanceof TracingConnectedService) {
 				service.addStatusChangedListener(serviceStatusListener);
 			}
 		}
-		reconcileConnection((IConnection2) connection);
 	}
 	
-	private void reconcileAsDefault(IConnection connection) {
-		// USB connections become default when added
-		if (USBConnectionType.ID.equals(connection.getConnectionType().getIdentifier()))
-			manager.setDefaultConnection(connection);
+	private void reconcileAsCurrent(IConnection connection) {
+		if (canBeSetToCurrent(connection) && isReady(connection)) {
+			manager.setCurrentConnection(connection);
+		}
 	}
 
-	private void reconcileConnection(IConnection2 connection) {
+	private boolean isReady(IConnection connection) {
+		if (connection instanceof IConnection2) {
+			IConnectionStatus connectionStatus = ((IConnection2) connection).getStatus();
+			if (connectionStatus != null)
+				return connectionStatus.getEConnectionStatus().equals(EConnectionStatus.READY);
+		}
+		return false;
+	}
+
+	private boolean canBeSetToCurrent(IConnection connection) {
+		// USB connections for now
+		return USBConnectionType.ID.equals(connection.getConnectionType().getIdentifier());
+	}
+
+	private void reconcileStatus(IConnection connection) {
+		if (!isDynamic(connection)) // don't set status for user generated connections
+			return;
+		
 		boolean isSysTRK = false;
 		EStatus trkStatus = EStatus.UNKNOWN;
 		EStatus traceStatus = EStatus.UNKNOWN;
@@ -200,8 +212,8 @@ public class ConnectionStatusReconciler {
 		handledConnections.remove(connection);
 	}
 
-	private IConnection2 findConnection(IConnectedService cs) {
-		for (IConnection2 connection : handledConnections) {
+	private IConnection findConnection(IConnectedService cs) {
+		for (IConnection connection : handledConnections) {
 			for (IConnectedService connectedService : manager.getConnectedServices(connection)) {
 				if (cs.equals(connectedService))
 					return connection;
@@ -212,10 +224,11 @@ public class ConnectionStatusReconciler {
 
 	public void handleServiceStatusChange(IStatus status) {
 		IConnectedService service = status.getConnectedService();
-		IConnection2 connection = findConnection(service);
-		if (connection != null) {
-			reconcileConnection(connection);
+		IConnection connection = findConnection(service);
+		if (connection instanceof IConnection2) {
+			reconcileStatus((IConnection2) connection);
 		}
+		reconcileAsCurrent(connection);
 	}
 
 }
