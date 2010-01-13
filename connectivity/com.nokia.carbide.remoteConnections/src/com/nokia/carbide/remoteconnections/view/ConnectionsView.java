@@ -122,7 +122,7 @@ public class ConnectionsView extends ViewPart {
 	private static final String REFRESH_ACTION = "ConnectionsView.refresh"; //$NON-NLS-1$
 	private static final String DELETE_ACTION = "ConnectionsView.delete"; //$NON-NLS-1$
 	private static final String HELP_ACTION = "ConnectionsView.help"; //$NON-NLS-1$
-	private static final String SET_DEFAULT_ACTION = "ConnectionsView.makeDefault"; //$NON-NLS-1$
+	private static final String SET_CURRENT_ACTION = "ConnectionsView.makeCurrent"; //$NON-NLS-1$
 	private KeyAdapter keyListener;
 	private boolean isDisposed;
 
@@ -222,7 +222,7 @@ public class ConnectionsView extends ViewPart {
 		@Override
 		public Font getFont(Object element) {
 			if (element instanceof TreeNode) {
-				if (((TreeNode)element).getValue().equals(Registry.instance().getDefaultConnection())) {
+				if (((TreeNode)element).getValue().equals(Registry.instance().getCurrentConnection())) {
 					return boldViewerFont;
 				}
 			}
@@ -538,7 +538,7 @@ public class ConnectionsView extends ViewPart {
 		
 		connectionListener = new IConnectionListener() {
 			
-			public void defaultConnectionSet(IConnection connection) {
+			public void currentConnectionSet(IConnection connection) {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						viewer.refresh(true);
@@ -621,7 +621,7 @@ public class ConnectionsView extends ViewPart {
 				helpAction.setText(helpAction.getText());
 				manager.add(helpAction);
 			}
-			manager.add(getAction(SET_DEFAULT_ACTION));
+			manager.add(getAction(SET_CURRENT_ACTION));
 		}
 	}
 	
@@ -780,20 +780,20 @@ public class ConnectionsView extends ViewPart {
 		connectionSelectedActions.add(action);
 		
 		desc = ConnectionUIUtils.CONNECTION_IMGDESC;
-		action = new Action(Messages.getString("ConnectionsView.SetDefaultActionLabel"), desc) { //$NON-NLS-1$
+		action = new Action(Messages.getString("ConnectionsView.SetCurrentActionLabel"), desc) { //$NON-NLS-1$
 			
 			@Override
 			public boolean isEnabled() {
-				return !ObjectUtils.equals(Registry.instance().getDefaultConnection(), getSelectedConnection());
+				return !ObjectUtils.equals(Registry.instance().getCurrentConnection(), getSelectedConnection());
 			}
 
 			@Override
 			public void run() {
-				Registry.instance().setDefaultConnection(getSelectedConnection());
+				Registry.instance().setCurrentConnection(getSelectedConnection());
 				setEnabled(false);
 			}
 		};
-		action.setId(SET_DEFAULT_ACTION);
+		action.setId(SET_CURRENT_ACTION);
 		actions.add(action);
 		connectionSelectedActions.add(action);		
 		

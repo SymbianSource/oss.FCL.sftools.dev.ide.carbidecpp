@@ -188,8 +188,8 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		if (id == null) {
 			return null;
 		}
-		if (id.equals(Registry.DEFAULT_CONNECTION_ID)) {
-			return RemoteConnectionsActivator.getConnectionsManager().getDefaultConnection();
+		if (id.equals(Registry.CURRENT_CONNECTION_ID)) {
+			return RemoteConnectionsActivator.getConnectionsManager().getCurrentConnection();
 		}
 		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
 			if (connection.getIdentifier().equals(id)) {
@@ -201,16 +201,16 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 
 	/**
 	 * Set the selected input.  
-	 * @param connection existing connection or <code>null</code> for the default   
+	 * @param connection existing connection or <code>null</code> for the current   
 	 */
 	private void setViewerInput(IConnection connection) {
 		List<IConnection> compatible = getCompatibleConnections();
 		connectionNames = new LinkedHashMap<String, String>();
 		
-		// update the default
-		IConnection defaultConnection = RemoteConnectionsActivator.getConnectionsManager().getDefaultConnection();
+		// update the current
+		IConnection currentConnection = RemoteConnectionsActivator.getConnectionsManager().getCurrentConnection();
 		
-		connectionNames.put(Registry.DEFAULT_CONNECTION_ID, createDefaultConnectionName(defaultConnection));
+		connectionNames.put(Registry.CURRENT_CONNECTION_ID, createCurrentConnectionName(currentConnection));
 		
 		for (IConnection conn : compatible) {
 			connectionNames.put(conn.getIdentifier(), conn.getDisplayName());
@@ -231,7 +231,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		}
 		editButton.setEnabled(!viewer.getSelection().isEmpty());
 		
-		// fire listener in case we selected anew or the default connection changed
+		// fire listener in case we selected anew or the current connection changed
 		fireConnectionSelected();
 	}
 
@@ -241,14 +241,14 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 				if (viewer != null && viewer.getContentProvider() != null) {
 					
 					// try to preserve the currently selected item, if it's a concrete
-					// connection; if it's default, allow for the new default to be chosen.
+					// connection; if it's current, allow for the new current to be chosen.
 					IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 					Object value = selection.getFirstElement();
 					String current = null;
 					if (value instanceof String) {
 						current = (String) value;
 					}
-					if (Registry.DEFAULT_CONNECTION_ID.equals(current)) {
+					if (Registry.CURRENT_CONNECTION_ID.equals(current)) {
 						current = null;
 					}
 					setViewerInput(getActualConnection(current));
@@ -258,13 +258,13 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	}
 	
 	/**
-	 * @param defaultConnection
+	 * @param currentConnection
 	 * @return
 	 */
-	private String createDefaultConnectionName(IConnection defaultConnection) {
-		return MessageFormat.format(Messages.getString("ClientServiceSiteUI2.DefaultConnectionFormat"), //$NON-NLS-1$
-				defaultConnection != null ? defaultConnection.getDisplayName() : 
-					Messages.getString("ClientServiceSiteUI2.DefaultConnection_NoneDetected")); //$NON-NLS-1$
+	private String createCurrentConnectionName(IConnection currentConnection) {
+		return MessageFormat.format(Messages.getString("ClientServiceSiteUI2.CurrentConnectionFormat"), //$NON-NLS-1$
+				currentConnection != null ? currentConnection.getDisplayName() : 
+					Messages.getString("ClientServiceSiteUI2.CurrentConnection_NoneDetected")); //$NON-NLS-1$
 	}
 
 	private void initializeDialogUnits(Composite parent) {
@@ -319,13 +319,13 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 							requiredConnectionTypes));
 		}
 		
-		// check whether the default is compatible with the service and connection type
-		if (Registry.DEFAULT_CONNECTION_ID.equals(connection)) {
+		// check whether the current is compatible with the service and connection type
+		if (Registry.CURRENT_CONNECTION_ID.equals(connection)) {
 			IConnection actual = getActualConnection(connection);
 			if (actual == null) {
 				return new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID,
 						MessageFormat.format(
-							Messages.getString("ClientServiceSiteUI2.NoDefaultConnection"), //$NON-NLS-1$
+							Messages.getString("ClientServiceSiteUI2.NoCurrentConnection"), //$NON-NLS-1$
 							service.getDisplayName(),
 							requiredConnectionTypes));
 			}
@@ -341,9 +341,9 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 			if (!found) {
 				return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
 						MessageFormat.format(
-								Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionService") //$NON-NLS-1$
+								Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionService") //$NON-NLS-1$
 								+ "\n"  //$NON-NLS-1$
-								+ Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionFixupAdvice"), //$NON-NLS-1$
+								+ Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionFixupAdvice"), //$NON-NLS-1$
 								actual.getDisplayName(),
 								service.getDisplayName()));
 			}
@@ -352,9 +352,9 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 			if (!isCompatibleConnection(actual)) {
 				return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
 						MessageFormat.format(
-								Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionType") //$NON-NLS-1$
+								Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionType") //$NON-NLS-1$
 								+ "\n"  //$NON-NLS-1$
-								+ Messages.getString("ClientServiceSiteUI2.IncompatibleDefaultConnectionFixupAdvice"), //$NON-NLS-1$
+								+ Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionFixupAdvice"), //$NON-NLS-1$
 								actual.getDisplayName(),
 								requiredConnectionTypes));
 		
@@ -424,9 +424,9 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	}
 
 	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#defaultConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#currentConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
 	 */
-	public void defaultConnectionSet(IConnection connection) {
+	public void currentConnectionSet(IConnection connection) {
 		refreshUI();		
 	}
 

@@ -81,7 +81,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private static final String NAME_FMT = "{0} ({1})"; //$NON-NLS-1$
 	
 	// this is exposed to other clients inside this plugin but it is not public knowledge
-	public static final String DEFAULT_CONNECTION_ID = RemoteConnectionsActivator.PLUGIN_ID + ".defaultConnection"; //$NON-NLS-1$
+	public static final String CURRENT_CONNECTION_ID = RemoteConnectionsActivator.PLUGIN_ID + ".currentConnection"; //$NON-NLS-1$
 	
 	private static Registry instance = new Registry();
 	
@@ -93,7 +93,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private ListenerList<IConnectionsManagerListener> listeners;
 	private List<IConnectedServiceFactory> connectedServiceFactories;
 	private ListenerList<IConnectionListener> connectionListeners;
-	private IConnection defaultConnection;
+	private IConnection currentConnection;
 	private Map<IConnection, IConnectionStatusChangedListener> connectionListenerMap;
 
 	public static Registry instance() {
@@ -338,8 +338,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 	
 	public IConnection findConnection(String connectionId) {
-		if (DEFAULT_CONNECTION_ID.equals(connectionId))
-			return getDefaultConnection();
+		if (CURRENT_CONNECTION_ID.equals(connectionId))
+			return getCurrentConnection();
 		
 		for (IConnection connection : connectionToConnectedServices.keySet()) {
 			if (connection.getIdentifier().equals(connectionId)) {
@@ -394,27 +394,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	public void removeConnection(IConnection connection) {
 		disposeConnection(connection);
 		connectionToConnectedServices.remove(connection);
-		if (connection == defaultConnection) {
-			defaultConnection = null;
-			pickNewDefaultConnection();
+		if (connection == currentConnection) {
+			currentConnection = null;
 		}
 		fireConnectionStoreChanged();
 		fireConnectionRemoved(connection);
-	}
-
-	private void pickNewDefaultConnection() {
-		Set<IConnection> connections = connectionToConnectedServices.keySet();
-		// try to get a dynamic connection
-		for (IConnection connection : connections) {
-			if (connection instanceof IConnection2 && 
-					((IConnection2) connection).isDynamic()) {
-				setDefaultConnection(connection);
-				break;
-			}
-		}
-		// otherwise, any connection will do
-		if (defaultConnection == null && !connections.isEmpty())
-			setDefaultConnection(connections.iterator().next());
 	}
 
 	private void disposeConnection(IConnection connection) {
@@ -513,11 +497,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		}
 	}
 	
-	private void fireDefaultConnectionSet(IConnection connection) {
+	private void fireCurrentConnectionSet(IConnection connection) {
 		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
-			listener.defaultConnectionSet(connection);
+			listener.currentConnectionSet(connection);
 		}
 	}
 	
@@ -539,17 +523,15 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return getCompatibleServices(connection.getConnectionType()).contains(service);
 	}
 
-	public void setDefaultConnection(IConnection connection) {
+	public void setCurrentConnection(IConnection connection) {
 		if (connectionToConnectedServices.keySet().contains(connection)) {
-			defaultConnection = connection;
-			fireDefaultConnectionSet(connection);
+			currentConnection = connection;
+			fireCurrentConnectionSet(connection);
 		}
 	}
 
-	public IConnection getDefaultConnection() {
-		if (defaultConnection == null)
-			pickNewDefaultConnection();
-		return defaultConnection;
+	public IConnection getCurrentConnection() {
+		return currentConnection;
 	}
 
 	public void disconnect(final IConnection2 connection) {

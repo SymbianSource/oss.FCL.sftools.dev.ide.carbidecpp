@@ -55,13 +55,13 @@ public interface IConnectionsManager {
 
 	
 	/**
-	 * Listener interface for connections which are added, removed and set as default
+	 * Listener interface for connections which are added, removed and set as current
 	 * @since 3.0
 	 */
 	public interface IConnectionListener {
 		void connectionAdded(IConnection connection);
 		void connectionRemoved(IConnection connection);
-		void defaultConnectionSet(IConnection connection);
+		void currentConnectionSet(IConnection connection);
 	}
 	
 	/**
@@ -155,23 +155,23 @@ public interface IConnectionsManager {
 	void removeConnectionListener(IConnectionListener listener);
 
 	/**
-	 * Sets the default connection.
+	 * Sets the current connection.
 	 * @param connection IConnection
 	 * @since 3.0
 	 */
-	void setDefaultConnection(IConnection connection);
+	void setCurrentConnection(IConnection connection);
 	
 	/**
-	 * Returns the default connection.
+	 * Returns the current connection.
 	 * @return IConnection
 	 * @since 3.0
 	 */
-	IConnection getDefaultConnection();
+	IConnection getCurrentConnection();
 	
 	/**
 	 * Returns the IClientServiceSiteUI2 for a service. Filters connection types to those that
 	 * are supported by the service. Connection list UI as well as new and edit wizards are filtered.
-	 * Allows selecting a "default" connection which maps to #getDefaultConnection()
+	 * Allows selecting a "current" connection which maps to #getCurrentConnection()
 	 * when you use #ensureConenction().
 	 * @param service IService
 	 * @return IClientServiceSiteUI2
@@ -194,7 +194,7 @@ public interface IConnectionsManager {
 	IConnection ensureConnection(String connectionId, IService service) throws CoreException;
 	
 	/**
-	 * Returns a connection from an id (including the default connection id) or null if none found.
+	 * Returns a connection from an id (including the current connection id) or null if none found.
 	 * @param connectionId String
 	 * @param service IService
 	 * @return IConnection

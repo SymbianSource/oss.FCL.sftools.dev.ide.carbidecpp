@@ -68,7 +68,7 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * This widget appears in the Eclipse trim and allows the user to select the
- * "default" device connection and also see its status at a glance.
+ * "current" device connection and also see its status at a glance.
  * <p>
  * Note: the UI for this control should behave similarly to that of the News Reader
  * trim.  Due to the way we're modifying the icon and the state dynamically
@@ -86,7 +86,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	private CLabel connectionInfo;
 	private ToolItem connectionIcon;
 	private IConnectionsManager manager;
-	private IConnection defaultConnection;
+	private IConnection currentConnection;
 	private ListenerBlock listenerBlock;
 	private ToolTip tooltip;
 	private MouseAdapter toolbarListener;
@@ -122,9 +122,9 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		}
 		
 		/* (non-Javadoc)
-		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#defaultConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
+		 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener#currentConnectionSet(com.nokia.carbide.remoteconnections.interfaces.IConnection)
 		 */
-		public void defaultConnectionSet(IConnection connection) {
+		public void currentConnectionSet(IConnection connection) {
 			updateUI();
 		}
 
@@ -163,7 +163,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	@Override
 	protected Control createControl(Composite parent) {
 		
-		// This UI is recreated whenever the default connection changes.
+		// This UI is recreated whenever the current connection changes.
 		
 		// This is gross.  The normal parent of this is a toolbar,
 		// but we cannot add arbitrary stuff to the toolbar besides
@@ -200,16 +200,16 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		connectionInfo = new CLabel(container, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(connectionInfo);
 
-		String text = Messages.getString("ConnectionStatusSelectorContribution_NoDefaultConnectionMessage"); //$NON-NLS-1$
-		defaultConnection = manager.getDefaultConnection();
-		if (defaultConnection != null)
-			text = defaultConnection.getDisplayName();
+		String text = Messages.getString("ConnectionStatusSelectorContribution_NoCurrentConnectionMessage"); //$NON-NLS-1$
+		currentConnection = manager.getCurrentConnection();
+		if (currentConnection != null)
+			text = currentConnection.getDisplayName();
 		
 		connectionInfo.setText(text);
 
 		attachListeners();
 		
-		updateConnectionStatus(getConnectionStatus(defaultConnection));
+		updateConnectionStatus(getConnectionStatus(currentConnection));
 		
 
 		// Yuck, toolbars and items have a wonky UI.  We need to do these events on the parent,
@@ -305,17 +305,17 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		if (dynamicConnections.size() + staticConnections.size() == 0) {
 			label.setText(Messages.getString("ConnectionStatusSelectorContribution.NoConnectionsDefinedOrDetected")); //$NON-NLS-1$
 		} else {
-			label.setText(Messages.getString("ConnectionStatusSelectorContribution_SelectTheDefaultConnectionMessage")); //$NON-NLS-1$
+			label.setText(Messages.getString("ConnectionStatusSelectorContribution_SelectTheCurrentConnectionMessage")); //$NON-NLS-1$
 			
 			for (IConnection connection : dynamicConnections) {
-				createConnectionMenuItem(menu, connection, defaultConnection, number++);
+				createConnectionMenuItem(menu, connection, currentConnection, number++);
 			}
 			
 			if (!staticConnections.isEmpty())
 				new MenuItem(menu, SWT.SEPARATOR);
 			
 			for (IConnection connection : staticConnections) {
-				createConnectionMenuItem(menu, connection, defaultConnection, number++);
+				createConnectionMenuItem(menu, connection, currentConnection, number++);
 			}
 		}
 		
@@ -334,25 +334,25 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	/**
 	 * @param menu
 	 * @param connection
-	 * @param defaultConnection 
+	 * @param currentConnection 
 	 */
 	private MenuItem createConnectionMenuItem(Menu menu, 
 			final IConnection connection, 
-			IConnection defaultConnection,
+			IConnection currentConnection,
 			int number) {
 		MenuItem item = new MenuItem(menu, SWT.CHECK);
 		
-		boolean isDefault = false;
-		isDefault = connection.equals(defaultConnection);
+		boolean isCurrent = false;
+		isCurrent = connection.equals(currentConnection);
 		
-		item.setSelection(isDefault);
+		item.setSelection(isCurrent);
 		
 		item.setText(MessageFormat.format("&{0} - {1}", number, connection.getDisplayName())); //$NON-NLS-1$
 		
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				manager.setDefaultConnection(connection);
+				manager.setCurrentConnection(connection);
 			}
 		});		
 		
@@ -363,17 +363,17 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		manager.addConnectionListener(listenerBlock);
 		Registry.instance().addConnectionStoreChangedListener(listenerBlock);
 		
-		if (defaultConnection != null) {
-			if (defaultConnection instanceof IConnection2) {
-				((IConnection2) defaultConnection).addStatusChangedListener(listenerBlock);
+		if (currentConnection != null) {
+			if (currentConnection instanceof IConnection2) {
+				((IConnection2) currentConnection).addStatusChangedListener(listenerBlock);
 			}
 		}
 	}
 
 	private void removeListeners() {
-		if (defaultConnection != null) {
-			if (defaultConnection instanceof IConnection2) {
-				((IConnection2) defaultConnection).removeStatusChangedListener(listenerBlock);
+		if (currentConnection != null) {
+			if (currentConnection instanceof IConnection2) {
+				((IConnection2) currentConnection).removeStatusChangedListener(listenerBlock);
 			}
 		}
 		manager.removeConnectionListener(listenerBlock);
@@ -402,8 +402,8 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	protected void openConnectionsView() {
 		try {
 			IViewPart view = WorkbenchUtils.getView(ConnectionsView.VIEW_ID);
-			if (defaultConnection != null && view instanceof ConnectionsView) {
-				((ConnectionsView) view).setSelectedConnection(defaultConnection);
+			if (currentConnection != null && view instanceof ConnectionsView) {
+				((ConnectionsView) view).setSelectedConnection(currentConnection);
 			}
         } 
         catch (PartInitException e) {
@@ -412,13 +412,13 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	}
 
 	/**
-	 * @param defaultConnection
+	 * @param currentConnection
 	 * @param status
 	 * @return
 	 */
-	private String createConnectionStatusTooltip(IConnection defaultConnection,
+	private String createConnectionStatusTooltip(IConnection currentConnection,
 			IConnectionStatus status) {
-		if (defaultConnection == null) {
+		if (currentConnection == null) {
 			return Messages.getString("ConnectionStatusSelectorContribution.NoDynamicOrManualConnectionsTooltip"); //$NON-NLS-1$
 		}
 		
@@ -429,13 +429,13 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 		
 		if (TextUtils.isEmpty(statusString)) {
 			// fallback string; the status should not be empty
-			if (ConnectionUIUtils.isSomeServiceInUse(defaultConnection))
+			if (ConnectionUIUtils.isSomeServiceInUse(currentConnection))
 				statusString = Messages.getString("ConnectionStatusSelectorContribution.InUse"); //$NON-NLS-1$
 			else
 				statusString = Messages.getString("ConnectionStatusSelectorContribution.NotInUse"); //$NON-NLS-1$
 		}
 		
-		return MessageFormat.format(Messages.getString("ConnectionStatusSelectorContribution.ConnectionStatusFormat"), defaultConnection.getDisplayName(), statusString); //$NON-NLS-1$
+		return MessageFormat.format(Messages.getString("ConnectionStatusSelectorContribution.ConnectionStatusFormat"), currentConnection.getDisplayName(), statusString); //$NON-NLS-1$
 	}
 
 	private String createStatusString(IConnectionStatus status) {
@@ -474,10 +474,10 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 				if (status != null)
 					statusImage = ConnectionUIUtils.getConnectionStatusImage(status);
 				else
-					statusImage = ConnectionUIUtils.getConnectionImage(defaultConnection);
+					statusImage = ConnectionUIUtils.getConnectionImage(currentConnection);
 				
 				connectionIcon.setImage(statusImage);
-				String tip = createConnectionStatusTooltip(defaultConnection, status);
+				String tip = createConnectionStatusTooltip(currentConnection, status);
 				connectionInfo.setToolTipText(tip);
 				
 				String preamble = Messages.getString("ConnectionStatusSelectorContribution.IconTooltipPrefixMessage"); //$NON-NLS-1$
