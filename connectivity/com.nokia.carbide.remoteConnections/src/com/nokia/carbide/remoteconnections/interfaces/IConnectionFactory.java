@@ -33,7 +33,7 @@ public interface IConnectionFactory {
 	
 	/**
 	 * Creates a composite with UI for editing settings, optionally initialized with initialSettings.<br>
-	 * Can provide optional errorReporter and optional listener.
+	 * Can provide optional errorReporter and optional listener. Assumes parent has GridLayout
 	 * @param parent Composite
 	 * @param errorReporter IValidationErrorReporter
 	 * @param initialSettings Map may be <code>null</code>
