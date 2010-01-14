@@ -50,10 +50,15 @@ public class ConnectionStatusReconciler {
 		}
 
 		public void connectionRemoved(IConnection connection) {
+			if (connection.equals(userSetCurrentConnection))
+				userSetCurrentConnection = null;
 			removeConnection(connection);
 		}
 		
-		public void currentConnectionSet(IConnection connection) {}
+		public void currentConnectionSet(IConnection connection) {
+			if (connection != null && !connection.equals(reconcilerSetCurrentConnection))
+				userSetCurrentConnection = connection;
+		}
 		
 	}
 	
@@ -70,6 +75,8 @@ public class ConnectionStatusReconciler {
 	private IConnectionListener connectionListener;
 	private List<IConnection> handledConnections;
 	private ServiceStatusListener serviceStatusListener;
+	private IConnection reconcilerSetCurrentConnection;
+	private IConnection userSetCurrentConnection;
 	
 	private ConnectionStatusReconciler() {
 		connectionListener = new ConnectionListener();
@@ -113,8 +120,24 @@ public class ConnectionStatusReconciler {
 	}
 	
 	private void reconcileAsCurrent(IConnection connection) {
-		if (canBeSetToCurrent(connection) && isReady(connection)) {
-			manager.setCurrentConnection(connection);
+		if (canBeSetToCurrent(connection)) {
+			if (isReady(connection)) {
+				reconcilerSetCurrentConnection = connection;
+				manager.setCurrentConnection(connection);
+			}
+			else if (isDynamic(connection) && connection.equals(manager.getCurrentConnection())) { // connection is NOT ready
+				manager.setCurrentConnection(userSetCurrentConnection);
+			}
+			else {
+				// look for some other existing connection that is ready
+				for (IConnection c : manager.getConnections()) {
+					if (canBeSetToCurrent(c) && isReady(c)) {
+						reconcilerSetCurrentConnection = connection;
+						manager.setCurrentConnection(connection);
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -228,7 +251,8 @@ public class ConnectionStatusReconciler {
 		if (connection instanceof IConnection2) {
 			reconcileStatus((IConnection2) connection);
 		}
-		reconcileAsCurrent(connection);
+		if (connection != null)
+			reconcileAsCurrent(connection);
 	}
 
 }
