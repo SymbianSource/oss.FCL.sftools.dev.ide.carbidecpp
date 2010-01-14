@@ -524,7 +524,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	}
 
 	public void setCurrentConnection(IConnection connection) {
-		if (connectionToConnectedServices.keySet().contains(connection)) {
+		if (connection == null) {
+			currentConnection = null; // special case
+			fireCurrentConnectionSet(null);
+		}
+		else if (connectionToConnectedServices.keySet().contains(connection)) {
 			currentConnection = connection;
 			fireCurrentConnectionSet(connection);
 		}
