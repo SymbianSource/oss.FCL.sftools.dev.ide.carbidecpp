@@ -17,20 +17,7 @@
 <p>This reference has new and updated topics:</p>
 <h5>3.2.5 Build 487</h5>
 <ul>
-  <li><span class="style5"><b>IMPORTANT WINSCW COMPILER</b></span> change - the WINSCW compiler 3.2.5 build 487  provides new name mangling to support critical exception handling. Without this change an exception can cause a program or system crash. This means that some previously frozen DLLs are no longer backward compatabile with earlier builds. <br>
-    <br>
-  The simple solution is to simply rebuild your entire program using the new compiler. To do this you'll want:
-   <ul>
-    <li>Developers should update their development environments to the latest compiler build</li>
-    <li>Teams build and test systems must update to use the latest compiler build</li>
-    <li><a href="https://xdabug001.ext.nokia.com/bugzilla/">Report</a> all bugs immediately for resolution<br>
-    </li>
-  </ul>
-  This is a compatibility break with earlier compiler builds and required for all software  going forward. If you are doing development for:
-  <ul>
-    <li>S60</li>
-    <li>Symbian ???</li>
-  </ul>
+  <li><span class="style5"><b>IMPORTANT WINSCW COMPILER</b></span> change - the WINSCW compiler 3.2.5 build 487  provides new name mangling to support critical exception handling. Without this change an exception can cause a program or system crash. For more information visit the <a href="http://developer.symbian.org/wiki/index.php/Category:C/C++/WINSCW">WINSCW</a> wiki page. <br>
   </li>
   
   <li>Made &quot;<span class="code">-def_for_structclass on</span>&quot; the default.</li>
@@ -41,16 +28,16 @@
 </ul>
 <h5>3.2.5 Build 485</h5>
 <ul>
-  <li>Fixed a codegen bug when bit field object with post-decrement is used as while loop counter.</li>
+  <li>Fixed a codegen bug when a bit field object with post-decrement is used as a while loop counter.</li>
 </ul>
 <h5>3.2.5 Build 482</h5>
 <ul>
-  <li>Fixed a bad assert flagging false internal compiler error.</li>
+  <li>Fixed a bad assert flagging false an internal compiler error.</li>
 </ul>
 <h5>3.2.5 Build 481</h5>
 <ul>
   
-  <li>Default constructor initialize to zero to comply with C++ standard &sect;5.3.4.15.</li>
+  <li>Default constructor initialized to zero to comply with C++ standard &sect;5.3.4.15.</li>
   <li>Fixed an issue for bad relocation type in reference to the destructor of an imported class from a DLL.</li>
   <li>Reverted bugfix on the issue around forward declaration in class/struct conflicting with definition, 	we added a new command line switch <span class="code">-def_for_structclass on</span>, and <span class="code">#pragma def_for_structclass</span> for the picking 	up the definition instead of forward declaration.</li>
 </ul>
