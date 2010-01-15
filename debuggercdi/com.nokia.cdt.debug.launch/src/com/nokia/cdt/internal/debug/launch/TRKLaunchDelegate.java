@@ -22,15 +22,28 @@ import org.eclipse.cdt.core.IBinaryParser.IBinaryObject;
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.cdt.debug.core.ICDebugConfiguration;
+import org.eclipse.cdt.debug.core.cdi.CDIException;
 import org.eclipse.cdt.debug.core.cdi.ICDISession;
 import org.eclipse.cdt.ui.CUIPlugin;
-import org.eclipse.core.runtime.*;
-import org.eclipse.debug.core.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.ILaunch;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
 import com.freescale.cdt.debug.cw.CWException;
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
+import com.freescale.cdt.debug.cw.core.cdi.ISessionListener;
 import com.freescale.cdt.debug.cw.core.cdi.Session;
 import com.freescale.cdt.debug.cw.core.cdi.model.Target;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
@@ -38,6 +51,10 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.debug.cw.symbian.SymbianPlugin;
 import com.nokia.cdt.internal.debug.launch.ui.PartialUpgradeAlertDialog;
@@ -50,7 +67,8 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 	private static final int LARGE_SIS_THRESHOLD = 250 * 1024; // 250K
 	
 	protected Session cwDebugSession;
-	
+	private IConnection connection;
+	private IConnectionStatusChangedListener connectionStatusChangedListener;
 	
 	public void launch(
 			ILaunchConfiguration 	config, 
@@ -77,7 +95,7 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
         	config = RemoteConnectionsTRKHelper.attemptUpdateLaunchConfiguration(config.getWorkingCopy());
         }
         
-        final IConnection connection = RemoteConnectionsTRKHelper.ensureConnectionFromConfig(config);
+        connection = RemoteConnectionsTRKHelper.ensureConnectionFromConfig(config);
 		if (connection == null) {
 			IStatus status = new Status(Status.ERROR, LaunchPlugin.PLUGIN_ID, 
 				LaunchMessages.getString("TRKLaunchDelegate.NoConnectionErrorMsg")); //$NON-NLS-1$
@@ -129,7 +147,8 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
             setDefaultSourceLocator(launch, config);
 
             if (mode.equals(ILaunchManager.DEBUG_MODE)) {
-                // debug mode
+        		hookConnectionStatus();
+               // debug mode
                 ICDebugConfiguration debugConfig = getDebugConfig(config);
                 ICDISession dsession = null;
                 String debugMode = config.getAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_START_MODE,
@@ -174,6 +193,7 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 						}
 					}
                 }
+                hookSessionEnded();
             }
             else if (mode.equals(ILaunchManager.RUN_MODE)) {
                 // Run the program.
@@ -224,10 +244,12 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
             }
         } catch (CWException e) {
        		connection.useConnection(false);
+       		unhookConnectionStatus();
         	if (! monitor.isCanceled()) // don't throw on user cancellation
         		e.printStackTrace();
 		} catch (CoreException e) {
 			connection.useConnection(false);
+			unhookConnectionStatus();
         	if (! monitor.isCanceled()) // don't throw on user cancellation
         		throw e;
 		} finally {
@@ -235,6 +257,40 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
             removeBeingLaunched(config);
         }
 	} // end of synchronized.
+	}
+
+	protected void hookSessionEnded() {
+		if (cwDebugSession != null) {
+			cwDebugSession.addListener(new ISessionListener() {
+				public void sessionEnded() {
+					connection.useConnection(false);
+					unhookConnectionStatus();
+				}
+			});
+		}
+	}
+
+	protected void hookConnectionStatus() {
+		if (connection instanceof IConnection2) {
+			connectionStatusChangedListener = new IConnectionStatusChangedListener() {
+				public void statusChanged(IConnectionStatus status) {
+					if (status.getEConnectionStatus().equals(EConnectionStatus.IN_USE_DISCONNECTED)) {
+						try {
+							cwDebugSession.getLaunch().terminate();
+						} catch (Exception e) {
+							LaunchPlugin.log(e);
+						}
+					}
+				}
+			};
+			((IConnection2) connection).addStatusChangedListener(connectionStatusChangedListener);
+		}
+	}
+
+	protected void unhookConnectionStatus() {
+		if (connection instanceof IConnection2 && connectionStatusChangedListener != null) {
+			((IConnection2) connection).removeStatusChangedListener(connectionStatusChangedListener);
+		}
 	}
 
 	@Override
