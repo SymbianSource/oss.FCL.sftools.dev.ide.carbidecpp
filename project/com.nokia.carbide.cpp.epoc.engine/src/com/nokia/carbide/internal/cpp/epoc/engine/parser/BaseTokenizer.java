@@ -163,18 +163,14 @@ public class BaseTokenizer {
 		char ch;
 		int start = idx;
 		while ((ch = peek()) != 0) {
-			consumeCatenatedLine();
-			if (isWhitespace(ch))
+			if (isWhitespace(ch)) {
 				get();
-			/*else if (ch == '\\') {
-				int prev = idx;
-				if (!consumeCatenatedLine()) {
-					idx = prev;
+			} else if (ch == '\\') {
+				if (!consumeCatenatedLine(true))
 					break;
-				}
-			}*/
-			else
+			} else {
 				break;
+			}
 		}
 		return start != idx;
 	}
@@ -290,19 +286,22 @@ public class BaseTokenizer {
 	
 	/**
 	 * Consume \\ and EOL for catenated line
+	 * @param addToToken if true, include catenation characters in current token
 	 * @return true if catenation detected and skipped
 	 */
-	protected boolean consumeCatenatedLine() {
+	protected boolean consumeCatenatedLine(boolean addToToken) {
 		if (peek() == '\\') {
 			int prevIdx = idx;
-			skip();
-			if (peek() == '\r') {
-				skip();
-				if (peek() == '\n')
-					skip();
+			if (addToToken) get(); else skip();
+			char ch = peek();
+			if (ch == '\r') {
+				if (addToToken) get(); else skip();
+				if (peek() == '\n') {
+					if (addToToken) get(); else skip();
+				}
 				return true;
-			} else if (peek() == '\n') {
-				skip();
+			} else if (ch == '\n') {
+				if (addToToken) get(); else skip();
 				return true;
 			}
 			idx = prevIdx;
@@ -310,6 +309,14 @@ public class BaseTokenizer {
 		return false;
 	}
 
+	/**
+	 * Consume \\ and EOL for catenated line
+	 * @return true if catenation detected and skipped
+	 */
+	protected boolean consumeCatenatedLine() {
+		return consumeCatenatedLine(false);
+	}
+	
 	/**
 	 * Consume a numeric sequence.  This starts with a number
 	 * and contains other numbers and letters and '.' and ('e' + '-'|'+'). 

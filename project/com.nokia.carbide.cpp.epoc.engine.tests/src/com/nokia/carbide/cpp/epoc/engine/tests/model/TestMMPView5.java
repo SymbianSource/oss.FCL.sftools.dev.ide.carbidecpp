@@ -520,4 +520,27 @@ public class TestMMPView5 extends BaseMMPViewTest {
 		
 		getView(mmpConfig);
 	}
+	
+	/** In this bug, somehow Carbide reads a *.mk file as an MMP. 
+	 * Whatever the reason, we want to avoid IllegalStateException when
+	 * parsing and rewriting it.
+	 */
+	public void testBug10519() {
+		
+		// The tricky part here is, there is a trailing "\" on a line with only spaces on the next.
+		// We need to fully consume those spaces as part of the mifconv statement.
+		String makefile = 
+				"RESOURCE :\r\n" + 
+				"\r\n" + 
+				"	mifconv $(ICONTARGETFILENAME) /h$(HEADERFILENAME) \\\r\n" + 
+				"		/c24,8 ..\\Rolodex_icon\\back.svg \\\r\n" + 
+				"    \r\n" + 
+				"					\r\n" + 
+				"FREEZE : do_nothing\r\n" + 
+				"";
+		
+		makeModel(makefile);
+		IMMPView view = getView(mmpConfig);
+		commitTest(view, makefile);
+	}	
 }
