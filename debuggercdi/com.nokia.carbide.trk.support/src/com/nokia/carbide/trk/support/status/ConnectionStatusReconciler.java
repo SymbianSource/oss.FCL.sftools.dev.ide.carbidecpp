@@ -121,35 +121,47 @@ public class ConnectionStatusReconciler {
 	
 	private void reconcileAsCurrent(IConnection connection) {
 		if (canBeSetToCurrent(connection)) {
-			if (isReady(connection)) {
+			if (isReady(connection)) { // set as current
 				reconcilerSetCurrentConnection = connection;
 				manager.setCurrentConnection(connection);
-			}
-			else if (isDynamic(connection) && connection.equals(manager.getCurrentConnection())) { // connection is NOT ready
-				manager.setCurrentConnection(userSetCurrentConnection);
-			}
-			else {
-				// look for some other existing connection that is ready
-				for (IConnection c : manager.getConnections()) {
-					if (canBeSetToCurrent(c) && isReady(c)) {
-						reconcilerSetCurrentConnection = connection;
-						manager.setCurrentConnection(connection);
-						break;
+			} else if (isNotReady(connection) && connection.equals(manager.getCurrentConnection())) { 
+				// unset current or set something else current
+				if (isDynamic(connection) && userSetCurrentConnection != null) {
+					manager.setCurrentConnection(userSetCurrentConnection);
+				}
+				else {
+					// look for some other existing connection that is ready
+					for (IConnection c : manager.getConnections()) {
+						if (canBeSetToCurrent(c) && isReady(c)) {
+							reconcilerSetCurrentConnection = connection;
+							manager.setCurrentConnection(connection);
+							return;
+						}
 					}
+					// set to no current connection
+					manager.setCurrentConnection(null);
 				}
 			}
 		}
 	}
 
 	private boolean isReady(IConnection connection) {
+		return equalsConnectionStatus(connection, EConnectionStatus.READY);
+	}
+
+	private boolean isNotReady(IConnection connection) {
+		return equalsConnectionStatus(connection, EConnectionStatus.NOT_READY);
+	}
+	
+	private boolean equalsConnectionStatus(IConnection connection, EConnectionStatus status) {
 		if (connection instanceof IConnection2) {
 			IConnectionStatus connectionStatus = ((IConnection2) connection).getStatus();
 			if (connectionStatus != null)
-				return connectionStatus.getEConnectionStatus().equals(EConnectionStatus.READY);
+				return connectionStatus.getEConnectionStatus().equals(status);
 		}
 		return false;
 	}
-
+	
 	private boolean canBeSetToCurrent(IConnection connection) {
 		// USB connections for now
 		return USBConnectionType.ID.equals(connection.getConnectionType().getIdentifier());
