@@ -1938,6 +1938,11 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 	protected boolean runMMPChangeCheck(final ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, final CarbideCommandLauncher launcher) {
 
+		// don't worry about it for tests
+		if (WorkbenchUtils.isJUnitRunning()) {
+			return true;
+		}
+		
 		// ignore this for Qt projects since the mmp will be regenerated before each build.
 		final IProject project = buildConfig.getCarbideProject().getProject();
 		try {
@@ -1973,6 +1978,11 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	
 	protected boolean runMMPChangeCheck(final ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, final CarbideCommandLauncher launcher) {
 
+		// don't worry about it for tests
+		if (WorkbenchUtils.isJUnitRunning()) {
+			return true;
+		}
+		
 		// ignore this for Qt projects since the mmp will be regenerated before each build.
 		final IProject project = buildConfig.getCarbideProject().getProject();
 		try {
