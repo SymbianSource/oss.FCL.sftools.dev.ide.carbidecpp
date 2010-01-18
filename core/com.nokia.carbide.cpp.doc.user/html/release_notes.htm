@@ -39,7 +39,8 @@ changes making the tools unusable!</p>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <blockquote>
   <ul>
-    <li><b>Qt Tools 1.6</b> now supported.</li>
+    <li><b>RVCT 4.0 (ARMv5)</b> supported</li>
+    <li><b>SmartInstaller for Qt</b> supported</li>
   </ul>
 </blockquote>
 <h4><a name="240" id="210222"></a>2.4.0</h4>
@@ -193,7 +194,8 @@ changes making the tools unusable!</p>
     </tr>
     <tr>
       <td style="vertical-align: top;">[4587] Unable to build  GCCE targets on Vista because of makefile error.</td>
-      <td style="vertical-align: top;">There are known tooling issues when building for the GCCE platform under Windows Vista that can prevent a GCCE build from occurring.  If you want to build for GCCE under S60 and UIQ you will need to manually update some files under<span class="style1"> \epoc32\tools\</span>. See the article <a href="http://wiki.forum.nokia.com/index.php/Windows_Vista">Windows Vista</a> for up-to-date workaround information.</td>
+      <td style="vertical-align: top;"><p>There are known tooling issues when building for the GCCE platform under Windows Vista that can prevent a GCCE build from occurring.  If you want to build for GCCE under S60 and UIQ you will need to manually update some files under<span class="style1"> \epoc32\tools\</span>. See the article <a href="http://wiki.forum.nokia.com/index.php/Windows_Vista">Windows Vista</a> for up-to-date workaround information.</p>
+      <p><b>UPDATE 2010</b>: SDKs still require patching to enable GCCE builds.</p></td>
     </tr>
     <tr bgcolor="#0071ff">
       <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
@@ -210,10 +212,6 @@ changes making the tools unusable!</p>
     <tr>
       <td style="vertical-align: top;">The C/C++ Editor will only work properly with files inside project source folders or on include paths. Source folders are configured in the project settings on the C/C++ Project Paths &gt; Source tab. </td>
       <td style="vertical-align: top;">When creating new folders, use File &gt; New &gt; Source Folder. This will add a folder and mark it a source folder. If you need to import copies of existing files (File &gt; Import &gt; File System) or link to existing sources (File &gt; New &gt; Folder with &quot;Link to folder in file system&quot;), then a normal folder will be created, not a source folder. If the folder is not underneath an existing source folder in the project, you will need to manually mark it as a source folder using the C/C++ Project Paths &gt; Source tab. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[3803] Occasionally a module is not expandable immediately after it's been imported in a project. </td>
-      <td style="vertical-align: top;">Workaround: Simply close and reopen the project using the context menu in the Project view.</td>
     </tr>
     <tr>
       <td style="vertical-align: top;">[3010] Bad synchronization in MMP editor for Linker definition file.</td>
@@ -270,10 +268,6 @@ dll&gt;cmexplorer.dll</font></td>
  class="style8">BUILD/IMPORTER</span></div>      </td>
     </tr>
     <tr>
-      <td style="vertical-align: top;">[3804] My application fails to start the first time I try to debug it using TRK. </td>
-      <td style="vertical-align: top;">Workaround: Launch the debug session again. </td>
-    </tr>
-    <tr>
       <td style="vertical-align: top;">[3809]<b> IMPORTANT</b>: You cannot import two projects into Carbide that have the same &quot;Root Directory&quot;.</td>
       <td style="vertical-align: top;"> If a .project file already exists in this location you either need to shorten or lengthen the &quot;Root Directory&quot; or delete the other project in the same location and try to import again.</td>
     </tr>
@@ -322,10 +316,6 @@ below.
       <td style="vertical-align: top;"><p>During crash debugger launch session, you can examine Symbian OS data (processes, threads, chunks etc) in Symbian OS Data view. But:</p>
         <p> (1) You must have Symbian kernel debugger (usually <span class="code">Kdebug.dll</span>) built in the image. </p>
       <p> (2) As getting the OS data from crash debugger is time consuming (takes more than one minute in our test), auto-refresh of the data in Symbian OS Data view is disabled for crash debugger. You need to click the &quot;Refresh&quot; button to do a manual refreshing.</p></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[2616] If you cast a variable to another type the details pane will still show the original type</td>
-      <td style="vertical-align: top;">No Workaround. </td>
     </tr>
     <tr>
       <td style="vertical-align: top;">[2960] The thread run control icons (step over, step in, run) are sometimes disabled after stepping</td>
