@@ -94,6 +94,8 @@ public class EpocEngineHelper {
 			SymbianBuildContextDataCache.startProjectOperation();
 			
 			for (final ISymbianBuildContext context : buildConfigs) {
+				if (monitor.isCanceled())
+					break;
 				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
 						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
 						new BldInfDataRunnableAdapter() {
@@ -157,6 +159,8 @@ public class EpocEngineHelper {
 			SymbianBuildContextDataCache.startProjectOperation();
 			
 			for (final ISymbianBuildContext context : buildConfigs) {
+				if (monitor.isCanceled())
+					break;
 				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
 						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
 						new BldInfDataRunnableAdapter() {
@@ -213,6 +217,8 @@ public class EpocEngineHelper {
 			SymbianBuildContextDataCache.startProjectOperation();
 			
 			for (final ISymbianBuildContext context : buildConfigs) {
+				if (monitor.isCanceled())
+					break;
 				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
 						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
 						new BldInfDataRunnableAdapter() {
@@ -265,6 +271,8 @@ public class EpocEngineHelper {
 			SymbianBuildContextDataCache.startProjectOperation();
 			
 			for (final ISymbianBuildContext context : buildConfigs) {
+				if (monitor.isCanceled())
+					break;
 				EpocEnginePlugin.runWithBldInfData(bldInfFilePath, 
 						new DefaultViewConfiguration(context, bldInfFilePath, new AcceptedNodesViewFilter()), 
 						new BldInfDataRunnableAdapter() {
