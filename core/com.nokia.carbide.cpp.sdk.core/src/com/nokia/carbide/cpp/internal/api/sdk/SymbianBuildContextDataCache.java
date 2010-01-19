@@ -12,6 +12,8 @@
 */
 package com.nokia.carbide.cpp.internal.api.sdk;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -561,10 +563,11 @@ public class SymbianBuildContextDataCache {
 		ObjectOutputStream os = null;
 		try {
 			File cacheFile = getCacheFile();
-			if (DEBUG) System.out.println("Saving to " + cacheFile); //$NON-NLS-1$
-			os = new ObjectOutputStream(new FileOutputStream(cacheFile));
+			if (DEBUG) System.out.print("Saving to " + cacheFile + "... "); //$NON-NLS-1$ //$NON-NLS-2$
+			os = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(cacheFile)));
 			doSaveCache(os);
 			changed = false;
+			if (DEBUG) System.out.println("done."); //$NON-NLS-1$
 		} catch (ObjectStreamException e) {
 			Logging.log(SDKCorePlugin.getDefault(), 
 					Logging.newStatus(SDKCorePlugin.getDefault(), 
@@ -594,7 +597,7 @@ public class SymbianBuildContextDataCache {
 		final ClassLoader classLoader = SDKCorePlugin.getDefault().getClass().getClassLoader();
 		File cacheFile = getCacheFile();
 		try {
-			is = new ObjectInputStream(new FileInputStream(cacheFile)) {
+			is = new ObjectInputStream(new BufferedInputStream(new FileInputStream(cacheFile))) {
 				/* (non-Javadoc)
 				 * @see java.io.ObjectInputStream#resolveClass(java.io.ObjectStreamClass)
 				 */
