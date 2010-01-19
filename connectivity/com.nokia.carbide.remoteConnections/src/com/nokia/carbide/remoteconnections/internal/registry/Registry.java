@@ -40,11 +40,19 @@ import java.util.regex.Pattern;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.IFilter;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
@@ -55,16 +63,19 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
-import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.ui.ClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * A registry of connection type and service extensions
@@ -509,12 +520,84 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		Check.checkArg(service);
 		IConnection connection = findConnection(id);
 		if (!isCompatibleConnection(connection, service)) {
-			// TODO ask user to connect a device or cancel
-			throw new CoreException(
-					Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
-							Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
+			connection = getCompatibleConnectionFromUser(service);
+			if (connection == null) {
+				throw new CoreException(
+						Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
+								Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
+			}
 		}
 		return connection;
+	}
+
+	private IConnection getCompatibleConnectionFromUser(final IService service) {
+		final IConnection[] connectionHolder = { null };
+		if (!WorkbenchUtils.isJUnitRunning()) {
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					final IClientServiceSiteUI2 ui = getClientSiteUI2(service);
+					final TitleAreaDialog dialog = new TitleAreaDialog(WorkbenchUtils.getSafeShell()) {
+						@Override
+						protected Control createDialogArea(Composite parent) {
+							final Composite c = (Composite) super.createDialogArea(parent);
+							ui.createComposite(c);
+							ui.addListener(new IListener() {
+								public void connectionSelected() {
+									IStatus selectionStatus = ui.getSelectionStatus();
+									updateStatus(selectionStatus);
+								}
+
+							});
+							
+							return c;
+						}
+
+						private void updateStatus(IStatus selectionStatus) {
+							setTitle(Messages.getString("Registry.EnsureConnection.TitleLabel")); //$NON-NLS-1$
+							switch (selectionStatus.getSeverity()) {
+							case IStatus.ERROR:
+								setMessage(selectionStatus.getMessage(), IMessageProvider.ERROR);
+								getButton(IDialogConstants.OK_ID).setEnabled(false);
+								break;
+							case IStatus.WARNING:
+								setMessage(selectionStatus.getMessage(), IMessageProvider.WARNING);
+								getButton(IDialogConstants.OK_ID).setEnabled(true);
+								break;
+							case IStatus.INFO:
+								setMessage(selectionStatus.getMessage(), IMessageProvider.INFORMATION);
+								getButton(IDialogConstants.OK_ID).setEnabled(true);
+								break;
+							default:
+								setMessage(null, IMessageProvider.NONE);
+								getButton(IDialogConstants.OK_ID).setEnabled(true);
+							}
+						}
+						
+						@Override
+						public void create() {
+							super.create();
+							updateStatus(new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID, 
+									Messages.getString("Registry.EnsureConnection.InitialStatusMessage"))); //$NON-NLS-1$
+						}
+						
+						@Override
+						protected void configureShell(Shell newShell) {
+							super.configureShell(newShell);
+							newShell.setText(Messages.getString("Registry.EnsureConnection.DialogTitle")); //$NON-NLS-1$
+						}
+						
+						@Override
+						protected boolean isResizable() {
+							return true;
+						}
+					};
+					dialog.setBlockOnOpen(true);
+					if (dialog.open() == Dialog.OK)
+						connectionHolder[0] = findConnection(ui.getSelectedConnection());
+				}
+			});
+		}
+		return connectionHolder[0];
 	}
 
 	private boolean isCompatibleConnection(IConnection connection, IService service) {
