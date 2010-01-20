@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -543,8 +542,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 							ui.createComposite(c);
 							ui.addListener(new IListener() {
 								public void connectionSelected() {
-									IStatus selectionStatus = ui.getSelectionStatus();
-									updateStatus(selectionStatus);
+									updateStatus(ui.getSelectionStatus());
 								}
 
 							});
@@ -554,6 +552,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 
 						private void updateStatus(IStatus selectionStatus) {
 							setTitle(Messages.getString("Registry.EnsureConnection.TitleLabel")); //$NON-NLS-1$
+							setMessage(Messages.getString("Registry.EnsureConnection.Description")); //$NON-NLS-1$
 							switch (selectionStatus.getSeverity()) {
 							case IStatus.ERROR:
 								setMessage(selectionStatus.getMessage(), IMessageProvider.ERROR);
@@ -568,7 +567,6 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 								getButton(IDialogConstants.OK_ID).setEnabled(true);
 								break;
 							default:
-								setMessage(null, IMessageProvider.NONE);
 								getButton(IDialogConstants.OK_ID).setEnabled(true);
 							}
 						}
@@ -576,8 +574,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 						@Override
 						public void create() {
 							super.create();
-							updateStatus(new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID, 
-									Messages.getString("Registry.EnsureConnection.InitialStatusMessage"))); //$NON-NLS-1$
+							updateStatus(ui.getSelectionStatus());
 						}
 						
 						@Override
