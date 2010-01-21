@@ -60,6 +60,7 @@ import org.xml.sax.SAXException;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
@@ -77,7 +78,6 @@ import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 import com.sun.org.apache.xpath.internal.XPathAPI;
-import com.sun.org.apache.xpath.internal.operations.Minus;
 
 public class SDKManager implements ISDKManager, ISDKManagerInternal {
 	
@@ -964,16 +964,30 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 			sbsV2Version = new Version(0, 0, 0);
 			
 			Runtime rt=Runtime.getRuntime();
+			IPath sbsPath = SBSv2Utils.getSBSPath();  
+			Process p = null; 
 			try {
-				Process p = rt.exec("sbs.bat -v");
+			
+				p = rt.exec(new String[] { sbsPath.toOSString(), "-v" });
 				
+			} 
+			catch (IOException e) {  
+				// no such process, SBSv2 not available  
+				Logging.log(SDKCorePlugin.getDefault(), Logging.newSimpleStatus(0, IStatus.WARNING,
+						MessageFormat.format("Could not find or launch Raptor script ''{0}''; SBSv2 support will not be available",
+								sbsPath), e));  
+				} 
+			if (p != null)	 {
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String overallOutput = null;
 				String stdErrLine = null;
-				while ((stdErrLine = br.readLine()) != null) {
-					overallOutput += stdErrLine;
+				try { 
+					while ((stdErrLine = br.readLine()) != null) { 
+						overallOutput += stdErrLine; 
+					}
+				} catch (IOException e) { 
+					e.printStackTrace();
 				}
-				
 				if (overallOutput != null) {
 				{
 					String[] tokens = overallOutput.split(" ");
@@ -1001,13 +1015,9 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 						}
 					
 					p.destroy();
+					}	
 				}
 			}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
 			
 		}
 		return sbsV2Version;

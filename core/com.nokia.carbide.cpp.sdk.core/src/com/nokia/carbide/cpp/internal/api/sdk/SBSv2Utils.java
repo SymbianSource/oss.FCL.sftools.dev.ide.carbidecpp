@@ -14,20 +14,29 @@ package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.filesystem.URIUtil;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Preferences;
 import org.osgi.framework.Version;
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
@@ -40,6 +49,13 @@ public class SBSv2Utils {
 	private static final String SBSV2_FILTERED_CONFIGS_STORE = "sbsv2FilteredConfigs"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_DELIMETER = ";"; //$NON-NLS-1$
 
+	protected static String sbsHome; 
+	protected static IPath sbsPath; 
+	
+	private static boolean scannedSbsState = false; 
+	private static final String sbsScriptName = "sbs.bat"; 
+	protected static final String SBS_HOME = "SBS_HOME"; 
+	
 	private static List<String> unfilteredSBSv2ConfigNames;
 
 	
@@ -276,4 +292,35 @@ public class SBSv2Utils {
 			}
 		}
     }
+    
+    /**  
+     *  (Re-)scan the SBSv2 / Raptor configuration  
+     *   @return message if error, else null  
+     **/  
+    public static String scanSBSv2() {  
+    	// do some basic checks  
+    	sbsHome = System.getenv(SBS_HOME);  
+    	if (sbsHome == null) {  
+    		return "Please define the SBS_HOME environment (e.g. /path/to/raptor) and add $SBS_HOME/bin to your PATH before running Carbide.";
+    		}  
+    	
+    	sbsPath = HostOS.findProgramOnPath(sbsScriptName, null);
+    	if (sbsPath == null) {  
+    		return "Please add $SBS_HOME/bin to your PATH before running Carbide.";  
+    		}  
+    	
+    	return null; 
+    	}  
+    
+    /**  
+     * Get the path to SBSv2 (sbs.bat or sbs)  
+     **/  
+    public static IPath getSBSPath() {  
+    	if (!scannedSbsState) {  
+    		scanSBSv2();  
+    		scannedSbsState = true;  
+    		}  
+    	return sbsPath != null ? sbsPath : new Path(sbsScriptName); 
+    }
+    
 }
