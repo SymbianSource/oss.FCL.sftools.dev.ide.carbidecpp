@@ -28,7 +28,7 @@ public abstract class QtFilter implements IFilter {
 
 		if (context.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 			return context.getSDK().getReleaseRoot().append(context.getPlatformString()).
-			append(context.getTargetString()).append("QtCore.lib").toFile(); //$NON-NLS-1$
+			append(context.getTargetString()).append("QtCore.dll").toFile(); //$NON-NLS-1$
 		} else {
 			// for non-emulator targets, check in the armv5/lib directory (ARMV5 and GCCE)
 			return context.getSDK().getReleaseRoot().append("armv5/lib/QtCore.lib").toFile(); //$NON-NLS-1$
