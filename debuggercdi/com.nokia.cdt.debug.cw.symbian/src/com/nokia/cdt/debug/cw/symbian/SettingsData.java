@@ -282,7 +282,7 @@ public class SettingsData {
 
 					if (isEmulatorRequired(buildConfig, mainExeHostPath, mainExeWorkspaceRelativeMMPPath)) {
 						IPath releaseRoot = buildConfig.getSDK().getReleaseRoot();
-						String winscwudeb = releaseRoot.toOSString() + File.separator + "WINSCW" + File.separator + "UDEB"; //$NON-NLS-1$ //$NON-NLS-2$
+						String winscwudeb = releaseRoot.toOSString() + File.separator + "WINSCW" + File.separator + buildConfig.getTargetString(); //$NON-NLS-1$ //$NON-NLS-2$
 
 						String emulatorPath = winscwudeb + File.separator + "epoc.exe"; //$NON-NLS-1$
 						configuration.setAttribute(DebuggerCommonData.Host_App_Path, getCanonicalPath(emulatorPath));			
