@@ -19,11 +19,18 @@
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Remote Connections view</h2>
-<p>Use  the <strong>Remote Connections</strong> view to monitor, create, edit, or remove  common  connection settings for remote agents. The columns include:</p>
+<p>Use  the <strong>Remote Connections</strong> view to monitor, create, edit, or remove  common  connection settings for remote agents. Remote agents provide support for debugging, profiling, trace, and more. The connection types currently supported include:</p>
+<ul>
+  <li>Serial &mdash; mainly for boards with a serial interface</li>
+  <li>Bluetooth &mdash; available for  debug support </li>
+  <li>USB &mdash; available for both debug and trace support </li>
+  <li>Platform Simulator (PlatSim) &mdash; Nokia's device simulator</li>
+</ul>
+<p>The columns in the Remote Connections view include:</p>
 <ul>
   <li>Connection/Services - connection name defined by you and remote agent type</li>
   <li>Type - connection type, i.e. Bluetooth, USB, TCP/IP, etc.</li>
-  <li>Status - current connection status, i.e. Available, Not available, In Use, etc.</li>
+  <li>Status - current connection status, i.e. Available, Not accessible, Ready, etc.</li>
   <li>Description - provides information on the current connection test status.</li>
 </ul>
 <p align="center"><img src="../images/view_remote_connections.png" width="588" height="177"></p>
