@@ -1034,6 +1034,12 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 								break;
 							}
 							
+							if (osVersionString.compareToIgnoreCase("tb101sf") == 0){
+								setOSVersion(new Version("9.6.0"));
+								setSDKVersion(new Version("6.0.0"));
+								break;
+							}
+							
 							if (osVersionString.endsWith(EKA1_A_BRANCH_IDENTIFIER) || 
 							    osVersionString.endsWith(EKA2_B_BRANCH_IDENTIFIER) ||
 							    osVersionString.endsWith(EKA1_S_BRANCH_IDENTIFIER)){
