@@ -40,8 +40,11 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_MIDDWARE_INC = "epoc32/include/middleware";
 	
 	private static final String S60_MIDDWARE_INC2 =  "epoc32/include/mw";
-	private static final String S60_INC_MACROS2 = "#include <domain/osextensions/platform_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
+	private static final String S60_DOMAND_OSTEXT_PLAT_PATHS = "epoc32/include/domain/osextensions/platform_paths.hrh"; 
+	private static final String S60_DOMAND_OSTEXT_PLAT_PATHS_INCLUDE = "#include <domain/osextensions/platform_paths.hrh>";
+	private static final String APP_LAYER_SYSTEM_INCLUDES = "APP_LAYER_SYSTEMINCLUDE"; 
+	
 	private static final String S60_SF_FOLDER =  "sf";
 	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
@@ -145,7 +148,16 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 					
 					if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
 						// add symbol as at least one build config is a CustKit
-						S60_50_Macros_String = S60_INC_MACROS2;
+						File domainPath = new File(sdk.getEPOCROOT(), S60_DOMAND_OSTEXT_PLAT_PATHS); 
+						if (domainPath.exists()){ 
+							S60_50_Macros_String = S60_DOMAND_OSTEXT_PLAT_PATHS_INCLUDE + "\n"; 
+						}
+						//else { 
+						// The platform_paths include is in the variant.cfg defined prefix file
+						//} 
+						
+						S60_50_Macros_String += APP_LAYER_SYSTEM_INCLUDES; 
+						
 						break;
 					}
 
