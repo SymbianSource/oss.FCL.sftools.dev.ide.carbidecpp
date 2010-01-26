@@ -79,7 +79,6 @@ public class SettingsData {
 	public static final String LaunchConfig_SysTRK = PREFIX + ".LaunchConfig_SysTRK"; //$NON-NLS-1$
 	public static final String LaunchConfig_CrashDebugger = PREFIX + ".LaunchConfig_CrashDebugger"; //$NON-NLS-1$
 	public static final String LaunchConfig_Trace32 = PREFIX + ".LaunchConfig_Trace32"; //$NON-NLS-1$
-	public static final String LaunchConfig_SophiaSTI = PREFIX + ".LaunchConfig_SophiaSTI"; //$NON-NLS-1$
 
 	public static final String ATTR_originalName = "originalName"; //$NON-NLS-1$
 
@@ -98,7 +97,6 @@ public class SettingsData {
 	public static final String APP_TRK_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "appTRKLaunch"; //$NON-NLS-1$
 	public static final String SYS_TRK_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "systemTRKLaunch"; //$NON-NLS-1$
 	public static final String ATTACH_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "attachLaunch"; //$NON-NLS-1$
-	public static final String STI_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "stiLaunch"; //$NON-NLS-1$
 	public static final String T32_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "t32Launch"; //$NON-NLS-1$
 
 	//================ Shadowed CW Preference Panels =================================
@@ -136,14 +134,6 @@ public class SettingsData {
 	public static final String spn_Trace32Conn_LogOption= SPN(spn_Trace32Conn, "Trace32LogOption"); //$NON-NLS-1$	
 	public static final String spn_Trace32Conn_BootConfigArgs= SPN(spn_Trace32Conn, "Trace32BootConfigArgs"); //$NON-NLS-1$
 	
-	//	---< STI Connection Panel> -------------------
-	public static final String spn_SophiaSTIConn= "Sophia Target Interface Connection"; //$NON-NLS-1$
-	
-	public static final String spn_SophiaSTIConn_DllPath= SPN(spn_SophiaSTIConn, "SophiaTargetInterfaceDllPath"); //$NON-NLS-1$
-	public static final String spn_SophiaSTIConn_LogOption= SPN(spn_SophiaSTIConn, "STILogOption"); //$NON-NLS-1
-	public static final String spn_SophiaSTIConn_JtagClock= SPN(spn_SophiaSTIConn,	"STIJTAGClock"); //$NON-NLS-1
-	public static final String spn_SophiaSTIConn_StiEmulatorType= SPN(spn_SophiaSTIConn,	"STIJTAGType"); //$NON-NLS-1
-
 	//================= End of Shadowed panels ===========================================
 
 	public static final String TARGET_PATH_INCLUDES_FILENAME = "TARGET_PATH_INCLUDES_FILENAME"; //$NON-NLS-1$
@@ -612,7 +602,7 @@ public class SettingsData {
 		{
 			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, false );
 		}
-		else // others like T32, Sophia and crash debugger.
+		else // others like T32 and crash debugger.
 			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, true );	
 	}
 
@@ -760,8 +750,7 @@ public class SettingsData {
 			setFileTransferTab(configuration, project);
 		}
 
-		if (settingsGroup.equals(LaunchConfig_Trace32) ||
-				settingsGroup.equals(LaunchConfig_SophiaSTI))
+		if (settingsGroup.equals(LaunchConfig_Trace32))
 		{
 			setStopModeMainTab(configuration, project);
 			setStopModeDebuggerTab(configuration, project);
@@ -839,26 +828,6 @@ public class SettingsData {
 					""); //$NON-NLS-1$
 		}
 	
-		if (settingsGroup.equals(LaunchConfig_SophiaSTI)) {
-			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_DllPath, "C:\\CarbideIF_ARM\\WTI.dll"); //$NON-NLS-1$
-			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_JtagClock, "Auto"); //$NON-NLS-1$
-			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_LogOption, false);
-			configuration.setAttribute( SettingsData.spn_SophiaSTIConn_StiEmulatorType, "Auto"); //$NON-NLS-1$
-			
-			// Stop mode debugging using STI : specify Sophia STI debugger protocol plugin.
-			//
-			ConnectionTypeInfo connTI = new ConnectionTypeInfo(
-					"Carbide Sophia STI", // Internal ID //$NON-NLS-1$
-					"Sophia STI Configuration", // Display name. //$NON-NLS-1$
-					"Sophia Target Interface Connection"); // Pref panel name
-
-			DebuggerCommonData.setLaunchConfigConnSettings(
-					configuration,
-					connTI, 
-					"Sophia Target Interface Plugin", //$NON-NLS-1$
-					""); //$NON-NLS-1$
-		}
-		
 		// Add the Symbian OS SDK Mapping.
 		addSymbianSDKMapping(project, configuration);
 
@@ -988,8 +957,7 @@ public class SettingsData {
 			ILaunchConfigurationType configurationType = configuration.getType();
 			String id = configurationType.getIdentifier();
 			return id.equals(T32_LAUNCH_TYPE_ID) ||
-			id.endsWith("T32Launch")||//$NON-NLS-1$
-			id.equals(STI_LAUNCH_TYPE_ID);
+			id.endsWith("T32Launch"); //$NON-NLS-1$
 		} catch (CoreException e) {
 		}
 		
