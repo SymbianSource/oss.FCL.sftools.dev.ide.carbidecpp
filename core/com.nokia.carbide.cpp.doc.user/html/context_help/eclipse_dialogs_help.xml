@@ -109,12 +109,6 @@
 		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
 	</context>
 
-	<context id="wizard_sophia_page" >
-		<description>Specify Sophia configuration information.</description>
-		<topic label="Creating a Launch Configuration"				href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Symbian OS Sophia Target Interface Support"	href="html/reference/wnd_sophia_config.htm" />
-	</context>
-
 	<context id="wizard_trace32_page" >
 		<description>Specify Trace32 configuration information.</description>
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
