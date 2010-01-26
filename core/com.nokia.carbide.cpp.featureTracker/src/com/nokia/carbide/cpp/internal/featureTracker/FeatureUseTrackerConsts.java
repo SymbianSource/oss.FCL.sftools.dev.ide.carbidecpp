@@ -25,7 +25,6 @@ public class FeatureUseTrackerConsts {
 	public static final String CARBIDE_APPDEP = "Carbide_AppDep"; // dependency explorer
 	public static final String CARBIDE_CODESCANNER = "Carbide_CodeScanner";
 	public static final String CARBIDE_TRACE32 = "Carbide_Trace32";
-	public static final String CARBIDE_SOPHIAWTI = "Carbide_SophiaWTI";
 	public static final String CARBIDE_OST_TRACE = "Carbide_OST_Trace";
 	public static final String CARBIDE_IDE = "Carbide_IDE"; // did user launch IDE
 	public static final String CARBIDE_INTERNALONLY = "Carbide_InternalOnly"; // many carbide extensions
