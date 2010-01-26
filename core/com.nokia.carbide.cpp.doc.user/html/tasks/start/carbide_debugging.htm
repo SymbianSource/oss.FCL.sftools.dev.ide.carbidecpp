@@ -16,11 +16,11 @@
 <p class="note"><b>NOTE</b> You can only debug compiled programs. Use the <a href="../projects/prj_build.htm">Build Project</a> command to compile project sources into a binary file if you do not already have an executable in the project. You will also need a symbolics ( .sym) file for debugging on a target device. Ensure that a .sym file has been created. If you are importing an existing application, you may have to rebuild the application and create a related .sym file. Make sure a .sym file has been created in the output directory.</p>
   <ol>
     <li>Set a breakpoint in the HelloCarbide program</li>
-    <p>Open the \src\<span class="code">CHelloCarbideAppUI.cpp</span> file and <a href="../breakpoints/pgm_bp_setting.htm">set a breakpoint</a> in the <span class="code">HandleCommandL</span> routine.</p>
+    <p>Open the <span class="code">\src\CHelloCarbideAppUI.cpp</span> file and <a href="../breakpoints/pgm_bp_setting.htm">set a breakpoint</a> in the <span class="code">HandleCommandL</span> routine.</p>
     <p align="center"><img src="images/debug_set_breakpoint.png" width="602" height="238" /></p>
   <p class="figure">Figure 1 - Breakpoint set in <span class="code">CHelloCarbideAppUI</span>::HandleCommandL routine. </p>
   <li>Launch the Carbide.c++ debugger and S60 EPOC Emulator</li>
-  <p><a href="../../debugger/debug/cmds_starting.htm">Start</a> the Carbide debugger which launches the S60 EPOC Emulator and installs the HelloCarbide application. For on-device debugging, your application will be installed on your target device.</p>
+  <p><a href="../../debugger/debug/cmds_starting.htm">Start</a> the Carbide debugger which launches the S60 EPOC Emulator and installs the HelloCarbide application. For on-device debugging, the application is installed on the target device.</p>
   <p align="center"><img src="images/debug_s60_emulator_launch.png" width="293" height="391" /></p>
   <p class="figure"><span class="figure">Figure 2 - S60 Emulator launches</span></p>
   <li>Open the Installed directory within the S60 Emulator or your target device </li>
