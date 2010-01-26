@@ -601,10 +601,6 @@
 	   <topic href="html/tasks/start/carbide_deploying.htm" label="Uploading"/>
 	</entry>
 
-	<entry keyword="Sophia">
-	   <topic href="html/projects/launch/sophia.htm"/>
-	</entry>
-
 	<entry keyword="Starting the Debugger">
 	   <topic href="html/tasks/debugger/work_debug_act_start.htm"/>
 	</entry>

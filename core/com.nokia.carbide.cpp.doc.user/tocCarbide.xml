@@ -155,7 +155,6 @@
         <topic label="Application TRK"				href="html/projects/launch/run_mode.htm" />
         <topic label="Attach to Process"			href="html/projects/launch/attach_process.htm" />
         <topic label="Emulation"					href="html/projects/launch/emulation.htm" />
-        <topic label="Sophia (STI)"					href="html/projects/launch/sophia.htm" />
         <topic label="System TRK"					href="html/projects/launch/stop_mode.htm" />
         <topic label="Trace32"						href="html/projects/launch/trace32.htm" />
         <anchor id="launch_config_ANCHOR"/>
@@ -298,15 +297,6 @@
       <topic label="Stop Mode Debug Example" 					href="html/tasks/debugger/stop_mode_debug.htm" >
         <topic label="1. On-Device Debugging Preconditions" href="html/tasks/debugger/stop_mode_debug_precond.htm" />
         <topic label="2. Trace32 Support" 					href="html/projects/launch/trace32.htm" >
-          <topic label="Main" 							href="html/projects/launch/page_main.htm" />
-          <topic label="Connection" 						href="html/projects/launch/page_connection.htm" />
-          <topic label="Debugger" 						href="html/projects/launch/page_debugger.htm" />
-          <topic label="ROM Image" 						href="html/projects/launch/page_rom_image.htm" />
-          <topic label="Executables" 						href="html/projects/launch/page_executables.htm" />
-          <topic label="Source" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
-          <topic label="Commmon" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm/" />
-        </topic>
-        <topic label="3. Sophia Target Interface Support" 	href="html/projects/launch/sophia.htm" >
           <topic label="Main" 							href="html/projects/launch/page_main.htm" />
           <topic label="Connection" 						href="html/projects/launch/page_connection.htm" />
           <topic label="Debugger" 						href="html/projects/launch/page_debugger.htm" />
