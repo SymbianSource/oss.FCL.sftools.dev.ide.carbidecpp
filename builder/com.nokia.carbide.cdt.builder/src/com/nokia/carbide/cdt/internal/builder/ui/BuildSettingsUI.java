@@ -231,8 +231,8 @@ public class BuildSettingsUI {
 		cleanCmdv2Label.setLayoutData(new GridData());
 
 		defaultCleanLevelv2Combo = new Combo(content, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
-		defaultCleanLevelv2Combo.add(Messages.getString("SharedPrefs.CleanLevel0")); //$NON-NLS-1$
-		defaultCleanLevelv2Combo.add(Messages.getString("SharedPrefs.CleanLevel1")); //$NON-NLS-1$
+		defaultCleanLevelv2Combo.add(Messages.getString("SharedPrefs_SBSv2.CleanLevel0")); //$NON-NLS-1$
+		defaultCleanLevelv2Combo.add(Messages.getString("SharedPrefs_SBSv2.CleanLevel1")); //$NON-NLS-1$
 		defaultCleanLevelv2Combo.setToolTipText(Messages.getString("SharedPrefs.CleanCommandLabelToolTip")); //$NON-NLS-1$
 		defaultCleanLevelv2Combo.setLayoutData(new GridData());
 
