@@ -60,17 +60,6 @@
             sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
       </launchDelegate>
       
-      <launchDelegate
-            name="Symbian OS Sophia"
-            delegate="com.nokia.cdt.internal.debug.launch.SophiaSTILaunchDelegate"
-            delegateDescription="Launch a classic Symbian OS Trace32 debug session."          
-            modes="debug"
-            type="com.nokia.cdt.debug.launch.stiLaunch"
-            id="com.nokia.cdt.debug.launch.stiLaunchDelegate"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
-      </launchDelegate>
-  
    </extension>
 
    <extension
@@ -106,12 +95,6 @@
             id="com.nokia.cdt.debug.launch.t32Launch">
       </launchConfigurationType>
       
-      <launchConfigurationType
-            name="Symbian OS Sophia"
-            public="true"
-            id="com.nokia.cdt.debug.launch.stiLaunch">
-      </launchConfigurationType>
-  
    </extension>
    
   <extension
@@ -141,12 +124,6 @@
             icon="icons/launch_config_file_16x16.png"
             configTypeID="com.nokia.cdt.debug.launch.t32Launch"
             id="com.nokia.cdt.debug.launch.t32LaunchImage">
-      </launchConfigurationTypeImage>
-      
-      <launchConfigurationTypeImage
-            icon="icons/launch_config_file_16x16.png"
-            configTypeID="com.nokia.cdt.debug.launch.stiLaunch"
-            id="com.nokia.cdt.debug.launch.stiLaunchImage">
       </launchConfigurationTypeImage>
     </extension>
 
@@ -195,15 +172,6 @@
       </launchConfigurationTabGroup>
     </extension>
     
-    <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            type="com.nokia.cdt.debug.launch.stiLaunch"
-            class="com.nokia.cdt.internal.debug.launch.ui.SophiaConfigurationTabGroup"
-            id="com.nokia.cdt.debug.launch.SophiaLaunchTabGroup">
-      </launchConfigurationTabGroup>
-    </extension>
-
  
     <extension
          point="org.eclipse.debug.ui.launchShortcuts">

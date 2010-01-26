@@ -188,12 +188,6 @@ public class LaunchCreationWizard extends Wizard {
 			wizards.add(trace32Wizard);
 		}
 
-		SophiaLaunchWizard sophiaWizard = new SophiaLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		if (sophiaWizard.supportsMode(mode)) {
-			sophiaWizard.addPages();
-			wizards.add(sophiaWizard);
-		}
-
 		AttachTRKLaunchWizard attachTRKWizard = new AttachTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
 		if (attachTRKWizard.supportsMode(mode)) {
 			attachTRKWizard.addPages();

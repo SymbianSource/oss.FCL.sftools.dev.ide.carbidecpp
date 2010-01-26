@@ -60,8 +60,6 @@ public class LaunchTabHelpIds {
 	
 	public static final String STOP_MODE_T32_CONNECTION = HelpID_Prefix + "stopmode_t32connection"; //$NON-NLS-1$
 	
-	public static final String STOP_MODE_SOPHIA_CONNECTION = HelpID_Prefix + "stopmode_sophiaconnection"; //$NON-NLS-1$
-	
 	public static final String STOP_MODE_ROM_IMAGE = HelpID_Prefix + "stopmode_romimage"; //$NON-NLS-1$
 	
 	public static final String RUN_MODE_ROM_LOG_FILE = HelpID_Prefix + "runmode_romlogfile"; //$NON-NLS-1$
