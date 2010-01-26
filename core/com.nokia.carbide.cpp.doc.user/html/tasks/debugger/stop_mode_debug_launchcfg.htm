@@ -5,10 +5,17 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title>Stop Mode On-Device Debugging</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {font-size: 1em}
+.style5 {font-size: 1em; font-family: Verdana, Ariel, Helvetica, sans-serif; }
+.style7 {font-size: 1em; font-weight: bold; }
+-->
+</style>
 </head>
 <body bgcolor="#FFFFFF" dir="ltr">
 <h2> Defining a Stop Mode Debug Configuration</h2>
-<p>After installing all necessary software such as Perl, JTAG, compilers, Devkits and SDKs and creating your project, you will need to define a Debug launch configuration for your project. For this example, we will define a Trace32 launch configuration. For new projects that do not have a launch configuration, a New Launch Configuration Wizard will appear and allow you to define settings. You can also cancel the wizard and define a launch configuration from the following instructions.</p>
+<p>After installing all necessary software such as Perl, JTAG, compilers, Devkits and SDKs and creating your project, you will need to define a Debug launch configuration for your project. For this example, we'll define a Trace32 launch configuration. For new projects that do not have a launch configuration, a New Launch Configuration Wizard will appear and allow you to define settings. You can also cancel the wizard and define a launch configuration from the following instructions.</p>
 <div class="step">
   <h4>Define a Launch Configuration </h4>
   <ol>
@@ -23,7 +30,7 @@
   </li>
     <p align="center"><img src="images/Debug_Config_window.png" width="704" height="455" /></p>
     <p align="left" class="figure">Figure 1 - Debug Configurations</p>
-    <p>Select either a Symbian OS Sophia or Symbian OS Trace32 configuration type for stop mode on-device debugging and click the New launch configuration icon. The following pages require review and possible option settings:</p>
+    <p>Select either a Symbian OS Trace32 configuration type for stop mode on-device debugging and click the New launch configuration icon. The following pages require review and possible option settings:</p>
     <ul>
       <li> Main - defines the project to be launched on the target device</li>
         <li>Connection - specifies the method used to transfer files to the target device</li>
@@ -44,11 +51,11 @@
         <th width="62%" scope="col">Explanation</th>
       </tr>
       <tr>
-        <td>Project</td>
+        <td><span class="style7">Project</span></td>
         <td><p>The project to associate with this debug launch configuration. Click Browse to select a different project.</p></td>
       </tr>
       <tr>
-        <td>Executable</td>
+        <td><span class="style7">Executable</span></td>
         <td><span
  style="font-weight: normal;">This is the name of the executable that is linked to the project. </span>Click <b>Browse</b> to select a different executable.</td>
       </tr>
@@ -64,13 +71,17 @@
             <th width="62%" scope="col">Explanation</th>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Trace32 Executable</b></font></font></p></td>
+        <td><span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style5"><b>Trace32 Executable</b></p></td>
             <td><p>Specify the path to the Trace32 executable. The default path assumes that the Trace32 executable is installed in the default location: C:\T32\T32marm.exe.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Trace32 Configuration File</b></font></font></p></td>
+        <td><span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style5"><b>Trace32 Configuration File</b></p></td>
             <td>Specify the path to the config.t32 file or other custom configuration file. The default path assumes that the Trace32 configuration file is installed in the default location: C:\T32\config.t32.
               <p>For arm11 processors copy the trace32 configuration file for non-ARM11 processor (config_arm11.t32) to your C:\T32 folder and specify it in the edit box.</p>
               <p>You can modify the config.t32 file to support UDP (User Datagram Protocol) connections by adding the following lines: <br />
@@ -80,17 +91,21 @@
                 PORT=20000</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td><span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style5">
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <b>Trace32 Initialization Script</b></font></font></p></td>
+            <b>Trace32 Initialization Script</b></p></td>
             <td><p>Specify the path to the initialization <span class="code">cmm</span> file. This script will be run in T32 after connecting to T32. You can specify your own scripts for the targets used.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><b><font size="2" style="font-size: 9pt">
+        <td><span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style5"><b>
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></b><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>View messages between Carbide and Trace32</b></font></font></p></td>
+            View messages between Carbide and Trace32</b></p></td>
             <td>Enable to log communications with Trace32 to the console window.</td>
       </tr>
     </table>
@@ -113,19 +128,28 @@
         <td>A drop down with a list of all supported processors.  The process selection should help in determining the memory model. This will in turn help determine the base address and the offsets for the Symbian OS kernel aware information.</td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Target Initialization File</b></font></font></p></td>
+        <td>
+          <span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+        <p class="style5"><b>Target Initialization File</b></p></td>
         <td><p>Check this box to have the debugger run an initialization script when the debug session starts. For example, if a target device requires initialization for the debugger to be able to read and write memory or registers, you can specify an initialization script here. Click Browse to select a script file using a standard file selection dialog box.</p>
-            <p>When using T32, most of the initialization is done in the CMM script file. With other debug protocols like Sophia, you can specify the initialization file, which can be run after connecting to the target.</p></td>
+            <p>When using T32, most of the initialization is done in the CMM script file. With other debug protocols you can specify the initialization file, which can be run after connecting to the target.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><b><font size="2" style="font-size: 9pt"><font face="Georgia, serif">Memory Configuration File</font></font></b></p></td>
+        <td>
+          <span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+        <p class="style5"><b>Memory Configuration File</b></p></td>
         <td>Controls whether the debugger uses a memory configuration file when a debug session starts. The Carbide debugger uses this configuration file to know which memory is accessible, readable, and writable on the target.</td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><b><font size="2" style="font-size: 9pt"><font face="Georgia, serif">Reset target at the start of each debug session</font></font></b></p></td>
+        <td>
+          <span class="style5">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+        <p class="style5"><b>Reset target at the start of each debug session</b></p></td>
         <td>Forces the Carbide IDE to reset the target at the start of each debug session. This ensures that the debugging session uses the most up-to-date program code.</td>
       </tr>
       <tr>
@@ -150,152 +174,127 @@
         <th width="62%" scope="col">Explanation</th>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><font face="Georgia, serif">
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Start Address</b></font></font></p></td>
+            <b>Start Address</b></font></p></td>
         <td><p>Enter the physical address in memory where the Symbian OS start code begins execution. This address is target-specific. The address should be in hexadecimal format with the 0x prefix. For example, 0x8000000 is a valid entry.</p>
           <p class="note"><b>NOTE</b> The address entered in this field must match the start address specified in the source code used to build the Symbian OS ROM image to be debugged. The Start address must match the Download address.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><font face="Georgia, serif">
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Debug from Start address</b></font></font></p></td>
+            <b>Debug from Start address</b></font></p></td>
         <td>Select this option to have the debugger halt the program at the address specified in Start Address once the target initialization is done and the OS is downloaded; if the user has chosen to download the OS. You can then step through start-up code or run the target in bare-board mode.</td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><font face="Georgia, serif">
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Run from start address</b></font></font></p></td>
+            <b>Run from start address</b></font></p></td>
         <td>Select this option to have the debugger start the code at the address specified in Start Address once the target initialization is done. If you have breakpoints set, the debugger stops at the first breakpoint encountered. You can click the Break button to halt the device.</td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><font face="Georgia, serif">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-              </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
-              <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Symbian ROM Log file</b></font></font></p></td>
+              
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+            <b>Symbian ROM Log file</b></font></p></td>
         <td>Check the Parse ROM Log File option and specify the information that the debugger needs in order to show detailed stack information, set breakpoints, and show source level debugging information for ROM images. In the first text field, browse to or enter the full path and name of the log file that corresponds to the ROM image on the target device. This log file is generated by default when the ROM image is built.</td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><font face="Georgia, serif">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-              <b>Symbian OS Kit EPOC32 Directory</b></font></font></p></td>
+              <b>Symbian OS Kit EPOC32 Directory</b></font></p></td>
         <td class="note"><p>Specifies the epoc32 directory in which the ROM image and log files are stored. Since the log file may not contain full paths to the ROM components on the host PC, you need to enter this epoc32 directory.</p>
             <p class="note"><b>NOTE</b> Always include the epoc32 folder in this path.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><font face="Georgia, serif">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-              </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
-              <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Log unresolved modules</b></font></font></p></td>
+              
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+            <b>Log unresolved modules</b></font></p></td>
         <td class="note"><p>Check this box to have the debugger output a list of components from the specified ROMBUILD log file that do not have debugger symbolic information. The list is displayed in the debugger console window at the beginning of the debug session.</p>
             <p class="note"><b>NOTE</b> You cannot perform source-level debugging on components that do not include symbolic information.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <p><b><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><b>
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-              </font></b><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+              </b><font face="Georgia, serif">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
               <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-              <b>Debug non-XIP Executables</b></font></font></p></td>
+              <b>Debug non-XIP Executables</b></font></p></td>
         <td><p>Check this box to debug a project, or a dynamically loaded module, that is loaded from NAND-Flash or other removable media (MMC, memory stick, etc.) at run time and executed in RAM. Use this option to debug modules that work fine when executed in place as part of the ROM image, but sometimes fail when placed in NAND-Flash or other removable media.</p>
             <p class="note"> <b>NOTE</b> Selecting this option will affect debugging performance. When the debugger needs to load a module (DLL, EXE, etc.) it will stop the target, read information from it, then restart it.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><b><font size="2" style="font-size: 9pt">
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+          <p class="style1"><b>
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></b><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
+            </b><font face="Georgia, serif">
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Symbian ROM Image</b></font></font></p></td>
+            <b>Symbian ROM Image</b></font></p></td>
         <td>Controls the logging of communication with Trace32. Enable to log communications with Trace32 to the console window.</td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Download Address (hex) </b></font></font></p></td>
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+        <p class="style1"><font face="Georgia, serif"><b>Download Address (hex) </b></font></p></td>
         <td><p>Enter the physical address in memory at which the debugger should place the ROM image. This address is target-specific. The address should be in hexadecimal format with the 0x prefix. For example, 0x000FFF00 is a valid entry.</p>
           <p class="note"> <b>NOTE</b> The address entered in this field must match the download address specified in the source code used to build the Symbian OS ROM image to be debugged. If you leave this field blank, the debugger does not download the ROM image to the device at the beginning of the debug session. The Download address must match the Start address.</p></td>
       </tr>
       <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Ask for download at the start of each debug session</b></font></font></p></td>
+        <td>
+          <span class="style1">
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+          </span>
+        <p class="style1"><font face="Georgia, serif"><b>Ask for download at the start of each debug session</b></font></p></td>
         <td>Check this box to have the debugger display a dialog box at the beginning of every debug session that lets you choose whether or not you want the debugger to download the ROM image to the device.</td>
       </tr>
     </table>
-    <p>&nbsp;</p>
   </ol>
-    <h3>Sophia Target Interface Connection</h3>
-    <p>The following Connection pane is specific to the Sophia Target Interface and is shown in a Sophia Launch Configuration only. Other panes are same as Trace32 panes.</p>
-    <p align="center"><img src="images/Debug_Config_sophia.png" width="819" height="305" /></p>
-    <p class="figure">Figure 6 - Sophia Connection Window</p>
-    <p>Table 5 -  Sophia Connection Window</p>
-    <table width="94%"  border="0" cellpadding="2" cellspacing="0">
-      <tr>
-        <th width="38%" scope="col">Item</th>
-        <th width="62%" scope="col">Explanation</th>
-      </tr>
-      <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
-            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
-            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
-            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            </font></font><font face="Georgia, serif"><font size="2" style="font-size: 9pt"><b>Sophia Target Interface (WTI.dll) location</b></font></font></p></td>
-        <td>Specifies the location of a Sophia dll that the debugger will load and interface with in order to communicate with the Sophia JTAG interface. The preference panel will try to determine this value from the registry or some other means and auto fill it when possible.</td>
-      </tr>
-      <tr>
-        <td><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-          <p><font face="Georgia, serif"><font size="2" style="font-size: 9pt">
-            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-            <b>EJ_Debug Type </b></font></font></p></td>
-        <td><p>Sophia Systems' EJ-Debug is a compact, USB-powered JTAG emulator. Select the EJ_Debug type. Options include:</p>
-          <ul>
-            <li>Auto (automatically detects target CPU) </li>
-            <li>ARM9 (target CPU) </li>
-            <li>ARM11 (target CPU)</li>
-            <li>ARM9_11 (target CPU)</li>
-            <li>ARM7_9_11 (target CPU)</li>
-        </ul></td>
-      </tr>
-      <tr>
-        <td><b>JTAG TCLK Frequency</b></td>
-        <td>Select the JTAG TCLK frequency. Options include:
-          <ul>
-            <li>Auto</li>
-            <li>33 MHz</li>
-            <li>16 MHz</li>
-            <li>8 MHz</li>
-            <li>500 KHz </li>
-        </ul></td>
-      </tr>
-      <tr>
-        <td><b>View messages between Carbide and STI</b></td>
-        <td>The View Messages between Carbide and STI check box allows you to specify if the debug protocol messages between Carbide and STI should be logged in a Communication Log console window.</td>
-      </tr>
-    </table>
-
 </div>
 <h5>Related Tasks</h5>
 <ul>
   <li><a href="stop_mode_debug_precond.htm">Stop Mode On-Device Debugging Preconditions</a></li>
 </ul>
 
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>

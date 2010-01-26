@@ -10,11 +10,11 @@
 		  
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
-       		label="Carbide.c++ Release Notes (2.2)" 
+       		label="Carbide.c++ Release Notes (2.5)" 
        		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
        		id="carbide-link" 
        		style-id="content-link">
-          	<text>Learn about what's new in Carbide.c++ for Symbian OS developers.</text>
+          	<text>Learn about what's new in Carbide.c++ for Symbian OS development.</text>
        		</link>
        	</group>
 		  
@@ -40,16 +40,6 @@
 
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
-       		label="Carbide.c++ News Reader (2.0.3)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/view_carbide_news.htm" 
-       		id="carbide-link" 
-       		style-id="content-link">
-          	<text>Provides updates on the latest Carbide, Symbian, and S60 news.</text>
-       		</link>
-       	</group>
-
-		<group style-id="content-group" id="carbide-cpp">
-       		<link 
        		label="On-Device Connection (2.0)" 
        		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm" 
        		id="carbide-link" 
@@ -59,4 +49,5 @@
        	</group>
 
   	</extensionContent>
+
 </introContent>

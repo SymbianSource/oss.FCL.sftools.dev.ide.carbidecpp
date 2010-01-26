@@ -13,7 +13,7 @@
 <ul>
   <li><a href="#emulator_mode">Emulation Debugger page</a> (Emulation) </li>
   <li><a href="#trk_runmode">Run-mode Debugger page</a> (Application TRK) </li>
-  <li><a href="#trk_stopmode">Stop-mode Debugger page</a> (System TRK, Trace32, Sophia, Attach to Process) </li>
+  <li><a href="#trk_stopmode">Stop-mode Debugger page</a> (System TRK, Trace32, Attach to Process) </li>
 </ul>
 <h3><a name="emulator_mode" id="emulator_mode"></a>Emulation Debugger page </h3>
 <p>The <b>Symbian OS <a href="emulation.htm">Emulation</a></b> launch configurations the <b>Debugger</b> page to specify  entry point breaks and which  logs to output to the Console view.</p>
@@ -89,7 +89,7 @@
   </tr>
 </table>
 <h3><a name="trk_stopmode" id="trk_stopmode"></a>Stop-mode Debugger page </h3>
-<p>In  stop-mode launch configurations like <b><a href="stop_mode.htm">System TRK</a></b>, <b><a href="trace32.htm">Trace32</a></b>,  <b><a href="sophia.htm">Sophia</a></b>, and <a href="attach_process.htm"><b>Attach to Process</b></a>, use the <b>Startup Options</b> to  attach to a target and debug or run from the specified start address. Then use <b>Target Options</b> to specify the target's processor type,  and set which initialization and memory configuration files to use in the debug session. </p>
+<p>In  stop-mode launch configurations like <b><a href="stop_mode.htm">System TRK</a></b>, <b><a href="trace32.htm">Trace32</a></b>, and <a href="attach_process.htm"><b>Attach to Process</b></a>, use the <b>Startup Options</b> to  attach to a target and debug or run from the specified start address. Then use <b>Target Options</b> to specify the target's processor type,  and set which initialization and memory configuration files to use in the debug session. </p>
 <p align="center"><img src="images/page_debugger_stop_mode.png" width="642" height="401"></p>
 <p class="figure">Figure 3 - Debugger page showing stop-mode options  </p>
 <h5>Table 3. Debugger page &mdash; stop-mode  options </h5>
@@ -135,7 +135,7 @@
     <td>&nbsp;</td>
     <td><b>Target initialization file </b></td>
     <td><p>Check this box to have the debugger run an initialization script when the debug session starts. For example, if a target device requires initialization for the debugger to be able to read and write memory or registers, you can specify an initialization script here.</p>
-    <p> Click Browse to select a script file using a standard file selection dialog box. When using T32, most of the initialization is done in the CMM script file. With other debug protocols like Sophia, you can specify the initialization file, which can be run after connecting to the target. </p></td>
+    <p> Click Browse to select a script file using a standard file selection dialog box. When using T32, most of the initialization is done in the CMM script file. With other debug protocols you can specify the initialization file, which can be run after connecting to the target. </p></td>
   </tr>
   <tr>
     <td>&nbsp;</td>

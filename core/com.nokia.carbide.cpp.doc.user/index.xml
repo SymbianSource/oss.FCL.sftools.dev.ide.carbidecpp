@@ -197,8 +197,9 @@
 
 	<entry keyword="debugger">
 	   <topic href="html/concepts/working_with_data.htm" label="Working with Debugger Data"/>
-	   <topic href="html/reference/launch_configs/emulator_debugger.htm" />
-	   <topic href="html/reference/launch_configs/page_trk_debugger.htm"/>
+	   <topic href="html/reference/projects/launch/emulation.htm" label="Emulator Launch Configuration" />
+	   <topic href="html/reference/projects/launch/run_mode.htm" label="Application TRK Launch Configuration" />
+	   <topic href="html/reference/projects/launch/stop_mode.htm" label="System TRK Launch Configuration" />
 	   <topic href="html/reference/debugger_settings.htm" label="Debugger Settings"/>
 	</entry>
 	
@@ -215,11 +216,11 @@
 	</entry>
 
 	<entry keyword="debug agent">
-	   <topic href="html/concepts/trk.htm"/>
-	   <topic href="html/tasks/trk/trk_overview.htm"/>
-	   <topic href="html/tasks/trk/trk_install_pcsuite.htm"/>
-	   <topic href="html/tasks/trk/trk_install_bluetooth.htm"/>
-	   <topic href="html/tasks/trk/trk_install_usb.htm"/>
+	   <topic href="html/concepts/trk.htm" label="On-device Debugging" />
+	   <topic href="html/tasks/trk/trk_overview.htm" label="TRK Overview" />
+	   <topic href="html/tasks/trk/trk_install_pcsuite.htm" label="PC Suite"/>
+	   <topic href="html/tasks/trk/trk_install_bluetooth.htm" label="Bluetooth"/>
+	   <topic href="html/tasks/trk/trk_install_usb.htm" label="USB"/>
 	</entry>
 
 	<entry keyword="Debug Perspective">
@@ -231,9 +232,9 @@
 	</entry>
 
 	<entry keyword="Debug window">
-	   <topic href="html/reference/wnd_debug_configuration.htm"/>
-	   <topic href="html/concepts/launch_configuration.htm"/>
-	   <topic href="html/tasks/projects/wiz_new_launch_config.htm"/>
+	   <topic href="html/reference/wnd_debug_configuration.htm" label="Debug window" />
+	   <topic href="html/concepts/launch_configuration.htm" label="Launch Configurations" />
+	   <topic href="html/tasks/projects/wiz_new_launch_config.htm" label="New Launch Configuration" />
 	</entry>
 
 	<entry keyword="dependency tracking">
@@ -305,7 +306,7 @@
 	</entry>
 
 	<entry keyword="Global Variables Window">
-	   <topic href="html/reference/view_global_variables.htm"/>
+	   <topic href="html/reference/view_global_variables.htm"  label="Global Variables Window" />
 	</entry>
 
 <!-- H -->
@@ -340,10 +341,9 @@
 	</entry>
 
 	<entry keyword="installation">
-	   <topic href="html/tasks/start/carbide_install.htm"/>
-	   <topic href="html/tasks/trk/trk_install_pcsuite.htm"/>
-	   <topic href="html/tasks/trk/trk_install_bluetooth.htm"/>
-	   <topic href="html/tasks/trk/trk_install_usb.htm"/>
+	   <topic href="html/tasks/trk/trk_install_pcsuite.htm" label="PC Suite"/>
+	   <topic href="html/tasks/trk/trk_install_bluetooth.htm" label="Bluetooth"/>
+	   <topic href="html/tasks/trk/trk_install_usb.htm" label="USB"/>
 	</entry>
 
 	<entry keyword="Installation Pane">
@@ -409,7 +409,7 @@
 	</entry>
 
 	<entry keyword="menus">
-	   <topic href="html/reference/menus/new_symbian_class.htm" />
+	   <topic label="Symbian OS C++ Class" href="html/reference/menus/new_symbian_class.htm" />
 	   <topic label="Symbian OS C++ Project" href="html/reference/menus/new_symbian_project.htm" />
 	   <topic href="html/reference/menus/open_cmd_window.htm" />
 	   <topic href="html/reference/menus/open_explorer_window.htm" />
@@ -510,7 +510,7 @@
 	</entry>
 
     <entry keyword="Projects">
-       <topic href="html/concepts/Projects.html"/>
+       <topic href="html/concepts/Projects.html" label="Projects" />
        <topic href="html/qt_help/qt_creating_projs_01.htm"/>
        <topic href="html/qt_help/qt_importing_projs_01.htm"/>
 	</entry>
@@ -592,7 +592,6 @@
 	</entry>
 
 	<entry keyword="SDK Support">
-	   <topic href="html/concepts/SDKSupport.html"/>
 	   <topic href="html/tasks/AddinganSDK.html" />
 	   <topic href="html/tasks/WorkingwithSDKs.html"/>
 	   <topic href="html/tasks/RmvngandVwngPropsosSDK.html" label="Viewing and Editing SDK Properties"/>
@@ -600,10 +599,6 @@
 
 	<entry keyword="SIS File">
 	   <topic href="html/tasks/start/carbide_deploying.htm" label="Uploading"/>
-	</entry>
-
-	<entry keyword="Sophia">
-	   <topic href="html/projects/launch/sophia.htm"/>
 	</entry>
 
 	<entry keyword="Starting the Debugger">
@@ -656,7 +651,7 @@
 	</entry>
 
 	<entry keyword="System Browser View">
-	   <topic href="html/reference/view_system_browser.htm"/>
+	   <topic href="html/reference/view_system_browser.htm" label="System Browser" />
 	</entry>
 
 <!-- T -->
@@ -682,8 +677,8 @@
 	</entry>
 
 	<entry keyword="TRK" >
-		<topic href="html/concepts/trk.htm"/>
-		<topic href="html/tasks/trk/trk_overview.htm"/>
+		<topic href="html/concepts/trk.htm" label="On-device Debugging" />
+		<topic href="html/tasks/trk/trk_overview.htm" label="TRK Overview" />
 		<topic href="html/tasks/trk/trk_carbide_setup.htm" />
 		<topic href="html/tasks/start/carbide_example_trk.htm" />
 		<topic href="html/tasks/debugger/stop_mode_debug.htm" />
@@ -708,7 +703,7 @@
 <!-- V -->
 
 	<entry keyword="variables">
-	   <topic href="html/concepts/working_with_variables.htm" />
+	   <topic href="html/concepts/working_with_variables.htm" label="Working with Variables" />
 	   <topic href="html/debugger/variables/adding_variables.htm" />
 	   <topic href="html/debugger/variables/viewing_variables.htm" />
 	   <topic href="html/debugger/variables/variables.htm" />
@@ -727,16 +722,16 @@
 		<topic href="html/reference/view_disassembly.htm" />
 		<topic href="html/reference/view_executables.htm" />
 		<topic href="html/reference/view_expressions.htm" />
-		<topic href="html/reference/view_global_variables.htm" />
+		<topic href="html/reference/view_global_variables.htm" label="Global Variables Window" />
 		<topic href="html/reference/view_memory_wnd.htm" />
 		<topic href="html/reference/view_mifdef_editor.htm" />
 		<topic href="html/reference/view_module_wnd.htm" />
 	    <topic href="html/concepts/registers.htm" />
-	    <topic href="html/reference/view_signals_wnd.htm" />
+	    <topic href="html/reference/view_signals_wnd.htm" label="Symbols" />
 	    <topic href="html/reference/view_symbian_kernel.htm" />
 	    <topic href="html/reference/view_sym_proj_nav.htm" />
 	    <topic href="html/reference/view_symbian_kernel.htm" />
-	    <topic href="html/reference/view_system_browser.htm" />
+	    <topic href="html/reference/view_system_browser.htm" label="System Browser" />
 	    <topic href="html/reference/view_variables.htm" />
 	</entry>
 

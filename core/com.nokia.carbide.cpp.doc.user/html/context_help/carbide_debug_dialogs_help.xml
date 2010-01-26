@@ -237,15 +237,6 @@
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
 	</context>
 
-	<!--  STOPMODE.SOPHIACONNECTION -->
-	<context id="stopmode_sophiaconnection" >
-		<description>Specify the settings for Sophia debugging.</description>
-		<topic label="Sophia Target Interface Support"    	href="html/reference/wnd_sophia_config.htm" />
-		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
-	</context>
-
 	<!--  STOPMODE.ROMIMAGE -->
 	<context id="stopmode_romimage" >
 		<description>Specify the ROM image details.</description>
@@ -285,12 +276,6 @@
 		<description>Review launch configuration information.</description>
 		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
-	</context>
-
-	<context id="wizard_sophia_page" >
-		<description>Specify Sophia configuration information.</description>
-		<topic label="Creating a Launch Configuration"				href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Symbian OS Sophia Target Interface Support"	href="html/reference/wnd_sophia_config.htm" />
 	</context>
 
 	<context id="wizard_trace32_page" >

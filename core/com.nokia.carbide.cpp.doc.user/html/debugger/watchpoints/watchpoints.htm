@@ -5,20 +5,113 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Watchpoints Overview</title>
-<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Watchpoints Overview </h2>
-<p>A <b>watchpoint</b> is a marker set on a specific memory location which is designed to suspend program execution when the value at that location changes. Watchpoints are closely related to breakpoints and are shown in the <a href="../breakpoints/viewing_breakpoints.htm">Breakpoints</a> view. </p>
-<p>When a watchpoint is encountered during program execution, the debugger suspends execution and the <a href="../../reference/perspective_debug.htm">Debug</a> perspective appears so you can examine the executable's current state,  check register and variable values, and use the stepping commands to walk line by line through the program to verify its operation. You can also change values and alter the flow of normal program execution. Setting watchpoints helps you debug your program and verify its efficiency.</p>
-<p>The following topics cover various breakpoint concepts and actions: </p>
+<p>  Use <em>watchpoints</em> (sometimes referred to as access breakpoints) to halt program execution when a specific global location is accessed. After you set a watchpoint at a key point in memory, you can halt program execution whenever that point in memory is written to or read from. You can then examine the call chain, check register and variable values, and step through your code. You can also change values and alter the flow of normal program execution.</p>
+<p>A watchpoint must be both enabled and resolved during a debug session in order to halt program execution. The  <a href="../reference/view_breakpoints.htm">Breakpoints view</a> indicates the status of any watchpoint using a set of common icons and checkmark status badge. These include:</p>
 <ul>
-  <li><a href="../breakpoints/viewing_breakpoints.htm">Viewing Breakpoints and Watchpoints</a> </li>
-  <li><a href="status_watchpoints.htm">Watchpoint Status Indicators</a></li>
-  <li><a href="setting_watchpoints.htm">Setting and Removing Watchpoints</a></li>
-  <li><a href="toggling_watchpoints.htm">Enabling and Disabling Watchpoints</a></li>
-  <li><a href="../breakpoints/exporting_breakpoints.htm">Exporting</a> and <a href="../breakpoints/importing_breakpoints.htm">importing</a> watchpoints</li>
+  <li>An <b>enabled</b> watchpoint has a non-gray icon (<img src="../tasks/watchpoints/images/icon_watchpoint_write_resolved.png" width="15" height="16" align="absmiddle" />) indicating that program execution  halts when encountered.</li>
+  <li>A <b>disabled</b> watchpoint displays a gray icon (<img src="../tasks/watchpoints/images/icon_watchpoint_write_disabled.png" width="16" height="16" align="absmiddle" />) indicating that program execution will not stop when encountered. </li>
+  <li>A <b>resolved</b> watchpoint has a small checkmark badge (<img src="../tasks/watchpoints/images/icon_watchpoint_rw_enabled_resolved.png" width="16" height="16" align="absmiddle" /> ) indicating that the debugger has located it in memory during program launch. When resolved, the debugger can halt program execution if the watchpoint is encountered.</li>
+</ul>
+<p>In effect, a watchpoint that is enabled by the user and resolved by the debugger during program launch can halt program execution. The table below shows the various states that cause the debugger to halt program execution: </p>
+<h5>Table 1 Watchpoint&mdash;stop execution chart </h5>
+<table width="50%"  border="0" align="left" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="32%" scope="col">Watchpoint</th>
+    <th width="32%" scope="col"><div align="center">Resolved</div></th>
+    <th width="36%" scope="col"><div align="center">Unresolved</div></th>
+  </tr>
+  <tr>
+    <th scope="col">Enabled</th>
+    <td><div align="center"><b>Stops execution </b></div></td>
+    <td><div align="center"><b>No</b></div></td>
+  </tr>
+  <tr>
+    <th scope="col">Disabled</th>
+    <td><div align="center"><b>No</b></div></td>
+    <td><div align="center"><b>No</b></div></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>In addition, you can use these types of watchpoints:</p>
+<ul>
+  <li><a href="../tasks/watchpoints/pgm_wpt_setting.htm">regular</a> watchpoints&mdash;halt program execution</li>
+  <li><a href="../tasks/watchpoints/pgm_wpt_conditional.htm">conditional</a> watchpoints&mdash;halt program execution after meeting a condition that you specify (same as for breakpoints)</li>
+</ul>
+<p>A watchpoint is equivalent to a memory breakpoint.</p>
+<p>Unlike a breakpoint, a watchpoint can detect when any part of your program affects memory. For example, if a write or write/read watchpoint is set, when the program writes a new value to the address or area of memory that has the watchpoint, the debugger suspends program execution.</p>
+<p class="note"><b>NOTE</b> You cannot set a watchpoint on a local variable, because the debugger cannot detect watchpoints for variables stored on the stack or in registers.</p>
+<h5>Table 2 Watchpoint&mdash;types and states </h5>
+<table width="90%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="14%" scope="col">Type</th>
+    <th width="14%" scope="col">State</th>
+    <th width="10%" scope="col">Icon</th>
+    <th width="62%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Write</b></td>
+    <td>enabled</td>
+    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_write_resolved.png" width="15" height="16" /></div></td>
+    <td><p>The watchpoint is activated for write access operations on the specific memory location and if resolved, will halt program execution on a write operation at the watchpoint. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>disabled</td>
+    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_write_disabled.png" width="16" height="16" /></div></td>
+    <td><p>Watchpoint is disabled for the source line, debugger does not halt program execution on a write operation. </p>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Read</b></td>
+    <td>enabled</td>
+    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_read_enabled.png" width="16" height="16" /></div></td>
+    <td><p>The watchpoint is activated for read access operations on the specific memory location and if resolved, will halt program execution on a read operation at the watchpoint. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>disabled</td>
+    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_read_disabled.png" width="16" height="16" /></div></td>
+    <td><p>Watchpoint is disabled for the source line, debugger does not halt program execution on a read operation. </p>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Write/Read</b></td>
+    <td>enabled</td>
+    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_rw_enabled.png" width="16" height="16" /></div></td>
+    <td><p>The watchpoint is activated for both read and write access operations on the specific memory location and if resolved, will halt program execution  on any read or write operation at the watchpoint. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>disabled</td>
+    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_rw_disabled.png" width="16" height="16" /></div></td>
+    <td><p>Watchpoint is disabled for the source line, debugger does not halt program execution on a read or write operation. </p>
+    </td>
+  </tr>
+</table>
+<p>A project can have a different maximum number of watchpoints, depending on the build target. The IDE generally limits the acceptable range for watchpoints to memory that it can write-protect. This range also depends on the host and on the application. </p>
+<p>All set watchpoints appear in the <a href="../reference/view_breakpoints.htm">Breakpoints view</a>  list.</p>
+<h5>Related concepts</h5>
+<ul>
+  <li> <a href="breakpoints.htm">Breakpoints</a></li>
+</ul>
+<h5>Related tasks </h5>
+<ul>
+  <li><a href="../tasks/watchpoints/pgm_wpt_setting.htm">Setting Watchpoints</a></li>
+  <li><a href="../tasks/watchpoints/pgm_wpt_enable.htm">Enabling Watchpoints</a></li>
+  <li><a href="../tasks/watchpoints/pgm_wpt_disable.htm">Disabling Watchpoints</a></li>
+  <li><a href="../tasks/watchpoints/pgm_wpt_clearing.htm">Clearing Watchpoints</a></li>
+</ul>
+<h5>Related references </h5>
+<ul>
+  <li><a href="../reference/view_breakpoints.htm">Breakpoints view</a> </li>
 </ul>
 <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
 </body>
 </html>

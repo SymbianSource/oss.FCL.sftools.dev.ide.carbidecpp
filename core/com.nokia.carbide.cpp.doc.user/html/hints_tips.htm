@@ -26,23 +26,19 @@
 <blockquote>
    <p>Use the <a href="reference/search/wnd_system_search.htm">System Search</a> feature in Carbide. Click <b>Search &gt; System...</b>, enter the search data, press Search. </p>
 </blockquote>
- <h5 class="note">How can I quickly open a .h file associated from the source file I am currently editing ? </h5>
+ <h5 class="note">How can I quickly open a .h file associated from the source file I am currently editing? </h5>
  <blockquote>
    <p>The CDT editor supports quick opening of associated .h files. To view the .h file, select the name of the .h file in the source you are currently editing and press F3 (Open Declaration). A new editor view will appear and display the .h file. </p>
 </blockquote>
  <h5 class="note">I can't locate the eclipse.ini file to modify the behavior of Carbide.c++, where can I find it? </h5>
  <blockquote>
-  <p>The <span class="code">eclipse.ini</span> file was renamed the <span class="code">carbide.c++.1.x.ini</span> file to keep the <span class="code">.exe</span> and <span class="code">.ini</span> files in sync. </p>
+  <p>The <span class="code">eclipse.ini</span> file was renamed the <span class="code">carbide.c++.2.x.ini</span> file to keep the <span class="code">.exe</span> and <span class="code">.ini</span> files in sync. </p>
 </blockquote>
  <h5 class="note"><a name="VMissues"></a>I can't launch Carbide.c++ due to &quot;Error occurred in initialization of VM, could not reserve enough space for object heap? </h5>
  <blockquote>
    <p>By default, the heap space set aside for Carbide is 1024MB. You can see this setting in the <span class="code">carbide.c++.1.x.ini</span> file as the line &quot;<span class="code">-Xmx1024m</span>&quot;. Some system may have limited VM space available so we suggest you try lowering the default amount to  &quot;<span class="code">-Xmx512m</span>&quot; and  relaunching Carbide. </p>
 </blockquote>
- <h5 class="note">I want to use CDT for other C/C++ development in Carbide.c++</h5>
- <blockquote>
-  <p>Carbide.c++ hides some CDT UI elements using capabilities.  We do this to avoid confusion as there are several things labeled C/C++ that don't really apply to Symbian development.  To show these items, you need to add the Eclipse SDK to your Carbide.c++ installation (download link:<span class="code"> www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.2.1-200609210945/eclipse-SDK-3.2.1-win32.zip</span>), and then enable it from the preferences (<b>Window > Preferences > General > Capabilities > Nokia Debug</b>).</p>
-</blockquote>
- <h5 class="note">When I press F1 in a dialog, the help pane isn't very helpful? </h5>
+<h5 class="note">When I press F1 in a dialog, the help pane isn't very helpful? </h5>
  <blockquote>
    <p>If the Help pane does not display   information specific to the page content, it may be because the page in the dialog doesn't have focus. This often occurs in a wizard page when nothing has been selected on the page. The help system has not  been told which  help content to display in the About section of the help pane. </p>
    <p class="note"><b>NOTE</b> The Dynamic help section usually displays the proper helpful links, just not as specific as the About section should display. </p>
@@ -89,22 +85,23 @@
  </blockquote>
  <h5>New debug launch configuration fields not filled in correctly upon creation </h5>
  <blockquote>
-   <p>See &quot;Debug icon not visible on executable in C/C++ Projects view&quot; to correct this issue. Once completed, try to create a debug launch configuration again. Click the New button in the Configuration window to create a new configuration with the correct project information. </p>
+   <p>See &quot;Debug icon not visible on executable in Project Explorer view&quot; to correct this issue. Once completed, try to create a debug launch configuration again. Click the New button in the Configuration window to create a new configuration with the correct project information. </p>
 </blockquote>
- <h5>Debug icon not visible on executable in C/C++ Projects view </h5>
- <blockquote>
-   <p>This is commonly caused when the binary parser is not set correctly in the project. To correct, open the project properties window (right-click project name in C/C++ Projects view and select Properties), expand the C/C++ Build section and click the Binary Parser tab in the C/C++ Build page. Now look for the PE Windows Parser option. If it's not checkmarked, checkmark it and click Apply. If it is already set then uncheck it and click Apply, then reapply a checkmark and click Apply. The debug icon should now appear.</p>
- </blockquote>
+ <h5>Debug icon not visible on executable in Project Explorer view </h5>
+<blockquote>
+   <p>This is commonly caused when the binary parser is not set correctly in the project. To correct, open the project properties window (right-click project name in Project Explorer view and select Properties), expand the C/C++ Build section and click the Binary Parser tab in the C/C++ Build page. Now look for the PE Windows Parser option. If it's not checkmarked, checkmark it and click Apply. If it is already set then uncheck it and click Apply, then reapply a checkmark and click Apply. The debug icon should now appear.</p>
+</blockquote>
 <h3><a name="connectivity" id="connectivity"></a>Connectivity</h3>
  <h5>Unable to connect to device using Bluetooth and debug it using TRK </h5>
 <blockquote>
   <p>When using Bluetooth to connect to a device there are several things that require correction, including:</p>
   <ul>
     <li>If using built-in Bluetooth under WinXP SP2,  ensure the manufacturer&#8217;s device drivers are installed and active. The default Microsoft drivers do not work correctly for debugging devices using TRK. For example, if using IBM Integrated Bluetooth on your computer, make sure you have the IBM drivers for the device. </li>
-    <li>Ensure the COM port used by Bluetooth is not commandeered by another process or device</li>
+    <li>Ensure the COM port used by Bluetooth is not commandeered by another process or device.</li>
+    <li>Ensure that you have the <a href="tasks/trk/trk_installation_instr.htm">latest version </a>of TRK on the target device.</li>
   </ul>
 </blockquote>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 
 </body>
