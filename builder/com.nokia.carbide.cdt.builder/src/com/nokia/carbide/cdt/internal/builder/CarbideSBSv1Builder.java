@@ -2460,7 +2460,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final IPreferenceStore prefsStore = CarbideBuilderPlugin.getDefault().getPreferenceStore();
 		
 		if (prefsStore.getBoolean(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH) == false &&
-				areWeManagingTheMakeFiles && !makeFileHasOurChanges(makefile)) {
+				areWeManagingTheMakeFiles && !makeFileHasOurChanges(makefile) && !WorkbenchUtils.isJUnitRunning()) {
 			
 			// if they are not then the user must have been building from the command line.  this means that
 			// any dependency files that exist could be stale so we need to delete them.  we also need to
