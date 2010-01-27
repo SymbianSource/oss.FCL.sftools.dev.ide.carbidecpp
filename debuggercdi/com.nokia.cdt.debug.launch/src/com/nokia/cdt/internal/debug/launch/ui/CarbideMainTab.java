@@ -87,7 +87,7 @@ public class CarbideMainTab extends CMainTab {
 		// forces page to get focus so that help works without having to select some control first.
 		getControl().setFocus();
 	}
-
+	
 	@Override
 	public void createBuildOptionGroup(final Composite parent, int colSpan){
 		super.createBuildOptionGroup(parent, colSpan);
@@ -97,4 +97,5 @@ public class CarbideMainTab extends CMainTab {
 		fWorkpsaceSettingsLink.setData(".uid", "CMainTab.WorkspaceSettingsLink"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 	}
+
 }
