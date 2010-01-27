@@ -89,11 +89,12 @@ public class CarbideMainTab extends CMainTab {
 	}
 
 	@Override
-	public void createControl(Composite parent) {
-		super.createControl(parent);
+	public void createBuildOptionGroup(final Composite parent, int colSpan){
+		super.createBuildOptionGroup(parent, colSpan);
 		fEnableBuildButton.setData(".uid", "CMainTab.EnableBuildButton"); //$NON-NLS-1$ //$NON-NLS-2$
 		fDisableBuildButton.setData(".uid", "CMainTab.DisableBuildButton"); //$NON-NLS-1$ //$NON-NLS-2$
 		fWorkspaceSettingsButton.setData(".uid", "CMainTab.WorkspaceSettingsButton"); //$NON-NLS-1$ //$NON-NLS-2$ 
 		fWorkpsaceSettingsLink.setData(".uid", "CMainTab.WorkspaceSettingsLink"); //$NON-NLS-1$ //$NON-NLS-2$
+		
 	}
 }
