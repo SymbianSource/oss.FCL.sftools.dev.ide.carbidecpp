@@ -20,8 +20,18 @@
 		  
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
+       		label="Plug-n-Play On-device Debugging (2.5)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+       		id="carbide-link" 
+       		style-id="content-link">
+          	<text>Debugging programs on a target device has never been easier with PnP on-device debugging.</text>
+       		</link>
+       	</group>
+
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
        		label="Performance Improvements (2.1)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm#210" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm#new210" 
        		id="carbide-link" 
        		style-id="content-link">
           	<text>Carbide performance improvements in 2.1 for large project importing, building, and other critical areas.</text>
@@ -35,16 +45,6 @@
        		id="carbide-link" 
        		style-id="content-link">
           	<text>See Symbian API Reference information appear when you hover over a Symbian symbol in C/C++ editors.</text>
-       		</link>
-       	</group>
-
-		<group style-id="content-group" id="carbide-cpp">
-       		<link 
-       		label="On-Device Connection (2.0)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/reference/trk/wnd_new_connection_wizard.htm" 
-       		id="carbide-link" 
-       		style-id="content-link">
-          	<text>Create remote connection settings and update Carbide software services on devices.</text>
        		</link>
        	</group>
 
