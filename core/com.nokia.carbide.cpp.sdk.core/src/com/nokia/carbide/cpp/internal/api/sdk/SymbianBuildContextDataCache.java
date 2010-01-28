@@ -181,9 +181,12 @@ public class SymbianBuildContextDataCache {
 			File[] includedFiles = null;
 
 			if (prefixFile != null) {
-
-				// add any BSF/SBV includes so the headers are picked up from the correct location
+				
 				List<File> systemPaths = new ArrayList<File>();
+				// Always add epoc32/include to the search path as this is implicit for includes in the HRH
+				systemPaths.add(new File(sdk.getEPOCROOT() + "epoc32/include"));
+				
+				// add any BSF/SBV includes so the headers are picked up from the correct location
 				IBSFPlatform bsfPlat = sdk.getBSFCatalog().findPlatform(platformString);
 				ISBVPlatform sbvPlat = sdk.getSBVCatalog().findPlatform(platformString);
 				if (bsfPlat != null) {
