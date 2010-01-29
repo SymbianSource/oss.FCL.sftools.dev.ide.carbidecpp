@@ -35,6 +35,31 @@ import com.nokia.carbide.remoteconnections.tests.extensions.IntervalConnectionTy
 import com.nokia.carbide.remoteconnections.tests.extensions.TestFilter;
 
 public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
+	public class RandomPrerequisiteStatus implements IPrerequisiteStatus {
+
+		private boolean OK;
+		private String errorText;
+		private URL location;
+		
+		RandomPrerequisiteStatus() {
+			OK = true;
+			errorText = null;
+			location = null;
+		}
+		public String getErrorText() {
+			return errorText;
+		}
+
+		public URL getURL() {
+			return location;
+		}
+
+		public boolean isOK() {
+			return OK;
+		}
+
+	}
+
 	private static final String CONNECTION_TYPE = 
 		"com.nokia.carbide.remoteconnections.tests.extensions.IntervalConnectionType";
 	private Random random = new Random();
@@ -111,6 +136,14 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 
 	public void stop() throws CoreException {
 		thread.stopRunning();
+	}
+
+	public String getDisplayName() {
+		return "Random Test Discovery Agent";
+	}
+
+	public IPrerequisiteStatus getPrerequisiteStatus() {
+		return (new RandomPrerequisiteStatus());
 	}
 
 }
