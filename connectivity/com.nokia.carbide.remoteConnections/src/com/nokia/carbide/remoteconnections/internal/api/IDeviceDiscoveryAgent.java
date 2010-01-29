@@ -28,6 +28,31 @@ import org.eclipse.core.runtime.CoreException;
 public interface IDeviceDiscoveryAgent {
 
 	/**
+	 * An interface for discovery agents to implement that the manager uses
+	 * before loading the agent to get errors about required components.
+	 * <p>
+	 * Every discovery agent must implement this interface.
+	 */
+	public interface IPrerequisiteStatus {
+		/**
+		 * Is the status OK?
+		 * @return boolean 
+		 */
+		boolean isOK();
+		/**
+		 * If status is not OK, return error message text.
+		 * @return String
+		 */
+		String getErrorText();
+		/**
+		 * Optionally return a URL for user to browse to for more information on error.
+		 * @return URL
+		 */
+		URL getURL();
+		
+	}
+
+	/**
 	 * Starts agent. Once started, runs until stopped.
 	 * @throws CoreException
 	 */
@@ -45,6 +70,22 @@ public interface IDeviceDiscoveryAgent {
 	 * @return URL
 	 */
 	URL getInformation();
+	
+	/**
+	 * Returns a display name for the particular discovery agent in case we need to
+	 * let the user know errors from the agents.
+	 * @return String
+	 */
+	String getDisplayName();
+	
+	/**
+	 * Manager will call this to get any status of prerequisites not satisfied before
+	 * the manager calls start(). The agent should check its prerequisites at this time.
+	 * <p>
+	 * If the agent has no prerequisites return a status of OK.
+	 * @return IPrerequisiteStatus
+	 */
+	IPrerequisiteStatus getPrerequisiteStatus();
 	
 	// In addition, there may need to be an additional API to do a deeper form of discovery for
 	// connection mechanisms that require pairing (like BT or Wifi). In these cases, normal discovery

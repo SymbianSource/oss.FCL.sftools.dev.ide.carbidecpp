@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -33,8 +34,11 @@ import org.osgi.framework.BundleContext;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
+import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent.IPrerequisiteStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.carbide.remoteconnections.internal.ui.DeviceDiscoveryPrequisiteErrorDialog;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -51,6 +55,8 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	private static RemoteConnectionsActivator plugin;
 
 	private Collection<IDeviceDiscoveryAgent> discoveryAgents;
+	private boolean ignoreAgentLoadErrors = false;
+	private static final String IGNORE_AGENT_LOAD_ERRORS_KEY = "ignoreAgentLoadErrors"; //$NON-NLS-1$
 
 	/**
 	 * The constructor
@@ -64,15 +70,72 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		Registry instance = Registry.instance();
 		instance.loadExtensions();
 		instance.loadConnections();
-		loadAndStartDeviceDiscoveryAgents();
+
+		loadIgnoreAgentLoadErrorsFlag();
+		if (!ignoreAgentLoadErrors) {
+			checkPrerequisites();
+			// loading done in checkPrerequisites after load errors dealt with
+		} else {
+			// if we ignore the load errors
+			// go ahead and load anyway
+			loadAndStartDeviceDiscoveryAgents();
+		}
+	}
+
+	private void loadIgnoreAgentLoadErrorsFlag() {
+		ignoreAgentLoadErrors = getPreferenceStore().getBoolean(IGNORE_AGENT_LOAD_ERRORS_KEY);
+	}
+
+	private void checkPrerequisites() {
+		final Collection<String> agentNames = new ArrayList<String>();
+		final Collection<IPrerequisiteStatus> agentStatuses = new ArrayList<IPrerequisiteStatus>();
+		// load the extensions just to check statuses
+		// later we'll load them for real
+		Collection<IDeviceDiscoveryAgent> agents = new ArrayList<IDeviceDiscoveryAgent>();
+		
+		loadExtensions(DISCOVERY_AGENT_EXTENSION, null, agents, null);
+		
+		for (IDeviceDiscoveryAgent agent : agents) {
+			IPrerequisiteStatus status = agent.getPrerequisiteStatus();
+			if (!status.isOK()) {
+				agentNames.add(agent.getDisplayName());
+				agentStatuses.add(status);
+			}
+		}
+
+		if (!agentNames.isEmpty()) {
+			Display.getDefault().asyncExec(new Runnable() {
+
+				public void run() {
+					DeviceDiscoveryPrequisiteErrorDialog dlg = new DeviceDiscoveryPrequisiteErrorDialog(WorkbenchUtils.getSafeShell());
+					IPrerequisiteStatus[] statuses = (IPrerequisiteStatus[]) agentStatuses.toArray(new IPrerequisiteStatus[agentStatuses.size()]);
+					String[] names = agentNames.toArray(new String[agentNames.size()]);
+					for (int i = 0; i < names.length; i++) {
+						dlg.addAgentData(names[i], statuses[i].getErrorText(), statuses[i].getURL());
+					}
+					dlg.open();
+					ignoreAgentLoadErrors = dlg.isDontBotherMeOn();
+					dlg.close();
+					
+					// now load and start agents for real
+					loadAndStartDeviceDiscoveryAgents();
+				}
+			});
+		}
 	}
 
 	public void stop(BundleContext context) throws Exception {
 		stopDeviceDiscoveryAgents();
 		Registry.instance().storeConnections();
 		Registry.instance().disposeConnections();
+		storeIgnoreAgentLoadErrorsFlag();
 		plugin = null;
 		super.stop(context);
+	}
+
+	private void storeIgnoreAgentLoadErrorsFlag() {
+		getPreferenceStore().setValue(IGNORE_AGENT_LOAD_ERRORS_KEY, ignoreAgentLoadErrors);
+		savePluginPreferences();
 	}
 
 	/**
