@@ -7,7 +7,6 @@ Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- com.nokia.carbide.cpp.project.core,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.help.ui,
