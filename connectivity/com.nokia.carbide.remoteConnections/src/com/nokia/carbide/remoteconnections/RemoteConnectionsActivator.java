@@ -121,6 +121,9 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 					loadAndStartDeviceDiscoveryAgents();
 				}
 			});
+		} else {
+			// now load and start agents for real
+			loadAndStartDeviceDiscoveryAgents();
 		}
 	}
 
