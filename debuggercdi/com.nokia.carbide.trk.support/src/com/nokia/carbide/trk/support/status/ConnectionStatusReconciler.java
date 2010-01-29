@@ -20,6 +20,8 @@ package com.nokia.carbide.trk.support.status;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.ui.PartInitException;
+
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
@@ -36,6 +38,8 @@ import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.carbide.trk.support.service.TRKConnectedService;
 import com.nokia.carbide.trk.support.service.TracingConnectedService;
+import com.nokia.cpp.internal.api.utils.ui.RunRunnableWhenWorkbenchVisibleJob;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * A singleton object that manages the device status of dynamic connections
@@ -43,6 +47,9 @@ import com.nokia.carbide.trk.support.service.TracingConnectedService;
  */
 public class ConnectionStatusReconciler {
 	
+	private static final String CONNECTIONS_VIEW_ID = 
+		"com.nokia.carbide.remoteconnections.view.ConnectionsView"; //$NON-NLS-1$
+
 	private class ConnectionListener implements IConnectionListener {
 
 		public void connectionAdded(IConnection connection) {
@@ -117,6 +124,19 @@ public class ConnectionStatusReconciler {
 				service.addStatusChangedListener(serviceStatusListener);
 			}
 		}
+		showConnectionsView();
+	}
+
+	private void showConnectionsView() {
+		RunRunnableWhenWorkbenchVisibleJob.start(new Runnable() {
+			public void run() {
+				// try to show the connections view to start service testers
+				try {
+					WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
+				} catch (PartInitException e) {
+				}
+			}
+		});
 	}
 	
 	private void reconcileAsCurrent(IConnection connection) {

@@ -10,9 +10,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.help.ui,
- com.nokia.cpp.utils.core,
- com.nokia.carbide.remoteConnections,
  com.freescale.cdt.debug.cw.core,
+ com.nokia.carbide.remoteConnections,
+ com.nokia.cpp.utils.core,
+ com.nokia.cpp.utils.ui;bundle-version="1.0.0",
  com.nokia.tcf,
  com.nokia.carbide.cpp.featureTracker;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
