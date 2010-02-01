@@ -76,6 +76,12 @@ public enum EMMPStatement {
 	 */
 	FEATUREVARIANT("FEATUREVARIANT", IMMPParserConfiguration.FLAG_STATEMENT), //$NON-NLS-1$
 	
+	/**
+	 * @since 2.5 - Added with Symbian^3
+	 */
+	STDCPP("STDCPP", IMMPParserConfiguration.FLAG_STATEMENT), //$NON-NLS-1$ 
+	NOSTDCPP("NOSTDCPP", IMMPParserConfiguration.FLAG_STATEMENT), //$NON-NLS-1$ 
+	
 	HEADER("HEADER", IMMPParserConfiguration.FLAG_STATEMENT, "RESOURCE|BITMAP"), //$NON-NLS-1$ //$NON-NLS-2$
 	HEADERONLY("HEADERONLY", IMMPParserConfiguration.FLAG_STATEMENT, "RESOURCE|BITMAP"), //$NON-NLS-1$ //$NON-NLS-2$
 	
