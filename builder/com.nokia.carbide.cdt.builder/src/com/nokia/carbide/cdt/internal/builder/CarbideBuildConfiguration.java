@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.settings.model.CMacroEntry;
 import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
@@ -320,6 +321,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			macros.add("NDEBUG"); //$NON-NLS-1$
 		}
 		
+		if (hasSTDCPPSupport()){
+			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
+		}
+		
 		return macros;
 	}
 
@@ -378,14 +383,14 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	}
 
 
-	public boolean hasSTDCPPSupport() {
+	private boolean hasSTDCPPSupport() {
 		
 		ICarbideProjectInfo cpi = getCarbideProject();
 		
 		List<ISymbianBuildContext> buildConfig = new ArrayList<ISymbianBuildContext>();
 		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
 		List<IPath> testMakMakePaths = new ArrayList<IPath>();
-		buildConfig.add(cpi.getDefaultConfiguration());
+		buildConfig.add(this);
 		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfig, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
 		
 		for (IPath mmpPath : normalMakMakePaths){

@@ -140,10 +140,6 @@ public class CarbideLanguageData extends CLanguageData {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 			
-			if (carbideBuildConfig.hasSTDCPPSupport()){
-				macros.add(new CMacroEntry("__SYMBIAN_STDCPP_SUPPORT__", "", 0));
-			}
-			
 			return macros.toArray(new ICLanguageSettingEntry[macros.size()]);
 		}
 		

@@ -131,12 +131,5 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 * Compares two configurations to see if their display names are equivalent.
 	 */
 	boolean equals(Object obj);
-
-	/**
-	 * Check whether or not the build configuration has an MMP that supports standard C++
-	 * @return true if the project has one MMP with standard C++ support
-	 * @see EpocEngineHelper#hasSTDCPPSupport(ICarbideProjectInfo, IPath)
-	 */
-	boolean hasSTDCPPSupport();
 	
 }
