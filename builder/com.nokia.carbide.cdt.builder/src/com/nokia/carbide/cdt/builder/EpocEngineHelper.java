@@ -2080,6 +2080,45 @@ public class EpocEngineHelper {
 		return result != null ? result.booleanValue() : false;
 	}
 	
+
+	/**
+	 * Check whether or not the project and build for standard C++.
+	 * The following rules apply:
+	 * 
+	 * 1) If an MMP contains NOSTDCPP then it does not have std C++ support
+	 * 2) Else If the STDCPP keyword is set it does have std C++ support
+	 * 3) Else if TARGETTYPE is one of STDEXE|STDDLL|STDLIB it does have std C++ support
+	 * 4) Else not std C++ support
+	 * 
+	 * @return true if the MMP has standard C++ support
+	 */
+	public static boolean hasSTDCPPSupport(ICarbideProjectInfo projectInfo, final IPath relativeMMPPath) {
+		Boolean result = (Boolean) EpocEnginePlugin.runWithMMPData(
+				relativeMMPPath, 
+			new DefaultMMPViewConfiguration(
+					projectInfo,
+					new AllNodesViewFilter()),
+			new MMPDataRunnableAdapter() {
+				public Object run(IMMPData data) {
+					if (data.getFlags().contains(EMMPStatement.NOSTDCPP)){
+						return false;
+					} else if (data.getFlags().contains(EMMPStatement.STDCPP)){
+						return true;
+					} 
+					
+					String targetType = data.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
+					if (targetType != null) {
+						if (targetType.toUpperCase().matches("STDEXE|STDLIB|STDDLL")) { //$NON-NLS-1$
+							return true;
+						}
+					}
+					
+					return false;
+				}
+		});
+		return result != null ? result.booleanValue() : false;
+	}
+	
 	/**
 	 * A particular MMP file is considered to be a Symbian Binary Variation iff the MMP file
 	 * has the keyword "FEATUREVARIANT" flag defined and the build configuration has a valid

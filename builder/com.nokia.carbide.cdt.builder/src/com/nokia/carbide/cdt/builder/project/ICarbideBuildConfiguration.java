@@ -18,7 +18,10 @@ package com.nokia.carbide.cdt.builder.project;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**

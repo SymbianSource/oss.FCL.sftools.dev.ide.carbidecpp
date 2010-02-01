@@ -183,4 +183,14 @@ public class TestEpocEngineHelper extends BaseTest {
 			}
 		}
 	}
+	
+	public void testSTDCPPSupport() throws Exception {
+		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(carbideProject);
+		for (final IPath mmpPath : EpocEngineHelper.getMMPFilesForBuildConfiguration(cpi.getDefaultConfiguration())) {
+			if (EpocEngineHelper.hasSTDCPPSupport(cpi, mmpPath)){
+				fail("Project does not have STDCPP Support");
+			}
+		}
+	}
+	
 }

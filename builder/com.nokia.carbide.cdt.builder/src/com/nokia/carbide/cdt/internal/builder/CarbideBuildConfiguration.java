@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.settings.model.CMacroEntry;
 import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
@@ -28,12 +29,14 @@ import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -318,6 +321,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			macros.add("NDEBUG"); //$NON-NLS-1$
 		}
 		
+		if (hasSTDCPPSupport()){
+			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
+		}
+		
 		return macros;
 	}
 
@@ -373,5 +380,25 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 
 	public IROMBuilderInfo getROMBuildInfo() {
 		return romBuilderInfo;
+	}
+
+
+	private boolean hasSTDCPPSupport() {
+		
+		ICarbideProjectInfo cpi = getCarbideProject();
+		
+		List<ISymbianBuildContext> buildConfig = new ArrayList<ISymbianBuildContext>();
+		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
+		List<IPath> testMakMakePaths = new ArrayList<IPath>();
+		buildConfig.add(this);
+		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfig, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
+		
+		for (IPath mmpPath : normalMakMakePaths){
+			if (EpocEngineHelper.hasSTDCPPSupport(cpi, mmpPath)){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

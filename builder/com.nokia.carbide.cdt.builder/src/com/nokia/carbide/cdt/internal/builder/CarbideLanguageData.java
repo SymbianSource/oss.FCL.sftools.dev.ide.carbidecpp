@@ -139,7 +139,7 @@ public class CarbideLanguageData extends CLanguageData {
 			for (IDefine define : carbideBuildConfig.getCompilerMacros()) {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
-
+			
 			return macros.toArray(new ICLanguageSettingEntry[macros.size()]);
 		}
 		

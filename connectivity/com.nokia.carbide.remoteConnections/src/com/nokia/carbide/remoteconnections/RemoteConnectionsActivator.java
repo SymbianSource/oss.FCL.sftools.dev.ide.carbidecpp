@@ -18,23 +18,32 @@ package com.nokia.carbide.remoteconnections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.prefs.BackingStoreException;
 
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
+import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent.IPrerequisiteStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.carbide.remoteconnections.internal.ui.DeviceDiscoveryPrequisiteErrorDialog;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.RunRunnableWhenWorkbenchVisibleJob;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -44,13 +53,13 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.remoteConnections"; //$NON-NLS-1$
 
-	private static final String DISCOVERY_AGENT_EXTENSION = 
-		PLUGIN_ID + ".deviceDiscoveryAgent"; //$NON-NLS-1$
+	private static final String DISCOVERY_AGENT_EXTENSION = PLUGIN_ID + ".deviceDiscoveryAgent"; //$NON-NLS-1$
 
 	// The shared instance
 	private static RemoteConnectionsActivator plugin;
 
 	private Collection<IDeviceDiscoveryAgent> discoveryAgents;
+	private static final String IGNORE_AGENT_LOAD_ERRORS_KEY = "ignoreAgentLoadErrors"; //$NON-NLS-1$
 
 	/**
 	 * The constructor
@@ -64,7 +73,47 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		Registry instance = Registry.instance();
 		instance.loadExtensions();
 		instance.loadConnections();
-		loadAndStartDeviceDiscoveryAgents();
+
+		RunRunnableWhenWorkbenchVisibleJob.start(new Runnable() {
+			public void run() {
+				if (!ignoreAgentLoadErrors())
+					checkPrerequisites();
+
+				loadAndStartDeviceDiscoveryAgents();
+			}
+		});
+	}
+
+	private boolean ignoreAgentLoadErrors() {
+		return getPreferenceStore().getBoolean(IGNORE_AGENT_LOAD_ERRORS_KEY);
+	}
+
+	private void checkPrerequisites() {
+		final Map<IDeviceDiscoveryAgent, IPrerequisiteStatus> agentToStatusMap = 
+			new HashMap<IDeviceDiscoveryAgent, IPrerequisiteStatus>();
+		
+		// load the extensions just to check statuses
+		Collection<IDeviceDiscoveryAgent> agents = new ArrayList<IDeviceDiscoveryAgent>();
+		loadExtensions(DISCOVERY_AGENT_EXTENSION, null, agents, null);
+		
+		for (IDeviceDiscoveryAgent agent : agents) {
+			IPrerequisiteStatus status = agent.getPrerequisiteStatus();
+			if (!status.isOK()) {
+				agentToStatusMap.put(agent, status);
+			}
+		}
+
+		if (!agentToStatusMap.isEmpty()) {
+			DeviceDiscoveryPrequisiteErrorDialog dlg = new DeviceDiscoveryPrequisiteErrorDialog(WorkbenchUtils.getSafeShell());
+			for (Entry<IDeviceDiscoveryAgent, IPrerequisiteStatus> entry : agentToStatusMap.entrySet()) {
+				IDeviceDiscoveryAgent agent = entry.getKey();
+				IPrerequisiteStatus status = entry.getValue();
+				dlg.addAgentData(agent.getDisplayName(), status.getErrorText(), status.getURL());
+			}
+			dlg.open();
+			if (dlg.isDontAskAgainChecked())
+				storeIgnoreAgentLoadErrorsFlag();
+		}	
 	}
 
 	public void stop(BundleContext context) throws Exception {
@@ -73,6 +122,15 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		Registry.instance().disposeConnections();
 		plugin = null;
 		super.stop(context);
+	}
+
+	private void storeIgnoreAgentLoadErrorsFlag() {
+		getPreferenceStore().setValue(IGNORE_AGENT_LOAD_ERRORS_KEY, true);
+		try {
+			new InstanceScope().getNode(PLUGIN_ID).flush();
+		} catch (BackingStoreException e) {
+			logError(e);
+		}
 	}
 
 	/**

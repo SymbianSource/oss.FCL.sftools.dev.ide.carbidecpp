@@ -17,6 +17,7 @@
 
 package com.nokia.carbide.remoteconnections.tests.discovery;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,6 +36,32 @@ import com.nokia.carbide.remoteconnections.tests.extensions.IntervalConnectionTy
 import com.nokia.carbide.remoteconnections.tests.extensions.TestFilter;
 
 public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
+	public class RandomPrerequisiteStatus implements IPrerequisiteStatus {
+
+		private boolean ok;
+		
+		RandomPrerequisiteStatus() {
+			ok = true; // modify to test
+		}
+		public String getErrorText() {
+			return "Test error text";
+		}
+
+		public URL getURL() {
+			try {
+				return new URL("http://www.yahoo.com");
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		public boolean isOK() {
+			return ok;
+		}
+
+	}
+
 	private static final String CONNECTION_TYPE = 
 		"com.nokia.carbide.remoteconnections.tests.extensions.IntervalConnectionType";
 	private Random random = new Random();
@@ -92,7 +119,6 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 		connection.setDynamic(true);
 		connections.add(connection);
 		manager.addConnection(connection);
-		manager.setCurrentConnection(connection);
 	}
 
 	private String getRandomIntervalString() {
@@ -111,6 +137,14 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 
 	public void stop() throws CoreException {
 		thread.stopRunning();
+	}
+
+	public String getDisplayName() {
+		return "Random Test Discovery Agent";
+	}
+
+	public IPrerequisiteStatus getPrerequisiteStatus() {
+		return (new RandomPrerequisiteStatus());
 	}
 
 }
