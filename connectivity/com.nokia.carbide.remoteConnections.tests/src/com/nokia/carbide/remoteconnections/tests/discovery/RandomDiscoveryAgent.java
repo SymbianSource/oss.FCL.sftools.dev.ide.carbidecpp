@@ -17,6 +17,7 @@
 
 package com.nokia.carbide.remoteconnections.tests.discovery;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Map;
@@ -37,25 +38,26 @@ import com.nokia.carbide.remoteconnections.tests.extensions.TestFilter;
 public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 	public class RandomPrerequisiteStatus implements IPrerequisiteStatus {
 
-		private boolean OK;
-		private String errorText;
-		private URL location;
+		private boolean ok;
 		
 		RandomPrerequisiteStatus() {
-			OK = true;
-			errorText = null;
-			location = null;
+			ok = true; // modify to test
 		}
 		public String getErrorText() {
-			return errorText;
+			return "Test error text";
 		}
 
 		public URL getURL() {
-			return location;
+			try {
+				return new URL("http://www.yahoo.com");
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 
 		public boolean isOK() {
-			return OK;
+			return ok;
 		}
 
 	}
@@ -117,7 +119,6 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 		connection.setDynamic(true);
 		connections.add(connection);
 		manager.addConnection(connection);
-		manager.setCurrentConnection(connection);
 	}
 
 	private String getRandomIntervalString() {

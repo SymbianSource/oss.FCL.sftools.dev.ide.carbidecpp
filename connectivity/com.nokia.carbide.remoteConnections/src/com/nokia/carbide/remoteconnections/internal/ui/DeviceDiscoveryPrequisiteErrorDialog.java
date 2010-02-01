@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -17,11 +17,12 @@
 package com.nokia.carbide.remoteconnections.internal.ui;
 
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -51,9 +52,10 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 
+import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 
-public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
+public class DeviceDiscoveryPrequisiteErrorDialog extends TrayDialog {
 
 	private class AgentItem {
 		public String agentName;
@@ -66,19 +68,19 @@ public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
 			agentLocation = location;
 			// if location is not null and error text doesn't contain href
 			//  then do it here
-			if (agentLocation != null && !agentErrorText.contains("href=")) {
-				String msg = String.format("%s - For more information go to: <a href=\"%s\">%s</a>",
-						agentErrorText, location.toString(), location.toString());
+			if (agentLocation != null && !agentErrorText.contains("href")) { //$NON-NLS-1$
+				String msg = MessageFormat.format(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_ErrorFormatWithURL"), //$NON-NLS-1$
+						agentErrorText, location, location);
 				agentErrorText = msg;
 			}
 		}
 	}
 	
 	private Collection<AgentItem> agentList = new ArrayList<AgentItem>();
-	private boolean isDontBotherMeOn = false;
+	private boolean dontAskAgain;
 	private ListViewer agentListViewer;
 	private Link errorText;
-	private Button dontBotherMeCheckBox;
+	private Button dontAskAgainCheckBox;
 
 	/**
 	 * @param parentShell
@@ -100,8 +102,8 @@ public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
 		agentList.add(new AgentItem(name, errorText, location));
 	}
 
-	public boolean isDontBotherMeOn() {
-		return isDontBotherMeOn;
+	public boolean isDontAskAgainChecked() {
+		return dontAskAgain;
 	}
 
 	@Override
@@ -122,20 +124,18 @@ public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
 	
 		// Message at top
 		Text topMessage = new Text(container, SWT.MULTI | SWT.WRAP);
-		topMessage.setText("At least one device discovery agent had load errors that prevent it from discovering connections to devices. Select one to get more information about its error.");
+		topMessage.setText(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_Description")); //$NON-NLS-1$
 		topMessage.setEditable(false);
 		topMessage.setDoubleClickEnabled(false);
 		GridData topMsgData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
 		topMsgData.heightHint = 48;
 		topMessage.setLayoutData(topMsgData);
-		topMessage.setToolTipText("Select an agent for more information about load errors.");
+		topMessage.setToolTipText(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_ToolTipText")); //$NON-NLS-1$
 
 		// next two panes can be resized with a sash form
 		SashForm sashForm = new SashForm(container, SWT.VERTICAL);
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		sashForm.setLayoutData(gridData);
-		sashForm.setToolTipText("Slide to adjust pane size above and below to see more text.");
-		
 
 		// this pane lists all the agent display names
 		agentListViewer = new ListViewer(sashForm, SWT.V_SCROLL | SWT.BORDER);
@@ -162,7 +162,7 @@ public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
 		// pane to view the information about the selected agent
 		errorText = new Link(sashForm, SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
 		errorText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
-		errorText.setToolTipText("Error message for the selected agent above");
+		errorText.setToolTipText(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_ErrorTextToolTipText")); //$NON-NLS-1$
 		errorText.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(Event event) {
@@ -182,16 +182,15 @@ public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
 		// add initial weights to the above two panes
 		sashForm.setWeights(new int[] {150,200});
 
-		// now the don't bother me check box
-		dontBotherMeCheckBox = new Button(container, SWT.CHECK);
-		dontBotherMeCheckBox.setLayoutData(new GridData(GridData.BEGINNING, GridData.CENTER, true, false));
-		dontBotherMeCheckBox.setText("Don't bother me again.");
-		dontBotherMeCheckBox.setToolTipText("Check this to ignore further discovery agent load errors");
-		dontBotherMeCheckBox.setSelection(isDontBotherMeOn);
-		dontBotherMeCheckBox.addSelectionListener(new SelectionAdapter() {
+		// now the don't ask again check box
+		dontAskAgainCheckBox = new Button(container, SWT.CHECK);
+		dontAskAgainCheckBox.setLayoutData(new GridData(GridData.BEGINNING, GridData.CENTER, true, false));
+		dontAskAgainCheckBox.setText(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_DontAskAgainLabel")); //$NON-NLS-1$
+		dontAskAgainCheckBox.setToolTipText(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_DontAskAgainToolTipText")); //$NON-NLS-1$
+		dontAskAgainCheckBox.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
-				isDontBotherMeOn = dontBotherMeCheckBox.getSelection();
+				dontAskAgain = dontAskAgainCheckBox.getSelection();
 			}
 
 		});
@@ -216,15 +215,9 @@ public class DeviceDiscoveryPrequisiteErrorDialog extends Dialog {
 	}
 
 	@Override
-	protected void okPressed() {
-		// TODO Auto-generated method stub
-		super.okPressed();
-	}
-
-	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		// set our title to the dialog
-		newShell.setText("Device Discovery Load Errors");
+		newShell.setText(Messages.getString("DeviceDiscoveryPrequisiteErrorDialog_Title")); //$NON-NLS-1$
 	}
 }
