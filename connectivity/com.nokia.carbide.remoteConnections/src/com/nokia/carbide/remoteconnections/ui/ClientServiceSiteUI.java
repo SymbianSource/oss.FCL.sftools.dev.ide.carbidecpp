@@ -19,8 +19,8 @@
 package com.nokia.carbide.remoteconnections.ui;
 
 import com.nokia.carbide.remoteconnections.Messages;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
@@ -42,6 +42,7 @@ import java.util.List;
 
 /**
  * Implementation of IClientServiceSiteUI
+ * @deprecated
  */
 public class ClientServiceSiteUI implements IClientServiceSiteUI {
 
@@ -176,7 +177,7 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 		getCompatibleConnectionTypes();
 		
 		List<IConnection> compatibleConnections = new ArrayList<IConnection>();
-		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
+		for (IConnection connection : Registry.instance().getConnections()) {
 			if (isCompatibleConnection(connection))
 				compatibleConnections.add(connection);
 		}
@@ -190,10 +191,10 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 	private void getCompatibleConnectionTypes() {
 		compatibleConnectionTypes = new HashSet<IConnectionType>();
 		Collection<String> compatibleTypeIds =
-			RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleConnectionTypeIds(service);
+			Registry.instance().getCompatibleConnectionTypeIds(service);
 		for (String typeId : compatibleTypeIds) {
 			compatibleConnectionTypes.add(
-					RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(typeId));
+					Registry.instance().getConnectionType(typeId));
 		}
 	}
 
@@ -204,14 +205,16 @@ public class ClientServiceSiteUI implements IClientServiceSiteUI {
 		viewer.setSelection(new StructuredSelection(connection));
 	}
 	
+	@SuppressWarnings("unchecked")
 	private boolean viewerInputContainsConnection(IConnection connection) {
 		Object input = viewer.getInput();
-		if (input instanceof List) {
-			return ((List) input).contains(connection);
+		if (input instanceof Collection) {
+			return ((Collection) input).contains(connection);
 		}
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void addConnectionToViewerInput(IConnection connection) {
 		Object input = viewer.getInput();
 		if (input instanceof Collection) {

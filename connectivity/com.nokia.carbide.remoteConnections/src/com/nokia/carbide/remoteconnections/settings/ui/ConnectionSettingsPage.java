@@ -18,42 +18,87 @@
 
 package com.nokia.carbide.remoteconnections.settings.ui;
 
+import java.io.File;
+import java.io.InputStream;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jface.viewers.TreeNodeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.IWizardContainer2;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Version;
+
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IService2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
-import com.nokia.cpp.internal.api.utils.core.*;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.wizard.IWizardContainer2;
-import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.program.Program;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
-import org.osgi.framework.Version;
-
-import java.io.File;
-import java.io.InputStream;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.List;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.Pair;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class ConnectionSettingsPage extends WizardPage {
 	
@@ -141,9 +186,14 @@ public class ConnectionSettingsPage extends WizardPage {
 
 		createSettingsGroup(agentTestTabComposite);
 		
-		createDeviceOSCombo(agentTestTabComposite);
+		Group group = new Group(agentTestTabComposite, SWT.NONE);
+		group.setText(Messages.getString("ConnectionSettingsPage.ConnectionTestingLabel")); //$NON-NLS-1$
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(group);
+		GridDataFactory.fillDefaults().span(2, 1).grab(true, true).applyTo(group);
+		
+		createDeviceOSCombo(group);
 
-		createServiceTestComposite(agentTestTabComposite);
+		createServiceTestComposite(group);
 	}
 
 	private void createDeviceOSCombo(Composite parent) {
@@ -165,6 +215,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		gd_sdkcombo.widthHint = 150;
 		deviceOSComboViewer.getCombo().setLayoutData(gd_sdkcombo);
 		deviceOSComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@SuppressWarnings("unchecked")
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
 				Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
@@ -175,10 +226,11 @@ public class ConnectionSettingsPage extends WizardPage {
 		});
 		deviceOSComboViewer.setContentProvider(new ArrayContentProvider());
 		deviceOSComboViewer.setLabelProvider(new LabelProvider() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public String getText(Object element) {
 				Check.checkState(element instanceof Pair);
-				Pair pair = (Pair) element;
+				Pair<String, Version> pair = (Pair) element;
 				return MessageFormat.format("{0} {1}", pair.first, pair.second); //$NON-NLS-1$
 			}
 		});
@@ -453,10 +505,13 @@ public class ConnectionSettingsPage extends WizardPage {
 				GridData gd = new GridData(SWT.LEFT, SWT.TOP, true, true);
 				label.setLayoutData(gd);
 			}
+			else if (settingsWizard.isConnectionToEditDynamic()) {
+				disableControls(settingsUI);
+			}
 	
 			// update services list
 			Collection<IService> compatibleServices = 
-				RemoteConnectionsActivator.getConnectionTypeProvider().getCompatibleServices(connectionType);
+				Registry.instance().getCompatibleServices(connectionType);
 			servicesListViewer.setInput(compatibleServices);
 			if (!compatibleServices.isEmpty()) {
 				servicesListViewer.getList().select(0);
@@ -482,6 +537,14 @@ public class ConnectionSettingsPage extends WizardPage {
 		
 		if (getControl().isVisible())
 			((IWizardContainer2) getWizard().getContainer()).updateSize();
+	}
+
+	private void disableControls(Control[] controls) {
+		for (Control control : controls) {
+			if (control instanceof Composite)
+				disableControls(((Composite) control).getChildren());
+			control.setEnabled(false);
+		}
 	}
 
 	private synchronized void initializeInstallerData() {
@@ -518,8 +581,14 @@ public class ConnectionSettingsPage extends WizardPage {
 				installerTreeViewer.expandAll();
 				
 				if (treeNodes.length == 0) {
-					String errorText = Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString"); //$NON-NLS-1$
-					errorText += "\n" + Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString2"); //$NON-NLS-1$ //$NON-NLS-2$
+					String errorText;
+					// TODO: the actual error condition needs to be recorded... 
+					if (HostOS.IS_UNIX) {
+						errorText = Messages.getString("ConnectionSettingsPage.NoInstallerSupport"); //$NON-NLS-1$
+					} else {
+						errorText = Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString"); //$NON-NLS-1$
+						errorText += "\n" + Messages.getString("ConnectionSettingsPage.NoInstallerDataInfoString2"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 					installerInfoText.setText(errorText);
 				}
 				
@@ -556,6 +625,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private TreeNode findTreeNodeForPair(TreeNode[] treeNodes, Pair<String, Version> pair) {
 		for (TreeNode treeNode : treeNodes) {
 			Object value = treeNode.getValue();
@@ -575,6 +645,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void testService() {
 		Map<String, String> settings = connectionFactory.getSettingsFromUI();
 		boolean newConnection = connection == null || !connectionType.equals(connection.getConnectionType());
@@ -590,7 +661,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		if (newConnection || connectedService == null || !connectedService.getService().equals(service)) {
 			disposeConnectedService();
 			connectedService = 
-				RemoteConnectionsActivator.getConnectionsManager().createConnectedService(service, connection);
+				Registry.instance().createConnectedService(service, connection);
 			IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
 			Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
 			if (pair != null)
@@ -652,8 +723,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			dialog.setText(Messages.getString("ConnectionSettingsPage.SaveAsDialogTitle"));  //$NON-NLS-1$
 			if (saveAsParent == null)
 				saveAsParent = System.getProperty("user.home");  //$NON-NLS-1$
-			dialog.setFilterPath(saveAsParent);
-			dialog.setFileName(packageContents.getDefaultNameFileName());
+			BrowseDialogUtils.initializeFrom(dialog, new Path(saveAsParent).append(packageContents.getDefaultNameFileName()));
 			dialog.setOverwrite(true); // prompt for overwrite
 			String path = dialog.open();
 			if (path != null) {
@@ -758,7 +828,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			for (String familyName : familyNames) {
 				List<Version> versions = installerProvider.getVersions(familyName);
 				for (Version version : versions) {
-					Pair<String, Version> pair = new Pair(familyName, version);
+					Pair<String, Version> pair = new Pair<String, Version>(familyName, version);
 					if (!deviceOSPairs.contains(pair))
 						deviceOSPairs.add(pair);
 				}

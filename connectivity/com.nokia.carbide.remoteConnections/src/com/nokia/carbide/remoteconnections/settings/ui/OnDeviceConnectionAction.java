@@ -19,6 +19,8 @@
 package com.nokia.carbide.remoteconnections.settings.ui;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.view.ConnectionsView;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -37,14 +39,11 @@ public class OnDeviceConnectionAction implements IWorkbenchWindowActionDelegate 
 
 	public void run(IAction action) {
 		// Ensure the remote connections view is visible
-        IWorkbenchPage page = window.getActivePage();
-        if (page != null) {
-            try {
-                page.showView("com.nokia.carbide.remoteconnections.view.ConnectionsView"); //$NON-NLS-1$
-            } 
-            catch (PartInitException e) {
-            	RemoteConnectionsActivator.logError(e);
-            }
+        try {
+        	WorkbenchUtils.getView(ConnectionsView.VIEW_ID);
+        } 
+        catch (PartInitException e) {
+        	RemoteConnectionsActivator.logError(e);
         }
 		
 		// Launch the new connection wizard

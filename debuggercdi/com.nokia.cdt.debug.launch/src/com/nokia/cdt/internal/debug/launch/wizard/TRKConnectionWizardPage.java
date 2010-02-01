@@ -16,8 +16,15 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import java.text.MessageFormat;
+import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.core.Check;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
@@ -26,19 +33,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 
-import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI.IListener;
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cpp.internal.api.utils.core.Check;
+import java.text.MessageFormat;
 
 public class TRKConnectionWizardPage extends WizardPage {
     
 	private final ISummaryTextItemContainer summaryTextItemContainer;
-	private IClientServiceSiteUI clientSiteUI;
-	private IConnection connection;
+	private IClientServiceSiteUI2 clientSiteUI;
+	private String connectionId;
 	
     
     public TRKConnectionWizardPage(ISummaryTextItemContainer summaryTextItemContainer) {
@@ -58,7 +59,7 @@ public class TRKConnectionWizardPage extends WizardPage {
         GridLayout layout = new GridLayout();
         composite.setLayout(layout);
 
-		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI(LaunchPlugin.getTRKService());
+		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(LaunchPlugin.getTRKService());
 		clientSiteUI.createComposite(composite);
 		clientSiteUI.addListener(new IListener() {
 			public void connectionSelected() {
@@ -72,26 +73,37 @@ public class TRKConnectionWizardPage extends WizardPage {
     }
     
     void updateConfiguration(ILaunchConfigurationWorkingCopy config) {
-		if (connection != null) {
-			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection.getIdentifier());
+		if (connectionId != null) {
+			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connectionId);
 		}
     }
 
     public void setVisible(boolean visible) {
     	super.setVisible(visible);
+    	IConnection connection = RemoteConnectionsActivator.getConnectionsManager().findConnection(connectionId);
     	if (!visible && connection != null) {
     		summaryTextItemContainer.putSummaryTextItem("Connection", //$NON-NLS-1$
-    				MessageFormat.format("{0} {1}", Messages.getString("TRKConnectionWizardPage.ConnectionSummaryLabel"), connection.getDisplayName())); //$NON-NLS-1$ //$NON-NLS-2$
+    				MessageFormat.format("{0} {1}", Messages.getString("TRKConnectionWizardPage.ConnectionSummaryLabel"), //$NON-NLS-1$ //$NON-NLS-2$
+    						connection.getDisplayName()));
     	}
     }
     
     protected void validatePage() {
     	setErrorMessage(null);
+    	setMessage(null);
     	setPageComplete(true);
-		connection = clientSiteUI.getSelectedConnection();
-		if (connection == null) {
-			setErrorMessage(Messages.getString("TRKConnectionWizardPage.NoConnectionError")); //$NON-NLS-1$
-			setPageComplete(false);
+		IStatus status = clientSiteUI.getSelectionStatus();
+		if (!status.isOK()) {
+			if (status.getSeverity() == IStatus.ERROR) {
+				setErrorMessage(status.getMessage());
+				setPageComplete(false);
+			} else {
+				setMessage(status.getMessage(), 
+						status.getSeverity() == IStatus.WARNING ? WARNING : INFORMATION); 
+			}
+		}
+		else {
+			connectionId = clientSiteUI.getSelectedConnection();
 		}
     }
     

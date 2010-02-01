@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -38,9 +39,8 @@ import org.eclipse.swt.widgets.Text;
 
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI.IListener;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 import cwdbg.PreferenceConstants;
@@ -58,9 +58,9 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 
 	protected Label remoteLabel;
 	protected Text remoteText;
-	protected IConnection connection;
+	protected String connection;
 	protected boolean wantsConnectionUI = true;
-	protected IClientServiceSiteUI clientSiteUI;
+	protected IClientServiceSiteUI2 clientSiteUI;
 	
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
@@ -81,7 +81,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		if (wantsConnectionUI)
 		{
 			createVerticalSpacer(comp, 1);
-			clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI(LaunchPlugin.getTRKService());
+			clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(LaunchPlugin.getTRKService());
 			clientSiteUI.createComposite(comp);
 			clientSiteUI.addListener(new IListener() {
 				public void connectionSelected() {
@@ -153,7 +153,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 	        if (!RemoteConnectionsTRKHelper.configUsesConnectionAttribute(config)) {
 	        	config = RemoteConnectionsTRKHelper.attemptUpdateLaunchConfiguration(config.getWorkingCopy());
 	        }
-			connection = RemoteConnectionsTRKHelper.getConnectionFromConfig(config);
+			connection = RemoteConnectionsTRKHelper.getConnectionIdFromConfig(config);
 		} catch (CoreException e) {
 		}
 		if (clientSiteUI != null)
@@ -170,7 +170,7 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		super.performApply(config);
 		config.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, remoteText.getText());
 		if (connection != null) {
-			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection.getIdentifier());
+			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection);
 		}		
 		// Now check if the process to launch is the main target exe 
 		// for debugging. If not, try to set process to launch as the 
@@ -237,10 +237,11 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 			else {
 				if (clientSiteUI != null)
 				{
-					connection = clientSiteUI.getSelectedConnection();
-					if (connection == null) {
-						setErrorMessage(Messages.getString("RunModeMainTab.NoConnectionError")); //$NON-NLS-1$
-						result = false;
+					IStatus status = clientSiteUI.getSelectionStatus();
+					if (!status.isOK()) {
+						// unfortunately, no way to display a warning here...
+						setErrorMessage(status.getMessage());
+						result = status.getSeverity() != IStatus.ERROR;
 					}
 				}
 			}

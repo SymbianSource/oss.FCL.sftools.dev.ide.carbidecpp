@@ -22,6 +22,7 @@ import com.nokia.carbide.remoteconnections.interfaces.*;
 import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.*;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 import java.util.*;
 
@@ -56,6 +57,9 @@ public class TRKService implements IService {
 	}
 
 	public IRemoteAgentInstallerProvider getInstallerProvider() {
+		if (HostOS.IS_UNIX)
+			return null;		// TODO: implement
+
 		return new TRKInstallerProvider(this);
 	}
 

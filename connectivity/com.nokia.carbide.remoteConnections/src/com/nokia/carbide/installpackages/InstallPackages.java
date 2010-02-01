@@ -66,7 +66,7 @@ public class InstallPackages {
 
 	private final IServerData serverData;
 	private List<PackageType> packageList;
-	private IPath serverPath;
+	private String serverPath;
 	
 	public InstallPackages(IServerData serverData, IRunnableContext runnableContext) {
 		Check.checkArg(serverData);
@@ -166,7 +166,7 @@ public class InstallPackages {
             }
             out.close();
             in.close();
-    		URL url = masterFile.toURL();
+    		URL url = masterFile.toURI().toURL();
     		return loadPackages(url);
     	}
     	
@@ -214,11 +214,11 @@ public class InstallPackages {
 	}
 
 	private String getRelativePath(String installFilePath) {
-		IPath path = getServerPath();
-		return path.append(installFilePath).toString();
+		String path = getServerPath();
+		return path + "/" + installFilePath; //$NON-NLS-1$
 	}
 
-	private IPath getServerPath() {
+	private String getServerPath() {
 		if (serverPath != null)
 			return serverPath;
 		// see if there's an alternate server, otherwise use IServerData
@@ -235,10 +235,10 @@ public class InstallPackages {
 			String key = serverData.getRemoteAgentInstallerProvider().getService().getIdentifier();
 			String pathStr = (String) properties.get(key);
 			if (pathStr != null)
-				return serverPath = new Path(pathStr);
+				return serverPath = pathStr;
 		} catch (IOException e) {
 			RemoteConnectionsActivator.logError(e);
 		}
-		return new Path(""); //$NON-NLS-1$
+		return ""; //$NON-NLS-1$
 	}
 }

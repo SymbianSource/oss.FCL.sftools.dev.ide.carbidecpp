@@ -49,30 +49,23 @@ public abstract class AbstractServiceDialogAction implements IWorkbenchWindowAct
 	
 	public void run(IAction action) {
 		IService service = findService(getServiceId());
-		IConnection connection = getPersistedConnection(getServiceId());
+		String connection = getPersistedConnection(getServiceId());
 		POUConnectionDialog dialog = new POUConnectionDialog(service, connection);
 		dialog.open();
 		connection = dialog.getSelectedConnection();
 		persistConnection(getServiceId(), connection);
 	}
 
-	protected void persistConnection(String key, IConnection connection) {
+	protected void persistConnection(String key, String connection) {
 		if (connection != null) {
-			Activator.getDefault().getPreferenceStore().putValue(key, connection.getIdentifier());
+			Activator.getDefault().getPreferenceStore().putValue(key, connection);
 			Activator.getDefault().savePluginPreferences();
 		}
 	}
 
-	protected IConnection getPersistedConnection(String key) {
+	protected String getPersistedConnection(String key) {
 		String connectionId = Activator.getDefault().getPreferenceStore().getString(key);
-		if (connectionId != null) {
-			Collection<IConnection> connections = RemoteConnectionsActivator.getConnectionsManager().getConnections();
-			for (IConnection connection : connections) {
-				if (connection.getIdentifier().equals(connectionId))
-					return connection;
-			}
-		}
-		return null;
+		return connectionId;
 	}
 
 	protected IService findService(String serviceId) {

@@ -18,25 +18,67 @@
 
 package com.nokia.carbide.remoteconnections.interfaces;
 
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.eclipse.jface.resource.ImageDescriptor;
+
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.ListenerList;
 
 /**
  * A standard implementation of IConnection
  */
-public abstract class AbstractConnection implements IConnection {
+public abstract class AbstractConnection implements IConnection2 {
+	
+	public static class ConnectionStatus implements IConnectionStatus {
+		private EConnectionStatus estatus;
+		private String shortDescription;
+		private String longDescription;
+		
+		public ConnectionStatus(EConnectionStatus estatus, String shortDescription, String longDescription) {
+			this.estatus = estatus;
+			this.shortDescription = shortDescription;
+			this.longDescription = longDescription;
+		}
+
+		public EConnectionStatus getEConnectionStatus() {
+			return estatus;
+		}
+		
+		public String getShortDescription() {
+			return shortDescription;
+		}
+
+		public String getLongDescription() {
+			return longDescription;
+		}
+		
+		public void setEStatus(EConnectionStatus estatus) {
+			this.estatus = estatus;
+		}
+
+		public void setDescriptions(String shortDescription, String longDescription) {
+			this.shortDescription = shortDescription;
+			this.longDescription = longDescription;
+		}
+	}
 
 	private final IConnectionType connectionType;
 	private final Map<String, String> settings;
 	private String name;
 	private String id;
+	private boolean dynamic;
+	private IConnectionStatus status;
+	private ImageDescriptor imageDescriptor;
+	private ListenerList<IConnectionStatusChangedListener> listeners;
 
 	public AbstractConnection(IConnectionType connectionType, Map<String, String> settings) {
 		this.connectionType = connectionType;
 		this.settings = new HashMap<String, String>(settings);
+		status = new ConnectionStatus(EConnectionStatus.NONE, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void dispose() {
@@ -70,5 +112,51 @@ public abstract class AbstractConnection implements IConnection {
 //		System.out.println("settings update, thread="+Thread.currentThread().getId());
 		settings.putAll(newSettings);
 	}
+
+	public boolean isDynamic() {
+		return dynamic;
+	}
+	
+	public void setDynamic(boolean dynamic) {
+		this.dynamic = dynamic;
+	}
+	
+	public IConnectionStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(IConnectionStatus status) {
+		Check.checkArg(status);
+		this.status = status;
+		fireStatusChanged();
+	}
+	
+	public void addStatusChangedListener(IConnectionStatusChangedListener listener) {
+		if (listeners == null)
+			listeners = new ListenerList<IConnectionStatusChangedListener>();
+		listeners.add(listener);
+	}
+	
+	public void removeStatusChangedListener(IConnectionStatusChangedListener listener) {
+		if (listeners != null)
+			listeners.remove(listener);
+	}
+	
+	public void fireStatusChanged() {
+		if (listeners == null)
+			return;
+		for (IConnectionStatusChangedListener listener : listeners) {
+			listener.statusChanged(status);
+		}
+	}
+
+	public ImageDescriptor getImageDescriptor() {
+		return imageDescriptor;
+	}
+	
+	public void setImageDescriptor(ImageDescriptor imageDescriptor) {
+		this.imageDescriptor = imageDescriptor;
+	}
+	
 
 }

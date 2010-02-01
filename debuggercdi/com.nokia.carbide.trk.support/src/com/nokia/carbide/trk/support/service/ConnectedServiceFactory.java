@@ -20,6 +20,7 @@ package com.nokia.carbide.trk.support.service;
 
 import com.nokia.carbide.remoteconnections.interfaces.*;
 import com.nokia.carbide.trk.support.connection.*;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 import java.util.*;
 
@@ -34,10 +35,14 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 	public IConnectedService createConnectedService(IService service, IConnection connection) {
 		if (service instanceof TracingService &&
 				isCompatibleConnection(getCompatibleTracingConnectionTypeIds(), connection)) {
+			if (HostOS.IS_UNIX)
+				return new RemoteConnectedService(service);		// TODO: not ported
 			return new TracingConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
 		else if (service instanceof TRKService &&
 				isCompatibleConnection(getCompatibleTRKConnectionTypeIds(), connection)) {
+			if (HostOS.IS_UNIX)
+				return new RemoteConnectedService(service);	// TODO: not ported
 			return new TRKConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
 		
@@ -75,7 +80,7 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 			return getCompatibleTRKConnectionTypeIds();
 		else if (service instanceof TracingService)
 			return getCompatibleTracingConnectionTypeIds();
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 }

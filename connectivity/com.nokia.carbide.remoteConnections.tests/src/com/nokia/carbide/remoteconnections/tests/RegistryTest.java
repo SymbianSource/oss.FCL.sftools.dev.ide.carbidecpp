@@ -67,7 +67,7 @@ public class RegistryTest extends TestCase {
 	
 	public void testStoreAndLoadConnections() {
 		Registry.instance().disposeConnections();
-		Collection<IConnection> connections = RemoteConnectionsActivator.getConnectionsManager().getConnections();
+		Collection<IConnection> connections = Registry.instance().getConnections();
 		assertTrue(connections.isEmpty());
 		
 		IConnectionType ct = 
@@ -78,18 +78,18 @@ public class RegistryTest extends TestCase {
 		assertNotNull(cf);
 		IConnection connection = cf.createConnection(cf.getSettingsFromUI());
 		connection.setIdentifier("test 1");
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnection(connection);
 		
-		connections = RemoteConnectionsActivator.getConnectionsManager().getConnections();
+		connections = Registry.instance().getConnections();
 		assertEquals(1, connections.size());
-		RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+		Registry.instance().storeConnections();
 		
-		RemoteConnectionsActivator.getConnectionsManager().removeConnection(connection);
-		connections = RemoteConnectionsActivator.getConnectionsManager().getConnections();
+		Registry.instance().removeConnection(connection);
+		connections = Registry.instance().getConnections();
 		assertTrue(connections.isEmpty());
 		
-		RemoteConnectionsActivator.getConnectionsManager().loadConnections();
-		connections = RemoteConnectionsActivator.getConnectionsManager().getConnections();
+		Registry.instance().loadConnections();
+		connections = Registry.instance().getConnections();
 		assertEquals(1, connections.size());
 		
 		connection = connections.iterator().next();
@@ -121,19 +121,19 @@ public class RegistryTest extends TestCase {
 
 			public void displayChanged() {}
 		};
-		RemoteConnectionsActivator.getConnectionsManager().addConnectionStoreChangedListener(listener);
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnectionStoreChangedListener(listener);
+		Registry.instance().addConnection(connection);
 		assertTrue(listenerCalled[0]);
 		
 		listenerCalled[0] = false;
-		RemoteConnectionsActivator.getConnectionsManager().removeConnection(connection);
+		Registry.instance().removeConnection(connection);
 		assertTrue(listenerCalled[0]);
 
-		RemoteConnectionsActivator.getConnectionsManager().removeConnectionStoreChangedListener(listener);
+		Registry.instance().removeConnectionStoreChangedListener(listener);
 		listenerCalled[0] = false;
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnection(connection);
 		assertFalse(listenerCalled[0]);
-		RemoteConnectionsActivator.getConnectionsManager().removeConnection(connection);
+		Registry.instance().removeConnection(connection);
 		assertFalse(listenerCalled[0]);
 	}
 	
@@ -147,12 +147,12 @@ public class RegistryTest extends TestCase {
 		assertNotNull(cf);
 		IConnection connection = cf.createConnection(cf.getSettingsFromUI());
 		connection.setDisplayName("foo");
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnection(connection);
 		String id = connection.getIdentifier();
 		connection = cf.createConnection(cf.getSettingsFromUI());
 		connection.setIdentifier(id);
 		connection.setDisplayName("foo");
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnection(connection);
 		assertFalse(id.equals(connection.getIdentifier()));
 	}
 
@@ -166,11 +166,11 @@ public class RegistryTest extends TestCase {
 		assertNotNull(cf);
 		IConnection connection = cf.createConnection(cf.getSettingsFromUI());
 		connection.setDisplayName("foo");
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnection(connection);
 		assertEquals("foo", connection.getDisplayName());
 		connection = cf.createConnection(cf.getSettingsFromUI());
 		connection.setDisplayName("foo");
-		RemoteConnectionsActivator.getConnectionsManager().addConnection(connection);
+		Registry.instance().addConnection(connection);
 		assertFalse("foo".equals(connection.getIdentifier()));
 	}
 	

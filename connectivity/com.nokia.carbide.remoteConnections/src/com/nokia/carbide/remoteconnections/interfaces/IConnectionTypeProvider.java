@@ -27,13 +27,37 @@ import java.util.Collection;
  */
 public interface IConnectionTypeProvider {
 
-	IConnectionType getConnectionType(String identifier);
+	/**
+	 * Returns IConnectionType corresponding to the id or null
+	 * @param id String
+	 * @return IConnectionType
+	 */
+	IConnectionType getConnectionType(String id);
 	
+	/**
+	 * Returns all the known connection types
+	 * @return Collection<IConnectionType>
+	 */
 	Collection<IConnectionType> getConnectionTypes();
 	
+	/**
+	 * Returns a collection of IService that are supported over a connection type
+	 * @param connectionType IConnectionType
+	 * @return Collection<IService>
+	 */
 	Collection<IService> getCompatibleServices(IConnectionType connectionType);
 
+	/**
+	 * Returns IService corresponding to the id or null
+	 * @param id String
+	 * @return IService
+	 */
 	IService findServiceByID(String id);
 	
+	/**
+	 * Returns a collection of connection type ids that support a service
+	 * @param service IService
+	 * @return Collection<String>
+	 */
 	Collection<String> getCompatibleConnectionTypeIds(IService service);
 }
