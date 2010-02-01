@@ -26,16 +26,16 @@ import org.eclipse.swt.widgets.*;
 public class POUConnectionDialog extends TrayDialog {
 
 	private final IService service;
-	private IClientServiceSiteUI clientSiteUI;
-	private IConnection connection;
+	private IClientServiceSiteUI2 clientSiteUI;
+	private String connection;
 	/**
 	 * Create the dialog
 	 */
-	public POUConnectionDialog(IService service, IConnection initialConnection) {
+	public POUConnectionDialog(IService service, String initialConnection) {
 		super((Shell) null);
 		this.service = service;
 		this.connection = initialConnection;
-		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI(service);
+		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(service);
 		
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 	}
@@ -58,7 +58,7 @@ public class POUConnectionDialog extends TrayDialog {
 		return container;
 	}
 
-	public IConnection getSelectedConnection() {
+	public String getSelectedConnection() {
 		return clientSiteUI.getSelectedConnection();
 	}
 

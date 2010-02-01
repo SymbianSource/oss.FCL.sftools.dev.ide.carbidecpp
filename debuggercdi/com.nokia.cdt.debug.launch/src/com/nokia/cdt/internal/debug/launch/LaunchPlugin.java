@@ -293,7 +293,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 			// which non-emulator launch type,
 			// or both
 			try {
-				final LaunchCreationWizard wizard =
+				final LaunchCreationWizard wizard = 
 					LaunchCreationWizardInstance.getInstance().create(project, defaultConfigName, mmpPaths, exePaths, defaultExecutable, isX86, useEmulatorByDefault, mode);
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {

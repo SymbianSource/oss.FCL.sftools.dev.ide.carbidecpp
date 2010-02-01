@@ -70,7 +70,7 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 	        	config = RemoteConnectionsTRKHelper.attemptUpdateLaunchConfiguration(config.getWorkingCopy());
 	        }
 	        
-	        final IConnection connection = RemoteConnectionsTRKHelper.getConnectionFromConfig(config);
+	        final IConnection connection = RemoteConnectionsTRKHelper.ensureConnectionFromConfig(config);
 			if (connection == null) {
 				IStatus status = new Status(Status.ERROR, LaunchPlugin.PLUGIN_ID, 
 					LaunchMessages.getString("TRKLaunchDelegate.NoConnectionErrorMsg")); //$NON-NLS-1$
@@ -93,6 +93,7 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 				setDefaultSourceLocator(launch, config);
 
 				if (mode.equals(ILaunchManager.DEBUG_MODE)) {
+					hookConnectionStatus();
 					// debug mode
 					ICDebugConfiguration debugConfig = getDebugConfig(config);
 					ICDISession dsession = null;
@@ -169,11 +170,13 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 							}
 						}
 					}
+	    			hookSessionEnded();
 				} else if (mode.equals(ILaunchManager.RUN_MODE)) {
 					// run mode not supported for attach
 				}
 			} catch (CoreException e) {
 	      		connection.useConnection(false);
+	      		unhookConnectionStatus();
 	        	if (! monitor.isCanceled()) // don't throw on user cancellation
 					throw e;
 			} finally {

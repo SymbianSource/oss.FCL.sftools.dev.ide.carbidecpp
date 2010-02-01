@@ -22,6 +22,9 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * The user interface for picking a connection to use that can be added to client service user interfaces
+ * @noimplement
+ * @noextend
+ * @deprecated new code which wants to use default connections should use {@link IClientServiceSiteUI2}
  */
 public interface IClientServiceSiteUI {
 	
@@ -61,5 +64,4 @@ public interface IClientServiceSiteUI {
 	 * @param listener IListener
 	 */
 	void removeListener(IListener listener);
-	
 }

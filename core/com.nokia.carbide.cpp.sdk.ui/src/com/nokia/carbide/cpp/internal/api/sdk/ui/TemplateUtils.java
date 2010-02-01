@@ -50,7 +50,7 @@ public class TemplateUtils {
 	 */
 	public static boolean sdkMatchesTemplate(ISymbianSDK symbianSDK, ITemplate template) {
 		Version sdkVersion = symbianSDK.getSDKVersion();
-		String family = symbianSDK.getFamily(); // ??? is this S60, UIQ, etc. ???
+		String family = symbianSDK.getFamily(); // S60, symbian... 3rd segment of devices.xml 'name' attrib 
 		return sdkMatchesTemplate(sdkVersion, family, template);
 	}
 	

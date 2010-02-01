@@ -192,9 +192,16 @@ public class SymbianSDK implements ISymbianSDK {
 
 	public String getFamily() {
 		String[] parts = getName().split("\\.");
-		if (parts.length == 3)
-			return parts[2];
-		
+		if (parts.length == 3){ 
+			if (getSDKVersion().getMajor() == 5 && getName().equalsIgnoreCase(NOKIA_SF_SDK_NAME)){ 
+				// A vendor of "symbian" and SDK major version 5 is the same as prior naming for "com.nokia.s60" & 5th Edition. 
+				// Return "s60" so that project template generation continues to work as it's a S60 5th ed. SDK. 
+				return ISymbianSDK.S60_FAMILY_ID;
+			} else {
+				return parts[2];
+			}
+		}
+			
 		return "";
 	}
 	

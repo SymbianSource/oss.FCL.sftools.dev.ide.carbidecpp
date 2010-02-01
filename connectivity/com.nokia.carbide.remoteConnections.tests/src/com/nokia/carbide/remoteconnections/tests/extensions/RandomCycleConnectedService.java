@@ -18,19 +18,27 @@
 
 package com.nokia.carbide.remoteconnections.tests.extensions;
 
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.cpp.internal.api.utils.core.ListenerList;
-
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.*;
-import org.osgi.framework.Version;
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Version;
+
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.cpp.internal.api.utils.core.ListenerList;
 
 public class RandomCycleConnectedService implements IConnectedService {
 	

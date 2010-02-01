@@ -18,26 +18,68 @@
 
 package com.nokia.carbide.remoteconnections.internal.registry;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.IFilter;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedServiceFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
+import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.ui.ClientServiceSiteUI2;
+import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
-
-import org.eclipse.core.runtime.*;
-import org.eclipse.jface.viewers.IFilter;
-
-import java.io.*;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * A registry of connection type and service extensions
  */
+@SuppressWarnings("deprecation")
 public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 
 	private static final String FILTER_EXTENSION = RemoteConnectionsActivator.PLUGIN_ID + ".extensionFilter"; //$NON-NLS-1$
@@ -47,7 +89,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private static final String CONNECTION_DATA_XML = "connectionData.xml"; //$NON-NLS-1$
 	private static final String NAME_SUFFIX_PATTERN = "(.+) \\((\\d+)\\)"; //$NON-NLS-1$
 	private static final String NAME_FMT = "{0} ({1})"; //$NON-NLS-1$
-	private static Registry instance;
+	
+	// this is exposed to other clients inside this plugin but it is not public knowledge
+	public static final String CURRENT_CONNECTION_ID = RemoteConnectionsActivator.PLUGIN_ID + ".currentConnection"; //$NON-NLS-1$
+	
+	private static Registry instance = new Registry();
 	
 	private List<IExtensionFilter> extensionFilters;
 	private Map<String, IConnectionType> connectionTypeIdMap;
@@ -56,18 +102,18 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private Map<IConnection, List<IConnectedService>> connectionToConnectedServices;
 	private ListenerList<IConnectionsManagerListener> listeners;
 	private List<IConnectedServiceFactory> connectedServiceFactories;
+	private ListenerList<IConnectionListener> connectionListeners;
+	private IConnection currentConnection;
+	private Map<IConnection, IConnectionStatusChangedListener> connectionListenerMap;
 
 	public static Registry instance() {
-		if (instance == null) {
-			instance = new Registry();
-		}
-		
 		return instance;
 	}
 	
 	private Registry() {
 		// private because is singleton
 		connectionToConnectedServices = new HashMap<IConnection, List<IConnectedService>>();
+		connectionListenerMap = new HashMap<IConnection, IConnectionStatusChangedListener>();
 	}
 
 	public void loadExtensions() {
@@ -81,19 +127,21 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private void loadConnectedServiceFactoryExtensions() {
 		connectedServiceFactories = new ArrayList<IConnectedServiceFactory>();
 		String loadError = Messages.getString("Registry.ConnectedServiceFactoryExtensionLoadError"); //$NON-NLS-1$
-		loadExtensions(CONNECTED_SERVICE_FACTORY_EXTENSION, loadError, connectedServiceFactories, null);
+		RemoteConnectionsActivator.loadExtensions(CONNECTED_SERVICE_FACTORY_EXTENSION, loadError, 
+				connectedServiceFactories, null);
 	}
 
 	private void loadExtensionFilters() {
 		extensionFilters = new ArrayList<IExtensionFilter>();
 		String loadError = Messages.getString("Registry.FilterExtensionLoadError"); //$NON-NLS-1$
-		loadExtensions(FILTER_EXTENSION, loadError, extensionFilters, null);
+		RemoteConnectionsActivator.loadExtensions(FILTER_EXTENSION, loadError, extensionFilters, null);
 	}
 
 	private void loadConnectionTypeExtensions() {
 		List<IConnectionType> connectionTypeExtensions = new ArrayList<IConnectionType>();
 		String loadError = Messages.getString("Registry.ConnectionTypeExtensionLoadError"); //$NON-NLS-1$
-		loadExtensions(CONNECTION_TYPE_EXTENSION, loadError, connectionTypeExtensions, new IFilter() {
+		RemoteConnectionsActivator.loadExtensions(CONNECTION_TYPE_EXTENSION, loadError, 
+				connectionTypeExtensions, new IFilter() {
 			public boolean select(Object toTest) {
 				return acceptConnectionType(((IConnectionType) toTest).getIdentifier());
 			}
@@ -116,7 +164,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	private void loadServiceExtensions() {
 		services = new ArrayList<IService>();
 		String loadError = Messages.getString("Registry.ServiceExtensionLoadError"); //$NON-NLS-1$
-		loadExtensions(SERVICE_EXTENSION, loadError, services, new IFilter() {
+		RemoteConnectionsActivator.loadExtensions(SERVICE_EXTENSION, loadError, services, new IFilter() {
 			public boolean select(Object toTest) {
 				return acceptService(((IService) toTest).getIdentifier());
 			}
@@ -129,28 +177,6 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 				return false;
 		}
 		return true;
-	}
-	
-	private <T> void loadExtensions(String extensionId, String loadError, Collection<T> extensionObjects, IFilter filter) {
-		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(extensionId);
-		IExtension[] extensions = extensionPoint.getExtensions();
-		
-		for (int i = 0; i < extensions.length; i++) {
-			IExtension extension = extensions[i];
-			IConfigurationElement[] elements = extension.getConfigurationElements();
-			Check.checkContract(elements.length == 1);
-			IConfigurationElement element = elements[0];
-			try {
-				T extObject = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
-				if (filter == null || filter.select(extObject))
-					extensionObjects.add(extObject);
-			} 
-			catch (CoreException e) {
-				if (loadError != null)
-					log(loadError, e);
-			}
-		}
 	}
 	
 	private void mapConnectionTypeToServices() {
@@ -198,17 +224,6 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return accept;
 	}
 
-	private void log(String errorStr, Throwable t) {
-		RemoteConnectionsActivator p = RemoteConnectionsActivator.getDefault();
-		String error = errorStr;
-		if (t != null) {
-			error += " : " + t.getLocalizedMessage(); //$NON-NLS-1$
-		}
-		Logging.log(p, Logging.newStatus(p, IStatus.ERROR, error));
-		if (t instanceof CoreException)
-			Logging.log(p, ((CoreException) t).getStatus());
-	}
-	
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionStore#loadConnections()
 	 */
@@ -226,7 +241,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			fireConnectionStoreChanged();
 		} 
 		catch (Exception e) {
-			log(Messages.getString("Registry.ConnectionLoadError"), e); //$NON-NLS-1$
+			RemoteConnectionsActivator.log(Messages.getString("Registry.ConnectionLoadError"), e); //$NON-NLS-1$
 		}
 		
 	}
@@ -235,7 +250,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		List<IConnectedService> connectedServices = new ArrayList<IConnectedService>();
 		for (IService service : getCompatibleServices(connection.getConnectionType())) {
 			IConnectedService connectedService = createConnectedService(service, connection);
-			connectedServices.add(connectedService);
+			if (connectedService != null)
+				connectedServices.add(connectedService);
 		}
 		return connectedServices;
 	}
@@ -247,28 +263,32 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			if (connectedService != null)
 				return connectedService;
 		}
-		log(MessageFormat.format(
+		RemoteConnectionsActivator.log(MessageFormat.format(
 				Messages.getString("Registry.ConnectedServiceFactoryError"), //$NON-NLS-1$
 				service.getDisplayName(), connection.getConnectionType().getDisplayName()), null);
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionStore#storeConnections()
-	 */
 	public void storeConnections() {
 		try {
 			OutputStream os = new FileOutputStream(getConnectionStorageFile());
-			Writer.writeToXML(os, connectionToConnectedServices.keySet());
+			Writer.writeToXML(os, getNonDynamicConnections());
 		} 
 		catch (Exception e) {
-			log(Messages.getString("Registry.ConnectionStoreError"), e); //$NON-NLS-1$
+			RemoteConnectionsActivator.log(Messages.getString("Registry.ConnectionStoreError"), e); //$NON-NLS-1$
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionStore#addConnectionStoreChangedListener(com.nokia.carbide.remoteconnections.registry.Registry.IConnectionStoreChangedListener)
-	 */
+	private Collection<IConnection> getNonDynamicConnections() {
+		List<IConnection> nonDynamicConnections = new ArrayList<IConnection>();
+		for (IConnection connection : connectionToConnectedServices.keySet()) {
+			if (!(connection instanceof IConnection2) ||
+					!((IConnection2) connection).isDynamic())
+				nonDynamicConnections.add(connection);
+		}
+		return nonDynamicConnections;
+	}
+
 	public void addConnectionStoreChangedListener(IConnectionsManagerListener listener) {
 		if (listeners == null)
 			listeners = new ListenerList<IConnectionsManagerListener>();
@@ -287,10 +307,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			listener.connectionStoreChanged();
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionTypeProvider#getConnectionType(java.lang.String)
-	 */
+
 	public IConnectionType getConnectionType(String identifier) {
 		Check.checkContract(connectionTypeIdMap != null);
 		return connectionTypeIdMap.get(identifier);
@@ -305,7 +322,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		Collection<IService> services = connectionTypeToServices.get(connectionType);
 		if (services != null)
 			return new ArrayList<IService>(services);
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 	
 	/* (non-Javadoc)
@@ -317,11 +334,12 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		List<IConnectedService> connectedServices = createConnectedServicesForConnection(connection);
 		connectionToConnectedServices.put(connection, connectedServices);
 		fireConnectionStoreChanged();
+		fireConnectionAdded(connection);
 	}
 	
 	private void ensureUniqueId(IConnection connection) {
 		String id = connection.getIdentifier();
-		if (id == null || id.length() == 0 || connectionIdInUse(id))
+		if (id == null || id.length() == 0 || findConnection(id) != null)
 			connection.setIdentifier(getUniqueConnectionId());
 	}
 	
@@ -329,15 +347,16 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return UUID.randomUUID().toString();
 	}
 	
-	private boolean connectionIdInUse(String id) {
-		boolean used = false;
-		for (IConnection c : connectionToConnectedServices.keySet()) {
-			if (c.getIdentifier().equals(id)) {
-				used = true;
-				break;
+	public IConnection findConnection(String connectionId) {
+		if (CURRENT_CONNECTION_ID.equals(connectionId))
+			return getCurrentConnection();
+		
+		for (IConnection connection : connectionToConnectedServices.keySet()) {
+			if (connection.getIdentifier().equals(connectionId)) {
+				return connection;
 			}
 		}
-		return used;
+		return null;
 	}
 
 	private void ensureUniqueName(IConnection connection) {
@@ -382,19 +401,22 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return used;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.remoteconnections.registry.IConnectionStore#removeConnection(com.nokia.carbide.remoteconnections.extensions.IConnection)
-	 */
 	public void removeConnection(IConnection connection) {
 		disposeConnection(connection);
 		connectionToConnectedServices.remove(connection);
+		if (connection == currentConnection) {
+			currentConnection = null;
+		}
 		fireConnectionStoreChanged();
+		fireConnectionRemoved(connection);
 	}
 
 	private void disposeConnection(IConnection connection) {
 		List<IConnectedService> connectedServices = connectionToConnectedServices.get(connection);
-		for (IConnectedService connectedService : connectedServices) {
-			connectedService.dispose();
+		if (connectedServices != null) {
+			for (IConnectedService connectedService : connectedServices) {
+				connectedService.dispose();
+			}
 		}
 		connection.dispose();
 	}
@@ -442,6 +464,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		return new ClientServiceSiteUI(service);
 	}
 	
+	public IClientServiceSiteUI2 getClientSiteUI2(IService service) {
+		return new ClientServiceSiteUI2(service);
+	}
+	
 	public Collection<IService> getServices() {
 		return new ArrayList<IService>(services);
 	}
@@ -452,5 +478,203 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 				return service;
 		}
 		return null;
+	}
+
+	public void addConnectionListener(IConnectionListener listener) {
+		if (connectionListeners == null)
+			connectionListeners = new ListenerList<IConnectionListener>();
+		connectionListeners.add(listener);
+	}
+
+	public void removeConnectionListener(IConnectionListener listener) {
+		if (connectionListeners != null)
+			connectionListeners.remove(listener);
+	}
+	
+	private void fireConnectionAdded(IConnection connection) {
+		if (connectionListeners == null)
+			return;
+		for (IConnectionListener listener : connectionListeners) {
+			listener.connectionAdded(connection);
+		}
+	}
+	
+	private void fireConnectionRemoved(IConnection connection) {
+		if (connectionListeners == null)
+			return;
+		for (IConnectionListener listener : connectionListeners) {
+			listener.connectionRemoved(connection);
+		}
+	}
+	
+	private void fireCurrentConnectionSet(IConnection connection) {
+		if (connectionListeners == null)
+			return;
+		for (IConnectionListener listener : connectionListeners) {
+			listener.currentConnectionSet(connection);
+		}
+	}
+	
+	public IConnection ensureConnection(String id, IService service) throws CoreException {
+		Check.checkArg(service);
+		IConnection connection = findConnection(id);
+		if (!isCompatibleConnection(connection, service)) {
+			connection = getCompatibleConnectionFromUser(service);
+			if (connection == null) {
+				throw new CoreException(
+						Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
+								Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
+			}
+		}
+		return connection;
+	}
+
+	private IConnection getCompatibleConnectionFromUser(final IService service) {
+		final IConnection[] connectionHolder = { null };
+		if (!WorkbenchUtils.isJUnitRunning()) {
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					final IClientServiceSiteUI2 ui = getClientSiteUI2(service);
+					final TitleAreaDialog dialog = new TitleAreaDialog(WorkbenchUtils.getSafeShell()) {
+						@Override
+						protected Control createDialogArea(Composite parent) {
+							final Composite c = (Composite) super.createDialogArea(parent);
+							ui.createComposite(c);
+							ui.addListener(new IListener() {
+								public void connectionSelected() {
+									updateStatus(ui.getSelectionStatus());
+								}
+
+							});
+							
+							return c;
+						}
+
+						private void updateStatus(IStatus selectionStatus) {
+							setTitle(Messages.getString("Registry.EnsureConnection.TitleLabel")); //$NON-NLS-1$
+							setMessage(Messages.getString("Registry.EnsureConnection.Description")); //$NON-NLS-1$
+							switch (selectionStatus.getSeverity()) {
+							case IStatus.ERROR:
+								setMessage(selectionStatus.getMessage(), IMessageProvider.ERROR);
+								getButton(IDialogConstants.OK_ID).setEnabled(false);
+								break;
+							case IStatus.WARNING:
+								setMessage(selectionStatus.getMessage(), IMessageProvider.WARNING);
+								getButton(IDialogConstants.OK_ID).setEnabled(true);
+								break;
+							case IStatus.INFO:
+								setMessage(selectionStatus.getMessage(), IMessageProvider.INFORMATION);
+								getButton(IDialogConstants.OK_ID).setEnabled(true);
+								break;
+							default:
+								getButton(IDialogConstants.OK_ID).setEnabled(true);
+							}
+						}
+						
+						@Override
+						public void create() {
+							super.create();
+							updateStatus(ui.getSelectionStatus());
+						}
+						
+						@Override
+						protected void configureShell(Shell newShell) {
+							super.configureShell(newShell);
+							newShell.setText(Messages.getString("Registry.EnsureConnection.DialogTitle")); //$NON-NLS-1$
+						}
+						
+						@Override
+						protected boolean isResizable() {
+							return true;
+						}
+					};
+					dialog.setBlockOnOpen(true);
+					if (dialog.open() == Dialog.OK)
+						connectionHolder[0] = findConnection(ui.getSelectedConnection());
+				}
+			});
+		}
+		return connectionHolder[0];
+	}
+
+	private boolean isCompatibleConnection(IConnection connection, IService service) {
+		if (connection == null)
+			return false;
+		return getCompatibleServices(connection.getConnectionType()).contains(service);
+	}
+
+	public void setCurrentConnection(IConnection connection) {
+		if (connection == null) {
+			currentConnection = null; // special case
+			fireCurrentConnectionSet(null);
+		}
+		else if (connectionToConnectedServices.keySet().contains(connection)) {
+			currentConnection = connection;
+			fireCurrentConnectionSet(connection);
+		}
+	}
+
+	public IConnection getCurrentConnection() {
+		return currentConnection;
+	}
+
+	public void disconnect(final IConnection2 connection) {
+		if (!connection.isDynamic())
+			return;
+		
+		// transition to disconnected state and wait:
+		// 	when not in-use, remove and stop waiting
+		if (connection.getStatus().getEConnectionStatus().equals(EConnectionStatus.IN_USE)) {
+			IConnectionStatus status = new ConnectionStatus(EConnectionStatus.IN_USE_DISCONNECTED, 
+					Messages.getString("ConnectionsView.DisconnectedLabel"), //$NON-NLS-1$
+					Messages.getString("ConnectionsView.DisconnectedDesc")); //$NON-NLS-1$
+			connection.setStatus(status);
+			IConnectionStatusChangedListener listener = new IConnectionStatusChangedListener() {
+				public void statusChanged(IConnectionStatus status) {
+					if (notInUse(status)) {
+						IConnectionStatusChangedListener listener = 
+							connectionListenerMap.remove(connection);
+						connection.removeStatusChangedListener(listener);
+						removeConnection(connection);
+					}
+				}
+
+				private boolean notInUse(IConnectionStatus status) {
+					EConnectionStatus eStatus = status.getEConnectionStatus();
+					return !eStatus.equals(EConnectionStatus.IN_USE) &&
+						!eStatus.equals(EConnectionStatus.IN_USE_DISCONNECTED);
+				}
+			};
+			connectionListenerMap.put(connection, listener);
+			connection.addStatusChangedListener(listener);
+		}
+		else {
+			removeConnection(connection);
+		}
+	}
+
+	public boolean reconnect(IConnection2 connection) {
+		if (!connection.isDynamic())
+			return false;
+		
+		// if not removed, transition out of disconnected state 
+		// return not removed
+		IConnectionStatusChangedListener listener = connectionListenerMap.remove(connection);
+		if (listener != null)
+			connection.removeStatusChangedListener(listener);
+		if (connectionToConnectedServices.containsKey(connection)) {
+			IConnectionStatus status;
+			if (ConnectionUIUtils.isSomeServiceInUse(connection)) {
+				status = new ConnectionStatus(EConnectionStatus.IN_USE, 
+						Messages.getString("ConnectionsView.InUseLabel"), //$NON-NLS-1$
+						Messages.getString("ConnectionsView.InUseDesc")); //$NON-NLS-1$
+			}
+			else {
+				status = new ConnectionStatus(EConnectionStatus.NOT_READY, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			connection.setStatus(status);
+			return true;
+		}
+		return false;
 	}
 }

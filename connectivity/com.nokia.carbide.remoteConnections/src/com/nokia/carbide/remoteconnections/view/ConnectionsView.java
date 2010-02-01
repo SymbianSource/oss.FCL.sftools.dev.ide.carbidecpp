@@ -18,72 +18,103 @@
 
 package com.nokia.carbide.remoteconnections.view;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.LegacyActionTools;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.TreeColumnViewerLabelProvider;
+import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jface.viewers.TreeNodeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.TreeViewerEditor;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.*;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
+import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
-
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.part.ViewPart;
-
-import java.util.*;
-import java.util.List;
 
 
 /**
  * The view part for Remote connections
  */
+@SuppressWarnings("deprecation")
 public class ConnectionsView extends ViewPart {
+	public static final String VIEW_ID = "com.nokia.carbide.remoteconnections.view.ConnectionsView"; //$NON-NLS-1$
 
 	private TreeViewer viewer;
 	private IConnectionsManagerListener connectionStoreChangedListener;
+	private IConnectionListener connectionListener;
 	private Map<IConnectedService, IStatusChangedListener> serviceToListenerMap;
 	private List<Action> actions;
 	private List<Action> connectionSelectedActions;
 	private List<Action> serviceSelectedActions;
 	private static final String UID = ".uid"; //$NON-NLS-1$
 
-	private static final ImageDescriptor STATUS_AVAIL_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusAvailable.png"); //$NON-NLS-1$
-	private static final ImageDescriptor STATUS_UNAVAIL_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusUnavailable.png"); //$NON-NLS-1$
-	private static final ImageDescriptor STATUS_UNK_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusUnknown.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connection.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_EDIT_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionEdit.png"); //$NON-NLS-1$
-	private static final ImageDescriptor SERVICE_TEST_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest.png"); //$NON-NLS-1$
-	private static final ImageDescriptor STATUS_INUSE_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/statusInUse.png"); //$NON-NLS-1$
-	private static final ImageDescriptor CONNECTION_REFRESH_IMGDESC = 
-		RemoteConnectionsActivator.getImageDescriptor("icons/connectionRefresh.png"); //$NON-NLS-1$
-	private static final Image STATUS_AVAIL_IMG = STATUS_AVAIL_IMGDESC.createImage();
-	private static final Image STATUS_UNAVAIL_IMG = STATUS_UNAVAIL_IMGDESC.createImage();
-	private static final Image STATUS_INUSE_IMG = STATUS_INUSE_IMGDESC.createImage();
-	private static final Image STATUS_UNK_IMG = STATUS_UNK_IMGDESC.createImage();
-	private static final Image CONNECTION_IMG = CONNECTION_IMGDESC.createImage();
-	private static final Color COLOR_RED = new Color(Display.getDefault(), 192, 0, 0);
-	private static final Color COLOR_GREEN = new Color(Display.getDefault(), 0, 128, 0);
-	private static final Color COLOR_ELECTRIC = new Color(Display.getDefault(), 0, 0, 255);
-	private static final Color COLOR_GREY = new Color(Display.getDefault(), 96, 96, 96);
+	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
+	private static final ImageDescriptor CONNECTION_EDIT_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionEdit.png"); //$NON-NLS-1$
+	private static final ImageDescriptor SERVICE_TEST_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest.png"); //$NON-NLS-1$
+	private static final ImageDescriptor CONNECTION_REFRESH_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionRefresh.png"); //$NON-NLS-1$
+
 	private static final String NEW_ACTION = "ConnectionsView.new"; //$NON-NLS-1$
 	private static final String EDIT_ACTION = "ConnectionsView.edit"; //$NON-NLS-1$
 	private static final String RENAME_ACTION = "ConnectionsView.rename"; //$NON-NLS-1$
@@ -91,8 +122,12 @@ public class ConnectionsView extends ViewPart {
 	private static final String REFRESH_ACTION = "ConnectionsView.refresh"; //$NON-NLS-1$
 	private static final String DELETE_ACTION = "ConnectionsView.delete"; //$NON-NLS-1$
 	private static final String HELP_ACTION = "ConnectionsView.help"; //$NON-NLS-1$
+	private static final String SET_CURRENT_ACTION = "ConnectionsView.makeCurrent"; //$NON-NLS-1$
 	private KeyAdapter keyListener;
 	private boolean isDisposed;
+
+	// handle, do not dispose
+	private Font boldViewerFont;
 	
 	private TreeNode[] loadConnections() {
 		if (serviceToListenerMap == null)
@@ -100,14 +135,14 @@ public class ConnectionsView extends ViewPart {
 		removeServiceListeners();
 		List<TreeNode> connectionNodes = new ArrayList<TreeNode>();
 		Collection<IConnection> connections = 
-			RemoteConnectionsActivator.getConnectionsManager().getConnections();
+			Registry.instance().getConnections();
 		for (IConnection connection : connections) {
 			// create a node for the connection
 			TreeNode connectionNode = new TreeNode(connection);
 			// create subnodes for the connected services
 			List<TreeNode> serviceNodes = new ArrayList<TreeNode>();
 			Collection<IConnectedService> connectedServicesForConnection = 
-				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+				Registry.instance().getConnectedServices(connection);
 			for (IConnectedService connectedService : connectedServicesForConnection) {
 				final TreeNode treeNode = new TreeNode(connectedService);
 				IStatusChangedListener statusChangedListener = new IStatusChangedListener() {
@@ -144,10 +179,11 @@ public class ConnectionsView extends ViewPart {
 			super(viewer);
 			editor = new TextCellEditor((Composite) viewer.getControl(), SWT.BORDER);
 		}
-
+		
 		@Override
 		protected boolean canEdit(Object element) {
-			if (((TreeNode) element).getValue() instanceof IConnection)
+			Object object = ((TreeNode) element).getValue();
+			if (object instanceof IConnection && !isDynamicConnection(object))
 				return true;
 			return false;
 		}
@@ -167,9 +203,10 @@ public class ConnectionsView extends ViewPart {
 		protected void setValue(Object element, Object value) {
 			IConnection connection = (IConnection) ((TreeNode) element).getValue();
 			connection.setDisplayName(value.toString());
-			viewer.refresh(true);
-			packColumns();
-			RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+			//viewer.refresh(true);
+			//packColumns();
+			Registry.instance().updateDisplays();
+			Registry.instance().storeConnections();
 		}
 	}
 
@@ -178,31 +215,32 @@ public class ConnectionsView extends ViewPart {
 		public String getText(Object obj) {
 			return getNodeDisplayName(obj);
 		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			if (element instanceof TreeNode) {
+				if (((TreeNode)element).getValue().equals(Registry.instance().getCurrentConnection())) {
+					return boldViewerFont;
+				}
+			}
+			return super.getFont(element);
+		}
 
 		public Image getImage(Object obj) {
 			TreeNode node = (TreeNode) obj;
 			Object value = node.getValue();
 			if (value instanceof IConnection) {
-				if (isConnectionInUse((IConnection) value)) {
-					return STATUS_INUSE_IMG;
-				}
-				return CONNECTION_IMG;
+				return ConnectionUIUtils.getConnectionImage((IConnection) value);
 			}
 			else if (value instanceof IConnectedService) {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
 				IConnection connection = findConnection((IConnectedService) value);
-				if (connection != null && isConnectionInUse(connection))
+				if (connection != null && ConnectionUIUtils.isSomeServiceInUse(connection))
 					status = EStatus.IN_USE;
-				switch (status) {
-				case DOWN:
-					return STATUS_UNAVAIL_IMG;
-				case UP:
-					return STATUS_AVAIL_IMG;
-				case IN_USE:
-					return CONNECTION_IMG;
-				case UNKNOWN:
-					return STATUS_UNK_IMG;
-				}
+				return ConnectionUIUtils.getConnectedServiceStatusImage(status);
 			}
 			return null;
 		}
@@ -216,16 +254,23 @@ public class ConnectionsView extends ViewPart {
 				IStatus status = null;
 				IConnection connection = findConnection((IConnectedService) value);
 				if (connection != null)
-					status = getFirstInUseStatus(connection);
+					status = ConnectionUIUtils.getFirstInUseServiceStatus(connection);
 				if (status == null) {
 					status = ((IConnectedService) value).getStatus();
 					return status.getShortDescription();
 				}
 			}
 			else if (value instanceof IConnection) {
-				IStatus status = getFirstInUseStatus((IConnection) value);
-				if (status != null)
-					return status.getShortDescription();
+				if (isDynamicConnection(value)) {
+					IConnectionStatus status = ((IConnection2) value).getStatus();
+					if (status != null)
+						return status.getShortDescription();
+				}
+				else {	
+					IStatus status = ConnectionUIUtils.getFirstInUseServiceStatus((IConnection) value);
+					if (status != null)
+						return status.getShortDescription();
+				}
 			}
 				
 			return null;
@@ -239,17 +284,26 @@ public class ConnectionsView extends ViewPart {
 				EStatus status = ((IConnectedService) value).getStatus().getEStatus();
 				switch (status) {
 				case DOWN:
-					return COLOR_RED;
+					return ConnectionUIUtils.COLOR_RED;
 				case UP:
-					return COLOR_GREEN;
+					return ConnectionUIUtils.COLOR_GREEN;
 				case UNKNOWN:
-					return COLOR_GREY;
+					return ConnectionUIUtils.COLOR_GREY;
 				}
 			}
 			else if (value instanceof IConnection) // only showing in-use for connections
-				return COLOR_ELECTRIC;
+				return ConnectionUIUtils.COLOR_ELECTRIC;
 			
 			return null;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			// we need this to avoid letting the bold name column influence the others 
+			return JFaceResources.getDefaultFont();
 		}
 	}
 	
@@ -263,7 +317,7 @@ public class ConnectionsView extends ViewPart {
 				IStatus status = ((IConnectedService) value).getStatus();
 				IConnection connection = findConnection((IConnectedService) value);
 				if (!status.getEStatus().equals(EStatus.IN_USE) ||
-						!(connection != null && isConnectionInUse(connection))) { // if in-use, we show it in the connection row
+						!(connection != null && ConnectionUIUtils.isSomeServiceInUse(connection))) { // if in-use, we show it in the connection row
 					String longDescription = status.getLongDescription();
 					if (longDescription != null)
 						longDescription = TextUtils.canonicalizeNewlines(longDescription, " "); //$NON-NLS-1$
@@ -271,12 +325,26 @@ public class ConnectionsView extends ViewPart {
 				}
 			}
 			else if (value instanceof IConnection) {
-				if (isConnectionInUse((IConnection) value)) {
-					return Messages.getString("ConnectionsView.InUseDesc");
+				if (isDynamicConnection(value)) {
+					IConnectionStatus status = ((IConnection2) value).getStatus();
+					if (status != null)
+						return status.getLongDescription();
+				}
+				else if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
+					return Messages.getString("ConnectionsView.InUseDesc"); //$NON-NLS-1$
 				}
 			}
 			
 			return null;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			// we need this to avoid letting the bold name column influence the others 
+			return JFaceResources.getDefaultFont();
 		}
 	}
 
@@ -289,6 +357,15 @@ public class ConnectionsView extends ViewPart {
 				return ((IConnection) value).getConnectionType().getDisplayName();
 			}
 			return null;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
+		 */
+		@Override
+		public Font getFont(Object element) {
+			// we need this to avoid letting the bold name column influence the others 
+			return JFaceResources.getDefaultFont();
 		}
 	}
 	
@@ -358,6 +435,8 @@ public class ConnectionsView extends ViewPart {
 			}
 		};
 		TreeViewerEditor.create(viewer, activationStrategy, ColumnViewerEditor.DEFAULT);
+		
+		boldViewerFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
 
 		TreeViewerColumn typeColumn = new TreeViewerColumn(viewer, SWT.LEFT);
 		typeColumn.setLabelProvider(new TypeLabelProvider());
@@ -455,7 +534,28 @@ public class ConnectionsView extends ViewPart {
 				});
 			}
 		};
-		RemoteConnectionsActivator.getConnectionsManager().addConnectionStoreChangedListener(connectionStoreChangedListener);
+		Registry.instance().addConnectionStoreChangedListener(connectionStoreChangedListener);
+		
+		connectionListener = new IConnectionListener() {
+			
+			public void currentConnectionSet(IConnection connection) {
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						viewer.refresh(true);
+						packColumns();
+					}
+				});				
+			}
+			
+			public void connectionRemoved(IConnection connection) {
+				// presumably the viewer itself handles this...
+			}
+			
+			public void connectionAdded(IConnection connection) {
+				// presumably the viewer itself handles this...
+			}
+		};
+		Registry.instance().addConnectionListener(connectionListener);
 
 		RemoteConnectionsActivator.setHelp(parent, ".connections_view"); //$NON-NLS-1$
 	}
@@ -507,13 +607,21 @@ public class ConnectionsView extends ViewPart {
 			return;
 		TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
 		Object value = node.getValue();
-		if (value instanceof IConnectedService)
+		if (value instanceof IConnectedService) {
+			manager.add(new Separator());
 			manager.add(getAction(ENABLE_SERVICE_ACTION));
-		else {
+		}
+		else if (value instanceof IConnection) {
+			manager.add(new Separator());
 			manager.add(getAction(RENAME_ACTION));
 			manager.add(getAction(EDIT_ACTION));
 			manager.add(getAction(DELETE_ACTION));
-			manager.add(getAction(HELP_ACTION));
+			IAction helpAction = getAction(HELP_ACTION);
+			if (helpAction.isEnabled()) {
+				helpAction.setText(helpAction.getText());
+				manager.add(helpAction);
+			}
+			manager.add(getAction(SET_CURRENT_ACTION));
 		}
 	}
 	
@@ -538,9 +646,10 @@ public class ConnectionsView extends ViewPart {
 		};
 		action.setId(NEW_ACTION);
 		actions.add(action);
-		action.setEnabled(!RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionTypes().isEmpty());
+		action.setEnabled(!Registry.instance().getConnectionTypes().isEmpty());
 		
-		action = new Action(Messages.getString("ConnectionsView.EditActionLabel"), CONNECTION_EDIT_IMGDESC) { //$NON-NLS-1$
+		String editLabel = Messages.getString("ConnectionsView.EditActionLabel"); //$NON-NLS-1$
+		action = new Action(editLabel, CONNECTION_EDIT_IMGDESC) { //$NON-NLS-1$
 			@Override
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -570,6 +679,11 @@ public class ConnectionsView extends ViewPart {
 					viewer.editElement(node, 0);
 				}
 			}
+
+			@Override
+			public boolean isEnabled() {
+				return selectionCanBeEdited();
+			}
 		};
 		action.setId(RENAME_ACTION);
 		action.setAccelerator(SWT.F2);
@@ -587,7 +701,7 @@ public class ConnectionsView extends ViewPart {
 		action = new Action(Messages.getString("ConnectionsView.RefreshActionLabel"), CONNECTION_REFRESH_IMGDESC) { //$NON-NLS-1$
 			@Override
 			public void run() {
-				IConnectionsManager connectionsManager = RemoteConnectionsActivator.getConnectionsManager();
+				IConnectionsManager connectionsManager = Registry.instance();
 				for (IConnection connection : connectionsManager.getConnections()) {
 					Collection<IConnectedService> connectedServices = connectionsManager.getConnectedServices(connection);
 					for (IConnectedService connectedService : connectedServices) {
@@ -607,14 +721,19 @@ public class ConnectionsView extends ViewPart {
 			@Override
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				if (selection.isEmpty())
+				if (selection.isEmpty() || !canBeEdited(selection))
 					return;
 				TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
 				Object value = node.getValue();
 				if (value instanceof IConnection) {
-					RemoteConnectionsActivator.getConnectionsManager().removeConnection((IConnection) value);
-					RemoteConnectionsActivator.getConnectionsManager().storeConnections();
+					Registry.instance().removeConnection((IConnection) value);
+					Registry.instance().storeConnections();
 				}
+			}
+
+			@Override
+			public boolean isEnabled() {
+				return selectionCanBeEdited();
 			}
 		};
 		action.setAccelerator(SWT.DEL);
@@ -624,18 +743,26 @@ public class ConnectionsView extends ViewPart {
 		
 		Image image = JFaceResources.getImage(org.eclipse.jface.dialogs.Dialog.DLG_IMG_HELP);
 		ImageDescriptor desc = ImageDescriptor.createFromImage(image);
-		action = new Action(Messages.getString("ConnectionsView.HelpActionLabel"), desc) { //$NON-NLS-1$
+		action = new Action(Messages.getString("ConnectionsView.NoHelpActionLabel"), desc) { //$NON-NLS-1$
 			
 			private String getHelpContextFromSelection() {
-				ISelection selection = viewer.getSelection();
-				if (!selection.isEmpty()) {
-					TreeNode treeNode = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
-					Object value = treeNode.getValue();
-					if (value instanceof IConnection) {
-						return ((IConnection) value).getConnectionType().getHelpContext();
-					}
+				IConnection connection = getSelectedConnection();
+				if (connection != null) {
+					return connection.getConnectionType().getHelpContext();
 				}
 				return null;
+			}
+			
+			@Override
+			public String getText() {
+				if (isEnabled()) {
+					IConnection connection = getSelectedConnection();
+					IConnectionType connectionType = connection.getConnectionType();
+					String displayName = connectionType.getDisplayName();
+					String pattern = Messages.getString("ConnectionsView.HelpActionLabel"); //$NON-NLS-1$
+					return MessageFormat.format(pattern, displayName);
+				}
+				return super.getText();
 			}
 			
 			@Override
@@ -651,6 +778,25 @@ public class ConnectionsView extends ViewPart {
 		action.setId(HELP_ACTION);
 		actions.add(action);
 		connectionSelectedActions.add(action);
+		
+		desc = ConnectionUIUtils.CONNECTION_IMGDESC;
+		action = new Action(Messages.getString("ConnectionsView.SetCurrentActionLabel"), desc) { //$NON-NLS-1$
+			
+			@Override
+			public boolean isEnabled() {
+				return !ObjectUtils.equals(Registry.instance().getCurrentConnection(), getSelectedConnection());
+			}
+
+			@Override
+			public void run() {
+				Registry.instance().setCurrentConnection(getSelectedConnection());
+				setEnabled(false);
+			}
+		};
+		action.setId(SET_CURRENT_ACTION);
+		actions.add(action);
+		connectionSelectedActions.add(action);		
+		
 		enableConnectionSelectedActions(false);
 		enableServiceSelectedActions(false);
 	}
@@ -707,10 +853,10 @@ public class ConnectionsView extends ViewPart {
 	
 	private void disableAllConnectedServices() {
 		Collection<IConnection> connections = 
-			RemoteConnectionsActivator.getConnectionsManager().getConnections();
+			Registry.instance().getConnections();
 		for (IConnection connection : connections) {
 			Collection<IConnectedService> connectedServicesForConnection = 
-				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+				Registry.instance().getConnectedServices(connection);
 			for (IConnectedService connectedService : connectedServicesForConnection) {
 				connectedService.setEnabled(false);
 			}
@@ -720,15 +866,16 @@ public class ConnectionsView extends ViewPart {
 	@Override
 	public void dispose() {
 		removeServiceListeners();
-		RemoteConnectionsActivator.getConnectionsManager().removeConnectionStoreChangedListener(connectionStoreChangedListener);
+		Registry.instance().removeConnectionStoreChangedListener(connectionStoreChangedListener);
+		Registry.instance().removeConnectionListener(connectionListener);
 		disableAllConnectedServices();
 		isDisposed = true;
 		super.dispose();
 	}
 	
 	private static IConnection findConnection(IConnectedService cs) {
-		for (IConnection connection : RemoteConnectionsActivator.getConnectionsManager().getConnections()) {
-			for (IConnectedService connectedService : RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection)) {
+		for (IConnection connection : Registry.instance().getConnections()) {
+			for (IConnectedService connectedService : Registry.instance().getConnectedServices(connection)) {
 				if (cs.equals(connectedService))
 					return connection;
 			}
@@ -736,22 +883,43 @@ public class ConnectionsView extends ViewPart {
 		return null;
 	}
 
-	private static IStatus getFirstInUseStatus(IConnection connection) {
-		Collection<IConnectedService> connectedServices = 
-			RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
-		// if any service is in-use, then connection is in-use
-		for (IConnectedService connectedService : connectedServices) {
-			IStatus status = connectedService.getStatus();
-			if (status.getEStatus().equals(EStatus.IN_USE))
-				return status;
+	private static boolean isDynamicConnection(Object object) {
+		return object instanceof IConnection2 && ((IConnection2) object).isDynamic();
+	}
+
+	private boolean selectionCanBeEdited() {
+		ISelection selection = viewer.getSelection();
+		return canBeEdited(selection);
+	}
+
+	private static boolean canBeEdited(ISelection selection) {
+		if (selection.isEmpty())
+			return false;
+		TreeNode node = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
+		return !isDynamicConnection(node.getValue());
+	}
+
+	private IConnection getSelectedConnection() {
+		ISelection selection = viewer.getSelection();
+		if (!selection.isEmpty()) {
+			TreeNode treeNode = (TreeNode) ((IStructuredSelection) selection).getFirstElement();
+			Object value = treeNode.getValue();
+			if (value instanceof IConnection) {
+				return (IConnection) value;
+			}
 		}
-		
 		return null;
 	}
 
-	private boolean isConnectionInUse(IConnection connection) {
-		return getFirstInUseStatus(connection) != null;
+	public void setSelectedConnection(IConnection connection) {
+		if (viewer != null && !viewer.getControl().isDisposed()) {
+			if (connection != null) {
+				TreeNode node = new TreeNode(connection);
+				viewer.setSelection(new StructuredSelection(node));
+			} else {
+				viewer.setSelection(null);
+			}
+		}
 	}
-
 }
 
