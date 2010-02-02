@@ -16,6 +16,7 @@
 */
 package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 
+import java.nio.IntBuffer;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -99,12 +100,12 @@ public class PCCSConnection {
 
 	private static final Collection<DeviceEventListener> listeners = new LinkedList<DeviceEventListener>();
 	private IConnAPILibrary library;
-	private LPDMHANDLE dmHandle = new LPDMHANDLE();
+	private LPAPIHANDLE dmHandle = new LPAPIHANDLE();
 	private DeviceNotificationCallback pfnCallback = new DeviceNotificationCallback();
 	public static final int PCCS_NOT_FOUND = 1;
 	public static final int PCCS_WRONG_VERSION = 2;
 	
-	private LPMCHANDLE mcHandle = new LPMCHANDLE();
+	private LPAPIHANDLE mcHandle = new LPAPIHANDLE();
 	
 	/**
 	 * 
@@ -117,7 +118,7 @@ public class PCCSConnection {
 			library = ConnAPILibrary.getInstance();
 		}
 		loadDMAPI();
-//		loadMCAPI(); TODO: not tested yet
+		loadMCAPI(); //TODO: not tested yet
 	}
 	
 	/**
@@ -151,7 +152,7 @@ public class PCCSConnection {
 //    	}
     	
     	// open a DM handle
-    	dmHandle.setValue(DMHANDLE.INVALID_HANDLE_VALUE);
+    	dmHandle.setValue(APIHANDLE.INVALID_HANDLE_VALUE);
     	dwResult = library.CONAOpenDM(dmHandle);
     	if (dwResult != PCCSErrors.CONA_OK) {
     		library.DMAPI_Terminate(null);
@@ -168,7 +169,7 @@ public class PCCSConnection {
 //    		System.out.printf("CONAOpenDM returned: %x\n", dwResult);
     		library.DMAPI_Terminate(null);
     		library.CONACloseDM(dmHandle.getValue());
-        	dmHandle.setValue(DMHANDLE.INVALID_HANDLE_VALUE);
+        	dmHandle.setValue(APIHANDLE.INVALID_HANDLE_VALUE);
 
         	String msg = String.format(Messages.PCCSConnection_PCCS_CONARegisterNotifyCallback_Error, dwResult);
     		if (dwResult == PCCSErrors.ECONA_INVALID_POINTER) {
@@ -210,7 +211,7 @@ public class PCCSConnection {
 		if (library == null)
 			return;
 		
-//		closeMCAPI(); TODO: not tested yet
+		closeMCAPI(); //TODO: not tested yet
 		closeDMAPI();
 	}
 	
@@ -220,12 +221,12 @@ public class PCCSConnection {
 	 */
 	private void closeDMAPI() throws CoreException {
 		int dwResult = PCCSErrors.CONA_OK;
-		if (dmHandle.getValue() != DMHANDLE.INVALID_HANDLE_VALUE) {
+		if (dmHandle.getValue() != APIHANDLE.INVALID_HANDLE_VALUE) {
 			// unregister callback
 			dwResult = library.CONARegisterNotifyCallback(dmHandle.getValue(), PCCSTypeDefinitions.API_UNREGISTER, pfnCallback);
 			// close DM connection
 			dwResult = library.CONACloseDM(dmHandle.getValue());
-        	dmHandle.setValue(DMHANDLE.INVALID_HANDLE_VALUE);
+        	dmHandle.setValue(APIHANDLE.INVALID_HANDLE_VALUE);
         	// Terminate Common Functions API
 //        	dwResult = library.CFAPI_Terminate(null); unnecessary
         	// Terminate Device management API
@@ -235,12 +236,23 @@ public class PCCSConnection {
 
 	private void closeMCAPI() {
 		int dwResult = PCCSErrors.CONA_OK;
-		if (mcHandle.getValue() != MCHANDLE.INVALID_HANDLE_VALUE) {
+		if (mcHandle.getValue() != APIHANDLE.INVALID_HANDLE_VALUE) {
 			// close DM connection
 			dwResult = library.CONACloseDM(mcHandle.getValue());
-			mcHandle.setValue(MCHANDLE.INVALID_HANDLE_VALUE);
+			mcHandle.setValue(APIHANDLE.INVALID_HANDLE_VALUE);
         	// Terminate Device management API
     		dwResult = library.MCAPI_Terminate(null);
+	}
+	
+	public void getMediaList() {
+		if (mcHandle.getValue() != APIHANDLE.INVALID_HANDLE_VALUE) {
+			IntBuffer pdwCount = IntBuffer.allocate(1);
+			CONAPI_MEDIA pMedia = new CONAPI_MEDIA();
+			
+			CONAPI_MEDIA.ByReference[] ppMedia = null;
+			
+			int dwResult = library.CONAMMGetMedia(mcHandle.getValue(), pdwCount, ppMedia);
+			System.out.printf("dwResult = %x\tpdwCount = %d\n", dwResult, pdwCount.get());
 		}
 	}
 	/**

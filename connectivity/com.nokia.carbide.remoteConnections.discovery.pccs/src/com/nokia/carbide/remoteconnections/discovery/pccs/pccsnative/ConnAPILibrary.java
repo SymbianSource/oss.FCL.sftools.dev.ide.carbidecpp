@@ -66,6 +66,8 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		}
 	}
 
+	// these calls are here just to satisfy the interface
+	//   the real calls are marshalled through jna to the native library
 	public int CFAPI_Initialize(int dwAPIVersion, IntByReference pdwParam) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -76,7 +78,7 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int CONACloseDM(DMHANDLE mHDMHandle) {
+	public int CONACloseDM(APIHANDLE mHDMHandle) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -86,23 +88,23 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int CONAGetDeviceCount(DMHANDLE hDMHandle, IntByReference pdwCount) {
+	public int CONAGetDeviceCount(APIHANDLE hDMHandle, IntByReference pdwCount) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int CONAGetDevices(DMHANDLE hDMHandle, IntByReference pdwCount,
+	public int CONAGetDevices(APIHANDLE hDMHandle, IntByReference pdwCount,
 			CONAPI_DEVICE[] pDevices) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int CONAOpenDM(LPDMHANDLE mHDMHandle) {
+	public int CONAOpenDM(LPAPIHANDLE mHDMHandle) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int CONARegisterNotifyCallback(DMHANDLE hDMHandle, int dwState,
+	public int CONARegisterNotifyCallback(APIHANDLE hDMHandle, int dwState,
 			IConnAPIDeviceCallback pfnNotify) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -123,7 +125,7 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int CONACloseMM(MCHANDLE hMCHandle) {
+	public int CONACloseMM(APIHANDLE hMCHandle) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -134,23 +136,23 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int CONAMMGetMedia(MCHANDLE hMCHandle, IntBuffer pdwCountOfMedia,
+	public int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia,
 			ByReference[] ppMedia) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int CONAMMSetMedia(MCHANDLE hMCHandle, CONAPI_MEDIA[] pMedia) {
+	public int CONAMMSetMedia(APIHANDLE hMCHandle, CONAPI_MEDIA[] pMedia) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int CONAOpenMM(LPMCHANDLE phMCHandle, int dwValue) {
+	public int CONAOpenMM(LPAPIHANDLE phMCHandle, int dwValue) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int CONARegisterMMNotifyCallback(MCHANDLE hMCHandle, int dwState,
+	public int CONARegisterMMNotifyCallback(APIHANDLE hMCHandle, int dwState,
 			IConnAPIMediaCallback pfnNotify) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -166,7 +168,7 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int MCAPI_GetMediaInfo(MCHANDLE hMCHandle, ShortBuffer pstrMediaID,
+	public int MCAPI_GetMediaInfo(APIHANDLE hMCHandle, ShortBuffer pstrMediaID,
 			CONAPI_MEDIA_INFO[] pMediaInfo) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -182,7 +184,7 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int UPAPI_CloseUSBPersonality(UPHANDLE hUPHandle) {
+	public int UPAPI_CloseUSBPersonality(APIHANDLE hUPHandle) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -210,21 +212,21 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int UPAPI_GetConfigurationDescriptor(UPHANDLE hUPHandle,
+	public int UPAPI_GetConfigurationDescriptor(APIHANDLE hUPHandle,
 			ShortBuffer pstrDeviceId,
 			UP_CONFIGURATION_DESCRIPTOR[] pConfigurationDescriptor) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int UPAPI_GetPersonalityDescriptors(UPHANDLE hUPHandle,
+	public int UPAPI_GetPersonalityDescriptors(APIHANDLE hUPHandle,
 			ShortBuffer pstrDeviceId,
 			UP_PERSONALITY_DESCRIPTORS[] pPersonalityDescriptors) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int UPAPI_GetStringDescriptor(UPHANDLE hUPHandle,
+	public int UPAPI_GetStringDescriptor(APIHANDLE hUPHandle,
 			ShortBuffer pstrDeviceId, int dwDescriptorIndex, int dwLanguageID,
 			UP_STRING_DESCRIPTOR[] pStringDescriptor) {
 		// TODO Auto-generated method stub
@@ -236,31 +238,31 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int UPAPI_OpenUSBPersonality(int dwVendorId, LPUPHANDLE phUPHandle) {
+	public int UPAPI_OpenUSBPersonality(int dwVendorId, LPAPIHANDLE phUPHandle) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int UPAPI_QueryDeviceCount(UPHANDLE hUPHandle,
+	public int UPAPI_QueryDeviceCount(APIHANDLE hUPHandle,
 			IntBuffer pdwDeviceCount) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int UPAPI_QueryDevices(Pointer hUPHandle, IntBuffer pdwDeviceCount,
+	public int UPAPI_QueryDevices(APIHANDLE hUPHandle, IntBuffer pdwDeviceCount,
 			UP_DEVICE_DESCRIPTOR[] pDeviceDescriptor) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int UPAPI_SendCommandToDevice(UPHANDLE hUPHandle,
+	public int UPAPI_SendCommandToDevice(APIHANDLE hUPHandle,
 			ShortBuffer pstrDeviceId, int dwDataDirection,
 			UP_DATA_BUFFER[] pDataBuffer) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int UPAPI_SetPersonality(UPHANDLE hUPHandle,
+	public int UPAPI_SetPersonality(APIHANDLE hUPHandle,
 			ShortBuffer pstrDeviceId, int dwPersonalityCode) {
 		// TODO Auto-generated method stub
 		return 0;
