@@ -33,12 +33,10 @@ TARGET $(baseName)_$(uid3)_reg
 TARGETPATH 	  \private\10003a3f\apps
 END //RESOURCE
 
-
-
 USERINCLUDE	   ..\$(incDir)
 USERINCLUDE    ..\$(helpDir)
 
-SYSTEMINCLUDE	 \epoc32\include
+$(EPOC32SystemInclude)
 
 LIBRARY		   euser.lib
 LIBRARY		   apparc.lib
