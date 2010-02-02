@@ -242,6 +242,7 @@ public class PCCSConnection {
 			mcHandle.setValue(APIHANDLE.INVALID_HANDLE_VALUE);
         	// Terminate Device management API
     		dwResult = library.MCAPI_Terminate(null);
+		}
 	}
 	
 	public void getMediaList() {
