@@ -881,7 +881,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 						setCreateDate(format.parse(node.getTextContent()));
 					}
 					catch (ParseException pe) {
-						pe.printStackTrace();
+						// ignore, we're just using the date for info, not critical if missing
 					}
 				}
 				
