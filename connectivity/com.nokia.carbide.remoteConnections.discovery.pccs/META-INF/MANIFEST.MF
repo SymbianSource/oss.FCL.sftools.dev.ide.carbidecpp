@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PCCS Discovery Agent
+Bundle-SymbolicName: com.nokia.carbide.remoteConnections.discovery.pccs;singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: com.nokia.carbide.remoteconnections.discovery.pccs.Activator
+Bundle-Vendor: Nokia
+Require-Bundle: org.eclipse.cdt.core,
+ org.eclipse.core.runtime,
+ org.eclipse.jface,
+ org.eclipse.ui,
+ com.nokia.carbide.remoteConnections
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/jna.jar,
+ lib/win32-x86.jar,
+ pccsPlugin.jar
+Export-Package: com.nokia.carbide.remoteconnections.discovery.pccs.agent,
+ com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative

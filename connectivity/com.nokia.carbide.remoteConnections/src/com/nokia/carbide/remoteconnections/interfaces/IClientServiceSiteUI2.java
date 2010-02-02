@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * The user interface for picking or defining a connection to use that can be added to client service user interfaces.
  * <p>
- * This variant allows selecting a "default connection" which will map to the currently selected default at runtime.
+ * This variant allows selecting a "current connection" which will map to the currently selected connection at runtime.
  * <p>
  * This requires that you use {@link IConnectionsManager#ensureConnection(String, IService)}
  * to map from a persisted connection identifier to an IConnection.  Do not rely on "validating"
@@ -60,7 +60,7 @@ public interface IClientServiceSiteUI2 {
 	 * Do not expect to find this identifier in the {@link IConnectionsManager#getConnections()} list.  
 	 * Instead, use {@link IConnectionsManager#ensureConnection(String, IService)} to find
 	 * the actual IConnection at runtime.
-	 * @return the connection id, which may represent a "default".  
+	 * @return the connection id, which may represent a "current" connection.  
 	 */
 	String getSelectedConnection();
 	
@@ -83,11 +83,11 @@ public interface IClientServiceSiteUI2 {
 	 * <ol>
 	 * <li>If a connection is selected and it's compatible, return OK.
 	 * <li>If no connection is selected, return ERROR.
-	 * <li>If selected connection is a default, but the current default is incompatible,
+	 * <li>If selected connection is current, but the current connection is incompatible,
 	 * return WARNING.
 	 * (Normally, the concrete connections are already filtered to show only
-	 * compatible ones, but the default may be anything.)  This is only a warning
-	 * because the default connection can be changed externally to this UI, thus
+	 * compatible ones, but the current may be anything.)  This is only a warning
+	 * because the current connection can be changed externally to this UI, thus
 	 * isn't a fatal error.
 	 * </ol>
 	 */
