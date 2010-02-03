@@ -321,24 +321,18 @@ three (3) years from the date of the distribution of this product by Nokia.
 
 
    <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.swt"/>
-      <import plugin="org.eclipse.cdt.debug.core"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.cdt.core"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.cdt.ui"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.core.variables"/>
-      <import plugin="org.eclipse.cdt.debug.ui"/>
-      <import plugin="org.eclipse.cdt.launch"/>
-      <import plugin="org.eclipse.ui.console"/>
-      <import plugin="org.eclipse.ui.intro"/>
-      <import plugin="org.eclipse.ui.cheatsheets"/>
-      <import plugin="org.eclipse.cdt.make.core"/>
       <import feature="org.eclipse.platform"/>
-      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.core.runtime" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.resources" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.filebuffers" version="3.3.0" match="compatible"/>
+      <import plugin="org.eclipse.search"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.ui" version="3.3.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.ide" version="3.3.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.3.0" match="compatible"/>
+      <import plugin="org.eclipse.jface.text" version="3.3.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.forms" version="3.2.0" match="compatible"/>
+      <import plugin="com.ibm.icu"/>
    </requires>
 
    <plugin
