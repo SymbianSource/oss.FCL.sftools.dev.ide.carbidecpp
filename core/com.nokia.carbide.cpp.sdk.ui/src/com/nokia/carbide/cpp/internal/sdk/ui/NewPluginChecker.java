@@ -17,7 +17,6 @@
 package com.nokia.carbide.cpp.internal.sdk.ui;
 
 import com.nokia.carbide.cpp.internal.sdk.core.model.DynamicFeatureInstaller;
-import com.nokia.carbide.cpp.internal.sdk.core.model.InstallationFailureException;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
@@ -31,14 +30,12 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 @SuppressWarnings("restriction")
 public class NewPluginChecker {
 
-	private static final String SDK_FEATURE_SUBDIR = "epoc32/kit/feature";  //$NON-NLS-1$
+	private static final String SDK_FEATURE_SUBDIR = "epoc32/kit";  //$NON-NLS-1$
 	
 	public static void checkForNewlyInstalledPlugins(final IWorkbench workbench){
 		
@@ -59,22 +56,16 @@ public class NewPluginChecker {
 						// XML was parsed, now try to run the feature installer
 						sdk.setPreviouslyScanned(true);
 						File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
-						if (featureDir.exists()) {
-							try {
-								DynamicFeatureInstaller installer = new DynamicFeatureInstaller(featureDir, null);
-								if (installer.install()) {
-									installed = true;
-								}
-		// Boog 8383: We should fail silently, since this will not break anything and may SDKs will not have any documentation
-		// Otherwise, these errors will be logged every time this check is done (workspace is opened)
-		// Originally, this was used to install MBS build support, but now is only used for SDK documentation
-							} catch (MalformedURLException e) {
-		//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
-							} catch (FileNotFoundException e) {
-		//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
-							} catch (InstallationFailureException e) {
-		//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
+						try {
+							DynamicFeatureInstaller installer = new DynamicFeatureInstaller(featureDir, null);
+							if (installer.install()) {
+								installed = true;
 							}
+						} catch (Exception e) {
+							// Boog 8383: We should fail silently, since this will not break anything and may SDKs will not have any documentation
+							// Otherwise, these errors will be logged every time this check is done (workspace is opened)
+							// Originally, this was used to install MBS build support, but now is only used for SDK documentation
+	//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
 						}
 					}
 					
