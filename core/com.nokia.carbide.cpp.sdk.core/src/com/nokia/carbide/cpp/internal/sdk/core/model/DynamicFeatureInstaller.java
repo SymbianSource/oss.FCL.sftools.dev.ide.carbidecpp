@@ -93,13 +93,13 @@ public class DynamicFeatureInstaller {
 		// Having a manifest does not require that you actually install anything. So errors should not be thrown.
 		// You simply should not run the dynamic installer if the SDK has nothing to install.
 		if (!featureDirectory.isDirectory()) {
-			//throw new FileNotFoundException(featureDirectory + " is not a directory.");
+			throw new FileNotFoundException(featureDirectory + " is not a directory.");
 		}
 		if (!(new File(featureDirectory, "features").isDirectory())) {
-			//throw new FileNotFoundException(featureDirectory + " does not contain \"features\" directory.");
+			throw new FileNotFoundException(featureDirectory + " does not contain \"features\" directory.");
 		}
 		if (!(new File(featureDirectory, "plugins").isDirectory())) {
-			//throw new FileNotFoundException(featureDirectory + " does not contain \"plugins\" directory.");
+			throw new FileNotFoundException(featureDirectory + " does not contain \"plugins\" directory.");
 		}
 	}
 
@@ -113,7 +113,7 @@ public class DynamicFeatureInstaller {
 	 *                        the installation progress as a Progress Bar to the user.
 	 *                        Can be null. 
 	 */
-	public DynamicFeatureInstaller(URL featureDirectoryURL, IProgressMonitor progressMonitor) {
+	private DynamicFeatureInstaller(URL featureDirectoryURL, IProgressMonitor progressMonitor) {
 		this.featureURL = featureDirectoryURL;
 		this.progressMonitor = progressMonitor;
 	}

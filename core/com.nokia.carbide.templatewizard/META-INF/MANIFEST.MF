@@ -9,11 +9,9 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xmi,
- org.eclipse.core.resources,
  org.eclipse.ui.ide,
  com.nokia.cpp.utils.core,
- com.nokia.cpp.utils.ui,
- org.eclipse.emf.edit;bundle-version="2.4.0";resolution:=optional
+ com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.internal.api.template.engine,
  com.nokia.carbide.internal.api.templatewizard.ui,

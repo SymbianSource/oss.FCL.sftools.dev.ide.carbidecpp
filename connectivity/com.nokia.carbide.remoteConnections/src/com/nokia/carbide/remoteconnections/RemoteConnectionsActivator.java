@@ -89,6 +89,9 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	}
 
 	private void checkPrerequisites() {
+		if (WorkbenchUtils.isJUnitRunning())
+			return;
+		
 		final Map<IDeviceDiscoveryAgent, IPrerequisiteStatus> agentToStatusMap = 
 			new HashMap<IDeviceDiscoveryAgent, IPrerequisiteStatus>();
 		

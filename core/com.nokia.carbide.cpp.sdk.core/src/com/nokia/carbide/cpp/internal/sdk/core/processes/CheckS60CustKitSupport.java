@@ -42,6 +42,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String SBSV2_BUILDER_ATTRIBUTE = "useSBSv2Builder"; //$NON-NLS-1$
 
 	private static final String S60_50_BUILD_MACROS = "S60_50_CustomBuildIncludes";
+	private static final String EXPLICIT_EPOC32_SYSTEM_INCLUDE = "EPOC32SystemInclude";
 	
 	private static final String S60_INC_MACROS = "#include <data_caging_paths.hrh>\n#include <domain/osextensions/platform_paths.hrh>\nMW_LAYER_SYSTEMINCLUDE";
 	private static final String S60_MIDDWARE_INC = "epoc32/include/middleware";
@@ -79,7 +80,13 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		String includesValue = "";
 		includesValue = createCustKitIncludes(template);
 		template.getTemplateValues().put(S60_50_BUILD_MACROS, includesValue);
-
+		
+		String explicitEpoc32Include = "";
+		if (!includesValue.contains(APP_LAYER_SYSTEM_INCLUDES)){
+			explicitEpoc32Include = "SYSTEMINCLUDE	 /epoc32/include";
+		}
+		template.getTemplateValues().put(EXPLICIT_EPOC32_SYSTEM_INCLUDE, explicitEpoc32Include); //$NON-NLS-1$
+		
 		String helpCompiler = findHelpCompiler(template);
 		String enableHelpString = "";
 		String enableHelpSISString = "";

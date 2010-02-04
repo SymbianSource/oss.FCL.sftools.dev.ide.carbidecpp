@@ -6,9 +6,7 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.sdk.core.SDKCorePlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.edit,
  org.eclipse.emf.ecore.xmi,
- org.eclipse.core.resources,
  org.eclipse.cdt.core,
  org.eclipse.ui,
  com.nokia.cpp.utils.core,
