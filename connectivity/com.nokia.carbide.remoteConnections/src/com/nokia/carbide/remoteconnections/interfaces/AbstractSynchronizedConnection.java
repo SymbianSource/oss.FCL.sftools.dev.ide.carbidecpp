@@ -100,4 +100,8 @@ public abstract class AbstractSynchronizedConnection extends AbstractConnection 
 		}
 		setInUse(use);
 	}
+	
+	public Object getCurrentResource() {
+		return getCurrentResourceString();
+	}
 }

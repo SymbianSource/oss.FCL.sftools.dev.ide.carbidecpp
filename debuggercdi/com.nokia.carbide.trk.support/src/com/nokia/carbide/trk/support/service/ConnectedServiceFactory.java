@@ -18,11 +18,19 @@
 
 package com.nokia.carbide.trk.support.service;
 
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.trk.support.connection.*;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
-import java.util.*;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedServiceFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.trk.support.connection.SerialBTConnectionType;
+import com.nokia.carbide.trk.support.connection.SerialConnectionType;
+import com.nokia.carbide.trk.support.connection.USBConnectionType;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  *

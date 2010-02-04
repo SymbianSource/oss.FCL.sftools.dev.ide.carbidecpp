@@ -18,22 +18,33 @@
 
 package com.nokia.carbide.trk.support.service;
 
-import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.trk.support.Messages;
-import com.nokia.carbide.trk.support.connection.*;
-import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.tcf.api.*;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.osgi.framework.Version;
-
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-public class TracingConnectedService extends AbstractConnectedService {
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.osgi.framework.Version;
+
+import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.trk.support.Messages;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
+import com.nokia.carbide.trk.support.connection.USBConnectionType;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.tcf.api.ITCAPIConnection;
+import com.nokia.tcf.api.ITCConnection;
+import com.nokia.tcf.api.ITCMessage;
+import com.nokia.tcf.api.ITCMessageIds;
+import com.nokia.tcf.api.ITCMessageInputStream;
+import com.nokia.tcf.api.ITCMessageOptions;
+import com.nokia.tcf.api.TCFClassFactory;
+
+public class TracingConnectedService extends AbstractConnectedService2 {
 	
 	private static final String OK_STATUS = 
 		Messages.getString("TracingConnectedService.OKStatus"); //$NON-NLS-1$

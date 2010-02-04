@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.osgi.framework.Version;
 
 import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
-import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
@@ -51,7 +51,7 @@ import com.nokia.tcf.api.TCFClassFactory;
 /**
  *
  */
-public class TRKConnectedService extends AbstractConnectedService {
+public class TRKConnectedService extends AbstractConnectedService2 {
 	
 	public static final String PROP_SYS_TRK = "is-system-trk"; //$NON-NLS-1$
 	
