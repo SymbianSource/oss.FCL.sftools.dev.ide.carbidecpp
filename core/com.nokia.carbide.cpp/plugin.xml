@@ -40,7 +40,7 @@
 			value="product:themes/carbide/graphics/root/brandmark.gif"/>
 		<property
 			name="introBrandingImageText"
-			value="Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved."/>
+			value="Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved."/>
 		<property
 			name="introDescription-overview"
 			value="Carbide.c++ provides C/C++ developer tools for creating programs that operate on the Symbian OS. Carbide.c++ is based on Eclipse - an open extensible IDE for anything and nothing in particular."/>

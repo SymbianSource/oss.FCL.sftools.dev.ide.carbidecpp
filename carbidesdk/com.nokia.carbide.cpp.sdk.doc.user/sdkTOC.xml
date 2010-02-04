@@ -6,6 +6,8 @@
   
 	<topic label="Carbide.c++ Plug-in Developer Guide" href="html/sdkMainTopic.htm">
  
+		<topic label="Carbide SDK Overview" href="html/sdkTOC.htm" />
+			   
 		<topic label="Getting Started" href="html/gettingStarted/gettingStarted.htm" >
 		   <anchor id="sdkGettingStarted" />
 		</topic>

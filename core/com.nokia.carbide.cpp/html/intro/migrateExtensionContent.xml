@@ -11,13 +11,6 @@
 		
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
 		
-			<link 
-				label="Switching to Carbide.c++" 
-				url="http://sw.nokia.com/id/efb22f32-66d4-4dab-ac3f-9f107b81e4c6/Switching_to_Carbide_cpp_White_Paper_v1_0_en.pdf"  
-				id="carbide" 
-				style-id="content-link">
-				<text>Download this whitepaper to learn how Carbide.c++ compares to Microsoft Visual Studio and Nokia CodeWarrior for Symbian development.</text>
-			</link>
 			
 			<link 
 				label="Carbide.c++ Shortcuts" 
