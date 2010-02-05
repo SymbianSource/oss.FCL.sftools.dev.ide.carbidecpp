@@ -515,21 +515,30 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		}
 	}
 	
-	public IConnection ensureConnection(String id, IService service) throws CoreException {
+	public ISelectedConnectionInfo ensureConnection(String id, IService service) throws CoreException {
 		Check.checkArg(service);
-		IConnection connection = findConnection(id);
-		if (!isCompatibleConnection(connection, service)) {
-			connection = getCompatibleConnectionFromUser(service);
-			if (connection == null) {
+		final IConnection[] connectionHolder = { findConnection(id) };
+		final String[] storableIdHolder = { id };
+		if (!isCompatibleConnection(connectionHolder[0], service)) {
+			connectionHolder[0] = getCompatibleConnectionFromUser(service, storableIdHolder);
+			if (connectionHolder[0] == null) {
 				throw new CoreException(
 						Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
 								Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
 			}
 		}
-		return connection;
+		return new ISelectedConnectionInfo() {
+			public String getStorableId() {
+				return storableIdHolder[0];
+			}
+			
+			public IConnection getConnection() {
+				return connectionHolder[0];
+			}
+		};
 	}
 
-	private IConnection getCompatibleConnectionFromUser(final IService service) {
+	private IConnection getCompatibleConnectionFromUser(final IService service, final String[] storableIdHolder) {
 		final IConnection[] connectionHolder = { null };
 		if (!WorkbenchUtils.isJUnitRunning()) {
 			Display.getDefault().syncExec(new Runnable() {
@@ -589,8 +598,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 						}
 					};
 					dialog.setBlockOnOpen(true);
-					if (dialog.open() == Dialog.OK)
-						connectionHolder[0] = findConnection(ui.getSelectedConnection());
+					if (dialog.open() == Dialog.OK) {
+						storableIdHolder[0] = ui.getSelectedConnection();
+						connectionHolder[0] = findConnection(storableIdHolder[0]);
+					}
 				}
 			});
 		}
