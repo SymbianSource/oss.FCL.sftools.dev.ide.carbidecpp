@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.CoreException;
 
 /**
  * An interface to a device discovery agent
- * @since 3.0
+ * @since 2.5
  */
 public interface IDeviceDiscoveryAgent {
 

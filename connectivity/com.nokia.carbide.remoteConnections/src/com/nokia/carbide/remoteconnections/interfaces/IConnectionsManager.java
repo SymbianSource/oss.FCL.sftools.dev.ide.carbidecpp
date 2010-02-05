@@ -56,7 +56,7 @@ public interface IConnectionsManager {
 	
 	/**
 	 * Listener interface for connections which are added, removed and set as current
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	public interface IConnectionListener {
 		void connectionAdded(IConnection connection);
@@ -143,28 +143,28 @@ public interface IConnectionsManager {
 	/**
 	 * Add new IConnectionListener
 	 * @param listener IConnectionListener
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void addConnectionListener(IConnectionListener listener);
 	
 	/**
 	 * Remove IConnectionListener
 	 * @param listener IConnectionListener
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void removeConnectionListener(IConnectionListener listener);
 
 	/**
 	 * Sets the current connection.
 	 * @param connection IConnection
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void setCurrentConnection(IConnection connection);
 	
 	/**
 	 * Returns the current connection.
 	 * @return IConnection
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IConnection getCurrentConnection();
 	
@@ -175,7 +175,7 @@ public interface IConnectionsManager {
 	 * when you use #ensureConenction().
 	 * @param service IService
 	 * @return IClientServiceSiteUI2
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IClientServiceSiteUI2 getClientSiteUI2(IService service);
 	
@@ -189,7 +189,7 @@ public interface IConnectionsManager {
 	 * @param service IService
 	 * @return IConnection
 	 * @throws CoreException
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IConnection ensureConnection(String connectionId, IService service) throws CoreException;
 	
@@ -199,7 +199,7 @@ public interface IConnectionsManager {
 	 * @param service IService
 	 * @return IConnection
 	 * @throws CoreException
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IConnection findConnection(String connectionId);
 	
@@ -209,7 +209,7 @@ public interface IConnectionsManager {
 	 * is in use by some client service, and is eventually removed from the system once it is 
 	 * no longer in use. 
 	 * @param connection IConnection2
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void disconnect(IConnection2 connection);
 	
@@ -218,7 +218,7 @@ public interface IConnectionsManager {
 	 * If the connection has not been removed from the system, and is still in-use, 
 	 * it will be restored. Returns true if successful in restoring the connection.
 	 * @param connection IConnection2
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	boolean reconnect(IConnection2 connection);
 }
