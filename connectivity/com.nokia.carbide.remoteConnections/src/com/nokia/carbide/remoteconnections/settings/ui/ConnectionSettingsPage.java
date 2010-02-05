@@ -78,7 +78,7 @@ import org.osgi.framework.Version;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
@@ -105,12 +105,12 @@ public class ConnectionSettingsPage extends WizardPage {
 	public final class Tester extends Thread {
 		@Override
 		public void run() {
-			((AbstractConnectedService) connectedService).setManualTesting();
+			((AbstractConnectedService2) connectedService).setExternalTesting();
 			for (int i = 0; i < 3 && connectedService != null; i++) {
 				connectedService.testStatus();
 				try {
 					if (i < 2)
-						sleep(AbstractConnectedService.TIMEOUT);
+						sleep(AbstractConnectedService2.TIMEOUT);
 				} catch (InterruptedException e) {
 					break;
 				}
@@ -678,8 +678,8 @@ public class ConnectionSettingsPage extends WizardPage {
 					});
 				}
 			});
-			if (connectedService instanceof AbstractConnectedService) {
-				((AbstractConnectedService) connectedService).setRunnableContext(getContainer());
+			if (connectedService instanceof AbstractConnectedService2) {
+				((AbstractConnectedService2) connectedService).setRunnableContext(getContainer());
 				tester = new Tester();
 				tester.start();
 			}
