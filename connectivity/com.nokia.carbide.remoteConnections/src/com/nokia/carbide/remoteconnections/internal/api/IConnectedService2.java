@@ -23,7 +23,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 
 /**
  * An extended interface to a connected service
- * @since 3.0
+ * @since 2.5
  */
 public interface IConnectedService2 extends IConnectedService {
 
