@@ -483,7 +483,7 @@ public class SettingsData {
 		configuration.setAttribute(RemoteConnectionsTRKHelper.USES_REMOTE_CONNECTIONS_ATTRIBUTE, true);
 		IConnection defaultConnection = RemoteConnectionsTRKHelper.getFirstCompatibleConnection();
 		if (defaultConnection != null)
-			configuration.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, defaultConnection.getIdentifier());
+			RemoteConnectionsTRKHelper.setRemoteConnectionAttribute(configuration, defaultConnection);
 	}
 	
 	public static void setFileTransferTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
