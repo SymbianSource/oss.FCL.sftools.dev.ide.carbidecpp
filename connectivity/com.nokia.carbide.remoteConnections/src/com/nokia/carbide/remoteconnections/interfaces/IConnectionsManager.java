@@ -42,6 +42,14 @@ public interface IConnectionsManager {
 	}
 
 	/**
+	 * Return value for IConnectionsManager.ensureConnection
+	 */
+	public interface ISelectedConnectionInfo {
+		IConnection getConnection();
+		String getStorableId();
+	}
+
+	/**
 	 * Internal method for loading connections from persisted state
 	 * @deprecated
 	 */
@@ -56,7 +64,7 @@ public interface IConnectionsManager {
 	
 	/**
 	 * Listener interface for connections which are added, removed and set as current
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	public interface IConnectionListener {
 		void connectionAdded(IConnection connection);
@@ -143,28 +151,28 @@ public interface IConnectionsManager {
 	/**
 	 * Add new IConnectionListener
 	 * @param listener IConnectionListener
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void addConnectionListener(IConnectionListener listener);
 	
 	/**
 	 * Remove IConnectionListener
 	 * @param listener IConnectionListener
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void removeConnectionListener(IConnectionListener listener);
 
 	/**
 	 * Sets the current connection.
 	 * @param connection IConnection
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void setCurrentConnection(IConnection connection);
 	
 	/**
 	 * Returns the current connection.
 	 * @return IConnection
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IConnection getCurrentConnection();
 	
@@ -175,7 +183,7 @@ public interface IConnectionsManager {
 	 * when you use #ensureConenction().
 	 * @param service IService
 	 * @return IClientServiceSiteUI2
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IClientServiceSiteUI2 getClientSiteUI2(IService service);
 	
@@ -183,15 +191,18 @@ public interface IConnectionsManager {
 	 * Can be called by specific service implementors (e.g., debugger) to ensure some connection
 	 * exists and supports this service. If the connection does not exist or does not support
 	 * the service, a CoreException may be thrown after the framework attempts to allow the user
-	 * to correct the situation. If an IConnection is returned, it is assumed to be 
-	 * a valid connection in the system that supports the service.
+	 * to correct the situation by showing a connection selection dialog. 
+	 * If an ISelectedConnectionInfo is returned, {@link ISelectedConnectionInfo#getConnection()} 
+	 * is assumed to be a valid connection in the system that supports the service 
+	 * and {@link ISelectedConnectionInfo#getStorableId()} is the id that can
+ 	 * be stored by the caller that represents the user's selection.
 	 * @param connectionId String
 	 * @param service IService
-	 * @return IConnection
+	 * @return ISelectedConnectionInfo
 	 * @throws CoreException
-	 * @since 3.0
+	 * @since 2.5
 	 */
-	IConnection ensureConnection(String connectionId, IService service) throws CoreException;
+	ISelectedConnectionInfo ensureConnection(String connectionId, IService service) throws CoreException;
 	
 	/**
 	 * Returns a connection from an id (including the current connection id) or null if none found.
@@ -199,7 +210,7 @@ public interface IConnectionsManager {
 	 * @param service IService
 	 * @return IConnection
 	 * @throws CoreException
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	IConnection findConnection(String connectionId);
 	
@@ -209,7 +220,7 @@ public interface IConnectionsManager {
 	 * is in use by some client service, and is eventually removed from the system once it is 
 	 * no longer in use. 
 	 * @param connection IConnection2
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	void disconnect(IConnection2 connection);
 	
@@ -218,7 +229,7 @@ public interface IConnectionsManager {
 	 * If the connection has not been removed from the system, and is still in-use, 
 	 * it will be restored. Returns true if successful in restoring the connection.
 	 * @param connection IConnection2
-	 * @since 3.0
+	 * @since 2.5
 	 */
 	boolean reconnect(IConnection2 connection);
 }

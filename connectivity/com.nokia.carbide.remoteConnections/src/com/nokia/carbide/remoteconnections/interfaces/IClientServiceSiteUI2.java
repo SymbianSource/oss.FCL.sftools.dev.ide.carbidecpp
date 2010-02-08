@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Composite;
  * the identifier manually by iterating the {@link IConnectionsManager#getConnections()}!
  * @noimplement
  * @noextend
- * @since 3.0
+ * @since 2.5
  */
 public interface IClientServiceSiteUI2 {
 	

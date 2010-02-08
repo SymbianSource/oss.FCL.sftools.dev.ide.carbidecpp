@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -16,12 +16,9 @@
 */
 package com.nokia.carbide.remoteconnections.interfaces;
 
-import com.nokia.carbide.remoteconnections.Messages;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
-import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.cpp.internal.api.utils.core.ListenerList;
-import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -30,44 +27,27 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import com.nokia.carbide.remoteconnections.Messages;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.internal.ServiceTester;
+import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.ListenerList;
+import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
 
 /**
- @deprecated use AbstractConnectedService2
+ * @since 2.5
  */
-public abstract class AbstractConnectedService implements IConnectedService2 {
+public abstract class AbstractConnectedService2 implements IConnectedService2 {
 	
 	public final static int TIMEOUT = 2000;
-	
+
 	public static class ConnectionFailException extends Exception {
 		public ConnectionFailException(String string) {
 			super(string);
 		}
 
-		private static final long serialVersionUID = -5438012263174866433L;
-	}
-
-	public final class Tester extends Thread {
-		private volatile boolean run = true;
-		
-		@Override
-		public void run() {
-			while (run) {
-				testStatus();
-				try {
-					if (run)
-						sleep(TIMEOUT);
-				} catch (InterruptedException e) {
-					stopRunning();
-				}
-			}
-		}
-		
-		public void stopRunning() {
-			run = false;
-		}
+		private static final long serialVersionUID = -5438012263174866437L;
 	}
 
 	public class Status implements IStatus {
@@ -76,7 +56,7 @@ public abstract class AbstractConnectedService implements IConnectedService2 {
 		private String longDescription;
 		
 		public IConnectedService getConnectedService() {
-			return AbstractConnectedService.this;
+			return AbstractConnectedService2.this;
 		}
 
 		public EStatus getEStatus() {
@@ -128,11 +108,10 @@ public abstract class AbstractConnectedService implements IConnectedService2 {
 	private ListenerList<IStatusChangedListener> listeners;
 	protected IRunnableContext runnableContext;
 	protected Status currentStatus;
-	protected Tester tester;
-	protected boolean manualTesting;
+	protected boolean externalTesting;
 	private Map<String, String> properties;
 
-	public AbstractConnectedService(IService service, AbstractSynchronizedConnection connection) {
+	public AbstractConnectedService2(IService service, AbstractSynchronizedConnection connection) {
 		this.service = service;
 		this.connection = connection;
 		properties = new HashMap<String, String>();
@@ -149,16 +128,12 @@ public abstract class AbstractConnectedService implements IConnectedService2 {
 	}
 
 	public void dispose() {
-		if (tester != null) {
-			tester.stopRunning();
-			tester = null;
-		}
-
 		if (listeners != null) {
 			for (IStatusChangedListener listener : listeners) {
 				listeners.remove(listener);
 			}
 		}
+		ServiceTester.getInstance().unregister(this);
 	}
 
 	public IService getService() {
@@ -183,7 +158,7 @@ public abstract class AbstractConnectedService implements IConnectedService2 {
 	}
 
 	public void testStatus() {
-		if (!(isEnabled() || manualTesting))
+		if (!(isEnabled() || externalTesting))
 			return;
 			
 		final TestResult result[] = { null };
@@ -206,32 +181,30 @@ public abstract class AbstractConnectedService implements IConnectedService2 {
 			result[0] = runTestStatus(new NullProgressMonitor());
 		}
 		
-		if (!(isEnabled() || manualTesting)) // could be waiting for response past when service testing was disabled
+		if (!(isEnabled() || externalTesting)) // could be waiting for response past when service testing was disabled
 			return;
 		if (result[0].shortDescription != null && result[0].longDescription != null) {
 			currentStatus.setEStatus(result[0].estatus, result[0].shortDescription, result[0].longDescription);
 		}
 	}
 	
-	public void setManualTesting() {
-		manualTesting = true;
+	public void setExternalTesting() {
+		externalTesting = true;
 	}
 
 	public boolean isEnabled() {
-		return tester != null;
+		return ServiceTester.getInstance().isRegistered(this);
 	}
 
 	public void setEnabled(boolean enabled) {
 		if (!service.isTestable())
 			return;
-		if (enabled && tester == null) {
+		if (enabled && !isEnabled()) {
 			Check.checkState(connection.getSettings() != null);
-			tester = new Tester();
-			tester.start();
+			ServiceTester.getInstance().register(this);
 		}
-		else if (!enabled && tester != null) {
-			tester.stopRunning();
-			tester = null;
+		else if (!enabled && isEnabled()) {
+			ServiceTester.getInstance().unregister(this);
 			currentStatus.setEStatus(EStatus.UNKNOWN, 
 					Messages.getString("AbstractConnectedService.NoTestingLabel"), //$NON-NLS-1$
 					Messages.getString("AbstractConnectedService.UserDisabledMessage")); //$NON-NLS-1$
@@ -240,5 +213,11 @@ public abstract class AbstractConnectedService implements IConnectedService2 {
 	
 	public Map<String, String> getProperties() {
 		return properties;
+	}
+
+	public void setStatus(Status status) {
+		if (currentStatus == null)
+			currentStatus = new Status();
+		currentStatus.setEStatus(status.internalGetEStatus(), status.getShortDescription(), status.getLongDescription());
 	}
 }

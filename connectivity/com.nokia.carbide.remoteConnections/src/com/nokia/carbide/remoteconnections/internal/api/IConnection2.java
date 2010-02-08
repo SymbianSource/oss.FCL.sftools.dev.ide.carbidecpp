@@ -23,7 +23,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 
 /**
  * An extended interface to a connection
- * @since 3.0
+ * @since 2.5
  */
 public interface IConnection2 extends IConnection {
 	
