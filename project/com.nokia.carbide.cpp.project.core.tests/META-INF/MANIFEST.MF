@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.carbide.cpp.project.ui,
  com.nokia.carbide.cpp.api.test.support;bundle-version="1.0.0",
  com.nokia.carbide.cpp.qt.core;bundle-version="1.4.0",
- com.trolltech.qtcppproject;bundle-version="1.6.0",
- com.trolltech.qtproject;bundle-version="1.0.1"
+ com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional,
+ com.trolltech.qtproject;bundle-version="1.0.1";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.project.core.tests
