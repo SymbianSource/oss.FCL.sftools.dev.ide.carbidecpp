@@ -28,7 +28,8 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.carbide.cpp.ui,
  com.nokia.cpp.utils.core,
  com.freescale.cdt.debug.cw.core.ui,
- com.nokia.carbide.remoteConnections
+ com.nokia.carbide.remoteConnections,
+ com.nokia.cpp.utils.ui;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.cdt.internal.debug.launch,
  com.nokia.cdt.internal.debug.launch.ui,
