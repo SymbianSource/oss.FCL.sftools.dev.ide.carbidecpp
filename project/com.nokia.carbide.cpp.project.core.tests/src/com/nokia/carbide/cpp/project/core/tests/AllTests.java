@@ -28,6 +28,7 @@ public class AllTests {
 		suite.addTestSuite(CreateProjectTest.class);
 		suite.addTestSuite(ResourceListenerTest.class);
 		suite.addTestSuite(TestBldInfImportDataLoader.class);
+		suite.addTestSuite(QtPropertiesTest.class);
 		// MissingSdkTest modifies the SDK list so run this last
 		suite.addTestSuite(MissingSdkTest.class);
 		//$JUnit-END$
