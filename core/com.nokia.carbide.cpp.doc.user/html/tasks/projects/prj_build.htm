@@ -24,7 +24,7 @@
 <div class="step">
   <h4>Building a Project</h4>
   <ul>
-    <li>Right-click the project name in the C/C++ Projects view and select Build Project (Figure 1) </li>
+    <li>Right-click the project name in the Project Explorer view and select Build Project (Figure 1) </li>
   </ul>
   <ol>
     <p></p>
@@ -39,7 +39,7 @@
   </ul>
   <ul>
     <li>Click the Build icon in the tool bar (Figure 2) to build the current build configuration </li>
-    <p align="center"><img src="images/wnd_build_config_select_tgt.png" width="321" height="69" /></p>
+    <p align="center"><img src="images/wnd_build_config_select_tgt.png" width="341" height="128" /></p>
     <p class="figure">Figure 2 - Build icon </p>
     <p>or
     </p>
@@ -48,16 +48,16 @@
     <li>Select a build configuration using the Build icon&#8217;s dropdown list in the tool bar (Figure 2)</li>
   </ul>
   <ol>
-    <p>Carbide.c++ builds the project. During the build a build dialog will appear on screen and a task bar is shown at the bottom right of the perspective when the build is run in the background. All output as the build progresses is shown in the Console view and all build errors and warnings appear in the Problems view.</p>
+    <p>Carbide.c++ builds the project. A build dialog  and a task bar appear during a build process. All build output  is shown in the Console view while build errors and warnings appear in the Problems view.</p>
     <p>Whether a full build or incremental build is requested, Carbide forwards the request to the SDK make system. The SDK make system determines if anything needs to be
-      built. So Carbide will always check that makefiles are up-to-date and
-    check dependencies.</p>
-    <p>A project is also built if you make a change to a project and then click <b>Debug</b>. It may be useful to automatically save modified resources before a manual build process by enabling the <b>Save automatically before build</b> option in the <b>Window &gt; Preferences &gt; General &gt;</b> <img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Workbench)")'> Workspace</a> preference panel. </p>
+      built. Carbide  always checks that makefiles are up-to-date and
+    dependencies present.</p>
+    <p>Project is also built if you make a change to it and then click <b>Debug</b>. It may be useful to automatically save modified resources before a manual build process by enabling the <b>Save automatically before build</b> option in the <b>Window &gt; Preferences &gt; General &gt;</b> <img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Workbench)")'> Workspace</a> preference panel. </p>
     <p class="note"><b>NOTE</b> If you want to turn off building before launching, uncheck the <b>Build (if required) before launching</b> option in the <b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel.</p>
   </ol>
-  <p>When performing a build, output is displayed in the Console window. If you do not want to clear the console before each build you need to uncheck the option <span class="code">Always clear console before building</span> in the Build Console panel. This option is enabled by default. You can access this panel by selecting <b>Window &gt; Preferences &gt; C/C++ &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferneces.CBuildConsolePreferernces)")'> Build Console</a></b> preference panel (figure 2).</p>
-  <p>Not clearing the console can be useful when you are performing multiple builds, such as a regular project build, building a project package (.pkg) file, and building a ROM image. For example, if you do not clear the console before each build, then a subsequent build will not overwrite information from a previous build.</p>
-<p align="center"><img src="images/build_console.png" width="532" height="451" /></p>
+  <p>When performing a build, output is displayed in the Console window. If you do not want to clear the console before each build you need to uncheck the option <b>Always clear console before building</b> in the <b>Build Console</b> panel. This option is enabled by default. You can access this panel by selecting <b>Window &gt; Preferences &gt; C/C++ &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferneces.CBuildConsolePreferernces)")'> Build Console</a></b> preference panel (figure 2).</p>
+  <p>Not clearing the console is useful when you are performing multiple builds, such as a regular project build, building a project package (.pkg) file, and building a ROM image. For example, if you do not clear the console before each build, then a subsequent build will not overwrite information from a previous build.</p>
+<p align="center"><img src="images/build_console.png" width="562" height="446" /></p>
 <p align="left" class="figure">Figure 4 - Build Console Preference Panel</p>
 <p>&nbsp;</p>
 </div>
@@ -77,7 +77,7 @@
     <li><a href="../../reference/menus/build_pkg_file.htm">Build Package (.pkg) File</a></li>
     <li><a href="../ImportingProjects.html">Importing BLD.INF Files</a></li>
   </ul>
-  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+  <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>
