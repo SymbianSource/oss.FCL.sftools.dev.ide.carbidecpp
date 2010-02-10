@@ -33,8 +33,10 @@ import org.eclipse.core.runtime.Status;
 
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.ui.QtUIPlugin;
+import com.nokia.carbide.cpp.internal.sdk.core.model.QtSDKUtils;
 import com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.template.engine.ITemplate;
 import com.nokia.carbide.templatewizard.process.IParameter;
 import com.trolltech.qtcppproject.QtProject;
@@ -46,6 +48,7 @@ public class ProjectCreatedTasksQt extends ProjectCreatedTasks {
 		super();
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	public void process(ITemplate template, List<IParameter> parameters, IProgressMonitor monitor) throws CoreException {
 
@@ -81,6 +84,19 @@ public class ProjectCreatedTasksQt extends ProjectCreatedTasks {
 
 			// set the qmake generated pkg files to be built
 			QtUIPlugin.setupSISBuilderSettings(project);
+			
+			// set the default Qt SDK
+			ISymbianSDK sdk = ((ISymbianBuildContext)listOfBuildConfigs.get(0)).getSDK();
+			String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+			if (qtSDKName == null){
+				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
+				qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+			}
+			
+			if (qtSDKName != null){
+				QtSDKUtils.setDefaultQtSDKForProject(project, qtSDKName);
+			}
+			
 		}
 	}
 }

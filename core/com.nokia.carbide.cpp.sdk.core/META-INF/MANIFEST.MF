@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.update.core,
  com.nokia.carbide.templatewizard,
  org.eclipse.core.filesystem,
- com.nokia.cpp.utils.ui
+ com.nokia.cpp.utils.ui,
+ com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional,
+ com.trolltech.qtproject;bundle-version="1.0.1";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.api.sdk,
  com.nokia.carbide.cpp.internal.sdk.core.model;x-friends:="com.nokia.carbide.cpp.sdk.core.test",

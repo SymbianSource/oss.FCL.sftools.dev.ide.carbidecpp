@@ -41,6 +41,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.ui.QtUIPlugin;
+import com.nokia.carbide.cpp.internal.sdk.core.model.QtSDKUtils;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.trolltech.qtcppproject.QtProject;
@@ -120,7 +121,19 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
 
     			// set the qmake generated pkg files to be built
     			QtUIPlugin.setupSISBuilderSettings(newProject);
-
+    			
+    			// Set the default Qt SDK, if any
+    			ISymbianSDK sdk = selectedConfigs.get(0).getSDK();
+    			String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+    			if (qtSDKName == null){
+    				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
+    				qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+    			}
+    			
+    			if (qtSDKName != null){
+    				QtSDKUtils.setDefaultQtSDKForProject(newProject, qtSDKName);
+    			}
+    			
     			if (monitor.isCanceled()) {
 	    			// the user canceled the import so delete the project
 	    			newProject.delete(false, true, null);
