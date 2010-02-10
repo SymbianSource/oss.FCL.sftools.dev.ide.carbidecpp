@@ -18,23 +18,21 @@
 </ul>
 <div class="step">
 <h4>Creating a Default Launch Configuration</h4>
-<p class="note"><b>NOTE</b> Carbide.c++ only creates a new default launch configuration when it cannot find one in the project. If the project already contains a launch configuration, Carbide.c++ launches that instead. </p>
+<p class="note"><b>NOTE</b> Carbide only creates a new default launch configuration when it cannot find one in the project. If the project already contains a launch configuration, Carbide launches that instead. </p>
 <ul>
   <li>Click the <b>Run</b> (<img src="../../images/icons/btn_run.png" alt="Run icon" width="16" height="16" align="middle" />) or <b>Debug</b> (<img src="../../images/icons/btn_debug.png" width="17" height="16" align="middle" alt="Debug icon"/>) icon in the tool bar
     <p>or</p>
   </li>
   <li>Choose Select <b>Run &gt; Run</b> menu option to launch the project or <b>Run &gt; Debug</b> menu option to debug the project</li>
-  <p>Carbide.c++ creates a default launch configuration for the project and begins running or debugging the project. If the project already has a defined launch configuration, clicking Run or Debug uses it instead of creating a new one. There are two possible scenarios when creating a default launch configuration: </p>
+  <p>Carbide creates a default launch configuration for the project that is used to run or debug the project. If the project already has a defined launch configuration, clicking <b>Run</b> or <b>Debug</b> uses it instead of creating a new one. There are two possible scenarios when creating a default launch configuration: </p>
   <ul>
-    <li><b>for emulator targets </b> - an emulator launch configuration is created based on the project settings </li>
+    <li><b>for emulator targets</b> <b> - an emulator launch configuration is created based on the project settings </b></li>
     <li><b>for target devices</b> - the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a> appears asking for additional information</li>
   </ul>
 </ul>
 </div>
-  <p class="note"><b>NOTE</b> To see if a project already has a launch configuration, open a Run or Debug window using the <b>Run &gt; Open Run Dialog...</b> or <b>Run &gt; Open Debug Dialog...</b> menu items. 
-    
-  </p>
-  <p>In the event that the default launch configuration settings need to be changed, it is possible to edit them in the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window, or create a new launch configuration for the project that deviates from the default settings.</p>
+  <p class="note"><b>NOTE</b> To see if a project already has a launch configuration, open a Run or Debug window using the <b>Run &gt; Run As</b> or <b>Run &gt;  Debug As</b> menu items.  </p>
+<p>In the event that the default launch configuration settings must be changed, edit them in the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window, or simply create a new launch configuration for the project that deviates from the default settings.</p>
 <div class="step">
 <h4>Creating a Custom Launch Configuration </h4>
 <ol>
@@ -44,16 +42,16 @@
         <p>The appropriate Run or <a href="../../reference/wnd_debug_configuration.htm">Debug</a> launch configuration window appears (Figure 1).</p>
       </li>
    </ul>
-  <p align="center"><img src="images/wnd_launch_configuration_blank.png" width="709" height="455" alt="Undefined launch configuration"/> </p>
+  <p align="center"><img src="images/wnd_launch_configuration_blank.png" width="736" height="505" alt="Undefined launch configuration"/> </p>
   <p class="figure">Figure 1 - Initial blank Debug launch configuration window</p>
   </li>
   <li>Select a type of launch configuration (for example, Symbian OS Emulation), then click the New launch configuration icon to create a new
     configuration of that type.
-    <p>A new configuration appears in the Configuration list under the
+    <p>A new configuration appears in the configuration list under the
       appropriate section  using the project name and target to create the configuration name.</p>
-  <p class="note"><b>NOTE</b> By default, when you click New, the project information is used to fill in the Project and Process to launch text boxes. You normally should not have to edit these for a run/debug a project. If a bld.inf has multiple MMPS then the first executable named in the list of MMP files is used to fill in the executable field.  Therefore, for projects with multiple MMPs you may need to change the executable field.    </p>
+  <p class="note"><b>NOTE</b> Project information is used to fill in the <b>Project</b> and <b>Process to launch</b> text boxes by default when you click <b>New</b>. You  should not have to edit these for a normal run/debug project. If a <span class="code">bld.inf</span> has multiple MMP files listed, then the first executable  in the list  is used to fill in the executable field.  Therefore, for projects with multiple MMPs you may need to change the executable field.    </p>
   </li>
-  <p align="center"><img src="images/run_config_new.png" width="787" height="489" alt="New launch configuration" /> </p>
+  <p align="center"><img src="images/run_config_new.png" width="819" height="539" alt="New launch configuration" /> </p>
     <p class="figure">Figure 2 - New launch configuration with name and settings filled in (emulator)</p>
   
   <li>View the information to define the project and executable
@@ -94,7 +92,7 @@
     <li><a href="prj_build.htm">Building Projects</a></li>
     <li><a href="prj_debug_dlls.htm">Debugging DLLs</a></li>
 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>
