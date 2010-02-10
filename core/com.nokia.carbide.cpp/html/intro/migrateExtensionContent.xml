@@ -9,7 +9,6 @@
 		style="carbide.css" 
 		path="migrate/@">
 		
-		<!-- Removed 20091201 since links are no longer valid
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
 					
 			<link 
@@ -21,7 +20,6 @@
 			</link>
 			
 		</group>
-		-->
 		
 	</extensionContent>
 		
