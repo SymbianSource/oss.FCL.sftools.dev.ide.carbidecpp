@@ -49,17 +49,11 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.IWizardSection#createComposite(org.eclipse.swt.widgets.Composite)
-	 */
 	public void createControl(Composite parent) {
 		createSection(parent, 0);
 		manager.addConnectionListener(this);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#dispose()
-	 */
 	@Override
 	protected void dispose() {
 		manager.removeConnectionListener(this);
@@ -104,16 +98,13 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 		launchOptionsPage.changed();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#createChangeSettingsDialog(org.eclipse.swt.widgets.Shell, com.nokia.cdt.internal.debug.launch.wizard2.LaunchOptionsData)
-	 */
 	@Override
 	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchOptionsData dialogData) {
 		return new ConnectToDeviceDialog(shell, dialogData);
 	}
 	
 	protected void refresh() {
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				validate();
 				updateUI();

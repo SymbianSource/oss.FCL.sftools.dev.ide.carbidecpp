@@ -35,17 +35,11 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		super(data, MessageFormat.format("{0} process", data.getModeLabel()));
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.IWizardSection#createComposite(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	public void createControl(Composite parent) {
 		createSection(parent, 1);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#dispose()
-	 */
 	@Override
 	protected void dispose() {
 		
@@ -60,26 +54,17 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 			data.setExeSelectionPath(data.getDefaultExecutable());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#createChangeSettingsDialog(org.eclipse.swt.widgets.Shell, com.nokia.cdt.internal.debug.launch.wizard2.LaunchOptionsData)
-	 */
 	@Override
 	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(
 			Shell shell, LaunchOptionsData dialogData) {
 		return new DebugRunProcessDialog(shell, dialogData);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#refresh()
-	 */
 	@Override
 	protected void refresh() {
 		updateUI();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#validate()
-	 */
 	@Override
 	protected void validate() {
 

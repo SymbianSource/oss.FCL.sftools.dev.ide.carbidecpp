@@ -156,8 +156,10 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			attachToProcessRadioButton.setSelection(true);
 			break;
 		}
+		handleProjectExecutableRadioSelected();
+		handleRemoteExecutableRadioSelected();
+		handleAttachToProcessRadioSelected();
 	}
-	
 
 	private void createPackageConfiguration(Composite composite) {
 		Label label;
@@ -421,16 +423,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		projectExecutableRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (projectExecutableRadioButton.getSelection()) {
-					projectExecutableViewer.getControl().setEnabled(true);
-					data.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
-					
-					validate();
-				} else {
-					projectExecutableViewer.getControl().setEnabled(false);
-					// another button becomes active and sets the new launch process
-				}
+				handleProjectExecutableRadioSelected();
 			}
+
 		});
 		
 		projectExecutableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -452,6 +447,18 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		});
 	}
 
+	private void handleProjectExecutableRadioSelected() {
+		if (projectExecutableRadioButton.getSelection()) {
+			projectExecutableViewer.getControl().setEnabled(true);
+			data.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
+			
+			validate();
+		} else {
+			projectExecutableViewer.getControl().setEnabled(false);
+			// another button becomes active and sets the new launch process
+		}
+	}
+
 	/**
 	 * Allow user to enter an executable path.
 	 * @param radioGroup
@@ -471,17 +478,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		remoteExecutableRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (remoteExecutableRadioButton.getSelection()) {
-					remoteProgramEntry.setEnabled(true);
-					data.setExeSelection(EExeSelection.USE_REMOTE_EXECUTABLE);
-					String symbianPath = PathUtils.convertPathToWindows(remoteProgramEntry.getText());
-					data.setExeSelectionPath(new Path(symbianPath));
-					validate();
-				} else {
-					remoteProgramEntry.setEnabled(false);
-					// another button becomes active and sets the new launch process
-				}
+				handleRemoteExecutableRadioSelected();
 			}
+
 		});
 		
 		remoteProgramEntry.addFocusListener(new FocusAdapter() {
@@ -492,6 +491,19 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			}
 		});
 		
+	}
+
+	private void handleRemoteExecutableRadioSelected() {
+		if (remoteExecutableRadioButton.getSelection()) {
+			remoteProgramEntry.setEnabled(true);
+			data.setExeSelection(EExeSelection.USE_REMOTE_EXECUTABLE);
+			String symbianPath = PathUtils.convertPathToWindows(remoteProgramEntry.getText());
+			data.setExeSelectionPath(new Path(symbianPath));
+			validate();
+		} else {
+			remoteProgramEntry.setEnabled(false);
+			// another button becomes active and sets the new launch process
+		}
 	}
 
 	/**
@@ -513,18 +525,23 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		attachToProcessRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (attachToProcessRadioButton.getSelection()) {
-					data.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
-					data.setExeSelectionPath(null);
-					validate();
-				} else {
-					// another button becomes active and sets the new launch process
-				}
+				handleAttachToProcessRadioSelected();
 			}
+
 		});
 		
 	}
 	
+	private void handleAttachToProcessRadioSelected() {
+		if (attachToProcessRadioButton.getSelection()) {
+			data.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
+			data.setExeSelectionPath(null);
+			validate();
+		} else {
+			// another button becomes active and sets the new launch process
+		}
+	}
+
 	@Override
 	protected void validate() {
 		IStatus status = Status.OK_STATUS;
