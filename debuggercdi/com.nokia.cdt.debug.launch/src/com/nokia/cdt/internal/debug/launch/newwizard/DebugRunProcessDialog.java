@@ -19,6 +19,7 @@ package com.nokia.cdt.internal.debug.launch.newwizard;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.settings.model.CProjectDescriptionEvent;
@@ -43,8 +44,6 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -156,9 +155,6 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			attachToProcessRadioButton.setSelection(true);
 			break;
 		}
-		handleProjectExecutableRadioSelected();
-		handleRemoteExecutableRadioSelected();
-		handleAttachToProcessRadioSelected();
 	}
 
 	private void createPackageConfiguration(Composite composite) {
@@ -332,7 +328,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 
 
 	public void handleEvent(CProjectDescriptionEvent event) {
-		if (getShell().isDisposed()) {
+		Shell shell = getShell();
+		if (shell == null || shell.isDisposed()) {
 			return;
 		}
 		
@@ -365,29 +362,31 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
 	protected void initUI() {
-		projectExecutableViewer.setInput(data.getExes());
-		
-		if (data.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && data.getExeSelectionPath() != null) {
-			projectExecutableViewer.setSelection(new StructuredSelection(data.getExeSelectionPath()));
+		List<IPath> exes = data.getExes();
+		projectExecutableViewer.setInput(exes);
+		IPath exeSelectionPath = data.getExeSelectionPath();
+		if (exeSelectionPath.equals(Path.EMPTY) && !exes.isEmpty())
+			exeSelectionPath = exes.get(0);
+		projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
+		IPath remotePath = createSuggestedRemotePath(exeSelectionPath);
+		remoteProgramEntry.setText(PathUtils.convertPathToWindows(remotePath));
+
+		if (data.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && exeSelectionPath != null) {
 			projectExecutableRadioButton.forceFocus();
 		}
 		
-		if (data.getExeSelection() == EExeSelection.USE_REMOTE_EXECUTABLE && data.getExeSelectionPath() != null) {
-			IPath exeSelectionPath = createSuggestedRemotePath(data.getExeSelectionPath());
-			remoteProgramEntry.setText(PathUtils.convertPathToWindows(exeSelectionPath));
+		if (data.getExeSelection() == EExeSelection.USE_REMOTE_EXECUTABLE && exeSelectionPath != null) {
 			remoteExecutableRadioButton.forceFocus();
 		}
 		
 		if (data.getExeSelection() == EExeSelection.ATTACH_TO_PROCESS) {
 			attachToProcessRadioButton.forceFocus();
 		}
+
+		handleProjectExecutableRadioSelected();
+		handleRemoteExecutableRadioSelected();
+		handleAttachToProcessRadioSelected();
 	}
 
 
@@ -451,7 +450,11 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		if (projectExecutableRadioButton.getSelection()) {
 			projectExecutableViewer.getControl().setEnabled(true);
 			data.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
-			
+			IPath selectedPath = (IPath) ((IStructuredSelection) projectExecutableViewer.getSelection()).getFirstElement();
+			if (selectedPath != null) {
+				String symbianPath = PathUtils.convertPathToWindows(selectedPath);
+				data.setExeSelectionPath(new Path(symbianPath));
+			}
 			validate();
 		} else {
 			projectExecutableViewer.getControl().setEnabled(false);
@@ -483,14 +486,12 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 
 		});
 		
-		remoteProgramEntry.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
+		remoteProgramEntry.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
 				data.setExeSelectionPath(new Path(remoteProgramEntry.getText().trim()));
 				validate();
 			}
 		});
-		
 	}
 
 	private void handleRemoteExecutableRadioSelected() {
