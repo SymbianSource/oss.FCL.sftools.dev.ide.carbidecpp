@@ -488,7 +488,32 @@ long CClientManager::StartServer()
 	TCDEBUGLOGA1("CClientManager::StartServer end numRefs = %d\n", pData->numRefs);
 	return ret;
 }
-
+BOOL CClientManager::IsTCFServerActive(DWORD processId)
+{
+	HANDLE h = ::OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, processId);
+	if (h)
+	{
+		// is it really still alive?
+		DWORD exitCode = -5;
+		BOOL exitCall = ::GetExitCodeProcess(h, &exitCode);
+		::CloseHandle(h);
+		if (exitCall == TRUE && exitCode != STILL_ACTIVE)
+		{
+			// TCFServer is really dead
+			return FALSE;
+		}
+		else
+		{
+			// TCFServer is still active
+			return TRUE;
+		}
+	}
+	else
+	{
+		// TCFServer is really dead
+		return FALSE;
+	}
+}
 long CClientManager::StopServer()
 {
 	long ret = TCAPI_ERR_NONE;
@@ -516,23 +541,34 @@ long CClientManager::StopServer()
 		// substract ref count
 		pData->numRefs--;
 		if (pData->numRefs < 0) pData->numRefs = 0;
+
+		bool sendStop = true;
+		if (!IsTCFServerActive(pData->serverProcess.dwProcessId))
+		{
+			sendStop = false;
+			pData->numRefs = 0;
+		}
+
 		// if refcount == 0 then really stop the server process
 		if (pData->numRefs == 0)
 		{
-			// last client process is closing
-			// tell server to exit
-			ServerCommandData cmdrsp;
-			cmdrsp.command = eCmdExit;
-			
-			TCDEBUGLOGS(" SendCommand eCmdExit\n");
-			m_Server->SendCommand(&cmdrsp);
-			TCDEBUGLOGS(" GetResponse eExit\n");
-			m_Server->GetResponse(&cmdrsp);
-			
-			// wait for process to exit
-			TCDEBUGLOGS(" WaitForSingleObject start\n");
-			DWORD waitErr = ::WaitForSingleObject(m_hServer, 10000L /*INFINITE*/);
-			TCDEBUGLOGA1("CClientManager::StopServer WaitForSingleObject = %d\n", waitErr);
+			if (sendStop)
+			{
+				// last client process is closing
+				// tell server to exit
+				ServerCommandData cmdrsp;
+				cmdrsp.command = eCmdExit;
+				
+				TCDEBUGLOGS(" SendCommand eCmdExit\n");
+				m_Server->SendCommand(&cmdrsp);
+				TCDEBUGLOGS(" GetResponse eExit\n");
+				m_Server->GetResponse(&cmdrsp);
+				
+				// wait for process to exit
+				TCDEBUGLOGS(" WaitForSingleObject start\n");
+				DWORD waitErr = ::WaitForSingleObject(m_hServer, 10000L /*INFINITE*/);
+				TCDEBUGLOGA1("CClientManager::StopServer WaitForSingleObject = %d\n", waitErr);
+			}
 
 			// now close our handle to server process
 			if (m_hServer != NULL)
@@ -580,11 +616,14 @@ long CClientManager::StopServer()
 BOOL CClientManager::IsServerRunning()
 {
 	pServerProcessData pData = m_Server->GetProcessPtr();
-	if (pData->serverProcess.hProcess != NULL)
+	if (IsTCFServerActive(pData->serverProcess.dwProcessId))
+	{
 		return TRUE;
+	}
 	else
+	{
 		return FALSE;
-
+	}
 }
 
 void CClientManager::CreateLockFile(DWORD processId)
@@ -780,6 +819,7 @@ void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 				}
 				if (numDeadCallers == numIds)
 				{
+					// All clients of this TCFServer are dead
 					// terminate the TCFServer, and delete lock file
 					pData->numRefs = 0;
 					::remove(m_ServerLockFile);
@@ -797,27 +837,43 @@ void CClientManager::TerminateServerThroughLockFile(pServerProcessData pData)
 				}
 				else
 				{
-					// leave TCFServer running, recreate lock file and save live callers
-					::remove(m_ServerLockFile);
-					f = fopen(m_ServerLockFile, "wt");
-					if (f)
+					// some java clients are still alive
+					//   check to see if TCFServer is still alive
+					if (IsTCFServerActive(serverIds[0]))
 					{
-						for (int i = 0; i < numIds; i++)
+						// TCFServer is still active
+						// leave TCFServer running, recreate lock file and save live callers
+						::remove(m_ServerLockFile);
+						f = fopen(m_ServerLockFile, "wt");
+						if (f)
 						{
-							if (liveCaller[i])
+							for (int i = 0; i < numIds; i++)
 							{
-								fprintf(f, "%ld %ld\n", creatorIds[i], serverIds[i]);
+								if (liveCaller[i])
+								{
+									fprintf(f, "%ld %ld\n", creatorIds[i], serverIds[i]);
+								}
 							}
+							fclose(f);
 						}
-						fclose(f);
+						pData->numRefs -= numDeadCallers;
+						if (pData->numRefs < 0) pData->numRefs = 0;
 					}
-					pData->numRefs -= numDeadCallers;
-					if (pData->numRefs < 0) pData->numRefs = 0;
+					else
+					{
+						// TCFServer is really dead
+						pData->numRefs = 0;
+						::remove(m_ServerLockFile);
+					}
 				}
 			}
 			else
 			{
 				// error opening lock file
+				// perhaps the user deleted it,
+				//   if so, we assume he has also deleted the TCFServer as we now have no way of verifying if the 
+				//   process is dead.
+				pData->numRefs = 0;
 				DWORD err = ::GetLastError();
 				TCDEBUGLOGA2("CClientManager::TerminateServerThroughLockFile fopenErr=%d:%s\n", err, GetErrorText(err));
 			}

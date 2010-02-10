@@ -359,6 +359,23 @@ public class TCAPIConnection implements ITCAPIConnection {
 				this.cookie.setConnected(true);
 				this.connection = inConnection;
 				this.messageOptions = inMessageOptions;
+			} else if (ret == TCErrorConstants.TCAPI_ERR_COMM_SERVER_RESPONSE_TIMEOUT){
+				// TCFServer may have died, attempt to restart it
+				ret = nativeStartServer();
+				if (ret == TCErrorConstants.TCAPI_ERR_NONE) {
+					// now try connecting again
+					ret = nativeConnect(type, options, settings, moptions, filePath, clientId);
+					if (ret == TCErrorConstants.TCAPI_ERR_NONE) {
+						this.cookie.setClientId(clientId[0]);
+						this.cookie.setConnected(true);
+						this.connection = inConnection;
+						this.messageOptions = inMessageOptions;
+					} else {
+						status = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
+					}
+				} else {
+					status = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
+				}
 			} else {
 				status = new Status(Status.ERROR, Activator.PLUGIN_ID, (int)ret, TCErrorConstants.getErrorMessage(ret), null);
 			}
