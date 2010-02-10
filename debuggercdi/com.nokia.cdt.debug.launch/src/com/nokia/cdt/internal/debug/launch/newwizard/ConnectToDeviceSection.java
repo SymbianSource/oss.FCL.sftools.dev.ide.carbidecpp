@@ -114,7 +114,6 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	
 	protected void refresh() {
 		Display.getDefault().asyncExec(new Runnable() {
-			@Override
 			public void run() {
 				validate();
 				updateUI();
