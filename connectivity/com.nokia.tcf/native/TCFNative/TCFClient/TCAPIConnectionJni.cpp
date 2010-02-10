@@ -84,6 +84,13 @@ JNIEXPORT jlong JNICALL Java_com_nokia_tcf_impl_TCAPIConnection_nativeConnect
 	TCDEBUGOPEN();
 
 	TCDEBUGLOGS("nativeConnect\n");
+	if (!gManager->IsServerRunning())
+	{
+		TCDEBUGLOGS("Server not running\n");
+		TCDEBUGCLOSE();
+		return TCAPI_ERR_COMM_SERVER_RESPONSE_TIMEOUT;
+	}
+
 
 	gManager->m_Server->WaitforServerPipeAccess();
 
@@ -1255,6 +1262,13 @@ JNIEXPORT jlong JNICALL Java_com_nokia_tcf_impl_TCAPIConnection_nativeSendMessag
 	TCDEBUGOPEN();
 	TCDEBUGLOGS("nativeSendMessage\n");
 	TCDEBUGLOGA1(" inClientId=%d\n", inClientId);
+	if (!gManager->IsServerRunning())
+	{
+		// return right away if TCFServer is dead
+		TCDEBUGLOGS("nativeSendMessage: server is dead\n");
+		TCDEBUGCLOSE();
+		return TCAPI_ERR_COMM_SERVER_RESPONSE_TIMEOUT;
+	}
 
 	gManager->m_Server->WaitforServerPipeAccess();
 

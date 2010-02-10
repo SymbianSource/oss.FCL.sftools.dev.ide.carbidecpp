@@ -70,6 +70,7 @@ public:
 	void AppendToLockFile(DWORD processId);
 	void DeleteLockFile();
 	void DeleteFromLockFile(DWORD processId);
+	BOOL IsTCFServerActive(DWORD processId);
 
 	// input stream
 	CInputStream* FindInputStream(long inClientId);
