@@ -169,8 +169,8 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		group.addDisposeListener(new DisposeListener() {
 			
 			public void widgetDisposed(DisposeEvent e) {
-				RemoteConnectionsActivator.getConnectionsManager().addConnectionListener(ClientServiceSiteUI2.this);
-				RemoteConnectionsActivator.getConnectionsManager().addConnectionStoreChangedListener(ClientServiceSiteUI2.this);
+				RemoteConnectionsActivator.getConnectionsManager().removeConnectionListener(ClientServiceSiteUI2.this);
+				RemoteConnectionsActivator.getConnectionsManager().removeConnectionStoreChangedListener(ClientServiceSiteUI2.this);
 			}
 		});
 		
