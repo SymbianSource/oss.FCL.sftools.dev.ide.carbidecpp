@@ -94,7 +94,7 @@ public class ServiceTester {
 			public void run() {
 				while (true) {
 					Collection<Set<AbstractConnectedService2>> csSetsByResource = 
-						createConnectedServiceSetsByResource(registry);
+						createConnectedServiceSetsByResource(new HashSet<AbstractConnectedService2>(registry));
 					for (Set<AbstractConnectedService2> set : csSetsByResource) {
 						Collection<Set<AbstractConnectedService2>> csSetsByService = 
 							createConnectedServiceSetsByService(set);

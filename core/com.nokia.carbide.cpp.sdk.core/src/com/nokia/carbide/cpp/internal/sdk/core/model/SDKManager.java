@@ -981,10 +981,26 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String overallOutput = null;
 				String stdErrLine = null;
-				try { 
-					while ((stdErrLine = br.readLine()) != null) { 
-						overallOutput += stdErrLine; 
+				try {
+
+					// Only try for 10 seconds then bail in case Raptor hangs
+					int maxTries = 20;
+					int numTries = 0;
+					while (numTries < maxTries) {
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							// ignore
+						}
+						if (br.ready()) {
+							while ((stdErrLine = br.readLine()) != null) {
+								overallOutput += stdErrLine;
+							}
+							break;
+						}
+						numTries++;
 					}
+
 				} catch (IOException e) { 
 					e.printStackTrace();
 				}
