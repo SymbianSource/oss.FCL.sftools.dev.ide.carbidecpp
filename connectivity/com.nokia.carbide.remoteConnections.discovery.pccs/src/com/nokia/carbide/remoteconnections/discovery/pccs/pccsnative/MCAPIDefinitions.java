@@ -16,8 +16,6 @@
 */
 package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 
-import com.sun.jna.Structure;
-
 public class MCAPIDefinitions {
 	//=========================================================
 	// Media Control API versions 

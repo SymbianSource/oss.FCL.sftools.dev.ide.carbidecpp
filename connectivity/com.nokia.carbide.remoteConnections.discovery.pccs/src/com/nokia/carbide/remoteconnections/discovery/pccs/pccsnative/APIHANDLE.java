@@ -26,7 +26,7 @@ import com.sun.jna.PointerType;
  */
 public class APIHANDLE extends PointerType {
 	// Constant value representing an invalid HANDLE.
-    public static APIHANDLE INVALID_HANDLE_VALUE = new APIHANDLE(Pointer.createConstant(-1));
+    public static APIHANDLE INVALID_HANDLE_VALUE = new APIHANDLE(Pointer.createConstant((long)-1));
 	private boolean immutable;
 
 	public APIHANDLE() {

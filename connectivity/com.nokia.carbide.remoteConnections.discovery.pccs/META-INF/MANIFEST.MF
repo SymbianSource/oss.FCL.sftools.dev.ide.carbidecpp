@@ -18,3 +18,5 @@ Bundle-ClassPath: .,
  pccsPlugin.jar
 Export-Package: com.nokia.carbide.remoteconnections.discovery.pccs.agent,
  com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative
+Import-Package: com.nokia.cpp.internal.api.utils.core,
+ com.nokia.cpp.internal.api.utils.ui

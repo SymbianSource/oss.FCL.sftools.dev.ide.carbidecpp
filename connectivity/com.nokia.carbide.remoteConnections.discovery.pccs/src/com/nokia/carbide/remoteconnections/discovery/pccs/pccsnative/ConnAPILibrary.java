@@ -25,9 +25,9 @@ import org.eclipse.core.runtime.Status;
 
 import com.nokia.carbide.remoteconnections.discovery.pccs.Activator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Messages;
-import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA.ByReference;
+//import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA.ByReference;
 import com.sun.jna.Native;
-import com.sun.jna.Pointer;
+import com.sun.jna.WString;
 import com.sun.jna.ptr.IntByReference;
 
 public class ConnAPILibrary implements IConnAPILibrary {
@@ -130,14 +130,13 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		return 0;
 	}
 
-	public int CONAMMFreeMediaStructures(int dwCountOfMedia,
-			CONAPI_MEDIA[] pMedia) {
+	public int CONAMMFreeMediaStructures(int dwCountOfMedia, CONAPI_MEDIA[] pMedia) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia,
-			ByReference[] ppMedia) {
+			CONAPI_MEDIA.ByReference[] ppMedia) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -202,7 +201,7 @@ public class ConnAPILibrary implements IConnAPILibrary {
 	}
 
 	public int UPAPI_FreeStringDescriptor(
-			UP_STRING_DESCRIPTOR[] pStringDescriptor) {
+			UP_STRING_DESCRIPTOR pStringDescriptor) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -213,22 +212,22 @@ public class ConnAPILibrary implements IConnAPILibrary {
 	}
 
 	public int UPAPI_GetConfigurationDescriptor(APIHANDLE hUPHandle,
-			ShortBuffer pstrDeviceId,
+			WString pstrDeviceId,
 			UP_CONFIGURATION_DESCRIPTOR[] pConfigurationDescriptor) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int UPAPI_GetPersonalityDescriptors(APIHANDLE hUPHandle,
-			ShortBuffer pstrDeviceId,
+			WString pstrDeviceId,
 			UP_PERSONALITY_DESCRIPTORS[] pPersonalityDescriptors) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int UPAPI_GetStringDescriptor(APIHANDLE hUPHandle,
-			ShortBuffer pstrDeviceId, int dwDescriptorIndex, int dwLanguageID,
-			UP_STRING_DESCRIPTOR[] pStringDescriptor) {
+			WString pstrDeviceId, int dwDescriptorIndex, int dwLanguageID,
+			UP_STRING_DESCRIPTOR pStringDescriptor) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -256,14 +255,14 @@ public class ConnAPILibrary implements IConnAPILibrary {
 	}
 
 	public int UPAPI_SendCommandToDevice(APIHANDLE hUPHandle,
-			ShortBuffer pstrDeviceId, int dwDataDirection,
+			WString pstrDeviceId, int dwDataDirection,
 			UP_DATA_BUFFER[] pDataBuffer) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int UPAPI_SetPersonality(APIHANDLE hUPHandle,
-			ShortBuffer pstrDeviceId, int dwPersonalityCode) {
+			WString pstrDeviceId, int dwPersonalityCode) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

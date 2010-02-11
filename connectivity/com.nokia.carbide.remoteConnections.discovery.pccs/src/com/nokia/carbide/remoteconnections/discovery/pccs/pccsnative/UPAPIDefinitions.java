@@ -31,6 +31,7 @@ public class UPAPIDefinitions {
 	   public static final int UPAPI_PERSONALITY_CODE_PICTURE_TRANSFER	=0x03;
 	   public static final int UPAPI_PERSONALITY_CODE_MEDIA_TRANSFER	=0x04;
 	   public static final int UPAPI_PERSONALITY_CODE_COMBINED			=0x05;
+	   public static final int UPAPI_PERSONALITY_CODE_OVI_SUITE			=UPAPI_PERSONALITY_CODE_COMBINED;
 	   public static final int UPAPI_PERSONALITY_CODE_PC_TO_WEB			=0x06;
 
 	   // not from documentation - from email only

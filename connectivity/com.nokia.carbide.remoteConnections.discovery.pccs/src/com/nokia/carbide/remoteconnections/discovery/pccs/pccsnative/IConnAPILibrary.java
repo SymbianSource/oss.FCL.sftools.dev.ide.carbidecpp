@@ -19,10 +19,7 @@ package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
-import org.eclipse.core.runtime.CoreException;
-
-import com.sun.jna.Callback;
-import com.sun.jna.Native;
+import com.sun.jna.WString;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.ShortByReference;
 import com.sun.jna.win32.StdCallLibrary;
@@ -79,13 +76,13 @@ public interface IConnAPILibrary extends StdCallLibrary {
 	int UPAPI_QueryDeviceCount(APIHANDLE hUPHandle, IntBuffer pdwDeviceCount);
 	int UPAPI_QueryDevices(APIHANDLE hUPHandle, IntBuffer pdwDeviceCount, UP_DEVICE_DESCRIPTOR[] pDeviceDescriptor);
 	int UPAPI_FreeDeviceDescriptor(int dwDeviceCount, UP_DEVICE_DESCRIPTOR[] pDeviceDescriptor);
-	int UPAPI_GetConfigurationDescriptor(APIHANDLE hUPHandle, ShortBuffer pstrDeviceId, UP_CONFIGURATION_DESCRIPTOR[] pConfigurationDescriptor);
-	int UPAPI_GetStringDescriptor(APIHANDLE hUPHandle, ShortBuffer pstrDeviceId, int dwDescriptorIndex, int dwLanguageID, UP_STRING_DESCRIPTOR[] pStringDescriptor);
-	int UPAPI_FreeStringDescriptor(UP_STRING_DESCRIPTOR[] pStringDescriptor);
-	int UPAPI_GetPersonalityDescriptors(APIHANDLE hUPHandle, ShortBuffer pstrDeviceId, UP_PERSONALITY_DESCRIPTORS[] pPersonalityDescriptors);
+	int UPAPI_GetConfigurationDescriptor(APIHANDLE hUPHandle, WString pstrDeviceId, UP_CONFIGURATION_DESCRIPTOR[] pConfigurationDescriptor);
+	int UPAPI_GetStringDescriptor(APIHANDLE hUPHandle, WString pstrDeviceId, int dwDescriptorIndex, int dwLanguageID, UP_STRING_DESCRIPTOR pStringDescriptor);
+	int UPAPI_FreeStringDescriptor(UP_STRING_DESCRIPTOR pStringDescriptor);
+	int UPAPI_GetPersonalityDescriptors(APIHANDLE hUPHandle, WString pstrDeviceId, UP_PERSONALITY_DESCRIPTORS[] pPersonalityDescriptors);
 	int UPAPI_FreePersonalityDescriptors(UP_PERSONALITY_DESCRIPTORS[] pPersonalityDescriptors);
-	int UPAPI_SetPersonality(APIHANDLE hUPHandle, ShortBuffer pstrDeviceId, int dwPersonalityCode);
-	int UPAPI_SendCommandToDevice(APIHANDLE hUPHandle, ShortBuffer pstrDeviceId, int dwDataDirection, UP_DATA_BUFFER[] pDataBuffer);
+	int UPAPI_SetPersonality(APIHANDLE hUPHandle, WString pstrDeviceId, int dwPersonalityCode);
+	int UPAPI_SendCommandToDevice(APIHANDLE hUPHandle, WString pstrDeviceId, int dwDataDirection, UP_DATA_BUFFER[] pDataBuffer);
 	
 
 }
