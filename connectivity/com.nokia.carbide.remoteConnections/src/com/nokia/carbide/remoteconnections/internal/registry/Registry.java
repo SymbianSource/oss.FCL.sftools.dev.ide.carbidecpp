@@ -517,6 +517,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	
 	public ISelectedConnectionInfo ensureConnection(String id, IService service) throws CoreException {
 		Check.checkArg(service);
+		final boolean wasCurrentConnection = id.equals(CURRENT_CONNECTION_ID);
 		final IConnection[] connectionHolder = { findConnection(id) };
 		final String[] storableIdHolder = { id };
 		if (!isCompatibleConnection(connectionHolder[0], service)) {
@@ -525,6 +526,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 				throw new CoreException(
 						Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
 								Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
+			}
+			else if (wasCurrentConnection && !connectionHolder[0].getIdentifier().equals(CURRENT_CONNECTION_ID)) {
+				setCurrentConnection(connectionHolder[0]);
+				storableIdHolder[0] = CURRENT_CONNECTION_ID;
 			}
 		}
 		return new ISelectedConnectionInfo() {
