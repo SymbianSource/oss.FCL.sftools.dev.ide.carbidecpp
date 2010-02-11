@@ -32,11 +32,11 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
-import com.nokia.carbide.cpp.internal.sdk.core.model.QtSDKUtils;
+import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
-public class ProjectCorePluginUtility implements ICarbideConfigurationChangedListener {
+public class ProjectCorePluginUtility {
 
 	private static ResourceChangeListener resourceChangeListener;
 	private static boolean listening = false;
@@ -46,12 +46,10 @@ public class ProjectCorePluginUtility implements ICarbideConfigurationChangedLis
 	}
 
 	public void startup() {
-		CarbideBuilderPlugin.addBuildConfigChangedListener(this);
 	}
 
 	public void shutdown() {
 		stopProjectListener();
-		CarbideBuilderPlugin.removeBuildConfigChangedListener(this);
 	}
 
 	public static void startProjectListener() {
@@ -113,28 +111,5 @@ public class ProjectCorePluginUtility implements ICarbideConfigurationChangedLis
     		
     		cpi.saveChanges();
 		}
-	}
-
-	public void buildConfigurationChanged(ICarbideBuildConfiguration currentConfig) {
-		checkDefaultQtSDKForProject(currentConfig);
-	}
-	
-	@SuppressWarnings("restriction")
-	private void checkDefaultQtSDKForProject(ICarbideBuildConfiguration currentConfig){
-		IProject project = currentConfig.getCarbideProject().getProject();
-		if (project != null && QtCorePlugin.isQtProject(project)) {
-			try {
-				String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(currentConfig.getSDK());
-				if (qtSDKName == null || QtSDKUtils.getDefaultQtSDKForProject(project).equals(QtSDKUtils.QT_DEFAULT_SDK_NAME)) {
-					return;
-				}
-				
-				QtSDKUtils.setDefaultQtSDKForProject(project, qtSDKName);
-				
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-		}
-		
 	}
 }

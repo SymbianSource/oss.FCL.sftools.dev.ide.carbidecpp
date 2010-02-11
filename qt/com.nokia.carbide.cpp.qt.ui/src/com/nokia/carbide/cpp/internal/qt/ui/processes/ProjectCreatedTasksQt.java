@@ -32,8 +32,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
+import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.internal.qt.ui.QtUIPlugin;
-import com.nokia.carbide.cpp.internal.sdk.core.model.QtSDKUtils;
 import com.nokia.carbide.cpp.project.ui.processes.ProjectCreatedTasks;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;

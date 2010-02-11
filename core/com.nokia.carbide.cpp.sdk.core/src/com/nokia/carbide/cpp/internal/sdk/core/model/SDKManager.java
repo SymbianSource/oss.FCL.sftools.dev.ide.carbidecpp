@@ -96,7 +96,6 @@ public class SDKManager extends AbstractSDKManager {
 			for (Iterator iter = devices.iterator(); iter.hasNext();) {
 				SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
 				sdkList.add(sdk);
-				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
 			}
 
 			return true;
