@@ -16,10 +16,7 @@
 */
 package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 
-import com.sun.jna.NativeLong;
-import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import com.sun.jna.TypeMapper;
 import com.sun.jna.ptr.ShortByReference;
 
 /**

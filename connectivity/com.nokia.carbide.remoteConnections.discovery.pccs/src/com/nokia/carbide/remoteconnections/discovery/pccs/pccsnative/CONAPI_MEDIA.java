@@ -16,6 +16,7 @@
 */
 package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -46,6 +47,9 @@ public class CONAPI_MEDIA extends Structure {
 	public CONAPI_MEDIA() {
 		super();
 	}
+	public CONAPI_MEDIA(Pointer p) {
+		super(p);
+	}
 	/**
 	 * @param dwSize Must be sizeof(CONAPI_MEDIA)<br>
 	 * @param dwMedia Media type<br>
@@ -67,12 +71,29 @@ public class CONAPI_MEDIA extends Structure {
 		this.dwMediaData = dwMediaData;
 		this.pstrID = pstrID;
 	}
-	protected ByReference newByReference() { return new ByReference(); }
-	protected ByValue newByValue() { return new ByValue(); }
-	protected CONAPI_MEDIA newInstance() { return new CONAPI_MEDIA(); }
+	protected ByReference newByReference() {
+		ByReference s = new ByReference();
+		s.useMemory(getPointer());
+		write();
+		s.read();
+		return s;
+	}
+	protected ByValue newByValue() { 
+		ByValue s = new ByValue();
+		s.useMemory(getPointer());
+		write();
+		s.read();
+		return s;
+	}
+	protected CONAPI_MEDIA newInstance() {
+		CONAPI_MEDIA s = new CONAPI_MEDIA();
+		s.useMemory(getPointer());
+		write();
+		s.read();
+		return s;
+	}
 	public static CONAPI_MEDIA[] newArray(int arrayLength) {
-		return null;
-//			return com.ochafik.lang.jnaerator.runtime.Structure.newArray(CONAPI_MEDIA.class, arrayLength);
+		return (CONAPI_MEDIA[]) new CONAPI_MEDIA().toArray(arrayLength);
 	}
 	public static class ByReference extends CONAPI_MEDIA implements com.sun.jna.Structure.ByReference {}
 	public static class ByValue extends CONAPI_MEDIA implements com.sun.jna.Structure.ByValue {}

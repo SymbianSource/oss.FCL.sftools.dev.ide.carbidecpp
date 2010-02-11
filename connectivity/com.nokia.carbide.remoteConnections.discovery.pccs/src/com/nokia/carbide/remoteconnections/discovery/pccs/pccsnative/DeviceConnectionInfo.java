@@ -23,7 +23,8 @@ public class DeviceConnectionInfo {
 	public String deviceName;
 	public String address;
 	public int state;
-	public String comPort;
+	public String port;	// may be serial port or IP address
+	public String mode;		// "serial" or "rndis" or etc.
 	/**
 	 * 
 	 */

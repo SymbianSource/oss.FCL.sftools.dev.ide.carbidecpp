@@ -18,6 +18,7 @@ package com.nokia.carbide.remoteconnections.discovery.pccs.agent;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Activator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Messages;
-import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.DeviceConnectionInfo;
-import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.DeviceInfo;
+import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.DeviceConnection;
 import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.PCCSConnection;
 import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.PCCSConnection.DeviceEventListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
@@ -123,7 +123,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 			case DEVICE_REMOVED:
 			case DEVICE_UPDATED_ADDEDCONNECTION:
 			case DEVICE_UPDATED_REMOVEDCONNECTION:
-				updateConnections(pccsConnection.getDeviceList());
+				updateConnections(pccsConnection.getGoodConnectionList());
 				break;
 			case DEVICE_UPDATED_RENAMED:
 				// TODO what to do when device is renamed?
@@ -145,7 +145,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 			saveLoadStatus(ce);
 			throw ce;		// rethrow
 		}
-		updateConnections(pccsConnection.getDeviceList());
+		updateConnections(pccsConnection.getGoodConnectionList());
 		pccsConnection.addEventListenter(this);
 	}
 
@@ -186,86 +186,83 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	}
 
 	/**
-	 * Creates a new PCCS USB connection
-	 * @param deviceInfo - device information of the PCCS USB connection
+	 * Creates a new PCCS connection
+	 * @param deviceConn - device/connection information from PCCS
 	 */
-	protected void createConnection(DeviceInfo deviceInfo, DeviceConnectionInfo connectionInfo) {
-		if (connections.get(deviceInfo) == null) {
-			// TODO: currently only handles USB
-			if (connectionInfo.media.equals("usb")) { //$NON-NLS-1$
-				IConnectionType connectionType = 
-					RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(USB_CONNECTION_TYPE);
-				if (connectionType != null) {
-					IConnectionFactory factory = connectionType.getConnectionFactory();
-					Map<String, String> settings = factory.getSettingsFromUI();
-					settings.put(PORT_SETTING, connectionInfo.comPort);
-					IConnection connection = factory.createConnection(settings);
-					if (connection instanceof IConnection2) {
-						IConnection2 connection2 = (IConnection2) connection;
-						connection2.setIdentifier(createUniqueId(deviceInfo));
-						connection2.setDisplayName(deviceInfo.friendlyName);
-						connection2.setDynamic(true);
-						String key = getKey(deviceInfo, connectionInfo);
-						connections.put(key, connection2);
-						manager.addConnection(connection2);
+	protected void createConnection(DeviceConnection deviceConn) {
+		if (connections.get(getKey(deviceConn)) == null) {
+			// TODO: currently only handles USB & Serial
+			if (deviceConn.media.equals("usb")) { //$NON-NLS-1$
+				if (deviceConn.mode.equals("serial")) { //$NON-NLS-1$
+					IConnectionType connectionType = 
+						RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(USB_CONNECTION_TYPE);
+					if (connectionType != null) {
+						IConnectionFactory factory = connectionType.getConnectionFactory();
+						Map<String, String> settings = factory.getSettingsFromUI();
+						settings.put(PORT_SETTING, deviceConn.port);
+						IConnection connection = factory.createConnection(settings);
+						if (connection instanceof IConnection2) {
+							IConnection2 connection2 = (IConnection2) connection;
+							connection2.setIdentifier(createUniqueId(deviceConn));
+							connection2.setDisplayName(deviceConn.friendlyName);
+							connection2.setDynamic(true);
+							String key = getKey(deviceConn);
+							connections.put(key, connection2);
+							manager.addConnection(connection2);
+						}
+						else {
+							RemoteConnectionsActivator.log("Could not create dynamic serial connection", null);
+						}
 					}
 					else {
-						RemoteConnectionsActivator.log("Could not create dynamic serial connection", null);
+						RemoteConnectionsActivator.log("USB connection type extension not found", null);
 					}
-				}
-				else {
-					RemoteConnectionsActivator.log("USB connection type extension not found", null);
 				}
 			}
 		}
 	}
 
-	private String createUniqueId(DeviceInfo deviceInfo) {
-		return getClass().getSimpleName() + ": " + deviceInfo.friendlyName; //$NON-NLS-1$
-	}
-
 	/**
-	 * Return a string key based on the device and connection information 
-	 * @param deviceInfo - device information
-	 * @param connectionInfo - device connection information
+	 * Create a unique ID based on this device/connection
+	 * @param conn - device/connection information from PCCS
 	 * @return
 	 */
-	protected String getKey(DeviceInfo deviceInfo, DeviceConnectionInfo connectionInfo) {
-		String key = deviceInfo.friendlyName + deviceInfo.serialNumber + connectionInfo.address;
-		return key;
+	private String createUniqueId(DeviceConnection conn) {
+		return getClass().getSimpleName() + ": " + conn.friendlyName; //$NON-NLS-1$
 	}
 
 	/**
-	 * Update existing PCCS USB connections
-	 * @param deviceInfoList - list of device information for current PCCS USB connections
+	 * Return a string key based on the device and connection information
+	 * @param conn - device/connection information
+	 * @return
 	 */
-	protected void updateConnections(DeviceInfo[] deviceInfoList) {
+	protected String getKey(DeviceConnection conn) {
+		String key = conn.friendlyName + conn.serialNumber + conn.address;
+		return key;
+	}
+	/**
+	 * Update existing PCCS connections
+	 * @param connList - the Device/Connection list from PCCS
+	 */
+	protected void updateConnections(Collection<DeviceConnection> connList) {
 		disconnectAll();
- 		if (deviceInfoList != null) {
+ 		if (connList != null && !connList.isEmpty()) {
 			if (connections.isEmpty()) {
 				// no existing connections, so create new ones
-				for (DeviceInfo deviceInfo : deviceInfoList) {
-					for (DeviceConnectionInfo connectionInfo : deviceInfo.connections) {
-						createConnection(deviceInfo, connectionInfo);
-					}
+				for (DeviceConnection deviceConn : connList) {
+					createConnection(deviceConn);
 				}
 			}
 			else {
-				for (DeviceInfo deviceInfo : deviceInfoList) {
-					for (DeviceConnectionInfo connectionInfo : deviceInfo.connections) {
-						String key = getKey(deviceInfo, connectionInfo);
-						IConnection2 connection = connections.get(key);
-						if (connection == null) {
-							// no existing connection for the device found, must be new connection
-							createConnection(deviceInfo, connectionInfo);
-						}
-						else {
-							// existing connection for the device found, try to reconnect
-							if (!manager.reconnect(connection)) {
-								// reconnect failed, probably because the connection is not in use
-								// so just create a new one
-								manager.addConnection(connection);
-							}
+				for (DeviceConnection deviceConn : connList) {
+					String key = getKey(deviceConn);
+					IConnection2 connection = connections.get(key);
+					if (connection == null) {
+						// no existing connection for the device found, must be new connection
+						createConnection(deviceConn);
+					} else {
+						if (!manager.reconnect(connection)) {
+							manager.addConnection(connection);
 						}
 					}
 				}
@@ -296,5 +293,4 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 		
 		return loadStatus;
 	}
-	
 }
