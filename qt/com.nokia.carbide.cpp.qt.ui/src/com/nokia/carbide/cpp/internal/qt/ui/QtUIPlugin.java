@@ -157,7 +157,8 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 		if (project != null && QtCorePlugin.isQtProject(project)) {
 			try {
 				String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(currentConfig.getSDK());
-				if (qtSDKName == null || QtSDKUtils.getDefaultQtSDKForProject(project).equals(QtSDKUtils.QT_DEFAULT_SDK_NAME)) {
+				// If qtSDK is not internally installed or <Default> is set, don't change anything
+				if (qtSDKName == null || QtSDKUtils.getDefaultQtSDKForProject(project) == null) {
 					return;
 				}
 				
