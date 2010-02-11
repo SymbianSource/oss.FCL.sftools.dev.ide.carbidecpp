@@ -16,6 +16,7 @@
 */
 package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 
+import com.nokia.carbide.remoteconnections.discovery.pccs.Messages;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
@@ -39,7 +40,7 @@ public class GUID extends Structure {
 		this.Data2 = Data2;
 		this.Data3 = Data3;
 		if (Data4.length != this.Data4.length) 
-			throw new java.lang.IllegalArgumentException("Wrong array size !");
+			throw new java.lang.IllegalArgumentException(Messages.GUID_0);
 		this.Data4 = Data4;
 	}
 	protected ByReference newByReference() { return new ByReference(); }
