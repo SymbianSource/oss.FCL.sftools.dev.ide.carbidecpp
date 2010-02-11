@@ -20,6 +20,8 @@ package com.nokia.carbide.trk.support.status;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PartInitException;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
@@ -128,15 +130,28 @@ public class ConnectionStatusReconciler {
 	}
 
 	private void showConnectionsView() {
-		RunRunnableWhenWorkbenchVisibleJob.start(new Runnable() {
-			public void run() {
-				// try to show the connections view to start service testers
-				try {
-					WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
-				} catch (PartInitException e) {
+		// avoid deadlock if this called as a result of a launch sequence issuing a "select connection" dialog
+		Shell shell = WorkbenchUtils.getActiveShell();
+		if (shell == null || !shell.isVisible()) {
+			RunRunnableWhenWorkbenchVisibleJob.start(new Runnable() {
+				public void run() {
+					// try to show the connections view to start service testers
+					try {
+						WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
+					} catch (PartInitException e) {
+					}
 				}
-			}
-		});
+			});
+		} else {
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					try {
+						WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
+					} catch (PartInitException e) {
+					}
+				}
+			});
+		}
 	}
 	
 	private void reconcileAsCurrent(IConnection connection) {
