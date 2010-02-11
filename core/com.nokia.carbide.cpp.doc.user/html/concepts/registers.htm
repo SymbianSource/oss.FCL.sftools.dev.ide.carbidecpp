@@ -11,10 +11,14 @@
 <h2>Registers</h2>
 <p>  Registers are the register contents of the central processing unit (CPU) of the host computer or the targeted device. When debugging projects using the emulator, only the host computer x86 registers are visible in the <a href="../reference/view_registers.htm">Registers</a> view. When debugging projects on a device, only the target device registers are visible. </p>
 <p>In most cases, the contents of all the registers can be modified. However,  when debugging applications on a target device with Application TRK, you cannot change the LR and SP registers.</p>
-<p>The types of registers include:</p>
+<p align="center"><img src="images/view_registers.png" width="463" height="260"></p>
+<p class="figure">Figure 1. Registers view with possible register types</p>
+<p>The types of registers can include:</p>
 <ul>
-  <li><b>general</b>&#8212;the register contents of the central processing unit (CPU) of the host computer</li>
-  <li><b>FPU</b>&#8212;register contents of the floating-point unit (FPU) of the host computer</li>
+  <li><b>general</b> &#8212; the register contents of the central processing unit (CPU) of the host computer</li>
+  <li><b>FPU</b> &#8212; register contents of the floating-point unit (FPU) of the host computer</li>
+  <li><b>MMX</b> &mdash; 64-bit MultiMedia eXtension (MMX) registers</li>
+  <li><b>SSE</b> &mdash; 128-bit Streaming SIMD Extension registers</li>
   <li><b>host-specific</b>&#8212;additional register contents for registers specific to the host (for example ARM registers)</li>
 </ul>
 <p class="note"><b>NOTE</b> When opening the Registers view, the list of available registers will vary depending upon the target devices being debugged. </p>
@@ -25,7 +29,7 @@
   <li><a href="../tasks/registers/mem_reg_changing.htm">Changing Register Values</a> </li>
   <li><a href="arm_registers.htm">ARM Registers </a></li>
 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>
