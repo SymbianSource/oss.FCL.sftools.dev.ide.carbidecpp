@@ -17,6 +17,8 @@
 */
 package com.nokia.carbide.cpp.internal.qt.core;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
@@ -24,6 +26,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.trolltech.qtcppproject.QtNature;
 
 public class QtCorePlugin extends Plugin {
@@ -49,6 +53,7 @@ public class QtCorePlugin extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		scanForQtSDKs();
 	}
 
 	/*
@@ -92,6 +97,13 @@ public class QtCorePlugin extends Plugin {
 		} catch (CoreException e) {
 			getDefault().getLog().log(e.getStatus());
 			return false;
+		}
+	}
+	
+	private void scanForQtSDKs(){
+		List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
+		for (ISymbianSDK sdk : sdkList){
+			QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
 		}
 	}
 

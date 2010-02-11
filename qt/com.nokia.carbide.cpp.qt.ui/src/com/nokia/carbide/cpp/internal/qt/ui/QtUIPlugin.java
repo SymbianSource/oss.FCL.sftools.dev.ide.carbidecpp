@@ -19,6 +19,7 @@ package com.nokia.carbide.cpp.internal.qt.ui;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -32,12 +33,15 @@ import org.osgi.framework.BundleContext;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideConfigurationChangedListener;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
+import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
-public class QtUIPlugin extends AbstractUIPlugin {
+public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.qt.ui"; //$NON-NLS-1$
@@ -58,6 +62,7 @@ public class QtUIPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		CarbideBuilderPlugin.addBuildConfigChangedListener(this);
 	}
 
 	/*
@@ -65,6 +70,7 @@ public class QtUIPlugin extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		CarbideBuilderPlugin.removeBuildConfigChangedListener(this);
 		plugin = null;
 		super.stop(context);
 	}
@@ -139,5 +145,29 @@ public class QtUIPlugin extends AbstractUIPlugin {
 		} catch (IllegalStateException e) {
 			// PlatformUI.getWorkbench() throws if running headless
 		}
+	}
+	
+	public void buildConfigurationChanged(ICarbideBuildConfiguration currentConfig) {
+		checkDefaultQtSDKForProject(currentConfig);
+	}
+	
+	@SuppressWarnings("restriction")
+	private void checkDefaultQtSDKForProject(ICarbideBuildConfiguration currentConfig){
+		IProject project = currentConfig.getCarbideProject().getProject();
+		if (project != null && QtCorePlugin.isQtProject(project)) {
+			try {
+				String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(currentConfig.getSDK());
+				// If qtSDK is not internally installed or <Default> is set, don't change anything
+				if (qtSDKName == null || QtSDKUtils.getDefaultQtSDKForProject(project) == null) {
+					return;
+				}
+				
+				QtSDKUtils.setDefaultQtSDKForProject(project, qtSDKName);
+				
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }

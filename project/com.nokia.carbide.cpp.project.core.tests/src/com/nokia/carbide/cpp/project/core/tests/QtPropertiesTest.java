@@ -152,14 +152,6 @@ public class QtPropertiesTest extends TestCase {
 					break;
 				}
 			}
-//			if (store.contains(binpathKey)) {
-//				binpath = store.getString(binpathKey);
-//				System.out.println("Binpath: " + binpath);
-//			}
-//			if (store.contains(includepathKey)) {
-//				includepath = store.getString(includepathKey);
-//				System.out.println("Inc Path: " + includepath);
-//			}
 		}
 		
 		return foundIndex;
