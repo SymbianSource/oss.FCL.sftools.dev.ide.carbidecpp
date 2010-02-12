@@ -3,7 +3,12 @@
 <plugin>
 
    <extension
-         point="org.eclipse.ui.startup">
+         id="com.nokia.carbide.cpp.qt.core.symbianSDKMgrHook"
+         name="Symbian SDK Manager Hook"
+         point="com.nokia.carbide.cpp.sdk.core.sdkManagerLoadedHook">
+          <provider
+            class="com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin"
+            name="com.nokia.carbide.cpp.internal.qt.core.SDK-HookClient"/>
    </extension>
 
 </plugin>

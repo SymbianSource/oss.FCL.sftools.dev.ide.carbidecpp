@@ -30,5 +30,7 @@
       </scriptableClass>
    </extension>
 
+  <extension-point id="sdkManagerLoadedHook" name="SDKManager Available Notification"/>
+
 </plugin>
 

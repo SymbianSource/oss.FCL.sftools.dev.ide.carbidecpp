@@ -36,6 +36,10 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -51,6 +55,7 @@ import org.xml.sax.SAXException;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
@@ -90,6 +95,11 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	
 	protected static final String[] knownRVCTVersions = {"3.1", "3.0", "2.2", "2.1"};
 	protected Version sbsV2Version;
+	
+	static boolean sdkHookExtenstionsNotified;
+	public static final String SDK_MANAGER_LOADED_HOOK = SDKCorePlugin.PLUGIN_ID
+	+ ".sdkManagerLoadedHook"; //$NON-NLS-1$
+	
 	
 	/**
 	 * Minimum SBSv2 version supported with Carbide
@@ -170,6 +180,13 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		// tell others about it
 		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		scanCarbideSDKCache();
+		
+		// Notify any plugins that want to know if the SDKManager has scanned plugins.
+		if (!sdkHookExtenstionsNotified) {
+			notifySDKManagerLoaded();
+			sdkHookExtenstionsNotified = true;
+		}
+		
 	}
 
 	/**
@@ -711,6 +728,42 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 
 	public Version getMinimumSupportedSBSv2Version() {
 		return MINIMUM_RAPTOR_VERSION;
+	}
+	
+	/**
+	 * Find clients of the 'sdkManagerLoadedHook' extension point so their plug-ins can be loaded
+	 */
+	private void notifySDKManagerLoaded() {
+
+		ISDKManagerLoadedHook sdkHook = null;
+		IExtensionRegistry er = Platform.getExtensionRegistry();
+		IExtensionPoint ep = er.getExtensionPoint(SDK_MANAGER_LOADED_HOOK);
+		IExtension[] extensions = ep.getExtensions();
+
+		for (int i = 0; i < extensions.length; i++) {
+			IExtension extension = extensions[i];
+			IConfigurationElement[] ces = extension.getConfigurationElements();
+			if (ces != null && ces.length >= 1) {
+				IConfigurationElement providerElement = ces[0];
+				String name = providerElement.getAttribute("name"); //$NON-NLS-1$
+				if (name != null) {
+					if (providerElement.getAttribute("class") != null) { //$NON-NLS-1$
+
+						try {
+							sdkHook = (ISDKManagerLoadedHook) providerElement
+									.createExecutableExtension("class"); //$NON-NLS-1$
+							sdkHook.symbianSDKManagerLoaded();
+						} catch (CoreException e) {
+							// ignore
+							// e.printStackTrace();
+						}
+					}
+				}
+
+			}
+		}
+		return;
+
 	}
 	
 	
