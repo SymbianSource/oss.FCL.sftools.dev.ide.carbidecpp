@@ -21,10 +21,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
-import com.nokia.carbide.automation.utils.UITestCase;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -36,13 +37,13 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
-public class ErrorParserRegressionGenerator extends UITestCase {
+public class ErrorParserRegressionGenerator extends TestCase {
 	public ErrorParserRegressionGenerator(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
-	//private static final String PROJECT_NAME = "TestErrorParser";
+	private static final String PROJECT_NAME = "TestErrorParser";
+
 	// Platform matters, set this before you build
 	private static final String PLATFORM_STRING = ISymbianBuildContext.GCCE_PLATFORM;
 

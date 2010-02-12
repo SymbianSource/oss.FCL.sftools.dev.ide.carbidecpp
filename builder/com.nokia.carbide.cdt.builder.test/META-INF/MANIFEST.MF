@@ -6,15 +6,12 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.cdt.builder.test.TestPlugin
 Bundle-Vendor: NOKIA
 Bundle-Localization: plugin
-Require-Bundle: abbot,
- abbot.swt,
- abbot.swt.eclipse,
+Require-Bundle: 
  org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,
  com.nokia.carbide.cpp.sdk.core,
  com.nokia.carbide.cpp.project.core,
- com.nokia.carbide.automation.utils,
  com.nokia.carbide.cdt.builder,
  com.nokia.carbide.cpp.epoc.engine,
  com.nokia.cpp.utils.core,
