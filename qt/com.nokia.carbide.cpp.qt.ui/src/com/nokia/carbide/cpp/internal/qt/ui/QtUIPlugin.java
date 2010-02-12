@@ -37,11 +37,12 @@ import com.nokia.carbide.cdt.builder.project.ICarbideConfigurationChangedListene
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
-public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener {
+public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener, ISDKManagerLoadedHook {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.qt.ui"; //$NON-NLS-1$
@@ -62,7 +63,6 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		CarbideBuilderPlugin.addBuildConfigChangedListener(this);
 	}
 
 	/*
@@ -158,7 +158,8 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 			try {
 				String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(currentConfig.getSDK());
 				// If qtSDK is not internally installed or <Default> is set, don't change anything
-				if (qtSDKName == null || QtSDKUtils.getDefaultQtSDKForProject(project) == null) {
+				String currQtSDK = QtSDKUtils.getDefaultQtSDKForProject(project);
+				if (qtSDKName == null || currQtSDK == null || currQtSDK.equals(QtSDKUtils.QT_DEFAULT_SDK_NAME)) {
 					return;
 				}
 				
@@ -169,5 +170,9 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 			}
 		}
 		
+	}
+
+	public void symbianSDKManagerLoaded() {
+		CarbideBuilderPlugin.addBuildConfigChangedListener(this);
 	}
 }
