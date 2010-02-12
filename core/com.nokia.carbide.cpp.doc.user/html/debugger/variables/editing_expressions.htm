@@ -13,10 +13,23 @@
 <p>Use the <b>Enable</b> control to set whether this expression should be automatically evaluated during a debug session.</p>
 <p align="center"><img src="../images/wnd_edit_watch_expr.png"></p>
 <p class="figure">Figure 1. Edit Watch Expression dialog</p>
+<p>You can enter any valid C/C++ expression, for example:</p>
+<blockquote>
+  <p class="code">2 + 2<br>
+    myVariable + 8<br>
+    &amp;myVariable<br>
+    myClass.myMemberVar<br>
+    etc.</p>
+</blockquote>
+<p>are all valid expressions that the Expressions view can monitor and display. However, an expression cannot call a function or execute code. The following example will not work:</p>
+<blockquote>
+  <p class="code">std:strlen(&quot;Hello&quot;); </p>
+</blockquote>
 <h5>Other references</h5>
 <ul>
   <li><a href="variables.htm">Variables and Expressions Overview</a></li>
 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>
+License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 </body>
 </html>
