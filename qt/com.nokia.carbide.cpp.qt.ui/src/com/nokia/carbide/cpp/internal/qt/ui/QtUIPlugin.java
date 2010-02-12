@@ -147,10 +147,19 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 		}
 	}
 	
+	/** 
+	 * Implements ICarbideConfigurationChangedListener
+	 */
 	public void buildConfigurationChanged(ICarbideBuildConfiguration currentConfig) {
 		checkDefaultQtSDKForProject(currentConfig);
 	}
 	
+	/**
+	 * For the newly selected build configuration, check and see if there's an analogous internally installed
+	 * Qt-SDK, and if so make that the default. The default should not change if already set to &ltDefault&gt in the qt preferences or
+	 * if the new configuration has no internally built Qt-SDK.
+	 * @param currentConfig
+	 */
 	@SuppressWarnings("restriction")
 	private void checkDefaultQtSDKForProject(ICarbideBuildConfiguration currentConfig){
 		IProject project = currentConfig.getCarbideProject().getProject();
@@ -172,6 +181,9 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 		
 	}
 
+	/** 
+	 * Implements ISDKManagerLoadedHook
+	 */
 	public void symbianSDKManagerLoaded() {
 		CarbideBuilderPlugin.addBuildConfigChangedListener(this);
 	}

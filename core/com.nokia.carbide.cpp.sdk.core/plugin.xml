@@ -30,6 +30,7 @@
       </scriptableClass>
    </extension>
 
+  <!-- Convenience extension so clients can know when the SDKs have loaded to avoid earlyStartup -->
   <extension-point id="sdkManagerLoadedHook" name="SDKManager Available Notification"/>
 
 </plugin>

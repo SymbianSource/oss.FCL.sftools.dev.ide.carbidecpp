@@ -15,9 +15,7 @@ package com.nokia.carbide.cpp.internal.qt.core;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
-import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -28,15 +26,20 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.trolltech.qtcppproject.QtProjectPlugin;
 import com.trolltech.qtcppproject.preferences.PreferenceConstants;
 
+/**
+ * Wrapper utils for the Qt-ecilpse integration and obtaining information about internally installed Qt-sdks
+ */
 @SuppressWarnings({ "restriction" })
 public class QtSDKUtils {
 	
+	/**
+	 * Represents one Qt-SDK from the Qt global preferences
+	 */
 	private static class QtSDK {
 		
 		QtSDK(String name, String incPath, String binPath){
@@ -68,6 +71,11 @@ public class QtSDKUtils {
 	// private data from QtProject.java
 	private static final String QTVERSION = "com.trolltech.qtcppproject.properties.qtversion";
 	
+	/**
+	 * For the given Symbian SDK, test whether or not it qualifies for have Qt internally built.
+	 * @param sdk - The Symbian SDK or source base to test
+	 * @return - true if Qt is internally installed
+	 */
 	static private boolean isQtInternallyInstalled(ISymbianSDK sdk){
 		
 		String epocRoot = sdk.getEPOCROOT();
@@ -86,6 +94,11 @@ public class QtSDKUtils {
 		return false;
 	}
 	
+	/**
+	 * For the given Symbian SDK, get the Qt SDK name from the Qt global preferences.
+	 * @param sdk
+	 * @return The Qt SDK display name in the preferences, null if not found
+	 */
 	static public String getQtSDKNameForSymbianSDK(ISymbianSDK sdk){
 		
 		String epocRoot = sdk.getEPOCROOT();
@@ -110,6 +123,12 @@ public class QtSDKUtils {
 		return null;
 	}
 	
+	/**
+	 * Add a single Qt-SDK BIN and INLCUDE path to the Qt global preferences iff it is an internally built
+	 * Qt-SDK and the BIN and INC path do not already exist.
+	 * @param sdk
+	 * @param makeDefault - Set the default name in the global Qt prefs
+	 */
 	static public void addQtSDKForSymbianSDK(ISymbianSDK sdk, boolean makeDefault){
 	
 		refreshQtStoredSDKs();
@@ -120,6 +139,13 @@ public class QtSDKUtils {
 		}
 	}
 	
+	/**
+	 * Add a Qt-SDK to the Qt global preferences
+	 * @param name
+	 * @param binPath
+	 * @param incPath
+	 * @param makeDefault
+	 */
 	static private void addQtSDK(String name, IPath binPath, IPath incPath, boolean makeDefault){
 
 		IPreferenceStore store = QtProjectPlugin.getDefault().getPreferenceStore();
@@ -147,6 +173,9 @@ public class QtSDKUtils {
 		refreshQtStoredSDKs();
 	}
 	
+	/**
+	 * Update the internal list of Qt-SDKs found in the Qt global preferences
+	 */
 	static void refreshQtStoredSDKs(){
 		
 		qtSDKList.clear();
@@ -178,10 +207,22 @@ public class QtSDKUtils {
 		}
 	}
 	
+	/**
+	 * This method assumes the IProject has a Qt nature and sets the QTVERSION in the Qt project settings panel
+	 * @param project
+	 * @param qtSDKName
+	 * @throws CoreException
+	 */
 	public static void setDefaultQtSDKForProject(IProject project, String qtSDKName) throws CoreException{
 		project.setPersistentProperty(new QualifiedName("", QTVERSION), qtSDKName);
 	}
 	
+	/**
+	 * Assuming a Qt project, this retrieves the Qt project setting for the currently set Qt-SDK
+	 * @param project
+	 * @return
+	 * @throws CoreException
+	 */
 	public static String getDefaultQtSDKForProject(IProject project) throws CoreException{
 		return project.getPersistentProperty(new QualifiedName("", QTVERSION));
 	}

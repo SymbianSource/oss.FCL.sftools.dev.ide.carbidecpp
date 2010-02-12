@@ -125,10 +125,16 @@ public class QtCorePlugin extends Plugin implements ISDKManagerLoadedHook, ICarb
 		job.schedule();
 	}
 
+	/**
+	 * ISDKManagerLoadedHook extension implementation
+	 */
 	public void symbianSDKManagerLoaded() {
 		scanForQtSDKs();
 	}
 
+	/**
+	 * Implements ICarbideInstalledSDKChangeListener. Ensures the Qt-SDK list is up to date with scanned Symbian SDKs
+	 */
 	public void installedSdkChanged(SDKChangeEventType eventType) {
 		scanForQtSDKs();
 	}

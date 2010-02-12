@@ -18,7 +18,8 @@ package com.nokia.carbide.cpp.internal.api.sdk;
 public interface ISDKManagerLoadedHook {
 	
 	/**
-	 * Feature to notify that SDKs are loade
+	 * Feature to notify that SDKs are loaded the first time.
+	 * For subsequent SDK scan notifications see {@link com.nokia.carbide.cdt.builder.project.ICarbideConfigurationChangedListener}
 	 */
 	public void symbianSDKManagerLoaded();
 	
