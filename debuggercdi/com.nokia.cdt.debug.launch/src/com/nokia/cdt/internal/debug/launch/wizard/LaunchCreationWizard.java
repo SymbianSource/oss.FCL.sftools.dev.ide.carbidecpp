@@ -16,11 +16,8 @@
 */
 package com.nokia.cdt.internal.debug.launch.wizard;
 
-import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
-import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
-import com.nokia.cdt.debug.cw.symbian.SettingsData;
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cpp.internal.api.utils.core.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -33,20 +30,22 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbench;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 
-public class LaunchCreationWizard extends Wizard {
+public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizard {
 
 	private MainExecutableSelectionWizardPage fBinarySelectionPage;
 	private LaunchWizardSummaryPage fEmulationSummaryPage;
-	private LaunchCategorySelectionPage fCategorySelectionPage;
 	private LaunchWizardSelectionPage fWizardSelectionPage;
     private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
 	private ILaunchConfigurationWorkingCopy launchConfig;
@@ -54,6 +53,7 @@ public class LaunchCreationWizard extends Wizard {
 	private IProject project;
 	private String configurationName;
 	private List<AbstractLaunchWizard> wizards = new ArrayList<AbstractLaunchWizard>();
+	private String categoryId;
 	
 	public LaunchCreationWizard(IProject project, String configurationName, 
 										List<IPath> mmps, List<IPath> exes, IPath defaultExecutable,  
@@ -74,7 +74,6 @@ public class LaunchCreationWizard extends Wizard {
 			fBinarySelectionPage = new MainExecutableSelectionWizardPage(mmps, exes, defaultExecutable, true, emulatorPath, emulatorOnly, fEmulationSummaryPage);
 		}
 		else {
-			fCategorySelectionPage = new LaunchCategorySelectionPage(this);
 	        fWizardSelectionPage = new LaunchWizardSelectionPage(this, mmps, exes, defaultExecutable, project, configurationName, mode);
 		}
 	}
@@ -115,7 +114,6 @@ public class LaunchCreationWizard extends Wizard {
     		addPage(fEmulationSummaryPage);
     	} 
     	else if (fWizardSelectionPage != null) {
-            addPage(fCategorySelectionPage);
             addPage(fWizardSelectionPage);
     	}
     }
@@ -125,7 +123,7 @@ public class LaunchCreationWizard extends Wizard {
 		return true;
 	}
 
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
+	public void init() {
         setWindowTitle(Messages.getString("LaunchCreationWizard.0")); //$NON-NLS-1$
 		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_NEW_LAUNCH_CONFIG_WIZARD_BANNER));
     }
@@ -153,8 +151,12 @@ public class LaunchCreationWizard extends Wizard {
 		return shouldOpenLaunchDialog;
 	}
 	
-	public String getSelectedCategoryId() {
-		return fCategorySelectionPage.getSelectedCategoryId();
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	
+	public String getCategoryId() {
+		return categoryId;
 	}
 	
 	public List<Wizard> getWizardsForCategory(String categoryId) {
@@ -168,28 +170,10 @@ public class LaunchCreationWizard extends Wizard {
 	}
 	
 	private void loadWizards(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, String mode) {
-		AppTRKLaunchWizard appTRKWizard = new AppTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		if (appTRKWizard.supportsMode(mode)) {
-			appTRKWizard.addPages();
-			wizards.add(appTRKWizard);
-		}
-		
-		SystemTRKLaunchWizard sysTRKWizard = new SystemTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		if (sysTRKWizard.supportsMode(mode)) {
-			sysTRKWizard.addPages();
-			wizards.add(sysTRKWizard);
-		}
-
 		Trace32LaunchWizard trace32Wizard = new Trace32LaunchWizard(mmps, exes, defaultExecutable, project, configurationName); 
 		if (trace32Wizard.supportsMode(mode)) {
 			trace32Wizard.addPages();
 			wizards.add(trace32Wizard);
-		}
-
-		AttachTRKLaunchWizard attachTRKWizard = new AttachTRKLaunchWizard(mmps, exes, defaultExecutable, project, configurationName);
-		if (attachTRKWizard.supportsMode(mode)) {
-			attachTRKWizard.addPages();
-			wizards.add(attachTRKWizard);
 		}
 
 		// load any wizard extensions

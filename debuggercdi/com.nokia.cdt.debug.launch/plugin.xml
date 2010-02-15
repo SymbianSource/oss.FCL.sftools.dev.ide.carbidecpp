@@ -172,14 +172,15 @@
       </launchConfigurationTabGroup>
     </extension>
     
+ 
     <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            label="Symbian OS Application"
+            label="Symbian OS Board Launch"
             icon="icons/launch_config_file_16x16.png"
             modes="run, debug"
-            class="com.nokia.cdt.internal.debug.launch.SymbianLaunchShortcut"
-            id="com.nokia.cdt.debug.launch.symbianCPPShortcut">
+            class="com.nokia.cdt.internal.debug.launch.BoardLaunchShortcut"
+            id="com.nokia.cdt.debug.launch.symbianCPPShortcut.board">
          <contextualLaunch>
            <enablement>
              <with variable="selection">
@@ -209,23 +210,185 @@
                            forcePluginActivation="true"
                            property="com.nokia.cdt.debug.launch.isExecutable"/>
                    </or>
+                   <test
+                         forcePluginActivation="true"
+                         property="com.nokia.cdt.debug.launch.isNotEmulator">
+                   </test>
  				</and>
                </iterate>
              </with>
            </enablement>
            <contextLabel
          	  mode="run"
-         	  label="Run Symbian OS Application"/>
+         	  label="Run Symbian OS Application on board"/>
   		   <contextLabel
   		 	  mode="debug"
-  		 	  label="Debug Symbian OS Application"/>
+  		 	  label="Debug Symbian OS Application on board"/>
   		 </contextualLaunch>
          <description
              mode="run"
-             description="Runs a Symbian OS executable"/>
+             description="Runs on a development board or reference hardware using a JTAG connection."/>
           <description
              mode="debug"
-             description="Debugs a Symbian OS executable"/>
+             description="Debugs on a development board or reference hardware using a JTAG connection."/>
+      </shortcut>
+      <shortcut
+            class="com.nokia.cdt.internal.debug.launch.PhoneLaunchShortcut"
+            icon="icons/launch_config_file_16x16.png"
+            id="com.nokia.cdt.debug.launch.symbianCPPShortcut.phone"
+            label="Symbian OS Phone Launch"
+            modes="run, debug">
+         <contextualLaunch>
+            <enablement>
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.cdt.core.model.IBinary">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.cdt.core.model.ICProject">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.cdt.debug.core.executables.Executable">
+                           </instanceof>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="org.eclipse.cdt.launch.isExecutable">
+                           </test>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="org.eclipse.cdt.launch.isCProject">
+                           </test>
+                           <and>
+                              <instanceof
+                                    value="org.eclipse.ui.IFileEditorInput">
+                              </instanceof>
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <adapt
+                                       type="org.eclipse.cdt.core.model.ICElement">
+                                 </adapt>
+                              </adapt>
+                           </and>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="com.nokia.cdt.debug.launch.isCarbideProject">
+                           </test>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="com.nokia.cdt.debug.launch.isExecutable">
+                           </test>
+                        </or>
+                        <test
+                              forcePluginActivation="true"
+                              property="com.nokia.cdt.debug.launch.isNotEmulator">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </enablement>
+            <contextLabel
+                  label="Run Symbian OS Application on phone"
+                  mode="run">
+            </contextLabel>
+            <contextLabel
+                  label="Debug Symbian OS Application on phone"
+                  mode="debug">
+            </contextLabel>
+         </contextualLaunch>
+         <description
+               description="Debugs on a phone using System TRK or Application TRK"
+               mode="debug">
+         </description>
+         <description
+               description="Runs on a phone using System TRK or Application TRK"
+               mode="run">
+         </description>
+      </shortcut>
+      <shortcut
+            class="com.nokia.cdt.internal.debug.launch.EmulatorLaunchShortcut"
+            icon="icons/launch_config_file_16x16.png"
+            id="com.nokia.cdt.debug.launch.symbianCPPShortcut.emulator"
+            label="Symbian OS Emulator Launch"
+            modes="run, debug">
+         <contextualLaunch>
+            <enablement>
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.cdt.core.model.IBinary">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.cdt.core.model.ICProject">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.cdt.debug.core.executables.Executable">
+                           </instanceof>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="org.eclipse.cdt.launch.isExecutable">
+                           </test>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="org.eclipse.cdt.launch.isCProject">
+                           </test>
+                           <and>
+                              <instanceof
+                                    value="org.eclipse.ui.IFileEditorInput">
+                              </instanceof>
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <adapt
+                                       type="org.eclipse.cdt.core.model.ICElement">
+                                 </adapt>
+                              </adapt>
+                           </and>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="com.nokia.cdt.debug.launch.isCarbideProject">
+                           </test>
+                           <test
+                                 forcePluginActivation="true"
+                                 property="com.nokia.cdt.debug.launch.isExecutable">
+                           </test>
+                        </or>
+                        <test
+                              forcePluginActivation="true"
+                              property="com.nokia.cdt.debug.launch.isEmulator">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </enablement>
+            <contextLabel
+                  label="Run Symbian OS Application on emulator"
+                  mode="run">
+            </contextLabel>
+            <contextLabel
+                  label="Debug Symbian OS Application on emulator"
+                  mode="debug">
+            </contextLabel>
+         </contextualLaunch>
+         <description
+               description="Debugs using a WINSCW emulator"
+               mode="debug">
+         </description>
+         <description
+               description="Runs using a WINSCW emulator"
+               mode="run">
+         </description>
       </shortcut>
      </extension>
    
@@ -233,7 +396,7 @@
    <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
       		namespace="com.nokia.cdt.debug.launch"
-            properties="isExecutable, isCarbideProject"
+            properties="isExecutable, isCarbideProject, isEmulator, isNotEmulator"
             type="org.eclipse.core.runtime.IAdaptable"
             class="com.nokia.cdt.internal.debug.launch.SymbianProjectPropertyTester"
             id="com.nokia.cdt.debug.launch.SymbianProjectPropertyTester">
