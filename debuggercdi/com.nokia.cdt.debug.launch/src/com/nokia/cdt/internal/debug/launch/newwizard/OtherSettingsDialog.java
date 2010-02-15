@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchOptionsData.EBuildBeforeLaunchOption;
+import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EBuildBeforeLaunchOption;
 
 /**
  *	This dialog allows in-depth configuration of the other settings in the launch.
@@ -48,7 +48,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 	private Button fWorkspaceSettingsButton;
 	private Link fWorkspaceSettingsLink;
 
-	protected OtherSettingsDialog(Shell shell, LaunchOptionsData data) {
+	protected OtherSettingsDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
 	}
 

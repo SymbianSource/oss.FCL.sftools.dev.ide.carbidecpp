@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchOptionsData.EBuildBeforeLaunchOption;
+import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EBuildBeforeLaunchOption;
 
 /**
  * Present the "Build before debug" section with a short description.
@@ -31,7 +31,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	/**
 	 * 
 	 */
-	public OtherSettingsSection(LaunchOptionsData data) {
+	public OtherSettingsSection(LaunchWizardData data) {
 		super(data, "Other settings");
 		
 	}
@@ -86,7 +86,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	 */
 	@Override
 	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(
-			Shell shell, LaunchOptionsData dialogData) {
+			Shell shell, LaunchWizardData dialogData) {
 		return new OtherSettingsDialog(shell, dialogData);
 	}
 	

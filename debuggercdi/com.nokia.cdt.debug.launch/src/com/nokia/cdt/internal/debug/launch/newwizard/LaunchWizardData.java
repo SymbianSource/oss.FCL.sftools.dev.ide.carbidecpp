@@ -17,27 +17,43 @@
 
 package com.nokia.cdt.internal.debug.launch.newwizard;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.ILaunchConfigurationType;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.osgi.service.prefs.Preferences;
 
+import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
+
+import cwdbg.PreferenceConstants;
 
 /**
  * Data manipulated by the launch wizard and its dialogs.
  */
-public class LaunchOptionsData {
+@SuppressWarnings("restriction")
+public class LaunchWizardData extends LaunchOptions {
 	public interface IPathValidator {
 		/**
 		 * @param path IPath
@@ -46,17 +62,7 @@ public class LaunchOptionsData {
 		String isValidPath(IPath path);
 	}
 
-	// settings detected in project
-	private final List<IPath> mmps;
-	private final List<IPath> exes;
-	private final IPath defaultExecutable;
-	private final IProject project;
-	private final String configurationName;
 	private final IService service;
-	private final boolean isEmulation;
-	private final boolean emulatorOnly;
-	private final String mode;
-	private IConnection connection;
 	
 	// overall target
 	public static class LaunchType {
@@ -66,7 +72,7 @@ public class LaunchOptionsData {
 			this.launchId = launchId;
 		}
 		
-		public boolean isApplicable(LaunchOptionsData data) {
+		public boolean isApplicable(LaunchWizardData data) {
 			return true;
 		}
 		
@@ -93,6 +99,7 @@ public class LaunchOptionsData {
 	private EBuildBeforeLaunchOption buildBeforeLaunch;
 	private boolean installPackage;
 	private String sisPath;
+	private IConnection connection;
 	
 	// settings made in the Other Settings section
 	enum EBuildBeforeLaunchOption {
@@ -101,19 +108,15 @@ public class LaunchOptionsData {
 		USE_WORKSPACE_SETTING,
 	}
 
-	public LaunchOptionsData(List<IPath> mmps, List<IPath> exes,
-			IPath defaultExecutable, IProject project,
-			String configurationName, boolean isEmulation,
-			boolean emulatorOnly, String mode, 
-			IService trkService) {
-		this.mmps = mmps;
-		this.exes = exes;
-		this.defaultExecutable = defaultExecutable;
-		this.project = project;
-		this.configurationName = configurationName;
-		this.isEmulation = isEmulation;
-		this.emulatorOnly = emulatorOnly;
-		this.mode = mode;
+	public LaunchWizardData(LaunchOptions launchOptions, IService trkService) {
+		this.mmps = launchOptions.mmps;
+		this.exes = launchOptions.exes;
+		this.defaultExecutable = launchOptions.defaultExecutable;
+		this.project = launchOptions.project;
+		this.configurationName = launchOptions.configurationName;
+		this.isEmulation = launchOptions.isEmulation;
+		this.emulatorOnly = launchOptions.emulatorOnly;
+		this.mode = launchOptions.mode;
 		this.service = trkService;
 	}
 
@@ -252,13 +255,27 @@ public class LaunchOptionsData {
 	}
 	
 	/**
+	 * @return
+	 */
+	public String getSisPath() {
+		return sisPath;
+	}
+	
+	/**
 	 * Copy the data, for use by a transient dialog.
 	 * @return new copy of data
 	 */
-	public LaunchOptionsData copy() {
-		LaunchOptionsData d = new LaunchOptionsData(
-				mmps, exes, defaultExecutable, project, configurationName,
-				isEmulation, emulatorOnly, mode, service);
+	public LaunchWizardData copy() {
+		LaunchOptions launchOptions = new LaunchOptions();
+		launchOptions.mmps = mmps;
+		launchOptions.exes = exes;
+		launchOptions.defaultExecutable = defaultExecutable;
+		launchOptions.project = project;
+		launchOptions.configurationName = configurationName;
+		launchOptions.isEmulation = isEmulation;
+		launchOptions.emulatorOnly = emulatorOnly;
+		launchOptions.mode = mode;
+		LaunchWizardData d = new LaunchWizardData(launchOptions, service);
 		d.exeSelection = exeSelection;
 		d.exeSelectionPath = exeSelectionPath;
 		d.buildBeforeLaunch = buildBeforeLaunch;
@@ -272,7 +289,7 @@ public class LaunchOptionsData {
 	 * Apply the given data to the receiver (when a transient dialog is accepted) 
 	 * @param dialogData
 	 */
-	public void apply(LaunchOptionsData dialogData) {
+	public void apply(LaunchWizardData dialogData) {
 		exeSelection = dialogData.exeSelection;
 		exeSelectionPath = dialogData.exeSelectionPath;
 		buildBeforeLaunch = dialogData.buildBeforeLaunch;
@@ -285,7 +302,7 @@ public class LaunchOptionsData {
 	 * @return
 	 */
 	public boolean requiresInstallPackage() {
-		return false;
+		return !isSysTRKConnection() || installPackage;
 	}
 
 	public void setConnection(IConnection connection) {
@@ -296,4 +313,92 @@ public class LaunchOptionsData {
 		return connection;
 	}
 
+	public ILaunchConfigurationWorkingCopy createConfiguration() throws CoreException {
+		String launchTypeId = getApplicableLaunchTypeId();
+		ILaunchConfigurationType launchType = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(launchTypeId);
+		ILaunchConfigurationWorkingCopy config = launchType.newInstance(null, configurationName);
+		initializeConfigSettings(launchTypeId, config);
+		
+		return config;
+	}
+
+	private void initializeConfigSettings(String launchTypeId, ILaunchConfigurationWorkingCopy config) {
+		IPath exePath = getExePath();
+		IPath mmpPath = getMmpPath(exePath);
+		if (launchTypeId.equals(SettingsData.APP_TRK_LAUNCH_TYPE_ID)) {
+    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_AppTRK, project, mmpPath, exePath);
+		}
+		else if (launchTypeId.equals(SettingsData.SYS_TRK_LAUNCH_TYPE_ID)) {
+    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_SysTRK, project, mmpPath, exePath);
+		}
+		else if (launchTypeId.equals(SettingsData.ATTACH_LAUNCH_TYPE_ID)) {
+    		SettingsData.setDefaults(config, SettingsData.LaunchConfig_AppTRK, project, mmpPath, exePath);
+		}
+		addBuildOptions(config);
+		// always set the current connection id
+		config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, Registry.CURRENT_CONNECTION_ID);
+		if (installPackage)
+			config.setAttribute(PreferenceConstants.J_PN_SisFileHostPath, sisPath);
+	}
+
+	private IPath getMmpPath(IPath exePath) {
+		if (!mmps.isEmpty()) {
+			for (int i = 0; i < exes.size(); i++) {
+				IPath exe = exes.get(i);
+				if (exe.lastSegment().equals(exePath.lastSegment()))
+					return mmps.get(i);
+			}
+		}
+		return null;
+	}
+
+	private IPath getExePath() {
+		if (exeSelection.equals(EExeSelection.ATTACH_TO_PROCESS))
+			return exes.get(0);
+		return exeSelectionPath;
+	}
+	
+	private IConnectedService getConnectedService() {
+		if (connection != null) {
+			Collection<IConnectedService> connectedServices = 
+				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
+			for (IConnectedService connectedService : connectedServices) {
+				if (connectedService.getService().getIdentifier().equals(service.getIdentifier()))
+					return connectedService;
+			}
+		}
+		return null;
+	}
+	
+	public boolean isSysTRKConnection() {
+		IConnectedService connectedService = getConnectedService();
+		if (connectedService instanceof IConnectedService2) {
+			String value = ((IConnectedService2) connectedService).getProperties().get("is-system-trk"); //$NON-NLS-1$
+			return Boolean.parseBoolean(value);
+		}
+		return false;
+	}
+
+	private String getApplicableLaunchTypeId() {
+		if (exeSelection.equals(EExeSelection.ATTACH_TO_PROCESS))
+			return SettingsData.ATTACH_LAUNCH_TYPE_ID;
+		else if (!installPackage || isSysTRKConnection())
+			return SettingsData.SYS_TRK_LAUNCH_TYPE_ID;
+		else
+			return SettingsData.APP_TRK_LAUNCH_TYPE_ID;
+	}
+
+	private void addBuildOptions(ILaunchConfigurationWorkingCopy config) {
+		int buildBeforeLaunchValue = ICDTLaunchConfigurationConstants.BUILD_BEFORE_LAUNCH_USE_WORKSPACE_SETTING;
+		switch (buildBeforeLaunch) {
+		case NEVER:
+			buildBeforeLaunchValue = ICDTLaunchConfigurationConstants.BUILD_BEFORE_LAUNCH_DISABLED;
+			break;
+		case ALWAYS:
+			buildBeforeLaunchValue = ICDTLaunchConfigurationConstants.BUILD_BEFORE_LAUNCH_ENABLED;
+			break;
+		}
+		config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_BUILD_BEFORE_LAUNCH, buildBeforeLaunchValue);
+	}
 }
+

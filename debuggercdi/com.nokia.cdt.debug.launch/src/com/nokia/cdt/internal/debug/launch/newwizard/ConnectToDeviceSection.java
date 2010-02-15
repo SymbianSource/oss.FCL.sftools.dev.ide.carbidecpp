@@ -43,7 +43,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	 * @param unifiedLaunchOptionsPage 
 	 * 
 	 */
-	public ConnectToDeviceSection(LaunchOptionsData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+	public ConnectToDeviceSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
 		super(data, "Connect to device");
 		this.launchOptionsPage = launchOptionsPage;
 		manager = RemoteConnectionsActivator.getConnectionsManager();
@@ -69,7 +69,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 
 	/** Get the simple status for the connection state */
-	static IStatus revalidate(LaunchOptionsData data) {
+	static IStatus revalidate(LaunchWizardData data) {
 		IStatus status = Status.OK_STATUS;
 		
 		if (data.getConnection() == null) {
@@ -80,7 +80,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 	
 	static String getStandardPNPMessage() {
-		return "You may plug in a device over USB or activate it over WLAN, or create a new connection now for your device or simulator.";
+		return "You may plug in a device over USB or activate it over WLAN, or create a new connection now for your device.";
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 	
 	@Override
-	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchOptionsData dialogData) {
+	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchWizardData dialogData) {
 		return new ConnectToDeviceDialog(shell, dialogData);
 	}
 	

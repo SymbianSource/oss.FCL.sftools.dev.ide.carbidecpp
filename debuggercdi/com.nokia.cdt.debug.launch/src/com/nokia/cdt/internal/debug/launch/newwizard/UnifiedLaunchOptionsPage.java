@@ -46,7 +46,7 @@ import com.nokia.cdt.internal.debug.launch.newwizard.IWizardSection.ISectionChan
  */
 public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChangeListener {
 
-	private final LaunchOptionsData data;
+	private final LaunchWizardData data;
 	private ArrayList<IWizardSection> sections;
 	
 	
@@ -57,7 +57,7 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 	 * @param project
 	 * @param configurationName
 	 */
-	public UnifiedLaunchOptionsPage(LaunchOptionsData data) {
+	public UnifiedLaunchOptionsPage(LaunchWizardData data) {
 		super("Configure Launch Settings");
 		
 		setDescription("Configure the connection and process to launch.");

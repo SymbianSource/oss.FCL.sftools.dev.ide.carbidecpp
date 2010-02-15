@@ -64,7 +64,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchOptionsData.EExeSelection;
+import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelection;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
@@ -85,7 +85,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private Button sisBrowse;
 	private Composite installPackageUI;
 	
-	protected DebugRunProcessDialog(Shell shell, LaunchOptionsData data) {
+	protected DebugRunProcessDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
 	}
 
@@ -194,8 +194,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		});
 		
 		
-		if (data.requiresInstallPackage()) {
+		if (data.isInstallPackage()) {
 			installPackageCheckbox.setSelection(true);
+			updatePackageUI();
 		}
 		
 		updateSisFile();
@@ -311,7 +312,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	protected void updateSisFile() {
 		String sisPath;
     	if (sisFile != null) {
-        	sisPath = sisFile.getSelectionIndex() == 0 ? "" : sisFile.getText(); //$NON-NLS-1$
+        	sisPath = sisFile.getSelectionIndex() == 0 ? null : sisFile.getText(); //$NON-NLS-1$
         	data.setSisPath(sisPath);
     	} else if (sisEdit != null) {
     		sisPath = sisEdit.getText();

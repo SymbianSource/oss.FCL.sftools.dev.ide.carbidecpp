@@ -48,7 +48,7 @@ import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 public abstract class AbstractLaunchWizardSection implements IWizardSection {
 
 	private static final String CHANGE_LABEL = "Change...";
-	protected final LaunchOptionsData data;
+	protected final LaunchWizardData data;
 	private String sectionName;
 
 	protected IStatus status;
@@ -58,7 +58,7 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 	private ISectionChangeListener changeListener;
 
 
-	public AbstractLaunchWizardSection(LaunchOptionsData data, String sectionName) {
+	public AbstractLaunchWizardSection(LaunchWizardData data, String sectionName) {
 		this.data = data;
 		this.sectionName = sectionName;
 		status = Status.OK_STATUS;
@@ -83,7 +83,7 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 	public abstract void createControl(Composite parent);
 
 	/** Create the dialog for the Change... button. */
-	protected abstract AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchOptionsData dialogData);
+	protected abstract AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchWizardData dialogData);
 	/** Refresh the section after the Change... dialog has been closed. */
 	protected abstract void refresh();
 
@@ -162,7 +162,7 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 	 * @see com.nokia.cdt.internal.debug.launch.wizard2.AbstractLaunchWizardSection#doChange()
 	 */
 	protected void doChange() {
-		LaunchOptionsData dialogData = data.copy();
+		LaunchWizardData dialogData = data.copy();
 		AbstractLaunchSettingsDialog dialog = createChangeSettingsDialog(getControl().getShell(), dialogData);
 		if (dialog.open() == Window.OK) {
 			data.apply(dialogData);

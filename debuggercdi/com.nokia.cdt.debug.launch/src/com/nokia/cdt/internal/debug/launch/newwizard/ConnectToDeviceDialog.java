@@ -68,7 +68,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	private Button editButton;
 	private Label descriptionLabel;
 
-	protected ConnectToDeviceDialog(Shell shell, LaunchOptionsData data) {
+	protected ConnectToDeviceDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 		typeProvider = RemoteConnectionsActivator.getConnectionTypeProvider();

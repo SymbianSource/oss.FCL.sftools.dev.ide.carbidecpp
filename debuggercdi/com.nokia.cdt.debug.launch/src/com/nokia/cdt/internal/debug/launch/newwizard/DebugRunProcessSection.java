@@ -19,11 +19,16 @@ package com.nokia.cdt.internal.debug.launch.newwizard;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchOptionsData.EExeSelection;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelection;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 /**
@@ -31,7 +36,7 @@ import com.nokia.cpp.internal.api.utils.core.PathUtils;
  */
 public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 
-	public DebugRunProcessSection(LaunchOptionsData data) {
+	public DebugRunProcessSection(LaunchWizardData data) {
 		super(data, MessageFormat.format("{0} process", data.getModeLabel()));
 	}
 	
@@ -52,11 +57,20 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 			data.setExeSelectionPath(data.getExes().get(0));
 		else if (data.getDefaultExecutable() != null)
 			data.setExeSelectionPath(data.getDefaultExecutable());
+		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(data.getProject());
+		if (cpi != null) {
+			data.setInstallPackage(!data.isSysTRKConnection());
+			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
+			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
+				IPath sisPath = info.getSigningType() == ISISBuilderInfo.DONT_SIGN ? info.getUnsignedSISFullPath() : info.getSignedSISFullPath();
+				data.setSisPath(sisPath.toOSString());
+			}
+		}
 	}
 
 	@Override
 	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(
-			Shell shell, LaunchOptionsData dialogData) {
+			Shell shell, LaunchWizardData dialogData) {
 		return new DebugRunProcessDialog(shell, dialogData);
 	}
 	
@@ -84,10 +98,11 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		case ATTACH_TO_PROCESS:
 			break;
 		}
-		
-		// TODO: package
+
+		if (data.isInstallPackage() && (data.getSisPath() == null || data.getSisPath().length() == 0))
+			status = error("Carbide must install a package to debug this project.");
 	}
-	
+
 	@Override
 	protected void updateUI() {
 		
@@ -110,7 +125,7 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 				break;
 			}
 			
-			copyOrInstallMsg = "copy files to the device";
+			copyOrInstallMsg = getCopyOrInstallMsg();
 			
 			String runOrDebugProcessMessage = MessageFormat.format(mainFormat, copyOrInstallMsg, runOrLaunchMsg);
 			descriptionLabel.setText(runOrDebugProcessMessage);
@@ -119,6 +134,13 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 					MessageFormat.format("Click the 'Change...' button to select another {0} method.",
 							data.getModeLabel().toLowerCase()));
 		}
+	}
+
+	private String getCopyOrInstallMsg() {
+		if (data.isSysTRKConnection() || !data.isInstallPackage())
+			return "copy files to the device";
+		else
+			return MessageFormat.format("install \"{0}\"", data.getSisPath());
 	}
 
 }

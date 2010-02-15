@@ -146,7 +146,7 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible && wizardSelectionTableViewer != null) {
-			wizardSelectionTableViewer.setInput(mainWizard.getWizardsForCategory(mainWizard.getSelectedCategoryId()));
+			wizardSelectionTableViewer.setInput(mainWizard.getWizardsForCategory(mainWizard.getCategoryId()));
 			if (inputChanged) {
 				wizardSelectionTableViewer.setSelection(new StructuredSelection(wizardSelectionTableViewer.getElementAt(0)), true);
 			}

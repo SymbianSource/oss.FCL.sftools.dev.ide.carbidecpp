@@ -72,18 +72,18 @@ public class CommandRunLaunchWizard2 extends AbstractHandler {
 					allMMPPaths,
 					currBuiltMMPPaths); 
 					
-			LaunchWizard wiz = new LaunchWizard(project, 
-					info.getDefaultBuildConfigName(),
-					mmpFiles,
-					currBuiltExePaths,
-					EpocEngineHelper.getHostPathForExecutable(info.getDefaultConfiguration(), mmpFiles.get(0)),
-					false, false, 
-					ILaunchManager.DEBUG_MODE,
-					trkService
-					);
-			WizardDialog dialog = new WizardDialog(HandlerUtil.getActiveShell(event), wiz);
-			dialog.setPageSize(500, 300);
-			dialog.open();
+//			LaunchWizard wiz = new LaunchWizard(project, 
+//					info.getDefaultBuildConfigName(),
+//					mmpFiles,
+//					currBuiltExePaths,
+//					EpocEngineHelper.getHostPathForExecutable(info.getDefaultConfiguration(), mmpFiles.get(0)),
+//					false, false, 
+//					ILaunchManager.DEBUG_MODE,
+//					trkService
+//					);
+//			WizardDialog dialog = new WizardDialog(HandlerUtil.getActiveShell(event), wiz);
+//			dialog.setPageSize(500, 300);
+//			dialog.open();
 		}
 				
 		return null;
