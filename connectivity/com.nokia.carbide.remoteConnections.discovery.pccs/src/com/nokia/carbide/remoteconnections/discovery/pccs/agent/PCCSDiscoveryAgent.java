@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 
@@ -228,7 +229,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	 * @return
 	 */
 	private String createUniqueId(DeviceConnection conn) {
-		return getClass().getSimpleName() + ": " + conn.friendlyName; //$NON-NLS-1$
+		return getClass().getSimpleName() + ": " + conn.friendlyName + ": " + conn.address; //$NON-NLS-1$
 	}
 
 	/**
@@ -271,8 +272,22 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	}
 
 	private void disconnectAll() {
-		for (IConnection2 connection : connections.values()) {
-			manager.disconnect(connection);
+		if (connections.isEmpty())
+			return;
+		Set<String> keySet = connections.keySet();
+		for (String key : keySet) {
+			IConnection2 connection = connections.get(key);
+			// if manager knows about this connection, disconnect
+			// otherwise it has already been removed from our system
+			if (manager.findConnection(connection.getIdentifier()) != null) {
+				// not removed yet, disconnect only
+				manager.disconnect(connection);
+			} else {
+				// it's been removed from system
+				// remove it from our list also
+				connections.remove(key);
+			}
+			
 		}
 	}
 
