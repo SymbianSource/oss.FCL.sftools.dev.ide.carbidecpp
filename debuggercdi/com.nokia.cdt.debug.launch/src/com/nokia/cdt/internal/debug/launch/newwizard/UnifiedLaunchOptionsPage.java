@@ -71,10 +71,10 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 		section = new ConnectToDeviceSection(data, this);
 		sections.add(section);
 		
-		section = new DebugRunProcessSection(data);
+		section = new DebugRunProcessSection(data, this);
 		sections.add(section);
 		
-		section = new OtherSettingsSection(data);
+		section = new OtherSettingsSection(data, this);
 		sections.add(section);
 	}
 

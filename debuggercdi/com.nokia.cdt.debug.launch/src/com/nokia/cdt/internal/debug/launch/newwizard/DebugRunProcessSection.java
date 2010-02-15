@@ -36,8 +36,8 @@ import com.nokia.cpp.internal.api.utils.core.PathUtils;
  */
 public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 
-	public DebugRunProcessSection(LaunchWizardData data) {
-		super(data, MessageFormat.format("{0} process", data.getModeLabel()));
+	public DebugRunProcessSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+		super(data, MessageFormat.format("{0} process", data.getModeLabel()), launchOptionsPage);
 	}
 	
 	@Override
