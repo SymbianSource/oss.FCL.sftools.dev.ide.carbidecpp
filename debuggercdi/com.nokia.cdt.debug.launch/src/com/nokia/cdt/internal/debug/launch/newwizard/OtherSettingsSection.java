@@ -31,8 +31,8 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	/**
 	 * 
 	 */
-	public OtherSettingsSection(LaunchWizardData data) {
-		super(data, "Other settings");
+	public OtherSettingsSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+		super(data, "Other settings", launchOptionsPage);
 		
 	}
 	

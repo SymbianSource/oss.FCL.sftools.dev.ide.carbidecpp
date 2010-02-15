@@ -36,7 +36,6 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConne
 public class ConnectToDeviceSection extends AbstractLaunchWizardSection implements IConnectionListener {
 
 	private static final String NO_CURRENT_CONNECTION_MSG = "No current connection is defined or detected.";
-	private final UnifiedLaunchOptionsPage launchOptionsPage;
 	private final IConnectionsManager manager;
 
 	/**
@@ -44,8 +43,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	 * 
 	 */
 	public ConnectToDeviceSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
-		super(data, "Connect to device");
-		this.launchOptionsPage = launchOptionsPage;
+		super(data, "Connect to device", launchOptionsPage);
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 	}
 	

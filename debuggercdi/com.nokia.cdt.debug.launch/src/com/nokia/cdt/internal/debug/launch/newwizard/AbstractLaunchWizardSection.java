@@ -56,11 +56,13 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 	protected Button changeButton;
 	protected Composite control;
 	private ISectionChangeListener changeListener;
+	protected final UnifiedLaunchOptionsPage launchOptionsPage;
 
 
-	public AbstractLaunchWizardSection(LaunchWizardData data, String sectionName) {
+	public AbstractLaunchWizardSection(LaunchWizardData data, String sectionName, UnifiedLaunchOptionsPage launchOptionsPage) {
 		this.data = data;
 		this.sectionName = sectionName;
+		this.launchOptionsPage = launchOptionsPage;
 		status = Status.OK_STATUS;
 	}
 	
@@ -167,6 +169,7 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 		if (dialog.open() == Window.OK) {
 			data.apply(dialogData);
 			refresh();
+			launchOptionsPage.getWizard().getContainer().getShell().pack();
 		}
 	}
 
