@@ -85,9 +85,6 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, ILaunchConfigurationListener, IStartup {
 	
 	public interface ILaunchCreationWizardFactory {
-//		ILaunchCreationWizard createLaunchCreationWizard(IProject project, String mode, 
-//				final String defaultConfigName, boolean isX86, boolean useEmulatorByDefault, 
-//				IPath defaultExecutable, List<IPath> exePaths, List<IPath> mmpPaths) throws Exception;
 		ILaunchCreationWizard createLaunchCreationWizard(LaunchOptions launchOptions) throws Exception;
 	}
 
