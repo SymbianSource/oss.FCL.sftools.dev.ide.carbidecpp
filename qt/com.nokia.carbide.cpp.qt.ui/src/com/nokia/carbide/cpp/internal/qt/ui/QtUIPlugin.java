@@ -19,6 +19,7 @@ package com.nokia.carbide.cpp.internal.qt.ui;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -32,12 +33,16 @@ import org.osgi.framework.BundleContext;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideConfigurationChangedListener;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
+import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
+import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
-public class QtUIPlugin extends AbstractUIPlugin {
+public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener, ISDKManagerLoadedHook {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.qt.ui"; //$NON-NLS-1$
@@ -65,6 +70,7 @@ public class QtUIPlugin extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		CarbideBuilderPlugin.removeBuildConfigChangedListener(this);
 		plugin = null;
 		super.stop(context);
 	}
@@ -139,5 +145,45 @@ public class QtUIPlugin extends AbstractUIPlugin {
 		} catch (IllegalStateException e) {
 			// PlatformUI.getWorkbench() throws if running headless
 		}
+	}
+	
+	/** 
+	 * Implements ICarbideConfigurationChangedListener
+	 */
+	public void buildConfigurationChanged(ICarbideBuildConfiguration currentConfig) {
+		checkDefaultQtSDKForProject(currentConfig);
+	}
+	
+	/**
+	 * For the newly selected build configuration, check and see if there's an analogous internally installed
+	 * Qt-SDK, and if so make that the default. The default should not change if already set to &ltDefault&gt in the qt preferences or
+	 * if the new configuration has no internally built Qt-SDK.
+	 * @param currentConfig
+	 */
+	@SuppressWarnings("restriction")
+	private void checkDefaultQtSDKForProject(ICarbideBuildConfiguration currentConfig){
+		IProject project = currentConfig.getCarbideProject().getProject();
+		try {
+			if (project != null && project.hasNature(QtCorePlugin.QT_PROJECT_NATURE_ID)) {
+				
+					String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(currentConfig.getSDK());
+					// If qtSDK is not internally installed or <Default> is set, don't change anything
+					String currQtSDK = QtSDKUtils.getDefaultQtSDKForProject(project);
+					if (qtSDKName == null || currQtSDK == null || currQtSDK.equals(QtSDKUtils.QT_DEFAULT_SDK_NAME)) {
+						return;
+					}
+					
+					QtSDKUtils.setDefaultQtSDKForProject(project, qtSDKName);
+			}
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/** 
+	 * Implements ISDKManagerLoadedHook
+	 */
+	public void symbianSDKManagerLoaded() {
+		CarbideBuilderPlugin.addBuildConfigChangedListener(this);
 	}
 }

@@ -17,16 +17,25 @@
 */
 package com.nokia.carbide.cpp.internal.qt.core;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.BundleContext;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
+import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.trolltech.qtcppproject.QtNature;
 
-public class QtCorePlugin extends Plugin {
+public class QtCorePlugin extends Plugin implements ICarbideInstalledSDKChangeListener, ISDKManagerLoadedHook {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.qt.core"; //$NON-NLS-1$
@@ -56,6 +65,7 @@ public class QtCorePlugin extends Plugin {
 	 * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		SDKCorePlugin.getSDKManager().removeInstalledSdkChangeListener(this);
 		plugin = null;
 		super.stop(context);
 	}
@@ -82,6 +92,35 @@ public class QtCorePlugin extends Plugin {
 		newNatures[prevNatures.length] = QtCorePlugin.QT_PROJECT_NATURE_ID;
 		description.setNatureIds(newNatures);
 		project.setDescription(description, monitor);
+	}
+
+	private void scanForQtSDKs() {
+		
+		final String jobBaseText = "Checking for Qt installed in Symbian SDKs";
+		Job job = new Job(jobBaseText) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager()
+						.getSDKList();
+				for (ISymbianSDK sdk : sdkList) {
+					QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
+				}
+
+				return Status.OK_STATUS;
+			}
+
+		};
+		job.schedule();
+	}
+	
+	public void symbianSDKManagerLoaded() {
+		scanForQtSDKs();
+		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(this);
+	}
+
+	public void installedSdkChanged(SDKChangeEventType eventType) {
+		scanForQtSDKs();
 	}
 
 }
