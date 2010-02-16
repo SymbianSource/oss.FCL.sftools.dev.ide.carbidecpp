@@ -224,18 +224,19 @@ public class ConnectionStatusReconciler {
 	private void setConnectionStatus(IConnection2 connection, boolean isSysTRK, EStatus trkStatus, EStatus traceStatus) {
 		// use trk status
 		EConnectionStatus connectionStatus = service2ConnectionStatus(trkStatus);
-		// if sys trk, tracing also used
-		if (isSysTRK && connectionStatus.equals(EConnectionStatus.READY)) {
-			connectionStatus = service2ConnectionStatus(traceStatus);
-		}
+		// NOTE: removing trace status logic for now
+//		// if sys trk, tracing also used
+//		if (isSysTRK && connectionStatus.equals(EConnectionStatus.READY)) {
+//			connectionStatus = service2ConnectionStatus(traceStatus);
+//		}
 
 		String shortDesc = getShortDescriptionForStatus(connectionStatus);
 		StringBuilder longDesc = new StringBuilder(Messages.getString("ConnectionStatusReconciler_TRKServicePrefix")); //$NON-NLS-1$
 		longDesc.append(getServiceStatusString(trkStatus));
-		if (isSysTRK) {
-			longDesc.append(Messages.getString("ConnectionStatusReconciler_TracingServicePrefix")); //$NON-NLS-1$
-			longDesc.append(getServiceStatusString(traceStatus));
-		}
+//		if (isSysTRK) {
+//			longDesc.append(Messages.getString("ConnectionStatusReconciler_TracingServicePrefix")); //$NON-NLS-1$
+//			longDesc.append(getServiceStatusString(traceStatus));
+//		}
 		
 		connection.setStatus(new ConnectionStatus(connectionStatus, shortDesc, longDesc.toString()));
 	}
