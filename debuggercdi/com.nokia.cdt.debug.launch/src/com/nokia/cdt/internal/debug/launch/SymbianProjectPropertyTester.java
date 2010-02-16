@@ -16,16 +16,22 @@
 */
 package com.nokia.cdt.internal.debug.launch;
 
+import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.IBinary;
 import org.eclipse.cdt.core.model.ICElement;
+import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**
  * A property tester that determines if a file is an executable.
@@ -41,7 +47,13 @@ public class SymbianProjectPropertyTester extends PropertyTester {
 		}
 		if ("isCarbideProject".equals(property)) { //$NON-NLS-1$
 			return isCarbideProject(receiver);
-		}		
+		}
+		if ("isEmulator".equals(property)) { //$NON-NLS-1$
+			return isEmulator(receiver);
+		}
+		if ("isNotEmulator".equals(property)) { //$NON-NLS-1$
+			return !isEmulator(receiver);
+		}
 		return true;
 	}
 
@@ -80,5 +92,64 @@ public class SymbianProjectPropertyTester extends PropertyTester {
 		}
 		return (celement != null && celement instanceof IBinary);
 	}
+	
+	private boolean isEmulator(Object receiver) {
+		if (receiver instanceof Executable) {
+			return isEmulatorBinaryPath(((Executable) receiver).getPath());
+		}
+		if (receiver instanceof IBinary) {
+			return isEmulatorBinaryPath(((IBinary) receiver).getPath());
+		}
+		if (receiver instanceof IAdaptable) {
+			IResource res = (IResource) ((IAdaptable) receiver).getAdapter(IResource.class);
+			if (res != null) {
+				IProject project = res.getProject();
+				if (project != null) {
+					ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
+					if (cpi != null) {
+						ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
+						// just check the platform for the default config
+						if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+							return true;
+						}
+					}
+					else {
+						return getIsEmulatorFromExecutablesProject(project);
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean getIsEmulatorFromExecutablesProject(IProject project) {
+        ICProject cProject = CoreModel.getDefault().create(project);
+        if (cProject != null) {
+			try {
+    			for (IBinary bin : cProject.getBinaryContainer().getBinaries()) {
+    				if (bin.isExecutable()) {
+    					IPath path = bin.getResource().getLocation();
+    					if (isEmulatorBinaryPath(path)) {
+							return true;
+						}
+    				}
+    			}
+			} catch (CModelException e) {
+			}
+        }
+        return false;
+	}
+
+	private boolean isEmulatorBinaryPath(IPath binaryPath) {
+		if (binaryPath != null) {
+			for (String segment : binaryPath.segments()) {
+				if (segment.equalsIgnoreCase("winscw")) //$NON-NLS-1$
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	
 }

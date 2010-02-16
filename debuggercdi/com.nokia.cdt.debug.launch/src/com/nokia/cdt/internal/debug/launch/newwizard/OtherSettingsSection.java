@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchOptionsData.EBuildBeforeLaunchOption;
+import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EBuildBeforeLaunchOption;
 
 /**
  * Present the "Build before debug" section with a short description.
@@ -31,8 +31,8 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	/**
 	 * 
 	 */
-	public OtherSettingsSection(LaunchOptionsData data) {
-		super(data, "Other settings");
+	public OtherSettingsSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+		super(data, Messages.getString("OtherSettingsSection.Title"), launchOptionsPage); //$NON-NLS-1$
 		
 	}
 	
@@ -69,16 +69,16 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	protected void updateUI() {
 		String msg;
 		
-		String ifWorkspace = "";
+		String ifWorkspace = ""; //$NON-NLS-1$
 		if (data.getBuildBeforeLaunch() == EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING)
-			ifWorkspace = " (workspace setting)";
+			ifWorkspace = Messages.getString("OtherSettingsSection.WorkspaceLabel"); //$NON-NLS-1$
 		
 		if (data.isCurrentBuildBeforeLaunch())
-			msg = "Carbide will build the project before launch";
+			msg = Messages.getString("OtherSettingsSection.BuildBeforeLabel"); //$NON-NLS-1$
 		else
-			msg = "Carbide will not build the project before launch";
+			msg = Messages.getString("OtherSettingsSection.NoBuildBeforeLabel"); //$NON-NLS-1$
 		
-		descriptionLabel.setText(msg + ifWorkspace + ".");
+		descriptionLabel.setText(msg + ifWorkspace + "."); //$NON-NLS-1$
 	}
 	
 	/* (non-Javadoc)
@@ -86,7 +86,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	 */
 	@Override
 	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(
-			Shell shell, LaunchOptionsData dialogData) {
+			Shell shell, LaunchWizardData dialogData) {
 		return new OtherSettingsDialog(shell, dialogData);
 	}
 	

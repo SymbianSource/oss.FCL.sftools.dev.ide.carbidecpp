@@ -35,17 +35,15 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConne
  */
 public class ConnectToDeviceSection extends AbstractLaunchWizardSection implements IConnectionListener {
 
-	private static final String NO_CURRENT_CONNECTION_MSG = "No current connection is defined or detected.";
-	private final UnifiedLaunchOptionsPage launchOptionsPage;
+	private static final String NO_CURRENT_CONNECTION_MSG = Messages.getString("ConnectToDeviceSection.NoConnectionMsg"); //$NON-NLS-1$
 	private final IConnectionsManager manager;
 
 	/**
 	 * @param unifiedLaunchOptionsPage 
 	 * 
 	 */
-	public ConnectToDeviceSection(LaunchOptionsData data, UnifiedLaunchOptionsPage launchOptionsPage) {
-		super(data, "Connect to device");
-		this.launchOptionsPage = launchOptionsPage;
+	public ConnectToDeviceSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+		super(data, Messages.getString("ConnectToDeviceSection.Title"), launchOptionsPage); //$NON-NLS-1$
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 	}
 	
@@ -69,7 +67,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 
 	/** Get the simple status for the connection state */
-	static IStatus revalidate(LaunchOptionsData data) {
+	static IStatus revalidate(LaunchWizardData data) {
 		IStatus status = Status.OK_STATUS;
 		
 		if (data.getConnection() == null) {
@@ -80,7 +78,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 	
 	static String getStandardPNPMessage() {
-		return "You may plug in a device over USB or activate it over WLAN, or create a new connection now for your device or simulator.";
+		return Messages.getString("ConnectToDeviceSection.StdPNPMsg"); //$NON-NLS-1$
 	}
 
 	@Override
@@ -90,16 +88,16 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 		
 		String msg;
 		if (data.getConnection() != null)
-			msg = MessageFormat.format("The current connection is now ''{0}''.", data.getConnectionName());
+			msg = MessageFormat.format(Messages.getString("ConnectToDeviceSection.CurrentConnectionLabel"), data.getConnectionName()); //$NON-NLS-1$
 		else
-			msg = MessageFormat.format("{0} {1}", NO_CURRENT_CONNECTION_MSG, getStandardPNPMessage());
+			msg = MessageFormat.format("{0} {1}", NO_CURRENT_CONNECTION_MSG, getStandardPNPMessage()); //$NON-NLS-1$
 			
 		descriptionLabel.setText(msg);
 		launchOptionsPage.changed();
 	}
 	
 	@Override
-	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchOptionsData dialogData) {
+	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchWizardData dialogData) {
 		return new ConnectToDeviceDialog(shell, dialogData);
 	}
 	

@@ -16,23 +16,51 @@
 */
 package com.nokia.cdt.internal.debug.launch;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
-import org.eclipse.cdt.core.model.*;
+import org.eclipse.cdt.core.model.CModelException;
+import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.model.IBinary;
+import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
-import org.eclipse.debug.core.*;
-import org.eclipse.debug.ui.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.ILaunch;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationListener;
+import org.eclipse.debug.core.ILaunchConfigurationType;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchListener;
+import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.debug.ui.AbstractDebugView;
+import org.eclipse.debug.ui.DebugUITools;
+import org.eclipse.debug.ui.IDebugUIConstants;
+import org.eclipse.debug.ui.IDebugView;
 import org.eclipse.debug.ui.contexts.DebugContextEvent;
 import org.eclipse.debug.ui.contexts.IDebugContextListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.*;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IWindowListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.osgi.framework.BundleContext;
@@ -46,15 +74,20 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.cdt.debug.cw.symbian.*;
-import com.nokia.cdt.internal.debug.launch.wizard.LaunchCreationWizard;
-import com.nokia.cdt.internal.debug.launch.wizard.LaunchCreationWizardInstance;
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.wizard.ILaunchCreationWizard;
+import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 /**
  * The main plugin class to be used in the desktop.
  */
 public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, ILaunchConfigurationListener, IStartup {
+	
+	public interface ILaunchCreationWizardFactory {
+		ILaunchCreationWizard createLaunchCreationWizard(LaunchOptions launchOptions) throws Exception;
+	}
+
 	//The shared instance.
 	private static LaunchPlugin plugin;
 	//Resource bundle.
@@ -206,7 +239,8 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
         return isX86;
 	}
 
-	private ILaunchConfiguration createConfigurationForProject(IProject project, Executable executable, IPath defaultMMP, String mode) throws CoreException {
+	private ILaunchConfiguration createConfigurationForProject(IProject project, Executable executable, 
+			IPath defaultMMP, String mode, ILaunchCreationWizardFactory wizardFactory) throws CoreException {
 
 		boolean openLaunchConfigDialog = false;
 
@@ -292,15 +326,17 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 			// which exe to launch or emulator if not required, 
 			// which non-emulator launch type,
 			// or both
+			LaunchOptions launchOptions = new LaunchOptions();
+			launchOptions.project = project;
+			launchOptions.mode = mode;
+			launchOptions.configurationName = defaultConfigName;
+			launchOptions.isEmulation = isX86;
+			launchOptions.emulatorOnly = useEmulatorByDefault;
+			launchOptions.defaultExecutable = defaultExecutable;
+			launchOptions.exes = exePaths;
+			launchOptions.mmps = mmpPaths;
 			try {
-				final LaunchCreationWizard wizard = 
-					LaunchCreationWizardInstance.getInstance().create(project, defaultConfigName, mmpPaths, exePaths, defaultExecutable, isX86, useEmulatorByDefault, mode);
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						wizard.init(PlatformUI.getWorkbench(), null);
-						wizard.openWizard(CUIPlugin.getActiveWorkbenchShell());
-					}
-				});
+				final ILaunchCreationWizard wizard = openLaunchCreationWizard(launchOptions, wizardFactory);
 				config = wizard.getLaunchConfiguration();
 				openLaunchConfigDialog = wizard.shouldOpenLaunchConfigurationDialog();
 			}
@@ -324,6 +360,19 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 				return config.doSave();
 		}
 		return null;
+	}
+
+	private ILaunchCreationWizard openLaunchCreationWizard(LaunchOptions launchOptions, 
+			ILaunchCreationWizardFactory wizardFactory) throws Exception {
+		final ILaunchCreationWizard wizard = 
+			wizardFactory.createLaunchCreationWizard(launchOptions);
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				wizard.init();
+				wizard.openWizard(CUIPlugin.getActiveWorkbenchShell());
+			}
+		});
+		return wizard;
 	}
 
 	public ILaunchConfiguration[] getLaunchConfigurations(IProject project, Executable executable, IPath defaultMMP)
@@ -368,10 +417,11 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		return configs.toArray(new ILaunchConfiguration[configs.size()]);		
 	}
 	
-	public void launchProject(IProject project, Executable executable, IPath defaultMMP, String mode) {
+	public void launchProject(IProject project, Executable executable, IPath defaultMMP, String mode, 
+			ILaunchCreationWizardFactory wizardFactory) {
 		ILaunchConfiguration configuration = null;
 		try {
-			configuration = createConfigurationForProject(project, executable, defaultMMP, mode);
+			configuration = createConfigurationForProject(project, executable, defaultMMP, mode, wizardFactory);
 		} catch (CoreException e) {
 			log(e);
 		}
@@ -540,7 +590,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		});
 		
 	}
-
+	
 	public static IService getTRKService() {
 		return RemoteConnectionsActivator.getConnectionTypeProvider().
 					findServiceByID("com.nokia.carbide.trk.support.service.TRKService"); //$NON-NLS-1$

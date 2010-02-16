@@ -64,7 +64,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchOptionsData.EExeSelection;
+import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelection;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
@@ -85,7 +85,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private Button sisBrowse;
 	private Composite installPackageUI;
 	
-	protected DebugRunProcessDialog(Shell shell, LaunchOptionsData data) {
+	protected DebugRunProcessDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
 	}
 
@@ -96,7 +96,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite composite = initDialogArea(parent, 
-				MessageFormat.format("Change {0} Process", data.getModeLabel()),
+				MessageFormat.format(Messages.getString("DebugRunProcessDialog.ChangeProcessMsg"), data.getModeLabel()), //$NON-NLS-1$
 				data.isDebug() ? LaunchWizardHelpIds.WIZARD_DIALOG_CHANGE_DEBUG_PROCESS : 
 					LaunchWizardHelpIds.WIZARD_DIALOG_CHANGE_RUN_PROCESS);
 
@@ -120,7 +120,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		Label label;
 		
 		label = new Label(composite, SWT.WRAP);
-		label.setText(MessageFormat.format("{0} method:", data.getModeLabel()));
+		label.setText(MessageFormat.format(Messages.getString("DebugRunProcessDialog.ModeLabel"), data.getModeLabel())); //$NON-NLS-1$
 		label.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DIALOG_FONT));
 		
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
@@ -139,9 +139,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		
 		String msg;
 		if (data.isDebug())
-			msg = "Configure how to debug the program.  The initial settings reflect the debug capabilities of the selected device and the SIS builder settings.";
+			msg = Messages.getString("DebugRunProcessDialog.DebugConfigureMsg"); //$NON-NLS-1$
 		else
-			msg = "Configure how to run the program.";
+			msg = Messages.getString("DebugRunProcessDialog.RunConfigureMsg"); //$NON-NLS-1$
 		setMessage(msg);
 		
 		switch (data.getExeSelection()) {
@@ -161,7 +161,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		Label label;
 		
 		label = new Label(composite, SWT.WRAP);
-		label.setText(MessageFormat.format("Deploy method:", data.getModeLabel()));
+		label.setText(MessageFormat.format(Messages.getString("DebugRunProcessDialog.DeployLabel"), data.getModeLabel())); //$NON-NLS-1$
 		label.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DIALOG_FONT));
 		
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
@@ -178,7 +178,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		installPackageCheckbox = new Button(composite, SWT.CHECK);
 		GridDataFactory.fillDefaults().applyTo(installPackageCheckbox);
 		
-		installPackageCheckbox.setText("Install package before launch");
+		installPackageCheckbox.setText(Messages.getString("DebugRunProcessDialog.InstallBeforeLaunchLabel")); //$NON-NLS-1$
 		installPackageUI = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().indent(INDENT, 0).applyTo(installPackageUI);
 		
@@ -194,8 +194,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		});
 		
 		
-		if (data.requiresInstallPackage()) {
+		if (data.isInstallPackage()) {
 			installPackageCheckbox.setSelection(true);
+			updatePackageUI();
 		}
 		
 		updateSisFile();
@@ -209,16 +210,16 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 		if (cpi != null) {
 			final Label sisLabel = new Label(composite, SWT.NONE);
-			sisLabel.setText("SIS File to Install:");
+			sisLabel.setText(Messages.getString("DebugRunProcessDialog.SISFileLabel")); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).span(1, 1).applyTo(sisLabel);
-			sisLabel.setToolTipText("Specify which SIS file to install on the phone prior to launching");
-			sisLabel.setData(UID, "DebugRunProcessDialog.sisLabel");
+			sisLabel.setToolTipText(Messages.getString("DebugRunProcessDialog.SISQueryTip")); //$NON-NLS-1$
+			sisLabel.setData(UID, "DebugRunProcessDialog.sisLabel"); //$NON-NLS-1$
 
 			sisFile = new Combo(composite, SWT.READ_ONLY);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).span(1, 1).grab(true, false).applyTo(sisLabel);
-			sisFile.setToolTipText("Specify which SIS file to install on the phone prior to launching"); 
+			sisFile.setToolTipText(Messages.getString("DebugRunProcessDialog.SISQueryTip"));  //$NON-NLS-1$
 			sisFile.add("None"); //$NON-NLS-1$
-			sisFile.setData(UID, "DebugRunProcessDialog.sisFile");
+			sisFile.setData(UID, "DebugRunProcessDialog.sisFile"); //$NON-NLS-1$
 			
 			sisFile.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -251,44 +252,44 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			});
 			
 			Link link = new Link(composite, SWT.NONE);
-			link.setText("<a>" + "Modify SIS builder settings for build configuration" + "...</a>");
+			link.setText("<a>" + Messages.getString("DebugRunProcessDialog.SISConfigLinkText") + "...</a>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			GridDataFactory.swtDefaults().align(SWT.FILL, SWT.CENTER).span(2, 1).grab(true, false).applyTo(link);
 			link.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					PreferencesUtil.createPropertyDialogOn(getShell(), project, "com.nokia.carbide.cdt.internal.builder.ui.CarbideBuildConfigurationsPage", null, null).open();
+					PreferencesUtil.createPropertyDialogOn(getShell(), project, "com.nokia.carbide.cdt.internal.builder.ui.CarbideBuildConfigurationsPage", null, null).open(); //$NON-NLS-1$
 				}
 			});
-			link.setData(UID, "DebugRunProcessDialog.link");
+			link.setData(UID, "DebugRunProcessDialog.link"); //$NON-NLS-1$
 		} else {
 			// not a Carbide project, just an executable.  show a browse/edit combo
 			// to let them select a sis file if they want to.
 			final Label sisLabel = new Label(composite, SWT.NONE);
 			sisLabel.setText("SIS File to Install:"); //$NON-NLS-1$
 			GridDataFactory.swtDefaults().span(2, 1).applyTo(sisLabel);
-			sisLabel.setToolTipText("Specify which SIS file to install on the phone prior to launching");
-			sisLabel.setData(UID, "DebugRunProcessDialog.sisLabel");
+			sisLabel.setToolTipText(Messages.getString("DebugRunProcessDialog.SISQueryTip")); //$NON-NLS-1$
+			sisLabel.setData(UID, "DebugRunProcessDialog.sisLabel"); //$NON-NLS-1$
 
 			sisEdit = new Text(composite, SWT.BORDER);
 			GridDataFactory.fillDefaults().span(1, 1).align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(sisEdit);
-			sisEdit.setToolTipText("Specify which SIS file to install on the phone prior to launching");
+			sisEdit.setToolTipText(Messages.getString("DebugRunProcessDialog.SISQueryTip")); //$NON-NLS-1$
 			sisEdit.addModifyListener(new ModifyListener() {
 				public void modifyText(ModifyEvent e) {
 					updateSisFile();
 					validate();
 				}
 			});
-			sisEdit.setData(UID, "DebugRunProcessDialog.sisEdit");
+			sisEdit.setData(UID, "DebugRunProcessDialog.sisEdit"); //$NON-NLS-1$
 
 			sisBrowse = new Button(composite, SWT.NONE);
-			sisBrowse.setText("Browse...");
+			sisBrowse.setText(Messages.getString("DebugRunProcessDialog.BrowseLabel")); //$NON-NLS-1$
 			sisBrowse.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 			sisBrowse.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent evt) {
 					FileDialog dialog = new FileDialog(getShell(), SWT.NONE);
 
-					dialog.setText("Select installation file");
-					dialog.setFilterExtensions(new String[] {"*.sis*", "*.*"});
-					dialog.setFilterNames(new String[] {"Installation Files", "All Files"});
+					dialog.setText(Messages.getString("DebugRunProcessDialog.Title")); //$NON-NLS-1$
+					dialog.setFilterExtensions(new String[] {"*.sis*", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
+					dialog.setFilterNames(new String[] {Messages.getString("DebugRunProcessDialog.InstallFilterName"), Messages.getString("DebugRunProcessDialog.AllFilterName")}); //$NON-NLS-1$ //$NON-NLS-2$
 
 					BrowseDialogUtils.initializeFrom(dialog, sisEdit);
 
@@ -300,7 +301,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 					}
 				}
 			});
-			sisBrowse.setData(UID, "DebugRunProcessDialog.sisBrowse");
+			sisBrowse.setData(UID, "DebugRunProcessDialog.sisBrowse"); //$NON-NLS-1$
 		}
     }
     
@@ -311,7 +312,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	protected void updateSisFile() {
 		String sisPath;
     	if (sisFile != null) {
-        	sisPath = sisFile.getSelectionIndex() == 0 ? "" : sisFile.getText(); //$NON-NLS-1$
+        	sisPath = sisFile.getSelectionIndex() == 0 ? null : sisFile.getText(); //$NON-NLS-1$
         	data.setSisPath(sisPath);
     	} else if (sisEdit != null) {
     		sisPath = sisEdit.getText();
@@ -344,7 +345,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			if (cpi != null) {
 				sisFile.removeAll();
 
-				sisFile.add("None");
+				sisFile.add(Messages.getString("DebugRunProcessDialog.NoneItem")); //$NON-NLS-1$
 				
 				ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 				for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
@@ -392,7 +393,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 
 	private IPath createSuggestedRemotePath(IPath exeSelectionPath) {
 		String filename = exeSelectionPath.lastSegment();
-		return PathUtils.createPath("C:/sys/bin").append(filename);
+		return PathUtils.createPath("C:/sys/bin").append(filename); //$NON-NLS-1$
 	}
 
 	/**
@@ -402,12 +403,12 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private void createProjectExecutableRadioButton(Composite radioGroup) {
 		projectExecutableRadioButton = new Button(radioGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().grab(false, false).applyTo(projectExecutableRadioButton);
-		projectExecutableRadioButton.setText("Launch project &executable:");
-		projectExecutableRadioButton.setData(UID, "radio_project_executable");
+		projectExecutableRadioButton.setText(Messages.getString("DebugRunProcessDialog.LaunchProjectExeLabel")); //$NON-NLS-1$
+		projectExecutableRadioButton.setData(UID, "radio_project_executable"); //$NON-NLS-1$
 		
 		projectExecutableViewer = new ComboViewer(radioGroup, SWT.READ_ONLY);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(projectExecutableViewer.getControl());
-		projectExecutableViewer.getControl().setData(UID, "combo_project_executable");
+		projectExecutableViewer.getControl().setData(UID, "combo_project_executable"); //$NON-NLS-1$
 		
 		projectExecutableViewer.setContentProvider(new ArrayContentProvider());
 		projectExecutableViewer.setLabelProvider(new LabelProvider() {
@@ -469,14 +470,14 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private void createRemoteExecutableRadioButton(Composite radioGroup) {
 		remoteExecutableRadioButton = new Button(radioGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().grab(false, false).applyTo(remoteExecutableRadioButton);
-		remoteExecutableRadioButton.setText("Launch &remote program:");
+		remoteExecutableRadioButton.setText(Messages.getString("DebugRunProcessDialog.LaunchRemoteProgLabel")); //$NON-NLS-1$
 		
-		remoteExecutableRadioButton.setData(UID, "radio_remote_program");
+		remoteExecutableRadioButton.setData(UID, "radio_remote_program"); //$NON-NLS-1$
 		
 		remoteProgramEntry = new Text(radioGroup, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteProgramEntry);
 		
-		remoteProgramEntry.setData(UID, "text_remote_program");
+		remoteProgramEntry.setData(UID, "text_remote_program"); //$NON-NLS-1$
 		
 		remoteExecutableRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -514,14 +515,14 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private void createAttachToProcessRadioButton(Composite radioGroup) {
 		attachToProcessRadioButton = new Button(radioGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().grab(false, false).applyTo(attachToProcessRadioButton);
-		attachToProcessRadioButton.setText("&Attach to process:");
+		attachToProcessRadioButton.setText(Messages.getString("DebugRunProcessDialog.AttachLabel")); //$NON-NLS-1$
 		
-		attachToProcessRadioButton.setData(UID, "radio_attach_to_process");
+		attachToProcessRadioButton.setData(UID, "radio_attach_to_process"); //$NON-NLS-1$
 		
 		Label label = new Label(radioGroup, SWT.WRAP);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.LEFT, SWT.CENTER).applyTo(label);
 		
-		label.setText("(selected at launch time)");
+		label.setText(Messages.getString("DebugRunProcessDialog.AttachAddlMsg")); //$NON-NLS-1$
 		
 		attachToProcessRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -552,12 +553,12 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		switch (data.getExeSelection()) {
 		case USE_PROJECT_EXECUTABLE:
 			if (exePath.isEmpty()) {
-				status = error("The project builds no executables.");
+				status = error(Messages.getString("DebugRunProcessDialog.NoExesError")); //$NON-NLS-1$
 			}
 			break;
 		case USE_REMOTE_EXECUTABLE:
 			if (exePath.isEmpty()) {
-				status = error("Enter a non-empty executable path.");
+				status = error(Messages.getString("DebugRunProcessDialog.EnterPathError")); //$NON-NLS-1$
 			} else {
 				String exePathString = exePath.toString();
 				char drive = exePathString.charAt(0);
@@ -566,9 +567,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 				char lastChar = exePathString.charAt(exePathString.length() - 1);
 				if (!Character.isLetter(drive) || colon != ':' || (root != '\\' && root != '/') || 
 						lastChar == '\\' || lastChar == '/' || lastChar == ':') { 
-					status = error("The executable path must be absolute.");
+					status = error(Messages.getString("DebugRunProcessDialog.AbsolutePathError")); //$NON-NLS-1$
 				} else if (exePath.getFileExtension() == null) {
-					status = warning("The executable path should end in a filename.");
+					status = warning(Messages.getString("DebugRunProcessDialog.FilePathError")); //$NON-NLS-1$
 				}
 			}
 			break;
@@ -585,7 +586,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	    			// it exists
 	    			File file = new File(text);
 	    			if (!file.exists()) {
-	    				status = error("The SIS file ''{0}'' does not exist.", text);
+	    				status = error(Messages.getString("DebugRunProcessDialog.SISFileExistError"), text); //$NON-NLS-1$
 	    			}
 	    		}
 	    	}

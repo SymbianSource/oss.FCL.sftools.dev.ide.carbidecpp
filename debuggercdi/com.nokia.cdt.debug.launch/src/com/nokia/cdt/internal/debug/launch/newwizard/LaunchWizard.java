@@ -18,14 +18,12 @@
 package com.nokia.cdt.internal.debug.launch.newwizard;
 
 import java.text.MessageFormat;
-import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IPageChangedListener;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.IWizardContainer;
@@ -38,31 +36,32 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cdt.internal.debug.launch.wizard.ILaunchCreationWizard;
+import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
 
 /**
  * New launch wizard for Carbide 3.0.
  * 
  * See https://xdabug001.ext.nokia.com/bugzilla/show_bug.cgi?id=10419
  */
-public class LaunchWizard extends Wizard {
+public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 	 
-	private LaunchOptionsData launchData;
+	private LaunchWizardData launchData;
 	private UnifiedLaunchOptionsPage mainPage;
 	private Button advancedButton;
 	private boolean advancedEdit;
 	private IPageChangedListener pageChangedListener;
+	private boolean hasFinished;
 	
-	public LaunchWizard(IProject project, String configurationName, 
-			List<IPath> mmps, List<IPath> exes, IPath defaultExecutable,  
-			boolean isEmulation, boolean emulatorOnly, String mode,
-			IService trkService) {
-		launchData = new LaunchOptionsData(mmps, exes, defaultExecutable, project, configurationName,
-				isEmulation, emulatorOnly, mode, trkService);
+	public LaunchWizard(LaunchOptions launchOptions, IService trkService) {
+		launchData = new LaunchWizardData(launchOptions, trkService);
 		mainPage = new UnifiedLaunchOptionsPage(launchData); 
 		mainPage.initializeSettings();
-		setWindowTitle("New Launch Configuration Wizard");
+		setWindowTitle(Messages.getString("LaunchWizard.Title")); //$NON-NLS-1$
     }
 
 	/* (non-Javadoc)
@@ -103,9 +102,9 @@ public class LaunchWizard extends Wizard {
 				((GridLayout) parent.getLayout()).numColumns++;
 				advancedButton.moveBelow(parent.getChildren()[0]);
 				
-				advancedButton.setText("Edit advanced settings before launch");
+				advancedButton.setText(Messages.getString("LaunchWizard.AdvancedLabel")); //$NON-NLS-1$
 				advancedButton.setToolTipText(MessageFormat.format(
-						"Before finishing the wizard, edit settings in the ''{0} Configurations'' dialog.",
+						Messages.getString("LaunchWizard.AdvancedTip"), //$NON-NLS-1$
 						launchData.getModeLabel()));
 				advancedButton.addSelectionListener(new SelectionAdapter() {
 					@Override
@@ -132,12 +131,12 @@ public class LaunchWizard extends Wizard {
 		if (finishButton != null) {
 			advancedEdit = advancedButton.getSelection();
 			if (advancedEdit) {
-				finishButton.setText("Edit");
-				finishButton.setToolTipText("Click to accept settings and edit advanced settings.");
+				finishButton.setText(Messages.getString("LaunchWizard.EditLabel")); //$NON-NLS-1$
+				finishButton.setToolTipText(Messages.getString("LaunchWizard.EditTip")); //$NON-NLS-1$
 				getContainer().updateButtons();
 			} else {
 				finishButton.setText(launchData.getModeLabel());
-				finishButton.setToolTipText("Click to accept settings and launch the program.");
+				finishButton.setToolTipText(Messages.getString("LaunchWizard.FinishTip")); //$NON-NLS-1$
 				getContainer().updateButtons();
 			}
 		}
@@ -176,8 +175,33 @@ public class LaunchWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		MessageDialog.openWarning(getShell(), "New Launch Configuration Wizard", "Launching from this wizard not enabled yet");
-		return false;
+		hasFinished = true;
+		return true;
 	}
 
+	public boolean shouldOpenLaunchConfigurationDialog() {
+		return hasFinished && advancedEdit;
+	}
+
+	public ILaunchConfigurationWorkingCopy getLaunchConfiguration() {
+		if (!hasFinished)
+			return null;
+		
+		ILaunchConfigurationWorkingCopy config = null;
+		try {
+			config = launchData.createConfiguration();
+		} catch (CoreException e) {
+			LaunchPlugin.log(e);
+		}
+		
+		return config;
+	}
+
+	public void init() {
+	}
+
+	public int openWizard(Shell shell) {
+		WizardDialog dialog = new WizardDialog(shell, this);
+		return dialog.open();
+	}
 }
