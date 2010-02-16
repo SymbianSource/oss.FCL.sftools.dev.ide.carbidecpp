@@ -130,14 +130,18 @@ public class ConnectionStatusReconciler {
 	}
 
 	private void showConnectionsView() {
-		// avoid deadlock if this called as a result of a launch sequence issuing a "select connection" dialog
+		// avoid deadlock with RunRunnableWhenWorkbenchVisibleJob 
+		// if this called as a result of a launch sequence issuing a "select connection" dialog
 		final Shell shell = WorkbenchUtils.getActiveShell();
-		final boolean isVisible[] = { true };
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				isVisible[0] = shell != null && shell.isVisible();
-			}
-		});
+		final boolean isVisible[] = { false };
+		
+		if (shell != null) {
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					isVisible[0] = shell.isVisible();
+				}
+			});
+		}
 		
 		Runnable runnable = new Runnable() {
 			public void run() {
@@ -148,7 +152,7 @@ public class ConnectionStatusReconciler {
 			}
 		};
 		
-		if (shell == null || !isVisible[0]) {
+		if (!isVisible[0]) {
 			RunRunnableWhenWorkbenchVisibleJob.start(runnable);
 		} else {
 			Display.getDefault().asyncExec(runnable);
