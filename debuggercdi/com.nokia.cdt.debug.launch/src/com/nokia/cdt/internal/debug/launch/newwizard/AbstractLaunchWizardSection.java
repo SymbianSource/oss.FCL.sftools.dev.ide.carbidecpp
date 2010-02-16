@@ -47,7 +47,7 @@ import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
  */
 public abstract class AbstractLaunchWizardSection implements IWizardSection {
 
-	private static final String CHANGE_LABEL = "Change...";
+	private static final String CHANGE_LABEL = Messages.getString("AbstractLaunchWizardSection.ChangeLabel"); //$NON-NLS-1$
 	protected final LaunchWizardData data;
 	private String sectionName;
 
