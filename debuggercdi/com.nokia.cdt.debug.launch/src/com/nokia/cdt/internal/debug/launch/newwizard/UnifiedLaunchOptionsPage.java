@@ -58,9 +58,9 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 	 * @param configurationName
 	 */
 	public UnifiedLaunchOptionsPage(LaunchWizardData data) {
-		super("Configure Launch Settings");
+		super(Messages.getString("UnifiedLaunchOptionsPage.Title")); //$NON-NLS-1$
 		
-		setDescription("Configure the connection and process to launch.");
+		setDescription(Messages.getString("UnifiedLaunchOptionsPage.Desc")); //$NON-NLS-1$
 		
 		this.data = data;
 		this.sections = new ArrayList<IWizardSection>();
@@ -116,9 +116,9 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 			if (status.isOK())
 				continue;
 			if (builder.length() > 0)
-				builder.append("\n");
+				builder.append("\n"); //$NON-NLS-1$
 			
-			builder.append(MessageFormat.format("{0}: {1}",
+			builder.append(MessageFormat.format("{0}: {1}", //$NON-NLS-1$
 					section.getSectionName(), 
 					status.getMessage()));
 			severity = Math.max(severity, status.getSeverity());
@@ -131,7 +131,7 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 			pageStatus = data.validate();
 		}
 		
-		setTitle("Configure launch configuration");
+		setTitle(Messages.getString("UnifiedLaunchOptionsPage.TitleText")); //$NON-NLS-1$
 		
 		if (pageStatus != null && !pageStatus.isOK()) {
 			setMessage(pageStatus.getMessage(), severityToMsgType(pageStatus.getSeverity()));

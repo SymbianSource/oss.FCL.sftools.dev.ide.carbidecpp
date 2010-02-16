@@ -32,7 +32,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	 * 
 	 */
 	public OtherSettingsSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
-		super(data, "Other settings", launchOptionsPage);
+		super(data, Messages.getString("OtherSettingsSection.Title"), launchOptionsPage); //$NON-NLS-1$
 		
 	}
 	
@@ -69,16 +69,16 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	protected void updateUI() {
 		String msg;
 		
-		String ifWorkspace = "";
+		String ifWorkspace = ""; //$NON-NLS-1$
 		if (data.getBuildBeforeLaunch() == EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING)
-			ifWorkspace = " (workspace setting)";
+			ifWorkspace = Messages.getString("OtherSettingsSection.WorkspaceLabel"); //$NON-NLS-1$
 		
 		if (data.isCurrentBuildBeforeLaunch())
-			msg = "Carbide will build the project before launch";
+			msg = Messages.getString("OtherSettingsSection.BuildBeforeLabel"); //$NON-NLS-1$
 		else
-			msg = "Carbide will not build the project before launch";
+			msg = Messages.getString("OtherSettingsSection.NoBuildBeforeLabel"); //$NON-NLS-1$
 		
-		descriptionLabel.setText(msg + ifWorkspace + ".");
+		descriptionLabel.setText(msg + ifWorkspace + "."); //$NON-NLS-1$
 	}
 	
 	/* (non-Javadoc)

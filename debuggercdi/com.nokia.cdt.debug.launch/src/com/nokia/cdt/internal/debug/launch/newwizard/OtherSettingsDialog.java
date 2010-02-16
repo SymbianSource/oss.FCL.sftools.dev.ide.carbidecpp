@@ -59,12 +59,12 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite composite = initDialogArea(parent, 
-				"Other Settings", 
+				Messages.getString("OtherSettingsDialog.Title"),  //$NON-NLS-1$
 				LaunchWizardHelpIds.WIZARD_DIALOG_OTHER_SETTINGS);
 
-		String description = "Build the project before launch?  " + 
-		"This can take a very long time in some projects and build systems.  " +
-		"On the other hand, you must remember to build the project yourself if you make changes.";
+		String description = Messages.getString("OtherSettingsDialog.Desc1") +  //$NON-NLS-1$
+		Messages.getString("OtherSettingsDialog.Desc2") + //$NON-NLS-1$
+		Messages.getString("OtherSettingsDialog.Desc3"); //$NON-NLS-1$
 		
 		final Label label = new Label(composite, SWT.WRAP);
 		label.setText(description);
@@ -89,7 +89,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		fDisableBuildButton = new Button(radio, SWT.RADIO);
 		fDisableBuildButton.setText(Messages.getString("OtherSettingsDialog.DisableButtonLabel")); //$NON-NLS-1$
 		fDisableBuildButton.setToolTipText(Messages.getString("OtherSettingsDialog.DisableButtonToolTip")); //$NON-NLS-1$
-		fDisableBuildButton.setData(UID, "OtherSettingsDialog.disableBuildButton");
+		fDisableBuildButton.setData(UID, "OtherSettingsDialog.disableBuildButton"); //$NON-NLS-1$
 		
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(fDisableBuildButton);
 		
@@ -104,7 +104,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		fEnableBuildButton = new Button(radio, SWT.RADIO);
 		fEnableBuildButton.setText(Messages.getString("OtherSettingsDialog.EnableButtonLabel")); //$NON-NLS-1$
 		fEnableBuildButton.setToolTipText(Messages.getString("OtherSettingsDialog.EnableButtonToolTip")); //$NON-NLS-1$
-		fEnableBuildButton.setData(UID, "OtherSettingsDialog.enableBuildButon");
+		fEnableBuildButton.setData(UID, "OtherSettingsDialog.enableBuildButon"); //$NON-NLS-1$
 		
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(fEnableBuildButton);
 		
@@ -119,7 +119,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		fWorkspaceSettingsButton = new Button(radio, SWT.RADIO);
 		fWorkspaceSettingsButton.setText(Messages.getString("OtherSettingsDialog.WorkspaceSettingsButtonLabel")); //$NON-NLS-1$
 		fWorkspaceSettingsButton.setToolTipText(Messages.getString("OtherSettingsDialog.WorkspaceSettingsButtonToolTip")); //$NON-NLS-1$
-		fWorkspaceSettingsButton.setData(UID, "OtherSettingsDialog.workspaceSettingsButton");
+		fWorkspaceSettingsButton.setData(UID, "OtherSettingsDialog.workspaceSettingsButton"); //$NON-NLS-1$
 		
 		GridDataFactory.swtDefaults().span(1, 1).applyTo(fWorkspaceSettingsButton);
 
@@ -133,7 +133,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		
 		fWorkspaceSettingsLink = new Link(radio, SWT.NONE);
 		fWorkspaceSettingsLink.setText(Messages.getString("OtherSettingsDialog.WorkspaceSettingsLinkLabel")); //$NON-NLS-1$
-		fWorkspaceSettingsLink.setData(UID, "OtherSettingsDialog.workspaceSettingsLink");
+		fWorkspaceSettingsLink.setData(UID, "OtherSettingsDialog.workspaceSettingsLink"); //$NON-NLS-1$
 		
 		GridDataFactory.swtDefaults().align(SWT.RIGHT, SWT.CENTER).grab(true, false).span(1, 1).applyTo(fWorkspaceSettingsLink);
 		
@@ -173,11 +173,11 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		IStatus status = Status.OK_STATUS;
 		updateStatus(status);
 		
-		String wsState = "";
+		String wsState = ""; //$NON-NLS-1$
 		if (data.isWorkspaceBuildBeforeLaunch())
-			wsState = " (enabled)";
+			wsState = Messages.getString("OtherSettingsDialog.EnabledLabel"); //$NON-NLS-1$
 		else
-			wsState = " (disabled)";
+			wsState = Messages.getString("OtherSettingsDialog.DisabledLabel"); //$NON-NLS-1$
 		
 		fWorkspaceSettingsButton.setText(
 				Messages.getString("OtherSettingsDialog.WorkspaceSettingsButtonLabel") + //$NON-NLS-1$

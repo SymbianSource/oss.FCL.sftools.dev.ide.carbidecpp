@@ -38,7 +38,7 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
  */
 public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 	
-	protected final static String UID = ".uid";
+	protected final static String UID = ".uid"; //$NON-NLS-1$
 	
 	protected final LaunchWizardData data;
 	protected int INDENT;
@@ -61,7 +61,7 @@ public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("New Launch Configuration Wizard");
+		newShell.setText(Messages.getString("AbstractLaunchSettingsDialog.Title")); //$NON-NLS-1$
 	}
 
 	protected Composite initDialogArea(Composite parent, String title, String helpId) {
@@ -115,7 +115,7 @@ public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 		setTitle(title);
 
 		if (status.isOK()) {
-			setMessage("", IMessageProvider.NONE);
+			setMessage("", IMessageProvider.NONE); //$NON-NLS-1$
 		} else {
 			setMessage(status.getMessage(), severityToMsgType(status.getSeverity()));
 		}

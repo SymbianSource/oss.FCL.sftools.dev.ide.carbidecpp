@@ -37,7 +37,7 @@ import com.nokia.cpp.internal.api.utils.core.PathUtils;
 public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 
 	public DebugRunProcessSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
-		super(data, MessageFormat.format("{0} process", data.getModeLabel()), launchOptionsPage);
+		super(data, MessageFormat.format(Messages.getString("DebugRunProcessSection.Title"), data.getModeLabel()), launchOptionsPage); //$NON-NLS-1$
 	}
 	
 	@Override
@@ -87,12 +87,12 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		switch (data.getExeSelection()) {
 		case USE_PROJECT_EXECUTABLE:
 			if (data.getExeSelectionPath() == null) 
-				status = error("This project does not build any executables.",
+				status = error(Messages.getString("DebugRunProcessSection.NoExesError"), //$NON-NLS-1$
 						data.getModeLabel().toLowerCase());
 			break;
 		case USE_REMOTE_EXECUTABLE:
 			if (data.getExeSelectionPath() == null)
-				status = error("No remote executable is selected.",
+				status = error(Messages.getString("DebugRunProcessSection.NoRemoteExeError"), //$NON-NLS-1$
 						data.getModeLabel().toLowerCase());
 			break;
 		case ATTACH_TO_PROCESS:
@@ -100,7 +100,7 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		}
 
 		if (data.isInstallPackage() && (data.getSisPath() == null || data.getSisPath().length() == 0))
-			status = error("Carbide must install a package to debug this project.");
+			status = error(Messages.getString("DebugRunProcessSection.MustInstallError")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -109,19 +109,19 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		validate();
 
 		if (status.isOK()) {
-			String mainFormat = "Carbide will {0} and {1}.";
-			String copyOrInstallMsg = "";
-			String runOrLaunchMsg = "";
+			String mainFormat = Messages.getString("DebugRunProcessSection.MainFormat"); //$NON-NLS-1$
+			String copyOrInstallMsg = ""; //$NON-NLS-1$
+			String runOrLaunchMsg = ""; //$NON-NLS-1$
 	
 			switch (data.getExeSelection()) {
 			case USE_PROJECT_EXECUTABLE:
-				runOrLaunchMsg = "launch '" + data.getExeSelectionPath().lastSegment() + "'";
+				runOrLaunchMsg = MessageFormat.format(Messages.getString("DebugRunProcessSection.LaunchFormat"), data.getExeSelectionPath().lastSegment()); //$NON-NLS-1$
 				break;
 			case USE_REMOTE_EXECUTABLE:
-				runOrLaunchMsg = "launch '" + PathUtils.convertPathToWindows(data.getExeSelectionPath()) + "'";
+				runOrLaunchMsg = MessageFormat.format(Messages.getString("DebugRunProcessSection.LaunchFormat"), PathUtils.convertPathToWindows(data.getExeSelectionPath())); //$NON-NLS-1$
 				break;
 			case ATTACH_TO_PROCESS:
-				runOrLaunchMsg = "attach to a process selected at launch time";
+				runOrLaunchMsg = Messages.getString("DebugRunProcessSection.AttachMsg"); //$NON-NLS-1$
 				break;
 			}
 			
@@ -130,17 +130,17 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 			String runOrDebugProcessMessage = MessageFormat.format(mainFormat, copyOrInstallMsg, runOrLaunchMsg);
 			descriptionLabel.setText(runOrDebugProcessMessage);
 		} else {
-			descriptionLabel.setText(status.getMessage() + "\n\n" +
-					MessageFormat.format("Click the 'Change...' button to select another {0} method.",
+			descriptionLabel.setText(status.getMessage() + "\n\n" + //$NON-NLS-1$
+					MessageFormat.format(Messages.getString("DebugRunProcessSection.ChangeMsg"), //$NON-NLS-1$
 							data.getModeLabel().toLowerCase()));
 		}
 	}
 
 	private String getCopyOrInstallMsg() {
 		if (data.isSysTRKConnection() || !data.isInstallPackage())
-			return "copy files to the device";
+			return Messages.getString("DebugRunProcessSection.CopyMsg"); //$NON-NLS-1$
 		else
-			return MessageFormat.format("install \"{0}\"", data.getSisPath());
+			return MessageFormat.format(Messages.getString("DebugRunProcessSection.InstallMsg"), data.getSisPath()); //$NON-NLS-1$
 	}
 
 }
