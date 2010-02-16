@@ -87,11 +87,11 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	protected Control createDialogArea(Composite parent) {
 		initializeDialogUnits(parent);
 		final Composite composite = initDialogArea(parent, 
-				"Change connection",
+				Messages.getString("ConnectToDeviceDialog.Title"), //$NON-NLS-1$
 				LaunchWizardHelpIds.WIZARD_DIALOG_CHANGE_CONNECTION);
 		
 		Group viewerGroup = new Group(composite, SWT.NONE);
-		viewerGroup.setText("Current connection");
+		viewerGroup.setText(Messages.getString("ConnectToDeviceDialog.GroupLabel")); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().applyTo(viewerGroup);
 		GridLayoutFactory.swtDefaults().applyTo(viewerGroup);
 		
@@ -102,7 +102,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 				if (element instanceof IConnection)
 					return ((IConnection) element).getDisplayName();
 				
-				return "No Current connection";
+				return Messages.getString("ConnectToDeviceDialog.NoCurrentItem"); //$NON-NLS-1$
 			}
 		});
 		viewer.setContentProvider(new ArrayContentProvider());
@@ -128,7 +128,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		buttonGroup.setFont(parent.getFont());
 		
 		newButton = new Button(buttonGroup, SWT.PUSH);
-		newButton.setText("New...");
+		newButton.setText(Messages.getString("ConnectToDeviceDialog.NewLabel")); //$NON-NLS-1$
 		newButton.setFont(JFaceResources.getDialogFont());
 		int widthHint = Dialog.convertHorizontalDLUsToPixels(fm, IDialogConstants.BUTTON_WIDTH);
 		Point minSize = newButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
@@ -149,7 +149,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		});
 		
 		editButton = new Button(buttonGroup, SWT.PUSH);
-		editButton.setText("Edit...");
+		editButton.setText(Messages.getString("ConnectToDeviceDialog.EditLabel")); //$NON-NLS-1$
 		editButton.setFont(JFaceResources.getDialogFont());
 		widthHint = Dialog.convertHorizontalDLUsToPixels(fm, IDialogConstants.BUTTON_WIDTH);
 		minSize = editButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
@@ -206,7 +206,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 				
 				if (connectedService == null) {
 					status = error(MessageFormat.format(
-							"The selected connection does not support {0}",
+							Messages.getString("ConnectToDeviceDialog.ServiceNotSupportedError"), //$NON-NLS-1$
 							data.getService().getDisplayName()));
 				}
 				else {
@@ -214,7 +214,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 						connectedService.getStatus();
 					if (!serviceStatus.getEStatus().equals(
 							com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus.UP)) {
-						status = warning("The selected connection may not be usable for debugging:\n {0}", 
+						status = warning(Messages.getString("ConnectToDeviceDialog.ServiceNotAvailWarning"),  //$NON-NLS-1$
 								serviceStatus.getLongDescription());
 					}
 				}
@@ -233,7 +233,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		if (connection != null) {
 			descriptionLabel.setText(standardPNPMessage);
 		} else {
-			descriptionLabel.setText("No connections are detected or defined.  " + standardPNPMessage);
+			descriptionLabel.setText(Messages.getString("ConnectToDeviceDialog.NoConnectionsText") + standardPNPMessage); //$NON-NLS-1$
 		}
 		
 	}

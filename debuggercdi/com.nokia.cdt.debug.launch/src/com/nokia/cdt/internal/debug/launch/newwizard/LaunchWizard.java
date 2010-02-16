@@ -61,7 +61,7 @@ public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 		launchData = new LaunchWizardData(launchOptions, trkService);
 		mainPage = new UnifiedLaunchOptionsPage(launchData); 
 		mainPage.initializeSettings();
-		setWindowTitle("New Launch Configuration Wizard");
+		setWindowTitle(Messages.getString("LaunchWizard.Title")); //$NON-NLS-1$
     }
 
 	/* (non-Javadoc)
@@ -102,9 +102,9 @@ public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 				((GridLayout) parent.getLayout()).numColumns++;
 				advancedButton.moveBelow(parent.getChildren()[0]);
 				
-				advancedButton.setText("Edit advanced settings before launch");
+				advancedButton.setText(Messages.getString("LaunchWizard.AdvancedLabel")); //$NON-NLS-1$
 				advancedButton.setToolTipText(MessageFormat.format(
-						"Before finishing the wizard, edit settings in the ''{0} Configurations'' dialog.",
+						Messages.getString("LaunchWizard.AdvancedTip"), //$NON-NLS-1$
 						launchData.getModeLabel()));
 				advancedButton.addSelectionListener(new SelectionAdapter() {
 					@Override
@@ -131,12 +131,12 @@ public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 		if (finishButton != null) {
 			advancedEdit = advancedButton.getSelection();
 			if (advancedEdit) {
-				finishButton.setText("Edit");
-				finishButton.setToolTipText("Click to accept settings and edit advanced settings.");
+				finishButton.setText(Messages.getString("LaunchWizard.EditLabel")); //$NON-NLS-1$
+				finishButton.setToolTipText(Messages.getString("LaunchWizard.EditTip")); //$NON-NLS-1$
 				getContainer().updateButtons();
 			} else {
 				finishButton.setText(launchData.getModeLabel());
-				finishButton.setToolTipText("Click to accept settings and launch the program.");
+				finishButton.setToolTipText(Messages.getString("LaunchWizard.FinishTip")); //$NON-NLS-1$
 				getContainer().updateButtons();
 			}
 		}

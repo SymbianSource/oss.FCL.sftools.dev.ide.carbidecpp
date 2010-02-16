@@ -136,9 +136,9 @@ public class LaunchWizardData extends LaunchOptions {
 
 	public String getModeLabel() {
 		if (mode.equals(ILaunchManager.RUN_MODE))
-			return "Run";
+			return Messages.getString("LaunchWizardData.RunModeLabel"); //$NON-NLS-1$
 		else if (mode.equals(ILaunchManager.DEBUG_MODE))
-			return "Debug";
+			return Messages.getString("LaunchWizardData.DebugModeLabel"); //$NON-NLS-1$
 		else
 			return TextUtils.titleCase(mode);
 			
