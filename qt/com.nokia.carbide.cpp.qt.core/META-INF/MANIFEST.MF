@@ -6,15 +6,11 @@ Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.cdt.core,
  org.eclipse.ui,
- org.eclipse.core.resources,
- org.eclipse.jface,
  com.nokia.carbide.cpp.sdk.core,
  com.nokia.carbide.cpp.sdk.ui,
  com.nokia.cpp.utils.core;bundle-version="1.0.0",
- com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional,
- com.trolltech.qtproject;bundle-version="1.6.0";resolution:=optional
+ com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.qt.core
