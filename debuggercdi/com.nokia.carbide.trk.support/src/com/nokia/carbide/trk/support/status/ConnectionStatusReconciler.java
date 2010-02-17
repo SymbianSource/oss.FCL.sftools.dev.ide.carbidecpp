@@ -130,27 +130,32 @@ public class ConnectionStatusReconciler {
 	}
 
 	private void showConnectionsView() {
-		// avoid deadlock if this called as a result of a launch sequence issuing a "select connection" dialog
-		Shell shell = WorkbenchUtils.getActiveShell();
-		if (shell == null || !shell.isVisible()) {
-			RunRunnableWhenWorkbenchVisibleJob.start(new Runnable() {
+		// avoid deadlock with RunRunnableWhenWorkbenchVisibleJob 
+		// if this called as a result of a launch sequence issuing a "select connection" dialog
+		final Shell shell = WorkbenchUtils.getActiveShell();
+		final boolean isVisible[] = { false };
+		
+		if (shell != null) {
+			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-					// try to show the connections view to start service testers
-					try {
-						WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
-					} catch (PartInitException e) {
-					}
+					isVisible[0] = shell.isVisible();
 				}
 			});
+		}
+		
+		Runnable runnable = new Runnable() {
+			public void run() {
+				try {
+					WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
+				} catch (PartInitException e) {
+				}
+			}
+		};
+		
+		if (!isVisible[0]) {
+			RunRunnableWhenWorkbenchVisibleJob.start(runnable);
 		} else {
-			Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					try {
-						WorkbenchUtils.getView(CONNECTIONS_VIEW_ID);
-					} catch (PartInitException e) {
-					}
-				}
-			});
+			Display.getDefault().asyncExec(runnable);
 		}
 	}
 	
