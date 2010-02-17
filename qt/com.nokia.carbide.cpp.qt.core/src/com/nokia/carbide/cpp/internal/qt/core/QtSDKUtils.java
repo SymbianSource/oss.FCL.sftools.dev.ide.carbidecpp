@@ -17,14 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.trolltech.qtcppproject.QtProjectPlugin;
 import com.trolltech.qtcppproject.preferences.PreferenceConstants;
 
@@ -159,6 +162,11 @@ public class QtSDKUtils {
 		if (makeDefault || count == 0){
 			store.setValue(PreferenceConstants.QTVERSION_DEFAULT, count);
 		}
+		
+		ResourcesPlugin.getPlugin().getLog().log(Logging.newStatus(QtCorePlugin.getDefault(), 
+				IStatus.INFO,
+				"New Qt-Symbian SDK added to Qt global preferences: " + name, //$NON-NLS-1$
+				null));
 		
 		store.setValue(PreferenceConstants.QTVERSION_COUNT, count + 1); // # of table items, base is 1 (i.e. not zero)
 		
