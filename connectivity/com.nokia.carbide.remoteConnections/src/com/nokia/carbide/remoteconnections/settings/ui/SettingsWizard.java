@@ -139,7 +139,7 @@ public class SettingsWizard extends Wizard {
 
 	private void saveConnectedServicesEnabledState() {
 		Collection<IConnectedService> connectedServices = Registry.instance().getConnectedServices(connectionToEdit);
-		if (connectedServices.isEmpty())
+		if (connectedServices == null)
 			return;
 		if (savedEnabledStates == null)
 			savedEnabledStates = new HashMap<IConnectedService, Boolean>();
@@ -150,7 +150,7 @@ public class SettingsWizard extends Wizard {
 
 	private void enableConnectedServices(boolean enabled) {
 		Collection<IConnectedService> connectedServices = Registry.instance().getConnectedServices(connectionToEdit);
-		if (connectedServices.isEmpty() || savedEnabledStates == null)
+		if (connectedServices == null || savedEnabledStates == null)
 			return;
 		for (IConnectedService connectedService : connectedServices) {
 			if (!enabled) // disable when asked

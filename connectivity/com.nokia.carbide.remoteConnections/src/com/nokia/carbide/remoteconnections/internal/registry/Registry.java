@@ -433,7 +433,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (connectedServices != null)
 			return new ArrayList<IConnectedService>(connectedServices);
 		
-		return Collections.emptyList();
+		return null;
 	}
 
 	private File getConnectionStorageFile() {

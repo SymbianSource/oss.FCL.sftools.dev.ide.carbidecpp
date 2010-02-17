@@ -196,9 +196,11 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 			if (connection != null) {
 				IConnectedService connectedService = null;
 				Collection<IConnectedService> services = manager.getConnectedServices(connection);
-				for (IConnectedService service : services) {
-					if (service != null && service.getService().getIdentifier().equals(data.getService().getIdentifier())) {
-						connectedService = service;
+				if (services != null) {
+					for (IConnectedService service : services) {
+						if (service != null && service.getService().getIdentifier().equals(data.getService().getIdentifier())) {
+							connectedService = service;
+						}
 					}
 				}
 				

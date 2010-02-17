@@ -144,7 +144,7 @@ public class ConnectionUIUtils {
 		Collection<IConnectedService> connectedServices = 
 			Registry.instance().getConnectedServices(connection);
 		// if any service is in-use, then connection is in-use
-		if (connectedServices.isEmpty())
+		if (connectedServices == null)
 			return null;
 		
 		for (IConnectedService connectedService : connectedServices) {
