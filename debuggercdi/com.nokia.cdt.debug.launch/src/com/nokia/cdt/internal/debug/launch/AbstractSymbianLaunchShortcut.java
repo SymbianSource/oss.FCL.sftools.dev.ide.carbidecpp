@@ -3,6 +3,7 @@ package com.nokia.cdt.internal.debug.launch;
 import java.util.List;
 
 import org.eclipse.cdt.debug.core.executables.Executable;
+import org.eclipse.cdt.debug.core.executables.ISourceFileRemapping;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -19,6 +20,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemapping;
 
 public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 {
 
@@ -92,7 +94,8 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 					}
 					else
 					{		
-						executable = new Executable(file.getLocation(), file.getProject(), file);
+						executable = new Executable(file.getLocation(), file.getProject(), file,
+								new ISourceFileRemapping[] {new SymbianSourceFileRemapping()});
 						launchProject(file.getProject(), executable, defaultMMP, mode);
 						launched = true;					
 					}
@@ -128,7 +131,8 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 					{
 						defaultMMP = filePath;
 					}
-					Executable executable = new Executable(file.getLocation(), file.getProject(), file);
+					Executable executable = new Executable(file.getLocation(), file.getProject(), file,
+							new ISourceFileRemapping[] {new SymbianSourceFileRemapping()});
 					return LaunchPlugin.getDefault().getLaunchConfigurations(file.getProject(), executable, defaultMMP);
 				}
 			}

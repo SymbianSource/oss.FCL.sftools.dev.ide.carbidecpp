@@ -18,17 +18,11 @@ package com.nokia.cdt.debug.cw.symbian.ui.executables;
 
 import org.eclipse.cdt.debug.core.CDebugCorePlugin;
 import org.eclipse.cdt.debug.core.executables.ISourceFileRemapping;
-import org.eclipse.cdt.debug.core.sourcelookup.ICSourceLocator;
-import org.eclipse.cdt.debug.internal.core.sourcelookup.CSourceLookupDirector;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunch;
-import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.core.model.ISourceLocator;
 import org.eclipse.debug.core.sourcelookup.containers.LocalFileStorage;
 
 import com.nokia.cdt.debug.cw.symbian.SymbianSourceContainer;
@@ -58,25 +52,6 @@ public class SymbianSourceFileRemapping implements ISourceFileRemapping {
 			SymbianSourceContainer symbianSourceContainer = new SymbianSourceContainer(new Path(epocRoot));
 			try {
 				Object[] foundElements = symbianSourceContainer.findSourceElements(filePath);
-				
-				if (foundElements.length == 0)
-				{
-					Object foundElement = null;
-					ILaunchManager launchMgr = DebugPlugin.getDefault().getLaunchManager();
-					ILaunch[] launches = launchMgr.getLaunches();
-					for (ILaunch launch : launches) {
-						ISourceLocator locator = launch.getSourceLocator();
-						if ( locator instanceof ICSourceLocator || locator instanceof CSourceLookupDirector ) {
-							if ( locator instanceof ICSourceLocator )
-								foundElement = ((ICSourceLocator)locator).findSourceElement( filePath );
-							else
-								foundElement = ((CSourceLookupDirector)locator).getSourceElement( filePath );
-						}
-					}
-					if (foundElement != null)
-						foundElements = new Object[] {foundElement};				
-				}
-				
 				if (foundElements.length == 1)
 				{
 					if (foundElements[0] instanceof LocalFileStorage)

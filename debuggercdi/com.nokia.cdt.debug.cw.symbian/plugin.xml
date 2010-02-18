@@ -199,7 +199,7 @@
 
    <extension
        point="org.eclipse.cdt.debug.core.SourceRemappingProvider">
-      <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemapping"/>
+      <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemappingFactory"/>
    </extension>
    
    <!-- *************** Preference Page Keyword Filtering **************** -->

@@ -25,6 +25,7 @@ import org.eclipse.cdt.core.CCProjectNature;
 import org.eclipse.cdt.core.CProjectNature;
 import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.cdt.debug.core.executables.IProjectExecutablesProvider;
+import org.eclipse.cdt.debug.core.executables.ISourceFileRemapping;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -37,6 +38,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemapping;
 
 public class CarbideExecutablesProvider implements IProjectExecutablesProvider {
 
@@ -77,7 +79,8 @@ public class CarbideExecutablesProvider implements IProjectExecutablesProvider {
 							File hpFile = hp.toFile();
 							if (hpFile.exists()) {
 								try {
-									Executable exe = new Executable(new Path(hpFile.getCanonicalPath()), project, null);
+									Executable exe = new Executable(new Path(hpFile.getCanonicalPath()),
+											project, null, new ISourceFileRemapping[] {new SymbianSourceFileRemapping()});
 									executables.add(exe);
 								} catch (Exception e) {
 								}
