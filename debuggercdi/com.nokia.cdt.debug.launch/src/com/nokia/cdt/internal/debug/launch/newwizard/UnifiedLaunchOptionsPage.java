@@ -27,6 +27,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.newwizard.IWizardSection.ISectionChangeListener;
@@ -174,5 +175,9 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 	 */
 	public void changed() {
 		validatePage();
+		Control control = getControl();
+		if (control != null && !control.isDisposed())
+			getWizard().getContainer().getShell().pack();
+
 	}
 }

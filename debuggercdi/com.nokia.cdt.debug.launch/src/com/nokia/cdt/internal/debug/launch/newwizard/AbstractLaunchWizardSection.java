@@ -169,7 +169,6 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 		if (dialog.open() == Window.OK) {
 			data.apply(dialogData);
 			refresh();
-			launchOptionsPage.getWizard().getContainer().getShell().pack();
 		}
 	}
 
