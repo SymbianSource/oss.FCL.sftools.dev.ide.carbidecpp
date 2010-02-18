@@ -17,7 +17,7 @@
   <li><b>Unsigned SIS file</b> - names of the unsigned SIS files used by the project </li>
   <li><b>Signed SIS file</b>  - names of the signed SIS files created by the project  </li>
 </ul>
-<p align="center"><img src="../images/carbide_build_config.png" width="795" height="692" /></p>
+<p align="center"><img src="../images/carbide_build_config.png" width="778" height="675" /></p>
 <p class="figure">Figure 1 - SIS Builder pane</p>
 <h5>Table 1 <span class="figure">SIS Builder</span> items </h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -50,7 +50,12 @@
 <p>The SIS Builder supports the generation of partial upgrade .SIS files. A dialog appears when a SIS file exceeds 250k in size that describes the partial upgrade feature with a link to the SIS Builder page. Partial upgrade files enable Carbide to generate and download to the device only those portions of the application that have changed, enabling faster debug cycles. It does this using the SIS partial upgrade (PU) flag to mark the SIS file as a replacement or addition to the original SIS file. Debugging of large applications using Application TRK is enhanced as the entire application no longer needs to be installed on the device each time a change is made. </p>
 <p>When the Partial update option is checked for a SIS file, both a complete and partial SIS files are generated. This ensures that the full SIS file is kept in sync with the partial upgrade SIS file. The partial upgrade SIS files are placed in the same folder as the full SIS file when stored in a project directory, or in the root of the project directory when the SIS file exists outside of the project. You can see where a partial upgrade file is created by examining the <b>Partial upgrade sis/sisx path</b> in the <a href="../../projects/launch/page_installation.htm">Installation</a> tab of the launch configuration. Links to the partial upgrade files are added to the project within the <a href="../view_cpp_projects.htm">Project Explorer</a> view.</p>
 <p class="note"><b>NOTE</b> Internally, the .PKG file format of a partial upgrade file is identical to a complete .PKG file with two exceptions, 1) the file list only includes the names of files changed, and 2) the PU flag is set.</p>
-<p>Partial upgrade files are deleted and only full SIS/SISX files are generated when: 1) the full SIS/SISX files do not already exist, 2) the PKG file is changed, and 3) the Partial upgrade option is disabled.</p>
+<p>Partial upgrade files are deleted and only full SIS/SISX files are generated when:</p>
+<ul>
+  <li>the full SIS/SISX files do not already exist</li>
+  <li>the PKG file is changed</li>
+  <li>the Partial upgrade option is disabled</li>
+</ul>
 <h5>Other references</h5>
 <ul>
   <li><a href="pane_build_config.htm">Carbide Build Configurations </a><a href="../../tasks/projects/working_with_sis_pkg_files.htm"></a></li>
@@ -58,7 +63,7 @@
   <li><a href="pane_build_config_args.htm">Arguments</a></li>
   <li><a href="pane_build_config_paths.htm">Paths and Symbols</a></li>
 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>
