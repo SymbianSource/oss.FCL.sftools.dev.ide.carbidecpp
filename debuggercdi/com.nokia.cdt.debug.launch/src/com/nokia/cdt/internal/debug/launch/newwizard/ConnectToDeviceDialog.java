@@ -141,9 +141,6 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 				SettingsWizard wizard = new SettingsWizard(null, data.getService());
 				wizard.open(composite.getShell());
 				IConnection connection = wizard.getConnectionToEdit();
-				// note: refresh ASAP so the selection will be valid; but endure a listener event
-				// which will redo this
-				refreshUI();
 				setViewerInput(connection);
 			}
 		});
@@ -242,15 +239,15 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	}
 	
 	public void connectionAdded(IConnection connection) {
-		refreshUI();
+		refreshUI(null);
 	}
 
 	public void connectionRemoved(IConnection connection) {
-		refreshUI();		
+		refreshUI(null);		
 	}
 
 	public void currentConnectionSet(IConnection connection) {
-		refreshUI();		
+		refreshUI(connection);
 	}
 
 	private Set<IConnectionType> getCompatibleConnectionTypes() {
@@ -301,11 +298,12 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		return (IConnection) ((IStructuredSelection) selection).getFirstElement();
 	}
 
-	private void refreshUI() {
+	private void refreshUI(final IConnection connection) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				if (viewer != null && viewer.getContentProvider() != null) {
-					setViewerInput(getConnectionFromSelection(viewer.getSelection()));
+					IConnection connectionToSet = connection == null ? getConnectionFromSelection(viewer.getSelection()) : connection;
+					setViewerInput(connectionToSet);
 				}
 			}
 		});

@@ -30,6 +30,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -62,6 +64,7 @@ public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(Messages.getString("AbstractLaunchSettingsDialog.Title")); //$NON-NLS-1$
+		setTitleImage(CarbideUIPlugin.getSharedImages().getImage(ICarbideSharedImages.IMG_NEW_LAUNCH_CONFIG_WIZARD_BANNER));
 	}
 
 	protected Composite initDialogArea(Composite parent, String title, String helpId) {

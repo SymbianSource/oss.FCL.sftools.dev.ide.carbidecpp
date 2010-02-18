@@ -38,6 +38,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.wizard.ILaunchCreationWizard;
@@ -98,7 +100,7 @@ public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 			if (parent != null) {
 				
 				advancedButton = new Button(parent, SWT.CHECK);
-				GridDataFactory.swtDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(advancedButton);
+				GridDataFactory.swtDefaults().align(SWT.LEFT, SWT.CENTER).indent(6, 0).applyTo(advancedButton);
 				((GridLayout) parent.getLayout()).numColumns++;
 				advancedButton.moveBelow(parent.getChildren()[0]);
 				
@@ -198,6 +200,7 @@ public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 	}
 
 	public void init() {
+		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_NEW_LAUNCH_CONFIG_WIZARD_BANNER));
 	}
 
 	public int openWizard(Shell shell) {
