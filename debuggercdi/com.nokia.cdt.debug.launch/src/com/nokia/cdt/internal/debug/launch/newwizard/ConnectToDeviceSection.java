@@ -94,6 +94,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 			
 		descriptionLabel.setText(msg);
 		launchOptionsPage.changed();
+		launchOptionsPage.getWizard().getContainer().getShell().pack();
 	}
 	
 	@Override

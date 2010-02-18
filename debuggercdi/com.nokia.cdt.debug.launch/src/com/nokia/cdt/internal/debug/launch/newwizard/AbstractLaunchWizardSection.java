@@ -113,24 +113,24 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 		
 		GridLayoutFactory.fillDefaults().numColumns(2).margins(6, 0).applyTo(composite);
 		
+		// spacing
+		Label spacer = new Label(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(spacer);
+		
 		Label titleLabel = new Label(composite, SWT.NONE);
 		titleLabel.setText(sectionName);
 		titleLabel.setFont(JFaceResources.getBannerFont());
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(titleLabel);
 		
-		// spacing
-		Label spacer = new Label(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(spacer);
-		
 		descriptionLabel = new Label(composite, SWT.WRAP);
-		GridDataFactory.fillDefaults().grab(true, true).indent(INDENT, 0).applyTo(descriptionLabel);
+		GridDataFactory.fillDefaults().grab(true, true).indent(INDENT, 0).hint(350, SWT.DEFAULT).applyTo(descriptionLabel);
 		
 		String label = MessageFormat.format("{0}&{1}", //$NON-NLS-1$
 				CHANGE_LABEL.substring(0, acceleratorIndex), CHANGE_LABEL.substring(acceleratorIndex));
 		changeButton = new Button(composite, SWT.PUSH);
 		changeButton.setText(label);
 		Point minSize = changeButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-		GridDataFactory.defaultsFor(changeButton).grab(false, false).hint(minSize.x + INDENT, SWT.DEFAULT).applyTo(changeButton);
+		GridDataFactory.defaultsFor(changeButton).grab(false, false).hint(minSize.x + INDENT, SWT.DEFAULT).indent(6, 0).applyTo(changeButton);
 		changeButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
