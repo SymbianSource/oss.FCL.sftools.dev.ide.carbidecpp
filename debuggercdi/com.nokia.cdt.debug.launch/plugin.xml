@@ -258,7 +258,7 @@
             class="com.nokia.cdt.internal.debug.launch.BoardLaunchShortcut"
             icon="icons/launch_config_file_16x16.png"
             id="com.nokia.cdt.debug.launch.symbianCPPShortcut.refboard"
-            label="Symbian OS Refrence Board Launch"
+            label="Symbian OS Reference Board Launch"
             modes="run, debug">
          <contextualLaunch>
             <enablement>
