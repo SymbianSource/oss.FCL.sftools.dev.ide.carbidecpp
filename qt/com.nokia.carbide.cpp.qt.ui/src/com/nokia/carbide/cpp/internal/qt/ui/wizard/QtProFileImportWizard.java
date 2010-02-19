@@ -98,7 +98,19 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
 
     			// enable the pro file listener by default
     			new QtProject(newProject).setRunQMakeWhenProFileChanges(true);
-
+    			
+       			// Set the default Qt SDK, if any
+    			ISymbianSDK sdk = selectedConfigs.get(0).getSDK();
+    			String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+    			if (qtSDKName == null){
+    				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
+    				qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+    			}
+    			
+    			if (qtSDKName != null){
+    				QtSDKUtils.setDefaultQtSDKForProject(newProject, qtSDKName);
+    			}
+    			
     			// set EPOCROOT to the default build config's SDK before calling qmake
     			IPath epocroot = new Path(selectedConfigs.get(0).getSDK().getEPOCROOT());
     			Map<String, String> envMods = new HashMap<String, String>();
@@ -121,18 +133,6 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
 
     			// set the qmake generated pkg files to be built
     			QtUIPlugin.setupSISBuilderSettings(newProject);
-    			
-    			// Set the default Qt SDK, if any
-    			ISymbianSDK sdk = selectedConfigs.get(0).getSDK();
-    			String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
-    			if (qtSDKName == null){
-    				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
-    				qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
-    			}
-    			
-    			if (qtSDKName != null){
-    				QtSDKUtils.setDefaultQtSDKForProject(newProject, qtSDKName);
-    			}
     			
     			if (monitor.isCanceled()) {
 	    			// the user canceled the import so delete the project
