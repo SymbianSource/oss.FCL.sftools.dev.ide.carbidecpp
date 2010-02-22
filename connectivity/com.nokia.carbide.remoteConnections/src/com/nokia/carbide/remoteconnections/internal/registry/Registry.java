@@ -673,24 +673,31 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (!connection.isDynamic())
 			return false;
 		
+		if (!connectionToConnectedServices.containsKey(connection)) // connection does not exist
+			return false;
+		
 		// if not removed, transition out of disconnected state 
 		// return not removed
 		IConnectionStatusChangedListener listener = connectionListenerMap.remove(connection);
-		if (listener != null)
+		if (listener != null) { // is disconnected
 			connection.removeStatusChangedListener(listener);
-		if (connectionToConnectedServices.containsKey(connection)) {
-			IConnectionStatus status;
-			if (ConnectionUIUtils.isSomeServiceInUse(connection)) {
-				status = new ConnectionStatus(EConnectionStatus.IN_USE, 
-						Messages.getString("ConnectionsView.InUseLabel"), //$NON-NLS-1$
-						Messages.getString("ConnectionsView.InUseDesc")); //$NON-NLS-1$
+			if (connectionToConnectedServices.containsKey(connection)) {
+				IConnectionStatus status;
+				if (ConnectionUIUtils.isSomeServiceInUse(connection)) {
+					status = new ConnectionStatus(EConnectionStatus.IN_USE, 
+							Messages.getString("ConnectionsView.InUseLabel"), //$NON-NLS-1$
+							Messages.getString("ConnectionsView.InUseDesc")); //$NON-NLS-1$
+				}
+				else {
+					status = new ConnectionStatus(EConnectionStatus.NOT_READY, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				connection.setStatus(status);
+				return true;
 			}
-			else {
-				status = new ConnectionStatus(EConnectionStatus.NOT_READY, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-			connection.setStatus(status);
-			return true;
 		}
+		else // connection is not disconnected
+			return true;
+		
 		return false;
 	}
 }
