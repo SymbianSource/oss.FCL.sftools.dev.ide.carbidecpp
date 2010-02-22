@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.cdt.core,
  org.eclipse.core.runtime,
  org.eclipse.jface,
  org.eclipse.ui,
- com.nokia.carbide.remoteConnections
+ com.nokia.carbide.remoteConnections,
+ com.nokia.cpp.utils.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,

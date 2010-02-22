@@ -37,6 +37,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * Implementation of IDeviceDiscoveryAgent for PCCS USB connection.
@@ -296,16 +297,18 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	}
 
 	public IPrerequisiteStatus getPrerequisiteStatus() {
-		// Manager calls this first so we can check if we can load.
-		// so let's open the discovery and close it catching any exceptions.
-		try {
-			pccsConnection.open();
-			// successful load - close it as start() will open again
-			pccsConnection.close();
-		} catch (CoreException ce) {
-			saveLoadStatus(ce);
-		}
-		
+		// Only try on platforms that run PC Suite
+		if (HostOS.IS_WIN32) {
+			// Manager calls this first so we can check if we can load.
+			// so let's open the discovery and close it catching any exceptions.
+			try {
+				pccsConnection.open();
+				// successful load - close it as start() will open again
+				pccsConnection.close();
+			} catch (CoreException ce) {
+				saveLoadStatus(ce);
+			}
+		}		
 		return loadStatus;
 	}
 }
