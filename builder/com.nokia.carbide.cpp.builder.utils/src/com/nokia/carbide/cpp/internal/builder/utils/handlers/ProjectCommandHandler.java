@@ -27,7 +27,6 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -46,6 +45,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -133,15 +133,19 @@ public class ProjectCommandHandler extends AbstractHandler {
 			IWorkbenchWindow window = Activator.getActiveWorkbenchWindow();
 			IWorkbenchPage wpage = window.getActivePage();
 			if (wpage != null) {
-				IEditorPart ep = wpage.getActiveEditor();
-				if (ep != null) {
-					IEditorInput editorInput = ep.getEditorInput();
-					if (editorInput instanceof IFileEditorInput) {
-						IFile file = ((IFileEditorInput)editorInput).getFile();
-						if (file != null) {
-							IProject project = file.getProject();
-							if (CarbideBuilderPlugin.getBuildManager().isCarbideProject(project)) {
-								selectedProjects.add(project);
+				// make sure it's not the disassembly (or DSF disassembly) view
+				IWorkbenchPart part = wpage.getActivePart();
+				if (part == null || !part.getTitle().toLowerCase().endsWith("disassembly")) { //$NON-NLS-1$
+					IEditorPart ep = wpage.getActiveEditor();
+					if (ep != null) {
+						IEditorInput editorInput = ep.getEditorInput();
+						if (editorInput instanceof IFileEditorInput) {
+							IFile file = ((IFileEditorInput)editorInput).getFile();
+							if (file != null) {
+								IProject project = file.getProject();
+								if (CarbideBuilderPlugin.getBuildManager().isCarbideProject(project)) {
+									selectedProjects.add(project);
+								}
 							}
 						}
 					}

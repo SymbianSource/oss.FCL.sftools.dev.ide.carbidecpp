@@ -25,8 +25,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
-import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class BuilderUtilsPropertyTester extends PropertyTester {

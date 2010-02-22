@@ -67,6 +67,18 @@ public class ProjectCreatedTasksQt extends ProjectCreatedTasks {
 			// set EPOCROOT to the default build config's SDK before calling qmake
 			List listOfBuildConfigs = (List) template.getTemplateValues().get(SELECTED_BUILD_CONFIGS_VALUE_KEY);
 
+			// set the default Qt SDK
+			ISymbianSDK sdk = ((ISymbianBuildContext)listOfBuildConfigs.get(0)).getSDK();
+			String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+			if (qtSDKName == null){
+				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
+				qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
+			}
+			
+			if (qtSDKName != null){
+				QtSDKUtils.setDefaultQtSDKForProject(project, qtSDKName);
+			}
+			
 			IPath epocroot = new Path(((ISymbianBuildContext)listOfBuildConfigs.get(0)).getSDK().getEPOCROOT());
 			Map<String, String> envMods = new HashMap<String, String>();
 			envMods.put("EPOCROOT", epocroot.setDevice(null).toOSString());
@@ -84,18 +96,6 @@ public class ProjectCreatedTasksQt extends ProjectCreatedTasks {
 
 			// set the qmake generated pkg files to be built
 			QtUIPlugin.setupSISBuilderSettings(project);
-			
-			// set the default Qt SDK
-			ISymbianSDK sdk = ((ISymbianBuildContext)listOfBuildConfigs.get(0)).getSDK();
-			String qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
-			if (qtSDKName == null){
-				QtSDKUtils.addQtSDKForSymbianSDK(sdk, false);
-				qtSDKName = QtSDKUtils.getQtSDKNameForSymbianSDK(sdk);
-			}
-			
-			if (qtSDKName != null){
-				QtSDKUtils.setDefaultQtSDKForProject(project, qtSDKName);
-			}
 			
 		}
 	}
