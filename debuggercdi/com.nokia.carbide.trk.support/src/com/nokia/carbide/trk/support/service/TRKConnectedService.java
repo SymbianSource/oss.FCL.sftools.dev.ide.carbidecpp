@@ -86,8 +86,11 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 	private static final byte[] TRK_PING = {0x7e, 0x0, 0x0, (byte) 0xff, 0x7e};
 	private static final byte[] TRK_VERSION = {0x7e, 0x08, 0x01, (byte) 0xf6, 0x7e};
 	private static final byte[] TRK_VERSIONS3 = {0x7e, 0x51, 0x02, (byte) 0xac, 0x7e};
-	private static final byte[] SYS_TRK_RESPONSE = 
-		{0x7e, (byte) 0x80, 0x02, 0x00, 0x03, 0x02, 0x03, 0x06, 0x04, 0x00, 0x0a, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x20, 0x54, 0x52, 0x4b, (byte) 0xcb, 0x7e};
+	private static final int SYS_TRK_RESPONSE_STR_OFFSET = 10;
+	private static final byte[] SYS_TRK_RESPONSE_STR = 
+					{0x0a, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x20, 0x54, 0x52, 0x4b};
+	private static final int REQUIRED_MSG_LEN = 
+					SYS_TRK_RESPONSE_STR.length + SYS_TRK_RESPONSE_STR_OFFSET;
 	
 	private Pair<String, Version> deviceOS;
 	private TRKService trkService;
@@ -205,7 +208,14 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 									tcMessage = stream.readMessage(); // version response
 									message = tcMessage.getMessage();
 //									printMessage(message);
-									boolean isSysTrk = Arrays.equals(message, SYS_TRK_RESPONSE);
+									boolean isSysTrk = false;
+									if (message.length >= REQUIRED_MSG_LEN) {
+										byte[] trkStr = new byte[SYS_TRK_RESPONSE_STR.length];
+										System.arraycopy(message, SYS_TRK_RESPONSE_STR_OFFSET, trkStr, 0, trkStr.length);
+//										printMessage(trkStr);
+//										printMessage(SYS_TRK_RESPONSE_STR);
+										isSysTrk = Arrays.equals(trkStr, SYS_TRK_RESPONSE_STR);
+									}
 									getProperties().put(PROP_SYS_TRK, Boolean.valueOf(isSysTrk).toString());
 								}
 							}
