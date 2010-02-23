@@ -68,8 +68,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		
 		final Label label = new Label(composite, SWT.WRAP);
 		label.setText(description);
-		GridData labelData = GridDataFactory.fillDefaults().grab(true, false).create();
-		label.setLayoutData(labelData);
+		GridDataFactory.fillDefaults().grab(true, false).hint(400, SWT.DEFAULT).applyTo(label);
 		
 		// spacer
 		new Label(composite, SWT.NONE);
