@@ -24,7 +24,7 @@ public class LaunchWizardHelpIds {
 	/*
 	 * Help context ID. Should be: PluginID + "." + <words without '.'>
 	 */
-	private static final String HelpID_Prefix = LaunchPlugin.getUniqueIdentifier() + ".launch2_"; //$NON-NLS-1$
+	private static final String HelpID_Prefix = LaunchPlugin.getUniqueIdentifier() + ".newwizard_"; //$NON-NLS-1$
 
 	
 	public static final String WIZARD_DIALOG_CHANGE_DEBUG_PROCESS = HelpID_Prefix + "wizard_dialog_change_debug_process"; //$NON-NLS-1$
@@ -34,4 +34,5 @@ public class LaunchWizardHelpIds {
 
 	public static final String WIZARD_DIALOG_OTHER_SETTINGS = HelpID_Prefix + "wizard_dialog_other_settings"; //$NON-NLS-1$
 
+	public static final String WIZARD_DIALOG_LAUNCH_OPTIONS_PAGE = HelpID_Prefix + "wizard_dialog_launch_options_page"; //$NON-NLS-1$
 }
