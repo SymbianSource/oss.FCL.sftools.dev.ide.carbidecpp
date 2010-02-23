@@ -118,6 +118,7 @@ public class LaunchWizard extends Wizard implements ILaunchCreationWizard {
 			
 			// Thanks, JFace, for deleting validation messages on the first display
 			mainPage.validatePage();
+			updateDebugEditButton();
 		}
 	}
 	
