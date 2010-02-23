@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Control;
 
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.newwizard.IWizardSection.ISectionChangeListener;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * This page presents three sections:
@@ -95,6 +96,7 @@ public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChan
 			GridDataFactory.fillDefaults().grab(true, true).applyTo(section.getControl());
 		}
 		
+		WorkbenchUtils.setHelpContextId(composite, LaunchWizardHelpIds.WIZARD_DIALOG_LAUNCH_OPTIONS_PAGE);
 		
 		setControl(composite);
 	}
