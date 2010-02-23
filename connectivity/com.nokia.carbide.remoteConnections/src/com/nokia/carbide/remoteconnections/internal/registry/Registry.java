@@ -517,6 +517,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	
 	public ISelectedConnectionInfo ensureConnection(String id, IService service) throws CoreException {
 		Check.checkArg(service);
+		if (id == null)
+			return null;
 		final boolean wasCurrentConnection = id.equals(CURRENT_CONNECTION_ID);
 		final IConnection[] connectionHolder = { findConnection(id) };
 		final String[] storableIdHolder = { id };
