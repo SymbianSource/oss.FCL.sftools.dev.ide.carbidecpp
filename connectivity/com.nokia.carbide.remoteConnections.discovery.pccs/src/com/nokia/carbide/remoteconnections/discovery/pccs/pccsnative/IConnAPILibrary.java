@@ -19,13 +19,17 @@ package com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.ShortByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
 public interface IConnAPILibrary extends StdCallLibrary {
 
+	public static IConnAPILibrary INSTANCE = (IConnAPILibrary) Native.loadLibrary("ConnAPI", IConnAPILibrary.class); //$NON-NLS-1$
 	// DMAPI Device Management
 	// DMAPI Callbacks
 	public interface IConnAPIDeviceCallback extends StdCallCallback {
@@ -59,8 +63,12 @@ public interface IConnAPILibrary extends StdCallLibrary {
 	int CONAOpenMM(LPAPIHANDLE phMCHandle, int dwValue);
 	int CONACloseMM(APIHANDLE hMCHandle);
 	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, CONAPI_MEDIA.ByReference[] ppMedia); //TODO: c++ - CONAPI_MEDIA**	ppMedia
+	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, CONAPI_MEDIA.ByReference ppMedia); //TODO: c++ - CONAPI_MEDIA**	ppMedia
+	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, PointerByReference ppMedia); //TODO: c++ - CONAPI_MEDIA**	ppMedia
 	int CONAMMSetMedia(APIHANDLE hMCHandle, CONAPI_MEDIA[] pMedia);
+	int CONAMMSetMedia(APIHANDLE hMCHandle, Pointer pMedia);
 	int CONAMMFreeMediaStructures(int dwCountOfMedia, CONAPI_MEDIA[] pMedia);
+	int CONAMMFreeMediaStructures(int dwCountOfMedia, Pointer pMedia);
 	int MCAPI_GetMediaInfo(APIHANDLE hMCHandle, ShortBuffer pstrMediaID, CONAPI_MEDIA_INFO[] pMediaInfo);
 	int MCAPI_FreeMediaInfo(CONAPI_MEDIA_INFO[] pMediaInfo);
 	int CONARegisterMMNotifyCallback(APIHANDLE hMCHandle, int dwState, IConnAPIMediaCallback pfnNotify);
