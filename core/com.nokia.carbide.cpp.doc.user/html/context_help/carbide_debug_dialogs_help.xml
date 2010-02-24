@@ -97,6 +97,35 @@
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
+
+	<!-- ============================================================== -->
+	<!-- PnP NEW WIZARD SECTION (added 2.5)                             -->
+	<!-- ============================================================== -->
+
+	<!-- Added Launch Options page (2.5) -->
+	<context id="newwizard_wizard_dialog_launch_options_page" >
+    <description>Review or modify the project's new launch configuration.</description>
+	   <topic label="Configure Launch Configuration" 	href="html/projects/launch/launch_configs_overview.htm"/>
+	</context>
+
+	<!-- Added Change Connections page (2.5) -->
+	<context id="newwizard_wizard_dialog_change_connection" >
+    <description>Select or edit a connection, or create new remote connections.</description>
+	   <topic label="Change Connection" 				href="html/projects/launch/wnd_change_connection.htm"/>
+	</context>
+
+	<!-- Added Change Debug Process page (2.5) -->
+	<context id="newwizard_wizard_dialog_change_debug_process" >
+    <description>Specify the executable to launch or process to attach to.</description>
+	   <topic label="Change Debug Process" 				href="html/projects/launch/wnd_change_debug_process.htm"/>
+	</context>
+
+	<!-- Added Other Settings page (2.5) -->
+	<context id="newwizard_wizard_dialog_other_settings" >
+    <description>Control how auto build is configured.</description>
+	   <topic label="Other Settings" 					href="html/projects/launch/wnd_change_other_settings.htm"/>
+	</context>
+
 	
 	<!-- ============================================================== -->
 	<!-- EMULATOR SECTION                                               -->
@@ -360,5 +389,6 @@
 	   <topic label="New Launch Configuration Wizard" 		href="html/projects/launch/wiz_new_launch_config.htm"/>
 	   <topic label="Launch Configuration Main page" 		href="html/projects/launch/page_main.htm"/>
 	</context>
+
 
 </contexts>

@@ -225,6 +225,8 @@
 
 	<!-- ============================================================== -->
 	<!-- LAUNCH CONFIGURATION DIALOG                                    -->
+	<!-- ============================================================== -->
+
 	<context id="launch_configuration_dialog" >
 		<description>Use the Debug or Run panels to create launch configurations for your applications.</description>
 		<topic label="Creating Launch Configurations"			href="html/tasks/projects/prj_debug_config.htm" />
@@ -247,6 +249,13 @@
 	</context>
 
 	
+	<!-- DEBUG AS DIALOG -->
+	<!-- ADDED 2.5  -->
+	<context id="select_launch_method_dialog" >
+		<description>Select the .</description>
+		<topic label="Debug As"  						href="html/reference/view_memory_wnd.htm" />
+	</context>
+
 	<!-- WORKING SET PAGE  -->
 
 	<!--
