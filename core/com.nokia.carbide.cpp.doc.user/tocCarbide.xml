@@ -223,49 +223,13 @@
         <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
       </topic>
     </topic>
-    <topic label="Debugging actions" href="html/debugger/debug/debug.htm">
-      <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging"></topic>
-      <topic href="html/debugger/debug/cmds_starting.htm" label="Starting and Terminating"></topic>
-      <topic href="html/debugger/debug/cmds_resuming.htm" label="Suspending and Resuming"></topic>
-      <topic href="html/debugger/debug/cmds_stepping.htm" label="Stepping Over, Into, and Out of Routines"></topic>
-      <topic href="html/debugger/debug/cmds_other.htm" label="Other useful commands"></topic>
-      <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
-    </topic>
-    <topic href="html/debugger/breakpoints/breakpoints.htm" label="Breakpoints">
-      <topic label="Viewing breakpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
-      <topic label="Breakpoint status indicators" href="html/debugger/breakpoints/resolving_breakpoints.htm" />
-      <topic label="Enabling, disabling, and removing breakpoints" href="html/debugger/breakpoints/toggling_breakpoints.htm" />
-      <topic label="Breakpoint properties" href="html/debugger/breakpoints/properties_breakpoints.htm" >
-        <topic label="Creating conditional breakpoints" href="html/debugger/breakpoints/conditional_breakpoints.htm" />
-        <topic label="Creating temporary breakpoints" href="html/debugger/breakpoints/temporary_breakpoints.htm" />
-      </topic>
-      <topic label="Exporting breakpoints and watchpoints" href="html/debugger/breakpoints/exporting_breakpoints.htm" />
-      <topic label="Importing breakpoints and watchpoints" href="html/debugger/breakpoints/importing_breakpoints.htm" />
-      <topic label="Toggle hardware breakpoints" href="html/reference/menus/hardware_breakpoints.htm" />
-    </topic>
-    <topic href="html/debugger/watchpoints/watchpoints.htm" label="Watchpoints">
-      <topic label="Viewing watchpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
-      <topic label="Watchpoint status indicators" href="html/debugger/watchpoints/status_watchpoints.htm" />
-      <topic label="Setting and removing watchpoints" href="html/debugger/watchpoints/setting_watchpoints.htm" />
-      <topic label="Enabling and disabling watchpoints" href="html/debugger/watchpoints/toggling_watchpoints.htm" />
-      <topic label="Exporting breakpoints and watchpoints" href="html/debugger/breakpoints/exporting_breakpoints.htm" />
-      <topic label="Importing breakpoints and watchpoints" href="html/debugger/breakpoints/importing_breakpoints.htm" />
-    </topic>
-    <topic label="Variables and Expressions" 			href="html/debugger/variables/variables.htm" >
-      <topic label="Viewing variables"                   		href="html/debugger/variables/viewing_variables.htm" >
-        <topic label="Adding and removing global variables" 	href="html/debugger/variables/adding_variables.htm" />
-      </topic>
-      <topic label="Viewing expressions" 						href="html/debugger/variables/viewing_expressions.htm" >
-        <topic label="Adding and removing expressions" 		href="html/debugger/variables/adding_expressions.htm" />
-        <topic label="Editing expressions" 					href="html/debugger/variables/editing_expressions.htm" />
-      </topic>
-    </topic>
-    <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="On-Device Connections Overview" >
-      <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/trk/wnd_new_conn_wiz_edit.htm" label="Adding, editing, and deleting connections" />
-      <topic href="html/reference/trk/exporting_remote_conns.htm" label="Exporting remote connections"></topic>
-      <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
-    </topic>
+    <topic label="Debugging">
+       <topic href="html/projects/launch/launch_emulator.htm" label="Debugging with an emulator">
+       </topic>
+       <topic href="html/projects/launch/launch_phone.htm" label="Debugging a phone">
+       </topic>
+       <topic href="html/projects/launch/launch_board.htm" label="Debugging a reference board">
+       </topic>
     <topic label="Emulator projects" 					href="html/tasks/EmulatorToc.htm">
       <topic label="Setting Environment for x86 Compiler"		href="html/tasks/projects/prj_build_cmd_line.htm" />
       <topic label="Unsetting Built-in Environment"	        href="html/reference/wnd_carbide_pref_x86.htm" />
@@ -311,6 +275,50 @@
       <topic label="ARM Registers" 						href="html/concepts/arm_registers.htm" />
       <topic label="Symbian OS Data View"					href="html/reference/view_symbian_kernel.htm" />
       <topic label="Toggle HW Breakpoint"           		href="html/reference/menus/hardware_breakpoints.htm" />
+    </topic>
+    </topic>
+    <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="On-Device Connections Overview" >
+      <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
+      <topic href="html/reference/trk/wnd_new_conn_wiz_edit.htm" label="Adding, editing, and deleting connections" />
+      <topic href="html/reference/trk/exporting_remote_conns.htm" label="Exporting remote connections"></topic>
+      <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
+    </topic>
+    <topic label="Debugging actions" href="html/debugger/debug/debug.htm">
+      <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging"></topic>
+      <topic href="html/debugger/debug/cmds_starting.htm" label="Starting and Terminating"></topic>
+      <topic href="html/debugger/debug/cmds_resuming.htm" label="Suspending and Resuming"></topic>
+      <topic href="html/debugger/debug/cmds_stepping.htm" label="Stepping Over, Into, and Out of Routines"></topic>
+      <topic href="html/debugger/debug/cmds_other.htm" label="Other useful commands"></topic>
+      <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
+    </topic>
+    <topic href="html/debugger/breakpoints/breakpoints.htm" label="Breakpoints">
+      <topic label="Viewing breakpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
+      <topic label="Breakpoint status indicators" href="html/debugger/breakpoints/resolving_breakpoints.htm" />
+      <topic label="Enabling, disabling, and removing breakpoints" href="html/debugger/breakpoints/toggling_breakpoints.htm" />
+      <topic label="Breakpoint properties" href="html/debugger/breakpoints/properties_breakpoints.htm" >
+        <topic label="Creating conditional breakpoints" href="html/debugger/breakpoints/conditional_breakpoints.htm" />
+        <topic label="Creating temporary breakpoints" href="html/debugger/breakpoints/temporary_breakpoints.htm" />
+      </topic>
+      <topic label="Exporting breakpoints and watchpoints" href="html/debugger/breakpoints/exporting_breakpoints.htm" />
+      <topic label="Importing breakpoints and watchpoints" href="html/debugger/breakpoints/importing_breakpoints.htm" />
+      <topic label="Toggle hardware breakpoints" href="html/reference/menus/hardware_breakpoints.htm" />
+    </topic>
+    <topic href="html/debugger/watchpoints/watchpoints.htm" label="Watchpoints">
+      <topic label="Viewing watchpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
+      <topic label="Watchpoint status indicators" href="html/debugger/watchpoints/status_watchpoints.htm" />
+      <topic label="Setting and removing watchpoints" href="html/debugger/watchpoints/setting_watchpoints.htm" />
+      <topic label="Enabling and disabling watchpoints" href="html/debugger/watchpoints/toggling_watchpoints.htm" />
+      <topic label="Exporting breakpoints and watchpoints" href="html/debugger/breakpoints/exporting_breakpoints.htm" />
+      <topic label="Importing breakpoints and watchpoints" href="html/debugger/breakpoints/importing_breakpoints.htm" />
+    </topic>
+    <topic label="Variables and Expressions" 			href="html/debugger/variables/variables.htm" >
+      <topic label="Viewing variables"                   		href="html/debugger/variables/viewing_variables.htm" >
+        <topic label="Adding and removing global variables" 	href="html/debugger/variables/adding_variables.htm" />
+      </topic>
+      <topic label="Viewing expressions" 						href="html/debugger/variables/viewing_expressions.htm" >
+        <topic label="Adding and removing expressions" 		href="html/debugger/variables/adding_expressions.htm" />
+        <topic label="Editing expressions" 					href="html/debugger/variables/editing_expressions.htm" />
+      </topic>
     </topic>
     <topic label="Debugging variations"                     href="html/concepts/debugger_about.htm" >
       <topic label="Emulation Debugging"			        href="html/concepts/emulators.htm" />
