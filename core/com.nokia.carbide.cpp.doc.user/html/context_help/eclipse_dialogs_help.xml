@@ -252,8 +252,9 @@
 	<!-- DEBUG AS DIALOG -->
 	<!-- ADDED 2.5  -->
 	<context id="select_launch_method_dialog" >
-		<description>Select the .</description>
-		<topic label="Debug As"  						href="html/reference/view_memory_wnd.htm" />
+		<description>Select the type of Symbian OS device to debug.</description>
+		<topic label="Phone Launch"  					href="html/projects/launch/launch_phone.htm" />
+		<topic label="Reference Board Launch"  			href="html/projects/launch/board_phone.htm" />
 	</context>
 
 	<!-- WORKING SET PAGE  -->
