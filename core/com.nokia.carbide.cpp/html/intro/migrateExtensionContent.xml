@@ -10,14 +10,13 @@
 		path="migrate/@">
 		
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
-		
-			
+					
 			<link 
 				label="Carbide.c++ Shortcuts" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp/html/help_keys_Toc.htm"  
 				id="carbide-keys" 
 				style-id="content-link">
-				<text>Carbide.c++ shortcuts include support for Microsoft Visual Studio as well as Nokia CodeWarrior.</text>
+				<text>Carbide.c++ shortcuts include support for Microsoft Visual Studio.</text>
 			</link>
 			
 		</group>
