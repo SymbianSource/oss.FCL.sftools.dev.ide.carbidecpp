@@ -253,6 +253,7 @@
 	<!-- ADDED 2.5  -->
 	<context id="select_launch_method_dialog" >
 		<description>Select the type of Symbian OS device to debug.</description>
+		<topic label="Emulator Launch"  				href="html/projects/launch/emulator_phone.htm" />
 		<topic label="Phone Launch"  					href="html/projects/launch/launch_phone.htm" />
 		<topic label="Reference Board Launch"  			href="html/projects/launch/board_phone.htm" />
 	</context>
