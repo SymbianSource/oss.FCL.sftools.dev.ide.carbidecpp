@@ -48,7 +48,7 @@ import com.sun.jna.ptr.ShortByReference;
 public class PCCSConnection {
 
 	private static final String NOT_KNOWN = "not known"; //$NON-NLS-1$ // used for all string structure elements that come back from PCCS as null
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	private String DONT_ASK_AGAIN_KEY = "DontAskAgain"; //$NON-NLS-1$
 	
 	/**

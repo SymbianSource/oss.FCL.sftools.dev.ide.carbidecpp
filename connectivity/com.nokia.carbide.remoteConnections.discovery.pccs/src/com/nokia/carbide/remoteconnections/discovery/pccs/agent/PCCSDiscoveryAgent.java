@@ -46,7 +46,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	private static final String USB_CONNECTION_TYPE = 
 		"com.nokia.carbide.trk.support.connection.USBConnectionType"; //$NON-NLS-1$
 	private static final String PORT_SETTING = "port"; //$NON-NLS-1$
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	public class PCCSPrequisiteStatus implements IPrerequisiteStatus {
 		private boolean isOK = true;
