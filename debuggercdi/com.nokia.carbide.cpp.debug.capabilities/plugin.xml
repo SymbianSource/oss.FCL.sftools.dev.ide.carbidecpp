@@ -12,17 +12,11 @@
             id="com.nokia.carbide.cpp.debug.cdtactivity">
       </activity>
       
-<!-- The signals view is added to the debug perspective by CDT and therefore it
-	 tries to show the view no matter what.  Because we hide it here it fails to
-	 show the view properly and gives an error.  There is no way to remove it from
-	 the default debug perspective without modifying CDT.  We'll just leave it in
-	 for now, it won't have any content anyway.
-
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            isEqualityPattern="true"
             pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.SignalsView">
       </activityPatternBinding>
--->
 
 <!-- The following UI elements are from org.eclipse.cdt.launch -->
  
@@ -137,6 +131,13 @@
             pattern="org\.eclipse\.cdt.*/.*NewFolderDropDown">
       </activityPatternBinding>
   
+<!-- The following UI elements are from org.eclipse.cdt.dsf.ui -->
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.dsf.ui/org.eclipse.cdt.dsf.debug.ui.disassembly.view">
+      </activityPatternBinding>
+ 
 <!-- The following UI elements are from org.eclipse.debug.ui -->
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"

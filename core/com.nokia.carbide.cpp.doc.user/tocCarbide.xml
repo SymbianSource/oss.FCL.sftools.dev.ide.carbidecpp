@@ -223,17 +223,28 @@
         <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
       </topic>
     </topic>
-    <topic label="Debugging">
-       <topic href="html/projects/launch/launch_emulator.htm" label="Debugging with an emulator">
+	
+    <topic label="PnP Debugging"  href="html/projects/launch/pnp_debug_overview.htm" >
+       <topic label="Debugging with an emulator"				href="html/projects/launch/launch_emulator.htm" >
+			<topic label="Executable Selection"					href="html/projects/launch/wiz_new_launch_config.htm#EXE_SEL" />
+			<topic label="Build Options Selection"				href="html/projects/launch/wiz_new_launch_config.htm#BLD_OPT" />
+			<topic label="New Launch Configuration"				href="html/projects/launch/wiz_new_launch_config.htm#FINISH" />
+			<topic label="Other project options" 					href="html/tasks/EmulatorToc.htm">
+			  <topic label="Setting Environment for x86 Compiler"	href="html/tasks/projects/prj_build_cmd_line.htm" />
+			  <topic label="Unsetting Built-in Environment"	        href="html/reference/wnd_carbide_pref_x86.htm" />
+			</topic>
        </topic>
+	   
        <topic href="html/projects/launch/launch_phone.htm" label="Debugging a phone">
+          <topic label="Configure launch configuration"		href="html/projects/launch/wnd_config_launch_config.htm" />
+          <topic label="Remote connection setting"			href="html/projects/launch/wnd_change_connection.htm" />
+          <topic label="Debug process settings"				href="html/projects/launch/wnd_change_debug_process.htm" />
+          <topic label="Other settings"						href="html/projects/launch/wnd_change_other_settings.htm" />
        </topic>
+	   
        <topic href="html/projects/launch/launch_board.htm" label="Debugging a reference board">
        </topic>
-    <topic label="Emulator projects" 					href="html/tasks/EmulatorToc.htm">
-      <topic label="Setting Environment for x86 Compiler"		href="html/tasks/projects/prj_build_cmd_line.htm" />
-      <topic label="Unsetting Built-in Environment"	        href="html/reference/wnd_carbide_pref_x86.htm" />
-    </topic>
+	   
     <topic label="Run mode projects" 						href="html/tasks/RunModeToc.htm">
       <topic label="Run Mode Overview"  			href="html/tasks/start/carbide_overview_trk.htm" ></topic>
       <topic href="html/concepts/autotargeting.htm" label="Auto-Targeting of Executables"></topic>
