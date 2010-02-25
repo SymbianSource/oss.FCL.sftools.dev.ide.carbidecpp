@@ -1038,6 +1038,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 							
 							if (osVersionString.compareToIgnoreCase("tb92sf") == 0){
 								setOSVersion(new Version("9.5.0"));
+								setSDKVersion(new Version("5.2.0"));
 								break;
 							}
 							
