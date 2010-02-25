@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.internal.qt.ui.QtUIPlugin;
@@ -60,7 +61,7 @@ public class ProjectCreatedTasksQt extends ProjectCreatedTasks {
 		if (project != null) {
 			// add qt nature here
 			QtCorePlugin.addQtNature(project, monitor);
-
+			
 			// enable the pro file listener by default
 			new QtProject(project).setRunQMakeWhenProFileChanges(true);
 
@@ -82,6 +83,9 @@ public class ProjectCreatedTasksQt extends ProjectCreatedTasks {
 			IPath epocroot = new Path(((ISymbianBuildContext)listOfBuildConfigs.get(0)).getSDK().getEPOCROOT());
 			Map<String, String> envMods = new HashMap<String, String>();
 			envMods.put("EPOCROOT", epocroot.setDevice(null).toOSString());
+			
+			// Make sure we set the session property so when qmake is called we know the proper -spec to invoke
+			project.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder));
 			
 			// run qmake to ensure bld.inf file exists
 			String errMsg = QMakeRunner.runQMake(project, envMods, monitor);

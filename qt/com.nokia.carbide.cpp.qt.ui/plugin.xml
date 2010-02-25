@@ -88,7 +88,16 @@
       </modifier>
    </extension>
    
-      <extension
+   <extension
+         id="com.nokia.carbide.cpp.internal.qt.ui.qmakeCommandProvider"
+         name="Qt qmake command provider"
+         point="com.trolltech.qtcppproject.qmakeCommandProvider">
+          <provider
+            class="com.nokia.carbide.cpp.internal.qt.ui.CarbideQmakeCommandProvider"
+            name="com.nokia.carbide.cpp.internal.qt.ui.CarbideQmakeCommandProvider"/>
+   </extension>
+   
+   <extension
          id="com.nokia.carbide.cpp.qt.ui.symbianSDKMgrHook"
          name="Symbian SDK Manager Hook"
          point="com.nokia.carbide.cpp.sdk.core.sdkManagerLoadedHook">
