@@ -97,5 +97,14 @@
             name="com.nokia.carbide.cpp.internal.qt.core.SDK-HookClient"/>
    </extension>
    
+    <extension
+         id="com.nokia.carbide.cpp.internal.qt.ui.qmakeCommandProvider"
+         name="Qt qmake command provider"
+         point="com.trolltech.qtcppproject.qmakeCommandProvider">
+          <provider
+            class="com.nokia.carbide.cpp.internal.qt.ui.CarbideQmakeCommandProvider"
+            name="com.nokia.carbide.cpp.internal.qt.ui.CarbideQmakeCommandProvider"/>
+   </extension>
+   
 
 </plugin>
