@@ -39,6 +39,7 @@ import com.nokia.carbide.remoteconnections.discovery.pccs.Activator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Messages;
 import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary.IConnAPIDeviceCallback;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.ptr.IntByReference;
@@ -47,8 +48,7 @@ import com.sun.jna.ptr.ShortByReference;
 public class PCCSConnection {
 
 	private static final String NOT_KNOWN = "not known"; //$NON-NLS-1$ // used for all string structure elements that come back from PCCS as null
-	private boolean DEBUG = false;
-	private boolean SWITCH_TO_RNDIS = false; // false for 2.x, true for 3.x
+	private boolean DEBUG = true;
 	private String DONT_ASK_AGAIN_KEY = "DontAskAgain"; //$NON-NLS-1$
 	
 	/**
@@ -60,52 +60,46 @@ public class PCCSConnection {
 		 * @see com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary.IConnAPIDeviceCallback#invoke(int, com.sun.jna.ptr.ShortByReference)
 		 */
 		public int invoke(final int dwStatus, final ShortByReference pstrSerialNumber) {
-			Display.getDefault().asyncExec(
-				new Runnable ()	{
-					public void run() {
-						// check for NULL, since I am seeing bogus events coming from PCCS before the real one
-						//  and the serial number is not filled in. If the serial number is null,
-						//  everything else will be null (according to the PCCS docs)
-						//  TODO: bug in PCCS API: 
-						if (DEBUG) System.out.printf("DeviceNotificationCallback %x %s\n", dwStatus, (pstrSerialNumber == null ? "serNum: null" : pstrSerialNumber.getPointer().getString(0, true))); //$NON-NLS-1$ //$NON-NLS-2$
-						String serialNumber = NOT_KNOWN;
-						if (pstrSerialNumber != null) {
-							serialNumber = pstrSerialNumber.getPointer().getString(0, true);
-						}
+			// check for NULL, since I am seeing bogus events coming from PCCS before the real one
+			//  and the serial number is not filled in. If the serial number is null,
+			//  everything else will be null (according to the PCCS docs)
+			//  TODO: bug in PCCS API: 
+			if (DEBUG) System.out.printf("DeviceNotificationCallback %x %s\n", dwStatus, (pstrSerialNumber == null ? "serNum: null" : pstrSerialNumber.getPointer().getString(0, true))); //$NON-NLS-1$ //$NON-NLS-2$
+			String serialNumber = NOT_KNOWN;
+			if (pstrSerialNumber != null) {
+				serialNumber = pstrSerialNumber.getPointer().getString(0, true);
+			}
 
-						DeviceEventListener.DeviceEvent eventType = DeviceEventListener.DeviceEvent.DEVICE_LIST_UPDATED;
-						// decode dwStatus per PCCS docs
-						switch(DMAPIDefinitions.GET_CONAPI_CB_STATUS(dwStatus)) {
-						case DMAPIDefinitions.CONAPI_DEVICE_LIST_UPDATED:
-							eventType = DeviceEventListener.DeviceEvent.DEVICE_LIST_UPDATED;
-							break;
-						case DMAPIDefinitions.CONAPI_DEVICE_ADDED:
-							eventType = DeviceEventListener.DeviceEvent.DEVICE_ADDED;
-							break;
-						case DMAPIDefinitions.CONAPI_DEVICE_REMOVED:
-							eventType = DeviceEventListener.DeviceEvent.DEVICE_REMOVED;
-							break;
-						case DMAPIDefinitions.CONAPI_DEVICE_UPDATED:
-							switch(DMAPIDefinitions.GET_CONAPI_CB_INFO(dwStatus)) {
-							case DMAPIDefinitions.CONAPI_CONNECTION_ADDED:
-								eventType = DeviceEventListener.DeviceEvent.DEVICE_UPDATED_ADDEDCONNECTION;
-								break;
-							case DMAPIDefinitions.CONAPI_CONNECTION_REMOVED:
-								eventType = DeviceEventListener.DeviceEvent.DEVICE_UPDATED_REMOVEDCONNECTION;
-								break;
-							case DMAPIDefinitions.CONAPI_DEVICE_RENAMED:
-								eventType = DeviceEventListener.DeviceEvent.DEVICE_UPDATED_RENAMED;
-								break;
-							}
-						}
-						// fire events
-						Iterator<DeviceEventListener> iter = listeners.iterator();
-						while (iter.hasNext()) {
-							iter.next().onDeviceEvent(eventType, serialNumber);
-						}
-					}
+			DeviceEventListener.DeviceEvent eventType = DeviceEventListener.DeviceEvent.DEVICE_LIST_UPDATED;
+			// decode dwStatus per PCCS docs
+			switch(DMAPIDefinitions.GET_CONAPI_CB_STATUS(dwStatus)) {
+			case DMAPIDefinitions.CONAPI_DEVICE_LIST_UPDATED:
+				eventType = DeviceEventListener.DeviceEvent.DEVICE_LIST_UPDATED;
+				break;
+			case DMAPIDefinitions.CONAPI_DEVICE_ADDED:
+				eventType = DeviceEventListener.DeviceEvent.DEVICE_ADDED;
+				break;
+			case DMAPIDefinitions.CONAPI_DEVICE_REMOVED:
+				eventType = DeviceEventListener.DeviceEvent.DEVICE_REMOVED;
+				break;
+			case DMAPIDefinitions.CONAPI_DEVICE_UPDATED:
+				switch(DMAPIDefinitions.GET_CONAPI_CB_INFO(dwStatus)) {
+				case DMAPIDefinitions.CONAPI_CONNECTION_ADDED:
+					eventType = DeviceEventListener.DeviceEvent.DEVICE_UPDATED_ADDEDCONNECTION;
+					break;
+				case DMAPIDefinitions.CONAPI_CONNECTION_REMOVED:
+					eventType = DeviceEventListener.DeviceEvent.DEVICE_UPDATED_REMOVEDCONNECTION;
+					break;
+				case DMAPIDefinitions.CONAPI_DEVICE_RENAMED:
+					eventType = DeviceEventListener.DeviceEvent.DEVICE_UPDATED_RENAMED;
+					break;
 				}
-			);
+			}
+			// fire events
+			Iterator<DeviceEventListener> iter = listeners.iterator();
+			while (iter.hasNext()) {
+				iter.next().onDeviceEvent(eventType, serialNumber);
+			}
 			return PCCSErrors.CONA_OK;
 		}
 	}
@@ -115,10 +109,15 @@ public class PCCSConnection {
 	private DeviceNotificationCallback pfnCallback = new DeviceNotificationCallback();
 	public static final int PCCS_NOT_FOUND = 1;
 	public static final int PCCS_WRONG_VERSION = 2;
+	private static final int DMAPI_VERSION = DMAPIDefinitions.DMAPI_VERSION_34;
 	
 	private APIHANDLE dmHandle = APIHANDLE.INVALID_HANDLE_VALUE;
 	private APIHANDLE mcHandle = APIHANDLE.INVALID_HANDLE_VALUE;
 	private APIHANDLE upHandle = APIHANDLE.INVALID_HANDLE_VALUE;
+	private boolean dontAskAgain;
+	private boolean doSwitch;
+	
+	private Collection<String> noSwitchConnections = new ArrayList<String>();
 	
 	private void storeDontAskAgain() {
 		Activator.getDefault().getPreferenceStore().setValue(DONT_ASK_AGAIN_KEY, true);
@@ -131,43 +130,47 @@ public class PCCSConnection {
 	private boolean dontAskAgain() {
 		return Activator.getDefault().getPreferenceStore().getBoolean(DONT_ASK_AGAIN_KEY);
 	}
-	/**
-	 * 
-	 */
+
 	public PCCSConnection() {
 	}
 
 	public void open() throws CoreException {
 		if (library == null) {
-			library = ConnAPILibrary.getInstance();
+			try {
+				library = IConnAPILibrary.INSTANCE;
+			} catch (UnsatisfiedLinkError e) {
+				String msg;
+				if (Activator.isSymSEELayout()) {
+					msg = Messages.ConnAPILibrary_PCCS_Not_Found_Error + Activator.getLoadErrorURL();
+				} else {
+					msg = Messages.ConnAPILibrary_PCSuite_Not_Found_Error + Activator.getLoadErrorURL();
+				}
+				throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCSConnection.PCCS_NOT_FOUND, msg, e));
+			} catch (NoClassDefFoundError e) {
+				String msg;
+				if (Activator.isSymSEELayout()) {
+					msg = Messages.ConnAPILibrary_PCCS_Not_Found_Error + Activator.getLoadErrorURL();
+				} else {
+					msg = Messages.ConnAPILibrary_PCSuite_Not_Found_Error + Activator.getLoadErrorURL();
+				}
+				throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCSConnection.PCCS_NOT_FOUND, msg, e));
+			}
 		}
 		// this uses the MCAPI only to enable required media
 		ensureMediaEnabled();
 		
 		// load DMAPI
-		loadDMAPI();
+		initDMAPI();
+		dmHandle = loadDMAPI();
+		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(dmHandle)) {
+			startDMNotifications(dmHandle);
+		}
 	}
 	
-	private void ensureMediaEnabled() throws CoreException {
-		// open the MCAPI
-		loadMCAPI();
-		// TODO:
-		// get media
-		// enable media
-		// close MCAPI
-		closeMCAPI();
-	}
-
-	/**
-	 * Initializes the Device Management API (DMAPI) for use.
-	 * 
-	 * @throws CoreException
-	 */
-	private void loadDMAPI() throws CoreException {
-
-		int dwResult = library.DMAPI_Initialize(DMAPIDefinitions.DMAPI_VERSION_34, null);
+	private void initDMAPI() throws CoreException {
+		int dwResult = library.DMAPI_Initialize(DMAPI_VERSION, null);
     	if (dwResult != PCCSErrors.CONA_OK) {
-    		library.DMAPI_Terminate(null);
+    		terminateDMAPI();
     		String msg;
     		if (Activator.isSymSEELayout()) {
         		msg = String.format("PCCS DMAPI_Initialize API returned error on initialization %x", dwResult); //$NON-NLS-1$
@@ -179,38 +182,14 @@ public class PCCSConnection {
     		}
     		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCS_WRONG_VERSION, msg, null));
     	}
-    	
-    	// initialize common API
-//    	dwResult = library.CFAPI_Initialize(DMAPIDefinitions.CFAPI_VERSION_10, null); unnecessary
-//    	if (dwResult != PCCSErrors.CONA_OK) {
-//    		library.DMAPI_Terminate(null);
-//    		String msg = String.format("PCCS CFAPI_Initialize API returned error on initialization %x", dwResult);
-//    		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, dwResult, msg, null));
-//    	}
-    	
-    	// open a DM handle
-    	dmHandle = APIHANDLE.INVALID_HANDLE_VALUE;
-    	LPAPIHANDLE pHandle = new LPAPIHANDLE();
-    	dwResult = library.CONAOpenDM(pHandle);
-    	
-    	if (dwResult != PCCSErrors.CONA_OK) {
-    		library.DMAPI_Terminate(null);
-    		String msg = String.format(Messages.PCCSConnection_PCCS_CONAOpenDM_Error, dwResult);
-    		if (dwResult == PCCSErrors.ECONA_NOT_ENOUGH_MEMORY) {
-    			msg = Messages.PCCSConnection_PCCS_Not_Enough_Memory_Error;
-    		}
-    		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, dwResult, msg, null));
-    	} else {
-    		dmHandle = pHandle.getValue();
-    	}
-    	
+		if (DEBUG) System.out.println("initDMAPI"); //$NON-NLS-1$
+	}
+	private void startDMNotifications(APIHANDLE handle) throws CoreException {
     	// register a call back
-    	dwResult = library.CONARegisterNotifyCallback(dmHandle, PCCSTypeDefinitions.API_REGISTER, pfnCallback);
+    	int dwResult = library.CONARegisterNotifyCallback(handle, PCCSTypeDefinitions.API_REGISTER, pfnCallback);
     	if (dwResult != PCCSErrors.CONA_OK) {
-//    		System.out.printf("CONAOpenDM returned: %x\n", dwResult);
-    		library.DMAPI_Terminate(null);
-    		library.CONACloseDM(dmHandle);
-        	dmHandle = APIHANDLE.INVALID_HANDLE_VALUE;
+    		library.CONACloseDM(handle);
+        	handle = APIHANDLE.INVALID_HANDLE_VALUE;
 
         	String msg = String.format(Messages.PCCSConnection_PCCS_CONARegisterNotifyCallback_Error, dwResult);
     		if (dwResult == PCCSErrors.ECONA_INVALID_POINTER) {
@@ -218,6 +197,80 @@ public class PCCSConnection {
     		}
     		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, dwResult, msg, null));
     	}
+		if (DEBUG) System.out.println("startDMNotifications"); //$NON-NLS-1$
+	
+	}
+	private void ensureMediaEnabled() throws CoreException {
+		// open the MCAPI
+		loadMCAPI();
+		// get media list
+		IntBuffer pdwCount = IntBuffer.allocate(1);
+		CONAPI_MEDIA.ByReference ppMedia = new CONAPI_MEDIA.ByReference();
+
+		int dwResult = library.CONAMMGetMedia(mcHandle, pdwCount, ppMedia);
+		if (DEBUG)
+			System.out.printf("CONAMMGetMedia dwResult = %x\tpdwCount = %d\n", dwResult, pdwCount.get(0)); //$NON-NLS-1$
+
+		int count = pdwCount.get(0);
+		
+		Pointer pMedia = ppMedia.getPointer();
+		Pointer nativePointer = pMedia.getPointer(0); // save this for freeing media
+		int size = ppMedia.size();
+		
+		if (count > 0) {
+			CONAPI_MEDIA media[] = new CONAPI_MEDIA[count];
+			for (int i = 0; i < count; i++) {
+				// get pointer from offset of native pointer
+				Pointer sharedP = nativePointer.share(0 + i*size);
+				media[i] = new CONAPI_MEDIA(sharedP);
+				// and read the data from native memory
+				media[i].read();
+			}
+			for (int i = 0; i < count; i++) {
+				if (MCAPIDefinitions.CONAPI_GET_MEDIA_TYPE(media[i].dwMedia) == MCAPIDefinitions.CONAPI_MEDIA_USB) {
+					if (MCAPIDefinitions.CONAPI_IS_MEDIA_UNACTIVE(media[i].dwState)) {
+						media[i].dwState = MCAPIDefinitions.CONAPI_MEDIA_ACTIVE;
+						dwResult = library.CONAMMSetMedia(mcHandle, media);
+						if (DEBUG)
+							System.out.printf("CONAMMSetMedia dwResult = %x\n", dwResult); //$NON-NLS-1$
+					}
+				}
+			}
+			dwResult = library.CONAMMFreeMediaStructures(count, nativePointer);
+			if (DEBUG)
+				System.out.printf("CONAMMFreeMediaStructures dwResult = %x\n", dwResult); //$NON-NLS-1$
+		}
+
+		// close MCAPI
+		closeMCAPI();
+	}
+
+	/**
+	 * Opens Device Management API (DMAPI) for use. Note: initDMAPI must be called prior to this.<br>
+	 * initDMAPI need be called only once, but this can be called whenever we need a handle to
+	 * the DMAPI.
+	 * 
+	 * @throws CoreException
+	 */
+	private APIHANDLE loadDMAPI() throws CoreException {
+
+    	// open a DM handle
+    	APIHANDLE handle = APIHANDLE.INVALID_HANDLE_VALUE;
+    	LPAPIHANDLE pHandle = new LPAPIHANDLE();
+    	int dwResult = library.CONAOpenDM(pHandle);
+    	
+    	if (dwResult != PCCSErrors.CONA_OK) {
+    		String msg = String.format(Messages.PCCSConnection_PCCS_CONAOpenDM_Error, dwResult);
+    		if (dwResult == PCCSErrors.ECONA_NOT_ENOUGH_MEMORY) {
+    			msg = Messages.PCCSConnection_PCCS_Not_Enough_Memory_Error;
+    		}
+    		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, dwResult, msg, null));
+    	} else {
+    		handle = pHandle.getValue();
+    	}
+    	
+		if (DEBUG) System.out.printf("loadDMAPI handle=%s\n", handle.toString()); //$NON-NLS-1$
+    	return handle;
 	}
 
 	private void loadMCAPI() throws CoreException {
@@ -249,6 +302,7 @@ public class PCCSConnection {
     	} else {
     		mcHandle = pHandle.getValue();
     	}
+		if (DEBUG) System.out.println("\n-----loadMCAPI"); //$NON-NLS-1$
 	}
 
 	private void loadUPAPI() throws CoreException {
@@ -288,27 +342,40 @@ public class PCCSConnection {
 		if (library == null)
 			return;
 
+		stopDMNotifications(dmHandle);
+		
 		// DMAPI should only one be open
-		closeDMAPI();		
+		dmHandle = closeDMAPI(dmHandle);
+		
+		terminateDMAPI();
 	}
 	
+	private void terminateDMAPI() {
+    	// Terminate Device management API
+    	int dwResult = library.DMAPI_Terminate(null);
+		if (DEBUG) System.out.println("terminateDMAPI"); //$NON-NLS-1$
+	}
+	private void stopDMNotifications(APIHANDLE handle) {
+		int dwResult = PCCSErrors.CONA_OK;
+		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(handle)) {
+			// unregister callback
+			dwResult = library.CONARegisterNotifyCallback(handle, PCCSTypeDefinitions.API_UNREGISTER, pfnCallback);
+		}		
+		if (DEBUG) System.out.println("stopDMNotifications"); //$NON-NLS-1$
+	}
 	/**
 	 * Closes the DMAPI.
 	 * @throws CoreException
 	 */
-	private void closeDMAPI() throws CoreException {
+	private APIHANDLE closeDMAPI(APIHANDLE handle) throws CoreException {
 		int dwResult = PCCSErrors.CONA_OK;
-		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(dmHandle)) {
-			// unregister callback
-			dwResult = library.CONARegisterNotifyCallback(dmHandle, PCCSTypeDefinitions.API_UNREGISTER, pfnCallback);
+		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(handle)) {
 			// close DM connection
-			dwResult = library.CONACloseDM(dmHandle);
-        	dmHandle = APIHANDLE.INVALID_HANDLE_VALUE;
-        	// Terminate Common Functions API
-//        	dwResult = library.CFAPI_Terminate(null); unnecessary
-        	// Terminate Device management API
-        	dwResult = library.DMAPI_Terminate(null);
+			dwResult = library.CONACloseDM(handle);
+			if (DEBUG) System.out.printf("closeDMAPI ret=%x handle=%s\n", dwResult, handle.toString()); //$NON-NLS-1$
+			handle = APIHANDLE.INVALID_HANDLE_VALUE;
 		}
+		return handle;
 	}
 
 	private void closeMCAPI() {
@@ -320,12 +387,12 @@ public class PCCSConnection {
         	// Terminate Device management API
     		dwResult = library.MCAPI_Terminate(null);
 		}
+		if (DEBUG) System.out.println("closeMCAPI----\n"); //$NON-NLS-1$
 	}
 	
 	private void closeUPAPI() {
 		int dwResult = PCCSErrors.CONA_OK;
 		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(upHandle)) {
-//		if (upHandle.getValue() != APIHANDLE.INVALID_HANDLE_VALUE) {
 			// close DM connection
 			dwResult = library.UPAPI_CloseUSBPersonality(upHandle);
 			if (dwResult != PCCSErrors.CONA_OK) {
@@ -341,42 +408,6 @@ public class PCCSConnection {
 		if (DEBUG) System.out.println("closeUPAPI----\n"); //$NON-NLS-1$
 	}
 
-	public void getMediaList() {
-		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(mcHandle)) {
-			IntBuffer pdwCount = IntBuffer.allocate(1);
-			
-			CONAPI_MEDIA.ByReference[] ppMedia = (CONAPI_MEDIA.ByReference[])new CONAPI_MEDIA.ByReference().toArray(10);
-			
-			int dwResult = library.CONAMMGetMedia(mcHandle, pdwCount, ppMedia);
-			if (DEBUG) System.out.printf("dwResult = %x\tpdwCount = %d\n", dwResult, pdwCount.get(0)); //$NON-NLS-1$
-			int size = pdwCount.get(0);
-			CONAPI_MEDIA[] pMedia = CONAPI_MEDIA.newArray(10);
-			Pointer p0 = ppMedia[0].getPointer().getPointer(0);
-			Pointer p1 = ppMedia[1].getPointer().getPointer(0);
-			CONAPI_MEDIA media0 = ppMedia[0].newInstance();
-			CONAPI_MEDIA media1 = ppMedia[1].newInstance();
-			if (dwResult == PCCSErrors.CONA_OK) {
-				for (int i = 0; i < size; i++) {
-	//				if (DEBUG) {
-	//					System.out.printf("dwSize=%d\tdwMedia=%x\tpstrDescription=%s\n", 
-	//							media.dwMedia, 
-	//							media.dwMedia, 
-	//							(media.pstrDescription == null) ? "null" : media.pstrDescription.getPointer().getString(0, true));
-	//					System.out.printf("dwState=%d\tdwOptions=%x\tdwMediaData=%d\tpstrID=%s\n", 
-	//							media.dwState,
-	//							media.dwOptions,
-	//							media.dwMediaData,
-	//							(media.pstrID == null) ? "null" : media.pstrID.getPointer().getString(0, true));
-	//				}
-	//
-				}
-				dwResult = library.CONAMMFreeMediaStructures(size, pMedia);
-				if (dwResult != PCCSErrors.CONA_OK) {
-					if (DEBUG) System.out.printf("CONAMMFreeMediaStructures = %x\n", dwResult); //$NON-NLS-1$
-				}
-			}
-		}
-	} 
 	/**
 	 * All devices detected are gotten here - BT, USB, etc.
 	 *  No checking of a valid connection is done here
@@ -385,20 +416,34 @@ public class PCCSConnection {
 	 */
 	private DeviceInfo[] getCompleteDeviceList() {
 		DeviceInfo[] deviceInfo = null;
-		
-		IntByReference pdwCount = new IntByReference(0);
-		int dwResult = library.CONAGetDeviceCount(dmHandle, pdwCount);
-		if (DEBUG) System.out.printf("CONAGetDeviceCount: %x number of devices: %d\n", dwResult, pdwCount.getValue()); //$NON-NLS-1$
-		if (dwResult != PCCSErrors.CONA_OK)
+		APIHANDLE handle = APIHANDLE.INVALID_HANDLE_VALUE;
+		try {
+			handle = loadDMAPI();
+		} catch (CoreException e) {
 			return deviceInfo;
+		}
+		IntByReference pdwCount = new IntByReference(0);
+		int dwResult = library.CONAGetDeviceCount(handle, pdwCount);
+		if (DEBUG) System.out.printf("CONAGetDeviceCount: %x number of devices: %d\n", dwResult, pdwCount.getValue()); //$NON-NLS-1$
+		if (dwResult != PCCSErrors.CONA_OK) {
+			try {
+				closeDMAPI(handle);
+			} catch (CoreException e) {
+			}
+			return deviceInfo;
+		}
 		
 		int deviceCount = pdwCount.getValue();
 		if (deviceCount > 0) {
 			
 			CONAPI_DEVICE[] pDevices = (CONAPI_DEVICE[])new CONAPI_DEVICE().toArray(deviceCount);
-			dwResult = library.CONAGetDevices(dmHandle, pdwCount, pDevices);
+			dwResult = library.CONAGetDevices(handle, pdwCount, pDevices);
 			if (DEBUG) System.out.printf("CONAGetDevices: %x number of devices: %d\n", dwResult, deviceCount); //$NON-NLS-1$
 			if (dwResult != PCCSErrors.CONA_OK) {
+				try {
+					closeDMAPI(handle);
+				} catch (CoreException e) {
+				}
 				return deviceInfo;
 			}
 			
@@ -475,10 +520,20 @@ public class PCCSConnection {
 			}
 			dwResult = library.CONAFreeDeviceStructure(deviceCount, pDevices);
 		}
-		
+		try {
+			closeDMAPI(handle);
+		} catch (CoreException e) {
+		}
+
 		return deviceInfo;
 	}
 
+	/**
+	 * Gets the complete list of connections and weeds out "good" connections (i.e., non-debuggable)
+	 * 
+	 * @return
+	 * @throws CoreException
+	 */
 	public synchronized Collection<DeviceConnection> getGoodConnectionList() throws CoreException {
 		DeviceInfo[] deviceList = getCompleteDeviceList();
 		Collection<DeviceConnection> goodConnections = new ArrayList<DeviceConnection>();
@@ -493,33 +548,48 @@ public class PCCSConnection {
 			return goodConnections;
 		}
 		boolean upapiOpen = true;
-		Collection<DeviceUSBPersonalityInfo> personalityList = getAllDeviceUSBPersonalities();
-		// sometimes on a phone connected to USB, this is failing at least a couple of times
-		//   so retry a number of times
-		// if there are no USB connections, this failure is expected
-		if (personalityList == null || personalityList.size() == 0) {
-			if (DEBUG) System.out.printf("Error 1 getting USB personalities\n"); //$NON-NLS-1$
-			closeUPAPI();
-			upapiOpen = false;
-			for (int i = 2; i < 6; i++) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
+		int numUSBPersonalities = 0;
+		for (DeviceInfo device : deviceList) {
+			Collection<DeviceConnectionInfo> connectionList = device.connections;
+			for (DeviceConnectionInfo connInfo : connectionList) {
+				if (connInfo.media.equals("usb")) {
+					numUSBPersonalities++;
 				}
-				try {
-					loadUPAPI();
-					upapiOpen = true;
-				} catch (CoreException e) {
-					Activator.logError(e);
-				}
-				if (upapiOpen)
-					personalityList = getAllDeviceUSBPersonalities();
-				if (personalityList == null || personalityList.size() == 0) {
-					if (DEBUG) System.out.printf("Error %d getting USB personalities\n", i); //$NON-NLS-1$
-					closeUPAPI();
-					upapiOpen = false;
-				} else {
-					break;
+			}
+		}
+		if (DEBUG)
+			System.out.println("numUSBPersonalities: " + numUSBPersonalities);
+		
+		Collection<DeviceUSBPersonalityInfo> personalityList = null;
+		if (numUSBPersonalities > 0) {
+			personalityList = getAllDeviceUSBPersonalities();
+			// sometimes on a phone connected to USB, this is failing at least a couple of times
+			//   so retry a number of times
+			// if there are no USB connections, this failure is expected
+			if (personalityList == null || personalityList.size() < numUSBPersonalities) {
+				if (DEBUG) System.out.printf("Error 1 getting USB personalities: %d of %d total\n", (personalityList != null) ? personalityList.size() : 0, numUSBPersonalities); //$NON-NLS-1$
+				closeUPAPI();
+				upapiOpen = false;
+				for (int i = 2; i < 6; i++) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+					try {
+						loadUPAPI();
+						upapiOpen = true;
+					} catch (CoreException e) {
+						Activator.logError(e);
+					}
+					if (upapiOpen)
+						personalityList = getAllDeviceUSBPersonalities();
+					if (personalityList == null || personalityList.size() < numUSBPersonalities) {
+						if (DEBUG) System.out.printf("Error %d getting USB personalities: %d of %d total\n", (personalityList != null) ? personalityList.size() : 0, numUSBPersonalities); //$NON-NLS-1$
+						closeUPAPI();
+						upapiOpen = false;
+					} else {
+						break;
+					}
 				}
 			}
 		}
@@ -530,6 +600,8 @@ public class PCCSConnection {
 			loadUPAPI();
 			upapiOpen = true;
 		}
+		
+		forgetAllNoSwitchConnectionsNotInCurrentList(personalityList);
 		
 		// go through each connected device and check for good connection modes (e.g. USB in debuggable mode)
 		if (DEBUG) System.out.printf("getGoodConnectionList: sizeof deviceList: %d\n", deviceList.length); //$NON-NLS-1$
@@ -582,6 +654,34 @@ public class PCCSConnection {
 		return goodConnections;
 	}
 	/**
+	 * Forget all previous "no-switch-personality" devices that are not in current list (e.g., device is now disconnected)
+	 * 
+	 * @param personalityList
+	 */
+	private void forgetAllNoSwitchConnectionsNotInCurrentList(
+			Collection<DeviceUSBPersonalityInfo> personalityList) {
+		if (personalityList == null || personalityList.isEmpty()) {
+			if (DEBUG) System.out.println("forgetAllNoSwitchConnectionsNotInCurrentList: all");
+			noSwitchConnections.clear();
+		} else if (noSwitchConnections == null || noSwitchConnections.isEmpty()) {
+			if (DEBUG) System.out.println("forgetAllNoSwitchConnectionsNotInCurrentList: noSwitchConnections already empty");
+				return;
+		} else {
+			for (String id : new ArrayList<String>(noSwitchConnections)) {
+				boolean found = false;
+				for (DeviceUSBPersonalityInfo personality : personalityList) {
+					if (id.equals(personality.deviceID)) {
+						found = true;
+					}
+				}
+				if (!found) {
+					if (DEBUG) System.out.println("forgetAllNoSwitchConnectionsNotInCurrentList: " + id);
+					noSwitchConnections.remove(id);
+				}
+			}
+		}		
+	}
+	/**
 	 * Find a matching device in the personality list (all USB devices).<p>
 	 * Might have to use a combination of the serial number and device ID to match with ID's from personality.
 	 *
@@ -620,6 +720,13 @@ public class PCCSConnection {
 					return personality;
 				}
 			}
+			// sometimes the serial number is part of the address!
+			if (!address.equals(NOT_KNOWN) && !personality.serialNumber.equals(NOT_KNOWN)) {
+				if (address.endsWith(personality.serialNumber)) {
+					if (DEBUG) System.out.println("findPersonality: address contains serialNumber");
+					return personality;
+				}
+			}
 		}
 		if (DEBUG) System.out.println("findPersonality end return null"); //$NON-NLS-1$
 		return null;
@@ -650,6 +757,7 @@ public class PCCSConnection {
 			connInfo.mode = "serial"; //$NON-NLS-1$
 			connInfo.port = getUSBComPort(connInfo.address);
 			// good personality
+			forgetNoSwitchConnections(personality.deviceID);
 			return true;
 		}
 
@@ -669,37 +777,80 @@ public class PCCSConnection {
 			return false;
 		}
 
-		// ask to switch
-		askToSwitchPersonality(device, personality, goodCode, goodDesc);
+		if (!noSwitchConnectionsContains(personality.deviceID))
+			// ask to switch
+			askToSwitchPersonality(device, personality, goodCode, goodDesc);
 
 		// was bad personality - if we switched, it will be good next notification
 		if (DEBUG) System.out.println("isGoodUSBPersonality: return false"); //$NON-NLS-1$
 		return false;
 	}
-	private void askToSwitchPersonality(DeviceInfo device,
-			DeviceUSBPersonalityInfo personality, int goodCode, String goodDesc) {
-
-		// ask the user and switch
-		String fmt = Messages.PCCSConnection_Switch_Message1 +
-		Messages.PCCSConnection_Swtich_Message2 +
-		Messages.PCCSConnection_Switch_Message3 +
-		Messages.PCCSConnection_Switch_Message4;
-		String message = MessageFormat.format(fmt,
-				device.friendlyName,
-				personality.currentPersonalityDescription,
-				goodDesc);
-
-		MessageDialogWithToggle dlg = MessageDialogWithToggle.openYesNoQuestion(
-				WorkbenchUtils.getSafeShell(), 
-				Messages.PCCSConnection_Switch_Message_Title, 
-				message, 
-				Messages.PCCSConnection_DontAsk_CheckText, 
-				false, 
-				null, 
-				null);
-		boolean dontAskAgain = dlg.getToggleState();
-		boolean doSwitch = (dlg.getReturnCode() == IDialogConstants.YES_ID);
+	
+	/**
+	 * Search previous "no-switch-personality" list for a new device (e.g., user already said no before - don't ask again unless he reconnects)
+	 *  
+	 * @param deviceID
+	 * @return
+	 */
+	private boolean noSwitchConnectionsContains(String deviceID) {
+		if (!noSwitchConnections.isEmpty()) {
+			for (String id : noSwitchConnections) {
+				if (id.equals(deviceID)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * Forget one device in previous "no-switch-personality" list (e.g., device is now in a good personality and doesn't need switching)
+	 * 
+	 * @param deviceID
+	 */
+	private void forgetNoSwitchConnections(String deviceID) {
+		if (noSwitchConnections.isEmpty()) {
+			if (DEBUG) System.out.println("forgetNoSwitchConnections empty");
+			return;
+		}
+		for (String id : new ArrayList<String>(noSwitchConnections)) {
+			if (id.equals(deviceID)) {
+				if (DEBUG) System.out.println("forgetNoSwitchConnections: " + deviceID);
+				noSwitchConnections.remove(id);
+			}
+		}
+	}
+	private void askToSwitchPersonality(final DeviceInfo device,
+			final DeviceUSBPersonalityInfo personality, final int goodCode, final String goodDesc) {
 		
+		doSwitch = false;
+		Display.getDefault().syncExec(
+			new Runnable() {
+
+				public void run() {
+					// ask the user and switch
+					String fmt = Messages.PCCSConnection_Switch_Message1 +
+					Messages.PCCSConnection_Swtich_Message2 +
+					Messages.PCCSConnection_Switch_Message3 +
+					Messages.PCCSConnection_Switch_Message4;
+					String message = MessageFormat.format(fmt,
+							device.friendlyName,
+							personality.currentPersonalityDescription,
+							goodDesc);
+
+					MessageDialogWithToggle dlg = MessageDialogWithToggle.openYesNoQuestion(
+							WorkbenchUtils.getSafeShell(), 
+							Messages.PCCSConnection_Switch_Message_Title, 
+							message, 
+							Messages.PCCSConnection_DontAsk_CheckText, 
+							false, 
+							null, 
+							null);
+					dontAskAgain = dlg.getToggleState();
+					doSwitch = (dlg.getReturnCode() == IDialogConstants.YES_ID);
+					
+				}
+			}
+		);
 		if (doSwitch) {
 			WString pstrDeviceId = new WString(personality.deviceID);
 			int dwResult = library.UPAPI_SetPersonality(upHandle, pstrDeviceId, goodCode);
@@ -707,6 +858,15 @@ public class PCCSConnection {
 				if (DEBUG)
 					System.out.printf("UPAPI_SetPersonality failed: %x\n", dwResult); //$NON-NLS-1$
 			}
+		} else {
+			// remember this device so we don't ask again unless it changes personality or is reconnected
+			rememberNoSwitchConnections(personality.deviceID);
+			// also log an info message to error log regarding this
+			String fmt = Messages.PCCSConnection_Switch_Message1 + Messages.PCCSConnection_Swtich_Message2;
+			String message = MessageFormat.format(fmt, 	device.friendlyName,
+							personality.currentPersonalityDescription,
+							goodDesc);
+			Activator.logMessage(message, IStatus.INFO);
 		}
 		// store don't ask again only if selected
 		if (dontAskAgain)
@@ -714,12 +874,22 @@ public class PCCSConnection {
 	}
 
 	/**
+	 * Device is bad personality and user said 'no' to switch (we won't ask again for this device unless it is reconnected or now in a good mode)
+	 * 
+	 * @param deviceID
+	 */
+	private void rememberNoSwitchConnections(String deviceID) {
+		if (DEBUG) System.out.println("rememberNoSwitchConnections: " + deviceID);
+		noSwitchConnections.add(deviceID);
+	}
+	/**
 	 * This function assumes the UPAPI has already been loaded by the caller
 	 * @return - list of personalities
 	 */
 	private Collection<DeviceUSBPersonalityInfo> getAllDeviceUSBPersonalities() {
 		Collection<DeviceUSBPersonalityInfo> p = new ArrayList<DeviceUSBPersonalityInfo>();
 		boolean apiError = false;
+
 		// how many USB devices are connected
 		IntBuffer pdwDeviceCount = IntBuffer.allocate(1);
 		int dwResult = library.UPAPI_QueryDeviceCount(upHandle, pdwDeviceCount);
@@ -771,7 +941,7 @@ public class PCCSConnection {
 			if (DEBUG)
 				System.out.printf("UPAPI_QueryDeviceCount dwResult = %x\n", dwResult); //$NON-NLS-1$
 		}
-		if (DEBUG) System.out.printf("getAllDeviceUSBPersonalities return p size : %s\n", p.size()); //$NON-NLS-1$
+		if (DEBUG) System.out.printf("getAllDeviceUSBPersonalities return size : %s\n", p.size()); //$NON-NLS-1$
 		return p;
 	}
 	private boolean getPersonalityDescriptors(
@@ -846,134 +1016,6 @@ public class PCCSConnection {
 		return apiError;
 	}
 
-	/**
-	 * @return null if no device found.
-	 * @throws CoreException
-	 * @deprecated Use {@link #getGoodConnectionList()} instead.
-	 */
-	public DeviceInfo[] getDeviceList() throws CoreException {
-		
-		DeviceInfo[] deviceInfo = null;
-		
-		int dwResult = PCCSErrors.CONA_OK;
-		IntByReference pdwCount = new IntByReference(0);
-		dwResult = library.CONAGetDeviceCount(dmHandle, pdwCount);
-		if (DEBUG) System.out.printf("CONAGetDeviceCount: %x number of devices: %d\n", dwResult, pdwCount.getValue()); //$NON-NLS-1$
-
-		int deviceCnt = pdwCount.getValue();
-		if (dwResult != PCCSErrors.CONA_OK || deviceCnt == 0)
-			return deviceInfo;
-		
-		// array of structs in contiguous memory required !
-		CONAPI_DEVICE[] pDevices = (CONAPI_DEVICE[])new CONAPI_DEVICE().toArray(deviceCnt);
-		dwResult = library.CONAGetDevices(dmHandle, pdwCount, pDevices);
-		if (DEBUG) System.out.printf("CONAGetDevices: %x number of devices: %d\n", dwResult, deviceCnt); //$NON-NLS-1$
-		
-		if (dwResult == PCCSErrors.CONA_OK) {
-			// extract to regular java types
-			if (deviceCnt > 0) {
-				deviceInfo = new DeviceInfo[deviceCnt];
-				CONAPI_DEVICE[] devices = pDevices;
-				for (int i = 0; i < deviceCnt; i++) {
-					deviceInfo[i] = new DeviceInfo();
-					if (devices[i].pstrSerialNumber != null) {
-						deviceInfo[i].serialNumber = devices[i].pstrSerialNumber.getPointer().getString(0, true);
-					} else {
-						// TODO: docs say if ser num == null --> device unsupported, but this is a bug in PCCS
-						deviceInfo[i].serialNumber = NOT_KNOWN; //$NON-NLS-1$
-					}
-					if (devices[i].pstrFriendlyName != null) {
-						deviceInfo[i].friendlyName = devices[i].pstrFriendlyName.getPointer().getString(0, true);
-					} else {
-						deviceInfo[i].friendlyName = NOT_KNOWN; //$NON-NLS-1$
-					}
-					if (devices[i].pstrModel != null) {
-						deviceInfo[i].model = devices[i].pstrModel.getPointer().getString(0, true);
-					} else {
-						deviceInfo[i].model = NOT_KNOWN; //$NON-NLS-1$
-					}
-					if (devices[i].pstrManufacturer != null) {
-						deviceInfo[i].mfr = devices[i].pstrManufacturer.getPointer().getString(0, true);
-					} else {
-						deviceInfo[i].mfr = NOT_KNOWN; //$NON-NLS-1$
-					}
-					int numItems = deviceInfo[i].numberOfConnections = devices[i].dwNumberOfItems;
-					
-					CONAPI_CONNECTION_INFO[] conn = null;
-					if (numItems > 0)
-						 conn = (CONAPI_CONNECTION_INFO[])devices[i].pItems.toArray(numItems);
-					for (int j = 0; j < numItems; j++) {
-						DeviceConnectionInfo connInfo = new DeviceConnectionInfo();
-						connInfo.deviceID = conn[j].dwDeviceID;
-						switch(conn[j].dwMedia){
-						case PCCSTypeDefinitions.API_MEDIA_BLUETOOTH:
-							connInfo.media = "bluetooth"; //$NON-NLS-1$
-							break;
-						case PCCSTypeDefinitions.API_MEDIA_IRDA:
-							connInfo.media = "irda"; //$NON-NLS-1$
-							break;
-						case PCCSTypeDefinitions.API_MEDIA_SERIAL:
-							connInfo.media = "serial-ca42"; //$NON-NLS-1$
-							break;
-						default:
-						case PCCSTypeDefinitions.API_MEDIA_USB:
-							connInfo.media = "usb"; //$NON-NLS-1$
-							break;
-						}
-						if (conn[j].pstrDeviceName != null) {
-							connInfo.deviceName = conn[j].pstrDeviceName.getPointer().getString(0,true);
-							if (deviceInfo[i].friendlyName.equals(NOT_KNOWN)) { //$NON-NLS-1$
-								// use device name as friendly name (latter was null)
-								deviceInfo[i].friendlyName = connInfo.deviceName;
-							}
-						} else {
-							connInfo.deviceName = NOT_KNOWN; //$NON-NLS-1$
-						}
-						// Bomb if friendly name is not known or address is not known
-						//   since these are essential to a connection
-						if (conn[j].pstrAddress == null || deviceInfo[i].friendlyName.equals(NOT_KNOWN)) //$NON-NLS-1$
-							continue;
-						
-						connInfo.address = conn[j].pstrAddress.getPointer().getString(0, true);
-						connInfo.state = conn[j].dwState;
-						
-						if (connInfo.media.equals("usb")) { //$NON-NLS-1$
-							if (checkUSBMode(deviceInfo[i], connInfo)){ 
-								connInfo.port = getUSBComPort(connInfo.address);
-							} else {
-								// don't store - not in good USB personality mode
-								continue;
-							}
-						} else if (connInfo.media.equals("bluetooth")) { //$NON-NLS-1$
-							// TODO: implement BT
-							connInfo.port = getBTComPort(connInfo.address);
-						} else {
-							// IRDA and Serial(CA42) probably will not come here anyway
-							connInfo.port = null;
-						}
-						if (connInfo.port != null)
-							deviceInfo[i].connections.add(connInfo);
-					}
-				}
-			}
-			dwResult = library.CONAFreeDeviceStructure(deviceCnt, pDevices);
-			if (DEBUG) System.out.printf("CONAFreeDeviceStructure: %x\n", dwResult); //$NON-NLS-1$
-		}
-		return deviceInfo;
-	}
-
-	/**
-	 * 
-	 * @param deviceInfo
-	 * @param connInfo
-	 * @return
-	 * 
-	 * @deprecated not used anymore
-	 */
-	private boolean checkUSBMode(DeviceInfo deviceInfo,
-			DeviceConnectionInfo connInfo) {
-		return true;
-	}
 
 	private String getBTComPort(String address) {
 		// TODO Auto-generated method stub
@@ -1052,5 +1094,90 @@ public class PCCSConnection {
 		//  int = personality code
 		//  string = personality description for code from device
 		Map<Integer, String> supportedPersonalities;
+	}
+	public void testPrerequisites() throws CoreException {
+		try {
+			if (library == null)
+				library = IConnAPILibrary.INSTANCE;
+		} catch (UnsatisfiedLinkError e) {
+			String msg;
+			if (Activator.isSymSEELayout()) {
+				msg = Messages.ConnAPILibrary_PCCS_Not_Found_Error + Activator.getLoadErrorURL();
+			} else {
+				msg = Messages.ConnAPILibrary_PCSuite_Not_Found_Error + Activator.getLoadErrorURL();
+			}
+			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCSConnection.PCCS_NOT_FOUND, msg, e));
+		} catch (NoClassDefFoundError e) {
+			String msg;
+			if (Activator.isSymSEELayout()) {
+				msg = Messages.ConnAPILibrary_PCCS_Not_Found_Error + Activator.getLoadErrorURL();
+			} else {
+				msg = Messages.ConnAPILibrary_PCSuite_Not_Found_Error + Activator.getLoadErrorURL();
+			}
+			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCSConnection.PCCS_NOT_FOUND, msg, e));
+		}
+		testDMAPI();
+		testUPAPI();
+		testMCAPI();
+	}
+	/*
+	 * Tests version of DMAPI and leaves it closed
+	 */
+	private void testDMAPI() throws CoreException {
+		int dwResult = library.DMAPI_Initialize(DMAPI_VERSION, null);
+		library.DMAPI_Terminate(null);
+    	if (dwResult != PCCSErrors.CONA_OK) {
+    		String msg;
+    		if (Activator.isSymSEELayout()) {
+        		msg = String.format("PCCS DMAPI_Initialize API returned error on initialization %x", dwResult); //$NON-NLS-1$
+        		if (dwResult == PCCSErrors.ECONA_UNSUPPORTED_API_VERSION) {
+        			msg = Messages.PCCSConnection_PCCS_Version_Error + Activator.getLoadErrorURL();
+        		}
+    		} else {
+    			msg = Messages.PCCSConnection_PCSuite_Version_Error + Activator.getLoadErrorURL();
+    		}
+    		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCS_WRONG_VERSION, msg, null));
+    	}
+	}
+	/*
+	 * Test version of UPAPI and leaves it closed
+	 */
+	private void testUPAPI() throws CoreException {
+		int dwResult = PCCSErrors.CONA_OK;
+		dwResult = library.UPAPI_Initialize(UPAPIDefinitions.UPAPI_VERSION_10, null);
+		library.UPAPI_Terminate(null);
+    	if (dwResult != PCCSErrors.CONA_OK) {
+    		String msg;
+    		msg = String.format("PCCS UPAPI_Initialize API returned error on initialization %x", dwResult); //$NON-NLS-1$
+    		if (DEBUG) System.out.println(msg);
+    		if (Activator.isSymSEELayout()) {
+        		if (dwResult == PCCSErrors.ECONA_UNSUPPORTED_API_VERSION) {
+        			msg = Messages.PCCSConnection_PCCS_Version_Error + Activator.getLoadErrorURL();
+        		}
+    		} else {
+    			msg = Messages.PCCSConnection_PCSuite_Version_Error + Activator.getLoadErrorURL();
+    		}
+    		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCS_WRONG_VERSION, msg, null));
+    	}
+	}
+	/*
+	 * Test version of MCAPI and leaves it closed
+	 */
+	private void testMCAPI() throws CoreException {
+		int dwResult = PCCSErrors.CONA_OK;
+		dwResult = library.MCAPI_Initialize(MCAPIDefinitions.MCAPI_VERSION_32, null);
+		library.MCAPI_Terminate(null);
+    	if (dwResult != PCCSErrors.CONA_OK) {
+    		String msg;
+    		if (Activator.isSymSEELayout()) {
+        		msg = String.format("PCCS MCAPI_Initialize API returned error on initialization %x", dwResult); //$NON-NLS-1$
+        		if (dwResult == PCCSErrors.ECONA_UNSUPPORTED_API_VERSION) {
+        			msg = Messages.PCCSConnection_PCCS_Version_Error + Activator.getLoadErrorURL();
+        		}
+    		} else {
+    			msg = Messages.PCCSConnection_PCSuite_Version_Error + Activator.getLoadErrorURL();
+    		}
+    		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCS_WRONG_VERSION, msg, null));
+    	}
 	}
 }

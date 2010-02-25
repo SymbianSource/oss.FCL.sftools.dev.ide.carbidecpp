@@ -19,11 +19,10 @@ package com.nokia.carbide.remoteconnections.discovery.pccs.agent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Activator;
@@ -47,6 +46,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	private static final String USB_CONNECTION_TYPE = 
 		"com.nokia.carbide.trk.support.connection.USBConnectionType"; //$NON-NLS-1$
 	private static final String PORT_SETTING = "port"; //$NON-NLS-1$
+	private boolean DEBUG = true;
 
 	public class PCCSPrequisiteStatus implements IPrerequisiteStatus {
 		private boolean isOK = true;
@@ -87,16 +87,17 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 
 	}
 
-	protected Map<String, IConnection2> connections;
 	protected IConnectionsManager manager;
 	protected PCCSConnection pccsConnection;
 	private IPrerequisiteStatus loadStatus = new PCCSPrequisiteStatus();
+	private UpdateConnectionThread updateThread;
+	private volatile int numPendingUpdates;
 
 	/**
 	 * Constructs a PCCSDiscoveryAgent object
 	 */
 	public PCCSDiscoveryAgent() {
-		connections = new HashMap<String, IConnection2>();
+//		connections = new HashMap<String, IConnection2>();
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 		pccsConnection = new PCCSConnection();
 	}
@@ -125,17 +126,49 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 			case DEVICE_REMOVED:
 			case DEVICE_UPDATED_ADDEDCONNECTION:
 			case DEVICE_UPDATED_REMOVEDCONNECTION:
-				updateConnections(pccsConnection.getGoodConnectionList());
+				if (updateThread != null && updateThread.isAlive()) {
+					if (DEBUG) System.out.println("onDeviceEvent: update in progress still");
+					numPendingUpdates++;
+				} else {
+					if (DEBUG) System.out.println("onDeviceEvent: update not started or has finished");
+					numPendingUpdates = 1;
+					updateThread = new UpdateConnectionThread(pccsConnection);
+					updateThread.start();
+				}
+				
+//				updateConnections(pccsConnection.getGoodConnectionList());
 				break;
 			case DEVICE_UPDATED_RENAMED:
 				// TODO what to do when device is renamed?
 				break;
 			}
-		} catch (CoreException e) {
+		} catch (Exception e) {
 			RemoteConnectionsActivator.logError(e);
 		}
 	}
 
+	private class UpdateConnectionThread extends Thread {
+		final PCCSConnection pccs;
+		public UpdateConnectionThread(final PCCSConnection pccs) {
+			super(Activator.getDisplayName() + ":updateThread");
+			this.pccs = pccs;
+		}
+
+		@Override
+		public void run() {
+			try {
+				do {
+					if (DEBUG) System.out.println("updateThread updating");
+					updateConnections2(pccs.getGoodConnectionList());
+					numPendingUpdates--;
+				} while (numPendingUpdates > 0);
+				
+				if (DEBUG) System.out.println("updateThread exiting");
+			} catch (CoreException e) {
+				Activator.logError(e);
+			}
+		}		
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see com.nokia.carbide.remoteconnections.internal.IDeviceDiscoveryAgent#start()
@@ -147,7 +180,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 			saveLoadStatus(ce);
 			throw ce;		// rethrow
 		}
-		updateConnections(pccsConnection.getGoodConnectionList());
+		updateConnections2(pccsConnection.getGoodConnectionList());
 		pccsConnection.addEventListenter(this);
 	}
 
@@ -192,34 +225,30 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	 * @param deviceConn - device/connection information from PCCS
 	 */
 	protected void createConnection(DeviceConnection deviceConn) {
-		if (connections.get(getKey(deviceConn)) == null) {
-			// TODO: currently only handles USB & Serial
-			if (deviceConn.media.equals("usb")) { //$NON-NLS-1$
-				if (deviceConn.mode.equals("serial")) { //$NON-NLS-1$
-					IConnectionType connectionType = 
-						RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(USB_CONNECTION_TYPE);
-					if (connectionType != null) {
-						IConnectionFactory factory = connectionType.getConnectionFactory();
-						Map<String, String> settings = factory.getSettingsFromUI();
-						settings.put(PORT_SETTING, deviceConn.port);
-						IConnection connection = factory.createConnection(settings);
-						if (connection instanceof IConnection2) {
-							IConnection2 connection2 = (IConnection2) connection;
-							connection2.setIdentifier(createUniqueId(deviceConn));
-							connection2.setDisplayName(deviceConn.friendlyName);
-							connection2.setDynamic(true);
-							String key = getKey(deviceConn);
-							connections.put(key, connection2);
-							manager.addConnection(connection2);
-						}
-						else {
-							RemoteConnectionsActivator.log("Could not create dynamic serial connection", null);
-						}
-					}
-					else {
-						RemoteConnectionsActivator.log("USB connection type extension not found", null);
-					}
+		// TODO: currently only handles USB & Serial
+		if (deviceConn.media.equals("usb") && deviceConn.mode.equals("serial")) { //$NON-NLS-1$
+			IConnectionType connectionType = 
+				RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(USB_CONNECTION_TYPE);
+			if (connectionType != null) {
+				IConnectionFactory factory = connectionType.getConnectionFactory();
+				Map<String, String> settings = factory.getSettingsFromUI();
+				settings.put(PORT_SETTING, deviceConn.port);
+				IConnection connection = factory.createConnection(settings);
+				if (connection instanceof IConnection2) {
+					IConnection2 connection2 = (IConnection2) connection;
+					connection2.setIdentifier(createUniqueId(deviceConn));
+					connection2.setDisplayName(deviceConn.friendlyName);
+					connection2.setDynamic(true);
+					String key = getKey(deviceConn);
+					if (DEBUG) System.out.println("createConnection addConnection: " + key);
+					manager.addConnection(connection2);
 				}
+				else {
+					Activator.logMessage("Could not create dynamic serial connection", IStatus.ERROR);
+				}
+			}
+			else {
+				Activator.logMessage("USB connection type extension not found", IStatus.ERROR);
 			}
 		}
 	}
@@ -243,72 +272,77 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 		return key;
 	}
 	/**
-	 * Update existing PCCS connections
-	 * @param connList - the Device/Connection list from PCCS
+	 * update the remote connections
 	 */
-	protected void updateConnections(Collection<DeviceConnection> connList) {
-		disconnectAll();
- 		if (connList != null && !connList.isEmpty()) {
-			if (connections.isEmpty()) {
-				// no existing connections, so create new ones
-				for (DeviceConnection deviceConn : connList) {
-					createConnection(deviceConn);
-				}
-			}
-			else {
-				for (DeviceConnection deviceConn : connList) {
-					String key = getKey(deviceConn);
-					IConnection2 connection = connections.get(key);
-					if (connection == null) {
-						// no existing connection for the device found, must be new connection
-						createConnection(deviceConn);
-					} else {
-						if (!manager.reconnect(connection)) {
-							manager.addConnection(connection);
+	private void updateConnections2(Collection<DeviceConnection> connList) {
+	
+		if (connList == null || connList.isEmpty()) {
+			// disconnect all our connections
+			Collection<IConnection> rConnList = manager.getConnections();
+			for (IConnection rConn : rConnList) {
+				if (rConn instanceof IConnection2) {
+					if (((IConnection2) rConn).isDynamic()) {
+						if (rConn.getIdentifier().contains(getClass().getSimpleName())) {
+							if (DEBUG) System.out.println("new list empty, disconnect: "+ rConn.getIdentifier());
+							manager.disconnect((IConnection2) rConn);
 						}
 					}
 				}
 			}
-		}
-	}
-
-	private void disconnectAll() {
-		if (connections.isEmpty())
-			return;
-		Set<String> keySet = connections.keySet();
-		for (String key : keySet) {
-			IConnection2 connection = connections.get(key);
-			// if manager knows about this connection, disconnect
-			// otherwise it has already been removed from our system
-			if (manager.findConnection(connection.getIdentifier()) != null) {
-				// not removed yet, disconnect only
-				manager.disconnect(connection);
-			} else {
-				// it's been removed from system
-				// remove it from our list also
-				connections.remove(key);
+		} else {
+			// new list not empty
+			// disconnect all remote ones not in our list
+			Collection<IConnection> rConnList = manager.getConnections();
+			for (IConnection rConn : rConnList) {
+				if (rConn instanceof IConnection2) {
+					if (((IConnection2) rConn).isDynamic()) {
+						String uid = rConn.getIdentifier();
+						if (uid.contains(getClass().getSimpleName())) {
+							boolean uidFound = false;
+							for (DeviceConnection ourConn : connList) {
+								if (createUniqueId(ourConn).equals(uid)) {
+									uidFound = true;
+									break;
+								}
+							}
+							if (!uidFound) {
+								if (DEBUG) System.out.println("new list not empty, in manager but not in new list  -- disconnect: "+ uid);
+								manager.disconnect((IConnection2) rConn);
+							}
+						}
+					}
+				}
 			}
-			
+			// create if manager doesn't have this connection
+			// reconnect if manager still does
+			for (DeviceConnection ourConn : connList) {
+				String uid = createUniqueId(ourConn);
+				IConnection2 rConn = (IConnection2) manager.findConnection(uid);
+				if (rConn == null) {
+					if (DEBUG) System.out.println("new list not empty, manager doesn't have this -- create: "+ uid);
+					createConnection(ourConn);
+				} else {
+					if (DEBUG) System.out.println("new list not empty, manager has this -- reconnect: "+ uid);
+					manager.reconnect(rConn);
+				}
+			}
 		}
 	}
-
 	public String getDisplayName() {
 		return Activator.getDisplayName();
 	}
 
 	public IPrerequisiteStatus getPrerequisiteStatus() {
-		// Only try on platforms that run PC Suite
-		if (HostOS.IS_WIN32) {
+		 // Only try on platforms that run PC Suite  
+		if (HostOS.IS_WIN32) { 
 			// Manager calls this first so we can check if we can load.
 			// so let's open the discovery and close it catching any exceptions.
 			try {
-				pccsConnection.open();
-				// successful load - close it as start() will open again
-				pccsConnection.close();
+				pccsConnection.testPrerequisites();
 			} catch (CoreException ce) {
 				saveLoadStatus(ce);
 			}
-		}		
+		}
 		return loadStatus;
 	}
 }

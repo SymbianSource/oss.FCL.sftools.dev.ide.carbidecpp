@@ -25,10 +25,11 @@ import org.eclipse.core.runtime.Status;
 
 import com.nokia.carbide.remoteconnections.discovery.pccs.Activator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Messages;
-//import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA.ByReference;
 import com.sun.jna.Native;
+import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 public class ConnAPILibrary implements IConnAPILibrary {
 
@@ -134,13 +135,27 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	public int CONAMMFreeMediaStructures(int dwCountOfMedia, Pointer pMedia) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 	public int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia,
 			CONAPI_MEDIA.ByReference[] ppMedia) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	public int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia,
+			CONAPI_MEDIA.ByReference ppMedia) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia,
+			PointerByReference ppMedia) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	public int CONAMMSetMedia(APIHANDLE hMCHandle, CONAPI_MEDIA[] pMedia) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -271,5 +286,11 @@ public class ConnAPILibrary implements IConnAPILibrary {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public int CONAMMSetMedia(APIHANDLE hMCHandle, Pointer pMedia) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
