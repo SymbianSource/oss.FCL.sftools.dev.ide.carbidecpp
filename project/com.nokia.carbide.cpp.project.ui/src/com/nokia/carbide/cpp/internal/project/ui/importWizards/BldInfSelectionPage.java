@@ -27,6 +27,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -66,7 +68,7 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 	public void createControl(Composite parent) {
 		setPageComplete(false);
 		setErrorMessage(null);
-		setMessage(null);
+		setMessage(Messages.BldInfSelectionPage_selectABLDINFToImport);
 
 		initializeDialogUnits(parent);
         
@@ -113,10 +115,18 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
     	
 		setButtonLayoutData(browseButton);
 		
-		if (SBSv2Utils.enableSBSv1Support() && SBSv2Utils.enableSBSv2Support()) {
-	        builderComposite = new BuilderSelectionComposite(parent);
-	        builderComposite.createControls();
-		}
+	    builderComposite = new BuilderSelectionComposite(parent);
+	    builderComposite.createControls();
+	    builderComposite.getBuilderCombo().addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				setPageComplete(validatePage());
+			}
+		});
     }
 
 	public void handleEvent(Event event) {
@@ -162,7 +172,7 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 
     private boolean validatePage() {
 		setErrorMessage(null);
-
+		setMessage(Messages.BldInfSelectionPage_selectABLDINFToImport);
 		infFilePath = bldInfCombo.getText().trim();
 		if (infFilePath == null || infFilePath == "") { //$NON-NLS-1$
 			return false;
@@ -194,7 +204,12 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 		}
 		
 		if (builderComposite != null) {
-			return builderComposite.validatePage();
+
+			String msg = builderComposite.validatePage();
+			if (msg != null) {
+				setMessage(msg, ERROR);
+				return false;
+			}
 		}
 		
 		return true;

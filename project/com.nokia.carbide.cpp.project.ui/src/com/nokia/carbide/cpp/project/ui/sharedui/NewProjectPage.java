@@ -16,6 +16,25 @@
 */
 package com.nokia.carbide.cpp.project.ui.sharedui;
 
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.TemplateUtils;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
@@ -24,18 +43,6 @@ import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
-
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
-
-import java.io.File;
-import java.text.MessageFormat;
-import java.util.*;
 
 /**
  * Page that gathers name and location for new project
@@ -87,8 +94,9 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 	@Override
 	protected boolean validatePage() {
 		String projectName = getProjectName();
+		
 		if (projectName.length() == 0) {
-			// don't report error for emoty required fields, only disable next (per Eclipse guidlines)
+			// don't report error for empty required fields, only disable next (per Eclipse guidlines)
 			//setErrorMessage(Messages.getString("NewProjectPage.InvalidProjectNameError")); //$NON-NLS-1$
 			return false;
 		}
@@ -147,7 +155,12 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
         }
 		
         if (builderComposite != null) {
-            return builderComposite.validatePage();
+        	
+        	String msg = builderComposite.validatePage();
+        	if (msg != null){
+        		setMessage(msg, ERROR);
+        		return false;
+        	}
         }
         
         return true;
@@ -224,13 +237,20 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 
-		// if there is a choice to be made...
-		if (SBSv2Utils.enableSBSv1Support() && SBSv2Utils.enableSBSv2Support()) {
-			Control control = getControl();
-			if (control instanceof Composite) {
-				builderComposite = new BuilderSelectionComposite((Composite)control);
-		        builderComposite.createControls();
-			}
+		Control control = getControl();
+		if (control instanceof Composite) {
+			builderComposite = new BuilderSelectionComposite((Composite)control);
+		    builderComposite.createControls();
+		    builderComposite.getBuilderCombo().addSelectionListener(new SelectionListener() {
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+
+				public void widgetSelected(SelectionEvent e) {
+					setPageComplete(validatePage());
+				}
+			});
 		}
 
 		getControl().setData(".uid", "NewProjectPage"); //$NON-NLS-1$ //$NON-NLS-2$
