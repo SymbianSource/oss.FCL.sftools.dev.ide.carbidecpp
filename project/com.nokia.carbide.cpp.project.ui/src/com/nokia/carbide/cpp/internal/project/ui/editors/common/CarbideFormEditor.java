@@ -410,7 +410,10 @@ public abstract class CarbideFormEditor extends FormEditor
 	protected void commitView() {
 		try {
 			committingView = true;
-			getView().commit();
+			IView view = getView();
+			if (view != null) {
+				view.commit();
+			}
 		} finally {
 			committingView = false;
 		}	
@@ -583,12 +586,15 @@ public abstract class CarbideFormEditor extends FormEditor
 			} catch (CoreException x) {
 				ProjectUIPlugin.log(x);
 			}
-			IMessage[] messages = getView().getMessages();
-			IPath modelPath = file.getLocation();
-			for (IMessage message : messages) {
-				// TODO: at a later point we should add markers to the #included files too, once we determine the proper way to clear them. 
-				if (message.getLocation() != null && message.getLocation().equals(modelPath))
-					message.createMarker(file, CarbideFormEditorMarker.FORMEDITOR_PROBLEM_MARKER);
+			IView view = getView();
+			if (view != null) {
+				IMessage[] messages = view.getMessages();
+				IPath modelPath = file.getLocation();
+				for (IMessage message : messages) {
+					// TODO: at a later point we should add markers to the #included files too, once we determine the proper way to clear them. 
+					if (message.getLocation() != null && message.getLocation().equals(modelPath))
+						message.createMarker(file, CarbideFormEditorMarker.FORMEDITOR_PROBLEM_MARKER);
+				}
 			}
 		}
 	}
