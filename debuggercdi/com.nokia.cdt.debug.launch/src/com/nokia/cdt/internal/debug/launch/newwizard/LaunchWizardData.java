@@ -334,6 +334,9 @@ public class LaunchWizardData extends LaunchOptions {
 		else if (launchTypeId.equals(SettingsData.ATTACH_LAUNCH_TYPE_ID)) {
     		SettingsData.setDefaults(config, SettingsData.LaunchConfig_AppTRK, project, mmpPath, exePath);
 		}
+		if (exeSelection.equals(EExeSelection.USE_REMOTE_EXECUTABLE))
+			SettingsData.setProcessToLaunch(config, exeSelectionPath);
+		
 		addBuildOptions(config);
 		// always set the current connection id
 		config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, Registry.CURRENT_CONNECTION_ID);
@@ -353,9 +356,20 @@ public class LaunchWizardData extends LaunchOptions {
 	}
 
 	private IPath getExePath() {
+		// if attach, doesn't matter so return first exe
 		if (exeSelection.equals(EExeSelection.ATTACH_TO_PROCESS))
-			return exes.get(0);
-		return exeSelectionPath;
+			return exes.isEmpty() ? Path.EMPTY : exes.get(0);
+
+		// otherwise, see if we can use the selected path - process to launch string
+		// by checking if the file name matches any of the ones in our list of exes
+		String filename = exeSelectionPath.lastSegment();
+		for (IPath exePath : exes) {
+			if (filename.equalsIgnoreCase(exePath.lastSegment())) {
+				return exePath;
+			}
+		}
+		// none could be found matching the selected path, so use the first in the list
+		return exes.isEmpty() ? Path.EMPTY : exes.get(0);
 	}
 	
 	private IConnectedService getConnectedService() {
