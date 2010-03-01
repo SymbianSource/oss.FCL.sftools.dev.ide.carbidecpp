@@ -156,10 +156,14 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 		
         if (builderComposite != null) {
         	
-        	String msg = builderComposite.validatePage();
-        	if (msg != null){
-        		setMessage(msg, ERROR);
-        		return false;
+        	IStatus status = builderComposite.validatePage();
+        	if (status != null){
+        		// Get the level from the status.
+        		int level = getMessageLevelFromIStatus(status);
+        		setMessage(status.getMessage(), level);
+        		if (level == ERROR){
+        			return false;
+        		}
         	}
         }
         
@@ -276,5 +280,16 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
             	builderComposite.restoreDialogSettings(settings);
             }
     	}
+    }
+    
+    private int getMessageLevelFromIStatus(IStatus status){
+    	if (status.getSeverity() == Status.ERROR)
+    		return ERROR;
+    	else if (status.getSeverity() == Status.WARNING)
+    		return WARNING;
+    	else if (status.getSeverity() == Status.INFO)
+    		return INFORMATION;
+    	
+    	return NONE;
     }
 }

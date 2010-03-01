@@ -23,7 +23,9 @@ import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -204,12 +206,17 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 		}
 		
 		if (builderComposite != null) {
-
-			String msg = builderComposite.validatePage();
-			if (msg != null) {
-				setMessage(msg, ERROR);
-				return false;
-			}
+			
+			IStatus status = builderComposite.validatePage();
+        	if (status != null){
+        		// Get the level from the status.
+        		int level = getMessageLevelFromIStatus(status);
+        		setMessage(status.getMessage(), level);
+        		if (level == ERROR){
+        			return false;
+        		}
+        	}
+        
 		}
 		
 		return true;
@@ -277,4 +284,15 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 	public void performHelp() {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl().getShell(), ProjectUIHelpIds.BLDINF_SELECTION_PAGE);
 	}
+	
+    private int getMessageLevelFromIStatus(IStatus status){
+    	if (status.getSeverity() == Status.ERROR)
+    		return ERROR;
+    	else if (status.getSeverity() == Status.WARNING)
+    		return WARNING;
+    	else if (status.getSeverity() == Status.INFO)
+    		return INFORMATION;
+    	
+    	return NONE;
+    }
 }

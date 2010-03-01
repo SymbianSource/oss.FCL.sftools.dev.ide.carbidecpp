@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Label;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage;
 
 public class BuilderSelectionComposite extends Composite {
@@ -82,21 +84,30 @@ public class BuilderSelectionComposite extends Composite {
      * listen for changes on the builder combo via {@link #getBuilderCombo()}
      * @return null for no error, otherwise a string for the error message
      */
-    public String validatePage() {
-		useSBSv2Builder = false;
+    public IStatus validatePage() {
+		useSBSv2Builder = true;
+		IStatus status = null;
 		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) {
 			
 			// if SBSv2 is selected, make sure SBS_HOME is defined
 			if (SBSv2Utils.getSBSBinDirectory() == null){
-				return "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.";
+				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.");
+				useSBSv2Builder = false;
+			}
+			
+			// check the raptor version
+			if (SDKCorePlugin.getSDKManager().getSBSv2Version(false).getMajor() == 0){
+				// Try to scan again....
+				if (SDKCorePlugin.getSDKManager().getSBSv2Version(true).getMajor() == 0){
+					status = new Status(Status.WARNING, ProjectUIPlugin.PLUGIN_ID, "SBS version cannot be determined, some SBS functionality may not work. Please check your SBS installation.");
+				}
 			}
 
-			useSBSv2Builder = true;
 		}
 
 		getShell().setData(BuildTargetsPage.SBSV2BUILDER, new Boolean(useSBSv2Builder));
 		
-		return null;
+		return status;
     }
     
     public void saveDialogSettings(IDialogSettings settings) {
