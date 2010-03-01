@@ -37,11 +37,6 @@ public class Messages extends NLS {
 	public static String PCCSConnection_PCCS_Version_Error;
 	public static String PCCSConnection_PCSuite_Version_Error;
 	public static String PCCSConnection_Personality_Switch_Error;
-	public static String PCCSConnection_Switch_Message_Title;
-	public static String PCCSConnection_Switch_Message1;
-	public static String PCCSConnection_Switch_Message3;
-	public static String PCCSConnection_Switch_Message4;
-	public static String PCCSConnection_Swtich_Message2;
 	public static String PCCSDiscoveryAgent_PCCS_Not_Found_Error;
 	public static String PCCSDiscoveryAgent_PCCS_Version_Error;
 	public static String PCCSDiscoveryAgent_PCSuite_Not_Found_Error;

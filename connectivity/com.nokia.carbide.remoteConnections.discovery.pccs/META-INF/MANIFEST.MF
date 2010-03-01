@@ -7,8 +7,6 @@ Bundle-Activator: com.nokia.carbide.remoteconnections.discovery.pccs.Activator
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.cdt.core,
  org.eclipse.core.runtime,
- org.eclipse.jface,
- org.eclipse.ui,
  com.nokia.carbide.remoteConnections
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

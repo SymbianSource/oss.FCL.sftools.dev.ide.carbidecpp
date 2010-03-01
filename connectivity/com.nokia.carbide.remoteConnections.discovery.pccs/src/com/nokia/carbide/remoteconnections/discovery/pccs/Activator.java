@@ -17,9 +17,7 @@
 package com.nokia.carbide.remoteconnections.discovery.pccs;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import com.nokia.cpp.internal.api.utils.core.Logging;
@@ -27,7 +25,7 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.remoteConnections.discovery.pccs"; //$NON-NLS-1$
@@ -95,9 +93,5 @@ public class Activator extends AbstractUIPlugin {
 	
 	public static void logMessage(String message, int type) {
 		Logging.log(plugin, Logging.newStatus(plugin, type, message));
-	}
-
-	public static void setHelp(Control control, String id) {
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(control, PLUGIN_ID + id);		 //$NON-NLS-1$
 	}
 }

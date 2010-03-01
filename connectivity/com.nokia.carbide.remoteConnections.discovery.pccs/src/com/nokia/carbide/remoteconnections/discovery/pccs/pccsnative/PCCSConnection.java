@@ -29,17 +29,11 @@ import org.eclipse.cdt.utils.WindowsRegistry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.swt.widgets.Display;
-import org.osgi.service.prefs.BackingStoreException;
 
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Activator;
 import com.nokia.carbide.remoteconnections.discovery.pccs.Messages;
 import com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary.IConnAPIDeviceCallback;
-import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.ptr.IntByReference;
@@ -49,11 +43,7 @@ public class PCCSConnection {
 
 	private static final String NOT_KNOWN = "not known"; //$NON-NLS-1$ // used for all string structure elements that come back from PCCS as null
 	private boolean DEBUG = false;
-	private String DONT_ASK_AGAIN_KEY = "DontAskAgain"; //$NON-NLS-1$
 	
-	/**
-	 *
-	 */
 	public class DeviceNotificationCallback implements IConnAPIDeviceCallback {
 
 		/* (non-Javadoc)
@@ -114,23 +104,9 @@ public class PCCSConnection {
 	private APIHANDLE dmHandle = APIHANDLE.INVALID_HANDLE_VALUE;
 	private APIHANDLE mcHandle = APIHANDLE.INVALID_HANDLE_VALUE;
 	private APIHANDLE upHandle = APIHANDLE.INVALID_HANDLE_VALUE;
-	private boolean dontAskAgain;
-	private boolean doSwitch;
 	
 	private Collection<String> noSwitchConnections = new ArrayList<String>();
 	
-	private void storeDontAskAgain() {
-		Activator.getDefault().getPreferenceStore().setValue(DONT_ASK_AGAIN_KEY, true);
-		try {
-			new InstanceScope().getNode(Activator.PLUGIN_ID).flush();
-		} catch (BackingStoreException e) {
-			Activator.logError(e);
-		}
-	}
-	private boolean dontAskAgain() {
-		return Activator.getDefault().getPreferenceStore().getBoolean(DONT_ASK_AGAIN_KEY);
-	}
-
 	public PCCSConnection() {
 	}
 
@@ -352,14 +328,14 @@ public class PCCSConnection {
 	
 	private void terminateDMAPI() {
     	// Terminate Device management API
-    	int dwResult = library.DMAPI_Terminate(null);
+    	/*int dwResult =*/ library.DMAPI_Terminate(null);
 		if (DEBUG) System.out.println("terminateDMAPI"); //$NON-NLS-1$
 	}
 	private void stopDMNotifications(APIHANDLE handle) {
-		int dwResult = PCCSErrors.CONA_OK;
+//		int dwResult = PCCSErrors.CONA_OK;
 		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(handle)) {
 			// unregister callback
-			dwResult = library.CONARegisterNotifyCallback(handle, PCCSTypeDefinitions.API_UNREGISTER, pfnCallback);
+			/*dwResult =*/ library.CONARegisterNotifyCallback(handle, PCCSTypeDefinitions.API_UNREGISTER, pfnCallback);
 		}		
 		if (DEBUG) System.out.println("stopDMNotifications"); //$NON-NLS-1$
 	}
@@ -379,13 +355,13 @@ public class PCCSConnection {
 	}
 
 	private void closeMCAPI() {
-		int dwResult = PCCSErrors.CONA_OK;
+//		int dwResult = PCCSErrors.CONA_OK;
 		if (!APIHANDLE.INVALID_HANDLE_VALUE.equals(mcHandle)) {
 			// close DM connection
-			dwResult = library.CONACloseDM(mcHandle);
+			/*dwResult =*/ library.CONACloseDM(mcHandle);
 			mcHandle = APIHANDLE.INVALID_HANDLE_VALUE;
         	// Terminate Device management API
-    		dwResult = library.MCAPI_Terminate(null);
+    		/*dwResult =*/ library.MCAPI_Terminate(null);
 		}
 		if (DEBUG) System.out.println("closeMCAPI----\n"); //$NON-NLS-1$
 	}
@@ -768,15 +744,6 @@ public class PCCSConnection {
 		}
 		String goodDesc = personality.supportedPersonalities.get(new Integer(goodCode));
 
-		if (dontAskAgain()) {
-			if (DEBUG) System.out.println("isGoodUSBPersonality: dont ask = true, return false"); //$NON-NLS-1$
-			String fmt = Messages.PCCSConnection_Bad_Personality_DontSwitch_Warning1 +
-			Messages.PCCSConnection_Bad_Personality_DontSwitch_Warning2;
-			String message = MessageFormat.format(fmt, device.friendlyName, personality.currentPersonalityDescription, goodDesc);
-			Activator.logMessage(message, IStatus.WARNING);
-			return false;
-		}
-
 		if (!noSwitchConnectionsContains(personality.deviceID))
 			// ask to switch
 			askToSwitchPersonality(device, personality, goodCode, goodDesc);
@@ -812,65 +779,37 @@ public class PCCSConnection {
 			if (DEBUG) System.out.println("forgetNoSwitchConnections empty");
 			return;
 		}
-		for (String id : new ArrayList<String>(noSwitchConnections)) {
-			if (id.equals(deviceID)) {
-				if (DEBUG) System.out.println("forgetNoSwitchConnections: " + deviceID);
-				noSwitchConnections.remove(id);
-			}
-		}
+		if (DEBUG) System.out.println("forgetNoSwitchConnections: " + deviceID);
+		noSwitchConnections.remove(deviceID);
 	}
+	
 	private void askToSwitchPersonality(final DeviceInfo device,
 			final DeviceUSBPersonalityInfo personality, final int goodCode, final String goodDesc) {
 		
-		doSwitch = false;
-		Display.getDefault().syncExec(
-			new Runnable() {
+		// remember this device so we don't ask again unless it changes personality or is reconnected
+		rememberNoSwitchConnections(personality.deviceID);
 
-				public void run() {
-					// ask the user and switch
-					String fmt = Messages.PCCSConnection_Switch_Message1 +
-					Messages.PCCSConnection_Swtich_Message2 +
-					Messages.PCCSConnection_Switch_Message3 +
-					Messages.PCCSConnection_Switch_Message4;
-					String message = MessageFormat.format(fmt,
-							device.friendlyName,
-							personality.currentPersonalityDescription,
-							goodDesc);
-
-					MessageDialogWithToggle dlg = MessageDialogWithToggle.openYesNoQuestion(
-							WorkbenchUtils.getSafeShell(), 
-							Messages.PCCSConnection_Switch_Message_Title, 
-							message, 
-							Messages.PCCSConnection_DontAsk_CheckText, 
-							false, 
-							null, 
-							null);
-					dontAskAgain = dlg.getToggleState();
-					doSwitch = (dlg.getReturnCode() == IDialogConstants.YES_ID);
-					
+		String message = MessageFormat.format(
+				"''{0}'' is currently in {1} mode\nand must be in {2} mode to be usable in Carbide.",
+				device.friendlyName,
+				personality.currentPersonalityDescription,
+				goodDesc);
+		IStatus status = new Status(IStatus.WARNING, Activator.PLUGIN_ID, message);
+		
+		String prompt = MessageFormat.format("Switch to {0} mode now.", goodDesc);
+		
+		RemoteConnectionsActivator.getStatusDisplay().displayStatusWithAction(status, prompt, new Runnable() {
+			public void run() {
+				WString pstrDeviceId = new WString(personality.deviceID);
+				int dwResult = library.UPAPI_SetPersonality(upHandle, pstrDeviceId, goodCode);
+				if (dwResult != PCCSErrors.CONA_OK) {
+					forgetNoSwitchConnections(personality.deviceID);
+					if (DEBUG)
+						System.out.printf("UPAPI_SetPersonality failed: %x\n", dwResult); //$NON-NLS-1$
 				}
 			}
-		);
-		if (doSwitch) {
-			WString pstrDeviceId = new WString(personality.deviceID);
-			int dwResult = library.UPAPI_SetPersonality(upHandle, pstrDeviceId, goodCode);
-			if (dwResult != PCCSErrors.CONA_OK) {
-				if (DEBUG)
-					System.out.printf("UPAPI_SetPersonality failed: %x\n", dwResult); //$NON-NLS-1$
-			}
-		} else {
-			// remember this device so we don't ask again unless it changes personality or is reconnected
-			rememberNoSwitchConnections(personality.deviceID);
-			// also log an info message to error log regarding this
-			String fmt = Messages.PCCSConnection_Switch_Message1 + Messages.PCCSConnection_Swtich_Message2;
-			String message = MessageFormat.format(fmt, 	device.friendlyName,
-							personality.currentPersonalityDescription,
-							goodDesc);
-			Activator.logMessage(message, IStatus.INFO);
-		}
-		// store don't ask again only if selected
-		if (dontAskAgain)
-			storeDontAskAgain();
+		});
+
 	}
 
 	/**
@@ -1017,10 +956,10 @@ public class PCCSConnection {
 	}
 
 
-	private String getBTComPort(String address) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	private String getBTComPort(String address) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	public String getUSBComPort(String address) {
 		if (address != null && address.length() > 0) {

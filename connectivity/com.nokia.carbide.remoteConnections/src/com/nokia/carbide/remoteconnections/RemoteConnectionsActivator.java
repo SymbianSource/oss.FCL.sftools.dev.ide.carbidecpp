@@ -30,6 +30,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -38,17 +40,51 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
+import com.nokia.carbide.remoteconnections.internal.api.IStatusDisplay;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent.IPrerequisiteStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.DeviceDiscoveryPrequisiteErrorDialog;
+import com.nokia.carbide.remoteconnections.internal.ui.StatusDisplay;
 import com.nokia.cpp.internal.api.utils.core.Logging;
-import com.nokia.cpp.internal.api.utils.ui.RunRunnableWhenWorkbenchVisibleJob;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * The activator class controls the plug-in life cycle
  */
 public class RemoteConnectionsActivator extends AbstractUIPlugin {
+
+	private final class WhenWorkbenchIsVisibleThread extends Thread {
+		private Shell shell;
+		private boolean visible;
+		private final Runnable runnable;
+		
+		public WhenWorkbenchIsVisibleThread(Runnable runnable) {
+			this.runnable = runnable;
+			shell = WorkbenchUtils.getActiveShell();
+		}
+		
+		public void run() {
+			while (true) {
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						if (shell != null && shell.isVisible()) {
+							visible = true;
+						}
+					}
+				});
+				if (visible)
+					break;
+				
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					break;
+				}
+			}
+			if (visible)
+				runnable.run();
+		}
+	}
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.remoteConnections"; //$NON-NLS-1$
@@ -59,6 +95,7 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	private static RemoteConnectionsActivator plugin;
 
 	private Collection<IDeviceDiscoveryAgent> discoveryAgents;
+
 	private static final String IGNORE_AGENT_LOAD_ERRORS_KEY = "ignoreAgentLoadErrors"; //$NON-NLS-1$
 
 	/**
@@ -74,14 +111,14 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		instance.loadExtensions();
 		instance.loadConnections();
 
-		RunRunnableWhenWorkbenchVisibleJob.start(new Runnable() {
+		new WhenWorkbenchIsVisibleThread(new Runnable() {
 			public void run() {
 				if (!ignoreAgentLoadErrors())
 					checkPrerequisites();
-
+				
 				loadAndStartDeviceDiscoveryAgents();
 			}
-		});
+		}).start();
 	}
 
 	private boolean ignoreAgentLoadErrors() {
@@ -241,5 +278,9 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 					RemoteConnectionsActivator.log(loadError, e);
 			}
 		}
+	}
+	
+	public static IStatusDisplay getStatusDisplay() {
+		return new StatusDisplay();
 	}
 }
