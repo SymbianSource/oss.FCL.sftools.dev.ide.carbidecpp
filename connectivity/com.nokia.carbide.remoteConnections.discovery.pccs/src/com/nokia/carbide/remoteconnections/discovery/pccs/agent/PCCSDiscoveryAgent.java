@@ -118,6 +118,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 	 * @see com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.PCCSConnection.DeviceEventListener#onDeviceEvent(com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.PCCSConnection.DeviceEventListener.DeviceEvent, java.lang.String)
 	 */
 	public void onDeviceEvent(DeviceEvent eventType, String serialNumber) {
+		if (DEBUG) System.out.println("onDeviceEvent");
 		try {
 			switch (eventType) {
 			case DEVICE_LIST_UPDATED:
@@ -138,7 +139,10 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 //				updateConnections(pccsConnection.getGoodConnectionList());
 				break;
 			case DEVICE_UPDATED_RENAMED:
-				// TODO what to do when device is renamed?
+				if (DEBUG) System.out.println("onDeviceEvent: updated renamed");
+				break;
+			default:
+				if (DEBUG) System.out.println("onDeviceEvent: default");
 				break;
 			}
 		} catch (Exception e) {
@@ -157,7 +161,7 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 		public void run() {
 			try {
 				do {
-					if (DEBUG) System.out.println("updateThread updating");
+					if (DEBUG) System.out.println("updateThread updating: " + numPendingUpdates);
 					updateConnections2(pccs.getGoodConnectionList());
 					numPendingUpdates--;
 				} while (numPendingUpdates > 0);
