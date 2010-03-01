@@ -216,9 +216,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			sisLabel.setData(UID, "DebugRunProcessDialog.sisLabel"); //$NON-NLS-1$
 
 			sisFile = new Combo(composite, SWT.READ_ONLY);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).span(1, 1).grab(true, false).applyTo(sisLabel);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).span(1, 1).grab(true, false).applyTo(sisFile);
 			sisFile.setToolTipText(Messages.getString("DebugRunProcessDialog.SISQueryTip"));  //$NON-NLS-1$
-			sisFile.add("None"); //$NON-NLS-1$
 			sisFile.setData(UID, "DebugRunProcessDialog.sisFile"); //$NON-NLS-1$
 			
 			sisFile.addSelectionListener(new SelectionAdapter() {
@@ -228,18 +227,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 				}
 			});
 			
-			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
-			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
-				IPath sisPath = info.getSigningType() == ISISBuilderInfo.DONT_SIGN ? info.getUnsignedSISFullPath() : info.getSignedSISFullPath();
-				sisFile.add(sisPath.toOSString());
-			}
-			
-			// select the first sis file if any, otherwise select none
-			if (sisFile.getItemCount() > 1) {
-				sisFile.select(1);
-			} else {
-				sisFile.select(0);
-			}
+			updateSisFileCombo(cpi);
 
 			// listen for events so we can detect if they click on the link below and add new sis info.
 			CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(this, CProjectDescriptionEvent.APPLIED);
@@ -278,6 +266,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 					validate();
 				}
 			});
+			String sisPath = data.getSisPath();
+			if (sisPath != null)
+				sisEdit.setText(sisPath);
 			sisEdit.setData(UID, "DebugRunProcessDialog.sisEdit"); //$NON-NLS-1$
 
 			sisBrowse = new Button(composite, SWT.NONE);
@@ -304,6 +295,25 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			sisBrowse.setData(UID, "DebugRunProcessDialog.sisBrowse"); //$NON-NLS-1$
 		}
     }
+
+
+	private void updateSisFileCombo(ICarbideProjectInfo cpi) {
+		sisFile.add(Messages.getString("DebugRunProcessDialog.NoneItem")); //$NON-NLS-1$
+
+		ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
+		for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
+			IPath sisPath = info.getSigningType() == ISISBuilderInfo.DONT_SIGN ? info.getUnsignedSISFullPath() : info.getSignedSISFullPath();
+			sisFile.add(sisPath.toOSString());
+		}
+		
+		// select the first sis file if any, otherwise select none
+		if (sisFile.getItemCount() > 1) {
+			sisFile.select(1);
+		} else {
+			sisFile.select(0);
+		}
+		updateSisFile();
+	}
     
     
 	/**
@@ -345,20 +355,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			if (cpi != null) {
 				sisFile.removeAll();
 
-				sisFile.add(Messages.getString("DebugRunProcessDialog.NoneItem")); //$NON-NLS-1$
-				
-				ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
-				for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
-					IPath sisPath = info.getSigningType() == ISISBuilderInfo.DONT_SIGN ? info.getUnsignedSISFullPath() : info.getSignedSISFullPath();
-					sisFile.add(sisPath.toOSString());
-				}
-				
-				// select the first sis file if any, otherwise select none
-				if (sisFile.getItemCount() > 1) {
-					sisFile.select(1);
-				} else {
-					sisFile.select(0);
-				}
+				updateSisFileCombo(cpi);
 			}
 		}
 	}
