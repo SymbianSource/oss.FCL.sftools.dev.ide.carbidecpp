@@ -20,8 +20,7 @@
 				label="%uid3.label"
 				min="0xe0000000"
 				max="0xefffffff"
-				mandatory="true"
-				persist="true">
+				mandatory="true">
 				<description>%uid3.desc</description>
 		</uidField>
 	</wizardPage>
