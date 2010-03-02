@@ -66,17 +66,6 @@ public class BuilderSelectionComposite extends Composite {
 		builderCombo.add(Messages.getString("NewProjectPage.sbsv2")); //$NON-NLS-1$
 		builderCombo.setData(".uid", "builderCombo"); //$NON-NLS-1$ //$NON-NLS-2$
 		builderCombo.select(0);
-//		builderCombo.addSelectionListener(new SelectionListener() {
-//
-//			public void widgetDefaultSelected(SelectionEvent e) {
-//				widgetSelected(e);
-//			}
-//
-//			public void widgetSelected(SelectionEvent e) {
-//				validatePage();
-//			}
-//			
-//		});
     }
 
     /**
@@ -92,7 +81,6 @@ public class BuilderSelectionComposite extends Composite {
 			// if SBSv2 is selected, make sure SBS_HOME is defined
 			if (SBSv2Utils.getSBSBinDirectory() == null){
 				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.");
-				useSBSv2Builder = false;
 			}
 			
 			// check the raptor version
@@ -103,6 +91,8 @@ public class BuilderSelectionComposite extends Composite {
 				}
 			}
 
+		} else {
+			useSBSv2Builder = false;
 		}
 
 		getShell().setData(BuildTargetsPage.SBSV2BUILDER, new Boolean(useSBSv2Builder));
