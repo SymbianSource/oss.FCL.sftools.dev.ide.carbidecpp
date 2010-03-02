@@ -16,25 +16,31 @@
 */
 package com.nokia.carbide.cpp.project.ui.sharedui;
 
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+
 import com.nokia.carbide.cpp.internal.api.sdk.ui.TemplateUtils;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
 import com.nokia.carbide.cpp.internal.project.ui.sharedui.BuilderSelectionComposite;
 import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
-
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
-
-import java.io.File;
-import java.text.MessageFormat;
-import java.util.*;
 
 /**
  * Page that gathers name and location for new project
@@ -141,7 +147,15 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
         }
 		
         if (builderComposite != null) {
-            return builderComposite.validatePage();
+        	IStatus status = builderComposite.validate(); 
+        	if (status != null){ 
+        		// Get the level from the status. 
+        		int level = getMessageLevelFromIStatus(status); 
+        		setMessage(status.getMessage(), level); 
+        		if (level == ERROR){ 
+        			return false; 
+        		}
+        	}
         }
         
         return true;
@@ -218,13 +232,21 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 
-		if (SBSv2Utils.enableSBSv2Support()) {
-			Control control = getControl();
-			if (control instanceof Composite) {
-				builderComposite = new BuilderSelectionComposite((Composite)control);
-		        builderComposite.createControls();
-			}
+		
+		Control control = getControl();
+		if (control instanceof Composite) {
+			builderComposite = new BuilderSelectionComposite((Composite)control);
+		    builderComposite.createControls();
+		    builderComposite.getBuilderCombo().addSelectionListener(new SelectionListener() { 
+		    	public void widgetDefaultSelected(SelectionEvent e) { 
+		    		widgetSelected(e); 
+		    	}
+		    	public void widgetSelected(SelectionEvent e) { 
+		    		setPageComplete(validatePage()); 
+		    	}
+		    }); 
 		}
+		
 
 		getControl().setData(".uid", "NewProjectPage"); //$NON-NLS-1$ //$NON-NLS-2$
 		getControl().setData("WizardPage", this); //$NON-NLS-1$
@@ -249,5 +271,16 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
             	builderComposite.restoreDialogSettings(settings);
             }
     	}
+    }
+    
+    private int getMessageLevelFromIStatus(IStatus status){ 
+    	if (status.getSeverity() == Status.ERROR) 
+    		return ERROR;
+    	else if (status.getSeverity() == Status.WARNING) 
+    		return WARNING;
+    	else if (status.getSeverity() == Status.INFO) 
+    		return INFORMATION;
+    	
+    	return NONE;
     }
 }
