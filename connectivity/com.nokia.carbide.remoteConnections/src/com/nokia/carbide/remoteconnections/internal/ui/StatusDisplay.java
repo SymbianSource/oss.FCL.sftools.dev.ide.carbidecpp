@@ -35,6 +35,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.remoteconnections.internal.api.IStatusDisplay;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -75,18 +77,9 @@ public class StatusDisplay implements IStatusDisplay {
 		
 		@Override
 		protected String getPopupShellTitle() {
-			switch (status.getSeverity()) {
-			case IStatus.INFO:
-				return "Information";
-			case IStatus.WARNING:
-				return "Warning";
-			case IStatus.ERROR:
-				return "Error";
-			};
-			Check.checkState(false);
-			return null;
+			return getTitleString(status);
 		}
-	 
+
 		@Override
 		protected Image getPopupShellImage(int maximumHeight) {
 			switch (status.getSeverity()) {
@@ -102,6 +95,8 @@ public class StatusDisplay implements IStatusDisplay {
 		}
 	}
 
+	private static final int MODAL_MASK = SWT.APPLICATION_MODAL | SWT.PRIMARY_MODAL | SWT.SYSTEM_MODAL;
+	
 	private boolean clicked;
 	private boolean closed;
 
@@ -134,14 +129,69 @@ public class StatusDisplay implements IStatusDisplay {
 			action.run();
 	}
 
-	protected void doDisplayStatus(Display display, String prompt, IStatus status) {
-		NotificationPopup popup = new NotificationPopup(display, status, prompt);
-		popup.open();
-		popup.getShell().addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				StatusDisplay.this.closed = true;
+	private Shell getModalShell(Display display) {
+		Shell[] shells = display.getShells();
+		for (int i = shells.length - 1; i >= 0; i--) {
+			Shell shell = shells[i];
+			if ((shell.getStyle() & MODAL_MASK) != 0) {
+				System.out.println(shell.getText() + ":" + shell.getBounds());
+				return shell;
 			}
-		});
+		}
+		return null;
 	}
 
+	protected void doDisplayStatus(Display display, String prompt, IStatus status) {
+		Shell modalShell = getModalShell(display);
+		if (modalShell == null) {
+			NotificationPopup popup = new NotificationPopup(display, status, prompt);
+			popup.open();
+			popup.getShell().addDisposeListener(new DisposeListener() {
+				public void widgetDisposed(DisposeEvent e) {
+					StatusDisplay.this.closed = true;
+				}
+			});
+		}
+		else {
+			int style = SWT.YES | SWT.NO;
+			switch (status.getSeverity()) {
+			case IStatus.INFO:
+				style |= SWT.ICON_INFORMATION;
+				break;
+			case IStatus.WARNING:
+				style |= SWT.ICON_WARNING;
+				break;
+			case IStatus.ERROR:
+				style |= SWT.ICON_ERROR;
+				break;
+			default:
+				Check.checkState(false);
+			};
+			
+			MessageBox messageBox = new MessageBox(modalShell, style);
+			messageBox.setText(getTitleString(status));
+			StringBuilder sb = new StringBuilder();
+			sb.append(status.getMessage());
+			sb.append("\n");
+			sb.append(prompt);
+			messageBox.setMessage(sb.toString());
+			int open = messageBox.open();
+			closed = true;
+			clicked = open == SWT.YES;
+		}
+	}
+
+	private String getTitleString(IStatus status) {
+		switch (status.getSeverity()) {
+		case IStatus.INFO:
+			return "Information";
+		case IStatus.WARNING:
+			return "Warning";
+		case IStatus.ERROR:
+			return "Error";
+		};
+		Check.checkState(false);
+		return null;
+	}
+ 
 }
