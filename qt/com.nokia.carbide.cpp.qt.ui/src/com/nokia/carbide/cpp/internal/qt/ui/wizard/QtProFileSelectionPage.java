@@ -251,7 +251,7 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
 
 		if (builderComposite != null) {
 
-			IStatus status = builderComposite.validatePage();
+			IStatus status = builderComposite.validate();
         	if (status != null){
         		// Get the level from the status.
         		int level = getMessageLevelFromIStatus(status);

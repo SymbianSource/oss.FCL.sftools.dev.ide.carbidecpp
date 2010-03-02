@@ -83,7 +83,7 @@ public class BuilderSelectionComposite extends Composite {
      * listen for changes on the builder combo via {@link #getBuilderCombo()}
      * @return null for no error, otherwise a string for the error message
      */
-    public IStatus validatePage() {
+    public IStatus validate() {
 		useSBSv2Builder = true;
 		IStatus status = null;
 		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) {
