@@ -61,6 +61,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 
@@ -68,7 +69,7 @@ import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
  *	This dialog allows in-depth configuration of the connection settings.
  */
 @SuppressWarnings("restriction")
-public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implements IConnectionListener {
+public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implements IConnectionListener, IStatusChangedListener {
 	private IConnectionsManager manager;
 	private IConnectionTypeProvider typeProvider;
 	private FontMetrics fm;
@@ -76,6 +77,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	private Button editButton;
 	private Label descriptionLabel;
 	private Button newButton;
+	private IConnectedService currentServiceListener;
 
 	protected ConnectToDeviceDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
@@ -191,13 +193,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		if (status.isOK()) {
 			IConnection connection = data.getConnection();
 			if (connection != null) {
-				IConnectedService connectedService = null;
-				Collection<IConnectedService> services = manager.getConnectedServices(connection);
-				for (IConnectedService service : services) {
-					if (service != null && service.getService().getIdentifier().equals(data.getService().getIdentifier())) {
-						connectedService = service;
-					}
-				}
+				IConnectedService connectedService = findConnectedServiceFromConnection(connection);
 				
 				if (connectedService == null) {
 					status = error(MessageFormat.format(
@@ -209,13 +205,24 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 						connectedService.getStatus();
 					if (!serviceStatus.getEStatus().equals(
 							com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus.UP)) {
+						String description  = serviceStatus.getLongDescription();
 						status = warning(Messages.getString("ConnectToDeviceDialog.ServiceNotAvailWarning"),  //$NON-NLS-1$
-								serviceStatus.getLongDescription());
+								description == null ? "" : description); //$NON-NLS-1$
 					}
 				}
 			}
 		}
 		updateStatus(status);
+	}
+
+	private IConnectedService findConnectedServiceFromConnection(IConnection connection) {
+		Collection<IConnectedService> services = manager.getConnectedServices(connection);
+		for (IConnectedService connectedService : services) {
+			if (connectedService != null && connectedService.getService().getIdentifier().equals(data.getService().getIdentifier())) {
+				return connectedService;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -230,10 +237,14 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		} else {
 			descriptionLabel.setText(Messages.getString("ConnectToDeviceDialog.NoConnectionsText") + standardPNPMessage); //$NON-NLS-1$
 		}
-		
+		if (currentServiceListener != null)
+			currentServiceListener.removeStatusChangedListener(this);
+		currentServiceListener = findConnectedServiceFromConnection(connection);
+		if (currentServiceListener != null)
+			currentServiceListener.addStatusChangedListener(this);
 	}
 
-	public void connectionSelected(IConnection connection) {
+	protected void connectionSelected(IConnection connection) {
 		updateConnection(connection);
 		validate();
 	}
@@ -247,9 +258,13 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	}
 
 	public void currentConnectionSet(IConnection connection) {
-		refreshUI(connection);
+//		refreshUI(connection);
 	}
 
+	public void statusChanged(com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus status) {
+		validate();
+	}
+	
 	private Set<IConnectionType> getCompatibleConnectionTypes() {
 		HashSet<IConnectionType> types = new HashSet<IConnectionType>();
 		Collection<String> compatibleTypeIds =
@@ -314,5 +329,6 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		manager.addConnectionListener(this);
 		return super.close();
 	}
+
 }
 
