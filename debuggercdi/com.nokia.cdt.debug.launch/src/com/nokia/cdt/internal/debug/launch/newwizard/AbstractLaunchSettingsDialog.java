@@ -28,6 +28,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
@@ -114,16 +115,20 @@ public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 			okButton.setEnabled(enabled);
 	}
 
-	protected void updateStatus(IStatus status) {
-		setTitle(title);
+	protected void updateStatus(final IStatus status) {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				setTitle(title);
 
-		if (status.isOK()) {
-			setMessage("", IMessageProvider.NONE); //$NON-NLS-1$
-		} else {
-			setMessage(status.getMessage(), severityToMsgType(status.getSeverity()));
-		}
-		
-		setOkEnabled(!status.matches(IStatus.ERROR));
+				if (status.isOK()) {
+					setMessage("", IMessageProvider.NONE); //$NON-NLS-1$
+				} else {
+					setMessage(status.getMessage(), severityToMsgType(status.getSeverity()));
+				}
+				
+				setOkEnabled(!status.matches(IStatus.ERROR));
+			}
+		});
 	}
 	
 }
