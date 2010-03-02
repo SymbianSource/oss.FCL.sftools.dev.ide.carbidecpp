@@ -73,7 +73,7 @@ public class BuilderSelectionComposite extends Composite {
      * listen for changes on the builder combo via {@link #getBuilderCombo()}
      * @return null for no error, otherwise a string for the error message
      */
-    public IStatus validatePage() {
+    public IStatus validate() {
 		useSBSv2Builder = true;
 		IStatus status = null;
 		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) {
@@ -135,7 +135,9 @@ public class BuilderSelectionComposite extends Composite {
     
     /**
      * Get the builder combo that the user select the builder (e.g. SBSv1 or SBSv2)
-     * when creating projects.
+     * when creating projects. This is currently used by clients to listen for changes to the builder combo.
+     * TODO: This probably is not the most friendly method. After review we decided it would be cleaner for 
+     * clients to pass in a validator interface (e.g. IBuildComboValidator) and make call backs on that. 
      * @return the Combo
      */
     public Combo getBuilderCombo(){

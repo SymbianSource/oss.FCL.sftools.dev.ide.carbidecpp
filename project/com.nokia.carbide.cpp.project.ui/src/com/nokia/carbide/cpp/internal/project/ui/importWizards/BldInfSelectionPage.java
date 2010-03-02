@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
@@ -119,12 +120,7 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 		
 	    builderComposite = new BuilderSelectionComposite(parent);
 	    builderComposite.createControls();
-	    builderComposite.getBuilderCombo().addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-
+	    builderComposite.getBuilderCombo().addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				setPageComplete(validatePage());
 			}
@@ -207,7 +203,7 @@ public class BldInfSelectionPage extends WizardPage implements Listener {
 		
 		if (builderComposite != null) {
 			
-			IStatus status = builderComposite.validatePage();
+			IStatus status = builderComposite.validate();
         	if (status != null){
         		// Get the level from the status.
         		int level = getMessageLevelFromIStatus(status);

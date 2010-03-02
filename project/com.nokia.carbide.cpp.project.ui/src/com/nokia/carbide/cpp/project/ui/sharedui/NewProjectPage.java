@@ -29,8 +29,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
@@ -156,7 +156,7 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 		
         if (builderComposite != null) {
         	
-        	IStatus status = builderComposite.validatePage();
+        	IStatus status = builderComposite.validate();
         	if (status != null){
         		// Get the level from the status.
         		int level = getMessageLevelFromIStatus(status);
@@ -245,12 +245,7 @@ public class NewProjectPage extends WizardNewProjectCreationPage implements IWiz
 		if (control instanceof Composite) {
 			builderComposite = new BuilderSelectionComposite((Composite)control);
 		    builderComposite.createControls();
-		    builderComposite.getBuilderCombo().addSelectionListener(new SelectionListener() {
-
-				public void widgetDefaultSelected(SelectionEvent e) {
-					widgetSelected(e);
-				}
-
+		    builderComposite.getBuilderCombo().addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					setPageComplete(validatePage());
 				}
