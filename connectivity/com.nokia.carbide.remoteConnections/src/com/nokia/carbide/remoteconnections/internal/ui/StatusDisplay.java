@@ -134,7 +134,6 @@ public class StatusDisplay implements IStatusDisplay {
 		for (int i = shells.length - 1; i >= 0; i--) {
 			Shell shell = shells[i];
 			if ((shell.getStyle() & MODAL_MASK) != 0) {
-				System.out.println(shell.getText() + ":" + shell.getBounds());
 				return shell;
 			}
 		}
