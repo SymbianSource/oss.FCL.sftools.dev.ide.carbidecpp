@@ -30,6 +30,8 @@ public class Messages extends NLS {
 	public static String BldInfSelectionPage_browseDialogTitle;
 
 	public static String BldInfSelectionPage_noSpacesInPathError;
+	
+	public static String BldInfSelectionPage_selectABLDINFToImport;
 
 	public static String BldInfSelectionPage_invalidInfError;
 

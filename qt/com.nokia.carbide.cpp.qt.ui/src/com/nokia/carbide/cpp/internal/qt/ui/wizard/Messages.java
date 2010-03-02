@@ -34,6 +34,8 @@ public class Messages extends NLS {
 	public static String QtProFileSelectionPage_browseDialogTitle;
 
 	public static String QtProFileSelectionPage_noSpacesInPathError;
+	
+	public static String QtProFileSelectionPage_selectAProFileInfo;
 
 	public static String QtProFileSelectionPage_invalidProError;
 

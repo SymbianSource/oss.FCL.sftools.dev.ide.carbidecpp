@@ -28,9 +28,12 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,7 +46,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.project.ui.sharedui.BuilderSelectionComposite;
 import com.nokia.carbide.cpp.internal.qt.ui.QtUIHelpIds;
 
@@ -68,7 +70,7 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
 	public void createControl(Composite parent) {
 		setPageComplete(false);
 		setErrorMessage(null);
-		setMessage(null);
+		setMessage(Messages.QtProFileSelectionPage_selectAProFileInfo);
 
 		initializeDialogUnits(parent);
         
@@ -115,10 +117,18 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
     	
 		setButtonLayoutData(browseButton);
 
-		if (SBSv2Utils.enableSBSv2Support()) {
-	        builderComposite = new BuilderSelectionComposite(parent);
-	        builderComposite.createControls();
-		}
+        builderComposite = new BuilderSelectionComposite(parent);
+        builderComposite.createControls();
+        builderComposite.getBuilderCombo().addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				setPageComplete(validatePage());
+			}
+		});
 	}
 
 	public void handleEvent(Event event) {
@@ -163,7 +173,7 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
 
     private boolean validatePage() {
 		setErrorMessage(null);
-
+		setMessage(Messages.QtProFileSelectionPage_selectAProFileInfo);
 		proFilePath = proFileCombo.getText().trim();
 		if (proFilePath == null || proFilePath == "") { //$NON-NLS-1$
 			return false;
@@ -240,7 +250,16 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
 		}
 
 		if (builderComposite != null) {
-			return builderComposite.validatePage();
+
+			IStatus status = builderComposite.validatePage();
+        	if (status != null){
+        		// Get the level from the status.
+        		int level = getMessageLevelFromIStatus(status);
+        		setMessage(status.getMessage(), level);
+        		if (level == ERROR){
+        			return false;
+        		}
+        	}
 		}
 		
 		return true;
@@ -305,4 +324,15 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
 	public void performHelp() {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl().getShell(), QtUIHelpIds.QT_PRO_FILE_SELECTION_PAGE);
 	}
+	
+    private int getMessageLevelFromIStatus(IStatus status){
+    	if (status.getSeverity() == Status.ERROR)
+    		return ERROR;
+    	else if (status.getSeverity() == Status.WARNING)
+    		return WARNING;
+    	else if (status.getSeverity() == Status.INFO)
+    		return INFORMATION;
+    	
+    	return NONE;
+    }
 }
