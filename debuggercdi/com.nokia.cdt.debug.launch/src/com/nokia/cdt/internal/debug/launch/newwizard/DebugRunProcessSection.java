@@ -58,8 +58,8 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		else if (data.getDefaultExecutable() != null)
 			data.setExeSelectionPath(data.getDefaultExecutable());
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(data.getProject());
+		data.setInstallPackage(!data.isSysTRKConnection());
 		if (cpi != null) {
-			data.setInstallPackage(!data.isSysTRKConnection());
 			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
 				IPath sisPath = info.getSigningType() == ISISBuilderInfo.DONT_SIGN ? info.getUnsignedSISFullPath() : info.getSignedSISFullPath();
