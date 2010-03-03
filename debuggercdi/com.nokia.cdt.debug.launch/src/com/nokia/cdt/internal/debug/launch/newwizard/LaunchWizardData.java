@@ -355,7 +355,7 @@ public class LaunchWizardData extends LaunchOptions {
 		return null;
 	}
 
-	private IPath getExePath() {
+	public IPath getExePath() {
 		// if attach, doesn't matter so return first exe
 		if (exeSelection.equals(EExeSelection.ATTACH_TO_PROCESS))
 			return exes.isEmpty() ? Path.EMPTY : exes.get(0);
