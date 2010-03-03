@@ -94,7 +94,7 @@ public class BuilderSelectionComposite extends Composite {
 			}
 			
 			// check the raptor version
-			if (SDKCorePlugin.getSDKManager().getSBSv2Version(false).getMajor() == 0){
+			else if (SDKCorePlugin.getSDKManager().getSBSv2Version(false).getMajor() == 0){
 				// Try to scan again....
 				if (SDKCorePlugin.getSDKManager().getSBSv2Version(true).getMajor() == 0){
 					status = new Status(Status.WARNING, ProjectUIPlugin.PLUGIN_ID, "SBS version cannot be determined, some SBS functionality may not work. Please check your SBS installation.");
