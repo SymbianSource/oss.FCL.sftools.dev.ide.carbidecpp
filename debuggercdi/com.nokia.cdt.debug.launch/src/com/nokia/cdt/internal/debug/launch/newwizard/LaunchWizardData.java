@@ -340,8 +340,13 @@ public class LaunchWizardData extends LaunchOptions {
 		addBuildOptions(config);
 		// always set the current connection id
 		config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, Registry.CURRENT_CONNECTION_ID);
-		if (installPackage)
+		if (installPackage) {
 			config.setAttribute(PreferenceConstants.J_PN_SisFileHostPath, sisPath);
+			// special case handling for running out of E: drive - install into E: drive
+			if (exeSelection.equals(EExeSelection.USE_REMOTE_EXECUTABLE) && 
+					exeSelectionPath.getDevice().equalsIgnoreCase("E:")) //$NON-NLS-1$
+				config.setAttribute(PreferenceConstants.J_PN_InstallToDrive, 4); // index 4 == E: drive
+		}
 	}
 
 	private IPath getMmpPath(IPath exePath) {
