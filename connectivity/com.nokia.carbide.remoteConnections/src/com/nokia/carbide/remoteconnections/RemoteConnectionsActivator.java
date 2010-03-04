@@ -144,15 +144,19 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		}
 
 		if (!agentToStatusMap.isEmpty()) {
-			DeviceDiscoveryPrequisiteErrorDialog dlg = new DeviceDiscoveryPrequisiteErrorDialog(WorkbenchUtils.getSafeShell());
-			for (Entry<IDeviceDiscoveryAgent, IPrerequisiteStatus> entry : agentToStatusMap.entrySet()) {
-				IDeviceDiscoveryAgent agent = entry.getKey();
-				IPrerequisiteStatus status = entry.getValue();
-				dlg.addAgentData(agent.getDisplayName(), status.getErrorText(), status.getURL());
-			}
-			dlg.open();
-			if (dlg.isDontAskAgainChecked())
-				storeIgnoreAgentLoadErrorsFlag();
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					DeviceDiscoveryPrequisiteErrorDialog dlg = new DeviceDiscoveryPrequisiteErrorDialog(WorkbenchUtils.getSafeShell());
+					for (Entry<IDeviceDiscoveryAgent, IPrerequisiteStatus> entry : agentToStatusMap.entrySet()) {
+						IDeviceDiscoveryAgent agent = entry.getKey();
+						IPrerequisiteStatus status = entry.getValue();
+						dlg.addAgentData(agent.getDisplayName(), status.getErrorText(), status.getURL());
+					}
+					dlg.open();
+					if (dlg.isDontAskAgainChecked())
+						storeIgnoreAgentLoadErrorsFlag();
+				}
+			});
 		}	
 	}
 
