@@ -549,6 +549,11 @@ public class PCCSConnection {
 			return goodConnections;
 		}
 		
+		if (deviceList.length == 1) {
+			// forget all non switched devices
+			forgetAllNoSwitchConnectionsNotInCurrentList(null);
+		}
+
 		Collection<DeviceUSBPersonalityInfo> personalityList = null;
 		if (numUSBDevicesExpected > 0) {
 			int attempt = 1;
@@ -556,7 +561,7 @@ public class PCCSConnection {
 				personalityList = getAllDeviceUSBPersonalities();
 				if (personalityList == null || personalityList.size() < numUSBDevicesExpected) {
 					if (DEBUG) System.out.printf("Error %d getting USB personalities: %d of %d total\n", attempt, (personalityList != null) ? personalityList.size() : 0, numUSBDevicesExpected); //$NON-NLS-1$
-					if (attempt > 5) {
+					if (attempt > 10) {
 						break; // bomb - leave UPAPI open, we need it later
 					}
 					attempt++;
