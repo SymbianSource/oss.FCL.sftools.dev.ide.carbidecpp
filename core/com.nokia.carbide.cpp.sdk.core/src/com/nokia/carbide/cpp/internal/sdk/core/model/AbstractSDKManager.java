@@ -668,7 +668,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			}
 			if (p != null) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-				String overallOutput = null;
+				String overallOutput = "";
 				String stdErrLine = null;
 				try {
 
@@ -684,15 +684,16 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						if (br.ready()) {
 							while ((stdErrLine = br.readLine()) != null) {
 								overallOutput += stdErrLine;
+								numTries = maxTries;
 							}
-							break;
+							
 						}
 						numTries++;
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				if (overallOutput != null) {
+				if (overallOutput.length() > 0) {
 				{
 					String[] tokens = overallOutput.split(" ");
 					if (tokens.length >= 3) {

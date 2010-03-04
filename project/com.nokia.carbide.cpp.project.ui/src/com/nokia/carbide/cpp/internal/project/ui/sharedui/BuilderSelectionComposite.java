@@ -16,12 +16,11 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.sharedui;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -31,7 +30,6 @@ import org.eclipse.swt.widgets.Label;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage;
 
@@ -77,10 +75,17 @@ public class BuilderSelectionComposite extends Composite {
 		useSBSv2Builder = true;
 		IStatus status = null;
 		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) {
+
+			IPath sbsBinPath = SBSv2Utils.getSBSBinDirectory();
 			
 			// if SBSv2 is selected, make sure SBS_HOME is defined
 			if (SBSv2Utils.getSBSBinDirectory() == null){
 				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.");
+			}
+			
+			// check to see if SBS_HOME directory really exists
+			else if (!sbsBinPath.toFile().exists()){
+				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable path does not exist: " + sbsBinPath.toOSString());
 			}
 			
 			// check the raptor version
