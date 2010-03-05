@@ -62,9 +62,9 @@ public interface IConnAPILibrary extends StdCallLibrary {
 	int MCAPI_GetAPIVersion();
 	int CONAOpenMM(LPAPIHANDLE phMCHandle, int dwValue);
 	int CONACloseMM(APIHANDLE hMCHandle);
-	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, CONAPI_MEDIA.ByReference[] ppMedia); //TODO: c++ - CONAPI_MEDIA**	ppMedia
-	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, CONAPI_MEDIA.ByReference ppMedia); //TODO: c++ - CONAPI_MEDIA**	ppMedia
-	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, PointerByReference ppMedia); //TODO: c++ - CONAPI_MEDIA**	ppMedia
+	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, CONAPI_MEDIA.ByReference[] ppMedia);
+	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, CONAPI_MEDIA.ByReference ppMedia);
+	int CONAMMGetMedia(APIHANDLE hMCHandle, IntBuffer pdwCountOfMedia, PointerByReference ppMedia);
 	int CONAMMSetMedia(APIHANDLE hMCHandle, CONAPI_MEDIA[] pMedia);
 	int CONAMMSetMedia(APIHANDLE hMCHandle, Pointer pMedia);
 	int CONAMMFreeMediaStructures(int dwCountOfMedia, CONAPI_MEDIA[] pMedia);

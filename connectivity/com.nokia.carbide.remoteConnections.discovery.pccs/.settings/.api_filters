@@ -1,378 +1,672 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <component id="com.nokia.carbide.remoteConnections.discovery.pccs" version="2">
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/APIHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.APIHANDLE">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="PointerType"/>
-                <message_argument value="APIHANDLE"/>
-            </message_arguments>
-        </filter>
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="FromNativeContext"/>
-                <message_argument value="APIHANDLE"/>
-                <message_argument value="fromNative(Object, FromNativeContext)"/>
-            </message_arguments>
-        </filter>
-        <filter id="643850349">
-            <message_arguments>
-                <message_argument value="Pointer"/>
-                <message_argument value="APIHANDLE"/>
-                <message_argument value="APIHANDLE(Pointer)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_CONNECTION_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_CONNECTION_INFO">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="CONAPI_CONNECTION_INFO"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_CONNECTION_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_CONNECTION_INFO$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_CONNECTION_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_CONNECTION_INFO$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_DEVICE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_DEVICE">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="CONAPI_DEVICE"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_DEVICE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_DEVICE$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_DEVICE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_DEVICE$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="CONAPI_MEDIA"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA_INFO">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="CONAPI_MEDIA_INFO"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA_INFO$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA_INFO$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/ConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.ConnAPILibrary">
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="IntByReference"/>
-                <message_argument value="ConnAPILibrary"/>
-                <message_argument value="CFAPI_Initialize(int, IntByReference)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/DMHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.DMHANDLE">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="PointerType"/>
-                <message_argument value="DMHANDLE"/>
-            </message_arguments>
-        </filter>
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="FromNativeContext"/>
-                <message_argument value="DMHANDLE"/>
-                <message_argument value="fromNative(Object, FromNativeContext)"/>
-            </message_arguments>
-        </filter>
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="Pointer"/>
-                <message_argument value="DMHANDLE"/>
-                <message_argument value="setPointer(Pointer)"/>
-            </message_arguments>
-        </filter>
-        <filter id="643850349">
-            <message_arguments>
-                <message_argument value="Pointer"/>
-                <message_argument value="DMHANDLE"/>
-                <message_argument value="DMHANDLE(Pointer)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/GUID.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.GUID">
-        <filter id="643850349">
-            <message_arguments>
-                <message_argument value="NativeLong"/>
-                <message_argument value="GUID"/>
-                <message_argument value="GUID(NativeLong, short, short, byte[])"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/GUID.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.GUID$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/GUID.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.GUID$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/IConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="StdCallLibrary"/>
-                <message_argument value="IConnAPILibrary"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/IConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary$IConnAPIDeviceCallback">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="StdCallCallback"/>
-                <message_argument value="IConnAPIDeviceCallback"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/LPAPIHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.LPAPIHANDLE">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="LPAPIHANDLE"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/LPDMHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.LPDMHANDLE">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="LPDMHANDLE"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/MCHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.MCHANDLE">
-        <filter id="643850349">
-            <message_arguments>
-                <message_argument value="Pointer"/>
-                <message_argument value="MCHANDLE"/>
-                <message_argument value="MCHANDLE(Pointer)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/PCCSConnection.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.PCCSConnection$DeviceNotificationCallback">
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="ShortByReference"/>
-                <message_argument value="DeviceNotificationCallback"/>
-                <message_argument value="invoke(int, ShortByReference)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_CONFIGURATION_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_CONFIGURATION_DESCRIPTOR">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="UP_CONFIGURATION_DESCRIPTOR"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_CONFIGURATION_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_CONFIGURATION_DESCRIPTOR$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_CONFIGURATION_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_CONFIGURATION_DESCRIPTOR$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DATA_BUFFER.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DATA_BUFFER">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="UP_DATA_BUFFER"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DATA_BUFFER.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DATA_BUFFER$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DATA_BUFFER.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DATA_BUFFER$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DEVICE_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DEVICE_DESCRIPTOR">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="UP_DEVICE_DESCRIPTOR"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DEVICE_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DEVICE_DESCRIPTOR$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DEVICE_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DEVICE_DESCRIPTOR$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="UP_PERSONALITY"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY_DESCRIPTORS.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY_DESCRIPTORS">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="UP_PERSONALITY_DESCRIPTORS"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY_DESCRIPTORS.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY_DESCRIPTORS$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY_DESCRIPTORS.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY_DESCRIPTORS$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_STRING_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_STRING_DESCRIPTOR">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="Structure"/>
-                <message_argument value="UP_STRING_DESCRIPTOR"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_STRING_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_STRING_DESCRIPTOR$ByReference">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByReference"/>
-                <message_argument value="ByReference"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_STRING_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_STRING_DESCRIPTOR$ByValue">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ByValue"/>
-                <message_argument value="ByValue"/>
-            </message_arguments>
-        </filter>
-    </resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/APIHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.APIHANDLE">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="PointerType"/>
+<message_argument value="APIHANDLE"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="APIHANDLE"/>
+<message_argument value="setPointer(Pointer)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="FromNativeContext"/>
+<message_argument value="APIHANDLE"/>
+<message_argument value="fromNative(Object, FromNativeContext)"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="APIHANDLE"/>
+<message_argument value="APIHANDLE(Pointer)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_CONNECTION_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_CONNECTION_INFO">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="CONAPI_CONNECTION_INFO"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_CONNECTION_INFO"/>
+<message_argument value="pstrAddress"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_CONNECTION_INFO"/>
+<message_argument value="pstrDeviceName"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_CONNECTION_INFO"/>
+<message_argument value="CONAPI_CONNECTION_INFO(int, int, ShortByReference, ShortByReference, int)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_CONNECTION_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_CONNECTION_INFO$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_CONNECTION_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_CONNECTION_INFO$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_DEVICE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_DEVICE">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="CONAPI_DEVICE"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_DEVICE"/>
+<message_argument value="pstrManufacturer"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_DEVICE"/>
+<message_argument value="pstrFriendlyName"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_DEVICE"/>
+<message_argument value="pstrModel"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_DEVICE"/>
+<message_argument value="pstrSerialNumber"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_DEVICE"/>
+<message_argument value="CONAPI_DEVICE(ShortByReference, ShortByReference, ShortByReference, ShortByReference, int, CONAPI_CONNECTION_INFOByReference)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_DEVICE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_DEVICE$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_DEVICE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_DEVICE$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="CONAPI_MEDIA"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA"/>
+<message_argument value="pstrDescription"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA"/>
+<message_argument value="pstrID"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA"/>
+<message_argument value="CONAPI_MEDIA(int, int, ShortByReference, int, int, int, ShortByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="CONAPI_MEDIA"/>
+<message_argument value="CONAPI_MEDIA(Pointer)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA_INFO">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="CONAPI_MEDIA_INFO"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA_INFO"/>
+<message_argument value="pstrVersion"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA_INFO"/>
+<message_argument value="pstrHWName"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA_INFO"/>
+<message_argument value="pstrAddress"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA_INFO"/>
+<message_argument value="pstrName"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="CONAPI_MEDIA_INFO"/>
+<message_argument value="CONAPI_MEDIA_INFO(int, GUID, int, int, ShortByReference, ShortByReference, ShortByReference, ShortByReference, int)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA_INFO$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/CONAPI_MEDIA_INFO.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.CONAPI_MEDIA_INFO$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/ConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.ConnAPILibrary">
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="ConnAPILibrary"/>
+<message_argument value="CFAPI_Initialize(int, IntByReference)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/DMHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.DMHANDLE">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="PointerType"/>
+<message_argument value="DMHANDLE"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="DMHANDLE"/>
+<message_argument value="setPointer(Pointer)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="FromNativeContext"/>
+<message_argument value="DMHANDLE"/>
+<message_argument value="fromNative(Object, FromNativeContext)"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="DMHANDLE"/>
+<message_argument value="DMHANDLE(Pointer)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/GUID.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.GUID">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="GUID"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="NativeLong"/>
+<message_argument value="GUID"/>
+<message_argument value="Data1"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="NativeLong"/>
+<message_argument value="GUID"/>
+<message_argument value="GUID(NativeLong, short, short, byte[])"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/GUID.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.GUID$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/GUID.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.GUID$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/IConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="StdCallLibrary"/>
+<message_argument value="IConnAPILibrary"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CFAPI_Initialize(int, IntByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CFAPI_Terminate(IntByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="WString"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="UPAPI_SendCommandToDevice(APIHANDLE, WString, int, UP_DATA_BUFFER[])"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CONAGetDeviceCount(APIHANDLE, IntByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="WString"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="UPAPI_GetStringDescriptor(APIHANDLE, WString, int, int, UP_STRING_DESCRIPTOR)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="DMAPI_Terminate(IntByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="PointerByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CONAMMGetMedia(APIHANDLE, IntBuffer, PointerByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CONAGetDevices(APIHANDLE, IntByReference, CONAPI_DEVICE[])"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CONAMMSetMedia(APIHANDLE, Pointer)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="WString"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="UPAPI_SetPersonality(APIHANDLE, WString, int)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="WString"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="UPAPI_GetPersonalityDescriptors(APIHANDLE, WString, UP_PERSONALITY_DESCRIPTORS[])"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="IntByReference"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="DMAPI_Initialize(int, IntByReference)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="CONAMMFreeMediaStructures(int, Pointer)"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="WString"/>
+<message_argument value="IConnAPILibrary"/>
+<message_argument value="UPAPI_GetConfigurationDescriptor(APIHANDLE, WString, UP_CONFIGURATION_DESCRIPTOR[])"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/IConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary$IConnAPIDeviceCallback">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="StdCallCallback"/>
+<message_argument value="IConnAPIDeviceCallback"/>
+</message_arguments>
+</filter>
+<filter id="643846161">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="IConnAPIDeviceCallback"/>
+<message_argument value="invoke(int, ShortByReference)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/IConnAPILibrary.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.IConnAPILibrary$IConnAPIMediaCallback">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="StdCallCallback"/>
+<message_argument value="IConnAPIMediaCallback"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/LPAPIHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.LPAPIHANDLE">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="LPAPIHANDLE"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/LPDMHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.LPDMHANDLE">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="LPDMHANDLE"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/MCHANDLE.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.MCHANDLE">
+<filter id="643850349">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="MCHANDLE"/>
+<message_argument value="MCHANDLE(Pointer)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/PCCSConnection.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.PCCSConnection$DeviceNotificationCallback">
+<filter id="643846161">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="DeviceNotificationCallback"/>
+<message_argument value="invoke(int, ShortByReference)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_CONFIGURATION_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_CONFIGURATION_DESCRIPTOR">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="UP_CONFIGURATION_DESCRIPTOR"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_CONFIGURATION_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_CONFIGURATION_DESCRIPTOR$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_CONFIGURATION_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_CONFIGURATION_DESCRIPTOR$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DATA_BUFFER.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DATA_BUFFER">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="UP_DATA_BUFFER"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="UP_DATA_BUFFER"/>
+<message_argument value="pbData"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="Pointer"/>
+<message_argument value="UP_DATA_BUFFER"/>
+<message_argument value="UP_DATA_BUFFER(int, byte, short, short, short, Pointer)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DATA_BUFFER.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DATA_BUFFER$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DATA_BUFFER.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DATA_BUFFER$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DEVICE_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DEVICE_DESCRIPTOR">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="UP_DEVICE_DESCRIPTOR"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="UP_DEVICE_DESCRIPTOR"/>
+<message_argument value="pstrDeviceID"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="UP_DEVICE_DESCRIPTOR"/>
+<message_argument value="pstrSerialNumber"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DEVICE_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DEVICE_DESCRIPTOR$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_DEVICE_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_DEVICE_DESCRIPTOR$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="UP_PERSONALITY"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY_DESCRIPTORS.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY_DESCRIPTORS">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="UP_PERSONALITY_DESCRIPTORS"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY_DESCRIPTORS.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY_DESCRIPTORS$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_PERSONALITY_DESCRIPTORS.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_PERSONALITY_DESCRIPTORS$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_STRING_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_STRING_DESCRIPTOR">
+<filter id="576720909">
+<message_arguments>
+<message_argument value="Structure"/>
+<message_argument value="UP_STRING_DESCRIPTOR"/>
+</message_arguments>
+</filter>
+<filter id="627060751">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="UP_STRING_DESCRIPTOR"/>
+<message_argument value="pstrDescription"/>
+</message_arguments>
+</filter>
+<filter id="643850349">
+<message_arguments>
+<message_argument value="ShortByReference"/>
+<message_argument value="UP_STRING_DESCRIPTOR"/>
+<message_argument value="UP_STRING_DESCRIPTOR(int, byte, ShortByReference)"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_STRING_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_STRING_DESCRIPTOR$ByReference">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByReference"/>
+<message_argument value="ByReference"/>
+</message_arguments>
+</filter>
+</resource>
+<resource path="src/com/nokia/carbide/remoteconnections/discovery/pccs/pccsnative/UP_STRING_DESCRIPTOR.java" type="com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative.UP_STRING_DESCRIPTOR$ByValue">
+<filter id="576725006">
+<message_arguments>
+<message_argument value="ByValue"/>
+<message_argument value="ByValue"/>
+</message_arguments>
+</filter>
+</resource>
 </component>
