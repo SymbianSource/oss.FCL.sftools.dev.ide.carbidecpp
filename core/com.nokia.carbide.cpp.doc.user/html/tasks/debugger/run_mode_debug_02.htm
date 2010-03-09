@@ -4,41 +4,58 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>Debugger Settings</title>
+<title>Installing an SDK</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 </head>
 <body bgcolor="#FFFFFF">
-<h2>Run Mode On-Device Debugging</h2>
-<p>To implement run mode on-device debugging the following tasks need to be completed.</p>
-<ol>
-  <li><a href="run_mode_debug.htm">Install device connection software</a></li>
-  <li><a href="run_mode_debug_01.htm">Install Perl</a></li>
-  <li><b>Install an SDK</b></li>
-  <li><a href="run_mode_debug_03.htm">Setup environment variables</a></li>
-  <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
-  <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
-  <li><a href="run_mode_debug_06.htm">Install the SISX file on the target device</a></li>
-  <li><a href="run_mode_debug_07.htm">Configure TRK connection on the device</a></li>
-  <li><a href="run_mode_debug_08.htm">Create a launch configuration</a></li>
-  </ol>
+<h2>Installing an SDK</h2>
+<p>To create projects an SDK must be installed. If more than one SDK is installed one must be specified as the default.</p>
 <div class="step">
-<h4><a name="runSDK" id="runSDK"> </a>Install an SDK</h4>
-<p>The following SDKs can be downloaded from forum Nokia at: <a href="http://www.forum.nokia.com/Tools_Docs_and_Code/">http://www.forum.nokia.com/</a>.</p>
-<ul>
-  <li>Install at least one of the following SDKs:</li>
-<ul>
-  <li> Series 60 5.0</li>
-  <li> Series 60 3.0</li>
-  <li>Series80</li>
-  <li>UIQ 3.0</li>
-  <li>Series 60 cust kits </li>
-  <li>Techview Development kits
-    <p></p>
+<h4><a name="runSDK" id="runSDK"> </a>Installing an SDK</h4>
+<p>The following SDKs can be downloaded from Nokia at: <a href="http://www.forum.nokia.com/Tools_Docs_and_Code/">http://www.forum.nokia.com/</a>.</p>
+<ol>
+  <li>Install at least one of the following SDKs using the install directions that accompany the SDK:
+    <ul>
+      <li>Series 60 5.0</li>
+      <li>Qt for S60</li>
+      <li>Series80</li>
+      <li>Series 60 cust kits</li>
+      <li>Techview Development kits</li>
+    </ul>
   </li>
-</ul>
-</ul>
-</div>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+  <li>Set the default SDK to use for projects
+    <ol type="A">
+      <li>In Carbide.c++
+        <ol type="i">
+          <li>Click Window &gt; Preferences &gt; Carbide.c++ &gt; SDK Preferences to open the SDK Preferences panel</li>
+          <li>Select the SDK and click SDK Properties to open the SDK Properties dialog</li>
+          <li>Set the Default SDK value to Yes</li>
+          <li>Close all the dialogs</li>
+        </ol>
+      </li>
+      <li>In a command-line prompt:
+        <ol type="i">
+          <li>Set the default device devkit by typing on the command line:<br>
+            <br />
+  &gt; <span class="code">devices &ndash;setdefault @device id: name</span></li>
+          <p>The device id and name can be found in the devices.xml file. For example, for a Techview 9.2 kit you might type<br>
+              <br />
+            <span class="code">&gt; devices &ndash;setdefault @ SymbianOS_92_2006_wk40:com.symbian.techview</span></p>
+          <li>Now ensure the default device is set by entering:<br>
+            <br />
+  &gt; <span class="code">devices</span></li>
+          </ol>
+      </li>
+      <li>Make sure the correct SDK default is set.</li>
+      </ol>
+  </li>
+  </ol>
+  </div>
 
+<h5>Other references</h5>
+<ul>
+  <li><a href="run_mode_debug.htm">Run Mode On-Device Debugging</a>  </li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 </body>
 </html>

@@ -9,59 +9,26 @@
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Run Mode On-Device Debugging</h2>
-<p>To implement run mode on-device debugging the following tasks need to be completed.</p>
+<p>Run mode on-device debugging enables you to download and launch a project on a phone or target device and debug it using the Carbide debugger. Before you can do that, some setup requirements are required. Once the setup is done, Carbide can then use plug-and-play (PnP) with USB to create a remote connection that connects  with the TRK agent on the target device to download, launch, and debug the program.</p>
 <ol>
-  <li><b>Install device connection software</b></li>
-  <li><a href="run_mode_debug_01.htm">Install Perl</a></li>
-  <li><a href="run_mode_debug_02.htm">Install an SDK</a></li>
-  <li><a href="run_mode_debug_03.htm">Setup environment variables</a></li>
-  <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
-  <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
-  <li><a href="run_mode_debug_06.htm">Install the SISX file on the target device</a></li>
-  <li><a href="run_mode_debug_07.htm">Configure TRK connection on the device</a></li>
-  <li><a href="run_mode_debug_08.htm">Create a launch configuration</a></li>
+  <li><b>Setup system and development requirements</b> (below)</li>
+  <li><a href="../trk/trk_installation_instr.htm">Install</a> Application or System TRK v3.2.6 or later on the target device</li>
+  <li><a href="../trk/trk_connection_usb.htm">Connect</a> USB cable to phone or target device for PnP connectivity</li>
+  <li><a href="../CreatingProjectsToc.htm">Create</a> or <a href="../ImportingProjects.html">import</a> a project in the Carbide C/C++ workspace</li>
+  <li><a href="../projects/prj_build.htm">Build</a> the project</li>
+  <li><a href="../../debugger/debug/cmds_starting.htm">Debug</a> the project on  a <a href="../../projects/launch/launch_phone.htm">phone</a> or <a href="../../projects/launch/launch_board.htm"> target device</a></li>
 </ol>
 <div class="step">
-<h4><a name="runInstall" id="runInstall">	</a>Install Device Connection Software</h4>
-<p>The two choices for connecting are Bluetooth and PC Suite. </p>
-<h5>BlueTooth</h5>
-<ol>
-  <li>System requirements: </li>
+  <h4><a name="runInstall" id="runInstall2"> </a>Setup  system and development requirements</h4>
+  <p>All of the following requirements are required to build, communicate, and control programs on a phone or target device.</p>
   <ul>
-    <li>Administration rights on your computer</li>
-    <li> BT dongle attached to your computer</li>
-    <li>Bluetooth installer to install the drivers</li>
+    <li>Install <a href="../trk/trk_install_pcsuite.htm">PC Suite</a> or <a href="http://nds1.nokia.com/files/support/global/phones/software/Nokia_Ovi_Suite_webinstaller_ALL.exe">Ovi Suite</a> on your PC to ensure the correct drivers are installed for connecting to the phone or target device.</li>
+    <li>Install the correct version of <a href="run_mode_debug_01.htm">Perl</a> on your PC to support Symbian OS builds</li>
+    <li>Install a supported <a href="run_mode_debug_02.htm">SDK</a> and make sure its the default</li>
+    <li><a href="run_mode_debug_03.htm">Configure</a> the environmental variables</li>
+    <li>(Optional) <a href="run_mode_debug_04.htm">Setup</a> a virtual drive to use Techview and Cust Kits</li>
   </ul>
-  <li>Install the Bluetooth dongle to a USB port</li>
-  <li>Install the drivers from the Bluetooth CD</li>
-  <li>Click on the Bluetooth icon in your system tray and run the Bluetooth setup</li>
-  <li>Right click on the Bluetooth icon in the System tray and select Advanced Configuration</li>
-  <li>Click the Accessibility tab
-    <ol type="a">
-      <li>Check the option &ldquo;Let other Bluetooth devices discover this computer&rdquo;</li>
-        <li>Set the option under &ldquo;Allow&rdquo; to &ldquo;All Devices&rdquo;</li>
-      </ol>
-    </li>
-</ol>
-<p class="note"><b>NOTE</b> The Nokia PC image includes the Microsoft Bluetooth drivers which do not support serial emulation over Bluetooth. You need to download and install the drivers provided by the Bluetooth manufacturer to connect to a device. </p>
-<h5>Nokia PC Suite</h5>
-<ol>
-  <li>Install <a href="http://www.nokiausa.com/support/pcsuite/main.html%20or%20http://europe.nokia.com/A4144903">PC Suite</a> (or later version)    
-    <p>Launch the PC Suite installer and follow the onscreen instructions to install the software. When finished, a <b>Get Connected</b> wizard should appear</p>
-  </li>
-  <li> Press Next</li>
-  <li>In the &quot;Select your connection type&quot; window select &quot;Cable Connection&quot; and press Next</li>
-  <li>You will be prompted to connect the phone via the USB cable</li>
-  <li>Connect the phone and continue with  onscreen instructions</li>
-  <li>After installation your  phone should be listed</li>
-  <li>Click Finish</li>
-  <li>Select PC suite on your phone</li>
-  <p>The Nokia PC Suite window should appear</p>
-  <li>Select the Manage Connections icon</li>
-  <li>Uncheck all the connections available</li>
-  <li>Click Ok</li>
-  <p>PC Suite is now ready to use.</p>
-</ol>
+  <p>Once you've setup your environment, its time to verify that the TRK agent is on the phone or target device.</p>
 </div>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
