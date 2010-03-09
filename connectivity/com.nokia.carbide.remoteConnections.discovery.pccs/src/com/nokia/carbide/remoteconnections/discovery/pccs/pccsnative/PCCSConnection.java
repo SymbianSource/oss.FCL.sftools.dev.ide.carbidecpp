@@ -600,7 +600,7 @@ public class PCCSConnection {
 					System.out.printf("getGoodConnectionList: name: %s media: %s\n", device.friendlyName, connInfo.media); //$NON-NLS-1$
 				}
 				if (connInfo.media.equals("usb")) { //$NON-NLS-1$
-					DeviceUSBPersonalityInfo personality = findPersonality(numUSBDevicesExpected, device.serialNumber, connInfo.address, personalityList);
+					DeviceUSBPersonalityInfo personality = findPersonality30(numUSBDevicesExpected, device.serialNumber, connInfo.address, personalityList);
 					if (personality == null) {
 						if (DEBUG) System.out.println("getGoodConnectionList: personality not found for device: " + device.friendlyName + "-- continue"); //$NON-NLS-1$
 						String msg = MessageFormat.format(Messages.PCCSConnection_Personality_Switch_Error,
@@ -825,13 +825,13 @@ public class PCCSConnection {
 					personality.matchedToDMDevice = true;
 					return personality;
 				} else {
-//					if (serialNumber.equals(NOT_KNOWN)) {
-//						if (personality.deviceID.contains(id)) {
-//							if (DEBUG) System.out.println("findPersonality: serial number not known, but VID/PID match\n"); //$NON-NLS-1$
-//							personality.matchedToDMDevice = true;
-//							return personality;
-//						}
-//					}
+					if (serialNumber.equals(NOT_KNOWN)) {
+						if (personality.deviceID.contains(vidpid) && numUSBDevicesExpected == 1) {
+							if (DEBUG) System.out.println("findPersonality: serial number not known, but VID/PID match\n"); //$NON-NLS-1$
+							personality.matchedToDMDevice = true;
+							return personality;
+						}
+					}
 					String begin = personality.deviceID.substring(0, personality.deviceID.indexOf('\\'));
 					if (begin.equals("0") || numUSBDevicesExpected == 1) {
 						// no serial number at beginning
