@@ -38,11 +38,13 @@ changes making the tools unusable!</p>
 <h3><a name="whatsNew" id="whatsNew"></a>What's New in 2.5.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <ul>
-  <li><b>Plug-and-Play On-device Debugging </b> supported &mdash; debugging a target device just got easier. Using a USB cable, connect the PC to the target device, then launch Carbide.c++. Carbide locates the connected device and creates a remote connection setup to communicate with it. Build the program and launch it on the device to start the debugging session.</li>
+  <li><b>Plug-and-Play (PnP) On-device Debugging </b> supported &mdash; debugging a target device just got easier. Using a USB cable, connect the PC to the target device, then launch Carbide.c++. Carbide locates the connected device and creates a remote connection setup to communicate with it. Build the program and launch it on the device to start the debugging session.</li>
+  <li><b>PnP Launch Wizard</b> - If the project does not already have a launch configuration, the PnP Launch Wizard makes it easy to create one no matter what the target: <a href="projects/launch/launch_emulator.htm">emulator</a>, <a href="projects/launch/launch_phone.htm">phone</a>, or hardware <a href="projects/launch/launch_board.htm">device</a>. In addition the new <a href="projects/launch/wnd_config_launch_config.htm">Configure Launch Configuration</a> dialog provides a quick summary of the remote connection for easy review and modification.</li>
+  <li><b>Carbide  automatically detects TRK on target phones and devices</b> - Carbide  now detects the presence of either Application or System TRK on a connected device when TRK 3.2.6 or later are installed. Earlier TRK versions  do not support this recognition feature.</li>
   <li><b>TRK improvements</b> - TRK continues to evolve and now includes these improvements:
     <ul>
-        <li>Both Application and System TRK support PnP mode</li>
-        <li><span class="code">VERSION3</span> command now supported</li>
+        <li>Both Application and System TRK v3.2.6 support PnP debugging. Update and install  using the <b>Help &gt; On Device Connections &gt; Install Remote Agents</b> pane in the <b>New Connection</b> dialog.</li>
+      <li><span class="code">VERSION3</span> command now supported</li>
     </ul>
   </li>
   <li><b>RVCT 4.0 (ARMv5)</b> builds and some limited debugging is supported</li>
