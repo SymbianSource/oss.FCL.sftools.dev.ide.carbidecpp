@@ -17,6 +17,7 @@
 
 package com.nokia.cdt.internal.debug.launch.newwizard;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -100,6 +101,7 @@ public class LaunchWizardData extends LaunchOptions {
 	private boolean installPackage;
 	private String sisPath;
 	private IConnection connection;
+	private List<IPath> launchableExes;
 	
 	// settings made in the Other Settings section
 	enum EBuildBeforeLaunchOption {
@@ -158,6 +160,17 @@ public class LaunchWizardData extends LaunchOptions {
 	 */
 	public List<IPath> getExes() {
 		return exes;
+	}
+	
+	public List<IPath> getLaunchableExes() {
+		if (launchableExes == null) {
+			launchableExes = new ArrayList<IPath>();
+			for (IPath path : exes) {
+				if ("exe".equalsIgnoreCase(path.getFileExtension()))
+					launchableExes.add(path);
+			}
+		}
+		return launchableExes;
 	}
 
 	/**
@@ -368,13 +381,15 @@ public class LaunchWizardData extends LaunchOptions {
 		// otherwise, see if we can use the selected path - process to launch string
 		// by checking if the file name matches any of the ones in our list of exes
 		String filename = exeSelectionPath.lastSegment();
-		for (IPath exePath : exes) {
-			if (filename.equalsIgnoreCase(exePath.lastSegment())) {
-				return exePath;
+		if (filename != null) {
+			for (IPath exePath : exes) {
+				if (filename.equalsIgnoreCase(exePath.lastSegment())) {
+					return exePath;
+				}
 			}
 		}
 		// none could be found matching the selected path, so use the first in the list
-		return exes.isEmpty() ? Path.EMPTY : exes.get(0);
+		return getLaunchableExes().isEmpty() ? Path.EMPTY : getLaunchableExes().get(0);
 	}
 	
 	private IConnectedService getConnectedService() {

@@ -361,15 +361,17 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	}
 	
 	protected void initUI() {
-		List<IPath> exes = data.getExes();
+		List<IPath> exes = data.getLaunchableExes();
 		projectExecutableViewer.setInput(exes);
 		IPath exeSelectionPath = data.getExeSelectionPath();
 		if (exeSelectionPath.equals(Path.EMPTY) && !exes.isEmpty())
 			exeSelectionPath = exes.get(0);
-		projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
-		IPath remotePath = createSuggestedRemotePath(exeSelectionPath);
-		remoteProgramEntry.setText(PathUtils.convertPathToWindows(remotePath));
-
+		if (!Path.EMPTY.equals(exeSelectionPath)) {
+			projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
+			IPath remotePath = createSuggestedRemotePath(exeSelectionPath);
+			remoteProgramEntry.setText(PathUtils.convertPathToWindows(remotePath));
+		}
+		
 		if (data.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && exeSelectionPath != null) {
 			projectExecutableRadioButton.forceFocus();
 		}

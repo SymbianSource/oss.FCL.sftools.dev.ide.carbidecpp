@@ -20,6 +20,7 @@ package com.nokia.cdt.internal.debug.launch.newwizard;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -53,12 +54,14 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 	@Override
 	public void initializeSettings() {
 		data.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
-		if (data.getExes().size() > 0)
-			data.setExeSelectionPath(data.getExes().get(0));
+		if (data.getLaunchableExes().size() > 0)
+			data.setExeSelectionPath(data.getLaunchableExes().get(0));
 		else if (data.getDefaultExecutable() != null)
 			data.setExeSelectionPath(data.getDefaultExecutable());
+		if (Path.EMPTY.equals(data.getExeSelectionPath()))
+			data.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(data.getProject());
-		data.setInstallPackage(!data.isSysTRKConnection());
+		data.setInstallPackage(!data.isSysTRKConnection() && !data.getExeSelection().equals(EExeSelection.ATTACH_TO_PROCESS));
 		if (cpi != null) {
 			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
