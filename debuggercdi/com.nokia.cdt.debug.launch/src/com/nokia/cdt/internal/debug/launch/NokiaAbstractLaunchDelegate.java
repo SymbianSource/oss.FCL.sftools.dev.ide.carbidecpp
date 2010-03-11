@@ -19,10 +19,8 @@ package com.nokia.cdt.internal.debug.launch;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -41,22 +39,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.core.model.ISourceLocator;
-import org.eclipse.debug.core.sourcelookup.AbstractSourceLookupDirector;
-import org.eclipse.debug.core.sourcelookup.ISourceContainer;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
 import com.freescale.cdt.debug.cw.core.cdi.Session;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.cdt.debug.cw.symbian.SymbianPlugin;
-import com.nokia.cdt.debug.cw.symbian.SymbianSourceContainer;
-import com.nokia.cdt.debug.cw.symbian.ui.executables.ExecutableTargeted;
 import com.nokia.carbide.cpp.debug.kernelaware.OSDataManager;
+import com.nokia.cdt.debug.common.internal.source.lookup.SourceMappingUtils;
+import com.nokia.cdt.debug.cw.symbian.ui.executables.ExecutableTargeted;
 import com.nokia.cdt.internal.debug.launch.ui.ExecutablesTab;
 
 public abstract class NokiaAbstractLaunchDelegate extends
@@ -204,7 +196,7 @@ public abstract class NokiaAbstractLaunchDelegate extends
 			ICProject project, ILaunchConfiguration config)
 			throws CoreException {
 		ILaunchConfigurationWorkingCopy workingCopy = config.getWorkingCopy();
-		addSourceMappingToLaunch(workingCopy);
+		SourceMappingUtils.addSourceMappingToLaunch(workingCopy);
 		return workingCopy.doSave();
 	}
 
@@ -343,62 +335,7 @@ public abstract class NokiaAbstractLaunchDelegate extends
 	}
 
 
-	private void addSourceMappingToDirector(AbstractSourceLookupDirector director, ILaunchConfiguration configuration) throws CoreException {
 
-		ArrayList containerList = new ArrayList(Arrays.asList(director.getSourceContainers()));
-
-		boolean hasSymbianContainer = false;
-
-		SymbianSourceContainer symbianContainer = null;
-		
-		for (Iterator iter = containerList.iterator(); iter.hasNext() && !hasSymbianContainer;) {
-			ISourceContainer container = (ISourceContainer) iter.next();
-			if (container instanceof SymbianSourceContainer)
-			{
-				hasSymbianContainer = true;
-			}
-		}
-
-		if (!hasSymbianContainer) {
-			
-			String epocRootPath = configuration.getAttribute( SymbianPlugin.Epoc_Root, (String)null );
-			if (epocRootPath != null)
-			{
-				symbianContainer = new SymbianSourceContainer(new Path(epocRootPath));
-				symbianContainer.init(director);
-				containerList.add(symbianContainer);
-			}
-		}
-		
-		director.setSourceContainers((ISourceContainer[]) containerList.toArray(new ISourceContainer[containerList.size()]));
-	}
-	
-	private void addSourceMappingToLaunch(ILaunchConfigurationWorkingCopy configuration) throws CoreException {
-		String memento = null;
-		String type = null;
-
-		memento = configuration.getAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_MEMENTO, (String) null);
-		type = configuration.getAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, (String) null);
-		if (type == null) {
-			type = configuration.getType().getSourceLocatorId();
-		}
-		ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
-		ISourceLocator locator = launchManager.newSourceLocator(type);
-		if (locator instanceof AbstractSourceLookupDirector) {
-			AbstractSourceLookupDirector director = (AbstractSourceLookupDirector) locator;
-			if (memento == null) {
-				director.initializeDefaults(configuration);
-			} else {
-				director.initializeFromMemento(memento, configuration);
-			}
-
-			addSourceMappingToDirector(director, configuration);
-			
-			configuration.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_MEMENTO, director.getMemento());
-			configuration.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, director.getId());
-		}
-	}
-	
 	protected String getTargetLabel(String processName) {
 		String format = "{0} (Launched {1})"; //$NON-NLS-1$
 		String timestamp = DateFormat.getInstance().format(new Date(System.currentTimeMillis()));

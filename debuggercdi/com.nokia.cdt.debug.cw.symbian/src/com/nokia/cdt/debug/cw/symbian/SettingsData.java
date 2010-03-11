@@ -176,7 +176,7 @@ public class SettingsData {
 	static private void addSymbianSDKMapping(String epocRoot, ILaunchConfigurationWorkingCopy configuration) {
 		if (epocRoot.length() > 0 && new File(epocRoot).exists())
 			configuration.setAttribute(SymbianPlugin.Epoc_Root, epocRoot);
-}
+	}
 
 	static public void addSymbianSDKMapping(Path executable, ILaunchConfigurationWorkingCopy configuration) {
 		

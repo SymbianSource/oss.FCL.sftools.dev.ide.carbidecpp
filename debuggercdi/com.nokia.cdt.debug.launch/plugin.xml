@@ -7,7 +7,7 @@
 
        <launchDelegate
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"
+            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer"
             delegateDescription="Launch a classic Carbide Emulator debug session."          
             name="Classic Symbian OS Emulation"
             delegate="com.nokia.cdt.internal.debug.launch.EmulationLaunchDelegate"
@@ -24,7 +24,7 @@
             type="com.nokia.cdt.debug.launch.appTRKLaunch"
             id="com.nokia.cdt.debug.launch.appTRKLaunchDelegate"
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
       </launchDelegate>
  
       <launchDelegate
@@ -35,7 +35,7 @@
             type="com.nokia.cdt.debug.launch.systemTRKLaunch"
             id="com.nokia.cdt.debug.launch.systemTRKLaunchDelegate"
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
       </launchDelegate>
  
       <launchDelegate
@@ -46,7 +46,7 @@
             type="com.nokia.cdt.debug.launch.attachLaunch"
             id="com.nokia.cdt.debug.launch.attachLaunchDelegate"
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
       </launchDelegate>
     
       <launchDelegate
@@ -57,7 +57,7 @@
             type="com.nokia.cdt.debug.launch.t32Launch"
             id="com.nokia.cdt.debug.launch.t32LaunchDelegate"
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer">
+            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
       </launchDelegate>
       
    </extension>

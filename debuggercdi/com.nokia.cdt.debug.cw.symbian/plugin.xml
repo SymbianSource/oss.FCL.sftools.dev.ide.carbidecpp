@@ -31,13 +31,6 @@
       </debugger>
    </extension>
  
-    <extension
-         point="org.eclipse.debug.core.sourcePathComputers">
-      <sourcePathComputer
-            class="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputerDelegate"
-            id="com.nokia.cdt.debug.cw.symbian.CarbideSourcePathComputer"/>
-   </extension>
- 
  <!-- Import Executable Wizard -->
    <extension
          point="org.eclipse.ui.importWizards">
@@ -137,17 +130,7 @@
       </cextension>
    </extension>
     
- <!-- *************** Source Container Types **************** -->
-   
-      <extension
-         point="org.eclipse.debug.core.sourceContainerTypes">
-      <sourceContainerType
-            class="com.nokia.cdt.debug.cw.symbian.SymbianSourceContainerType"
-            description="Maps source files to EPOCROOT"
-            id="com.nokia.cdt.debug.cw.symbian.containerType.mapping"
-            name="Symbian OS SDK Mapping"/>
-    </extension>
-  
+
      <!-- *************** HW Breakpoint Actions **************** -->
    
      <extension
@@ -187,6 +170,8 @@
    </extension>   
 
    <!-- *************** Executables manager extensions **************** -->
+
+<!--  Moved to  com.nokia.carbide.cpp.edc
    <extension
        point="org.eclipse.cdt.debug.core.ExecutablesProvider">
       <provider class="com.nokia.cdt.debug.cw.symbian.CarbideExecutablesProvider"/>
@@ -199,9 +184,10 @@
 
    <extension
        point="org.eclipse.cdt.debug.core.SourceRemappingProvider">
-      <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.SymbianSourceFileRemappingFactory"/>
+      <provider class="com.nokia.cdt.debug.common.executables.SymbianSourceFileRemappingFactory"/>
    </extension>
-   
+-->
+
    <!-- *************** Preference Page Keyword Filtering **************** -->
    <extension
          point="org.eclipse.ui.keywords">

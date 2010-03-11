@@ -6,7 +6,8 @@ Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: com.nokia.cdt.internal.debug.launch.LaunchPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: com.nokia.cdt.debug.common,
+ org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.cdt.launch,
  org.eclipse.cdt.debug.core,
@@ -28,10 +29,12 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.cpp.utils.core,
  com.freescale.cdt.debug.cw.core.ui,
  com.nokia.carbide.remoteConnections,
- com.nokia.cpp.utils.ui
+ com.nokia.cpp.utils.ui,
+ com.nokia.carbide.cpp.edc;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.cdt.internal.debug.launch,
  com.nokia.cdt.internal.debug.launch.ui,
  com.nokia.cdt.internal.debug.launch.wizard
 Bundle-ClassPath: lib/JSiMa.jar,
  .
+
