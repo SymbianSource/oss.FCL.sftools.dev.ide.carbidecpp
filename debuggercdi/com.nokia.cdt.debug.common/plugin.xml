@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            class="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputerDelegate"
+            id="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer"/>
+   </extension>
+
+	<!-- *************** Source Container Types **************** -->
+   
+   <extension
+         point="org.eclipse.debug.core.sourceContainerTypes">
+      <sourceContainerType
+            class="com.nokia.cdt.debug.common.internal.source.lookup.SymbianSourceContainerType"
+            description="Maps source files to EPOCROOT"
+            id="com.nokia.cdt.debug.common.containerType.mapping"
+            name="Symbian OS SDK Mapping"/>
+    </extension>
+
+</plugin>
