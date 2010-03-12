@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.sourcelookup.ISourceContainer;
 import org.eclipse.debug.core.sourcelookup.ISourcePathComputerDelegate;
@@ -40,7 +41,10 @@ import com.nokia.cdt.debug.common.CarbideCommonDebuggerPlugin;
 public class CarbideSourcePathComputerDelegate implements ISourcePathComputerDelegate {
 
 	/** From legacy DE support. */
-	public static final String PSC_FindSourceOutsideWorkspace = "com.freescale.cdt.debug.cw.PN_FindSourceOutsideWorkspace";
+	public static final String PSC_FindSourceOutsideWorkspace = "com.freescale.cdt.debug.cw.PN_FindSourceOutsideWorkspace"; // $//$NON-NLS-N$
+	
+	/** Plugin ID to look up Carbide global debugger prefs */
+	public static final String CWPluginID = "com.freescale.cdt.debug.cw.core"; // $//$NON-NLS-N$
 	
 	/** 
 	 * Constructor for CSourcePathComputerDelegate. 
@@ -68,9 +72,10 @@ public class CarbideSourcePathComputerDelegate implements ISourcePathComputerDel
 				containers.add( 0, new ProjectSourceContainer( project, true ) );
 			}
 		}
-		if (CarbideCommonDebuggerPlugin.getDefault().getPluginPreferences().getBoolean(
-				PSC_FindSourceOutsideWorkspace))		
+		
+		if (Platform.getPreferencesService().getBoolean( CWPluginID, PSC_FindSourceOutsideWorkspace, false, null)){
 			containers.add( 0, new AbsolutePathSourceContainer() );
+		}
 		return (ISourceContainer[])containers.toArray( new ISourceContainer[containers.size()] );
 	}
 }
