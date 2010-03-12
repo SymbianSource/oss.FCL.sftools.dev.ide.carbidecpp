@@ -30,6 +30,7 @@ Require-Bundle: com.nokia.cdt.debug.common,
  com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.cdt.internal.debug.launch,
+ com.nokia.cdt.internal.debug.launch.newwizard,
  com.nokia.cdt.internal.debug.launch.ui,
  com.nokia.cdt.internal.debug.launch.wizard
 Bundle-ClassPath: lib/JSiMa.jar,
