@@ -20,4 +20,21 @@
             name="Symbian OS SDK Mapping"/>
     </extension>
 
+    <!-- Executables view -->
+    
+   <extension
+       point="org.eclipse.cdt.debug.core.ExecutablesProvider">
+      <provider class="com.nokia.cdt.debug.common.internal.executables.CarbideExecutablesProvider"/>
+   </extension>
+  
+   <extension
+       point="org.eclipse.cdt.debug.core.SourceFilesProvider">
+      <provider class="org.eclipse.cdt.debug.edc.internal.symbols.EDCSourceFilesProvider"/>
+   </extension>
+
+	<extension
+       point="org.eclipse.cdt.debug.core.SourceRemappingProvider">
+      <provider class="com.nokia.cdt.debug.common.internal.executables.SymbianSourceFileRemappingFactory"/>
+   </extension>
+
 </plugin>

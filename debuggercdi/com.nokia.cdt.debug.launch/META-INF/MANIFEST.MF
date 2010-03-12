@@ -7,7 +7,6 @@ Bundle-Activator: com.nokia.cdt.internal.debug.launch.LaunchPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: com.nokia.cdt.debug.common,
- org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.cdt.launch,
  org.eclipse.cdt.debug.core,
@@ -20,7 +19,6 @@ Require-Bundle: com.nokia.cdt.debug.common,
  org.eclipse.ui.console,
  com.freescale.swt,
  org.eclipse.ui.forms,
- com.nokia.carbide.cpp.support,
  org.eclipse.ui.ide,
  com.nokia.carbide.cpp.debug.kernelaware,
  com.nokia.carbide.cdt.builder,
@@ -29,8 +27,7 @@ Require-Bundle: com.nokia.cdt.debug.common,
  com.nokia.cpp.utils.core,
  com.freescale.cdt.debug.cw.core.ui,
  com.nokia.carbide.remoteConnections,
- com.nokia.cpp.utils.ui,
- com.nokia.carbide.cpp.edc;bundle-version="1.0.0"
+ com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.cdt.internal.debug.launch,
  com.nokia.cdt.internal.debug.launch.ui,

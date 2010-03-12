@@ -20,7 +20,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cpp.edc.executables.SymbianSourceFileRemapping;
+import com.nokia.cdt.debug.common.internal.executables.SymbianSourceFileRemapping;
 
 public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 {
 
