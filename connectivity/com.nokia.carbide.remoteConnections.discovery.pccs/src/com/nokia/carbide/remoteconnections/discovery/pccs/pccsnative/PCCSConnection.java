@@ -675,7 +675,7 @@ public class PCCSConnection {
 	 * @param personalityList - all USB-connected devices
 	 * @return - null if no personality found
 	 */
-	private DeviceUSBPersonalityInfo findPersonality(int numUSBPersonalities, String serialNumber, String address, Collection<DeviceUSBPersonalityInfo> personalityList) {
+	private DeviceUSBPersonalityInfo findPersonality(int numUSBDevicesExpected, String serialNumber, String address, Collection<DeviceUSBPersonalityInfo> personalityList) {
 	
 		if (DEBUG) System.out.println("findPersonality: start"); //$NON-NLS-1$
 		if (personalityList == null || personalityList.isEmpty()) {
@@ -707,16 +707,27 @@ public class PCCSConnection {
 				//   0\VID_0421&PID_00AB\0 (no serial number as part of id)
 				//   004401011418023\VID_0421&PID_0500\0 (serial number comes at front)
 				// compare Device IDs
-				String id = address.substring(address.indexOf('\\'), address.lastIndexOf('\\'));
-				if (personality.deviceID.contains(id) && personality.deviceID.contains(serialNumber)) {
-					if (DEBUG) System.out.println("findPersonality: address matches deviceID with serial number"); //$NON-NLS-1$
+				String vidpid = address.substring(address.indexOf('\\'), address.lastIndexOf('\\'));
+				String endid = address.substring(address.lastIndexOf('\\')+1);
+				if (personality.deviceID.contains(vidpid) && personality.deviceID.contains(endid)) {
+					if (DEBUG) System.out.println("findPersonality: address matches deviceID with end number\n"); //$NON-NLS-1$
+					return personality;
+				}
+				else if (personality.deviceID.contains(vidpid) && personality.deviceID.contains(serialNumber)) {
+					if (DEBUG) System.out.println("findPersonality: address matches deviceID with serial number\n"); //$NON-NLS-1$
 					return personality;
 				} else {
+					if (serialNumber.equals(NOT_KNOWN)) {
+						if (personality.deviceID.contains(vidpid) && numUSBDevicesExpected == 1) {
+							if (DEBUG) System.out.println("findPersonality: serial number not known, but VID/PID match\n"); //$NON-NLS-1$
+							return personality;
+						}
+					}
 					String begin = personality.deviceID.substring(0, personality.deviceID.indexOf('\\'));
-					if (begin.equals("0")) {
+					if (begin.equals("0") || numUSBDevicesExpected == 1) {
 						// no serial number at beginning
-						if (personality.deviceID.contains(id)) {
-							if (DEBUG) System.out.println("findPersonality: address matches deviceID without serial number"); //$NON-NLS-1$
+						if (personality.deviceID.contains(vidpid)) {
+							if (DEBUG) System.out.println("findPersonality: address matches deviceID without serial number\n"); //$NON-NLS-1$
 							return personality;
 						}
 					}

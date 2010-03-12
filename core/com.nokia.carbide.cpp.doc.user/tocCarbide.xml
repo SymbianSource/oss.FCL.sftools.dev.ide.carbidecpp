@@ -2,7 +2,16 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Introduction" href="html/concepts/Introduction.html"  >
   <topic label="Carbide.c++ Overview" 			href="html/tasks/start/carbide_overview.htm" >
-    <topic label="System Requirements" 			href="html/tasks/start/carbide_requirements.htm" />
+    <topic href="html/tasks/start/carbide_requirements.htm" label="System Requirements">
+       <topic href="html/tasks/debugger/run_mode_debug_01.htm" label="Installing PERL">
+       </topic>
+       <topic href="html/tasks/debugger/run_mode_debug_02.htm" label="Installing an SDK">
+       </topic>
+       <topic href="html/tasks/debugger/run_mode_debug_03.htm" label="Configuring environment variables">
+       </topic>
+       <topic href="html/tasks/debugger/run_mode_debug_04.htm" label="Setting up a virtual drive">
+       </topic>
+    </topic>
     <topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" />
     <topic label="Supported Target Types"		href="html/concepts/build_targets.htm" />
     <topic label="Supported SDKs" 		    	href="html/sos_references.htm" />
@@ -222,6 +231,21 @@
         <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
       </topic>
     </topic>
+    <topic label="Debugging actions" href="html/debugger/debug/debug.htm">
+      <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging"></topic>
+      <topic href="html/debugger/debug/cmds_starting.htm" label="Starting and Terminating"></topic>
+      <topic href="html/debugger/debug/cmds_resuming.htm" label="Suspending and Resuming"></topic>
+      <topic href="html/debugger/debug/cmds_stepping.htm" label="Stepping Over, Into, and Out of Routines"></topic>
+      <topic href="html/debugger/debug/cmds_other.htm" label="Other useful commands"></topic>
+      <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
+    </topic>
+    
+    <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="On-Device Connections Overview" >
+      <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
+      <topic href="html/reference/trk/wnd_new_conn_wiz_edit.htm" label="Adding, editing, and deleting connections" />
+      <topic href="html/reference/trk/exporting_remote_conns.htm" label="Exporting remote connections"></topic>
+      <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
+    </topic>
 	
        <topic label="Debugging with an emulator"				href="html/projects/launch/launch_emulator.htm" >
 			<topic label="Executable Selection"					href="html/projects/launch/wiz_new_launch_config.htm#EXE_SEL" />
@@ -231,52 +255,33 @@
 			  <topic label="Setting Environment for x86 Compiler"	href="html/tasks/projects/prj_build_cmd_line.htm" />
 			  <topic label="Unsetting Built-in Environment"	        href="html/reference/wnd_carbide_pref_x86.htm" />
 			</topic>
+    		<topic label="DLL Emulator Example" href="html/concepts/SampleExampleProjectCreate.html" />
        </topic>
        
-    <topic label="Run mode debugging"  href="html/projects/launch/pnp_debug_overview.htm" >
+    <topic label="Run mode projects"  href="html/projects/launch/pnp_debug_overview.htm" >
+      <topic label="Run Mode Overview"  			href="html/tasks/start/carbide_overview_trk.htm" ></topic>
+      <topic href="html/concepts/autotargeting.htm" label="Auto-Targeting of Executables"></topic>
 	   <topic href="html/projects/launch/launch_phone.htm" label="Debugging a phone">
           <topic label="Configure launch configuration"		href="html/projects/launch/wnd_config_launch_config.htm" />
           <topic label="Remote connection setting"			href="html/projects/launch/wnd_change_connection.htm" />
           <topic label="Debug process settings"				href="html/projects/launch/wnd_change_debug_process.htm" />
           <topic label="Other settings"						href="html/projects/launch/wnd_change_other_settings.htm" />
        </topic>
-    </topic>
-
-
-    <topic label="DLL Emulator Example" href="html/concepts/SampleExampleProjectCreate.html" />
-    </topic>
-	   
-       <topic href="html/projects/launch/launch_board.htm" label="Debugging a reference board">
-       </topic>
-	   
-    <topic label="Run mode projects" 						href="html/tasks/RunModeToc.htm">
-      <topic label="Run Mode Overview"  			href="html/tasks/start/carbide_overview_trk.htm" ></topic>
-      <topic href="html/concepts/autotargeting.htm" label="Auto-Targeting of Executables"></topic>
-      
-      <topic href="html/tasks/start/carbide_example_trk.htm" label="Run Mode Example">
-        <topic href="html/tasks/trk/trk_preconditions.htm" label="1. Preconditions to On-Device Debugging"></topic>
-        <topic href="html/tasks/trk/trk_installation_instr.htm" label="2. Installing an On-Device Debug Agent"></topic>
-        <topic href="html/tasks/projects/working_with_sis_pkg_files.htm" label="3. Creating a PKG File"></topic>
-        <topic href="html/tasks/projects/prj_creating_sis_file.htm" label="4. Creating a .SIS File"></topic>
-        <topic href="html/tasks/start/carbide_deploying.htm" label="5. Deploying Programs"></topic>
-        <topic href="html/tasks/trk/trk_carbide_setup.htm" label="6. Launch Configuration Setup">
-          <topic href="html/reference/trk/panel_trk_overview.htm" label="Debug (On-device Debugging) Overview"></topic>
+      <topic href="html/tasks/debugger/run_mode_debug.htm" label="Run Mode Example">
       </topic>
         
-        <topic href="html/tasks/projects/prj_debug_config.htm" label="7. Debugging Applications">
-          <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
-          <topic href="html/tasks/projects/prj_import_exe.htm" label="Importing a Symbian Executable"></topic>
-          <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching to a Symbian OS Process"></topic>
-          <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
-          <topic href="html/concepts/arm_registers.htm" label="Registers"></topic>
-          <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data View"></topic>
-        </topic>
+      <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
+      <topic href="html/tasks/projects/prj_import_exe.htm" label="Importing a Symbian Executable"></topic>
+      <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching to a Symbian OS Process"></topic>
+      <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
+      <topic href="html/concepts/arm_registers.htm" label="Registers"></topic>
+      <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data View"></topic>
         
-      </topic>
-      <topic label="Troubleshooting" 						href="html/tasks/trk/trk_troubleshooting.htm"/>
     </topic>
     
     <topic label="Stop mode projects" 				href="html/tasks/StopModeToc.htm">
+       <topic href="html/projects/launch/launch_board.htm" label="Debugging a reference board">
+       </topic>
       <topic label="Stop Mode Debug Example" 				href="html/tasks/debugger/stop_mode_debug.htm" >
         <topic label="1. On-Device Debugging Preconditions" href="html/tasks/debugger/stop_mode_debug_precond.htm" />
         <topic label="2. Trace32 Support" 					href="html/projects/launch/trace32.htm" >
@@ -294,21 +299,6 @@
       <topic label="ARM Registers" 						href="html/concepts/arm_registers.htm" />
       <topic label="Symbian OS Data View"					href="html/reference/view_symbian_kernel.htm" />
       <topic label="Toggle HW Breakpoint"           		href="html/reference/menus/hardware_breakpoints.htm" />
-    </topic>
-    
-    <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="On-Device Connections Overview" >
-      <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/trk/wnd_new_conn_wiz_edit.htm" label="Adding, editing, and deleting connections" />
-      <topic href="html/reference/trk/exporting_remote_conns.htm" label="Exporting remote connections"></topic>
-      <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
-    </topic>
-    <topic label="Debugging actions" href="html/debugger/debug/debug.htm">
-      <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging"></topic>
-      <topic href="html/debugger/debug/cmds_starting.htm" label="Starting and Terminating"></topic>
-      <topic href="html/debugger/debug/cmds_resuming.htm" label="Suspending and Resuming"></topic>
-      <topic href="html/debugger/debug/cmds_stepping.htm" label="Stepping Over, Into, and Out of Routines"></topic>
-      <topic href="html/debugger/debug/cmds_other.htm" label="Other useful commands"></topic>
-      <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
     </topic>
     <topic href="html/debugger/breakpoints/breakpoints.htm" label="Breakpoints">
       <topic label="Viewing breakpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
@@ -345,6 +335,11 @@
       <topic label="Debugging in ROM"		                href="html/tasks/projects/prj_debug_rom.htm" />
       <topic label="Importing Symbian Executables"		href="html/tasks/projects/prj_import_exe.htm" />
     </topic>
+
+      <topic label="Troubleshooting" 						href="html/tasks/trk/trk_troubleshooting.htm"/>
+    </topic>
+    
+	   
   <topic href="html/reference/search/wnd_system_search.htm" label="System Search">
     <topic label="System Search view"      		href="html/reference/search/view_system_search.htm" />
     <topic label="System Search preferences"    href="html/reference/search/wnd_system_search_prefs.htm" />

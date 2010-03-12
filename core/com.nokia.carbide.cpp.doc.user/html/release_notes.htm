@@ -38,8 +38,8 @@ changes making the tools unusable!</p>
 <h3><a name="whatsNew" id="whatsNew"></a>What's New in 2.5.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <ul>
-  <li><b>Plug-and-Play (PnP) On-device Debugging </b> supported &mdash; debugging a target device just got easier. Using a USB cable, connect the PC to the target device, then launch Carbide.c++. Carbide locates the connected device and creates a remote connection setup to communicate with it. Build the program and launch it on the device to start the debugging session.</li>
-  <li><b>PnP Launch Wizard</b> - If the project does not already have a launch configuration, the PnP Launch Wizard makes it easy to create one no matter what the target: <a href="projects/launch/launch_emulator.htm">emulator</a>, <a href="projects/launch/launch_phone.htm">phone</a>, or hardware <a href="projects/launch/launch_board.htm">device</a>. In addition the new <a href="projects/launch/wnd_config_launch_config.htm">Configure Launch Configuration</a> dialog provides a quick summary of the remote connection for easy review and modification.</li>
+  <li><b>Plug-and-Play (PnP) On-device Debugging </b> supported &mdash; debugging a target device just got easier. Using a USB cable, connect the PC to the target device, then launch Carbide.c++. Carbide locates the connected device and creates a remote connection setup to communicate with it. Build the program and launch it on the device to start the debugging session. Refer to <a href="#pnpIssues">Known PnP Issues</a> for details if you experience problems.</li>
+  <li><b>PnP Phone Launch Wizard</b> - If the project does not already have a launch configuration, the PnP Launch Wizard makes it easy to create one for <a href="projects/launch/launch_phone.htm">phones</a>. In addition the new <a href="projects/launch/wnd_config_launch_config.htm">Configure Launch Configuration</a> dialog provides a quick summary of the remote connection for easy review and modification.</li>
   <li><b>Carbide  automatically detects TRK on target phones and devices</b> - Carbide  now detects the presence of either Application or System TRK on a connected device when TRK 3.2.6 or later are installed. Earlier TRK versions  do not support this recognition feature.</li>
   <li><b>TRK improvements</b> - TRK continues to evolve and now includes these improvements:
     <ul>
@@ -182,6 +182,26 @@ changes making the tools unusable!</p>
  style="vertical-align: top; text-align: center; font-weight: bold; ">Summary<br />      </th>
       <th 
  style="vertical-align: top; text-align: center; font-weight: bold; ">Workaround</th>
+    </tr>
+    <tr align="center">
+      <td colspan="2" bgcolor="#FFFFCC"><b><a name="pnpIssues" id="pnpIssues"></a>KNOWN PnP ISSUES in 2.5</b></td>
+    </tr>
+    <tr align="center">
+      <td><div align="left">Connecting multiple devices</div></td>
+      <td><div align="left">If multiple devices are plugged into USB, Carbide sometimes cannot determine the USB personality of either or both devices. Carbide will log an error that says the &quot;getting/setting of USB personality&quot; was not supported and no connection is created. The work-around is to plug only one device in.</div></td>
+    </tr>
+    <tr align="center">
+      <td><div align="left">Multiple same error warnings</div></td>
+      <td><div align="left">
+        <p>If a single device is plugged in, and Carbide logs the same error, this is an indication that either </p>
+        <p>A. the PCSuite/OVISuite drivers are not up-to-date or </p>
+        <p>B. the device does not support switching to PC/OVI Suite mode from its current mode </p>
+        <p>For case A, try installing a later version of PCSuite. For case B, set the default USB mode to PC/OVI Suite mode in the settings on the device or selecting PC/OVI Suite mode when the device asks which USB mode to select.</p>
+        </div></td>
+    </tr>
+    <tr align="center">
+      <td><div align="left">PC Suite fails to send updates</div></td>
+      <td><div align="left">On some devices, when unplugging and plugging back in the same USB mode, PC Suite will fail to notify that the device disconnected and the personality switch bubble will not pop up. As a work-around, change the default mode and plug in the device again.</div></td>
     </tr>
     <tr align="center">
       <td colspan="2" bgcolor="#FFFFCC"><a name="CRITICAL_ITEMS"></a><span class="style8">CRITICAL ITEMS</span></td>
