@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.mylyn.internal.provisional.commons.ui.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -39,9 +38,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.remoteconnections.internal.api.IStatusDisplay;
+import com.nokia.carbide.remoteconnections.internal.ui.mylyn.AbstractNotificationPopup;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
-@SuppressWarnings("restriction")
 public class StatusDisplay implements IStatusDisplay {
 		
 	private final class NotificationPopup extends AbstractNotificationPopup {
