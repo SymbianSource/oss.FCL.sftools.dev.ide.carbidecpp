@@ -130,64 +130,6 @@
       </cextension>
    </extension>
     
-
-     <!-- *************** HW Breakpoint Actions **************** -->
-   
-     <extension
-         point="org.eclipse.ui.popupMenus">
-      <viewerContribution
-            targetID="#CEditorRulerContext"
-            id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.CEditorRulerHwBkptActions">
-         <action
-               label="%HwBreakpoint.label"
-               menubarPath="additions"
-               class="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.ManageHwBreakpointRulerActionDelegate"               
-               id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.CEditor.ManageHWBreakpointRulerAction">
-         </action>
-      </viewerContribution>
-     
-      <viewerContribution
-            targetID="#ASMEditorRulerContext"            
-            id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.AsmEditorRulerHwBkptAction">
-         <action
-               label="%HwBreakpoint.label"
-               menubarPath="additions"
-               class="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.ManageHwBreakpointRulerActionDelegate"               
-               id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.AsmTextEditor.ManageHWBreakpointRulerAction">
-         </action>
-      </viewerContribution>
-                  
-      <viewerContribution
-            targetID="#DisassemblyEditorRulerContext"            
-            id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.DisassemblyEditorRulerHwBkptAction">
-         <action
-               label="%HwBreakpoint.label"
-               menubarPath="additions"
-               class="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.ManageHwBreakpointRulerActionDelegate"               
-               id="com.nokia.cdt.debug.cw.symbian.breakpoint.actions.DisassemblyEditor.ManageHWBreakpointRulerAction">
-         </action>
-      </viewerContribution>
-   </extension>   
-
-   <!-- *************** Executables manager extensions **************** -->
-
-<!--  Moved to  com.nokia.carbide.cpp.edc
-   <extension
-       point="org.eclipse.cdt.debug.core.ExecutablesProvider">
-      <provider class="com.nokia.cdt.debug.cw.symbian.CarbideExecutablesProvider"/>
-   </extension>
-
-   <extension
-       point="org.eclipse.cdt.debug.core.SourceFilesProvider">
-      <provider class="com.nokia.cdt.debug.cw.symbian.ui.executables.CarbideSourceFilesProvider"/>
-   </extension>
-
-   <extension
-       point="org.eclipse.cdt.debug.core.SourceRemappingProvider">
-      <provider class="com.nokia.cdt.debug.common.executables.SymbianSourceFileRemappingFactory"/>
-   </extension>
--->
-
    <!-- *************** Preference Page Keyword Filtering **************** -->
    <extension
          point="org.eclipse.ui.keywords">
