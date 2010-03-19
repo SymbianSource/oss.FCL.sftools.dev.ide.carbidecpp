@@ -24,13 +24,13 @@ int main(int argc, char* argv[])
 {
 	printf("Calling GetTRKVersion()\n");
 
-	long version[3];
-	DWORD error = GetTRKVersion("COM8", -1, 0, 0, 0, 0, version);
+	long version[4];
+	DWORD error = GetTRKVersion("\\\\.\\COM26", -1, 0, 0, 0, 0, version);
 	
 	if (error != 0)
 		printf("Error = %d\n", error);
 	else
-		printf("Version ints = %d, %d, %d\n", version[0], version[1], version[2]);
+		printf("Version ints = %d, %d, %d, %d\n", version[0], version[1], version[2], version[3]);
 	
 	return 0;
 }

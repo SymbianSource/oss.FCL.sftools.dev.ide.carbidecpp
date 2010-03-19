@@ -118,7 +118,7 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 	
 	private Version getTRKVersionFromDevice() throws ConnectionFailException {
 		if (connection.getConnectionType() instanceof SerialConnectionType) {
-			int[] versInts = {0,0,0};
+			int[] versInts = {0,0,0,0};
 			String portNumStr = connection.getSettings().get(SerialConnectionSettings.PORT);
 			int portNum = Integer.parseInt(portNumStr);
 			int baud = getIndexValue(SerialConnectionSettings.BAUD);
@@ -131,6 +131,10 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 			}
 			catch (Exception e) {
 				throw new ConnectionFailException(e.getMessage());
+			}
+			if (versInts[3] > 0) {
+				boolean isSysTrk = versInts[3] > 1;
+				getProperties().put(PROP_SYS_TRK, Boolean.valueOf(isSysTrk).toString());
 			}
 			return new Version(versInts[0], versInts[1], versInts[2]);
 		}
