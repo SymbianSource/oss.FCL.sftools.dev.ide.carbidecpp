@@ -19,7 +19,6 @@
 
 #include "stdafx.h"
 #include "GetTRKVersion.h"
-#include "com_nokia_carbide_trk_support_onDeviceSetup_ui_CheckExistingTRKPage.h"
 #include "com_nokia_carbide_trk_support_service_TRKConnectedService.h"
 
 
@@ -240,9 +239,14 @@ static DWORD ReceiveData(HANDLE serialPortHandle, unsigned long timeout, unsigne
 	return ERROR_SUCCESS;
 }
 
+static bool IsVersions3EnabledTRK(long major, long minor, long micro)
+{
+	return major > 3 || (major == 3 && minor > 2) || (major == 3 && minor == 2 && micro >= 4);
+}
+
 
 __declspec(dllexport)
-DWORD GetTRKVersion(const char* inPortName, int baudIndex, int dataBits, int parity, int stopBits, int flowControl, long version[3])
+DWORD GetTRKVersion(const char* inPortName, int baudIndex, int dataBits, int parity, int stopBits, int flowControl, long version[4])
 {
 	// open the serial port
 	HANDLE serialPortHandle = NULL;
@@ -261,7 +265,7 @@ DWORD GetTRKVersion(const char* inPortName, int baudIndex, int dataBits, int par
 	// receive response
 	unsigned char pingRxBuf[16];
 	unsigned long pingRxSize = 0;
-	error = ReceiveData(serialPortHandle, 2001, 16, pingRxBuf, pingRxSize);
+	error = ReceiveData(serialPortHandle, 2001UL, 16, pingRxBuf, pingRxSize);
 	if (error != ERROR_SUCCESS) {
 		Disconnect(serialPortHandle);
 		return error;
@@ -278,7 +282,7 @@ DWORD GetTRKVersion(const char* inPortName, int baudIndex, int dataBits, int par
 	// receive response
 	unsigned char versRxBuf[16];
 	unsigned long versRxSize = 0;
-	error = ReceiveData(serialPortHandle, 2001, 16, versRxBuf, versRxSize);
+	error = ReceiveData(serialPortHandle, 2001UL, 16, versRxBuf, versRxSize);
 	if (error != ERROR_SUCCESS) {
 		Disconnect(serialPortHandle);
 		if (error == kNoPingError)
@@ -286,12 +290,43 @@ DWORD GetTRKVersion(const char* inPortName, int baudIndex, int dataBits, int par
 		return error;
 	}
 	
-	if (versRxSize >= 9)
-	{
+	if (versRxSize >= 9) {
 		version[0] = versRxBuf[4];
 		version[1] = versRxBuf[5];
 		version[2] = versRxBuf[8];
+		version[3] = 0; // unknown TRK
+
+		if (IsVersions3EnabledTRK(version[0], version[1], version[2])) {
+			// send versions3 command
+			unsigned char vers3TxBuf[] = {0x7e, 0x51, 0x02, 0xac, 0x7e};
+			error = SendData(serialPortHandle, &vers3TxBuf, 5);
+			if (error != ERROR_SUCCESS) {
+				Disconnect(serialPortHandle);
+				return error;
+			}
+
+			// receive response
+			unsigned char vers3RxBuf[64];
+			unsigned long vers3RxSize = 0;
+			error = ReceiveData(serialPortHandle, 2001UL, 64, vers3RxBuf, vers3RxSize);
+			if (error != ERROR_SUCCESS) {
+				Disconnect(serialPortHandle);
+				return error;
+			}
+
+			version[3] = 1; // AppTRK
+			unsigned char SYS_TRK_NAME[] = {0x0a, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x20, 0x54, 0x52, 0x4b};
+			unsigned long SYS_TRK_NAME_LEN = sizeof(SYS_TRK_NAME);
+			const int SYS_TRK_NAME_OFFSET = 10;
+			if (vers3RxSize >= (SYS_TRK_NAME_LEN + SYS_TRK_NAME_OFFSET)) {
+				unsigned char nameBuf[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+				memcpy(nameBuf, vers3RxBuf + SYS_TRK_NAME_OFFSET, SYS_TRK_NAME_LEN);
+				if (memcmp(nameBuf, SYS_TRK_NAME, SYS_TRK_NAME_LEN) == 0)
+					version[3] = 2; // SysTRK
+			}
+		}
 	}
+
 
 	Disconnect(serialPortHandle);
 	return ERROR_SUCCESS;
@@ -323,31 +358,6 @@ static const char* GetErrorText(DWORD error)
 
 
 /*
- * Class:     com_nokia_carbide_trk_support_onDeviceSetup_ui_CheckExistingTRKPage
- * Method:    getTRKVersion
- * Signature: (Ljava/lang/String;[I)V
- */
-JNIEXPORT void JNICALL Java_com_nokia_carbide_trk_support_onDeviceSetup_ui_CheckExistingTRKPage_getTRKVersion
-  (JNIEnv* env, jclass, jstring jPortName, jintArray jVersionInts)
-{
-	const char* portName = env->GetStringUTFChars(jPortName, NULL);
-
-	jint versionInts[3];
-	DWORD error = GetTRKVersion(portName, -1, 0, 0, 0, 0, versionInts);
-	env->SetIntArrayRegion(jVersionInts, 0, 3, versionInts);
-	
-	env->ReleaseStringUTFChars(jPortName, portName);
-
-	if (error > ERROR_SUCCESS)
-	{
-
-		jclass clazz = env->FindClass("Ljava/lang/Exception;");
-		env->ThrowNew(clazz, GetErrorText(error));
-	}
-
-}
-
-/*
  * Class:     com_nokia_carbide_trk_support_service_TRKConnectedService
  * Method:    getTRKVersionFromSerial
  * Signature: (Ljava/lang/String;IIIII[I)V
@@ -357,9 +367,9 @@ JNIEXPORT void JNICALL Java_com_nokia_carbide_trk_support_service_TRKConnectedSe
 {
 	const char* portName = env->GetStringUTFChars(jPortName, NULL);
 
-	jint versionInts[3];
+	jint versionInts[4];
 	DWORD error = GetTRKVersion(portName, jBaud, jDataBits, jParity, jStopBits, jFlowControl, versionInts);
-	env->SetIntArrayRegion(jVersionInts, 0, 3, versionInts);
+	env->SetIntArrayRegion(jVersionInts, 0, 4, versionInts);
 	
 	env->ReleaseStringUTFChars(jPortName, portName);
 
