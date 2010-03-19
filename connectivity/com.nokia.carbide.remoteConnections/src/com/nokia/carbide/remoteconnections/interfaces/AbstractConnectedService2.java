@@ -31,6 +31,7 @@ import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.internal.ServiceTester;
 import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
@@ -87,9 +88,20 @@ public abstract class AbstractConnectedService2 implements IConnectedService2 {
 			this.shortDescription = shortDescription;
 			this.longDescription = longDescription;
 			fireStatusChanged();
+			if (!connection.isDynamic())
+				connection.setStatus(getInUseConnectionStatus(estatus));
 		}
 	}
-	
+
+	private IConnectionStatus getInUseConnectionStatus(EStatus serviceStatus) {
+		String desc = ""; //$NON-NLS-1$
+		if (serviceStatus.equals(EStatus.IN_USE)) {
+			desc = Messages.getString("AbstractConnectedService2.InUseDesc"); //$NON-NLS-1$
+			return new AbstractConnection.ConnectionStatus(IConnectionStatus.EConnectionStatus.IN_USE, desc, desc);
+		} else
+			return new AbstractConnection.ConnectionStatus(IConnectionStatus.EConnectionStatus.NONE, desc, desc);
+	}
+
 	public static class TestResult {
 		public TestResult(EStatus estatus, String shortDescription, String longDescription) {
 			this.estatus = estatus;
