@@ -33,6 +33,7 @@ public class DMAPIDefinitions {
 	public static final int DMAPI_VERSION_35		=35;
 	public static final int DMAPI_VERSION_36		=36;
 	public static final int DMAPI_VERSION_37		=37;
+	public static final int DMAPI_VERSION_38		=38;
 	//=========================================================
 	// Device callback status values
 	public static final int CONAPI_DEVICE_LIST_UPDATED		=0x00;	// List is updated. No any specific information.

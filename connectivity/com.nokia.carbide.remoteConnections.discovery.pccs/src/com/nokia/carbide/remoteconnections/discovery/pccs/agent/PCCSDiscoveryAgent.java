@@ -162,8 +162,12 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 			try {
 				do {
 					if (DEBUG) System.out.println("updateThread updating: " + numPendingUpdates);
-					updateConnections2(pccs.getGoodConnectionList());
-					numPendingUpdates--;
+					if (numPendingUpdates > 1) {
+						numPendingUpdates--;
+					} else {
+						updateConnections2(pccs.getGoodConnectionList());
+						numPendingUpdates--;
+					}
 				} while (numPendingUpdates > 0);
 				
 				if (DEBUG) System.out.println("updateThread exiting");
