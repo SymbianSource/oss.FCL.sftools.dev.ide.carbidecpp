@@ -676,32 +676,32 @@ public class PCCSConnection {
 		if (numFound == 0) {
 			if (Activator.isSymSEELayout()) {
 				String pattern = "PCCS reported {0} devices connected to USB, but did not return any USB personalities for these devices. " +
-					"Either this device requires a later version of PCCS or the devices are not responding to part of the PCCS API. " +
-					"If the latest PCCS version is installed, try disconnecting and reconnecting all the devices. " +
+					"Either these devices require a later version of PCCS or the devices are not responding to part of the PCCS API. " +
+					"If the latest PCCS version is installed, try disconnecting the devices and reconnecting in PC/OVI Suite mode. " +
 					"The latest PCCS can be found here: " + Activator.getLoadErrorURL();
 				String message = MessageFormat.format(pattern, numUSBDevicesExpected);
 				logMessage(message, IStatus.ERROR);
 			} else {
-				String pattern = "PCSuite reported {0} devices connected to USB, but did not return any USB personalities for these devices. " +
-					"Either this device requires a later version of PCSuite or the devices are not responding to part of the PCSuite API. " +
-					"If the latest PCSuite version is installed, try disconnecting and reconnecting all the devices. " +
-					"The latest PCSuite can be found here: " + Activator.getLoadErrorURL();
+				String pattern = "PC/OVI Suite reported {0} devices connected to USB, but did not return any USB personalities for these devices. " +
+					"Either these devices require a later version of PC/OVI Suite or the devices are not responding to part of the PC/OVI Suite API. " +
+					"If the latest PC/OVI Suite version is installed, try disconnecting the devices and reconnecting in PC/OVI Suite mode. " +
+					"The latest PC/OVI Suite can be found here: " + Activator.getLoadErrorURL();
 				String message = MessageFormat.format(pattern, numUSBDevicesExpected);
 				logMessage(message, IStatus.ERROR);
 			}
 		} else if (numFound < numUSBDevicesExpected) {
 			if (Activator.isSymSEELayout()) {
 				String pattern = "PCCS reported {0} devices connected to USB, but found only {1} USB personalities for these devices. " +
-					"Either this device requires a later version of PCCS or a device is not responding to part of the PCCS API. " +
-					"If the latest PCCS version is installed, try disconnecting and reconnecting all the devices. " +
+					"Either a device requires a later version of PCCS or a device is not responding to part of the PCCS API. " +
+					"If the latest PCCS version is installed, try disconnecting the device and reconnecting in PC/OVI Suite mode. " +
 					"The latest PCCS can be found here: " + Activator.getLoadErrorURL();
 				String message = MessageFormat.format(pattern, numUSBDevicesExpected, numFound);
 				logMessage(message, IStatus.ERROR);
 			} else {
-				String pattern = "PCSuite reported {0} devices connected to USB, but found only {1} USB personalities for these devices. " +
-					"Either this device requires a later version of PCSuite or a device is not responding to part of the PCSuite API. " +
-					"If the latest PCSuite version is installed, try disconnecting and reconnecting all the devices. " +
-					"The latest PCSuite can be found here: " + Activator.getLoadErrorURL();
+				String pattern = "PC/OVI Suite reported {0} devices connected to USB, but found only {1} USB personalities for these devices. " +
+					"Either a device requires a later version of PCSuite or a device is not responding to part of the PC/OVI Suite API. " +
+					"If the latest PC/OVI Suite version is installed, try disconnecting the device and reconnecting in PC/OVI Suite mode. " +
+					"The latest PC/OVI Suite can be found here: " + Activator.getLoadErrorURL();
 				String message = MessageFormat.format(pattern, numUSBDevicesExpected, numFound);
 				logMessage(message, IStatus.ERROR);
 			}
