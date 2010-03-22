@@ -43,6 +43,8 @@ public class PCCSConnection {
 
 	private static final String NOT_KNOWN = "not known"; //$NON-NLS-1$ // used for all string structure elements that come back from PCCS as null
 	private boolean DEBUG = false;
+	private volatile boolean pendingEvents;
+	private boolean DEBUG_EVENTS = false;
 	
 	public class DeviceNotificationCallback implements IConnAPIDeviceCallback {
 
@@ -54,7 +56,7 @@ public class PCCSConnection {
 			//  and the serial number is not filled in. If the serial number is null,
 			//  everything else will be null (according to the PCCS docs)
 			//  TODO: bug in PCCS API: 
-			if (DEBUG) System.out.printf("DeviceNotificationCallback %x %s\n", dwStatus, (pstrSerialNumber == null ? "serNum: null" : pstrSerialNumber.getPointer().getString(0, true))); //$NON-NLS-1$ //$NON-NLS-2$
+			if (DEBUG_EVENTS) System.out.printf("DeviceNotificationCallback %x %s\n", dwStatus, (pstrSerialNumber == null ? "serNum: null" : pstrSerialNumber.getPointer().getString(0, true))); //$NON-NLS-1$ //$NON-NLS-2$
 			String serialNumber = NOT_KNOWN;
 			if (pstrSerialNumber != null) {
 				serialNumber = pstrSerialNumber.getPointer().getString(0, true);
@@ -86,7 +88,8 @@ public class PCCSConnection {
 				}
 			}
 			// fire events
-			if (DEBUG) System.out.println("DeviceNotificationCallback: fire events");
+			pendingEvents = true;
+			if (DEBUG_EVENTS) System.out.println("DeviceNotificationCallback: fire events pendingEvents: " + pendingEvents);
 			Iterator<DeviceEventListener> iter = listeners.iterator();
 			while (iter.hasNext()) {
 				iter.next().onDeviceEvent(eventType, serialNumber);
@@ -100,7 +103,7 @@ public class PCCSConnection {
 	private DeviceNotificationCallback pfnCallback = new DeviceNotificationCallback();
 	public static final int PCCS_NOT_FOUND = 1;
 	public static final int PCCS_WRONG_VERSION = 2;
-	private static final int DMAPI_VERSION = DMAPIDefinitions.DMAPI_VERSION_34;
+	private static final int DMAPI_VERSION = DMAPIDefinitions.DMAPI_VERSION_38;
 	
 	private APIHANDLE dmHandle = APIHANDLE.INVALID_HANDLE_VALUE;
 	private APIHANDLE mcHandle = APIHANDLE.INVALID_HANDLE_VALUE;
@@ -393,12 +396,16 @@ public class PCCSConnection {
 	 */
 	private DeviceInfo[] getCompleteDeviceList() {
 		DeviceInfo[] deviceInfo = null;
+		
+		// open the DMAPI
 		APIHANDLE handle = APIHANDLE.INVALID_HANDLE_VALUE;
 		try {
 			handle = loadDMAPI();
 		} catch (CoreException e) {
 			return deviceInfo;
 		}
+		
+		// get the device count
 		IntByReference pdwCount = new IntByReference(0);
 		int dwResult = library.CONAGetDeviceCount(handle, pdwCount);
 		if (DEBUG) System.out.printf("CONAGetDeviceCount: %x number of devices: %d\n", dwResult, pdwCount.getValue()); //$NON-NLS-1$
@@ -410,9 +417,9 @@ public class PCCSConnection {
 			return deviceInfo;
 		}
 		
+		// get the device list
 		int deviceCount = pdwCount.getValue();
 		if (deviceCount > 0) {
-			
 			CONAPI_DEVICE[] pDevices = (CONAPI_DEVICE[])new CONAPI_DEVICE().toArray(deviceCount);
 			dwResult = library.CONAGetDevices(handle, pdwCount, pDevices);
 			if (DEBUG) System.out.printf("CONAGetDevices: %x number of devices: %d\n", dwResult, deviceCount); //$NON-NLS-1$
@@ -512,85 +519,68 @@ public class PCCSConnection {
 	 * @throws CoreException
 	 */
 	public synchronized Collection<DeviceConnection> getGoodConnectionList() throws CoreException {
-		DeviceInfo[] deviceList = getCompleteDeviceList();
+
 		Collection<DeviceConnection> goodConnections = new ArrayList<DeviceConnection>();
 
+		if (DEBUG_EVENTS) System.out.println("getGoodConnectionList pendingEvents: " + pendingEvents);
+		pendingEvents = false;
+		
+		// get all DMAPI devices
+		DeviceInfo[] deviceList = getCompleteDeviceList();
+
+		// if no DMAPI devices exist
+		//   forget all previous non-switched devices
+		//   and return an empty connection list
 		if (deviceList == null) { 
-			// forget all non switched devices
 			forgetAllNoSwitchConnectionsNotInCurrentList(null);
 			return goodConnections;
 		}
+
+		// get number of expected USB devices
+		int numUSBDevicesExpected = getNumUSBDevicesExpected(deviceList);
 		
-		try {
-			loadUPAPI();
-		} catch (CoreException e) {
-			Activator.logError(e);
+		// PCSuite has a problem where a single device could have multiple USB connections
+		//   but shouldn't have... Attempt to split them out into separate devices.
+		if (numUSBDevicesExpected > 0) {
+			deviceList = adjustForMulitpleUSBConnectionsPerDevice(deviceList);
+		}
+		
+		// if we still couldn't get one USB device per DMAPI device, then error
+		if (deviceList.length < numUSBDevicesExpected) {
+			String message = MessageFormat.format(
+					"PCSuite is reporting more USB connections ({0}) than the number of connected devices ({1}). Carbide cannot match devices to USB connections. Try connecting only a single device.", 
+					numUSBDevicesExpected, deviceList.length);
+			logMessage(message, IStatus.ERROR);
 			return goodConnections;
 		}
-		boolean upapiOpen = true;
-		int numUSBDevicesExpected = 0;
-		for (DeviceInfo device : deviceList) {
-			Collection<DeviceConnectionInfo> connectionList = device.connections;
-			for (DeviceConnectionInfo connInfo : connectionList) {
-				if (connInfo.media.equals("usb")) {
-					numUSBDevicesExpected++;
-				}
-			}
-		}
-		if (DEBUG) System.out.println("numDevices: "+ deviceList.length + " numUSBDevicesExpected: " + numUSBDevicesExpected);
-		if (deviceList.length < numUSBDevicesExpected) {
-			deviceList = trySplittingDevices(deviceList);
-			if (deviceList.length < numUSBDevicesExpected) {
-				// error - number of total devices should be equal to or more than number of USB devices
-				//   i.e., only 1 USB connection is permitted per device
-				String message = MessageFormat.format(
-						"PCSuite is reporting more USB connections ({0}) than the number of connected devices ({1}). Carbide cannot match devices to USB connections.", 
-						numUSBDevicesExpected, deviceList.length);
-				Activator.logMessage(message, IStatus.ERROR);
-				closeUPAPI();
-				return goodConnections;
-			}
-		}
-		
+
+		// if there is only one device, forget all previous devices that were
+		//  not switched to Suite mode
 		if (deviceList.length == 1) {
-			// forget all non switched devices
 			forgetAllNoSwitchConnectionsNotInCurrentList(null);
 		}
 
+		// get all the USB personalities for the current connections
 		Collection<DeviceUSBPersonalityInfo> personalityList = null;
 		if (numUSBDevicesExpected > 0) {
-			int attempt = 1;
-			do {
-				personalityList = getAllDeviceUSBPersonalities();
-				if (personalityList == null || personalityList.size() < numUSBDevicesExpected) {
-					if (DEBUG) System.out.printf("Error %d getting USB personalities: %d of %d total\n", attempt, (personalityList != null) ? personalityList.size() : 0, numUSBDevicesExpected); //$NON-NLS-1$
-					if (attempt > 10) {
-						break; // bomb - leave UPAPI open, we need it later
-					}
-					attempt++;
-					// UPAPI seems to need a reload
+			try {
+				loadUPAPI();
+				int numUSBDevices = getNumberUPAPIDevices(numUSBDevicesExpected);
+				if (numUSBDevices < numUSBDevicesExpected) {
 					closeUPAPI();
-					upapiOpen = false;
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-					}
-					loadUPAPI();
-					upapiOpen = true;
+					return null;
 				}
-			} while (personalityList == null || personalityList.size() < numUSBDevicesExpected);
-		}
-		// if we failed getting the USB personalities above - UPAPI will be closed
-		//  so reopen it
-		// else we finally got the USB personalities, UPAPI is still open
-		if (!upapiOpen) {
-			loadUPAPI();
-			upapiOpen = true;
+			} catch (CoreException e) {
+				closeUPAPI();
+				return null;
+			}
+			personalityList = getAllDeviceUSBPersonalities(numUSBDevicesExpected);
 		}
 		
+		// forget all previous non-suite-switched devices not in current list
 		forgetAllNoSwitchConnectionsNotInCurrentList(personalityList);
 		
-		// go through each connected device and check for good connection modes (e.g. USB in debuggable mode)
+		// go through each connected device and check for good connection modes (e.g. USB in a Suite mode)
 		if (DEBUG) System.out.printf("getGoodConnectionList: sizeof deviceList: %d\n", deviceList.length); //$NON-NLS-1$
 		for (DeviceInfo device : deviceList) {
 			Collection<DeviceConnectionInfo> connectionList = device.connections;
@@ -600,12 +590,12 @@ public class PCCSConnection {
 					System.out.printf("getGoodConnectionList: name: %s media: %s\n", device.friendlyName, connInfo.media); //$NON-NLS-1$
 				}
 				if (connInfo.media.equals("usb")) { //$NON-NLS-1$
-					DeviceUSBPersonalityInfo personality = findPersonality30(numUSBDevicesExpected, device.serialNumber, connInfo.address, personalityList);
+					DeviceUSBPersonalityInfo personality = findPersonality(numUSBDevicesExpected, device.serialNumber, connInfo.address, personalityList);
 					if (personality == null) {
 						if (DEBUG) System.out.println("getGoodConnectionList: personality not found for device: " + device.friendlyName + "-- continue"); //$NON-NLS-1$
 						String msg = MessageFormat.format(Messages.PCCSConnection_Personality_Switch_Error,
 								device.friendlyName);
-						Activator.logMessage(msg, IStatus.ERROR);
+						logMessage(msg, IStatus.ERROR);
 						continue;
 					}
 					if (isGoodUSBPersonality(device, connInfo, personality)) {
@@ -635,15 +625,111 @@ public class PCCSConnection {
 				}
 			}
 		}
-		if (upapiOpen)
-			closeUPAPI();
+		closeUPAPI();
 		
 		return goodConnections;
 	}
-	private DeviceInfo[] trySplittingDevices(DeviceInfo[] deviceList) {
-		// Assumption: one device can at most one USB connection
-		// sometimes, PCSuite reports only one device with multiple USB connections (e.g., when serialNumber is null on more than one device)
-		//  we attempt to take multiple USB connections and create separate devices
+	private void logMessage(String message, int error) {
+		if (DEBUG_EVENTS) System.out.println("logMessage: pendingEvents: " + pendingEvents);
+		if (pendingEvents == false)
+			Activator.logMessage(message, IStatus.ERROR);
+	}
+
+	/**
+	 * Assumes UPAPI is loaded
+	 * @param numUSBDevicesExpected
+	 * @return
+	 */
+	private int getNumberUPAPIDevices(int numUSBDevicesExpected) {
+		int numFound = 0;
+		
+		int attempt = 1;
+		do {
+			IntBuffer pdwDeviceCount = IntBuffer.allocate(1);
+			pdwDeviceCount.put(numUSBDevicesExpected);
+			int dwResult = library.UPAPI_QueryDeviceCount(upHandle, pdwDeviceCount);
+			if (dwResult == PCCSErrors.CONA_OK) {
+				numFound = pdwDeviceCount.get(0);
+				if (DEBUG) System.out.printf("getNumberUSBDevices: try=%d found=%d of %d\n", attempt, numFound, numUSBDevicesExpected);
+				if (numFound == numUSBDevicesExpected)
+					break;
+				
+				attempt++;
+				if (attempt > 10)
+					break;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+				
+			} else {
+				if (DEBUG) System.out.printf("getNumberUSBDevices: try=%d dwResult=%x\n", attempt, dwResult);
+				attempt++;
+				if (attempt > 10)
+					break;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+			}
+		} while (numFound < numUSBDevicesExpected);
+		if (numFound == 0) {
+			if (Activator.isSymSEELayout()) {
+				String pattern = "PCCS reported {0} devices connected to USB, but did not return any USB personalities for these devices. " +
+					"Either this device requires a later version of PCCS or the devices are not responding to part of the PCCS API. " +
+					"If the latest PCCS version is installed, try disconnecting and reconnecting all the devices. " +
+					"The latest PCCS can be found here: " + Activator.getLoadErrorURL();
+				String message = MessageFormat.format(pattern, numUSBDevicesExpected);
+				logMessage(message, IStatus.ERROR);
+			} else {
+				String pattern = "PCSuite reported {0} devices connected to USB, but did not return any USB personalities for these devices. " +
+					"Either this device requires a later version of PCSuite or the devices are not responding to part of the PCSuite API. " +
+					"If the latest PCSuite version is installed, try disconnecting and reconnecting all the devices. " +
+					"The latest PCSuite can be found here: " + Activator.getLoadErrorURL();
+				String message = MessageFormat.format(pattern, numUSBDevicesExpected);
+				logMessage(message, IStatus.ERROR);
+			}
+		} else if (numFound < numUSBDevicesExpected) {
+			if (Activator.isSymSEELayout()) {
+				String pattern = "PCCS reported {0} devices connected to USB, but found only {1} USB personalities for these devices. " +
+					"Either this device requires a later version of PCCS or a device is not responding to part of the PCCS API. " +
+					"If the latest PCCS version is installed, try disconnecting and reconnecting all the devices. " +
+					"The latest PCCS can be found here: " + Activator.getLoadErrorURL();
+				String message = MessageFormat.format(pattern, numUSBDevicesExpected, numFound);
+				logMessage(message, IStatus.ERROR);
+			} else {
+				String pattern = "PCSuite reported {0} devices connected to USB, but found only {1} USB personalities for these devices. " +
+					"Either this device requires a later version of PCSuite or a device is not responding to part of the PCSuite API. " +
+					"If the latest PCSuite version is installed, try disconnecting and reconnecting all the devices. " +
+					"The latest PCSuite can be found here: " + Activator.getLoadErrorURL();
+				String message = MessageFormat.format(pattern, numUSBDevicesExpected, numFound);
+				logMessage(message, IStatus.ERROR);
+			}
+		}
+		return numFound;
+	}
+
+	private int getNumUSBDevicesExpected(DeviceInfo[] deviceList) {
+		int numUSBDevicesExpected = 0;
+		for (DeviceInfo device : deviceList) {
+			Collection<DeviceConnectionInfo> connectionList = device.connections;
+			for (DeviceConnectionInfo connInfo : connectionList) {
+				if (connInfo.media.equals("usb")) {
+					numUSBDevicesExpected++;
+				}
+			}
+		}
+		if (DEBUG) System.out.println("numDevices: "+ deviceList.length + " numUSBDevicesExpected: " + numUSBDevicesExpected);
+		return numUSBDevicesExpected;
+	}
+
+	private DeviceInfo[] adjustForMulitpleUSBConnectionsPerDevice(
+			DeviceInfo[] deviceList) {
+		
+		// This is to work-around a PCSuite problem where multiple USB connections can be associated
+		//  with the same device - a no-no in current Nokia-land.
+		// This happens when the serial number coming from DMAPI is <null> and PCSuite assumes all the devices with the
+		//  same <null> serial number are the same device
 		Collection<DeviceInfo> newList = new ArrayList<DeviceInfo>();
 		for (DeviceInfo device : deviceList) {
 			if (device.numberOfConnections > 1) {
@@ -674,7 +760,6 @@ public class PCCSConnection {
 			}
 		}
 		return newList.toArray(new DeviceInfo[newList.size()]);
-//		return deviceList;
 	}
 
 	/**
@@ -708,74 +793,14 @@ public class PCCSConnection {
 	/**
 	 * Find a matching device in the personality list (all USB devices).<p>
 	 * Might have to use a combination of the serial number and device ID to match with ID's from personality.
-	 * @param numUSBPersonalities 
+	 * @param numUSBDevicesExpected 
 	 *
 	 * @param serialNumber - serial number from connectivity API
 	 * @param address - this contains the device ID from the connectivity API
 	 * @param personalityList - all USB-connected devices
 	 * @return - null if no personality found
 	 */
-	// 2.5 functionality
-	private DeviceUSBPersonalityInfo findPersonality(int numUSBPersonalities, String serialNumber, String address, Collection<DeviceUSBPersonalityInfo> personalityList) {
-		
-		if (DEBUG) System.out.println("findPersonality: start"); //$NON-NLS-1$
-		if (personalityList == null || personalityList.isEmpty()) {
-			if (DEBUG) System.out.println("findPersonality: list is empty");
-			return null;
-		}
-
-		for (DeviceUSBPersonalityInfo personality : personalityList) {
-			if (DEBUG) {
-				System.out.printf("findPersonality: serialNums: %s\t%s\n", serialNumber, personality.serialNumber); //$NON-NLS-1$
-				System.out.printf("findPersonality: address: %s\tdeviceID: %s\n", address, personality.deviceID); //$NON-NLS-1$
-			}
-			// sometimes the serial numbers match except the personality one has an added 0
-			if (!serialNumber.equals(NOT_KNOWN) && !personality.serialNumber.equals(NOT_KNOWN)) {
-				// serial number not null from both DMAPI and UPAPI
-				if (serialNumber.equals(personality.serialNumber)) {
-					if (DEBUG) System.out.println("findPersonality: serialNums match"); //$NON-NLS-1$
-					return personality;
-				} else if (new String(serialNumber+"0").equals(personality.serialNumber)) { //$NON-NLS-1$
-					if (DEBUG) System.out.println("findPersonality: serialNums match (by appending '0' to DMAPI)"); //$NON-NLS-1$
-					return personality;
-				} else {
-					if (DEBUG) System.out.println("findPersonality: both serialNums != null && serialNums do not match");  //$NON-NLS-1$
-				}
-			}
-			// cannot use serial numbers! try using device IDs
-			if (!address.equals(NOT_KNOWN) && !personality.deviceID.equals(NOT_KNOWN)) {
-				// example device ids:
-				//   0\VID_0421&PID_00AB\0 (no serial number as part of id)
-				//   004401011418023\VID_0421&PID_0500\0 (serial number comes at front)
-				// compare Device IDs
-				String id = address.substring(address.indexOf('\\'), address.lastIndexOf('\\'));
-				if (personality.deviceID.contains(id) && personality.deviceID.contains(serialNumber)) {
-					if (DEBUG) System.out.println("findPersonality: address matches deviceID with serial number"); //$NON-NLS-1$
-					return personality;
-				} else {
-					String begin = personality.deviceID.substring(0, personality.deviceID.indexOf('\\'));
-					if (begin.equals("0")) {
-						// no serial number at beginning
-						if (personality.deviceID.contains(id)) {
-							if (DEBUG) System.out.println("findPersonality: address matches deviceID without serial number"); //$NON-NLS-1$
-							return personality;
-						}
-					}
-				}
-			}
-			// sometimes the serial number is part of the address!
-			if (!address.equals(NOT_KNOWN) && !personality.serialNumber.equals(NOT_KNOWN)) {
-				if (address.endsWith(personality.serialNumber)) {
-					if (DEBUG) System.out.println("findPersonality: address contains serialNumber");
-					return personality;
-				}
-			}
-		}
-		if (DEBUG) System.out.println("findPersonality end return null"); //$NON-NLS-1$
-		return null;
-	}
-	// 3.0 experimental functionality
-	private DeviceUSBPersonalityInfo findPersonality30(int numUSBDevicesExpected, String serialNumber, String address, Collection<DeviceUSBPersonalityInfo> personalityList) {
+	private DeviceUSBPersonalityInfo findPersonality(int numUSBDevicesExpected, String serialNumber, String address, Collection<DeviceUSBPersonalityInfo> personalityList) {
 	
 		if (DEBUG) System.out.println("\nfindPersonality: start"); //$NON-NLS-1$
 		if (personalityList == null || personalityList.isEmpty()) {
@@ -783,6 +808,7 @@ public class PCCSConnection {
 			return null;
 		}
 
+		int numLeft = numUSBDevicesExpected;
 		for (DeviceUSBPersonalityInfo personality : personalityList) {
 			if (DEBUG) {
 				System.out.printf("findPersonality: serialNums: device:%s\t usb:%s\n", serialNumber, personality.serialNumber); //$NON-NLS-1$
@@ -790,6 +816,7 @@ public class PCCSConnection {
 			}
 			if (personality.matchedToDMDevice) {
 				if (DEBUG) System.out.println("device matched already -- continue");
+				numLeft--;
 				continue;
 			}
 			// sometimes the serial numbers match except the personality one has an added 0
@@ -809,7 +836,10 @@ public class PCCSConnection {
 			}
 			// cannot use serial numbers! try using device IDs
 			if (!address.equals(NOT_KNOWN) && !personality.deviceID.equals(NOT_KNOWN)) {
-				// example device ids:
+				// example DMAPI addresses:
+				//   0\VID_0421&PID_0078\7&2382d757&0 (no serial number)
+				//   0\VID_0421&PID_007B\354172020011853 (serial number comes at end)
+				// example UPAPI device ids:
 				//   0\VID_0421&PID_00AB\0 (no serial number as part of id)
 				//   004401011418023\VID_0421&PID_0500\0 (serial number comes at front)
 				// compare Device IDs
@@ -826,14 +856,14 @@ public class PCCSConnection {
 					return personality;
 				} else {
 					if (serialNumber.equals(NOT_KNOWN)) {
-						if (personality.deviceID.contains(vidpid) && numUSBDevicesExpected == 1) {
+						if (personality.deviceID.contains(vidpid) && numLeft == 1) {
 							if (DEBUG) System.out.println("findPersonality: serial number not known, but VID/PID match\n"); //$NON-NLS-1$
 							personality.matchedToDMDevice = true;
 							return personality;
 						}
 					}
 					String begin = personality.deviceID.substring(0, personality.deviceID.indexOf('\\'));
-					if (begin.equals("0") || numUSBDevicesExpected == 1) {
+					if (begin.equals("0") || numLeft == 1) {
 						// no serial number at beginning
 						if (personality.deviceID.contains(vidpid)) {
 							if (DEBUG) System.out.println("findPersonality: address matches deviceID without serial number\n"); //$NON-NLS-1$
@@ -945,20 +975,23 @@ public class PCCSConnection {
 		final IStatus status = new Status(IStatus.WARNING, Activator.PLUGIN_ID, message);
 		
 		String prompt = MessageFormat.format("Switch to {0} mode now.", goodDesc);
-		
-		RemoteConnectionsActivator.getStatusDisplay().displayStatusWithAction(status, prompt, new Runnable() {
-			public void run() {
-				WString pstrDeviceId = new WString(personality.deviceID);
-				int dwResult = library.UPAPI_SetPersonality(upHandle, pstrDeviceId, goodCode);
-				if (dwResult != PCCSErrors.CONA_OK) {
-					forgetNoSwitchConnections(personality.deviceID);
-					String message = status.getMessage() + "\nThe device returned an error when trying to switch. Disconnect and reconnect in the proper mode.";
-					Activator.logMessage(message, IStatus.ERROR);
-					if (DEBUG) System.out.printf("UPAPI_SetPersonality failed: %x\n", dwResult); //$NON-NLS-1$
-				}
-			}
-		});
 
+		if (DEBUG_EVENTS) System.out.println("askToSwitchPersonality: pendingEvents: " + pendingEvents);
+
+		if (pendingEvents == false) {
+			RemoteConnectionsActivator.getStatusDisplay().displayStatusWithAction(status, prompt, new Runnable() {
+				public void run() {
+					WString pstrDeviceId = new WString(personality.deviceID);
+					int dwResult = library.UPAPI_SetPersonality(upHandle, pstrDeviceId, goodCode);
+					if (dwResult != PCCSErrors.CONA_OK) {
+						forgetNoSwitchConnections(personality.deviceID);
+						String message = status.getMessage() + "\nThe device returned an error when trying to switch. Disconnect and reconnect in the proper mode.";
+						logMessage(message, IStatus.ERROR);
+						if (DEBUG) System.out.printf("UPAPI_SetPersonality failed: %x\n", dwResult); //$NON-NLS-1$
+					}
+				}
+			});
+		}
 	}
 
 	/**
@@ -974,61 +1007,51 @@ public class PCCSConnection {
 	 * This function assumes the UPAPI has already been loaded by the caller
 	 * @return - list of personalities
 	 */
-	private Collection<DeviceUSBPersonalityInfo> getAllDeviceUSBPersonalities() {
+	private Collection<DeviceUSBPersonalityInfo> getAllDeviceUSBPersonalities(int numUSBDevicesExpected) {
 		Collection<DeviceUSBPersonalityInfo> p = new ArrayList<DeviceUSBPersonalityInfo>();
 		boolean apiError = false;
 
 		// how many USB devices are connected
-		IntBuffer pdwDeviceCount = IntBuffer.allocate(1);
-		int dwResult = library.UPAPI_QueryDeviceCount(upHandle, pdwDeviceCount);
-		if (dwResult == PCCSErrors.CONA_OK) {
-			int dwDeviceCount = pdwDeviceCount.get(0);
-			if (DEBUG) System.out.printf("UPAPI_QueryDeviceCount: dwDeviceCount: %d\n", dwDeviceCount); //$NON-NLS-1$
-			if (dwDeviceCount > 0) {
-				UP_DEVICE_DESCRIPTOR[] pDeviceDescriptor = (UP_DEVICE_DESCRIPTOR[])new UP_DEVICE_DESCRIPTOR().toArray(dwDeviceCount);
-				
-				// get the descriptor for all USB device
-				dwResult = library.UPAPI_QueryDevices(upHandle, pdwDeviceCount, pDeviceDescriptor);
-				if (dwResult == PCCSErrors.CONA_OK) {
-					if (DEBUG) System.out.printf("UPAPI_QueryDevices dwDeviceCount: %d\n", dwDeviceCount); //$NON-NLS-1$
+		if (numUSBDevicesExpected > 0) {
+			UP_DEVICE_DESCRIPTOR[] pDeviceDescriptor = (UP_DEVICE_DESCRIPTOR[])new UP_DEVICE_DESCRIPTOR().toArray(numUSBDevicesExpected);
+			
+			IntBuffer pdwDeviceCount = IntBuffer.allocate(1);
+			pdwDeviceCount.put(numUSBDevicesExpected);
+			// get the descriptor for all USB device
+			int dwResult = library.UPAPI_QueryDevices(upHandle, pdwDeviceCount, pDeviceDescriptor);
+			if (dwResult == PCCSErrors.CONA_OK) {
+				if (DEBUG) System.out.printf("UPAPI_QueryDevices dwDeviceCount: %d\n", numUSBDevicesExpected); //$NON-NLS-1$
+				int numUSBDevicesFound = pdwDeviceCount.get(0);
+				UP_DEVICE_DESCRIPTOR[] devices = pDeviceDescriptor;
+				// 
+		        for (int i = 0; i < numUSBDevicesFound; i++) {
+					// save important device descriptor information for each device
+		        	DeviceUSBPersonalityInfo deviceInfo = new DeviceUSBPersonalityInfo();
 					
-					UP_DEVICE_DESCRIPTOR[] devices = pDeviceDescriptor;
-					// 
-			        for (int i = 0; i < dwDeviceCount; i++) {
-						// save important device descriptor information for each device
-			        	DeviceUSBPersonalityInfo deviceInfo = new DeviceUSBPersonalityInfo();
-						
-						// device ID is very important to get personalities and for matching with
-						//  the connectivity API
-						if (devices[i].pstrDeviceID != null) {
-							deviceInfo.deviceID = devices[i].pstrDeviceID.getPointer().getString(0, true);
-						} else {
-							deviceInfo.deviceID = NOT_KNOWN;
-						}
-						if (DEBUG) System.out.println("UPAPI_QueryDevices: ID found: " + deviceInfo.deviceID);
-						// nice to have, but maybe null on some devices
-						if (devices[i].pstrSerialNumber != null) {
-							deviceInfo.serialNumber = devices[i].pstrSerialNumber.getPointer().getString(0, true);
-						} else {
-							deviceInfo.serialNumber = NOT_KNOWN;
-						}
-						// now get the personality descriptor for this device
-						apiError = getPersonalityDescriptors(p, deviceInfo);
+					// device ID is very important to get personalities and for matching with
+					//  the connectivity API
+					if (devices[i].pstrDeviceID != null) {
+						deviceInfo.deviceID = devices[i].pstrDeviceID.getPointer().getString(0, true);
+					} else {
+						deviceInfo.deviceID = NOT_KNOWN;
 					}
-			        if (DEBUG) System.out.println("getAllDeviceUSBPersonalities all devices read"); //$NON-NLS-1$
-				} else {
-					apiError = true;
-					if (DEBUG)
-						System.out.printf("UPAPI_QueryDevices dwResult = %x\n", dwResult); //$NON-NLS-1$
+					if (DEBUG) System.out.println("UPAPI_QueryDevices: ID found: " + deviceInfo.deviceID);
+					// nice to have, but maybe null on some devices
+					if (devices[i].pstrSerialNumber != null) {
+						deviceInfo.serialNumber = devices[i].pstrSerialNumber.getPointer().getString(0, true);
+					} else {
+						deviceInfo.serialNumber = NOT_KNOWN;
+					}
+					// now get the personality descriptor for this device
+					apiError = getPersonalityDescriptors(p, deviceInfo);
 				}
-				dwResult = library.UPAPI_FreeDeviceDescriptor(dwDeviceCount, pDeviceDescriptor);
+		        if (DEBUG) System.out.println("getAllDeviceUSBPersonalities all devices read"); //$NON-NLS-1$
+				dwResult = library.UPAPI_FreeDeviceDescriptor(numUSBDevicesFound, pDeviceDescriptor);
 			} else {
-		        if (DEBUG) System.out.println("getAllDeviceUSBPersonalities no devices"); //$NON-NLS-1$
+				apiError = true;
+				if (DEBUG)
+					System.out.printf("UPAPI_QueryDevices dwResult = %x\n", dwResult); //$NON-NLS-1$
 			}
-		} else {
-			apiError = true;
-			if (DEBUG)
-				System.out.printf("UPAPI_QueryDeviceCount dwResult = %x\n", dwResult); //$NON-NLS-1$
 		}
 		if (DEBUG) System.out.printf("getAllDeviceUSBPersonalities return size : %s\n", p.size()); //$NON-NLS-1$
 		return p;
@@ -1086,11 +1109,13 @@ public class PCCSConnection {
 			if (dwResult == PCCSErrors.CONA_OK) {
 				if (pStringDescriptor.pstrDescription != null) {
 					desc = pStringDescriptor.pstrDescription.getPointer().getString(0, true);
+				} else {
+					desc = "Personality code: " + code.toString();
 				}
 				if (DEBUG) System.out.printf("UPAPI_GetStringDescriptor code: %d, desc: %s\n", code.intValue(), desc); //$NON-NLS-1$
 				dwResult = library.UPAPI_FreeStringDescriptor(pStringDescriptor);
 			} else {
-				apiError = true;
+				desc = "Personality code: " + code.toString();
 				if (DEBUG)
 					System.out.printf("UPAPI_GetStringDescriptor dwResult = %x\n", dwResult); //$NON-NLS-1$
 			}
