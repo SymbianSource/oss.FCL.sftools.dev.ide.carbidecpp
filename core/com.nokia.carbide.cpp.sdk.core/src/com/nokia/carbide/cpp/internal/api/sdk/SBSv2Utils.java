@@ -15,23 +15,34 @@ package com.nokia.carbide.cpp.internal.api.sdk;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.filesystem.URIUtil;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.Version;
 import org.osgi.service.prefs.BackingStoreException;
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
@@ -45,7 +56,10 @@ public class SBSv2Utils {
 	private static final String SBSV2_FILTERED_CONFIGS_STORE = "sbsv2FilteredConfigs"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_DELIMETER = ";"; //$NON-NLS-1$
 
-	private static List<String> unfilteredSBSv2ConfigNames;
+	/**
+	 * Map of usable Raptor alias for -c parameter and base platform: <alise, base plat>
+	 */
+	private static Map<String, String> unfilteredSBSv2ConfigNames;
 
 	protected static final String SBS_HOME = "SBS_HOME";
 	protected static String sbsHome;
@@ -70,12 +84,12 @@ public class SBSv2Utils {
     /**
      * Get the build configurations supported by SBSv2
      * @param refreshList whether or not to parse the configuration xml files again
-     * @return list of configuration names, never null
+     * @return A map of raptor aliases (key) to base build platform. Never null;
      */
-    public static List<String> getUnfilteredSBSv2BuildConfigurations(boolean refreshList) {
+    public static Map<String, String> getUnfilteredSBSv2BuildConfigurations(boolean refreshList) {
     	
     	if (unfilteredSBSv2ConfigNames == null || refreshList) {
-    		unfilteredSBSv2ConfigNames = new ArrayList<String>();
+    		unfilteredSBSv2ConfigNames = new HashMap<String, String>();
     		
         	// parse the xml files in SBS_HOME/lib/config/ to get SBSv2 configs
     		try {
@@ -187,32 +201,40 @@ public class SBSv2Utils {
 	public static List<ISymbianBuildContext> getFilteredSBSv2BuildContexts(ISymbianSDK sdk) {
 		List<ISymbianBuildContext> contexts = new ArrayList<ISymbianBuildContext>();
 		
-		for (String name : getUnfilteredSBSv2BuildConfigurations(false)) {
-
+		Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator();
+		
+		while (it.hasNext()){
+			
+			Map.Entry buildConfigPair = (Map.Entry)it.next();
+			String alias = (String)buildConfigPair.getKey(); // The sbsv2 alias 
+			String basePlat = (String)buildConfigPair.getValue();
 			boolean addConfig = true;
+			
 			for (String filteredConfig : getSBSv2ConfigurationsToFilter()) {
-				if (filteredConfig.compareTo(name) == 0) {
+				if (filteredConfig.compareTo(alias) == 0) {
 					addConfig = false;
 					break;
 				}
 			}
 
 			if (addConfig) {
+
 				// only support configs that fall into something we can make a build context
 				// out of.  They must have a platform and a target.
 				String targetString = null;
-		    	if (name.toLowerCase().endsWith("_udeb") || name.toLowerCase().endsWith("_deb")) { //$NON-NLS-1$ //$NON-NLS-2$
+				String[] configTokens = alias.split("_"); // $//$NON-NLS-N$
+				// We presume that aliases have the second token as the "target". 
+		    	if (configTokens[1].toLowerCase().endsWith("deb")) { //$NON-NLS-1$ //$NON-NLS-2$
 		    		targetString = ISymbianBuildContext.DEBUG_TARGET;
-		    	} else if (name.toLowerCase().endsWith("_urel") || name.toLowerCase().endsWith("_rel")) { //$NON-NLS-1$ //$NON-NLS-2$
+		    	} else if (configTokens[1].toLowerCase().endsWith("rel")) { //$NON-NLS-1$ //$NON-NLS-2$
 		    		targetString = ISymbianBuildContext.RELEASE_TARGET;
 		    	}
 		    	
 		    	if (targetString != null) {
-		    		String[] parts = name.split("_"); //$NON-NLS-1$
-		    		if (parts.length == 2) {
-		    			SymbianBuildContext context = new SymbianBuildContext(sdk, parts[0].toUpperCase(), targetString);
+		    		SymbianBuildContext context = null;
+		    		context = new SymbianBuildContext(sdk, basePlat, targetString, alias);
+		    		if (context != null) 
 		    			contexts.add(context);
-		    		}
 		    	}
 			}
 		}
@@ -278,7 +300,7 @@ public class SBSv2Utils {
     		
     		NodeList children = root.getChildNodes();
     		for (int i=0; i< children.getLength(); i++) {
-    			getConfigsForNode(children.item(i));
+    			getConfigsForNode(children.item(i), root);
     		}
     		
     	} catch (Exception e) {
@@ -287,27 +309,38 @@ public class SBSv2Utils {
     	}
     }
     
-    private static void getConfigsForNode(Node node) {
+    private static void getConfigsForNode(Node node, Node parentNode) {
 		if (node.getNodeName().equals("config")) { //$NON-NLS-1$
 			Node abstractNode = node.getAttributes().getNamedItem("abstract");  //$NON-NLS-1$
+			Node namedNode = node.getAttributes().getNamedItem("name"); //$NON-NLS-1$
 			if (abstractNode == null || abstractNode.getNodeValue().equals("false")) { //$NON-NLS-1$
-				Node namedNode = node.getAttributes().getNamedItem("name"); //$NON-NLS-1$
 				if (namedNode != null) {
+					
+					// Get the parent base build platform
+					String baseBuildPlatform = null;
+					if (parentNode != null){
+						baseBuildPlatform = parentNode.getAttributes().getNamedItem("name").getNodeValue();
+					}
+					
 					// only support configs that fall into something we can make a build context
 					// out of.  They must have a platform and a target.
 					String configName = namedNode.getNodeValue();
-			    	if (configName.toLowerCase().endsWith("_udeb") || configName.toLowerCase().endsWith("_deb") || //$NON-NLS-1$ //$NON-NLS-2$
-		    			configName.toLowerCase().endsWith("_urel") || configName.toLowerCase().endsWith("_rel")) { //$NON-NLS-1$ //$NON-NLS-2$
-			    		if (configName.split("_").length == 2) { //$NON-NLS-1$
-							unfilteredSBSv2ConfigNames.add(configName);
+					String[] configTokens = configName.split("_");
+			    	if (configTokens.length >= 2) { //$NON-NLS-1$
+			    		String target = configTokens[1];
+			    		if (target.endsWith("deb") || target.endsWith("rel")){ //$NON-NLS-1$
+			    			if (baseBuildPlatform == null){
+			    				baseBuildPlatform = "unknown";
+			    			}
+			    			unfilteredSBSv2ConfigNames.put(configName, baseBuildPlatform);
 			    		}
 			    	}
-				}
+			    }
 			}
 
 			NodeList children = node.getChildNodes();
 			for (int i=0; i< children.getLength(); i++) {
-				getConfigsForNode(children.item(i));
+				getConfigsForNode(children.item(i), node);
 			}
 		}
     }

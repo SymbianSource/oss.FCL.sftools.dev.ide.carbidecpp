@@ -28,6 +28,7 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	private String platform;
 	private String target;
 	private String displayString = null;
+	private String sbsv2Alias = null;
 	
 	private static String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
 	private static String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
@@ -43,6 +44,15 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		sdkId = theSDK.getUniqueId();
 		platform = thePlatform;
 		target = theTarget;
+		
+		getDisplayString();
+	}
+	
+	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias) {
+		sdkId = theSDK.getUniqueId();
+		platform = thePlatform;
+		target = theTarget;
+		sbsv2Alias = theSBSv2Alias;
 		
 		getDisplayString();
 	}
@@ -121,8 +131,14 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 			} else {
 				displayString = displayString + SPACE_DISPLAY_TEXT + RELEASE_DISPLAY_TEXT;
 			}
-
-			displayString = displayString + " (" + platform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
+			
+			String basePlatform;
+			if (sbsv2Alias != null)
+				basePlatform = sbsv2Alias;
+			else
+				basePlatform = platform;
+			
+			displayString = displayString + " (" + basePlatform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
 		}
 		return displayString;
 	}
@@ -136,15 +152,43 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 				sdk = SDKManagerInternalAPI.addMissingSdk(sdkId);
 			}
 						
-			return new SymbianBuildContext(sdk, getPlatformFromBuildConfigName(displayName), getTargetFromBuildConfigName(displayName));
+			return new SymbianBuildContext(sdk, 
+						getPlatformFromBuildConfigName(displayName), 
+						getTargetFromBuildConfigName(displayName),
+						getSBSv2AliasFromConfigName(displayName));
 		}
 		return new SymbianBuildContext(fallbackForBadSdk, SDK_NOT_INSTALLED, SDK_NOT_INSTALLED);
+	}
+
+	/**
+	 * See if the build configuration is an SBSv2 alias, and if so get the build-able alias name 
+	 * @param displayName
+	 * @return The full SBSv2 alias that can be used with -c, otherwise null if not SBSv2
+	 */
+	private static String getSBSv2AliasFromConfigName(String displayName) {
+		int indexBegin = displayName.indexOf("(");  //$NON-NLS-1$
+		int indexEnd = displayName.indexOf(")");  //$NON-NLS-1$
+		if (indexBegin > 0 && indexEnd > 0){
+			String configPart =  displayName.substring(indexBegin+1, indexEnd);
+			if (configPart.split("_").length > 0){
+				return configPart;
+			}
+		} 
+		
+		return null;
 	}
 
 	private static String getPlatformFromBuildConfigName(String configName) {
 		String[] tokens = configName.split(SPACE_DISPLAY_TEXT);
 		String sdkIdToken = tokens[2];
-		return sdkIdToken.substring(1, sdkIdToken.length()-1);
+		if (sdkIdToken.contains("_")){
+			sdkIdToken = sdkIdToken.substring(1, sdkIdToken.length()-1);
+			String[] aliasTokens = sdkIdToken.split("_");
+			return aliasTokens[0];
+		} else {
+			return sdkIdToken.substring(1, sdkIdToken.length()-1);
+		}
+		
 	}
 
 	public static String getSDKIDFromConfigName(String configName) {
@@ -386,6 +430,10 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	 */
 	public List<File> getCachedSystemIncludePaths() {
 		return getCachedData().getSystemIncludePaths();
+	}
+
+	public String getSBSv2Alias() {
+		return sbsv2Alias;
 	}
 
 }

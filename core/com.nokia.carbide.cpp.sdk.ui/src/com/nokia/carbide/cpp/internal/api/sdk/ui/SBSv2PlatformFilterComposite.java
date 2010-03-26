@@ -97,7 +97,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	
 	private void initTable(boolean refreshList) {
 
-		tableViewer.setInput(SBSv2Utils.getUnfilteredSBSv2BuildConfigurations(refreshList));
+		tableViewer.setInput(SBSv2Utils.getUnfilteredSBSv2BuildConfigurations(refreshList).keySet());
 
 		// check all configs
 		tableViewer.setAllChecked(true);
