@@ -65,6 +65,8 @@ public class BuildSettingsUI {
 	private Text makeEngineText;
 	private Label extraArgsLabel;
 	private Text  extraArgsText;
+	private Label buildAliasLabel;     // project setting only
+	private Text  buildAliasText; // project setting only
 	
 	public BuildSettingsUI(Shell shell, boolean wantsSBSv2, boolean projectSetting) {
 		this.shell = shell;
@@ -256,6 +258,17 @@ public class BuildSettingsUI {
 		extraArgsText.setToolTipText(Messages.getString("BuildSettingsUI.ExtraArgsToolTipText")); //$NON-NLS-1$
 		extraArgsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
+		if (projectSetting){
+			buildAliasLabel = new Label(content, SWT.NONE);
+			buildAliasLabel.setText(Messages.getString("BuildSettingsUI.AlliasAppendLabel")); //$NON-NLS-1$
+			buildAliasLabel.setToolTipText(Messages.getString("BuildSettingsUI.AlliasAppendToolTipText"));  //$NON-NLS-1$
+			GridData buildAliasGridData = new GridData();
+			buildAliasLabel.setLayoutData(buildAliasGridData);
+			
+			buildAliasText = new Text(content, SWT.BORDER);
+			buildAliasText.setToolTipText(Messages.getString("BuildSettingsUI.AlliasAppendToolTipText")); //$NON-NLS-1$
+			buildAliasText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		}
 		overrideDefaultMakeEngineCheck = new Button(content, SWT.CHECK);
 		overrideDefaultMakeEngineCheck.setText(Messages.getString("BuildSettingsUI.OverrideMakeEngineLabel")); //$NON-NLS-1$
 		overrideDefaultMakeEngineCheck.setToolTipText(Messages.getString("BuildSettingsUI.OverrideMakeEngineToolTip")); //$NON-NLS-1$
@@ -455,6 +468,14 @@ public class BuildSettingsUI {
 
 	public void setExtraSBSv2Args(String args) {
 		extraArgsText.setText(args);
+	}
+	
+	public String getBuildAliasAppendText() {
+		return buildAliasText.getText();
+	}
+
+	public void setBuildAliasAppendText(String args) {
+		buildAliasText.setText(args);
 	}
 	
 	public boolean getDontPromtTrackDeps(){

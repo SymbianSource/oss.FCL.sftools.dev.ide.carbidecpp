@@ -239,27 +239,7 @@ public class SBSv2Utils {
 			}
 		}
 		
-		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
-
-			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
-				String platform1 = o1.getPlatformString();
-				String platform2 = o2.getPlatformString();
-				if (platform1.equals(platform2)) {
-					return o1.getTargetString().compareTo(o2.getTargetString());
-				} else {
-					if (platform1.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
-						return -1;
-					}
-					else if (platform2.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
-						return 1;
-					}
-				}
-				return 0;
-			}
-			
-		});
-
-		return contexts;
+		return sortContexts(contexts);
 	}
 
 	/**
@@ -380,6 +360,91 @@ public class SBSv2Utils {
 			scannedSbsState = true;
 		}
 		return sbsPath != null ? sbsPath : new Path(sbsScriptName);  // dummy
+	}
+	
+	private static List<ISymbianBuildContext> sortContexts(List<ISymbianBuildContext> contexts){
+		
+		// 3 sorting stages to handle long Raptor aliases, and multiple aliases that have a similar platform and target prefix (e.g. armv5_urel)
+		
+		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
+
+			// First sort the target name (Debug / Release) and push Emulation to the top
+			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
+				String sbsAlias1 = o1.getSBSv2Alias();
+				String sbsAlias2 = o2.getSBSv2Alias();
+				
+				if (o1.getPlatformString().equals(o2.getPlatformString())) {
+					if (o1.getSBSv2Alias().split("_").length == 2 && o2.getSBSv2Alias().split("_").length == 2)
+						return o1.getTargetString().compareTo(o2.getTargetString());
+					else if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3)
+						return 1;
+				} else {
+					if (sbsAlias1.toUpperCase().startsWith(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+						return -1;
+					}else if (sbsAlias2.toUpperCase().startsWith(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+						return 1;
+					} 
+				}
+				return sbsAlias1.compareTo(sbsAlias2);
+				
+			}
+			
+		});
+
+		// Sort long alias names
+		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
+
+			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
+				String sbsAlias1 = o1.getSBSv2Alias();
+				String sbsAlias2 = o2.getSBSv2Alias();
+				
+				if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && !sbsAlias1.equals(sbsAlias2)){
+					String temp1[] = sbsAlias1.split("_");
+					String temp2[] = sbsAlias2.split("_");
+					String suffix1 = "";
+					String suffix2 = "";
+					for (int i = 2; i < temp1.length; i++){
+						suffix1 += temp1[i] + "_";
+					}
+					
+					for (int i = 2; i < temp2.length; i++){
+						suffix2 += temp2[i] + "_";
+					}
+					
+					return suffix1.compareTo(suffix2);
+				} 
+				
+				return 0;	
+			}
+		});
+		
+		// Sort the target string for long aliases
+		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
+
+			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
+				String sbsAlias1 = o1.getSBSv2Alias();
+				String sbsAlias2 = o2.getSBSv2Alias();
+				String temp1[] = sbsAlias1.split("_");
+				String temp2[] = sbsAlias2.split("_");
+				String suffix1 = "";
+				String suffix2 = "";
+				for (int i = 2; i < temp1.length; i++){
+					suffix1 += temp1[i] + "_";
+				}
+				
+				for (int i = 2; i < temp2.length; i++){
+					suffix2 += temp2[i] + "_";
+				}
+				
+				if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && suffix1.equals(suffix2)){
+					return o1.getTargetString().compareTo(o2.getTargetString());
+				} 
+				
+				return 0;	
+			}
+		});
+		
+		return contexts;
 	}
 
 }

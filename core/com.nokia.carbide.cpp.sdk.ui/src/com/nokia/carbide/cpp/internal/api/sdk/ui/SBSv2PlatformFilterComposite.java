@@ -17,6 +17,7 @@
 package com.nokia.carbide.cpp.internal.api.sdk.ui;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -97,8 +98,13 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	
 	private void initTable(boolean refreshList) {
 
-		tableViewer.setInput(SBSv2Utils.getUnfilteredSBSv2BuildConfigurations(refreshList).keySet());
-
+		Object[] keySet = SBSv2Utils.getUnfilteredSBSv2BuildConfigurations(refreshList).keySet().toArray();
+		List<String> sbsAliases = new ArrayList<String>();
+		for (Object key : keySet)
+			sbsAliases.add((String)key);
+		Collections.sort(sbsAliases);
+		tableViewer.setInput(sbsAliases);
+		
 		// check all configs
 		tableViewer.setAllChecked(true);
 		

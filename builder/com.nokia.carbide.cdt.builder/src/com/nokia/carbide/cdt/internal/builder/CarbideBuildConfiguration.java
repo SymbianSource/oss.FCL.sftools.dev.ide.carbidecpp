@@ -288,6 +288,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	public int getErrorParserId(){
 		String plat = this.getPlatformString();
 		
+		if (this.getSBSv2Alias() != null && this.getSBSv2Alias().toUpperCase().contains(ISymbianBuildContext.GCCE_PLATFORM)){
+			return ERROR_PARSERS_GCCE;
+		}
+		
 		if (plat.equals(ISymbianBuildContext.EMULATOR_PLATFORM)){
 			return ERROR_PARSERS_WINSCW;
 		} else if (plat.startsWith("ARMV")){
