@@ -29,6 +29,8 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.trk.support.connection.SerialBTConnectionType;
 import com.nokia.carbide.trk.support.connection.SerialConnectionType;
+import com.nokia.carbide.trk.support.connection.TCFConnection;
+import com.nokia.carbide.trk.support.connection.TCFConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 
@@ -49,7 +51,7 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 		}
 		else if (service instanceof TRKService &&
 				isCompatibleConnection(getCompatibleTRKConnectionTypeIds(), connection)) {
-			if (HostOS.IS_UNIX)
+			if (HostOS.IS_UNIX || connection instanceof TCFConnection)
 				return new RemoteConnectedService(service);	// TODO: not ported
 			return new TRKConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
@@ -75,7 +77,8 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 	
 	private Collection<String> getCompatibleTRKConnectionTypeIds() {
 		return Arrays.asList(new String[] {
-				SerialConnectionType.ID, 
+				SerialConnectionType.ID,
+				TCFConnectionType.ID,
 				SerialBTConnectionType.ID,
 				USBConnectionType.ID}); 
 	}
