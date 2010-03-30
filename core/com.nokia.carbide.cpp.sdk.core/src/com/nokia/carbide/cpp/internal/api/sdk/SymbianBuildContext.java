@@ -92,8 +92,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		if (target == null) {
 			if (other.target != null)
 				return false;
-		} else if (!target.equals(other.target))
+		} else if (!target.equals(other.target)) {
 			return false;
+		} else if (sbsv2Alias!= null && !sbsv2Alias.equals(other.sbsv2Alias)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -170,7 +173,7 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		int indexEnd = displayName.indexOf(")");  //$NON-NLS-1$
 		if (indexBegin > 0 && indexEnd > 0){
 			String configPart =  displayName.substring(indexBegin+1, indexEnd);
-			if (configPart.split("_").length > 0){
+			if (configPart.split("_").length > 1){
 				return configPart;
 			}
 		} 
@@ -434,6 +437,15 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 
 	public String getSBSv2Alias() {
 		return sbsv2Alias;
+	}
+	
+	public void setSBSv2Alias(String sbsv2Alias) {
+		this.sbsv2Alias = sbsv2Alias;
+	}
+
+	public void setDisplayString(String newDisplayName) {
+		this.displayString = newDisplayName;
+		
 	}
 
 }
