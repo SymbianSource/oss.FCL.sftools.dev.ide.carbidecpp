@@ -150,4 +150,8 @@ public interface ISymbianBuildContext {
 	 * @return the configuration name, or null if none.
 	 */
 	public String getSBSv2Alias();
+	
+	public void setSBSv2Alias(String newAlias);
+	
+	public void setDisplayString(String newDisplayName);
 }
