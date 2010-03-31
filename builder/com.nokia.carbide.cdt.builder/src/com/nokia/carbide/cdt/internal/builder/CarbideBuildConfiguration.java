@@ -69,7 +69,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	
 
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
-		super(context.getSDK(), context.getPlatformString(), context.getTargetString());
+		super(context.getSDK(), context.getPlatformString(), context.getTargetString(), context.getSBSv2Alias());
 		projectTracker = new TrackedResource(project);
 		sisBuilderInfoList = new ArrayList<ISISBuilderInfo>(0);
 		envVarsInfo = new EnvironmentVarsInfo2(project, context);
@@ -286,6 +286,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	
 	public int getErrorParserId(){
 		String plat = this.getPlatformString();
+		
+		if (this.getSBSv2Alias() != null && this.getSBSv2Alias().toUpperCase().contains(ISymbianBuildContext.GCCE_PLATFORM)){
+			return ERROR_PARSERS_GCCE;
+		}
 		
 		if (plat.equals(ISymbianBuildContext.EMULATOR_PLATFORM)){
 			return ERROR_PARSERS_WINSCW;
