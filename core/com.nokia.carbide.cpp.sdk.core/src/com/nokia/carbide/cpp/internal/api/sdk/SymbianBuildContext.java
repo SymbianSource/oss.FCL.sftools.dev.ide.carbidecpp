@@ -42,16 +42,16 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	
 	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget) {
 		sdkId = theSDK.getUniqueId();
-		platform = thePlatform;
-		target = theTarget;
+		platform = thePlatform.toUpperCase();
+		target = theTarget.toUpperCase();
 		
 		getDisplayString();
 	}
 	
 	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias) {
 		sdkId = theSDK.getUniqueId();
-		platform = thePlatform;
-		target = theTarget;
+		platform = thePlatform.toUpperCase();
+		target = theTarget.toUpperCase();
 		sbsv2Alias = theSBSv2Alias;
 		
 		getDisplayString();
@@ -112,11 +112,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	}
 
 	public String getPlatformString() {
-		return platform;
+		return platform.toUpperCase();
 	}
 
 	public String getTargetString() {
-		return target;
+		return target.toUpperCase();
 	}
 
 	public String getDisplayString() {
@@ -285,26 +285,26 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	}
 
 	public IPath getCompilerPrefixFile() {
-		String platUpper = platform.toUpperCase();
-		if (platUpper.equals(GCCE_PLATFORM)) {
+		if (platform.equals(GCCE_PLATFORM) || 
+				(sbsv2Alias != null && sbsv2Alias.toUpperCase().contains(GCCE_PLATFORM))) {
 			return getGCCEPrefixFilePath();
-		} else if (platUpper.equals(ARMV5_PLATFORM)
-					|| platUpper.equals(ARMV5_ABIV2_PLATFORM)
-					|| platUpper.equals(ARMV6_PLATFORM)
-					|| platUpper.equals(ARMV6_ABIV2_PLATFORM)) {
+		} else if (platform.equals(ARMV5_PLATFORM)
+					|| platform.equals(ARMV5_ABIV2_PLATFORM)
+					|| platform.equals(ARMV6_PLATFORM)
+					|| platform.equals(ARMV6_ABIV2_PLATFORM)) {
 			return getRVCTPrefixFilePath();
-		} else if (platUpper.equals(EMULATOR_PLATFORM)
-				|| platUpper.equals(ARMI_PLATFORM)
-				|| platUpper.equals(ARM4_PLATFORM)
-				|| platUpper.equals(THUMB_PLATFORM)) {
+		} else if (platform.equals(EMULATOR_PLATFORM)
+				|| platform.equals(ARMI_PLATFORM)
+				|| platform.equals(ARM4_PLATFORM)
+				|| platform.equals(THUMB_PLATFORM)) {
 			return null;
 		} else {
 			// check BSF's
 			IBSFCatalog catalog = getSDK().getBSFCatalog();
 	    	if (catalog != null) {
 	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
-	    			if (plat.getName().compareToIgnoreCase(platUpper) == 0) {
-	    				String mainPlatform = catalog.getReleasePlatform(platUpper);
+	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
+	    				String mainPlatform = catalog.getReleasePlatform(platform);
 	    				if (mainPlatform != null) {
 	    					if (mainPlatform.equals(GCCE_PLATFORM)) {
 	    						return getGCCEPrefixFilePath();
