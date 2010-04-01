@@ -1047,6 +1047,8 @@ public class PCCSConnection {
 				}
 		        if (DEBUG) System.out.println("getAllDeviceUSBPersonalities all devices read"); //$NON-NLS-1$
 				dwResult = library.UPAPI_FreeDeviceDescriptor(numUSBDevicesFound, pDeviceDescriptor);
+				if (DEBUG)
+					System.out.printf("UPAPI_FreeDeviceDescriptor dwResult = %x\n", dwResult); //$NON-NLS-1$
 			} else {
 				apiError = true;
 				if (DEBUG)
@@ -1077,12 +1079,14 @@ public class PCCSConnection {
 
 			// get all the supported personalities for this device
 			apiError = getSupportedPersonalities(deviceInfo, pid, persDesc, numPers);
+			dwResult = library.UPAPI_FreePersonalityDescriptors(persDesc);
+			if (DEBUG)
+				System.out.printf("UPAPI_FreePersonalityDescriptors dwResult = %x\n", dwResult); //$NON-NLS-1$
 		} else {
 			apiError = true;
 			if (DEBUG)
 				System.out.printf("UPAPI_GetPersonalityDescriptors dwResult = %x\n", dwResult); //$NON-NLS-1$
 		}
-		dwResult = library.UPAPI_FreePersonalityDescriptors(persDesc);
 		if (apiError == false) {
 			if (DEBUG) System.out.println("getAllDeviceUSBPersonalities deviceInfo added"); //$NON-NLS-1$
 			p.add(deviceInfo);
