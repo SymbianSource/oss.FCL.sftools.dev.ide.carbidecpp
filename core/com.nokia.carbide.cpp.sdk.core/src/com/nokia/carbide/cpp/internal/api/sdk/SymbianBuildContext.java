@@ -13,16 +13,30 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultModelDocumentProvider;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProvider;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianMissingSDKFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
+import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
+import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
 
@@ -32,6 +46,7 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	private String platform;
 	private String target;
 	private String displayString = null;
+	private String sbsv2Alias = null; 
 	
 	private static String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
 	private static String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
@@ -54,15 +69,22 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	private List<IDefine> compilerPrefixMacros = new ArrayList<IDefine>();
 	private long compilerCacheTimestamp;
 	
+	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias) { 
+		sdkId = theSDK.getUniqueId(); 
+		platform = thePlatform.toUpperCase(); 
+		target = theTarget.toUpperCase(); 
+		sbsv2Alias = theSBSv2Alias; 
+		
+		getDisplayString(); 
+	}
 	
 	public SymbianBuildContext(ISymbianSDK theSDK, String thePlatform, String theTarget) {
 		sdkId = theSDK.getUniqueId();
-		platform = thePlatform;
-		target = theTarget;
+		platform = thePlatform.toUpperCase(); 
+		target = theTarget.toUpperCase(); 
 		getDisplayString();
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -97,8 +119,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		if (target == null) {
 			if (other.target != null)
 				return false;
-		} else if (!target.equals(other.target))
+		} else if (!target.equals(other.target)) {
 			return false;
+		} else if (sbsv2Alias!= null && !sbsv2Alias.equals(other.sbsv2Alias)) {
+			return false; 
+		}
 		return true;
 	}
 
@@ -114,11 +139,11 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	}
 
 	public String getPlatformString() {
-		return platform;
+		return platform.toUpperCase(); 
 	}
 
 	public String getTargetString() {
-		return target;
+		return target.toUpperCase(); 
 	}
 
 	public String getDisplayString() {
@@ -137,7 +162,13 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 				displayString = displayString + SPACE_DISPLAY_TEXT + RELEASE_DISPLAY_TEXT;
 			}
 
-			displayString = displayString + " (" + platform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
+			String basePlatform; 
+			if (sbsv2Alias != null) 
+				basePlatform = sbsv2Alias; 
+			else
+				basePlatform = platform; 
+			
+			displayString = displayString + " (" + basePlatform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$ 
 		}
 		return displayString;
 	}
@@ -151,15 +182,37 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 				sdk = SDKManagerInternalAPI.addMissingSdk(sdkId);
 			}
 						
-			return new SymbianBuildContext(sdk, getPlatformFromBuildConfigName(displayName), getTargetFromBuildConfigName(displayName));
+			return new SymbianBuildContext(sdk, getPlatformFromBuildConfigName(displayName), 
+					getTargetFromBuildConfigName(displayName), getSBSv2AliasFromConfigName(displayName)); 	
 		}
-		return new SymbianBuildContext(fallbackForBadSdk, SDK_NOT_INSTALLED, SDK_NOT_INSTALLED);
+		return new SymbianBuildContext(fallbackForBadSdk, SDK_NOT_INSTALLED, SDK_NOT_INSTALLED); 		
 	}
-
+	/**
+	 * See if the build configuration is an SBSv2 alias, and if so get the build-able alias name 
+	 * @param displayName 
+	 * @return The full SBSv2 alias that can be used with -c, otherwise null if not SBSv2 
+	 */
+	private static String getSBSv2AliasFromConfigName(String displayName) { 
+		int indexBegin = displayName.indexOf("("); //$NON-NLS-1$ 
+		int indexEnd = displayName.indexOf(")"); //$NON-NLS-1$ 
+		if (indexBegin > 0 && indexEnd > 0){ 
+			String configPart = displayName.substring(indexBegin+1, indexEnd); 
+			if (configPart.split("_").length > 1){ 
+				return configPart; 
+			}
+		}
+		return null;
+	}
 	private static String getPlatformFromBuildConfigName(String configName) {
 		String[] tokens = configName.split(SPACE_DISPLAY_TEXT);
 		String sdkIdToken = tokens[2];
-		return sdkIdToken.substring(1, sdkIdToken.length()-1);
+		if (sdkIdToken.contains("_")){ 
+			sdkIdToken = sdkIdToken.substring(1, sdkIdToken.length()-1); 
+			String[] aliasTokens = sdkIdToken.split("_"); 
+			return aliasTokens[0]; 
+		} else {
+			return sdkIdToken.substring(1, sdkIdToken.length()-1); 
+		}
 	}
 
 	public static String getSDKIDFromConfigName(String configName) {
@@ -253,7 +306,8 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	}
 
 	public IPath getCompilerPrefixFile() {
-		if (platform.equals(GCCE_PLATFORM)) {
+		if (platform.equals(GCCE_PLATFORM) ||
+				(sbsv2Alias != null && sbsv2Alias.toUpperCase().contains(GCCE_PLATFORM))) {
 			return getGCCEPrefixFilePath();
 		} else if (platform.equals(ARMV5_PLATFORM)
 					|| platform.equals(ARMV5_ABIV2_PLATFORM)
@@ -569,5 +623,15 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 		return plat;
 	}
 	
+	public String getSBSv2Alias() {  
+		return sbsv2Alias;
+	} 
 	
+	public void setSBSv2Alias(String sbsv2Alias) { 
+		this.sbsv2Alias = sbsv2Alias; 
+	}
+	
+	public void setDisplayString(String newDisplayName) { 
+		this.displayString = newDisplayName; 
+	}
 }

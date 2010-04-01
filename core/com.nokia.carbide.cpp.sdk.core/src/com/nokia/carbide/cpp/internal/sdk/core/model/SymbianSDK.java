@@ -107,7 +107,6 @@ public class SymbianSDK implements ISymbianSDK {
 	public SymbianSDK(DeviceType device) {
 		deviceEntry = device;
 		scanSDK();
-		
 	}
 	
 	public void scanSDK(){
@@ -1026,8 +1025,18 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 				if (line.startsWith(BUILD_INFO_KEYWORD)){
 					String[] versionTokens = line.split(" ");
 					if (versionTokens.length == 3){
-						int index = versionTokens[2].lastIndexOf("v");
-						if (index > 0){
+						
+						if (versionTokens[2].toUpperCase().startsWith("TB92SF") || versionTokens[2].toUpperCase().endsWith("TB92SF")){
+							setOSVersion(new Version("9.5.0"));
+							setSDKVersion(new Version("5.2.0"));
+							break;
+						} else if (versionTokens[2].toUpperCase().startsWith("TB101SF") || versionTokens[2].toUpperCase().endsWith("TB101SF")){
+							setOSVersion(new Version("9.6.0"));
+							setSDKVersion(new Version("6.0.0"));
+							break;
+						}
+						else if (versionTokens[2].lastIndexOf("v") > 0){
+							int index = versionTokens[2].lastIndexOf("v");
 							String osVersionString = versionTokens[2].substring(index+1, versionTokens[2].length());
 							
 							if (osVersionString.compareToIgnoreCase("tb91sf") == 0){

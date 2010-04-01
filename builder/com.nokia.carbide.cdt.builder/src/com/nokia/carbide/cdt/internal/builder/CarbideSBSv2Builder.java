@@ -91,9 +91,9 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		return true;
 	}
     
+    /** Get the build-able configuration from the command line (i.e. build alias). This is passed after the sbs -c parameter */ 
     protected String getConfigName(ICarbideBuildConfiguration buildConfig) {
-    	//TODO is this sufficient?
-    	return buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase(); //$NON-NLS-1$
+    	return buildConfig.getSBSv2Alias(); 
     }
     
 	public boolean buildComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
@@ -501,9 +501,17 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		args.add(cpi.getAbsoluteBldInfPath().toOSString());
 		args.add("-c"); //$NON-NLS-1$
 		String configName = getConfigName(buildConfig);
+		if (configName == null){ 
+			configName = "error_retrieving_sbs_config"; 
+		}
 		if (isTest) {
 			configName = configName + ".test"; //$NON-NLS-1$
 		}
+		
+		if (cpi.buildConfigAppender() != null && cpi.buildConfigAppender().length() > 0){
+			configName = configName + cpi.buildConfigAppender();
+		}
+		
 		args.add(configName);
 		
 		//TODO this causes output to go to stdout, but only at the end of the build.  should we specify a logfile name and tail the file?

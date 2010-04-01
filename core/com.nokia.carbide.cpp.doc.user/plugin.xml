@@ -14,11 +14,23 @@
             file="tocRelease.xml"
             primary="false"/> -->
 	   
+	 	<!-- Prebuilt Index -->
 		<index path="index" />
    </extension>
   
 	
-	<!-- Carbide.c++ cheatsheets extension -->
+<!-- =================================================================================== -->
+<!-- Manual Index                                                                        -->
+<!-- =================================================================================== -->
+	
+ <extension point="org.eclipse.help.index">
+    <index file="html/index.xml"/>
+ </extension>
+
+
+<!-- =================================================================================== -->
+<!-- Cheatsheets extension                                                               -->
+<!-- =================================================================================== -->
 	
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
@@ -221,13 +233,6 @@
 	</extension>
 
 
-<!-- =================================================================================== -->
-<!-- Manual Index                                                                        -->
-<!-- =================================================================================== -->
-	
- <extension point="org.eclipse.help.index">
-    <index file="index.xml"/>
- </extension>
 
 <!-- =================================================================================== -->
 <!-- Universal intro extensions to show content in welcome pages                         -->

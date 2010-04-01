@@ -61,7 +61,8 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	protected boolean overrideMakeEngine;
 	protected String makeEngineToUse;
 	protected String extraSBSv2Args;
-
+	protected String buildAliasAppender;
+	
 	// for internal plugin use
 	public static final String OVERRIDE_WORKSPACE_SETTINGS_KEY = "overrideWorkspaceSettings"; //$NON-NLS-1$
 	public static final String CLEAN_LEVEL = "cleanLevel"; //$NON-NLS-1$
@@ -79,7 +80,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	public static final String OVERRIDE_MAKE_ENGINE = "overrideMakeEngine"; //$NON-NLS-1$
 	public static final String MAKE_ENGINE_TO_USE = "makeEngineToUse"; //$NON-NLS-1$
 	public static final String EXTRA_SBSV2_ARGS = "extraSBSv2Args"; //$NON-NLS-1$
-
+	public static final String BUILD_ALIAS_APPENDER = "buildAliasAppendText"; //$NON-NLS-1$
 	
 	public CarbideProjectInfo(IProject project) {
 		this.projectTracker = new TrackedResource(project);
@@ -229,6 +230,10 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 					if (orig != null){
 						extraSBSv2Args = orig;
 					}
+					orig = storage.getAttribute(BUILD_ALIAS_APPENDER);
+					if (orig != null){
+						buildAliasAppender = orig;
+					}
 					 
 				}
 			}
@@ -262,6 +267,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		overrideMakeEngine = BuilderPreferencePage.overrideDefaultMakeEngine();
 		makeEngineToUse = BuilderPreferencePage.makeEngine();
 		extraSBSv2Args = BuilderPreferencePage.extraSBSv2ArgsTextStore();
+		buildAliasAppender = ""; // project setting only
 	}
 
 	public List<ICarbideBuildConfiguration> getBuildConfigurations() {
@@ -527,6 +533,11 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		return BuilderPreferencePage.extraSBSv2ArgsTextStore();
 	}
 	
+	public String buildConfigAppender() {
+		// This is a project setting only, i.e. no workspace setting to override
+		return buildAliasAppender;
+	}
+	
 	/*
 	 * The following methods are non-API
 	 */
@@ -584,5 +595,9 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	
 	public String extraSBSv2ArgsProjectValue() {
 		return extraSBSv2Args;
+	}
+	
+	public String buildAliasAppendTextValue() {
+		return buildAliasAppender;
 	}
 }

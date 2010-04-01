@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.5"?>
+
+<target name="Carbide Help">
+<locations>
+<location path="/Users/Shared/mercurial/carbidecpp/core" type="Directory">
+<includeBundles>
+<plugin id="com.nokia.carbide.cpp.compiler.doc.user"/>
+<plugin id="com.nokia.carbide.cpp"/>
+<plugin id="com.nokia.carbide.cpp.doc.user"/>
+</includeBundles>
+</location>
+</locations>
+</target>
