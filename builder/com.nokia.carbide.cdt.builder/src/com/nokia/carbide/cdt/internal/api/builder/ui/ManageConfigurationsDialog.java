@@ -282,7 +282,21 @@ public class ManageConfigurationsDialog extends TrayDialog {
 						// if the current config is already a config set it to checked.
 						ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
 						for (ICarbideBuildConfiguration currExistingConfig : buildConfigList){
-							if (currExistingConfig.equals(buildContext)){
+							boolean checkIt = false;
+							checkIt = currExistingConfig.equals(buildContext);
+							if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()) &&
+											!checkIt && currExistingConfig.getSBSv2Alias() == null){
+								
+								// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
+								if (buildContext.getTargetString().equals(currExistingConfig.getTargetString()) &&
+									buildContext.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
+									buildContext.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
+									&& buildContext.getSBSv2Alias() != null && buildContext.getSBSv2Alias().split("_").length == 2){
+									
+									checkIt = true;
+								}
+							}
+							if (checkIt){
 								// must expand parent before checking, otherwise, we won't succeed
 								properSdkViewer.setExpandedState(sdkNode, true);
 								properSdkViewer.setChecked(currConfigNode, true);
@@ -359,10 +373,14 @@ public class ManageConfigurationsDialog extends TrayDialog {
 								// Now find out if it's checked. If it's not checked remove it
 								if (!properSdkViewer.getChecked(currConfigNode)){
 									ICarbideBuildConfiguration config = cpm.getNamedConfiguration(buildContext.getDisplayString());
+									if (config == null){
+										config = cpm.getNamedConfiguration(currExistingConfig.getDisplayString());
+									}
 									if (config != null){
 										cpm.deleteConfiguration(config);
 										break;
 									}
+									
 								} 
 							}
 						}

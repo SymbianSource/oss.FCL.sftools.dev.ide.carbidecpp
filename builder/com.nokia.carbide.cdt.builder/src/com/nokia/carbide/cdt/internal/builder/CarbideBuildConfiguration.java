@@ -61,6 +61,13 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	protected final static String ARGUMENTS_DATA_ID = "ARGUMENTS_DATA_ID"; //$NON-NLS-1$
 	protected final static String ROM_BUILDER_DATA_ID = "ROM_BUILDER_DATA_ID"; //$NON-NLS-1$
 	
+	// SBSv2 only config settings 
+	protected final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
+	protected final static String ATRRIB_CONFIG_BASE_PLATFORM = "CONFIG_BASE_PLATFORM"; //$NON-NLS-1$ 
+	protected final static String ATTRIB_CONFIG_TARGET = "CONFIG_TARGET"; //$NON-NLS-1$ 
+	protected final static String ATTRIB_SBSV2_BUILD_ALIAS = "SBSV2_BUILD_ALIAS"; //$NON-NLS-1$ 
+	protected final static String ATTRIB_SBSV2_CONFIG_DISPLAY_STRING = "SBSV2_CONFIG_DISPLAY_STRING"; //$NON-NLS-1$ 
+	
 	protected TrackedResource projectTracker;
 	protected List<ISISBuilderInfo> sisBuilderInfoList;
 	protected EnvironmentVarsInfo2 envVarsInfo;
@@ -118,7 +125,18 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			envVarsInfo.saveToStorage(rootStorage.createChild(ENV_VAR_DATA_ID));
 			saveBuildArgsToStorage(rootStorage.createChild(ARGUMENTS_DATA_ID));
 			romBuilderInfo.saveToStorage(rootStorage.createChild(ROM_BUILDER_DATA_ID));
+			
+			if (getSBSv2Alias() != null){ 
+				saveSBSv2DataToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
+			}
 		}
+	}
+	
+	private void saveSBSv2DataToStorage(ICStorageElement createChild) {
+		createChild.setAttribute(ATRRIB_CONFIG_BASE_PLATFORM, getPlatformString()); 
+		createChild.setAttribute(ATTRIB_CONFIG_TARGET, getTargetString()); 
+		createChild.setAttribute(ATTRIB_SBSV2_BUILD_ALIAS, getSBSv2Alias()); 
+		createChild.setAttribute(ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, getDisplayString()); 
 	}
 	
 	private void loadBuildArgsFromStorage(ICStorageElement rootStorage) {
@@ -278,9 +296,13 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			ISymbianBuildContext context = (ISymbianBuildContext)obj;
 			if (context.getDisplayString().equals(this.getDisplayString())){
 				return true;
+			} else if (context.getPlatformString().equals(this.getPlatformString()) && 
+					context.getTargetString().equals(this.getTargetString()) && 
+					context.getSDK().equals(this.getSDK()) && context.getSBSv2Alias() != null && context.getSBSv2Alias().split("_").length == 2){ 
+				return true; 
+			} else {
+				return false;
 			}
-		} else {
-			return false;
 		}
 		return false;
 	}

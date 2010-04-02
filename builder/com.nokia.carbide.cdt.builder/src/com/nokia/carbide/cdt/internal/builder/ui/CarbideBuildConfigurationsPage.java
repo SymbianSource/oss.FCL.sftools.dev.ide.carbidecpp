@@ -508,7 +508,9 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 			String defaultConfigName = cpm.getDefaultBuildConfigName();
 			
 			if (!selectedConfigString.equals(defaultConfigName)) {
-				cpm.setDefaultConfiguration(cpm.getNamedConfiguration(selectedConfigString));
+				if (cpm.getNamedConfiguration(selectedConfigString) != null){
+					cpm.setDefaultConfiguration(cpm.getNamedConfiguration(selectedConfigString));
+				}
 				cpm.saveChanges();
 			}
 			
