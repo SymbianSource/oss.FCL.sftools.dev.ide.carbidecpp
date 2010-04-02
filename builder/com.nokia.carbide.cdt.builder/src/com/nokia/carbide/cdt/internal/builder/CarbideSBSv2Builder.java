@@ -502,8 +502,11 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		args.add("-c"); //$NON-NLS-1$
 		String configName = getConfigName(buildConfig);
 		if (configName == null){ 
-			//TODO: Try to contrive if the project hasn't yet been converted.....
-			configName = "error_retrieving_sbs_config"; 
+			// Just get the default target. This is a SBSv1 style configuration name...
+			if (buildConfig.getSBSv2Alias() == null)
+				configName = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
+			else
+				configName = "error_retrieving_build_alias";
 		}
 		if (isTest) {
 			configName = configName + ".test"; //$NON-NLS-1$
@@ -588,8 +591,11 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		
 		String configName = getConfigName(buildConfig);
 		if (configName == null){ 
-			//TODO: Try to contrive if the project hasn't yet been converted.....
-			configName = "error_retrieving_sbs_config"; 
+			// Just get the default target. This is a SBSv1 style configuration name...
+			if (buildConfig.getSBSv2Alias() == null)
+				configName = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
+			else
+				configName = "error_retrieving_build_alias";
 		}
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());
