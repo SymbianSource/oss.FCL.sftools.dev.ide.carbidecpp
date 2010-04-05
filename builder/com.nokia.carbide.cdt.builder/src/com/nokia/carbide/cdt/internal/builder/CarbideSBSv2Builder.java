@@ -591,6 +591,11 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 			else
 				configName = "error_retrieving_build_alias"; 
 		}
+		
+		if (cpi.buildConfigAppender() != null && cpi.buildConfigAppender().length() > 0){
+			configName = configName + cpi.buildConfigAppender();
+		}
+		
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());
 		
