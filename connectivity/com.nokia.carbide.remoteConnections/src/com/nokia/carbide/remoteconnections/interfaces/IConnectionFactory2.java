@@ -15,43 +15,37 @@
 *
 */
 
-
 package com.nokia.carbide.remoteconnections.interfaces;
-
-import org.eclipse.swt.widgets.Composite;
 
 import java.util.Map;
 
+import org.eclipse.swt.widgets.Composite;
+
 /**
- * The interface for a connection factory
+ * An extended interface for a connection factory.
  */
-public interface IConnectionFactory {
-	
-	interface IValidationErrorReporter {
-		void setErrorMessage(String newMessage);
+public interface IConnectionFactory2 extends IConnectionFactory {
+
+	public static final String PREFERRED_CONNECTION_NAME = "preferred-connection-name"; //$NON-NLS-1$
+
+	public interface ISettingsChangedListener {
+		void settingsChanged();
 	}
-	
+
+	public interface IEditingUI {
+		Map<String, String> getSettings();
+	}
+
 	/**
 	 * Creates a composite with UI for editing settings, optionally initialized with initialSettings.<br>
 	 * Can provide optional errorReporter and optional listener. Assumes parent has GridLayout
 	 * @param parent Composite
 	 * @param errorReporter IValidationErrorReporter
 	 * @param initialSettings Map may be <code>null</code>
-	 * @deprecated
+	 * @param settingsListener ISettingsChangedListener
+	 * @return IEditingUI
 	 */
-	void createEditingUI(Composite parent, IValidationErrorReporter errorReporter, Map<String, String> initialSettings);
-
-	/**
-	 * Returns the settings from the editing UI as name value pairs
-	 * @return Map
-	 */
-	Map<String, String> getSettingsFromUI();
-
-	/**
-	 * Create a new connection from settings or default settings if <code>null</code>
-	 * @param settings Map may be <code>null</code>
-	 * @return IConnection
-	 */
-	IConnection createConnection(Map<String, String> settings);
-
+	IEditingUI createEditingUI(Composite parent, IValidationErrorReporter errorReporter, 
+			Map<String, String> initialSettings, ISettingsChangedListener settingsListener);
+	
 }
