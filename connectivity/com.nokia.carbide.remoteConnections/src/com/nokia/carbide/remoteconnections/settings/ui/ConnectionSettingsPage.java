@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -47,6 +50,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.wizard.IWizardContainer2;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -54,6 +59,8 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -80,19 +87,22 @@ import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.IEditingUI;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
-import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.interfaces.IService2;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IService2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -100,7 +110,7 @@ import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
-public class ConnectionSettingsPage extends WizardPage {
+public class ConnectionSettingsPage extends WizardPage implements ISettingsChangedListener {
 	
 	public final class Tester extends Thread {
 		@Override
@@ -127,11 +137,17 @@ public class ConnectionSettingsPage extends WizardPage {
 	private final static Image FOLDER_ICON_IMG = 
 		PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 				ISharedImages.IMG_OBJ_FOLDER).createImage();
+	private static final String INITIAL_NAME_FMT = "connection {0}"; //$NON-NLS-1$
 	private static final String UID = ".uid"; //$NON-NLS-1$
 	private final SettingsWizard settingsWizard;
 	private IConnectionType connectionType;
 	private ComboViewer deviceOSComboViewer;
 	private Group settingsGroup;
+	private Composite setupTabComposite;
+	private ComboViewer connectionTypeViewer;
+	private Text nameText;
+	private boolean modifiedName;
+	private boolean initialized;
 	private Composite agentTestTabComposite;
 	private ListViewer servicesListViewer;
 	private Text serviceTestInfo;
@@ -140,6 +156,7 @@ public class ConnectionSettingsPage extends WizardPage {
 	private Label statusLabel;
 	private Text statusText;
 	private IConnectionFactory connectionFactory;
+	private IEditingUI editingUI;
 	private IConnection connection;
 	private IService service;
 	private volatile IConnectedService connectedService;
@@ -166,6 +183,7 @@ public class ConnectionSettingsPage extends WizardPage {
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
 		tabFolder.setData(UID, "ConnectionSettingsPage"); //$NON-NLS-1$
 		
+		createSetupTabComposite(tabFolder);
 		createAgentTestTabComposite(tabFolder);
 		createInstallTabComposite(tabFolder);
 		
@@ -173,7 +191,80 @@ public class ConnectionSettingsPage extends WizardPage {
 		
 		setControl(tabFolder);
 	}
-	
+
+	private void createSetupTabComposite(TabFolder tabFolder) {
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText(Messages.getString("ConnectionSettingsPage.SetupTabLabel")); //$NON-NLS-1$
+		tabItem.setData(UID, "setupTab"); //$NON-NLS-1$
+		setupTabComposite = new Composite(tabFolder, SWT.NONE);
+		setupTabComposite.setLayout(new GridLayout(2, false));
+		tabItem.setControl(setupTabComposite);
+		
+		boolean canEditConnection = !settingsWizard.isConnectionToEditDynamic();
+
+		Label viewerLabel = new Label(setupTabComposite, SWT.NONE);
+		viewerLabel.setText(Messages.getString("ConnectionTypePage.ViewerLabel")); //$NON-NLS-1$
+		
+		connectionTypeViewer = new ComboViewer(setupTabComposite, SWT.READ_ONLY);
+		connectionTypeViewer.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				Check.checkState(element instanceof IConnectionType);
+				IConnectionType connectionType = (IConnectionType) element;
+				return connectionType.getDisplayName() + " (" + getServicesString(connectionType) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		});
+		connectionTypeViewer.setContentProvider(new ArrayContentProvider());
+		connectionTypeViewer.setInput(getConnectionTypes());
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false);
+		connectionTypeViewer.getControl().setLayoutData(gd);
+		connectionTypeViewer.getControl().setData(UID, "viewer"); //$NON-NLS-1$
+		connectionTypeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			private IConnectionType previousSelection;
+			public void selectionChanged(SelectionChangedEvent event) {
+				Object currentSelection = ((IStructuredSelection) event.getSelection()).getFirstElement();
+				if (!currentSelection.equals(previousSelection)) {
+					settingsWizard.connectionTypeChanged();
+					previousSelection = (IConnectionType) currentSelection;
+				}
+			}
+		});
+		connectionTypeViewer.addDoubleClickListener(new IDoubleClickListener() {
+			public void doubleClick(DoubleClickEvent event) {
+				getWizard().getContainer().showPage(getNextPage());
+			}
+		});
+		connectionTypeViewer.setSorter(new ViewerSorter() {
+			@Override
+			public int compare(Viewer viewer, Object e1, Object e2) {
+				IConnectionType t1 = (IConnectionType) e1;
+				IConnectionType t2 = (IConnectionType) e2;
+				return t1.getDisplayName().compareToIgnoreCase(t2.getDisplayName());
+			}
+		});
+		connectionTypeViewer.getCombo().select(getCurrentTypeIndex());
+		connectionTypeViewer.getCombo().setEnabled(canEditConnection);
+
+		Label nameLabel = new Label(setupTabComposite, SWT.NONE);
+		nameLabel.setText(Messages.getString("ConnectionTypePage.NameLabel")); //$NON-NLS-1$
+		nameText = new Text(setupTabComposite, SWT.BORDER);
+		gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		nameText.setLayoutData(gd);
+		nameText.setToolTipText(Messages.getString("ConnectionTypePage.NameTextToolTip")); //$NON-NLS-1$
+		nameText.setData(UID, "nameText"); //$NON-NLS-1$
+		nameText.setText(getInitialNameText());
+		nameText.selectAll();
+		nameText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				modifiedName = true;
+				setPageComplete(validatePage());
+			}
+		});
+		nameText.setEnabled(canEditConnection);
+
+		createSettingsGroup(setupTabComposite);
+	}
+
 	private void createAgentTestTabComposite(TabFolder tabFolder) {
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText(Messages.getString("ConnectionSettingsPage.AgentTestTabLabel")); //$NON-NLS-1$
@@ -183,8 +274,6 @@ public class ConnectionSettingsPage extends WizardPage {
 		gridLayout.numColumns = 2;
 		agentTestTabComposite.setLayout(gridLayout);
 		tabItem.setControl(agentTestTabComposite);
-
-		createSettingsGroup(agentTestTabComposite);
 		
 		Group group = new Group(agentTestTabComposite, SWT.NONE);
 		group.setText(Messages.getString("ConnectionSettingsPage.ConnectionTestingLabel")); //$NON-NLS-1$
@@ -462,12 +551,18 @@ public class ConnectionSettingsPage extends WizardPage {
 	
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (visible)
-			updateDynamicUI();
+		if (visible) {
+			if (!initialized) {
+				initialized = true;
+				connectionTypeViewer.setSelection(connectionTypeViewer.getSelection());
+			}
+			settingsWizard.connectionTypeChanged();
+		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void updateDynamicUI() {
-		IConnectionType currentConnectionType = settingsWizard.getConnectionType();
+		IConnectionType currentConnectionType = getConnectionType();
 		if (currentConnectionType != null && !currentConnectionType.equals(connectionType)) {
 			setErrorMessage(null);
 			setPageComplete(true);
@@ -489,7 +584,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 			if (connectionToEdit != null && connectionToEdit.getConnectionType().equals(connectionType)) // show existing settings
 				initialSettings = connectionToEdit.getSettings();
-			connectionFactory.createEditingUI(settingsGroup, new IValidationErrorReporter() {
+			IValidationErrorReporter errorReporter = new IValidationErrorReporter() {
 				public void setErrorMessage(String newMessage) {
 					ConnectionSettingsPage.this.setErrorMessage(newMessage);
 					boolean noError = newMessage == null;
@@ -497,7 +592,19 @@ public class ConnectionSettingsPage extends WizardPage {
 					String buttonLabel = Messages.getString("ConnectionSettingsPage.StartServiceTestButtonLabel"); //$NON-NLS-1$
 					serviceTestButton.setText(buttonLabel);
 				}
-			}, initialSettings);
+			};
+			if (connectionFactory instanceof IConnectionFactory2) {
+				editingUI = ((IConnectionFactory2)connectionFactory).createEditingUI(
+						settingsGroup, errorReporter, initialSettings, this);
+				settingsChanged();
+			}
+			else {
+				connectionFactory.createEditingUI(settingsGroup, errorReporter, initialSettings);
+				if (!modifiedName) {
+					nameText.setText(getInitialNameText());
+					modifiedName = false;
+				}
+			}
 			settingsUI = settingsGroup.getChildren();
 			if (settingsUI.length == 0) {
 				CLabel label = new CLabel(settingsGroup, SWT.NONE);
@@ -508,7 +615,7 @@ public class ConnectionSettingsPage extends WizardPage {
 			else if (settingsWizard.isConnectionToEditDynamic()) {
 				disableControls(settingsUI);
 			}
-	
+
 			// update services list
 			Collection<IService> compatibleServices = 
 				Registry.instance().getCompatibleServices(connectionType);
@@ -532,11 +639,23 @@ public class ConnectionSettingsPage extends WizardPage {
 			t.start();
 		}
 		
-		if (getControl().isVisible())
+		if (getControl().isVisible()) {
+			setupTabComposite.layout(true, true);
 			agentTestTabComposite.layout(true, true);
+		}
 		
 		if (getControl().isVisible())
 			((IWizardContainer2) getWizard().getContainer()).updateSize();
+	}
+
+	public void settingsChanged() {
+		if (!modifiedName && editingUI != null) {
+			String preferredName = editingUI.getSettings().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
+			if (preferredName != null) {
+				nameText.setText(preferredName);
+				modifiedName = false;
+			}
+		}
 	}
 
 	private void disableControls(Control[] controls) {
@@ -647,7 +766,13 @@ public class ConnectionSettingsPage extends WizardPage {
 
 	@SuppressWarnings("unchecked")
 	protected void testService() {
-		Map<String, String> settings = connectionFactory.getSettingsFromUI();
+		Map<String, String> settings;
+		if (connectionFactory instanceof IConnectionFactory2 && editingUI != null) {
+			settings = editingUI.getSettings();
+		}
+		else {
+			settings = connectionFactory.getSettingsFromUI();
+		}
 		boolean newConnection = connection == null || !connectionType.equals(connection.getConnectionType());
 		if (newConnection) {
 			if (connection != null)
@@ -707,7 +832,7 @@ public class ConnectionSettingsPage extends WizardPage {
 	public Map<String, String> getSettings() {
 		if (connectionFactory == null) {
 			IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
-			if (connectionToEdit == null || !connectionToEdit.getConnectionType().equals(settingsWizard.getConnectionType())) {
+			if (connectionToEdit == null || !connectionToEdit.getConnectionType().equals(getConnectionType())) {
 				return null;
 			}
 			return connectionToEdit.getSettings();
@@ -896,4 +1021,111 @@ public class ConnectionSettingsPage extends WizardPage {
 		});
 	}
 
+	public IConnectionType getConnectionType() {
+		return (IConnectionType) ((IStructuredSelection) connectionTypeViewer.getSelection()).getFirstElement();
+	}
+	
+	public String getName() {
+		return nameText.getText().trim();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private int getCurrentTypeIndex() {
+		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
+		if (connectionToEdit != null) {
+			Object input = connectionTypeViewer.getInput();
+			if (input != null) {
+				Collection<IConnectionType> connectionTypes = (Collection<IConnectionType>) input;
+				for (int i = 0; i < connectionTypes.size(); i++) {
+					IConnectionType connectionType = (IConnectionType) connectionTypeViewer.getElementAt(i);
+					if (connectionToEdit.getConnectionType().equals(connectionType))
+						return i;
+				}
+			}
+		}
+		return 0;
+	}
+	
+	private Collection<IConnectionType> getConnectionTypes() {
+		Collection<IConnectionType> connectionTypes = getValidConnectionTypes();
+		IService serviceToRestrict = settingsWizard.getServiceToRestrict();
+		if (serviceToRestrict != null) {
+			List<IConnectionType> restrictedConnectionTypes = new ArrayList<IConnectionType>();
+			Collection<String> compatibleConnectionTypeIds = 
+				Registry.instance().getCompatibleConnectionTypeIds(serviceToRestrict);
+			for (String connectionTypeId : compatibleConnectionTypeIds) {
+				IConnectionType connectionType = 
+					Registry.instance().getConnectionType(connectionTypeId);
+				if (connectionTypes.contains(connectionType))
+					restrictedConnectionTypes.add(connectionType);
+			}
+			return restrictedConnectionTypes;
+		}
+		
+		return connectionTypes;
+	}
+
+	private String getInitialNameText() {
+		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
+		if (connectionToEdit != null)
+			return connectionToEdit.getDisplayName();
+		
+		long i = 1;
+		while (true) {
+			String name = MessageFormat.format(INITIAL_NAME_FMT, new Object[] { Long.toString(i++) });
+			if (isNameUnique(name))
+				return name;
+		}
+	}
+
+	private String getServicesString(IConnectionType connectionType) {
+		StringBuilder servicesString = new StringBuilder();
+		Collection<IService> services = 
+			Registry.instance().getCompatibleServices(connectionType);
+		if (services == null || services.isEmpty())
+			return ""; //$NON-NLS-1$
+		for (Iterator<IService> iterator = services.iterator(); iterator.hasNext();) {
+			servicesString.append(iterator.next().getDisplayName());
+			if (iterator.hasNext())
+				servicesString.append(", "); //$NON-NLS-1$
+		}
+		
+		return MessageFormat.format(Messages.getString("ConnectionTypePage.SupportedServicesLabel"), new Object[] { servicesString.toString() }); //$NON-NLS-1$
+	}
+
+	private Collection<IConnectionType> getValidConnectionTypes() {
+		// valid connection types have at least one compatible service, or are the actual connection type of the connection being edited
+		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
+		IConnectionType connectionTypeToEdit = connectionToEdit != null ? connectionToEdit.getConnectionType() : null;
+		Collection<IConnectionType> allConnectionTypes = 
+		Registry.instance().getConnectionTypes();
+		Collection<IConnectionType> connectionTypes = new ArrayList<IConnectionType>();
+		for (IConnectionType connectionType : allConnectionTypes) {
+			if (!Registry.instance().getCompatibleServices(connectionType).isEmpty() ||
+					connectionType.equals(connectionTypeToEdit))
+				connectionTypes.add(connectionType);
+		}
+		return connectionTypes;
+	}
+
+	private boolean isNameUnique(String name) {
+		boolean inUse = Registry.instance().connectionNameInUse(name);
+		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
+		if (connectionToEdit != null && inUse)
+			inUse = !name.equals(connectionToEdit.getDisplayName());
+		
+		return !inUse;
+	}
+
+	private boolean validatePage() {
+		setErrorMessage(null);
+		String name = getName();
+		boolean isValid = isNameUnique(name);
+		if (!isValid) {
+			setErrorMessage(MessageFormat.format(Messages.getString("ConnectionTypePage.ConnectionNameInUseError"), new Object[] { name } )); //$NON-NLS-1$
+		}
+		
+		return isValid;
+	}
+	
 }

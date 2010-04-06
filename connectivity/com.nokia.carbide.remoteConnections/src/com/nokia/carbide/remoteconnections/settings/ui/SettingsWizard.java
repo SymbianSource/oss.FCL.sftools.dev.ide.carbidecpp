@@ -41,7 +41,6 @@ import com.nokia.carbide.remoteconnections.internal.registry.Registry;
  */
 public class SettingsWizard extends Wizard {
 
-	private ConnectionTypePage connectionTypePage;
 	private ConnectionSettingsPage connectionSettingsPage;
 	private IConnection connectionToEdit;
 	private IService serviceToRestrict;
@@ -70,17 +69,12 @@ public class SettingsWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		connectionTypePage = new ConnectionTypePage(this);
-		addPage(connectionTypePage);
 		connectionSettingsPage = new ConnectionSettingsPage(this);
 		addPage(connectionSettingsPage);
 	}
 	
     public IWizardPage getStartingPage() {
-    	if (connectionToEdit == null)
-    		return connectionTypePage;
-    	else
-    		return connectionSettingsPage;
+    	return connectionSettingsPage;
     }
     
     public IConnection getConnectionToEdit() {
@@ -96,15 +90,11 @@ public class SettingsWizard extends Wizard {
 		return serviceToRestrict;		
 	}
 	
-	public IConnectionType getConnectionType() {
-		return connectionTypePage.getConnectionType();
-	}
-	
 	@Override
 	public boolean performFinish() {
-		String newName = connectionTypePage.getName();
+		String newName = connectionSettingsPage.getName();
 		Map<String, String> newSettings = connectionSettingsPage.getSettings();
-		IConnectionType newConnectionType = connectionTypePage.getConnectionType();
+		IConnectionType newConnectionType = connectionSettingsPage.getConnectionType();
 		if (connectionToEdit == null || !connectionToEdit.getConnectionType().equals(newConnectionType)) {
 			String id = null;
 			if (connectionToEdit != null) {
