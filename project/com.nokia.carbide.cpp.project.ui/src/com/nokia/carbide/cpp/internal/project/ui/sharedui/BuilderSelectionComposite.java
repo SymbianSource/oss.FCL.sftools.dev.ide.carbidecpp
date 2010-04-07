@@ -74,28 +74,37 @@ public class BuilderSelectionComposite extends Composite {
     public IStatus validate() {
 		useSBSv2Builder = true;
 		IStatus status = null;
-		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) {
-
-			IPath sbsBinPath = SBSv2Utils.getSBSBinDirectory();
-			
-			// if SBSv2 is selected, make sure SBS_HOME is defined
-			if (SBSv2Utils.getSBSBinDirectory() == null){
-				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.");
-			}
-			
-			// check to see if SBS_HOME directory really exists
-			else if (!sbsBinPath.toFile().exists()){
-				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable path does not exist: " + sbsBinPath.toOSString());
-			}
-			
-			// check the raptor version
-			else if (SDKCorePlugin.getSDKManager().getSBSv2Version(false).getMajor() == 0){
-				// Try to scan again....
-				if (SDKCorePlugin.getSDKManager().getSBSv2Version(true).getMajor() == 0){
-					status = new Status(Status.WARNING, ProjectUIPlugin.PLUGIN_ID, "SBS version cannot be determined, some SBS functionality may not work. Please check your SBS installation.");
+		if (builderCombo != null) {
+			if (builderCombo.getSelectionIndex() == 0) {
+				if (!SBSv2Utils.enableSBSv1Support()) {
+					status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBSv1 is not supported on this system.");
 				}
 			}
+			else if (builderCombo.getSelectionIndex() == 1) {
 
+				IPath sbsBinPath = SBSv2Utils.getSBSBinDirectory();
+				
+				// if SBSv2 is selected, make sure SBS_HOME is defined
+				if (SBSv2Utils.getSBSBinDirectory() == null){
+					status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.");
+				}
+				
+				// check to see if SBS_HOME directory really exists
+				else if (!sbsBinPath.toFile().exists()){
+					status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable path does not exist: " + sbsBinPath.toOSString());
+				}
+				
+				// check the raptor version
+				else if (SDKCorePlugin.getSDKManager().getSBSv2Version(false).getMajor() == 0){
+					// Try to scan again....
+					if (SDKCorePlugin.getSDKManager().getSBSv2Version(true).getMajor() == 0){
+						status = new Status(Status.WARNING, ProjectUIPlugin.PLUGIN_ID, "SBS version cannot be determined, some SBS functionality may not work. Please check your SBS installation.");
+					}
+				}
+
+			} else {
+				useSBSv2Builder = false;
+			}
 		} else {
 			useSBSv2Builder = false;
 		}
