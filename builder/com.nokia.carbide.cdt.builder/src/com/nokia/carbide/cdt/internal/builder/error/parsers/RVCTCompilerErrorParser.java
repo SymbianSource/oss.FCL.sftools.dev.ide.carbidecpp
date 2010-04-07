@@ -16,12 +16,18 @@
 */
 package com.nokia.carbide.cdt.internal.builder.error.parsers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.cdt.core.ErrorParserManager;
 import org.eclipse.cdt.core.IMarkerGenerator;
 import org.eclipse.core.runtime.Path;
 
 public class RVCTCompilerErrorParser extends CarbideBaseErrorParser {
 
+	private static final Pattern RVCT_ERROR_PATTERN = Pattern.compile("(?:Error|Fatal error): (C\\d\\d\\d\\d.: .*)");
+	private static final Pattern RVCT_WARNING_PATTERN = Pattern.compile("Warning: (C\\d\\d\\d\\d.: .*)");
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.cdt.core.IErrorParser#processLine(java.lang.String, org.eclipse.cdt.core.ErrorParserManager)
 	 */
@@ -50,13 +56,22 @@ public class RVCTCompilerErrorParser extends CarbideBaseErrorParser {
 		}
 		
 		// Check for license.
-		// TODO: This seems to follow a pattern of "Error: <code>: <message>:" So we might do a regexp check
-		// in the future.
 		if (aLine.toLowerCase().contains("cannot obtain license for compiler")){
 			aErrorParserManager.generateMarker(aErrorParserManager.getProject(), 0, aLine, IMarkerGenerator.SEVERITY_ERROR_BUILD, null);
 			return true;
 		}
-		
+
+		// Check general (command-line) errors and warnings
+		Matcher matcher = RVCT_ERROR_PATTERN.matcher(aLine);
+		if (matcher.matches()) {
+			aErrorParserManager.generateMarker(aErrorParserManager.getProject(), 0, matcher.group(1), IMarkerGenerator.SEVERITY_ERROR_BUILD, null);
+			return true;
+		}
+		matcher = RVCT_WARNING_PATTERN.matcher(aLine);
+		if (matcher.matches()) {
+			aErrorParserManager.generateMarker(aErrorParserManager.getProject(), 0, matcher.group(1), IMarkerGenerator.SEVERITY_WARNING, null);
+			return true;
+		}
 		
 		if (!setFirstColon(aLine)) {
 			return false;
