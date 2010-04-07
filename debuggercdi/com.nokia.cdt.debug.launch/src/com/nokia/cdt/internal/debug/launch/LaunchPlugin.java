@@ -391,12 +391,16 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		}
 		String defaultConfigName = getDefaultLaunchConfigName(project, executable);
 		ArrayList<ILaunchConfiguration> configs = new ArrayList<ILaunchConfiguration>();
+		
 		// Try the configurations not from the launch history
+		// EJS 100407: match more than one configuration if possible: there may be several for the same
+		// project and executable (stop mode, run mode, app trk, sys trk, etc).  These will have
+		// suffixes like "(1)", "(2)", etc.  So look for String#contains instead of String#equals.
 		ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
 		try {
 			ILaunchConfiguration[] launches = launchManager.getLaunchConfigurations();
 			for (ILaunchConfiguration launchConfiguration : launches) {
-				if (launchConfiguration.getName().equals(defaultConfigName) || 
+				if (launchConfiguration.getName().contains(defaultConfigName) || 
 						launchConfiguration.getAttribute(SettingsData.ATTR_originalName, launchConfiguration.getName()).equals(defaultConfigName))
 				{
 					if (defaultExecutable != null)
@@ -407,7 +411,6 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 					}
 					else
 						configs.add(launchConfiguration);
-					break;
 				}					
 			}
 		} catch (CoreException e) { 

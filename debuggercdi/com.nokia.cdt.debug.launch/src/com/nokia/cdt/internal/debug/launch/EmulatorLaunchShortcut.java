@@ -18,14 +18,27 @@ package com.nokia.cdt.internal.debug.launch;
 
 import org.eclipse.cdt.debug.core.executables.Executable;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.debug.core.ILaunchConfiguration;
 
+import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin.ILaunchCreationWizardFactory;
 import com.nokia.cdt.internal.debug.launch.wizard.ILaunchCreationWizard;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchCreationWizardInstance;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
 
 public class EmulatorLaunchShortcut extends AbstractSymbianLaunchShortcut {
+	
+	/* (non-Javadoc)
+	 * @see com.nokia.cdt.internal.debug.launch.AbstractSymbianLaunchShortcut#isSupportedConfiguration(org.eclipse.debug.core.ILaunchConfiguration)
+	 */
+	@Override
+	protected boolean isSupportedConfiguration(ILaunchConfiguration config)
+			throws CoreException {
+		
+		return SettingsData.isEmulatorConfiguration(config);
+	}
 	
 	@Override
 	protected void launchProject(IProject project, Executable executable, IPath defaultMMP, String mode) {

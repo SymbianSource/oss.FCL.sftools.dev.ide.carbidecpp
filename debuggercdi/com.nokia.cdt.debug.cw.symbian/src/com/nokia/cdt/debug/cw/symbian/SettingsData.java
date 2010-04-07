@@ -974,6 +974,17 @@ public class SettingsData {
 		return false;
 	}
 	
+	public static boolean isSysTRKConfiguration(ILaunchConfiguration configuration) {
+		try {
+			ILaunchConfigurationType configurationType = configuration.getType();
+			String id = configurationType.getIdentifier();
+			return id.equals(SYS_TRK_LAUNCH_TYPE_ID);
+		} catch (CoreException e) {
+		}
+		
+		return false;
+	}
+	
 	public static boolean isEmulatorConfiguration(ILaunchConfiguration configuration) {
 		try {
 			ILaunchConfigurationType configurationType = configuration.getType();
