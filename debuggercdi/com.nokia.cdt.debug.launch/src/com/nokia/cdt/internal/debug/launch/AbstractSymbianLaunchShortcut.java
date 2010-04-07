@@ -1,5 +1,6 @@
 package com.nokia.cdt.internal.debug.launch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.cdt.debug.core.executables.Executable;
@@ -12,20 +13,27 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.ui.DebugUITools;
+import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.debug.ui.ILaunchShortcut2;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.cdt.debug.common.internal.executables.SymbianSourceFileRemapping;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 {
 
 	protected abstract void launchProject(IProject project, Executable executable, IPath defaultMMP, String mode);
 
+	/** Tell whether this existing configuration matches one the shortcut would create */
+	protected abstract boolean isSupportedConfiguration(ILaunchConfiguration config) throws CoreException;
+	
 	public void launch(IEditorPart editor, String mode) {
 		// launch an existing config if one exists
 		ILaunchConfiguration[] configs = getLaunchConfigurations(editor);
@@ -33,7 +41,7 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 			// just launch the first one that supports the mode
 			for (ILaunchConfiguration config : configs) {
 				try {
-					if (config.supportsMode(mode)) {
+					if (config.supportsMode(mode) && isSupportedConfiguration(config)) {
 						DebugUITools.launch(configs[0], mode);
 						return;
 					}
@@ -57,16 +65,29 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 		// launch an existing config if one exists
 		ILaunchConfiguration[] configs = getLaunchConfigurations(selection);
 		if (configs.length > 0) {
-			// just launch the first one that supports the mode
-			for (ILaunchConfiguration config : configs) {
+			// find all the ones that support the mode and shortcut (#11013)
+			List<ILaunchConfiguration> matches = new ArrayList<ILaunchConfiguration>();
+			for (int i = 0; i < configs.length; i++) {
+				ILaunchConfiguration config = configs[i];
 				try {
-					if (config.supportsMode(mode)) {
-						DebugUITools.launch(configs[0], mode);
-						return;
+					if (config.supportsMode(mode) && isSupportedConfiguration(config)) {
+						matches.add(config);
 					}
 				} catch (CoreException e) {
 					e.printStackTrace();
 				}
+			}
+			// if only one matches, just launch
+			if (matches.size() > 0) {
+				if (matches.size() == 1 || WorkbenchUtils.isJUnitRunning()) {
+					DebugUITools.launch(matches.get(0), mode);
+				} else {
+					// else, ask the user
+					ILaunchConfiguration selected = chooseConfiguration(matches, mode);
+					if (selected != null)
+						DebugUITools.launch(selected, mode);
+				}
+				return;
 			}
 		}
 		
@@ -88,7 +109,7 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 				if (file != null)
 				{
 					IPath filePath = file.getLocation();
-					if ("mmp".equalsIgnoreCase(filePath.getFileExtension()))
+					if ("mmp".equalsIgnoreCase(filePath.getFileExtension())) //$NON-NLS-1$
 					{
 						defaultMMP = filePath;
 					}
@@ -111,6 +132,27 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 			}
 		}
 	}
+	
+	/**
+	 * Show a selection dialog that allows the user to choose one of the specified
+	 * launch configurations.  Return the chosen config, or <code>null</code> if the
+	 * user cancelled the dialog.
+	 */
+	protected ILaunchConfiguration chooseConfiguration(List<ILaunchConfiguration> configList, String mode) {
+		IDebugModelPresentation labelProvider = DebugUITools.newDebugModelPresentation();
+		ElementListSelectionDialog dialog = new ElementListSelectionDialog(WorkbenchUtils.getSafeShell(), labelProvider);
+		dialog.setElements(configList.toArray());
+		dialog.setTitle(Messages.getString("AbstractSymbianLaunchShortcut.ChooseConfigTitle"));  //$NON-NLS-1$
+		dialog.setMessage(Messages.getString("AbstractSymbianLaunchShortcut.ChooseConfigLabel"));  //$NON-NLS-1$
+		dialog.setMultipleSelection(false);
+		int result = dialog.open();
+		labelProvider.dispose();
+		if (result == Window.OK) {
+			return (ILaunchConfiguration) dialog.getFirstResult();
+		}
+		return null;
+	}
+
 
 	public ILaunchConfiguration[] getLaunchConfigurations(ISelection selection) {
 		IPath defaultMMP = null;
@@ -127,7 +169,7 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 				if (file != null)
 				{
 					IPath filePath = file.getLocation();
-					if ("mmp".equalsIgnoreCase(filePath.getFileExtension()))
+					if ("mmp".equalsIgnoreCase(filePath.getFileExtension())) //$NON-NLS-1$
 					{
 						defaultMMP = filePath;
 					}
