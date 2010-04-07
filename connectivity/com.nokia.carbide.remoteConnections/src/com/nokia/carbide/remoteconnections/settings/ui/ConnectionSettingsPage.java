@@ -129,15 +129,16 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		}
 	}
 
-	private final static TreeNode LOADING_CONTENT_TREENODE = 
+	private static final TreeNode LOADING_CONTENT_TREENODE = 
 		new TreeNode(Messages.getString("ConnectionSettingsPage.GettingDataMessage")); //$NON-NLS-1$
 	private static final TreeNode[] LOADING_CONTENT_INPUT = new TreeNode[] { LOADING_CONTENT_TREENODE };
 	private static final String STATUS_NOT_TESTED = 
 		Messages.getString("ConnectionSettingsPage.NotTestedStatusString"); //$NON-NLS-1$
-	private final static Image FOLDER_ICON_IMG = 
+	private static final Image FOLDER_ICON_IMG = 
 		PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 				ISharedImages.IMG_OBJ_FOLDER).createImage();
-	private static final String INITIAL_NAME_FMT = "connection {0}"; //$NON-NLS-1$
+	private static final String CONNECTION_PREFIX = "connection"; //$NON-NLS-1$
+	private static final String INITIAL_NAME_FMT = "{0} {1}"; //$NON-NLS-1$
 	private static final String UID = ".uid"; //$NON-NLS-1$
 	private final SettingsWizard settingsWizard;
 	private IConnectionType connectionType;
@@ -649,12 +650,18 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	}
 
 	public void settingsChanged() {
-		if (!modifiedName && editingUI != null) {
-			String preferredName = editingUI.getSettings().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
-			if (preferredName != null) {
-				nameText.setText(preferredName);
-				modifiedName = false;
+		if (!modifiedName) {
+			if (editingUI != null) {
+				String preferredName = editingUI.getSettings().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
+				if (preferredName != null) {
+					nameText.setText(getPreferredNameText(preferredName));
+					modifiedName = false;
+					return;
+				}
 			}
+			// when editingUI or preferredName is null
+			nameText.setText(getInitialNameText());
+			modifiedName = false;
 		}
 	}
 
@@ -1067,14 +1074,30 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	private String getInitialNameText() {
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
-		if (connectionToEdit != null)
+		if (connectionToEdit != null) {
 			return connectionToEdit.getDisplayName();
+		}
 		
 		long i = 1;
 		while (true) {
-			String name = MessageFormat.format(INITIAL_NAME_FMT, new Object[] { Long.toString(i++) });
-			if (isNameUnique(name))
+			String name = MessageFormat.format(INITIAL_NAME_FMT, CONNECTION_PREFIX, Long.toString(i++));
+			if (isNameUnique(name)) {
 				return name;
+			}
+		}
+	}
+
+	private String getPreferredNameText(String preferredName) {
+		if (isNameUnique(preferredName)) {
+			return preferredName;
+		}
+
+		long i = 1;
+		while (true) {
+			String name = MessageFormat.format(INITIAL_NAME_FMT, preferredName, Long.toString(i++));
+			if (isNameUnique(name)) {
+				return name;
+			}
 		}
 	}
 
