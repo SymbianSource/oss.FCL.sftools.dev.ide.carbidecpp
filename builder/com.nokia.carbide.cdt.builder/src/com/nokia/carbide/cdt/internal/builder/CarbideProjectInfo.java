@@ -34,6 +34,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
 
@@ -94,7 +95,7 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 				if (storage != null) {
 					String orig = storage.getAttribute(PROJECT_RELATIVE_INFFILE_PROPS_KEY);
 					if (orig != null){
-						projectRelativeBldInfPath = new Path(orig);
+						projectRelativeBldInfPath = PathUtils.createPath(orig);
 					}
 
 					orig = storage.getAttribute(BLD_FROM_INF_PROPS_KEY);
