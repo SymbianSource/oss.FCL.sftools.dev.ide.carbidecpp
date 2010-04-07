@@ -31,8 +31,14 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 
 	protected abstract void launchProject(IProject project, Executable executable, IPath defaultMMP, String mode);
 
-	/** Tell whether this existing configuration matches one the shortcut would create */
-	protected abstract boolean isSupportedConfiguration(ILaunchConfiguration config) throws CoreException;
+	/**
+	 * Override to tell whether this existing configuration matches the type of
+	 * one the shortcut would create. The default implementation returns true
+	 * for all configurations.
+	 */
+	protected boolean isSupportedConfiguration(ILaunchConfiguration config) throws CoreException {
+		return true;
+	}
 	
 	public void launch(IEditorPart editor, String mode) {
 		// launch an existing config if one exists
