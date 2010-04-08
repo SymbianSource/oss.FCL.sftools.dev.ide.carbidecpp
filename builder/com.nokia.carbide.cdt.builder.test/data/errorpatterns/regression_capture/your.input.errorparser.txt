@@ -1,32 +1,20 @@
-MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
-Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
-make: *** [MAKEFILELISTBOX] Error 255
-perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
-WARNING: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(2) : Unrecognised Keyword "TARGE"
+make[1]: Leaving directory `C:/Symbian/9.1/S60_3rd_MR/S60Ex/AddressBook/group'
+  make -r  -f
+"\Symbian\9.1\S60_3rd_MR\EPOC32\BUILD\Symbian\9.1\S60_3rd_MR\S60Ex\AddressBook\group\ARMV5.make"
+TARGET CFG=UDEB
+Warning: C3492W: Site License not found, falling back to normal license
+ARM/Thumb C/C++ Compiler, RVCT2.2 [Build 593]
+Error: C3397E: Cannot obtain license for Compiler (feature compiler) with
+license version >= 2.2: 
+The desired vendor daemon is down
+ 1) Check the lmgrd log file, or 2) Try lmreread
+Feature:       compiler
+Vendor:Host:   asqarun1.americas.nokia.com
+License path:  7166@asqarun1.americas.nokia.com
+FLEXlm error:  -97,121
+For further information, refer to the FLEXlm End User Manual,
+available at "www.macrovision.com".
 
-FATAL ERROR: ERROR: No Target specified
-
-MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
-perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
-WARNING: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(11) : SOURCEPATH "\APPS\Nokia\DDB21Nightly\workspace\ListBox\datx\" not found
-
-MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
-Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
-make: *** [MAKEFILELISTBOX] Error 255
-perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
-FATAL ERROR: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(6) : Stack size doesn't fit expected number format
-
-MMPFILE "\APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP"
-Died at C:\Symbian\9.3\S60_3rd_FP2_Beta\epoc32\tools\/MMP.PM line 1814.
-make: *** [MAKEFILELISTBOX] Error 255
-perl -S makmake.pl -nd -D \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX ARMV5  
-FATAL ERROR: \APPS\Nokia\DDB21Nightly\workspace\ListBox\group\LISTBOX.MMP(42) : BITMAP color depth "listboxlistbox.cpp" - unexpected format
-
-FATAL ERROR: ERROR: No Sources specified
-
-FATAL ERROR: ERROR: No Sources specified
-
-C:\runtime-EclipseApplication\GUIFooey\group\BLD.INF:23: #error test
-BLDMAKE ERROR: ERROR: cpp.exe returned non-zero exit status (8448)
-	cpp.EXE -undef -nostdinc -+  -I "C:\S60\devices\S60_5th_Edition_SDK_v1.0\epoc32\include" -I . -I "C:\runtime-EclipseApplication\GUIFooey\group\"  -I "C:\S60\devices\S60_5th_Edition_SDK_v1.0\EPOC32\include\variant" -include "C:\S60\devices\S60_5th_Edition_SDK_v1.0\EPOC32\include\variant\Symbian_OS.hrh" "C:\runtime-EclipseApplication\GUIFooey\group\BLD.INF"
-
+make[1]: ***
+[..\..\..\EPOC32\BUILD\Symbian\9.1\S60_3rd_MR\S60Ex\AddressBook\group\ADDRESSBOOK\ARMV5\UDEB\AddressBookApp.o]
+Error 1

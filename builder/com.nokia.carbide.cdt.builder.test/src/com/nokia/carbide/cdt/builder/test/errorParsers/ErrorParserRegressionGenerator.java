@@ -45,7 +45,7 @@ public class ErrorParserRegressionGenerator extends TestCase {
 	private static final String PROJECT_NAME = "TestErrorParser";
 
 	// Platform matters, set this before you build
-	private static final String PLATFORM_STRING = ISymbianBuildContext.GCCE_PLATFORM;
+	private static final String PLATFORM_STRING = ISymbianBuildContext.ARMV5_PLATFORM;
 
 	CarbideErrorParserTestHarness harness;
 	private IProject project;
