@@ -420,7 +420,9 @@ public class LaunchWizardData extends LaunchOptions {
 		IConnectedService connectedService = getConnectedService();
 		if (connectedService instanceof IConnectedService2) {
 			String value = ((IConnectedService2) connectedService).getProperties().get("is-system-trk"); //$NON-NLS-1$
-			return Boolean.parseBoolean(value);
+			if (value != null) {
+				return Boolean.parseBoolean(value);
+			}
 		}
 		
 		return null;
