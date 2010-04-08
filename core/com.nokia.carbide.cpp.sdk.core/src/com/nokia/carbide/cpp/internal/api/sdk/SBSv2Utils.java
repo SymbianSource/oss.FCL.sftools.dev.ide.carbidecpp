@@ -267,7 +267,10 @@ public class SBSv2Utils {
 					// Get the parent base build platform 
 					String baseBuildPlatform = null; 
 					if (parentNode != null){ 
-						baseBuildPlatform = parentNode.getAttributes().getNamedItem("name").getNodeValue(); 
+						baseBuildPlatform = parentNode.getAttributes().getNamedItem("name").getNodeValue();
+						if (baseBuildPlatform.split("_").length > 1){
+							baseBuildPlatform = baseBuildPlatform.split("_")[0];
+						}
 					}
 					// only support configs that fall into something we can make a build context
 					// out of.  They must have a platform and a target.
