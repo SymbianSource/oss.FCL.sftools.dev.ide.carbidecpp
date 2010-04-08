@@ -42,7 +42,7 @@ public class ServiceTester {
 		@Override
 		public void run() {
 			for (Set<AbstractConnectedService2> connectedServices : connectedServicesSets) {
-				// test first in the set and set status for others
+				// test first in the set and set status and properties for others
 				Iterator<AbstractConnectedService2> iterator = connectedServices.iterator();
 				AbstractConnectedService2 toTest = iterator.next();
 				toTest.testStatus();
@@ -50,6 +50,7 @@ public class ServiceTester {
 				while (iterator.hasNext()) {
 					AbstractConnectedService2 next = iterator.next();
 					next.setStatus((Status) status);
+					next.getProperties().putAll(toTest.getProperties());
 				}
 			}
 			unregisterThread(this);
