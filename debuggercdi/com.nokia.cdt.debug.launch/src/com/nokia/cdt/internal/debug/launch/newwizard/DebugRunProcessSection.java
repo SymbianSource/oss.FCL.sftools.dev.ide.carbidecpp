@@ -61,7 +61,9 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		if (Path.EMPTY.equals(data.getExeSelectionPath()))
 			data.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(data.getProject());
-		data.setInstallPackage(!data.isSysTRKConnection() && !data.getExeSelection().equals(EExeSelection.ATTACH_TO_PROCESS));
+		data.setInstallPackage((data.isSysTRKConnection() == Boolean.FALSE  /* but NOT if unknown */
+								|| !data.isInternalLayout())
+				&& !data.getExeSelection().equals(EExeSelection.ATTACH_TO_PROCESS));
 		if (cpi != null) {
 			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
@@ -103,7 +105,8 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		}
 
 		if (data.isInstallPackage() && (data.getSisPath() == null || data.getSisPath().length() == 0))
-			status = error(Messages.getString("DebugRunProcessSection.MustInstallError")); //$NON-NLS-1$
+			status = error(Messages.getString("DebugRunProcessSection.MustInstallError"),
+					data.getModeLabel().toLowerCase()); //$NON-NLS-1$
 	}
 
 	@Override
@@ -118,10 +121,12 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 	
 			switch (data.getExeSelection()) {
 			case USE_PROJECT_EXECUTABLE:
-				runOrLaunchMsg = MessageFormat.format(Messages.getString("DebugRunProcessSection.LaunchFormat"), data.getExeSelectionPath().lastSegment()); //$NON-NLS-1$
+				runOrLaunchMsg = MessageFormat.format(Messages.getString("DebugRunProcessSection.LaunchFormat"), 
+						data.getExeSelectionPath().lastSegment()); //$NON-NLS-1$
 				break;
 			case USE_REMOTE_EXECUTABLE:
-				runOrLaunchMsg = MessageFormat.format(Messages.getString("DebugRunProcessSection.LaunchFormat"), PathUtils.convertPathToWindows(data.getExeSelectionPath())); //$NON-NLS-1$
+				runOrLaunchMsg = MessageFormat.format(Messages.getString("DebugRunProcessSection.LaunchFormat"), 
+						PathUtils.convertPathToWindows(data.getExeSelectionPath().toString())); //$NON-NLS-1$
 				break;
 			case ATTACH_TO_PROCESS:
 				runOrLaunchMsg = Messages.getString("DebugRunProcessSection.AttachMsg"); //$NON-NLS-1$
@@ -140,10 +145,10 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 	}
 
 	private String getCopyOrInstallMsg() {
-		if (data.isSysTRKConnection() || !data.isInstallPackage())
-			return Messages.getString("DebugRunProcessSection.CopyMsg"); //$NON-NLS-1$
-		else
+		if (data.requiresInstallPackage())
 			return MessageFormat.format(Messages.getString("DebugRunProcessSection.InstallMsg"), data.getSisPath()); //$NON-NLS-1$
+		else
+			return Messages.getString("DebugRunProcessSection.CopyMsg"); //$NON-NLS-1$
 	}
 
 }

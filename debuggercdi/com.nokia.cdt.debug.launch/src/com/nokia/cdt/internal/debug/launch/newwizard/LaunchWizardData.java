@@ -35,6 +35,7 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.IDebugUIConstants;
+import org.osgi.framework.Bundle;
 import org.osgi.service.prefs.Preferences;
 
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
@@ -55,6 +56,13 @@ import cwdbg.PreferenceConstants;
  */
 @SuppressWarnings("restriction")
 public class LaunchWizardData extends LaunchOptions {
+	/**
+	 * This plugin is only shipped in internal layouts and is used as a fallback
+	 * to determine whether Sys TRK is more likely to be available than App TRK 
+	 * if we cannot otherwise tell.
+	 */
+	private static final String COM_NOKIA_CARBIDE_SYMSEE_TRK_SUPPORT = "com.nokia.carbide.symsee.trk.support";
+
 	public interface IPathValidator {
 		/**
 		 * @param path IPath
@@ -315,7 +323,7 @@ public class LaunchWizardData extends LaunchOptions {
 	 * @return
 	 */
 	public boolean requiresInstallPackage() {
-		return !isSysTRKConnection() || installPackage;
+		return isSysTRKConnection() == Boolean.FALSE /* but not if unknown */ || installPackage;
 	}
 
 	public void setConnection(IConnection connection) {
@@ -404,11 +412,29 @@ public class LaunchWizardData extends LaunchOptions {
 		return null;
 	}
 	
-	public boolean isSysTRKConnection() {
+	/** Tell whether we can detect that the current connection is Sys TRK.
+	 * 
+	 * @return Boolean.TRUE if Sys TRK, Boolean.FALSE if App TRK, or <code>null</code> if unknown
+	 */
+	public Boolean isSysTRKConnection() {
 		IConnectedService connectedService = getConnectedService();
 		if (connectedService instanceof IConnectedService2) {
 			String value = ((IConnectedService2) connectedService).getProperties().get("is-system-trk"); //$NON-NLS-1$
 			return Boolean.parseBoolean(value);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Tell whether Carbide is running in an internal layout.
+	 * @return true if the installation includes known internal-only plugins
+	 */
+	public boolean isInternalLayout() {
+		Bundle bundle = Platform.getBundle(COM_NOKIA_CARBIDE_SYMSEE_TRK_SUPPORT);
+		if (bundle != null) {
+			// assume this is an internal build 
+			return true;
 		}
 		return false;
 	}
@@ -416,7 +442,7 @@ public class LaunchWizardData extends LaunchOptions {
 	private String getApplicableLaunchTypeId() {
 		if (exeSelection.equals(EExeSelection.ATTACH_TO_PROCESS))
 			return SettingsData.ATTACH_LAUNCH_TYPE_ID;
-		else if (!installPackage || isSysTRKConnection())
+		else if (!installPackage)
 			return SettingsData.SYS_TRK_LAUNCH_TYPE_ID;
 		else
 			return SettingsData.APP_TRK_LAUNCH_TYPE_ID;
