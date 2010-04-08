@@ -79,6 +79,7 @@ public class BuilderSelectionComposite extends Composite {
 				if (!SBSv2Utils.enableSBSv1Support()) {
 					status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBSv1 is not supported on this system.");
 				}
+				useSBSv2Builder = false;
 			}
 			else if (builderCombo.getSelectionIndex() == 1) {
 
