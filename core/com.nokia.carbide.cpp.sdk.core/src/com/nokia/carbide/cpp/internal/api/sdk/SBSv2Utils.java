@@ -300,6 +300,9 @@ public class SBSv2Utils {
 					String baseBuildPlatform = null;
 					if (parentNode != null){
 						baseBuildPlatform = parentNode.getAttributes().getNamedItem("name").getNodeValue();
+						if (baseBuildPlatform.split("_").length > 1){
+							baseBuildPlatform = baseBuildPlatform.split("_")[0];
+						}
 					}
 					
 					// only support configs that fall into something we can make a build context
