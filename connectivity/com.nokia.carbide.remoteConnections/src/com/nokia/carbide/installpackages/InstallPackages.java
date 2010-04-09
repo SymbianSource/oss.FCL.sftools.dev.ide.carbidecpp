@@ -33,10 +33,12 @@ import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.runtime.*;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.osgi.framework.Version;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -120,7 +122,7 @@ public class InstallPackages {
 		Resource r = factory.createResource(xmlURI);
 
 		r.load(null);
-		EList contents = r.getContents();
+		EList<EObject> contents = r.getContents();
 	
 		DocumentRoot root = (DocumentRoot) contents.get(0);
 		PackagesType packages = root.getPackages();
@@ -240,5 +242,15 @@ public class InstallPackages {
 			RemoteConnectionsActivator.logError(e);
 		}
 		return ""; //$NON-NLS-1$
+	}
+	
+	public static String formatSDKVersion(Version v) {
+		if (v.getMicro() != 0)
+			return v.toString();
+		StringBuffer sb = new StringBuffer();
+		sb.append(v.getMajor());
+		sb.append('.');
+		sb.append(v.getMinor());
+		return sb.toString();
 	}
 }

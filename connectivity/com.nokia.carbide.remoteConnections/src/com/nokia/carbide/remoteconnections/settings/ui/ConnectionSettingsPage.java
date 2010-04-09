@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -83,26 +83,27 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.installpackages.InstallPackages;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.IEditingUI;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
-import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
-import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.interfaces.IService2;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.IEditingUI;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -321,7 +322,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 			public String getText(Object element) {
 				Check.checkState(element instanceof Pair);
 				Pair<String, Version> pair = (Pair) element;
-				return MessageFormat.format("{0} {1}", pair.first, pair.second); //$NON-NLS-1$
+				return MessageFormat.format("{0} {1}", pair.first, InstallPackages.formatSDKVersion(pair.second)); //$NON-NLS-1$
 			}
 		});
 		deviceOSComboViewer.getControl().setToolTipText(Messages.getString("ConnectionSettingsPage.DeviceOSComboToolTip")); //$NON-NLS-1$
@@ -447,6 +448,8 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 					String label = ((IRemoteAgentInstaller) value).getLabel();
 					return label == null ? Messages.getString("ConnectionSettingsPage.UnlabeledPackageLabel") : label; //$NON-NLS-1$
 				}
+				if (value instanceof Version)
+					return InstallPackages.formatSDKVersion((Version) value);
 					
 				return value.toString();
 			}
@@ -704,7 +707,6 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 					installerTreeViewer.setContentProvider(new TreeNodeContentProvider());
 				installerTreeViewer.setInput(treeNodes);
 				installerTreeViewer.refresh(true);
-				installerTreeViewer.expandAll();
 				
 				if (treeNodes.length == 0) {
 					String errorText;
@@ -746,6 +748,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		if (input instanceof TreeNode[]) {
 			TreeNode node = findTreeNodeForPair((TreeNode[]) input, pair);
 			if (node != null) {
+				installerTreeViewer.collapseAll();
 				installerTreeViewer.setSelection(new StructuredSelection(node));
 			}
 		}
@@ -893,7 +896,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	}
 	
 	private synchronized TreeNode[] createTreeNodes() {
-		Map<String, TreeNode> sdkFamilyToNodes = new HashMap<String, TreeNode>();
+		Map<String, TreeNode> sdkFamilyToNodes = new LinkedHashMap<String, TreeNode>();
 		for (IRemoteAgentInstallerProvider installerProvider : installerProviders) {
 			List<String> familyNames = installerProvider.getSDKFamilyNames(null);
 			for (String familyName : familyNames) {
