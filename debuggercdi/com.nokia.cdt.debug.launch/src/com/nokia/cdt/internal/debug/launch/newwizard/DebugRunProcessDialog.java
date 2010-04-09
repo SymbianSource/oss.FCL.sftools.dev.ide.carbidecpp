@@ -452,8 +452,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			data.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
 			IPath selectedPath = (IPath) ((IStructuredSelection) projectExecutableViewer.getSelection()).getFirstElement();
 			if (selectedPath != null) {
-				String symbianPath = PathUtils.convertPathToWindows(selectedPath);
-				data.setExeSelectionPath(new Path(symbianPath));
+				data.setExeSelectionPath(selectedPath);
 			}
 			validate();
 		} else {
@@ -498,8 +497,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		if (remoteExecutableRadioButton.getSelection()) {
 			remoteProgramEntry.setEnabled(true);
 			data.setExeSelection(EExeSelection.USE_REMOTE_EXECUTABLE);
-			String symbianPath = PathUtils.convertPathToWindows(remoteProgramEntry.getText());
-			data.setExeSelectionPath(new Path(symbianPath));
+			IPath path = PathUtils.createPath(remoteProgramEntry.getText());
+			data.setExeSelectionPath(path);
 			validate();
 		} else {
 			remoteProgramEntry.setEnabled(false);

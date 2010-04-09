@@ -41,6 +41,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.FontMetrics;
@@ -118,6 +120,15 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 			}
 		});
 		manager.addConnectionListener(this);
+
+		parent.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				manager.removeConnectionListener(ConnectToDeviceDialog.this);
+				
+				if (currentServiceListener != null)
+					currentServiceListener.removeStatusChangedListener(ConnectToDeviceDialog.this);
+			}
+		});
 		
 		final Composite buttonGroup = new Composite(viewerGroup, SWT.NONE);
 		int w = Dialog.convertHorizontalDLUsToPixels(fm, IDialogConstants.HORIZONTAL_MARGIN);
@@ -323,12 +334,5 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 			}
 		});
 	}
-	
-	@Override
-	public boolean close() {
-		manager.addConnectionListener(this);
-		return super.close();
-	}
-
 }
 
