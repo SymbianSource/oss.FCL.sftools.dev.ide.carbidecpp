@@ -39,7 +39,8 @@ abstract public class AbstractGCCEErrorParser extends AbstractErrorParser {
 		 *	int severity
 		 */
 			// arm-none-symbianelf-g++: \test\test.cpp: No such file or directory
-			new ErrorPattern("(.*):\\s*(.*):\\s*(.*(?:[Nn]o such file:\\s*)?[Nn]o such file or directory)", 2, 0, 3, 0, IMarkerGenerator.SEVERITY_ERROR_RESOURCE),	//$NON-NLS-1$
+			// arm-none-symbianelf-ld: \S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\ARMV5\LIB\foo.dso: No such file: No such file or directory
+			new ErrorPattern("(.*?):\\s*(.*?):\\s*(.*(?:[Nn]o such file:\\s*)?[Nn]o such file or directory)", 2, 0, 3, 0, IMarkerGenerator.SEVERITY_ERROR_RESOURCE),	//$NON-NLS-1$
 			// arm-none-symbianelf-g++: no input files
 			new ErrorPattern("(.*):\\s*(.*[Nn]o input files)", 0, 0, 2, 0, IMarkerGenerator.SEVERITY_ERROR_RESOURCE),	//$NON-NLS-1$
 			//arm-none-symbianelf-g++: warning: `-x c++' after last input file has no effect

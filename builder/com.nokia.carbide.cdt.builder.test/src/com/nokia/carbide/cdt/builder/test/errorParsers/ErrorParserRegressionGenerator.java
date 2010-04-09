@@ -123,7 +123,6 @@ public class ErrorParserRegressionGenerator extends TestCase {
 		// This is how we capture a control case
 		try {
 			harness.writeFileContentsToStdout(FileUtils.pluginRelativeFile(TestPlugin.getDefault(), "data/errorpatterns/regression_capture/your.input.errorparser.txt"));
-			harness.getMarkersFromIde();
 			java.io.File file = FileUtils.pluginRelativeFile(TestPlugin.getDefault(), "data/errorpatterns/regression_capture/regression.capture.xml");
 			if (!file.exists()) {
 				file.createNewFile();

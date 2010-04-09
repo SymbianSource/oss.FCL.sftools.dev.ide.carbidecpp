@@ -103,6 +103,7 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 		try {
 			// pick out the stdout stream directly, where CDT error parser sniff
 			// for error messages from build console
+			ideProblemMarkerInfoList.clear();
 			stdoutStream.getProject().deleteMarkers(ICModelMarker.C_MODEL_PROBLEM_MARKER, true, IResource.DEPTH_INFINITE); // clear UI list before we start
 			stdoutStream.clearScratchBuffer();	// some error parser do multiple lines
 			consoleOutput += "\n";	// force the input file to flush all lines
@@ -117,16 +118,13 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	// need to intercept and keep track ourself
 	// reportProblems() calls this from base class
 	public void addMarker(ProblemMarkerInfo problemMarkerInfo) {
+		if (problemMarkerInfo.variableName == null || problemMarkerInfo.variableName.length() == 0)
+			problemMarkerInfo.variableName = EMPTY;
+		if (problemMarkerInfo.description == null || problemMarkerInfo.description.length() == 0)
+			problemMarkerInfo.description = EMPTY;
+			
 		ideProblemMarkerInfoList.add(problemMarkerInfo);
 		super.addMarker(problemMarkerInfo);
-	}
-	
-	// Read in error markers from IDE to this test harness and set up internal marker list
-	public void getMarkersFromIde() {
-		// flush out markers into project, that's the only way to tap into 
-		// markers reported by error parsers in current API
-		ideProblemMarkerInfoList.clear();
-		stdoutStream.reportProblems();
 	}
 	
 	/**
@@ -163,7 +161,6 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	 */ 
 	public boolean testIdeMarkerAgainstXML(InputStream xmlInputStream) {
 		// load data from IDE and control file
-		getMarkersFromIde();
 		readControlXML(xmlInputStream);
 		
 		if (ideProblemMarkerInfoList.size() != xmlFilePromblemMarkerInfoList.size()) {
