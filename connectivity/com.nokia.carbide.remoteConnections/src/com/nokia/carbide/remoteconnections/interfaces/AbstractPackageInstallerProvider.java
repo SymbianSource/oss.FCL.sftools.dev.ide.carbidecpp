@@ -173,7 +173,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 		Set<String> sdkFamilyNames = new HashSet<String>();
 		packageList = packages.getAvailablePackageList();
 		if (packageList == null)
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		for (PackageType packageType : packageList) {
 			String sdkFamily = packageType.getSdkFamily();
 			sdkFamilyNames.add(sdkFamily);
@@ -183,6 +183,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 		return sdkFamilyNameList;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Version> getVersions(String familyName) {
 		Set<Version> versions = new HashSet<Version>();
 		for (PackageType packageType : packageList) {
@@ -197,6 +198,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 		}
 		List<Version> versionList = new ArrayList<Version>(versions);
 		Collections.sort(versionList);
+		Collections.reverse(versionList);
 		return versionList;
 	}
 
