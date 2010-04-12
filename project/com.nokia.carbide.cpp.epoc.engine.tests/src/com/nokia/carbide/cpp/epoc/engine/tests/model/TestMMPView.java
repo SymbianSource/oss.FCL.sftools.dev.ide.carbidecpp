@@ -286,6 +286,74 @@ public class TestMMPView extends BaseMMPViewTest {
 		model.dispose();
 	}
 	
+	/** bug 10968 */
+	public void testSourceChanging7() throws Exception {
+		makeModel("SOURCEPATH ..\\src\n"+
+				"SOURCE a.cpp b.cpp\n"+
+				"SOURCE c.cpp\n"+
+				"SOURCE d.cpp\n"+
+				"SOURCEPATH ..\\data\n" +
+				"START RESOURCE extra.rss\n"+
+				"END\n");
+
+		IMMPView view = getView(mmpConfig);
+		assertNotNull(view);
+
+		// when we add files, put them in the right section (DUH)
+		view.getSources().add(new Path("data/Foo.cpp"));
+		commitTest(view, "SOURCEPATH ..\\src\n"+
+				"SOURCE a.cpp b.cpp\n"+
+				"SOURCE c.cpp\n"+
+				"SOURCE d.cpp\n"+
+				"SOURCEPATH ..\\data\n" +
+				"START RESOURCE extra.rss\n"+
+				"END\n"+
+				"SOURCE Foo.cpp\n" +
+				"");
+
+		match(new IPath[] { new Path("src"), new Path("data") }, view.getRealSourcePaths());
+		
+		assertTrue(view.getSources().contains(new Path("data/Foo.cpp")));
+
+		view.dispose();
+		model.dispose();
+	}
+	
+	/** bug 10968 */
+	public void testSourceChanging7b() throws Exception {
+		makeModel("SOURCEPATH ..\\src\n"+
+				"SOURCE a.cpp b.cpp\n"+
+				"SOURCE c.cpp\n"+
+				"SOURCE d.cpp\n"+
+				"SOURCEPATH ..\\data\n" +
+				"SOURCEPATH ..\\empty\n" +
+				"START RESOURCE extra.rss\n"+
+				"END\n");
+
+		IMMPView view = getView(mmpConfig);
+		assertNotNull(view);
+
+		// when we add files, put them in the right section (DUH)
+		view.getSources().add(new Path("data/Foo.cpp"));
+		commitTest(view, "SOURCEPATH ..\\src\n"+
+				"SOURCE a.cpp b.cpp\n"+
+				"SOURCE c.cpp\n"+
+				"SOURCE d.cpp\n"+
+				"SOURCEPATH ..\\empty\n" +
+				"START RESOURCE extra.rss\n"+
+				"END\n"+
+				"SOURCEPATH ..\\data\n" +
+				"SOURCE Foo.cpp\n" +
+				"");
+
+		match(new IPath[] { new Path("src"), new Path("empty"), new Path("data") }, view.getRealSourcePaths());
+		
+		assertTrue(view.getSources().contains(new Path("data/Foo.cpp")));
+
+		view.dispose();
+		model.dispose();
+	}
+	
 	public void testSourceChangingCond1() throws Exception {
 		makeModel("SOURCEPATH ..\\src\n#if 1\nSOURCE a.cpp\n#endif\nSOURCE b.cpp c.cpp");
 

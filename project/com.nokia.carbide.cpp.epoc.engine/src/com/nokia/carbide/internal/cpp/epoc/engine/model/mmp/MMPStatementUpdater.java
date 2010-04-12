@@ -149,6 +149,15 @@ public class MMPStatementUpdater extends BaseStatementUpdater {
 	private void updateSourcePath(IASTMMPSingleArgumentStatement sourcePath) {
 		changeStatement(sourcePath);
 		currentSourcePath = mmpView.fromMmpToProjectPath(sourcePath.getArgument());
+		
+		// These statements depend on the SOURCEPATH, but such statements may
+		// not actually appear.  Thus, if we add a new entry, we should not change 
+		// the previous SOURCE/etc. statement until until there is an actual 
+		// statement to modify (bug 10968)
+		lastListStmts.remove(EMMPStatement.SOURCE);
+		lastListStmts.remove(EMMPStatement.DOCUMENT);
+		lastListStmts.remove(EMMPStatement.RESOURCE);
+		lastListStmts.remove(EMMPStatement.SYSTEMRESOURCE);
 	}
 
 	/**
