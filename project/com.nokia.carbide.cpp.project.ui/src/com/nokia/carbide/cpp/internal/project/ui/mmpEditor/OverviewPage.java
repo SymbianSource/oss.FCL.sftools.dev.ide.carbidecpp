@@ -292,7 +292,7 @@ public class OverviewPage extends MMPEditorFormPage {
 	}
 
 	private void hookControls() {
-		RegExInputValidator targetNameValidator = new RegExInputValidator("^[\\w|\\.]+$", false, Messages.OverviewPage_targetNameValidationErr);	//$NON-NLS-1$
+		RegExInputValidator targetNameValidator = new RegExInputValidator("^[A-Za-z0-9_\\.-]+$", false, Messages.OverviewPage_targetNameValidationErr);	//$NON-NLS-1$
 		SingleSettingTextHandler handler = new SingleSettingTextHandler(targetNameText, 
 				new FormEditorEditingContext(editorContext.editor, targetNameText),
 				(isMMPFile()) ? targetNameValidator : null,
