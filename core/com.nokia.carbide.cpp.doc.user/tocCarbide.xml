@@ -240,9 +240,11 @@
       <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
     </topic>
     
-    <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="On-Device Connections Overview" >
+    <topic href="html/reference/trk/wnd_on_device_setup.htm" label="On-Device Connections" >
+      <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="Setup Connection" />
+      <topic href="html/reference/trk/wnd_on_device_check_tab.htm" label="Test Connections" />
+      <topic href="html/reference/trk/wnd_new_conn_install_tab.htm" label="Install Remote Agents" />
       <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/trk/wnd_new_conn_wiz_edit.htm" label="Adding, editing, and deleting connections" />
       <topic href="html/reference/trk/exporting_remote_conns.htm" label="Exporting remote connections"></topic>
       <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
     </topic>
