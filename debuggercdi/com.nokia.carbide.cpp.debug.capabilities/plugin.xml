@@ -83,6 +83,12 @@
      <activityPatternBinding
            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
            isEqualityPattern="true"
+           pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.DebuggerTypesPreferencePage">
+      </activityPatternBinding>
+
+     <activityPatternBinding
+           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           isEqualityPattern="true"
            pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.applicationLaunchType">
       </activityPatternBinding>
 
@@ -92,18 +98,57 @@
            pattern="org.eclipse.cdt.debug.gdbjtag.core/org.eclipse.cdt.debug.gdbjtag.launchConfigurationType">
       </activityPatternBinding>
 
-<!-- The following UI elements are from org.eclipse.cdt.debug.ui -->
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.cdt.*/.*SignalZeroWorkbenchActionDelegate">
-      </activityPatternBinding>
-
 
 <!-- The following UI elements are from org.eclipse.cdt.managedbuilder.ui -->
       <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.wizards.ConvertToMakeWizard">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.wizards.NewMakeFromExisting">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.wizards.MakeProjFromExisting">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_NewCDTWizard">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_NewCDTProject">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_Vars">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_Env">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_PropertyPage">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_MultiConfig">
+      </activityPatternBinding>
+
+<!-- The following UI elements are from org.eclipse.cdt.make.ui -->
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.make.ui/org.eclipse.cdt.make.ui.preferences.MakePreferencePage">
       </activityPatternBinding>
 
 <!-- The following UI elements are from org.eclipse.cdt.ui -->
@@ -122,20 +167,30 @@
             pattern="org\.eclipse\.cdt.*/.*NewProjectDropDown">
       </activityPatternBinding>
  
-       <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             pattern="org\.eclipse\.cdt.*/.*NewTypeDropDown">
       </activityPatternBinding>
  
-       <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             pattern="org\.eclipse\.cdt.*/.*NewFileDropDown">
       </activityPatternBinding>
  
-       <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             pattern="org\.eclipse\.cdt.*/.*NewFolderDropDown">
       </activityPatternBinding>
+      
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsImportWizard">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsExportWizard">
+      </activityPatternBinding>      
   
 <!-- The following UI elements are from org.eclipse.debug.ui -->
       <activityPatternBinding
@@ -194,22 +249,22 @@
             pattern="org.eclipse.ui.project.buildAutomatically">
       </activityPatternBinding>
 
-     <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             pattern="org.eclipse.ui.project.buildAll">
       </activityPatternBinding>
 
-     <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.buildConfigToolbarAction">
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.buildConfigToolbarAction">
       </activityPatternBinding>
 
-     <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.buildConfigMenuAction">
+            pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.buildConfigMenuAction">
       </activityPatternBinding>
 
-    <activityPatternBinding
+      <activityPatternBinding
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             pattern="org.eclipse.cdt.debug.mi.ui/org.eclipse.cdt.debug.mi.ui.MIPreferencePage">
       </activityPatternBinding>
@@ -218,7 +273,7 @@
             activityId="com.nokia.carbide.cpp.debug.cdtactivity"
             categoryId="com.nokia.carbide.cpp.debug.nokiacategory">
       </categoryActivityBinding>
-      
+
    </extension>
 
 </plugin>
