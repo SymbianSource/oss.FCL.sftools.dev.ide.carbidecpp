@@ -29,7 +29,7 @@
 			
 			<link 
 				label="Create a run mode debugging application" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_example_trk.htm"  
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
 				<text>Learn how create and build an application and debug it on a device using the App TRK on-device debug agent.</text>

@@ -4,63 +4,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>Breakpoints</title>
-<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<title>Breakpoints Overview</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 </head>
 <body bgcolor="#FFFFFF">
-<h2>Breakpoints </h2>
-<p>  A <b>breakpoint</b> is a marker set on a specific line of source code and is designed to halt program execution when encountered by the debugger. After you set a breakpoint at a key point in the program, you can halt its execution, examine its current state, and check register and variable values. You can also change values and alter the flow of normal program execution. Setting breakpoints helps you debug your program and verify its efficiency.</p>
-<p>A project can have multiple breakpoints set in the source code files. All breakpoints  in a project are shown in the <a href="../reference/view_breakpoints.htm">Breakpoints</a> view. Breakpoints are enabled or disabled on the currently selected line within  a source code editor by selecting the <b>Run &gt; Toggle Breakpoint</b> menu option, right-clicking the marker bar in the editor and selecting <b>Toggle Breakpoint</b>, or by pressing <span class="code">CTRL-SHIFT-B</span>.</p>
-<p>You can set a breakpoint on any executable line of code that the debugger can resolve. Lines containing comments and other non executable code cannot be assigned a breakpoint as they are normally stripped from the  compiled   binary. The debugger must load  the symbols for a module before it can attempt to resolve  breakpoints within the module. This is most easily done using the <a href="../reference/view_executables.htm">Executables</a> view to import a binary file, especially if the binary is not in the workspace. </p>
-<p>When the debugger attempts to resolve a breakpoint it will result in:</p>
+<h2>Breakpoints Overview </h2>
+<p>A <b>breakpoint</b> is a marker set on a specific line of source code and is designed to suspend program execution. Breakpoints are shown in the UI both with the associated source code in an editor view as well as a dedicated <a href="viewing_breakpoints.htm">Breakpoints</a> view. </p>
+<p>When a breakpoint is encountered during program execution, the debugger suspends execution and the <a href="../../reference/perspective_debug.htm">Debug</a> perspective appears so you can examine the executable's current state,  check register and variable values, and use the stepping commands to walk line by line through the program to verify its operation. You can also change values and alter the flow of normal program execution. Setting breakpoints helps you debug your program and verify its efficiency.</p>
+<p>The following topics cover various breakpoint concepts and actions: </p>
 <ul>
-  <li><b>resolved</b> &#8212; the symbols for the module  are loaded  and the breakpoint  located in the executable that&#8217;s currently being debugged, circle icon changes to flagged icon </li>
-  <li><b>resolved and moved</b> &#8212;the breakpoint is not found in the executable at the specified point. Debugger moves breakpoint forward in the current function until a line is found that can be resolved. Breakpoint icon moved to source line matching new breakpoint location and changed to flagged icon.</li>
-  <li><b>unresolved</b>  &#8212;  if the symbols for the module  are not loaded or the breakpoint was not able to be set within the current function. This may indicate no executable code in the source line or a deadstripped function  not present in the executable. Breakpoint icon remains in unflagged state indicating unresolved status.</li>
+  <li><a href="viewing_breakpoints.htm">Viewing Breakpoints</a></li>
+  <li><a href="resolving_breakpoints.htm">Breakpoint status indicators </a> </li>
+  <li><a href="toggling_breakpoints.htm">Enabling, Disabling and Removing Breakpoints</a></li>
+  <li><a href="properties_breakpoints.htm">Breakpoint properties </a>
+    <ul>
+      <li><a href="temporary_breakpoints.htm">Creating temporary breakpoints</a> </li>
+      <li><a href="conditional_breakpoints.htm">Creating conditional breakpoints</a> </li>
+    </ul>
+  </li>
+  <li><a href="exporting_breakpoints.htm">Exporting</a> and <a href="importing_breakpoints.htm">importing</a> breakpoints</li>
+  <li><a href="../../reference/menus/hardware_breakpoints.htm">Toggle hardware breakpoints</a> </li>
 </ul>
-<p>Breakpoints have enabled and disabled types as well as resolved and unresolved states. Table 1 explains the different breakpoint types and states.</p>
-<h5>Table 1 Breakpoint&mdash;type and states </h5>
-<table width="90%"  border="0" cellpadding="2" cellspacing="0">
-  <tr>
-    <th width="15%" scope="col">Type</th>
-    <th width="14%" scope="col">State</th>
-    <th width="14%" scope="col">Icon</th>
-    <th width="71%" scope="col">Explanation</th>
-  </tr>
-  <tr>
-    <td>Enabled</td>
-    <td><div align="center">Unresolved</div></td>
-    <td><div align="center"><img src="../tasks/breakpoints/images/breakpoints_enabled_icon.png" width="9" height="10" /></div></td>
-    <td>Indicates that the breakpoint is currently enabled but not located in the executable during a debug session. Debugger cannot halt program execution.</td>
-  </tr>
-  <tr>
-    <td>Enabled</td>
-    <td><div align="center">Resolved</div></td>
-    <td><div align="center"> <img src="../images/icons/breakpoints_enabled_icon.png" width="15" height="12" /></div></td>
-    <td>Indicates that the breakpoint is currently enabled and resolved for the source line. The debugger halts program execution at an enabled breakpoint. </td>
-  </tr>
-  <tr>
-    <td>Disabled</td>
-    <td><div align="center">Unresolved</div></td>
-    <td><div align="center"><img src="../tasks/breakpoints/images/breakpoints_disabled_icon.png" width="12" height="11" /></div></td>
-    <td>Indicates that the breakpoint is currently disabled but not located in the executable during a debug session. The debugger does not halt program execution at a disabled breakpoint.</td>
-  </tr>
-  <tr>
-    <td>Disabled</td>
-    <td><div align="center">Resolved</div></td>
-    <td><div align="center"><img src="../images/icons/breakpoints_disabled_icon.png" width="15" height="12" /></div></td>
-    <td>Indicates that the breakpoint is currently disabled and resolved for the source line. The debugger does not halt program execution at a disabled breakpoint.</td>
-  </tr>
-</table>
-<p>Other references </p>
+<h4>Other references</h4>
 <ul>
-  <li><a href="../reference/view_executables.htm">Executables view</a></li>
-  <li><a href="../tasks/breakpoints/pgm_bp_setting.htm">Setting Breakpoints</a></li>
-  <li><a href="../tasks/breakpoints/pgm_bp_enable.htm">Enabling Breakpoints</a></li>
-  <li><a href="../tasks/breakpoints/pgm_bp_disable.htm">Disabling Breakpoints</a></li>
-  <li><a href="../tasks/breakpoints/pgm_bp_clearing.htm">Clearing Breakpoints</a></li>
+  <li>Debugging overview </li>
 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
-
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 </body>
 </html>

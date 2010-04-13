@@ -340,20 +340,8 @@
 	   <topic href="html/reference/INF_Editor_addedit_mmp.html" />
 	</entry>
 
-	<entry keyword="installation">
-	   <topic href="html/tasks/trk/trk_install_pcsuite.htm" label="PC Suite"/>
-	   <topic href="html/tasks/trk/trk_install_bluetooth.htm" label="Bluetooth"/>
-	   <topic href="html/tasks/trk/trk_install_usb.htm" label="USB"/>
-	</entry>
-
 	<entry keyword="Installation Pane">
 	   <topic href="html/reference/trk/panel_trk_installation.htm"/>
-	</entry>
-
-	<entry keyword="Installing On-device Debug Agents">
-	   <topic href="html/tasks/trk/trk_installation_instr.htm" label="Overview"/>
-	   <topic href="html/tasks/trk/trk_install_bluetooth.htm" label="Bluetooth"/>
-	   <topic href="html/tasks/trk/trk_install_usb.htm" label="USB"/>
 	</entry>
 
 <!-- J -->
@@ -473,6 +461,14 @@
 	</entry>
 
 <!-- N -->
+
+	<entry keyword="New Connection">
+	   <topic href="html/reference/trk/wnd_new_connection_wizard.htm"/>
+	   <topic href="html/reference/trk/wnd_on_device_check_tab.htm"/>
+	   <topic href="html/reference/trk/wnd_new_conn_install_tab.htm"/>
+       <topic href="html/reference/trk/view_remote_connection.htm" />
+	</entry>
+
 <!-- O -->
 
    <entry keyword="On-device Connections">
@@ -568,6 +564,10 @@
 	   <topic href="html/tasks/start/carbide_requirements.htm"/>
 	</entry>
 
+	<entry keyword="Remote Connections view">
+	    <topic href="html/reference/trk/view_remote_connection.htm" />
+	</entry>
+
 	<entry keyword="ROM Build Settings">
 	   <topic href="html/reference/ROM_build_settings.html"/>
 	</entry>
@@ -575,6 +575,7 @@
 	<entry keyword="Running a Program">
 	   <topic href="html/debugger/debug/cmds_starting.htm"/>
 	</entry>
+
 
 <!-- S -->
 
@@ -727,6 +728,7 @@
 		<topic href="html/reference/view_mifdef_editor.htm" />
 		<topic href="html/reference/view_module_wnd.htm" />
 	    <topic href="html/concepts/registers.htm" />
+	    <topic href="html/reference/trk/view_remote_connection.htm" />
 	    <topic href="html/reference/view_signals_wnd.htm" label="Symbols" />
 	    <topic href="html/reference/view_symbian_kernel.htm" />
 	    <topic href="html/reference/view_sym_proj_nav.htm" />

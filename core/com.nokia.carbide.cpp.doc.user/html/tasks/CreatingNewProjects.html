@@ -1,53 +1,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Creating New Projects in Tasks</title>
+  <title>Creating New Projects</title>
 <link rel="StyleSheet" href="../../book.css" type="text/css"/>
 </head>
 <body>
 <h2>Creating New Projects</h2>
   <div class="Bodytext">
-    <p> A new Symbian OS C++ project can be created using the <b>New Project
-    Wizard</b>. A number of templates are available that support different SDKs and executable types. </p>
-    <p class="note"><b>NOTE</b> There must be at least one recognized SDK installed before you can create a project. See the <a href="../reference/SDKPreferences.html">SDK Preferences panel</a> to determine if the installed SDKs are recognized by Carbide.c++ IDE. If the SDK you have is not recognized, you may still be able to <a href="sdks/sdk_add.htm">add</a> it to the Discovered Symbian OS SDK list.</p>
+    <p>New  projects are created using the <b>New Project Wizard</b>. Carbide includes a number of templates that make creating projects for different SDKs and executables quick and easy.</p>
+    <p class="note"><b>NOTE</b> You must have  at least one recognized SDK installed before you can create a project. See the <a href="../reference/SDKPreferences.html">SDK Preferences panel</a> to determine if the installed SDKs are recognized by Carbide.c++ IDE. If the SDK you have is not recognized, you may still be able to <a href="sdks/sdk_add.htm">add</a> it to the Discovered Symbian OS SDK list.</p>
     <p class="note"><b>NOTE</b> When creating or importing projects the sources and SDK must be on the same drive. This is due to many of the internal SDK tools using an implicit working drive to calculate paths (e.g. \epoc32\tools). Avoid spaces in SDK paths since this will also cause problems.</p>
-    <h3>Creating New Symbian OS C++ Projects</h3>
     <div class="step">
-      <ol>
-      <li style="font-weight: normal;"> Select <b>File
-&gt; New &gt; Symbian OS C++ Project</b> to invoke the <b>New Project</b> wizard.</li>
-      <div align="center">
-        <p><img src="../images/step1.png" width="506" height="318" alt="" ></p>
-        <p>&nbsp;</p>
-      </div>
-      <li style="font-weight: normal;">The <b>New Symbian OS C++ Project</b> wizard appears. Select a template related to an installed SDK. Select the &quot;Filter templates based on enabled SDKs&quot; option to list only SDKs enabled in the <a href="../reference/SDKPreferences.html">SDK Preferences panel</a>. Unselect this option to list  SDKs that can be used with Carbide. Click Next.</li>
-      <p>A project template provides an initial set of source files and project settings appropriate for the project type that you have chosen. The text at the bottom of the window provides a brief description of each template. The project type determines the type of program that you are writing.</p>
-      <p class="note"><b>NOTE</b><b> </b>If the selected template requires user input, additional wizard pages will collect data from the user before creating the project. </p>
-      <p align="center"><img src="../images/step2.png" width="500" height="567" alt="" > </p>
-      <p align="center">&nbsp;</p>
-      <li style="font-weight: normal;">Enter a name for your project. Enable the <b>Use default location</b> option to save the project in the current workspace. Unselect this option to save your project to another location. Enter the path in the <b>Location</b> field or click Browse button to locate the directory. Click <b>Next</b>.</li>
-      <p align="center"><span class="Image"><img src="images/new_proj_name_location.png" alt="new project" width="500" height="400"></span></p>
-      <p class="note"><strong>NOTE</strong> There will be two builders available in Carbide, one for SBSv1 (current version of Symbian Build System) and  one for SBSv2 (newer version). The Builder option will only be displayed when a SBSv2  installation is detected.</p>
-      <p class="Image">SBSv2  only works with recent versions of Symbian OS9.5. Both  SBSv1 and SBSv2 are GNU make based build systems.&nbsp; SBSv1 uses Perl to generate make files,  while SBSv2 uses Python. Select the appropriate builder for your project.</p>
-      When building for  SBSv2, the builder will set EPOCROOT to the absolute path (including drive  letter) to the kit for the active build configuration.&nbsp; It will also add the path to the sbs bin  directory to the start of the PATH variable.&nbsp;  This is derived from the SBS_HOME environment variable.
-      <p class="Image">For SBSv2, all  build configurations (platform/target), including the built-in platforms  (WISNCW, ARMV5), are declared in xml files in the \sbs\lib\config directory.  The Build  Configurations selection page will display only those kits  known to support SBSv2.<span class="Image"><br>
+    <h3>Creating New Symbian OS C++ Projects</h3>
+    <ol>
+      <li class="step">Select <b>File &gt; New &gt; Symbian OS C++ Project</b> to invoke the <b>New Project</b> wizard.</span></li>
+        <p><img src="../images/step1.png" width="546" height="142" alt="" ></p>
+        <li>The <b class="step">New Symbian OS C++ Project</b> wizard appears. Select a template related to an installed SDK.</li>
+      <p>A project template provides the initial source files and project settings appropriate for the chosen project type. A brief description of each template appears below the list. The project type determines the type of program that you are writing.</p>
+      <p class="note"><b>NOTE</b> If the selected template requires user input, additional wizard pages will collect data from the user before creating the project.</p>
+      <p>Checkmark the <b>Filter templates based on enabled SDKs</b> option to only list  SDKs enabled in the <a href="../reference/SDKPreferences.html">SDK Preferences</a> panel. Uncheck this option to list  SDKs that can be used with Carbide. Click <b>Next</b>.</p>
+      <p align="center"><img src="../images/step2.png" width="500" height="567" alt="" ></p>
+      <li>Enter a name for your project. </li>
+      <p>Checkmark the <b>Use default location</b> option to save the project in the current workspace by default or uncheck it to save to another location. Enter the path in the <b>Location</b> field or click <b>Browse</b> button to locate the directory. Click <b>Next</b>.</p>
+      <p align="center"><span class="Image"><img src="images/new_proj_name_location.png" alt="new project" width="500" height="567"></span><span class="Image"><br>
       </span></p>
-      <li style="font-weight: normal;">Select the <b>SDKs and Build Configurations</b>. Enable the <b>Filter SDKs based on selected template</b> option to show only the build configurations based on the SDK template you previously selected. Uncheck this option to show all enabled SDKs and their related build configurations.</li>
-    
-  <p align="center"><img src="../images/step4.png" width="500" height="500" alt="" ></p>
-      <p class="Image">The Symbian OS SDKs wizard page shows a tree of the SDKs that are available to be used, and for each
-        SDK, the type of builds that can be done. You can select a single SDK
-        if you are developing the program for just one version of a platform,
-      or multiple SDKs if you intend to build your program for multiple build platforms or SDK versions.</p>
-      <p> The build configuration allows you to choose the compiler(s) to
-      do the build, and whether debug and/or release builds are required. For this example we recommend using the Emulator Debug version as the <a href="../concepts/build_configurations.htm">build configuration</a>. Later, you can <a href="projects/prj_set_build_tgt.htm">switch</a> to another build configuration to create the project for a specific device.</p>
-      <li span style="font-weight: normal;">Click <b>Next</b> to set project properties in the <b>Basic Settings</b> page: </li>
-    <div align="center"><img src="../images/step5.png" width="500" height="500" alt="" >        </div>
-    <blockquote>
+      <li>Select the <b>SDKs and Build Configurations</b>. </li>
+      <p>Checkmark the <b>Filter SDKs based on selected template</b> option to only show  build configurations based on the selected SDK template, or uncheck to show all enabled SDKs and their related build configurations.</p>
+      <p align="center"><img src="../images/step4.png" width="500" height="567" alt="" ></p>
+      <p class="Image">The Symbian OS SDKs wizard page shows a tree of the SDKs and the type of builds available within that SDK. Select a single SDK
+        if the program you are developing is for just one version of a platform,
+      or select multiple SDKs to build the program for multiple build platforms or SDK versions.</p>
+      <p> The build configuration allows you to specify the compiler(s) to
+        do the build, and whether debug and/or release builds are required. For this example we recommend using the Emulator Debug version as the <a href="../concepts/build_configurations.htm">build configuration</a>. Later, you can <a href="projects/prj_set_build_tgt.htm">switch</a> to another build configuration to create the project for a specific device.</p>
+      <p> Click <b>Next</b>.</p>
+      <li>Set the project properties in the <b>Basic Settings</b> page. </li>
+      <div align="center"><img src="../images/step5.png" width="500" height="567" alt="" >        </div>
+      <blockquote>
         <p align="left" class="note"><b>NOTE</b> The basic properties for a project may change based on the template selected for a particular project type. </p>
         <p align="left" style="font-weight: normal;">Fill in the applicable fields, which
               may include UID2, UID3, Vendor ID, Author, Support Email, Copyright
-        notice and&nbsp; Target Type for console EXEs.</p>
+        notice and Target Type for console EXEs.</p>
     
   <p>Application UID (or UID3) is used to uniquely identify the binary (EXE or DLL) within the system. The purpose of UID 3 is to prevent one executable from interfering the operation of another executable.</p>
       <p>    A Vendor ID (VID) is a unique identifier for the organization that is supplying the program. In versions of Symbian OS with platform security, a program can read a VID at runtime to check that a binary comes from a particular source. In most cases, the VID should be zero, meaning that source of the executable is not required for any security checks.</p>
@@ -59,30 +51,27 @@
           <li>For static interface DLLs, the UID 2 is always 0x1000008d</li>
           <li>For polymorphic DLLs, the UID2 is defined by the framework which is being implemented</li>
         </ul>
-      Author, Copyright notice, and Text to be shown are used in comments created by the wizard in the source code.    </blockquote>
-    <blockquote>
+      Author, Copyright notice, and Text to be shown are used in comments created by the wizard in the source code.    
       <p><span style="font-weight: normal;"> For more information on UIDs
           and Vendor IDs, see </span><a
  href="https://www.symbiansigned.com/app/page/uidfaq"
  style="font-weight: normal;">Symbian Signed</a>,
           <span style="font-weight: normal;">which allocates these values.</span>        </p>
-    </blockquote>
-    
-    <li span style="font-weight: normal;">
+      </blockquote>
+      <li span style="font-weight: normal;">
         Click <b>Next</b> to move to the <b>Project Directories</b> page.</li>
         <div class="Figure">
-          <p align="center" class="Image"><img src="../images/step6.png" width="500" height="500" alt="" ><br>
+          <p align="center" class="Image"><img src="../images/step6.png" width="500" height="567" alt="" ><br>
           </p>
-          <p class="note" style="font-weight: normal;"> <b>NOTE</b> The project directories depends on the template
-      selected. That is, the directories required to store project data may
-      change based on the template selected. </p>
+          <p class="note" style="font-weight: normal;"> <b>NOTE</b> The project directories depends on the selected template. That is, the directories required to store project data may
+      change based on the template used. </p>
         </div>
-      <li style="font-weight: normal;">Accept the defaults or enter the names for Include and Source folders to be created under the project root directory. Generated files will be copied to these directories.      </li>
-      <li style="font-weight: normal;"> Click <b>Finish</b> to create the project, which will generate the necessary files for the project based
-      on the template selected and show them in the <a href="../reference/view_cpp_projects.htm">C/C++ Projects view</a>.</li>
+      <p>Accept the defaults or enter the names for Include and Source folders to be created under the project root directory. Generated files will be copied to these directories.</p>
+      <li> Click <b>Finish</b> to create the project.</li>
+      <p>This generates the necessary files for the project based on the template selected and show them in the <a href="../reference/view_cpp_projects.htm">Project Explorer</a> view.</p>
     </ol>
     <blockquote>
-      <p align="center"><img src="../images/step7.png" width="273" height="301" alt="" > </p>
+      <p align="center"><img src="../images/step7.png" width="277" height="339" alt="" > </p>
     </blockquote>
   </div>
   <blockquote>
@@ -106,7 +95,7 @@
     <li><a href="start/carbide_debugging.htm">Debugging a Symbian OS Program</a> </li>
   </ul>
   
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>

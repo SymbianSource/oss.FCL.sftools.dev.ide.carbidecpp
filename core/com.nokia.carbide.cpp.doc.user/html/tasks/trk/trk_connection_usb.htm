@@ -14,42 +14,28 @@
   <li>DKU-2</li>
   <li>CA-53 </li>
 </ul>
+<p>Carbide uses plug-and-play (PnP) to create a remote connection  for the phone or target device once it's plugged in. Once a remote connection is created the <a href="../../reference/trk/view_remote_connection.htm">Remote Connections</a> view appears  in Carbide. In addition, the current available connection is shown  in the  workspace's lower-right trim area. </p>
+<p align="center"><img src="../../reference/images/trim_remote_conns.png" width="212" height="44"></p>
+<p class="figure">Figure 1. Current available connection shown in workspace trim area</p>
+<p class="note"><b>NOTE</b> PC Suite or Ovi Suite must be installed on your PC for the following steps to work.</p>
 <div class="step">
   <h4>Setting up a USB Connection for On-device Debugging </h4>
   <ol>
-    <li>Install the latest USB connectivity software, for example, S60 devices use Nokia PC Suite</li>
-    <li>Connect the USB connectivity cable  to your PC and then the target device</li>
-    <li>For S60 devices, select PC-Suite from the USB Mode list when the target device is connected</li>
-    <li>Download the Application TRK or System TRK SISX file to the device</li>
-    <li>On the PC 
-    (optional)</li>
-  </ol>
-  <ol>
-    <ol type="a">
-      <li>Open the Windows Computer Management (Windows XP) </li>
-      <p>Right-click <b>My Computer</b> and select <b>Manage</b> from the context menu to open the <b>Computer Management</b> window. Select <b>System Tools &gt; Device Manager &gt; Ports (COM &amp; LPT)</b> to display all active ports. </p>
-      <li>Locate the S60 Phone USB (COMx) item in the list (Figure 2) </li>
-      <p align="center"><img src="../../reference/images/wnd_win_device_mgr.png" width="502" height="339" /></p>
-      <p class="figure">Figure 2. Device Manager showing Ports (COM &amp; LPT) section</p>
-      <li>The USB COM Port number should match the COM port used in the <a href="../../projects/launch/page_connection.htm">Connections</a> tab of the TRK launch
-      configuration.</li>
-      <li>Close the Device Manager window</li>
-    </ol>
+    <li>Connect the USB connectivity cable  to your PC and then the phone or target device</li>
+    <li>On the phone or target device,  select PC-Suite from the USB Mode options when asked</li>
+    <li>In Carbide.c++, verify the current available connection is shown in the Remote Connections view or the indicator in the trim area</li>
   </ol>
 </div>
 <h5>Related concepts</h5>
 <ul>
-  <li><a href="../../concepts/trk.htm">On-device Debugging </a></li>
+  <li><a href="../../concepts/trk.htm">On-device Debugging</a></li>
+  <li><a href="../debugger/run_mode_debug.htm">Run Mode On-Device Debugging</a></li>
 </ul>
 <h5>Related references</h5>
 <ul>
   <li><a href="../../projects/launch/page_main.htm">Debug Window (On-device Debugging) Overview</a></li>
 </ul>
-<h5>Related tasks</h5>
-<ul>
-  <li><a href="trk_install_usb.htm">Installing On-device Debug Agents using USB</a></li>
-</ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>
 </html>
