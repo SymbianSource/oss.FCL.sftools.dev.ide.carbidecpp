@@ -489,7 +489,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 				listenForVariablesView();
 				return Status.OK_STATUS;
 			}};
-			earlyJob.schedule();
+			// earlyJob.schedule();
 	}
 
 	public static IProject getSelectedProject() {
