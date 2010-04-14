@@ -60,17 +60,29 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 			data.setExeSelectionPath(data.getDefaultExecutable());
 		if (Path.EMPTY.equals(data.getExeSelectionPath()))
 			data.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
+		
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(data.getProject());
-		data.setInstallPackage((data.isSysTRKConnection() == Boolean.FALSE  /* but NOT if unknown */
-								|| !data.isInternalLayout())
-				&& !data.getExeSelection().equals(EExeSelection.ATTACH_TO_PROCESS));
+		boolean hasSisInstall = false;
 		if (cpi != null) {
 			ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 			for (ISISBuilderInfo info : config.getSISBuilderInfoList()) {
 				IPath sisPath = info.getSigningType() == ISISBuilderInfo.DONT_SIGN ? info.getUnsignedSISFullPath() : info.getSignedSISFullPath();
 				data.setSisPath(sisPath.toOSString());
+				if (info.isEnabled()) {
+					hasSisInstall = true;
+					break;
+				}
 			}
 		}
+		
+		if (data.getExeSelection().equals(EExeSelection.ATTACH_TO_PROCESS)) {
+			data.setInstallPackage(true);
+		} else {
+			Boolean detectedSysTrk = data.isSysTRKConnection(); // TRUE, FALSE, or null
+			boolean isSysTrk = detectedSysTrk == Boolean.TRUE || (detectedSysTrk == null && data.isInternalLayout());
+			data.setInstallPackage(hasSisInstall || !isSysTrk);
+		}
+		
 	}
 
 	@Override
