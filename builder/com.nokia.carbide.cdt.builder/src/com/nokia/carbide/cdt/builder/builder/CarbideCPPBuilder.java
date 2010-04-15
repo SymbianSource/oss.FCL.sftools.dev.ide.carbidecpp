@@ -59,9 +59,11 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv1Builder;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
@@ -1915,7 +1917,15 @@ public static String[] getParserIdArray(int id) {
     			pkgFileStr.contains(PKG_SYMBOL_TARGET) ) {
     				// need to create a new PKG file, resolved...
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_EPOCROOT, context.getSDK().getEPOCROOT());
-    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, context.getPlatformString().toLowerCase());
+    				String platSubst = context.getPlatformString().toLowerCase();				
+    				if (context instanceof CarbideBuildConfiguration){
+    					// Test is this is an SBSv2 build binary variant (changes the output directory)
+    					ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)context).getSBSv2BuildConfigInfo();
+    					if (sbsv2Info != null && sbsv2Info.getVariantOutputDirModifier() != null){
+    						platSubst = platSubst + sbsv2Info.getVariantOutputDirModifier();
+    					}
+    				}
+    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, platSubst);
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_TARGET, context.getTargetString().toLowerCase());
     				
     				IPath tmpPKGPath = pkgFile.removeLastSegments(1);

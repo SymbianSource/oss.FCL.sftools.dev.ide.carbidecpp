@@ -18,6 +18,8 @@ package com.nokia.carbide.cdt.builder;
 
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.*;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.epoc.engine.*;
 import com.nokia.carbide.cpp.epoc.engine.image.*;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
@@ -852,6 +854,14 @@ public class EpocEngineHelper {
 					}
 					
 					String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getBasePlatformForVariation());
+					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(buildConfig.getCarbideProject().getProject())){
+						// Test is this is an SBSv2 build binary variant (changes the output directory)
+						ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
+						if ( sbsv2Info != null && sbsv2Info.getVariantOutputDirModifier() != null && !releasePlatform.contains(".") ){
+							releasePlatform = releasePlatform + sbsv2Info.getVariantOutputDirModifier();
+						}
+					} 
+					
 					IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 
 					// if targetpath is non-null and this is an EKA1 emulator config then add it

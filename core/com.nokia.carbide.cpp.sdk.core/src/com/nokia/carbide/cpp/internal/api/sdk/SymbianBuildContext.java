@@ -439,14 +439,4 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	public String getSBSv2Alias() {
 		return sbsv2Alias;
 	}
-	
-	public void setSBSv2Alias(String sbsv2Alias) {
-		this.sbsv2Alias = sbsv2Alias;
-	}
-
-	public void setDisplayString(String newDisplayName) {
-		this.displayString = newDisplayName;
-		
-	}
-
 }

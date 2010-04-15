@@ -22,6 +22,8 @@ import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
@@ -69,7 +71,14 @@ public class PKGViewPathHelper {
 		this.pkgFilePath = view.getModel().getPath();
 		this.buildConfig = buildConfig;
 		this.epocRoot = new Path(buildConfig.getSDK().getEPOCROOT());
-		this.platform = buildConfig.getPlatformString();
+		this.platform = buildConfig.getPlatformString();		
+		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(buildConfig.getCarbideProject().getProject())){
+			// Test is this is an SBSv2 build binary variant (changes the output directory)
+			ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
+			if ( sbsv2Info != null && sbsv2Info.getVariantOutputDirModifier() != null && !platform.contains(".") ){
+				this.platform = this.platform + sbsv2Info.getVariantOutputDirModifier();
+			}
+		} 
 		this.target = buildConfig.getTargetString();
 		this.mainDirectory = pkgFilePath.removeLastSegments(1);
 	}

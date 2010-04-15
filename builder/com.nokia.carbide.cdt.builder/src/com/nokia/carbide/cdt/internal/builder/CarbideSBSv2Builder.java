@@ -88,7 +88,16 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     
     /** Get the build-able configuration from the command line (i.e. build alias). This is passed after the sbs -c parameter */
     protected String getConfigName(ICarbideBuildConfiguration buildConfig) {
-    	 return buildConfig.getSBSv2Alias();
+    	String buildAlias = buildConfig.getSBSv2Alias();
+    	ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
+    	if (sbsv2Info != null){
+    		String variant = sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
+    		if (variant != null && variant.length() > 1){
+    			buildAlias = buildAlias + variant;
+    		}
+    		
+    	}
+    	return buildAlias;
     }
     
 	public boolean buildComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {

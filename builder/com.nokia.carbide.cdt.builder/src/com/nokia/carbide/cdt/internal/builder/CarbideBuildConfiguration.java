@@ -63,10 +63,6 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	
 	// SBSv2 only config settings 
 	protected final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
-	protected final static String ATRRIB_CONFIG_BASE_PLATFORM = "CONFIG_BASE_PLATFORM"; //$NON-NLS-1$ 
-	protected final static String ATTRIB_CONFIG_TARGET = "CONFIG_TARGET"; //$NON-NLS-1$ 
-	protected final static String ATTRIB_SBSV2_BUILD_ALIAS = "SBSV2_BUILD_ALIAS"; //$NON-NLS-1$ 
-	protected final static String ATTRIB_SBSV2_CONFIG_DISPLAY_STRING = "SBSV2_CONFIG_DISPLAY_STRING"; //$NON-NLS-1$ 
 	
 	protected TrackedResource projectTracker;
 	protected List<ISISBuilderInfo> sisBuilderInfoList;
@@ -74,8 +70,8 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	protected BuildArgumentsInfo buildArgumentsInfo;
 	protected BuildConfigurationData buildConfigData;
 	protected ROMBuilderInfo romBuilderInfo;
+	protected SBSv2BuilderInfo sbsv2BuilderInfo;
 	
-
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
 		super(context.getSDK(), context.getPlatformString(), context.getTargetString(), context.getSBSv2Alias());
 		projectTracker = new TrackedResource(project);
@@ -84,6 +80,9 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
 		buildConfigData = new BuildConfigurationData(this);
 		romBuilderInfo = new ROMBuilderInfo(getSDK());
+		if (context.getSBSv2Alias() != null){
+			sbsv2BuilderInfo = new SBSv2BuilderInfo(context);
+		}
 	}
 	
 	public void loadFromStorage(ICConfigurationDescription projDes) throws CoreException {
@@ -105,6 +104,8 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 					loadBuildArgsFromStorage(se);
 				} else if (se.getName().equals(ROM_BUILDER_DATA_ID)) {
 					romBuilderInfo.loadFromStorage(se);
+				} else if (se.getName().equals(SBSV2_DATA_ID)){
+					sbsv2BuilderInfo.loadFromStorage(se);
 				}
 			}
 		} else {
@@ -127,16 +128,9 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			romBuilderInfo.saveToStorage(rootStorage.createChild(ROM_BUILDER_DATA_ID));
 			
 			if (getSBSv2Alias() != null){ 
-				saveSBSv2DataToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
+				sbsv2BuilderInfo.saveToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
 			}
 		}
-	}
-	
-	private void saveSBSv2DataToStorage(ICStorageElement createChild) {
-		createChild.setAttribute(ATRRIB_CONFIG_BASE_PLATFORM, getPlatformString()); 
-		createChild.setAttribute(ATTRIB_CONFIG_TARGET, getTargetString()); 
-		createChild.setAttribute(ATTRIB_SBSV2_BUILD_ALIAS, getSBSv2Alias()); 
-		createChild.setAttribute(ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, getDisplayString()); 
 	}
 	
 	private void loadBuildArgsFromStorage(ICStorageElement rootStorage) {
@@ -408,6 +402,9 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		return romBuilderInfo;
 	}
 
+	public ISBSv2BuildConfigInfo getSBSv2BuildConfigInfo(){
+		return sbsv2BuilderInfo;
+	}
 
 	private boolean hasSTDCPPSupport() {
 		
@@ -426,5 +423,9 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		}
 		
 		return false;
+	}
+
+	public ISBSv2BuildConfigInfo getSBSv2ConfigInfo() {
+		return sbsv2BuilderInfo;
 	}
 }
