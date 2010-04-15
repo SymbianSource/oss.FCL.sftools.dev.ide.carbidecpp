@@ -37,12 +37,4 @@ public interface ISBSv2BuildConfigInfo {
 	 * @param value
 	 */
 	void setSBSv2Setting(String id, String value);
-	
-	/**
-	 * If a variant is defined and it chages the output directory, return the directory name.
-	 * For example, armv5_udeb.phone1 would return '.phone1'. If not variant that changes the release tree, then null
-	 * @return null if not a variant or the value to append to the platform release tree directory
-	 */
-	String getVariantOutputDirModifier();
-	
 }

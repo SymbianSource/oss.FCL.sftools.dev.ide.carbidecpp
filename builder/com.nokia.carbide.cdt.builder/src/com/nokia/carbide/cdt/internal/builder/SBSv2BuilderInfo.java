@@ -104,27 +104,6 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 
 	public void setSBSv2Setting(String id, String value) {
 		sbsv2ConfigDataMap.put(id, value);
-		
 	}
 
-	public String getVariantOutputDirModifier() {
-		String newOutputDir = null;
-		String variantText = getSBSv2Setting(ATTRIB_SBSV2_VARIANT);
-		if (variantText != null && variantText.length() > 1){
-			String[] variantTok = variantText.split("\\.");
-			if (variantTok.length > 1){
-				if (variantTok[1].toLowerCase().equals("generic")){
-					return null;
-				} else if (variantTok[1].toLowerCase().equals("tracecompiler")){
-					return null;
-				} else {
-					newOutputDir = "." + variantTok[1];
-				}
-			}
-		}
-		return newOutputDir;
-	}
-
-	
-	
 }

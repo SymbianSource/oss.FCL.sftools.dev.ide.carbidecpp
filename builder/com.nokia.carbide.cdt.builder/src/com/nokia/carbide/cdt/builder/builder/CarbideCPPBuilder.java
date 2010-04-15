@@ -75,6 +75,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -1921,8 +1922,8 @@ public static String[] getParserIdArray(int id) {
     				if (context instanceof CarbideBuildConfiguration){
     					// Test is this is an SBSv2 build binary variant (changes the output directory)
     					ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)context).getSBSv2BuildConfigInfo();
-    					if (sbsv2Info != null && sbsv2Info.getVariantOutputDirModifier() != null){
-    						platSubst = platSubst + sbsv2Info.getVariantOutputDirModifier();
+    					if (sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null){
+    						platSubst = platSubst + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
     					}
     				}
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, platSubst);

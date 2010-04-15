@@ -28,6 +28,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -857,8 +858,8 @@ public class EpocEngineHelper {
 					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(buildConfig.getCarbideProject().getProject())){
 						// Test is this is an SBSv2 build binary variant (changes the output directory)
 						ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
-						if ( sbsv2Info != null && sbsv2Info.getVariantOutputDirModifier() != null && !releasePlatform.contains(".") ){
-							releasePlatform = releasePlatform + sbsv2Info.getVariantOutputDirModifier();
+						if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){
+							releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
 						}
 					} 
 					

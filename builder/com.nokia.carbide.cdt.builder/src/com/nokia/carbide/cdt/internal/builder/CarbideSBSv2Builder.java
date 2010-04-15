@@ -515,10 +515,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 			configName = configName + ".test"; //$NON-NLS-1$
 		}
 		
-		if (cpi.buildConfigAppender() != null && cpi.buildConfigAppender().length() > 0){
-			configName = configName + cpi.buildConfigAppender();
-		}
-		
 		args.add(configName);
 		
 		//TODO this causes output to go to stdout, but only at the end of the build.  should we specify a logfile name and tail the file?
@@ -599,10 +595,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 				configName = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase(); 
 			else
 				configName = "error_retrieving_build_alias"; 
-		}
-		
-		if (cpi.buildConfigAppender() != null && cpi.buildConfigAppender().length() > 0){
-			configName = configName + cpi.buildConfigAppender();
 		}
 		
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};

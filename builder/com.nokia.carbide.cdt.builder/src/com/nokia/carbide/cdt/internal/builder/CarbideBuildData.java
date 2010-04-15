@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 
 /**
  * Part of the new CDT 4.0 project model requirements.  All this class
@@ -61,8 +62,8 @@ public class CarbideBuildData extends CBuildData {
 		String thePlatform = carbideBuildConfig.getPlatformString();
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(carbideBuildConfig.getCarbideProject().getProject())){
 			ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)carbideBuildConfig).getSBSv2BuildConfigInfo();
-			if ( sbsv2Info != null && sbsv2Info.getVariantOutputDirModifier() != null ){
-				thePlatform = thePlatform + sbsv2Info.getVariantOutputDirModifier();
+			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null ){
+				thePlatform = thePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
 			}
 		} 
 		IPath outputPath = carbideBuildConfig.getSDK().getReleaseRoot().append(thePlatform).append(carbideBuildConfig.getTargetString());

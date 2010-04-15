@@ -272,9 +272,7 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 
 				cpi.writeProjectSetting(CarbideProjectInfo.MAKE_ENGINE_TO_USE, buildSettingsUI.getMakeEngine());
 				
-				cpi.writeProjectSetting(CarbideProjectInfo.EXTRA_SBSV2_ARGS, buildSettingsUI.getExtraSBSv2Args());
-				
-				cpi.writeProjectSetting(CarbideProjectInfo.BUILD_ALIAS_APPENDER, buildSettingsUI.getBuildAliasAppendText());
+				cpi.writeProjectSetting(CarbideProjectInfo.EXTRA_SBSV2_ARGS, buildSettingsUI.getExtraSBSv2Args());				
 			}
 
 			List<String> checkedComponents = getCheckedComponentFilenames();
@@ -330,7 +328,6 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
         		buildSettingsUI.setOverrideDefaultMakeEngine(cpi.overrideMakeEngineProjectValue());
         		buildSettingsUI.setMakeEngineText(cpi.makeEngineProjectValue());
         		buildSettingsUI.setExtraSBSv2Args(cpi.extraSBSv2ArgsProjectValue());
-        		buildSettingsUI.setBuildAliasAppendText(cpi.buildAliasAppendTextValue());
     		}
     		
     		initMMPSelectionUI(cpi);
