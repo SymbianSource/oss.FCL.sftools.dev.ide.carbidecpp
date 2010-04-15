@@ -219,8 +219,6 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 						makeEngineToUse = settingValue;
 					} else if (settingName.equals(EXTRA_SBSV2_ARGS)) {
 						extraSBSv2Args = settingValue;
-					} else if (settingName.equals(BUILD_ALIAS_APPENDER)) {
-						buildAliasAppender = settingValue;
 					}
 					
 					// now write it to the file
@@ -310,7 +308,6 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 					storage.setAttribute(OVERRIDE_MAKE_ENGINE, overrideMakeEngine ? "true" : "false");
 					storage.setAttribute(MAKE_ENGINE_TO_USE, makeEngineToUse);
 					storage.setAttribute(EXTRA_SBSV2_ARGS, extraSBSv2Args);
-					storage.setAttribute(BUILD_ALIAS_APPENDER, buildAliasAppender);
 				}
 			}
 		} catch (CoreException e) {

@@ -47,7 +47,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     
     private static final IPath SBS_BAT = new Path("sbs.bat"); //$NON-NLS-1$
     
-    
     public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		
 		SubMonitor progress = SubMonitor.convert(monitor, 3);
@@ -93,7 +92,15 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     
     /** Get the build-able configuration from the command line (i.e. build alias). This is passed after the sbs -c parameter */ 
     protected String getConfigName(ICarbideBuildConfiguration buildConfig) {
-    	return buildConfig.getSBSv2Alias(); 
+    	String buildAlias = buildConfig.getSBSv2Alias(); 
+    	ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
+    	if (sbsv2Info != null){ 
+    		String variant = sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
+    		if (variant != null && variant.length() > 1){
+    			buildAlias = buildAlias + variant;
+    		}
+    	}
+    	return buildAlias;
     }
     
 	public boolean buildComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
@@ -512,10 +519,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 			configName = configName + ".test"; //$NON-NLS-1$
 		}
 		
-		if (cpi.buildConfigAppender() != null && cpi.buildConfigAppender().length() > 0){
-			configName = configName + cpi.buildConfigAppender();
-		}
-		
 		args.add(configName);
 		
 		//TODO this causes output to go to stdout, but only at the end of the build.  should we specify a logfile name and tail the file?
@@ -596,10 +599,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 				configName = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
 			else
 				configName = "error_retrieving_build_alias";
-		}
-		
-		if (cpi.buildConfigAppender() != null && cpi.buildConfigAppender().length() > 0){
-			configName = configName + cpi.buildConfigAppender();
 		}
 		
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};

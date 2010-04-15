@@ -59,12 +59,13 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv1Builder;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
-import com.nokia.carbide.cdt.internal.builder.ui.Messages;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
@@ -74,6 +75,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -1919,7 +1921,15 @@ public static String[] getParserIdArray(int id) {
     			pkgFileStr.contains(PKG_SYMBOL_TARGET) ) {
     				// need to create a new PKG file, resolved...
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_EPOCROOT, context.getSDK().getEPOCROOT());
-    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, context.getPlatformString());
+    				String platSubst = context.getPlatformString().toLowerCase(); 
+    				if (context instanceof CarbideBuildConfiguration){ 
+    					// Test is this is an SBSv2 build binary variant (changes the output directory)
+    					ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)context).getSBSv2BuildConfigInfo(); 
+    					if (sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null){ 
+    						platSubst = platSubst + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)); 
+    					}
+    				}
+    				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, platSubst); 
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_TARGET, context.getTargetString());
     				
     				IPath tmpPKGPath = pkgFile.removeLastSegments(1);

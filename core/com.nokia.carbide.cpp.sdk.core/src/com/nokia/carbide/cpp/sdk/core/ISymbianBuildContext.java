@@ -151,7 +151,4 @@ public interface ISymbianBuildContext {
 	 */
 	public String getSBSv2Alias();
 	
-	public void setSBSv2Alias(String newAlias);
-	
-	public void setDisplayString(String newDisplayName);
 }
