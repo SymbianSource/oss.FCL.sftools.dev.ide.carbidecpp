@@ -840,6 +840,9 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	}
 	
 	public Map<String, String> getSettings() {
+		if (editingUI != null)
+			return editingUI.getSettings();
+		
 		if (connectionFactory == null) {
 			IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 			if (connectionToEdit == null || !connectionToEdit.getConnectionType().equals(getConnectionType())) {
