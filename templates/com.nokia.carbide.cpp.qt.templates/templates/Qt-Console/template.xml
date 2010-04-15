@@ -17,6 +17,20 @@
 				persist="true">
 				<description>%uid3.desc</description>
 		</uidField>
+		<textField 
+				id="author"
+				label="%basics.author.label"
+				persist="true">
+				<description>%basics.author.desc</description>
+		</textField>
+		<textField 
+				id="copyright"
+				label="%basics.copyright.label"
+				multiline="true"
+				default="Your copyright notice"
+				persist="true">
+				<description>%basics.copyright.desc</description>
+		</textField>
 	</wizardPage>
 
 	<process class="com.nokia.carbide.cpp.project.core.processes.NewProject"
