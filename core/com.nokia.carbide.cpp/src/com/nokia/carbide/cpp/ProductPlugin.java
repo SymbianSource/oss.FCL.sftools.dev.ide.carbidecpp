@@ -17,8 +17,10 @@
 package com.nokia.carbide.cpp;
 
 import org.eclipse.ui.plugin.*;
+import org.eclipse.equinox.p2.ui.Policy;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -28,6 +30,8 @@ public class ProductPlugin extends AbstractUIPlugin {
 	//The shared instance.
 	private static ProductPlugin plugin;
 	
+	private ServiceRegistration policyRegistration;
+
 	/**
 	 * The constructor.
 	 */
@@ -40,12 +44,16 @@ public class ProductPlugin extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		Policy policy = new Policy();
+		policy.setRestartPolicy(Policy.RESTART_POLICY_PROMPT);
+		policyRegistration = context.registerService(Policy.class.getName(), policy, null);
 	}
 
 	/**
 	 * This method is called when the plug-in is stopped
 	 */
 	public void stop(BundleContext context) throws Exception {
+		policyRegistration.unregister();
 		super.stop(context);
 		plugin = null;
 	}

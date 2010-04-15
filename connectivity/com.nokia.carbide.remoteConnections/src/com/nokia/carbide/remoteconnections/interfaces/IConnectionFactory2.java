@@ -48,4 +48,5 @@ public interface IConnectionFactory2 extends IConnectionFactory {
 	IEditingUI createEditingUI(Composite parent, IValidationErrorReporter errorReporter, 
 			Map<String, String> initialSettings, ISettingsChangedListener settingsListener);
 	
+	Map<String, String> getDefaultSettings();
 }
