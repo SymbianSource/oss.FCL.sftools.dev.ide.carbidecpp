@@ -175,6 +175,11 @@ CConnectionImpl::~CConnectionImpl()
 		::CloseHandle(m_hMessageProcessorStoppedEvent);
 	}
 
+	if (m_hMessageProcessorStartedEvent != NULL)
+	{
+		::CloseHandle(m_hMessageProcessorStartedEvent);
+	}
+
 	if (m_ConnectSettings)
 		delete m_ConnectSettings;
 
