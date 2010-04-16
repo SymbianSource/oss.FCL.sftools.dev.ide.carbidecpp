@@ -38,8 +38,8 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class SBSv2BuildConfigTabComposite extends Composite {
 	
-	private static final String configCmdLabelPrefixText = "Configuration Command: -c "; 
-	private static final String releaseTreeLabelPrefixText = "Release Tree: "; 
+	private static final String configCmdLabelPrefixText = "Configuration Command: -c "; // $NON-NLS-N$ 
+	private static final String releaseTreeLabelPrefixText = "Release Tree: "; // $NON-NLS-N$
 	
 	Text variantEdit;
 	
