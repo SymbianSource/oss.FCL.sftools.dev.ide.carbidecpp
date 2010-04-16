@@ -297,13 +297,4 @@ public interface ICarbideProjectInfo {
 	 * @since 2.2
 	 */
 	public String extraSBSv2Args();
-	
-	/**
-	 * Appends arbitrary text to a default Carbide/Raptor configuration (the -c parameter). The default name is always given, e.g. armv5_urel, but users can 
-	 * append whatever they want to change the behavior of the build. 
-	 * @return the string to append the text to for the Raptor -c parameter
-	 * 
-	 * @since 2.6
-	 */
-	public String buildConfigAppender();
 }

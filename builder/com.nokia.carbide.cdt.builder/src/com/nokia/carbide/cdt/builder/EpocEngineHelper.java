@@ -16,30 +16,78 @@
 */
 package com.nokia.carbide.cdt.builder;
 
-import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cpp.epoc.engine.*;
-import com.nokia.carbide.cpp.epoc.engine.image.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
-import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
-import com.nokia.cpp.internal.api.utils.core.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
+import com.nokia.carbide.cpp.epoc.engine.BldInfDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.ImageMakefileDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IMultiImageSource;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfData;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExport;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMMPReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference;
+import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPBitmap;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPViewConfiguration;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGEmbeddedSISFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGInstallFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.PKGModelHelper;
+import com.nokia.cpp.internal.api.utils.core.CommonPathFinder;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 public class EpocEngineHelper {
 
@@ -815,6 +863,13 @@ public class EpocEngineHelper {
 					}
 					
 					String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getBasePlatformForVariation());
+					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(buildConfig.getCarbideProject().getProject())){ 
+						// Test is this is an SBSv2 build binary variant (changes the output directory) 
+						ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo(); 
+						if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){ 
+							releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)); 
+						}
+					}
 					IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform).append(buildConfig.getTargetString());
 
 					// if targetpath is non-null and this is an EKA1 emulator config then add it
