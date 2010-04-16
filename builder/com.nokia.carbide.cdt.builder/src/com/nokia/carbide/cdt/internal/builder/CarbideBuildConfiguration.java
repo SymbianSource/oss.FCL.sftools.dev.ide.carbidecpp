@@ -16,23 +16,17 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.cdt.core.CCorePlugin;
-import org.eclipse.cdt.core.ICDescriptor;
-import org.eclipse.cdt.core.ICExtensionReference;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
-import org.eclipse.cdt.core.settings.model.WriteAccessException;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -46,12 +40,11 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
 import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -112,7 +105,9 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 				} else if (se.getName().equals(ROM_BUILDER_DATA_ID)) {
 					romBuilderInfo.loadFromStorage(se);
 				} else if (se.getName().equals(SBSV2_DATA_ID)){ 
-					sbsv2BuilderInfo.loadFromStorage(se); 
+					if (sbsv2BuilderInfo != null){
+						sbsv2BuilderInfo.loadFromStorage(se);
+					}
 				}
 			}
 		} else {
@@ -435,6 +430,18 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	
 	public ISBSv2BuildConfigInfo getSBSv2ConfigInfo() { 
 		return sbsv2BuilderInfo; 
+	}
+	
+	public IPath getTargetOutputDirectory() {
+		String releasePlatform = getSDK().getBSFCatalog().getReleasePlatform(getBasePlatformForVariation());
+		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
+			// Test is this is an SBSv2 build binary variant (changes the output directory)
+			ISBSv2BuildConfigInfo sbsv2Info = getSBSv2BuildConfigInfo();
+			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){
+				releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
+			}
+		}
+		return getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
 	}
 	
 }

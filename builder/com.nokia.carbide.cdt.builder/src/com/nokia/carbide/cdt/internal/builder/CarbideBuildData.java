@@ -59,14 +59,7 @@ public class CarbideBuildData extends CBuildData {
 
 	@Override
 	public ICOutputEntry[] getOutputDirectories() {
-		String thePlatform = carbideBuildConfig.getPlatformString();
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(carbideBuildConfig.getCarbideProject().getProject())){
-			ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)carbideBuildConfig).getSBSv2BuildConfigInfo();
-			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null ){
-				thePlatform = thePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
-			}
-		} 
-		IPath outputPath = carbideBuildConfig.getSDK().getReleaseRoot().append(thePlatform).append(carbideBuildConfig.getTargetString());
+		IPath outputPath = carbideBuildConfig.getTargetOutputDirectory();
 		return new ICOutputEntry[]{new COutputEntry(outputPath, null, 0)};
 	}
 

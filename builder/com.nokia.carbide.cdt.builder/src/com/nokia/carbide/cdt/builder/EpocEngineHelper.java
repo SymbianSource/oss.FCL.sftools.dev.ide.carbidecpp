@@ -862,16 +862,8 @@ public class EpocEngineHelper {
 						exePath = tempPath.lastSegment();
 					}
 					
-					String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getBasePlatformForVariation());
-					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(buildConfig.getCarbideProject().getProject())){ 
-						// Test is this is an SBSv2 build binary variant (changes the output directory) 
-						ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo(); 
-						if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){ 
-							releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)); 
-						}
-					}
-					IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform).append(buildConfig.getTargetString());
-
+					IPath path = buildConfig.getTargetOutputDirectory();
+					
 					// if targetpath is non-null and this is an EKA1 emulator config then add it
 					if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 						if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {

@@ -18,6 +18,8 @@ package com.nokia.carbide.cdt.builder.project;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
@@ -128,5 +130,13 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 * Compares two configurations to see if their display names are equivalent.
 	 */
 	boolean equals(Object obj);
+	
+	/** Get the full path of the release directory into the SDK where binaries are built
+	 *  NOTE: This does not account for whether or not a project has the FEATUREVARIANT keyword
+	 * @return IPath
+	 * 
+	 * @since 2.6
+	 */
+	IPath getTargetOutputDirectory();
 	
 }
