@@ -240,7 +240,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			}
 			fireConnectionStoreChanged();
 		} 
-		catch (Exception e) {
+		catch (Throwable e) {
 			RemoteConnectionsActivator.log(Messages.getString("Registry.ConnectionLoadError"), e); //$NON-NLS-1$
 		}
 		

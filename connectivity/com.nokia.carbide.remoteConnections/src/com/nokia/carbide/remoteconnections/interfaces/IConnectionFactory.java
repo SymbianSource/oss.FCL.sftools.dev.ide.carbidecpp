@@ -37,14 +37,12 @@ public interface IConnectionFactory {
 	 * @param parent Composite
 	 * @param errorReporter IValidationErrorReporter
 	 * @param initialSettings Map may be <code>null</code>
-	 * @deprecated use IConnectionFactory2.createEditingUI(Composite, IValidationErrorReporter, Map, com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener)
 	 */
 	void createEditingUI(Composite parent, IValidationErrorReporter errorReporter, Map<String, String> initialSettings);
 
 	/**
 	 * Returns the settings from the editing UI as name value pairs
 	 * @return Map
-	 * @deprecated use IConnectionFactory2.IEditingUI.getSettings() or IConnectionFactory2.getDefaultSettings()
 	 */
 	Map<String, String> getSettingsFromUI();
 

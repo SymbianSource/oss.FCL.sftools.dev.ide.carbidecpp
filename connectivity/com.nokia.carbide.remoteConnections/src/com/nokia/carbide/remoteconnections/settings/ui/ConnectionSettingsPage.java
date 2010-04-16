@@ -100,7 +100,6 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.IEditingUI;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
@@ -158,7 +157,6 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	private Label statusLabel;
 	private Text statusText;
 	private IConnectionFactory connectionFactory;
-	private IEditingUI editingUI;
 	private IConnection connection;
 	private IService service;
 	private volatile IConnectedService connectedService;
@@ -564,7 +562,6 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void updateDynamicUI() {
 		IConnectionType currentConnectionType = getConnectionType();
 		if (currentConnectionType != null && !currentConnectionType.equals(connectionType)) {
@@ -598,7 +595,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 				}
 			};
 			if (connectionFactory instanceof IConnectionFactory2) {
-				editingUI = ((IConnectionFactory2)connectionFactory).createEditingUI(
+				((IConnectionFactory2)connectionFactory).createEditingUI(
 						settingsGroup, errorReporter, initialSettings, this);
 				settingsChanged();
 			}
@@ -654,16 +651,13 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	public void settingsChanged() {
 		if (!modifiedName) {
-			if (editingUI != null) {
-				String preferredName = editingUI.getSettings().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
-				if (preferredName != null) {
-					nameText.setText(getPreferredNameText(preferredName));
-					modifiedName = false;
-					return;
-				}
+			String preferredName = connectionFactory.getSettingsFromUI().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
+			if (preferredName != null) {
+				nameText.setText(ensureUniquePreferredName(preferredName));
 			}
-			// when editingUI or preferredName is null
-			nameText.setText(getInitialNameText());
+			else {
+				nameText.setText(getInitialNameText());
+			}
 			modifiedName = false;
 		}
 	}
@@ -776,13 +770,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	@SuppressWarnings("unchecked")
 	protected void testService() {
-		Map<String, String> settings;
-		if (connectionFactory instanceof IConnectionFactory2 && editingUI != null) {
-			settings = editingUI.getSettings();
-		}
-		else {
-			settings = connectionFactory.getSettingsFromUI();
-		}
+		Map<String, String> settings = connectionFactory.getSettingsFromUI();
 		boolean newConnection = connection == null || !connectionType.equals(connection.getConnectionType());
 		if (newConnection) {
 			if (connection != null)
@@ -840,9 +828,6 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	}
 	
 	public Map<String, String> getSettings() {
-		if (editingUI != null)
-			return editingUI.getSettings();
-		
 		if (connectionFactory == null) {
 			IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 			if (connectionToEdit == null || !connectionToEdit.getConnectionType().equals(getConnectionType())) {
@@ -1093,7 +1078,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		}
 	}
 
-	private String getPreferredNameText(String preferredName) {
+	private String ensureUniquePreferredName(String preferredName) {
 		if (isNameUnique(preferredName)) {
 			return preferredName;
 		}
