@@ -32,10 +32,6 @@ public interface IConnectionFactory2 extends IConnectionFactory {
 		void settingsChanged();
 	}
 
-	public interface IEditingUI {
-		Map<String, String> getSettings();
-	}
-
 	/**
 	 * Creates a composite with UI for editing settings, optionally initialized with initialSettings.<br>
 	 * Can provide optional errorReporter and optional listener. Assumes parent has GridLayout
@@ -43,10 +39,7 @@ public interface IConnectionFactory2 extends IConnectionFactory {
 	 * @param errorReporter IValidationErrorReporter
 	 * @param initialSettings Map may be <code>null</code>
 	 * @param settingsListener ISettingsChangedListener
-	 * @return IEditingUI
 	 */
-	IEditingUI createEditingUI(Composite parent, IValidationErrorReporter errorReporter, 
+	void createEditingUI(Composite parent, IValidationErrorReporter errorReporter, 
 			Map<String, String> initialSettings, ISettingsChangedListener settingsListener);
-	
-	Map<String, String> getDefaultSettings();
 }
