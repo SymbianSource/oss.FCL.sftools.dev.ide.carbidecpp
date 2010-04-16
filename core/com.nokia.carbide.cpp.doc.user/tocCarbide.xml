@@ -97,6 +97,7 @@
         <topic label="SIS Builder" 								href="html/reference/build_properties/pane_build_config_sis.htm" >
           <topic label="SIS Properties"						href="html/reference/build_properties/wnd_sis_properties.htm" />
         </topic>
+        <topic label="SBSv2"									href="html/reference/build_properties/pane_build_config_sbsv2.htm" />
         <topic label="Environment"								href="html/reference/build_properties/pane_build_config_env.htm" />
         <topic label="Arguments"								href="html/reference/build_properties/pane_build_config_args.htm" />
         <topic label="Paths and Symbols"						href="html/reference/build_properties/pane_build_config_paths.htm" />

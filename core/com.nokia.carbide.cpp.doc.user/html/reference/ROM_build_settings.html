@@ -5,7 +5,7 @@
 </head>
    <body>
    <h2>ROM Builder pane </h2>
-   <p>Use the <b>ROM Builder</b> pane to specify commands and a working directory for building a GUI ROM Image. The tool used to build GUI ROM images is called buildrom and can typically be found in your SDK path, for example in the <span class="code">\Symbian\9.1\S60_3rd\Epoc32\tools</span> directory. The tool used to build text shell images is called ROM. The ROM image generated from the ROM building process specifies a base address for the image to run at. This might be an address in RAM or ROM. The image must be downloaded to the device at this address.</p>
+   <p>Use the <b>ROM Builder</b> pane to specify commands and a working directory for building a GUI ROM Image. The tool used to build GUI ROM images is called buildrom and can typically be found in your SDK path, for example in the <span class="code">\Symbian\9.2\S60_5th_Ed\Epoc32\tools</span> directory. The tool used to build text shell images is called ROM. The ROM image generated from the ROM building process specifies a base address for the image to run at. This might be an address in RAM or ROM. The image must be downloaded to the device at this address.</p>
    <p>Building a ROM requires that the following are available, or have been successfully created:</p>
    <ul>
      <li> Symbian OS components making up a set of releasables</li>
@@ -15,7 +15,7 @@
    <p>Rom build assembles executable and data files into a ROM image.</p>
    <p>Executables are pre-processed, relocated, and have their imports and exports bound for a ROM image based at some given virtual address. The files, base address of the ROM, and various other parameters are specified by means of the obey file. This is a file of type .oby and is a text file containing statements that specify how the ROM image is to be built. A .oby file can include other files in the same way that files containing C++ source can #include other C++ files. By convention, the included files have the .iby file type. This structure allows flexibility in the way that ROM images are defined.</p>
    <p class="note"><b>NOTE</b> The ROM image will be rebuilt for any target whenever a change to the project occurs; except for WINSCW targets.</p>
-   <p align="center"><img src="images/rom_build.png" width="558" height="203" /></p>
+   <p align="center"><img src="images/rom_build.png" width="575" height="175" /></p>
    <p align="center" class="figure">Figure 1. ROM Builder pane </p>
    <h5>Table 1. ROM Build Settings &mdash;items</h5>
    <table cellpadding="2" cellspacing="0"
@@ -30,12 +30,16 @@ border="0">
          <tr valign="top">
            <td class="Cell"><b>Working Directory</b></td>
            <td class="Cell"><p>Specify the working directory for building the ROM Image. Typically, the working directory is the folder where you need to have your rom image built.
-Note that your sdk and working directory should be on
+Note that your SDK and working directory should be on
 the same drive, otherwise some of the rombuild scripts will fail.</p>
            </td>
      </tr>
    </table>
-	 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+	 <h5>Other references</h5>
+	 <ul>
+       <li><a href="build_properties/pane_build_config.htm">Carbide Build Configurations</a></li>
+   </ul>
+   <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
    </body>
    </html>

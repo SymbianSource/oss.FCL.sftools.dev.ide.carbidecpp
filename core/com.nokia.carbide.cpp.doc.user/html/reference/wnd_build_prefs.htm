@@ -9,9 +9,7 @@
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
 <style type="text/css">
 <!--
-.style1 {	font-family: Georgia, "Times New Roman", Times, serif;
-	font-weight: bold;
-}
+.style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; }
 -->
 </style>
 </head>
@@ -60,25 +58,22 @@
     <th width="57%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><span class="style1">Clean level </span></td>
+    <td><span class="style5">Clean level </span></td>
     <td><p>Specifies the level of clean to perform on  project files. The levels include:</p>
       <ul>
         <li>Level 0  (<span class="code">abld clean</span>) - removes all the intermediate files created during compilation, and all the executables and import libraries created by the linker</li>
         <li>Level 1  (<span class="code">abld reallyclean</span>) - performs a <span class="code">clean</span> operation, but also removes all exported files and makefiles</li>
         <li>Level 2  (<span class="code">abld reallyclean</span>, <span class="code">bldmake clean</span>) - performs  a <span class="code">reallyclean</span> operation and then removes all files created by bldmake</li>
-      </ul>
-    </td>
+      </ul>    </td>
   </tr>
   <tr>
-    <td><span class="style1">Manage dependency tracking (improves build speed) </span></td>
+    <td><span class="style5">Manage dependency tracking (improves build speed) </span></td>
     <td><p>Enable to have Carbide manage the dependency tracking for source and resource files. Carbide does this by separating out the generation of dependency information from the makefile and managing the entire process.  All builds now can quickly compare whether new dependency information is required due to changes in a source file and only build those that need updating. </p>
-    <p>If not enabled, the Symbian OS command line build system handles all dependency tracking by generating the dependency information in the makefiles. Because it does this for all project files, regardless of the number of changes, it can result in a performance penalty. A single edit in a MMP file  forces a complete regeneration of the makefile dependency information for all project files. </p>
-    </td>
+    <p>If not enabled, the Symbian OS command line build system handles all dependency tracking by generating the dependency information in the makefiles. Because it does this for all project files, regardless of the number of changes, it can result in a performance penalty. A single edit in a MMP file  forces a complete regeneration of the makefile dependency information for all project files. </p>    </td>
   </tr>
   <tr>
     <td><b>Show a dialog to modify build actions when modified MMPs are detected </b></td>
-    <td><p>Enable to have Carbide ask before starting a build what action to take when modified files are detected. When disabled, do not show a dialog but use the default action listed below.</p>
-    </td>
+    <td><p>Enable to have Carbide ask before starting a build what action to take when modified files are detected. When disabled, do not show a dialog but use the default action listed below.</p>    </td>
   </tr>
   <tr>
     <td><b>Default action to take when mmp files are modified </b></td>
@@ -87,8 +82,7 @@
         <li>None</li>
         <li>Link Only</li>
         <li>Compile and Link</li>
-      </ul>
-    </td>
+      </ul>    </td>
   </tr>
   <tr>
     <td><strong>Do not offer to track dependencies for projects build on command-line </strong></td>
@@ -122,6 +116,10 @@
   <tr>
     <td><b>Additional SBSv2 arguments</b></td>
     <td>Enter additional SBSv2 build arguments here.</td>
+  </tr>
+  <tr>
+    <td><b>Append to Build Configuration</b></td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><b>Override default make engine </b></td>
