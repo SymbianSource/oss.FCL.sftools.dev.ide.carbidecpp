@@ -134,6 +134,8 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	/** Get the full path of the release directory into the SDK where binaries are built
 	 *  NOTE: This does not account for whether or not a project has the FEATUREVARIANT keyword
 	 * @return IPath
+	 * 
+	 * @since 2.6
 	 */
 	IPath getTargetOutputDirectory();
 	

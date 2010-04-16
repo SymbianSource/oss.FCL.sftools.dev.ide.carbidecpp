@@ -855,8 +855,7 @@ public class EpocEngineHelper {
 					}
 					
 					IPath path = buildConfig.getTargetOutputDirectory();
-					//IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
-
+					
 					// if targetpath is non-null and this is an EKA1 emulator config then add it
 					if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 						if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
