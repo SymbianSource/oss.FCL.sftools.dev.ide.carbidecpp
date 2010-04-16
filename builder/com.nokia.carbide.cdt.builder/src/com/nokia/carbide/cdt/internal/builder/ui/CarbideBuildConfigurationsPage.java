@@ -659,8 +659,10 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 		// Compare each of the settings to see if they are the same
 		boolean sisSettingsEqual = sisFilesBlock.compareConfigurationSettings(selectedConfig, writeToConfig);
 		
-		boolean sbsv2ConfigEqual = sbsv2BuildConfigTabComposite.compareConfigurationSettings(selectedConfig, writeToConfig);
-		
+		boolean sbsv2ConfigEqual = true;
+		if (sbsv2BuildConfigTabComposite != null) { 
+			sbsv2ConfigEqual = sbsv2BuildConfigTabComposite.compareConfigurationSettings(selectedConfig, writeToConfig);
+		}
 		// Compare envVars settings
 		boolean envVarsSettingsEqual = envVarList.size() == envVarListOrig.size() && envVarList.equals(envVarListOrig);
 		if (!envVarsSettingsEqual && writeToConfig) {
