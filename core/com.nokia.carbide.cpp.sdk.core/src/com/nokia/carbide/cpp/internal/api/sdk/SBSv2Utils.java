@@ -61,24 +61,24 @@ public class SBSv2Utils {
 	 */
 	private static Map<String, String> unfilteredSBSv2ConfigNames;
 
-	protected static final String SBS_HOME = "SBS_HOME";
-	protected static String sbsHome;
+	/** Path, to and including the SBS script */
 	protected static IPath sbsPath;
 
 	private static boolean scannedSbsState = false;
 	private static final String sbsScriptName = HostOS.IS_WIN32 ? "sbs.bat" : "sbs"; 
 	
 	/**
-     * Get the path to the SBSv2 bin directory.  This is based on the SBS_HOME environment variable
-     * and may or may not actually exist.
-     * @return absolute path to the bin directory, or null if SBS_HOME is not set
+     * Get the path to the SBSv2 bin directory, not including the sbs executable.  
+     * May or may not actually exist.
+     * @return absolute path to the bin directory, or null if sbs is not found
      */
     public static IPath getSBSBinDirectory() {
-    	String sbsHome = EnvironmentReader.getEnvVar("SBS_HOME"); //$NON-NLS-1$
-    	if (sbsHome != null) {
-    		return new Path(sbsHome).append("bin"); //$NON-NLS-1$
+    	String pathValue = EnvironmentReader.getEnvVar("PATH"); //$NON-NLS-1$
+    	IPath sbs = HostOS.findProgramOnPath(sbsScriptName, pathValue);
+    	if (sbs != null){
+    		sbs = sbs.removeLastSegments(1);
     	}
-    	return null;
+    	return sbs;
     }
 
     /**
@@ -88,10 +88,10 @@ public class SBSv2Utils {
      */
     public static Map<String, String> getUnfilteredSBSv2BuildConfigurations(boolean refreshList) {
     	
-    	if (unfilteredSBSv2ConfigNames == null || refreshList) {
+    	if (unfilteredSBSv2ConfigNames == null || refreshList || unfilteredSBSv2ConfigNames.size() == 0) {
     		unfilteredSBSv2ConfigNames = new HashMap<String, String>();
     		
-        	// parse the xml files in SBS_HOME/lib/config/ to get SBSv2 configs
+        	// parse the xml files in <sbs-install>/lib/config/ to get SBSv2 configs
     		try {
 
     			IPath configPath = getSBSBinDirectory();
@@ -333,22 +333,22 @@ public class SBSv2Utils {
 	 * @return message if error, else null
 	 */
 	public static String scanSBSv2() {
-		// do some basic checks
-		sbsHome = System.getenv(SBS_HOME);
-		if (sbsHome == null) {
-			return Messages.getString("SBSv2Utils.DefineSBS_HOMEMessage"); //$NON-NLS-1$
+		if (sbsPath != null){
+			return null;
 		}
-		
-		IPath expectedPath = new Path(sbsHome).append("bin").append(sbsScriptName);
-		if (expectedPath.toFile().exists()) {
-			sbsPath = expectedPath;
-		} else {
-			sbsPath = HostOS.findProgramOnPath(sbsScriptName, null);
-			if (sbsPath == null) {
-				return MessageFormat.format(
-								Messages.getString("SBSv2Utils.CannotFindSBSScriptError"), //$NON-NLS-1$
-								sbsScriptName);
+		// do some basic checks
+		IPath expectedPath = getSBSBinDirectory();
+		if (expectedPath != null) {
+			expectedPath = expectedPath.append(sbsScriptName);
+			if (expectedPath.toFile().exists()) {
+				sbsPath = expectedPath;
 			}
+		} 
+		
+		if (sbsPath == null) {
+			return MessageFormat.format(Messages
+					.getString("SBSv2Utils.CannotFindSBSScriptError"), //$NON-NLS-1$
+					sbsScriptName);
 		}
 		
 		return null;

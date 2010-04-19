@@ -56,8 +56,8 @@ public class HostOS {
 	/**
 	 * Scan the PATH variable and see if the given binary is visible on
 	 * the PATH that will be used at runtime (with the default environment and overrides).
-	 * @param pathValue the expected Path 
-	 * @param program
+	 * @param program - program name to find on the path
+	 * @param pathValue the value of the path in the system to search on
 	 * @return IPath if program is on PATH, else <code>null</code>
 	 */
 	public static IPath findProgramOnPath(String program, String pathValue) {
