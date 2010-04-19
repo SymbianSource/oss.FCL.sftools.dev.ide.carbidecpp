@@ -21,7 +21,7 @@
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
        		label="Plug-n-Play On-device Debugging (2.5)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm" 
        		id="carbide-link" 
        		style-id="content-link">
           	<text>Debugging programs on a target device has never been easier with PnP on-device debugging.</text>
