@@ -231,6 +231,10 @@ public class SDKManager implements ISDKManager, ISDKManagerInternal {
 		// tell others about it
 		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		scanCarbideSDKCache();
+		String message = SBSv2Utils.scanSBSv2();
+		if (message != null){
+			logError(message, null);
+		}
 	}
 
 	private void ensureScannedSDKs() {

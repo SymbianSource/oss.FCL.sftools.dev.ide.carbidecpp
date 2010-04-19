@@ -88,14 +88,8 @@ public class BuilderSelectionComposite extends Composite {
 			
 			IPath sbsBinPath = SBSv2Utils.getSBSBinDirectory(); 
 			
-			// if SBSv2 is selected, make sure SBS_HOME is defined
 			if (SBSv2Utils.getSBSBinDirectory() == null){
-				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable is not defined. Carbide needs this variable to find the base SBS install.");
-			}
-			
-			// check to see if SBS_HOME directory really exists
-			else if (!sbsBinPath.toFile().exists()){
-				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBS_HOME environment variable path does not exist: " + sbsBinPath.toOSString()); 
+				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "The Symbian Build System (sbs) cannot be found on the PATH. Carbide needs a valid SBS installation on the PATH to use the SBSv2 builder."); 
 			}
 			// check the raptor version
 			else if (SDKCorePlugin.getSDKManager().getSBSv2Version(false).getMajor() == 0){
