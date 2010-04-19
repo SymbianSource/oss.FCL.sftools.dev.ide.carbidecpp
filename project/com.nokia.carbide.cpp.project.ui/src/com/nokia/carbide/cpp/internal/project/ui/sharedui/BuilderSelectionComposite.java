@@ -82,8 +82,6 @@ public class BuilderSelectionComposite extends Composite {
 				useSBSv2Builder = false;
 			}
 			else if (builderCombo.getSelectionIndex() == 1) {
-
-				IPath sbsBinPath = SBSv2Utils.getSBSBinDirectory();
 				
 				// if SBSv2 is selected, make sure SBS bin directory exists
 				if (SBSv2Utils.getSBSBinDirectory() == null){
