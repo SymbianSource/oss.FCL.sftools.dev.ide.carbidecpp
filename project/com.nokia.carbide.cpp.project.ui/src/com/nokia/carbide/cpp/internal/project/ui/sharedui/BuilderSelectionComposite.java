@@ -84,9 +84,7 @@ public class BuilderSelectionComposite extends Composite {
     public IStatus validate() {
 		useSBSv2Builder = true;
 		IStatus status = null;
-		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) {
-			
-			IPath sbsBinPath = SBSv2Utils.getSBSBinDirectory(); 
+		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) { 
 			
 			if (SBSv2Utils.getSBSBinDirectory() == null){
 				status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "The Symbian Build System (sbs) cannot be found on the PATH. Carbide needs a valid SBS installation on the PATH to use the SBSv2 builder."); 
