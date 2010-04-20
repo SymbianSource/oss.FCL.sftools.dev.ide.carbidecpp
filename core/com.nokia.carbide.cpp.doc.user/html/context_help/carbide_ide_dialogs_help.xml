@@ -27,14 +27,20 @@
 	<context id="project_properties_page" >
 		<description>Use the Carbide Project Settings window to specify project build options.</description>
 		<topic label="Carbide Project Settings"		              href="html/reference/build_properties/pane_project_settings.htm" />
-		<topic label="Building Projects"			              href="html/tasks/projects/prj_build.htm" />
 		<topic label="Carbide Build Configurations"				  href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Macro Settings"				  			  href="html/reference/build_properties/pane_macro_settings.htm" />
+		<topic label="Building Projects"			              href="html/tasks/projects/prj_build.htm" />
 	</context>
 
 	<!-- Carbide Build Configurations Page -->
 	<context id="project_configurations_page" >
 		<description>The Carbide Build Configurations page allows you to specify SIS file options and environment variable settings for the selected build configuration</description>
 		<topic label="Carbide Build Configurations"					href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="SIS Builder"									href="html/reference/build_properties/pane_build_config_sis.htm" />
+		<topic label="SBSv2"										href="html/reference/build_properties/pane_build_config_sbsv2.htm" />
+		<topic label="Environment"									href="html/reference/build_properties/pane_build_config_env.htm" />
+		<topic label="Paths and Symbols"							href="html/reference/build_properties/pane_build_config_paths.htm" />
+		<topic label="ROM Builder"									href="html/reference/ROM_build_settings.html" />
 		<topic label="Carbide Build Configurations Manage SDK"		href="html/reference/ProjectTypeandSDK.html" />
 		<topic label="Environment Variables"						href="html/reference/build_properties/pane_build_config_env.htm" />
 	</context>
@@ -130,11 +136,13 @@
 	</context>
 
 	<!-- Carbide Project Settings Page -->
+	<!-- DUPLICATE DEFINITION
 	<context id="project_properties_page" >
 		<description>Project Properties page</description>
 		<topic label="Project Properties page"  	href="html/tasks/ImportingProjects.html" />
 		<topic label="Importing Projects"  			href="html/tasks/ImportingProjects.html" />
 	</context>
+	-->
 
 	<!-- Choose Project Page   -->
 	<context id="choose_project_page" >

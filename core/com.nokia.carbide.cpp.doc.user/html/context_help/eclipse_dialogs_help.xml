@@ -310,6 +310,16 @@
 		<topic label="Console view"  			href="html/reference/view_log.htm" />
 	</context>
 
+
+	<!-- ============================================================== -->
+	<!-- PROJECT PROPERTY DIALOG                                        -->
+	<context id="property_dialog_context" >
+		<description>Carbide specific project settings.</description>
+		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Macro Settings"					href="html/reference/build_properties/pane_macro_settings.htm" />
+		<topic label="Project Settings"					href="html/reference/build_properties/pane_project_settings.htm" />
+	</context>
+	
 	
 	<!-- PREFERENCE PANELS -->
 
