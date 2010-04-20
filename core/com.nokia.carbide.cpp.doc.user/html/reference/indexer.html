@@ -4,9 +4,9 @@
 </head>
    <body>
 <h2>Indexer</h2>
-<p>The C/C++ indexer uses the parser to create a database of your source and header files that provides the basis for C/C++ search, navigation features and content assist. The goal of indexing is to record all named elements in a project's source code and store them with their related data. The indexer parses each source file in your project and updates related indexes. By indexing your files with the indexer, useful features such as code completion and fast file search can be used. It is also possible to specify different indexer settings for each project in your workspace.</p>
-   <p>If you choose to perform the Full C/C++ Indexer option the indexer will consume the CPU for some time, but you will gain more benefit from the process after it completes.
-    However, if you do not require the benefits of indexing your project, select the No Indexer option to speed up the process of building your project.</p>
+<p>The C/C++ <b>Indexer</b> uses the parser to create a database of  source and header files that provide the basis for C/C++ search, navigation features and content assist. The goal of indexing is to record all named elements in a project's source code and store them with their related data. The indexer parses each source file in your project and updates related indexes. By indexing your files with the indexer, useful features such as code completion and fast file search can be used. It is also possible to specify different indexer settings for each project in your workspace.</p>
+   <p>If you choose to perform the <b>Full C/C++ Indexer </b>option the indexer will consume the CPU for some time, but you will gain more benefit from the process after it completes.
+    However, if you do not require the benefits of indexing your project, select the <b>No Indexer</b> option to speed up the process of building your project.</p>
    <p>The indexer runs on a background thread and reacts to resource change events such as:</p>
    <ul>
      <li>C/C++ project creation/deletion</li>
@@ -14,24 +14,23 @@
      <li>File imports</li>
      <li> Source file content changes</li>
    </ul>
-   <p>The Preferences Indexer can be accessed by selecting Window &gt; Preferences then expanding the C/C++ group and selecting Indexer (figure 1). The Project Properties Indexer can be accessed by selecting a project in the C/C++ Projects or Symbian Project Navigator view and selecting Project &gt; Properties, then select C/C++ Indexer (figure 2).</p>
-   <p class="note"><b>NOTE</b> You can also rebuild a project's index by selecting a project, right-click to display the context menu and select <b>Rebuild Index</b>. </p>
-   <p align="center" class="Image"><img src="images/indexer.png" width="663" height="439" /></p>
+   <p>The global <b>Indexer</b> is accessed by selecting <b>Window &gt; Preferences &gt; C/C++ &gt; Indexer</b> (figure 1). The sections outlined in red appear as part of the project level indexer.</p>
+   <p class="note"><b>NOTE</b> You can also rebuild a project's index by selecting a project, then right-click  and select the <b>Rebuild Index</b> menu item. </p>
+   <p align="center" class="Image"><img src="images/indexer.png" width="627" height="704" /></p>
    <p align="left" class="figure">Figure 1 - Indexer Window in Preferences Panels</p>
-   <p align="left" class="Image">&nbsp;</p>
-   <p align="center" class="Image"><img src="images/indexer_prop.png" width="616" height="392" /></p>
-   <p align="left" class="figure">Figure 2 - Indexer Window in Project Properties</p>
-   <p align="left" class="Image">&nbsp; </p>
+   <p align="left" class="Image">The project  indexer is accessed by selecting a project in the Project Explorer or Symbian Project Navigator view and selecting <b>Project &gt; Properties &gt; C/C++ General &gt; Indexer</b> (figure 2).</p>
+   <p align="center" class="Image"><img src="images/indexer_prop.png" width="682" height="579" /></p>
+   <p align="left" class="figure">Figure 2 - Indexer Window in Project Properties </p>
    <table cellpadding="2" cellspacing="0"
 border="0">
 	 <tr valign="top"><th width="221" class="Cell">Name</th><th width="558" class="Cell">Function</th></tr>
          <tr valign="top">
-           <td class="Cell"><b>Available indexers </b></td>
+           <td class="Cell"><b>Select indexer </b></td>
            <td class="Cell"><p>Dropdown list of available index options.</p>
              <ul>
-               <li>No Indexer - Project source files will not be indexed, therefore search features will not work accurately and code completion will not be available.</li>
                <li>Fast C/C++ Indexer - Source files will be indexed and eat up a lot of CPU time and memory during the first generation of the indexer. This can take some time depending on the size of your project. Afterwards the indexer will only reindex the relevant parts you changed in your code and not the whole source tree.</li>
                <li>Full C/C++ Indexer - Performs a complete parse of all source files and takes up the most amount of time to complete.</li>
+               <li>No Indexer - Project source files are not indexed, therefore search features will not work accurately and code completion will not be available.</li>
            </ul></td>
         </tr>
          <tr valign="top">
@@ -61,7 +60,7 @@ border="0">
        <li><a href="../tasks/projects/prj_debug_config.htm">Creating Launch Configurations</a></li>
 	   <li><a href="../tasks/projects/prj_new_build_config.htm">Creating Build Configurations</a></li>
 	 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
    </body>
    </html>

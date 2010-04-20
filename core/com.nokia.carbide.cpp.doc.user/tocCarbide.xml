@@ -97,6 +97,7 @@
         <topic label="SIS Builder" 								href="html/reference/build_properties/pane_build_config_sis.htm" >
           <topic label="SIS Properties"						href="html/reference/build_properties/wnd_sis_properties.htm" />
         </topic>
+        <topic label="SBSv2"									href="html/reference/build_properties/pane_build_config_sbsv2.htm" />
         <topic label="Environment"								href="html/reference/build_properties/pane_build_config_env.htm" />
         <topic label="Arguments"								href="html/reference/build_properties/pane_build_config_args.htm" />
         <topic label="Paths and Symbols"						href="html/reference/build_properties/pane_build_config_paths.htm" />
@@ -341,6 +342,7 @@
       <topic label="Troubleshooting" 						href="html/tasks/trk/trk_troubleshooting.htm"/>
     </topic>
     
+	   
   <topic href="html/reference/search/wnd_system_search.htm" label="System Search">
     <topic label="System Search view"      		href="html/reference/search/view_system_search.htm" />
     <topic label="System Search preferences"    href="html/reference/search/wnd_system_search_prefs.htm" />

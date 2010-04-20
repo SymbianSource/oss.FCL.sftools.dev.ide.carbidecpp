@@ -57,7 +57,7 @@ li	{
 	}
 
 .listing	{
-	background-color: #ffe869;
+	background-color: #FFFFCC;
 	font-family: "Courier New", Courier, mono;
 	font-size: 1.1em;
 	color: #000000;
@@ -120,7 +120,7 @@ div ol > p, div ul > p, div li > p {
 	
 div h5, div h4	{
 	padding:5px 0px 5px 12px;
-	background-color: #ffd62c;
+	background-color: #FFCC00;
 	font-weight:bold;
 	color: #000000;
 	}
