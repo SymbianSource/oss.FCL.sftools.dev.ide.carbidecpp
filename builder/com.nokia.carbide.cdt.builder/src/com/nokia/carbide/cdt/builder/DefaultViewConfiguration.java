@@ -198,6 +198,11 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 	public Collection<IDefine> getMacros() {
 		List<IDefine> macros = new ArrayList<IDefine>();
 		if (context != null) {
+			
+			if (context.getSBSv2Alias() != null){
+				macros.add(DefineFactory.createDefine("SBSV2", null));
+			}
+			
 			for (IDefine macro : context.getVariantHRHDefines()) {
 				macros.add(macro);
 			}

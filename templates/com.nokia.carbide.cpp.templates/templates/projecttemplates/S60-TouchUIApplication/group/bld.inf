@@ -12,11 +12,35 @@
 PRJ_PLATFORMS
 WINSCW ARMV5 GCCE
 
+$(undefSBSV2)
+#ifdef SBSV2
+
+PRJ_EXTENSIONS
+	
+	START EXTENSION s60/mifconv
+	OPTION TARGETFILE $(baseName$lower)_$(uid3).mif
+	OPTION HEADERFILE $(baseName$lower)_$(uid3).mbg
+	OPTION SOURCEDIR ../gfx
+	OPTION SOURCES -c32 qgn_menu_$(baseName)
+	END
+	
+	// help compiler is not always available; see similar comment in *.pkg file
+	$(buildHelpPrefix)START EXTENSION techview/bldhelp
+	$(buildHelpPrefix)OPTION HELPPROJECTFILE $(baseName).cshlp
+	$(buildHelpPrefix)OPTION HELPTOOLTARGETNAME $(baseName$lower)_$(uid3).hlp
+	$(buildHelpPrefix)END
+
+#else
+
 PRJ_MMPFILES
 
-gnumakefile icons_scalable_dc.mk
+	gnumakefile icons_scalable_dc.mk
 
-$(buildHelpPrefix)gnumakefile ..\$(helpDir)\build_help.mk
+	// help compiler is not always available; see similar comment in *.pkg file
+	$(buildHelpPrefix)gnumakefile ../$(helpDir)/build_help.mk
+
+#endif
+
+PRJ_MMPFILES
 
 $(baseName).mmp
-

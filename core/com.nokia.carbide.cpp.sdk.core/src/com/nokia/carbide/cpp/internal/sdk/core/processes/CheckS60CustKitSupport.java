@@ -19,7 +19,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
+import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.Messages;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -33,7 +35,9 @@ import com.nokia.cpp.internal.api.utils.core.Check;
  */
 public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	
+	// copied from ProjectCreatedTasks (YUCK) 
 	private static final String SELECTED_BUILD_CONFIGS_VALUE_KEY = "selectedBuildConfigs"; //$NON-NLS-1$
+	
 	private static final String S60_50_BUILD_MACROS = "S60_50_CustomBuildIncludes";
 	
 	private static final String S60_INC_MACROS = "#include <data_caging_paths.hrh>\n#include <domain/osextensions/platform_paths.hrh>\nMW_LAYER_SYSTEMINCLUDE";
@@ -48,6 +52,11 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String S60_SF_FOLDER =  "sf";
 	private static final String S60_INC_MACROS_SF = "#include <platform_paths.hrh>\n#include <data_caging_paths.hrh>\nAPP_LAYER_SYSTEMINCLUDE";
 
+	private static final String USE_PRJ_EXTENSIONS_VALUE = "usePrjExtensionsValue"; 
+	
+	private static final String UNDEF_SBSV2 = "undefSBSV2"; 
+	private static final String UNDEF_SBSV2_CODE = Messages.getString("CheckS60CustKitSupport.undefSBSV2Code"); //$NON-NLS-1$
+
 	private static final String BUILD_HELP_PREFIX = "buildHelpPrefix";
 	private static final String BUILD_HELP_SIS_PREFIX = "buildHelpSISPrefix"; 
 	private static final String DISABLE_HELP_STRING = "//";
@@ -55,7 +64,8 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 	private static final String HELP_COMPILER = "epoc32/tools/cshlpcmp.bat";
 	private static final String HELP_SUPPORT_MACRO = "helpSupport";
 	private static final String HELP_SUPPORT_STRING = "MACRO _HELP_AVAILABLE_";
-
+	private static final Version VERSION_9_5 = new Version(9, 5, 0); 
+	
 	protected IProject project;
 
 	@Override
@@ -80,6 +90,16 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		template.getTemplateValues().put(BUILD_HELP_PREFIX, enableHelpString);
 		template.getTemplateValues().put(BUILD_HELP_SIS_PREFIX, enableHelpSISString); 
 		template.getTemplateValues().put(HELP_SUPPORT_MACRO, helpSupportString);
+		
+		String usePrjExtensionsValue = usePrjExtensionsRequired(template) ? "1" : "0"; 
+		template.getTemplateValues().put(USE_PRJ_EXTENSIONS_VALUE, usePrjExtensionsValue); 
+		
+		if (usePrjExtensionsRequired(template)) { 
+			template.getTemplateValues().put(UNDEF_SBSV2, UNDEF_SBSV2_CODE); 
+		} else {
+			template.getTemplateValues().put(UNDEF_SBSV2, ""); //$NON-NLS-1$ 
+		}
+		
 	}
 
 	@Override
@@ -87,6 +107,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		return SDKCorePlugin.getDefault();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private boolean isHelpCompilerAvailable(ITemplate template) {
 		Object object = template.getTemplateValues().get(SELECTED_BUILD_CONFIGS_VALUE_KEY);
 		if (object instanceof List) {
@@ -168,4 +189,60 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 		return S60_50_Macros_String;
 	}
 	
+	/**
+	 * Tell whether we should use PRJ_EXTENSIONS in bld.inf. Raptor doesn't 
+	 * officially support [n|gnu]makefile statements in PRJ_MMPFILES anymore, 
+	 * and actively ignores them on Linux. 
+	 * @param template 
+	 * @return 
+	 */
+	private boolean usePrjExtensionsRequired(ITemplate template) {
+		
+		// look for the directory housing the extension templates;
+		// if this doesn't exist, then PRJ_EXTENSIONS won't work
+		boolean makefileTemplatesAlwaysAvailable = true;
+
+		boolean allPostSDK9_5 = true;
+
+		for (ISymbianBuildContext symbianBuildContext : getBuildContexts(template)) {
+			ISymbianSDK sdk = symbianBuildContext.getSDK();
+			if (sdk != null) {
+				File makefileTemplateDir = new File(sdk.getEPOCROOT(), "epoc32/tools/makefile_templates"); //$NON-NLS-1$
+				if (!makefileTemplateDir.exists()) {
+					// old location
+					makefileTemplateDir = new File(sdk.getEPOCROOT(), "s60/tools/makefile_templates"); //$NON-NLS-1$
+					if (!makefileTemplateDir.exists()) {
+						makefileTemplatesAlwaysAvailable = false;
+						break;
+					}
+				}
+				
+				if (sdk.getOSVersion().compareTo(VERSION_9_5) < 0) {
+					allPostSDK9_5 = false;
+				}
+			}
+		}
+		
+		if (!makefileTemplatesAlwaysAvailable)
+			return false;
+		
+		// OS 9.5+ kits are supposed to be Raptorized.  Don't recommend extensions
+		// unless we think they'll be present.
+		//
+		if (!allPostSDK9_5)
+			return false;
+		
+		return true;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private ISymbianBuildContext[] getBuildContexts(ITemplate template) {
+		Object object = template.getTemplateValues().get(SELECTED_BUILD_CONFIGS_VALUE_KEY);
+		if (object instanceof List) {
+			List<ISymbianBuildContext> listOfBuildConfigs = (List<ISymbianBuildContext>) object;
+			return (ISymbianBuildContext[]) listOfBuildConfigs
+					.toArray(new ISymbianBuildContext[listOfBuildConfigs.size()]);
+		}
+		return new ISymbianBuildContext[0];
+	}
 }

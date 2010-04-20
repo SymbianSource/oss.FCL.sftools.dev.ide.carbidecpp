@@ -328,6 +328,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	public List<String> getBuiltinMacros() {
 		List<String> macros = new ArrayList<String>();
 		
+		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
+			macros.add("SBSV2"); //$NON-NLS-1$
+		}
+		
 		// add the macros that should always be defined
 		macros.add("__SYMBIAN32__"); //$NON-NLS-1$
 		macros.add("_UNICODE"); //$NON-NLS-1$
