@@ -72,7 +72,7 @@ public class TRKConnectionWizardPage extends WizardPage {
         validatePage();
     }
     
-    void updateConfiguration(ILaunchConfigurationWorkingCopy config) {
+    public void updateConfiguration(ILaunchConfigurationWorkingCopy config) {
 		if (connectionId != null) {
 			config.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connectionId);
 		}

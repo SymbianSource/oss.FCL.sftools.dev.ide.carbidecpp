@@ -99,9 +99,14 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 
 	public static final String EMULATION_LAUNCH_TYPE = "com.nokia.cdt.debug.launch.emulationLaunch"; //$NON-NLS-1$
 	public static final String PROXY_LAUNCH_TYPE = "com.nokia.cdt.debug.launch.proxyLaunch"; //$NON-NLS-1$
+	
+	public static final String REMOTE_CONNECTIONS_TRK_SERVICE = "com.nokia.carbide.trk.support.service.TRKService"; //$NON-NLS-1$
+	public static final String REMOTE_CONNECTIONS_TRACING_SERVICE = "com.nokia.carbide.trk.support.service.TracingService"; //$NON-NLS-1$
 
 	// Preference constants
 	public static final String Use_New_Project_Assist = "com.nokia.cdt.debug.launch.Use_New_Project_Assist"; //$NON-NLS-1$
+
+	
 
 	
 	/**
@@ -596,7 +601,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 	
 	public static IService getTRKService() {
 		return RemoteConnectionsActivator.getConnectionTypeProvider().
-					findServiceByID("com.nokia.carbide.trk.support.service.TRKService"); //$NON-NLS-1$
+					findServiceByID(REMOTE_CONNECTIONS_TRK_SERVICE); //$NON-NLS-1$
 	}
 	
 	/**

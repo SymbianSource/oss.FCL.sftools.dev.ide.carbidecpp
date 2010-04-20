@@ -17,20 +17,23 @@
 package com.nokia.cdt.internal.debug.launch;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.cdt.core.IBinaryParser.IBinaryObject;
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.cdt.debug.core.ICDebugConfiguration;
-import org.eclipse.cdt.debug.core.cdi.CDIException;
 import org.eclipse.cdt.debug.core.cdi.ICDISession;
 import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.debug.core.DebugException;
@@ -67,13 +70,14 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 	private static final int LARGE_SIS_THRESHOLD = 250 * 1024; // 250K
 	
 	protected Session cwDebugSession;
-	private IConnection connection;
+	protected IConnection connection;
 	private IConnectionStatusChangedListener connectionStatusChangedListener;
+	private List<ILaunchDelegateConnectionExtension> connectionExtensions;
 	
 	public void launch(
 			ILaunchConfiguration 	config, 
-			String 					mode, 
-			ILaunch 				launch, 
+			final String 					mode, 
+			final ILaunch 				launch, 
 			IProgressMonitor monitor) throws CoreException 
 	{
 	// See comment at definition of the "mutex" for why this "synchronized".		
@@ -85,7 +89,7 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
             monitor = new NullProgressMonitor();
         }
 
-        monitor.beginTask(LaunchMessages.getString("LocalRunLaunchDelegate.Launching_Local_C_Application"), 10); //$NON-NLS-1$
+        monitor.beginTask(LaunchMessages.getString("LocalRunLaunchDelegate.Launching_Local_C_Application"), 30); //$NON-NLS-1$
         // check for cancellation
         if (monitor.isCanceled()) {
             return;
@@ -101,8 +105,10 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 				LaunchMessages.getString("TRKLaunchDelegate.NoConnectionErrorMsg")); //$NON-NLS-1$
 			throw new DebugException(status);
 		}
-		connection.useConnection(true);
 		
+		invokeConnectionSpecificSetup(launch, new SubProgressMonitor(monitor, 5));
+		
+		connection.useConnection(true);
         try {
         	addBeingLaunched(config); // indicating the LC is being launched
         	
@@ -162,7 +168,7 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 
 					doAdditionalSessionSetup(cwDebugSession);
 					
-					IPath[] otherExecutables = getOtherExecutables(project, exePath, config, monitor);					
+					IPath[] otherExecutables = getOtherExecutables(project, exePath, config, new SubProgressMonitor(monitor, 1));					
 					{
 						try {
 							monitor.worked(1);
@@ -193,7 +199,7 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 						}
 					}
                 }
-                hookSessionEnded();
+                hookSessionEnded(launch);
             }
             else if (mode.equals(ILaunchManager.RUN_MODE)) {
                 // Run the program.
@@ -215,7 +221,7 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 										arguments, 
 										null, 
 										getEnvironmentAsProperty(config), 
-										monitor, 
+										new SubProgressMonitor(monitor, 8), 
 										project, 
 										"",  //$NON-NLS-1$
 										false  /* run instead of debug */);
@@ -233,7 +239,13 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 				
 				display.syncExec(new Runnable() {
 					public void run() {
-						connection.useConnection(false);
+						try {
+							invokeConnectionSpecificShutdown(launch, new NullProgressMonitor());
+						} catch (CoreException e) {
+							LaunchPlugin.log(e);
+						} finally {
+							connection.useConnection(false);
+						}
 						MessageDialog.openInformation(
 							CUIPlugin.getActiveWorkbenchShell(),
 							LaunchMessages.getString("CarbideCPPLaunchDelegate.DebuggerName"),  //$NON-NLS-1$
@@ -242,6 +254,8 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 					}
 				});
             }
+            
+            invokeConnectionSpecificPostLaunch(launch, new SubProgressMonitor(monitor, 5));
         } catch (CWException e) {
        		connection.useConnection(false);
        		unhookConnectionStatus();
@@ -259,12 +273,66 @@ public class TRKLaunchDelegate extends NokiaAbstractLaunchDelegate {
 	} // end of synchronized.
 	}
 
-	protected void hookSessionEnded() {
+	/** Create the extensions every session, in case they hold state. */
+	protected List<ILaunchDelegateConnectionExtension> getLaunchDelegateConnectionExtensions() {
+		if (connectionExtensions == null) {
+			connectionExtensions = new ArrayList<ILaunchDelegateConnectionExtension>();
+			IConfigurationElement[] elements =
+				Platform.getExtensionRegistry().getConfigurationElementsFor(ILaunchDelegateConnectionExtension.ID);
+			for (IConfigurationElement element : elements) {
+				try {
+					connectionExtensions.add((ILaunchDelegateConnectionExtension) element.createExecutableExtension("class"));
+				} catch (CoreException e) {
+					LaunchPlugin.log(e);
+				}
+			}
+		}
+		return connectionExtensions;
+	}
+	
+	protected void invokeConnectionSpecificSetup(ILaunch launch,
+			IProgressMonitor monitor) throws CoreException {
+		List<ILaunchDelegateConnectionExtension> extensions = getLaunchDelegateConnectionExtensions();
+		monitor.beginTask("", extensions.size());
+		for (ILaunchDelegateConnectionExtension extension : extensions) {
+			extension.initializeConnection(launch, connection, new SubProgressMonitor(monitor, 1));
+		}
+		monitor.done();
+	}
+	
+	protected void invokeConnectionSpecificPostLaunch(ILaunch launch,
+			IProgressMonitor monitor) throws CoreException {
+		List<ILaunchDelegateConnectionExtension> extensions = getLaunchDelegateConnectionExtensions();
+		monitor.beginTask("", extensions.size());
+		for (ILaunchDelegateConnectionExtension extension : extensions) {
+			extension.launchStarted(launch, connection, new SubProgressMonitor(monitor, 1));
+		}
+		monitor.done();
+	}
+	
+
+	protected void invokeConnectionSpecificShutdown(
+			ILaunch launch, IProgressMonitor monitor) throws CoreException {
+		List<ILaunchDelegateConnectionExtension> extensions = getLaunchDelegateConnectionExtensions();
+		monitor.beginTask("", extensions.size());
+		for (ILaunchDelegateConnectionExtension extension : extensions) {
+			extension.terminateConnection(launch, connection, new SubProgressMonitor(monitor, 1));
+		}
+		monitor.done();
+	}
+
+	protected void hookSessionEnded(final ILaunch launch) {
 		if (cwDebugSession != null) {
 			cwDebugSession.addListener(new ISessionListener() {
 				public void sessionEnded() {
-					connection.useConnection(false);
-					unhookConnectionStatus();
+					try {
+						invokeConnectionSpecificShutdown(launch, new NullProgressMonitor());
+					} catch (CoreException e) {
+						LaunchPlugin.log(e);
+					} finally {
+						connection.useConnection(false);
+						unhookConnectionStatus();
+					}
 				}
 			});
 		}

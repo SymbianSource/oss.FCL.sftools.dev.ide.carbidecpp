@@ -170,7 +170,7 @@ public class AttachLaunchDelegate extends TRKLaunchDelegate {
 							}
 						}
 					}
-	    			hookSessionEnded();
+	    			hookSessionEnded(launch);
 				} else if (mode.equals(ILaunchManager.RUN_MODE)) {
 					// run mode not supported for attach
 				}

@@ -68,7 +68,7 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 
 		// launch an existing config if one exists
 		ILaunchConfiguration[] configs = getLaunchConfigurations(selection);
-		if (configs.length > 0) {
+		if (configs != null && configs.length > 0) {
 			// find all the ones that support the mode and shortcut (#11013)
 			List<ILaunchConfiguration> matches = new ArrayList<ILaunchConfiguration>();
 			for (int i = 0; i < configs.length; i++) {
