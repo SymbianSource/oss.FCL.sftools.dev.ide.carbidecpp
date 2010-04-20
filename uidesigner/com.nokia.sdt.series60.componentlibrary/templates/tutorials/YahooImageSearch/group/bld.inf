@@ -2,9 +2,25 @@
 PRJ_PLATFORMS
 WINSCW ARMV5 GCCE
 
+$(undefSBSV2)
+#ifdef SBSV2
+
+PRJ_EXTENSIONS
+	
+	START EXTENSION s60/mifconv
+	OPTION TARGETFILE $(baseName$lower)_aif.mif
+	OPTION HEADERFILE $(baseName$lower)_aif.mbg
+	OPTION SOURCEDIR ../gfx
+	OPTION SOURCES -c32 qgn_menu_$(baseName)
+	END
+
+#else
+
 PRJ_MMPFILES
 
-gnumakefile icons_aif_scalable_dc.mk
+	gnumakefile icons_scalable_dc.mk
 
+#endif
 
+PRJ_MMPFILES
 $(baseName).mmp
