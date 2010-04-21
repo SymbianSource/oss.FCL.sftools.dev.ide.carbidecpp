@@ -147,6 +147,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		IProject currentProject = getProject();
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(currentProject);
 		if (cpi != null) {
+			ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
 			if (cpi.incrementalBuilderEnabled()) {
 				// the callOnEmptyDelta builder attribute is set, so we get called
 				// not matter what, even with an empty delta.  this means that when the
@@ -156,36 +157,41 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 				IResourceDelta delta = getDelta(currentProject);
 				if (delta != null) {
 					// something in the workspace has changed.  see if a rebuild is needed.
-					if (!shouldRebuild(delta)) {
-
-						// also rebuild if the project has errors
-						boolean hasErrors = false;
-				    	try {
-							for (IMarker currMarker : getProject().findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE)){
-								if (currMarker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR) == IMarker.SEVERITY_ERROR){
-									hasErrors = true;
-									break;
+					if (shouldRebuild(delta)) {
+						// set rebuild flag in build configs
+						shouldRebuildConfigs(cpi);
+					} else {
+						if (defaultConfig != null) {
+							// check current build config to see if rebuild is needed
+							CarbideBuildConfiguration config = (CarbideBuildConfiguration) defaultConfig;
+							if (!config.getRebuildNeeded()) {
+								// also rebuild if the project has errors
+								if (!projectHasErrors()) {
+									return null;
 								}
 							}
-							
-						} catch (CoreException e){
-							e.printStackTrace();
-						}
-						
-						if (!hasErrors) {
-							return null;
+						} else {
+							// also rebuild if the project has errors
+							if (!projectHasErrors()) {
+								return null;
+							}
 						}
 					}
 				}
 			}
 			
-			ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
 			if (defaultConfig != null) {
 				CarbideCommandLauncher launcher = new CarbideCommandLauncher(currentProject, monitor, getParserIdArray(defaultConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
 				launcher.showCommand(true);
 				invokeBuild(defaultConfig, launcher, subMonitor.newChild(1), true);
 			} else {
 	   			CarbideBuilderPlugin.createCarbideProjectMarker(currentProject, IMarker.SEVERITY_ERROR,  "Project has no configurations.", IMarker.PRIORITY_HIGH);
+			}
+
+			if (!monitor.isCanceled() && cpi.incrementalBuilderEnabled() && defaultConfig != null) {
+				// reset rebuild flag in current build config after build succeeded
+				CarbideBuildConfiguration config = ((CarbideBuildConfiguration) defaultConfig);
+				config.setRebuildNeeded(false);
 			}
 		}
 		monitor.done();
@@ -216,6 +222,31 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 			}
 		}
 		return false;
+	}
+	
+    protected void shouldRebuildConfigs(ICarbideProjectInfo cpi) {
+    	List<ICarbideBuildConfiguration> configs = cpi.getBuildConfigurations();
+    	ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
+    	for (ICarbideBuildConfiguration config : configs) {
+			CarbideBuildConfiguration cbc = (CarbideBuildConfiguration) config;
+			cbc.setRebuildNeeded(true);
+    	}
+    }
+
+	protected boolean projectHasErrors() {
+		boolean hasErrors = false;
+    	try {
+			for (IMarker currMarker : getProject().findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE)){
+				if (currMarker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR) == IMarker.SEVERITY_ERROR){
+					hasErrors = true;
+					break;
+				}
+			}
+			
+		} catch (CoreException e){
+			e.printStackTrace();
+		}
+		return hasErrors;
 	}
 	
 	protected void clean(IProgressMonitor monitor) throws CoreException {
