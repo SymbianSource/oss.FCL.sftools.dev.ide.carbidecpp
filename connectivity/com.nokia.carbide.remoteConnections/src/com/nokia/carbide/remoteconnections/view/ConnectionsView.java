@@ -87,6 +87,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConne
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
@@ -261,10 +262,9 @@ public class ConnectionsView extends ViewPart {
 				}
 			}
 			else if (value instanceof IConnection) {
-				if (isDynamicConnection(value)) {
-					IConnectionStatus status = ((IConnection2) value).getStatus();
-					if (status != null)
-						return status.getShortDescription();
+				IConnectionStatus connectionStatus = getConnectionStatus((IConnection) value);
+				if (connectionStatus != null) {
+					return connectionStatus.getShortDescription();
 				}
 				else {	
 					IStatus status = ConnectionUIUtils.getFirstInUseServiceStatus((IConnection) value);
@@ -325,10 +325,9 @@ public class ConnectionsView extends ViewPart {
 				}
 			}
 			else if (value instanceof IConnection) {
-				if (isDynamicConnection(value)) {
-					IConnectionStatus status = ((IConnection2) value).getStatus();
-					if (status != null)
-						return status.getLongDescription();
+				IConnectionStatus status = getConnectionStatus((IConnection) value);
+				if (status != null) {
+					return status.getLongDescription();
 				}
 				else if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
 					return Messages.getString("ConnectionsView.InUseDesc"); //$NON-NLS-1$
@@ -558,6 +557,16 @@ public class ConnectionsView extends ViewPart {
 		Registry.instance().addConnectionListener(connectionListener);
 
 		RemoteConnectionsActivator.setHelp(parent, ".connections_view"); //$NON-NLS-1$
+	}
+
+	// returns non-null status when status is not EConnectionStatus.NONE
+	private IConnectionStatus getConnectionStatus(IConnection connection) {
+		if (connection instanceof IConnection2) {
+			IConnectionStatus status = ((IConnection2) connection).getStatus();
+			if (status != null && status.getEConnectionStatus() != EConnectionStatus.NONE)
+				return status;
+		}
+		return null;
 	}
 
 	private void packColumns() {
