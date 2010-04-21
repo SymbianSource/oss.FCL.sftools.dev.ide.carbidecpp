@@ -22,8 +22,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin.ILaunchCreationWizardFactory;
@@ -47,8 +45,7 @@ public class PhoneLaunchShortcut extends AbstractSymbianLaunchShortcut {
 		LaunchPlugin.getDefault().launchProject(project, executable, defaultMMP, mode, 
 																new ILaunchCreationWizardFactory() {
 					public ILaunchCreationWizard createLaunchCreationWizard(LaunchOptions launchOptions) throws Exception {
-						IConnectionTypeProvider provider = RemoteConnectionsActivator.getConnectionTypeProvider();
-						IService trkService = provider.findServiceByID("com.nokia.carbide.trk.support.service.TRKService"); //$NON-NLS-1$
+						IService trkService = LaunchPlugin.getTRKService();
 						LaunchWizard launchWizard = new LaunchWizard(launchOptions, trkService);
 						return launchWizard;
 					};

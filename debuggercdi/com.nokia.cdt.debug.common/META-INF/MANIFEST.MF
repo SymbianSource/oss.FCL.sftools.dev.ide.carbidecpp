@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Carbide Common CDT Plugin
+Bundle-Name: Carbide Common CDT Debug Plugin
 Bundle-SymbolicName: com.nokia.cdt.debug.common;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.nokia.cdt.debug.common.CarbideCommonDebuggerPlugin
@@ -10,8 +10,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.cdt.debug.core;bundle-version="7.0.0",
  org.eclipse.debug.core;bundle-version="3.6.0",
  com.nokia.carbide.cdt.builder;bundle-version="2.0.0",
- org.eclipse.cdt.debug.edc
+ org.eclipse.cdt.debug.edc,
+ com.nokia.carbide.remoteConnections;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: com.nokia.cdt.debug.common.internal.source.lookup, 
- com.nokia.cdt.debug.common.internal.executables
+Export-Package: com.nokia.cdt.debug.common.internal.api,
+ com.nokia.cdt.debug.common.internal.executables,
+ com.nokia.cdt.debug.common.internal.source.lookup

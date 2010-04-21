@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -155,7 +156,7 @@ public abstract class NokiaAbstractLaunchDelegate extends
 			// If a debug session is already running for the given launch
 			// configuration, don't allow user to start another session.
 			//
-			if (Session.preLaunchCheckForExistingTarget(configuration)) {
+			if (Session.preLaunchCheckForExistingTarget(configuration, new SubProgressMonitor(monitor, 0))) {
 				// Pop up a dialog telling user.
 				String cfgName = configuration.getName();
 				showMessage(LaunchMessages.getString("CarbideCPPLaunchDelegate.DebuggerName"), //$NON-NLS-1$

@@ -179,7 +179,7 @@
             class="com.nokia.cdt.internal.debug.launch.PhoneLaunchShortcut"
             icon="icons/launch_config_file_16x16.png"
             id="com.nokia.cdt.debug.launch.symbianCPPShortcut.phone"
-            label="Symbian OS Phone Launch"
+            label="Symbian OS Phone or Simulator Launch"
             modes="run, debug">
          <contextualLaunch>
             <enablement>
@@ -237,20 +237,20 @@
                </with>
             </enablement>
             <contextLabel
-                  label="Run Symbian OS Application on Phone"
+                  label="Run Symbian OS Application on Phone or Simulator"
                   mode="run">
             </contextLabel>
             <contextLabel
-                  label="Debug Symbian OS Application on Phone"
+                  label="Debug Symbian OS Application on Phone or Simulator"
                   mode="debug">
             </contextLabel>
          </contextualLaunch>
          <description
-               description="Debugs on a phone using System TRK or Application TRK"
+               description="Debugs on a phone or simulator using System TRK or Application TRK"
                mode="debug">
          </description>
          <description
-               description="Runs on a phone using System TRK or Application TRK"
+               description="Runs on a phone or simulator using System TRK or Application TRK"
                mode="run">
          </description>
       </shortcut>
@@ -316,11 +316,11 @@
                </with>
             </enablement>
             <contextLabel
-                  label="Run Symbian OS Application on Reference Board"
+                  label="Run Symbian OS System on Reference Board"
                   mode="run">
             </contextLabel>
             <contextLabel
-                  label="Debug Symbian OS Application on Reference Board"
+                  label="Debug Symbian OS System on Reference Board"
                   mode="debug">
             </contextLabel>
          </contextualLaunch>

@@ -37,4 +37,6 @@
       <provider class="com.nokia.cdt.debug.common.internal.executables.SymbianSourceFileRemappingFactory"/>
    </extension>
 
+   <extension-point id="launchDelegateConnectionExtension" name="Launch Delegate Connection Extension" schema="schema/launchDelegateConnectionExtension.exsd"/>
+
 </plugin>
