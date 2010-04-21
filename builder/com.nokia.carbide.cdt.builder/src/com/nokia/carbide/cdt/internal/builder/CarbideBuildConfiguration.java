@@ -71,6 +71,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	protected BuildConfigurationData buildConfigData;
 	protected ROMBuilderInfo romBuilderInfo;
 	protected SBSv2BuilderInfo sbsv2BuilderInfo;
+	protected boolean rebuildNeeded;
 	
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
 		super(context.getSDK(), context.getPlatformString(), context.getTargetString(), context.getSBSv2Alias());
@@ -83,6 +84,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		if (context.getSBSv2Alias() != null){
 			sbsv2BuilderInfo = new SBSv2BuilderInfo(context);
 		}
+		rebuildNeeded = true;
 	}
 	
 	public void loadFromStorage(ICConfigurationDescription projDes) throws CoreException {
@@ -446,4 +448,13 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		}
 		return getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
 	}
+ 	
+	public boolean getRebuildNeeded() {
+		return rebuildNeeded;
+	}
+	
+	public void setRebuildNeeded(boolean value) {
+		rebuildNeeded = value;
+	}
+	
 }
