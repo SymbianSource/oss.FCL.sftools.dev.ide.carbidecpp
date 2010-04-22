@@ -97,7 +97,9 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	}
 	
 	private void initTable(boolean refreshList) {
-
+		
+		SBSv2Utils.initDefaultConfigsToFilter();
+		
 		Object[] keySet = SBSv2Utils.getUnfilteredSBSv2BuildConfigurations(refreshList).keySet().toArray();
 		List<String> sbsAliases = new ArrayList<String>();
 		for (Object key : keySet)
@@ -123,7 +125,12 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	public void setDefaults(){
 		initTable(true);
 		for (TableItem item : tableViewer.getTable().getItems()) {
-			if (item.getText().toLowerCase().startsWith("tool") || item.getText().toLowerCase().startsWith("gccxml")) {
+			if (item.getText().toLowerCase().startsWith("tool")  || 
+				item.getText().toLowerCase().startsWith("gccxml") ||
+				item.getText().toLowerCase().startsWith("armv6")  ||
+				item.getText().toLowerCase().startsWith("armv7")  || 
+				item.getText().toLowerCase().startsWith("armv7")  ||
+				item.getText().toLowerCase().startsWith("armv9")) {
 				tableViewer.setChecked(item.getData(), false);
 			} else {
 				tableViewer.setChecked(item.getData(), true);

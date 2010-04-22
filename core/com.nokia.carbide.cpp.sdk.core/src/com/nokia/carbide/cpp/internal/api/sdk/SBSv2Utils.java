@@ -51,6 +51,7 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 public class SBSv2Utils {
 
 	private static final String SBSV2_FILTERED_CONFIGS_STORE = "sbsv2FilteredConfigs"; //$NON-NLS-1$
+	private static final String SBSV2_FILTERED_CONFIGS_STORE_INITED = "sbsv2FilteredConfigsInited"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_DELIMETER = ";"; //$NON-NLS-1$
 
 	/** Path, to and including the SBS script */ 
@@ -186,6 +187,8 @@ public class SBSv2Utils {
 	public static List<ISymbianBuildContext> getFilteredSBSv2BuildContexts(ISymbianSDK sdk) {
 		List<ISymbianBuildContext> contexts = new ArrayList<ISymbianBuildContext>();
 		
+		initDefaultConfigsToFilter();
+		
 		Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator(); 
 		while (it.hasNext()){ 
 			Map.Entry buildConfigPair = (Map.Entry)it.next(); 
@@ -223,6 +226,32 @@ public class SBSv2Utils {
 		}
 		
 		return sortContexts(contexts);
+	}
+
+	/**
+	 * There are many build aliases presented by default from Raptor
+	 * Filter out those that are less commonly used on new workspace creation.
+	 */
+	public static void initDefaultConfigsToFilter() {
+		Preferences prefs = SDKCorePlugin.getDefault().getPluginPreferences();
+		String inited = prefs.getString(SBSV2_FILTERED_CONFIGS_STORE_INITED);
+		if (inited == null || inited.length() == 0){
+			Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator(); 
+			List<String> defaultConfigsToFilter = new ArrayList<String>();
+			while (it.hasNext()){ 
+				Map.Entry buildConfigPair = (Map.Entry)it.next();
+				String buildAlias = (String)buildConfigPair.getKey();
+				if (buildAlias.toLowerCase().startsWith("armv6") ||
+					buildAlias.toLowerCase().startsWith("armv7") ||
+					buildAlias.toLowerCase().startsWith("armv9")){
+					defaultConfigsToFilter.add(buildAlias);
+				}
+			}
+			prefs.setValue(SBSV2_FILTERED_CONFIGS_STORE_INITED, "true");
+			setSBSv2ConfigurationsToFilter(defaultConfigsToFilter.toArray(new String[defaultConfigsToFilter.size()]));
+			
+		}
+		
 	}
 
 	/**
@@ -356,7 +385,6 @@ public class SBSv2Utils {
 					} 
 				}
 				return sbsAlias1.compareTo(sbsAlias2);
-				
 			}
 			
 		});
@@ -382,32 +410,6 @@ public class SBSv2Utils {
 					}
 					
 					return suffix1.compareTo(suffix2);
-				} 
-				
-				return 0;	
-			}
-		});
-		
-		// Sort the target string for long aliases
-		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
-
-			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
-				String sbsAlias1 = o1.getSBSv2Alias();
-				String sbsAlias2 = o2.getSBSv2Alias();
-				String temp1[] = sbsAlias1.split("_");
-				String temp2[] = sbsAlias2.split("_");
-				String suffix1 = "";
-				String suffix2 = "";
-				for (int i = 2; i < temp1.length; i++){
-					suffix1 += temp1[i] + "_";
-				}
-				
-				for (int i = 2; i < temp2.length; i++){
-					suffix2 += temp2[i] + "_";
-				}
-				
-				if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && suffix1.equals(suffix2)){
-					return o1.getTargetString().compareTo(o2.getTargetString());
 				} 
 				
 				return 0;	

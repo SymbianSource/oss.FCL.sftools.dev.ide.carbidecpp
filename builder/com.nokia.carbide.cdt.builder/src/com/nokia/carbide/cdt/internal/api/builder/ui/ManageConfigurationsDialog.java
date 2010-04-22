@@ -31,17 +31,22 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -52,9 +57,13 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.qt.core.QtConfigFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKFilter;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetTreeNode;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class ManageConfigurationsDialog extends TrayDialog {
 	
@@ -191,23 +200,8 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
-		
-		boolean sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject());
-		
-		properSdkViewer.setContentProvider(filteringContentProviderWrapper);
-		properSdkViewer.setInput(BuildTargetTreeNode.getTreeViewerInput(sbsv2Project));
-		propagateSdkTree();
-		properSdkViewer.addCheckStateListener(new ICheckStateListener() {
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				// Disclose the tree if the user selected the parent node
-				Object obj = event.getElement();
-				if (obj instanceof BuildTargetTreeNode){
-					BuildTargetTreeNode bttn = (BuildTargetTreeNode)obj;
-						properSdkViewer.setExpandedState(bttn, true);
-				}
-				validatePage();
-			}
-		});
+				
+		drawSDKConfigTree();
 
 		BrokenConfigurationInProjectTreeNode[] brokenTreeInput = BrokenConfigurationInProjectTreeNode.getTreeViewerInput(cpi);
 		if (brokenTreeInput.length > 0) {
@@ -239,9 +233,42 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		sdkStaticHelp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		sdkStaticHelp.setText(Messages.getString("ManageConfigurationsDialog.Select_config_help_text")); //$NON-NLS-1$
 		
+		Link fLink = new Link(parent, SWT.WRAP);
+		fLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		fLink.setText("\n " + Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		fLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		fLink.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				// I don't see a way to open it to a specific tab, only the page
+				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage", null, null, 0).open()){ //$NON-NLS-1$
+					drawSDKConfigTree();
+				}
+			}
+		});
+		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, CarbideCPPBuilderUIHelpIds.CARBIDE_BUILDER_MANAGE_CONFIGURATIONS_DLG);
 		
 		return container;
+	}
+
+	private void drawSDKConfigTree() {
+		boolean sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject());
+	
+		properSdkViewer.setContentProvider(filteringContentProviderWrapper);
+		properSdkViewer.setInput(BuildTargetTreeNode.getTreeViewerInput(sbsv2Project));
+		propagateSdkTree();
+		properSdkViewer.addCheckStateListener(new ICheckStateListener() {
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				// Disclose the tree if the user selected the parent node
+				Object obj = event.getElement();
+				if (obj instanceof BuildTargetTreeNode){
+					BuildTargetTreeNode bttn = (BuildTargetTreeNode)obj;
+						properSdkViewer.setExpandedState(bttn, true);
+				}
+				validatePage();
+			}
+		});
+		
 	}
 
 	/**
