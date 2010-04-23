@@ -223,8 +223,13 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		else {
 			viewer.getCombo().setEnabled(true);
 			if (connection == null) {
-				viewer.getCombo().select(0);
-				viewer.setSelection(viewer.getSelection());
+				String lastConnectionId = Registry.instance().getLastConnectionId();
+				if (lastConnectionId != null) {
+					selectConnection(lastConnectionId);
+				} else {
+					viewer.getCombo().select(0);
+					viewer.setSelection(viewer.getSelection());
+				}
 			}
 			else
 				selectConnection(connection.getIdentifier());
@@ -304,6 +309,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	}
 	
 	public String getSelectedConnection() {
+		Registry.instance().setLastConnectionId(connection);
 		return connection;
 	}
 	

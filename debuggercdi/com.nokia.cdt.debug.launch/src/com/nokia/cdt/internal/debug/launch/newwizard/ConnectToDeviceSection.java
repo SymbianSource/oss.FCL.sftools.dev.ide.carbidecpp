@@ -29,6 +29,7 @@ import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
+import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 
 /**
  * Present the "Connect to device" section with a short description.
@@ -129,7 +130,17 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	
 	@Override
 	protected void doChange() {
-		super.doChange();
+		// if no connections are available, immediately offer to create a connection
+		
+		if (manager.getConnections().isEmpty()) {
+			SettingsWizard wizard = new SettingsWizard(null, data.getService());
+			wizard.open(getControl().getShell());
+			IConnection newConnection = wizard.getConnectionToEdit();
+			data.setConnection(newConnection);
+		} else {
+			super.doChange();
+		}
+		
 		IConnection connection = data.getConnection();
 		if (connection != null && !connection.equals(manager.getCurrentConnection()))
 			manager.setCurrentConnection(connection);

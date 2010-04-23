@@ -70,7 +70,6 @@ import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 /**
  *	This dialog allows in-depth configuration of the connection settings.
  */
-@SuppressWarnings("restriction")
 public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implements IConnectionListener, IStatusChangedListener {
 	private IConnectionsManager manager;
 	private IConnectionTypeProvider typeProvider;
