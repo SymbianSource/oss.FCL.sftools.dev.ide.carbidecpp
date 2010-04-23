@@ -30,6 +30,7 @@ import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.Version;
@@ -54,6 +55,7 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 public class SBSv2Utils {
 
 	private static final String SBSV2_FILTERED_CONFIGS_STORE = "sbsv2FilteredConfigs"; //$NON-NLS-1$
+	private static final String SBSV2_FILTERED_CONFIGS_STORE_INITED = "sbsv2FilteredConfigsInited"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_DELIMETER = ";"; //$NON-NLS-1$
 
 	/**
@@ -201,6 +203,8 @@ public class SBSv2Utils {
 	public static List<ISymbianBuildContext> getFilteredSBSv2BuildContexts(ISymbianSDK sdk) {
 		List<ISymbianBuildContext> contexts = new ArrayList<ISymbianBuildContext>();
 		
+		initDefaultConfigsToFilter();
+		
 		Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator();
 		
 		while (it.hasNext()){
@@ -240,6 +244,31 @@ public class SBSv2Utils {
 		}
 		
 		return sortContexts(contexts);
+	}
+
+	/**
+	 * There are many build aliases presented by default from Raptor
+	 * Filter out those that are less commonly used on new workspace creation.
+	 */
+	public static void initDefaultConfigsToFilter() {
+		IEclipsePreferences prefs = new InstanceScope().getNode(SDKCorePlugin.getPluginId());
+		String inited = prefs.get(SBSV2_FILTERED_CONFIGS_STORE_INITED, "");
+		if (inited == null || inited.length() == 0){
+			Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator(); 
+			List<String> defaultConfigsToFilter = new ArrayList<String>();
+			while (it.hasNext()){ 
+				Map.Entry buildConfigPair = (Map.Entry)it.next();
+				String buildAlias = (String)buildConfigPair.getKey();
+				if (buildAlias.toLowerCase().startsWith("armv6") ||
+					buildAlias.toLowerCase().startsWith("armv7") ||
+					buildAlias.toLowerCase().startsWith("armv9")){
+					defaultConfigsToFilter.add(buildAlias);
+				}
+			}
+			prefs.put(SBSV2_FILTERED_CONFIGS_STORE_INITED, "true");
+			setSBSv2ConfigurationsToFilter(defaultConfigsToFilter.toArray(new String[defaultConfigsToFilter.size()]));
+			
+		}
 	}
 
 	/**
@@ -365,9 +394,9 @@ public class SBSv2Utils {
 		return sbsPath != null ? sbsPath : new Path(sbsScriptName);  // dummy
 	}
 	
-	private static List<ISymbianBuildContext> sortContexts(List<ISymbianBuildContext> contexts){
-		
-		// 3 sorting stages to handle long Raptor aliases, and multiple aliases that have a similar platform and target prefix (e.g. armv5_urel)
+	private static List<ISymbianBuildContext> sortContexts(List<ISymbianBuildContext> contexts){ 
+    	
+		// 2 sorting stages to handle long Raptor aliases, and multiple aliases that have a similar platform and target prefix (e.g. armv5_urel)
 		
 		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
 
@@ -377,10 +406,23 @@ public class SBSv2Utils {
 				String sbsAlias2 = o2.getSBSv2Alias();
 				
 				if (o1.getPlatformString().equals(o2.getPlatformString())) {
-					if (o1.getSBSv2Alias().split("_").length == 2 && o2.getSBSv2Alias().split("_").length == 2)
+					if (o1.getSBSv2Alias().split("_").length != o2.getSBSv2Alias().split("_").length)
 						return o1.getTargetString().compareTo(o2.getTargetString());
-					else if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3)
-						return 1;
+					else if (sbsAlias1.split("_").length >= 3){
+						String temp1[] = sbsAlias1.split("_");
+						String temp2[] = sbsAlias2.split("_");
+						String suffix1 = "";
+						String suffix2 = "";
+						for (int i = 2; i < temp1.length; i++){
+							suffix1 += temp1[i] + "_";
+						}
+						
+						for (int i = 2; i < temp2.length; i++){
+							suffix2 += temp2[i] + "_";
+						}
+						
+						return suffix1.compareTo(suffix2);
+					} 
 				} else {
 					if (sbsAlias1.toUpperCase().startsWith(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 						return -1;
@@ -389,7 +431,6 @@ public class SBSv2Utils {
 					} 
 				}
 				return sbsAlias1.compareTo(sbsAlias2);
-				
 			}
 			
 		});
@@ -401,7 +442,10 @@ public class SBSv2Utils {
 				String sbsAlias1 = o1.getSBSv2Alias();
 				String sbsAlias2 = o2.getSBSv2Alias();
 				
-				if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && !sbsAlias1.equals(sbsAlias2)){
+				if (o1.getSBSv2Alias().split("_").length == 3 && o2.getSBSv2Alias().split("_").length == 3 &&
+						o1.getPlatformString().equals(o2.getPlatformString()))
+					return o1.getTargetString().compareTo(o2.getTargetString());
+				else if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && !sbsAlias1.equals(sbsAlias2)){
 					String temp1[] = sbsAlias1.split("_");
 					String temp2[] = sbsAlias2.split("_");
 					String suffix1 = "";
@@ -421,34 +465,8 @@ public class SBSv2Utils {
 			}
 		});
 		
-		// Sort the target string for long aliases
-		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
-
-			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
-				String sbsAlias1 = o1.getSBSv2Alias();
-				String sbsAlias2 = o2.getSBSv2Alias();
-				String temp1[] = sbsAlias1.split("_");
-				String temp2[] = sbsAlias2.split("_");
-				String suffix1 = "";
-				String suffix2 = "";
-				for (int i = 2; i < temp1.length; i++){
-					suffix1 += temp1[i] + "_";
-				}
-				
-				for (int i = 2; i < temp2.length; i++){
-					suffix2 += temp2[i] + "_";
-				}
-				
-				if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && suffix1.equals(suffix2)){
-					return o1.getTargetString().compareTo(o2.getTargetString());
-				} 
-				
-				return 0;	
-			}
-		});
-		
-		return contexts;
-	}
+    	return contexts; 
+    }
 	
 	/**
 	 * If a variant is defined and it changes the output directory, return the directory name.
