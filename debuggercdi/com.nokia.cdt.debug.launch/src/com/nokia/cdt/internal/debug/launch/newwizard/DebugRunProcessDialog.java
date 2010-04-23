@@ -19,7 +19,10 @@ package com.nokia.cdt.internal.debug.launch.newwizard;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.settings.model.CProjectDescriptionEvent;
@@ -64,8 +67,10 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelection;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
@@ -73,7 +78,7 @@ import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
  */
 public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implements ICProjectDescriptionListener {
 	private ComboViewer projectExecutableViewer;
-	private Text remoteProgramEntry;
+	private ComboViewer remoteProgramViewer;
 	private Button projectExecutableRadioButton;
 	private Button remoteExecutableRadioButton;
 	private Button attachToProcessRadioButton;
@@ -84,6 +89,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private Text sisEdit;
 	private Button sisBrowse;
 	private Composite installPackageUI;
+	
+	private Set<IPath> remotePathEntries = new LinkedHashSet<IPath>();
 	
 	protected DebugRunProcessDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
@@ -100,6 +107,14 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 				data.isDebug() ? LaunchWizardHelpIds.WIZARD_DIALOG_CHANGE_DEBUG_PROCESS : 
 					LaunchWizardHelpIds.WIZARD_DIALOG_CHANGE_RUN_PROCESS);
 
+		loadRemoteProgramEntries();
+		
+		composite.addDisposeListener(new DisposeListener() {
+			
+			public void widgetDisposed(DisposeEvent e) {
+				saveRemoteProgramEntries();
+			}
+		});
 
 		createProcessSelector(composite);
 		
@@ -113,6 +128,46 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		validate();
 
 		return composite;
+	}
+
+	// pref key for paths the user has manually entered
+	final static String USER_REMOTE_PATHS = "user.remote.paths"; //$NON-NLS-1$
+
+	/**
+	 * 
+	 */
+	protected void saveRemoteProgramEntries() {
+		Set<IPath> uniqueRemotePathEntries = new LinkedHashSet<IPath>(remotePathEntries);
+		
+		// in case user was typing, ensure that entry is present
+		if(remoteProgramViewer != null)
+			uniqueRemotePathEntries.add(PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim()));
+		
+		for (Iterator<IPath> iter = uniqueRemotePathEntries.iterator(); iter.hasNext(); ) { 
+			IPath path = iter.next();
+			if (path.isEmpty() || data.getExes().contains(path))
+				iter.remove();
+		}
+		
+		// truncate size
+		while (uniqueRemotePathEntries.size() > 10)
+			uniqueRemotePathEntries.remove(uniqueRemotePathEntries.iterator().next());
+		
+		String pathSoup = TextUtils.catenateStrings(uniqueRemotePathEntries.toArray(), "|"); //$NON-NLS-1$
+		LaunchPlugin.getDefault().getPreferenceStore().setValue(USER_REMOTE_PATHS, pathSoup);
+	}
+
+
+	/**
+	 * 
+	 */
+	protected void loadRemoteProgramEntries() {
+		String pathSoup = LaunchPlugin.getDefault().getPreferenceStore().getString(USER_REMOTE_PATHS);
+		if (pathSoup != null) {
+			String[] paths = pathSoup.split("\\|"); //$NON-NLS-1$
+			for (String path : paths)
+				remotePathEntries.add(PathUtils.createPath(path));
+		}
 	}
 
 
@@ -368,8 +423,15 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			exeSelectionPath = exes.get(0);
 		if (!Path.EMPTY.equals(exeSelectionPath)) {
 			projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
-			IPath remotePath = createSuggestedRemotePath(exeSelectionPath);
-			remoteProgramEntry.setText(PathUtils.convertPathToWindows(remotePath));
+			IPath remotePath = exeSelectionPath;
+			if (remoteProgramViewer != null) {
+				if (!remotePathEntries.contains(remotePath)) {
+					remotePath = createSuggestedRemotePath(exeSelectionPath);
+					remotePathEntries.add(remotePath);
+					remoteProgramViewer.add(remotePath);
+				}
+				remoteProgramViewer.setSelection(new StructuredSelection(remotePath));
+			}
 		}
 		
 		if (data.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && exeSelectionPath != null) {
@@ -435,9 +497,10 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 					data.setExeSelectionPath((IPath) sel); 
 					
 					// track the default remote program from the executable, for easy editing
-					if (remoteProgramEntry != null) {
+					if (remoteProgramViewer != null) {
 						IPath exeSelectionPath = createSuggestedRemotePath(data.getExeSelectionPath());
-						remoteProgramEntry.setText(PathUtils.convertPathToWindows(exeSelectionPath)); 
+						// path should already be in model
+						remoteProgramViewer.setSelection(new StructuredSelection(exeSelectionPath)); 
 					}
 					
 					validate();
@@ -472,10 +535,25 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		
 		remoteExecutableRadioButton.setData(UID, "radio_remote_program"); //$NON-NLS-1$
 		
-		remoteProgramEntry = new Text(radioGroup, SWT.BORDER);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteProgramEntry);
+		remoteProgramViewer = new ComboViewer(radioGroup, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteProgramViewer.getControl());
 		
-		remoteProgramEntry.setData(UID, "text_remote_program"); //$NON-NLS-1$
+		remotePathEntries.addAll(data.getExes());
+		
+		remoteProgramViewer.setContentProvider(new ArrayContentProvider());
+		remoteProgramViewer.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof IPath)
+					return PathUtils.convertPathToWindows((IPath) element);
+				return super.getText(element);
+			}
+		});
+		remoteProgramViewer.setInput(remotePathEntries);
+		remoteProgramViewer.getCombo().setVisibleItemCount(remotePathEntries.size());
+		
+		
+		remoteProgramViewer.setData(UID, "combo_remote_program"); //$NON-NLS-1$
 		
 		remoteExecutableRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -485,9 +563,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 
 		});
 		
-		remoteProgramEntry.addModifyListener(new ModifyListener() {
+		remoteProgramViewer.getCombo().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				data.setExeSelectionPath(new Path(remoteProgramEntry.getText().trim()));
+				data.setExeSelectionPath(PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim()));
 				validate();
 			}
 		});
@@ -495,13 +573,13 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 
 	private void handleRemoteExecutableRadioSelected() {
 		if (remoteExecutableRadioButton.getSelection()) {
-			remoteProgramEntry.setEnabled(true);
+			remoteProgramViewer.getControl().setEnabled(true);
 			data.setExeSelection(EExeSelection.USE_REMOTE_EXECUTABLE);
-			IPath path = PathUtils.createPath(remoteProgramEntry.getText());
+			IPath path = PathUtils.createPath(remoteProgramViewer.getCombo().getText());
 			data.setExeSelectionPath(path);
 			validate();
 		} else {
-			remoteProgramEntry.setEnabled(false);
+			remoteProgramViewer.getControl().setEnabled(false);
 			// another button becomes active and sets the new launch process
 		}
 	}
