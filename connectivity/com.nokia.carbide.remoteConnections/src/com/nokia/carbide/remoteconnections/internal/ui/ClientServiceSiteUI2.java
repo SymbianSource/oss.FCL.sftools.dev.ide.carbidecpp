@@ -95,7 +95,7 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 				String connection = (String) selection.getFirstElement();
-				if (!connection.equals(ClientServiceSiteUI2.this.connection)) {
+				if (connection != null && !connection.equals(ClientServiceSiteUI2.this.connection)) {
 					ClientServiceSiteUI2.this.connection = connection;
 					fireConnectionSelected();
 				}
