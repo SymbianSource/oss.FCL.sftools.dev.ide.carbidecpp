@@ -225,7 +225,8 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 			if (connection == null) {
 				String lastConnectionId = Registry.instance().getLastConnectionId();
 				if (lastConnectionId != null) {
-					selectConnection(lastConnectionId);
+					viewer.getCombo().select(0);  // the default setting
+					selectConnection(lastConnectionId);  // should override if connection still exists
 				} else {
 					viewer.getCombo().select(0);
 					viewer.setSelection(viewer.getSelection());
