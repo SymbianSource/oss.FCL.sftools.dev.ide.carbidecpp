@@ -87,6 +87,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConne
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
@@ -106,6 +107,7 @@ public class ConnectionsView extends ViewPart {
 	private IConnectionsManagerListener connectionStoreChangedListener;
 	private IConnectionListener connectionListener;
 	private Map<IConnectedService, IStatusChangedListener> serviceToListenerMap;
+	private Map<IConnection2, IConnectionStatusChangedListener> connectionToListenerMap;
 	private List<Action> actions;
 	private List<Action> connectionSelectedActions;
 	private List<Action> serviceSelectedActions;
@@ -133,11 +135,24 @@ public class ConnectionsView extends ViewPart {
 	private TreeNode[] loadConnections() {
 		if (serviceToListenerMap == null)
 			serviceToListenerMap = new HashMap<IConnectedService, IStatusChangedListener>();
-		removeServiceListeners();
+		if (connectionToListenerMap == null)
+			connectionToListenerMap = new HashMap<IConnection2, IConnectionStatusChangedListener>();
+		removeStatusListeners();
 		List<TreeNode> connectionNodes = new ArrayList<TreeNode>();
 		Collection<IConnection> connections = 
 			Registry.instance().getConnections();
 		for (IConnection connection : connections) {
+			if (connection instanceof IConnection2) {
+				IConnectionStatusChangedListener statusChangedListener = 
+					new IConnectionStatusChangedListener() {
+						public void statusChanged(IConnectionStatus status) {
+							handleStatusChanged();
+						}
+					};
+				IConnection2 connection2 = (IConnection2) connection;
+				connection2.addStatusChangedListener(statusChangedListener);
+				connectionToListenerMap.put(connection2, statusChangedListener);
+			}
 			// create a node for the connection
 			TreeNode connectionNode = new TreeNode(connection);
 			// create subnodes for the connected services
@@ -148,14 +163,7 @@ public class ConnectionsView extends ViewPart {
 				final TreeNode treeNode = new TreeNode(connectedService);
 				IStatusChangedListener statusChangedListener = new IStatusChangedListener() {
 					public void statusChanged(final IStatus status) {
-						Display.getDefault().asyncExec(new Runnable() {
-							public void run() {
-								if (!isDisposed) {
-									viewer.refresh(true);
-									packColumns();
-								}
-							}
-						});
+						handleStatusChanged();
 					}
 				};
 				connectedService.addStatusChangedListener(statusChangedListener);
@@ -171,6 +179,17 @@ public class ConnectionsView extends ViewPart {
 		}
 		
 		return (TreeNode[]) connectionNodes.toArray(new TreeNode[connectionNodes.size()]);
+	}
+
+	private void handleStatusChanged() {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				if (!isDisposed) {
+					viewer.refresh(true);
+					packColumns();
+				}
+			}
+		});
 	}
 
 	private class NameEditingSupport extends EditingSupport {
@@ -852,12 +871,17 @@ public class ConnectionsView extends ViewPart {
 		viewer.getControl().setFocus();
 	}
 	
-	private void removeServiceListeners() {
+	private void removeStatusListeners() {
 		for (IConnectedService connectedService : serviceToListenerMap.keySet()) {
 			IStatusChangedListener listener = serviceToListenerMap.get(connectedService);
 			connectedService.removeStatusChangedListener(listener);
 		}
 		serviceToListenerMap.clear();
+		for (IConnection2 connection : connectionToListenerMap.keySet()) {
+			IConnectionStatusChangedListener listener = connectionToListenerMap.get(connection);
+			connection.removeStatusChangedListener(listener);
+		}
+		connectionToListenerMap.clear();
 	}
 	
 	private void disableAllConnectedServices() {
@@ -874,7 +898,7 @@ public class ConnectionsView extends ViewPart {
 	
 	@Override
 	public void dispose() {
-		removeServiceListeners();
+		removeStatusListeners();
 		Registry.instance().removeConnectionStoreChangedListener(connectionStoreChangedListener);
 		Registry.instance().removeConnectionListener(connectionListener);
 		disableAllConnectedServices();
