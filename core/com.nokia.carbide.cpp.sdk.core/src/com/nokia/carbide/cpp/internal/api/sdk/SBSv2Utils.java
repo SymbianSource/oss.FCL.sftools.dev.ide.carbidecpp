@@ -31,6 +31,8 @@ import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Preferences;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.Version;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -233,8 +235,8 @@ public class SBSv2Utils {
 	 * Filter out those that are less commonly used on new workspace creation.
 	 */
 	public static void initDefaultConfigsToFilter() {
-		Preferences prefs = SDKCorePlugin.getDefault().getPluginPreferences();
-		String inited = prefs.getString(SBSV2_FILTERED_CONFIGS_STORE_INITED);
+		IEclipsePreferences prefs = new InstanceScope().getNode(SDKCorePlugin.getPluginId());
+		String inited = prefs.get(SBSV2_FILTERED_CONFIGS_STORE_INITED, "");
 		if (inited == null || inited.length() == 0){
 			Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator(); 
 			List<String> defaultConfigsToFilter = new ArrayList<String>();
@@ -247,7 +249,7 @@ public class SBSv2Utils {
 					defaultConfigsToFilter.add(buildAlias);
 				}
 			}
-			prefs.setValue(SBSV2_FILTERED_CONFIGS_STORE_INITED, "true");
+			prefs.put(SBSV2_FILTERED_CONFIGS_STORE_INITED, "true");
 			setSBSv2ConfigurationsToFilter(defaultConfigsToFilter.toArray(new String[defaultConfigsToFilter.size()]));
 			
 		}
@@ -363,7 +365,7 @@ public class SBSv2Utils {
     
     private static List<ISymbianBuildContext> sortContexts(List<ISymbianBuildContext> contexts){ 
     	
-		// 3 sorting stages to handle long Raptor aliases, and multiple aliases that have a similar platform and target prefix (e.g. armv5_urel)
+		// 2 sorting stages to handle long Raptor aliases, and multiple aliases that have a similar platform and target prefix (e.g. armv5_urel)
 		
 		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
 
@@ -373,10 +375,23 @@ public class SBSv2Utils {
 				String sbsAlias2 = o2.getSBSv2Alias();
 				
 				if (o1.getPlatformString().equals(o2.getPlatformString())) {
-					if (o1.getSBSv2Alias().split("_").length == 2 && o2.getSBSv2Alias().split("_").length == 2)
+					if (o1.getSBSv2Alias().split("_").length != o2.getSBSv2Alias().split("_").length)
 						return o1.getTargetString().compareTo(o2.getTargetString());
-					else if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3)
-						return 1;
+					else if (sbsAlias1.split("_").length >= 3){
+						String temp1[] = sbsAlias1.split("_");
+						String temp2[] = sbsAlias2.split("_");
+						String suffix1 = "";
+						String suffix2 = "";
+						for (int i = 2; i < temp1.length; i++){
+							suffix1 += temp1[i] + "_";
+						}
+						
+						for (int i = 2; i < temp2.length; i++){
+							suffix2 += temp2[i] + "_";
+						}
+						
+						return suffix1.compareTo(suffix2);
+					} 
 				} else {
 					if (sbsAlias1.toUpperCase().startsWith(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 						return -1;
@@ -396,7 +411,10 @@ public class SBSv2Utils {
 				String sbsAlias1 = o1.getSBSv2Alias();
 				String sbsAlias2 = o2.getSBSv2Alias();
 				
-				if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && !sbsAlias1.equals(sbsAlias2)){
+				if (o1.getSBSv2Alias().split("_").length == 3 && o2.getSBSv2Alias().split("_").length == 3 &&
+						o1.getPlatformString().equals(o2.getPlatformString()))
+					return o1.getTargetString().compareTo(o2.getTargetString());
+				else if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && !sbsAlias1.equals(sbsAlias2)){
 					String temp1[] = sbsAlias1.split("_");
 					String temp2[] = sbsAlias2.split("_");
 					String suffix1 = "";
