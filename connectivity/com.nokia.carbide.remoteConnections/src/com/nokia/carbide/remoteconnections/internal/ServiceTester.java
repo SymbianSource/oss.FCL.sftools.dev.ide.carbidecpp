@@ -18,6 +18,7 @@
 package com.nokia.carbide.remoteconnections.internal;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -89,13 +90,15 @@ public class ServiceTester {
 	}
 	
 	private ServiceTester() {
-		registry = new HashSet<AbstractConnectedService2>();
+		registry = Collections.synchronizedSet(new HashSet<AbstractConnectedService2>());
 		runningThreads = new HashSet<TestRunner>();
 		Thread t = new Thread(new Runnable() {
 			public void run() {
 				while (true) {
-					Collection<Set<AbstractConnectedService2>> csSetsByResource = 
-						createConnectedServiceSetsByResource(new HashSet<AbstractConnectedService2>(registry));
+					Collection<Set<AbstractConnectedService2>> csSetsByResource;
+					synchronized (registry) {
+						csSetsByResource = createConnectedServiceSetsByResource(new HashSet<AbstractConnectedService2>(registry));
+					}
 					for (Set<AbstractConnectedService2> set : csSetsByResource) {
 						Collection<Set<AbstractConnectedService2>> csSetsByService = 
 							createConnectedServiceSetsByService(set);
