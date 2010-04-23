@@ -102,7 +102,7 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 				IFile file = project.getFile(project.getName() + underscore + config.getPlatformString().toLowerCase() +
 						underscore + config.getTargetString().toLowerCase() + ".pkg"); //$NON-NLS-1$
 				
-				if (file == null || !file.exists() && config.getPlatformString() != ISymbianBuildContext.EMULATOR_PLATFORM) {
+				if (file == null || !file.exists() && !config.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 					// Qt 4.6 only creates one PKG file per project. Do not add for WINSCW
 					file = project.getFile(project.getName() + underscore + template + ".pkg"); //$NON-NLS-1$
 				} 
