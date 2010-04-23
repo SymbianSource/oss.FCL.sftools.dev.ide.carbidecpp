@@ -21,7 +21,7 @@ Export-Package: com.nokia.carbide.installpackages,
  com.nokia.carbide.remoteconnections.interfaces,
  com.nokia.carbide.remoteconnections.internal.api,
  com.nokia.carbide.remoteconnections.internal.registry;x-friends:="com.nokia.carbide.remoteConnections.tests,com.nokia.carbide.tests.debug",
- com.nokia.carbide.remoteconnections.settings.ui;x-friends:="com.nokia.carbide.tests.debug"
+ com.nokia.carbide.remoteconnections.settings.ui;x-friends:="com.nokia.carbide.tests.debug,com.nokia.cdt.debug.launch"
 Bundle-ClassPath: .,
  lib/commons-codec-1.3.jar,
  lib/commons-httpclient-3.1.jar,

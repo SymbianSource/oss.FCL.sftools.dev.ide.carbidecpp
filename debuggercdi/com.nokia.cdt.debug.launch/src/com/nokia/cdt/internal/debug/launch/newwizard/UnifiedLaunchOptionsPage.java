@@ -45,8 +45,11 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
  * allowing selecting different process to launch, and a button allowing more
  * in-depth configuration.
  * <p>
- * Build before debug: section with the build-before-debug preference for this
+ * Other settings: section with (currently only) the build-before-debug preference for this
  * launch configuration.
+ * <p>
+ * Each section is validated separately and editable with its own dialog.  Changes in
+ * the dialog are not applied until the dialog is accepted.
  */
 public class UnifiedLaunchOptionsPage extends WizardPage implements ISectionChangeListener {
 

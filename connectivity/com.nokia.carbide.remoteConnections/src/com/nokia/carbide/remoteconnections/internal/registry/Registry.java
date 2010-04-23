@@ -41,14 +41,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.IFilter;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
@@ -63,13 +58,13 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.ui.ClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
+import com.nokia.carbide.remoteconnections.internal.ui.SelectConnectionDialog;
 import com.nokia.carbide.remoteconnections.ui.ClientServiceSiteUI;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
@@ -92,6 +87,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 	
 	// this is exposed to other clients inside this plugin but it is not public knowledge
 	public static final String CURRENT_CONNECTION_ID = RemoteConnectionsActivator.PLUGIN_ID + ".currentConnection"; //$NON-NLS-1$
+	
+	private static final String LAST_CONNECTION_ID = "last_connection_id"; //$NON-NLS-1$
 	
 	private static Registry instance = new Registry();
 	
@@ -335,6 +332,8 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		connectionToConnectedServices.put(connection, connectedServices);
 		fireConnectionStoreChanged();
 		fireConnectionAdded(connection);
+		
+		setLastConnectionId(connection.getIdentifier());
 	}
 	
 	private void ensureUniqueId(IConnection connection) {
@@ -524,7 +523,7 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			connectionHolder[0] = getCompatibleConnectionFromUser(service, storableIdHolder);
 			if (connectionHolder[0] == null) {
 				throw new CoreException(
-						Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.ERROR, 
+						Logging.newStatus(RemoteConnectionsActivator.getDefault(), IStatus.CANCEL, 
 								Messages.getString("Registry.NoCompatibleConnectionMsg"))); //$NON-NLS-1$
 			}
 			else if (wasCurrentConnection && !connectionHolder[0].getIdentifier().equals(CURRENT_CONNECTION_ID)) {
@@ -548,60 +547,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (!WorkbenchUtils.isJUnitRunning()) {
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
+					// First, see if any connections could possibly be selected.
+					// If not, immediately offer to create a new connection.
+					
 					final IClientServiceSiteUI2 ui = getClientSiteUI2(service);
-					final TitleAreaDialog dialog = new TitleAreaDialog(WorkbenchUtils.getSafeShell()) {
-						@Override
-						protected Control createDialogArea(Composite parent) {
-							final Composite c = (Composite) super.createDialogArea(parent);
-							ui.createComposite(c);
-							ui.addListener(new IListener() {
-								public void connectionSelected() {
-									updateStatus(ui.getSelectionStatus());
-								}
-
-							});
-							
-							return c;
-						}
-
-						private void updateStatus(IStatus selectionStatus) {
-							setTitle(Messages.getString("Registry.EnsureConnection.TitleLabel")); //$NON-NLS-1$
-							setMessage(Messages.getString("Registry.EnsureConnection.Description")); //$NON-NLS-1$
-							switch (selectionStatus.getSeverity()) {
-							case IStatus.ERROR:
-								setMessage(selectionStatus.getMessage(), IMessageProvider.ERROR);
-								getButton(IDialogConstants.OK_ID).setEnabled(false);
-								break;
-							case IStatus.WARNING:
-								setMessage(selectionStatus.getMessage(), IMessageProvider.WARNING);
-								getButton(IDialogConstants.OK_ID).setEnabled(true);
-								break;
-							case IStatus.INFO:
-								setMessage(selectionStatus.getMessage(), IMessageProvider.INFORMATION);
-								getButton(IDialogConstants.OK_ID).setEnabled(true);
-								break;
-							default:
-								getButton(IDialogConstants.OK_ID).setEnabled(true);
-							}
-						}
-						
-						@Override
-						public void create() {
-							super.create();
-							updateStatus(ui.getSelectionStatus());
-						}
-						
-						@Override
-						protected void configureShell(Shell newShell) {
-							super.configureShell(newShell);
-							newShell.setText(Messages.getString("Registry.EnsureConnection.DialogTitle")); //$NON-NLS-1$
-						}
-						
-						@Override
-						protected boolean isResizable() {
-							return true;
-						}
-					};
+					final TitleAreaDialog dialog = new SelectConnectionDialog(WorkbenchUtils.getSafeShell(), ui);
 					dialog.setBlockOnOpen(true);
 					if (dialog.open() == Dialog.OK) {
 						storableIdHolder[0] = ui.getSelectedConnection();
@@ -699,5 +649,26 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 			return true;
 		
 		return false;
+	}
+
+	/**
+	 * Internal method:  get the last id of a connection created or selected in UI.  
+	 * Used to prepopulate UI for selecting connections.
+	 * @return connection id (not "current") or <code>null</code>
+	 */
+	public String getLastConnectionId() {
+		return RemoteConnectionsActivator.getDefault().getPreferenceStore().getString(LAST_CONNECTION_ID);
+	}
+	
+	/**
+	 * Internal method:  remember the last id of a connection created or selected in UI.  
+	 * @param id connection id.  Current connection is converted to an actual connection id.
+	 */
+	public void setLastConnectionId(String id) {
+		if (CURRENT_CONNECTION_ID.equals(id)) 
+			id = currentConnection != null ? currentConnection.getIdentifier() : null;
+		if (id == null) 
+			return;
+		RemoteConnectionsActivator.getDefault().getPreferenceStore().setValue(LAST_CONNECTION_ID, id);
 	}
 }
