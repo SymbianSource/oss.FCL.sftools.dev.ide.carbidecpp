@@ -240,6 +240,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		GridDataFactory.fillDefaults().applyTo(installPackageCheckbox);
 		
 		installPackageCheckbox.setText(Messages.getString("DebugRunProcessDialog.InstallBeforeLaunchLabel")); //$NON-NLS-1$
+		installPackageCheckbox.setToolTipText(Messages.getString("DebugRunProcessDialog.SISCheckboxTooltip")); //$NON-NLS-1$
+		
 		installPackageUI = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().indent(INDENT, 0).applyTo(installPackageUI);
 		
@@ -488,10 +490,13 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		GridDataFactory.fillDefaults().grab(false, false).applyTo(projectExecutableRadioButton);
 		projectExecutableRadioButton.setText(Messages.getString("DebugRunProcessDialog.LaunchProjectExeLabel")); //$NON-NLS-1$
 		projectExecutableRadioButton.setData(UID, "radio_project_executable"); //$NON-NLS-1$
+		projectExecutableRadioButton.setToolTipText(Messages.getString("DebugRunProcessDialog.LaunchProjectExecutableRadioTooltip")); //$NON-NLS-1$
+
 		
 		projectExecutableViewer = new ComboViewer(radioGroup, SWT.READ_ONLY);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(projectExecutableViewer.getControl());
 		projectExecutableViewer.getControl().setData(UID, "combo_project_executable"); //$NON-NLS-1$
+		projectExecutableViewer.getControl().setToolTipText(Messages.getString("DebugRunProcessDialog.LaunchProjectExecutableSelectorTooltip")); //$NON-NLS-1$
 		
 		projectExecutableViewer.setContentProvider(new ArrayContentProvider());
 		projectExecutableViewer.setLabelProvider(new LabelProvider() {
@@ -556,6 +561,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		remoteExecutableRadioButton.setText(Messages.getString("DebugRunProcessDialog.LaunchRemoteProgLabel")); //$NON-NLS-1$
 		
 		remoteExecutableRadioButton.setData(UID, "radio_remote_program"); //$NON-NLS-1$
+		remoteExecutableRadioButton.setToolTipText(Messages.getString("DebugRunProcessDialog.LaunchRemoteProgramRadioTooltip")); //$NON-NLS-1$
 		
 		remoteProgramViewer = new ComboViewer(radioGroup, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteProgramViewer.getControl());
@@ -576,6 +582,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		
 		
 		remoteProgramViewer.setData(UID, "combo_remote_program"); //$NON-NLS-1$
+		remoteProgramViewer.getControl().setToolTipText(Messages.getString("DebugRunProcessDialog.LaunchRemoteProgramSelectorTooltip")); //$NON-NLS-1$
 		
 		remoteExecutableRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -622,7 +629,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		attachToProcessRadioButton.setText(Messages.getString("DebugRunProcessDialog.AttachLabel")); //$NON-NLS-1$
 		
 		attachToProcessRadioButton.setData(UID, "radio_attach_to_process"); //$NON-NLS-1$
-		
+		attachToProcessRadioButton.setToolTipText(Messages.getString("DebugRunProcessDialog.AttachProcessRadioTooltip")); //$NON-NLS-1$
+
 		Label label = new Label(radioGroup, SWT.WRAP);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.LEFT, SWT.CENTER).applyTo(label);
 		
