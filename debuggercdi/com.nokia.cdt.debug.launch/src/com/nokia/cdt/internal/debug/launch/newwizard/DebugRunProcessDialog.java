@@ -19,6 +19,7 @@ package com.nokia.cdt.internal.debug.launch.newwizard;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -90,7 +91,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private Button sisBrowse;
 	private Composite installPackageUI;
 	
-	private Set<IPath> remotePathEntries = new LinkedHashSet<IPath>();
+	private List<IPath> remotePathEntries = new ArrayList<IPath>();
 	
 	protected DebugRunProcessDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
@@ -137,11 +138,14 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	 * 
 	 */
 	protected void saveRemoteProgramEntries() {
-		Set<IPath> uniqueRemotePathEntries = new LinkedHashSet<IPath>(remotePathEntries);
-		
 		// in case user was typing, ensure that entry is present
-		if(remoteProgramViewer != null)
-			uniqueRemotePathEntries.add(PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim()));
+		if(remoteProgramViewer != null) {
+			IPath currentPath = PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim());
+			remotePathEntries.remove(currentPath);
+			remotePathEntries.add(0, currentPath);	// MRU
+		}
+		
+		Set<IPath> uniqueRemotePathEntries = new LinkedHashSet<IPath>(remotePathEntries);
 		
 		for (Iterator<IPath> iter = uniqueRemotePathEntries.iterator(); iter.hasNext(); ) { 
 			IPath path = iter.next();
@@ -149,11 +153,13 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 				iter.remove();
 		}
 		
-		// truncate size
-		while (uniqueRemotePathEntries.size() > 10)
-			uniqueRemotePathEntries.remove(uniqueRemotePathEntries.iterator().next());
+		// truncate size, removing from end
+		List<IPath> mruPathEntries = new ArrayList<IPath>(uniqueRemotePathEntries);
+		while (mruPathEntries.size() > 10) {
+			mruPathEntries.remove(mruPathEntries.size() - 1);
+		}
 		
-		String pathSoup = TextUtils.catenateStrings(uniqueRemotePathEntries.toArray(), "|"); //$NON-NLS-1$
+		String pathSoup = TextUtils.catenateStrings(mruPathEntries.toArray(), "|"); //$NON-NLS-1$
 		LaunchPlugin.getDefault().getPreferenceStore().setValue(USER_REMOTE_PATHS, pathSoup);
 	}
 
@@ -418,16 +424,32 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	protected void initUI() {
 		List<IPath> exes = data.getLaunchableExes();
 		projectExecutableViewer.setInput(exes);
+		
+		// this path may either be a project-relative or remote path
 		IPath exeSelectionPath = data.getExeSelectionPath();
 		if (exeSelectionPath.equals(Path.EMPTY) && !exes.isEmpty())
 			exeSelectionPath = exes.get(0);
+		
 		if (!Path.EMPTY.equals(exeSelectionPath)) {
-			projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
+			// keep previous path if possible...
 			IPath remotePath = exeSelectionPath;
+			if (data.getExes().contains(remotePath)) {
+				// unless that was actually a host-side path, which should be converted
+				remotePath = createSuggestedRemotePath(exeSelectionPath);
+			} else {
+				// selection is already a remote path; map back to project if possible
+				for (IPath exe : data.getExes()) {
+					if (exe.lastSegment().equals(remotePath.lastSegment())) {
+						exeSelectionPath = exe;
+						break;
+					}
+				}
+			}
+			projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
+			
 			if (remoteProgramViewer != null) {
 				if (!remotePathEntries.contains(remotePath)) {
-					remotePath = createSuggestedRemotePath(exeSelectionPath);
-					remotePathEntries.add(remotePath);
+					remotePathEntries.add(0, remotePath);	// MRU
 					remoteProgramViewer.add(remotePath);
 				}
 				remoteProgramViewer.setSelection(new StructuredSelection(remotePath));
@@ -435,11 +457,11 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		}
 		
 		if (data.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && exeSelectionPath != null) {
-			projectExecutableRadioButton.forceFocus();
+			projectExecutableViewer.getControl().forceFocus();
 		}
 		
 		if (data.getExeSelection() == EExeSelection.USE_REMOTE_EXECUTABLE && exeSelectionPath != null) {
-			remoteExecutableRadioButton.forceFocus();
+			remoteProgramViewer.getControl().forceFocus();
 		}
 		
 		if (data.getExeSelection() == EExeSelection.ATTACH_TO_PROCESS) {
@@ -565,7 +587,13 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		
 		remoteProgramViewer.getCombo().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				data.setExeSelectionPath(PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim()));
+				IPath path = PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim());
+				data.setExeSelectionPath(path);
+				
+				// MRU behavior
+				remotePathEntries.remove(path);
+				remotePathEntries.add(0, path);
+
 				validate();
 			}
 		});
