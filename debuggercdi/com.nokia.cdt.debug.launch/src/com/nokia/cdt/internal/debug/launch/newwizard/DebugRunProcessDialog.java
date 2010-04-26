@@ -93,7 +93,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private Composite installPackageUI;
 	
 	private List<IPath> remotePathEntries = new ArrayList<IPath>();
-	private ArrayList<IPath> projectGeneratedRemotePaths;
+	private List<IPath> projectGeneratedRemotePaths;
 	
 	protected DebugRunProcessDialog(Shell shell, LaunchWizardData data) {
 		super(shell, data);
@@ -608,8 +608,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			}
 		});
 		remoteProgramViewer.setInput(remotePathEntries);
-		remoteProgramViewer.getCombo().setVisibleItemCount(remotePathEntries.size());
-		
+		remoteProgramViewer.getCombo().setVisibleItemCount(Math.min(10, remotePathEntries.size()));
 		
 		remoteProgramViewer.setData(UID, "combo_remote_program"); //$NON-NLS-1$
 		remoteProgramViewer.getControl().setToolTipText(Messages.getString("DebugRunProcessDialog.LaunchRemoteProgramSelectorTooltip")); //$NON-NLS-1$
