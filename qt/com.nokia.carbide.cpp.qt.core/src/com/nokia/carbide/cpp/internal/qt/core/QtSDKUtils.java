@@ -53,8 +53,10 @@ public class QtSDKUtils {
 		public String incPath;
 	}
 	
-	/** Qt bin folder for internal SDK installs - epocroot relative */
+	/** Qt bin folder for internal SDK installs - epocroot relative - the deprecated internal location */
 	private static final String QT_SDK_BIN_PATH = "epoc32/tools/qt";
+	/** Qt bin folder for internal SDK installs - epocroot relative - the new internal location so that qmake is on the normal developer path with a subst'ed kit */
+	private static final String QT_SDK_PATH = "epoc32/tools/";
 	/** Qt include folder for internal SDK installs - epocroot relative */
 	private static final String QT_SDK_INC_PATH = "epoc32/include/mw";
 	
@@ -72,24 +74,14 @@ public class QtSDKUtils {
 	private static final String QTVERSION = "com.trolltech.qtcppproject.properties.qtversion";
 	
 	/**
-	 * For the given Symbian SDK, test whether or not it qualifies for have Qt internally built.
+	 * For the given Symbian SDK, test whether or not it has Qt internally built.
+	 * Qualification relies on locating the qmake executable and the Qt include directory
 	 * @param sdk - The Symbian SDK or source base to test
 	 * @return - true if Qt is internally installed
 	 */
 	static private boolean isQtInternallyInstalled(ISymbianSDK sdk){
-		
-		String epocRoot = sdk.getEPOCROOT();
-		if (new File(epocRoot + QT_SDK_BIN_PATH).exists() && 
-			new File(epocRoot + QT_SDK_INC_PATH).exists() &&
-			new File(epocRoot + QT_SDK_INC_PATH + File.separator + QT_FOLDER).exists() &&
-			new File(epocRoot + QT_SDK_BIN_PATH + File.separator + QT_MKSPECS).exists() ) 
-		{
-			if (HostOS.IS_WIN32 && new File(epocRoot + QT_SDK_BIN_PATH + File.separator + QT_QMAKE_WIN32).exists()){
-				return true;
-			} else if (HostOS.IS_UNIX && new File(epocRoot + QT_SDK_BIN_PATH + File.separator + QT_QMAKE_UNIX).exists()){
-				return true;
-			}
-		}
+		if (getQmakeInstallationPath(sdk) != null && getQtIncludeDirectory(sdk) != null)
+			return true;
 		
 		return false;
 	}
@@ -133,9 +125,7 @@ public class QtSDKUtils {
 		
 		refreshQtStoredSDKs();
 		if ((getQtSDKNameForSymbianSDK(sdk) == null) && isQtInternallyInstalled(sdk)){
-			IPath binPath = new Path(sdk.getEPOCROOT() + QT_SDK_BIN_PATH);
-			IPath incPath = new Path(sdk.getEPOCROOT() + QT_SDK_INC_PATH);
-			addQtSDK(sdk.getUniqueId(), binPath, incPath, makeDefault);
+			addQtSDK(sdk.getUniqueId(), getQmakeInstallationPath(sdk), getQtIncludeDirectory(sdk), makeDefault);
 		}
 	}
 	
@@ -225,6 +215,38 @@ public class QtSDKUtils {
 	*/
 	public static String getDefaultQtSDKForProject(IProject project) throws CoreException{
 		return project.getPersistentProperty(new QualifiedName("", QTVERSION));
+	}
+	
+	/**
+	 * Retrieve the directory where qmake resides for a given SDK.
+	 * @param sdk - The sdk to search
+	 * @return The IPath where qmake resides, null if qmake cannot be found
+	 */
+	public static IPath getQmakeInstallationPath(ISymbianSDK sdk){
+		String epocRoot = sdk.getEPOCROOT();
+		String qmakeExecutable = HostOS.IS_WIN32 ? QT_QMAKE_WIN32 : QT_QMAKE_UNIX;
+		
+		// Test the new location first, where /epoc32/tools/ is normally on the %PATH%
+		// else test the old location
+		if (new File(epocRoot + QT_SDK_PATH + qmakeExecutable).exists())
+			return new Path(epocRoot + QT_SDK_PATH);
+		else if (new File(epocRoot + QT_SDK_BIN_PATH + File.separator + qmakeExecutable).exists())
+			return new Path(epocRoot + QT_SDK_BIN_PATH);
+
+		return null;
+	}
+	
+	/**
+	 * Retrieve the qt include directory for a given SDK.
+	 * @param sdk - The sdk to search
+	 * @return The IPath if the include directory exists, null if the Qt include directory cannot be found
+	 */
+	public static IPath getQtIncludeDirectory(ISymbianSDK sdk){
+		String epocRoot = sdk.getEPOCROOT();
+		if (new File(epocRoot + QT_SDK_INC_PATH).exists() )
+			return new Path(epocRoot + QT_SDK_INC_PATH);
+			
+		return null;
 	}
 	
 }
