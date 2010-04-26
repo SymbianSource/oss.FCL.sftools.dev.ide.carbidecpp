@@ -48,6 +48,8 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -149,7 +151,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		
 		for (Iterator<IPath> iter = uniqueRemotePathEntries.iterator(); iter.hasNext(); ) { 
 			IPath path = iter.next();
-			if (path.isEmpty() || data.getExes().contains(path))
+			if (path.isEmpty() || getHostFileForRemoteLocation(path) != null)
 				iter.remove();
 		}
 		
@@ -162,7 +164,6 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		String pathSoup = TextUtils.catenateStrings(mruPathEntries.toArray(), "|"); //$NON-NLS-1$
 		LaunchPlugin.getDefault().getPreferenceStore().setValue(USER_REMOTE_PATHS, pathSoup);
 	}
-
 
 	/**
 	 * 
@@ -440,11 +441,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 				remotePath = createSuggestedRemotePath(exeSelectionPath);
 			} else {
 				// selection is already a remote path; map back to project if possible
-				for (IPath exe : data.getExes()) {
-					if (exe.lastSegment().equals(remotePath.lastSegment())) {
-						exeSelectionPath = exe;
-						break;
-					}
+				IPath projPath = getHostFileForRemoteLocation(exeSelectionPath);
+				if (projPath != null) {
+					exeSelectionPath = projPath;
 				}
 			}
 			projectExecutableViewer.setSelection(new StructuredSelection(exeSelectionPath));
@@ -479,6 +478,23 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private IPath createSuggestedRemotePath(IPath exeSelectionPath) {
 		String filename = exeSelectionPath.lastSegment();
 		return PathUtils.createPath("C:/sys/bin").append(filename); //$NON-NLS-1$
+	}
+
+
+	/**
+	 * Get the host-side file for a given remote location.  Opposite of
+	 * {@link #createSuggestedRemotePath(IPath)}.
+	 * @param path
+	 * @return host path or <code>null</code>
+	 */
+	private IPath getHostFileForRemoteLocation(IPath path) {
+		for (IPath exe : data.getExes()) {
+			IPath remoteSuggested = createSuggestedRemotePath(exe);
+			if (remoteSuggested.equals(path)) {
+				return exe;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -566,7 +582,11 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		remoteProgramViewer = new ComboViewer(radioGroup, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteProgramViewer.getControl());
 		
-		remotePathEntries.addAll(data.getExes());
+		// add the entries before the user MRU entries
+		int addIdx = 0;
+		for (IPath launchable : data.getLaunchableExes()) {
+			remotePathEntries.add(addIdx++, createSuggestedRemotePath(launchable));
+		}
 		
 		remoteProgramViewer.setContentProvider(new ArrayContentProvider());
 		remoteProgramViewer.setLabelProvider(new LabelProvider() {
@@ -596,12 +616,21 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			public void modifyText(ModifyEvent e) {
 				IPath path = PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim());
 				data.setExeSelectionPath(path);
+				validate();
+			}
+		});
+		
+		remoteProgramViewer.getCombo().addFocusListener(new FocusAdapter() {
+			/* (non-Javadoc)
+			 * @see org.eclipse.swt.events.FocusAdapter#focusLost(org.eclipse.swt.events.FocusEvent)
+			 */
+			@Override
+			public void focusLost(FocusEvent e) {
+				IPath path = PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim());
 				
 				// MRU behavior
 				remotePathEntries.remove(path);
 				remotePathEntries.add(0, path);
-
-				validate();
 			}
 		});
 	}
