@@ -159,13 +159,14 @@ public class SBVPlatform implements ISBVPlatform {
 			 * @see com.nokia.carbide.cpp.epoc.engine.IViewRunnable#failedLoad(org.eclipse.core.runtime.CoreException)
 			 */
 			public Object failedLoad(CoreException exception) {
-				EpocEnginePlugin.log(exception);
+				if (exception != null)
+					EpocEnginePlugin.log(exception);
 				messages.add(new Message(IMessage.ERROR,
 						new MessageLocation(sbvPath),
 						"SBVCatalog.SBVLoadError", //$NON-NLS-1$
 						MessageFormat.format(
 								Messages.getString("SBVCatalog.SBVLoadError"), //$NON-NLS-1$
-								new Object[] { exception.getLocalizedMessage() })
+								new Object[] { exception != null ? exception.getLocalizedMessage() : "file not found"  }) //$NON-NLS-1$
 				));
 				return null;
 			}

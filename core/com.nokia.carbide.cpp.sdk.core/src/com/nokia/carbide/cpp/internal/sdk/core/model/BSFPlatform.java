@@ -225,13 +225,14 @@ public class BSFPlatform implements IBSFPlatform {
 			 * @see com.nokia.carbide.cpp.epoc.engine.IViewRunnable#failedLoad(org.eclipse.core.runtime.CoreException)
 			 */
 			public Object failedLoad(CoreException exception) {
-				EpocEnginePlugin.log(exception);
+				if (exception != null)
+					EpocEnginePlugin.log(exception);
 				messages.add(new Message(IMessage.ERROR,
 						new MessageLocation(bsfPath),
 						"BSFCatalog.BSFLoadError", //$NON-NLS-1$
 						MessageFormat.format(
 								Messages.getString("BSFCatalog.BSFLoadError"), //$NON-NLS-1$
-								new Object[] { exception.getLocalizedMessage() })
+								new Object[] { exception != null ? exception.getLocalizedMessage() : "file not found" }) //$NON-NLS-1$
 				));
 				return null;
 			}
