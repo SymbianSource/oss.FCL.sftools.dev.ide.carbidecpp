@@ -54,15 +54,15 @@ public class QtSDKUtils {
 	}
 	
 	/** Qt bin folder for internal SDK installs - epocroot relative - the deprecated internal location */
-	private static final String QT_SDK_BIN_PATH = "epoc32/tools/qt";
+	private static final String OLD_QT_SDK_BIN_PATH = "epoc32/tools/qt";
 	/** Qt bin folder for internal SDK installs - epocroot relative - the new internal location so that qmake is on the normal developer path with a subst'ed kit */
 	private static final String QT_SDK_PATH = "epoc32/tools/";
 	/** Qt include folder for internal SDK installs - epocroot relative */
 	private static final String QT_SDK_INC_PATH = "epoc32/include/mw";
 	
 	/** qt subfolder under QT_INC_FOLDER */
-	private static final String QT_FOLDER = "qt";
-	private static final String QT_MKSPECS = "mkspecs";
+	//private static final String QT_FOLDER = "qt";
+	//private static final String QT_MKSPECS = "mkspecs";
 	private static final String QT_QMAKE_WIN32 = "qmake.exe";
 	private static final String QT_QMAKE_UNIX = "qmake";
 	
@@ -94,7 +94,7 @@ public class QtSDKUtils {
 	static public String getQtSDKNameForSymbianSDK(ISymbianSDK sdk){
 		
 		String epocRoot = sdk.getEPOCROOT();
-		File qtBinPath = new File (epocRoot + QT_SDK_BIN_PATH);
+		File qtBinPath = new File (epocRoot + OLD_QT_SDK_BIN_PATH);
 		File qtIncPath = new File (epocRoot + QT_SDK_INC_PATH);
 		
 		refreshQtStoredSDKs();
@@ -228,10 +228,10 @@ public class QtSDKUtils {
 		
 		// Test the new location first, where /epoc32/tools/ is normally on the %PATH%
 		// else test the old location
-		if (new File(epocRoot + QT_SDK_PATH + qmakeExecutable).exists())
+		if (new Path(epocRoot).append(QT_SDK_PATH).append(qmakeExecutable).toFile().exists())
 			return new Path(epocRoot + QT_SDK_PATH);
-		else if (new File(epocRoot + QT_SDK_BIN_PATH + File.separator + qmakeExecutable).exists())
-			return new Path(epocRoot + QT_SDK_BIN_PATH);
+		else if (new Path(epocRoot).append(OLD_QT_SDK_BIN_PATH).append(qmakeExecutable).toFile().exists())
+			return new Path(epocRoot).append(OLD_QT_SDK_BIN_PATH);
 
 		return null;
 	}
