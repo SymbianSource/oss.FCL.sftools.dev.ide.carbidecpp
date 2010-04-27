@@ -47,7 +47,7 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 	private LaunchCreationWizard mainWizard;
 	private FormBrowser descriptionBrowser;
 	private TableViewer wizardSelectionTableViewer = null;
-	private ILaunchWizard selectedWizard = null;
+	private AbstractLaunchWizard selectedWizard = null;
 	private boolean inputChanged = false;
 	
 	public LaunchWizardSelectionPage(LaunchCreationWizard mainWizard, List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, IProject project, String configurationName, String mode) throws Exception {
@@ -110,6 +110,8 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 		});
 		wizardSelectionTableViewer.addSelectionChangedListener(this);
 
+		wizardSelectionTableViewer.setInput(mainWizard.getWizardsForCategory(mainWizard.getCategoryId()));
+
 		createDescriptionIn(sashForm);
 		sashForm.setWeights(new int[] {75, 25});
 
@@ -128,12 +130,14 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 		setErrorMessage(null);
 		IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 		Object selectedObject = null;
-		Iterator iter = selection.iterator();
+		Iterator<?> iter = selection.iterator();
 		if (iter.hasNext()) {
 			selectedObject = iter.next();
-			if (selectedObject instanceof ILaunchWizard)
-				selectedWizard = (ILaunchWizard)selectedObject;
+			if (selectedObject instanceof AbstractLaunchWizard)
+				selectedWizard = (AbstractLaunchWizard)selectedObject;
 		}
+		mainWizard.setSelectedWizard(selectedWizard);
+		
 		if (selectedWizard == null) {
 			setDescriptionText(""); //$NON-NLS-1$
 			setSelectedNode(null);
@@ -146,14 +150,16 @@ class LaunchWizardSelectionPage extends WizardSelectionPage implements ISelectio
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible && wizardSelectionTableViewer != null) {
-			wizardSelectionTableViewer.setInput(mainWizard.getWizardsForCategory(mainWizard.getCategoryId()));
 			if (inputChanged) {
 				wizardSelectionTableViewer.setSelection(new StructuredSelection(wizardSelectionTableViewer.getElementAt(0)), true);
 			}
 			wizardSelectionTableViewer.getTable().setFocus();
 		}
 	}
+	
+	
 
+	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		List<Wizard> wizards = (List<Wizard>)inputElement;
 		return wizards.toArray();
