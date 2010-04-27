@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -54,6 +55,7 @@ public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizar
 	private String configurationName;
 	private List<AbstractLaunchWizard> wizards = new ArrayList<AbstractLaunchWizard>();
 	private String categoryId;
+	private AbstractLaunchWizard selectedWizard;
 	
 	public LaunchCreationWizard(IProject project, String configurationName, 
 										List<IPath> mmps, List<IPath> exes, IPath defaultExecutable,  
@@ -94,14 +96,13 @@ public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizar
 			}
 		}
 		
-		if (fWizardSelectionPage != null) {
-			AbstractLaunchWizard wizard = ((AbstractLaunchWizard) fWizardSelectionPage.getSelectedWizard());
-			wizard.performFinish();
-			Pair<IPath, IPath> exeAndMmp = wizard.getSelectedExeMmpPair();
-			IPath processToLaunchTargetPath = wizard.getProcessToLaunchTargetPath();
+		if (selectedWizard != null) {
+			selectedWizard.performFinish();
+			Pair<IPath, IPath> exeAndMmp = selectedWizard.getSelectedExeMmpPair();
+			IPath processToLaunchTargetPath = selectedWizard.getProcessToLaunchTargetPath();
 	    	launchConfig = 
-	    		fWizardSelectionPage.getSelectedWizard().createLaunchConfiguration(exeAndMmp.second, exeAndMmp.first, processToLaunchTargetPath);
-	    	shouldOpenLaunchDialog = fWizardSelectionPage.getSelectedWizard().shouldOpenLaunchConfigurationDialog();
+	    		selectedWizard.createLaunchConfiguration(exeAndMmp.second, exeAndMmp.first, processToLaunchTargetPath);
+	    	shouldOpenLaunchDialog = selectedWizard.shouldOpenLaunchConfigurationDialog();
 		}
 		
 		return true;
@@ -114,7 +115,21 @@ public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizar
     		addPage(fEmulationSummaryPage);
     	} 
     	else if (fWizardSelectionPage != null) {
-            addPage(fWizardSelectionPage);
+    		List<AbstractLaunchWizard> wizards = getWizardsForCategory(getCategoryId());
+    		if (wizards.size() > 1) {
+    			addPage(fWizardSelectionPage);
+    		} else {
+    			// just directly "select" the single wizard and add its pages instead of using
+    			// a wizard selection node, to avoid a needless intermediate selection page
+    			AbstractLaunchWizard wizard = wizards.get(0);
+    			for (IWizardPage page : wizard.getPages()) {
+    				page.setWizard(null);
+    				addPage(page);
+    			}
+    			setWindowTitle(wizard.getWindowTitle());
+    			fWizardSelectionPage = null;
+    			selectedWizard = wizard;
+    		}
     	}
     }
     
@@ -159,8 +174,8 @@ public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizar
 		return categoryId;
 	}
 	
-	public List<Wizard> getWizardsForCategory(String categoryId) {
-		List<Wizard> wizardsInCatgegory = new ArrayList<Wizard>();
+	public List<AbstractLaunchWizard> getWizardsForCategory(String categoryId) {
+		List<AbstractLaunchWizard> wizardsInCatgegory = new ArrayList<AbstractLaunchWizard>();
 		for (AbstractLaunchWizard wizard : wizards) {
 			if (wizard.supportsCategory(categoryId)) {
 				wizardsInCatgegory.add(wizard);
@@ -210,5 +225,9 @@ public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizar
 						"Unable to load launchWizardExtension extension from " + extension.getContributor().getName()));
 			}
 		}
+	}
+
+	public void setSelectedWizard(AbstractLaunchWizard selectedWizard) {
+		this.selectedWizard = selectedWizard;
 	}
 }

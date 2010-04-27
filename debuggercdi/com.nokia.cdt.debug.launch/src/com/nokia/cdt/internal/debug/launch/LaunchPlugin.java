@@ -346,7 +346,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 				openLaunchConfigDialog = wizard.shouldOpenLaunchConfigurationDialog();
 			}
 			catch (Exception e) {
-				throw new CoreException(new Status(IStatus.ERROR, getUniqueIdentifier(), 0, e.getMessage(), null )); //$NON-NLS-1$
+				throw new CoreException(new Status(IStatus.ERROR, getUniqueIdentifier(), 0, e.getMessage(), e )); //$NON-NLS-1$
 			}
 		}
 		
