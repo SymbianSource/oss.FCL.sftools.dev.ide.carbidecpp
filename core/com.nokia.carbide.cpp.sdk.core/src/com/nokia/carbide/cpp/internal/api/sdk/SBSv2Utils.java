@@ -30,7 +30,6 @@ import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.Version;
@@ -41,6 +40,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -57,6 +57,7 @@ public class SBSv2Utils {
 	private static final String SBSV2_FILTERED_CONFIGS_STORE = "sbsv2FilteredConfigs"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_STORE_INITED = "sbsv2FilteredConfigsInited"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_DELIMETER = ";"; //$NON-NLS-1$
+	private static final long VALID_ABLD_SIZE = 1024;
 
 	/**
 	 * Map of usable Raptor alias for -c parameter and base platform: <alise, base plat>
@@ -279,9 +280,9 @@ public class SBSv2Utils {
 		if (!enableSBSv2Support())
 			return true;
 		
-		// TODO LINUX: more accurate check
-		if (HostOS.IS_WIN32)
+		if (isSBSv1Supported())
 			return true;
+		
 		return false;
 	}
 	
@@ -493,5 +494,18 @@ public class SBSv2Utils {
 			}
 		}
 		return newOutputDir;
+	}
+
+	private static boolean isSBSv1Supported() {
+		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+		for (ISymbianSDK sdk : sdkMgr.getSDKList()) {
+			File abld = new File(sdk.getEPOCROOT(), "epoc32/tools/abld.pl"); //$NON-NLS-1$
+			if (abld.exists()) {
+				long size = abld.length();
+				if (size >= VALID_ABLD_SIZE)
+					return true;
+			}
+		}
+		return false;
 	}
 }

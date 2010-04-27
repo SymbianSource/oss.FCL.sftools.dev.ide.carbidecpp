@@ -16,7 +16,6 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.sharedui;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -60,10 +59,16 @@ public class BuilderSelectionComposite extends Composite {
 		builderCombo.setToolTipText(Messages.getString("NewProjectPage.builderToolTip")); //$NON-NLS-1$
 		builderCombo.setLayoutData(new GridData());
 		builderCombo.setData(".uid", "builderCombo"); //$NON-NLS-1$ //$NON-NLS-2$
-		builderCombo.add(Messages.getString("NewProjectPage.sbsv1")); //$NON-NLS-1$
+		if (SBSv2Utils.enableSBSv1Support()) {
+			builderCombo.add(Messages.getString("NewProjectPage.sbsv1")); //$NON-NLS-1$
+		}
 		builderCombo.add(Messages.getString("NewProjectPage.sbsv2")); //$NON-NLS-1$
 		builderCombo.setData(".uid", "builderCombo"); //$NON-NLS-1$ //$NON-NLS-2$
 		builderCombo.select(0);
+		if (!SBSv2Utils.enableSBSv1Support()) {
+			// hide the whole composite if only SBSvw is enabled
+			this.setVisible(false);
+		}
     }
 
     /**
@@ -75,13 +80,15 @@ public class BuilderSelectionComposite extends Composite {
 		useSBSv2Builder = true;
 		IStatus status = null;
 		if (builderCombo != null) {
-			if (builderCombo.getSelectionIndex() == 0) {
+			int index = builderCombo.getSelectionIndex();
+			String selection = builderCombo.getItem(index);
+			if (selection.equals(Messages.getString("NewProjectPage.sbsv1"))) { //$NON-NLS-1$
 				if (!SBSv2Utils.enableSBSv1Support()) {
 					status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "SBSv1 is not supported on this system.");
 				}
 				useSBSv2Builder = false;
 			}
-			else if (builderCombo.getSelectionIndex() == 1) {
+			else if (selection.equals(Messages.getString("NewProjectPage.sbsv2"))) { //$NON-NLS-1$
 				
 				// if SBSv2 is selected, make sure SBS bin directory exists
 				if (SBSv2Utils.getSBSBinDirectory() == null){

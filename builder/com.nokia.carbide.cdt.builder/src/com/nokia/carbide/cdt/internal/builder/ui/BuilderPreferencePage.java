@@ -36,19 +36,22 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 	}
 	
 	protected Control createContents(Composite parent) {
-		buildSettingsUI = new BuildSettingsUI(parent.getShell(), SBSv2Utils.enableSBSv2Support(), false);
+		buildSettingsUI = new BuildSettingsUI(parent.getShell(), SBSv2Utils.enableSBSv1Support(), SBSv2Utils.enableSBSv2Support(), false);
 		Control control = buildSettingsUI.createControl(parent);
 		
-		buildSettingsUI.setDefaultCleanLevelv1(getCleanLevel());
 		buildSettingsUI.setBuildTestComponents(isBuildingTestComps());
-		buildSettingsUI.setManageDependencies(manageDependencies());
 		buildSettingsUI.setUseIncrementalBuilder(useIncrementalBuilder());
 		buildSettingsUI.setUseConcurrentBuilding(useConcurrentBuilding());
 		buildSettingsUI.setNumConcurrentBuildJobs(concurrentBuildJobs());
-		buildSettingsUI.setPromptForMMPChangedAction(promptForMMPChangedAction());
-		buildSettingsUI.setDefaultMMPChangedAction(defaultMMPChangedAction());
 		buildSettingsUI.setUseBuiltInEnvVars(useBuiltInX86Vars());
-		buildSettingsUI.setDontPromtTrackDeps(promtDontTrackDependencies());
+		
+		if (SBSv2Utils.enableSBSv1Support()) {
+			buildSettingsUI.setDefaultCleanLevelv1(getCleanLevel());
+			buildSettingsUI.setManageDependencies(manageDependencies());
+			buildSettingsUI.setPromptForMMPChangedAction(promptForMMPChangedAction());
+			buildSettingsUI.setDefaultMMPChangedAction(defaultMMPChangedAction());
+			buildSettingsUI.setDontPromtTrackDeps(promtDontTrackDependencies());
+		}
 		
 		if (SBSv2Utils.enableSBSv2Support()) {
 			buildSettingsUI.setDefaultCleanLevelv2(getCleanLevelv2());
@@ -76,17 +79,20 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 	@Override
 	protected void performApply() {
 		IPreferenceStore store = CarbideBuilderPlugin.getDefault().getPreferenceStore();
-		store.setValue(BuilderPreferenceConstants.PREF_CLEAN_LEVEL, buildSettingsUI.getDefaultCleanLevelv1());
 		store.setValue(BuilderPreferenceConstants.PREF_BUILD_TEST_COMPS, buildSettingsUI.getBuildTestComponents());
-		store.setValue(BuilderPreferenceConstants.PREF_MANAGE_DEPENDENCIES, buildSettingsUI.getManageDependencies());
 		store.setValue(BuilderPreferenceConstants.PREF_USE_INCREMENTAL_BUILDER, buildSettingsUI.getUseIncrementalBuilder());
 		store.setValue(BuilderPreferenceConstants.PREF_USE_CONCURRENT_BUILDING, buildSettingsUI.getUseConcurrentBuilding());
 		store.setValue(BuilderPreferenceConstants.PREF_CONCURRENT_BUILD_JOBS, buildSettingsUI.getNumConcurrentBuildJobs());
-		store.setValue(BuilderPreferenceConstants.PREF_MMP_CHANGED_ACTION_PROMPT, buildSettingsUI.getPromptForMMPChangedAction());
-		store.setValue(BuilderPreferenceConstants.PREF_DEFAULT_MMP_CHANGED_ACTION, buildSettingsUI.getDefaultMMPChangedAction());
 		store.setValue(BuilderPreferenceConstants.PREF_USE_BUILIN_X86_VARS, buildSettingsUI.getUseBuiltInEnvVars());
-		store.setValue(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH, buildSettingsUI.getDontPromtTrackDeps()); // global setting only
 		
+		if (SBSv2Utils.enableSBSv1Support()) {
+			store.setValue(BuilderPreferenceConstants.PREF_CLEAN_LEVEL, buildSettingsUI.getDefaultCleanLevelv1());
+			store.setValue(BuilderPreferenceConstants.PREF_MANAGE_DEPENDENCIES, buildSettingsUI.getManageDependencies());
+			store.setValue(BuilderPreferenceConstants.PREF_MMP_CHANGED_ACTION_PROMPT, buildSettingsUI.getPromptForMMPChangedAction());
+			store.setValue(BuilderPreferenceConstants.PREF_DEFAULT_MMP_CHANGED_ACTION, buildSettingsUI.getDefaultMMPChangedAction());
+			store.setValue(BuilderPreferenceConstants.PREF_DONT_PROMPT_FOR_DEPENDENCY_MISMATCH, buildSettingsUI.getDontPromtTrackDeps()); // global setting only
+		}
+
 		if (SBSv2Utils.enableSBSv2Support()) {
 			store.setValue(BuilderPreferenceConstants.PREF_CLEAN_LEVEL_V2, buildSettingsUI.getDefaultCleanLevelv2());
 			store.setValue(BuilderPreferenceConstants.PREF_KEEP_GOING, buildSettingsUI.getKeepGoing());
@@ -98,16 +104,19 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 	}
 	
 	protected void performDefaults() {
-		buildSettingsUI.setDefaultCleanLevelv1(0);
 		buildSettingsUI.setBuildTestComponents(true);
-		buildSettingsUI.setManageDependencies(true);
 		buildSettingsUI.setUseIncrementalBuilder(false);
 		buildSettingsUI.setUseConcurrentBuilding(true);
 		buildSettingsUI.setNumConcurrentBuildJobs(4);
-		buildSettingsUI.setPromptForMMPChangedAction(true);
-		buildSettingsUI.setDefaultMMPChangedAction(0);
 		buildSettingsUI.setUseBuiltInEnvVars(true);
-		buildSettingsUI.setDontPromtTrackDeps(false);
+
+		if (SBSv2Utils.enableSBSv1Support()) {
+			buildSettingsUI.setDefaultCleanLevelv1(0);
+			buildSettingsUI.setManageDependencies(true);
+			buildSettingsUI.setPromptForMMPChangedAction(true);
+			buildSettingsUI.setDefaultMMPChangedAction(0);
+			buildSettingsUI.setDontPromtTrackDeps(false);
+		}
 
 		if (SBSv2Utils.enableSBSv2Support()) {
 			buildSettingsUI.setDefaultCleanLevelv2(0);

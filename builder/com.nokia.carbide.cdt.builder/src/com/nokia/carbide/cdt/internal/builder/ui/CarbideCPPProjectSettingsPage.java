@@ -23,7 +23,6 @@ import java.util.ListIterator;
 
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -154,7 +153,7 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 			sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project);
 		}
 
-		buildSettingsUI = new BuildSettingsUI(parent.getShell(), sbsv2Project, true);
+		buildSettingsUI = new BuildSettingsUI(parent.getShell(), !sbsv2Project, sbsv2Project, true);
 		buildSettingsUI.createControl(optionsGroup);
 
 		noDefaultAndApplyButton();
