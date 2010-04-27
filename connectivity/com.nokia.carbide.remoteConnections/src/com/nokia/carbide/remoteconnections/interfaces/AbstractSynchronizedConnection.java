@@ -20,6 +20,9 @@ package com.nokia.carbide.remoteconnections.interfaces;
 
 import java.util.Map;
 
+import com.nokia.carbide.remoteconnections.Messages;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+
 /**
  * Abstract base class providing implementation of in-use semantics of IConnection
  * using a counted map of potential resource strings and implements 
@@ -75,6 +78,17 @@ public abstract class AbstractSynchronizedConnection extends AbstractConnection 
 		}
 	}
 	
+	private void setStatus(boolean inUse) {
+		if (inUse) {
+			String label = Messages.getString("AbstractSynchronizedConnection.InUseLabel"); //$NON-NLS-1$
+			String desc = Messages.getString("AbstractSynchronizedConnection.InUseDesc"); //$NON-NLS-1$
+			setStatus(new ConnectionStatus(EConnectionStatus.IN_USE, label, desc));
+		}
+		else {
+			setStatus(new ConnectionStatus(EConnectionStatus.NONE, "", "")); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+	
 	public void setServiceTestingAndInUse(boolean value) {
 		synchronized (testingMutex) {
 			testing = value;
@@ -99,6 +113,8 @@ public abstract class AbstractSynchronizedConnection extends AbstractConnection 
 			}
 		}
 		setInUse(use);
+		if (!isDynamic())
+			setStatus(use);
 	}
 	
 	public Object getCurrentResource() {
