@@ -63,13 +63,15 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 			sbsv2TabItem.setControl(sbsv2Tab);
 		}
 		
-		TabItem sbsv1TabItem = new TabItem(tabFolder, SWT.NONE);
-		sbsv1TabItem.setText(Messages.getString("BuildPlatformFilterPage.SBSv1TabText")); //$NON-NLS-1$
-		sbsv1TabItem.setToolTipText(Messages.getString("BuildPlatformFilterPage.SBSv1TabToolTip")); //$NON-NLS-1$
-
-		sbsv1Tab = new SBSv1PlatformFilterComposite(tabFolder);
-		sbsv1Tab.createControls();
-		sbsv1TabItem.setControl(sbsv1Tab);
+		if (SBSv2Utils.enableSBSv1Support()) {
+			TabItem sbsv1TabItem = new TabItem(tabFolder, SWT.NONE);
+			sbsv1TabItem.setText(Messages.getString("BuildPlatformFilterPage.SBSv1TabText")); //$NON-NLS-1$
+			sbsv1TabItem.setToolTipText(Messages.getString("BuildPlatformFilterPage.SBSv1TabToolTip")); //$NON-NLS-1$
+	
+			sbsv1Tab = new SBSv1PlatformFilterComposite(tabFolder);
+			sbsv1Tab.createControls();
+			sbsv1TabItem.setControl(sbsv1Tab);
+		}
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(super.getControl(), SDKUIHelpIds.SDK_BUILD_FILTER_PAGE);
 		

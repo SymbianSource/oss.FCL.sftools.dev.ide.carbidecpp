@@ -40,6 +40,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -55,6 +56,7 @@ public class SBSv2Utils {
 	private static final String SBSV2_FILTERED_CONFIGS_STORE = "sbsv2FilteredConfigs"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_STORE_INITED = "sbsv2FilteredConfigsInited"; //$NON-NLS-1$
 	private static final String SBSV2_FILTERED_CONFIGS_DELIMETER = ";"; //$NON-NLS-1$
+	private static final long VALID_ABLD_SIZE = 1024;
 
 	/** Path, to and including the SBS script */ 
 	protected static IPath sbsPath; 
@@ -256,6 +258,20 @@ public class SBSv2Utils {
 		
 	}
 
+	/**
+	 * Whether or not to display SBSv1 builder UI
+	 * @return true if SBSv1 is available, false otherwise
+	 */
+	public static boolean enableSBSv1Support() {
+		if (!enableSBSv2Support())
+			return true;
+		
+		if (isSBSv1Supported())
+			return true;
+		
+		return false;
+	}
+	
 	/**
 	 * Whether or not to display SBSv2 builder UI
 	 * @return true if SBSv2 is installed, false otherwise
@@ -462,5 +478,18 @@ public class SBSv2Utils {
 			}
 		}
 		return newOutputDir;
+	}
+
+	private static boolean isSBSv1Supported() {
+		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+		for (ISymbianSDK sdk : sdkMgr.getSDKList()) {
+			File abld = new File(sdk.getEPOCROOT(), "epoc32/tools/abld.pl"); //$NON-NLS-1$
+			if (abld.exists()) {
+				long size = abld.length();
+				if (size >= VALID_ABLD_SIZE)
+					return true;
+			}
+		}
+		return false;
 	}
 }
