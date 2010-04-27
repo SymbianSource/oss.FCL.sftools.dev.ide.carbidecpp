@@ -154,7 +154,7 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 			sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project);
 		}
 
-		buildSettingsUI = new BuildSettingsUI(parent.getShell(), sbsv2Project, true);
+		buildSettingsUI = new BuildSettingsUI(parent.getShell(), !sbsv2Project, sbsv2Project, true);
 		buildSettingsUI.createControl(optionsGroup);
 
 		noDefaultAndApplyButton();

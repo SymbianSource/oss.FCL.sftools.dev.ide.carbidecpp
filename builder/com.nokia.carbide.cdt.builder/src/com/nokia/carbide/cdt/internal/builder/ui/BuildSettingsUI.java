@@ -33,6 +33,7 @@ public class BuildSettingsUI {
 
 	private Shell shell;
 	private TabFolder tabFolder;
+	private boolean wantsSBSv1;
 	private boolean wantsSBSv2;
 	private boolean projectSetting;
 	
@@ -66,8 +67,9 @@ public class BuildSettingsUI {
 	private Label extraArgsLabel;
 	private Text  extraArgsText;
 
-	public BuildSettingsUI(Shell shell, boolean wantsSBSv2, boolean projectSetting) {
+	public BuildSettingsUI(Shell shell, boolean wantsSBSv1, boolean wantsSBSv2, boolean projectSetting) {
 		this.shell = shell;
+		this.wantsSBSv1 = wantsSBSv1;
 		this.wantsSBSv2 = wantsSBSv2;
 		this.projectSetting = projectSetting;
 	}
@@ -81,7 +83,7 @@ public class BuildSettingsUI {
 		
 		// for project settings we show either sbsv1 or sbsv2.  for workspace prefs
 		// we potentially show both
-		if ((projectSetting && !wantsSBSv2) || !projectSetting) {
+		if (wantsSBSv1) {
 			createSBSv1TabComposite();
 		}
 		
