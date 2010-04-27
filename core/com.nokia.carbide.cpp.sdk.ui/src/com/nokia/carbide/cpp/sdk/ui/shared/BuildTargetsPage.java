@@ -227,6 +227,8 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 		});
 		filterCheckbox.setData(UID, "filterCheckbox"); //$NON-NLS-1$
         
+		addOtherControls(parent);
+		
 		Link fLink = new Link(parent, SWT.WRAP);
 		fLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		fLink.setText(Messages.getString("BuildTargetsPage.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -248,8 +250,6 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 			}
 
 		});
-		
-		addOtherControls(parent);
 		
 		setPageComplete(validatePage());
 	}
