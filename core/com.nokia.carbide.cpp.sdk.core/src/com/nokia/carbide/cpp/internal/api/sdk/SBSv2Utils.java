@@ -263,11 +263,11 @@ public class SBSv2Utils {
 	 * @return true if SBSv1 is available, false otherwise
 	 */
 	public static boolean enableSBSv1Support() {
-//		if (!enableSBSv2Support())
-//			return true;
-//		
-//		if (isSBSv1Supported())
-//			return true;
+		if (!enableSBSv2Support())
+			return true;
+		
+		if (isSBSv1Supported())
+			return true;
 		
 		return false;
 	}
