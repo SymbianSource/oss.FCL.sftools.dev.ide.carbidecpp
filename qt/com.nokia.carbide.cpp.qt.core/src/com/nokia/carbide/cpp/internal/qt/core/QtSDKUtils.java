@@ -95,7 +95,8 @@ public class QtSDKUtils {
 	static public String getQtSDKNameForSymbianSDK(ISymbianSDK sdk){
 		
 		String epocRoot = sdk.getEPOCROOT();
-		File qtBinPath = new Path(epocRoot).append(OLD_QT_SDK_BIN_PATH).toFile();
+		File oldQtBinPath = new Path(epocRoot).append(OLD_QT_SDK_BIN_PATH).toFile();
+		File newQtBinPath = new Path(epocRoot).append(QT_SDK_PATH).toFile();
 		File qtIncPath = new Path(epocRoot).append(QT_SDK_INC_PATH).toFile();
 		
 		refreshQtStoredSDKs();
@@ -108,7 +109,8 @@ public class QtSDKUtils {
 			File currBinPath = new File(qtSDK.binPath);
 			File currIncPath = new File(qtSDK.incPath);
 			
-			if (currBinPath.equals(qtBinPath) && currIncPath.equals(qtIncPath)){
+			if ( (currBinPath.equals(oldQtBinPath) && currIncPath.equals(qtIncPath)) ||
+				 (currBinPath.equals(newQtBinPath) && currIncPath.equals(qtIncPath))){
 				return qtSDK.name;
 			}
 		}
