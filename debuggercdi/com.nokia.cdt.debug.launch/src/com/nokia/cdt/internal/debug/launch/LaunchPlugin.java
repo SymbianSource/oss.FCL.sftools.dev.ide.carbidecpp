@@ -250,7 +250,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		boolean openLaunchConfigDialog = false;
 
 		// get the default config name and make sure it's unique
-		final String defaultConfigName = getLaunchManager().generateUniqueLaunchConfigurationNameFrom(getDefaultLaunchConfigName(project, executable));
+		final String defaultConfigName = getLaunchManager().generateLaunchConfigurationName(getDefaultLaunchConfigName(project, executable));
 		
 		// try to determine if this is for the emulator or not.  also get the list of binaries for the current
 		// build configuration or project.
@@ -355,10 +355,9 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 				IStructuredSelection selection = new StructuredSelection(config.doSave());
 				String identifier;
 				if (mode.equals("run")) //$NON-NLS-1$
-					identifier = new String("org.eclipse.debug.ui.launchGroup.run"); //$NON-NLS-1$
+					identifier = IDebugUIConstants.ID_RUN_LAUNCH_GROUP;
 				else
-					identifier = new String("org.eclipse.debug.ui.launchGroup.debug"); //$NON-NLS-1$
-
+					identifier = IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP;
 				DebugUITools.openLaunchConfigurationDialogOnGroup(CUIPlugin.getActiveWorkbenchShell(), selection, identifier);
 			}
 			else
