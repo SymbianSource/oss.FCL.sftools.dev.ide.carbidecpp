@@ -235,7 +235,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		
 		Link fLink = new Link(parent, SWT.WRAP);
 		fLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		fLink.setText("\n " + Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		fLink.setText(Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		fLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		fLink.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
