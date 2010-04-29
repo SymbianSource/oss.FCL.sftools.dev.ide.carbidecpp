@@ -89,7 +89,7 @@ public class BuilderSelectionComposite extends Composite {
     public IStatus validate() {
 		useSBSv2Builder = true;
 		IStatus status = null;
-		if (builderCombo != null && builderCombo.getSelectionIndex() == 1) { 
+		if (builderCombo != null) { 
 			int index = builderCombo.getSelectionIndex();
 			String selection = builderCombo.getItem(index);
 			if (selection.equals(Messages.getString("NewProjectPage.sbsv1"))) { //$NON-NLS-1$

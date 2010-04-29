@@ -83,7 +83,10 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 	}
 	
 	public boolean performOk() {
-		sbsv1Tab.performOk();
+		
+		if (sbsv1Tab != null){
+			sbsv1Tab.performOk();
+		}
 		
 		if (sbsv2Tab != null) {
 			sbsv2Tab.performOk();
@@ -100,8 +103,13 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 
 	@Override
 	protected void performDefaults() {
-		sbsv1Tab.setDefaults();
-		sbsv2Tab.setDefaults();
+		
+		if (sbsv1Tab != null)
+			sbsv1Tab.setDefaults();
+		
+		if (sbsv2Tab != null)
+			sbsv2Tab.setDefaults();
+		
 		super.performDefaults();
 	}
 	
