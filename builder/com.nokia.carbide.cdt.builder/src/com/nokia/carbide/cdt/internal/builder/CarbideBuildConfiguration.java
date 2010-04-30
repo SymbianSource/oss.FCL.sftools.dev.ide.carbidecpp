@@ -289,21 +289,25 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		}
 	}
 	
-	public boolean equals(Object obj) {
-		if (obj instanceof ICarbideBuildConfiguration || obj instanceof ISymbianBuildContext){
-			ISymbianBuildContext context = (ISymbianBuildContext)obj;
-			if (context.getDisplayString().equals(this.getDisplayString())){
-				return true;
-			} else if (context.getPlatformString().equals(this.getPlatformString()) && 
-					context.getTargetString().equals(this.getTargetString()) && 
-					context.getSDK().equals(this.getSDK()) && context.getSBSv2Alias() != null && context.getSBSv2Alias().split("_").length == 2){ 
-				return true; 
-			} else {
-				return false;
-			}
-		}
-		return false;
-	}
+//	public boolean equals(Object obj) {
+//		if (obj instanceof ICarbideBuildConfiguration || obj instanceof ISymbianBuildContext){
+//			ISymbianBuildContext context = (ISymbianBuildContext)obj;
+//			if (context.getDisplayString().equals(this.getDisplayString())){
+//				return true;
+//			} else if (context.getPlatformString().equals(this.getPlatformString()) && 
+//					context.getTargetString().equals(this.getTargetString()) && 
+//					context.getSDK().equals(this.getSDK())){
+//				if (context.getSBSv2Alias() == null && this.getSBSv2Alias() == null)
+//					return true;  // SBSv1 check
+//				else if (context.getSBSv2Alias().equalsIgnoreCase(this.getSBSv2Alias())){
+//					return true;  // SBSv2 check
+//				}
+//			} else {
+//				return false;
+//			}
+//		}
+//		return false;
+//	}
 	
 	public int getErrorParserId(){
 		String plat = this.getPlatformString();
