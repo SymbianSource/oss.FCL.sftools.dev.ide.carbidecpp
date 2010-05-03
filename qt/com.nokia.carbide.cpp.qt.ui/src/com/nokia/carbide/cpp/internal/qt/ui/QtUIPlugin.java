@@ -23,10 +23,15 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.internal.ide.IDEInternalPreferences;
+import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.osgi.framework.BundleContext;
@@ -40,6 +45,7 @@ import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
+import com.nokia.carbide.cpp.internal.qt.ui.wizard.Messages;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener, ISDKManagerLoadedHook {
@@ -131,11 +137,49 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 	
 			final IPerspectiveDescriptor perspective = workbench.getPerspectiveRegistry().findPerspectiveWithId("com.trolltech.qtcppproject.QtCppPerspective"); //$NON-NLS-1$
 			final IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+			if (activePage != null)
+			{
+				if (activePage.getPerspective().getId().equals(perspective.getId()))
+					return;  // already on the default perspective for this projects
+			}
 			if (activePage != null) {
 				
 				UIJob job = new UIJob(""){ //$NON-NLS-1$
 					public IStatus runInUIThread(IProgressMonitor monitor) {
-						activePage.setPerspective(perspective);
+						boolean switchToDefaultPerspective = false;
+						IPreferenceStore store = IDEWorkbenchPlugin.getDefault().getPreferenceStore();
+						
+						if (store != null){
+							String promptSetting = store.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+							if ((promptSetting.equals(MessageDialogWithToggle.ALWAYS)) ){
+								switchToDefaultPerspective = true;
+							}
+							else if ((promptSetting.equals(MessageDialogWithToggle.PROMPT))) {
+								MessageDialogWithToggle toggleDialog = MessageDialogWithToggle.openYesNoQuestion(
+										null,
+										Messages.PerspectiveSwitchDialog_Title,
+										Messages.PerspectiveSwitchDialog_Query,
+										Messages.PerspectiveSwitchDialog_RememberDecisionText,
+										false,
+										null,
+										null);
+								
+								boolean toggleState = toggleDialog.getToggleState();
+								switchToDefaultPerspective = toggleDialog.getReturnCode() == IDialogConstants.YES_ID;
+								
+								// set the store
+								if (toggleState){
+									if (switchToDefaultPerspective)
+										store.setValue(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE, MessageDialogWithToggle.ALWAYS);
+									else
+										store.setValue(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE, MessageDialogWithToggle.NEVER);
+								}
+							}
+						}
+						
+						if (switchToDefaultPerspective){
+							activePage.setPerspective(perspective);
+						}
 						return Status.OK_STATUS;
 					}};
 				job.setSystem(true);

@@ -121,6 +121,11 @@ public class Messages extends NLS {
 
 	public static String QtBuildTargetsPage_noQtConfigsError;
 	
+	public static String PerspectiveSwitchDialog_Title;
+	
+	public static String PerspectiveSwitchDialog_Query;
+	
+	public static String PerspectiveSwitchDialog_RememberDecisionText;
 	
 	static {
 		// initialize resource bundle
