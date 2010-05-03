@@ -89,7 +89,7 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 	public void initData(ICarbideBuildConfiguration buildConfig) {
 		this.config = buildConfig;
 		ISBSv2BuildConfigInfo sbsv2ConfigInfo = ((CarbideBuildConfiguration)buildConfig).getSBSv2ConfigInfo();
-		if (sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT) != null){
+		if (sbsv2ConfigInfo != null && sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT) != null){
 			variantEdit.setText(sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
 		}
 		
@@ -100,7 +100,11 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 		
 		String configCmdText = configCmdLabelPrefixText;
 		if (config != null){
-			configCmdText += config.getSBSv2Alias() + variantEdit.getText();
+			if (config.getSBSv2Alias() == null){
+				configCmdText += config.getPlatformString().toLowerCase() + "_" + config.getTargetString().toLowerCase() + variantEdit.getText();
+			} else {
+				configCmdText += config.getSBSv2Alias() + variantEdit.getText();
+			}
 		}
 		configCmdLabel.setText(configCmdText);
 
@@ -119,10 +123,12 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 		boolean settingsEqual = true;
 		
 		ISBSv2BuildConfigInfo currSBSv2Info = ((CarbideBuildConfiguration)selectedConfig).getSBSv2ConfigInfo();
-		settingsEqual = currSBSv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT).equals(variantEdit.getText());
-		
-		if (!settingsEqual && writeToConfig) {
-			currSBSv2Info.setSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT, variantEdit.getText());
+		if (currSBSv2Info != null){
+			settingsEqual = currSBSv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT).equals(variantEdit.getText());
+			
+			if (!settingsEqual && writeToConfig) {
+				currSBSv2Info.setSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT, variantEdit.getText());
+			}
 		}
 		
 		return settingsEqual;
