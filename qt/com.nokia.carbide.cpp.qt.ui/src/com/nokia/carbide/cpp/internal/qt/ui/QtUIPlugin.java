@@ -136,6 +136,11 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 			}
 			final IPerspectiveDescriptor perspective = workbench.getPerspectiveRegistry().findPerspectiveWithId("com.trolltech.qtcppproject.QtCppPerspective"); //$NON-NLS-1$
 			final IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+			if (activePage != null)
+			{
+				if (activePage.getPerspective().getId().equals(perspective.getId()))
+					return;  // already on the default perspective for this projects
+			}
 			
 			if (activePage != null) {
 				

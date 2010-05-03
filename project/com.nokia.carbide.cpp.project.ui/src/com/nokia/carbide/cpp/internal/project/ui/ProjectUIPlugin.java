@@ -191,14 +191,12 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 	
 			final IPerspectiveDescriptor perspective = workbench.getPerspectiveRegistry().findPerspectiveWithId("com.nokia.carbide.cpp.CarbideCppPerspective"); //$NON-NLS-1$
 			
-			IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-			if (page != null)
+			final IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+			if (activePage != null)
 			{
-				if (page.getPerspective().getId().equals(perspective.getId()))
+				if (activePage.getPerspective().getId().equals(perspective.getId()))
 					return;  // already on the default perspective for this projects
 			}
-			
-			final IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
 			
 			if (activePage != null) {
 				job = new UIJob(""){ //$NON-NLS-1$
