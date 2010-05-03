@@ -103,7 +103,7 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof SymbianBuildContext))
 			return false;
 		final SymbianBuildContext other = (SymbianBuildContext) obj;
 		if (platform == null) {
