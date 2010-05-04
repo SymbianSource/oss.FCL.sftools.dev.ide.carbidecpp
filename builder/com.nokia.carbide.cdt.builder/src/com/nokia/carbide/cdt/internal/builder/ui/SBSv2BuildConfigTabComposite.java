@@ -91,6 +91,8 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 		ISBSv2BuildConfigInfo sbsv2ConfigInfo = ((CarbideBuildConfiguration)buildConfig).getSBSv2ConfigInfo();
 		if (sbsv2ConfigInfo != null && sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT) != null){
 			variantEdit.setText(sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
+		} else {
+			variantEdit.setText("");
 		}
 		
 		setVaraintDetailsText();

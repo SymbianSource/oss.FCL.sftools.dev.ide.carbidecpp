@@ -89,6 +89,10 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     /** Get the build-able configuration from the command line (i.e. build alias). This is passed after the sbs -c parameter */
     protected String getConfigName(ICarbideBuildConfiguration buildConfig) {
     	String buildAlias = buildConfig.getSBSv2Alias();
+    	if (buildAlias == null){ 
+    		// Just get the default target. This is a SBSv1 style configuration name...
+    		buildAlias = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
+    	}
     	ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
     	if (sbsv2Info != null){
     		String variant = sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
@@ -505,12 +509,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		args.add(cpi.getAbsoluteBldInfPath().toOSString());
 		args.add("-c"); //$NON-NLS-1$
 		String configName = getConfigName(buildConfig);
-		if (configName == null){
-			if (buildConfig.getSBSv2Alias() == null) 
-				configName = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase(); 
-			else
-				configName = "error_retrieving_build_alias"; 
-		}
+		
 		if (isTest) {
 			configName = configName + ".test"; //$NON-NLS-1$
 		}
@@ -590,12 +589,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		IPath workingDirectory = cpi.getINFWorkingDirectory();
 		
 		String configName = getConfigName(buildConfig);
-		if (configName == null){
-			if (buildConfig.getSBSv2Alias() == null) 
-				configName = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase(); 
-			else
-				configName = "error_retrieving_build_alias"; 
-		}
 		
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());

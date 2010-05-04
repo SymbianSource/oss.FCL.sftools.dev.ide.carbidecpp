@@ -81,7 +81,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
 		buildConfigData = new BuildConfigurationData(this);
 		romBuilderInfo = new ROMBuilderInfo(getSDK());
-		if (context.getSBSv2Alias() != null){
+		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
 			sbsv2BuilderInfo = new SBSv2BuilderInfo(context);
 		}
 		rebuildNeeded = true;
@@ -131,7 +131,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			saveBuildArgsToStorage(rootStorage.createChild(ARGUMENTS_DATA_ID));
 			romBuilderInfo.saveToStorage(rootStorage.createChild(ROM_BUILDER_DATA_ID));
 			
-			if (getSBSv2Alias() != null){ 
+			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){ 
 				sbsv2BuilderInfo.saveToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
 			}
 		}
