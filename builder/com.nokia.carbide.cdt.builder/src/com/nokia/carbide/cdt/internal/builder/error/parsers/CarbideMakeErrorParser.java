@@ -29,7 +29,7 @@ public class CarbideMakeErrorParser extends CarbideBaseErrorParser {
 	private static Pattern UNRECOGNIZED_EXTERNAL_COMMAND = Pattern.compile("(.*) is not recognized as an internal or external command(.*)"); //$NON-NLS-1$
 	private static Pattern BUG6415_ERROR_PATTERN = Pattern.compile("make(.*) \\*\\*\\* (.*) Error 87"); //$NON-NLS-1$
 	
-	private static String[] errorStrings = {"NO RULE TO MAKE TARGET", "THE PROCESS CANNOT ACCESS THE FILE"};
+	private static String[] errorStrings = {"NO RULE TO MAKE TARGET", "THE PROCESS CANNOT ACCESS THE FILE", ": PERMISSION DENIED"};
 	private static String[] warningStrings = {"GIVEN MORE THAN ONCE IN THE SAME RULE"};
 	private static String cantLaunchProcess = "CreateProcess((null)";
 	private static String rvctNotInstalled = "RVCT0_0.H: No such file or directory";
