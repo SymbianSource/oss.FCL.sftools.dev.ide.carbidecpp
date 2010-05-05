@@ -40,7 +40,13 @@ changes making the tools unusable!</p>
 <ul>
   <li><b>GCCE 4.0 </b> supported &mdash; required for future SBSv2 releases.</li>
   <li><b>Symbian^3 </b>supported &mdash; new templates and improvements required for the public Symbian^3 SDK.</li>
-  <li><b>SBSv2 variants </b> supported &mdash; you can now both build and debug SBSv2 variants.</li>
+  <li><b>Known Issues in v2.6.0</b>:
+    <ul>
+        <li>GCCE4 support requires using a SBSv2 build alias (<span class="code">-c</span> parameter) of <span class="code">armv5_udeb_gcce</span> or <span class="code">armv5_urel_gcce</span>. As of this writing, these aliases were not available in the SDK or SBSv2, but will appear in some future version. Carbide versions prior to 2.6 do not support GCCE4.</li>
+        <li>Users should consult the SDK documentation for GCCE and SBSv2 issues and installation requirements.</li>
+        <li>TRK: If you install the TRK app onto your phone's flash memory (Mass Storage) a Remote Connection may not find the TRK-service even though TRK is already connected to your PC.         Workaround: Uninstall TRK then reinstall it onto your PHONE memory (C-drive). The TRK service should now be &quot;Available&quot;.</li>
+    </ul>
+  </li>
 </ul>
 <h4><a name="new250" id="new"></a>2.5.0</h4>
 <ul>
