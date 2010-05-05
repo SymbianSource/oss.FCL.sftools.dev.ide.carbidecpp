@@ -47,6 +47,7 @@ import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.internal.qt.ui.wizard.Messages;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener, ISDKManagerLoadedHook {
 
@@ -156,7 +157,7 @@ public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfiguratio
 							}
 							else if ((promptSetting.equals(MessageDialogWithToggle.PROMPT))) {
 								MessageDialogWithToggle toggleDialog = MessageDialogWithToggle.openYesNoQuestion(
-										null,
+										WorkbenchUtils.getActiveShell(),
 										Messages.PerspectiveSwitchDialog_Title,
 										Messages.PerspectiveSwitchDialog_Query,
 										Messages.PerspectiveSwitchDialog_RememberDecisionText,
