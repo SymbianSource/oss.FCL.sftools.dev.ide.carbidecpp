@@ -49,6 +49,7 @@ import com.nokia.carbide.cpp.internal.project.ui.dialogs.MMPSelectionResolver;
 import com.nokia.carbide.cpp.internal.project.ui.dialogs.UpdateProjectFilesQuery;
 import com.nokia.carbide.cpp.internal.project.ui.preferences.PreferenceConstants;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -214,7 +215,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 							}
 							else if ((promptSetting.equals(MessageDialogWithToggle.PROMPT))) {
 								MessageDialogWithToggle toggleDialog = MessageDialogWithToggle.openYesNoQuestion(
-										null,
+										WorkbenchUtils.getActiveShell(),
 										Messages.getString("PerspectiveSwitchDialog_Title"),
 										Messages.getString("PerspectiveSwitchDialog_Query"),
 										Messages.getString("PerspectiveSwitchDialog_RememberDecisionText"),
