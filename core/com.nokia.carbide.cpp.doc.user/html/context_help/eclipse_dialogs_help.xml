@@ -321,6 +321,15 @@
 	</context>
 	
 	
+	<!-- ============================================================== -->
+	<!-- NEW C++ CLASS WIZARD                                           -->
+	<!-- ADDED v2.6														-->
+	<context id="new_wizard_shortcut_context" >
+		<description>Create a new C++ class.</description>
+		<topic label="New C++ Class"  			href="html/reference/NewClassWizard.html" />
+	</context>
+
+	
 	<!-- PREFERENCE PANELS -->
 
 	<!-- KEYS
