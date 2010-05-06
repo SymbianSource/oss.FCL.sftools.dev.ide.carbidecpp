@@ -266,7 +266,7 @@ public class QtProFileSelectionPage extends WizardPage implements Listener {
     	if (builderComposite != null) {
         	return builderComposite.useSBSv2Builder();
     	}
-    	return false;
+    	return true;
     }
 
     public void saveDialogSettings() {
