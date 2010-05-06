@@ -116,13 +116,13 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
     			Map<String, String> envMods = new HashMap<String, String>();
     			envMods.put("EPOCROOT", epocroot.setDevice(null).toOSString());
     			
+           		newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(proFileSelectionPage.useSBSv2Builder()));
+    			
     			// run qmake
     			String errMsg = QMakeRunner.runQMake(newProject, envMods, monitor);
     			if (errMsg != null) {
     				throw new CoreException(new Status(IStatus.ERROR, QtUIPlugin.PLUGIN_ID, errMsg));
     			}
-
-        		newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(proFileSelectionPage.useSBSv2Builder()));
 
     			ProjectCorePlugin.postProjectCreatedActions(newProject, "bld.inf", selectedConfigs, new ArrayList<String>(0), "", null, monitor); //$NON-NLS-1$ //$NON-NLS-2$
 
