@@ -141,7 +141,7 @@ public class BuildSettingsUI {
 		concurrentBuildJobsLabel.setLayoutData(gd);
 
 		concurrentBuildJobsControl = new Spinner(content, SWT.BORDER | SWT.READ_ONLY);
-		concurrentBuildJobsControl.setValues(0, 2, 50, 0, 1, 4);
+		concurrentBuildJobsControl.setValues(0, 1, 50, 0, 1, 4);
 		concurrentBuildJobsControl.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		concurrentBuildJobsControl.setEnabled(useConcurrentBuildingCheck.getSelection());
 		concurrentBuildJobsControl.setToolTipText(Messages.getString("SharedPrefs.ConcurrentBuildJobsToolTip")); //$NON-NLS-1$
