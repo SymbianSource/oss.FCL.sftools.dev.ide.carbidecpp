@@ -37,7 +37,7 @@
 			value="Carbide.c++ v3.0.0 for Symbian"/> 
 		<property
 			name="introBrandingImage"
-			value="product:themes/carbide/graphics/root/brandmark.gif"/>
+			value="product:themes/carbide/graphics/root/brandmark.png"/>
 		<property
 			name="introBrandingImageText"
 			value="Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved."/>
