@@ -51,6 +51,10 @@ public class SBSv2QueryTests extends BaseTest {
 	private static HashMap<String, String> sbsAliasMap;
 	private long startTime;
 	
+	private final String QUERY_PRODUCTS_COMMAND = "--query=products";
+	private final String QUERY_CONFIG_COMMAND = "--query=config";
+	private final String QUERY_COMMAND = "--query=aliases";
+	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -68,8 +72,6 @@ public class SBSv2QueryTests extends BaseTest {
 	}
 	
 	public void testQueryAliases() throws Exception {
-		
-		final String QUERY_COMMAND = "--query=aliases";
 		
 		startTime = System.currentTimeMillis();
 		
@@ -101,7 +103,6 @@ public class SBSv2QueryTests extends BaseTest {
 	 */
 	public void testQueryConfigs() throws Exception {
 		
-		final String QUERY_CONFIG_COMMAND = "--query=config";
 		assertNotNull(sbsAliasMap);
 
 		startTime = System.currentTimeMillis();
@@ -129,7 +130,7 @@ public class SBSv2QueryTests extends BaseTest {
 	 * @throws Exception
 	 */
 	public void testQueryProductsFromSDKs() throws Exception {
-		final String QUERY_PRODUCTS_COMMAND = "--query=products";
+		
 
 		startTime = System.currentTimeMillis();
 		
@@ -149,6 +150,40 @@ public class SBSv2QueryTests extends BaseTest {
 		assertTrue("No products were found in query for : " + QUERY_PRODUCTS_COMMAND, productList.size() > 0);
 		
 		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
+	}
+	
+	public void testStressQueryTest() throws Exception {
+
+		long stressTestStartTime = System.currentTimeMillis();
+		
+		
+		testQueryAliases();
+		
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		testQueryConfigs();
+		
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		testQueryProductsFromSDKs();
+		
+		startTime = stressTestStartTime;
+		System.out.println("Time for testStressQueryTest(): " + getTimingStats());
 	}
 	
 	private List<String> parseQueryProductsResults(String queryResult) {
