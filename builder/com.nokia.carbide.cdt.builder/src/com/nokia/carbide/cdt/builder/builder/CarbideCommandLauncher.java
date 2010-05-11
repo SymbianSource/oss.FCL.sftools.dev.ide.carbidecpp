@@ -258,7 +258,13 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
 		String errMsg;
 		try {
 			
-			Process proc = execute(command, args, env, workingDir);
+			Process proc = null;
+			try {
+				proc = execute(command, args, env, workingDir, new NullProgressMonitor());
+			} catch (CoreException e1) {
+				CarbideBuilderPlugin.log(e1);
+				e1.printStackTrace();
+			}
 			
 			if (proc != null) {
 				try {
