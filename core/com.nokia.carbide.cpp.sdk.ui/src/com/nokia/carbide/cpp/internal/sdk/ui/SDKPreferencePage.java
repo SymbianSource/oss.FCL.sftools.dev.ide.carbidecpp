@@ -496,7 +496,15 @@ public class SDKPreferencePage
 			osVersionLabel.setForeground(RED);
 			osVersionLabel.setBackground(GRAY);
 		}
-		else {
+		else if (sdk.getOSVersion().getMajor() < 9 ||
+				 (sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() <= 4)){
+			// TODO: Temporary work to remove ABLD support
+			sdkHasError = true;
+			osVersionLabel.setText(OS_VERSION_LABEL + "This OS version is not supported: " + sdk.getOSVersion()); 
+			osVersionLabel.setForeground(RED);
+			osVersionLabel.setBackground(GRAY);
+			
+		} else {
 			if (sdk.getSDKOSBranch().length() > 0) {
 				osVersionLabel.setText(OS_VERSION_LABEL + sdk.getOSVersion().toString() + " (Branch = \"" + sdk.getSDKOSBranch() + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
 			} else {

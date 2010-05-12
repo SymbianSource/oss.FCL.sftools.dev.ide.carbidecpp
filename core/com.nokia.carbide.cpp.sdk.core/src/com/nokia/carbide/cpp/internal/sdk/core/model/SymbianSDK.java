@@ -184,6 +184,11 @@ public class SymbianSDK implements ISymbianSDK {
 	}
 
 	public boolean isEnabled() {
+		// TODO: Temporary work to remove ABLD support
+		if (getOSVersion().getMajor() < 9 ||
+			(getOSVersion().getMajor() == 9 && getOSVersion().getMinor() <=4 )){
+			return false;
+		}
 		return enabled;
 	}
 

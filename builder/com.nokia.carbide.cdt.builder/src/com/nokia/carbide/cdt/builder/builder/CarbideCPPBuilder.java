@@ -47,6 +47,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.DefaultMMPViewConfiguration;
@@ -129,7 +130,14 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)) {
 			return v2Builder;
 		} else {
-			return v1Builder;
+			// TODO: Temporary work to remove ABLD support
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Unsupported", "ABLD is not supported in this version of Carbide. Please enusre you are using Symbian^3 or greater and SBS is installed, then re-import your project.");
+				}
+			});
+			
+			return null;
 		}
 	}
 	
