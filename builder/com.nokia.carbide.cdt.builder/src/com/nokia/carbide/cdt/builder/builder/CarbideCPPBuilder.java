@@ -78,8 +78,10 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGEmbeddedSISFile;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGHeader;
@@ -130,14 +132,17 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)) {
 			return v2Builder;
 		} else {
-			// TODO: Temporary work to remove ABLD support
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-				public void run() {
-					MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Unsupported", "ABLD is not supported in this version of Carbide. Please enusre you are using Symbian^3 or greater and SBS is installed, then re-import your project.");
-				}
-			});
+			if (SDKCorePlugin.SUPPORTS_SBSV1_BUILDER){
+				return v1Builder;
+			} else {
+				PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Unsupported", "ABLD is not supported in this version of Carbide. Please enusre you are using Symbian^3 or greater and SBS is installed, then re-import your project.");
+					}
+				});
+				return null;
+			}
 			
-			return null;
 		}
 	}
 	

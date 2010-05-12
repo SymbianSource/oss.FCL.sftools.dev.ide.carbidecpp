@@ -276,13 +276,18 @@ public class SBSv2Utils {
 	 * Whether or not to display SBSv1 builder UI
 	 * @return true if SBSv1 is available, false otherwise
 	 */
+	
+	@SuppressWarnings("unused")
 	public static boolean enableSBSv1Support() {
-		// TODO: Working on removing ABLD support.
-//		if (!enableSBSv2Support())
-//			return true;
-//		
-//		if (isSBSv1Supported())
-//			return true;
+		
+		if (!SDKCorePlugin.SUPPORTS_SBSV1_BUILDER)
+			return false;
+		
+		else if (!enableSBSv2Support())
+			return true;
+		
+		else if (isSBSv1Supported())
+			return true;
 		
 		return false;
 	}

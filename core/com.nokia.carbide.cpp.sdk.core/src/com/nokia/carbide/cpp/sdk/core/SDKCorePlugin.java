@@ -26,7 +26,8 @@ import com.nokia.cpp.internal.api.utils.core.HostOS;
  */
 public class SDKCorePlugin extends Plugin {
 
-
+	public static final boolean SUPPORTS_SBSV1_BUILDER = false;
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.sdk.core"; //$NON-NLS-1$
 
@@ -78,10 +79,11 @@ public class SDKCorePlugin extends Plugin {
 	 */
 	public static ISDKManager getSDKManager() {
 		if (sdkManager == null) {
-			if (HostOS.IS_WIN32)
+			// TODO: SDKManagerRaptorOnly, currently only works on Linux
+//			if (HostOS.IS_WIN32 && SUPPORTS_SBSV1_BUILDER)
 				sdkManager = new SDKManager();
-			else
-				sdkManager = new SDKManagerRaptorOnly();
+//			else
+//				sdkManager = new SDKManagerRaptorOnly();
 		}
 		return sdkManager;
 	}

@@ -496,9 +496,9 @@ public class SDKPreferencePage
 			osVersionLabel.setForeground(RED);
 			osVersionLabel.setBackground(GRAY);
 		}
-		else if (sdk.getOSVersion().getMajor() < 9 ||
-				 (sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() <= 4)){
-			// TODO: Temporary work to remove ABLD support
+		else if (!SDKCorePlugin.SUPPORTS_SBSV1_BUILDER && 
+				 (sdk.getOSVersion().getMajor() < 9 ||
+				 (sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() <= 4))){
 			sdkHasError = true;
 			osVersionLabel.setText(OS_VERSION_LABEL + "This OS version is not supported: " + sdk.getOSVersion()); 
 			osVersionLabel.setForeground(RED);
