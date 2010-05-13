@@ -335,10 +335,10 @@ public class TestMMPViewPathHelper extends BaseTest {
 		if (HostOS.IS_WIN32) {
 			try {
 				path = helper.convertProjectOrFullPathToMMP(EMMPPathContext.AIF_SOURCE, 
-						new Path("f:/schnozz/foo.rss"));
+						new Path("b:/schnozz/foo.rss"));
 				fail();
 			} catch (InvalidDriveInMMPPathException e) {
-				assertEquals(new Path("f:/schnozz/foo.rss"), e.getPath());
+				assertEquals(new Path("b:/schnozz/foo.rss"), e.getPath());
 				assertEquals(new Path("/schnozz/foo.rss"), e.getPathNoDevice());
 			}
 		}
