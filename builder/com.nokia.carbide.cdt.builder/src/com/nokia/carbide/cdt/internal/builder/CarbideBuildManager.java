@@ -16,7 +16,11 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -25,15 +29,31 @@ import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
 import org.eclipse.cdt.core.settings.model.extension.CFolderData;
 import org.eclipse.cdt.core.settings.model.extension.CLanguageData;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
-import com.nokia.carbide.cdt.builder.*;
-import com.nokia.carbide.cdt.builder.project.*;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
+import com.nokia.carbide.cdt.builder.ICarbideBuildManager;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.cpp.internal.api.utils.core.*;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatcher.IResourceChangeHandler;
 
 /**
@@ -44,6 +64,8 @@ import com.nokia.cpp.internal.api.utils.core.MultiResourceChangeListenerDispatch
  *
  */
 public class CarbideBuildManager implements ICarbideBuildManager, IResourceChangeListener, ICarbideInstalledSDKChangeListener {
+	
+	private static final String CONVERTED_SRC_MAPPINGS_2X_TO_3X = "convertedSrcMappings2xTo3x"; //$NON-NLS-1$
 	
 	private Map<IProject, ICarbideProjectInfo> projectInfoMap = new HashMap<IProject, ICarbideProjectInfo>();
 	private MultiResourceChangeListenerDispatcher resourceChangedListener = new MultiResourceChangeListenerDispatcher();
@@ -358,6 +380,15 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 	public void installedSdkChanged(SDKChangeEventType eventType) {
 		
 		if (eventType == SDKChangeEventType.eSDKScanned){
+			// once per workspace, convert existing Carbide 2.x source location mappings to 3.x
+			if (!CarbideBuilderPlugin.getDefault().getPreferenceStore().getBoolean(CONVERTED_SRC_MAPPINGS_2X_TO_3X)) {
+				try {
+					CarbideBuildManagerUtils.convertSourceMappings2xTo3x();
+				} catch (Exception e) {
+				}
+				CarbideBuilderPlugin.getDefault().getPreferenceStore().setValue(CONVERTED_SRC_MAPPINGS_2X_TO_3X, true);
+			}
+
 			synchronized(projectInfoMap){
 				for (IProject currPrj : projectInfoMap.keySet()){
 					try {
@@ -373,4 +404,5 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 			}
 		}
 	}
+
 }

@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.carbide.cpp.sdk.ui,
  com.nokia.carbide.cpp.x86build,
  org.eclipse.ui.navigator.resources,
- com.nokia.carbide.cpp.qt.core
+ com.nokia.carbide.cpp.qt.core,
+ org.eclipse.debug.core
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cdt.builder,
  com.nokia.carbide.cdt.builder.builder,
