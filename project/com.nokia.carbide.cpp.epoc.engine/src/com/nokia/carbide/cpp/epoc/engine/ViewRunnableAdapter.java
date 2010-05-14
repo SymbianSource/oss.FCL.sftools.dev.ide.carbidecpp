@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 
-import java.io.FileNotFoundException;
 import java.text.MessageFormat;
 public abstract class ViewRunnableAdapter {
 
@@ -45,11 +44,13 @@ public abstract class ViewRunnableAdapter {
 			EpocEnginePlugin.log(status);
 			EpocEnginePlugin.log(exception.getStatus());
 		} else {
+			/*
 			status = Logging.newStatus(EpocEnginePlugin.getDefault(), IStatus.ERROR, 
 					MessageFormat.format("Could not find or load model: ''{0}''", //$NON-NLS-1$
 							new Object[] { modelPath.toOSString() }),
 					new FileNotFoundException());
 			EpocEnginePlugin.log(status);
+			*/
 		}
 		return null;
 	}
