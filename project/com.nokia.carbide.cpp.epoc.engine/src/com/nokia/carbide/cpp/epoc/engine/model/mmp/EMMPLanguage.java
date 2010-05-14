@@ -236,6 +236,13 @@ public enum EMMPLanguage {
     /*
      * Discontinuity
      */
+    E14346("14346", 14346),  //$NON-NLS-1$
+    E14387("14387", 14387),  //$NON-NLS-1$
+    E14412("14412", 14412),  //$NON-NLS-1$
+    E14419("14419", 14419),  //$NON-NLS-1$
+    /*
+     * Discontinuity
+     */
     SC_NonLocalized(Messages.getString("EMMPLanguage.NonLocalized"), 0); //$NON-NLS-1$
 
 	private String key;
