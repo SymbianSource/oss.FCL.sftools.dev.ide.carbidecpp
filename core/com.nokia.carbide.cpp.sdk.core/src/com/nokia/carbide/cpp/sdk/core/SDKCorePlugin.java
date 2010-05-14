@@ -80,10 +80,11 @@ public class SDKCorePlugin extends Plugin {
 	public static ISDKManager getSDKManager() {
 		if (sdkManager == null) {
 			// TODO: SDKManagerRaptorOnly, currently only works on Linux
-//			if (HostOS.IS_WIN32 && SUPPORTS_SBSV1_BUILDER)
+			// ... and SDKManager depends on Windows
+			if (HostOS.IS_WIN32)
 				sdkManager = new SDKManager();
-//			else
-//				sdkManager = new SDKManagerRaptorOnly();
+			else
+				sdkManager = new SDKManagerRaptorOnly();
 		}
 		return sdkManager;
 	}
