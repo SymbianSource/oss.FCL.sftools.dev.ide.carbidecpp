@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DiscoveryUI
+Bundle-SymbolicName: com.nokia.carbide.discovery.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.nokia.carbide.discovery.ui.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.equinox.p2.discovery;bundle-version="1.0.0",
+ org.eclipse.equinox.p2.discovery.compatibility;bundle-version="1.0.0",
+ org.eclipse.equinox.p2.ui.discovery;bundle-version="1.0.0",
+ org.eclipse.equinox.p2.ui;bundle-version="2.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Nokia
