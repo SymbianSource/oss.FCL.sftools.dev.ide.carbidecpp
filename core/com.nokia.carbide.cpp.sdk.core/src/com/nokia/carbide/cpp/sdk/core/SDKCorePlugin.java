@@ -26,7 +26,7 @@ import com.nokia.cpp.internal.api.utils.core.HostOS;
  */
 public class SDKCorePlugin extends Plugin {
 
-	public static final boolean SUPPORTS_SBSV1_BUILDER = false;
+	public static final boolean SUPPORTS_SBSV1_BUILDER = true;
 	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.sdk.core"; //$NON-NLS-1$
