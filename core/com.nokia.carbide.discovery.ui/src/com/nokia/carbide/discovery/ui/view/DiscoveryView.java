@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.internal.p2.discovery.Catalog;
 import org.eclipse.equinox.internal.p2.discovery.DiscoveryCore;
+import org.eclipse.equinox.internal.p2.discovery.compatibility.BundleDiscoveryStrategy;
 import org.eclipse.equinox.internal.p2.discovery.compatibility.RemoteBundleDiscoveryStrategy;
 import org.eclipse.equinox.internal.p2.discovery.model.CatalogItem;
 import org.eclipse.equinox.internal.p2.ui.discovery.DiscoveryUi;
@@ -82,15 +83,16 @@ public class DiscoveryView extends ViewPart {
 		Catalog catalog = new Catalog();
 		catalog.setEnvironment(DiscoveryCore.createEnvironment());
 		catalog.setVerifyUpdateSiteAvailability(false);
-
-		// look for descriptors from installed bundles
-//		catalog.getDiscoveryStrategies().add(new BundleDiscoveryStrategy());
-
+		
 		// look for remote descriptor
 		RemoteBundleDiscoveryStrategy remoteDiscoveryStrategy = new RemoteBundleDiscoveryStrategy();
 		String url = getFromServerProperties(DIRECTORY_KEY);
-		remoteDiscoveryStrategy.setDirectoryUrl(url);
-		catalog.getDiscoveryStrategies().add(remoteDiscoveryStrategy);
+		if (url != null) {
+			remoteDiscoveryStrategy.setDirectoryUrl(url);
+			catalog.getDiscoveryStrategies().add(remoteDiscoveryStrategy);
+		}
+		else // look for descriptors from installed bundles
+			catalog.getDiscoveryStrategies().add(new BundleDiscoveryStrategy());
 
 		return catalog;
 	}
