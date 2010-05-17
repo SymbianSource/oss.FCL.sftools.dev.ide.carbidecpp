@@ -1,8 +1,18 @@
 package com.nokia.carbide.discovery.ui.view;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.Properties;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.internal.p2.discovery.Catalog;
 import org.eclipse.equinox.internal.p2.discovery.DiscoveryCore;
 import org.eclipse.equinox.internal.p2.discovery.compatibility.RemoteBundleDiscoveryStrategy;
@@ -18,6 +28,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -28,33 +39,10 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nokia.carbide.discovery.ui.Activator;
 
-
-
-/**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
- * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
- * <p>
- */
-
 @SuppressWarnings("restriction")
 public class DiscoveryView extends ViewPart {
-
-	/**
-	 * The ID of the view as specified by the extension.
-	 */
-	public static final String ID = "testdiscovery.views.TestView";
+	
+	private static final String DIRECTORY_KEY = "com.nokia.carbide.discovery.directory"; //$NON-NLS-1$
 
 	private CatalogViewer viewer;
 	private Action refreshAction;
@@ -100,10 +88,30 @@ public class DiscoveryView extends ViewPart {
 
 		// look for remote descriptor
 		RemoteBundleDiscoveryStrategy remoteDiscoveryStrategy = new RemoteBundleDiscoveryStrategy();
-		remoteDiscoveryStrategy.setDirectoryUrl("http://daaus001.americas.nokia.com/carbide/public/updates/3.0");
+		String url = getFromServerProperties(DIRECTORY_KEY);
+		remoteDiscoveryStrategy.setDirectoryUrl(url);
 		catalog.getDiscoveryStrategies().add(remoteDiscoveryStrategy);
 
 		return catalog;
+	}
+
+	public static String getFromServerProperties(String key) {
+		Location installLocation = Platform.getInstallLocation();
+		URL url = installLocation.getURL();
+		IPath path = new Path(url.getPath());
+		path = path.append("configuration/server.properties"); //$NON-NLS-1$
+		File file = path.toFile();
+		Properties properties = new Properties();
+		try {
+			InputStream is = new FileInputStream(file);
+			properties.load(is);
+			is.close();
+		} catch (IOException e) {
+			String message = 
+				MessageFormat.format("Could not find URL in configuration/server.properties file for key={0}", key);
+			Activator.logError(message, e);
+		}
+		return (String) properties.get(key);
 	}
 
 	private void contributeToActionBars() {
