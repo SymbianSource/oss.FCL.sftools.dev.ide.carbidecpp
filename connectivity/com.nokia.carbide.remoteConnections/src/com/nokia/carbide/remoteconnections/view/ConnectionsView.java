@@ -184,7 +184,7 @@ public class ConnectionsView extends ViewPart {
 	private void handleStatusChanged() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				if (!isDisposed) {
+				if (!isDisposed && !viewer.getControl().isDisposed()) {
 					viewer.refresh(true);
 					packColumns();
 				}
