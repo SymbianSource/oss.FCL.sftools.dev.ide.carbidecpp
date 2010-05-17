@@ -44,7 +44,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 	ISymbianSDK sdk;
 	ISymbianBuildContext winscwContext;
 	ISymbianBuildContext armv5Context;
-	ISymbianBuildContext armiContext;
 	ISymbianBuildContext gcceContext;
 	@Override
 	protected void setUp() throws Exception {
@@ -71,11 +70,9 @@ public class TestMMPView3 extends BaseMMPViewTest {
 		if (sdk != null) {
 			winscwContext = new SymbianBuildContext(sdk, "WINSCW", "UDEB");
 			armv5Context = new SymbianBuildContext(sdk, "ARMV5", "UDEB");
-			armiContext = new SymbianBuildContext(sdk, "ARMI", "UREL");
 			gcceContext = new SymbianBuildContext(sdk, "GCCE", "UREL");
 			buildContexts.add(winscwContext);
 			buildContexts.add(armv5Context);
-			buildContexts.add(armiContext);
 			buildContexts.add(gcceContext);
 		}
 	}
@@ -87,8 +84,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		if (context == winscwContext) {
 			viewConfiguration.getExtraMacros().add(DefineFactory.createSimpleFreeformDefine("WINS"));
-		} else if (context == armiContext) {
-			viewConfiguration.getExtraMacros().add(DefineFactory.createSimpleFreeformDefine("GCC32"));
 		}
 		
 		((DefaultViewParserConfiguration)viewConfiguration.getViewParserConfiguration()).setProjectPath(projectPath);
@@ -177,7 +172,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "bwins/unnamedU.def");
 		assertDefFile(text, armv5Context, "eabi/unnamedU.def");
-		assertDefFile(text, armiContext, "bmarm/unnamedU.def");
 		assertDefFile(text, gcceContext, "eabi/unnamedU.def");
 
 		// target-based filename
@@ -185,7 +179,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 			"TARGETTYPE EXEdll\n";
 		assertDefFile(text, winscwContext, "bwins/fooU.def");
 		assertDefFile(text, armv5Context, "eabi/fooU.def");
-		assertDefFile(text, armiContext, "bmarm/fooU.def");
 		assertDefFile(text, gcceContext, "eabi/fooU.def");
 
 		// default filename, no U
@@ -194,7 +187,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "bwins/unnamed.def");
 		assertDefFile(text, armv5Context, "eabi/unnamed.def");
-		assertDefFile(text, armiContext, "bmarm/unnamed.def");
 		assertDefFile(text, gcceContext, "eabi/unnamed.def");
 
 		// target-based filename, no U
@@ -203,7 +195,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 			"TARGETTYPE EXEdll\n";
 		assertDefFile(text, winscwContext, "bwins/foo.def");
 		assertDefFile(text, armv5Context, "eabi/foo.def");
-		assertDefFile(text, armiContext, "bmarm/foo.def");
 		assertDefFile(text, gcceContext, "eabi/foo.def");
 	}
 
@@ -220,7 +211,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "bwins/myfileU.def");
 		assertDefFile(text, armv5Context, "eabi/myfileU.def");
-		assertDefFile(text, armiContext, "bmarm/myfileU.def");
 		assertDefFile(text, gcceContext, "eabi/myfileU.def");
 
 		// target-based filename, no U
@@ -230,7 +220,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 			"DEFFILE myfile";
 		assertDefFile(text, winscwContext, "bwins/myfile.def");
 		assertDefFile(text, armv5Context, "eabi/myfile.def");
-		assertDefFile(text, armiContext, "bmarm/myfile.def");
 		assertDefFile(text, gcceContext, "eabi/myfile.def");
 
 	}
@@ -246,14 +235,12 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "myfileU.def");
 		assertDefFile(text, armv5Context, "myfileU.def");
-		assertDefFile(text, armiContext, "myfileU.def");
 		assertDefFile(text, gcceContext, "myfileU.def");
 
 		text = "NOSTRICTDEF\n"+
 			"DEFFILE ..\\myfile";
 		assertDefFile(text, winscwContext, "myfile.def");
 		assertDefFile(text, armv5Context, "myfile.def");
-		assertDefFile(text, armiContext, "myfile.def");
 		assertDefFile(text, gcceContext, "myfile.def");
 
 	}
@@ -270,7 +257,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "group/deffiles/myfileU.def");
 		assertDefFile(text, armv5Context, "group/deffiles/myfileU.def");
-		assertDefFile(text, armiContext, "group/deffiles/myfileU.def");
 		assertDefFile(text, gcceContext, "group/deffiles/myfileU.def");
 
 		// this fixes the directory meaning platform is not supplied
@@ -285,7 +271,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 			"#endif\n";
 		assertDefFile(text, winscwContext, "group/deffiles/winscw/myfileU.def");
 		assertDefFile(text, armv5Context, "group/deffiles/eabi/myfileU.def");
-		assertDefFile(text, armiContext, "group/deffiles/bmarm/myfileU.def");
 		assertDefFile(text, gcceContext, "group/deffiles/eabi/myfileU.def");
 
 	}
@@ -300,7 +285,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "/bwins/release/deffiles/myfileU.def");
 		assertDefFile(text, armv5Context, "/eabi/release/deffiles/myfileU.def");
-		assertDefFile(text, armiContext, "/bmarm/release/deffiles/myfileU.def");
 		assertDefFile(text, gcceContext, "/eabi/release/deffiles/myfileU.def");
 
 		text = "TARGETTYPE DlL\n"+
@@ -309,7 +293,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "places/bwins/myfileU.def");
 		assertDefFile(text, armv5Context, "places/eabi/myfileU.def");
-		assertDefFile(text, armiContext, "places/bmarm/myfileU.def");
 		assertDefFile(text, gcceContext, "places/eabi/myfileU.def");
 
 		text = "TARGETTYPE DlL\n"+
@@ -318,7 +301,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "group/bwins/fileU.def");
 		assertDefFile(text, armv5Context, "group/eabi/fileU.def");
-		assertDefFile(text, armiContext, "group/bmarm/fileU.def");
 		assertDefFile(text, gcceContext, "group/eabi/fileU.def");
 
 		///
@@ -330,7 +312,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 
 		assertDefFile(text, winscwContext, "/bwins/release/deffiles/myfile.def");
 		assertDefFile(text, armv5Context, "/eabi/release/deffiles/myfile.def");
-		assertDefFile(text, armiContext, "/bmarm/release/deffiles/myfile.def");
 		assertDefFile(text, gcceContext, "/eabi/release/deffiles/myfile.def");
 	
 		text = "TARGETTYPE DlL\n"+
@@ -340,7 +321,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 	
 		assertDefFile(text, winscwContext, "places/bwins/myfile.def");
 		assertDefFile(text, armv5Context, "places/eabi/myfile.def");
-		assertDefFile(text, armiContext, "places/bmarm/myfile.def");
 		assertDefFile(text, gcceContext, "places/eabi/myfile.def");
 	
 		text = "TARGETTYPE DlL\n"+
@@ -350,7 +330,6 @@ public class TestMMPView3 extends BaseMMPViewTest {
 	
 		assertDefFile(text, winscwContext, "group/bwins/file.def");
 		assertDefFile(text, armv5Context, "group/eabi/file.def");
-		assertDefFile(text, armiContext, "group/bmarm/file.def");
 		assertDefFile(text, gcceContext, "group/eabi/file.def");
 
 	}

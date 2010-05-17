@@ -300,10 +300,6 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			return ERROR_PARSERS_WINSCW;
 		} else if (plat.startsWith("ARMV")){
 			return ERROR_PARSERS_ARMVx;
-		} else if (plat.equals(ISymbianBuildContext.THUMB_PLATFORM) ||
-				   plat.equals(ISymbianBuildContext.ARMI_PLATFORM) ||
-				   plat.equals(ISymbianBuildContext.ARM4_PLATFORM)){
-			return ERROR_PARSERS_ARM_EKA1;
 		} else if (plat.equals(ISymbianBuildContext.GCCE_PLATFORM)){
 			return ERROR_PARSERS_GCCE;
 		}

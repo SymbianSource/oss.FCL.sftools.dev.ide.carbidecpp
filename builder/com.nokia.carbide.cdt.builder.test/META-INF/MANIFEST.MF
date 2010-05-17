@@ -15,7 +15,7 @@ Require-Bundle:
  com.nokia.carbide.cdt.builder,
  com.nokia.carbide.cpp.epoc.engine,
  com.nokia.cpp.utils.core,
- org.eclipse.cdt.core,
- org.jdom
+ org.jdom,
+ org.eclipse.cdt.core
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cdt.builder.test

@@ -680,7 +680,8 @@ public class ResourcePresentationModel extends TreePresentationModel {
 		supportOldStyleResource = userResources.size() > 0 || systemResources.size() > 0;
 		
 		// Only support AIF if we're on a pre 9.0 (EKA1) system
-		supportAIF = editorContext.activeBuildConfig.getSDK().isEKA1();
+		//supportAIF = editorContext.activeBuildConfig.getSDK().isEKA1();
+		supportAIF = false;  // Carbide 3.0 does not support EKA1
 
 		List<ITreeNode> nodes = new ArrayList<ITreeNode>();
 		nodes.add(resourceBlocks);

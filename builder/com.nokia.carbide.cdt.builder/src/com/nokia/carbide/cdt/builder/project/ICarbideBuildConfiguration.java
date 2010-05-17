@@ -40,8 +40,6 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
     /** Integer identifier for the set of parser to be used for building with makesis, makekeys, and signsis */
     public static final int ERROR_PARSERS_SIS_BUILDER = 4;
     /** Integer identifier for the set of parser to be used for building the ARMI, THUMB, and ARM4 platforms */
-    public static final int ERROR_PARSERS_ARM_EKA1 = 5;
-    /** Integer identifier for the set of parser to be used when calling bldmake bldfiles platform */
     public static final int ERROR_PARSERS_BLDMAKE_MAKE = 6;
     /** Integer identifier for the set of parser to be used for building ROM images */
     public static final int ERROR_PARSERS_ROM_BUILDER = 7;

@@ -268,11 +268,7 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 	}
 	
 	private String getDefFileDirectoryNameForPlatform(String platform) {
-		if (platform.equals(THUMB_PLATFORM)
-				|| platform.equals(ARM4_PLATFORM)
-				|| platform.equals(ARMI_PLATFORM)) {
-			return "BMARM"; //$NON-NLS-1$
-		} else if (platform.equals(EMULATOR_PLATFORM)) {
+		if (platform.equals(EMULATOR_PLATFORM)) {
 			return "BWINS"; //$NON-NLS-1$
 		} else if (platform.equals(ARMV5_PLATFORM)
 					|| platform.equals(ARMV5_ABIV2_PLATFORM)
@@ -293,11 +289,6 @@ public class SymbianBuildContext implements ISymbianBuildContext {
 					|| platform.equals(ARMV6_PLATFORM)
 					|| platform.equals(ARMV6_ABIV2_PLATFORM)) {
 			return getRVCTPrefixFilePath();
-		} else if (platform.equals(EMULATOR_PLATFORM)
-				|| platform.equals(ARMI_PLATFORM)
-				|| platform.equals(ARM4_PLATFORM)
-				|| platform.equals(THUMB_PLATFORM)) {
-			return null;
 		} else {
 			// check BSF's
 			IBSFCatalog catalog = getSDK().getBSFCatalog();

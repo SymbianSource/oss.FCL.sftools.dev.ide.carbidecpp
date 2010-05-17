@@ -327,13 +327,7 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 			if (!CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(projectTracker.getProject())) {
 				// for managed projects, set the NO_DEPENDENCIES env variable to -nd to turn off dependency generation in makmake
 				if (cpi.areMakefilesManaged()) {
-					// we have to use something other than NO_DEPENDENCIES in EKA1 since some SDK's like S60_2nd_FP3
-					// have part of the no dependency support but not all, which would cause errors.
-					if (sdk.isEKA1()) {
-						returnEnvArray = addToArray(returnEnvArray, CARBIDE_NO_DEPENDENCIES + EQUALS + NO_DEPENDENCIES_VALUE);
-					} else {
-						returnEnvArray = addToArray(returnEnvArray, NO_DEPENDENCIES + EQUALS + NO_DEPENDENCIES_VALUE);
-					}
+					returnEnvArray = addToArray(returnEnvArray, NO_DEPENDENCIES + EQUALS + NO_DEPENDENCIES_VALUE);
 				}
 				
 				// set the MAKE variable to the correct value when concurrent building is enabled

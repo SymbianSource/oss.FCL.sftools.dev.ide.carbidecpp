@@ -33,9 +33,6 @@ public interface ISymbianBuildContext {
 	 * Platform constants
 	 */
 	public static final String EMULATOR_PLATFORM = "WINSCW";
-	public static final String ARMI_PLATFORM = "ARMI";
-	public static final String ARM4_PLATFORM = "ARM4";
-	public static final String THUMB_PLATFORM = "THUMB";
 	public static final String GCCE_PLATFORM = "GCCE";
 	public static final String ARMV5_PLATFORM = "ARMV5";
 	public static final String ARMV6_PLATFORM = "ARMV6";

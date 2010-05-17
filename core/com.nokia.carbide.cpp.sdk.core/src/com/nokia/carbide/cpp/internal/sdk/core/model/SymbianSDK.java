@@ -264,12 +264,6 @@ public class SymbianSDK implements ISymbianSDK {
 				continue;
 			}
 			
-			if (!currPlat.equals(ISymbianBuildContext.ARM4_PLATFORM) &&
-				!currPlat.equals(ISymbianBuildContext.ARMI_PLATFORM) &&
-				!currPlat.equals(ISymbianBuildContext.THUMB_PLATFORM)) { // EKA1 targets don't get debug builds
-				buildTargets.add(new SymbianBuildContext(this, currPlat, ISymbianBuildContext.DEBUG_TARGET));
-			}
-			
 			// everything gets release except for WINSCW
 			buildTargets.add(new SymbianBuildContext(this, currPlat, ISymbianBuildContext.RELEASE_TARGET));
 		}
@@ -358,16 +352,12 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 				
 				if (currPlat.getPlatName().equals(currContext.getPlatformString())){
 					if (!currPlat.isEnabled()){
-						if (isEKA1()&& currPlat.getOsIdentifier().equals(BuildPlat.EKA1_IDENTIFIER)){
-							li.remove(); // filtered out in UI, don't show
-							break;
-						} else if (isEKA2() && currPlat.getOsIdentifier().equals(BuildPlat.EKA2_IDENTIFIER)){
+						if (isEKA2() && currPlat.getOsIdentifier().equals(BuildPlat.EKA2_IDENTIFIER)){
 							li.remove();  // filtered out in UI, don't show
 							break;
 						}
 					}
 				}
-				
 			}
 		}
 		

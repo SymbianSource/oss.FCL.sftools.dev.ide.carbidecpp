@@ -634,12 +634,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 						IPath targetP = new Path(targetPath).makeRelative().addTrailingSeparator();
 						targetPath = targetP.toOSString();
 					} else {
-						// for EKA1 just leave empty.  for EKA2 use sys\bin\
-						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							targetPath = "sys\\bin\\"; //$NON-NLS-1$
-						} else {
-							targetPath = ""; //$NON-NLS-1$
-						}
+						targetPath = "sys\\bin\\"; //$NON-NLS-1$
 					}
 
 					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
@@ -651,11 +646,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 					List<IPath> userResources = mmpData.getUserResources();
 					for (IPath userRes : userResources) {
 						if (userRes.equals(projectRelativeResourcePath)) {
-							if (buildConfig.getSDK().isEKA1()) {
-								rezPath = new Path(dataZDir + targetPath + userRes.removeFileExtension().lastSegment());
-							} else {
-								rezPath = new Path(dataZDir).removeLastSegments(1).append(userRes.removeFileExtension().lastSegment());
-							}
+							rezPath = new Path(dataZDir).removeLastSegments(1).append(userRes.removeFileExtension().lastSegment());
 							break;
 						}
 					}
@@ -1110,19 +1101,6 @@ public static String[] getParserIdArray(int id) {
 			        };
 			break;
 		
-		case ICarbideBuildConfiguration.ERROR_PARSERS_ARM_EKA1:
-			parserIds = new String[] {
-			        "com.nokia.carbide.cdt.builder.MakmakeErrorParser",
-			        "com.nokia.carbide.cdt.builder.SBSv2ErrorParser",
-			        "com.nokia.carbide.cdt.builder.CarbideMakeErrorParser",
-			        "com.nokia.carbide.cdt.builder.RCOMPErrorParser",
-			        "org.eclipse.cdt.core.GCCErrorParser",
-			        "org.eclipse.cdt.core.GLDErrorParser",
-			        "com.nokia.carbide.cdt.builder.MakeDefErrorParser",
-			        "com.nokia.carbide.cdt.builder.DLLToolErrorParser"
-			        };
-			break;
-		
 		case ICarbideBuildConfiguration.ERROR_PARSERS_SIS_BUILDER:
 			parserIds = new String[] {
 			        "com.nokia.carbide.cdt.builder.MakeSisErrorParser"
@@ -1222,7 +1200,7 @@ public static String[] getParserIdArray(int id) {
 	}
 
     /**
-     * Invoke the SIS builder for either EKA1 or EKA2 projects. Depending on the os version will
+     * Invoke the SIS builder for either EKA2 projects. Depending on the os version will
      * determine if makesis or makeis/signsis will get called
      * @param pkgPath - Full path to the PKG file to be used to generate the SIS file
      * @param config - The current configuration from where to get the settings for

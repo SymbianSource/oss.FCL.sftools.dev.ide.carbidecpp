@@ -40,11 +40,6 @@ public class SDKUIPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA2_ARMV5, true);
 		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA2_ARMV5_ABIV2, false);
 		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA2_ARMV5_ABIV1, false);
-		
-		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA1_WINSCW, true);
-		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA1_ARMI, true);
-		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA1_ARM4, false);
-		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA1_THUMB, true);
 	}
 
 }

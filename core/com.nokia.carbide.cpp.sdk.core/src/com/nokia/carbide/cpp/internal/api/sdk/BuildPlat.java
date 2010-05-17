@@ -14,7 +14,6 @@ package com.nokia.carbide.cpp.internal.api.sdk;
 
 public class BuildPlat {
 	
-	public static final String EKA1_IDENTIFIER = "EKA1";
 	public static final String EKA2_IDENTIFIER = "EKA2";
 	
 	private String platName;

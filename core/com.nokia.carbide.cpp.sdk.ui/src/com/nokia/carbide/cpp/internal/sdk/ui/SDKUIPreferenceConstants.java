@@ -26,10 +26,5 @@ public class SDKUIPreferenceConstants {
 	public final static String PLAT_EKA2_ARMV5_ABIV2 = "platEKA2_ARMV5_ABIV2"; //$NON-NLS-1$
 	public final static String PLAT_EKA2_ARMV5_ABIV1 = "platEKA2_ARMV5_ABIV1"; //$NON-NLS-1$
 	
-	public final static String PLAT_EKA1_WINSCW = "platEKA1_WINSCW"; //$NON-NLS-1$
-	public final static String PLAT_EKA1_ARMI = "platEKA1_ARMI"; //$NON-NLS-1$
-	public final static String PLAT_EKA1_ARM4 = "platEKA1_ARM4"; //$NON-NLS-1$
-	public final static String PLAT_EKA1_THUMB = "platEKA1_THUMB"; //$NON-NLS-1$
-	
 	public final static String LISTEN_FOR_DEVICES_XML_CHANGE = "listenForDevicesXMLChange"; //$NON-NLS-1$	
 }

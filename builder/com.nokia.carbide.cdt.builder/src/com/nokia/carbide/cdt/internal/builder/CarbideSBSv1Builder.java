@@ -625,11 +625,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					List<IPath> userResources = mmpData.getUserResources();
 					for (IPath userRes : userResources) {
 						if (userRes.equals(projectRelativeResourcePath)) {
-							if (buildConfig.getSDK().isEKA1()) {
-								rezPath = new Path(dataZDir + targetPath + userRes.removeFileExtension().lastSegment());
-							} else {
-								rezPath = new Path(dataZDir).removeLastSegments(1).append(userRes.removeFileExtension().lastSegment());
-							}
+							rezPath = new Path(dataZDir).removeLastSegments(1).append(userRes.removeFileExtension().lastSegment());
 							break;
 						}
 					}
@@ -705,38 +701,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		// check the project pref to see if we should manage the make files
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		if (cpi.areMakefilesManaged()) {
-			// if it's an EKA1 SDK then we need to check if our change is there.  if not
-			// then we need to ask them if we can make the change.
-			final ISymbianSDK sdk = buildConfig.getSDK();
-			if (sdk.isEKA1()) {
-				// check to see if the CARBIDE_CHANGES.TXT file is there
-				if (!sdk.getToolsPath().append(CARBIDE_CHANGES_FILE).toFile().exists()) {
-
-					// trick to get flag back from runnable
-					final List<Boolean> shouldUpdate = new ArrayList<Boolean>(0);
-
-					// ask the user if we can update their sdk
-					Display.getDefault().syncExec(new Runnable() {
-
-						public void run() {
-							// ask the user if they want to update now
-							if (MessageDialog.openQuestion(WorkbenchUtils.getSafeShell(),
-									"SDK Update Required",
-									"In order for Carbide to manage dependencies and improve build times, we need to make a minor change to one of the files in your SDK.  This will not affect builds outside of Carbide in any way.  Would you like to make this change?")) {
-								shouldUpdate.add(Boolean.TRUE);
-							}
-						}
-					});
-
-					if (shouldUpdate.size() == 1 && shouldUpdate.get(0).booleanValue()) {
-						if (!updateMakDepsFile(sdk)) {
-							return false;
-						}
-					} else {
-						return false;
-					}
-				}
-			}
 			return true;
 		}
 		return false;
@@ -2573,13 +2537,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		// create a path to the directory where the make files live
 		IPath makefilePath = new Path(config.getSDK().getEPOCROOT()).append(EPOC_BUILD_DIR);
 		
-		// in EKA1 kits, you append the path to the mmp file to the epoc32 build directory.  in EKA2, they
-		// changed it to be the path to the bld.inf file. (see bldmake.pl sub CreatePlatMak())
-		if (config.getSDK().isEKA1()) {
-			makefilePath = makefilePath.append(componentPath.removeLastSegments(1).setDevice(null));
-		} else {
-			makefilePath = makefilePath.append(config.getCarbideProject().getINFWorkingDirectory().setDevice(null));
-		}
+		makefilePath = makefilePath.append(config.getCarbideProject().getINFWorkingDirectory().setDevice(null));
 		
 		// each mmp file has its own directory
 		String mmpName = componentPath.removeFileExtension().lastSegment().toUpperCase();
@@ -2686,24 +2644,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			IMacroDefinition[] macros = view.getAllMacroDefinitions("CCFLAGS");
 			if (macros.length < 1) {
 				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "CCFLAGS macro not found in makefile", null)); //$NON-NLS-1$
-			}
-			IMacroDefinition macro = macros[macros.length - 1];
-			// add the switches before to the end of the macro.  toString may add  a line delimiter to the end so strip that off
-			String macroText = macro.toString();
-			if (macroText.endsWith("\n")) {
-				macroText = macroText.substring(0, macroText.length() - 1);
-			}
-			macroText = macroText + " -MD" + view.getEOL();
-			view.replaceDirective(macro, macroText);
-			
-		} else if (platform.equals(ISymbianBuildContext.ARMI_PLATFORM) ||
-				platform.equals(ISymbianBuildContext.ARM4_PLATFORM) ||
-				platform.equals(ISymbianBuildContext.THUMB_PLATFORM)) {
-
-			// append the -MD switch to the GCCFLAGS macro
-			IMacroDefinition[] macros = view.getAllMacroDefinitions("GCCFLAGS");
-			if (macros.length < 1) {
-				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "GCCFLAGS macro not found in makefile", null)); //$NON-NLS-1$
 			}
 			IMacroDefinition macro = macros[macros.length - 1];
 			// add the switches before to the end of the macro.  toString may add  a line delimiter to the end so strip that off
@@ -2864,19 +2804,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					macros = defs[0].getValue().toString();
 					macros = view.expandAllMacrosInString(macros);
 
-				} else if (platform.equals(ISymbianBuildContext.ARMI_PLATFORM) ||
-						platform.equals(ISymbianBuildContext.ARM4_PLATFORM) ||
-						platform.equals(ISymbianBuildContext.THUMB_PLATFORM)) {
-					// the macros are listed in the GCCDEFS macro
-					IMacroDefinition[] defs = view.getAllMacroDefinitions("GCCDEFS");
-					if (defs.length != 1) {
-						throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "GCCDEFS macro not found in makefile", null)); //$NON-NLS-1$
-					}
-
-					// need to expand macros here
-					macros = defs[0].getValue().toString();
-					macros = view.expandAllMacrosInString(macros);
-
 				} else {
 					// assuming some version of RVCT
 					// the macros are listed in the ARMCCDEFS macro
@@ -2982,17 +2909,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					if (!platform.equals(ISymbianBuildContext.EMULATOR_PLATFORM) &&
 							!platform.equals(ISymbianBuildContext.GCCE_PLATFORM)) {
 
-						if (platform.equals(ISymbianBuildContext.ARM4_PLATFORM) ||
-							platform.equals(ISymbianBuildContext.ARMI_PLATFORM) ||
-							platform.equals(ISymbianBuildContext.THUMB_PLATFORM)) {
-							if (!isGCC30) {
-								moveDepFile = true;
-							}
-						} else {
 							// some form of ARMV5|6
 							moveDepFile = true;
-						}
-
 					}
 					
 					if (moveDepFile) {
@@ -3005,17 +2923,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 						plat = "winscw";
 					} else if (platform.equals(ISymbianBuildContext.GCCE_PLATFORM)) {
 						plat = "gcce";
-					} else if (platform.equals(ISymbianBuildContext.ARM4_PLATFORM) ||
-							platform.equals(ISymbianBuildContext.ARMI_PLATFORM) ||
-							platform.equals(ISymbianBuildContext.THUMB_PLATFORM)) {
-						if (isGCC30) {
-							plat = "gcce";
-						} else {
-							plat = "gcc98";
-						}
-					} else {
-						// assume some version of rvct.  no need to do anything since the dep files are generated correctly
 					}
+					
 					if (plat.length() > 0) {
 						newRule = newRule + "\tperl -S " + dep_file_paths_perl_script + " " + destPath.toOSString() + " " + plat + view.getEOL() + view.getEOL();
 					}
