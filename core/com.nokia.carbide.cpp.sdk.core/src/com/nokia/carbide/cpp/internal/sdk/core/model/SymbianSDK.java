@@ -264,6 +264,8 @@ public class SymbianSDK implements ISymbianSDK {
 				continue;
 			}
 			
+			buildTargets.add(new SymbianBuildContext(this, currPlat, ISymbianBuildContext.DEBUG_TARGET));
+			
 			// everything gets release except for WINSCW
 			buildTargets.add(new SymbianBuildContext(this, currPlat, ISymbianBuildContext.RELEASE_TARGET));
 		}

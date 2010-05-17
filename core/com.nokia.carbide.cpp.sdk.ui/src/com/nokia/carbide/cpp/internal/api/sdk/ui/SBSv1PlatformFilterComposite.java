@@ -84,12 +84,6 @@ public class SBSv1PlatformFilterComposite extends Composite {
 		platEKA2_ARMV5_ABIV1 = new Button(eka2PlatformsGroup, SWT.CHECK);
 		platEKA2_ARMV5_ABIV1.setText("ARMV5_ABIV1 (OS 9.4+)"); //$NON-NLS-1$
 
-		Group eka1PlatformsGroup = new Group(this, SWT.NONE);
-		eka1PlatformsGroup.setToolTipText(Messages.getString("BuildPlatformFilterPage.Specify_Platforms_Help2")); //$NON-NLS-1$
-		eka1PlatformsGroup.setLayoutData(new GridData(258, SWT.DEFAULT));
-		eka1PlatformsGroup.setText(Messages.getString("BuildPlatformFilterPage.EKA1_Platforms_Label")); //$NON-NLS-1$
-		eka1PlatformsGroup.setLayout(new GridLayout());
-
 		enableBSFScanner = new Button(this, SWT.CHECK);
 		enableBSFScanner.setToolTipText(Messages.getString("BuildPlatformFilterPage.BSF_Help")); //$NON-NLS-1$
 		enableBSFScanner.setText(Messages.getString("BuildPlatformFilterPage.BSF_Label")); //$NON-NLS-1$
