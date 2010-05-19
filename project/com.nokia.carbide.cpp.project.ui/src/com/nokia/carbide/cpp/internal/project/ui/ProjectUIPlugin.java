@@ -62,6 +62,9 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 	// The shared instance
 	private static ProjectUIPlugin plugin;
 	
+	// YUCK: Project nature copied from QtUtils
+   	public static final String QT_NATURE_ID = "com.trolltech.qtcppproject.QtNature";
+
 
 	/**
 	 * The constructor
@@ -181,6 +184,10 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 		job.setRule(null); // no rule needed here - could just block important jobs
 		job.schedule();
 
+		if (isQtProject(project))
+		    return;  // Qt project wizards flip to their own perspective
+
+		
 		// set the perspective to Carbide C/C++
 		try {
 			IWorkbench workbench = getDefault().getWorkbench();
@@ -244,6 +251,19 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 		} catch (IllegalStateException e) {
 			// PlatformUI.getWorkbench() throws if running headless
 		}
+	}
+
+	private static boolean isQtProject(IProject project) {
+		if (project == null){
+			return false;
+		}
+		try {
+			return project.hasNature(QT_NATURE_ID);
+		} catch (CoreException e){
+			e.printStackTrace();
+		}
+		return false;
+
 	}
 
 	public static boolean keepProjectsInSync() {
