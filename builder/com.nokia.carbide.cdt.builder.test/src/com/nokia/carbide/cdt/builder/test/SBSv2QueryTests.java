@@ -18,6 +18,7 @@
 package com.nokia.carbide.cdt.builder.test;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -34,6 +35,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Version;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -42,18 +44,26 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.nokia.carbide.cdt.builder.test.sandbox.ISBSv2ConfigData;
+import com.nokia.carbide.cdt.builder.test.sandbox.ISBSv2QueryData;
+import com.nokia.carbide.cdt.builder.test.sandbox.SBSv2ConfigData;
+import com.nokia.carbide.cdt.builder.test.sandbox.SBSv2QueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class SBSv2QueryTests extends BaseTest {
 	
-	private static HashMap<String, String> sbsAliasMap;
+	private static ISBSv2QueryData sbsAliasBaseQuery;
+	
 	private long startTime;
 	
 	private final String QUERY_PRODUCTS_COMMAND = "--query=products";
 	private final String QUERY_CONFIG_COMMAND = "--query=config";
 	private final String QUERY_COMMAND = "--query=aliases";
+	
+	private final String SDK_ID1 = "K_92_WK12"; // SDK with additional aliases and products
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -74,28 +84,97 @@ public class SBSv2QueryTests extends BaseTest {
 	public void testQueryAliases() throws Exception {
 		
 		startTime = System.currentTimeMillis();
-		
-		List<String> argList = new ArrayList<String>();
-		argList.add(QUERY_COMMAND);
-		
-		String queryResult = getSBSQueryOutput(argList, null);
-		System.out.println("Query output from " + QUERY_COMMAND + " : " + queryResult);
-		assertTrue("No output found from " + QUERY_COMMAND, queryResult.length() > 0);
-		
-		sbsAliasMap = parseQueryAliasResult(queryResult);
-		
-		assertTrue("No configs were successfully parsed from the sbs commmand : " + QUERY_COMMAND, sbsAliasMap.size() > 0);
-		
-		String aliasLookup = sbsAliasMap.get("armv5_udeb"); // look-up some known build alias
-		assertNotNull(aliasLookup);
-		
-		aliasLookup = sbsAliasMap.get("there_is_no_way_this_would_be_config_name");
-		assertNull(aliasLookup);
-		
+		if (sbsAliasBaseQuery == null){
+			sbsAliasBaseQuery = getSBSv2QueryData();
+		}
 		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
 		
+		List<ISBSv2ConfigData> baseConfigs = sbsAliasBaseQuery.getBaseSBSConfigurations();
+		
+		for (ISBSv2ConfigData config : baseConfigs){
+			assertTrue("Configuration should be true : " + config.toString(), config.isBaseConfig());
+		}
+		assertEquals(18, baseConfigs.size());
+		
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_urel"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("winscw_udeb"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("winscw_urel"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_urel_gcce4_4_1"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb_gcce4_4_1"));
+		
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.udeb.rvct2_2"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.urel.rvct2_2"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("winscw_base.winscw_debug"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("winscw_base.winscw_release"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.urel.gcce4_4_1"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.udeb.gcce4_4_1"));
+		
+		assertNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb.foobar"));
+		assertNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.udeb.foo.bar"));
+		
+		// Get the Raptor configs that are defined in an SDK
+		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
+		assertNotNull("Missing SDK on your system: " + SDK_ID1, sdk);
+		List<ISBSv2ConfigData> sdkSpecificConfigs = sbsAliasBaseQuery.getSDKSpecificConfigData(sdk);
+		assertEquals(10, sdkSpecificConfigs.size());
+		
+		// Get the union of the base Raptor configs and the SDK
+		List<ISBSv2ConfigData> allSDKConfigUnion = sbsAliasBaseQuery.getAllConfigurationsForSDK(sdk);
+		assertEquals(28, allSDKConfigUnion.size());
 	}
 	
+	private ISBSv2QueryData getSBSv2QueryData() {
+		List<String> argListConfigQuery = new ArrayList<String>();
+		List<String> argListProductQuery = new ArrayList<String>();
+		argListConfigQuery.add(QUERY_COMMAND);
+		SBSv2QueryData sbsQueryData = new SBSv2QueryData();
+		
+		/////// Invoke Raptor once with no EPOCROOT
+		Properties envVars = EnvironmentReader.getEnvVars();
+		envVars.setProperty("EPOCROOT", "FOOBAR");
+		String queryResult = getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
+	
+		HashMap<String, String> sbsAliasMap = parseQueryAliasResult(queryResult);
+		
+		for (String aliasKey : sbsAliasMap.keySet()){
+			String meaning = sbsAliasMap.get(aliasKey);
+			SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, null);
+			sbsQueryData.addConfigurationData(oneSBSConfig);
+		}
+		
+		/////// Do for each SDK to build up the alias list...
+		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+			IPath epocRoot = new Path(sdk.getEPOCROOT());
+			if ((sdk.getOSVersion().getMajor() <= 9 && sdk.getOSVersion().getMinor() <5)
+				|| !epocRoot.toFile().exists()){
+				
+				continue; // skip it, the sdk is not supported or broken
+			}
+			
+			envVars = EnvironmentReader.getEnvVars();
+			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+			
+			queryResult = getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
+			
+			sbsAliasMap = parseQueryAliasResult(queryResult);
+			
+			for (String aliasKey : sbsAliasMap.keySet()){
+				String meaning = sbsAliasMap.get(aliasKey);
+				SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, sdk);
+				sbsQueryData.addConfigurationData(oneSBSConfig);
+			}
+			
+			// Now get the products for each SDK
+			argListProductQuery.add(QUERY_PRODUCTS_COMMAND);
+			queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
+			List<String> productList = parseQueryProductsResults(queryResult);
+			sbsQueryData.addProductListForSDK(sdk, productList);
+		}
+		
+		return sbsQueryData;
+	}
+
 	/**
 	 * TODO: The SBS API FOR THIS QUERY IS UNDER CONSTRUCTION.....
 	 * TODO; This test should be run on individual %EPOCROOT% values
@@ -103,18 +182,17 @@ public class SBSv2QueryTests extends BaseTest {
 	 */
 	public void testQueryConfigs() throws Exception {
 		
-		assertNotNull(sbsAliasMap);
+		assertNotNull(sbsAliasBaseQuery);
 
 		startTime = System.currentTimeMillis();
 		
 		List<String> argList = new ArrayList<String>();
 		
-		for (String key : sbsAliasMap.keySet()){
-			argList.add(QUERY_CONFIG_COMMAND + "[" + key + "]");
+		for (ISBSv2ConfigData baseConfig: sbsAliasBaseQuery.getBaseSBSConfigurations()){
+			argList.add(QUERY_CONFIG_COMMAND + "[" + baseConfig.getBuildAlias() + "]");
 		}
 		
 		String queryResult = getSBSQueryOutput(argList, null);
-		System.out.println("Query output from " + QUERY_CONFIG_COMMAND + " : " + queryResult);
 		assertTrue("No output found from " + QUERY_CONFIG_COMMAND, queryResult.length() > 0);
 		
 		HashMap<String, String> outputMap = parseQueryConfigResults(queryResult);
@@ -130,32 +208,15 @@ public class SBSv2QueryTests extends BaseTest {
 	 * @throws Exception
 	 */
 	public void testQueryProductsFromSDKs() throws Exception {
-		
-
-		startTime = System.currentTimeMillis();
-		
-		List<String> argList = new ArrayList<String>();
-		
-		argList.add(QUERY_PRODUCTS_COMMAND);
-		
-		// TODO: Just hard-coding a known SDK that has variants set up.
-		Properties envVars = EnvironmentReader.getEnvVars();
-		envVars.setProperty("EPOCROOT", "K:");
-		
-		String queryResult = getSBSQueryOutput(argList, createEnvStringList(envVars));
-		System.out.println("Query output from " + QUERY_PRODUCTS_COMMAND + " : " + queryResult);
-		assertTrue("No output found from " + QUERY_PRODUCTS_COMMAND, queryResult.length() > 0);
-		
-		List<String> productList = parseQueryProductsResults(queryResult);
-		assertTrue("No products were found in query for : " + QUERY_PRODUCTS_COMMAND, productList.size() > 0);
-		
-		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
+		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
+		assertNotNull("Missing SDK on your system: " + SDK_ID1, sdk);
+		List<String> products = sbsAliasBaseQuery.getProductsForSDK(sdk);
+		assertEquals(38, products.size());
 	}
 	
 	public void testStressQueryTest() throws Exception {
 
 		long stressTestStartTime = System.currentTimeMillis();
-		
 		
 		testQueryAliases();
 		
@@ -364,7 +425,11 @@ public class SBSv2QueryTests extends BaseTest {
 			if (minutes > 0){
 				return "\nTotal Time: " + minutes + " min, " + seconds + " sec\n";
 			} else {
-				return "\nTotal Time: " + seconds + " sec\n";
+				if (seconds == 1){
+					return "\nTotal Time: " + millisec + " msec\n";
+				} else {
+					return "\nTotal Time: " + seconds + " sec\n";
+				}
 			}
 			
 		} else {
