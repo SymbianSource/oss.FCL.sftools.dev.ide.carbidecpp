@@ -16,6 +16,10 @@
 */
 package com.nokia.carbide.cpp;
 
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Map;
+
 import org.eclipse.ui.plugin.*;
 import org.eclipse.equinox.p2.ui.Policy;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -46,7 +50,8 @@ public class ProductPlugin extends AbstractUIPlugin {
 		super.start(context);
 		Policy policy = new Policy();
 		policy.setRestartPolicy(Policy.RESTART_POLICY_PROMPT);
-		policyRegistration = context.registerService(Policy.class.getName(), policy, null);
+		Map<String, Integer> map = Collections.singletonMap("service.ranking", 100);
+		policyRegistration = context.registerService(Policy.class.getName(), policy, new Hashtable<Object, Object>(map));
 	}
 
 	/**
