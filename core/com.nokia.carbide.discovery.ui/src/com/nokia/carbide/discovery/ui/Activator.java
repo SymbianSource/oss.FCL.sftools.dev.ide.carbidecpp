@@ -1,10 +1,32 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
 package com.nokia.carbide.discovery.ui;
+
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.equinox.p2.ui.Policy;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -15,6 +37,8 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private ServiceRegistration policyRegistration;
 
 	/**
 	 * The constructor
@@ -28,7 +52,11 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		plugin = this;
+		Policy policy = new Policy();
+		policy.setRestartPolicy(Policy.RESTART_POLICY_PROMPT);
+		Map<String, Integer> map = Collections.singletonMap("service.ranking", 100);
+		policyRegistration = context.registerService(Policy.class.getName(), policy, new Hashtable<Object, Object>(map));
+		System.setProperty("eclipse.p2.unsignedPolicy", "allow");
 	}
 
 	/*
@@ -36,8 +64,9 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-		plugin = null;
+		policyRegistration.unregister();
 		super.stop(context);
+		plugin = null;
 	}
 
 	/**
