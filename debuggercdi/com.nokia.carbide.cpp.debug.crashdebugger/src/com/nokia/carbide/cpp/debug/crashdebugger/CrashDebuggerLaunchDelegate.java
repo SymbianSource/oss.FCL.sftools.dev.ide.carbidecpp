@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -31,8 +32,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import com.freescale.cdt.debug.cw.core.cdi.Session;
-import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.NokiaAbstractLaunchDelegate;
+
+import cwdbg.PreferenceConstants;
 
 public class CrashDebuggerLaunchDelegate extends NokiaAbstractLaunchDelegate {
 
@@ -57,8 +59,20 @@ public class CrashDebuggerLaunchDelegate extends NokiaAbstractLaunchDelegate {
 				return;
 			}
 
-			// See comment for this method for more.
-            SettingsData.setInternalPreferences(config, SettingsData.LaunchConfig_CrashDebugger);
+    		ILaunchConfigurationWorkingCopy wc = null;
+    		try {
+    			wc = config.getWorkingCopy();
+    			
+    			if (wc == null)
+    				return;
+    			
+    			wc.setAttribute( PreferenceConstants.J_PN_SupportOSView, true );
+    			wc.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, true );	
+    			
+    			wc.doSave();
+    		} catch (CoreException e) {
+    			e.printStackTrace();
+    		}
             			
 			CrashDebuggerSession session = null;
 			

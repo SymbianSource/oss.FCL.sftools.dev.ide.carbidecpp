@@ -80,7 +80,6 @@ public class SettingsData {
 	public static final String LaunchConfig_Emulator = PREFIX + ".LaunchConfig_Emulator"; //$NON-NLS-1$
 	public static final String LaunchConfig_AppTRK = PREFIX + ".LaunchConfig_AppTRK"; //$NON-NLS-1$
 	public static final String LaunchConfig_SysTRK = PREFIX + ".LaunchConfig_SysTRK"; //$NON-NLS-1$
-	public static final String LaunchConfig_CrashDebugger = PREFIX + ".LaunchConfig_CrashDebugger"; //$NON-NLS-1$
 	public static final String LaunchConfig_Trace32 = PREFIX + ".LaunchConfig_Trace32"; //$NON-NLS-1$
 
 	public static final String ATTR_originalName = "originalName"; //$NON-NLS-1$
@@ -620,7 +619,7 @@ public class SettingsData {
 		{
 			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, false );
 		}
-		else // others like T32 and crash debugger.
+		else // others like T32
 			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, true );	
 	}
 
@@ -731,14 +730,9 @@ public class SettingsData {
 		configuration.setAttribute(PreferenceConstants.J_PN_SymbianKitEpoc32Dir, ""); //$NON-NLS-1$
 		configuration.setAttribute(PreferenceConstants.J_PN_LogUnresolved, false);
 
-		// For all but crash debugger, use our "SymbianDebugger".
-		// Crash debugger will set its own debugger (see CrashDebugConfigurationTabGroup.setDefaults()).
-		// 
-		if (!settingsGroup.equals(LaunchConfig_CrashDebugger)) {
-			configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ID, SymbianDebugger.DEBUGGER_ID);
-			// Executables tab is not shown for crash debugger launch configuration.
-			setExecutablesTab(configuration, settingsGroup, project);
-		}
+		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ID, SymbianDebugger.DEBUGGER_ID);
+
+		setExecutablesTab(configuration, settingsGroup, project);
 		
 		setInternalPreferences(configuration, settingsGroup);
 
@@ -749,8 +743,7 @@ public class SettingsData {
 		}
 		
 		if (settingsGroup.equals(LaunchConfig_AppTRK) || 
-			    settingsGroup.equals(LaunchConfig_SysTRK) ||
-				settingsGroup.equals(LaunchConfig_CrashDebugger))
+			    settingsGroup.equals(LaunchConfig_SysTRK))
 		{
 			setSerialConnTab(configuration, project);
 		}
@@ -793,25 +786,6 @@ public class SettingsData {
 					""); // Protocol plugin name //$NON-NLS-1$
 		}
 
-		if (settingsGroup.equals(LaunchConfig_CrashDebugger)) {
-			// Crash debugger: specify crash debugger protocol plugin.
-			//
-			// For crash debugger, we don't need a project. But don't set the name to "" as it would 
-			// cause crasher in CDT if we tries to create CDebugTarget without a project.
-			configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_NAME, "Any"); //$NON-NLS-1$
-			
-			ConnectionTypeInfo connTI = new ConnectionTypeInfo(
-					"Carbide CrashDebugger", // Internal ID //$NON-NLS-1$
-					"SymbianCrashDebuggerProtocol", // Display name. see SymbianCrashDebuggerPrefix.h on DE side. //$NON-NLS-1$
-					spn_SerialComm); // Pref panel name
-
-			DebuggerCommonData.setLaunchConfigConnSettings(
-					configuration,
-					connTI, 
-					"SymbianCrashDebuggerProtocol", //$NON-NLS-1$
-					""); // see SymbianCrashDebuggerPrefix.h on DE side //$NON-NLS-1$
-		}
-		
 		if (settingsGroup.equals(LaunchConfig_Trace32)) {
 			String t32ExePathStr = "C:\\t32\\t32marm.exe"; //$NON-NLS-1$
 			
