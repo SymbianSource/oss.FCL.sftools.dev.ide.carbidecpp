@@ -27,7 +27,9 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.SWT;
@@ -39,6 +41,7 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
 import org.eclipse.ui.part.ViewPart;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 @SuppressWarnings("restriction")
 public class DiscoveryView extends ViewPart {
@@ -47,11 +50,13 @@ public class DiscoveryView extends ViewPart {
 
 	private CatalogViewer viewer;
 	private Action refreshAction;
-	private BaseSelectionListenerAction selectAllAction;
-	private BaseSelectionListenerAction selectNoneAction;
+	private BaseSelectionListenerAction checkAllAction;
+	private BaseSelectionListenerAction checkNoneAction;
 	private BaseSelectionListenerAction installAction;
 
 	private boolean initialized;
+
+	private ISelectionChangedListener selectionListener;
 
 	public DiscoveryView() {
 	}
@@ -68,7 +73,8 @@ public class DiscoveryView extends ViewPart {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
 		
 		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "TestDiscovery.viewer");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), 
+				"com.nokia.carbide.discovery.ui.view.DiscoveryView.viewer"); //$NON-NLS-1$
 		makeActions();
 		contributeToActionBars();
 	}
@@ -110,7 +116,7 @@ public class DiscoveryView extends ViewPart {
 			is.close();
 		} catch (IOException e) {
 			String message = 
-				MessageFormat.format("Could not find URL in configuration/server.properties file for key={0}", key);
+				MessageFormat.format(Messages.DiscoveryView_MissingDirectoryURLError, key);
 			Activator.logError(message, e);
 		}
 		return (String) properties.get(key);
@@ -123,8 +129,8 @@ public class DiscoveryView extends ViewPart {
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(selectAllAction);
-		manager.add(selectNoneAction);
+		manager.add(checkAllAction);
+		manager.add(checkNoneAction);
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
@@ -135,13 +141,16 @@ public class DiscoveryView extends ViewPart {
 	private void makeActions() {
 		refreshAction = new Action() {
 			public void run() {
+				viewer.setSelection(StructuredSelection.EMPTY);
+				viewer.refresh();
 				viewer.updateCatalog();
 			}
 		};
-		refreshAction.setText("Refresh");
-		refreshAction.setImageDescriptor(Activator.getImageDescriptor("icons/refresh.gif"));
-		selectAllAction = new BaseSelectionListenerAction("Select All Items") {
+		refreshAction.setText(Messages.DiscoveryView_RefreshLabel);
+		refreshAction.setImageDescriptor(Activator.getImageDescriptor("icons/refresh.gif")); //$NON-NLS-1$
+		checkAllAction = new BaseSelectionListenerAction(Messages.DiscoveryView_CheckAllLabel) {
 			public void run() {
+				viewer.setSelection(StructuredSelection.EMPTY);
 				viewer.setSelection(getAllItemsSelection());
 				viewer.refresh();
 			}
@@ -155,7 +164,7 @@ public class DiscoveryView extends ViewPart {
 				return !getAllItemsSelection().equals(selection);
 			};
 		};
-		selectNoneAction = new BaseSelectionListenerAction("Deselect All Items") {
+		checkNoneAction = new BaseSelectionListenerAction(Messages.DiscoveryView_UncheckAllLabel) {
 			public void run() {
 				viewer.setSelection(StructuredSelection.EMPTY);
 				viewer.refresh();
@@ -165,7 +174,7 @@ public class DiscoveryView extends ViewPart {
 				return !selection.isEmpty();
 			};
 		};
-		installAction = new BaseSelectionListenerAction("Install Checked Items...") {
+		installAction = new BaseSelectionListenerAction(Messages.DiscoveryView_InstallLabel) {
 			public void run() {
 				DiscoveryUi.install(viewer.getCheckedItems(), new ProgressMonitorDialog(DiscoveryView.this.getViewSite().getShell()));
 			};
@@ -174,17 +183,29 @@ public class DiscoveryView extends ViewPart {
 				return !selection.isEmpty();
 			};
 		};
-		installAction.setImageDescriptor(Activator.getImageDescriptor("icons/icon-discovery.png"));
-		viewer.addSelectionChangedListener(selectAllAction);
-		viewer.addSelectionChangedListener(selectNoneAction);
+		installAction.setImageDescriptor(Activator.getImageDescriptor("icons/icon-discovery.png")); //$NON-NLS-1$
+		viewer.addSelectionChangedListener(checkAllAction);
+		viewer.addSelectionChangedListener(checkNoneAction);
 		viewer.addSelectionChangedListener(installAction);
+		selectionListener = new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				IActionBars bars = getViewSite().getActionBars();
+				bars.getStatusLineManager().setMessage(
+						selection.isEmpty() ? null : MessageFormat.format(
+								Messages.DiscoveryView_StatusLineFmt, selection.size()));
+			}
+		};
+		viewer.addSelectionChangedListener(selectionListener);
 	}
 	
 	@Override
 	public void dispose() {
-		viewer.removeSelectionChangedListener(selectAllAction);
-		viewer.removeSelectionChangedListener(selectNoneAction);
+		viewer.removeSelectionChangedListener(checkAllAction);
+		viewer.removeSelectionChangedListener(checkNoneAction);
 		viewer.removeSelectionChangedListener(installAction);
+		viewer.removeSelectionChangedListener(selectionListener);
 		
 		super.dispose();
 	}
@@ -198,10 +219,12 @@ public class DiscoveryView extends ViewPart {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					viewer.updateCatalog();
-					viewer.setSelection(StructuredSelection.EMPTY);
+					if (viewer.getViewer().getContentProvider() != null) {
+						viewer.updateCatalog();
+					}
 				}
 			});
 		}
 	}
+
 }

@@ -51,9 +51,6 @@
                id="com.nokia.carbide.cpp.CarbideCppPerspective">
          </perspectiveShortcut>
          <newWizardShortcut id="com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"/>
-         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewProjectWizard"/>
-         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.wizards.NewClassWizard"/>
-         <newWizardShortcut id="com.nokia.carbide.cpp.project.ui.mmpWizard"/>
       </perspectiveExtension>
    </extension>
 

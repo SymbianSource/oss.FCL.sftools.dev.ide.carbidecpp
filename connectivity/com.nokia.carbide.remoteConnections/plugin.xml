@@ -24,7 +24,7 @@
          <view
                id="com.nokia.carbide.remoteconnections.view.ConnectionsView"
                relationship="stack"
-               relative="org.eclipse.ui.views.TaskList">
+               relative="org.eclipse.cdt.debug.ui.executablesView">
          </view>
       </perspectiveExtension>
    </extension>

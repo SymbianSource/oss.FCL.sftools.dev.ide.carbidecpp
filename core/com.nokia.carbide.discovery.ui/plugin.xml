@@ -4,14 +4,10 @@
 
    <extension
          point="org.eclipse.ui.views">
-      <category
-            id="com.nokia.carbide.discovery.category"           
-            name="Discovery">
-      </category>
       <view
-            name="Install View"
+            name="%view.name"
             icon="icons/icon-discovery.png"
-            category="com.nokia.carbide.discovery.category"
+            category="com.nokia.carbide.cpp"
             class="com.nokia.carbide.discovery.ui.view.DiscoveryView"
             id="com.nokia.carbide.discovery.view">
       </view>
