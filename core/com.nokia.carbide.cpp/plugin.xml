@@ -66,7 +66,7 @@
 		<!-- Splash screen attributes -->
 		<property 
 			name="startupProgressRect" 
-			value="0,245,469,22" /> 
+			value="0,244,469,22" /> 
 		<property 
 			name="startupForegroundColor" 
 			value="777777" />
