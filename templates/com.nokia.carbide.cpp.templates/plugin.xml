@@ -44,14 +44,6 @@
             wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
 
       <template
-      		displayName="%uiq3.label"
-            filterArguments="UIQ:3.0-3.9"
-            groupLabel="%UIQ.label"
-            image="icons/icon_UIQ.png"
-            location="templates/projecttemplates/UIQ30-HelloWorld/template.xml"
-            templateId="com.nokia.carbide.cpp.templates.uiq30.helloworld"
-            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
-      <template
       		displayName="%openc.label"
             filterArguments="S60:3.0-5.9"
             groupLabel="%S60.3.label"
