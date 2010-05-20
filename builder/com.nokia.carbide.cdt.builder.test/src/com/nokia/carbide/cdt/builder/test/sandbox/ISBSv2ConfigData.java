@@ -11,13 +11,13 @@ public interface ISBSv2ConfigData {
 	
 	String getMeaning();
 	
-	String getReleaseDirectory();
+	String getReleaseDirectory(ISymbianSDK sdk);
 	
-	ISBSv2ConfigPreprocessorInfo getBuildData();
+	ISBSv2ConfigPreprocessorInfo getBuildData(ISymbianSDK sdk);
 	
-	String getTraditionalTarget();
+	String getTraditionalTarget(ISymbianSDK sdk);
 	
-	String getTraditionalPlatform();
+	String getTraditionalPlatform(ISymbianSDK sdk);
 	
 	List<ISymbianSDK> getSupportedSDKs();
 	

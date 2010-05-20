@@ -18,7 +18,6 @@
 package com.nokia.carbide.cdt.builder.test;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -32,10 +31,8 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Version;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -46,8 +43,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cdt.builder.test.sandbox.ISBSv2ConfigData;
 import com.nokia.carbide.cdt.builder.test.sandbox.ISBSv2QueryData;
-import com.nokia.carbide.cdt.builder.test.sandbox.SBSv2ConfigData;
-import com.nokia.carbide.cdt.builder.test.sandbox.SBSv2QueryData;
+import com.nokia.carbide.cdt.builder.test.sandbox.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -58,10 +54,6 @@ public class SBSv2QueryTests extends BaseTest {
 	private static ISBSv2QueryData sbsAliasBaseQuery;
 	
 	private long startTime;
-	
-	private final String QUERY_PRODUCTS_COMMAND = "--query=products";
-	private final String QUERY_CONFIG_COMMAND = "--query=config";
-	private final String QUERY_COMMAND = "--query=aliases";
 	
 	private final String SDK_ID1 = "K_92_WK12"; // SDK with additional aliases and products
 	
@@ -85,7 +77,7 @@ public class SBSv2QueryTests extends BaseTest {
 		
 		startTime = System.currentTimeMillis();
 		if (sbsAliasBaseQuery == null){
-			sbsAliasBaseQuery = getSBSv2QueryData();
+			sbsAliasBaseQuery = SBSv2QueryUtils.queryAliasAndProductVariants();
 		}
 		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
 		
@@ -124,82 +116,61 @@ public class SBSv2QueryTests extends BaseTest {
 		assertEquals(28, allSDKConfigUnion.size());
 	}
 	
-	private ISBSv2QueryData getSBSv2QueryData() {
-		List<String> argListConfigQuery = new ArrayList<String>();
-		List<String> argListProductQuery = new ArrayList<String>();
-		argListConfigQuery.add(QUERY_COMMAND);
-		SBSv2QueryData sbsQueryData = new SBSv2QueryData();
+	/**
+	 * Query data for a single configuration
+	 * @throws Exception
+	 */
+	public void testQuerySingleConfig() throws Exception {
 		
-		/////// Invoke Raptor once with no EPOCROOT
-		Properties envVars = EnvironmentReader.getEnvVars();
-		envVars.setProperty("EPOCROOT", "FOOBAR");
-		String queryResult = getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
-	
-		HashMap<String, String> sbsAliasMap = parseQueryAliasResult(queryResult);
+		assertNotNull(sbsAliasBaseQuery);
+
+		startTime = System.currentTimeMillis();
 		
-		for (String aliasKey : sbsAliasMap.keySet()){
-			String meaning = sbsAliasMap.get(aliasKey);
-			SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, null);
-			sbsQueryData.addConfigurationData(oneSBSConfig);
-		}
+		ISBSv2ConfigData config = sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb");
+		assertNotNull(config);
+		assertEquals("/epoc32/release/armv5/udeb", config.getReleaseDirectory(null));
+		assertEquals("armv5", config.getTraditionalPlatform(null));
+		assertEquals("udeb", config.getTraditionalTarget(null));
 		
-		/////// Do for each SDK to build up the alias list...
-		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
-			IPath epocRoot = new Path(sdk.getEPOCROOT());
-			if ((sdk.getOSVersion().getMajor() <= 9 && sdk.getOSVersion().getMinor() <5)
-				|| !epocRoot.toFile().exists()){
-				
-				continue; // skip it, the sdk is not supported or broken
-			}
-			
-			envVars = EnvironmentReader.getEnvVars();
-			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
-			
-			queryResult = getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
-			
-			sbsAliasMap = parseQueryAliasResult(queryResult);
-			
-			for (String aliasKey : sbsAliasMap.keySet()){
-				String meaning = sbsAliasMap.get(aliasKey);
-				SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, sdk);
-				sbsQueryData.addConfigurationData(oneSBSConfig);
-			}
-			
-			// Now get the products for each SDK
-			argListProductQuery.add(QUERY_PRODUCTS_COMMAND);
-			queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
-			List<String> productList = parseQueryProductsResults(queryResult);
-			sbsQueryData.addProductListForSDK(sdk, productList);
-		}
-		
-		return sbsQueryData;
+		config = sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb_gcce");
+		assertNotNull(config);
+		// TODO: This should fail if 'SBS_GCCE432BIN is not set
+		// So we should have one test that will fail with known error message
+		// and another that will pass when an env var is set correctly.
+		// e.g. test two different versions of GCCE aliases.
+//		assertEquals("/epoc32/release/armv5/udeb", config.getReleaseDirectory(null));
+//		assertEquals("armv5", config.getTraditionalPlatform(null));
+//		assertEquals("udeb", config.getTraditionalTarget(null));
 	}
+	
 
 	/**
 	 * TODO: The SBS API FOR THIS QUERY IS UNDER CONSTRUCTION.....
 	 * TODO; This test should be run on individual %EPOCROOT% values
 	 * @throws Exception
 	 */
-	public void testQueryConfigs() throws Exception {
+	public void testQueryMultipleConfigs() throws Exception {
 		
 		assertNotNull(sbsAliasBaseQuery);
-
+		
 		startTime = System.currentTimeMillis();
 		
-		List<String> argList = new ArrayList<String>();
 		
-		for (ISBSv2ConfigData baseConfig: sbsAliasBaseQuery.getBaseSBSConfigurations()){
-			argList.add(QUERY_CONFIG_COMMAND + "[" + baseConfig.getBuildAlias() + "]");
-		}
+		List<String> aliasOrMeaningArray = new ArrayList<String>();
+		aliasOrMeaningArray.add("armv5_udeb");
+		aliasOrMeaningArray.add("arm.9e.udeb.rvct2_2");
+		HashMap<String, String> releaseMap = SBSv2QueryUtils.queryConfigTargetInfo(aliasOrMeaningArray , null);
 		
-		String queryResult = getSBSQueryOutput(argList, null);
-		assertTrue("No output found from " + QUERY_CONFIG_COMMAND, queryResult.length() > 0);
+		assertEquals(2, releaseMap.size());
 		
-		HashMap<String, String> outputMap = parseQueryConfigResults(queryResult);
-		assertTrue("No configs were found in query for : " + QUERY_CONFIG_COMMAND, outputMap.size() > 0);
-		
-		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
-		
+//		String queryResult = getSBSQueryOutput(argList, null);
+//		assertTrue("No output found from " + SBSv2QueryUtils.QUERY_CONFIG_COMMAND, queryResult.length() > 0);
+//		
+//		HashMap<String, String> outputMap = parseQueryConfigResults(queryResult);
+//		assertTrue("No configs were found in query for : " + SBSv2QueryUtils.QUERY_CONFIG_COMMAND, outputMap.size() > 0);
+//		
+//		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
+//		
 	}
 	
 	/**
@@ -220,16 +191,16 @@ public class SBSv2QueryTests extends BaseTest {
 		
 		testQueryAliases();
 		
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
-		testQueryConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
+		testQueryMultipleConfigs();
 		
 		testQueryProductsFromSDKs();
 		testQueryProductsFromSDKs();
@@ -247,175 +218,6 @@ public class SBSv2QueryTests extends BaseTest {
 		System.out.println("Time for testStressQueryTest(): " + getTimingStats());
 	}
 	
-	private List<String> parseQueryProductsResults(String queryResult) {
-		List<String> productList = new ArrayList<String>();
-		
-		try {
-    		Element root = null;
-    		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    		parser.setErrorHandler(new DefaultHandler());
-    		
-    		StringReader reader = new StringReader( queryResult );
-    		InputSource inputSource = new InputSource( reader );
-    		root = parser.parse(inputSource).getDocumentElement();
-    		
-    		NodeList children = root.getChildNodes();
-    		for (int i=0; i< children.getLength(); i++) {
-    			Node aliasNode = children.item(i);
-    			if (aliasNode.getNodeName().equals("product")){
-    				NamedNodeMap productAttribs = aliasNode.getAttributes();
-    				String name = productAttribs.getNamedItem("name").getNodeValue();
-    				//System.out.println("ALIAS QUERY ==> " + dottedName + " <==> " + alias);
-    				productList.add(name);
-    			}
-    		}
-    		
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		Logging.log(SDKCorePlugin.getDefault(), Logging.newStatus(SDKCorePlugin.getDefault(), e));
-    	}
-		
-		return productList;
-	}
-
-	private HashMap<String, String> parseQueryAliasResult(String queryResult) {
-		/* Alias to dotted name config */
-		HashMap<String, String> sbsAliasMap = new HashMap<String, String>();
-		
-		try {
-    		Element root = null;
-    		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    		parser.setErrorHandler(new DefaultHandler());
-    		
-    		StringReader reader = new StringReader( queryResult );
-    		InputSource inputSource = new InputSource( reader );
-    		root = parser.parse(inputSource).getDocumentElement();
-    		
-    		NodeList children = root.getChildNodes();
-    		for (int i=0; i< children.getLength(); i++) {
-    			Node aliasNode = children.item(i);
-    			if (aliasNode.getNodeName().equals("alias")){
-    				NamedNodeMap meaning = aliasNode.getAttributes();
-    				String dottedName = meaning.getNamedItem("meaning").getNodeValue();
-    				String alias = meaning.getNamedItem("name").getNodeValue();
-    				//System.out.println("ALIAS QUERY ==> " + dottedName + " <==> " + alias);
-    				sbsAliasMap.put(alias, dottedName);
-    			}
-    		}
-    		
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		Logging.log(SDKCorePlugin.getDefault(), Logging.newStatus(SDKCorePlugin.getDefault(), e));
-    	}
-		
-		
-		return sbsAliasMap;
-	}
-
-	private HashMap<String, String> parseQueryConfigResults(String queryResult) {
-		/* Alias to output directory */
-		HashMap<String, String> sbsAliasMap = new HashMap<String, String>();
-		
-		try {
-    		Element root = null;
-    		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    		parser.setErrorHandler(new DefaultHandler());
-    		
-    		StringReader reader = new StringReader( queryResult );
-    		InputSource inputSource = new InputSource( reader );
-    		root = parser.parse(inputSource).getDocumentElement();
-    		
-    		NodeList children = root.getChildNodes();
-    		for (int i=0; i< children.getLength(); i++) {
-    			Node aliasNode = children.item(i);
-    			if (aliasNode.getNodeName().equals("config")){
-    				NamedNodeMap meaning = aliasNode.getAttributes();
-    				String outputpath = meaning.getNamedItem("outputpath").getNodeValue();
-    				String fullName = meaning.getNamedItem("fullname").getNodeValue();
-    				//System.out.println("ALIAS QUERY ==> " + dottedName + " <==> " + alias);
-    				sbsAliasMap.put(fullName, outputpath);
-    			}
-    		}
-    		
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		Logging.log(SDKCorePlugin.getDefault(), Logging.newStatus(SDKCorePlugin.getDefault(), e));
-    	}
-		
-		
-		return sbsAliasMap;
-	}
-	
-	
-	private String getSBSQueryOutput(List<String> queryCommandList, String[] env) {
-		String overallOutput = "";
-		
-		Runtime rt = Runtime.getRuntime();
-		IPath sbsPath = SBSv2Utils.getSBSPath();
-		Process p = null;
-		List<String> args = new ArrayList<String>();
-		args.add(sbsPath.toOSString());
-		args.addAll(queryCommandList);
-		try {
-			p = rt.exec(args.toArray(new String[args.size()]), env);
-		} catch (IOException e) {
-			// no such process, SBSv2 not available
-			Logging.log(
-					SDKCorePlugin.getDefault(),
-					Logging.newSimpleStatus(
-							0,
-							IStatus.WARNING,
-							MessageFormat
-									.format(
-											"Could not find or launch Raptor script ''{0}''; SBSv2 support will not be available",
-											sbsPath), e));
-		}
-		if (p != null) {
-			BufferedReader br = new BufferedReader(new InputStreamReader(p
-					.getInputStream()));
-			
-			String stdErrLine = null;
-			try {
-
-				// Only try for 30 seconds then bail in case Raptor hangs
-				int maxTries = 60;
-				int numTries = 0;
-				while (numTries < maxTries) {
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// ignore
-					}
-					if (br.ready()) {
-						while ((stdErrLine = br.readLine()) != null) {
-							overallOutput += stdErrLine;
-							numTries = maxTries;
-						}
-
-					}
-					numTries++;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return overallOutput;
-	}
-	
-	private static String[] createEnvStringList(Properties envProps) {
-		String[] env = null;
-		List<String> envList = new ArrayList<String>();
-		Enumeration<?> names = envProps.propertyNames();
-		if (names != null) {
-			while (names.hasMoreElements()) {
-				String key = (String) names.nextElement();
-				envList.add(key + "=" + envProps.getProperty(key));
-			}
-			env = (String[]) envList.toArray(new String[envList.size()]);
-		}
-		return env;
-	}
 	
 	public String getTimingStats(){
 		if (startTime != 0){
