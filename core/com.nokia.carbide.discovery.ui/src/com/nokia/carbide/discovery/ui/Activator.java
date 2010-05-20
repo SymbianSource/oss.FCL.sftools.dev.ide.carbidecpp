@@ -16,17 +16,11 @@
 */
 package com.nokia.carbide.discovery.ui;
 
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Map;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.equinox.p2.ui.Policy;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -37,8 +31,6 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-
-	private ServiceRegistration policyRegistration;
 
 	/**
 	 * The constructor
@@ -52,11 +44,6 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		Policy policy = new Policy();
-		policy.setRestartPolicy(Policy.RESTART_POLICY_PROMPT);
-		Map<String, Integer> map = Collections.singletonMap("service.ranking", 100);
-		policyRegistration = context.registerService(Policy.class.getName(), policy, new Hashtable<Object, Object>(map));
-		System.setProperty("eclipse.p2.unsignedPolicy", "allow");
 	}
 
 	/*
@@ -64,7 +51,6 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-		policyRegistration.unregister();
 		super.stop(context);
 		plugin = null;
 	}
