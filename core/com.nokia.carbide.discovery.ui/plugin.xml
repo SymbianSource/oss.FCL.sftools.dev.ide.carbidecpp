@@ -15,7 +15,7 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="*">
+            targetID="com.nokia.carbide.cpp.CarbideCppPerspective">
          <view
                id="com.nokia.carbide.discovery.view"
                relationship="stack"
