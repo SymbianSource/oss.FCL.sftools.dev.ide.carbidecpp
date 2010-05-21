@@ -21,10 +21,8 @@ public class FeatureUseTrackerConsts {
 	public static final String CARBIDE_KERNELAWARE = "Carbide_KernelAware"; // symbian os data view
 	public static final String CARBIDE_SYS_TRK = "Carbide_Sys_TRK";
 	public static final String CARBIDE_PROFILER = "Carbide_Profiler";
-	public static final String CARBIDE_CRASH_DEBUGGER = "Carbide_Crash_Debugger";
 	public static final String CARBIDE_APPDEP = "Carbide_AppDep"; // dependency explorer
 	public static final String CARBIDE_CODESCANNER = "Carbide_CodeScanner";
-	public static final String CARBIDE_TRACE32 = "Carbide_Trace32";
 	public static final String CARBIDE_OST_TRACE = "Carbide_OST_Trace";
 	public static final String CARBIDE_IDE = "Carbide_IDE"; // did user launch IDE
 	public static final String CARBIDE_INTERNALONLY = "Carbide_InternalOnly"; // many carbide extensions

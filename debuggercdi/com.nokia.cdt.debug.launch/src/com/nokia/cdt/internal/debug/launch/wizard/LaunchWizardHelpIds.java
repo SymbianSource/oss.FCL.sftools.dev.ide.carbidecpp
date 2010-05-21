@@ -34,8 +34,6 @@ public class LaunchWizardHelpIds {
 
 	public static final String WIZARD_SUMMARY_PAGE = HelpID_Prefix + "wizard_summary_page"; //$NON-NLS-1$
 
-	public static final String WIZARD_TRACE32_PAGE = HelpID_Prefix + "wizard_trace32_page"; //$NON-NLS-1$
-
 	public static final String WIZARD_STOP_MODE_ROM_IMG_PAGE = HelpID_Prefix + "wizard_stop_mode_rom_img_page"; //$NON-NLS-1$
 
 	public static final String WIZARD_TRK_CONNECTION_PAGE = HelpID_Prefix + "wizard_trk_connection_page"; //$NON-NLS-1$

@@ -114,12 +114,6 @@ class LaunchCategorySelectionPage extends WizardPage implements ISelectionChange
 					Messages.getString("LaunchCategorySelectionPage.phoneDesc"))); //$NON-NLS-1$));
 		}
 
-		if (wizard.getWizardsForCategory(AbstractLaunchWizard.BOARD_CATEGORY_ID).size() > 0) {
-			categories.add(new LaunchCategory(AbstractLaunchWizard.BOARD_CATEGORY_ID,
-					Messages.getString("LaunchCategorySelectionPage.board"), //$NON-NLS-1$));
-					Messages.getString("LaunchCategorySelectionPage.boardDesc"))); //$NON-NLS-1$));
-		}
-		
 		loadCategoryExtensions();
 	}
 

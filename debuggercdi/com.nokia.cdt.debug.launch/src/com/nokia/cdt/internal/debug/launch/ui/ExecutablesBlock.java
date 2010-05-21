@@ -16,8 +16,6 @@
 */
 package com.nokia.cdt.internal.debug.launch.ui;
 
-import org.eclipse.cdt.launch.AbstractCLaunchDelegate;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -49,7 +47,6 @@ public class ExecutablesBlock {
 	 */
 	private CheckboxTableViewer fExeFileList;
 	private ExeFileToDebug fMainExecutable;
-	private boolean wantsMainExecutable;
 	
 	private final static Color GRAY = new Color(null, 128, 128, 128);
 
@@ -79,9 +76,8 @@ public class ExecutablesBlock {
 		
 	}
 
-	ExecutablesBlock(ExecutablesTab launchTab, boolean wantsMainExecutable) {
+	ExecutablesBlock(ExecutablesTab launchTab) {
 		fLaunchTab = launchTab;
-		this.wantsMainExecutable = wantsMainExecutable;
 	}
 
 	/**
@@ -172,18 +168,10 @@ public class ExecutablesBlock {
 			fExeFileList.setInput(fExeFiles);
 			fExeFileList.refresh();
 			
-			String launchExeName = ""; //$NON-NLS-1$
-			try {
-				launchExeName = AbstractCLaunchDelegate.getProgramName(fLaunchTab.getLaunchConfiguration());
-			} catch (CoreException e) {}
-
 			for (int i = 0; i < fExeFiles.size(); i++) {
 				ExeFileToDebug file = (ExeFileToDebug) fExeFiles.get(i);
 				fExeFileList.setChecked(file, file.getEnabled());
-				if (wantsMainExecutable && file.getExePath().equalsIgnoreCase(launchExeName)) {
-					fMainExecutable = file;
-				}
-			}			
+			}
 		}
 	}
 

@@ -74,12 +74,6 @@
             label="New TRK Communications Log Console"
             class="com.nokia.cdt.debug.cw.symbian.TRKCommLogConsoleFactory"/>
    </extension>
-    <extension
-         point="org.eclipse.ui.console.consoleFactories">
-      <consoleFactory
-            label="New Trace32 Communications Log Console"
-            class="com.nokia.cdt.debug.cw.symbian.T32CommLogConsoleFactory"/>
-   </extension>
    <extension
          point="org.eclipse.ui.console.consoleFactories">
       <consoleFactory

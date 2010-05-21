@@ -120,7 +120,6 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 	private int targetingRule;
 	private boolean supportsTargetAll;
 	private boolean disposed;
-	private boolean wantsMainExecutable;
 	private List<ExeFileToDebug> executablesToTarget;
 
 	public ExecutablesTab(boolean supportsTargetAll) {
@@ -146,7 +145,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 		ExecutablesTabHeader header = new ExecutablesTabHeader(comp, SWT.NONE);
 		header.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, GridData.FILL_VERTICAL, true, false, 3, 1));
 
-		executablesBlock = new ExecutablesBlock(this, wantsMainExecutable);
+		executablesBlock = new ExecutablesBlock(this);
 		executablesBlock.createControl(comp);
 		Control control = executablesBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
@@ -221,7 +220,6 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 	 */
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		this.configuration = configuration;
-		wantsMainExecutable = SettingsData.isStopModeConfiguration(configuration);
 		try {
 			int targetingRule = configuration.getAttribute(SettingsData.LCS_ExecutableTargetingRule,
 					SettingsData.LCS_ExeTargetingRule_AllInSDK); //$NON-NLS-1$
@@ -272,34 +270,32 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 					PreferenceConstants.J_PN_SymbolLoadingRule,
 					PreferenceConstants.J_PV_SymbolLoadingRule_Auto);
 		
-		if (!wantsMainExecutable) {
-			// get the current program name because it needs to be set to some executable to target
-			String programName = null;
-			try {
-				programName = AbstractCLaunchDelegate.getProgramName(configuration);
-			} catch (CoreException e) {
-			}
-			
-			// only do this when the current program name is not empty.  if it is, we'll be changing it
-			// which causes the apply button to become enabled which is not expected behavior.  this will
-			// be called later if/when they do specify the main program, so we'll make sure then that it's
-			// actually being targeted.
-			if (programName != null && programName.length() > 0) {
-				boolean resetProgramName = true;
-				// check to see if the current program name is one of the executables to target
-				for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
-					if (exeFileToDebug.getExePath().equalsIgnoreCase(programName)) {
-						resetProgramName = false;
-						break;
-					}
+		// get the current program name because it needs to be set to some executable to target
+		String programName = null;
+		try {
+			programName = AbstractCLaunchDelegate.getProgramName(configuration);
+		} catch (CoreException e) {
+		}
+		
+		// only do this when the current program name is not empty.  if it is, we'll be changing it
+		// which causes the apply button to become enabled which is not expected behavior.  this will
+		// be called later if/when they do specify the main program, so we'll make sure then that it's
+		// actually being targeted.
+		if (programName != null && programName.length() > 0) {
+			boolean resetProgramName = true;
+			// check to see if the current program name is one of the executables to target
+			for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
+				if (exeFileToDebug.getExePath().equalsIgnoreCase(programName)) {
+					resetProgramName = false;
+					break;
 				}
-				if (resetProgramName) {
-					// ensure one of the enabled files to target is set as the program name
-					for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
-						if (exeFileToDebug.getEnabled()) {
-							configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exeFileToDebug.getExePath());
-							break;
-						}
+			}
+			if (resetProgramName) {
+				// ensure one of the enabled files to target is set as the program name
+				for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
+					if (exeFileToDebug.getEnabled()) {
+						configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exeFileToDebug.getExePath());
+						break;
 					}
 				}
 			}

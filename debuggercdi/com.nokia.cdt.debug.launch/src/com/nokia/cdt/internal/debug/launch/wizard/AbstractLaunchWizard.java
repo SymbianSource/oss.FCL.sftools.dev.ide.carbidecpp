@@ -30,7 +30,6 @@ import java.util.List;
 public abstract class AbstractLaunchWizard extends Wizard implements ILaunchWizard {
 
 	public static final String PHONE_CATEGORY_ID = "com.nokia.cdt.debug.launch.phoneCategory"; //$NON-NLS-1$
-	public static final String BOARD_CATEGORY_ID = "com.nokia.cdt.debug.launch.boardCategory"; //$NON-NLS-1$
 	
 	private LaunchWizardSummaryPage summaryPage;
 	private String configName = ""; //$NON-NLS-1$

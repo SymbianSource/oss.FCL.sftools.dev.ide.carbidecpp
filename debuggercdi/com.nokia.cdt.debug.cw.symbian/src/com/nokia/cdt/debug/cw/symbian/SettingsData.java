@@ -60,7 +60,6 @@ import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.carbide.cpp.internal.support.SupportPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -80,7 +79,6 @@ public class SettingsData {
 	public static final String LaunchConfig_Emulator = PREFIX + ".LaunchConfig_Emulator"; //$NON-NLS-1$
 	public static final String LaunchConfig_AppTRK = PREFIX + ".LaunchConfig_AppTRK"; //$NON-NLS-1$
 	public static final String LaunchConfig_SysTRK = PREFIX + ".LaunchConfig_SysTRK"; //$NON-NLS-1$
-	public static final String LaunchConfig_Trace32 = PREFIX + ".LaunchConfig_Trace32"; //$NON-NLS-1$
 
 	public static final String ATTR_originalName = "originalName"; //$NON-NLS-1$
 
@@ -99,7 +97,6 @@ public class SettingsData {
 	public static final String APP_TRK_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "appTRKLaunch"; //$NON-NLS-1$
 	public static final String SYS_TRK_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "systemTRKLaunch"; //$NON-NLS-1$
 	public static final String ATTACH_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "attachLaunch"; //$NON-NLS-1$
-	public static final String T32_LAUNCH_TYPE_ID = LAUNCH_TYPE_PREFIX + "t32Launch"; //$NON-NLS-1$
 
 	//================ Shadowed CW Preference Panels =================================
 	// These match prefs in a pref panel that exist in the CodeWarrior IDE. The names
@@ -125,17 +122,6 @@ public class SettingsData {
 	public static final String spn_SerialComm_serialConn= SPN(spn_SerialComm, "serial"); //$NON-NLS-1$
 	public static final String spn_SerialComm_xtiConn= SPN(spn_SerialComm, "tcpip"); //$NON-NLS-1$
 
-	//---< T32 Connection Panel> -------------------
-	
-	public static final String spn_Trace32Conn= "Trace32 Connection"; //$NON-NLS-1$
-	
-	public static final String spn_Trace32Conn_ExePath= SPN(spn_Trace32Conn, "LauterbachTrace32ExePath"); //$NON-NLS-1$
-	public static final String spn_Trace32Conn_ConfigFilePath= SPN(spn_Trace32Conn, "Trace32ConfigFilePath"); //$NON-NLS-1$
-	public static final String spn_Trace32Conn_BootScriptFile= SPN(spn_Trace32Conn, "Trace32BootConfigFilePath"); //$NON-NLS-1$
-	public static final String spn_Trace32Conn_UdpPort= SPN(spn_Trace32Conn, "LauterbachTrace32UDPPort"); //$NON-NLS-1$
-	public static final String spn_Trace32Conn_LogOption= SPN(spn_Trace32Conn, "Trace32LogOption"); //$NON-NLS-1$	
-	public static final String spn_Trace32Conn_BootConfigArgs= SPN(spn_Trace32Conn, "Trace32BootConfigArgs"); //$NON-NLS-1$
-	
 	//================= End of Shadowed panels ===========================================
 
 	public static final String TARGET_PATH_INCLUDES_FILENAME = "TARGET_PATH_INCLUDES_FILENAME"; //$NON-NLS-1$
@@ -434,31 +420,6 @@ public class SettingsData {
 		}	
 	}
 	
-	public static void setRomImgTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
-
-		configuration.setAttribute( PreferenceConstants.J_PN_DownloadRomImage, false);
-		configuration.setAttribute( PreferenceConstants.J_PN_RomImagePath, ""); //$NON-NLS-1$
-		configuration.setAttribute( PreferenceConstants.J_PN_DownloadAddress, 0);
-		configuration.setAttribute( PreferenceConstants.J_PN_AskForDownload, true);		
-
-		if (project != null) {
-	        ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project.getProject());
-	        
-	        if (cpi != null) {
-	        	final ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
-	    		if (buildConfig != null){
-	    			if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
-	    				String epoc32Dir = buildConfig.getSDK().getEPOCROOT()+ "epoc32";
-	    				if (new File(epoc32Dir).exists())
-	    					configuration.setAttribute(PreferenceConstants.J_PN_SymbianKitEpoc32Dir, epoc32Dir);
-	    			} else {
-	    				displayWarningDialog(Messages.getString("SettingsData.37")); //$NON-NLS-1$
-	    			}
-	    		}
-	        }
-		}	        
-	}
-
 	public static void setTrkDebuggerTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
 		//======  TRK:  debugger tab ================================================================
 		//
@@ -619,8 +580,6 @@ public class SettingsData {
 		{
 			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, false );
 		}
-		else // others like T32
-			configuration.setAttribute( PreferenceConstants.J_PN_IsSystemModeDebug, true );	
 	}
 
 	// a convenience function.
@@ -761,13 +720,6 @@ public class SettingsData {
 			setFileTransferTab(configuration, project);
 		}
 
-		if (settingsGroup.equals(LaunchConfig_Trace32))
-		{
-			setStopModeMainTab(configuration, project);
-			setStopModeDebuggerTab(configuration, project);
-			setRomImgTab(configuration, project);
-		}
-
 		if (settingsGroup.equals(LaunchConfig_AppTRK) || settingsGroup.equals(LaunchConfig_SysTRK)) {
 			setTrkMainTab(configuration, project);
 			setTrkDebuggerTab(configuration, project);
@@ -786,40 +738,6 @@ public class SettingsData {
 					""); // Protocol plugin name //$NON-NLS-1$
 		}
 
-		if (settingsGroup.equals(LaunchConfig_Trace32)) {
-			String t32ExePathStr = "C:\\t32\\t32marm.exe"; //$NON-NLS-1$
-			
-			//set the default config file from the Symbian support folder which has the predefined settings for connecting to Carbide.
-			String supportDir = SupportPlugin.getDefault().getSymbianSupportDirectory();
-			String defaultConfigFilePath = supportDir + "\\Trace32\\config_carbide.t32"; //$NON-NLS-1$
-	
-			if (new File("C:\\apps\\t32\\t32marm.exe").exists()) { //$NON-NLS-1$
-				t32ExePathStr = "C:\\apps\\t32\\t32marm.exe"; //$NON-NLS-1$
-				// use config_carbide_1.t32 where the SYS path is C:\Apps\T32\
-				defaultConfigFilePath = supportDir + "\\Trace32\\config_carbide_1.t32"; //$NON-NLS-1$
-			}
-
-			configuration.setAttribute(spn_Trace32Conn_ExePath, t32ExePathStr);
-			configuration.setAttribute(spn_Trace32Conn_ConfigFilePath, defaultConfigFilePath);
-			configuration.setAttribute(spn_Trace32Conn_BootScriptFile, ""); //$NON-NLS-1$
-			configuration.setAttribute(spn_Trace32Conn_LogOption, false);
-			configuration.setAttribute(spn_Trace32Conn_UdpPort, "20000"); //$NON-NLS-1$
-			configuration.setAttribute(spn_Trace32Conn_BootConfigArgs, ""); //$NON-NLS-1$
-
-			// Stop mode debugging using Trace32 : specify Trace32 debugger protocol plugin.
-			//
-			ConnectionTypeInfo connTI = new ConnectionTypeInfo(
-					"Carbide Trace32", // Internal ID //$NON-NLS-1$
-					"Trace32 Configuration", // Display name. //$NON-NLS-1$
-					"Trace32 Connection"); // Pref panel name
-
-			DebuggerCommonData.setLaunchConfigConnSettings(
-					configuration,
-					connTI, 
-					"LAUTERBACH TRACE32 Plugin", //$NON-NLS-1$
-					""); //$NON-NLS-1$
-		}
-	
 		// Add the Symbian OS SDK Mapping.
 		addSymbianSDKMapping(project, configuration);
 
@@ -943,20 +861,6 @@ public class SettingsData {
 		} );
 	}
 	
-	
-	public static boolean isStopModeConfiguration(ILaunchConfiguration configuration) {
-		try {
-			ILaunchConfigurationType configurationType = configuration.getType();
-			String id = configurationType.getIdentifier();
-			return id.equals(T32_LAUNCH_TYPE_ID) ||
-			id.endsWith("T32Launch"); //$NON-NLS-1$
-		} catch (CoreException e) {
-		}
-		
-		return false;
-	}
-
-
 	public static boolean isAppTRKConfiguration(ILaunchConfiguration configuration) {
 		try {
 			ILaunchConfigurationType configurationType = configuration.getType();

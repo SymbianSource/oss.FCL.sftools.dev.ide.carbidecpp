@@ -49,17 +49,6 @@
             sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
       </launchDelegate>
     
-      <launchDelegate
-            name="Classic Symbian OS Trace32"
-            delegate="com.nokia.cdt.internal.debug.launch.Trace32LaunchDelegate"
-            delegateDescription="Launch a classic Symbian OS Trace32 debug session."          
-            modes="debug"
-            type="com.nokia.cdt.debug.launch.t32Launch"
-            id="com.nokia.cdt.debug.launch.t32LaunchDelegate"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
-      </launchDelegate>
-      
    </extension>
 
    <extension
@@ -89,12 +78,6 @@
             id="com.nokia.cdt.debug.launch.attachLaunch">
       </launchConfigurationType>
     
-      <launchConfigurationType
-            name="Symbian OS Trace32"
-            public="true"
-            id="com.nokia.cdt.debug.launch.t32Launch">
-      </launchConfigurationType>
-      
    </extension>
    
   <extension
@@ -119,11 +102,6 @@
             icon="icons/launch_config_file_16x16.png"
             configTypeID="com.nokia.cdt.debug.launch.attachLaunch"
             id="com.nokia.cdt.debug.launch.attachLaunchImage">
-      </launchConfigurationTypeImage>
-      <launchConfigurationTypeImage
-            icon="icons/launch_config_file_16x16.png"
-            configTypeID="com.nokia.cdt.debug.launch.t32Launch"
-            id="com.nokia.cdt.debug.launch.t32LaunchImage">
       </launchConfigurationTypeImage>
     </extension>
 
@@ -162,16 +140,6 @@
             id="com.nokia.cdt.debug.launch.attachLaunchTabGroup">
       </launchConfigurationTabGroup>
     </extension>
-
-	<extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            type="com.nokia.cdt.debug.launch.t32Launch"
-            class="com.nokia.cdt.internal.debug.launch.ui.T32StopModeConfigurationTabGroup"
-            id="com.nokia.cdt.debug.launch.t32LaunchTabGroup">
-      </launchConfigurationTabGroup>
-    </extension>
-    
  
     <extension
          point="org.eclipse.debug.ui.launchShortcuts">
@@ -252,85 +220,6 @@
          <description
                description="Runs on a phone or simulator using System TRK or Application TRK"
                mode="run">
-         </description>
-      </shortcut>
-      <shortcut
-            class="com.nokia.cdt.internal.debug.launch.BoardLaunchShortcut"
-            icon="icons/launch_config_file_16x16.png"
-            id="com.nokia.cdt.debug.launch.symbianCPPShortcut.refboard"
-            label="Symbian OS Reference Board Launch"
-            modes="run, debug">
-         <contextualLaunch>
-            <enablement>
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.cdt.core.model.IBinary">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.cdt.core.model.ICProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.cdt.debug.core.executables.Executable">
-                           </instanceof>
-                           <test
-                                 forcePluginActivation="true"
-                                 property="org.eclipse.cdt.launch.isExecutable">
-                           </test>
-                           <test
-                                 forcePluginActivation="true"
-                                 property="org.eclipse.cdt.launch.isCProject">
-                           </test>
-                           <and>
-                              <instanceof
-                                    value="org.eclipse.ui.IFileEditorInput">
-                              </instanceof>
-                              <adapt
-                                    type="org.eclipse.core.resources.IResource">
-                                 <adapt
-                                       type="org.eclipse.cdt.core.model.ICElement">
-                                 </adapt>
-                              </adapt>
-                           </and>
-                           <test
-                                 forcePluginActivation="true"
-                                 property="com.nokia.cdt.debug.launch.isCarbideProject">
-                           </test>
-                           <test
-                                 forcePluginActivation="true"
-                                 property="com.nokia.cdt.debug.launch.isExecutable">
-                           </test>
-                        </or>
-                        <test
-                              forcePluginActivation="true"
-                              property="com.nokia.cdt.debug.launch.isNotEmulator">
-                        </test>
-                     </and>
-                  </iterate>
-               </with>
-            </enablement>
-            <contextLabel
-                  label="Run Symbian OS System on Reference Board"
-                  mode="run">
-            </contextLabel>
-            <contextLabel
-                  label="Debug Symbian OS System on Reference Board"
-                  mode="debug">
-            </contextLabel>
-         </contextualLaunch>
-         <description
-               description="Runs on a development board or reference hardware using a JTAG connection."
-               mode="run">
-         </description>
-         <description
-               description="Debugs on a development board or reference hardware using a JTAG connection."
-               mode="debug">
          </description>
       </shortcut>
       <shortcut

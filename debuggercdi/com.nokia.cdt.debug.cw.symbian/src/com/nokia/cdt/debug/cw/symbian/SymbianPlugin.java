@@ -43,7 +43,6 @@ public class SymbianPlugin extends AbstractUIPlugin {
 	private final String debugConsoleName = "Emulation Program Output"; //$NON-NLS-1$
 	private final String unframedDataConsoleName = "TRK Program Output"; //$NON-NLS-1$
 	private final String commMessagesConsoleName = "TRK Communication Log"; //$NON-NLS-1$
-	private final String t32CommMessagesConsoleName = "Trace32 Communications Log"; //$NON-NLS-1$
 	private final String symbianRomLogMessagesConsoleName = "Rom Log File Messages";
 	public static final String DebugTraceMessagesConsoleName = "Emulator Output"; //$NON-NLS-1$
 	
@@ -143,10 +142,6 @@ public class SymbianPlugin extends AbstractUIPlugin {
 
 	public void openTRKCommLogConsole(boolean clearConsole) {
 		openConsole(commMessagesConsoleName, clearConsole);
-	}
-	
-	public void openT32CommLogConsole(boolean clearConsole) {
-		openConsole(t32CommMessagesConsoleName, clearConsole);
 	}
 	
 	public void openSymbianRomLogConsole(boolean clearConsole) {

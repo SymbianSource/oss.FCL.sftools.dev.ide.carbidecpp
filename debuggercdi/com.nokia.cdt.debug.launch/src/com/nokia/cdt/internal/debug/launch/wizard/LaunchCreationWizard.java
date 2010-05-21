@@ -185,12 +185,6 @@ public class LaunchCreationWizard extends Wizard implements ILaunchCreationWizar
 	}
 	
 	private void loadWizards(List<IPath> mmps, List<IPath> exes, IPath defaultExecutable, String mode) {
-		Trace32LaunchWizard trace32Wizard = new Trace32LaunchWizard(mmps, exes, defaultExecutable, project, configurationName); 
-		if (trace32Wizard.supportsMode(mode)) {
-			trace32Wizard.addPages();
-			wizards.add(trace32Wizard);
-		}
-
 		// load any wizard extensions
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(LaunchPlugin.PLUGIN_ID + ".launchWizardExtension"); //$NON-NLS-1$
