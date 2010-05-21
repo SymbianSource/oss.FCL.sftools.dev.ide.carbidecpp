@@ -1,3 +1,20 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+* Test the BldInfViewPathHelper class.
+*
+*/
 package com.nokia.carbide.cdt.builder.test.sandbox;
 
 import java.util.ArrayList;
@@ -11,6 +28,9 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class SBSv2ConfigData implements ISBSv2ConfigData {
 
+	/** The supporting SDK. May be null if it's a base configuration */
+	ISymbianSDK sdk;
+	
 	/**
 	 * A unique build alias. There can only be one alias definition, but an SDK can change the meaning of the alias 
 	 */
@@ -24,18 +44,12 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 	String platform = null;
 	String releaseDirectory = null;
 	
-	/** A configuration that was discovered without using a valid EPOCROOT during an sbs query */
-	private boolean isBaseConfig;
-	List<ISymbianSDK> supportedSDKs = new ArrayList<ISymbianSDK>();
-	
 	public SBSv2ConfigData(String buildAlias, String meaning, ISymbianSDK sdk){
 		this.buildAlias = buildAlias;
 		this.meaning = meaning;
 		if (sdk != null){
-			supportedSDKs.add(sdk);
-		} else {
-			this.isBaseConfig = true; 
-		}
+			this.sdk = sdk;
+		} 
 	}
 
 	@Override
@@ -45,10 +59,6 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 
 	@Override
 	public String getMeaning() {
-		// TODO: What do you do if the meaning is different for another SDK?
-		// We need to figure out when there is a meaning conflict, and when to resolve it
-		// A different meaning can mean different output directory and dotted names,
-		// potentially different indexer data
 		return meaning;
 	}
 
@@ -109,23 +119,14 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 		return platform;
 	}
 
-	@Override
-	public List<ISymbianSDK> getSupportedSDKs() {
-		return supportedSDKs;
-	}
-
-	@Override
-	public void addSupportedSDK(ISymbianSDK sdk) {
-		supportedSDKs.add(sdk);
-	}
-
-	@Override
-	public boolean isBaseConfig() {
-		return isBaseConfig;
-	}
-	
 	public String toString(){
 		return "Alias = " + buildAlias + " : Meaning = " + meaning;
 	}
+
+	@Override
+	public ISymbianSDK getSupportingSDK() {
+		return sdk;
+	}
+	
 
 }

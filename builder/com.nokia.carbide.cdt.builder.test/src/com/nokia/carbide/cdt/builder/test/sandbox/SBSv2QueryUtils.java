@@ -1,3 +1,20 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+* Test the BldInfViewPathHelper class.
+*
+*/
 package com.nokia.carbide.cdt.builder.test.sandbox;
 
 import java.io.BufferedReader;
@@ -53,7 +70,7 @@ public class SBSv2QueryUtils {
 		for (String aliasKey : sbsAliasMap.keySet()){
 			String meaning = sbsAliasMap.get(aliasKey);
 			SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, null);
-			sbsQueryData.addConfigurationData(oneSBSConfig);
+			sbsQueryData.addConfigurationData(null, oneSBSConfig);
 		}
 		
 		/////// Do for each SDK to build up the alias list...
@@ -75,7 +92,7 @@ public class SBSv2QueryUtils {
 			for (String aliasKey : sbsAliasMap.keySet()){
 				String meaning = sbsAliasMap.get(aliasKey);
 				SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, sdk);
-				sbsQueryData.addConfigurationData(oneSBSConfig);
+				sbsQueryData.addConfigurationData(sdk, oneSBSConfig);
 			}
 			
 			// Now get the products for each SDK

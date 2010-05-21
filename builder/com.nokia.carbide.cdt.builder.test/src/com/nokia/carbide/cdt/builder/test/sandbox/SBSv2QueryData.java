@@ -1,3 +1,20 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+* Test the BldInfViewPathHelper class.
+*
+*/
 package com.nokia.carbide.cdt.builder.test.sandbox;
 
 import java.util.ArrayList;
@@ -8,70 +25,62 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class SBSv2QueryData implements ISBSv2QueryData {
 
-	
-	/** alias ==> build config data Map*/
-	HashMap<String, ISBSv2ConfigData> sbsBuildConfigMap = new HashMap<String, ISBSv2ConfigData>();
+	/** alias to ISBSv2ConfigData - These are the standard build configs defined by Raptor, and are treated as virtual by this API */
+	HashMap<String, ISBSv2ConfigData> baseSBSConfigs = new HashMap<String, ISBSv2ConfigData>();
+	/** SDK ==> ISBSv2ConfigData : Contains all the SBS configs particular to a single SDK */
+	HashMap<ISymbianSDK, List<ISBSv2ConfigData>> sbsSDKBuildConfigMap = new HashMap<ISymbianSDK, List<ISBSv2ConfigData>>();
 	HashMap<ISymbianSDK, List<String>> sdkProductVariantList = new HashMap<ISymbianSDK, List<String>>();
 	
 	@Override
-	public void addConfigurationData(ISBSv2ConfigData configData) {
+	public void addConfigurationData(ISymbianSDK sdk, ISBSv2ConfigData configData) {
 		
-		String buildAlias = configData.getBuildAlias();
-		if (null == sbsBuildConfigMap.get(buildAlias)){
-			sbsBuildConfigMap.put(buildAlias, configData);
-		} else  {
-			// build alias already exists, just add it as a supported SDK
-			ISBSv2ConfigData updateConfig = sbsBuildConfigMap.get(buildAlias);
-			for (ISymbianSDK sdk : configData.getSupportedSDKs()){
-				// Add to the list of already supported SDKs, if any
-				updateConfig.addSupportedSDK(sdk);
-			}
-			sbsBuildConfigMap.put(buildAlias, updateConfig);
+		if (sdk == null){
+			baseSBSConfigs.put(configData.getBuildAlias(), configData);
 		}
+		
+		List<ISBSv2ConfigData> configDataForSDK = sbsSDKBuildConfigMap.get(sdk);
+		
+		if (configDataForSDK == null){
+			// This SDK does not exist, create the first entry
+			configDataForSDK = new ArrayList<ISBSv2ConfigData>();
+			configDataForSDK.add(configData);
+			sbsSDKBuildConfigMap.put(sdk, configDataForSDK);
+			return;
+		}
+		
+		configDataForSDK.add(configData);
 	}
 
 	@Override
-	public List<ISBSv2ConfigData> getBaseSBSConfigurations() {
-		List<ISBSv2ConfigData> baseSBSConfigs = new ArrayList<ISBSv2ConfigData>();
-		
-		// get all the base configurations...
-		for (String key : sbsBuildConfigMap.keySet()) {
-			ISBSv2ConfigData configData = sbsBuildConfigMap.get(key);
-			if (configData.isBaseConfig()) {
-				baseSBSConfigs.add(configData);
-			}
-		}
-		
+	public HashMap<String, ISBSv2ConfigData> getBaseSBSConfigurations() {
 		return baseSBSConfigs;
 	}
 	
 	@Override
 	public List<ISBSv2ConfigData> getSDKSpecificConfigData(ISymbianSDK sdk) {
-		List<ISBSv2ConfigData> configsForSDK = new ArrayList<ISBSv2ConfigData>();
+		List<ISBSv2ConfigData> sdkDefinedConfigs =  new ArrayList<ISBSv2ConfigData>();
 		
-		// get all the base configurations...
-		for (String key : sbsBuildConfigMap.keySet()) {
-			ISBSv2ConfigData configData = sbsBuildConfigMap.get(key);
-			if (configData.isBaseConfig()) {
-				continue;
-			}
-			// Not a Raptor-defined config, see if the SDK defined it
-			if (sdk != null){
-				if (configData.getSupportedSDKs().contains(sdk)){
-					configsForSDK.add(configData);
+		for (ISBSv2ConfigData oneConfig : sbsSDKBuildConfigMap.get(sdk)){
+			// check if the alias is already in the base list, if not add it
+			boolean addConfigForReturn = true;
+			for (String alias : baseSBSConfigs.keySet()){
+				ISBSv2ConfigData baseConfig = baseSBSConfigs.get(alias);
+				if (oneConfig.getBuildAlias().equals(baseConfig.getBuildAlias())){
+					addConfigForReturn = false;
+					break;
 				}
 			}
+			if (addConfigForReturn){
+				sdkDefinedConfigs.add(oneConfig);
+			}
 		}
-		
-		return configsForSDK;
+			
+		return sdkDefinedConfigs;
 	}
 	
 	@Override
 	public List<ISBSv2ConfigData> getAllConfigurationsForSDK(ISymbianSDK sdk) {
-		List<ISBSv2ConfigData> allConfigs = new ArrayList<ISBSv2ConfigData>();
-		allConfigs.addAll(getBaseSBSConfigurations());
-		allConfigs.addAll(getSDKSpecificConfigData(sdk));
-		return allConfigs;
+		return sbsSDKBuildConfigMap.get(sdk);
 	}
 
 	@Override
@@ -86,24 +95,46 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 			
 			sdkProductVariantList.put(sdk, products);
 		}
-
 	}
 
 	@Override
-	public ISBSv2ConfigData getSBSConfigByAlias(String alias) {
-		return sbsBuildConfigMap.get(alias);
-	}
-
-	@Override
-	public ISBSv2ConfigData getSBSConfigByMeaning(String string) {
-		ISBSv2ConfigData configData = null;
-		for (String key : sbsBuildConfigMap.keySet()){
-			if (sbsBuildConfigMap.get(key).getMeaning().equals(string)){
-				return sbsBuildConfigMap.get(key);
+	public ISBSv2ConfigData getSBSConfigByAlias(ISymbianSDK sdk, String alias) {
+		
+		if (sdk == null){
+			return baseSBSConfigs.get(alias);
+		} else {
+			List<ISBSv2ConfigData> configListForSDK =  sbsSDKBuildConfigMap.get(sdk);
+			
+			for (ISBSv2ConfigData config : configListForSDK){
+				if (config.getBuildAlias().equals(alias)){
+					return config;
+				}
 			}
 		}
 		
-		return configData;
+		return null;
+	}
+
+	@Override
+	public ISBSv2ConfigData getSBSConfigByMeaning(ISymbianSDK sdk, String meaning) {
+		if (sdk == null){
+			for (String aliasKey : baseSBSConfigs.keySet()){
+				ISBSv2ConfigData config = baseSBSConfigs.get(aliasKey);
+				if (config.getMeaning().equals(meaning)){
+					return config;
+				}
+			}
+		} else {
+			List<ISBSv2ConfigData> configListForSDK =  sbsSDKBuildConfigMap.get(sdk);
+			
+			for (ISBSv2ConfigData config : configListForSDK){
+				if (config.getMeaning().equals(meaning)){
+					return config;
+				}
+			}
+		}
+		
+		return null;
 	}
 
 }

@@ -81,29 +81,31 @@ public class SBSv2QueryTests extends BaseTest {
 		}
 		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
 		
-		List<ISBSv2ConfigData> baseConfigs = sbsAliasBaseQuery.getBaseSBSConfigurations();
+		HashMap<String, ISBSv2ConfigData> baseConfigs = sbsAliasBaseQuery.getBaseSBSConfigurations();
 		
-		for (ISBSv2ConfigData config : baseConfigs){
-			assertTrue("Configuration should be true : " + config.toString(), config.isBaseConfig());
+		for (String aliasKey : baseConfigs.keySet()){
+			ISBSv2ConfigData config = baseConfigs.get(aliasKey);
+			boolean isBaseConfig = config.getSupportingSDK() == null ? true : false;
+			assertTrue("Configuration should be true : " + config.toString(), isBaseConfig);
 		}
 		assertEquals(18, baseConfigs.size());
 		
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_urel"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("winscw_udeb"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("winscw_urel"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_urel_gcce4_4_1"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb_gcce4_4_1"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_udeb"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_urel"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "winscw_udeb"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "winscw_urel"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_urel_gcce4_4_1"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_udeb_gcce4_4_1"));
 		
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.udeb.rvct2_2"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.urel.rvct2_2"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("winscw_base.winscw_debug"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("winscw_base.winscw_release"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.urel.gcce4_4_1"));
-		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.udeb.gcce4_4_1"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "arm.v5.udeb.rvct2_2"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "arm.v5.urel.rvct2_2"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "winscw_base.winscw_debug"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "winscw_base.winscw_release"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "arm.v5.urel.gcce4_4_1"));
+		assertNotNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "arm.v5.udeb.gcce4_4_1"));
 		
-		assertNull(sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb.foobar"));
-		assertNull(sbsAliasBaseQuery.getSBSConfigByMeaning("arm.v5.udeb.foo.bar"));
+		assertNull(sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_udeb.foobar"));
+		assertNull(sbsAliasBaseQuery.getSBSConfigByMeaning(null, "arm.v5.udeb.foo.bar"));
 		
 		// Get the Raptor configs that are defined in an SDK
 		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
@@ -126,14 +128,20 @@ public class SBSv2QueryTests extends BaseTest {
 
 		startTime = System.currentTimeMillis();
 		
-		ISBSv2ConfigData config = sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb");
+		ISBSv2ConfigData config = sbsAliasBaseQuery.getSBSConfigByAlias(null,  "armv5_udeb");
 		assertNotNull(config);
 		assertEquals("/epoc32/release/armv5/udeb", config.getReleaseDirectory(null));
 		assertEquals("armv5", config.getTraditionalPlatform(null));
 		assertEquals("udeb", config.getTraditionalTarget(null));
 		
-		config = sbsAliasBaseQuery.getSBSConfigByAlias("armv5_udeb_gcce");
-		assertNotNull(config);
+		config = sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_udeb_gcce");
+		assertNull(config); // This config should only be defined by SDK suppliers
+		
+		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
+		assertNotNull("Missing SDK on your system: " + SDK_ID1, sdk);
+		config = sbsAliasBaseQuery.getSBSConfigByAlias(sdk, "armv5_udeb_gcce");
+		assertNotNull(config); // This config should only be defined by SDK suppliers
+		
 		// TODO: This should fail if 'SBS_GCCE432BIN is not set
 		// So we should have one test that will fail with known error message
 		// and another that will pass when an env var is set correctly.
@@ -163,6 +171,10 @@ public class SBSv2QueryTests extends BaseTest {
 		
 		assertEquals(2, releaseMap.size());
 		
+		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
+		assertNotNull("Missing SDK on your system: " + SDK_ID1, sdk);
+		releaseMap = SBSv2QueryUtils.queryConfigTargetInfo(aliasOrMeaningArray , sdk);
+		assertEquals(2, releaseMap.size());
 //		String queryResult = getSBSQueryOutput(argList, null);
 //		assertTrue("No output found from " + SBSv2QueryUtils.QUERY_CONFIG_COMMAND, queryResult.length() > 0);
 //		
