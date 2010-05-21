@@ -4,6 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "com.nokia.carbide.discovery.ui.messages"; //$NON-NLS-1$
+	public static String DiscoveryView_AdvancedInstallLabel;
 	public static String DiscoveryView_CheckAllLabel;
 	public static String DiscoveryView_InstallLabel;
 	public static String DiscoveryView_MissingDirectoryURLError;

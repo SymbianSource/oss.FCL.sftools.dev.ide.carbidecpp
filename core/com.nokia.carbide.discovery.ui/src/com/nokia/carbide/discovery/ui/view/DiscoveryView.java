@@ -5,10 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -21,9 +26,15 @@ import org.eclipse.equinox.internal.p2.discovery.model.CatalogItem;
 import org.eclipse.equinox.internal.p2.ui.discovery.DiscoveryUi;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogConfiguration;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogViewer;
+import org.eclipse.equinox.p2.core.IProvisioningAgent;
+import org.eclipse.equinox.p2.operations.ProvisioningSession;
+import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
+import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
+import org.eclipse.equinox.p2.ui.ProvisioningUI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -53,6 +64,7 @@ public class DiscoveryView extends ViewPart {
 	private BaseSelectionListenerAction checkAllAction;
 	private BaseSelectionListenerAction checkNoneAction;
 	private BaseSelectionListenerAction installAction;
+	private Action showInstallWizardAction;
 
 	private boolean initialized;
 
@@ -131,6 +143,8 @@ public class DiscoveryView extends ViewPart {
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(checkAllAction);
 		manager.add(checkNoneAction);
+		manager.add(new Separator());
+		manager.add(showInstallWizardAction);
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
@@ -184,6 +198,11 @@ public class DiscoveryView extends ViewPart {
 			};
 		};
 		installAction.setImageDescriptor(Activator.getImageDescriptor("icons/icon-discovery.png")); //$NON-NLS-1$
+		showInstallWizardAction = new Action(Messages.DiscoveryView_AdvancedInstallLabel) {
+			public void run() {
+				showInstallWizard();
+			}
+		};
 		viewer.addSelectionChangedListener(checkAllAction);
 		viewer.addSelectionChangedListener(checkNoneAction);
 		viewer.addSelectionChangedListener(installAction);
@@ -226,5 +245,30 @@ public class DiscoveryView extends ViewPart {
 			});
 		}
 	}
+
+	private void showInstallWizard() {
+		ProvisioningUI defaultUI = ProvisioningUI.getDefaultUI();
+		ProvisioningSession session = defaultUI.getSession();
+		IProvisioningAgent agent = session.getProvisioningAgent();
+		IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager) agent.getService(IMetadataRepositoryManager.SERVICE_NAME);
+		IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager) agent.getService(IArtifactRepositoryManager.SERVICE_NAME);
+		for (URI uri : getCatalogURIs()) {
+			metadataManager.addRepository(uri);
+			artifactManager.addRepository(uri);
+		}
+		defaultUI.openInstallWizard(null, null, null);
+	}
+
+	private Collection<URI> getCatalogURIs() {
+		Set<URI> uris = new HashSet<URI>();
+		for (CatalogItem catalogItem : viewer.getCatalog().getItems()) {
+			try {
+				uris.add(new URI(catalogItem.getSiteUrl()));
+			} catch (URISyntaxException e) {
+				// ignore bad URIs
+			}
+		}
+		return uris;
+	};
 
 }
