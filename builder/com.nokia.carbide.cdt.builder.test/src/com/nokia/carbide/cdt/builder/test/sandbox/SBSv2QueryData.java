@@ -31,7 +31,6 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 	HashMap<ISymbianSDK, List<ISBSv2ConfigData>> sbsSDKBuildConfigMap = new HashMap<ISymbianSDK, List<ISBSv2ConfigData>>();
 	HashMap<ISymbianSDK, List<String>> sdkProductVariantList = new HashMap<ISymbianSDK, List<String>>();
 	
-	@Override
 	public void addConfigurationData(ISymbianSDK sdk, ISBSv2ConfigData configData) {
 		
 		if (sdk == null){
@@ -51,12 +50,10 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 		configDataForSDK.add(configData);
 	}
 
-	@Override
 	public HashMap<String, ISBSv2ConfigData> getBaseSBSConfigurations() {
 		return baseSBSConfigs;
 	}
 	
-	@Override
 	public List<ISBSv2ConfigData> getSDKSpecificConfigData(ISymbianSDK sdk) {
 		List<ISBSv2ConfigData> sdkDefinedConfigs =  new ArrayList<ISBSv2ConfigData>();
 		
@@ -78,17 +75,14 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 		return sdkDefinedConfigs;
 	}
 	
-	@Override
 	public List<ISBSv2ConfigData> getAllConfigurationsForSDK(ISymbianSDK sdk) {
 		return sbsSDKBuildConfigMap.get(sdk);
 	}
 
-	@Override
 	public List<String> getProductsForSDK(ISymbianSDK sdk) {
 		return sdkProductVariantList.get(sdk);
 	}
 
-	@Override
 	public void addProductListForSDK(ISymbianSDK sdk, List<String> products) {
 		if (null == sdkProductVariantList.get(sdk) || 
 			sdkProductVariantList.size() == 0){
@@ -97,7 +91,6 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 		}
 	}
 
-	@Override
 	public ISBSv2ConfigData getSBSConfigByAlias(ISymbianSDK sdk, String alias) {
 		
 		if (sdk == null){
@@ -115,7 +108,6 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 		return null;
 	}
 
-	@Override
 	public ISBSv2ConfigData getSBSConfigByMeaning(ISymbianSDK sdk, String meaning) {
 		if (sdk == null){
 			for (String aliasKey : baseSBSConfigs.keySet()){

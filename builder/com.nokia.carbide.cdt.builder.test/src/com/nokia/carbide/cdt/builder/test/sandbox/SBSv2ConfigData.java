@@ -52,18 +52,15 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 		} 
 	}
 
-	@Override
 	public String getBuildAlias() {
 		return buildAlias;
 	}
 
-	@Override
 	public String getMeaning() {
 		return meaning;
 	}
 
 
-	@Override
 	public String getReleaseDirectory(ISymbianSDK sdk) {
 		if (releaseDirectory == null){
 			initDefaultConfigTargetInfo(sdk);
@@ -95,13 +92,11 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 		
 	}
 
-	@Override
 	public ISBSv2ConfigPreprocessorInfo getBuildData(ISymbianSDK sdk) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getTraditionalTarget(ISymbianSDK sdk) {
 		if (target == null){
 			initDefaultConfigTargetInfo(sdk);
@@ -110,7 +105,6 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 		return target;
 	}
 
-	@Override
 	public String getTraditionalPlatform(ISymbianSDK sdk) {
 		if (platform == null){
 			initDefaultConfigTargetInfo(sdk);
@@ -123,7 +117,6 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 		return "Alias = " + buildAlias + " : Meaning = " + meaning;
 	}
 
-	@Override
 	public ISymbianSDK getSupportingSDK() {
 		return sdk;
 	}
