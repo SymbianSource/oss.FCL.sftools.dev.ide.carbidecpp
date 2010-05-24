@@ -45,35 +45,6 @@
    </extension>
 
    <extension
-         point="com.nokia.carbide.updater.projectUpdater">
-      <updater class="com.nokia.carbide.cpp.internal.project.core.updater.ProjectUpdater"/>
-   </extension>
-   <extension
-         point="com.nokia.carbide.updater.projectUpdater">
-      <updater class="com.nokia.carbide.cpp.internal.project.core.updater.ROMBuilderUpdater"/>
-   </extension>
-   <extension
-         point="com.nokia.carbide.updater.updateTrigger">
-      <trigger class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateTrigger"/>
-   </extension>
-   <extension
-         point="com.nokia.carbide.updater.updateTrigger">
-      <trigger
-            class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateTrigger13">
-      </trigger>
-   </extension>
-   <extension
-         point="com.nokia.carbide.updater.updateTrigger">
-      <trigger
-            class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateTrigger131">
-      </trigger>
-   </extension>
-   <extension
-         point="com.nokia.carbide.updater.updateProjectsScanner">
-      <scanner class="com.nokia.carbide.cpp.internal.project.core.updater.UpdateProjectsScanner"/>
-   </extension>
-
-   <extension
          id="ProjectConverter"
          name="ProjectConverter"
          point="org.eclipse.cdt.core.projectConverter">
