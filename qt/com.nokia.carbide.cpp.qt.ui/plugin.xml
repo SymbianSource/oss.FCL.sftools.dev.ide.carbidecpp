@@ -58,30 +58,6 @@
    </extension>
 
    <extension
-         point="org.eclipse.ui.activities">
-      <activity
-            description="%activityDescription"
-            id="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
-            name="%activityName"/>
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
-            pattern="com.trolltech.qtcppproject/com.trolltech.qtcppproject.wizards.QtConsoleProjectWizard"/>
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
-            pattern="com.trolltech.qtcppproject/com.trolltech.qtcppproject.wizards.QtGuiProjectWizard"/>
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
-            pattern="com.trolltech.qtcppproject/com.trolltech.qtcppproject.wizards.ImportQtWizard"/>
-      <category
-            description="%categoryDescription"
-            id="com.nokia.carbide.cpp.qt.qtuicategory"
-            name="%categoryName"/>
-      <categoryActivityBinding
-            activityId="com.nokia.carbide.cpp.qt.qtprojectcreationactivity"
-            categoryId="com.nokia.carbide.cpp.qt.qtuicategory"/>
-   </extension>   
-   
-   <extension
          point="com.trolltech.qtcppproject.qmakeEnvironmentModifier">
       <modifier
             class="com.nokia.carbide.cpp.internal.qt.ui.QMakeEnvironmentModifier">
