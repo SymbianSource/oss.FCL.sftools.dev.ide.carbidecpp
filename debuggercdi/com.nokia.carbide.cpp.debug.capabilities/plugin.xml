@@ -5,275 +5,468 @@
 
    <extension
          point="org.eclipse.ui.activities">
-  
-      <activity
-            name="Unused CDT UI"
-            description="These UI elements from CDT are not used and have been hidden using this capability"
-            id="com.nokia.carbide.cpp.debug.cdtactivity">
-      </activity>
-      
-<!-- The signals view is added to the debug perspective by CDT and therefore it
-	 tries to show the view no matter what.  Because we hide it here it fails to
-	 show the view properly and gives an error.  There is no way to remove it from
-	 the default debug perspective without modifying CDT.  We'll just leave it in
-	 for now, it won't have any content anyway.
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.SignalsView">
-      </activityPatternBinding>
--->
 
 <!-- The following UI elements are from org.eclipse.cdt.launch -->
- 
+      <category
+            name="CDT - Launch UI"
+            description="CDT Launch UI Elements"
+            id="org.eclipse.cdt.launch.category">
+      </category>
+      <activity
+            name="CDT - Launch UI"
+            description="CDT Launch UI"
+            id="org.eclipse.cdt.launch.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.launch.activity"
+            categoryId="org.eclipse.cdt.launch.category">
+      </categoryActivityBinding>
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.launch.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.cdt.launch/org.eclipse.cdt.cdi.launch.localCLaunch">
       </activityPatternBinding>
-
+       <activityPatternBinding
+            activityId="org.eclipse.cdt.launch.activity"
+            isEqualityPattern="true"
+            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.launch.launchGroup">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.dsf.gdb -->
+      <category
+            name="CDT - DSF GDB"
+            description="CDT DSF GDB Elements"
+            id="org.eclipse.cdt.dsf.gdb.category">
+      </category>
+      <activity
+            name="CDT DSF GDB UI"
+            description="CDT DSF GDB UI"
+            id="org.eclipse.cdt.dsf.gdb.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.dsf.gdb.activity"
+            categoryId="org.eclipse.cdt.dsf.gdb.category">
+      </categoryActivityBinding>
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.dsf.gdb.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.cdt.dsf.gdb/org.eclipse.cdt.dsf.gdb.launch.localCLaunch">
       </activityPatternBinding>
-
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.dsf.gdb.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.cdt.dsf.gdb/org.eclipse.cdt.dsf.gdb.launch.remoteCLaunch">
       </activityPatternBinding>
-
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.debug.core -->
+      <category
+            name="CDT - Core Debug Launch"
+            description="CDT Core Debug Launch"
+            id="org.eclipse.cdt.debug.core.category">
+      </category>
+      <activity
+            name="CDT - Core Debug Launch UI"
+            description="CDT Core Debug Launch"
+            id="org.eclipse.cdt.debug.core.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.core.activity"
+            categoryId="org.eclipse.cdt.debug.core.category">
+      </categoryActivityBinding>
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.debug.core.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.postmortemLaunchType">
       </activityPatternBinding>
       
-       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            isEqualityPattern="true"
-            pattern="org.eclipse.cdt.launch/org.eclipse.cdt.launch.launchGroup">
-      </activityPatternBinding>
-      
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.debug.core.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.attachLaunchType">
       </activityPatternBinding>
 
      <activityPatternBinding
-           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-           isEqualityPattern="true"
-           pattern="org.eclipse.cdt.launch.remote/org.eclipse.rse.remotecdt.RemoteApplicationLaunch">
-      </activityPatternBinding>
-
-     <activityPatternBinding
-           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-           isEqualityPattern="true"
-           pattern="org.eclipse.cdt.examples.dsf.pda/org.eclipse.cdt.examples.dsf.pda.launchType">
-      </activityPatternBinding>
-
-     <activityPatternBinding
-           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-           isEqualityPattern="true"
-           pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.localCShortcut">
-      </activityPatternBinding>
-
-     <activityPatternBinding
-           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-           isEqualityPattern="true"
-           pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.DebuggerTypesPreferencePage">
-      </activityPatternBinding>
-
-     <activityPatternBinding
-           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           activityId="org.eclipse.cdt.debug.core.activity"
            isEqualityPattern="true"
            pattern="org.eclipse.cdt.debug.core/org.eclipse.cdt.launch.applicationLaunchType">
       </activityPatternBinding>
-
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.launch.remote -->
+      <category
+            name="CDT - Remote Launch"
+            description="CDT Remote Launch Elements"
+            id="org.eclipse.cdt.launch.remote.category">
+      </category>
+      <activity
+            name="CDT - Remote Launch UI"
+            description="CDT Remote Launch Elements"
+            id="org.eclipse.cdt.launch.remote.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.launch.remote.activity"
+            categoryId="org.eclipse.cdt.launch.remote.category">
+      </categoryActivityBinding>
      <activityPatternBinding
-           activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+           activityId="org.eclipse.cdt.launch.remote.activity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.launch.remote/org.eclipse.rse.remotecdt.RemoteApplicationLaunch">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.examples.dsf.pda -->
+      <category
+            name="CDT - DSF PDA"
+            description="CDT DSF PDA Elements"
+            id="org.eclipse.cdt.examples.dsf.pda.category">
+      </category>
+      <activity
+            name="CDT - DSF PDA UI"
+            description="CDT DSF PDA Elements"
+            id="org.eclipse.cdt.examples.dsf.pda.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.examples.dsf.pda.activity"
+            categoryId="org.eclipse.cdt.examples.dsf.pda.category">
+      </categoryActivityBinding>
+     <activityPatternBinding
+           activityId="org.eclipse.cdt.examples.dsf.pda.activity"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.examples.dsf.pda/org.eclipse.cdt.examples.dsf.pda.launchType">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.debug.ui -->
+      <category
+            name="CDT - Debug UI"
+            description="CDT Debug UI Elements"
+            id="org.eclipse.cdt.debug.ui.category">
+      </category>
+      <activity
+            name="CDT - Debugger Local C Shortcut"
+            description="CDT Local C Shortcut"
+            id="org.eclipse.cdt.debug.ui.activity1">
+      </activity>
+      <activity
+            name="CDT - Debugger Types Preference Page"
+            description="CDT Debugger types preference page"
+            id="org.eclipse.cdt.debug.ui.activity2">
+      </activity>
+      <activity
+            name="CDT - Debugger Signals View"
+            description="CDT Debugger Signals View"
+            id="org.eclipse.cdt.debug.ui.activity3">
+      </activity>
+      <activity
+            name="CDT - Debugger Add Breakpoint Event Action"
+            description="CDT Debugger Add Breakpoint Event Action"
+            id="org.eclipse.cdt.debug.ui.activity4">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.ui.activity1"
+            categoryId="org.eclipse.cdt.debug.ui.cdtCategory">
+      </categoryActivityBinding>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.ui.activity2"
+            categoryId="org.eclipse.cdt.debug.ui.cdtCategory">
+      </categoryActivityBinding>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.ui.activity3"
+            categoryId="org.eclipse.cdt.debug.ui.cdtCategory">
+      </categoryActivityBinding>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.ui.activity4"
+            categoryId="org.eclipse.cdt.debug.ui.cdtCategory">
+      </categoryActivityBinding>
+     <activityPatternBinding
+           activityId="org.eclipse.cdt.debug.ui.activity1"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.localCShortcut">
+      </activityPatternBinding>
+     <activityPatternBinding
+           activityId="org.eclipse.cdt.debug.ui.activity2"
+           isEqualityPattern="true"
+           pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.DebuggerTypesPreferencePage">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.debug.ui.activity3"
+            pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.ui.SignalsView">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.debug.ui.activity4"
+            pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.internal.ui.actions.AddEventBreakpointActionDelegate">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.debug.gdbjtag.core -->
+      <category
+            name="CDT - GDB JTAG Debug UI"
+            description="CDT GDB JTAG Debug UI Elements"
+            id="org.eclipse.cdt.debug.gdbjtag.core.category">
+      </category>
+      <activity
+            name="CDT - GDB JTAG Debug UI"
+            description="CDT GDB JTAG Debug UI Elements"
+            id="org.eclipse.cdt.debug.gdbjtag.core.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.gdbjtag.core.activity"
+            categoryId="org.eclipse.cdt.debug.gdbjtag.core.category">
+      </categoryActivityBinding>
+     <activityPatternBinding
+           activityId="org.eclipse.cdt.debug.gdbjtag.core.activity"
            isEqualityPattern="true"
            pattern="org.eclipse.cdt.debug.gdbjtag.core/org.eclipse.cdt.debug.gdbjtag.launchConfigurationType">
       </activityPatternBinding>
-
-
+<!-- -->
 <!-- The following UI elements are from org.eclipse.cdt.managedbuilder.ui -->
+      <category
+            name="CDT - Managed Builder UI"
+            description="CDT Managed Builder UI Elements"
+            id="org.eclipse.cdt.managedbuilder.ui.category">
+      </category>
+      <activity
+            name="CDT - Managed Builder UI"
+            description="CDT Managed Builder UI Elements"
+            id="org.eclipse.cdt.managedbuilder.ui.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
+            categoryId="org.eclipse.cdt.managedbuilder.ui.category">
+      </categoryActivityBinding>
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.wizards.ConvertToMakeWizard">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.wizards.NewMakeFromExisting">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.wizards.MakeProjFromExisting">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_NewCDTWizard">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_NewCDTProject">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_Vars">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_Env">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_PropertyPage">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.managedbuilder.ui.preferences.PrefPage_MultiConfig">
       </activityPatternBinding>
 
-<!-- The following UI elements are from org.eclipse.cdt.make.ui -->
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.make.ui/org.eclipse.cdt.make.ui.preferences.MakePreferencePage">
-      </activityPatternBinding>
-
-<!-- The following UI elements are from org.eclipse.cdt.ui -->
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.wizards.NewCWizard1">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.wizards.NewCWizard2">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.cdt.*/.*NewProjectDropDown">
-      </activityPatternBinding>
- 
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.cdt.*/.*NewTypeDropDown">
-      </activityPatternBinding>
- 
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.cdt.*/.*NewFileDropDown">
-      </activityPatternBinding>
- 
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.cdt.*/.*NewFolderDropDown">
-      </activityPatternBinding>
-      
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsImportWizard">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsExportWizard">
-      </activityPatternBinding>      
-  
-<!-- The following UI elements are from org.eclipse.debug.ui -->
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*relaunch">
-      </activityPatternBinding>
- 
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.debug.ui/org.eclipse.cdt.debug.internal.ui.actions.AddEventBreakpointActionDelegate">
-      </activityPatternBinding>
- 
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern=".*ImportExecutableWizard">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*TerminateAndRelaunch">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*terminateAndRemove">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*terminateAll">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*stepWithFilters">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*toggleStepFilters">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org\.eclipse\.debug.*/.*ToggleStepFilters">
-      </activityPatternBinding>
-
-      <category
-            name="Nokia Debug"
-            description="Elements associated with the Nokia debugger"
-            id="com.nokia.carbide.cpp.debug.nokiacategory">
-      </category>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.ui.project.buildAutomatically">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.ui.project.buildAll">
-      </activityPatternBinding>
-
-      <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.buildConfigToolbarAction">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
+            activityId="org.eclipse.cdt.managedbuilder.ui.activity"
             pattern="org.eclipse.cdt.managedbuilder.ui/org.eclipse.cdt.ui.buildConfigMenuAction">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.make.ui -->
+      <category
+            name="CDT - Make UI"
+            description="CDT Make UI Elements"
+            id="org.eclipse.cdt.make.ui.category">
+      </category>
+      <activity
+            name="CDT - Make UI"
+            description="CDT Make UI Elements"
+            id="org.eclipse.cdt.make.ui.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.make.ui.activity"
+            categoryId="org.eclipse.cdt.make.ui.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.make.ui.activity"
+            pattern="org.eclipse.cdt.make.ui/org.eclipse.cdt.make.ui.preferences.MakePreferencePage">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.cdt.ui -->
+      <category
+            name="CDT - UI"
+            description="CDT UI Elements"
+            id="org.eclipse.cdt.ui.category">
+      </category>
+      <activity
+            name="CDT - UI for New* Wizards"
+            description="CDT UI for New* Wizards"
+            id="org.eclipse.cdt.ui.activity">
+      </activity>
+      <activity
+            name="CDT - Project Settings Actions"
+            description="CDT Project settings import and export actions"
+            id="org.eclipse.cdt.ui.activity2">
+      </activity>
+      <activity
+            name="CDT - Import Executable Action"
+            description="CDT Import executable action"
+            id="org.eclipse.cdt.ui.activity3">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            categoryId="org.eclipse.cdt.ui.category">
+      </categoryActivityBinding>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.ui.activity2"
+            categoryId="org.eclipse.cdt.ui.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.wizards.NewCWizard1">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.wizards.NewCWizard2">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            pattern="org\.eclipse\.cdt.*/.*NewProjectDropDown">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            pattern="org\.eclipse\.cdt.*/.*NewTypeDropDown">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            pattern="org\.eclipse\.cdt.*/.*NewFileDropDown">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity"
+            pattern="org\.eclipse\.cdt.*/.*NewFolderDropDown">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity2"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsImportWizard">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity2"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsExportWizard">
+      </activityPatternBinding>      
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activity3"
+            pattern=".*ImportExecutableWizard">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.debug.ui -->
+      <category
+            name="Platform Debug UI"
+            description="Platform Debug UI Elements"
+            id="org.eclipse.debug.ui.category">
+      </category>
+      <activity
+            name="Platform Debug UI"
+            description="Platform Debug UI Elements"
+            id="org.eclipse.debug.ui.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.debug.ui.activity"
+            categoryId="org.eclipse.debug.ui.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*relaunch">
+      </activityPatternBinding>
+ 
+      <activityPatternBinding
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*TerminateAndRelaunch">
       </activityPatternBinding>
 
       <activityPatternBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            pattern="org.eclipse.cdt.debug.mi.ui/org.eclipse.cdt.debug.mi.ui.MIPreferencePage">
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*terminateAndRemove">
       </activityPatternBinding>
 
-      <categoryActivityBinding
-            activityId="com.nokia.carbide.cpp.debug.cdtactivity"
-            categoryId="com.nokia.carbide.cpp.debug.nokiacategory">
-      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*terminateAll">
+      </activityPatternBinding>
 
+      <activityPatternBinding
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*stepWithFilters">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*toggleStepFilters">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="org.eclipse.debug.ui.activity"
+            pattern="org\.eclipse\.debug.*/.*ToggleStepFilters">
+      </activityPatternBinding>
+<!-- -->
+<!-- The following UI elements are from org.eclipse.ui.ide -->
+      <category
+            name="Platform IDE UI"
+            description="Platform IDE UI Elements"
+            id="org.eclipse.ui.ide.category">
+      </category>
+      <activity
+            name="Platform IDE UI"
+            description="Platform IDE UI Elements"
+            id="org.eclipse.ui.ide.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.ui.ide.activity"
+            categoryId="org.eclipse.ui.ide.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.ui.ide.activity"
+            pattern="org.eclipse.ui.project.buildAutomatically">
+      </activityPatternBinding>
+
+      <activityPatternBinding
+            activityId="org.eclipse.ui.ide.activity"
+            pattern="org.eclipse.ui.project.buildAll">
+      </activityPatternBinding>
+<!-- -->
+  
+<!-- The following UI elements are from org.eclipse.cdt.debug.mi.ui -->
+      <category
+            name="CDT - MI Debug UI"
+            description="CDT - MI Debug UI Elements"
+            id="org.eclipse.cdt.debug.mi.ui.category">
+      </category>
+      <activity
+            name="CDT - MI Debug UI"
+            description="CDT - MI Debug Preference Page"
+            id="org.eclipse.cdt.debug.mi.ui.activity">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.debug.mi.ui.activity"
+            categoryId="org.eclipse.cdt.debug.mi.ui.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.debug.mi.ui.activity"
+            pattern="org.eclipse.cdt.debug.mi.ui/org.eclipse.cdt.debug.mi.ui.MIPreferencePage">
+      </activityPatternBinding>
+<!-- -->
    </extension>
 
 </plugin>
