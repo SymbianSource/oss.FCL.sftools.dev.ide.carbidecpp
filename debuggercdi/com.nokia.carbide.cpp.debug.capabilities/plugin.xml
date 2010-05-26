@@ -334,6 +334,10 @@
             activityId="org.eclipse.cdt.ui.activity2"
             categoryId="org.eclipse.cdt.ui.category">
       </categoryActivityBinding>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.ui.activity3"
+            categoryId="org.eclipse.cdt.ui.category">
+      </categoryActivityBinding>
       <activityPatternBinding
             activityId="org.eclipse.cdt.ui.activity"
             pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.wizards.NewCWizard1">
