@@ -17,39 +17,21 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.osgi.framework.Version;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cdt.builder.test.sandbox.ISBSv2ConfigData;
 import com.nokia.carbide.cdt.builder.test.sandbox.ISBSv2QueryData;
 import com.nokia.carbide.cdt.builder.test.sandbox.SBSv2QueryUtils;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class SBSv2QueryTests extends BaseTest {
+	
+	private boolean printTimingStats = true;
 	
 	private static ISBSv2QueryData sbsAliasBaseQuery;
 	
@@ -79,7 +61,9 @@ public class SBSv2QueryTests extends BaseTest {
 		if (sbsAliasBaseQuery == null){
 			sbsAliasBaseQuery = SBSv2QueryUtils.queryAliasAndProductVariants();
 		}
-		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
+		
+		if (printTimingStats)
+			System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
 		
 		HashMap<String, ISBSv2ConfigData> baseConfigs = sbsAliasBaseQuery.getBaseSBSConfigurations();
 		
@@ -181,7 +165,8 @@ public class SBSv2QueryTests extends BaseTest {
 //		HashMap<String, String> outputMap = parseQueryConfigResults(queryResult);
 //		assertTrue("No configs were found in query for : " + SBSv2QueryUtils.QUERY_CONFIG_COMMAND, outputMap.size() > 0);
 //		
-//		System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
+		if (printTimingStats)
+			System.out.println("Time for testQueryProductsFromSDKs(): " + getTimingStats());
 //		
 	}
 	
@@ -194,7 +179,7 @@ public class SBSv2QueryTests extends BaseTest {
 		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
 		assertNotNull("Missing SDK on your system: " + SDK_ID1, sdk);
 		List<String> products = sbsAliasBaseQuery.getProductsForSDK(sdk);
-		assertEquals(38, products.size());
+		assertEquals(19, products.size());
 	}
 	
 	public void testStressQueryTest() throws Exception {
@@ -227,7 +212,9 @@ public class SBSv2QueryTests extends BaseTest {
 		testQueryProductsFromSDKs();
 		
 		startTime = stressTestStartTime;
-		System.out.println("Time for testStressQueryTest(): " + getTimingStats());
+		
+		if (printTimingStats)
+			System.out.println("Time for testStressQueryTest(): " + getTimingStats());
 	}
 	
 	
