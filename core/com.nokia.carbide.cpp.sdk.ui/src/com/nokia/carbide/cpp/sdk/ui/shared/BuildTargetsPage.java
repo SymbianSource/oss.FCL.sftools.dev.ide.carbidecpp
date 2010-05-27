@@ -239,7 +239,6 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage", null, null, 0).open()){ //$NON-NLS-1$
 					inited = false;
 					setVisible(true);
-					drawSDKConfigView(getControl().getParent());
 					TemplateSDKFilter filter = filterCheckbox.getSelection() ? templateFilter
 							: null;
 					filteringContentProviderWrapper.setFilter(filter);
@@ -256,11 +255,10 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 	
 	private void drawSDKConfigView(Composite parent) {
 		
-		if (viewer == null){
-			viewer = new ContainerCheckedTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-			viewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-			viewer.setLabelProvider(new LabelProvider());
-		}
+		viewer = new ContainerCheckedTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		viewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
+		viewer.setLabelProvider(new LabelProvider());
+
 		TreeNodeContentProvider treeNodeContentProvider = new TreeNodeContentProvider();
 		filteringContentProviderWrapper = 
 			new FilteringContentProviderWrapper(treeNodeContentProvider);
