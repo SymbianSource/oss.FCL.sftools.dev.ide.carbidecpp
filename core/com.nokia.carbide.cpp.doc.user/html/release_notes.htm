@@ -16,7 +16,7 @@
   </style>
 </head>
 <body bgcolor="#ffffff">
-<h2>Carbide.c++ Release Notes 2.6.0</h2>
+<h2>Carbide.c++ Release Notes 3.0.0</h2>
 <p>The Carbide.c++  is a comprehensive development tool suite for Symbian OS that is based on the Eclipse framework. The C++ Development Toolkit (CDT), provides the foundation for project and build tools management, as well as the primary interface for the debugger to communicate with the IDE. </p>
 <p>This is a collection of important information concerning last-minute
   changes and other topics that deserve special attention.&nbsp;Please
@@ -35,10 +35,22 @@ a quick introduction to Carbide.c++.</p>
 Updating the CDT feature in Carbide.c++/Eclipse will wipe out our
 changes making the tools unusable!</p>
 <p> See the <a href="hints_tips.htm">Tips &amp; tricks</a> page for more helpful information.</p>
-<h3><a name="whatsNew" id="whatsNew"></a>What's New in 2.6.0 </h3>
+<h3><a name="whatsNew" id="whatsNew"></a>What's New in 3.0.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <ul>
   <li><b>Nada </b> supported &mdash; ???</li>
+</ul>
+<h4><a name="new260" id="new260"></a>2.6.0 </h4>
+<ul>
+    <li><b>GCCE 4.0 </b> supported &mdash; required for future SBSv2 releases.</li>
+    <li><b>Symbian^3 </b>supported &mdash; new templates and improvements required for the public Symbian^3 SDK.</li>
+    <li><b>Known Issues in v2.6.0</b>:
+        <ul>
+                <li>GCCE4 support requires using a SBSv2 build alias (<span class="code">-c</span> parameter) of <span class="code">armv5_udeb_gcce</span> or <span class="code">armv5_urel_gcce</span>. As of this writing, these aliases were not available in the SDK or SBSv2, but will appear in some future version. Carbide versions prior to 2.6 do not support GCCE4.</li>
+            <li>Users should consult the SDK documentation for GCCE and SBSv2 issues and installation requirements.</li>
+            <li>TRK: If you install the TRK app onto your phone's flash memory (Mass Storage) a Remote Connection may not find the TRK-service even though TRK is already connected to your PC.         Workaround: Uninstall TRK then reinstall it onto your PHONE memory (C-drive). The TRK service should now be &quot;Available&quot;.</li>
+        </ul>
+    </li>
 </ul>
 <h4><a name="new250" id="new"></a>2.5.0</h4>
 <ul>
@@ -53,126 +65,6 @@ changes making the tools unusable!</p>
   </li>
   <li><b>RVCT 4.0 (ARMv5)</b> builds and some limited debugging is supported</li>
   <li><b>Symbian ^3 SDK</b> now supported</li>
-</ul>
-<h4><a name="new240" id="new240"></a>2.4.0</h4>
-<ul>
-  <li>    <span class="style5"><b>IMPORTANT WINSCW COMPILER</b></span> change - the WINSCW compiler 3.2.5 build 487  provides new name mangling to support critical exception handling. Without this change an exception can cause a program or system crash. For more information visit the <a href="http://developer.symbian.org/wiki/index.php/WINSCW_(build_version_information)">WINSCW</a> wiki page.</li>
-  <li><b>Qt Tools 1.6</b> now supported.</li>
-  <li>The <b>Run builds concurrently</b> option in the <a href="reference/wnd_build_prefs.htm">Builds</a> preference panel now supports up to 50 concurrent build jobs, up from 4.</li>
-</ul>
-<h4><a name="new230" id="new230"></a>2.3.0</h4>
-<ul>
-  <li>P2 update services now supported. Updating Carbide.c++ should be more flexible and easier than before.</li>
-  <li>The official Qt code style is now included in the Code Style preference panel.</li>
-  <li>Single file compiles on Raptor are now supported.</li>
-</ul>
-<h4><a name="new220" id="new220"></a>2.2.0</h4>
-<ul>
-  <li><b>Eclipse 3.5 </b>&#8212; The Eclipse 3.5 project (Galileo) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.5</a> for more information.</li>
-  <li><b>CDT 6.0 </b>&#8212; The final version of CDT included as part of the Galileo release. See the <a href="http://wiki.eclipse.org/CDT/User/NewIn60">CDT 6.0 News and Noteworthy</a> page for more information.</li>
-  <li><b>Java 6.0 </b>&#8212; Due to the above changes Carbide has also updated to use the Java Runtime Environment (JRE) 6.0. See <a href="http://java.sun.com/javase/6/webnotes/features.html">Java SE 6 Release Notes</a> page for more information.</li>
-  <li><b>SBSv2 arguments field</b> - added a text field to the <a href="reference/wnd_build_prefs.htm">Build &gt; SBSv2</a> panel to allow parameter passing to Raptor builds.</li>
-  <li><b>Carbide.c++ News Reader</b> - now uses  the proxy data provided by Eclipse when creating help connections.</li>
-</ul>
-<h4><a name="new210" id="new210"></a>2.1.0</h4>
-<ul>
-  <li><b>Performance improvements</b> - the following areas of Carbide have been optimized to improve performance:
-    <ul>
-      <li><b>Importing large projects</b>   - Importing large projects is one of our primary points of performance improvements. When too many project roots were used the more source and include paths were brought into the project, up to an including entire SDKs. Generally, we found that once a project root contains over 15-20K files Carbide became extremely sluggish. We have improved some edge cases where project roots were calculated incorrectly and now include only what's really needed. </li>
-      <li><b>Modifying Project Settings and Build Configuration Data</b>-    This is quite a significant improvement as modifying MMP files and switching build configurations are a couple of the most common operations done by end-users and because the time spent processing project and configuration data is done on the main thread, locking the UI. With optimization in one CDT function we were able to bring most project-related and configuration switch changes from 20 seconds to less than 3 seconds. You should also see improvements when saving MMP and INF files (the &quot;Refreshing Configuration Job&quot;). </li>
-      <li><b>Executables View Refreshing</b> - The Executables view refresh was impacting everything from IDE start-up to import and project creation as well refreshes during rebuilds. Some of our wall clock tests on large projects (such as contacts the browser) show the executables job running from 15-25 seconds down to about 5 seconds.</li>
-      <li><b>Indexing Options</b>  - Use the <b>Indexing Options</b> section in the <a href="reference/wnd_carbide_pref.htm">Carbide.c++</a> preference panel to control how  project MMP files are indexed.</li>
-    </ul>
-  </li>
-  <li><b>New Launch Configuration improvements</b> - The <b>New Launch Configuration</b> wizard now starts with a new <a href="projects/launch/wiz_new_launch_config.htm#CATEGORY">Category Selection</a> page which helps guide developers in choosing the correct launch configuration  for a project, whether it be for Phones, Boards, or other target devices. In addition, the <a href="projects/launch/wiz_new_launch_config.htm#BLD_OPT">Build Options Selection</a> page enables developers to define if a project is automatically built or not at the launch configuration level.</li>
-  <li><b>Customization (.bsf) and Symbian Variant Binary (.var) platform</b> discovery is now supported. See the Platform Filtering Preference panel for details.</li>
-  <li><b>TRK improvements</b> - TRK continues to evolve and now includes these improvements:
-    <ul>
-      <li>TRK now automatically reconnects if you disconnect the USB cable and then reconnect.</li>
-      <li>Added support for targeting nested static libraries of a polymorphic dll. </li>
-      <li>TRK now checks for  duplicates before adding a library to the target list to avoid sending duplicate library loading commands (bug 9035).</li>
-      <li>Users no longer need to specify a port number for Bluetooth connections as TRK now automatically locates BT serial port and uses that for the connections setup (bug 2502).</li>
-    </ul>
-  </li>
-  <li><b>Keywords in preference panels and property pages</b> - All Carbide related preference panels and project property pages now include keywords to make searching for options a bit easier.</li>
-  <li><b>New Carbide Extensions section</b> - Project Property dialogs now include a <b>Carbide Extensions</b> section which allows Carbide plug-in and utilities a place to add their own project  settings pages.</li>
-</ul>
-<h4>2.0.4</h4>
-<ul>
-  <li><b>Hover Help</b> - hover your pointer over a recognized Symbian symbol in an editor and see the Symbian API Reference information appear to assist you.</li>
-</ul>
-<h4>2.0.3</h4>
-<ul>
-  <li><b>Carbide.c++ News Reader</b> - introducing the <a href="reference/view_carbide_news.htm">Carbide.c++ News</a> view which provides the latest Carbide, Symbian, and S60 news as well as news on tools updates and screencasts for Carbide development.</li>
-</ul>
-<h4>2.0.0</h4>
-<ul><li><b>Eclipse 3.4.1 </b>&#8212; The Eclipse 3.4 project (Ganymede) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.4</a> for more information.</li>
-</ul>
-<ul><li><b>CDT 5.0.1</b> &#8212; The final version of CDT included as part of the Ganymede release. See the <a href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/concepts/cdt_c_whatsnew.htm">CDT 5.0 News and Noteworthy</a> page for more information. </li>
-  <li><b>SDK Migration support in CodeScanner</b> &#8212; CodeScanner now includes support for S60 SDK rules that provide helpful migration information on S60 functions within any C/C++ editor view and provide links to additional information within the SDK documentation or web. Very helpful during development to keep you code up-to-date with the latest SDK revisions.</li>
-  <li><b>Qt SDK for S60  support </b>&#8212; Carbide now <a href="qt_help/qt_overview.htm">supports</a> the <a href="qt_help/qt_importing_projs_01.htm">importing</a> and <a href="qt_help/qt_creating_projs_01.htm">creation</a> of Qt projects using the  <a href="http://trolltech.com/developer/technical-preview-qt-for-s60">Qt SDK for S60</a>.</li>
-  <li><b>Executables view improvements</b> &#8212; The <a href="reference/view_executables.htm">Executables</a> view now supports the loading of some additional DLL cases to ensure that the DLLs you want to debug are available during a debug session. In addition,  a Remove button has been added to the view's toolbar that makes it easier for you to remove any executables from the list.</li>
-  <li><b>More indexer improvements </b>&#8212; Speed improvements for code completion, syntax coloring, and much more.</li>
-  <li><b>Remote Connections view</b> &#8212; A visual list of <a href="reference/trk/view_remote_connection.htm">remote connections</a> and their state for managing multiple and diverse device connections.</li>
-  <li><b>Partial upgrade SIS file support</b> &#8212; Carbide now supports the generation of partial upgrade SIS/SISX files. This increases debugger turnaround by only generating new files for changes and uploading these smaller executables to the device.</li>
-  <li><b>More Program Counter support </b>&#8212; Added a Move to Line command for the debugger that enables you to move the PC to a new line while debugging without executing any intermediate lines or resuming execution.</li>
-  <li>Multiple<b> TRK</b> improvements including:
-    <ul>
-      <li>Both App and System TRK try to disable mobile crash debugging</li>
-      <li>TRK now looks for the new mobile crash agent (ms_useragent)</li>
-      <li>Added additional error checking when communicating over USB to improve stability</li>
-      <li>Fixed some random TRK deadlocks when reading registers or when thread panics occur</li>
-      <li>Option &gt; Exit has been replaced by Option &gt; Back to reflect the change made to exiting TRK</li>
-      <li>Changes made to use UIDs in place of component names to identify executables for improved identification</li>
-      <li>Reset TRK priority to high to avoid problems debugging complex process intensive applications</li>
-      <li>Improved breakpoint location in DLLs when debugging multiple processes</li>
-      <li>TRK no longer targets processes with UID 0 automatically. Users can still attach to the process or use a launch configuration.</li>
-      <li>TRK application name and UID changed to blocking of TRK SIS files assigned with the old UID.</li>
-      <li>TRK now always uses the kernel APIs to read/write memory to improve security, no more direct reads/writes.</li>
-      <li>Application TRK  no longer allows write operations to the following registers: CPSR, SP, and LR</li>
-    </ul>
-  </li>
-</ul>
-<h4>1.3.1</h4>
-<ul>
-  <li><b><a href="reference/trk/wnd_on_device_setup.htm">On-Device Setup</a> </b> dialog &#8212; connects, verifies and updates Carbide software services like the TRK debug agent on a device to ensure you are always using the latest version in your development efforts. Having trouble connecting with  TRK, give this a try. </li>
-  <li><b>New Bug Report wizard  </b> &#8212; directly submit bugs and enhancement requests  to  Carbide Bugzilla from within Carbide using the <strong>Help &gt; New Bug Report</strong> menu option. Enter the name and password into the Bug Reporter preference panel and quick bug reports are easy to submit. </li>
-  <li><strong>Launch configuration panels UI unification and improvements</strong>&#8212; a host of minor UI improvements are being made in the launch configuration panes to provide a more coherent and reproducible experience across all launch configuration dialogs. </li>
-</ul>
-<blockquote>
-  <p>For example, the concept of a &quot;main executable&quot; had been replaced with the Executables tab where a list of executables targeted for debugging were shown. This UI change brings the launch configurations into sync with that change by removing the Main Executable from the Main tab. The Main tab will only show a process to launch and not executables targeted for debugging. </p>
-  <p>Another example, the Arguments field used by the run-mode TRK configurations has been moved to the Arguments tab to match the Emulator configuration.</p>
-</blockquote>
-<ul>
-  <li>Many other bug fixes to improve stability and usability on Carbide </li>
-</ul>
-<h4>1.3.0</h4>
-<ul>
-  <li><b>Eclipse 3.3.1.1</b> &#8212; The Eclipse 3.3 project provides the foundation, or integration platform, for which the product is built upon. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.3</a> for more information.</li>
-  <li><b>CDT 4.0.1</b> &#8212; This drop is based on a final version of CDT that was part of the Europa release. See the <a href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/concepts/cdt_c_whatsnew.htm">CDT 4.0 News and Noteworthy</a> page for more information. </li>
-  <li><b>Build system improvements</b> &#8212; large project support has been enhanced for builds and indexing, but performance trade offs have been made so the latter improvements are possible. This is most noticeable when importing projects and making changes to <span class="code">bld.inf</span> and <span class="code">mmp</span> files.</li>
-  <li><b>System search</b> &#8212; search any directory outside the workspace. </li>
-  <li><b>Debugging improvements include:</b>
-    <ul>
-      <li><b>Executables view</b> &#8212; provides a dynamic list of executables and their related source files </li>
-      <li><b>Executables tab</b> &#8212; uses a rule based approach in launch configurations  to include/exclude executables in the project </li>
-      <li><b>On-device debugging</b> &#8212; lots of TRK  (v2.8.6) fixes here to make on-device debugging easier and more stable </li>
-    </ul>
-  </li>
-  <li><b>Carbide tool plug-ins include</b>:
-    <ul>
-      <li>CodeScanner - a static source code analysis tool for Symbian OS programs written in C++</li>
-      <li>Capability Scanner and Epocwind.out Scanner - performs static and runtime capability checks on your project </li>
-      <li>Dependency Explorer - analyses static dependencies between  components</li>
-    </ul>
-  </li>
-  <li><b>Indexing improvements</b></li>
-  <li>The creation of EKA1-based projects has been deprecated with this release. Carbide still supports its use but all development going forward will concentrate on EKA2-based projects. </li>
-  <li><b>Lots of bug fixes</b>... </li>
-</ul>
-<h3><a name="beta" id="beta"></a>User Notes</h3>
-<ul><li><b>New extension makefiles</b> - if your project is using the new extension makefile support in OS9.3+ (<span class="code">prj_extensions</span>), you will get a build error with the default builder settings.  We plan to fix this issue, but for now you can work around it by disabling the manage dependencies and concurrent compilation builder options found in the <b>Carbide.c++ &gt; Build</b> preference panel.</li>
-  <li><b>Qt for Symbian support</b> - The Qt views require registered COM plugins in order to work correctly.  These plugins are registered by our installer.  If you did not use our installer or have uninstalled an existing Qt Eclipse integration after installing Carbide, you'll need to register the plugins by running a batch file.  You'll find the batch file here: \configuration\qt\register_plugins.bat.  You'll know that you need to run the batch file if you get exceptions when opening one of the Qt views.</li>
 </ul>
 <h3><a name="issues" id="issues"></a>Fixed bugs and workarounds</h3>
 <ul>
