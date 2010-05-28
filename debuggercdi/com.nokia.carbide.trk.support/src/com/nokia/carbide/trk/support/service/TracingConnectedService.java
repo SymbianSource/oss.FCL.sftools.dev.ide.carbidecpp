@@ -32,9 +32,9 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.trk.support.Messages;
+import com.nokia.carbide.trk.support.connection.IUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
-import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.tcf.api.ITCAPIConnection;
 import com.nokia.tcf.api.ITCConnection;
@@ -78,7 +78,7 @@ public class TracingConnectedService extends AbstractConnectedService2 {
 	}
 
 	private boolean getTraceCoreResponse() throws ConnectionFailException {
-		if (connection.getConnectionType() instanceof USBConnectionType) {
+		if (connection.getConnectionType() instanceof IUSBConnectionType) {
 			String portNumStr = connection.getSettings().get(SerialConnectionSettings.PORT);
 			int portNum = Integer.parseInt(portNumStr);
 			return getTraceCoreResponseFromOSTUSB(getSimplePortName(portNum));
@@ -212,7 +212,7 @@ public class TracingConnectedService extends AbstractConnectedService2 {
 				if (connection.isInUse()) {
 					estatus = EStatus.IN_USE;
 					IConnectionType connectionType = connection.getConnectionType();
-					if (connectionType instanceof USBConnectionType)
+					if (connectionType instanceof IUSBConnectionType)
 						message = MessageFormat.format(PORT_IN_USE, 
 								connection.getSettings().get(SerialConnectionSettings.PORT));
 					else if (connectionType instanceof TCPIPConnectionType)
