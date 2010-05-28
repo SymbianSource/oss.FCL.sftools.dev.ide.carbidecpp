@@ -31,6 +31,7 @@ import com.nokia.carbide.trk.support.connection.SerialBTConnectionType;
 import com.nokia.carbide.trk.support.connection.SerialConnectionType;
 import com.nokia.carbide.trk.support.connection.TCFConnection;
 import com.nokia.carbide.trk.support.connection.TCFConnectionType;
+import com.nokia.carbide.trk.support.connection.TCFUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 
@@ -71,7 +72,8 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 
 	private Collection<String> getCompatibleTracingConnectionTypeIds() {
 		return Arrays.asList(new String[] {
-				USBConnectionType.ID
+				USBConnectionType.ID,
+				TCFUSBConnectionType.ID,
 		});
 	}
 	
@@ -80,7 +82,9 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 				SerialConnectionType.ID,
 				TCFConnectionType.ID,
 				SerialBTConnectionType.ID,
-				USBConnectionType.ID}); 
+				USBConnectionType.ID,
+				TCFUSBConnectionType.ID,
+				}); 
 	}
 
 	/* (non-Javadoc)

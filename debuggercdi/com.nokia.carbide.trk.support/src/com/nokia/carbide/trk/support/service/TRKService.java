@@ -45,7 +45,9 @@ public class TRKService implements IService {
 				SerialConnectionType.ID, 
 				SerialBTConnectionType.ID,
 				TCPIPConnectionType.ID,
-				USBConnectionType.ID}); 
+				USBConnectionType.ID,
+				TCFUSBConnectionType.ID
+				}); 
 	}
 
 	public String getDisplayName() {

@@ -34,10 +34,10 @@ import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.trk.support.Messages;
+import com.nokia.carbide.trk.support.connection.IUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.SerialConnectionType;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
-import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.tcf.api.ITCAPIConnection;
@@ -138,7 +138,7 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 			}
 			return new Version(versInts[0], versInts[1], versInts[2]);
 		}
-		else if (connection.getConnectionType() instanceof USBConnectionType) {
+		else if (connection.getConnectionType() instanceof IUSBConnectionType) {
 			String portNumStr = connection.getSettings().get(SerialConnectionSettings.PORT);
 			int portNum = Integer.parseInt(portNumStr);
 			return getTRKVersionFromOSTUSB(getSimplePortName(portNum));
@@ -316,7 +316,7 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 					estatus = EStatus.IN_USE;
 					IConnectionType connectionType = connection.getConnectionType();
 					if (connectionType instanceof SerialConnectionType ||
-							connectionType instanceof USBConnectionType)
+							connectionType instanceof IUSBConnectionType)
 						message = MessageFormat.format(PORT_IN_USE, 
 								connection.getSettings().get(SerialConnectionSettings.PORT));
 					else if (connectionType instanceof TCPIPConnectionType)

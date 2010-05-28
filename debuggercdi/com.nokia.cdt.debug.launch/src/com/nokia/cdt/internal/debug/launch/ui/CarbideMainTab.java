@@ -18,6 +18,9 @@ package com.nokia.cdt.internal.debug.launch.ui;
 
 import org.eclipse.cdt.launch.internal.ui.LaunchMessages;
 import org.eclipse.cdt.launch.ui.CMainTab;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -33,12 +36,19 @@ import org.eclipse.swt.widgets.Text;
 
 public class CarbideMainTab extends CMainTab {
 
+	protected boolean checkProject;
+	
+	
 	public CarbideMainTab() {
 		super();
 	}
 
 	public CarbideMainTab(int flags) {
 		super(flags);
+
+		// CMainTab won't validate a project if we tell it to ignore the program, so
+		// add the project validation here
+		checkProject = (flags & DONT_CHECK_PROGRAM) != 0;
 	}
 	
 	protected void createExeFileGroup(Composite parent, int colSpan) {
@@ -95,6 +105,28 @@ public class CarbideMainTab extends CMainTab {
 		fDisableBuildButton.setData(".uid", "CMainTab.DisableBuildButton"); //$NON-NLS-1$ //$NON-NLS-2$
 		fWorkspaceSettingsButton.setData(".uid", "CMainTab.WorkspaceSettingsButton"); //$NON-NLS-1$ //$NON-NLS-2$ 
 		fWorkpsaceSettingsLink.setData(".uid", "CMainTab.WorkspaceSettingsLink"); //$NON-NLS-1$ //$NON-NLS-2$
-		
+	}
+
+	@Override
+	public boolean isValid(ILaunchConfiguration config) {
+		boolean valid = super.isValid(config);
+		if (valid && checkProject) {
+			String name = fProjText.getText().trim();
+			if (name.length() == 0) {
+				setErrorMessage(LaunchMessages.getString("CMainTab.Project_not_specified")); //$NON-NLS-1$
+				return false;
+			}
+			if (!ResourcesPlugin.getWorkspace().getRoot().getProject(name).exists()) {
+				setErrorMessage(LaunchMessages.getString("Launch.common.Project_does_not_exist")); //$NON-NLS-1$
+				return false;
+			}
+			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
+			if (!project.isOpen()) {
+				setErrorMessage(LaunchMessages.getString("CMainTab.Project_must_be_opened")); //$NON-NLS-1$
+				return false;
+			}
+		}
+
+		return valid;
 	}
 }

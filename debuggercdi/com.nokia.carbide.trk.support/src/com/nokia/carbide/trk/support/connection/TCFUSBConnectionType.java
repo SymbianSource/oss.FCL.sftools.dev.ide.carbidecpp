@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2008 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -22,22 +22,23 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
 import com.nokia.carbide.trk.support.Messages;
 
 /**
- * Implementation of IConnectionType for USB over TC framework connections
+ * Implementation of IConnectionType for USB TCF connections.  This also uses Nokia TCF but 
+ * is given a unique identifier for now so we can debug it differently.
  */
-public class USBConnectionType implements IUSBConnectionType {
+public class TCFUSBConnectionType implements IUSBConnectionType {
 
-	public static final String ID = USBConnectionType.class.getName();
+	public static final String ID = "com.nokia.carbide.connection.TCFUSBConnectionType"; //$NON-NLS-1$
 
 	public IConnectionFactory getConnectionFactory() {
 		return new SerialConnectionFactory(this, true);
 	}
 
 	public String getDescription() {
-		return Messages.getString("USBConnectionType.Desc"); //$NON-NLS-1$
+		return Messages.getString("TCFUSBConnectionType.Desc"); //$NON-NLS-1$
 	}
 
 	public String getDisplayName() {
-		return Messages.getString("USBConnectionType.Label"); //$NON-NLS-1$
+		return Messages.getString("TCFUSBConnectionType.Label"); //$NON-NLS-1$
 	}
 
 	public String getHelpContext() {

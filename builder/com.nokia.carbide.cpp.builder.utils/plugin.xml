@@ -379,10 +379,21 @@
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
 			locationURI="popup:org.eclipse.ui.popup.any">
+			<separator name="SymbianBuildGroup" visible="true"/>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.ui.popup.any?after=SymbianBuildGroup">
+			<menu
+				id="com.nokia.carbide.cpp.builder.utils.buildmenu"
+				label="%BuilderUtils.Symbian_Build_Utils">
+			</menu>
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu">
 			<separator name="BuilderUtils" visible="true"/>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.preprocessSource"
 				label="%BuilderUtils.Preprocess">
@@ -392,7 +403,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
 				label="%BuilderUtils.Compile_Source">
@@ -402,7 +413,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeSymbianComponent"
 				label="%BuilderUtils.Freeze_Symbian_Component">
@@ -412,7 +423,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.cleanSymbianComponent"
 				label="%BuilderUtils.Clean_Symbian_Component">
@@ -422,7 +433,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildSymbianComponent"
 				label="%BuilderUtils.Build_Symbian_Component">
@@ -443,7 +454,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildAllConfigs"
 				label="%BuilderUtils.Build_All_Targets"
@@ -465,7 +476,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.freezeExports"
 				label="%BuilderUtils.Freeze_Exports"
@@ -476,7 +487,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<command
 				commandId="com.nokia.carbide.cpp.builder.utils.commands.buildPKG"
 				label="%BuilderUtils.Build_PKG">
@@ -620,7 +631,7 @@
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="popup:org.eclipse.ui.popup.any?after=BuilderUtils">
+			locationURI="popup:com.nokia.carbide.cpp.builder.utils.buildmenu?after=BuilderUtils">
 			<menu
 				id="com.nokia.carbide.cpp.builder.utils.abldmenu"
 				label="ABLD">

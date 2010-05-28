@@ -334,7 +334,6 @@ three (3) years from the date of the distribution of this product by Nokia.
          
 <!--
 These source features will be moved to a new feature
-    <includes id="com.nokia.carbide.bugreport.source" version="0.0.0"/>
     <includes id="com.nokia.carbide.cpp.capabilityScanner.source" version="0.0.0"/>
     <includes id="com.nokia.carbide.cpp.codescanner.source" version="0.0.0"/>
  	<includes id="com.nokia.carbide.cpp.pi.source" version="0.0.0"/>
