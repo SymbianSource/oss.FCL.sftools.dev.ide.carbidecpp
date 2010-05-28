@@ -8,12 +8,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link href="../book.css" rel="stylesheet" type="text/css" />
   <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
-  <style type="text/css">
-.style1 {font-family: "Courier New", Courier, mono}
-.style5 {color: #FF0000}
-.style6 {font-weight: bold}
-.style8 {color: #000000; font-weight: bold; }
-  </style>
 </head>
 <body bgcolor="#ffffff">
 <h2>Carbide.c++ Release Notes 3.0.0</h2>
@@ -26,7 +20,8 @@
 <ul>
   <li><a href="#whatsNew">What's new </a></li>
   <li><a href="#beta">User notes</a></li>
-  <li><a href="bugs_fixed.htm">Fixed bugs</a> and <a href="#issues">workarounds</a></li>
+  <li><a href="bugs_fixed.htm">K</a><a href="#issues">nown issues</a></li>
+  <li><a href="bugs_fixed.htm">Bug Fixes</a></li>
   <li><a href="#support">Technical support</a> </li>
 </ul>
 <p>Once you have read the release notes, we recommend you follow the <img src="images/command_link.png" width="16" height="12" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=com.nokia.carbide.cpp.doc.user.getStarted)")'>HelloWorld tutorial</a> for
@@ -34,11 +29,21 @@ a quick introduction to Carbide.c++.</p>
 <p class="note" style="color: rgb(255, 0, 0);"><span style="font-weight: bold;">WARNING</span>:
 Updating the CDT feature in Carbide.c++/Eclipse will wipe out our
 changes making the tools unusable!</p>
-<p> See the <a href="hints_tips.htm">Tips &amp; tricks</a> page for more helpful information.</p>
 <h3><a name="whatsNew" id="whatsNew"></a>What's New in 3.0.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <ul>
-  <li><b>Nada </b> supported &mdash; ???</li>
+    <li><b>Eclipse 3.6 </b>&#8212; The Eclipse 3.6 project (Helios) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.6</a> for more information.</li>
+    <li><b>CDT 7.0 </b>&#8212; The final version of CDT is included as part of the Helios release. See the <a href="http://wiki.eclipse.org/CDT/User/NewIn70">CDT 7.0 News and Noteworthy</a> page for more information.    </li>
+    <li><strong>Eclipse Debugger for C/C++</strong><strong> </strong>&mdash; Carbide now uses the <strong>Eclipse Debugger for C/C++</strong> (EDC) as its default debugger. EDC provided an entirely new Debug view with all of the standard debug features like variables, breakpoints, watchpoints, disassembly, and all the other views required to run a debugging session. In addition, EDC provides the framework to add new debug features like snapshots.</li>
+  <li><strong>Customized Carbide environment</strong>  &mdash; Carbide introduces Plugin Discovery Sites where you can search for and download Carbide plugins to customize your Carbide environment. Think of it as an app store for plugins. It uses the Eclipse P2 feature  to provide a common framework for finding, installing, updating, and removing plugins from the Carbide environment.</li>
+  <li><strong>Improved UI</strong> &mdash; Carbide's UI has been streamlined and minimized to a core set of functionality, mainly that of creating Symbian projects, building and debugging them. Context menus have been reworked to show a minimum set of options. If your favorite option is missing, you can use the <strong>Capability</strong> preference panel or the <strong>Customize Perspective</strong> dialog to add favorite commands back onto the context menus.</li>
+  <li><strong>Performance improvements</strong>  &mdash; We continue to address known performance issues as they reveal themselves. This release provides improvements for:
+      <ul>
+          <li><strong>Stack frames</strong>   &mdash; in the Debug view stack frames were displayed once the symbol tables were completely read. For large symbol files this sometimes slowed down the display and hence the ability to continue debugging. Now the Debug view will show a subset of stack frames after a set time and update the remainder once it has finished scanning the symbol file.</li>
+          <li><strong>Executables view</strong>   &mdash; eliminated several use cases that forced the Executables list to update to frequently.</li>
+          <li><strong>Large symbol tables</strong> supported &mdash; The Carbide symbol reader has been rewritten to provide faster access to symbols and to handle very large symbol files (larger than 10GB).</li>
+        </ul>
+  </li>
 </ul>
 <h4><a name="new260" id="new260"></a>2.6.0 </h4>
 <ul>
@@ -66,233 +71,11 @@ changes making the tools unusable!</p>
   <li><b>RVCT 4.0 (ARMv5)</b> builds and some limited debugging is supported</li>
   <li><b>Symbian ^3 SDK</b> now supported</li>
 </ul>
-<h3><a name="issues" id="issues"></a>Fixed bugs and workarounds</h3>
+<h3><a name="issues" id="issues"></a>Known issues</h3>
+<p>Workarounds for known issues: </p>
 <ul>
-  <li>Complete list of Carbide.c++ <a href="bugs_fixed.htm">bugs fixed</a></li>
-  <li>Workarounds for known issues: </li>
+    <li><strong>Qt issues</strong> &mdash; If Qt does not seem to be working as expected, be sure to run the <span class="code">\configuration\qt\register_plugins.bat</span> file to properly register the Qt plugins. This is especially important if you installed Carbide using a zip file and not an installer.</li>
 </ul>
-<table cellpadding="0" cellspacing="0" border="0" style="text-align: left; width: 100%;">
-  <tbody>
-    <tr>
-      <th 
- style="vertical-align: top; text-align: center; font-weight: bold; ">Summary<br />      </th>
-      <th 
- style="vertical-align: top; text-align: center; font-weight: bold; ">Workaround</th>
-    </tr>
-    <tr align="center">
-      <td colspan="2" bgcolor="#FFFFCC"><b><a name="pnpIssues" id="pnpIssues"></a>KNOWN PnP ISSUES in 2.5</b></td>
-    </tr>
-    <tr align="center">
-      <td><div align="left">Connecting multiple devices</div></td>
-      <td><div align="left">If multiple devices are plugged into USB, Carbide sometimes cannot determine the USB personality of either or both devices. Carbide will log an error that says the &quot;getting/setting of USB personality&quot; was not supported and no connection is created. The work-around is to plug only one device in.</div></td>
-    </tr>
-    <tr align="center">
-      <td><div align="left">Multiple same error warnings</div></td>
-      <td><div align="left">
-        <p>If a single device is plugged in, and Carbide logs the same error, this is an indication that either </p>
-        <p>A. the PCSuite/OVISuite drivers are not up-to-date or </p>
-        <p>B. the device does not support switching to PC/OVI Suite mode from its current mode </p>
-        <p>For case A, try installing a later version of PCSuite. For case B, set the default USB mode to PC/OVI Suite mode in the settings on the device or selecting PC/OVI Suite mode when the device asks which USB mode to select.</p>
-        </div></td>
-    </tr>
-    <tr align="center">
-      <td><div align="left">PC Suite fails to send updates</div></td>
-      <td><div align="left">On some devices, when unplugging and plugging back in the same USB mode, PC Suite will fail to notify that the device disconnected and the personality switch bubble will not pop up. As a work-around, change the default mode and plug in the device again.</div></td>
-    </tr>
-    <tr align="center">
-      <td colspan="2" bgcolor="#FFFFCC"><a name="CRITICAL_ITEMS"></a><span class="style8">CRITICAL ITEMS</span></td>
-    </tr>
-    <tr>
-      <td class="style5" style="vertical-align: top;"><b>WARNING:</b> The C/C++ Files view is a view of the actual FILE SYSTEM, so anything deleted in this view is also deleted from the file system. </td>
-      <td style="vertical-align: top;"><p>When deleting projects from the workspace please be sure you read the dialog that describes the  files that will be deleted. Select the &quot;Do not delete files&quot; option to keep them in the file system.</p>      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><span class="style5">Carbide.c++ terminates on startup on low memory machines</span></td>
-      <td style="vertical-align: top;"> <p>Machines with less than 1GB of memory (or machines running in a virtual machine) may experience start-up problems. Error dialog typically contains: </p>
-        <p><span class="code">JVM terminated, Return code = -1 </span></p>
-        <p>or when running from eclipse.exe: </p>
-        <p><span class="code">Error occurred during initialization of VM  Could not reserve enough space for object heap</span> </p>
-<p>The <a href="hints_tips.htm">solution</a> is to edit your <span class="code">Carbide.c++.2.x.ini</span> (or <span class="code">eclipse.ini</span> if launching <span class="code">Eclipsec.exe</span>) and use a smaller value for the <span class="code">-Xmx </span>parameter to the JVM. </p>
-<p class="note"><b>NOTE</b> In this scenario, Carbide.c++ performance may degrade.</p></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[4587] Unable to build  GCCE targets on Vista because of makefile error.</td>
-      <td style="vertical-align: top;"><p>There are known tooling issues when building for the GCCE platform under Windows Vista that can prevent a GCCE build from occurring.  If you want to build for GCCE under S60 and UIQ you will need to manually update some files under<span class="style1"> \epoc32\tools\</span>. See the article <a href="http://wiki.forum.nokia.com/index.php/Windows_Vista">Windows Vista</a> for up-to-date workaround information.</p>
-      <p><b>UPDATE 2010</b>: SDKs still require patching to enable GCCE builds.</p></td>
-    </tr>
-    <tr bgcolor="#0071ff">
-      <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
-      <div align="center" class="style6"><a name="bug_ide"></a><span class="style8">IDE</span></div>      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Debugging a project on a machine running Vista via &quot;Remote Desktop Connection&quot; does not work. </td>
-      <td style="vertical-align: top;">Workaround: Switch the project to a machine running Windows XP in order to use &quot;Remote Desktop Connection&quot;. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[6414] Using Mylyn causes MMP files to be spell checked and common terms like EXE, CPP, and EUSER.LIB flagged as misspellings in editor views </td>
-      <td style="vertical-align: top;"><p>Workaround: Remove Mylyn from the Carbide installation. </p>      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">The C/C++ Editor will only work properly with files inside project source folders or on include paths. Source folders are configured in the project settings on the C/C++ Project Paths &gt; Source tab. </td>
-      <td style="vertical-align: top;">When creating new folders, use File &gt; New &gt; Source Folder. This will add a folder and mark it a source folder. If you need to import copies of existing files (File &gt; Import &gt; File System) or link to existing sources (File &gt; New &gt; Folder with &quot;Link to folder in file system&quot;), then a normal folder will be created, not a source folder. If the folder is not underneath an existing source folder in the project, you will need to manually mark it as a source folder using the C/C++ Project Paths &gt; Source tab. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[3010] Bad synchronization in MMP editor for Linker definition file.</td>
-      <td style="vertical-align: top;">  The templates for Symbian DLL projects do not define a <span class="code">DEFFILE</span> statement, for the case where a <span class="code">DEF</span> file is not needed or imports are not frozen. If you edit the <span class="code">DEF</span> filename through the MMP editor, it is not automatically conditioned for the current target. If you wish to define target-specific <span class="code">DEF</span> file names in the MMP editor, manually insert <span class="code">#ifdef...#endif</span> blocks, or first uncomment the <span class="code">#ifdef...#endif</span> block from the template, so that target-specific filenames will be properly updated.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[2784] Changes to contents of <span class="code">#includes</span> of bld.inf and MMP files are not performed -- instead, changes involving reordering or deleting go to the main file. </td>
-      <td style="vertical-align: top;">Workaround: if making changes to nests of included files, either manually edit the <span class="code">#included</span> files, or if using MMP or bld.inf editors, look for changes in the main bld.inf or MMP file and manually fix them up.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Indexer coloring for problems</td>
-      <td style="vertical-align: top;">The problems marker for the indexer occasionally reports both false negative and false positive results (see indexer bugs below). The problems color by default is set to a dark gray to suggest a possible ambiguous state of the browser. You can change this color under the global preferences page: Syntax Coloring. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[4932] Indexer: Problems with templates </td>
-      <td style="vertical-align: top;">C++ template navigation is not fully supported yet. Problem areas are notable when templates are declared outside the file they are used and when functions or macros use template declarations. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[4937, 4941] Indexer: Problems with macro navigation </td>
-      <td style="vertical-align: top;">Browsing to macro declarations is problematic when macros are used within function call parameters as well as multi-line macro declarations.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[4931] Indexer does not track files outside the workspace. </td>
-      <td style="vertical-align: top;">If you make changes to files outside the workspace the indexer will not re-index these files (e.g. .rsg files under the SDK). When in doubt, re-index your project. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[4906] Indexer: const parameters get lost in function prototypes occasionally</td>
-      <td style="vertical-align: top;">The indexer sometimes loses the parameter of function types for const objects. In these cases code navigation will not work. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Target type macros (__EXE__, __DLL__, etc) are not always defined for the CDT indexer.</td>
-      <td style="vertical-align: top;">The CDT indexer macros are build configuration specific.  There could be multiple mmp's for a build configuration, each with a different target type macro.  Therefore the target type macro is only added if there is only one mmp file, or if all of the mmp's have the same target type macro.  You can manually add the macro if you wish using the C/C++ Include Paths and Symbols project property page.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">The C/C++ Projects  and Symbian Project Navigator views do not always refresh with changes in the file system.</td>
-      <td style="vertical-align: top;"> If you are in doubt about the contents select the folder in question, then hit F5 to refresh the directory from the file system.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Synergy 6.3 Installations will always crash Eclipse file navigation dialogs - The solution for this is to un-register cmexplorer.dll then reboot your machine. Un-registering this feature will only effect users that use Synergy integration to Windows Explorer. This issue is known to be fixed with Synergy 6.4.</td>
-      <td style="vertical-align: top;">The un-register command is:<br />
-      <br />
-      <font size="-1"><span class="code"
- style="font-family: courier new,courier,monospace;"> regsvr32 /u
-&lt;path to dll&gt;cmexplorer.dll</span> &nbsp; <br />
-      <br />
-      </font>To re-register, the command is:<br />
-      <br />
-      <font size="-1" class="code">regsvr32 &lt;path to
-dll&gt;cmexplorer.dll</font></td>
-    </tr>
-    <tr bgcolor="#0071ff">
-      <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
-      <div align="center" class="style6"><a name="bug_build"></a><span
- class="style8">BUILD/IMPORTER</span></div>      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[3809]<b> IMPORTANT</b>: You cannot import two projects into Carbide that have the same &quot;Root Directory&quot;.</td>
-      <td style="vertical-align: top;"> If a .project file already exists in this location you either need to shorten or lengthen the &quot;Root Directory&quot; or delete the other project in the same location and try to import again.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><p>Emulator (WINSCW) command line builds</p></td>
-      <td style="vertical-align: top;"><p>If you want to build for the emulator from the command line, run the tool from the start menu shortcut: <strong>Configure environment for WINSCW command line builds</strong>. It will setup the necessary environment variables for the x86 compiler. You do not need to do this if you will only be building emulator targets  from the IDE.</p></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Working with a workspace on one drive and a source base on another can build some items in the wrong location. </td>
-      <td style="vertical-align: top;">Workaround:  keep your source base and Carbide workspace on the same drive. Because some scripts work off an implicit root (e.g. \epoc32\include\) and don't support drive specs on paths there can be outputs to unexpected locations. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">When creating/importing projects the sources and SDK must be on the same drive.</td>
-      <td style="vertical-align: top;"> <p>For example, you cannot create a project on the C: drive and build with an SDK whose <span class="code">EPOCROOT</span> is <span class="code">M:\</span>.</p>
-      <p>      This is due to many of the internal SDK tools using an implicit working drive to calculate paths (e.g. <span class="code">\epoc32\tools</span>).</p></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Files that include non-ascii
-character types will not compile correctly with GCCE if the file type
-is not saved as UTF-8. </td>
-      <td style="vertical-align: top;">The workaround is to change the
-text file encoding in the global preferences at Windows &gt;
-Preferences, then open the General &gt; Editors panel in the
-Preferences window. Look for the Text file encoding option as shown
-below.
-      <p align="center"><img src="images/utf.png" width="212" height="68" alt="" /></p>      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Build system does not detect static library dependencies</td>
-    <td style="vertical-align: top;">The Symbian OS build system did not detect static library changes prior to 9.2.  They have release a patch for this <a href="http://www3.symbian.com/faq.nsf/0/E0F5C56AA68C305F8025731400051166?OpenDocument">here</a>.    </tr>
-    <tr bgcolor="#0071ff">
-      <td colspan="2" bgcolor="#FFFFCC" style="vertical-align: top;">
-      <div align="center" class="style6"><a name="bug_debug"></a><span
- class="style8">DEBUGGER</span></div>      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Unable to install TRK on flashed  devices</td>
-      <td style="vertical-align: top;"> Workaround: Some  devices contain images that won't allow TRK to be installed, specifically the Lumiere PR 1.0 and PR 1.1 releases, especially if the C drive image was flashed. To install TRK on these devices you must format the C drive to remove the old flash image, then reflash using an image containing TRK.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[3778,4658] Some variables show &quot;Invalid format&quot; in the Variable view. </td>
-      <td style="vertical-align: top;">No Workaround. </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Symbian OS Data view caveats. </td>
-      <td style="vertical-align: top;"><p>During crash debugger launch session, you can examine Symbian OS data (processes, threads, chunks etc) in Symbian OS Data view. But:</p>
-        <p> (1) You must have Symbian kernel debugger (usually <span class="code">Kdebug.dll</span>) built in the image. </p>
-      <p> (2) As getting the OS data from crash debugger is time consuming (takes more than one minute in our test), auto-refresh of the data in Symbian OS Data view is disabled for crash debugger. You need to click the &quot;Refresh&quot; button to do a manual refreshing.</p></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[2960] The thread run control icons (step over, step in, run) are sometimes disabled after stepping</td>
-      <td style="vertical-align: top;"> Click on the top frame of the suspended thread in the Debug view</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">Debugging without restarting the emulator.</td>
-      <td style="vertical-align: top;"> <p>If you modify any resource files resulting RSC files cannot be rebuilt, however CPP source files can. There are a couple of issues you should be aware of. </p>
-        <p>1) When starting a build, the debugger releases all file handles to the debugged application. Sometimes the emulator is slow to release its own handles to files after quitting an application. If a file is still locked on a rebuild make sure the application is closed (not the emulator itself), wait a few seconds, and try again. </p>
-      <p> 2) When setting breakpoints in source files that have been recompiled they do not always resolve correctly while the emulator is running. The best option is to clear the breakpoints in any modified file and set them again.</p></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[2716] [Variable View] - Sometimes when
-stepping through a loop
-variables do not refresh.</td>
-      <td style="vertical-align: top;">If you have refresh problems
-with variables, put focus on the variables pane, then off the pane and
-back onto the variable pane.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[1928] [Register View] Casting
-Registers to any type does not work.</td>
-      <td style="vertical-align: top;">Not currently supported.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">The value of some uninitialized
-variables is shown as
-"Unknown error ...."</td>
-      <td style="vertical-align: top;">When
-variables are in scope the proper value will be displayed.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[548] [Variable Scoping] - Multiple
-variables with the same name
-in subscopes are not displayed properly.</td>
-      <td style="vertical-align: top;">Give variables unique names.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[971] Watchpoints cannot be set on
-global variables declared in header files. </td>
-      <td style="vertical-align: top;">No workaround.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[1959] Expressions cannot be disabled.</td>
-      <td style="vertical-align: top;">No workaround.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">[Add Global Variables] Not all
-global namespace variables are displayed or duplicate entries sometimes
-appear. </td>
-      <td style="vertical-align: top;">No workaround.</td>
-    </tr>
-  </tbody>
-</table>
 <h3><a name="support" id="support"></a>Technical support </h3>
 <p>The following support services are available:</p>
 <ul><li>Visit the <a href="http://web-dev.foundationhost.org/">Symbian Foundation</a> for Carbide.c++ and Symbian development information </li>
