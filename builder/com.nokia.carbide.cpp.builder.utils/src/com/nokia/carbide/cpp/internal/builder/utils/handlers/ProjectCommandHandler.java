@@ -221,7 +221,7 @@ public class ProjectCommandHandler extends AbstractHandler {
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 		
 		final ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
-		Job buildJob = new Job("Freezing Configuration - " + defaultConfig.getDisplayString()) {
+		Job buildJob = new Job("Freezing Configuration - " + defaultConfig.getBuildContext().getDisplayString()) {
 			protected IStatus run(IProgressMonitor monitor) {
 				CarbideCPPBuilder.invokeFreeze(defaultConfig, monitor, true);
 				Activator.refreshProjectAfterFreeze(project);

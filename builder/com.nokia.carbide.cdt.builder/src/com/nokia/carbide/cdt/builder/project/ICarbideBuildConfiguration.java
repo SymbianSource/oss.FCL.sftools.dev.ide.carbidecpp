@@ -16,12 +16,15 @@
 */
 package com.nokia.carbide.cdt.builder.project;
 
+import java.io.File;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
  * An ICarbideBuildConfiguration interface represents on buildable target for a project. A single
@@ -29,7 +32,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
  *
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
+public interface ICarbideBuildConfiguration {
 
 	/** Integer identifier for the set of parser to be used for building the WINSCW platform */
     public static final int ERROR_PARSERS_WINSCW = 1;
@@ -136,5 +139,34 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 * @since 2.6
 	 */
 	IPath getTargetOutputDirectory();
+	
+	ISymbianBuildContext getBuildContext();
+	
+	/** ISymbianBuildContext wrapper */
+	String getDisplayString();
+	
+	/** ISymbianBuildContext wrapper */
+	ISymbianSDK getSDK();
+	
+	/** ISymbianBuildContext wrapper */
+	String getPlatformString();
+	
+	/** ISymbianBuildContext wrapper */
+	String getTargetString();
+	
+	/** TODO: Detect on instanceof ? */
+	public IPath getCompilerPrefixFile();
+	
+	/** TODO: Detect on instanceof ? */
+	public List<IDefine> getCompilerMacros();
+	
+	/** TODO: Detect on instanceof ? */
+	public List<IDefine> getVariantHRHDefines();
+	
+	/** TODO: Detect on instanceof ? */
+	public List<File> getPrefixFileIncludes();
+	
+	/** TODO: Detect on instanceof ? */
+	public String getBuildVariationName();
 	
 }

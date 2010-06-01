@@ -16,26 +16,22 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.editors.images;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.ImageMakefileViewPathHelper;
-import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.epoc.engine.image.*;
-import com.nokia.carbide.cpp.epoc.engine.model.*;
-import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
-import com.nokia.carbide.cpp.internal.project.ui.images.*;
-import com.nokia.carbide.cpp.internal.project.ui.images.providers.ThumbnailImageLabelProvider;
-import com.nokia.carbide.cpp.internal.ui.images.CachingImageLoader;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.ui.images.IImageLoader;
-import com.nokia.carbide.cpp.ui.images.IImageModel;
-import com.nokia.cpp.internal.api.utils.core.CacheMap;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.operations.*;
+import org.eclipse.core.commands.operations.DefaultOperationHistory;
+import org.eclipse.core.commands.operations.IOperationHistory;
+import org.eclipse.core.commands.operations.IOperationHistoryListener;
+import org.eclipse.core.commands.operations.IUndoContext;
+import org.eclipse.core.commands.operations.OperationHistoryEvent;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.graphics.Image;
@@ -44,8 +40,31 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.ImageMakefileViewPathHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSourceReference;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSourceReference;
+import com.nokia.carbide.cpp.epoc.engine.image.ISVGSourceReference;
+import com.nokia.carbide.cpp.epoc.engine.image.ImageFormat;
+import com.nokia.carbide.cpp.epoc.engine.model.IModel;
+import com.nokia.carbide.cpp.epoc.engine.model.IModelProvider;
+import com.nokia.carbide.cpp.epoc.engine.model.IView;
+import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
+import com.nokia.carbide.cpp.internal.project.ui.images.CarbideImageModelFactory;
+import com.nokia.carbide.cpp.internal.project.ui.images.IImageResolver;
+import com.nokia.carbide.cpp.internal.project.ui.images.IImageSourceModel;
+import com.nokia.carbide.cpp.internal.project.ui.images.IImageSourceReferenceModel;
+import com.nokia.carbide.cpp.internal.project.ui.images.ISymbianImageContainerModel;
+import com.nokia.carbide.cpp.internal.project.ui.images.providers.ThumbnailImageLabelProvider;
+import com.nokia.carbide.cpp.internal.ui.images.CachingImageLoader;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.ui.images.IImageLoader;
+import com.nokia.carbide.cpp.ui.images.IImageModel;
+import com.nokia.cpp.internal.api.utils.core.CacheMap;
 
 public abstract class MultiImageEditorContextBase {
 	private static final Pattern LEGAL_FILENAME_PATTERN = Pattern.compile("[A-Za-z0-9_]+"); //$NON-NLS-1$
@@ -247,7 +266,7 @@ public abstract class MultiImageEditorContextBase {
 	 * Get the default build context.
 	 * @return build context or null
 	 */
-	public ICarbideBuildConfiguration getBuildContext() {
+	public ICarbideBuildConfiguration getCarbideBuildConfiguration() {
 		IProject project = getProject();
 		if (project == null)
 			return null;
@@ -401,7 +420,7 @@ public abstract class MultiImageEditorContextBase {
 	 * @return
 	 */
 	public boolean isEKA2() {
-		ISymbianBuildContext buildContext = getBuildContext();
+		ISymbianBuildContext buildContext = getCarbideBuildConfiguration().getBuildContext();
 		ISymbianSDK sdk = buildContext != null ? buildContext.getSDK() : null;
 		if (sdk != null) {
 			return sdk.isEKA2();
@@ -414,7 +433,7 @@ public abstract class MultiImageEditorContextBase {
 	 * @return
 	 */
 	public boolean isS60() {
-		ISymbianBuildContext buildContext = getBuildContext();
+		ISymbianBuildContext buildContext = getCarbideBuildConfiguration().getBuildContext();
 		ISymbianSDK sdk = buildContext != null ? buildContext.getSDK() : null;
 		if (sdk != null) {
 			return sdk.isS60();

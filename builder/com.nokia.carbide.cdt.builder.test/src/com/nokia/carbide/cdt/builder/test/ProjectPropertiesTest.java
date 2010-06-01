@@ -34,7 +34,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
@@ -171,11 +171,11 @@ public class ProjectPropertiesTest extends TestCase {
         ICarbideProjectModifier cpm = CarbideBuilderPlugin.getBuildManager().getProjectModifier(project);
 		assertEquals(1, cpm.getBuildConfigurations().size());
 		
-		ISymbianBuildContext context2 = SymbianBuildContext.getBuildContextFromDisplayName(stockBuildConfigs.get(1).getDisplayString());
+		ISymbianBuildContext context2 = BuildContextSBSv1.getBuildContextFromDisplayName(stockBuildConfigs.get(1).getDisplayString());
 		assertNotNull(context2);
 		cpm.createNewConfiguration(context2, true);
 
-		ISymbianBuildContext context3 = SymbianBuildContext.getBuildContextFromDisplayName(stockBuildConfigs.get(2).getDisplayString());
+		ISymbianBuildContext context3 = BuildContextSBSv1.getBuildContextFromDisplayName(stockBuildConfigs.get(2).getDisplayString());
 		assertNotNull(context3);
 		cpm.createNewConfiguration(context3, false);
 		

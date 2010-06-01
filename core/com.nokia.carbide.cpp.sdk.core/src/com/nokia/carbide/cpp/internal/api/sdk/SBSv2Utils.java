@@ -40,6 +40,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -236,8 +237,8 @@ public class SBSv2Utils {
 		    	}
 		    	
 		    	if (targetString != null) {
-		    		SymbianBuildContext context = null;
-		    		context = new SymbianBuildContext(sdk, basePlat, targetString, alias);
+		    		BuildContextSBSv2 context = null;
+		    		context = new BuildContextSBSv2(sdk, basePlat, targetString, alias);
 		    		if (context != null) 
 		    			contexts.add(context);
 		    	}
@@ -409,11 +410,18 @@ public class SBSv2Utils {
 
 			// First sort the target name (Debug / Release) and push Emulation to the top
 			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
-				String sbsAlias1 = o1.getSBSv2Alias();
-				String sbsAlias2 = o2.getSBSv2Alias();
-				
+				ISBSv2BuildContext sbsv2Context1 = null;
+				ISBSv2BuildContext sbsv2Context2 = null;
+				String sbsAlias1 = "";
+				String sbsAlias2 = "";
+				if (o1 instanceof ISBSv2BuildContext && o2 instanceof ISBSv2BuildContext){
+					sbsv2Context1 = ((ISBSv2BuildContext)o1);
+					sbsv2Context2 = ((ISBSv2BuildContext)o2);
+					sbsAlias1 = sbsv2Context1.getSBSv2Alias();
+					sbsAlias2 = sbsv2Context2.getSBSv2Alias();
+				}
 				if (o1.getPlatformString().equals(o2.getPlatformString())) {
-					if (o1.getSBSv2Alias().split("_").length != o2.getSBSv2Alias().split("_").length)
+					if (sbsv2Context1.getSBSv2Alias().split("_").length != sbsv2Context1.getSBSv2Alias().split("_").length)
 						return o1.getTargetString().compareTo(o2.getTargetString());
 					else if (sbsAlias1.split("_").length >= 3){
 						String temp1[] = sbsAlias1.split("_");
@@ -446,10 +454,18 @@ public class SBSv2Utils {
 		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
 
 			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
-				String sbsAlias1 = o1.getSBSv2Alias();
-				String sbsAlias2 = o2.getSBSv2Alias();
+				ISBSv2BuildContext sbsv2Context1 = null;
+				ISBSv2BuildContext sbsv2Context2 = null;
+				String sbsAlias1 = "";
+				String sbsAlias2 = "";
+				if (o1 instanceof ISBSv2BuildContext && o2 instanceof ISBSv2BuildContext){
+					sbsv2Context1 = ((ISBSv2BuildContext)o1);
+					sbsv2Context2 = ((ISBSv2BuildContext)o2);
+					sbsAlias1 = sbsv2Context1.getSBSv2Alias();
+					sbsAlias2 = sbsv2Context2.getSBSv2Alias();
+				}
 				
-				if (o1.getSBSv2Alias().split("_").length == 3 && o2.getSBSv2Alias().split("_").length == 3 &&
+				if (sbsv2Context1.getSBSv2Alias().split("_").length == 3 && sbsv2Context2.getSBSv2Alias().split("_").length == 3 &&
 						o1.getPlatformString().equals(o2.getPlatformString()))
 					return o1.getTargetString().compareTo(o2.getTargetString());
 				else if (sbsAlias1.split("_").length >= 3 && sbsAlias1.split("_").length >= 3 && !sbsAlias1.equals(sbsAlias2)){

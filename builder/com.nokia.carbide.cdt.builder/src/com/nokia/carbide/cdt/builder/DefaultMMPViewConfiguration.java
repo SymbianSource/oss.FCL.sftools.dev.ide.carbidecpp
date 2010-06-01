@@ -30,7 +30,7 @@ public class DefaultMMPViewConfiguration extends DefaultViewConfiguration implem
 
 	/** Configuration for the default build configuration of the project */
 	public DefaultMMPViewConfiguration(ICarbideProjectInfo info, IViewFilter viewFilter) {
-		super(info.getProject(), info.getDefaultConfiguration(), viewFilter);
+		super(info.getProject(), info.getDefaultConfiguration().getBuildContext(), viewFilter);
 	}
 	/** Configuration for the given build configuration of the project with the given filter */
 	public DefaultMMPViewConfiguration(IProject project, ISymbianBuildContext context, IViewFilter viewFilter) {
@@ -49,7 +49,7 @@ public class DefaultMMPViewConfiguration extends DefaultViewConfiguration implem
 
 	/** Configuration for the given build configuration of the project with the given filter */
 	public DefaultMMPViewConfiguration(ICarbideBuildConfiguration buildConfiguration, IViewFilter viewFilter) {
-		super(buildConfiguration.getCarbideProject().getProject(), buildConfiguration, viewFilter);
+		super(buildConfiguration.getCarbideProject().getProject(), buildConfiguration.getBuildContext(), viewFilter);
 	}
 
 	/**

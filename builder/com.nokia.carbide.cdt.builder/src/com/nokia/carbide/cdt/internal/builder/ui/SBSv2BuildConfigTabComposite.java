@@ -34,6 +34,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class SBSv2BuildConfigTabComposite extends Composite {
@@ -46,6 +47,7 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 	Label configCmdLabel;
 	Label releaseTreeLabel;
 	private ICarbideBuildConfiguration config;
+	ISBSv2BuildContext context;
 	
 	public SBSv2BuildConfigTabComposite(TabItem tabItem) {
 		super(tabItem.getParent(), SWT.NONE);
@@ -88,6 +90,7 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 	
 	public void initData(ICarbideBuildConfiguration buildConfig) {
 		this.config = buildConfig;
+		context = (ISBSv2BuildContext)buildConfig;
 		ISBSv2BuildConfigInfo sbsv2ConfigInfo = ((CarbideBuildConfiguration)buildConfig).getSBSv2ConfigInfo();
 		if (sbsv2ConfigInfo != null && sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT) != null){
 			variantEdit.setText(sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
@@ -101,11 +104,11 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 	private void setVaraintDetailsText() {
 		
 		String configCmdText = configCmdLabelPrefixText;
-		if (config != null){
-			if (config.getSBSv2Alias() == null){
+		if (context != null){
+			if (context.getSBSv2Alias() == null){
 				configCmdText += config.getPlatformString().toLowerCase() + "_" + config.getTargetString().toLowerCase() + variantEdit.getText();
 			} else {
-				configCmdText += config.getSBSv2Alias() + variantEdit.getText();
+				configCmdText += context.getSBSv2Alias() + variantEdit.getText();
 			}
 		}
 		configCmdLabel.setText(configCmdText);

@@ -80,6 +80,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
@@ -461,7 +462,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();		
 		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>(1);
-		buildConfigList.add(buildConfig);
+		buildConfigList.add(buildConfig.getBuildContext());
 		
 		if (clearMarkers) {
     		try {
@@ -623,7 +624,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		final List<IPath> rules = new ArrayList<IPath>();
 		
 		EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 
 				public Object run(IMMPData mmpData) {
@@ -733,7 +734,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();		
 		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>(1);
-		buildConfigList.add(buildConfig);
+		buildConfigList.add(buildConfig.getBuildContext());
 
 		// get the list of mmp/make files for this build configuration
 		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfigList, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
@@ -906,7 +907,9 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 			
 			List<String> argsList = new ArrayList<String>();
 			argsList.add("bldfiles");
-			argsList.add(config.getBasePlatformForVariation().toLowerCase());
+			if (config instanceof ISBSv1BuildContext){
+				argsList.add(((ISBSv1BuildContext)config).getBasePlatformForVariation().toLowerCase());
+			}
 			
 			for (String arg : config.getBuildArgumentsInfo().getBldmakeBldFilesArgs().split(" ")) {
 				argsList.add(arg);
@@ -1352,7 +1355,7 @@ public static String[] getParserIdArray(int id) {
 
 			IPath tmpPKGPath = buildDirPath.append(prefix + pkgPath.lastSegment());
 
-			IPath resolvedPKGPath = resolvePKGFile(pkgPath, config, tmpPKGPath);
+			IPath resolvedPKGPath = resolvePKGFile(pkgPath, config.getBuildContext(), tmpPKGPath);
 			
 			List<String> args = new ArrayList<String>();
 
@@ -1626,7 +1629,7 @@ public static String[] getParserIdArray(int id) {
 
 		// update the temp pkg file by setting the PU flag and removing any files that have not been modified
 		PKGModelHelper.runWithPKGView(tempPkgBuildTreePath,
-				new DefaultViewConfiguration(config.getCarbideProject(), config), 
+				new DefaultViewConfiguration(config.getCarbideProject(), config.getBuildContext()), 
 				new PKGViewRunnableAdapter() {
 
 				public Object run(IPKGView view) {
@@ -1710,7 +1713,7 @@ public static String[] getParserIdArray(int id) {
 				}
 		});
 
-		tempPkgBuildTreePath = resolvePKGFile(tempPkgBuildTreePath, config, tempPkgBuildTreePath);
+		tempPkgBuildTreePath = resolvePKGFile(tempPkgBuildTreePath, config.getBuildContext(), tempPkgBuildTreePath);
 
 		// create link to temp pkg file and mark it as derived.
 		IFile tempPkgFileLink = getTempPkgIFile(pkgPath, tempPkgBuildTreePath, config);

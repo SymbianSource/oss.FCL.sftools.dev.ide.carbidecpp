@@ -310,7 +310,7 @@ public class ProjectReportJob extends WorkspaceJob {
 					emitPara(infPath.toString(), null);
 					IResource resource = project.findMember(infPath);
 					IPath bldInfPath = resource.getFullPath();
-					IViewConfiguration viewConfig = new DefaultViewConfiguration(info, buildConfiguration);
+					IViewConfiguration viewConfig = new DefaultViewConfiguration(info, buildConfiguration.getBuildContext());
 				
 					EpocEnginePlugin.runWithBldInfView(bldInfPath, viewConfig, this);
 					worked(1);
@@ -394,7 +394,7 @@ public class ProjectReportJob extends WorkspaceJob {
 			IResource mmpResource = project.findMember(mmpPath);
 			if (mmpResource != null ) {
 				IMMPViewConfiguration viewConfig = new DefaultMMPViewConfiguration(project, 
-						buildConfiguration, new AcceptedNodesViewFilter());
+						buildConfiguration.getBuildContext(), new AcceptedNodesViewFilter());
 				EpocEnginePlugin.runWithMMPView(mmpResource.getFullPath(), viewConfig, this);
 			} else {
 				emitPara(mmpPath.toString() + " not found.", null);

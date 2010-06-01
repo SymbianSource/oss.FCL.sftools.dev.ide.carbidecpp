@@ -16,6 +16,7 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,14 +45,17 @@ import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
 import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
-public class CarbideBuildConfiguration extends SymbianBuildContext implements ICarbideBuildConfiguration {
+public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	
 	static final String NOT_INSTALLED = "(SDK not found)"; //$NON-NLS-1$
 
@@ -64,6 +68,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	// SBSv2 only config settings 
 	protected final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
 	
+	protected ISymbianBuildContext context;
 	protected TrackedResource projectTracker;
 	protected List<ISISBuilderInfo> sisBuilderInfoList;
 	protected EnvironmentVarsInfo2 envVarsInfo;
@@ -73,8 +78,16 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	protected SBSv2BuilderInfo sbsv2BuilderInfo;
 	protected boolean rebuildNeeded;
 	
+	/**
+	 * TODO: Target constants - copied from ISymbianBuildContext 
+	 */
+
+	public static final String DEBUG_TARGET = "UDEB";
+
+	public static final String RELEASE_TARGET = "UREL";
+	
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
-		super(context.getSDK(), context.getPlatformString(), context.getTargetString(), context.getSBSv2Alias());
+		this.context = context;
 		projectTracker = new TrackedResource(project);
 		sisBuilderInfoList = new ArrayList<ISISBuilderInfo>(0);
 		envVarsInfo = new EnvironmentVarsInfo2(project, context);
@@ -82,9 +95,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		buildConfigData = new BuildConfigurationData(this);
 		romBuilderInfo = new ROMBuilderInfo(getSDK());
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
-			sbsv2BuilderInfo = new SBSv2BuilderInfo(context);
+			sbsv2BuilderInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
 		}
 		rebuildNeeded = true;
+		
 	}
 	
 	public void loadFromStorage(ICConfigurationDescription projDes) throws CoreException {
@@ -292,8 +306,10 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	public int getErrorParserId(){
 		String plat = this.getPlatformString();
 		
-		if (this.getSBSv2Alias() != null && this.getSBSv2Alias().toUpperCase().contains(ISymbianBuildContext.GCCE_PLATFORM)){
-			return ERROR_PARSERS_GCCE;
+		if (context instanceof ISBSv2BuildContext){
+			if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISymbianBuildContext.GCCE_PLATFORM)){
+				return ERROR_PARSERS_GCCE;
+			}
 		}
 		
 		if (plat.equals(ISymbianBuildContext.EMULATOR_PLATFORM)){
@@ -358,7 +374,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	public static String toMarkedConfig(String config) {
 		if (config == null)
 			return null;
-		if (SDKManagerInternalAPI.getMissingSdk(SymbianBuildContext.getSDKIDFromConfigName(config)) != null) {
+		if (SDKManagerInternalAPI.getMissingSdk(BuildContextSBSv1.getSDKIDFromConfigName(config)) != null) {
 			return badSdkString() + config;
 		}
 		return config;
@@ -401,7 +417,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		List<ISymbianBuildContext> buildConfig = new ArrayList<ISymbianBuildContext>();
 		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
 		List<IPath> testMakMakePaths = new ArrayList<IPath>();
-		buildConfig.add(this);
+		buildConfig.add(this.getBuildContext());
 		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfig, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
 		
 		for (IPath mmpPath : normalMakMakePaths){
@@ -418,7 +434,11 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	}
 
 	public IPath getTargetOutputDirectory() {
-		String releasePlatform = getSDK().getBSFCatalog().getReleasePlatform(getBasePlatformForVariation());
+		String releasePlatform = "";
+		if (context instanceof ISBSv1BuildContext){
+			ISBSv1BuildContext v1Context = (ISBSv1BuildContext)context;
+			releasePlatform = getSDK().getBSFCatalog().getReleasePlatform(v1Context.getBasePlatformForVariation());
+		}
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
 			// Test is this is an SBSv2 build binary variant (changes the output directory)
 			ISBSv2BuildConfigInfo sbsv2Info = getSBSv2BuildConfigInfo();
@@ -436,5 +456,47 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	public void setRebuildNeeded(boolean value) {
 		rebuildNeeded = value;
 	}
+
+	public ISymbianSDK getSDK() {
+		return context.getSDK();
+	}
+
+	public String getPlatformString() {
+		return context.getPlatformString();
+	}
+
+	public String getTargetString() {
+		return context.getTargetString();
+	}
+
+	public String getDisplayString() {
+		return context.getDisplayString();
+	}
+
+	public ISymbianBuildContext getBuildContext() {
+		return context;
+	}
+
+	public List<IDefine> getCompilerMacros() {
+		return context.getCompilerMacros();
+	}
+
+	public IPath getCompilerPrefixFile() {
+		return context.getCompilerPrefixFile();
+	}
+
+	public List<IDefine> getVariantHRHDefines() {
+		return context.getVariantHRHDefines();
+	}
+
+	public List<File> getPrefixFileIncludes() {
+		return context.getPrefixFileIncludes();
+	}
+
+	public String getBuildVariationName() {
+		return context.getBuildVariationName();
+	}
+	
+	
 	
 }

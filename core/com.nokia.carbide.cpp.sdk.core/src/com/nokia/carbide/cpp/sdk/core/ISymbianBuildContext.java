@@ -66,15 +66,6 @@ public interface ISymbianBuildContext {
 	 */
 	public String getPlatformString();
 	
-	/**
-	 * For Symbian Bianry Variation, platforms will be names <plat>.<variation>
-	 * So in some cases you need to know only the platforms that the variant is based on.
-	 * For example, a build platform name of "armv5.myvariant" will return "armv5".
-	 * @return The base platform string.
-	 * @see isSymbianBinaryVariation()
-	 * @since 2.0
-	 */
-	public String getBasePlatformForVariation();
 	
 	/**
 	 * The debug or release target the platform is building for.
@@ -141,11 +132,5 @@ public interface ISymbianBuildContext {
 	 */
 	public boolean isSymbianBinaryVariation();
 	
-	/**
-	 * Retrieve the build-able configuration; a valid command that cab be passed with Raptor's -c parameter.
-	 * This should not be used and should return null for abld-configurations.
-	 * @return the configuration name, or null if none.
-	 */
-	public String getSBSv2Alias();
 	
 }

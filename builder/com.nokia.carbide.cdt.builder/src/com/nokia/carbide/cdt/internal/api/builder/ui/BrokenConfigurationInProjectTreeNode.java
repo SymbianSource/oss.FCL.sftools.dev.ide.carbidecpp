@@ -41,7 +41,7 @@ public class BrokenConfigurationInProjectTreeNode extends TreeNode  {
 		
 		for (ICarbideBuildConfiguration config : buildConfigList) {
 			if (config.getSDK().getUniqueId().equals(value.getUniqueId())) {
-				childConfig.add(config);
+				childConfig.add(config.getBuildContext());
 			}
 		}
 

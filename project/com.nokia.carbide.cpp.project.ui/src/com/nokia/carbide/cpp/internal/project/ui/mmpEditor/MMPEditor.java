@@ -219,7 +219,7 @@ public class MMPEditor extends CarbideFormEditor implements
 			editorContext.mmpView = null;
 		}
 		MMPEditorViewConfiguration viewConfig = new MMPEditorViewConfiguration(
-				editorContext.activeBuildConfig, getProject());
+				editorContext.activeBuildConfig.getBuildContext(), getProject());
 		editorContext.mmpView = editorContext.mmpModel.createView(viewConfig);						
 	}
 	

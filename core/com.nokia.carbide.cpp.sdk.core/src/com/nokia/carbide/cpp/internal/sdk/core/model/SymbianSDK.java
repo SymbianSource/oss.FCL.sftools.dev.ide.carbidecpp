@@ -12,40 +12,68 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
-import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
-import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
-import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
-import com.nokia.carbide.cpp.sdk.core.*;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
-import com.nokia.cpp.internal.api.utils.core.PathUtils;
-import com.sun.org.apache.xpath.internal.XPathAPI;
-
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.*;
-import org.osgi.framework.Version;
-import org.w3c.dom.*;
-import org.w3c.dom.traversal.NodeIterator;
-import org.xml.sax.SAXException;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.*;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.osgi.framework.Version;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.traversal.NodeIterator;
+import org.xml.sax.SAXException;
+
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultModelDocumentProvider;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProvider;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
+import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
+import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
+import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
+import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
+import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public class SymbianSDK implements ISymbianSDK {
 
@@ -250,11 +278,12 @@ public class SymbianSDK implements ISymbianSDK {
 		if (buildPlats.size() == 0){
 			return Collections.emptyList();
 		}
-		
-		buildTargets.add(new SymbianBuildContext(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
+		// TODO: Hard code build context hack
+		buildTargets.add(new BuildContextSBSv1(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
 		
 		if (supportsWINSCW_UREL()){
-			buildTargets.add(new SymbianBuildContext(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
+			// TODO: Hard code build context hack
+			buildTargets.add(new BuildContextSBSv1(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
 		}
 		
 		for (String currPlat : buildPlats){
@@ -263,11 +292,12 @@ public class SymbianSDK implements ISymbianSDK {
 				// emulation targets already determined (some SDKs don't get WISNCW UREL
 				continue;
 			}
-			
-			buildTargets.add(new SymbianBuildContext(this, currPlat, ISymbianBuildContext.DEBUG_TARGET));
+			// TODO: Hard code build context hack
+			buildTargets.add(new BuildContextSBSv1(this, currPlat, ISymbianBuildContext.DEBUG_TARGET));
 			
 			// everything gets release except for WINSCW
-			buildTargets.add(new SymbianBuildContext(this, currPlat, ISymbianBuildContext.RELEASE_TARGET));
+			// TODO: Hard code build context hack
+			buildTargets.add(new BuildContextSBSv1(this, currPlat, ISymbianBuildContext.RELEASE_TARGET));
 		}
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
@@ -290,8 +320,10 @@ public class SymbianSDK implements ISymbianSDK {
 			for (IBSFPlatform platform : catalog.getPlatforms()) {
 				// only return non-variant style BSF's.  see boog #4533 for details.
 				if (!platform.isVariant()) {
-					bsfContextList.add(new SymbianBuildContext(this, platform.getName().toUpperCase(), ISymbianBuildContext.DEBUG_TARGET));
-					bsfContextList.add(new SymbianBuildContext(this, platform.getName().toUpperCase(), ISymbianBuildContext.RELEASE_TARGET));
+					// TODO: Hard code build context hack
+					bsfContextList.add(new BuildContextSBSv1(this, platform.getName().toUpperCase(), ISymbianBuildContext.DEBUG_TARGET));
+					// TODO: Hard code build context hack
+					bsfContextList.add(new BuildContextSBSv1(this, platform.getName().toUpperCase(), ISymbianBuildContext.RELEASE_TARGET));
 				}
 			}
 		}
@@ -311,8 +343,10 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
 				// Only add the build platform if it's not virtual.
 				if (!sbvPlatform.isVirtual()){
-					binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
-					binaryVariantContextList.add(new SymbianBuildContext(this, SymbianBuildContext.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
+					// TODO: Hard code build context hack
+					binaryVariantContextList.add(new BuildContextSBSv1(this, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
+					// TODO: Hard code build context hack
+					binaryVariantContextList.add(new BuildContextSBSv1(this, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
 				}
 			}
 		}

@@ -33,6 +33,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 
 public class CarbideSBSv2Builder implements ICarbideBuilder {
 
@@ -88,7 +89,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     
     /** Get the build-able configuration from the command line (i.e. build alias). This is passed after the sbs -c parameter */
     protected String getConfigName(ICarbideBuildConfiguration buildConfig) {
-    	String buildAlias = buildConfig.getSBSv2Alias();
+    	String buildAlias = ((ISBSv2BuildContext)buildConfig).getSBSv2Alias();
     	if (buildAlias == null){ 
     		// Just get the default target. This is a SBSv1 style configuration name...
     		buildAlias = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();

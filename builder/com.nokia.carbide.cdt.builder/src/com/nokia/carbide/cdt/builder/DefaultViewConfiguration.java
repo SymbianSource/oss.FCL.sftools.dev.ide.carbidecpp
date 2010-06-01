@@ -20,6 +20,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.IViewConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.IViewParserConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
@@ -43,7 +44,7 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 	public DefaultViewConfiguration(ICarbideProjectInfo projectInfo) {
 		Check.checkArg(projectInfo);
 		this.project = projectInfo.getProject();
-		this.context = projectInfo.getDefaultConfiguration();
+		this.context = projectInfo.getDefaultConfiguration().getBuildContext();
 		this.bldInfPath = null;
 		this.viewFilter = new AllNodesViewFilter();
 		wrapViewFilter();
@@ -199,7 +200,7 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 		List<IDefine> macros = new ArrayList<IDefine>();
 		if (context != null) {
 			
-			if (context.getSBSv2Alias() != null){
+			if (context instanceof ISBSv2BuildContext){
 				macros.add(DefineFactory.createDefine("SBSV2", null));
 			}
 			

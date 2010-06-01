@@ -384,4 +384,5 @@ public interface ISymbianSDK {
 	 */
 	void setPreviouslyScanned(boolean wasScanned);
 	
+	
 }

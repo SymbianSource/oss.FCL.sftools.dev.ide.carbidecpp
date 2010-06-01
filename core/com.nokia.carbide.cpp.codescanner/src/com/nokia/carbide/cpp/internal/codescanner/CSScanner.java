@@ -274,7 +274,7 @@ public class CSScanner {
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 		if (cpi != null) {
 			ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
-			IMMPViewConfiguration viewConfiguration = new DefaultMMPViewConfiguration(project, buildConfig, new AcceptedNodesViewFilter());
+			IMMPViewConfiguration viewConfiguration = new DefaultMMPViewConfiguration(project, buildConfig.getBuildContext(), new AcceptedNodesViewFilter());
 			EpocEnginePathHelper helper = new EpocEnginePathHelper(cpi.getProject());
 			IPath workspaceRelativeMMPPath = helper.convertToWorkspace(inMMPPath);
 			final String epocRoot = buildConfig.getSDK().getEPOCROOT();
@@ -312,7 +312,7 @@ public class CSScanner {
 		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 		if (cpi != null) {
 			ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
-			IMMPViewConfiguration viewConfiguration = new DefaultMMPViewConfiguration(project, buildConfig, new AcceptedNodesViewFilter());
+			IMMPViewConfiguration viewConfiguration = new DefaultMMPViewConfiguration(project, buildConfig.getBuildContext(), new AcceptedNodesViewFilter());
 			final EpocEnginePathHelper pathHelper = new EpocEnginePathHelper(cpi.getProject());
 			IPath workspaceRelativeMMPPath = pathHelper.convertToWorkspace(inMMPPath);
 			final String epocRoot = buildConfig.getSDK().getEPOCROOT();

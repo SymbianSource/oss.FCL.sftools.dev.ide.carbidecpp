@@ -429,7 +429,7 @@ public class PreprocessHandler extends AbstractHandler {
 			
 			// target type macro (e.g. __DLL__)
 			EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-					new DefaultMMPViewConfiguration(project, buildConfig, new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData mmpData) {

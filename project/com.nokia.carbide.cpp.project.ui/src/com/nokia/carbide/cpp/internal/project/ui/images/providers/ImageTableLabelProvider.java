@@ -60,7 +60,7 @@ public class ImageTableLabelProvider extends DelayedImageLoadingLabelProviderBas
 		if (view instanceof IImageMakefileView) {
 			this.imageViewPathHelper = new ImageMakefileViewPathHelper(
 					(IImageMakefileView) view, 
-					new ISymbianBuildContext[] { editorContext.getBuildContext() });
+					new ISymbianBuildContext[] { editorContext.getCarbideBuildConfiguration().getBuildContext() });
 		}
 		COLUMN_THUMB = 0;
 		COLUMN_FORMAT = 1;

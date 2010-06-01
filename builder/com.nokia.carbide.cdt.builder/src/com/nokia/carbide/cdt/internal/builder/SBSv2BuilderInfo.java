@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
 
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
@@ -31,10 +32,10 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 	
 	ISymbianBuildContext context;
 	
-	public SBSv2BuilderInfo(ISymbianBuildContext context) {
+	public SBSv2BuilderInfo(ISBSv2BuildContext context) {
 		String buildAlias = context.getSBSv2Alias() != null ? context.getSBSv2Alias() : "";
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS, buildAlias);
-		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM, context.getBasePlatformForVariation());
+		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM, context.getPlatformString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET, context.getTargetString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, context.getDisplayString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT, "");

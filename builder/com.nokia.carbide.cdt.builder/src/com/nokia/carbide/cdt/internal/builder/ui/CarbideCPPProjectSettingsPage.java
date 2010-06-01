@@ -52,6 +52,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI;
 import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI.FileInfo;
@@ -355,7 +356,9 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 
     		// get the list of normal and test project extensions
     		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>();
-			buildConfigList.addAll(cpi.getBuildConfigurations());
+			for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()){
+				buildConfigList.add(config.getBuildContext());
+			}
 
     		enableOrDisableControls();
         }

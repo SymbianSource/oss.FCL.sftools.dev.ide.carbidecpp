@@ -16,23 +16,29 @@
 */
 package com.nokia.carbide.cpp.project.core.tests;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class MissingSdkTest extends TestCase {
 	
@@ -108,8 +114,10 @@ public class MissingSdkTest extends TestCase {
 			// check we only have those configs in the removed SDK in the missing list
 			List<ICarbideBuildConfiguration> configList = cpi.getBuildConfigurations();
 			int badCount = 0;
-			for (ICarbideBuildConfiguration config: configList) {				
-				if (SDKManagerInternalAPI.getMissingSdk(SymbianBuildContext.getSDKIDFromConfigName(config.getDisplayString())) != null) {
+			for (ICarbideBuildConfiguration config: configList) {		
+				// TODO: Hack to use static method for prototyping BuildContextSBSv1.getSDKIDFromConfigName
+				// Should be no static calls on those classes.
+				if (SDKManagerInternalAPI.getMissingSdk(BuildContextSBSv1.getSDKIDFromConfigName(config.getDisplayString())) != null) {
 					badCount++;
 				}
 			}

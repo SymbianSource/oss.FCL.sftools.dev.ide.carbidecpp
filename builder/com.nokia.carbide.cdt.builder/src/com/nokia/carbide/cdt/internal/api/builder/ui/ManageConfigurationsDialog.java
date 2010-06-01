@@ -56,6 +56,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.qt.core.QtConfigFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKFilter;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -311,15 +312,18 @@ public class ManageConfigurationsDialog extends TrayDialog {
 							boolean checkIt = false;
 							checkIt = currExistingConfig.equals(buildContext);
 							if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()) &&
-											!checkIt && currExistingConfig.getSBSv2Alias() == null){
+											!checkIt){
 								
-								// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
-								if (buildContext.getTargetString().equals(currExistingConfig.getTargetString()) &&
-									buildContext.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
-									buildContext.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
-									&& buildContext.getSBSv2Alias() != null && buildContext.getSBSv2Alias().split("_").length == 2){
-									
-									checkIt = true;
+								if (buildContext instanceof ISBSv2BuildContext){
+									ISBSv2BuildContext v2Context = (ISBSv2BuildContext)buildContext;
+									// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
+									if (v2Context.getTargetString().equals(currExistingConfig.getTargetString()) &&
+										v2Context.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
+										v2Context.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
+										&& v2Context.getSBSv2Alias() != null && v2Context.getSBSv2Alias().split("_").length == 2){
+										
+										checkIt = true;
+									}
 								}
 							}
 							if (checkIt){

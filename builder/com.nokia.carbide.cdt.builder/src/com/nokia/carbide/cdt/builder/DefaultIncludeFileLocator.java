@@ -20,13 +20,14 @@
 package com.nokia.carbide.cdt.builder;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
@@ -52,9 +53,10 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 			}
 
 			// get info from context
-			Check.checkState(buildContext instanceof SymbianBuildContext);
+			// TODO: HACK HACK. Hard coded build context to get working....
+			Check.checkState(buildContext instanceof BuildContextSBSv1);
 			
-			systemPaths.addAll(((SymbianBuildContext) buildContext).getCachedSystemIncludePaths());
+			systemPaths.addAll(((BuildContextSBSv1) buildContext).getCachedSystemIncludePaths());
 		}
 		setPaths(null, (File[]) systemPaths.toArray(new File[systemPaths.size()]));
 	}

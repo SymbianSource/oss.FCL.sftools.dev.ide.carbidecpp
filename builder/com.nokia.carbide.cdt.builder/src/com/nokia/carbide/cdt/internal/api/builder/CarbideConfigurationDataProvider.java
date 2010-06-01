@@ -56,7 +56,8 @@ import com.nokia.carbide.cdt.internal.builder.SISBuilderInfo;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuilderConfigInfoType;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.ConfigurationType;
 import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**
@@ -121,7 +122,9 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			
 			// find the configuration that matches the id (sdk, platform, target)
 			String configId = des.getConfiguration().getId();
-			ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(configId);
+			// TODO: We should be able to get the build context from the SBSv2 data, if present,
+			// otherwise from the display name for ABLD
+			ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(configId);
 			if (context == null) {
 				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK, "SDK specified in project " + project.getName() + " is not installed, please set it up from project property", null));
 			}
@@ -180,7 +183,8 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			// as they are computed dynamically now.
 			for (Iterator i = buildConfigType.getConfiguration().iterator(); i.hasNext();) {
 				ConfigurationType currConfig = (ConfigurationType)i.next();
-				ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(currConfig.getName());
+				// TODO: YUKCY!
+				ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
 				IEnvironmentVarsInfo envSettings = new EnvironmentVarsInfo(project, context, currConfig.getEnvVars());
 				List<IEnvironmentVariable> varsFromSettings = envSettings.getModifiedEnvVarsListFromSettings();
 				List<IEnvironmentVariable> updatedEnvList = new ArrayList<IEnvironmentVariable>();
@@ -304,8 +308,8 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 					List<ISymbianBuildContext> configs = new ArrayList<ISymbianBuildContext>();
 					for (Iterator i = oldConfigInfo.getConfiguration().iterator(); i.hasNext();) {
 						ConfigurationType currConfig = (ConfigurationType)i.next();
-						
-		    			ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(currConfig.getName());
+						// TODO: YUCKY!
+		    			ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
 						if (context != null) {
 							configs.add(context);
 						}

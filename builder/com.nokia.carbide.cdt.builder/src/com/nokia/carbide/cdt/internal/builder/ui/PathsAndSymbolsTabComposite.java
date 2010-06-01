@@ -116,7 +116,7 @@ public class PathsAndSymbolsTabComposite extends Composite {
 			String macrosFile = cpi.getMacrosFile();
 			if (macrosFile != null && macrosFile.length() > 0) {
 				MacroScanner scanner = new MacroScanner(
-						new DefaultIncludeFileLocator(buildConfig.getCarbideProject().getProject(), buildConfig),
+						new DefaultIncludeFileLocator(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext()),
 						DefaultModelDocumentProvider.getInstance(), 
 						DefaultTranslationUnitProvider.getInstance());
 				scanner.scanFile(new File(macrosFile));

@@ -1001,8 +1001,8 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 		sisFilesBlock.performDefaults();
 
 		IEnvironmentVarsInfo envVarsDefaults = cpi.getNamedConfiguration(lastSelectedConfigName).getEnvironmentVarsInfo();
-		String[] defaultVars = envVarsDefaults.getDefaultEnvVarsSettings(cpi, cpi.getNamedConfiguration(lastSelectedConfigName));
-		setUpEnvVarsTable(defaultVars, envVarsDefaults.getDefaultEnvVarsList(cpi, cpi.getNamedConfiguration(lastSelectedConfigName)));
+		String[] defaultVars = envVarsDefaults.getDefaultEnvVarsSettings(cpi, cpi.getNamedConfiguration(lastSelectedConfigName).getBuildContext());
+		setUpEnvVarsTable(defaultVars, envVarsDefaults.getDefaultEnvVarsList(cpi, cpi.getNamedConfiguration(lastSelectedConfigName).getBuildContext()));
 		
 		if (argumentsTabcomposite != null) {
 			argumentsTabcomposite.performDefaults(cpi.getNamedConfiguration(lastSelectedConfigName).getSDK());

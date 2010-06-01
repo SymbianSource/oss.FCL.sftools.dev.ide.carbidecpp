@@ -16,36 +16,79 @@
 */
 package com.nokia.carbide.cdt.builder;
 
-import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
-import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
-import com.nokia.carbide.cpp.epoc.engine.*;
-import com.nokia.carbide.cpp.epoc.engine.image.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
-import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
-import com.nokia.cpp.internal.api.utils.core.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
+import com.nokia.carbide.cpp.epoc.engine.BldInfDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.ImageMakefileDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IMultiImageSource;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfData;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExport;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMMPReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference;
+import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPBitmap;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPViewConfiguration;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGEmbeddedSISFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGInstallFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.PKGModelHelper;
+import com.nokia.cpp.internal.api.utils.core.CommonPathFinder;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 public class EpocEngineHelper {
 
@@ -636,7 +679,7 @@ public class EpocEngineHelper {
 		final Set<IPath> tempNormalProjects = new LinkedHashSet<IPath>();
 		for (final ICarbideBuildConfiguration buildConfig : buildConfigs) {
 			EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-					new DefaultViewConfiguration(project, buildConfig, new AcceptedNodesViewFilter()), 
+					new DefaultViewConfiguration(project, buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 					new BldInfDataRunnableAdapter() {
 						public Object run(IBldInfData data) {
 							for (IMakMakeReference normalRef : data.getMakMakeReferences()) {
@@ -678,7 +721,7 @@ public class EpocEngineHelper {
 		}
 		
 		exePath = (String)EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 					public Object run(IBldInfData data) {
 						String exePath  = ""; //$NON-NLS-1$
@@ -688,7 +731,7 @@ public class EpocEngineHelper {
 						if (mmps.length == 1) {
 							final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmps[0].getPath());
 							exePath = (String)EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-									new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+									new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 									new MMPDataRunnableAdapter() {
 
 									public Object run(IMMPData mmpData) {
@@ -768,7 +811,7 @@ public class EpocEngineHelper {
 		final ICarbideBuildConfiguration buildConfig = info.getDefaultConfiguration();
 		
 		exePath = (IPath)EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 					public Object run(IBldInfData data) {
 						IPath exePath  = null;
@@ -778,7 +821,7 @@ public class EpocEngineHelper {
 						if (mmps.length == 1) {
 							final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmps[0].getPath());
 							exePath = (IPath)EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-									new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+									new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 									new MMPDataRunnableAdapter() {
 									public Object run(IMMPData mmpData) {
 										IPath exePath = null;
@@ -971,7 +1014,7 @@ public class EpocEngineHelper {
 		final ICarbideBuildConfiguration buildConfig = info.getDefaultConfiguration();
 		
 		EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 
 				public Object run(IBldInfData data) {
@@ -980,7 +1023,7 @@ public class EpocEngineHelper {
 					if (mmps.length == 1) {
 						final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmps[0].getPath());
 						EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-								new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+								new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 								new MMPDataRunnableAdapter() {
 
 								public Object run(IMMPData mmpData) {
@@ -1137,7 +1180,7 @@ public class EpocEngineHelper {
 
 		final ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		EpocEnginePlugin.runWithBldInfView(cpi.getWorkspaceRelativeBldInfPath(),
-				new DefaultViewConfiguration(cpi.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(cpi.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfViewRunnableAdapter() {
 
 					public Object run(IBldInfView view) {
@@ -1266,7 +1309,7 @@ public class EpocEngineHelper {
 			
 			if (mmpName.toUpperCase().equals(mmpName2.toUpperCase())){
 				EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-						new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+						new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 						new MMPDataRunnableAdapter() {
 
 						public Object run(IMMPData mmpData) {
@@ -1615,7 +1658,7 @@ public class EpocEngineHelper {
 		final IPath workspaceRelativeldInfPath = buildConfig.getCarbideProject().getWorkspaceRelativeBldInfPath();
 
 		EpocEnginePlugin.runWithBldInfData(workspaceRelativeldInfPath,
-			new DefaultViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+			new DefaultViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 			new BldInfDataRunnableAdapter() {
 
 				public Object run(IBldInfData data) {
@@ -1646,7 +1689,7 @@ public class EpocEngineHelper {
 		final List<String> macros = new ArrayList<String>();
 		
 		EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 
 				public Object run(IMMPData mmpData) {
@@ -1678,7 +1721,7 @@ public class EpocEngineHelper {
 			IPath mmp, final ICarbideBuildConfiguration buildConfiguration,
 			final List<File> userPaths, final List<File> systemPaths) {
 		IMMPViewConfiguration viewConfiguration = new DefaultMMPViewConfiguration(
-				project, buildConfiguration, new AcceptedNodesViewFilter());
+				project, buildConfiguration.getBuildContext(), new AcceptedNodesViewFilter());
 		
 		final IPath epocRoot = new Path(buildConfiguration.getSDK().getEPOCROOT());
 		EpocEnginePlugin.runWithMMPData(new Path(project.getName()).append(mmp), 
@@ -1805,7 +1848,7 @@ public class EpocEngineHelper {
 		final ICarbideBuildConfiguration buildConfig = info.getDefaultConfiguration();
 		final List<IPath>mmpPaths = new ArrayList<IPath>();
 		EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 
 					public Object run(IBldInfData infView) {
@@ -1813,7 +1856,7 @@ public class EpocEngineHelper {
 								final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmp.getPath());
 								
 								EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-										new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+										new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 										new MMPDataRunnableAdapter() {
 
 										public Object run(IMMPData mmpData) {
@@ -1913,7 +1956,7 @@ public class EpocEngineHelper {
 		final ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		
 		EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(cpi, buildConfig), 
+				new DefaultViewConfiguration(cpi, buildConfig.getBuildContext()), 
 				new BldInfDataRunnableAdapter() {
 
 					public Object run(IBldInfData infView) {
@@ -1999,7 +2042,7 @@ public class EpocEngineHelper {
 				continue;
 			
 			EpocEnginePlugin.runWithMMPData(mmpPath, 
-					new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData mmpData) {
@@ -2258,7 +2301,12 @@ public class EpocEngineHelper {
 		mmpFile = mmpFile.removeFileExtension();
 		String mmpRootName = mmpFile.lastSegment();
 		String plat = config.getPlatformString();
-		String basePlat = config.getBasePlatformForVariation();
+		String basePlat = "";
+		if (config.getBuildContext() instanceof ISBSv2BuildConfigInfo){
+			basePlat = ((ISBSv1BuildContext)config).getBasePlatformForVariation();
+		} else {
+			basePlat = config.getPlatformString();
+		}
 		String variantPlat = config.getBuildVariationName();
 		
 		if (variantPlat.length() == 0){
@@ -2295,7 +2343,7 @@ public class EpocEngineHelper {
 			}
 			
 			String searchString = "";
-			if (config.getTargetString().equals(SymbianBuildContext.DEBUG_TARGET)){
+			if (config.getTargetString().equals(BuildContextSBSv1.DEBUG_TARGET)){
 				searchString = "# FeatureVariantUDEBLabel";
 			} else {
 				searchString = "# FeatureVariantURELLabel";
@@ -2391,7 +2439,7 @@ public class EpocEngineHelper {
 	 */
 	public static void addIncludedFilesFromBldInf(ICarbideProjectInfo projectInfo, ICarbideBuildConfiguration buildConfig, IPath bldinfPath, final Collection<IPath> pathList) {
 		DefaultViewConfiguration viewConfig = buildConfig != null ?
-				new DefaultViewConfiguration(projectInfo, buildConfig) :
+				new DefaultViewConfiguration(projectInfo, buildConfig.getBuildContext()) :
 					new DefaultViewConfiguration(projectInfo);
 		EpocEnginePlugin.runWithBldInfData(bldinfPath, 
 				viewConfig, 
@@ -2440,7 +2488,7 @@ public class EpocEngineHelper {
 		final List<IPath> filePaths = new ArrayList<IPath>();
 		
 		PKGModelHelper.runWithPKGView(pkgPath, 
-				new DefaultViewConfiguration(buildConfig.getCarbideProject(), buildConfig), 
+				new DefaultViewConfiguration(buildConfig.getCarbideProject(), buildConfig.getBuildContext()), 
 				new PKGViewRunnableAdapter() {
 
 				public Object run(IPKGView view) {
@@ -2609,7 +2657,7 @@ public class EpocEngineHelper {
 		final ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		
 		EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(cpi, buildConfig), 
+				new DefaultViewConfiguration(cpi, buildConfig.getBuildContext()), 
 				new BldInfDataRunnableAdapter() {
 
 					public Object run(IBldInfData infView) {

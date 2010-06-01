@@ -18,13 +18,13 @@ package com.nokia.carbide.cpp.sdk.core.test;
 
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-
-import junit.framework.TestCase;
 
 /**
  * This test the creation and APIs of the Symbian build context class.
@@ -70,7 +70,7 @@ public class SymbianContextTest extends TestCase {
 			assertEquals(4,osVer.getMinor());
 		}
 		
-		SymbianBuildContext context = new SymbianBuildContext(sdk, "WINSCW", "UDEB");
+		BuildContextSBSv1 context = new BuildContextSBSv1(sdk, "WINSCW", "UDEB");
 		ISymbianSDK contextSDK = context.getSDK();
 		
 		assertEquals(sdk, contextSDK);
