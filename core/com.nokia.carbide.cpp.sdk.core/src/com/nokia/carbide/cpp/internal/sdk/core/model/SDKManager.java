@@ -36,6 +36,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
@@ -445,6 +446,10 @@ public class SDKManager extends AbstractSDKManager {
 			deviceType.setUserdeletable("false");
 			deviceType.setUserdeletetable("false");
 			ISymbianSDK sdk = new SymbianSDK(deviceType);
+			if (sdk.getOSVersion().toString().equals("0.0.0")) {
+				sdk.setOSVersion(new Version("9.5"));
+			}
+
 			if (!isSupportedSDK(sdk)) {
 				continue;
 			}

@@ -194,8 +194,10 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 	
 	public void scanSDKs() {
-		scanJob.setSystem(true);
-		scanJob.schedule();
+		if (scanJob.getState() == Job.NONE) {
+			scanJob.setSystem(true);
+			scanJob.schedule();
+		}
 	}
 
 	/**
