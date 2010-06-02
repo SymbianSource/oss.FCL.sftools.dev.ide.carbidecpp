@@ -50,7 +50,39 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	@Override
 	public String getDisplayString() {
 		// TODO We will need to cobble up proper display names
-		return "(" + sbsv2Alias + ") " + "[" + sdk.getUniqueId() + "]" ;
+		//return "(" + sbsv2Alias + ") " + "[" + sdk.getUniqueId() + "]" ;
+		
+		// TODO: This is temporary to support the old configs where
+		// The display name and id were the same thing. Need to work on supporting both
+		// as we migrate the display name to the settings and use a truly unique ID for configs.
+		
+		  String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
+		  String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
+		  String DEBUG_DISPLAY_TEXT = "Debug"; //$NON-NLS-1$
+		  String RELEASE_DISPLAY_TEXT = "Release"; //$NON-NLS-1$
+		  String SPACE_DISPLAY_TEXT = " "; //$NON-NLS-1$
+		  String SDK_NOT_INSTALLED = "SDK not installed"; //$NON-NLS-1$
+		String displayString = null;
+		if (displayString == null) {
+			// in the form Emulation Debug (WINSCW) [S60_3rd_MR] or
+			// Phone Release (GCCE) [S60_3rd_MR]
+			if (platform.compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) == 0) {
+				displayString = EMULATOR_DISPLAY_TEXT;
+			} else {
+				displayString = PHONE_DISPLAY_TEXT;
+			}
+			
+			if (target.compareTo(ISymbianBuildContext.DEBUG_TARGET) == 0) {
+				displayString = displayString + SPACE_DISPLAY_TEXT + DEBUG_DISPLAY_TEXT;
+			} else {
+				displayString = displayString + SPACE_DISPLAY_TEXT + RELEASE_DISPLAY_TEXT;
+			}
+			
+			String basePlatform = sbsv2Alias;
+			
+			displayString = displayString + " (" + basePlatform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
+		}
+		return displayString;
 	}
 
 	@Override
