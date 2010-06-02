@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IProject;
 
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -54,9 +55,13 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 
 			// get info from context
 			// TODO: HACK HACK. Hard coded build context to get working....
-			Check.checkState(buildContext instanceof BuildContextSBSv1);
+			Check.checkState(buildContext instanceof BuildContextSBSv1 || buildContext instanceof BuildContextSBSv2);
 			
-			systemPaths.addAll(((BuildContextSBSv1) buildContext).getCachedSystemIncludePaths());
+			if (buildContext instanceof BuildContextSBSv1){
+				systemPaths.addAll(((BuildContextSBSv1) buildContext).getCachedSystemIncludePaths());
+			} else if (buildContext instanceof BuildContextSBSv2){
+				systemPaths.addAll(((BuildContextSBSv2) buildContext).getCachedSystemIncludePaths());
+			}
 		}
 		setPaths(null, (File[]) systemPaths.toArray(new File[systemPaths.size()]));
 	}
