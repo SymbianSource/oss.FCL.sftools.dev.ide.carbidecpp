@@ -90,7 +90,7 @@ public class SBSv2BuildConfigTabComposite extends Composite {
 	
 	public void initData(ICarbideBuildConfiguration buildConfig) {
 		this.config = buildConfig;
-		context = (ISBSv2BuildContext)buildConfig;
+		context = (ISBSv2BuildContext)buildConfig.getBuildContext();
 		ISBSv2BuildConfigInfo sbsv2ConfigInfo = ((CarbideBuildConfiguration)buildConfig).getSBSv2ConfigInfo();
 		if (sbsv2ConfigInfo != null && sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT) != null){
 			variantEdit.setText(sbsv2ConfigInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));

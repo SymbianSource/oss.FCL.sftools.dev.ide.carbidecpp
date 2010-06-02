@@ -2368,7 +2368,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					 EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
 				buildPlatform = config.getPlatformString().toLowerCase();
 			} else if (config.getBuildContext() instanceof ISBSv1BuildContext) {
-				buildPlatform = ((ISBSv1BuildContext)config).getBasePlatformForVariation().toLowerCase();
+				buildPlatform = ((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 			}
 			
 			abldArgs.add(MAKEFILE_CMD); //$NON-NLS-1$
@@ -2587,10 +2587,10 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		if (EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
 			platformName = config.getPlatformString().toUpperCase();
 		} else if (config.getBuildContext() instanceof ISBSv1BuildContext) {
-			platformName = ((ISBSv1BuildContext)config).getBasePlatformForVariation();
+			platformName = ((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation();
 		}
 		
-		makefilePath = makefilePath.append(((ISBSv1BuildContext)config).getBasePlatformForVariation().toUpperCase());
+		makefilePath = makefilePath.append(((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation().toUpperCase());
 
 		// and the makefile has the form MMPNAME.PLATFORM
 		makefilePath = makefilePath.append(mmpName + "." + platformName);
