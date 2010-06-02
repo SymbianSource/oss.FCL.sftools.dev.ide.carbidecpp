@@ -19,6 +19,7 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
@@ -39,7 +40,7 @@ public class SDKManagerRaptorOnly extends AbstractSDKManager {
 	 * @see com.nokia.carbide.cpp.internal.sdk.core.model.AbstractSDKManager#doScanSDKs()
 	 */
 	@Override
-	protected boolean doScanSDKs() {
+	protected boolean doScanSDKs(IProgressMonitor monitor) {
 		
 		String message = SBSv2Utils.scanSBSv2();
 		if (message != null) {

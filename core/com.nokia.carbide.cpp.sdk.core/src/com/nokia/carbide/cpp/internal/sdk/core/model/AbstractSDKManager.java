@@ -16,8 +16,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +39,12 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.osgi.service.datalocation.Location;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -61,11 +61,11 @@ import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
+import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
@@ -77,6 +77,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	
 	protected static List<ISymbianSDK> sdkList = new ArrayList<ISymbianSDK>();
 	protected HashMap<String,ISymbianSDK> missingSdkMap = new HashMap<String,ISymbianSDK>();
+	protected Job scanJob;
 
 	protected static final String CARBIDE_SDK_CACHE_FILE_NAME = "carbideSDKCache.xml";
 	protected static final String SDK_CACHE_ID_ATTRIB = "id";
@@ -125,6 +126,67 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
+		scanJob = new Job ("Scan System Drives") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				synchronized (sdkList)
+				{
+					ArrayList<ISymbianSDK> oldSDKList = new ArrayList<ISymbianSDK>(sdkList);
+					
+					getSBSv2Version(true);
+					
+					if (sdkList != null){
+						sdkList.clear();
+					}
+				
+					if (!doScanSDKs(monitor))
+						return Status.OK_STATUS;;
+					
+					// now these SDK's are newly added, remove from internal list
+					for (ISymbianSDK sdk : sdkList) {
+						if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {
+							SDKManagerInternalAPI.removeMissingSdk(sdk
+									.getUniqueId());
+						}
+					}
+
+					// now these SDK's are removed from the old list, add to
+					// internal list
+					for (ISymbianSDK oldSdk : oldSDKList) {
+						boolean found = false;
+						for (ISymbianSDK sdk : sdkList) {
+							if (sdk.getUniqueId().equals(oldSdk.getUniqueId())) {
+								found = true;
+								break;
+							}
+						}
+						if (found == false) {
+							SDKManagerInternalAPI.addMissingSdk(oldSdk
+									.getUniqueId());
+							// flush cache
+							SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { oldSdk });
+						}
+					}
+				}
+
+				// make sure we don't rescan over and over again
+				hasScannedSDKs = true;
+				
+				// tell others about it
+				fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
+				scanCarbideSDKCache();
+				
+				// Notify any plugins that want to know if the SDKManager has scanned plugins.
+				if (!sdkHookExtenstionsNotified) {
+					notifySDKManagerLoaded();
+					sdkHookExtenstionsNotified = true;
+				}
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				return Status.OK_STATUS;
+			}
+		};
 	}
 	
 	public SymbianMacroStore getSymbianMacroStore(){
@@ -132,61 +194,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 	
 	public void scanSDKs() {
-		synchronized (sdkList)
-		{
-			ArrayList<ISymbianSDK> oldSDKList = new ArrayList<ISymbianSDK>(sdkList);
-			
-			getSBSv2Version(true);
-			
-			if (sdkList != null){
-				sdkList.clear();
-			}
-		
-			if (!doScanSDKs())
-				return;
-			
-			// now these SDK's are newly added, remove from internal list
-			for (ISymbianSDK sdk : sdkList) {
-				if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {
-					SDKManagerInternalAPI.removeMissingSdk(sdk
-							.getUniqueId());
-				}
-			}
-
-			// now these SDK's are removed from the old list, add to
-			// internal list
-			for (ISymbianSDK oldSdk : oldSDKList) {
-				boolean found = false;
-				for (ISymbianSDK sdk : sdkList) {
-					if (sdk.getUniqueId().equals(oldSdk.getUniqueId())) {
-						found = true;
-						break;
-					}
-				}
-				if (found == false) {
-					SDKManagerInternalAPI.addMissingSdk(oldSdk
-							.getUniqueId());
-					// flush cache
-					SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { oldSdk });
-				}
-			}
-
-
-		}
-
-		// make sure we don't rescan over and over again
-		hasScannedSDKs = true;
-		
-		// tell others about it
-		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
-		scanCarbideSDKCache();
-		
-		// Notify any plugins that want to know if the SDKManager has scanned plugins.
-		if (!sdkHookExtenstionsNotified) {
-			notifySDKManagerLoaded();
-			sdkHookExtenstionsNotified = true;
-		}
-		
+		scanJob.setSystem(true);
+		scanJob.schedule();
 	}
 
 	/**
@@ -195,8 +204,19 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	 * when SDKs are newly missing
 	 * @return true if scan succeeded
 	 */
-	abstract protected boolean doScanSDKs();
+	abstract protected boolean doScanSDKs(IProgressMonitor monitor);
 	
+	public void addScanJobListner(IJobChangeListener listener) {
+		if (scanJob != null) {
+			scanJob.addJobChangeListener(listener);
+		}
+	}
+
+	public void removeScanJobLisner(IJobChangeListener listener) {
+		if (scanJob != null) {
+			scanJob.removeJobChangeListener(listener);
+		}
+	}
 
 	protected void ensureScannedSDKs() {
 		if (!hasScannedSDKs) {
@@ -291,17 +311,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			throw new RuntimeException(e);
 		}
 		
-		// NOTE: If debugging runtime workbench and you clear your configuraiton at each launch
-		// the data in the configuration location will be lost
-		Location configurationLocation = Platform.getConfigurationLocation();
 		try {
-			URL url = new URL(configurationLocation.getURL(), SDKCorePlugin.PLUGIN_ID);
-			File configFolder = new File(url.getFile());
-			if (!configFolder.exists()) {
-				configFolder.mkdirs();
-			}
-
-		    File carbideSDKCacheFile = new File(configFolder, CARBIDE_SDK_CACHE_FILE_NAME);
+		    File carbideSDKCacheFile = new File(System.getProperty("user.home"), CARBIDE_SDK_CACHE_FILE_NAME);
 		    if (!carbideSDKCacheFile.exists()){
 		    	try {
 		    	FileUtils.writeFileContents(carbideSDKCacheFile, EMPTY_STRING.toCharArray(), null);
@@ -413,84 +424,72 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			return;
 		}
 		
-		Location configurationLocation = Platform.getConfigurationLocation();
-		try {
-					
-			URL url = new URL(configurationLocation.getURL(), SDKCorePlugin.PLUGIN_ID);
-			File configFolder = new File(url.getFile());
-			if (!configFolder.exists()) {
-				configFolder.mkdirs();
+		File carbideSDKCacheFile = new File(System.getProperty("user.home"), CARBIDE_SDK_CACHE_FILE_NAME);
+		if (!carbideSDKCacheFile.exists()){
+			try {
+			FileUtils.writeFileContents(carbideSDKCacheFile, EMPTY_STRING.toCharArray(), null);
+			} catch (CoreException e){
+				e.printStackTrace();
 			}
+		}
+		
+		Document d = docBuilder.newDocument();
+		Node sdks = d.appendChild(d.createElement("sdks"));
 			
-			File carbideSDKCacheFile = new File(configFolder, CARBIDE_SDK_CACHE_FILE_NAME);
-		    if (!carbideSDKCacheFile.exists()){
-		    	try {
-		    	FileUtils.writeFileContents(carbideSDKCacheFile, EMPTY_STRING.toCharArray(), null);
-		    	} catch (CoreException e){
-		    		e.printStackTrace();
-		    	}
-		    }
-		    
-			Document d = docBuilder.newDocument();
-			Node sdks = d.appendChild(d.createElement("sdks"));
+		synchronized(sdkList)
+		{
+			for (ISymbianSDK currSDK: sdkList) {
+				Node sdk = sdks.appendChild(d.createElement("sdk"));
+				NamedNodeMap attribs = sdk.getAttributes();
+				Node idNode = d.createAttribute(SDK_CACHE_ID_ATTRIB);
+				idNode.setNodeValue(currSDK.getUniqueId());
+				attribs.setNamedItem(idNode);
+					
+				// Hide the build config from view in the build config list?
+				Node enabledNode = d.createAttribute(SDK_CACHE_ENABLED_ATTRIB);
+				if (true == currSDK.isEnabled()) {
+					enabledNode.setNodeValue("true");
+				} else {
+					enabledNode.setNodeValue("false");
+				}
+				attribs.setNamedItem(enabledNode);
 				
-			synchronized(sdkList)
-			{
-				for (ISymbianSDK currSDK: sdkList) {
-					Node sdk = sdks.appendChild(d.createElement("sdk"));
-					NamedNodeMap attribs = sdk.getAttributes();
-					Node idNode = d.createAttribute(SDK_CACHE_ID_ATTRIB);
-					idNode.setNodeValue(currSDK.getUniqueId());
-					attribs.setNamedItem(idNode);
-						
-					// Hide the build config from view in the build config list?
-					Node enabledNode = d.createAttribute(SDK_CACHE_ENABLED_ATTRIB);
-					if (true == currSDK.isEnabled()) {
-						enabledNode.setNodeValue("true");
-					} else {
-						enabledNode.setNodeValue("false");
-					}
-					attribs.setNamedItem(enabledNode);
-					
-					Node wasScannedNode = d.createAttribute(SDK_SCANNED_FOR_PLUGINS);
-					if (true == currSDK.isPreviouslyScanned()) {
-						wasScannedNode.setNodeValue("true");
-					} else {
-						wasScannedNode.setNodeValue("false");
-					}
-					attribs.setNamedItem(wasScannedNode);
-					
-					Node osVerNode = d.createAttribute(SDK_CACHE_OS_VERSION_ATTRIB);
-					osVerNode.setNodeValue(currSDK.getOSVersion().toString());
-					attribs.setNamedItem(osVerNode);
-					
-					Node osBranchNode = d.createAttribute(SDK_CACHE_OS_BRANCH_ATTRIB);
-					osBranchNode.setNodeValue(currSDK.getSDKOSBranch());
-					attribs.setNamedItem(osBranchNode);
-					
-					Node sdkVerNode = d.createAttribute(SDK_CACHE_SDK_VERSION_ATTRIB);
-					sdkVerNode.setNodeValue(currSDK.getSDKVersion().toString());
-					attribs.setNamedItem(sdkVerNode);
-					
-					if (!isEPOCRootFixed()) {
-						Node sdkEpocRootNode = d.createAttribute(SDK_CACHE_EPOCROOT_ATTRIB);
-						sdkEpocRootNode.setNodeValue(currSDK.getEPOCROOT());
-						attribs.setNamedItem(sdkEpocRootNode);
-					}
+				Node wasScannedNode = d.createAttribute(SDK_SCANNED_FOR_PLUGINS);
+				if (true == currSDK.isPreviouslyScanned()) {
+					wasScannedNode.setNodeValue("true");
+				} else {
+					wasScannedNode.setNodeValue("false");
+				}
+				attribs.setNamedItem(wasScannedNode);
+				
+				Node osVerNode = d.createAttribute(SDK_CACHE_OS_VERSION_ATTRIB);
+				osVerNode.setNodeValue(currSDK.getOSVersion().toString());
+				attribs.setNamedItem(osVerNode);
+				
+				Node osBranchNode = d.createAttribute(SDK_CACHE_OS_BRANCH_ATTRIB);
+				osBranchNode.setNodeValue(currSDK.getSDKOSBranch());
+				attribs.setNamedItem(osBranchNode);
+				
+				Node sdkVerNode = d.createAttribute(SDK_CACHE_SDK_VERSION_ATTRIB);
+				sdkVerNode.setNodeValue(currSDK.getSDKVersion().toString());
+				attribs.setNamedItem(sdkVerNode);
+				
+				if (!isEPOCRootFixed()) {
+					Node sdkEpocRootNode = d.createAttribute(SDK_CACHE_EPOCROOT_ATTRIB);
+					sdkEpocRootNode.setNodeValue(currSDK.getEPOCROOT());
+					attribs.setNamedItem(sdkEpocRootNode);
 				}
 			}
-			DOMSource domSource = new DOMSource(d);
-			TransformerFactory transFactory = TransformerFactory.newInstance();
-			Result fileResult = new StreamResult(carbideSDKCacheFile);
-			try {
-				transFactory.newTransformer().transform(domSource, fileResult);
-			} catch (TransformerConfigurationException e) {
-				ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-			} catch (TransformerException e) {
-				ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-			} 
-		} catch (MalformedURLException e){
-			
+		}
+		DOMSource domSource = new DOMSource(d);
+		TransformerFactory transFactory = TransformerFactory.newInstance();
+		Result fileResult = new StreamResult(carbideSDKCacheFile);
+		try {
+			transFactory.newTransformer().transform(domSource, fileResult);
+		} catch (TransformerConfigurationException e) {
+			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
+		} catch (TransformerException e) {
+			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
 		}
 	}
 

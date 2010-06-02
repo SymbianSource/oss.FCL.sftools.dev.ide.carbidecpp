@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2009-2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -16,198 +16,281 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.ui;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.AddSDKDialog;
+import com.nokia.carbide.cpp.ui.TextAndDialogCellEditor;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class SDKPreferencePage
 	extends PreferencePage
 	implements IWorkbenchPreferencePage {
 	
-	ISDKManager sdkMgr;
-	private CheckboxTableViewer sdkListTableViewer;
-	private List<ISymbianSDK> sdkList; 
-	private Button sdkpropertiesButton;
-	private Button removeSdkButton;
-	private Button addNewSdkButton;
-	private Button rescanNowButton;
-	
-	private Label epocrootLabel;
-	private Label availablePlatformsLabel;
-	private Label osVersionLabel;
-	private Label diagnosticCheckLabel;
-	
-	private Button listenForDevicesXMLChangeButton;
-	
-	private static final String EPOCROOT_LABEL = "EPOCROOT: ";	//$NON-NLS-1$
-	private static final String PLATFORMS_LABEL = "Available Platforms: "; //$NON-NLS-1$
-	private static final String DIAGNOSTIC_CHECK_LABEL = "Diagnostic Check: "; //$NON-NLS-1$
-	private static final String OS_VERSION_LABEL = "OS Version: "; //$NON-NLS-1$
-	
-	private Color RED;
-	private Color BLACK;
-	private Color GRAY;
-	Shell shell;
-	
-	public SDKPreferencePage() {
-		super();
-		
-	}
-	
-	@Override
-	protected Control createContents(Composite parent) {
-		return null;
+	private class SDKLabelProvider extends LabelProvider implements ITableLabelProvider {
+		public Image getColumnImage(Object element, int columnIndex) {
+			return null;
+		}
+
+		public String getColumnText(Object element, int columnIndex) {
+			ISymbianSDK sdk = (ISymbianSDK) element;
+			switch (columnIndex) {
+			case 1:
+				return sdk.getUniqueId();
+			case 2:
+				return sdk.getEPOCROOT();
+			default:
+				return "";
+			}
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
-	public void init(IWorkbench workbench) {
+	private class IdEditingSupport extends EditingSupport {
+		private TextCellEditor editor;
+
+		public IdEditingSupport(ColumnViewer viewer) {
+			super(viewer);
+			editor = new TextCellEditor((Composite) viewer.getControl());
+		}
+
+		@Override
+		protected boolean canEdit(Object element) {
+			if (element instanceof ISymbianSDK) {
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		protected CellEditor getCellEditor(Object element) {
+			return editor;
+		}
+
+		@Override
+		protected Object getValue(Object element) {
+			ISymbianSDK sdk = (ISymbianSDK) element;
+			return sdk.getUniqueId();
+		}
+
+		@Override
+		protected void setValue(Object element, Object value) {
+			ISymbianSDK sdk = (ISymbianSDK) element;
+			sdk.setUniqueID(value.toString());
+			SDKCorePlugin.getSDKManager().updateSDK(sdk);
+			getViewer().refresh();
+		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	public void createControl(Composite parent) {
+
+	private class LocationEditingSupport extends EditingSupport {
+		private LocationCellEditor editor;
+
+		public LocationEditingSupport(ColumnViewer viewer) {
+			super(viewer);
+			editor = new LocationCellEditor((Composite) viewer.getControl());
+		}
+
+		@Override
+		protected boolean canEdit(Object element) {
+			if (element instanceof ISymbianSDK) {
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		protected CellEditor getCellEditor(Object element) {
+			return editor;
+		}
+
+		@Override
+		protected Object getValue(Object element) {
+			ISymbianSDK sdk = (ISymbianSDK) element;
+			return sdk.getEPOCROOT();
+		}
+
+		@Override
+		protected void setValue(Object element, Object value) {
+			ISymbianSDK sdk = (ISymbianSDK) element;
+			sdk.setEPOCROOT(value.toString());
+			SDKCorePlugin.getSDKManager().updateSDK(sdk);
+			getViewer().refresh();
+		}
+	}
+
+	private class LocationCellEditor extends TextAndDialogCellEditor {
+		private Button button;
+		private Text text;
+
+		public LocationCellEditor(Composite parent) {
+			super(parent);
+		}
+
+		@Override
+		protected Control createContents(Composite parent) {
+			text = (Text) super.createContents(parent);
+			return text;
+		}
+
+		@Override
+		protected Control createControl(Composite parent) {
+			Control control = super.createControl(parent);
+			button = getButton();
+			button.setText(Messages.getString("SDKPreferencePage.Browse_Location_Label")); //$NON-NLS-1$
+			return control;
+		}
+
+		@Override
+		protected Object openDialogBox(Control cellEditorWindow) {
+			DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN);
+			BrowseDialogUtils.initializeFrom(dialog, text);
+			return dialog.open();
+		}		
+	}
+
+	private class ScanJobListener implements IJobChangeListener {
+		public void done(IJobChangeEvent event) {
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					rescanSDKs();
+				}
+			});
+		}
+
+		public void aboutToRun(IJobChangeEvent event) {}
+		public void awake(IJobChangeEvent event) {}
+		public void running(IJobChangeEvent event) {}
+		public void scheduled(IJobChangeEvent event) {}
+		public void sleeping(IJobChangeEvent event) {}
 		
-		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
+	}
+
+	private IPreferenceStore prefsStore;
+	private ISDKManager sdkMgr;
+	private List<ISymbianSDK> sdkList;
+	private ScanJobListener scanJobListner;
+	private boolean scanForNewPlugins;
+	private CheckboxTableViewer sdkListTableViewer;
+	private Button addButton;
+	private Button deleteButton;
+	private Button propertiesButton;
+	private Button scanForNewPluginsButton;
+	private Button rescanButton;
+	private Label iconLabel;
+	private Label statusLabel;
+
+	private Color red;
+	private Color black;
+	private Color gray;
+
+	/**
+	 * Constructor.
+	 */
+	public SDKPreferencePage() {
+		super();
+		scanJobListner = new ScanJobListener();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.PreferencePage#createControl(org.eclipse.swt.widgets.Composite)
+	 */
+	public void createControl(Composite parent){
+		prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
 		sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr == null){
 			return; 
 		}
-		
-		shell = parent.getShell();
 		sdkList = sdkMgr.getSDKList();
-		RED = shell.getDisplay().getSystemColor(SWT.COLOR_RED);
-		BLACK = shell.getDisplay().getSystemColor(SWT.COLOR_BLACK);
-		GRAY = shell.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
-		
-		// check that devices.xml actually exists
-		if (sdkMgr instanceof SDKManager)
-			((SDKManager) sdkMgr).checkDevicesXMLExistAndCreate();
-		
-		Composite content = new Composite(parent, SWT.NONE);
-		setControl(content);
-		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		content.setLayout(gridLayout);
-
-		final Group availableSymbianOsGroup = new Group(content, SWT.NONE);
-		availableSymbianOsGroup.setToolTipText(Messages.getString("SDKPreferencePage.OS_Group_ToolTip")); //$NON-NLS-1$
-		final GridData availableSymbianOsGridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		availableSymbianOsGridData.widthHint = 350;
-		availableSymbianOsGroup.setText(Messages.getString("SDKPreferencePage.Available_SDKs_Label")); //$NON-NLS-1$
-		availableSymbianOsGroup.setLayoutData(availableSymbianOsGridData);
-		availableSymbianOsGroup.setLayout(new GridLayout());
-
-		sdkListTableViewer = CheckboxTableViewer.newCheckList(availableSymbianOsGroup, SWT.BORDER);
-		sdkListTableViewer.getTable().setLayoutData(availableSymbianOsGridData);
-		
-		final Composite composite = new Composite(content, SWT.NONE);
-		composite.setLayoutData(new GridData());
-		final GridLayout gridLayout_1 = new GridLayout();
-		gridLayout_1.makeColumnsEqualWidth = true;
-		composite.setLayout(gridLayout_1);
-
-		removeSdkButton = new Button(composite, SWT.NONE);
-		removeSdkButton.setToolTipText(Messages.getString("SDKPreferencePage.Delete_SDK_ToolTip")); //$NON-NLS-1$
-		final GridData gridData = new GridData(SWT.LEFT, SWT.TOP, true, false);
-		removeSdkButton.setLayoutData(gridData);
-		removeSdkButton.setText(Messages.getString("SDKPreferencePage.Remove_SDK_Label")); //$NON-NLS-1$
-		addButtonListener(removeSdkButton);
-		
-		addNewSdkButton = new Button(composite, SWT.NONE);
-		addNewSdkButton.setToolTipText(Messages.getString("SDKPreferencePage.Add_New_SDK_ToolTip")); //$NON-NLS-1$
-		addNewSdkButton.setLayoutData(gridData);
-		addNewSdkButton.setText(Messages.getString("SDKPreferencePage.Add_New_SDK_Label")); //$NON-NLS-1$
-		addButtonListener(addNewSdkButton);
-		
-		sdkpropertiesButton = new Button(composite, SWT.NONE);
-		sdkpropertiesButton.setToolTipText(Messages.getString("SDKPreferencePage.SDK_Props_Button_ToolTip")); //$NON-NLS-1$
-		sdkpropertiesButton.setLayoutData(gridData);
-		sdkpropertiesButton.setText(Messages.getString("SDKPreferencePage.SDK_Props_Button_Label")); //$NON-NLS-1$
-		addButtonListener(sdkpropertiesButton);
-		
-		final Group sdkInformationGroup = new Group(content, SWT.NONE);
-		sdkInformationGroup.setToolTipText(Messages.getString("SDKPreferencePage.SDK_Info_ToolTip")); //$NON-NLS-1$
-		final GridData sdkInfoGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		sdkInfoGridData.widthHint = 350;
-		sdkInformationGroup.setText(Messages.getString("SDKPreferencePage.SDK_Info_Label")); //$NON-NLS-1$
-		sdkInformationGroup.setLayoutData(sdkInfoGridData);
-		sdkInformationGroup.setLayout(new GridLayout());
-
-		epocrootLabel = new Label(sdkInformationGroup, SWT.WRAP);
-		epocrootLabel.setToolTipText(Messages.getString("SDKPreferencePage.EPOC32_Loc_ToolTip")); //$NON-NLS-1$
-		epocrootLabel.setLayoutData(new GridData(300, SWT.DEFAULT));
-		epocrootLabel.setText("EPOCROOT:"); //$NON-NLS-1$
-
-		osVersionLabel = new Label(sdkInformationGroup, SWT.WRAP);
-		osVersionLabel.setToolTipText(Messages.getString("SDKPreferencePage.OSVesions_ToolTip")); //$NON-NLS-1$
-		osVersionLabel.setLayoutData(new GridData(300, SWT.DEFAULT));
-		osVersionLabel.setText(Messages.getString("SDKPreferencePage.OSVersion_Label")); //$NON-NLS-1$
-
-		availablePlatformsLabel = new Label(sdkInformationGroup, SWT.WRAP);
-		availablePlatformsLabel.setToolTipText(Messages.getString("SDKPreferencePage.Platforms_ToolTip")); //$NON-NLS-1$
-		availablePlatformsLabel.setLayoutData(new GridData(300, SWT.DEFAULT));
-		availablePlatformsLabel.setText(Messages.getString("SDKPreferencePage.Available_Platforms")); //$NON-NLS-1$
-
-		diagnosticCheckLabel = new Label(sdkInformationGroup, SWT.WRAP);
-		diagnosticCheckLabel.setToolTipText(Messages.getString("SDKPreferencePage.Diagnostic_Check_ToolTip")); //$NON-NLS-1$
-		diagnosticCheckLabel.setLayoutData(sdkInfoGridData);
-		diagnosticCheckLabel.setText(Messages.getString("SDKPreferencePage.Diagnostic_Check_Label")); //$NON-NLS-1$
-		new Label(content, SWT.NONE);
-
-		listenForDevicesXMLChangeButton = new Button(content, SWT.CHECK);
-		listenForDevicesXMLChangeButton.setText(Messages.getString("SDKPreferencePage.listerForDevicesXML"));
-		listenForDevicesXMLChangeButton.setToolTipText(Messages.getString("SDKPreferencePage.listerForDevicesXML_Tooltip"));	//$NON-NLS-1$
-		listenForDevicesXMLChangeButton.setSelection(prefsStore.getBoolean(SDKUIPreferenceConstants.LISTEN_FOR_DEVICES_XML_CHANGE));
-		
-		new Label(content, SWT.WRAP); // filler
-		
-		rescanNowButton = new Button(content, SWT.NONE);
-		rescanNowButton.setToolTipText(Messages.getString("SDKPreferencePage.Rescan_Button_ToolTip")); //$NON-NLS-1$
-		rescanNowButton.setLayoutData(new GridData());
-		rescanNowButton.setText(Messages.getString("SDKPreferencePage.Rescan_Button_Label")); //$NON-NLS-1$
-		addButtonListener(rescanNowButton);
-		new Label(content, SWT.NONE);
-		
-		// Build the checked table of SDKs
-		addSDKComponentTableItems();
-		
-		ISymbianSDK sdk = (ISymbianSDK)sdkListTableViewer.getElementAt(0);
-		if (sdk != null){
-			sdkListTableViewer.setSelection(new StructuredSelection(sdk), true);
-			setSelectedSDKInfoText(sdk);
+		if (sdkMgr instanceof SDKManager) {
+			SDKManager mgr = (SDKManager) sdkMgr;
+			mgr.addScanJobListner(scanJobListner);
 		}
-		
-		
+
+		super.createControl(parent);
+
+		// Hide "Restore Defaults" button
+		getDefaultsButton().setVisible(false);
+
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(super.getControl(), SDKUIHelpIds.SDK_PREFERENCES_PAGE);
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.DialogPage#dispose()
+	 */
+	public void dispose() {
+		if (sdkMgr != null && sdkMgr instanceof SDKManager){
+			SDKManager mgr = (SDKManager) sdkMgr;
+			mgr.removeScanJobLisner(scanJobListner);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 */
+	public void init(IWorkbench arg0) {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.PreferencePage#performOk()
+	 */
 	public boolean performOk() {
-		
-		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
-		prefsStore.setValue(SDKUIPreferenceConstants.LISTEN_FOR_DEVICES_XML_CHANGE, listenForDevicesXMLChangeButton.getSelection());
-		
+		// Save preference page specific values;
+		prefsStore.setValue(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS, scanForNewPluginsButton.getSelection());
+
+		// Remember which SDK is enabled
 		for (ISymbianSDK sdk : sdkMgr.getSDKList()){
 			sdk.setEnabled(false);
 		}
@@ -218,341 +301,329 @@ public class SDKPreferencePage
 				sdk.setEnabled(true);
 			}
 		}
-		
-		ISDKManager sdkMgr =SDKCorePlugin.getSDKManager();
+
+		// Update cached SDK info
 		sdkMgr.updateCarbideSDKCache();
-		
 		return super.performOk();
 	}
-	
-	private void addSDKComponentTableItems() {
-		sdkListTableViewer.setContentProvider(new SDKTableComponentsContentProvider());
-		sdkListTableViewer.setLabelProvider(new SDKTableComponentsLabelProvider());
-		Table lTable = sdkListTableViewer.getTable();
-		
-		sdkList = SDKCorePlugin.getSDKManager().getSDKList();
-		sdkListTableViewer.setInput(sdkList);
-		lTable.setToolTipText(Messages.getString("SDKPreferencePage.List_of_Available_SDKs_ToolTip")); //$NON-NLS-1$
-		lTable.setVisible(true);
-		addSDKTableViewerSelectionListener();
-		//lTable.setLayoutData(grid);
-		if (sdkList == null || sdkList.size() == 0){
-			diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + Messages.getString("SDKPreferencePage.No_SDKs_Available")); //$NON-NLS-1$
-			diagnosticCheckLabel.setForeground(RED);
-			diagnosticCheckLabel.setBackground(GRAY);
-		} else {
-			setCheckBoxes(sdkList);
-		}
-	}
-	
-	/**
-	 * Sets the checkbox state for enabled SDKs.
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
 	 */
-	private void setCheckBoxes(List<ISymbianSDK> sdkList) {
-		List<ISymbianSDK> sdkListCopy = new ArrayList<ISymbianSDK>();
-		for (ISymbianSDK sdkCheck : sdkList){
-			if (sdkCheck.isEnabled()){
-				sdkListCopy.add(sdkCheck);
-			}
-		}
-		sdkListTableViewer.setCheckedElements(sdkListCopy.toArray(new ISymbianSDK[sdkListCopy.size()]));			
-	}
-	
-	 /**
-	  *  Extends <code>LabelProvider</code> with the default implementation 
-	  *  and implements<code>ITableLabelProvider</code> with the methods
-	  *	 to provide the text and/or image for each column of a given element.  
-	  *	 Used by table viewers.
-	  */
-	
-	static class SDKTableComponentsLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider  {
+	@Override
+	protected Control createContents(Composite parent) {
+		// Set up colors used in this preference page
+		Shell shell = parent.getShell();
+		red = shell.getDisplay().getSystemColor(SWT.COLOR_RED);
+		black = shell.getDisplay().getSystemColor(SWT.COLOR_BLACK);
+		gray = shell.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 
-		/**
-		 * Returns the label image for the given column of the given element.
-		 * The default implementation returns null.
-		 * 
-		 * @return image object
-		 */
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
+		Composite content = new Composite(parent, SWT.NONE);
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		content.setLayout(gridLayout);
 
-		/**
-		 * Returns the label text for the given column of the given element.
-		 * 
-		 * @return string is the label text for the given column.
-		 */
-		public String getColumnText(Object arg0, int column) {
-			if (arg0 instanceof ISymbianSDK){
-				ISymbianSDK sdk = (ISymbianSDK)arg0;
-				return sdk.getUniqueId();
-			}
-			
-			return ""; //$NON-NLS-1$
-		}
+		// SDK table
+		sdkListTableViewer = CheckboxTableViewer.newCheckList(content, 
+				SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION);
+		createSDKTable();
 
-		private Color lBlack = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-		private Color lRed =  Display.getDefault().getSystemColor(SWT.COLOR_RED);
+		// Buttons composite
+		Composite composite1 = new Composite(content, SWT.NONE);
+		composite1.setLayoutData(new GridData());
+		gridLayout = new GridLayout();
+		gridLayout.makeColumnsEqualWidth = true;
+		composite1.setLayout(gridLayout);
+		GridData gridData = new GridData(SWT.LEFT, SWT.TOP, true, false);
+
+		// Add button
+		addButton = new Button(composite1, SWT.NONE);
+		addButton.setLayoutData(gridData);
+		addButton.setText(Messages.getString("SDKPreferencePage.Add_Button_Label")); //$NON-NLS-1$
+		addButton.setToolTipText(Messages.getString("SDKPreferencePage.Add_Button_ToolTip")); //$NON-NLS-1$
+		addButtonListener(addButton);
+
+		// Delete button
+		deleteButton = new Button(composite1, SWT.NONE);
+		deleteButton.setLayoutData(gridData);
+		deleteButton.setText(Messages.getString("SDKPreferencePage.Delete_Button_Label")); //$NON-NLS-1$
+		deleteButton.setToolTipText(Messages.getString("SDKPreferencePage.Delete_Button_ToolTip")); //$NON-NLS-1$
+		addButtonListener(deleteButton);
+
+		// Properties button
+		propertiesButton = new Button(composite1, SWT.NONE);
+		propertiesButton.setLayoutData(gridData);
+		propertiesButton.setText(Messages.getString("SDKPreferencePage.Properties_Button_Label")); //$NON-NLS-1$
+		propertiesButton.setToolTipText(Messages.getString("SDKPreferencePage.Properties_Button_ToolTip")); //$NON-NLS-1$
+		addButtonListener(propertiesButton);
+
+		// Status and Rescan composite
+		Composite composite2 = new Composite(content, SWT.NONE);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gridData.widthHint = 350;
+		gridData.heightHint = 50;
+		composite2.setLayoutData(gridData);
+		gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		composite2.setLayout(gridLayout);
+
+		// IStatus icon label
+		iconLabel = new Label(composite2, SWT.NONE);
+		// IStatus text label
+		statusLabel = new Label(composite2, SWT.WRAP);
+		gridData = new GridData(SWT.LEFT, SWT.TOP, true, false);
+		gridData.verticalSpan = 2;
+		statusLabel.setLayoutData(gridData);
+
+		new Label(content, SWT.WRAP); // filler
 		
-		public Color getForeground(Object obj, int index) {
-			if (obj instanceof ISymbianSDK) {
-				ISymbianSDK sdk = (ISymbianSDK)obj;
-				File epocRootTest = new File(sdk.getEPOCROOT());
-				if ((sdk.getAvailablePlatforms().size() <= 0) || !epocRootTest.exists()) {
-					// There are no build configs and/or no epocroot exists
-					return lRed;
-				} else {
-					return lBlack;
-				}
-			}
-			return null;
-		}
+		// Scan SDK checkbox
+		scanForNewPluginsButton = new Button(content, SWT.CHECK);
+		scanForNewPluginsButton.setText(Messages.getString("SDKPreferencePage.ScanForNewPlugins_Button_Label")); //$NON-NLS-1$
+		scanForNewPluginsButton.setSelection(prefsStore.getBoolean(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS));
+		addButtonListener(scanForNewPluginsButton);
+
+
+		new Label(content, SWT.WRAP); // filler
 		
-		public Color getBackground(Object element, int columnIndex) {
-			return null;
-		}
+		// Rescan button
+		rescanButton = new Button(content, SWT.NONE);
+		rescanButton.setToolTipText(Messages.getString("SDKPreferencePage.Rescan_Button_ToolTip")); //$NON-NLS-1$
+		rescanButton.setText(Messages.getString("SDKPreferencePage.Rescan_Button_Label")); //$NON-NLS-1$
+		addButtonListener(rescanButton);
+
+		// Populate SDK table
+		addSDKComponentTableItems();
+		selectSDKEntry(0);
+
+		return content;
 	}
-	
-	/** 
-	 * This implementation of <code>IStructuredContentProvider</code> handles
-	 * 	the case where the viewer input is an unchanging array or collection of elements.
-	 * 
-	 */
-	static class SDKTableComponentsContentProvider implements IStructuredContentProvider {
-		
 
-		/**
-		 * Returns the elements in the input
-		 * 
-		 * @return array of objects.
-		 */
-		public Object[] getElements(Object arg0) {
-			if (arg0 instanceof ArrayList) {
-				return ((ArrayList<?>)arg0).toArray();
-			}
-			return new Object[0];
-		}
-
-		public void dispose() {
-		}
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			//do nothing
-		}
-	}
-	
-	/**
-	 * Sets the listener event to a button.
-	 * 
-	 * @param aButton
-	 */
-	private void addButtonListener( final Button aButton ) {
+	private void addButtonListener(final Button aButton) {
 		SelectionListener listener = new SelectionAdapter() {
-			public void widgetSelected( SelectionEvent e )  {
-				if (e.getSource().equals(sdkpropertiesButton)) {
-					sdkpropertiesButtonAction();
-				} else if (e.getSource().equals(addNewSdkButton)) {
-					addNewSdkButtonAction();
-				} else if (e.getSource().equals(removeSdkButton)) {
-					removeSdkButtonAction();
-				} else if (e.getSource().equals(rescanNowButton)) {
-					rescanNowButtonAction();
+			public void widgetSelected(SelectionEvent e)  {
+				if (e.getSource().equals(addButton)) {
+					handleAddButton();
+				} else if (e.getSource().equals(deleteButton)) {
+					handleDeleteButton();
+				} else if (e.getSource().equals(propertiesButton)) {
+					handlePropertiesButton();
+				} else if (e.getSource().equals(scanForNewPluginsButton)) {
+					handleScanForNewPluginsButton();
+				} else if (e.getSource().equals(rescanButton)) {
+					handleRescanButton();
 				}
-				
 			}
 		};
 		aButton.addSelectionListener(listener);
 	}
-	
-	private void sdkpropertiesButtonAction(){
+
+	private void addSDKComponentTableItems() {
+		sdkListTableViewer.setLabelProvider(new SDKLabelProvider());
+		sdkListTableViewer.setContentProvider(new ArrayContentProvider());
+		sdkList = sdkMgr.getSDKList();
+		sdkListTableViewer.setInput(sdkList.toArray());
+		sdkListTableViewer.getTable().setToolTipText(Messages.getString("SDKPreferencePage.List_of_Available_SDKs_ToolTip")); //$NON-NLS-1$
+		setCheckedElements();
+		addSDKTableViewerListeners();
+		if (sdkList == null || sdkList.size() == 0){
+			statusError(Messages.getString("SDKPreferencePage.No_SDKs_Available_Message")); //$NON-NLS-1$
+		}
+	}
+
+	private void addSDKTableViewerListeners(){
+		sdkListTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				if(event.getSelection() instanceof IStructuredSelection) {
+					IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+					if (selection.size() == 1){
+						ISymbianSDK sdk = (ISymbianSDK)selection.getFirstElement();
+						deleteButton.setEnabled(true);
+						propertiesButton.setEnabled(true);		
+						updateSDKStatus(sdk);
+					}
+					else {
+						deleteButton.setEnabled(false);
+						propertiesButton.setEnabled(false);			        	   
+					}	
+				}
+			}
+		});
+	}
+
+	private void createSDKTable() {
+		final Table table = sdkListTableViewer.getTable();
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gridData.widthHint = 350;
+		gridData.heightHint = table.getItemHeight() * 6;
+		table.setLayoutData(gridData);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(false);
+
+		TableViewerColumn enabledCol = new TableViewerColumn(sdkListTableViewer, SWT.LEFT);
+		enabledCol.getColumn().setText(Messages.getString("SDKPreferencePage.SDK_Table_Enabled_Column_Label")); //$NON-NLS-1$
+		enabledCol.getColumn().setWidth(50);
+
+		TableViewerColumn idCol = new TableViewerColumn(sdkListTableViewer, SWT.LEFT);
+		idCol.setEditingSupport(new IdEditingSupport(sdkListTableViewer)); //$NON-NLS-1$
+		idCol.getColumn().setText(Messages.getString("SDKPreferencePage.SDK_Table_ID_Column_Label"));
+		idCol.getColumn().setWidth(160);
+
+		TableViewerColumn locationCol = new TableViewerColumn(sdkListTableViewer, SWT.LEFT);
+		locationCol.setEditingSupport(new LocationEditingSupport(sdkListTableViewer));
+		locationCol.getColumn().setText(Messages.getString("SDKPreferencePage.SDK_Table_Location_Column_Label")); //$NON-NLS-1$
+		locationCol.getColumn().setWidth(170);
+	}
+
+	private void handleAddButton() {
+		AddSDKDialog dialog = new AddSDKDialog(getShell());
+		if (dialog.open() == AddSDKDialog.OK){
+			sdkList = sdkMgr.getSDKList();
+			sdkListTableViewer.setInput(sdkList.toArray());
+			setCheckedElements();
+			sdkListTableViewer.refresh();
+			selectSDKEntry(sdkList.size() - 1);
+		}
+	}
+
+	private void handleDeleteButton() {
+		ISymbianSDK sdk = (ISymbianSDK)((IStructuredSelection)sdkListTableViewer.getSelection()).getFirstElement();
+		int index = sdkListTableViewer.getTable().getSelectionIndex();
+		if (sdk != null){
+			if (sdkMgr.removeSDK(sdk.getUniqueId())){
+				sdkList = sdkMgr.getSDKList();
+				sdkListTableViewer.setInput(sdkList.toArray());
+				if (index > 0) {
+					selectSDKEntry(index - 1);
+				} else {
+					selectSDKEntry(index);
+				}
+				sdkListTableViewer.refresh();
+			}
+		}
+	}
+
+	private void handlePropertiesButton() {
 		ISymbianSDK sdk = (ISymbianSDK)((IStructuredSelection)sdkListTableViewer.getSelection()).getFirstElement();
 		if (sdk != null){
-			SDKPropertiesDialog sdkPropDlg = new SDKPropertiesDialog(getShell(), this, sdk);
+			SDKPropertiesDialog sdkPropDlg = new SDKPropertiesDialog(getShell(), sdk);
 			if (sdkPropDlg.open() == SDKPropertiesDialog.OK){
 				sdkListTableViewer.refresh();
-				setSelectedSDKInfoText(sdk);
+				updateSDKStatus(sdk);
 				// forcible rescan; dump cache
 				SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { sdk });
-				rescanSDKs(false);
+				sdkMgr.scanSDKs();
 			}
 		} else {
 			MessageDialog.openError(getShell(), Messages.getString("SDKPreferencePage.No_SDK_Selected"), Messages.getString("SDKPreferencePage.No_selected_SDK_detected")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
 
+	private void handleScanForNewPluginsButton() {
+		scanForNewPlugins = scanForNewPluginsButton.getSelection();
 	}
-	
-	private void removeSdkButtonAction(){
-		ISymbianSDK sdk = (ISymbianSDK)((IStructuredSelection)sdkListTableViewer.getSelection()).getFirstElement();
-		if (sdk != null){
-			if (MessageDialog.openConfirm(getShell(), Messages.getString("SDKPreferencePage.Confirm_Delete") + sdk.getUniqueId() , Messages.getString("SDKPreferencePage.Confirm_Delete_Msg"))){ //$NON-NLS-1$ //$NON-NLS-2$
-				if (sdkMgr.removeSDK(sdk.getUniqueId())){
-					sdkList.remove(sdk);
-					sdkListTableViewer.refresh();
-					sdk = (ISymbianSDK)sdkListTableViewer.getElementAt(0);
-					if (sdk != null){
-						sdkListTableViewer.setSelection(new StructuredSelection(sdk), true);
-						setSelectedSDKInfoText(sdk);
-					}
-				}
-			}
-		}
-	}
-	
-	private void addNewSdkButtonAction(){
-		
-		AddSDKDialog dialog = new AddSDKDialog(getShell());
-		if (dialog.open() == AddSDKDialog.OK){
-			addSDKComponentTableItems();
-			sdkListTableViewer.refresh();
-		}
-	}
-	
-	private void rescanNowButtonAction(){
+
+	private void handleRescanButton() {
 		// forcible rescan; dump cache
 		SymbianBuildContextDataCache.refreshForSDKs(null);
-		rescanSDKs(true);
+		sdkMgr.scanSDKs();
 	}
-	
-	private void rescanSDKs(boolean scanForNewPlugins){
+
+	private void rescanSDKs(){
 		sdkListTableViewer.getTable().clearAll();
 		sdkListTableViewer.refresh();
 		sdkList.clear();
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		sdkMgr.scanSDKs();
 		sdkList = sdkMgr.getSDKList();
 		addSDKComponentTableItems();
 		sdkListTableViewer.refresh();
-		
-		ISymbianSDK sdk = (ISymbianSDK)sdkListTableViewer.getElementAt(0);
-		if (sdk != null){
-			sdkListTableViewer.setSelection(new StructuredSelection(sdk), true);
-			setSelectedSDKInfoText(sdk);
-		}
-		
+		selectSDKEntry(0);
+
 		if (scanForNewPlugins){
 			NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
 		}
 	}
-	
-	/**
-	 * Sets the selection listener action event to the CheckboxTableViewer.
-	 * 
-	 * @param sdkTable 
-	 */
-	private void addSDKTableViewerSelectionListener(){
-		sdkListTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			   public void selectionChanged(SelectionChangedEvent event) {
 
-			       if(event.getSelection() instanceof IStructuredSelection) {
-			           IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-			           if (selection.size() == 1){
-			        	   ISymbianSDK sdk = (ISymbianSDK)selection.getFirstElement();
-			        	   sdkpropertiesButton.setEnabled(true);
-			          	   removeSdkButton.setEnabled(true);		
-			        	   setSelectedSDKInfoText(sdk);
-			        
-			           }else {
-			        	   sdkpropertiesButton.setEnabled(false);
-			        	   removeSdkButton.setEnabled(false);			        	   
-			           }	
-			       }
-			   }
-			} );
+	private void selectSDKEntry(int index) {
+		ISymbianSDK sdk = (ISymbianSDK)sdkListTableViewer.getElementAt(index);
+		if (sdk != null){
+			sdkListTableViewer.setSelection(new StructuredSelection(sdk), true);
+			sdkListTableViewer.getTable().setFocus();
+		}
+		updateSDKStatus(sdk);
 	}
-	
-	private void setSelectedSDKInfoText(ISymbianSDK sdk){
-		boolean sdkHasError = false;
-		String epocRootStr = sdk.getEPOCROOT();
-		File epocRootTest = new File(epocRootStr);
-		if (!epocRootTest.exists()) {
-			sdkHasError = true;
-			epocrootLabel.setText(EPOCROOT_LABEL + epocRootStr + Messages.getString("SDKPreferencePage.Path_Does_Not_Exist")); //$NON-NLS-1$
-			epocrootLabel.setForeground(RED);
-			epocrootLabel.setBackground(GRAY);
+
+	private void setCheckedElements() {
+		Iterator<ISymbianSDK> iterator = sdkList.iterator();
+		while (iterator.hasNext()) {
+			ISymbianSDK sdk = iterator.next();
+			sdkListTableViewer.setChecked(sdk, sdk.isEnabled());
 		}
-		else {
-			epocrootLabel.setText(EPOCROOT_LABEL + epocRootStr);
-			epocrootLabel.setForeground(BLACK);
-			epocrootLabel.setBackground(GRAY);
-		}
-		
-		// Set platforms 
-		if (sdk.getAvailablePlatforms().size() == 0) {
-			sdkHasError = true;
-			availablePlatformsLabel.setText(PLATFORMS_LABEL + Messages.getString("SDKPreferencePage.Platforms_cannot_be_determined")); //$NON-NLS-1$
-			availablePlatformsLabel.setForeground(RED);
-			availablePlatformsLabel.setBackground(GRAY);
-		}
-		else {
-			availablePlatformsLabel.setText(PLATFORMS_LABEL + sdk.getAvailablePlatforms().toString());
-			availablePlatformsLabel.setForeground(BLACK);
-			availablePlatformsLabel.setBackground(GRAY);
-		}
-		
-		// Set OS Version 
-		if (sdk.getOSVersion().getMajor() == 0) {
-			sdkHasError = true;
-			osVersionLabel.setText(OS_VERSION_LABEL + Messages.getString("SDKPreferencePage.OS_Version_Cannot_Be_Determined")); //$NON-NLS-1$
-			osVersionLabel.setForeground(RED);
-			osVersionLabel.setBackground(GRAY);
-		}
-		else if (!SDKCorePlugin.SUPPORTS_SBSV1_BUILDER && 
-				 (sdk.getOSVersion().getMajor() < 9 ||
-				 (sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() <= 4))){
-			sdkHasError = true;
-			osVersionLabel.setText(OS_VERSION_LABEL + "This OS version is not supported: " + sdk.getOSVersion()); 
-			osVersionLabel.setForeground(RED);
-			osVersionLabel.setBackground(GRAY);
-			
+	}
+
+	private void statusClear() {
+		iconLabel.setImage(null);
+		statusLabel.setText("");
+	}
+
+	private void statusError(String msg) {
+		String errorMsg = "Error : " + msg;
+		iconLabel.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+		statusLabel.setText(errorMsg);
+		statusLabel.setForeground(red);
+		statusLabel.setBackground(gray);
+		statusLabel.update();
+		statusLabel.getParent().layout(true);
+	}
+
+	private void statusWarning(String msg) {
+		String warningMsg = "Warning : " + msg; //$NON-NLS-1$
+		iconLabel.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_WARN_TSK));
+		statusLabel.setText(warningMsg);
+		statusLabel.setForeground(black);
+		statusLabel.setBackground(gray);
+		statusLabel.update();
+		statusLabel.getParent().layout(true);
+	}
+
+	private void statusInfo(String msg) {
+		String infoMsg = "Info : " + msg; //$NON-NLS-1$
+		iconLabel.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_INFO_TSK));
+		statusLabel.setText(infoMsg);
+		statusLabel.setForeground(black);
+		statusLabel.setBackground(gray);
+		statusLabel.update();
+		statusLabel.getParent().layout(true);
+	}
+
+	private void updateSDKStatus(ISymbianSDK sdk){
+		// No SDK selected
+		if (sdk == null) {
+			statusWarning(Messages.getString("SDKPreferencePage.No_SDKs_Available_Message")); //$NON-NLS-1$
+			return;
 		} else {
-			if (sdk.getSDKOSBranch().length() > 0) {
-				osVersionLabel.setText(OS_VERSION_LABEL + sdk.getOSVersion().toString() + " (Branch = \"" + sdk.getSDKOSBranch() + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
-			} else {
-				osVersionLabel.setText(OS_VERSION_LABEL + sdk.getOSVersion().toString());
+			// Check SDK EPOCROOT
+			String epocRootStr = sdk.getEPOCROOT();
+			IPath epocRoot = new Path(epocRootStr);
+			epocRoot = epocRoot.append("epoc32");
+			File epocRootFile = epocRoot.toFile();
+			if (!epocRootFile.exists()) {
+				statusError(Messages.getString("SDKPreferencePage.Invalid_Location_Message")); //$NON-NLS-1$
+				return;
 			}
-			osVersionLabel.setForeground(BLACK);
-			osVersionLabel.setBackground(GRAY);
+
+			// Check SDK OS Version
+			if ((sdk.getOSVersion().getMajor() < 9 ||
+				(sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() < 5))) {
+				statusError(MessageFormat.format(
+						Messages.getString("SDKPreferencePage.Invalid_SDK_Message"),  //$NON-NLS-1$
+						sdk.getOSVersion().toString())); //$NON-NLS-1$
+				return;
+			}			
+
+			// No error
+			statusClear();
 		}
-		
-		//  Get diagnostic check 
-		//if (lsdk.getSomeError().size() <= 0) {
-		if (sdkHasError){
-			diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + Messages.getString("SDKPreferencePage.SDK_Cannot_Be_Used")); //$NON-NLS-1$
-			diagnosticCheckLabel.setForeground(RED);
-			diagnosticCheckLabel.setBackground(GRAY);
-		}
-		else {
-			// check for other types of errors:
-			if (!sdk.getToolsPath().toFile().exists()){
-				diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + Messages.getString("SDKPreferencePage.No_Tools_Path") +  " " + sdk.getToolsPath().toOSString()); //$NON-NLS-1$
-				diagnosticCheckLabel.setForeground(RED);
-				diagnosticCheckLabel.setBackground(GRAY);
-			} else if (!sdk.getIncludePath().toFile().exists()){
-				diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + Messages.getString("SDKPreferencePage.No_Include_Path") +  " " + sdk.getIncludePath().toOSString()); //$NON-NLS-1$
-				diagnosticCheckLabel.setForeground(RED);
-				diagnosticCheckLabel.setBackground(GRAY);
-			} else if ( ((sdk.getPrefixFile() == null) || (!sdk.getPrefixFile().exists())) && (sdk.getOSVersion().getMajor() >= 9)){
-					diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + Messages.getString("SDKPreferencePage.No_HRH_File")); //$NON-NLS-1$
-					diagnosticCheckLabel.setForeground(RED);
-					diagnosticCheckLabel.setBackground(GRAY);
-			} else if ( ((sdk.isS60()) && sdk.getSDKVersion().getMajor() == 0)){
-				diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + Messages.getString("SDKPreferencePage.No_SDK_Version")); //$NON-NLS-1$
-				diagnosticCheckLabel.setForeground(RED);
-				diagnosticCheckLabel.setBackground(GRAY);
-			} else {
-				// Everything is OK....
-				diagnosticCheckLabel.setText(DIAGNOSTIC_CHECK_LABEL + "OK\r\n "); //$NON-NLS-1$
-				diagnosticCheckLabel.setForeground(BLACK);
-				diagnosticCheckLabel.setBackground(GRAY);
-			}
-		}
-   } 
-	
-	protected List<ISymbianSDK> getSDKList(){
-		return sdkList;
 	}
-	
-	protected ISDKManager getSDKManager(){
-		return sdkMgr;
-	}
+
 }

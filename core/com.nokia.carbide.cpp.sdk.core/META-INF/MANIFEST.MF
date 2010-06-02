@@ -17,13 +17,13 @@ Require-Bundle: org.eclipse.core.runtime,
  com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.api.sdk,
- com.nokia.carbide.cpp.internal.sdk.core.model;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
- com.nokia.carbide.cpp.internal.sdk.core.xml;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
- com.nokia.carbide.cpp.sdk.core,
  com.nokia.carbide.cpp.internal.sdk.core.gen.Devices;x-friends:="com.nokia.carbide.cpp.sdk.core.test,com.nokia.carbide.cpp.sdk.ui",
  com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.impl;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
  com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.util;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
  com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
  com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore.impl;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
- com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore.util;x-friends:="com.nokia.carbide.cpp.sdk.core.test"
+ com.nokia.carbide.cpp.internal.sdk.core.gen.SymbianMacroStore.util;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.internal.sdk.core.model;x-friends:="com.nokia.carbide.cpp.sdk.core.test,com.nokia.carbide.cpp.sdk.ui",
+ com.nokia.carbide.cpp.internal.sdk.core.xml;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
+ com.nokia.carbide.cpp.sdk.core
 Bundle-ClassPath: sdkCorePlugin.jar

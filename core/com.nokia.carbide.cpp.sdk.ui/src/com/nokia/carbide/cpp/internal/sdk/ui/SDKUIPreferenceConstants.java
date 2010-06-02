@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2009-2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -27,4 +27,5 @@ public class SDKUIPreferenceConstants {
 	public final static String PLAT_EKA2_ARMV5_ABIV1 = "platEKA2_ARMV5_ABIV1"; //$NON-NLS-1$
 	
 	public final static String LISTEN_FOR_DEVICES_XML_CHANGE = "listenForDevicesXMLChange"; //$NON-NLS-1$	
+	public final static String SCAN_FOR_NEW_PLUGINS = "scanForNewPlugins"; //$NON-NLS-1$	
 }

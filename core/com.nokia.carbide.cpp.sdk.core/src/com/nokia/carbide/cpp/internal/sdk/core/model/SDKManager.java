@@ -27,6 +27,7 @@ import java.util.List;
 import org.eclipse.cdt.utils.WindowsRegistry;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
@@ -36,7 +37,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
+import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -54,7 +57,12 @@ public class SDKManager extends AbstractSDKManager {
 	private static final String WINDOWS_SYSTEM_ROOT_KEY = "SystemRoot";
 
 	private static final String EMPTY_DEVICES_XML_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>";
-	
+
+	private static final String QMAKE_FILE = "epoc32/tools/qt/qmake" + HostOS.EXE_EXT; //$NON-NLS-1$
+	private static final String MIFCONV_FILE = "epoc32/tools/mifconv" + HostOS.EXE_EXT; //$NON-NLS-1$
+	private static final String ABLD_FILE = "epoc32/tools/abld.pl"; //$NON-NLS-1$
+	private static final long VALID_ABLD_SIZE = 1024;
+
 	static boolean hasPromptedForDevicesXML = false; // make sure we only ask once at startup if devices.xml does not exist
 	long devicesXLMLastModified;
 	
@@ -71,11 +79,10 @@ public class SDKManager extends AbstractSDKManager {
 	public SDKManager() {
 		super();
 		checkPerlInstallation();
-		
 	}
 	
-	protected boolean doScanSDKs() {
-		
+	protected boolean doScanSDKs(IProgressMonitor monitor) {
+		boolean result = true;
 		DevicesType devicesType;
 		try {
 			File devicesFile = getDevicesXMLFile();
@@ -87,24 +94,24 @@ public class SDKManager extends AbstractSDKManager {
 					hasPromptedForDevicesXML = true;
 					doAsynchPromptCreateDevicesXML();
 				}
-				return false; // no devices.xml file..
+				result = false; // no devices.xml file..
+			} else {
+				devicesXLMLastModified = devicesFile.lastModified();
+				devicesType = DevicesLoader.loadDevices(devicesFile.toURL());
+				EList devices = devicesType.getDevice();
+				for (Iterator iter = devices.iterator(); iter.hasNext();) {
+					SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
+					sdkList.add(sdk);
+				}
 			}
-
-			devicesXLMLastModified = devicesFile.lastModified();
-			devicesType = DevicesLoader.loadDevices(devicesFile.toURL());
-			EList devices = devicesType.getDevice();
-			for (Iterator iter = devices.iterator(); iter.hasNext();) {
-				SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
-				sdkList.add(sdk);
-			}
-
-			return true;
 		} catch (Exception e) {
-			logError("Failed to scan SDKs", e);
-			return false;
+			logError("Failed to scan devices.xml", e);
+			result = false;
 		}
-	}
 
+		doScanDrives(monitor);
+		return result;
+	}
 
 	public void updateSDK(ISymbianSDK sdk) {
 		try {
@@ -416,4 +423,101 @@ public class SDKManager extends AbstractSDKManager {
 	protected boolean isEPOCRootFixed() {
 		return true;
 	}
+
+	/**
+	 * Scan system drives for installed SDKs
+	 */
+	protected void doScanDrives(IProgressMonitor monitor) {
+		File[] drives = getSystemDrives();
+		monitor.beginTask("Scanning system drives for installed SDKs", drives.length);
+		for (File drive : drives) {
+			if (!isEPOCRoot(drive)) {
+				continue;
+			}
+
+			DeviceType deviceType = DevicesFactory.eINSTANCE.createDeviceType();
+			deviceType.setAlias(drive.toString());
+			deviceType.setDefault(DefaultType.NO_LITERAL);
+			deviceType.setEpocroot(drive.getAbsolutePath());
+			deviceType.setId(drive.toString().charAt(0) + "_SDK");
+			deviceType.setName("com.nokia.s60");
+			deviceType.setToolsroot(drive.getAbsolutePath());
+			deviceType.setUserdeletable("false");
+			deviceType.setUserdeletetable("false");
+			ISymbianSDK sdk = new SymbianSDK(deviceType);
+			if (!isSupportedSDK(sdk)) {
+				continue;
+			}
+			if (isInSDKList(sdk)) {
+				continue;
+			}
+
+			sdkList.add(sdk);
+			monitor.worked(1);
+			if (monitor.isCanceled()) {
+				monitor.done();
+				return;
+			}
+		}
+		monitor.done();
+	}
+
+	private File[] getSystemDrives() {
+		if (HostOS.IS_WIN32) {
+			return File.listRoots();
+		}
+		return new File[0];
+	}
+
+	private boolean hasAbldSupport(ISymbianSDK sdk) {
+		File abld = new File(sdk.getEPOCROOT(), ABLD_FILE);
+		if (abld.exists()) {
+			long size = abld.length();
+			if (size >= VALID_ABLD_SIZE)
+				return true;
+		}
+		return false;
+	}
+
+	private boolean hasQmake(ISymbianSDK sdk) {
+		File qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE);
+		if (qmake.exists()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean hasRaptor(ISymbianSDK sdk) {
+		File mifconv = new File(sdk.getEPOCROOT(), MIFCONV_FILE);
+		if (mifconv.exists()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isEPOCRoot(File drive) {
+		File epocRoot = new File(drive, "epoc32");
+		if (epocRoot.exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean isInSDKList(ISymbianSDK sdk) {
+		for (ISymbianSDK entry : sdkList) {
+			if (entry.getEPOCROOT().equalsIgnoreCase(sdk.getEPOCROOT())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSupportedSDK(ISymbianSDK sdk) {
+		if (!hasAbldSupport(sdk) || hasQmake(sdk) || hasRaptor(sdk)) {
+			return true;
+		}
+		return false;
+	}
+
 }

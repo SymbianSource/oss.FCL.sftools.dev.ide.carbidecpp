@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2009-2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -50,7 +50,6 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class SDKPropertiesDialog extends TrayDialog {
 	
-	SDKPreferencePage sdkPrefs;
 	ISymbianSDK sdk;
 	private CCombo osVersionCombo;
 	private CCombo sdkVersionCombo;
@@ -68,13 +67,12 @@ public class SDKPropertiesDialog extends TrayDialog {
 	 * Create the dialog
 	 * @param parentShell
 	 */
-	public SDKPropertiesDialog(Shell parentShell, SDKPreferencePage sdkPrefs, ISymbianSDK sdk) {
+	public SDKPropertiesDialog(Shell parentShell, ISymbianSDK sdk) {
 		super(parentShell);
-		this.sdkPrefs = sdkPrefs;
 		this.sdk = sdk;
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
 	 */
