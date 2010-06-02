@@ -59,14 +59,14 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	
 	static final String NOT_INSTALLED = "(SDK not found)"; //$NON-NLS-1$
 
-	protected static final String CARBIDE_STORAGE_ID = "CarbideConfigurationDataProvider"; //$NON-NLS-1$
+	public static final String CARBIDE_STORAGE_ID = "CarbideConfigurationDataProvider"; //$NON-NLS-1$
 	protected final static String SIS_BUILDER_DATA_ID = "SIS_BUILDER_DATA_ID"; //$NON-NLS-1$
 	protected final static String ENV_VAR_DATA_ID = "ENV_VAR_DATA_ID"; //$NON-NLS-1$
 	protected final static String ARGUMENTS_DATA_ID = "ARGUMENTS_DATA_ID"; //$NON-NLS-1$
 	protected final static String ROM_BUILDER_DATA_ID = "ROM_BUILDER_DATA_ID"; //$NON-NLS-1$
 	
 	// SBSv2 only config settings 
-	protected final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
+	public final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
 	
 	protected ISymbianBuildContext context;
 	protected TrackedResource projectTracker;

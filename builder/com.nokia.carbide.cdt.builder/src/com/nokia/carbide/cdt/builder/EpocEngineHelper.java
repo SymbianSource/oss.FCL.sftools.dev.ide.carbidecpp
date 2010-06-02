@@ -2303,7 +2303,7 @@ public class EpocEngineHelper {
 		String plat = config.getPlatformString();
 		String basePlat = "";
 		if (config.getBuildContext() instanceof ISBSv2BuildConfigInfo){
-			basePlat = ((ISBSv1BuildContext)config).getBasePlatformForVariation();
+			basePlat = ((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation();
 		} else {
 			basePlat = config.getPlatformString();
 		}

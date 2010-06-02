@@ -39,6 +39,7 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET, context.getTargetString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, context.getDisplayString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT, "");
+		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID, context.getSDK().getUniqueId());
 		this.context = context;
 	}
 	
@@ -69,6 +70,12 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 			sbsv2ConfigDataMap.put(ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, value);
 		}
 		
+		value = rootStorage.getAttribute(ATTRIB_SBSV2_SDK_ID);
+		if (value != null) {
+			sbsv2ConfigDataMap.put(ATTRIB_SBSV2_SDK_ID, value);
+		}
+		
+		
 	}
 	
 	public void saveToStorage(ICStorageElement rootStorage) {
@@ -97,6 +104,11 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 		if (value != null && value.trim().length() > 0){
 			rootStorage.setAttribute(ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, value);
 		}
+		
+		value = sbsv2ConfigDataMap.get(ATTRIB_SBSV2_SDK_ID);
+		if (value != null && value.trim().length() > 0){
+			rootStorage.setAttribute(ATTRIB_SBSV2_SDK_ID, value);
+		}
 
 	}
 
@@ -107,5 +119,5 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 	public void setSBSv2Setting(String id, String value) {
 		sbsv2ConfigDataMap.put(id, value);
 	}
-
+	
 }

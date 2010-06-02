@@ -12,6 +12,7 @@ import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
@@ -255,5 +256,18 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		// TODO: Still need to consider this for SBSv2 refactoring / Raptor query
 		return getCachedData().getSystemIncludePaths();
 	}
+	
+	
+	// Fall-back to get SDK id from old config name
+	public static String getSDKIDFromConfigName(String configName) {
+		int indexBegin = configName.indexOf("[");  //$NON-NLS-1$
+		int indexEnd = configName.indexOf("]");  //$NON-NLS-1$
+		if (indexBegin > 0 && indexEnd > 0){
+			return configName.substring(indexBegin+1, indexEnd);
+		} else {
+			return ""; //$NON-NLS-1$
+		}
+	}
+
 
 }

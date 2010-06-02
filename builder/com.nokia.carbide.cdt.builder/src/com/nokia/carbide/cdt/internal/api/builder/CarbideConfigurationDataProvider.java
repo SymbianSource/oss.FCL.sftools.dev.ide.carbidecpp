@@ -28,6 +28,7 @@ import java.util.List;
 import org.eclipse.cdt.core.ICExtensionReference;
 import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationDataProvider;
 import org.eclipse.core.resources.IFolder;
@@ -52,13 +53,16 @@ import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.builder.EnvironmentVarsInfo;
 import com.nokia.carbide.cdt.internal.builder.EnvironmentVarsInfo2;
+import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cdt.internal.builder.SISBuilderInfo;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuilderConfigInfoType;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.ConfigurationType;
 import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
-import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 /**
  * Main interface point with CDT with regards to our build configurations.  Note that
@@ -124,7 +128,76 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			String configId = des.getConfiguration().getId();
 			// TODO: We should be able to get the build context from the SBSv2 data, if present,
 			// otherwise from the display name for ABLD
-			ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(configId);
+			ISymbianBuildContext context = null;
+			String buidAlias = "";
+			String platform = "";
+			String target = "";
+			String displayString = "";
+			String variant = "";
+			String sdkID = null;
+			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
+				ICStorageElement rootStorage = des.getStorage(CarbideBuildConfiguration.CARBIDE_STORAGE_ID, false);
+				if (rootStorage != null) {
+					for (ICStorageElement se : rootStorage.getChildren()) {
+						if (se.getName().equals(
+								CarbideBuildConfiguration.SBSV2_DATA_ID)) {
+							String value = se.getAttribute(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
+							if (value != null) {
+								platform = value;
+							}
+
+							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
+							if (value != null) {
+								variant = value;
+							}
+
+							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
+							if (value != null) {
+								target = value;
+							}
+
+							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS);
+							if (value != null) {
+								buidAlias = value;
+							}
+
+							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING);
+							if (value != null) {
+								displayString = value;
+							}
+							
+							value = se
+							.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
+							if (value != null) {
+								sdkID = value;
+							}
+						}
+					}
+				} else {
+					throw new CoreException(new Status(IStatus.ERROR,
+							CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK,
+							"Unable to load Carbide settings for project "
+									+ project.getProject().getName(), null));
+				}
+				
+				ISymbianSDK sdk = null;
+				if (sdkID == null){
+					// pre-C3 project, get SDK id from config name
+					sdkID = BuildContextSBSv2.getSDKIDFromConfigName(displayString);
+				}
+				if (sdkID != null){
+					sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
+					// TODO: NEED TO HANDLE MISSING SDK ID
+					if (sdk != null){
+						context = new BuildContextSBSv2(sdk, platform, target, buidAlias);
+					}
+				}
+				
+			} else {
+				// TODO: Presume it's SBSv1?
+				context = BuildContextSBSv1.getBuildContextFromDisplayName(configId);
+			}
+			
 			if (context == null) {
 				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK, "SDK specified in project " + project.getName() + " is not installed, please set it up from project property", null));
 			}
