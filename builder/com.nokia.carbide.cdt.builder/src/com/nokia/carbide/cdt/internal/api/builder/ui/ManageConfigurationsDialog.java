@@ -310,14 +310,14 @@ public class ManageConfigurationsDialog extends TrayDialog {
 						ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
 						for (ICarbideBuildConfiguration currExistingConfig : buildConfigList){
 							boolean checkIt = false;
-							checkIt = currExistingConfig.equals(buildContext);
+							checkIt = currExistingConfig.getBuildContext().equals(buildContext);
 							if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()) &&
 											!checkIt){
 								
 								if (buildContext instanceof ISBSv2BuildContext){
 									ISBSv2BuildContext v2Context = (ISBSv2BuildContext)buildContext;
 									// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
-									if (v2Context.getTargetString().equals(currExistingConfig.getTargetString()) &&
+									if (v2Context.getSBSv2Alias().equals(((ISBSv2BuildContext)currExistingConfig.getBuildContext()).getSBSv2Alias()) &&
 										v2Context.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
 										v2Context.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
 										&& v2Context.getSBSv2Alias() != null && v2Context.getSBSv2Alias().split("_").length == 2){
@@ -370,7 +370,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 				ISymbianBuildContext context = (ISymbianBuildContext)node.getValue();
 				// Now check to see if the config already exists, if not create a new one
 				for (ICarbideBuildConfiguration currExistingConfig : buildConfigList){
-					if (currExistingConfig.equals(context)){
+					if (currExistingConfig.getBuildContext().equals(context)){
 						configAlreadyExists = true;
 						break;
 					}
@@ -398,7 +398,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 						if (currConfigNode.getValue() instanceof ISymbianBuildContext){
 							// if the current config is already a config set it to checked.
 							ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
-							if (currExistingConfig.equals(buildContext)){
+							if (currExistingConfig.getBuildContext().equals(buildContext)){
 								// The configuration is in both the tree viewer and the .settings
 								// Now find out if it's checked. If it's not checked remove it
 								if (!properSdkViewer.getChecked(currConfigNode)){

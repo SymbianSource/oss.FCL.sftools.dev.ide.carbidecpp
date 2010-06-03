@@ -300,6 +300,47 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 			return ""; //$NON-NLS-1$
 		}
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((platform == null) ? 0 : platform.hashCode());
+		result = prime * result + ((getSDK() == null) ? 0 : getSDK().getEPOCROOT().hashCode());
+		result = prime * result + ((target == null) ? 0 : target.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof BuildContextSBSv2))
+			return false;
+		final BuildContextSBSv2 other = (BuildContextSBSv2) obj;
+		if (sbsv2Alias == null) {
+			if (other.sbsv2Alias != null)
+				return false;
+		} else if (!sbsv2Alias.equals(other.sbsv2Alias))
+			return false;
+		if (getSDK() == null) {
+			if (other.getSDK() != null)
+				return false;
+		} else if (!getSDK().getEPOCROOT().equals(other.getSDK().getEPOCROOT()))
+			return false;
+		if (target == null) {
+			if (other.target != null)
+				return false;
+		} else if (!target.equals(other.target)) {
+			return false;
+		}
+		return true;
+	}
+
 
 
 }
