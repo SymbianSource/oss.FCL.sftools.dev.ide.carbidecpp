@@ -9,11 +9,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -30,12 +27,7 @@ import org.eclipse.equinox.internal.p2.ui.discovery.DiscoveryUi;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogConfiguration;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogViewer;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.engine.IProfile;
-import org.eclipse.equinox.p2.engine.IProfileRegistry;
-import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
-import org.eclipse.equinox.p2.query.IQueryResult;
-import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.equinox.p2.ui.ProvisioningUI;
@@ -265,20 +257,6 @@ public class DiscoveryView extends ViewPart {
 			artifactManager.addRepository(uri);
 		}
 		defaultUI.openInstallWizard(null, null, null);
-		
-		String profileId = defaultUI.getProfileId();
-		IProfileRegistry profileRegistry = (IProfileRegistry) agent.getService(IProfileRegistry.SERVICE_NAME);
-		IProfile profile = profileRegistry.getProfile(profileId);
-		IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUGroupQuery(), null);
-		List<String> list = new ArrayList<String>();
-		for (Iterator<IInstallableUnit> iter = queryResult.iterator(); iter.hasNext();) {
-			IInstallableUnit iu = iter.next();
-			list.add(iu.getId() + "|" + iu.getVersion());
-		}
-		Collections.sort(list);
-		for (String s : list) {
-			System.out.println(s);
-		}
 	}
 
 	private Collection<URI> getCatalogURIs() {
