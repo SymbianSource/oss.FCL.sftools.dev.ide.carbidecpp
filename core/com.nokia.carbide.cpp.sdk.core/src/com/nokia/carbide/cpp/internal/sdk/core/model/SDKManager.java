@@ -117,7 +117,14 @@ public class SDKManager extends AbstractSDKManager {
 	public void updateSDK(ISymbianSDK sdk) {
 		try {
 			File devicesFile = getDevicesXMLFile();
-			
+
+			if (devicesFile == null || !devicesFile.exists()) {
+				// There is no devices.xml. Ask the user if he/she wants to
+				// add it
+				doAsynchPromptCreateDevicesXML();
+				return;
+			}
+
 			// If file does not exist exception will catch it
 			DevicesLoader.updateDevice(sdk, devicesFile.toURL());
 			updateCarbideSDKCache();
@@ -436,11 +443,12 @@ public class SDKManager extends AbstractSDKManager {
 				continue;
 			}
 
+			String sdkId = getUniqueSDKId(drive);
 			DeviceType deviceType = DevicesFactory.eINSTANCE.createDeviceType();
 			deviceType.setAlias(drive.toString());
 			deviceType.setDefault(DefaultType.NO_LITERAL);
 			deviceType.setEpocroot(drive.getAbsolutePath());
-			deviceType.setId(drive.toString().charAt(0) + "_SDK");
+			deviceType.setId(sdkId);
 			deviceType.setName("com.nokia.s60");
 			deviceType.setToolsroot(drive.getAbsolutePath());
 			deviceType.setUserdeletable("false");
@@ -472,6 +480,16 @@ public class SDKManager extends AbstractSDKManager {
 			return File.listRoots();
 		}
 		return new File[0];
+	}
+
+	private String getUniqueSDKId(File drive) {
+		String sdkId = drive.toString().charAt(0) + "_SDK";
+		int suffice = 1;
+		while (!isUniqueSDKId(sdkId)) {
+			sdkId = drive.toString().charAt(0) + "_SDK" + suffice;
+			suffice++;
+		}
+		return sdkId;
 	}
 
 	private boolean hasAbldSupport(ISymbianSDK sdk) {
@@ -525,4 +543,12 @@ public class SDKManager extends AbstractSDKManager {
 		return false;
 	}
 
+	private boolean isUniqueSDKId(String sdkId) {
+		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+			if (sdk.getUniqueId().equalsIgnoreCase(sdkId)){
+				return false;
+			}
+		}
+		return true;
+	}
 }

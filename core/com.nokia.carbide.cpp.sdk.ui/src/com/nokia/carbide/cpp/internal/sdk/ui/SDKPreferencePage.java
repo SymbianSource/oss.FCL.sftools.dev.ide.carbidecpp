@@ -32,6 +32,9 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -40,6 +43,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -124,8 +128,16 @@ public class SDKPreferencePage
 
 		@Override
 		protected void setValue(Object element, Object value) {
+			String sdkID = value.toString();
+
+			// check for spaces in ID
+			if (sdkID.contains(" ")){ //$NON-NLS-1$
+				MessageDialog.openError(getShell(), Messages.getString("AddSDKDialog.Invalid_SDK_ID"), Messages.getString("AddSDKDialog.SDK_ID_No_Spaces")); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+
 			ISymbianSDK sdk = (ISymbianSDK) element;
-			sdk.setUniqueID(value.toString());
+			sdk.setUniqueID(sdkID);
 			SDKCorePlugin.getSDKManager().updateSDK(sdk);
 			getViewer().refresh();
 		}
@@ -195,6 +207,17 @@ public class SDKPreferencePage
 			BrowseDialogUtils.initializeFrom(dialog, text);
 			return dialog.open();
 		}		
+	}
+
+	private class SDKViewerStrategy extends ColumnViewerEditorActivationStrategy {
+		public SDKViewerStrategy(ColumnViewer viewer) {
+			super(viewer);
+		}
+
+		@Override
+		protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+			return (event.eventType ==  ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION);
+		}
 	}
 
 	private class ScanJobListener implements IJobChangeListener {
@@ -331,11 +354,11 @@ public class SDKPreferencePage
 
 		// Buttons composite
 		Composite composite1 = new Composite(content, SWT.NONE);
-		composite1.setLayoutData(new GridData());
 		gridLayout = new GridLayout();
 		gridLayout.makeColumnsEqualWidth = true;
 		composite1.setLayout(gridLayout);
 		GridData gridData = new GridData(SWT.LEFT, SWT.TOP, true, false);
+		composite1.setLayoutData(gridData);
 
 		// Add button
 		addButton = new Button(composite1, SWT.NONE);
@@ -456,10 +479,13 @@ public class SDKPreferencePage
 		final Table table = sdkListTableViewer.getTable();
 		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.widthHint = 350;
-		gridData.heightHint = table.getItemHeight() * 6;
+		gridData.heightHint = table.getItemHeight() * 10;
 		table.setLayoutData(gridData);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(false);
+
+		SDKViewerStrategy strategy = new SDKViewerStrategy(sdkListTableViewer);
+		TableViewerEditor.create(sdkListTableViewer, strategy, ColumnViewerEditor.DEFAULT);
 
 		TableViewerColumn enabledCol = new TableViewerColumn(sdkListTableViewer, SWT.LEFT);
 		enabledCol.getColumn().setText(Messages.getString("SDKPreferencePage.SDK_Table_Enabled_Column_Label")); //$NON-NLS-1$
@@ -506,15 +532,11 @@ public class SDKPreferencePage
 
 	private void handlePropertiesButton() {
 		ISymbianSDK sdk = (ISymbianSDK)((IStructuredSelection)sdkListTableViewer.getSelection()).getFirstElement();
+		int index = sdkListTableViewer.getTable().getSelectionIndex();
 		if (sdk != null){
 			SDKPropertiesDialog sdkPropDlg = new SDKPropertiesDialog(getShell(), sdk);
-			if (sdkPropDlg.open() == SDKPropertiesDialog.OK){
-				sdkListTableViewer.refresh();
-				updateSDKStatus(sdk);
-				// forcible rescan; dump cache
-				SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { sdk });
-				sdkMgr.scanSDKs();
-			}
+			sdkPropDlg.open();
+			selectSDKEntry(index);
 		} else {
 			MessageDialog.openError(getShell(), Messages.getString("SDKPreferencePage.No_SDK_Selected"), Messages.getString("SDKPreferencePage.No_selected_SDK_detected")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -614,7 +636,7 @@ public class SDKPreferencePage
 
 			// Check SDK OS Version
 			if ((sdk.getOSVersion().getMajor() < 9 ||
-				(sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() < 5))) {
+				(sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() < 4))) {
 				statusError(MessageFormat.format(
 						Messages.getString("SDKPreferencePage.Invalid_SDK_Message"),  //$NON-NLS-1$
 						sdk.getOSVersion().toString())); //$NON-NLS-1$
