@@ -168,5 +168,7 @@ public interface ICarbideBuildConfiguration {
 	
 	/** TODO: Detect on instanceof ? */
 	public String getBuildVariationName();
+
+	String getConfigurationID();
 	
 }

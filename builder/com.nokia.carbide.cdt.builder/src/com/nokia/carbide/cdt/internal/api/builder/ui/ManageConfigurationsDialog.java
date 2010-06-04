@@ -17,6 +17,7 @@
 package com.nokia.carbide.cdt.internal.api.builder.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -250,7 +251,11 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		boolean sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject());
 	
 		properSdkViewer.setContentProvider(filteringContentProviderWrapper);
-		properSdkViewer.setInput(BuildTargetTreeNode.getTreeViewerInput(sbsv2Project));
+		BuildTargetTreeNode[] sdkConfigTreeNodes = BuildTargetTreeNode.getTreeViewerInput(sbsv2Project);
+		if (sbsv2Project){
+			replaceFilteredConfigsFromProject(sdkConfigTreeNodes);
+		}
+		properSdkViewer.setInput(sdkConfigTreeNodes);
 		propagateSdkTree();
 		properSdkViewer.addCheckStateListener(new ICheckStateListener() {
 			public void checkStateChanged(CheckStateChangedEvent event) {
@@ -263,6 +268,88 @@ public class ManageConfigurationsDialog extends TrayDialog {
 				validatePage();
 			}
 		});
+		
+	}
+
+	/**
+	 * When displaying build configs there may be configurations in the project that may not be displayed.
+	 * We add those back in so they reside in the checked tree viewer in case the user wants to remove them.
+	 * @param sdkConfigTreeNodes
+	 */
+	private void replaceFilteredConfigsFromProject(BuildTargetTreeNode[] sdkConfigTreeNodes) {
+		List<ICarbideBuildConfiguration> bldConfigs = cpi.getBuildConfigurations();
+		
+		/////////////
+		//////////// TODO TODO TODO
+		/////////// Refactor me. This is very inefficient code, just used for prototyping of adding in filtered out configs
+		////////////
+		
+		for (ICarbideBuildConfiguration config : bldConfigs){
+			boolean foundConfig = false;
+			// Add in configs that are only defined in the project and not the
+			// suggested filtered config cache
+			for (BuildTargetTreeNode sdkConfigNode : sdkConfigTreeNodes){
+				TreeNode[] configNodes = sdkConfigNode.getChildren();
+				for (TreeNode childConfig : configNodes){
+					if (childConfig == null){
+						continue;
+					}
+					if (childConfig.getValue() instanceof ISymbianBuildContext){
+						ISymbianBuildContext context = (ISymbianBuildContext)(childConfig.getValue());
+						if (config.getBuildContext().equals(context)){
+							foundConfig = true;
+							break;
+						}
+					} else {
+						System.out.println("Huh? Not an ISymbiabBuildContext : " + childConfig.getValue());
+					}
+				}
+				if (foundConfig) break;
+			}
+			
+			if (!foundConfig){
+				for (BuildTargetTreeNode sdkConfigNode : sdkConfigTreeNodes){
+					ISymbianSDK sdk = sdkConfigNode.getSymbianSDK();
+					if (sdk.getUniqueId().equals(config.getSDK().getUniqueId())){
+						// add the config
+						TreeNode[] oldConfigNodes = sdkConfigNode.getChildren();
+						TreeNode[] newConfigNodes = new TreeNode[oldConfigNodes.length + 1];
+						int index = 0;
+						for (TreeNode newConfigNode : oldConfigNodes){
+							if (newConfigNode == null){
+								continue;
+							}
+							if (newConfigNode.getValue() instanceof ISymbianBuildContext){
+								ISymbianBuildContext context = (ISymbianBuildContext)(newConfigNode.getValue());
+								newConfigNodes[index++] = new TreeNode(context) {
+									@Override
+									public String toString() {
+										ISymbianBuildContext context = (ISymbianBuildContext)getValue();
+										return context.getDisplayString();
+									}
+								};
+							}
+						}
+						
+						// add the missing config
+						newConfigNodes[index++] = new TreeNode(config.getBuildContext()) {
+							@Override
+							public String toString() {
+								ISymbianBuildContext context = (ISymbianBuildContext)getValue();
+								return context.getDisplayString();
+							}
+						};
+						
+						sdkConfigNode.setChildren(newConfigNodes);
+						
+					} else {
+						continue; // not the SDK we're looking for
+					}
+				}
+
+			}
+			
+		}
 		
 	}
 
@@ -316,8 +403,14 @@ public class ManageConfigurationsDialog extends TrayDialog {
 								
 								if (buildContext instanceof ISBSv2BuildContext){
 									ISBSv2BuildContext v2Context = (ISBSv2BuildContext)buildContext;
+									ISBSv2BuildContext currV2Context = (ISBSv2BuildContext)currExistingConfig.getBuildContext();
 									// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
-									if (v2Context.getSBSv2Alias().equals(((ISBSv2BuildContext)currExistingConfig.getBuildContext()).getSBSv2Alias()) &&
+									if (currV2Context.getConfigID().startsWith(ISBSv2BuildContext.BUILDER_ID)){
+										if (v2Context.getConfigID().equals(currV2Context.getConfigID())	){
+											checkIt = true;
+										}
+									}
+									else if (v2Context.getSBSv2Alias().equals(currV2Context.getSBSv2Alias()) &&
 										v2Context.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
 										v2Context.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
 										&& v2Context.getSBSv2Alias() != null && v2Context.getSBSv2Alias().split("_").length == 2){

@@ -60,6 +60,7 @@ import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.Configurati
 import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -124,77 +125,21 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK, "Project " + project.getName() + " is not a valid Carbide project.", null));
 			}
 			
-			// find the configuration that matches the id (sdk, platform, target)
-			String configId = des.getConfiguration().getId();
-			// TODO: We should be able to get the build context from the SBSv2 data, if present,
-			// otherwise from the display name for ABLD
 			ISymbianBuildContext context = null;
-			String buidAlias = "";
-			String platform = "";
-			String target = "";
-			String displayString = "";
-			String variant = "";
-			String sdkID = null;
 			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
-				ICStorageElement rootStorage = des.getStorage(CarbideBuildConfiguration.CARBIDE_STORAGE_ID, false);
-				if (rootStorage != null) {
-					for (ICStorageElement se : rootStorage.getChildren()) {
-						if (se.getName().equals(
-								CarbideBuildConfiguration.SBSV2_DATA_ID)) {
-							String value = se.getAttribute(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
-							if (value != null) {
-								platform = value;
-							}
-
-							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
-							if (value != null) {
-								variant = value;
-							}
-
-							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
-							if (value != null) {
-								target = value;
-							}
-
-							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS);
-							if (value != null) {
-								buidAlias = value;
-							}
-
-							value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING);
-							if (value != null) {
-								displayString = value;
-							}
-							
-							value = se
-							.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
-							if (value != null) {
-								sdkID = value;
-							}
-						}
-					}
-				} else {
+				
+				context = loadSBSv2Configuration(des, monitor);
+				
+				if (context == null){
 					throw new CoreException(new Status(IStatus.ERROR,
 							CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK,
 							"Unable to load Carbide settings for project "
 									+ project.getProject().getName(), null));
 				}
-				
-				ISymbianSDK sdk = null;
-				if (sdkID == null){
-					// pre-C3 project, get SDK id from config name
-					sdkID = BuildContextSBSv2.getSDKIDFromConfigName(displayString);
-				}
-				if (sdkID != null){
-					sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
-					// TODO: NEED TO HANDLE MISSING SDK ID
-					if (sdk != null){
-						context = new BuildContextSBSv2(sdk, platform, target, buidAlias);
-					}
-				}
-				
 			} else {
 				// TODO: Presume it's SBSv1?
+				// find the configuration that matches the id (sdk, platform, target)
+				String configId = des.getConfiguration().getId();
 				context = BuildContextSBSv1.getBuildContextFromDisplayName(configId);
 			}
 			
@@ -214,6 +159,91 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		}
 
 		return null;
+	}
+
+	private ISymbianBuildContext loadSBSv2Configuration(ICConfigurationDescription des, 
+														IProgressMonitor monitor) {
+		
+		ICStorageElement rootStorage;
+		try {
+			rootStorage = des.getStorage(CarbideBuildConfiguration.CARBIDE_STORAGE_ID, false);
+		} catch (CoreException e) {
+			return null;
+		}
+		String configID = des.getConfiguration().getId();
+		String buidAlias = "";
+		String platform = "";
+		String target = "";
+		String displayString = null;
+		String variant = "";
+		String sdkID = null;
+		if (rootStorage != null) {
+			for (ICStorageElement se : rootStorage.getChildren()) {
+				if (se.getName().equals(
+						CarbideBuildConfiguration.SBSV2_DATA_ID)) {
+					String value = se.getAttribute(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
+					if (value != null) {
+						platform = value;
+					}
+
+					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
+					if (value != null) {
+						variant = value;
+					}
+
+					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
+					if (value != null) {
+						target = value;
+					}
+
+					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS);
+					if (value != null) {
+						buidAlias = value;
+					}
+
+					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING);
+					if (value != null) {
+						displayString = value;
+					}
+					
+					value = se
+					.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
+					if (value != null) {
+						sdkID = value;
+					}
+				}
+			}
+		} else {
+			return null;
+		}
+		
+		ISymbianSDK sdk = null;
+		if (sdkID == null){
+			// pre-C3 project, get SDK id from config name
+			if (displayString == null){
+				displayString = configID;
+			}
+			sdkID = BuildContextSBSv2.getSDKIDFromConfigName(displayString);
+		}
+		if (sdkID != null){
+			sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
+			// TODO: NEED TO HANDLE MISSING SDK ID
+			if (sdk != null){
+				if (displayString == null || !displayString.startsWith(ISBSv2BuildContext.BUILDER_ID)) {
+					// likely an old config that has used the display name as the config id
+					displayString = configID;
+				}
+				
+				if (!configID.startsWith(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS)){
+					System.out.println("old config");
+				}
+				displayString = displayString + " [" + sdk.getUniqueId() + "]";
+				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
+			}
+		}
+		
+		return null;
+		
 	}
 
 	@Override

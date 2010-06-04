@@ -146,7 +146,7 @@ public class SBSv2Utils {
 	    	for (ISymbianSDK sdk : sdks) {
 	    		Version osVersion = sdk.getOSVersion();
 	    		if (osVersion.getMajor() > 8 ||
-	    				(osVersion.getMajor() == 8 && osVersion.getMinor() > 3)) {
+	    				(osVersion.getMajor() == 9 && osVersion.getMinor() > 3)) {
 	    			supportedSDKs.add(sdk);
 	    		}
 	    	}
@@ -238,7 +238,10 @@ public class SBSv2Utils {
 		    	
 		    	if (targetString != null) {
 		    		BuildContextSBSv2 context = null;
-		    		context = new BuildContextSBSv2(sdk, basePlat, targetString, alias);
+		    		// TODO: Display String not properly set
+		    		String configID = ISBSv2BuildContext.BUILDER_ID + "." + alias + "." + sdk.getUniqueId();
+		    		String displayString = alias + " [" + sdk.getUniqueId() + "]";
+		    		context = new BuildContextSBSv2(sdk, basePlat, targetString, alias, displayString, configID);
 		    		if (context != null) 
 		    			contexts.add(context);
 		    	}

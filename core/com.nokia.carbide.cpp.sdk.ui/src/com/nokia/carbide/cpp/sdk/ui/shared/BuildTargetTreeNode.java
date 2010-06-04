@@ -126,9 +126,9 @@ public class BuildTargetTreeNode extends TreeNode {
 		
 		BuildTargetTreeNode[] input = new BuildTargetTreeNode[sdkListCopy.size()];
 		int index = 0;
-		for (Iterator<ISymbianSDK> iter = sdkListCopy.iterator(); iter.hasNext();) {
+		for (ISymbianSDK sdk : sdkListCopy) {
 			
-			BuildTargetTreeNode treeNode = new BuildTargetTreeNode(iter.next(), sbsv2Project);
+			BuildTargetTreeNode treeNode = new BuildTargetTreeNode(sdk, sbsv2Project);
 			if (treeNode.getChildren() != null){
 				input[index++] = treeNode;
 			}
@@ -144,4 +144,5 @@ public class BuildTargetTreeNode extends TreeNode {
 		}
 		return realInput;
 	}
+
 }

@@ -269,7 +269,8 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		try {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(projectTracker.getProject());
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(getDisplayString());
+			
+				ICConfigurationDescription configDes = projDes.getConfigurationById(getConfigurationID());
 				if (configDes != null) {
 					// save the CDT project description.  this saves all configs but that's the
 					// only thing CDT allows at this point.
@@ -285,6 +286,18 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		return false;
 	}
 	
+	/**
+	 * Get the unique ID for this build configuration.
+	 * For ABLD it is the display name, for SBSv2, it is the builder ID
+	 * @return
+	 */
+	public String getConfigurationID() {
+		if (context instanceof ISBSv2BuildContext){
+			return ((ISBSv2BuildContext) context).getConfigID();
+		}
+		return context.getDisplayString();
+	}
+
 	public List<ISISBuilderInfo> getSISBuilderInfoList() {
 		return sisBuilderInfoList;
 	}

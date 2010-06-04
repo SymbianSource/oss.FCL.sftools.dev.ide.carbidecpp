@@ -48,6 +48,8 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 /**
@@ -125,7 +127,13 @@ public class BuildConfigurationData extends CConfigurationData {
 
 	@Override
 	public String getId() {
-		return carbideBuildConfig.getDisplayString();
+		if (carbideBuildConfig.getBuildContext() instanceof ISBSv1BuildContext){
+			return carbideBuildConfig.getDisplayString();
+		} else if (carbideBuildConfig.getBuildContext() instanceof ISBSv2BuildContext) {
+			return ((ISBSv2BuildContext)carbideBuildConfig.getBuildContext()).getConfigID();
+		}
+	
+		return null;
 	}
 
 	@Override
@@ -277,7 +285,7 @@ public class BuildConfigurationData extends CConfigurationData {
 			
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject());
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getConfigurationID());
 				if (configDes != null) {
 					String sourcesCacheValue = "";
 					for (ICSourceEntry src : sourceEntries) {
@@ -308,7 +316,7 @@ public class BuildConfigurationData extends CConfigurationData {
 		try {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(((CarbideBuildConfiguration)carbideBuildConfig).getConfigurationID());
 				if (configDes != null) {
 					ICStorageElement storage = configDes.getStorage(CONFIG_DATA_CACHE, false);
 					if (storage != null) {

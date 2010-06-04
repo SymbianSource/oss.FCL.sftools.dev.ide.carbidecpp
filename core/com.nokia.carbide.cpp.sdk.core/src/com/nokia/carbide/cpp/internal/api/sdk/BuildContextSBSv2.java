@@ -21,15 +21,17 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	private String platform;
 	private String target;
 	private String sbsv2Alias;
-	ISymbianSDK sdk;
+	private ISymbianSDK sdk;
+	private String displayString;
+	private String configID;  // cconfiguration 'id' attribute from .cproject
 	
-	public BuildContextSBSv2(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias) {
-		sdk = theSDK;
-		platform = thePlatform.toUpperCase();
-		target = theTarget.toUpperCase();
-		sbsv2Alias = theSBSv2Alias;
-		
-		getDisplayString();
+	public BuildContextSBSv2(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias, String displayName, String configID) {
+		this.sdk = theSDK;
+		this.platform = thePlatform.toUpperCase();
+		this.target = theTarget.toUpperCase();
+		this.sbsv2Alias = theSBSv2Alias;
+		this.displayString = displayName;
+		this.configID = configID;
 	}
 
 	@Override
@@ -47,21 +49,27 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return target;
 	}
 
+	public String getConfigID(){
+		return configID;
+	}
+	
 	@Override
 	public String getDisplayString() {
-		// TODO We will need to cobble up proper display names
-		//return "(" + sbsv2Alias + ") " + "[" + sdk.getUniqueId() + "]" ;
 		
-		// TODO: This is temporary to support the old configs where
-		// The display name and id were the same thing. Need to work on supporting both
-		// as we migrate the display name to the settings and use a truly unique ID for configs.
 		
-		  String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
-		  String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
-		  String DEBUG_DISPLAY_TEXT = "Debug"; //$NON-NLS-1$
-		  String RELEASE_DISPLAY_TEXT = "Release"; //$NON-NLS-1$
-		  String SPACE_DISPLAY_TEXT = " "; //$NON-NLS-1$
-		  String SDK_NOT_INSTALLED = "SDK not installed"; //$NON-NLS-1$
+		// TODO: Still need to decide on how to set display string
+		// and how it's used for legacy SBSv2 configs
+		if (displayString != null && !displayString.equals(configID)){
+			return displayString;
+		}
+		
+		// TODO: else fallback for old configs, we should convert
+		String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
+		String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
+		String DEBUG_DISPLAY_TEXT = "Debug"; //$NON-NLS-1$
+		String RELEASE_DISPLAY_TEXT = "Release"; //$NON-NLS-1$
+		String SPACE_DISPLAY_TEXT = " "; //$NON-NLS-1$
+		String SDK_NOT_INSTALLED = "SDK not installed"; //$NON-NLS-1$
 		String displayString = null;
 		if (displayString == null) {
 			// in the form Emulation Debug (WINSCW) [S60_3rd_MR] or
@@ -83,6 +91,11 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 			displayString = displayString + " (" + basePlatform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
 		}
 		return displayString;
+	}
+
+	@Override
+	public String toString() {
+		return getConfigID();
 	}
 
 	@Override
@@ -336,6 +349,9 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 			if (other.target != null)
 				return false;
 		} else if (!target.equals(other.target)) {
+			return false;
+		} else if (!configID.equals(other.configID)){
+			// TODO: Do we really need anything other than a config ID comparison?
 			return false;
 		}
 		return true;
