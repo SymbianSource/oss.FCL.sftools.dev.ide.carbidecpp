@@ -59,7 +59,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		
 		// TODO: Still need to decide on how to set display string
 		// and how it's used for legacy SBSv2 configs
-		if (displayString != null && !displayString.equals(configID)){
+		if (displayString != null){
 			return displayString;
 		}
 		

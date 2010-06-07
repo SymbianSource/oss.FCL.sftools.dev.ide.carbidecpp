@@ -272,82 +272,87 @@ public class ManageConfigurationsDialog extends TrayDialog {
 	}
 
 	/**
-	 * When displaying build configs there may be configurations in the project that may not be displayed.
+	 * When displaying build configs there may be configurations in the project that may not be displayed
 	 * We add those back in so they reside in the checked tree viewer in case the user wants to remove them.
 	 * @param sdkConfigTreeNodes
 	 */
 	private void replaceFilteredConfigsFromProject(BuildTargetTreeNode[] sdkConfigTreeNodes) {
 		List<ICarbideBuildConfiguration> bldConfigs = cpi.getBuildConfigurations();
 		
-		/////////////
-		//////////// TODO TODO TODO
-		/////////// Refactor me. This is very inefficient code, just used for prototyping of adding in filtered out configs
-		////////////
-		
+		HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>> missingConfigMap = new HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>>();
 		for (ICarbideBuildConfiguration config : bldConfigs){
 			boolean foundConfig = false;
 			// Add in configs that are only defined in the project and not the
 			// suggested filtered config cache
 			for (BuildTargetTreeNode sdkConfigNode : sdkConfigTreeNodes){
-				TreeNode[] configNodes = sdkConfigNode.getChildren();
-				for (TreeNode childConfig : configNodes){
-					if (childConfig == null){
-						continue;
-					}
-					if (childConfig.getValue() instanceof ISymbianBuildContext){
-						ISymbianBuildContext context = (ISymbianBuildContext)(childConfig.getValue());
-						if (config.getBuildContext().equals(context)){
-							foundConfig = true;
-							break;
+				ISymbianSDK sdk = sdkConfigNode.getSymbianSDK();
+				if (!sdk.getUniqueId().equals(config.getSDK().getUniqueId())){
+					continue; // not in this SDK, don't bother looking at all configs
+				} else {
+					// Found the right SDK, now check and see if the config exists
+					TreeNode[] configNodes = sdkConfigNode.getChildren();
+					for (TreeNode childConfig : configNodes){
+						if (childConfig == null){
+							continue;
 						}
-					} else {
-						System.out.println("Huh? Not an ISymbiabBuildContext : " + childConfig.getValue());
+						if (childConfig.getValue() instanceof ISymbianBuildContext){
+							ISymbianBuildContext context = (ISymbianBuildContext)(childConfig.getValue());
+							if (config.getBuildContext().equals(context)){
+								foundConfig = true;
+								break;
+							}
+						}
+					}
+					if (!foundConfig){
+						// save config off, we'll add it back in later
+						List<ISymbianBuildContext> contextsToAdd = new ArrayList<ISymbianBuildContext>();
+						if (null == missingConfigMap.get(sdkConfigNode)){
+							contextsToAdd.add(config.getBuildContext());
+						} else {
+							contextsToAdd = missingConfigMap.get(sdkConfigNode);
+							contextsToAdd.add(config.getBuildContext());
+						}
+						missingConfigMap.put(sdkConfigNode, contextsToAdd);
+						
 					}
 				}
-				if (foundConfig) break;
+			}			
+		}
+		
+		for (BuildTargetTreeNode sdkNode : missingConfigMap.keySet()){
+			List<ISymbianBuildContext> configsToAdd = missingConfigMap.get(sdkNode);
+			TreeNode[] oldConfigNodes = sdkNode.getChildren();
+			TreeNode[] newConfigNodes = new TreeNode[oldConfigNodes.length + configsToAdd.size()];
+			int index = 0;
+			// build up the old list....
+			for (TreeNode newConfigNode : oldConfigNodes){
+				if (newConfigNode == null){
+					continue;
+				}
+				if (newConfigNode.getValue() instanceof ISymbianBuildContext){
+					ISymbianBuildContext context = (ISymbianBuildContext)(newConfigNode.getValue());
+					newConfigNodes[index++] = new TreeNode(context) {
+						@Override
+						public String toString() {
+							ISymbianBuildContext context = (ISymbianBuildContext)getValue();
+							return context.getDisplayString();
+						}
+					};
+				}
 			}
 			
-			if (!foundConfig){
-				for (BuildTargetTreeNode sdkConfigNode : sdkConfigTreeNodes){
-					ISymbianSDK sdk = sdkConfigNode.getSymbianSDK();
-					if (sdk.getUniqueId().equals(config.getSDK().getUniqueId())){
-						// add the config
-						TreeNode[] oldConfigNodes = sdkConfigNode.getChildren();
-						TreeNode[] newConfigNodes = new TreeNode[oldConfigNodes.length + 1];
-						int index = 0;
-						for (TreeNode newConfigNode : oldConfigNodes){
-							if (newConfigNode == null){
-								continue;
-							}
-							if (newConfigNode.getValue() instanceof ISymbianBuildContext){
-								ISymbianBuildContext context = (ISymbianBuildContext)(newConfigNode.getValue());
-								newConfigNodes[index++] = new TreeNode(context) {
-									@Override
-									public String toString() {
-										ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-										return context.getDisplayString();
-									}
-								};
-							}
-						}
-						
-						// add the missing config
-						newConfigNodes[index++] = new TreeNode(config.getBuildContext()) {
-							@Override
-							public String toString() {
-								ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-								return context.getDisplayString();
-							}
-						};
-						
-						sdkConfigNode.setChildren(newConfigNodes);
-						
-					} else {
-						continue; // not the SDK we're looking for
+			// ... then add the project specific items...
+			for (ISymbianBuildContext newContext : configsToAdd){
+				newConfigNodes[index++] = new TreeNode(newContext) {
+					@Override
+					public String toString() {
+						ISymbianBuildContext context = (ISymbianBuildContext)getValue();
+						return context.getDisplayString();
 					}
-				}
-
+				};
 			}
+			
+			sdkNode.setChildren(newConfigNodes);
 			
 		}
 		

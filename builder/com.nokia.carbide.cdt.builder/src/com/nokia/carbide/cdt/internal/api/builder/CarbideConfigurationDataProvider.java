@@ -229,15 +229,12 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
 			// TODO: NEED TO HANDLE MISSING SDK ID
 			if (sdk != null){
-				if (displayString == null || !displayString.startsWith(ISBSv2BuildContext.BUILDER_ID)) {
-					// likely an old config that has used the display name as the config id
-					displayString = configID;
-				}
 				
-				if (!configID.startsWith(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS)){
-					System.out.println("old config");
+				if (displayString == null && !configID.startsWith(ISBSv2BuildContext.BUILDER_ID)){
+					displayString = configID; // Old config, used unique 'id' and config name interchangably
+				} else {
+					displayString = displayString;
 				}
-				displayString = displayString + " [" + sdk.getUniqueId() + "]";
 				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
 			}
 		}
