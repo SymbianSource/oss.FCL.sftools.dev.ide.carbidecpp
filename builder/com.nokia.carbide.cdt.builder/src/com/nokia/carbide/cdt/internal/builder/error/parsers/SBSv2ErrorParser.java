@@ -16,17 +16,10 @@
 */
 package com.nokia.carbide.cdt.internal.builder.error.parsers;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.eclipse.cdt.core.ErrorParserManager;
 import org.eclipse.cdt.core.IMarkerGenerator;
 
 public class SBSv2ErrorParser extends CarbideBaseErrorParser {
-
-	private static final Pattern warningPattern = Pattern.compile("<warning>(.*)</warning>"); //$NON-NLS-1$
-	private static final Pattern errorPattern = Pattern.compile("<error>(.*)</error>"); //$NON-NLS-1$
-	private static final Pattern infoPattern = Pattern.compile("<info>(.*)</info>"); //$NON-NLS-1$
 
 	public SBSv2ErrorParser() {
 	}
@@ -35,51 +28,50 @@ public class SBSv2ErrorParser extends CarbideBaseErrorParser {
 
 		initialise();
 		
-		Matcher matcher = infoPattern.matcher(line);
-		if (matcher.matches()) {
+		if (line.startsWith("<info>"))
 			return true; // just ignore info messages
-		}
-		matcher = warningPattern.matcher(line);
-		if (matcher.matches()) {
-			// strip the tags
-			String text = line.substring("<warning>".length(), line.length() - "</warning>".length()); //$NON-NLS-1$ //$NON-NLS-2$
-			if (setFirstColon(text)) {
-				if (setFileNameAndLineNumber(text)) {
-					setFile(errorParserManager);
-					setDescription(text);
-					errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, IMarkerGenerator.SEVERITY_WARNING, null, externalFilePath);
-					return true;
-				}
-			}
-			msgFileName = ""; //$NON-NLS-1$
-			msgDescription = matcher.group(1);
-			setFile(errorParserManager);
-			errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, IMarkerGenerator.SEVERITY_WARNING, null, externalFilePath);
-			return true;
-		}
 		
-		matcher = errorPattern.matcher(line);
-		if (matcher.matches()) {
-			// strip the tags
-			String text = line.substring("<error>".length(), line.length() - "</error>".length()); //$NON-NLS-1$ //$NON-NLS-2$
-			if (setFirstColon(text)) {
-				if (setFileNameAndLineNumber(text)) {
-					setFile(errorParserManager);
-					setDescription(text);
-					errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, IMarkerGenerator.SEVERITY_ERROR_BUILD, null, externalFilePath);
-					return true;
-				}
-			}
-			msgFileName = ""; //$NON-NLS-1$
-			msgDescription = matcher.group(1);
-			setFile(errorParserManager);
-			errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, IMarkerGenerator.SEVERITY_ERROR_BUILD, null, externalFilePath);
+		// full message detected
+		if (findMessage(errorParserManager, line, "<error>", "</error>", IMarkerGenerator.SEVERITY_ERROR_BUILD)) 
 			return true;
-		}
+		if (findMessage(errorParserManager, line, "<warning>", "</warning>", IMarkerGenerator.SEVERITY_WARNING)) 
+			return true;
+		
+		// some messages are split across multiple lines, so for now, at least show the first line (where <error>, etc. are)
+		if (findMessage(errorParserManager, line, "<error>", "", IMarkerGenerator.SEVERITY_ERROR_BUILD)) 
+			return true;
+		if (findMessage(errorParserManager, line, "<warning>", "", IMarkerGenerator.SEVERITY_WARNING)) 
+			return true;
 
 		return false;
 	}
 	
+	protected boolean findMessage(ErrorParserManager errorParserManager, String line, 
+			String startStrip, String endStrip, int severity) {
+		int idx = line.indexOf(startStrip);
+		int endIdx = line.indexOf(endStrip);
+		if (idx >= 0 && endIdx >= 0) {
+			// strip the tags
+			int descStart = idx + startStrip.length();
+			int descEnd = line.length() - endStrip.length();
+			
+			String text = line.substring(descStart, descEnd);
+			if (setFirstColon(text)) {
+				if (setFileNameAndLineNumber(text)) {
+					setFile(errorParserManager);
+					setDescription(text);
+					errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, severity, null, externalFilePath);
+					return true;
+				}
+			}
+			msgFileName = ""; //$NON-NLS-1$
+			msgDescription = text;
+			setFile(errorParserManager);
+			errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, severity, null, externalFilePath);
+			return true;
+		}
+		return false;
+	}
 	public void setDescription(String line) {
 		// Get the iDescription
 		msgDescription = line.substring(msgFirstColon + 1).trim();

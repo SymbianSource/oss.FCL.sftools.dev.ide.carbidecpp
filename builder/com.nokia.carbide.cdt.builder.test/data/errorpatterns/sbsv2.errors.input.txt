@@ -8,6 +8,14 @@
 <info>Regression for bug 9091. Don't report info lines with SBSv2 error checker</info>
 <info>Could not write toolcheck cache: [Errno 2] No such file or directory: u'R:\\\\epoc32\\build\\toolcheck_cache__armv5_udeb.tmp'</info>
 
+<error>tool 'SBS_JAVATC' from config 'none' did not return version 'version \"1\.[5-9]' as required.
+Command 'D:/sources/trk/tcf/tcftrk/group/[undefined] -version' returned:
+(this line excised to avoid false positive)
+
+Check your environment and configuration.
+
+</error>
+
 <info>Executing 'make -r -f "J:/epoc32/build/Cone/makefile.default" -j 4
 DESCRAMBLE="C:/Symbian/SITK/sbs/bin/sbs_descramble.exe sbs2631027042"'</info>
 

@@ -1,6 +1,8 @@
 <root>
 <!--Error Marker at index 0-->
-<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="While Searching for a SPECIFIED DEFFILE: file not found: L:/src/common/generic/app-framework/cone/bwins/CONExu.DEF" severity="1" variable_name="^EMPTY^"/>
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="tool 'SBS_JAVATC' from config 'none' did not return version 'version \&quot;1\.[5-9]' as required." severity="3" variable_name="^EMPTY^"/>
 <!--Error Marker at index 1-->
+<marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="-1" message="While Searching for a SPECIFIED DEFFILE: file not found: L:/src/common/generic/app-framework/cone/bwins/CONExu.DEF" severity="1" variable_name="^EMPTY^"/>
+<!--Error Marker at index 2-->
 <marker_info external_path_string="^EMPTY^" file="^EMPTY^" line_number="0" message="Fatal error: L6002U: Could not open file P:/epoc32/build/helloworld/c_34df0185eb73bae4/helloworld_exe/armv5/udeb/HelloWorld_AppUi.o: No such file or directory" severity="3" variable_name="^EMPTY^"/>
 </root>
