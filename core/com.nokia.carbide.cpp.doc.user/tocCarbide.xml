@@ -39,8 +39,6 @@
     <topic label="Open Command Window"			href="html/reference/menus/open_cmd_window.htm" />
     <topic label="Preprocess" 					href="html/reference/menus/preprocess_source.htm" />
     <topic label="Run CodeScanner"				href="html/reference/menus/run_codescanner.htm" />
-    <topic label="Run Leavescan"				href="html/reference/menus/run_leavescan.htm" />
-    <topic label="S60 UI Designer"				href="html/reference/menus/s60_ui_designer.htm" />
     <topic label="Show in Explorer"				href="html/reference/menus/open_explorer_window.htm" />
     <topic label="Symbian OS C++ Class"			href="html/tasks/projects/prj_adding_symbian_class.htm"  />
     <topic label="Symbian OS C++ Project"		href="html/tasks/CreatingNewProjects.html" />
