@@ -40,8 +40,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
 import com.nokia.carbide.cpp.internal.sdk.ui.SDKUIHelpIds;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
@@ -178,7 +181,7 @@ public class AddSDKDialog extends TrayDialog {
 		}
 
 		// No objections raised, write the new device entry
-		String vendorName = ISymbianSDK.S60_SDK_NAME;
+		String vendorName = ISBSv1BuildInfo.S60_SDK_NAME;
 		Version osVersion = new Version("9.4.0"); //$NON-NLS-1$
 		String osBranch = ""; //$NON-NLS-1$
 		Version sdkVersion = new Version("0.0"); //$NON-NLS-1$
@@ -189,13 +192,16 @@ public class AddSDKDialog extends TrayDialog {
 														   osBranch,
 														   sdkVersion, 
 														   false);
-		sdk.setEnabled(true);
+		((SymbianSDK)sdk).setEnabled(true);
 		SDKCorePlugin.getSDKManager().addSDK(sdk);
 		List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
 		if (sdkList != null){
 			sdkList.add(sdk);
 		}
-		sdk.setIsDefaultSDK(false);
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		if (sbsv1BuildInfo != null) {
+			sbsv1BuildInfo.setIsDefaultSDK(sdk, false);
+		}
 		super.okPressed();
 	}
 

@@ -21,7 +21,9 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.image.*;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.ui.images.CachingImageLoader;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.ui.images.*;
 import com.nokia.cpp.internal.api.utils.core.ProjectUtils;
@@ -287,20 +289,23 @@ public abstract class CarbideImageModelFactory extends ImageModelFactory {
 		List<ICarbideBuildConfiguration> buildConfigurations = projectInfo.getBuildConfigurations();
 		for (ICarbideBuildConfiguration buildConfiguration : buildConfigurations) {
 			ISymbianSDK sdk = buildConfiguration.getSDK();
-			if (sdk.isS60()) {
-				Version version = sdk.getSDKVersion();
-				if (version != null) {
-					if (version.compareTo(new Version(2, 8, 0)) >= 0) {
-						supportsSVG = true;
-						break;
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			if (sbsv1BuildInfo != null) {
+				if (sbsv1BuildInfo.isS60(sdk)) {
+					Version version = sbsv1BuildInfo.getSDKVersion(sdk);
+					if (version != null) {
+						if (version.compareTo(new Version(2, 8, 0)) >= 0) {
+							supportsSVG = true;
+							break;
+						}
 					}
+	            }
+				if (sbsv1BuildInfo.getFamily(sdk).equals(ISBSv1BuildInfo.UIQ_FAMILY_ID)) {
+					Version version = sbsv1BuildInfo.getSDKVersion(sdk);
+					supportsSVG |= version != null && version.compareTo(new Version(3, 1, 0)) >= 0;
+					if (supportsSVG)
+						break;
 				}
-            }
-			if (sdk.getFamily().equals(ISymbianSDK.UIQ_FAMILY_ID)) {
-				Version version = sdk.getSDKVersion();
-				supportsSVG |= version != null && version.compareTo(new Version(3, 1, 0)) >= 0;
-				if (supportsSVG)
-					break;
 			}
         }
 		return supportsSVG;
@@ -318,9 +323,12 @@ public abstract class CarbideImageModelFactory extends ImageModelFactory {
 			List<ICarbideBuildConfiguration> buildConfigurations = projectInfo.getBuildConfigurations();
 			for (ICarbideBuildConfiguration buildConfiguration : buildConfigurations) {
 				ISymbianSDK sdk = buildConfiguration.getSDK();
-				if (sdk.getFamily().equals(ISymbianSDK.UIQ_FAMILY_ID)) {
-					imageConverterFactory = new UIQImageConverterFactory();
-					break;
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				if (sbsv1BuildInfo != null) {
+					if (sbsv1BuildInfo.getFamily(sdk).equals(ISBSv1BuildInfo.UIQ_FAMILY_ID)) {
+						imageConverterFactory = new UIQImageConverterFactory();
+						break;
+					}
 				}
 	        }
 		}

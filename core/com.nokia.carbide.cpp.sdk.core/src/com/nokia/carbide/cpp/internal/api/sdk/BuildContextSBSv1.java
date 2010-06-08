@@ -13,14 +13,24 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianMissingSDKFactory;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
+import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class BuildContextSBSv1 implements ISBSv1BuildContext {
 
@@ -200,14 +210,23 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return getDisplayString();
 	}
 	
+	private ISBSv1BuildInfo getBuildInfo() {
+		ISBSv1BuildInfo buildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		if (buildInfo == null) {
+			buildInfo = new SBSv1BuildInfo();
+			((SymbianSDK)getSDK()).setBuildInfo(buildInfo, ISymbianBuilderID.SBSV1_BUILDER);
+		}
+		return buildInfo;
+	}
+
 	public String getDefaultDefFileDirectoryName(boolean isASSP) {
 		// TODO: How the ASSP option affects the path?
 
 		String dirName = getDefFileDirectoryNameForPlatform(platform);
 		if (dirName == null) {
 			// check BSF's
-			IBSFCatalog catalog = getSDK().getBSFCatalog();
-	    	if (catalog != null) {
+			IBSFCatalog catalog = getBuildInfo().getBSFCatalog(getSDK());
+			if (catalog != null) {
 	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
 	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
 	    				String mainPlatform = catalog.getReleasePlatform(platform);
@@ -254,7 +273,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 			return getRVCTPrefixFilePath();
 		} else {
 			// check BSF's
-			IBSFCatalog catalog = getSDK().getBSFCatalog();
+			IBSFCatalog catalog = getBuildInfo().getBSFCatalog(getSDK());
 	    	if (catalog != null) {
 	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
 	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
@@ -281,8 +300,12 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return null;
 	}
 
+	private IPath getIncludePath() {
+		return getBuildInfo().getIncludePath(getSDK());
+	}
+
 	private IPath getGCCEPrefixFilePath() {
-		return getSDK().getIncludePath().append("gcce/gcce.h"); //$NON-NLS-1$
+		return getIncludePath().append("gcce/gcce.h"); //$NON-NLS-1$
 	}
 
 	private IPath getRVCTPrefixFilePath() {
@@ -292,13 +315,13 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		if (installedRVCTTools.length > 0) {
 			rvctFragment = getRVCTFragment(installedRVCTTools[0]);
 		}
-		IPath prefixFilePath = getSDK().getIncludePath().append(rvctFragment).append(rvctFragment + ".h"); //$NON-NLS-1$
+		IPath prefixFilePath = getIncludePath().append(rvctFragment).append(rvctFragment + ".h"); //$NON-NLS-1$
 		if (prefixFilePath.toFile().exists()){
 			return prefixFilePath;
 		} else {
 			// SF kits around SF^3 started to only use a single rvct.h header instead of specific versioned ones
 			// based on the default installation
-			return getSDK().getIncludePath().append("rvct").append("rvct" + ".h");
+			return getIncludePath().append("rvct").append("rvct" + ".h");
 		}
 	}
 

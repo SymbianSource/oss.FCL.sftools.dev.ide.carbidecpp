@@ -11,8 +11,11 @@ import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.project.utils.BldInfImportWrapper;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class ImporterScritpingUtils {
@@ -120,7 +123,15 @@ public class ImporterScritpingUtils {
 			}
 		}
 		else {
-			selectedConfigs = sdk.getFilteredBuildConfigurations();
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+			if (sbsv1BuildInfo != null) {
+				selectedConfigs = sbsv1BuildInfo.getFilteredBuildConfigurations(sdk);
+			} else if (sbsv2BuildInfo != null) {
+				selectedConfigs = sbsv2BuildInfo.getFilteredBuildConfigurations(sdk);
+			} else {
+				selectedConfigs = new ArrayList<ISymbianBuildContext>();
+			}
 		}
 		return selectedConfigs;
 	}

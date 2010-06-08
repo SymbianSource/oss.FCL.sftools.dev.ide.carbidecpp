@@ -24,6 +24,9 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.swt.widgets.TreeItem;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
+import com.nokia.carbide.cpp.internal.sdk.core.model.BSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.*;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage;
 
@@ -67,7 +70,15 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 						for (int i=0; i<items.length; i++) {
 							TreeNode node = (TreeNode)items[i].getData();
 							if (node.getValue() instanceof ISymbianSDK && node.getValue() == sdk) {
-								if (sdkMgr.getBSFScannerEnabled() || sdk.getBSFCatalog().getVirtualVariantPlatforms().length > 0){
+								IBSFCatalog bsfCatalog = null;
+								ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+								ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+								if (sbsv1BuildInfo != null) {
+									bsfCatalog = sbsv1BuildInfo.getBSFCatalog(sdk);
+								} else if (sbsv2BuildInfo != null) {
+									bsfCatalog = sbsv2BuildInfo.getBSFCatalog(sdk);
+								}
+								if (sdkMgr.getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
 									// Check and see if any of the configs in the SDK
 									// match any configuration that has been selected before
 									// for this SDK.
@@ -121,7 +132,15 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 			for (ISymbianBuildContext currContext : selectedConfigs){
 				ISymbianSDK sdk = currContext.getSDK();
-				if (sdk.getBSFCatalog().getVirtualVariantPlatforms().length > 0 || sdkMgr.getBSFScannerEnabled()){
+				IBSFCatalog bsfCatalog = null;
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+				if (sbsv1BuildInfo != null) {
+					bsfCatalog = sbsv1BuildInfo.getBSFCatalog(sdk);
+				} else if (sbsv2BuildInfo != null) {
+					bsfCatalog = sbsv2BuildInfo.getBSFCatalog(sdk);
+				}
+				if (sdkMgr.getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
 					// this setting needs to be persisted.
 					settingsNeedUpdate = true;
 					selectedConfigsToSave.add(currContext);

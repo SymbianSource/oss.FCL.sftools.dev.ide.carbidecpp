@@ -52,6 +52,7 @@ import com.nokia.carbide.cpp.epoc.engine.image.ImageFormat;
 import com.nokia.carbide.cpp.epoc.engine.model.IModel;
 import com.nokia.carbide.cpp.epoc.engine.model.IModelProvider;
 import com.nokia.carbide.cpp.epoc.engine.model.IView;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.project.ui.images.CarbideImageModelFactory;
 import com.nokia.carbide.cpp.internal.project.ui.images.IImageResolver;
@@ -61,7 +62,9 @@ import com.nokia.carbide.cpp.internal.project.ui.images.ISymbianImageContainerMo
 import com.nokia.carbide.cpp.internal.project.ui.images.providers.ThumbnailImageLabelProvider;
 import com.nokia.carbide.cpp.internal.ui.images.CachingImageLoader;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.ui.images.IImageLoader;
 import com.nokia.carbide.cpp.ui.images.IImageModel;
 import com.nokia.cpp.internal.api.utils.core.CacheMap;
@@ -423,7 +426,7 @@ public abstract class MultiImageEditorContextBase {
 		ISymbianBuildContext buildContext = getCarbideBuildConfiguration().getBuildContext();
 		ISymbianSDK sdk = buildContext != null ? buildContext.getSDK() : null;
 		if (sdk != null) {
-			return sdk.isEKA2();
+			return sdk.getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2);
 		}
 		return false;
 	}
@@ -436,7 +439,10 @@ public abstract class MultiImageEditorContextBase {
 		ISymbianBuildContext buildContext = getCarbideBuildConfiguration().getBuildContext();
 		ISymbianSDK sdk = buildContext != null ? buildContext.getSDK() : null;
 		if (sdk != null) {
-			return sdk.isS60();
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			if (sbsv1BuildInfo != null) {
+				return sbsv1BuildInfo.isS60(sdk);
+			}
 		}
 		return false;
 		

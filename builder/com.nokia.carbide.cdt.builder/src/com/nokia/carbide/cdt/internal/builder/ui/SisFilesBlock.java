@@ -61,6 +61,7 @@ import org.eclipse.swt.widgets.TableItem;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
 /**
  * A composite that displays files in a table. Files can be 
@@ -297,7 +298,7 @@ public class SisFilesBlock {
 			listCopy.add(new SISBuilderInfo2(info));
 		}
 		
-		isEKA2 = buildConfig.getSDK().isEKA2();
+		isEKA2 = buildConfig.getSDK().getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2);
 		
 		setFiles(listCopy);
 

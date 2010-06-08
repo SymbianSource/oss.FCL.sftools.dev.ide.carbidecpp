@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.TreeNode;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
@@ -52,7 +53,9 @@ public class BuildTargetTreeNode extends TreeNode {
 	public BuildTargetTreeNode(ISymbianSDK value, boolean sbsv2Project) {
 		super(value);
 		
-		List<ISymbianBuildContext> configurations = sbsv2Project ? SBSv2Utils.getFilteredSBSv2BuildContexts(value) : value.getFilteredBuildConfigurations();
+		List<ISymbianBuildContext> configurations = sbsv2Project ? 
+				SBSv2Utils.getFilteredSBSv2BuildContexts(value) : 
+				value.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getFilteredBuildConfigurations(value);
 
 		TreeNode[] children = new TreeNode[configurations.size()];
 		int index = 0;

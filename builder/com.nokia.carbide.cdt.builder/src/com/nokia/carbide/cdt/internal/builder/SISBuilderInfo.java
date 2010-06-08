@@ -27,6 +27,7 @@ import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuildConfigFactory;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.SisBuilderType;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
 /**
  * @deprecated use {@link SISBuilderInfo2} instead
@@ -250,7 +251,7 @@ public class SISBuilderInfo implements ISISBuilderInfo {
 		if (getCertificate().length() > 0) {
 			return KEY_CERT_SIGN;
 		}
-		if (sdk.isEKA2()) {
+		if (sdk.getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 			return SELF_SIGN;
 		}
 		return DONT_SIGN;

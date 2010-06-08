@@ -16,6 +16,8 @@
 */
 package com.nokia.carbide.cpp.epoc.engine.tests;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.*;
 
 import org.eclipse.core.runtime.Plugin;
@@ -68,9 +70,19 @@ public class TestsPlugin extends Plugin {
 	 */
 	public static List<ISymbianBuildContext> getUsableBuildConfigs() {
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
-			List<ISymbianBuildContext> contexts = sdk.getUnfilteredBuildConfigurations();
-			if (contexts.size() > 0) {
-				return contexts.subList(0, Math.min(contexts.size(), 8));
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+			List<ISymbianBuildContext> contexts;
+			if (sbsv1BuildInfo != null) {
+				contexts = sbsv1BuildInfo.getAllBuildConfigurations(sdk);
+				if (contexts.size() > 0) {
+					return contexts.subList(0, Math.min(contexts.size(), 8));
+				}
+			} else if (sbsv2BuildInfo != null) {
+				contexts = sbsv2BuildInfo.getAllBuildConfigurations(sdk);
+				if (contexts.size() > 0) {
+					return contexts.subList(0, Math.min(contexts.size(), 8));
+				}
 			}
 		}
 		TestCase.fail("No installed SDKs provide build configurations");

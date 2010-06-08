@@ -69,6 +69,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -137,7 +138,7 @@ public class SDKPreferencePage
 			}
 
 			ISymbianSDK sdk = (ISymbianSDK) element;
-			sdk.setUniqueID(sdkID);
+			((SymbianSDK)sdk).setUniqueId(sdkID);
 			SDKCorePlugin.getSDKManager().updateSDK(sdk);
 			getViewer().refresh();
 		}
@@ -315,13 +316,13 @@ public class SDKPreferencePage
 
 		// Remember which SDK is enabled
 		for (ISymbianSDK sdk : sdkMgr.getSDKList()){
-			sdk.setEnabled(false);
+			((SymbianSDK)sdk).setEnabled(false);
 		}
 		Object[] sdkObjects = sdkListTableViewer.getCheckedElements();
 		for (Object currObj : sdkObjects){
 			if (currObj instanceof ISymbianSDK){
 				ISymbianSDK sdk = (ISymbianSDK)currObj;
-				sdk.setEnabled(true);
+				((SymbianSDK)sdk).setEnabled(true);
 			}
 		}
 

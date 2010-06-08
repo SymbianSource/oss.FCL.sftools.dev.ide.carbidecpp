@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
@@ -39,10 +41,13 @@ public class SymbianSDKs {
 		ArrayList<Map<String,String>> sdkMapArray = new ArrayList<Map<String,String>>();
 		List<ISymbianSDK> sdkList = getSDKManager().getSDKList();
 		for (ISymbianSDK sdk : sdkList){
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			Map<String,String> mp = new HashMap<String, String>();
 			mp.put(KEY_SDK_ID, sdk.getUniqueId());
-			mp.put(KEY_SDK_NAME, sdk.getName());
 			mp.put(KEY_SDK_EPOCROOT, sdk.getEPOCROOT());
+			if (sbsv1BuildInfo != null) {
+				mp.put(KEY_SDK_NAME, sbsv1BuildInfo.getName(sdk));
+			}
 			sdkMapArray.add(mp);
 		}
 		

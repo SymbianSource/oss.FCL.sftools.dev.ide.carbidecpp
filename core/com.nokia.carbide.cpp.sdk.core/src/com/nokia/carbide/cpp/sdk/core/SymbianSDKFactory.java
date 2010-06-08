@@ -14,6 +14,7 @@ package com.nokia.carbide.cpp.sdk.core;
 
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
@@ -54,17 +55,21 @@ public class SymbianSDKFactory {
 		}
 		
 		SymbianSDK sdk = new SymbianSDK(newDeviceEntry); // create SDK and set the attribs found in devices.xml
-		// Set other essential paramaters not in devices.xml
-		
-		if (sdk.getOSVersion().getMajor() != 0){
+		// Set other essential parameters not in devices.xml
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		if (sdk.getOSVersion().getMajor() != 0) {
 			// use the version detected from the SDK creation
 		} else {
 			sdk.setOSVersion(osVersion);
-			sdk.setOSSDKBranch(osBranch);
+			if (sbsv1BuildInfo != null) {
+				sbsv1BuildInfo.setOSSDKBranch(sdk, osBranch);
+			}
 		}
 		
-		if (sdk.getSDKVersion().getMajor() == 0){
-			sdk.setSDKVersion(sdkVersion);
+		if (sbsv1BuildInfo != null) {
+			if (sbsv1BuildInfo.getSDKVersion(sdk).getMajor() == 0){
+				sbsv1BuildInfo.setSDKVersion(sdk, sdkVersion);
+			}
 		}
 		
 		return sdk;

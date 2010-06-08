@@ -22,11 +22,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,45 +53,31 @@ import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
 import org.xml.sax.SAXException;
 
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultModelDocumentProvider;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProvider;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
-import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
-import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISymbianSDKModifier;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
-import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.BasicIncludeFileLocator;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.MacroScanner;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
-public class SymbianSDK implements ISymbianSDK {
+public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public static final String MANIFEST_XML_LOCATION = "/epoc32/kit/manifest.xml"; //$NON-NLS-1$
 	
 	// manifest.xml attributes
-	private static final String PATH_ID_EPOC32DIR = "epoc32Dir"; //$NON-NLS-1$
 	private static final String PATH_ID_INCLUDEDIR = "includeDir"; //$NON-NLS-1$
 	private static final String PATH_ID_TOOLSDIR = "toolsDir"; //$NON-NLS-1$
 	private static final String PATH_ID_SRCDIR = "srcDir"; //$NON-NLS-1$
 	
-	private static final String INCLUDE = "include"; //$NON-NLS-1$
 	private static final String RELEASE = "release"; //$NON-NLS-1$
-	private static final String TOOLS = "tools"; //$NON-NLS-1$
-	private static final String EPOC32_DIR = "epoc32"; //$NON-NLS-1$
-	private static final String INCLUDE_SUBDIR = "epoc32/" + INCLUDE; //$NON-NLS-1$
-	private static final String RELEASE_SUBDIR = "epoc32/" + RELEASE; //$NON-NLS-1$
-	private static final String TOOLS_SUBDIR = "epoc32/" + TOOLS; //$NON-NLS-1$
 	private static final String VARIANT_CFG_FILE = "epoc32/tools/variant/variant.cfg"; //$NON-NLS-1$
 	private static final String SPP_VARIANT_CFG_FILE = "epoc32/tools/variant/spp_variant.cfg"; //$NON-NLS-1$
 	private static final String TARGETTYPE_PM_FILE = "epoc32/tools/trgtype.pm"; //$NON-NLS-1$
@@ -104,86 +90,52 @@ public class SymbianSDK implements ISymbianSDK {
 	private boolean enabled = true;
 	private boolean wasScanned = false;
 	private Version osVersion;
-	private Version sdkVersion;
-	private String sdkOSBranch;
-
-	private File licenseFile;
-	private File prefixFile;
-	
-	private List<IDefine> variantHRHMacros = null;
-	private List<ISymbianBuildContext> bsfContextList = new ArrayList<ISymbianBuildContext>(0);
-	
-	private List<ISymbianBuildContext> binaryVariantContextList = new ArrayList<ISymbianBuildContext>(0);
-	
-	private Date createDate;
-	private URL publisherURL;
-	private String sdkDescription;
-	private String publisherName;
-	
-	private boolean supportsWINSCW_UREL;
-	
-	List<String> supportedTargetTypesList = new ArrayList<String>();
-
-	private IBSFCatalog bsfCatalog;
-	private ISBVCatalog sbvCatalog;
-
+	private List<String> supportedTargetTypesList = new ArrayList<String>();
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
-	
+	private Map<String, ISDKBuildInfo> buildInfoMap = new HashMap<String, ISDKBuildInfo>();
+	@SuppressWarnings("rawtypes")
+	private Set sdkFeatures = new HashSet();
+
 	// greedy match means the filename is in the last group
 	private static Pattern VARIANT_HRH_LINE_PATTERN = Pattern.compile("(?i)(.*)(/|\\\\)(.*hrh)");
 
-	private long hrhFileTimeStamp = 0;
-	
 	public SymbianSDK(DeviceType device) {
 		deviceEntry = device;
+		if (SDKCorePlugin.SUPPORTS_SBSV1_BUILDER) {
+			setBuildInfo(new SBSv1BuildInfo(), ISymbianBuilderID.SBSV1_BUILDER);
+		}
+		if (SBSv2Utils.enableSBSv2Support()) {
+			setBuildInfo(new SBSv2BuildInfo(), ISymbianBuilderID.SBSV2_BUILDER);
+		}
+
 		scanSDK();
 	}
 	
 	public void scanSDK(){
 		
 		cachedPlatformMacros.clear();
-		variantHRHMacros = null;
 		
 		if (!setDataFromManifestXML()){
-			// must derive the OS and SDK version
-			if (!deriveOSVersionFromDeviceId()){
-				//need to scan SDK files for OS and SDK version
-				scanSDKForVersionInfo();
-			}
+			//need to scan SDK files for OS and SDK version
+			scanSDKForVersionInfo();
 		}
+		
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 		
 		IPath prefixFileFullPath =  getPrefixFromVariantCfg();
-		if (prefixFileFullPath != null){
-			setPrefixFile(prefixFileFullPath);
-		}
-		
-		// Trick for SEMC. Try to set the SDK version based on a UIQ HRH file
-		// if there's is no SDK version
-		if (getSDKVersion().getMajor() == 0 && getName().equalsIgnoreCase(ISymbianSDK.UIQ_SDK_NAME)){
-			// This might be an SEMC CustKit, get the version from the HRH file
-			if (getPrefixFile() != null){
-				String prefixFileStr = getPrefixFile().toString();
-				if (prefixFileStr.indexOf("UIQ_") != -1 && prefixFileStr.indexOf(".hrh") != -1){
-					prefixFileStr = prefixFileStr.substring(prefixFileStr.indexOf("UIQ_")+4, prefixFileStr.indexOf(".hrh"));
-					if (prefixFileStr.length() == 3 && prefixFileStr.contains(".")){
-						setSDKVersion(new Version(prefixFileStr));
-					}
-				}
+		if (prefixFileFullPath != null) {
+			if (sbsv1BuildInfo != null) {
+				sbsv1BuildInfo.setPrefixFile(this, prefixFileFullPath);
+			}
+			if (sbsv2BuildInfo != null) {
+				sbsv2BuildInfo.setPrefixFile(this, prefixFileFullPath);
 			}
 		}
 		
-		scanForWINSCW_UREL();
+		setSupportFeatures();
 	}
 	
-	public List<String> getAvailablePlatforms() {
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		return sdkMgr.getSymbianMacroStore().getSupportedPlatforms(getOSVersion(), getSDKOSBranch(), getBSFCatalog());
-	}
-
-	public Date getCreationDate() {
-		return createDate;
-	}
-
 	public String getEPOCROOT() {
 		if (deviceEntry != null) {
 			String epocRoot = deviceEntry.getEpocroot();
@@ -224,207 +176,6 @@ public class SymbianSDK implements ISymbianSDK {
 		enabled = enable;
 	}
 
-	public String getFamily() {
-		String[] parts = getName().split("\\.");
-		if (parts.length == 3){
-			if (getSDKVersion().getMajor() == 5 && getName().equalsIgnoreCase(NOKIA_SF_SDK_NAME)){
-				// A vendor of "symbian" and SDK major version 5 is the same as prior naming for "com.nokia.s60" & 5th Edition.
-				// Return "s60" so that project template generation continues to work as it's a S60 5th ed. SDK. 
-				return ISymbianSDK.S60_FAMILY_ID;
-			} else {
-				return parts[2];
-			}
-		}
-		
-		return "";
-	}
-	
-	
-	public List<String> getTargetTypeMacros(String targettype) {
-		// this is based on \epoc32\tools\trgtype.pm which changes from
-		// OS version to OS version, but largely remains constant with
-		// regards to the basic type.
-		List<String> macros = new ArrayList<String>();
-		
-		// if it's not one of these then it's a DLL
-		if (targettype.compareToIgnoreCase("EPOCEXE") == 0) {
-			macros.add("__EXEDLL__");
-		} else if (targettype.compareToIgnoreCase("EXEDLL") == 0) {
-			macros.add("__EXEDLL__");
-		} else if (targettype.compareToIgnoreCase("EXE") == 0) {
-			macros.add("__EXE__");
-		} else if (targettype.compareToIgnoreCase("EXEXP") == 0) {
-			macros.add("__EXE__");
-		} else if (targettype.compareToIgnoreCase("IMPLIB") == 0) {
-			macros.add("__IMPLIB__");
-		} else if (targettype.compareToIgnoreCase("KLIB") == 0) {
-			macros.add("__LIB__");
-		} else if (targettype.compareToIgnoreCase("LIB") == 0) {
-			macros.add("__LIB__");
-		} else {
-			macros.add("__DLL__");
-		}
-		return macros;
-	}
-
-
-	public List<ISymbianBuildContext> getUnfilteredBuildConfigurations() {
-		
-		List<ISymbianBuildContext> buildTargets = new ArrayList<ISymbianBuildContext>();
-		
-		// note that this gets variant platforms but not regular BSF's
-		List <String>buildPlats =  getAvailablePlatforms();
-		
-		if (buildPlats.size() == 0){
-			return Collections.emptyList();
-		}
-		// TODO: Hard code build context hack
-		buildTargets.add(new BuildContextSBSv1(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
-		
-		if (supportsWINSCW_UREL()){
-			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv1(this, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
-		}
-		
-		for (String currPlat : buildPlats){
-			
-			if (currPlat.equals(ISymbianBuildContext.EMULATOR_PLATFORM) ) { 
-				// emulation targets already determined (some SDKs don't get WISNCW UREL
-				continue;
-			}
-			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv1(this, currPlat, ISymbianBuildContext.DEBUG_TARGET));
-			
-			// everything gets release except for WINSCW
-			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv1(this, currPlat, ISymbianBuildContext.RELEASE_TARGET));
-		}
-		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (sdkMgr.getBSFScannerEnabled()){
-			buildTargets.addAll(getBSFPlatformContexts());
-			buildTargets.addAll(getBinaryVariationPlatformContexts()); // Symbian Binary Variation (.var)
-		}
-		
-		return buildTargets;
-	}
-	
-	public List<ISymbianBuildContext> getBSFPlatformContexts(){
-		
-		synchronized (bsfContextList) {
-			if (!bsfContextList.isEmpty()){
-				return bsfContextList;
-			}
-			
-			IBSFCatalog catalog = getBSFCatalog();
-			for (IBSFPlatform platform : catalog.getPlatforms()) {
-				// only return non-variant style BSF's.  see boog #4533 for details.
-				if (!platform.isVariant()) {
-					// TODO: Hard code build context hack
-					bsfContextList.add(new BuildContextSBSv1(this, platform.getName().toUpperCase(), ISymbianBuildContext.DEBUG_TARGET));
-					// TODO: Hard code build context hack
-					bsfContextList.add(new BuildContextSBSv1(this, platform.getName().toUpperCase(), ISymbianBuildContext.RELEASE_TARGET));
-				}
-			}
-		}
-		
-		return bsfContextList;
-	}
-	
-public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
-		
-		synchronized (binaryVariantContextList) {
-			if (!binaryVariantContextList.isEmpty()){
-				return binaryVariantContextList;
-			}
-			
-			ISBVCatalog catalog = getSBVCatalog();
-			for (ISBVPlatform sbvPlatform : catalog.getPlatforms()) {
-				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
-				// Only add the build platform if it's not virtual.
-				if (!sbvPlatform.isVirtual()){
-					// TODO: Hard code build context hack
-					binaryVariantContextList.add(new BuildContextSBSv1(this, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
-					// TODO: Hard code build context hack
-					binaryVariantContextList.add(new BuildContextSBSv1(this, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
-				}
-			}
-		}
-		
-		return binaryVariantContextList;
-	}
- 	
-	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
-		// This is probably a bug, but the filtering only uses SBSv1 preferences if SBSv1 is enabled...
-		List<ISymbianBuildContext> filteredContexts;
-		if (SBSv2Utils.enableSBSv1Support()) {
-			filteredContexts = getSBSv1FilteredBuildConfigurations();
-		} else {
-			if (SBSv2Utils.enableSBSv2Support()) {
-				filteredContexts = SBSv2Utils.getFilteredSBSv2BuildContexts(this);
-			} else {
-				// be optimistic in this case... SBSv3? ;)
-				filteredContexts = getUnfilteredBuildConfigurations();
-			}
-		}
-		return filteredContexts;
-	}
-
-	protected List<ISymbianBuildContext> getSBSv1FilteredBuildConfigurations() {
-		List<ISymbianBuildContext> buildContexts =  getUnfilteredBuildConfigurations();
-		
-		if (buildContexts.size() == 0){
-			return Collections.emptyList();
-		}
-		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		List<BuildPlat> platFilterList = sdkMgr.getPlatformList();
-		
-		Iterator<ISymbianBuildContext> li = buildContexts.iterator();
-
-		while(li.hasNext()){
-			ISymbianBuildContext currContext = li.next();
-			for (BuildPlat currPlat : platFilterList){ // see which ones need to be filtered out.
-				
-				if (currPlat.getPlatName().equals(currContext.getPlatformString())){
-					if (!currPlat.isEnabled()){
-						if (isEKA2() && currPlat.getOsIdentifier().equals(BuildPlat.EKA2_IDENTIFIER)){
-							li.remove();  // filtered out in UI, don't show
-							break;
-						}
-					}
-				}
-			}
-		}
-		
-		return buildContexts;
-	}
-
-	public IPath getIncludePath() {
-		String epocRoot = getEPOCROOT();
-		if (epocRoot.length() > 0) {
-			IPath epoc32IncPath = new Path(epocRoot).append("epoc32/include");
-			// try to canonicalize it so it matches actual file system case
-			try {
-				epoc32IncPath = new Path(epoc32IncPath.toFile().getCanonicalPath());
-			} catch (IOException e) {
-			}
-			return epoc32IncPath;
-		}
-		return null;
-	}
-
-	public File getLicenseFile() {
-		return licenseFile;
-	}
-
-	public String getName() {
-		if (deviceEntry != null) {
-			return deviceEntry.getName();
-		}
-		return "";
-	}
-
 	public Version getOSVersion() {		
 		if (osVersion == null){
 			return new Version("0.0");
@@ -432,79 +183,23 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		return osVersion;
 	}
 	
-	public Version getSDKVersion() {
-		if (sdkVersion == null){
-			return new Version("0.0");
-		}
-		return sdkVersion;
-	}
-
 	public List<String> getPlatformMacros(String platform) {
 		List<String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
 		if (platformMacros == null) {
 			synchronized (cachedPlatformMacros) {
+				String branch = "";
+				IBSFCatalog bsfCatalog = null;
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				if (sbsv1BuildInfo != null) {
+					branch = sbsv1BuildInfo.getSDKOSBranch(this);
+					bsfCatalog = sbsv1BuildInfo.getBSFCatalog(this);
+				}
 				ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-				platformMacros = sdkMgr.getSymbianMacroStore().getPlatformMacros(getOSVersion(), getSDKOSBranch(), getBSFCatalog(), platform);
+				platformMacros = sdkMgr.getSymbianMacroStore().getPlatformMacros(getOSVersion(), branch, bsfCatalog, platform);
 				cachedPlatformMacros.put(platform.toUpperCase(), platformMacros);
 			}
 		}
 		return platformMacros;
-	}
-	
-	public List<String> getVendorSDKMacros() {
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		return sdkMgr.getSymbianMacroStore().getVendorMacros(getSDKVersion(), getName());
-	}
-	
-	public File getPrefixFile() {
-		return prefixFile;
-	}
-
-	public URL getPublisherURL() {
-		return publisherURL;
-	}
-
-	public IPath getReleaseRoot() {
-		String epocRoot = getEPOCROOT();
-		if (epocRoot.length() > 0) {
-			IPath epoc32RelPath = new Path(epocRoot).append("epoc32/release");
-			// try to canonicalize it so it matches actual file system case
-			try {
-				epoc32RelPath = new Path(epoc32RelPath.toFile().getCanonicalPath());
-			} catch (IOException e) {
-			}
-			return epoc32RelPath;
-		}
-		return null;
-	}
-
-	public String getSDKDescription() {
-		if (sdkDescription == null){
-			return "";
-		}
-		return sdkDescription;
-	}
-
-	public String getSDKOSBranch() {
-		if (sdkOSBranch == null){
-			return "";
-		}
-		
-		return sdkOSBranch;
-	}
-
-	public IPath getToolsPath() {
-		String epocRoot = getEPOCROOT();
-		if (epocRoot.length() > 0) {
-			IPath epoc32ToolsPath = new Path(epocRoot).append("epoc32/tools");
-			// try to canonicalize it so it matches actual file system case
-			try {
-				epoc32ToolsPath = new Path(epoc32ToolsPath.toFile().getCanonicalPath());
-			} catch (IOException e) {
-			}
-			return epoc32ToolsPath;
-		}
-		return null;
 	}
 
 	public String getUniqueId() {
@@ -514,83 +209,6 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		return "";
 	}
 
-	public String getVendor() {
-		String[] parts = getName().split("\\.");
-		if (parts.length == 3)
-			return parts[1];
-		
-		return "";
-	}
-
-	public List<IDefine> getProjectVariantHRHDefines() {
-		// this is deprecated. should use the one in ISymbianBuildContext instead.
-
-		long hrhTime = 0;
-		if (getPrefixFile() != null){
-			hrhTime = getPrefixFile().lastModified();
-		}
-		
-		if (variantHRHMacros == null || variantHRHMacros.size() == 0 || hrhTime != hrhFileTimeStamp) {
-			synchronized (this) {
-				hrhFileTimeStamp = hrhTime;  // update time stamp to latest
-				List<IDefine> macros = new ArrayList<IDefine>();
-				Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
-				File file = getPrefixFile();
-				if (file != null){
-					
-					// Note: MacroScanner argument 'BasicIncludeFileLocation' can take 
-					// paramaters for user/system includes, however, for getting macros
-					// from the prefix file it should not be necessary.
-					MacroScanner scanner = new MacroScanner(
-							new BasicIncludeFileLocator(null, null),
-							DefaultModelDocumentProvider.getInstance(), 
-							DefaultTranslationUnitProvider.getInstance());
-					scanner.scanFile(file);
-		
-					List<IDefine> scannedMacros = (List<IDefine>)scanner.getMacroDefinitions();
-					for (IDefine scannedMacro : scannedMacros){
-						// we don't want duplicate macros, so check to see if it's already there.
-						// if it is, remove it and then add the newer one.  this is consistent with
-						// how it would be from a compiler standpoint.
-						IDefine macro = namedMacros.get(scannedMacro.getName());
-						if (macro != null) {
-							macros.remove(macro);
-						}
-						
-						macros.add(scannedMacro);
-						namedMacros.put(scannedMacro.getName(), scannedMacro);
-					}
-					
-					List<String> variantCFGMacros = getVariantCFGMacros();
-					for (String cfgMacros : variantCFGMacros){
-						// we don't want duplicate macros, so check to see if it's already there.
-						IDefine existingMacro = namedMacros.get(cfgMacros);
-						if (existingMacro != null) {
-							macros.remove(existingMacro);
-						}
-						
-						IDefine macro = DefineFactory.createSimpleFreeformDefine(cfgMacros);
-						macros.add(macro);
-						namedMacros.put(macro.getName(), macro);
-					}
-				}
-				variantHRHMacros = macros;
-			}
-		}
-		
-		return variantHRHMacros;
-	}
-	
-	public List<String> getProjectVariantHRHMacros() {
-		// this API is deprecated, so don't cache this
-		List<IDefine> defines = getProjectVariantHRHDefines();
-		List<String> macros = new ArrayList<String>(defines.size());
-		for (IDefine define : defines) {
-			macros.add(define.getDefinitionText());
-		}
-		return macros;
-	}
-	
 	@SuppressWarnings("unchecked")
 	public List<String> getVariantCFGMacros(){
 		
@@ -631,8 +249,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		
 		return variantCFGMacros;
 	}
-	
-	
+
 	public List<String> getSupportedTargetTypes() {
 		
 		synchronized (supportedTargetTypesList) {
@@ -676,18 +293,6 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		return supportedTargetTypesList;
 	}
 	
-	public boolean isDefaultSDK() {
-		if (deviceEntry == null) {
-			return false;
-		}
-		
-		if (deviceEntry.getDefault().equals(DefaultType.YES_LITERAL)){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public boolean isValid() {
 		// TODO: What makes us valid?  We only need a valid devices.xml entry
 		// to do a build, but we need the other data for most everything else.
@@ -737,55 +342,56 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		// XML Valiation code from: http://java.sun.com/developer/technicalArticles/xml/validationxpath/
 		try {
 
-	            // Parse an XML document into a DOM tree.
-	            DocumentBuilder parser =
-	                DocumentBuilderFactory.newInstance().newDocumentBuilder();
-	            doc = parser.parse(manifestFile);
+            // Parse an XML document into a DOM tree.
+            DocumentBuilder parser =
+                DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            doc = parser.parse(manifestFile);
+
+            // Create a SchemaFactory capable of understanding WXS schemas.
+            SchemaFactory factory =
+                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+            // Load a WXS schema, represented by a Schema instance.
+            String tempStr = manifestFile.getAbsolutePath();
+            int index = tempStr.lastIndexOf(File.separator);
+            tempStr = tempStr.substring(0, index);
+            tempStr += File.separator + "sdkManifest.xsd";
+            Source schemaFile = new StreamSource(new File(tempStr));
+            Schema schema = factory.newSchema(schemaFile);
+
+            // Create a Validator object, which can be used to validate
+            // an instance document.
+            Validator validator = schema.newValidator();
+
+            // Validate the DOM tree.
+            // Don't use new DOMSource(doc) for manifest, that requires namespace 
+            // and some (e.g. S60) manifest.xml says xsi:noNamespaceSchemaLocation.
+            // Failure will show in Java 6
+            // see detail in XERCESJ-1163 boog report
+            // http://issues.apache.org/jira/browse/XERCESJ-1163?page=all 
+            validator.validate(new StreamSource(manifestFile));
 	
-	            // Create a SchemaFactory capable of understanding WXS schemas.
-	            SchemaFactory factory =
-	                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-	
-	            // Load a WXS schema, represented by a Schema instance.
-	            String tempStr = manifestFile.getAbsolutePath();
-	            int index = tempStr.lastIndexOf(File.separator);
-	            tempStr = tempStr.substring(0, index);
-	            tempStr += File.separator + "sdkManifest.xsd";
-	            Source schemaFile = new StreamSource(new File(tempStr));
-	            Schema schema = factory.newSchema(schemaFile);
-	
-	            // Create a Validator object, which can be used to validate
-	            // an instance document.
-	            Validator validator = schema.newValidator();
-	
-	            // Validate the DOM tree.
-	            // Don't use new DOMSource(doc) for manifest, that requires namespace 
-	            // and some (e.g. S60) manifest.xml says xsi:noNamespaceSchemaLocation.
-	            // Failure will show in Java 6
-	            // see detail in XERCESJ-1163 boog report
-	            // http://issues.apache.org/jira/browse/XERCESJ-1163?page=all 
-	            validator.validate(new StreamSource(manifestFile));
-	
-	        } catch (ParserConfigurationException e) {
-	        	ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), IStatus.ERROR, "SDK Manifest could not be parsed correctly.", e));
-	        	hasParseError = true;
-	        } catch (SAXException e) {
-	        	ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), IStatus.ERROR, "SDK Manifest failed schema validation.", e));
-	        	hasParseError = true;
-	        	// exception handling - document not valid!
-	        } catch (IOException e) {
-	        	// This SDK has not manifest, don't post error
-	        	hasParseError = true;
-	        }       
+        } catch (ParserConfigurationException e) {
+        	ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), IStatus.ERROR, "SDK Manifest could not be parsed correctly.", e));
+        	hasParseError = true;
+        } catch (SAXException e) {
+        	ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), IStatus.ERROR, "SDK Manifest failed schema validation.", e));
+        	hasParseError = true;
+        	// exception handling - document not valid!
+        } catch (IOException e) {
+        	// This SDK has not manifest, don't post error
+        	hasParseError = true;
+        }       
 			
-			// if there were any parse errors, throw an exception so that suitable defaults
-			// can be calculated from the devices.xml entry.
-			if (hasParseError) {
-				return false;
-			}
+		// if there were any parse errors, throw an exception so that suitable defaults
+		// can be calculated from the devices.xml entry.
+		if (hasParseError) {
+			return false;
+		}
+		
+		try {
 			
-			try {
-			
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			Node node = XPathAPI.selectSingleNode(doc, "sdk/paths");
 			for (NodeIterator nodeIter = XPathAPI.selectNodeIterator(doc, "sdk"); (node = nodeIter.nextNode()) != null;) {
 				NamedNodeMap attribs = node.getAttributes();
@@ -794,14 +400,12 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 				if (node != null) {
 					// currently ignored...
 					String tempStr = node.getNodeValue();
-					
-					
 				}
 				
 				// name is currently ignored
 				node = attribs.getNamedItem("name");
 				String sdkFamily = node == null ? null : node.getNodeValue();
-				
+
 				node = XPathAPI.selectSingleNode(doc, "sdk/paths/@root");
 				String path = node == null ? null : node.getNodeValue();
 				if (null != path) {
@@ -816,68 +420,30 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 						// Loop through the sdk:paths:root elements and pick out check all the 'id' attriutes for matches...
 						attribs = node.getAttributes();
 						String rootType = attribs.getNamedItem("id").getNodeValue();
-							if (rootType.equals(PATH_ID_INCLUDEDIR)) {
-								node = attribs.getNamedItem("path");
-								/*if (null!=node){
-									setIncludePath(new Path(path + node.getNodeName()));
-								}*/
-							} else if (rootType.equals(RELEASE)) {
-								node = attribs.getNamedItem("path");
-								/*if (null!=node){
-									setReleaseRoot(new Path(path + node.getNodeName()));
-								}*/
-							} else if (rootType.equals(PATH_ID_TOOLSDIR)) {
-								node = attribs.getNamedItem("path");
-								/*if (null!=node){
-									setToolsPath(new Path(path + node.getNodeName()));
-								}*/
-							} else if (rootType.equals(PATH_ID_SRCDIR)) {
-								node = attribs.getNamedItem("path");
-								/*if (null!=node){
-									setSourcePath(new Path(path + node.getNodeName()));
-								}*/
-							} /*
-							else if (rootType.equals(PATH_ID_EPOC32DIR)) {
-								node = attribs.getNamedItem("path");
-								if (null!=node){
-									set(new File(path, node.getNodeName()));
-								}
-							}
-							*/
+						if (rootType.equals(PATH_ID_INCLUDEDIR)) {
+							node = attribs.getNamedItem("path");
+							/*if (null!=node){
+								setIncludePath(new Path(path + node.getNodeName()));
+							}*/
+						} else if (rootType.equals(RELEASE)) {
+							node = attribs.getNamedItem("path");
+							/*if (null!=node){
+								setReleaseRoot(new Path(path + node.getNodeName()));
+							}*/
+						} else if (rootType.equals(PATH_ID_TOOLSDIR)) {
+							node = attribs.getNamedItem("path");
+							/*if (null!=node){
+								setToolsPath(new Path(path + node.getNodeName()));
+							}*/
+						} else if (rootType.equals(PATH_ID_SRCDIR)) {
+							node = attribs.getNamedItem("path");
+							/*if (null!=node){
+								setSourcePath(new Path(path + node.getNodeName()));
+							}*/
 						}
-				}
-				
-				node = XPathAPI.selectSingleNode(doc, "sdk/paths/license/@file");
-				if (node != null){
-					String licenseStr = node.getNodeValue();
-					this.setLicenseFile(new File(path, licenseStr));
-				}
-				// Get the general SDK description...
-				node = XPathAPI.selectSingleNode(doc, "sdk/description");
-				if (null != node) {
-					setSDKDescription(node.getTextContent());
-				}	
-				
-				// Get the build configuration to use...
-				/*
-				node = XPathAPI.selectSingleNode(doc, "sdk/buildConfig");
-				if (null != node) {
-					sdkManifest.setSDKBuildConfig(node.getTextContent());
-					this.id = sdkManifest.getSDKBuildConfig();
-				}
-				*/
-				
-				//  Get the SDK Version...
-				node = XPathAPI.selectSingleNode(doc, "sdk/sdkVersion");
-				if (null != node) {
-					try {
-						setSDKVersion(new Version(node.getTextContent()));
 					}
-					catch (IllegalArgumentException e){	
-						// ignored...improper format
-					} 
 				}
-				
+
 				// Get the osInfo
 				node = XPathAPI.selectSingleNode(doc, "sdk/osInfo");
 				if (null != node){
@@ -896,51 +462,76 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 					if (null != node)
 					{
 						if (getOSVersion().getMajor() == 9){
-							setOSSDKBranch("");
+							sbsv1BuildInfo.setOSSDKBranch(this, "");
 						}else {
-							setOSSDKBranch(node.getNodeValue());
+							sbsv1BuildInfo.setOSSDKBranch(this, node.getNodeValue());
 						}
-					}
-				}
-				//	 Get the creation time/date
-				node = XPathAPI.selectSingleNode(doc, "sdk/createdDate");
-				if (null != node){
-					try {
-						// Get the default MEDIUM/SHORT DateFormat
-						DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
-						setCreateDate(format.parse(node.getTextContent()));
-					}
-					catch (ParseException pe) {
-						// ignore, we're just using the date for info, not critical if missing
 					}
 				}
 				
-				// Get the publisher
-				node = XPathAPI.selectSingleNode(doc, "sdk/publisher");
-				if (null != node){
-					attribs = node.getAttributes();
-					node = attribs.getNamedItem("link");
-					if (null != node)
-					{
+				if (sbsv1BuildInfo != null) {
+					node = XPathAPI.selectSingleNode(doc, "sdk/paths/license/@file");
+					if (node != null){
+						String licenseStr = node.getNodeValue();
+							sbsv1BuildInfo.setLicenseFile(this, new File(path, licenseStr));
+					}
+
+					// Get the general SDK description...
+					node = XPathAPI.selectSingleNode(doc, "sdk/description");
+					if (null != node) {
+						sbsv1BuildInfo.setSDKDescription(this, node.getTextContent());
+					}	
+					
+					//  Get the SDK Version...
+					node = XPathAPI.selectSingleNode(doc, "sdk/sdkVersion");
+					if (null != node) {
 						try {
-							setPublisherURL(new URL(node.getNodeValue()));
+							sbsv1BuildInfo.setSDKVersion(this, new Version(node.getTextContent()));
 						}
 						catch (IllegalArgumentException e){	
 							// ignored...improper format
+						} 
+					}
+					
+					//	 Get the creation time/date
+					node = XPathAPI.selectSingleNode(doc, "sdk/createdDate");
+					if (null != node){
+						try {
+							// Get the default MEDIUM/SHORT DateFormat
+							DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+							sbsv1BuildInfo.setCreateDate(this, format.parse(node.getTextContent()));
+						}
+						catch (ParseException pe) {
+							// ignore, we're just using the date for info, not critical if missing
 						}
 					}
-					node = attribs.getNamedItem("logo");
-					/*if (null != node){
-						setPublisherLogo(new File(path, node.getNodeValue()));
-					}*/
-					node = attribs.getNamedItem("name");
-					if (null != node)
-					{
-						setPublisherName(node.getNodeValue());
+					
+					// Get the publisher
+					node = XPathAPI.selectSingleNode(doc, "sdk/publisher");
+					if (null != node){
+						attribs = node.getAttributes();
+						node = attribs.getNamedItem("link");
+						if (null != node)
+						{
+							try {
+								sbsv1BuildInfo.setPublisherURL(this, new URL(node.getNodeValue()));
+							}
+							catch (IllegalArgumentException e){	
+								// ignored...improper format
+							}
+						}
+						node = attribs.getNamedItem("logo");
+						/*if (null != node){
+							setPublisherLogo(new File(path, node.getNodeValue()));
+						}*/
+						node = attribs.getNamedItem("name");
+						if (null != node)
+						{
+							sbsv1BuildInfo.setPublisherName(this, node.getNodeValue());
+						}
 					}
 				}
 			}
-		
 		} catch (TransformerException e){
 			e.printStackTrace();
 		} catch (MalformedURLException e){
@@ -949,100 +540,9 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		
 		return true;
 	}
-	
-	public void setLicenseFile(File licenseFile) {
-		 this.licenseFile = licenseFile;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-
-	public void setIsDefaultSDK(boolean isDefault) {
-		if (isDefault){
-			deviceEntry.setDefault(DefaultType.YES_LITERAL);
-		} else {
-			deviceEntry.setDefault(DefaultType.NO_LITERAL);
-		}
-		
-	}
-
-	public void setOSSDKBranch(String branch) {
-		sdkOSBranch = branch;
-		
-	}
 
 	public void setOSVersion(Version osVer) {
 		this.osVersion = osVer;
-		
-	}
-
-	public void setPrefixFile(IPath prefixFile) {
-		this.prefixFile = new File(prefixFile.toOSString());
-	}
-
-
-	public void setPublisherURL(URL publisherURL) {
-		this.publisherURL = publisherURL;
-	}
-
-	public void setSDKVersion(Version sdkVers) {
-		sdkVersion = sdkVers;
-	}
-
-	public void setSDKDescription(String sdkDescription) {
-		this.sdkDescription = sdkDescription;
-	}
-	
-	public void setPublisherName(String publisherName) {
-		this.publisherName = publisherName;
-	}
-	
-	private boolean deriveOSVersionFromDeviceId(){
-		boolean foundOSVersion = false;
-		
-		if (getUniqueId().equals("S60_3rd")){
-			setOSVersion(new Version("9.1.0"));
-			setSDKVersion(new Version("3.0.0"));
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("UIQ3") || getUniqueId().equals("UIQ_3_PB2")){
-			setOSVersion(new Version("9.1.0"));
-			setSDKVersion(new Version("3.0.0"));
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("Series60_1_2_CW")){
-			setOSVersion(new Version("6.1.0"));
-			setSDKVersion(new Version("1.2.0"));
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("Series60_2_0_CW")){
-			setOSVersion(new Version("7.0.0"));
-			setSDKVersion(new Version("2.0.0"));
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("Series60_v21_CW")){
-			setOSVersion(new Version("7.0.0"));
-			setSDKVersion(new Version("2.1.0"));
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("S60_2nd_FP2_CW")){
-			setOSVersion(new Version("8.0.0"));
-			setSDKVersion(new Version("2.6.0"));
-			setOSSDKBranch(EKA1_A_BRANCH_IDENTIFIER);
-			foundOSVersion = true;
-		}  else if (getUniqueId().equals("S60_2nd_FP3") || getUniqueId().equals("S60_2nd_FP3_CW") || getUniqueId().equals("S60_2nd_FP3_B")){
-			setOSVersion(new Version("8.1.0"));
-			setSDKVersion(new Version("2.8.0"));
-			setOSSDKBranch(EKA1_A_BRANCH_IDENTIFIER);
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("UIQ_21")){
-			setOSVersion(new Version("7.0.15"));
-			setSDKVersion(new Version("2.1.0"));
-			foundOSVersion = true;
-		} else if (getUniqueId().equals("Series80_DP2_0_SDK_CW")){
-			setOSVersion(new Version("7.0.0"));
-			setSDKVersion(new Version("2.0.0"));
-			foundOSVersion = true;
-		}
-		return foundOSVersion;
-		
 	}
 	
 	/**
@@ -1060,6 +560,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 			setOSVersion(new Version("9.5.0"));  // Set a default version that will work with all EKA2
 		
 		try {
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			char[] cbuf = new char[(int) bldInfoFile.length()];
 			Reader reader = new FileReader(bldInfoFile);
 			reader.read(cbuf);
@@ -1078,28 +579,34 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 
 						if (versionTokens[2].toUpperCase().contains("TB92SF")){
 							setOSVersion(new Version("9.5.0"));
-							setSDKVersion(new Version("5.2.0"));
+							if (sbsv1BuildInfo != null) {
+								sbsv1BuildInfo.setSDKVersion(this, new Version("5.2.0"));
+							}
 							break;
 						} else if (versionTokens[2].toUpperCase().contains("TB101SF")){
 							setOSVersion(new Version("9.6.0"));
-							setSDKVersion(new Version("6.0.0"));
+							if (sbsv1BuildInfo != null) {
+								sbsv1BuildInfo.setSDKVersion(this, new Version("6.0.0"));
+							}
 							break;
 						} else if (versionTokens[2].toUpperCase().contains("TB102SF")){
 							setOSVersion(new Version("9.6.0"));
-							setSDKVersion(new Version("6.0.0"));
+							if (sbsv1BuildInfo != null) {
+								sbsv1BuildInfo.setSDKVersion(this, new Version("6.0.0"));
+							}
 							break;
 						}
 						else if (versionTokens[2].lastIndexOf("v") > 0){
 							int index = versionTokens[2].lastIndexOf("v");
 							String osVersionString = versionTokens[2].substring(index+1, versionTokens[2].length());
 							
-							if (osVersionString.endsWith(EKA1_A_BRANCH_IDENTIFIER) || 
-							    osVersionString.endsWith(EKA2_B_BRANCH_IDENTIFIER) ||
-							    osVersionString.endsWith(EKA1_S_BRANCH_IDENTIFIER)){
+							if (osVersionString.endsWith(ISBSv1BuildInfo.EKA1_A_BRANCH_IDENTIFIER) || 
+							    osVersionString.endsWith(ISBSv1BuildInfo.EKA2_B_BRANCH_IDENTIFIER) ||
+							    osVersionString.endsWith(ISBSv1BuildInfo.EKA1_S_BRANCH_IDENTIFIER)){
 								
 								String branch = osVersionString.substring(osVersionString.length()-1, osVersionString.length());
-								if (branch != null){
-									setOSSDKBranch(branch);
+								if (sbsv1BuildInfo != null && branch != null){
+									sbsv1BuildInfo.setOSSDKBranch(this, branch);
 								}
 							}
 							
@@ -1203,92 +710,34 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		deviceEntry.setEpocroot(epocRoot);	
 	}
 
-	public void setName(String name) {
-		deviceEntry.setName(name);
-	}
-
-	public void setUniqueID(String id) {
+	public void setUniqueId(String id) {
 		deviceEntry.setId(id);
 	}
 	
-	@Deprecated
-	public boolean getRequiresRestart() {
-		return false;
-	}
-
-	public String getPublisherName() {
-		return publisherName;
-	}
-	
-	public boolean isEKA1() {
-		return !isEKA2() && getOSVersion().getMajor() < 9 && getOSVersion().getMajor() >= 6;
-	}
-	
-	public boolean isEKA2() {
+	private boolean isEKA2() {
 		if (getOSVersion().getMajor() >= 9) {
 			return true;
 		}
-		if (getOSVersion().getMajor() == 8 
-				&& getSDKOSBranch().equals(ISymbianSDK.EKA2_B_BRANCH_IDENTIFIER)){
-			return true;
-		}
 		return false;
-	}
-	
-	public boolean isS60() {
-		return getFamily().equals(ISymbianSDK.S60_FAMILY_ID)
-			|| getFamily().equals(ISymbianSDK.SERIES60_FAMILY_ID);
-	}
-
-	public void setSupportsWINSCW_UREL(boolean isSupported) {
-		supportsWINSCW_UREL = isSupported;
-	}
-
-	public boolean supportsWINSCW_UREL() {
-		return supportsWINSCW_UREL;
 	}
 	
 	/**
 	 * Check to see whether or not we should support WINSCW UREL
 	 */
+	@SuppressWarnings("unchecked")
 	private void scanForWINSCW_UREL(){
-		supportsWINSCW_UREL = false;
 		String winscwURELFullPathStr = getEPOCROOT();
 		winscwURELFullPathStr += WINSCW_UREL_DIR;
 		IPath winscwURELPath = new Path(winscwURELFullPathStr);
 		if (winscwURELPath != null && winscwURELPath.toFile().exists()){
 			if (winscwURELPath.append("epoc.exe").toFile().exists()){
 				if (winscwURELPath.append("euser.dll").toFile().exists()){
-					supportsWINSCW_UREL = true;
+					sdkFeatures.add(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED);
 				}
 			}
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISymbianSDK#getBSFCatalog()
-	 */
-	public IBSFCatalog getBSFCatalog() {
-		synchronized (this) {
-			if (bsfCatalog == null) {
-				bsfCatalog = BSFCatalogFactory.createCatalog(this);
-			}
-		}
-		return bsfCatalog;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISymbianSDK#getBSFCatalog()
-	 */
-	public ISBVCatalog getSBVCatalog() {
-		synchronized (this) {
-			if (sbvCatalog == null) {
-				sbvCatalog = SBVCatalogFactory.createCatalog(this);
-			}
-		}
-		return sbvCatalog;
-	}
-
 	public void setPreviouslyScanned(boolean wasScanned) {
 		this.wasScanned = wasScanned;
 	}
@@ -1296,5 +745,39 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	public boolean isPreviouslyScanned() {
 		return wasScanned;
 	}
-	
+
+	public ISDKBuildInfo getBuildInfo(String builderId) {
+		ISDKBuildInfo buildInfo = buildInfoMap.get(builderId);
+		return buildInfo;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Set getSupportedFeatures() {
+		return sdkFeatures;
+	}
+
+	public DeviceType getDeviceEntry() {
+		return deviceEntry;
+	}
+
+	public void setBuildInfo(ISDKBuildInfo buildInfo, String builderId) {
+		buildInfoMap.put(builderId, buildInfo);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void setSupportFeatures() {
+		scanForWINSCW_UREL();
+		if (isEKA2()) {
+			sdkFeatures.add(ISymbianSDKFeatures.IS_EKA2);
+		}
+		else {
+			sdkFeatures.add(ISymbianSDKFeatures.IS_EKA1);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addSupportedFeature(Object feature) {
+		sdkFeatures.add(feature);
+	}
+
 }

@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.template.engine.ITemplate;
@@ -49,8 +51,9 @@ public class TemplateUtils {
 	 * versionRange is a minVersion and maxVersion delimited by - 
 	 */
 	public static boolean sdkMatchesTemplate(ISymbianSDK symbianSDK, ITemplate template) {
-		Version sdkVersion = symbianSDK.getSDKVersion();
-		String family = symbianSDK.getFamily(); // S60, symbian... 3rd segment of devices.xml 'name' attrib
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)symbianSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		Version sdkVersion = sbsv1BuildInfo.getSDKVersion(symbianSDK);
+		String family = sbsv1BuildInfo.getFamily(symbianSDK); // S60, symbian... 3rd segment of devices.xml 'name' attrib
 		return sdkMatchesTemplate(sdkVersion, family, template);
 	}
 	
@@ -59,10 +62,10 @@ public class TemplateUtils {
 		if (f1.equalsIgnoreCase(f2))
 			return true;
 		
-		if ((f1.equalsIgnoreCase(ISymbianSDK.S60_FAMILY_ID) &&
-				f2.equalsIgnoreCase(ISymbianSDK.SERIES60_FAMILY_ID)) ||
-				(f2.equalsIgnoreCase(ISymbianSDK.S60_FAMILY_ID) &&
-						f1.equalsIgnoreCase(ISymbianSDK.SERIES60_FAMILY_ID)))
+		if ((f1.equalsIgnoreCase(ISBSv1BuildInfo.S60_FAMILY_ID) &&
+				f2.equalsIgnoreCase(ISBSv1BuildInfo.SERIES60_FAMILY_ID)) ||
+				(f2.equalsIgnoreCase(ISBSv1BuildInfo.S60_FAMILY_ID) &&
+						f1.equalsIgnoreCase(ISBSv1BuildInfo.SERIES60_FAMILY_ID)))
 			return true;
 		
 		return false;
