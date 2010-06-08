@@ -60,8 +60,11 @@ import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
@@ -259,7 +262,14 @@ public class SettingsData {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
 
 					if (isEmulatorRequired(buildConfig, mainExeHostPath, mainExeWorkspaceRelativeMMPPath)) {
-						IPath releaseRoot = buildConfig.getSDK().getReleaseRoot();
+						ISymbianSDK sdk = buildConfig.getSDK();
+						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+						IPath releaseRoot;
+						if (sbsv1BuildInfo != null) {
+							releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
+						} else {
+							releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
+						}
 						String winscwudeb = releaseRoot.toOSString() + File.separator + "WINSCW" + File.separator + buildConfig.getTargetString(); //$NON-NLS-1$ //$NON-NLS-2$
 
 						String emulatorPath = winscwudeb + File.separator + "epoc.exe"; //$NON-NLS-1$
@@ -480,7 +490,7 @@ public class SettingsData {
 				ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 				
 				String defaultTargetPath = "C:\\"; //$NON-NLS-1$
-				if (buildConfig.getSDK().isEKA2()) {
+				if (buildConfig.getSDK().getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 					// C:\\sys\bin for eka2
 					defaultTargetPath += "sys\\bin\\"; //$NON-NLS-1$
 				}
@@ -788,10 +798,13 @@ public class SettingsData {
 		for (ISymbianSDK currSDK : sdkList){
 			if (new Path(currSDK.getEPOCROOT()).isPrefixOf(mainExeHostPath))
 			{
-			       // Apparently this only works correctly with the S60 emulator.
-		        if (!currSDK.isS60() &&
-		        		!currSDK.getFamily().equalsIgnoreCase(ISymbianSDK.TECHVIEW_FAMILY_ID))
-		        	return true;
+			    // Apparently this only works correctly with the S60 emulator.
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				if (sbsv1BuildInfo != null) {
+			        if (!sbsv1BuildInfo.isS60(currSDK) &&
+			        	!sbsv1BuildInfo.getFamily(currSDK).equalsIgnoreCase(ISBSv1BuildInfo.TECHVIEW_FAMILY_ID))
+			        	return true;
+				}
 		        
 				if ("exe".equalsIgnoreCase(mainExeHostPath.getFileExtension())) { //$NON-NLS-1$
 					Version version = currSDK.getOSVersion();
