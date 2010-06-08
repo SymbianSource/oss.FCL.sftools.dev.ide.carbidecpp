@@ -198,6 +198,44 @@ public class SBSv2Utils {
 	}
 
 	/**
+	 * Gets the list of all SBSv2 build contexts for the given SDK
+	 * @param sdk the SDK to get the build contexts for
+	 * @return the list of SBSv2 build contexts.  the list may be empty
+	 */
+	public static List<ISymbianBuildContext> getAllSBSv2BuildContexts(ISymbianSDK sdk) {
+		List<ISymbianBuildContext> contexts = new ArrayList<ISymbianBuildContext>();
+		Iterator it = getUnfilteredSBSv2BuildConfigurations(false).entrySet().iterator();
+		while (it.hasNext()){
+			
+			Map.Entry buildConfigPair = (Map.Entry)it.next();
+			String alias = (String)buildConfigPair.getKey(); // The sbsv2 alias 
+			String basePlat = (String)buildConfigPair.getValue();
+			// only support configs that fall into something we can make a build context
+			// out of.  They must have a platform and a target.
+			String targetString = null;
+			String[] configTokens = alias.split("_"); // $//$NON-NLS-N$
+			// We presume that aliases have the second token as the "target". 
+	    	if (configTokens[1].toLowerCase().endsWith("deb")) { //$NON-NLS-1$ //$NON-NLS-2$
+	    		targetString = ISymbianBuildContext.DEBUG_TARGET;
+	    	} else if (configTokens[1].toLowerCase().endsWith("rel")) { //$NON-NLS-1$ //$NON-NLS-2$
+	    		targetString = ISymbianBuildContext.RELEASE_TARGET;
+	    	}
+	    	
+	    	if (targetString != null) {
+	    		BuildContextSBSv2 context = null;
+	    		// TODO: Display String not properly set
+	    		String configID = ISBSv2BuildContext.BUILDER_ID + "." + alias + "." + sdk.getUniqueId();
+	    		String displayString = alias + " [" + sdk.getUniqueId() + "]";
+	    		context = new BuildContextSBSv2(sdk, basePlat, targetString, alias, displayString, configID);
+	    		if (context != null) 
+	    			contexts.add(context);
+	    	}
+		}
+		
+		return sortContexts(contexts);
+	}
+
+	/**
 	 * Gets the list of SBSv2 build contexts for the given SDK
 	 * @param sdk the SDK to get the build contexts for
 	 * @return the list of SBSv2 build contexts.  the list may be empty

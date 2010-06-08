@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
  com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: com.nokia.carbide.cpp.internal.api.sdk,
+Export-Package: com.nokia.carbide.cpp.internal.api.sdk;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
  com.nokia.carbide.cpp.internal.sdk.core.gen.Devices;x-friends:="com.nokia.carbide.cpp.sdk.core.test,com.nokia.carbide.cpp.sdk.ui",
  com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.impl;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
  com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.util;x-friends:="com.nokia.carbide.cpp.sdk.core.test",

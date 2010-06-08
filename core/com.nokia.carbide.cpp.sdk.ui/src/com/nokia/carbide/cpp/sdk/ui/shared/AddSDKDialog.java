@@ -184,7 +184,7 @@ public class AddSDKDialog extends TrayDialog {
 		String vendorName = ISBSv1BuildInfo.S60_SDK_NAME;
 		Version osVersion = new Version("9.4.0"); //$NON-NLS-1$
 		String osBranch = ""; //$NON-NLS-1$
-		Version sdkVersion = new Version("0.0"); //$NON-NLS-1$
+		Version sdkVersion = new Version("5.0"); //$NON-NLS-1$
 		ISymbianSDK sdk = SymbianSDKFactory.createInstance(deviceIDtext.getText(), 
 														   epocRootText.getText(), 
 														   vendorName, 

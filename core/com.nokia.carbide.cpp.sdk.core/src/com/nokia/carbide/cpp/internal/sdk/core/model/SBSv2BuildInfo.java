@@ -16,25 +16,18 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
-import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
-import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 /**
@@ -46,8 +39,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	private File prefixFile;
 	private IBSFCatalog bsfCatalog;
 	private ISBVCatalog sbvCatalog;
-	private List<ISymbianBuildContext> binaryVariantContextList = new ArrayList<ISymbianBuildContext>(0);
-	private List<ISymbianBuildContext> bsfContextList = new ArrayList<ISymbianBuildContext>(0);
 
 	@Override
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations(ISymbianSDK sdk) {
@@ -64,43 +55,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	@Override
 	public List<ISymbianBuildContext> getAllBuildConfigurations(ISymbianSDK sdk) {
-		Set sdkFeatures = sdk.getSupportedFeatures();
-		List<ISymbianBuildContext> buildTargets = new ArrayList<ISymbianBuildContext>();
-		
-		// note that this gets variant platforms but not regular BSF's
-		List <String>buildPlats =  getAvailablePlatforms(sdk);
-		
-		if (buildPlats.size() == 0){
-			return Collections.emptyList();
-		}
-		// TODO: Hard code build context hack
-		buildTargets.add(new BuildContextSBSv2(sdk, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET, ""));
-		
-		if (sdkFeatures.contains(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED)){
-			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv2(sdk, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET, ""));
-		}
-		
-		for (String currPlat : buildPlats){
-			if (currPlat.equals(ISymbianBuildContext.EMULATOR_PLATFORM) ) { 
-				// emulation targets already determined (some SDKs don't get WISNCW UREL
-				continue;
-			}
-			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv2(sdk, currPlat, ISymbianBuildContext.DEBUG_TARGET, ""));
-			
-			// everything gets release except for WINSCW
-			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv2(sdk, currPlat, ISymbianBuildContext.RELEASE_TARGET, ""));
-		}
-		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (sdkMgr.getBSFScannerEnabled()){
-			buildTargets.addAll(getBSFPlatformContexts(sdk));
-			buildTargets.addAll(getBinaryVariationPlatformContexts(sdk)); // Symbian Binary Variation (.var)
-		}
-		
-		return buildTargets;
+		return SBSv2Utils.getAllSBSv2BuildContexts(sdk);
 	}
 
 	public List<String> getPlatformMacros(ISymbianSDK sdk, String platform) {
@@ -193,47 +148,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	public void setPrefixFile(ISymbianSDK sdk, IPath prefixFile) {
 		this.prefixFile = new File(prefixFile.toOSString());
-	}
-
-	protected List<ISymbianBuildContext> getBinaryVariationPlatformContexts(ISymbianSDK sdk) {
-		synchronized (binaryVariantContextList) {
-			if (!binaryVariantContextList.isEmpty()){
-				return binaryVariantContextList;
-			}
-			
-			ISBVCatalog catalog = getSBVCatalog(sdk);
-			for (ISBVPlatform sbvPlatform : catalog.getPlatforms()) {
-				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
-				// Only add the build platform if it's not virtual.
-				if (!sbvPlatform.isVirtual()){
-					// TODO: Hard code build context hack
-					binaryVariantContextList.add(new BuildContextSBSv2(sdk, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET, ""));
-					// TODO: Hard code build context hack
-					binaryVariantContextList.add(new BuildContextSBSv2(sdk, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET, ""));
-				}
-			}
-		}
-		return binaryVariantContextList;
-	}
-
-	protected List<ISymbianBuildContext> getBSFPlatformContexts(ISymbianSDK sdk) {
-		synchronized (bsfContextList) {
-			if (!bsfContextList.isEmpty()){
-				return bsfContextList;
-			}
-			
-			IBSFCatalog catalog = getBSFCatalog(sdk);
-			for (IBSFPlatform platform : catalog.getPlatforms()) {
-				// only return non-variant style BSF's.  see boog #4533 for details.
-				if (!platform.isVariant()) {
-					// TODO: Hard code build context hack
-					bsfContextList.add(new BuildContextSBSv2(sdk, platform.getName().toUpperCase(), ISymbianBuildContext.DEBUG_TARGET, ""));
-					// TODO: Hard code build context hack
-					bsfContextList.add(new BuildContextSBSv2(sdk, platform.getName().toUpperCase(), ISymbianBuildContext.RELEASE_TARGET, ""));
-				}
-			}
-		}
-		return bsfContextList;
 	}
 
 }
