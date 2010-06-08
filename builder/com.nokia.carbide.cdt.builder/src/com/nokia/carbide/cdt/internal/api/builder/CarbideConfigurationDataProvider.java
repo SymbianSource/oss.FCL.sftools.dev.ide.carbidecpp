@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.internal.ide.handlers.BuildAllProjectsHandler;
 
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
@@ -171,9 +172,9 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			return null;
 		}
 		String configID = des.getConfiguration().getId();
-		String buidAlias = "";
-		String platform = "";
-		String target = "";
+		String buidAlias = null;
+		String platform = null;
+		String target = null;
 		String displayString = null;
 		String variant = "";
 		String sdkID = null;
@@ -181,6 +182,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			for (ICStorageElement se : rootStorage.getChildren()) {
 				if (se.getName().equals(
 						CarbideBuildConfiguration.SBSV2_DATA_ID)) {
+					
 					String value = se.getAttribute(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
 					if (value != null) {
 						platform = value;
@@ -206,8 +208,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 						displayString = value;
 					}
 					
-					value = se
-					.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
+					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
 					if (value != null) {
 						sdkID = value;
 					}
@@ -218,23 +219,28 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		}
 		
 		ISymbianSDK sdk = null;
-		if (sdkID == null){
+		if (!configID.startsWith(ISBSv2BuildContext.BUILDER_ID)){
 			// pre-C3 project, get SDK id from config name
 			if (displayString == null){
 				displayString = configID;
+			} 
+			if (sdkID == null){
+				sdkID = BuildContextSBSv2.getSDKIDFromV1ConfigName(displayString);
 			}
-			sdkID = BuildContextSBSv2.getSDKIDFromConfigName(displayString);
+			if (platform == null){
+				platform = BuildContextSBSv2.getPlatformFromV1ConfigName(displayString);
+			}
+			if (target == null){
+				target = BuildContextSBSv2.getTargetFromV1ConfigName(displayString);
+			}
+			if (buidAlias == null){
+				buidAlias = BuildContextSBSv2.getBuildAliasFromV1ConfigName(displayString);
+			}
 		}
 		if (sdkID != null){
 			sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
 			// TODO: NEED TO HANDLE MISSING SDK ID
 			if (sdk != null){
-				
-				if (displayString == null && !configID.startsWith(ISBSv2BuildContext.BUILDER_ID)){
-					displayString = configID; // Old config, used unique 'id' and config name interchangably
-				} else {
-					displayString = displayString;
-				}
 				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
 			}
 		}

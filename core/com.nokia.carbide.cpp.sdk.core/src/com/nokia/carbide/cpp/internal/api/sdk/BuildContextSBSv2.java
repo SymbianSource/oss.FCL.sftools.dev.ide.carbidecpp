@@ -15,6 +15,7 @@ import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.Check;
 
 public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
@@ -55,41 +56,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
 	@Override
 	public String getDisplayString() {
-		
-		
-		// TODO: Still need to decide on how to set display string
-		// and how it's used for legacy SBSv2 configs
-		if (displayString != null){
-			return displayString;
-		}
-		
-		// TODO: else fallback for old configs, we should convert
-		String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
-		String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
-		String DEBUG_DISPLAY_TEXT = "Debug"; //$NON-NLS-1$
-		String RELEASE_DISPLAY_TEXT = "Release"; //$NON-NLS-1$
-		String SPACE_DISPLAY_TEXT = " "; //$NON-NLS-1$
-		String SDK_NOT_INSTALLED = "SDK not installed"; //$NON-NLS-1$
-		String displayString = null;
-		if (displayString == null) {
-			// in the form Emulation Debug (WINSCW) [S60_3rd_MR] or
-			// Phone Release (GCCE) [S60_3rd_MR]
-			if (platform.compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) == 0) {
-				displayString = EMULATOR_DISPLAY_TEXT;
-			} else {
-				displayString = PHONE_DISPLAY_TEXT;
-			}
-			
-			if (target.compareTo(ISymbianBuildContext.DEBUG_TARGET) == 0) {
-				displayString = displayString + SPACE_DISPLAY_TEXT + DEBUG_DISPLAY_TEXT;
-			} else {
-				displayString = displayString + SPACE_DISPLAY_TEXT + RELEASE_DISPLAY_TEXT;
-			}
-			
-			String basePlatform = sbsv2Alias;
-			
-			displayString = displayString + " (" + basePlatform + ") [" + getSDK().getUniqueId() + "]"; //$NON-NLS-1$
-		}
+		Check.checkState(displayString != null);
 		return displayString;
 	}
 
@@ -302,18 +269,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return getCachedData().getSystemIncludePaths();
 	}
 	
-	
-	// Fall-back to get SDK id from old config name
-	public static String getSDKIDFromConfigName(String configName) {
-		int indexBegin = configName.indexOf("[");  //$NON-NLS-1$
-		int indexEnd = configName.indexOf("]");  //$NON-NLS-1$
-		if (indexBegin > 0 && indexEnd > 0){
-			return configName.substring(indexBegin+1, indexEnd);
-		} else {
-			return ""; //$NON-NLS-1$
-		}
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -355,6 +310,44 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 			return false;
 		}
 		return true;
+	}
+
+	public static String getPlatformFromV1ConfigName(String displayString) {
+		String[] tokens = displayString.split(" ");
+		String sdkIdToken = tokens[2];
+		if (sdkIdToken.contains("_")){
+			sdkIdToken = sdkIdToken.substring(1, sdkIdToken.length()-1);
+			String[] aliasTokens = sdkIdToken.split("_");
+			return aliasTokens[0];
+		} else {
+			return sdkIdToken.substring(1, sdkIdToken.length()-1);
+		}
+	}
+
+	public static String getTargetFromV1ConfigName(String displayString) {
+		String[] tokens = displayString.split(" ");
+		if (tokens[1].compareTo("Debug") == 0) {
+			return ISymbianBuildContext.DEBUG_TARGET;
+		} else {
+			return ISymbianBuildContext.RELEASE_TARGET;
+		}
+	}
+
+	public static String getBuildAliasFromV1ConfigName(String displayString) {
+		String target = getTargetFromV1ConfigName(displayString);
+		String platform = getPlatformFromV1ConfigName(displayString);
+		return platform.toLowerCase() + "_" + target.toLowerCase();
+	}
+	
+	// Fall-back to get SDK id from old config name
+	public static String getSDKIDFromV1ConfigName(String configName) {
+		int indexBegin = configName.indexOf("[");  //$NON-NLS-1$
+		int indexEnd = configName.indexOf("]");  //$NON-NLS-1$
+		if (indexBegin > 0 && indexEnd > 0){
+			return configName.substring(indexBegin+1, indexEnd);
+		} else {
+			return ""; //$NON-NLS-1$
+		}
 	}
 
 
