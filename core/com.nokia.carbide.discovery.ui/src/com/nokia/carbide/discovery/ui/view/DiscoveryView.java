@@ -156,8 +156,8 @@ public class DiscoveryView extends ViewPart {
 		refreshAction = new Action() {
 			public void run() {
 				viewer.setSelection(StructuredSelection.EMPTY);
-				viewer.refresh();
 				viewer.updateCatalog();
+				viewer.refresh();
 			}
 		};
 		refreshAction.setText(Messages.DiscoveryView_RefreshLabel);

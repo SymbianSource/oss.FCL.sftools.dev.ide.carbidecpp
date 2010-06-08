@@ -251,10 +251,6 @@ public interface ICarbideSharedImages {
 	 */
 	public static final String IMG_ROM_LOG_16_16 = "ROM_Log.png";										//$NON-NLS-1$
 	/**
-	 * File path: icons/Run_Leavescan.png
-	 */
-	public static final String IMG_LEAVESCAN_16_16 = "Run_Leavescan.png";								//$NON-NLS-1$
-	/**
 	 * File path: icons/Start_Resource_Block.png
 	 */
 	public static final String IMG_START_RESOURCE_BLOCK_16_16 = "Start_Resource_Block.png";			//$NON-NLS-1$

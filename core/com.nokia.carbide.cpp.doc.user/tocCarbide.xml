@@ -64,12 +64,10 @@
       <topic label="Debugger"							href="html/reference/wnd_debugger_prefs.htm" />
       <topic label="CodeScanner"	  					href="PLUGINS_ROOT/com.nokia.carbide.cpp.codescanner/html/pref_codescanner_01.htm" />
       <topic label="Diagnostic Logs"          		href="html/reference/wnd_diagnostic_logs_pref.htm" />
-      <topic label="Leavescan Preferences"    		href="html/reference/leavescan_pref.html" />
       <topic label="Performance Investigator"  		href="PLUGINS_ROOT/com.nokia.carbide.cpp.pi.doc.user/html/tasks/analyser/key_profile_pref.htm" />
       <topic label="Platform Filtering Preferences"	href="html/tasks/sdks/sdk_platform_filter.htm" />
       <topic label="Preprocess"						href="html/reference/wnd_preprocess_prefs.htm" />
       <topic label="SDK Preferences"                  href="html/reference/SDKPreferences.html" />
-      <topic label="UI Designer"          			href="PLUGINS_ROOT/com.nokia.carbide.cpp.uidesigner.doc.user/html/reference/uidesign/ref_ui_designer_prefs.htm" />
       <topic label="Code Styles"						href="html/reference/wnd_pref_code_style.htm" >
         <topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />
         <topic label="Reformatting a Source File"		href="html/tasks/code_style_reformatting_sources.htm" />
