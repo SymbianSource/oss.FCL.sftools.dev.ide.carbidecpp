@@ -478,9 +478,16 @@ public class SDKPreferencePage
 
 	private void createSDKTable() {
 		final Table table = sdkListTableViewer.getTable();
+		int count = table.getItemCount();
+		if (count < 10) {	// min. number of rows
+			count = 10;
+		} else 
+		if (count > 20) {	// max. number of rows
+			count = 20;
+		}
 		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.widthHint = 350;
-		gridData.heightHint = table.getItemHeight() * 10;
+		gridData.heightHint = table.getItemHeight() * count;
 		table.setLayoutData(gridData);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(false);
