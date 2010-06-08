@@ -16,17 +16,19 @@
 */
 package com.nokia.carbide.cpp.sdk.core.test;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
+
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
-
-import org.eclipse.emf.common.util.EList;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
 
 public class SDKCreationTest extends BaseDeviceModifierTest {
 	
@@ -48,21 +50,25 @@ public class SDKCreationTest extends BaseDeviceModifierTest {
 			for (Iterator iter = devices.iterator(); iter.hasNext();) {
 				SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
 				assertNotNull(sdk);
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 				// Test an SDK that exists and we know OS version
 				if (sdk.getUniqueId().equals("UIQ3")){
 					List<String> platMacros = sdk.getPlatformMacros("WINSCW");
 					assertTrue(platMacros != null);
 					assertEquals(3, platMacros.size());
-					assertTrue(sdk.getFilteredBuildConfigurations().size() > 0);
+					if (sbsv1BuildInfo != null) {
+						assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations(sdk).size() > 0);
+					}
 				}
 				// Test an SDK that does not exist. Check for proper null values
 				else if (sdk.getUniqueId().equals("SDK_No_Exist")){
+					if (sbsv1BuildInfo != null) {
+						assertTrue(sbsv1BuildInfo.getSDKVersion(sdk).getMajor() == 0);
+						assertTrue(sbsv1BuildInfo.getAvailablePlatforms(sdk).size() == 0);
+						assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations(sdk).size() == 0);
+					}
 					assertTrue(sdk.getOSVersion().getMajor() == 0);
-					assertTrue(sdk.getSDKVersion().getMajor() == 0);
 					assertTrue(sdk.getPlatformMacros("WINSCW").size() == 0);
-					assertTrue(sdk.getProjectVariantHRHMacros().size() == 0);
-					assertTrue(sdk.getAvailablePlatforms().size() == 0);
-					assertTrue(sdk.getFilteredBuildConfigurations().size() == 0);
 					assertTrue(sdk.getSupportedTargetTypes().size() == 0);
 					File epocRoot = new File(sdk.getEPOCROOT());
 					assertTrue(epocRoot.exists() == false);

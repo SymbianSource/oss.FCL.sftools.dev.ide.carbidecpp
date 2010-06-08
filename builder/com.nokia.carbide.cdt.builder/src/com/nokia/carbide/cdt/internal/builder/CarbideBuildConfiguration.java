@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
@@ -47,11 +48,13 @@ import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
@@ -448,9 +451,13 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 
 	public IPath getTargetOutputDirectory() {
 		String releasePlatform = "";
+		ISymbianSDK sdk = getSDK();
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		if (context instanceof ISBSv1BuildContext){
 			ISBSv1BuildContext v1Context = (ISBSv1BuildContext)context;
-			releasePlatform = getSDK().getBSFCatalog().getReleasePlatform(v1Context.getBasePlatformForVariation());
+			if (sbsv1BuildInfo != null) {
+				releasePlatform = sbsv1BuildInfo.getBSFCatalog(sdk).getReleasePlatform(v1Context.getBasePlatformForVariation());
+			}
 		}
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
 			// Test is this is an SBSv2 build binary variant (changes the output directory)
@@ -459,7 +466,13 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 				releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
 			}
 		}
-		return getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
+		IPath releaseRoot;
+		if (sbsv1BuildInfo != null) {
+			releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
+		} else {
+			releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
+		}
+		return releaseRoot.append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
 	}
  	
 	public boolean getRebuildNeeded() {

@@ -23,6 +23,8 @@ import junit.framework.TestCase;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
@@ -58,9 +60,10 @@ public class SymbianContextTest extends TestCase {
 	 * @param sdk
 	 */
 	private void doTestSDK(ISymbianSDK sdk) {
-		if (sdk.getName().equals("S60_5th_Edition_SDK_v1.0")) {
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		if (sbsv1BuildInfo != null && sbsv1BuildInfo.getName(sdk).equals("S60_5th_Edition_SDK_v1.0")) {
 			// test that we get the SDK version
-			Version sdkVer = sdk.getSDKVersion();
+			Version sdkVer = sbsv1BuildInfo.getSDKVersion(sdk);
 			assertEquals(5,sdkVer.getMajor());
 			assertEquals(0,sdkVer.getMinor());
 			
@@ -72,13 +75,14 @@ public class SymbianContextTest extends TestCase {
 		
 		BuildContextSBSv1 context = new BuildContextSBSv1(sdk, "WINSCW", "UDEB");
 		ISymbianSDK contextSDK = context.getSDK();
+		sbsv1BuildInfo = (ISBSv1BuildInfo)contextSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		
 		assertEquals(sdk, contextSDK);
 		
 		// test that we can get the macros for valid SDKs 
 		// (if the default of 0.0, then we never fetch macros)
-		if (sdk.getOSVersion().compareTo(new Version(0, 0, 0)) > 0) {
-			List<String> platMacros = contextSDK.getPlatformMacros("WINSCW");
+		if (sbsv1BuildInfo != null && sdk.getOSVersion().compareTo(new Version(0, 0, 0)) > 0) {
+			List<String> platMacros = sbsv1BuildInfo.getPlatformMacros(contextSDK, "WINSCW");
 			if (platMacros.size() == 0)
 				fail("WINSCW platform macros should be > 0");
 		}

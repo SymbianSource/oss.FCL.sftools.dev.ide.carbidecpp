@@ -40,6 +40,7 @@ import org.osgi.framework.Version;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.codescanner.CSPlugin;
 import com.nokia.carbide.cpp.internal.codescanner.Messages;
 import com.nokia.carbide.cpp.internal.codescanner.config.CSConfigSettings;
@@ -68,6 +69,7 @@ import com.nokia.carbide.cpp.internal.codescanner.gen.Kbdata.ParameterType;
 import com.nokia.carbide.cpp.internal.codescanner.gen.Kbdata.SolutionType;
 import com.nokia.carbide.cpp.internal.codescanner.gen.Kbdata.SymptomType;
 import com.nokia.carbide.cpp.internal.codescanner.xml.CSKbdataXMLLoader;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
@@ -393,8 +395,11 @@ public class CSKbManager {
 			for (Iterator<ICarbideBuildConfiguration> iterator = buildConfigList.iterator(); iterator.hasNext();) {
 				ICarbideBuildConfiguration buildConfig = iterator.next();
 				ISymbianSDK sdk = buildConfig.getSDK();
-				Version version = sdk.getSDKVersion();
-				sdkVersions.add(version);
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				if (sbsv1BuildInfo != null) {
+					Version version = sbsv1BuildInfo.getSDKVersion(sdk);
+					sdkVersions.add(version);
+				}
 			}
 		}
 		

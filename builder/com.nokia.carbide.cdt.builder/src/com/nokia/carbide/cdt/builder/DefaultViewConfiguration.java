@@ -20,8 +20,12 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.IViewConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.IViewParserConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
 import org.eclipse.core.resources.IProject;
@@ -199,23 +203,32 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 	public Collection<IDefine> getMacros() {
 		List<IDefine> macros = new ArrayList<IDefine>();
 		if (context != null) {
-			
+			ISymbianSDK sdk = context.getSDK();
+
 			if (context instanceof ISBSv2BuildContext){
 				macros.add(DefineFactory.createDefine("SBSV2", null));
+				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+				if (sbsv2BuildInfo != null) {
+					for (String platMacro : sbsv2BuildInfo.getPlatformMacros(sdk, context.getPlatformString())) {
+						macros.add(DefineFactory.createDefine(platMacro.trim(), platMacro.trim()));
+					}
+				}
+			} else {
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				if (sbsv1BuildInfo != null) {
+					for (String platMacro : sbsv1BuildInfo.getPlatformMacros(sdk, context.getPlatformString())) {
+						macros.add(DefineFactory.createDefine(platMacro.trim(), platMacro.trim()));
+					}
+					
+					for (String vendorMacro : sbsv1BuildInfo.getVendorSDKMacros(sdk)){
+						macros.add(DefineFactory.createDefine(vendorMacro.trim(), vendorMacro.trim()));
+					}
+				}
 			}
 			
 			for (IDefine macro : context.getVariantHRHDefines()) {
 				macros.add(macro);
 			}
-			
-			for (String platMacro : context.getSDK().getPlatformMacros(context.getPlatformString())) {
-				macros.add(DefineFactory.createDefine(platMacro.trim(), platMacro.trim()));
-			}
-			
-			for (String vendorMacro : context.getSDK().getVendorSDKMacros()){
-				macros.add(DefineFactory.createDefine(vendorMacro.trim(), vendorMacro.trim()));
-			}
-			
 		}
 		macros.addAll(extraMacros);
 		

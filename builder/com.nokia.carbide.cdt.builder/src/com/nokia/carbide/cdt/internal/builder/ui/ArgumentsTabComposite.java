@@ -30,6 +30,7 @@ import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
 /**
  * Arguments tab for the Carbide Build Configurations page
@@ -211,7 +212,7 @@ public class ArgumentsTabComposite extends Composite {
 		abldCleanEdit.setText(""); //$NON-NLS-1$
 		abldFreezeEdit.setText(""); //$NON-NLS-1$
 		
-		if (sdk.isEKA2()) {
+		if (sdk.getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 			abldFreezeEdit.setText("-r"); //$NON-NLS-1$
 		}
 	}

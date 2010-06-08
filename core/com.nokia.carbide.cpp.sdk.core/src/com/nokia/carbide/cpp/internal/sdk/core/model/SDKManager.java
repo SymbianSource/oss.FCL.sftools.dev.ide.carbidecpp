@@ -38,11 +38,13 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
@@ -144,7 +146,10 @@ public class SDKManager extends AbstractSDKManager {
 			{
 				for (ISymbianSDK currSDK : sdkList){
 					if (!currSDK.getUniqueId().equals(sdk.getUniqueId())){
-						currSDK.setIsDefaultSDK(false);  // set all to false, except the input one
+						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+						if (sbsv1BuildInfo != null) {
+							sbsv1BuildInfo.setIsDefaultSDK(currSDK, false);  // set all to false, except the input one
+						}
 					}
 				}
 			}
@@ -408,9 +413,13 @@ public class SDKManager extends AbstractSDKManager {
 							needsRescan = true;
 							break;
 						}
-						if (!sdk.getName().equalsIgnoreCase(currSDK.getName())){
-							needsRescan = true;
-							break;
+						ISBSv1BuildInfo sbsv1BuildInfo1 = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+						ISBSv1BuildInfo sbsv1BuildInfo2 = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+						if (sbsv1BuildInfo1 != null) {
+							if (!sbsv1BuildInfo1.getName(sdk).equalsIgnoreCase(sbsv1BuildInfo2.getName(currSDK))){
+								needsRescan = true;
+								break;
+							}
 						}
 					}
 				}
@@ -455,7 +464,7 @@ public class SDKManager extends AbstractSDKManager {
 			deviceType.setUserdeletetable("false");
 			ISymbianSDK sdk = new SymbianSDK(deviceType);
 			if (sdk.getOSVersion().toString().equals("0.0.0")) {
-				sdk.setOSVersion(new Version("9.5"));
+				((SymbianSDK)sdk).setOSVersion(new Version("9.5"));
 			}
 
 			if (!isSupportedSDK(sdk)) {

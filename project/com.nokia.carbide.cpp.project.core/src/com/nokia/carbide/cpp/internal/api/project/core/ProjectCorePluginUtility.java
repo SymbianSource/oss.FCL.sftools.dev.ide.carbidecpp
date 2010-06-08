@@ -30,6 +30,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
 public class ProjectCorePluginUtility {
 
@@ -94,7 +95,7 @@ public class ProjectCorePluginUtility {
 					if (pkgFilePath != null) {
 						SISBuilderInfo2 sisInfo = new SISBuilderInfo2(projDes.getProject());
 						sisInfo.setPKGFile(pkgFilePath);
-						if (config.getSDK().isEKA2()) {
+						if (config.getSDK().getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 							// set to self signing
 							sisInfo.setSigningType(ISISBuilderInfo.SELF_SIGN);
 						}
