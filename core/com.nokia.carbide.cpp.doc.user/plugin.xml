@@ -171,6 +171,10 @@
        <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
        		plugin="com.nokia.carbide.cpp.news.reader" />
            
+        <!-- Install Extensions HELP  (added 3.0.0) -->
+       <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
+       		plugin="com.nokia.carbide.discovery.ui" />
+           
 		<!-- ====================================================  -->
 		<!-- CARBIDE DEBUGGER DIALOGS AND PREFS                    -->
 		<!-- XML: carbide_debug_dialogs_help.xml                   -->
