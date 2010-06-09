@@ -101,7 +101,7 @@ td, th	{
 	}
 	
 th	{
-	background-color: #ffd62c;
+	background-color: #E6E6E6;
 	}
 
 div.ol.p	{
@@ -120,7 +120,7 @@ div ol > p, div ul > p, div li > p {
 	
 div h5, div h4	{
 	padding:5px 0px 5px 12px;
-	background-color: #FFCC00;
+	background-color: #E6E6E6;
 	font-weight:bold;
 	color: #000000;
 	}

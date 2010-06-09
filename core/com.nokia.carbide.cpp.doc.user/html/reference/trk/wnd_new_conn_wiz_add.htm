@@ -19,7 +19,7 @@
 </ul>
 <h3><strong><a name="CONN_EDIT" id="INSTALL3"></a></strong>Edit connection name and type</h3>
 <p>Use the <b>Edit connection name and type</b> page to assign a name and connection type to the new connection setup.</p>
-<p align="center"><img src="../images/wnd_new_connection_wizard_01.png" width="456" height="554"></p>
+<p align="center"><img src="../images/wnd_new_connection_wizard_01.png" width="464" height="560"></p>
 <p class="figure">Figure 1 - New Connection wizard Edit connection name and type page</p>
 <p>Table 1. Edit connection name and type page - options</p>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -28,16 +28,16 @@
     <th width="59%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><strong>Connetion Name</strong></td>
+      <td><strong>Connection Type</strong></td>
+      <td>Select the type of connection this setup will use.</td>
+  </tr>
+  <tr>
+    <td><strong>Connection Name</strong></td>
     <td><p>Enter a name for the connection.</p>    </td>
   </tr>
   <tr>
-    <td><strong>Conection Type</strong></td>
-    <td>Select the type of connection this setup will use.</td>
-  </tr>
-  <tr>
-    <td><strong>Supported Services</strong></td>
-    <td><p>Shows a list of services supported by the connection type chosen.</p>    </td>
+    <td><strong>Connection Settings</strong></td>
+    <td><p>Select the connection port to use for this connection setting.</p>    </td>
   </tr>
 </table>
 <h3><strong><a name="CONN_SET" id="INSTALL2"></a></strong>Set Connection Settings pane</h3>
@@ -47,7 +47,7 @@
   <li>Allow easy serial port selection when connecting to a device </li>
   <li>Verify that you have the latest remote agent installed on a device</li>
 </ul>
-<p align="center"><img src="../images/wnd_new_connection_wizard_02.png" width="456" height="554"></p>
+<p align="center"><img src="../images/wnd_new_connection_wizard_02.png" width="464" height="560"></p>
 <p class="figure">Figure 2 - New Connection wizard Serial Connection Settings page</p>
 <p>Table 2. Serial Connection Setting page - Set Connection Settings tab</p>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -56,24 +56,16 @@
     <th width="59%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><strong>Serial Port </strong></td>
-    <td>A dropdown list of serial ports with known identifiers for selecting the communication port used by the PC to communicate with the device. A named COM port (<span class="code">COM4 - BthModem0</span>) indicates an active port. Unnamed port numbers have usually not been opened and assigned by the PC.</td>
-  </tr>
-  <tr>
-    <td><b>Baud Rate</b></td>
-    <td>a dropdown list of baud rates common to serial connections.</td>
-  </tr>
-  <tr>
-    <td><strong>Device OS </strong></td>
-    <td><p>A dropdown list of device OSes that are supported by the remote  agent  software. Select the OS used by the device before running a check. </p></td>
+    <td><strong>Device OS (used to determine installer version)</strong></td>
+    <td>Select the OS used on the device.</td>
   </tr>
   <tr>
     <td><b>Select a service to test</b></td>
     <td>Click to select a listed service for testing.</td>
   </tr>
   <tr>
-    <td><strong>Test Service Status</strong></td>
-    <td><p>Click <strong>Test Service Status</strong> to query the remote agent software on the device for its version number. It then compares the version number found with the latest version available for Carbide. A progress bar will appear should the Check TRK version operation requires more than a few seconds.</p>
+    <td><strong>Initiate Service Testing</strong></td>
+    <td><p>Click <strong>Initiate Service Testing</strong> to query the remote agent software on the device for its version number. It then compares the version number found with the latest version available for Carbide. A progress bar will appear should the Check TRK version operation requires more than a few seconds.</p>
         <p class="note"><strong>NOTE</strong> The PC must have an internet connection to perform a remote agent version check.</p>
       <p>Once the comparison is complete the Status text is updated with the result and further instructions as required.</p>
       <p align="center"><img src="../images/wnd_on_device_setup_install_new_version.png" width="466" height="67"></p>
@@ -87,7 +79,7 @@
 </table>
 <h3><strong><a name="INSTALL" id="INSTALL"></a>Install Remote Agents</strong> pane</h3>
 <p>Use  the <strong>Install Remote Agents</strong> pane to select the latest remote agent version  to download and install to the device. </p>
-<p align="center"><img src="../images/wnd_new_connection_wizard_03.png" width="456" height="554"></p>
+<p align="center"><img src="../images/wnd_new_connection_wizard_03.png" width="464" height="560"></p>
 <p class="figure">Figure 2 - New Connection wizard Serial Connection Settings page</p>
 <p>Table 3. Serial Connection Setting page - Install Remote Agents tab</p>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -96,8 +88,8 @@
     <th width="59%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><strong>Install remote agents</strong></td>
-    <td><p>A list of the most current versions of remote agents sorted by SDK and version. Select the version most compatable with the device. For example, a device running S60 3.1.0 needs a version of the TRK software compiled for that SDK, which in the image above is Application TRK 2.8.7. </p>
+    <td><strong>Install Remote Agents</strong></td>
+    <td><p>A list of the most current versions of remote agents sorted by SDK and version. Select the version most compatable with the device. For example, a device running S60 5.x needs a version of the TRK software compiled for that SDK, which in the image above is Application TRK 3.2.6. </p>
         <p>Additional information about the selected entry is displayed to the right to help you choose the correct version of TRK for the target device. </p></td>
   </tr>
   <tr>
@@ -113,7 +105,7 @@
 <p>&nbsp;</p>
 <h5>Related references</h5>
 <ul>
-  <li><a href="wnd_on_device_setup.htm">On-Device Setup</a></li>
+  <li><a href="wnd_on_device_setup.htm">On-Device Connections</a></li>
   <li><a href="wnd_new_conn_install_tab.htm">Install latest TRK</a> </li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
