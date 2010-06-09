@@ -448,7 +448,19 @@ public class SDKPreferencePage
 		sdkListTableViewer.setContentProvider(new ArrayContentProvider());
 		sdkList = sdkMgr.getSDKList();
 		sdkListTableViewer.setInput(sdkList.toArray());
-		sdkListTableViewer.getTable().setToolTipText(Messages.getString("SDKPreferencePage.List_of_Available_SDKs_ToolTip")); //$NON-NLS-1$
+		Table table = sdkListTableViewer.getTable();
+		int count = table.getItemCount();
+		if (count < 10) {	// min. number of rows
+			count = 10;
+		} else 
+		if (count > 20) {	// max. number of rows
+			count = 20;
+		}
+		table.setToolTipText(Messages.getString("SDKPreferencePage.List_of_Available_SDKs_ToolTip")); //$NON-NLS-1$
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gridData.widthHint = 350;
+		gridData.heightHint = table.getItemHeight() * (count + 2);
+		table.setLayoutData(gridData);
 		setCheckedElements();
 		addSDKTableViewerListeners();
 		if (sdkList == null || sdkList.size() == 0){
@@ -477,18 +489,7 @@ public class SDKPreferencePage
 	}
 
 	private void createSDKTable() {
-		final Table table = sdkListTableViewer.getTable();
-		int count = table.getItemCount();
-		if (count < 10) {	// min. number of rows
-			count = 10;
-		} else 
-		if (count > 20) {	// max. number of rows
-			count = 20;
-		}
-		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		gridData.widthHint = 350;
-		gridData.heightHint = table.getItemHeight() * count;
-		table.setLayoutData(gridData);
+		Table table = sdkListTableViewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(false);
 
