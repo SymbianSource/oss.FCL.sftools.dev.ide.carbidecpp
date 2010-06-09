@@ -7,19 +7,18 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
@@ -27,12 +26,15 @@ import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.ui.TextAndDialogCellEditor;
+import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 public class SBSv2ConfigManager extends Composite {
 
 	private CheckboxTableViewer sbsConfigTableViewer;
 	private List<ISBSv2BuildContext> sbsContexts;
 	List<String> globalBuildAliasList = new ArrayList<String>();
+	List<String> globalProductList = new ArrayList<String>();
 	List<ISBSv2BuildContext> sbsBuildContexts = new ArrayList<ISBSv2BuildContext>();
 	
 	private class SBSv2BuildContextLabelProvider extends LabelProvider implements ITableLabelProvider {
@@ -41,14 +43,14 @@ public class SBSv2ConfigManager extends Composite {
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
-			ISBSv2BuildContext sdk = (ISBSv2BuildContext) element;
+			ISBSv2BuildContext buildContext = (ISBSv2BuildContext) element;
 			switch (columnIndex) {
 			case 1:
-				return sdk.getSBSv2Alias();
+				return buildContext.getSBSv2Alias();
 			case 2:
-				return sdk.getBuildVariationName();
+				return buildContext.getBuildVariationName();
 			case 3:
-				return sdk.getDisplayString();
+				return buildContext.getDisplayString();
 			default:
 				return "";
 			}
@@ -56,11 +58,11 @@ public class SBSv2ConfigManager extends Composite {
 	}
 	
 	private class BuildAliasEditingSupport extends EditingSupport {
-		private BuildAliasComboEditor editor;
+		private BuildAliasCellEditor editor;
 
 		public BuildAliasEditingSupport(ColumnViewer viewer) {
 			super(viewer);
-			editor = new BuildAliasComboEditor((Composite) viewer.getControl());
+			editor = new BuildAliasCellEditor((Composite) viewer.getControl());
 		}
 
 		@Override
@@ -89,43 +91,58 @@ public class SBSv2ConfigManager extends Composite {
 			
 			ISBSv2BuildContext context = (ISBSv2BuildContext) element;
 			
-			
 			// TODO: Use real data. Here we can find an existing build context that works, or create a new one if a variant was applied
 			// We would need to run the query here to fill out extra params
-			context = new BuildContextSBSv2(context.getSDK(), "ARMV5", "UDEB", value.toString(), "New Display name", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb." + context.getSDK().getUniqueId());
-			// TODO: Handle edit and store data if alias changes
+			String alias = value.toString();
+			String aliasTokens[] = alias.split("_");
+			String platform = aliasTokens[0].toUpperCase();
+			String target = aliasTokens[1].toUpperCase();
+			String displayName = platform + " " + target;
+			String configID = ISBSv2BuildContext.BUILDER_ID + "." + value.toString() +  "." + context.getSDK().getUniqueId();
+			ISBSv2BuildContext newContext = new BuildContextSBSv2(context.getSDK(), platform, target, alias, displayName, configID);
+
+			if (contextExists(newContext)){
+				return;
+			}
+			
+						// TODO: Handle edit and store data if alias changes
+			sbsBuildContexts.add(newContext);
+			sbsBuildContexts.remove(sbsBuildContexts.indexOf(context));
+			addBuildConfigurationTableItems();
 			getViewer().refresh();
 		}
-	}
 
-	class BuildAliasContentProvider implements IStructuredContentProvider {
-
-		public void dispose() {
+		private boolean contextExists(ISBSv2BuildContext context) {
+			for (ISBSv2BuildContext prefContext : sbsBuildContexts){
+				if (prefContext.equals(context)){
+					return true;
+				}
+			}
+			return false;
 		}
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		}
-
-		public Object[] getElements(Object inputElement) {
-			return globalBuildAliasList.toArray();
-		}	
-		
 	}
 	
-	private class BuildAliasComboEditor extends ComboBoxViewerCellEditor {
+	private class BuildAliasCellEditor extends TextAndDialogCellEditor {
+		private Button button;
 		private Text text;
 
-		public BuildAliasComboEditor(Composite parent) {
+		public BuildAliasCellEditor(Composite parent) {
 			super(parent);
 		}
-
 		
 		@Override
 		protected Control createControl(Composite parent) {
 			Control control = super.createControl(parent);
-			this.setContenProvider(new BuildAliasContentProvider());
-			this.setInput(globalBuildAliasList);
+			button = getButton();
+			button.setText("..."); //$NON-NLS-1$
 			return control;
+		}
+
+		@Override
+		protected Object openDialogBox(Control cellEditorWindow) {
+			DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN);
+			BrowseDialogUtils.initializeFrom(dialog, text);
+			return dialog.open();
 		}
 	}
 	
@@ -157,6 +174,30 @@ public class SBSv2ConfigManager extends Composite {
 		globalBuildAliasList.add("tools2_deb");
 		globalBuildAliasList.add("tools2_rel");
 		/////////////////////
+		
+		/////// TODO: DUMMY SBSv2 BUILD CONTEXTS FOR TABLE
+		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDKList().get(0);
+		
+		ISBSv2BuildContext testContext = new BuildContextSBSv2(sdk, "ARMV5", "DEBUG", "arvm5_udeb", "ARMV5 Debug", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb." + sdk.getUniqueId());
+		sbsBuildContexts.add(testContext);
+		
+		testContext = new BuildContextSBSv2(sdk, "ARMV5", "Release", "arvm5_urel", "ARMV5 Release", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb." + sdk.getUniqueId());
+		sbsBuildContexts.add(testContext);
+		
+		testContext = new BuildContextSBSv2(sdk, "ARMV5", "Release", "arvm5_urel_gcce", "ARMV5 Release", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb_gcce." + sdk.getUniqueId());
+		sbsBuildContexts.add(testContext);
+		
+		testContext = new BuildContextSBSv2(sdk, "ARMV5", "Release", "arvm5_urel_gcce", "ARMV5 Release", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb_gcce." + sdk.getUniqueId());
+		sbsBuildContexts.add(testContext);
+		
+		testContext = new BuildContextSBSv2(sdk, "WINSCW", "Release", "winscw_urel", "WINSCW Release", ISBSv2BuildContext.BUILDER_ID + ".winscw_urel." + sdk.getUniqueId());
+		sbsBuildContexts.add(testContext);
+		
+		testContext = new BuildContextSBSv2(sdk, "WINSCW", "Debug", "winsw_udeb", "WINSCW Debug", ISBSv2BuildContext.BUILDER_ID + ".winscw_udeb." + sdk.getUniqueId());
+		sbsBuildContexts.add(testContext);
+		
+		
+		
 		
 	}
 
@@ -206,16 +247,8 @@ public class SBSv2ConfigManager extends Composite {
 
 	// TODO: Get context list from SDKManager for SBSv2
 	private List<ISBSv2BuildContext> getGlobalSBSContexts() {
-		List<ISBSv2BuildContext> contexts = new ArrayList<ISBSv2BuildContext>();
 		
-		// TODO: DUMMY TEST DATA
-		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDKList().get(0);
-		ISBSv2BuildContext testContext = new BuildContextSBSv2(sdk, "ARMV5", "DEBUG", "arvm5_udeb", "ARMV5 Debug", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb." + sdk.getUniqueId());
-		contexts.add(testContext);
-		testContext = new BuildContextSBSv2(sdk, "ARMV5", "Release", "arvm5_urel", "ARMV5 Release", ISBSv2BuildContext.BUILDER_ID + ".arvm5_udeb." + sdk.getUniqueId());
-		contexts.add(testContext);
-		
-		return contexts;
+		return sbsBuildContexts;
 	}
 
 	private void setCheckedElements() {
