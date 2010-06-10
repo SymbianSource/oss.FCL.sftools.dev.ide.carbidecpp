@@ -225,7 +225,7 @@ public class SDKPreferencePage
 		public void done(IJobChangeEvent event) {
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
-					rescanSDKs();
+					finishRescanning();
 				}
 			});
 		}
@@ -261,7 +261,7 @@ public class SDKPreferencePage
 	 */
 	public SDKPreferencePage() {
 		super();
-		scanJobListner = new ScanJobListener();
+//		scanJobListner = new ScanJobListener();
 	}
 
 	/*
@@ -277,7 +277,7 @@ public class SDKPreferencePage
 		sdkList = sdkMgr.getSDKList();
 		if (sdkMgr instanceof SDKManager) {
 			SDKManager mgr = (SDKManager) sdkMgr;
-			mgr.addScanJobListner(scanJobListner);
+//			mgr.addScanJobListner(scanJobListner);
 		}
 
 		super.createControl(parent);
@@ -558,10 +558,17 @@ public class SDKPreferencePage
 	private void handleRescanButton() {
 		// forcible rescan; dump cache
 		SymbianBuildContextDataCache.refreshForSDKs(null);
+		startRescanning();
 		sdkMgr.scanSDKs();
+		finishRescanning();
 	}
 
-	private void rescanSDKs(){
+	private void startRescanning() {
+		rescanButton.setText(Messages.getString("SDKPreferencePage.Rescanning_Button_Label")); //$NON-NLS-1$
+		rescanButton.setEnabled(false);
+	}
+
+	private void finishRescanning(){
 		sdkListTableViewer.getTable().clearAll();
 		sdkListTableViewer.refresh();
 		sdkList.clear();
@@ -569,6 +576,8 @@ public class SDKPreferencePage
 		addSDKComponentTableItems();
 		sdkListTableViewer.refresh();
 		selectSDKEntry(0);
+		rescanButton.setText(Messages.getString("SDKPreferencePage.Rescan_Button_Label")); //$NON-NLS-1$
+		rescanButton.setEnabled(true);
 
 		if (scanForNewPlugins){
 			NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
