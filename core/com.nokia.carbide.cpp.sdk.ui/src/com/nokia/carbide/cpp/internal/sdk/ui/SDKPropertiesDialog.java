@@ -31,6 +31,9 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.PlatformUI;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class SDKPropertiesDialog extends TrayDialog {
@@ -89,6 +92,12 @@ public class SDKPropertiesDialog extends TrayDialog {
 		TableItem itemOSVersion = new TableItem(propsTable, SWT.NONE);
 		itemOSVersion.setText(new String[] {Messages.getString("SDKPropertiesDialog.OS_Version"),  //$NON-NLS-2$
 											sdk.getOSVersion().toString()}); //$NON-NLS-1$
+		
+		// SDK Version at Row 2.
+		TableItem itemSDKVersion = new TableItem(propsTable, SWT.NONE);
+		ISBSv1BuildInfo buildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		String sdkVersion = buildInfo.getSDKVersion(sdk).toString();
+		itemSDKVersion.setText(new String[] {Messages.getString("SDKPropertiesDialog.OS_Version"), sdkVersion}); //$NON-NLS-1$
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SDKUIHelpIds.SDK_PROPERTIES_DIALOG);
 		
