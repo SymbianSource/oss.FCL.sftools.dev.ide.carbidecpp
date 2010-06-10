@@ -255,6 +255,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		if (sbsv2Project){
 			replaceFilteredConfigsFromProject(sdkConfigTreeNodes);
 		}
+		
 		properSdkViewer.setInput(sdkConfigTreeNodes);
 		propagateSdkTree();
 		properSdkViewer.addCheckStateListener(new ICheckStateListener() {
@@ -415,13 +416,6 @@ public class ManageConfigurationsDialog extends TrayDialog {
 											checkIt = true;
 										}
 									}
-//									else if (v2Context.getSBSv2Alias().equals(currV2Context.getSBSv2Alias()) &&
-//										v2Context.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
-//										v2Context.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
-//										&& v2Context.getSBSv2Alias() != null && v2Context.getSBSv2Alias().split("_").length == 2){
-//										
-//										checkIt = true;
-//									}
 								}
 							}
 							if (checkIt){

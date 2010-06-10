@@ -40,7 +40,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.ui.internal.ide.handlers.BuildAllProjectsHandler;
+import org.osgi.framework.Version;
 
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
@@ -65,6 +65,7 @@ import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
 
 /**
  * Main interface point with CDT with regards to our build configurations.  Note that
@@ -242,6 +243,12 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			// TODO: NEED TO HANDLE MISSING SDK ID
 			if (sdk != null){
 				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
+			} else {
+//				ISymbianSDK deadSDK = SymbianSDKFactory.createInstance(sdkID, "FIXME", "", new Version("0.0"), "", new Version("0.0"), false);
+//				SDKCorePlugin.getSDKManager().addSDK(deadSDK);
+//				
+//				return new BuildContextSBSv2(deadSDK, platform, target, buidAlias, displayString, configID);
+				return null;
 			}
 		}
 		

@@ -18,8 +18,8 @@
 
 package com.nokia.carbide.cpp.sdk.ui.shared;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.TreeNode;
@@ -64,7 +64,8 @@ public class BuildTargetTreeNode extends TreeNode {
 				@Override
 				public String toString() {
 					ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-					return context.getDisplayString();
+					String sdkId = context.getSDK().getUniqueId();
+					return context.getDisplayString().replace("[" + sdkId + "]", "");
 				}
 			};
 		}
@@ -76,6 +77,10 @@ public class BuildTargetTreeNode extends TreeNode {
 	 */
 	public String toString() {
 		ISymbianSDK value = (ISymbianSDK) getValue();
+		File f = new File(value.getEPOCROOT());
+		if (!f.exists()){
+			return value.getUniqueId() + " -- SDK location does not exist! Check Symbian SDKs!";
+		}
 		return value.getUniqueId();
 	}
 	
