@@ -16,6 +16,7 @@
 */
 package com.nokia.carbide.cdt.internal.api.builder.ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -35,6 +37,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -64,6 +67,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetTreeNode;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class ManageConfigurationsDialog extends TrayDialog {
 	
@@ -186,7 +190,30 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		
 		properSdkViewer = new ContainerCheckedTreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		properSdkViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-		properSdkViewer.setLabelProvider(new LabelProvider());
+		
+		class SDKNodeLabelProvider extends LabelProvider implements IColorProvider {
+
+			public Color getForeground(Object element) {
+				if (element instanceof BuildTargetTreeNode){
+					BuildTargetTreeNode treeNode = (BuildTargetTreeNode)element;
+					if (treeNode.getValue() instanceof ISymbianSDK){
+						ISymbianSDK sdk = (ISymbianSDK)treeNode.getValue();
+						File f = new File (sdk.getEPOCROOT());
+						if (!f.exists()){
+							return WorkbenchUtils.getSafeShell().getDisplay().getSystemColor(SWT.COLOR_RED);
+						}
+					}
+				}
+				
+				return null;
+			}
+
+			public Color getBackground(Object element) {
+				return null;
+			}
+		}
+		
+		properSdkViewer.setLabelProvider(new SDKNodeLabelProvider());
 		TreeNodeContentProvider treeNodeContentProvider = new TreeNodeContentProvider();
 		filteringContentProviderWrapper = 
 			new FilteringContentProviderWrapper(treeNodeContentProvider);
