@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
@@ -129,67 +130,12 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
-		scanJob = new Job ("Scan System Drives") {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				synchronized (sdkList)
-				{
-					ArrayList<ISymbianSDK> oldSDKList = new ArrayList<ISymbianSDK>(sdkList);
-					
-					getSBSv2Version(true);
-					
-					if (sdkList != null){
-						sdkList.clear();
-					}
-				
-					if (!doScanSDKs(monitor))
-						return Status.OK_STATUS;;
-					
-					// now these SDK's are newly added, remove from internal list
-					for (ISymbianSDK sdk : sdkList) {
-						if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {
-							SDKManagerInternalAPI.removeMissingSdk(sdk
-									.getUniqueId());
-						}
-					}
-
-					// now these SDK's are removed from the old list, add to
-					// internal list
-					for (ISymbianSDK oldSdk : oldSDKList) {
-						boolean found = false;
-						for (ISymbianSDK sdk : sdkList) {
-							if (sdk.getUniqueId().equals(oldSdk.getUniqueId())) {
-								found = true;
-								break;
-							}
-						}
-						if (found == false) {
-							SDKManagerInternalAPI.addMissingSdk(oldSdk
-									.getUniqueId());
-							// flush cache
-							SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { oldSdk });
-						}
-					}
-				}
-
-				// make sure we don't rescan over and over again
-				hasScannedSDKs = true;
-				
-				// tell others about it
-				fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
-				scanCarbideSDKCache();
-				
-				// Notify any plugins that want to know if the SDKManager has scanned plugins.
-				if (!sdkHookExtenstionsNotified) {
-					notifySDKManagerLoaded();
-					sdkHookExtenstionsNotified = true;
-				}
-				if (monitor.isCanceled()) {
-					return Status.CANCEL_STATUS;
-				}
-				return Status.OK_STATUS;
-			}
-		};
+//		scanJob = new Job ("Scan System Drives") {
+//			@Override
+//			protected IStatus run(IProgressMonitor monitor) {
+//				return handleScan(monitor);
+//			}
+//		};
 	}
 	
 	public SymbianMacroStore getSymbianMacroStore(){
@@ -197,10 +143,70 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 	
 	public void scanSDKs() {
-		if (scanJob.getState() == Job.NONE) {
-			scanJob.setSystem(true);
-			scanJob.schedule();
+//		if (scanJob.getState() == Job.NONE) {
+//			scanJob.setSystem(true);
+//			scanJob.schedule();
+//		}
+		handleScan(new NullProgressMonitor());
+	}
+
+	private IStatus handleScan(IProgressMonitor monitor) {
+		synchronized (sdkList)
+		{
+			ArrayList<ISymbianSDK> oldSDKList = new ArrayList<ISymbianSDK>(sdkList);
+			
+			getSBSv2Version(true);
+			
+			if (sdkList != null){
+				sdkList.clear();
+			}
+		
+			if (!doScanSDKs(monitor))
+				return Status.OK_STATUS;;
+			
+			// now these SDK's are newly added, remove from internal list
+			for (ISymbianSDK sdk : sdkList) {
+				if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {
+					SDKManagerInternalAPI.removeMissingSdk(sdk
+							.getUniqueId());
+				}
+			}
+
+			// now these SDK's are removed from the old list, add to
+			// internal list
+			for (ISymbianSDK oldSdk : oldSDKList) {
+				boolean found = false;
+				for (ISymbianSDK sdk : sdkList) {
+					if (sdk.getUniqueId().equals(oldSdk.getUniqueId())) {
+						found = true;
+						break;
+					}
+				}
+				if (found == false) {
+					SDKManagerInternalAPI.addMissingSdk(oldSdk
+							.getUniqueId());
+					// flush cache
+					SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { oldSdk });
+				}
+			}
 		}
+
+		// make sure we don't rescan over and over again
+		hasScannedSDKs = true;
+		
+		// tell others about it
+		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
+		scanCarbideSDKCache();
+		
+		// Notify any plugins that want to know if the SDKManager has scanned plugins.
+		if (!sdkHookExtenstionsNotified) {
+			notifySDKManagerLoaded();
+			sdkHookExtenstionsNotified = true;
+		}
+		if (monitor.isCanceled()) {
+			return Status.CANCEL_STATUS;
+		}
+		return Status.OK_STATUS;
 	}
 
 	/**
