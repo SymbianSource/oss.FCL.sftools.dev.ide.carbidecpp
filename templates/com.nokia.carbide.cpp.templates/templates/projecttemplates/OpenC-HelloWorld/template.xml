@@ -2,7 +2,6 @@
 <!DOCTYPE template [
 <!ENTITY projectDirsPageCommonFields SYSTEM "../../shared/projectDirsPageCommonFields.inc">
 <!ENTITY projectCreateAndCommonFoldersProcess SYSTEM "../../shared/projectCreateAndCommonFoldersProcess.inc">
-<!ENTITY projectCommonFilesProcessParams2x SYSTEM "../../shared/projectCommonFilesProcessParams2x.inc">
 ]>
 <template 
 	version="1.0" 
