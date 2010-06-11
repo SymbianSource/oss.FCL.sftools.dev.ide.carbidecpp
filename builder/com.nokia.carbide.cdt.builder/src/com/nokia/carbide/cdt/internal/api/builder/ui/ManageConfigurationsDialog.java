@@ -16,7 +16,6 @@
 */
 package com.nokia.carbide.cdt.internal.api.builder.ui;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -197,9 +196,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 				if (element instanceof BuildTargetTreeNode){
 					BuildTargetTreeNode treeNode = (BuildTargetTreeNode)element;
 					if (treeNode.getValue() instanceof ISymbianSDK){
-						ISymbianSDK sdk = (ISymbianSDK)treeNode.getValue();
-						File f = new File (sdk.getEPOCROOT());
-						if (!f.exists()){
+						if (treeNode.toString().contains(BuildTargetTreeNode.SDK_NODE_ERROR_EPOCROOT_INVALID)){
 							return WorkbenchUtils.getSafeShell().getDisplay().getSystemColor(SWT.COLOR_RED);
 						}
 					}

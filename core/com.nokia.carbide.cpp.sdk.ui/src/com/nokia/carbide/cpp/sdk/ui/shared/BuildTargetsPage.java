@@ -29,6 +29,7 @@ import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -40,6 +41,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -61,6 +63,7 @@ import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.carbide.template.engine.ITemplate;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * Wizard page used to select a list of Carbide.c++ build configurations.  Currently used
@@ -256,7 +259,27 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 		
 		viewer = new ContainerCheckedTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		viewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-		viewer.setLabelProvider(new LabelProvider());
+		class SDKNodeLabelProvider extends LabelProvider implements IColorProvider {
+
+			public Color getForeground(Object element) {
+				if (element instanceof BuildTargetTreeNode){
+					BuildTargetTreeNode treeNode = (BuildTargetTreeNode)element;
+					if (treeNode.getValue() instanceof ISymbianSDK){
+						if (treeNode.toString().contains(BuildTargetTreeNode.SDK_NODE_ERROR_EPOCROOT_INVALID)){
+							return WorkbenchUtils.getSafeShell().getDisplay().getSystemColor(SWT.COLOR_RED);
+						}
+					}
+				}
+				
+				return null;
+			}
+
+			public Color getBackground(Object element) {
+				return null;
+			}
+		}
+		
+		viewer.setLabelProvider(new SDKNodeLabelProvider());
 		
 		TreeNodeContentProvider treeNodeContentProvider = new TreeNodeContentProvider();
 		filteringContentProviderWrapper = 
