@@ -145,7 +145,7 @@ public class SBSv2Utils {
 	    	// For now, just filter out anything older than 9.4
 	    	for (ISymbianSDK sdk : sdks) {
 	    		Version osVersion = sdk.getOSVersion();
-	    		if (osVersion.getMajor() > 8 ||
+	    		if (osVersion.getMajor() > 8 || osVersion.getMajor() == 0 ||
 	    				(osVersion.getMajor() == 9 && osVersion.getMinor() > 3)) {
 	    			supportedSDKs.add(sdk);
 	    		}
