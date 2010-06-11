@@ -399,6 +399,8 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	}
 
 	public void setPrefixFile(IPath prefixFile, String builderId) {
+		if (prefixFile == null)
+			return;
 		File file = new File(prefixFile.toOSString());
 		prefixFileMap.put(builderId, file);
 	}
