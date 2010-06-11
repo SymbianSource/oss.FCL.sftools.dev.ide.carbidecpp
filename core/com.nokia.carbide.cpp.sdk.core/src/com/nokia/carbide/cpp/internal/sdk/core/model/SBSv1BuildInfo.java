@@ -14,25 +14,25 @@
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
-import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
@@ -42,6 +42,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 /**
  * SBSv1 specific build information.
@@ -49,38 +50,34 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
  */
 public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 
-	private Date createDate;
-	private File licenseFile;
-	private File prefixFile;
-	private Version sdkVersion;
-	private String sdkOSBranch;
-	private String sdkDescription;
-	private String publisherName;
-	private URL publisherURL;
+	private ISymbianSDK sdk;
 	private IBSFCatalog bsfCatalog;
 	private ISBVCatalog sbvCatalog;
+	private boolean wasScanned = false;
 	private List<ISymbianBuildContext> binaryVariantContextList = new ArrayList<ISymbianBuildContext>(0);
 	private List<ISymbianBuildContext> bsfContextList = new ArrayList<ISymbianBuildContext>(0);
+	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
 
-	public List<ISymbianBuildContext> getFilteredBuildConfigurations(ISymbianSDK sdk) {
-		// This is probably a bug, but the filtering only uses SBSv1 preferences if SBSv1 is enabled...
-		List<ISymbianBuildContext> filteredContexts;
-		if (SBSv2Utils.enableSBSv1Support()) {
-			filteredContexts = getSBSv1FilteredBuildConfigurations(sdk);
-		} else {
-			// be optimistic in this case... SBSv3? ;)
-			filteredContexts = getAllBuildConfigurations(sdk);
-		}
-		return filteredContexts;
+	public SBSv1BuildInfo(ISymbianSDK sdk) {
+		this.sdk = sdk;
+	}
+
+	public void clearPlatformMacros() {
+		cachedPlatformMacros.clear();
+	}
+
+	public List<String> getAvailablePlatforms() {
+		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+		return sdkMgr.getSymbianMacroStore().getSupportedPlatforms(((SymbianSDK)sdk).getOSVersion(), "", getBSFCatalog());
 	}
 
 	@SuppressWarnings("rawtypes")
-	public List<ISymbianBuildContext> getAllBuildConfigurations(ISymbianSDK sdk) {
+	public List<ISymbianBuildContext> getAllBuildConfigurations() {
 		Set sdkFeatures = sdk.getSupportedFeatures();
 		List<ISymbianBuildContext> buildTargets = new ArrayList<ISymbianBuildContext>();
 		
 		// note that this gets variant platforms but not regular BSF's
-		List <String>buildPlats =  getAvailablePlatforms(sdk);
+		List <String>buildPlats =  getAvailablePlatforms();
 		
 		if (buildPlats.size() == 0){
 			return Collections.emptyList();
@@ -108,147 +105,102 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr.getBSFScannerEnabled()){
-			buildTargets.addAll(getBSFPlatformContexts(sdk));
-			buildTargets.addAll(getBinaryVariationPlatformContexts(sdk)); // Symbian Binary Variation (.var)
+			buildTargets.addAll(getBSFPlatformContexts());
+			buildTargets.addAll(getBinaryVariationPlatformContexts()); // Symbian Binary Variation (.var)
 		}
 		
 		return buildTargets;
 	}
 
-	public List<String> getPlatformMacros(ISymbianSDK sdk, String platform) {
-		if (sdk instanceof SymbianSDK) {
-			return ((SymbianSDK)sdk).getPlatformMacros(platform);
-		}
-		return null;
-	}
-
-	public List<String> getVendorSDKMacros(ISymbianSDK sdk) {
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		return sdkMgr.getSymbianMacroStore().getVendorMacros(getSDKVersion(sdk), getName(sdk));
-	}
-
-	public List<String> getAvailablePlatforms(ISymbianSDK sdk) {
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		return sdkMgr.getSymbianMacroStore().getSupportedPlatforms(((SymbianSDK)sdk).getOSVersion(), getSDKOSBranch(sdk), getBSFCatalog(sdk));
-	}
-
-	public String getName(ISymbianSDK sdk) {
-		if (sdk instanceof SymbianSDK) {
-			DeviceType deviceEntry = ((SymbianSDK)sdk).getDeviceEntry();
-			if (deviceEntry != null) {
-				return deviceEntry.getName();
+	public IBSFCatalog getBSFCatalog() {
+		synchronized (sdk) {
+			if (bsfCatalog == null) {
+				bsfCatalog = BSFCatalogFactory.createCatalog(sdk);
 			}
 		}
-		return "";
+		return bsfCatalog;
 	}
 
-	public String getVendor(ISymbianSDK sdk) {
-		String[] parts = getName(sdk).split("\\.");
-		if (parts.length == 3)
-			return parts[1];
+	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
+		// This is probably a bug, but the filtering only uses SBSv1 preferences if SBSv1 is enabled...
+		List<ISymbianBuildContext> filteredContexts;
+		if (SBSv2Utils.enableSBSv1Support()) {
+			filteredContexts = getSBSv1FilteredBuildConfigurations();
+		} else {
+			// be optimistic in this case... SBSv3? ;)
+			filteredContexts = getAllBuildConfigurations();
+		}
+		return filteredContexts;
+	}
+
+	public List<String> getPlatformMacros(String platform) {
+		List<String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
+		if (platformMacros == null) {
+			synchronized (cachedPlatformMacros) {
+				IBSFCatalog bsfCatalog = getBSFCatalog();
+				ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+				platformMacros = sdkMgr.getSymbianMacroStore().getPlatformMacros(sdk.getOSVersion(), "", bsfCatalog, platform);
+				cachedPlatformMacros.put(platform.toUpperCase(), platformMacros);
+			}
+		}
+		return platformMacros;
+	}
+
+	/**
+	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
+	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
+	 */
+	public IPath getPrefixFromVariantCfg(){
+		File epocRoot = new File(sdk.getEPOCROOT());
+		File variantCfg;
+		variantCfg = new File(epocRoot, SymbianSDK.SPP_VARIANT_CFG_FILE);
+		if (!variantCfg.exists()) {
+			variantCfg = new File(epocRoot, SymbianSDK.VARIANT_CFG_FILE);
+			if (!variantCfg.exists())
+				return null;
+		}
 		
-		return "";
-	}
-
-	public String getFamily(ISymbianSDK sdk) {
-		String[] parts = getName(sdk).split("\\.");
-		if (parts.length == 3){
-			if (getSDKVersion(sdk).getMajor() == 5 && getName(sdk).equalsIgnoreCase(NOKIA_SF_SDK_NAME)){
-				// A vendor of "symbian" and SDK major version 5 is the same as prior naming for "com.nokia.s60" & 5th Edition.
-				// Return "s60" so that project template generation continues to work as it's a S60 5th ed. SDK. 
-				return ISBSv1BuildInfo.S60_FAMILY_ID;
-			} else {
-				return parts[2];
+		String variantDir = null;
+		String variantFile = null;
+		try {
+			char[] cbuf = new char[(int) variantCfg.length()];
+			Reader reader = new FileReader(variantCfg);
+			reader.read(cbuf);
+			reader.close();
+			String[] lines = new String(cbuf).split("\r\n|\r|\n");
+			for (int i = 0; i < lines.length; i++) {
+				// skip comments and blank lines
+				String line = SymbianSDK.removeComments(lines[i]);
+				if (line.matches("\\s*#.*") || line.trim().length() == 0) 
+					continue;
+				
+				// parse the variant line, which is an EPOCROOT-relative
+				// path to a bldvariant.hrh file
+				Matcher matcher = SymbianSDK.VARIANT_HRH_LINE_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					variantDir = matcher.group(1);
+					variantFile = matcher.group(3); 
+					File variantFullPathFile = new File(epocRoot, variantDir + File.separator + variantFile);
+					IPath variantFilePath = new Path(PathUtils.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
+					return variantFilePath;
+				}
 			}
+		} catch (IOException e) {
 		}
 		
-		return "";
+		return null; // can't find the file...
 	}
 
-	public Version getSDKVersion(ISymbianSDK sdk) {
-		if (sdkVersion == null){
-			return new Version("0.0");
-		}
-		return sdkVersion;
-	}
-
-	public File getPrefixFile(ISymbianSDK sdk) {
-		return prefixFile;
-	}
-
-	public IPath getToolsPath(ISymbianSDK sdk) {
-		String epocRoot = sdk.getEPOCROOT();
-		if (epocRoot.length() > 0) {
-			IPath epoc32ToolsPath = new Path(epocRoot).append("epoc32/tools");
-			// try to canonicalize it so it matches actual file system case
-			try {
-				epoc32ToolsPath = new Path(epoc32ToolsPath.toFile().getCanonicalPath());
-			} catch (IOException e) {
+	public ISBVCatalog getSBVCatalog() {
+		synchronized (sdk) {
+			if (sbvCatalog == null) {
+				sbvCatalog = SBVCatalogFactory.createCatalog(sdk);
 			}
-			return epoc32ToolsPath;
 		}
-		return null;
+		return sbvCatalog;
 	}
 
-	public IPath getReleaseRoot(ISymbianSDK sdk) {
-		String epocRoot = sdk.getEPOCROOT();
-		if (epocRoot.length() > 0) {
-			IPath epoc32RelPath = new Path(epocRoot).append("epoc32/release");
-			// try to canonicalize it so it matches actual file system case
-			try {
-				epoc32RelPath = new Path(epoc32RelPath.toFile().getCanonicalPath());
-			} catch (IOException e) {
-			}
-			return epoc32RelPath;
-		}
-		return null;
-	}
-
-	public IPath getIncludePath(ISymbianSDK sdk) {
-		String epocRoot = sdk.getEPOCROOT();
-		if (epocRoot.length() > 0) {
-			IPath epoc32IncPath = new Path(epocRoot).append("epoc32/include");
-			// try to canonicalize it so it matches actual file system case
-			try {
-				epoc32IncPath = new Path(epoc32IncPath.toFile().getCanonicalPath());
-			} catch (IOException e) {
-			}
-			return epoc32IncPath;
-		}
-		return null;
-	}
-
-	public String getSDKDescription(ISymbianSDK sdk) {
-		if (sdkDescription == null){
-			return "";
-		}
-		return sdkDescription;
-	}
-
-	public Date getCreationDate(ISymbianSDK sdk) {
-		return createDate;
-	}
-
-	public File getLicenseFile(ISymbianSDK sdk) {
-		return licenseFile;
-	}
-
-	public String getSDKOSBranch(ISymbianSDK sdk) {
-		if (sdkOSBranch == null){
-			return "";
-		}
-		return sdkOSBranch;
-	}
-
-	public URL getPublisherURL(ISymbianSDK sdk) {
-		return publisherURL;
-	}
-
-	public String getPublisherName(ISymbianSDK sdk) {
-		return publisherName;
-	}
-
-	public List<String> getTargetTypeMacros(ISymbianSDK sdk, String targettype) {
+	public List<String> getTargetTypeMacros(String targettype) {
 		// this is based on \epoc32\tools\trgtype.pm which changes from
 		// OS version to OS version, but largely remains constant with
 		// regards to the basic type.
@@ -275,116 +227,31 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		return macros;
 	}
 
-	public IBSFCatalog getBSFCatalog(ISymbianSDK sdk) {
-		synchronized (sdk) {
-			if (bsfCatalog == null) {
-				bsfCatalog = BSFCatalogFactory.createCatalog(sdk);
-			}
-		}
-		return bsfCatalog;
+	public List<String> getVendorSDKMacros() {
+		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+		return sdkMgr.getSymbianMacroStore().getVendorMacros(sdk.getSDKVersion(), sdk.getName());
 	}
 
-	public ISBVCatalog getSBVCatalog(ISymbianSDK sdk) {
-		synchronized (sdk) {
-			if (sbvCatalog == null) {
-				sbvCatalog = SBVCatalogFactory.createCatalog(sdk);
-			}
-		}
-		return sbvCatalog;
+	public boolean isS60() {
+		return sdk.getFamily().equals(ISBSv1BuildInfo.S60_FAMILY_ID)
+			|| sdk.getFamily().equals(ISBSv1BuildInfo.SERIES60_FAMILY_ID);
 	}
 
-	public boolean isDefaultSDK(ISymbianSDK sdk) {
-		if (sdk instanceof SymbianSDK) {
-			DeviceType deviceEntry = ((SymbianSDK)sdk).getDeviceEntry();
-			if (deviceEntry == null) {
-				return false;
-			}
-			if (deviceEntry.getDefault().equals(DefaultType.YES_LITERAL)){
-				return true;
-			}
-		}
-		return false;
+	public boolean isPreviouslyScanned() {
+		return wasScanned;
 	}
 
-	public boolean isS60(ISymbianSDK sdk) {
-		return getFamily(sdk).equals(ISBSv1BuildInfo.S60_FAMILY_ID)
-			|| getFamily(sdk).equals(ISBSv1BuildInfo.SERIES60_FAMILY_ID);
+	public void setPreviouslyScanned(boolean wasScanned) {
+		this.wasScanned = wasScanned;
 	}
 
-	public boolean isPreviouslyScanned(ISymbianSDK sdk) {
-		if (sdk instanceof SymbianSDK) {
-			return ((SymbianSDK)sdk).isPreviouslyScanned();
-		}
-		return true;
-	}
-
-	public void setLicenseFile(ISymbianSDK sdk, File licenseFile) {
-		 this.licenseFile = licenseFile;
-	}
-
-	public void setPrefixFile(ISymbianSDK sdk, IPath prefixFile) {
-		this.prefixFile = new File(prefixFile.toOSString());
-	}
-
-	public void setSDKVersion(ISymbianSDK sdk, Version sdkVers) {
-		sdkVersion = sdkVers;
-	}
-
-	public void setPublisherURL(ISymbianSDK sdk, URL pubURL) {
-		publisherURL = pubURL;
-	}
-
-	public void setCreateDate(ISymbianSDK sdk, Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public void setOSSDKBranch(ISymbianSDK sdk, String branch) {
-		sdkOSBranch = branch;
-	}
-
-	public void setSDKDescription(ISymbianSDK sdk, String descr) {
-		sdkDescription = descr;
-	}
-
-	public void setPublisherName(ISymbianSDK sdk, String pubName) {
-		publisherName = pubName;
-	}
-
-	public void setName(ISymbianSDK sdk, String name) {
-		if (sdk instanceof SymbianSDK) {
-			DeviceType deviceEntry = ((SymbianSDK)sdk).getDeviceEntry();
-			if (deviceEntry != null) {
-				deviceEntry.setName(name);
-			}
-		}
-	}
-
-	public void setIsDefaultSDK(ISymbianSDK sdk, boolean isDefault) {
-		if (sdk instanceof SymbianSDK) {
-			DeviceType deviceEntry = ((SymbianSDK)sdk).getDeviceEntry();
-			if (deviceEntry != null) {
-				if (isDefault){
-					deviceEntry.setDefault(DefaultType.YES_LITERAL);
-				} else {
-					deviceEntry.setDefault(DefaultType.NO_LITERAL);
-				}
-			}
-		}
-	}
-
-	public void setPreviouslyScanned(ISymbianSDK sdk, boolean wasScanned) {
-		if (sdk instanceof SymbianSDK) {
-			((SymbianSDK)sdk).setPreviouslyScanned(wasScanned);
-		}
-	}
-
-	protected List<ISymbianBuildContext> getBinaryVariationPlatformContexts(ISymbianSDK sdk) {
+	protected List<ISymbianBuildContext> getBinaryVariationPlatformContexts() {
 		synchronized (binaryVariantContextList) {
 			if (!binaryVariantContextList.isEmpty()){
 				return binaryVariantContextList;
 			}
 			
-			ISBVCatalog catalog = getSBVCatalog(sdk);
+			ISBVCatalog catalog = getSBVCatalog();
 			for (ISBVPlatform sbvPlatform : catalog.getPlatforms()) {
 				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
 				// Only add the build platform if it's not virtual.
@@ -399,13 +266,13 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		return binaryVariantContextList;
 	}
 
-	protected List<ISymbianBuildContext> getBSFPlatformContexts(ISymbianSDK sdk) {
+	protected List<ISymbianBuildContext> getBSFPlatformContexts() {
 		synchronized (bsfContextList) {
 			if (!bsfContextList.isEmpty()){
 				return bsfContextList;
 			}
 			
-			IBSFCatalog catalog = getBSFCatalog(sdk);
+			IBSFCatalog catalog = getBSFCatalog();
 			for (IBSFPlatform platform : catalog.getPlatforms()) {
 				// only return non-variant style BSF's.  see boog #4533 for details.
 				if (!platform.isVariant()) {
@@ -420,9 +287,9 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected List<ISymbianBuildContext> getSBSv1FilteredBuildConfigurations(ISymbianSDK sdk) {
+	protected List<ISymbianBuildContext> getSBSv1FilteredBuildConfigurations() {
 		Set sdkFeatures = sdk.getSupportedFeatures();
-		List<ISymbianBuildContext> buildContexts =  getAllBuildConfigurations(sdk);
+		List<ISymbianBuildContext> buildContexts =  getAllBuildConfigurations();
 		if (buildContexts.size() == 0){
 			return Collections.emptyList();
 		}

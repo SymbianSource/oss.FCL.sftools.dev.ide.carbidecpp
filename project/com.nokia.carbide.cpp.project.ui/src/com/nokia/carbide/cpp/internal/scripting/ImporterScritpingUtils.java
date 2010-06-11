@@ -123,15 +123,11 @@ public class ImporterScritpingUtils {
 			}
 		}
 		else {
+			selectedConfigs = new ArrayList<ISymbianBuildContext>();
 			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-			if (sbsv1BuildInfo != null) {
-				selectedConfigs = sbsv1BuildInfo.getFilteredBuildConfigurations(sdk);
-			} else if (sbsv2BuildInfo != null) {
-				selectedConfigs = sbsv2BuildInfo.getFilteredBuildConfigurations(sdk);
-			} else {
-				selectedConfigs = new ArrayList<ISymbianBuildContext>();
-			}
+			selectedConfigs.addAll(sbsv1BuildInfo.getFilteredBuildConfigurations());
+			selectedConfigs.addAll(sbsv1BuildInfo.getFilteredBuildConfigurations());
 		}
 		return selectedConfigs;
 	}

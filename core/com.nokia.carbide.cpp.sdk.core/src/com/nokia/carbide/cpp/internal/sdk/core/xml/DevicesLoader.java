@@ -21,14 +21,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DocumentRoot;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.util.DevicesResourceFactoryImpl;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 public class DevicesLoader {
@@ -106,7 +104,6 @@ public class DevicesLoader {
 		DocumentRoot root = (DocumentRoot) contents.get(0);
 		DevicesType devices = root.getDevices();
 		EList devicesList = devices.getDevice();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		
 		// Find the device entry we are updating
 		boolean deviceExists = false;
@@ -116,9 +113,7 @@ public class DevicesLoader {
 				 deviceExists = true;
 				 currDevice.setEpocroot(sdk.getEPOCROOT());
 				 currDevice.setId(sdk.getUniqueId());
-				 if (sbsv1BuildInfo != null) {
-					 currDevice.setName(sbsv1BuildInfo.getName(sdk));
-				 }
+				 currDevice.setName(sdk.getName());
 				 if (currDevice.getUserdeletetable() != null){
 					 currDevice.setUserdeletable(currDevice.getUserdeletetable());
 				 }
@@ -137,14 +132,8 @@ public class DevicesLoader {
 			DeviceType newDeviceEntry = DevicesFactory.eINSTANCE.createDeviceType();
 			newDeviceEntry.setId(sdk.getUniqueId());
 			newDeviceEntry.setEpocroot(sdk.getEPOCROOT());
-			if (sbsv1BuildInfo != null) {
-				newDeviceEntry.setName(sbsv1BuildInfo.getName(sdk));
-				if (sbsv1BuildInfo.isDefaultSDK(sdk) == true){
-					newDeviceEntry.setDefault(DefaultType.YES_LITERAL);
-				} else {
-					newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
-				}
-			}
+			newDeviceEntry.setName(sdk.getName());
+			newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
 			newDeviceEntry.setUserdeletable("no");
 			newDeviceEntry.setUserdeletetable(null); // just to be sure it doens't get written out
 			devicesList.add(newDeviceEntry); // Add the new/modified config to the list so new data is written			
@@ -174,21 +163,12 @@ public class DevicesLoader {
 		DocumentRoot root = (DocumentRoot) contents.get(0);
 		DevicesType devices = root.getDevices();
 		EList devicesList = devices.getDevice();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		
 		// Iterate all the devices and set the all to default=false
 		// Set the input sdk paramater's default to whatever it's default value is
 		for (Iterator i = devicesList.iterator(); i.hasNext();) {
 			DeviceType currDevice = (DeviceType)i.next();
-			 if (currDevice.getId().equals(sdk.getUniqueId())){
-				 if (sbsv1BuildInfo != null && sbsv1BuildInfo.isDefaultSDK(sdk)){
-					 currDevice.setDefault(DefaultType.YES_LITERAL);
-				 } else {
-					 currDevice.setDefault(DefaultType.NO_LITERAL);
-				 }
-			 } else {
-				 currDevice.setDefault(DefaultType.NO_LITERAL);
-			 }
+			currDevice.setDefault(DefaultType.NO_LITERAL);
 		}
 		
 		// write to disk

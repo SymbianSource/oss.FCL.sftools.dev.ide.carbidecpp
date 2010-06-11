@@ -24,7 +24,6 @@ import java.util.List;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.template.engine.ITemplate;
@@ -51,9 +50,8 @@ public class TemplateUtils {
 	 * versionRange is a minVersion and maxVersion delimited by - 
 	 */
 	public static boolean sdkMatchesTemplate(ISymbianSDK symbianSDK, ITemplate template) {
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)symbianSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		Version sdkVersion = sbsv1BuildInfo.getSDKVersion(symbianSDK);
-		String family = sbsv1BuildInfo.getFamily(symbianSDK); // S60, symbian... 3rd segment of devices.xml 'name' attrib
+		Version sdkVersion = symbianSDK.getSDKVersion();
+		String family = symbianSDK.getFamily(); // S60, symbian... 3rd segment of devices.xml 'name' attrib
 		return sdkMatchesTemplate(sdkVersion, family, template);
 	}
 	

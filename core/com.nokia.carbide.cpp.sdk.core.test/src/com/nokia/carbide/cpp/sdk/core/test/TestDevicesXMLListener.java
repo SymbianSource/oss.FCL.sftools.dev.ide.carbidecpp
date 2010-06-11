@@ -28,6 +28,7 @@ import org.osgi.framework.Bundle;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.*;
 
 /**
@@ -91,7 +92,7 @@ public class TestDevicesXMLListener extends TestCase {
 		assertTrue("Devices.xml has changed only timestamp, bad return value", sdkMgr.checkDevicesXMLSynchronized());
 		
 		ISymbianSDK sdk = sdkMgr.getSDKList().get(0);
-		sdk.setEPOCROOT("K:\\");
+		((SymbianSDK)sdk).setEPOCROOT("K:\\");
 		sdkMgr.updateSDK(sdk);
 		assertTrue("Devices.xml should still be true with sdk update via APIs", sdkMgr.checkDevicesXMLSynchronized());
 		

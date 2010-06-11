@@ -13,6 +13,7 @@
 
 package com.nokia.carbide.cpp.internal.api.sdk;
 
+import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
@@ -24,17 +25,17 @@ import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 public interface ISymbianSDKModifier {
 
 	/**
+	 * Add a feature supported by the SDK.
+	 * @param feature supported feature
+	 */
+	void addSupportedFeature(Object feature);
+
+	/**
 	 * Sets the build info for a particular builder.
 	 * @param buildInfo build info
 	 * @param builderId id string of a builder
 	 */
 	void setBuildInfo(ISDKBuildInfo buildInfo, String builderId);
-
-	/**
-	 * Add a feature supported by the SDK.
-	 * @param feature supported feature
-	 */
-	void addSupportedFeature(Object feature);
 
 	/**
 	 * Marks the SDK as enabled or disabled.
@@ -43,15 +44,40 @@ public interface ISymbianSDKModifier {
 	void setEnabled(boolean enable);
 
 	/**
+	 * Set the absolute path to the epoc32 directory of this SDK.
+	 * @param epocRoot absolute path to the epoc32 directory
+	 */
+	void setEPOCROOT(String epocRoot);
+
+	/**
+	 * Sets display name of a SDK. This is the com.vendor.family identifier.
+	 * @param name SDK display name
+	 */
+	void setName(String name);
+
+	/**
+	 * Sets the OS version string of a SDK.
+	 * @param osVer OS version
+	 */
+	public void setOSVersion(Version osVer);
+
+	/**
+	 * Sets the prefix file for a particular builder.
+	 * @param prefixFile path of prefix file
+	 * @param builderId id string of a builder
+	 */
+	void setPrefixFile(IPath prefixFile, String builderId);
+
+	/**
+	 * Sets the SDK version string of a SDK.
+	 * @param sdkVers SDK version
+	 */
+	void setSDKVersion(Version sdkVers);
+
+	/**
 	 * Sets the unique id of a SDK.
 	 * @param id id string of a SDK
 	 */
 	void setUniqueId(String id);
-
-	/**
-	 * Sets the OS version string of a SDK.
-	 * @param osVer OS version object
-	 */
-	public void setOSVersion(Version osVer);
 
 }

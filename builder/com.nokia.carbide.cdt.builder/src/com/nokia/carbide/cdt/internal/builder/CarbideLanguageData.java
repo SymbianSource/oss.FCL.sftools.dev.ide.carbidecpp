@@ -54,7 +54,9 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -196,18 +198,19 @@ public class CarbideLanguageData extends CLanguageData {
 		CarbideProjectInfo cpi = (CarbideProjectInfo)carbideBuildConfig.getCarbideProject();
 		IProject project = cpi.getProject();
 		ISymbianSDK sdk = carbideBuildConfig.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+		ISymbianBuildContext context = carbideBuildConfig.getBuildContext();
 
 		// add platform includes first
 		IBSFPlatform platform = null;
 		ISBVPlatform sbvPlat = null;
-		if (sbsv1BuildInfo != null) {
-			platform = sbsv1BuildInfo.getBSFCatalog(sdk).findPlatform(carbideBuildConfig.getPlatformString());
-			sbvPlat = sbsv1BuildInfo.getSBVCatalog(sdk).findPlatform(carbideBuildConfig.getPlatformString());
-		} else if (sbsv2BuildInfo != null) {
-			platform = sbsv2BuildInfo.getBSFCatalog(sdk).findPlatform(carbideBuildConfig.getPlatformString());
-			sbvPlat = sbsv2BuildInfo.getSBVCatalog(sdk).findPlatform(carbideBuildConfig.getPlatformString());
+		if (context instanceof ISBSv1BuildContext) {
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			platform = sbsv1BuildInfo.getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+			sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+		} else {
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+			platform = sbsv2BuildInfo.getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+			sbvPlat = sbsv2BuildInfo.getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
 		}
 		if (platform != null) {
 			IPath[] systemIncludePaths = platform.getSystemIncludePaths();
@@ -255,15 +258,7 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		
 		// add OEM dir
-		IPath includePath;
-		if (sbsv1BuildInfo != null) {
-			includePath = sbsv1BuildInfo.getIncludePath(sdk);
-		} else if (sbsv2BuildInfo != null) {
-			includePath = sbsv2BuildInfo.getIncludePath(sdk);
-		} else {
-			includePath = new Path(sdk.getEPOCROOT()).append("epoc32/include");
-		}
-		File oemDir = includePath.append("oem").toFile();
+		File oemDir = sdk.getIncludePath().append("oem").toFile();
 		if (oemDir.exists()) {
 			includeEntries.add(new CIncludePathEntry(new Path(oemDir.getAbsolutePath()), 0));
 		}
@@ -276,19 +271,21 @@ public class CarbideLanguageData extends CLanguageData {
 		Map<String, String> macros = new HashMap<String, String>();
 		
 		// platform macros
-		if (sbsv1BuildInfo != null) {
+		if (context instanceof ISBSv1BuildContext) {
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			// platform macros
-			for (String platMacro : sbsv1BuildInfo.getPlatformMacros(sdk, carbideBuildConfig.getPlatformString())) {
+			for (String platMacro : sbsv1BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString())) {
 				macros.put("__" + platMacro + "__", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			
 			// vendor macros (e.g. __SERIES60_3x__)
-			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros(sdk)) {
+			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
 				macros.put(builtinMacro, ""); //$NON-NLS-1$
 			}
-		} else if (sbsv2BuildInfo != null) {
+		} else {
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 			// platform macros
-			for (String platMacro : sbsv2BuildInfo.getPlatformMacros(sdk, carbideBuildConfig.getPlatformString())) {
+			for (String platMacro : sbsv2BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString())) {
 				macros.put("__" + platMacro + "__", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			
@@ -305,12 +302,14 @@ public class CarbideLanguageData extends CLanguageData {
 		// more than one but all have the same target type macro.  it wouldn't make sense to add different
 		// target type macros like __EXE__ and __DLL__.
 		if (targetTypes.size() == 1) {
-			if (sbsv1BuildInfo != null) {
-				for (String targetTypeMacro : sbsv1BuildInfo.getTargetTypeMacros(sdk, targetTypes.get(0))) {
+			if (context instanceof ISBSv1BuildContext) {
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				for (String targetTypeMacro : sbsv1BuildInfo.getTargetTypeMacros(targetTypes.get(0))) {
 					macros.put(targetTypeMacro, ""); //$NON-NLS-1$
 				}
-			} else if (sbsv2BuildInfo != null) {
-				for (String targetTypeMacro : sbsv2BuildInfo.getTargetTypeMacros(sdk, targetTypes.get(0))) {
+			} else {
+				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+				for (String targetTypeMacro : sbsv2BuildInfo.getTargetTypeMacros(targetTypes.get(0))) {
 					macros.put(targetTypeMacro, ""); //$NON-NLS-1$
 				}
 			}

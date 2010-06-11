@@ -14,7 +14,6 @@ package com.nokia.carbide.cpp.sdk.core;
 
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
@@ -41,35 +40,23 @@ public class SymbianSDKFactory {
 											 String epocRoot, 
 											 String name, 
 											 Version osVersion,
-											 String osBranch,
-											 Version sdkVersion, 
-											 boolean isDefault){
+											 Version sdkVersion) {
 		DeviceType newDeviceEntry = DevicesFactory.eINSTANCE.createDeviceType();
 		newDeviceEntry.setId(id);
 		newDeviceEntry.setEpocroot(epocRoot);
 		newDeviceEntry.setName(name);
-		if (isDefault){
-			newDeviceEntry.setDefault(DefaultType.YES_LITERAL);
-		} else {
-			newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
-		}
+		newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
 		
 		SymbianSDK sdk = new SymbianSDK(newDeviceEntry); // create SDK and set the attribs found in devices.xml
 		// Set other essential parameters not in devices.xml
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		if (sdk.getOSVersion().getMajor() != 0) {
 			// use the version detected from the SDK creation
 		} else {
 			sdk.setOSVersion(osVersion);
-			if (sbsv1BuildInfo != null) {
-				sbsv1BuildInfo.setOSSDKBranch(sdk, osBranch);
-			}
 		}
 		
-		if (sbsv1BuildInfo != null) {
-			if (sbsv1BuildInfo.getSDKVersion(sdk).getMajor() == 0){
-				sbsv1BuildInfo.setSDKVersion(sdk, sdkVersion);
-			}
+		if (sdk.getSDKVersion().getMajor() == 0) {
+			sdk.setSDKVersion(sdkVersion);
 		}
 		
 		return sdk;

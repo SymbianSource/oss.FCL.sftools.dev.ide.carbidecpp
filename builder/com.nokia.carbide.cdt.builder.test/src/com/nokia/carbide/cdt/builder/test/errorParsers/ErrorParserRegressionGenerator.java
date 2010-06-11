@@ -61,7 +61,7 @@ public class ErrorParserRegressionGenerator extends TestCase {
 		// You need to set the proper default configuration so the correct set of error parsers is called
 		List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
 		for (ISymbianSDK currSDK : sdkList){
-			List<ISymbianBuildContext> contexts = currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getAllBuildConfigurations(currSDK);
+			List<ISymbianBuildContext> contexts = currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getAllBuildConfigurations();
 			for (ISymbianBuildContext context : contexts) {
 				if (context.getPlatformString().equals(PLATFORM_STRING)) {
 					contextList.add(context);

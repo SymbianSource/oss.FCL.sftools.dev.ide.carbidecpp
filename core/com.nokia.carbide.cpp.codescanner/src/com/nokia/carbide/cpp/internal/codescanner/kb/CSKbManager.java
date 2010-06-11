@@ -394,12 +394,8 @@ public class CSKbManager {
 			List<ICarbideBuildConfiguration> buildConfigList = projectInfo.getBuildConfigurations();
 			for (Iterator<ICarbideBuildConfiguration> iterator = buildConfigList.iterator(); iterator.hasNext();) {
 				ICarbideBuildConfiguration buildConfig = iterator.next();
-				ISymbianSDK sdk = buildConfig.getSDK();
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				if (sbsv1BuildInfo != null) {
-					Version version = sbsv1BuildInfo.getSDKVersion(sdk);
-					sdkVersions.add(version);
-				}
+				Version version = buildConfig.getSDK().getSDKVersion();
+				sdkVersions.add(version);
 			}
 		}
 		

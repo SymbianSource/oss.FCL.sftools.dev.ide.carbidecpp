@@ -15,6 +15,8 @@ package com.nokia.carbide.cpp.sdk.core;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+
 /**
  * Interface for build related information of a Symbian SDK.
  * 
@@ -22,17 +24,21 @@ import java.util.List;
 public interface ISDKBuildInfo {
 
 	/**
-	 * Returns platform-filtered build configurations for a Symbian SDK.
-	 * @param sdk Symbian SDK
+	 * Returns all available build configurations for a Symbian SDK.
 	 * @return list of ISymbianBuildContext
 	 */
-	List<ISymbianBuildContext> getFilteredBuildConfigurations(ISymbianSDK sdk);
+	List<ISymbianBuildContext> getAllBuildConfigurations();
 
 	/**
-	 * Returns all available build configurations for a Symbian SDK.
-	 * @param sdk Symbian SDK
+	 * Returns platform-filtered build configurations for a Symbian SDK.
 	 * @return list of ISymbianBuildContext
 	 */
-	List<ISymbianBuildContext> getAllBuildConfigurations(ISymbianSDK sdk);
+	List<ISymbianBuildContext> getFilteredBuildConfigurations();
+
+	/**
+	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
+	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
+	 */
+	public IPath getPrefixFromVariantCfg();
 
 }

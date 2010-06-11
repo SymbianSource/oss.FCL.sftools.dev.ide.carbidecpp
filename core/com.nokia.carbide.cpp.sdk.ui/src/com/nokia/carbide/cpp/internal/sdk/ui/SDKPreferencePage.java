@@ -174,7 +174,7 @@ public class SDKPreferencePage
 		@Override
 		protected void setValue(Object element, Object value) {
 			ISymbianSDK sdk = (ISymbianSDK) element;
-			sdk.setEPOCROOT(value.toString());
+			((SymbianSDK)sdk).setEPOCROOT(value.toString());
 			SDKCorePlugin.getSDKManager().updateSDK(sdk);
 			getViewer().refresh();
 		}

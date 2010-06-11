@@ -102,8 +102,6 @@ public class SymbianBuildContextDataCache {
 	private ExternalFileInfoCollection compilerPrefixFileInfo = null; 
 	private List<File> systemIncludes;
 	private ISymbianSDK sdk;
-	ISBSv1BuildInfo sbsv1BuildInfo;
-	ISBSv2BuildInfo sbsv2BuildInfo;
 	private IPath compilerPrefixFile;
 
 	private String platformString;
@@ -111,7 +109,9 @@ public class SymbianBuildContextDataCache {
 	private String displayString;
 
 	private String contextKey;
-	
+
+	private String builderId;
+
 	private boolean changed;
 
 	private File cacheFile;
@@ -121,9 +121,12 @@ public class SymbianBuildContextDataCache {
 		this.platformString = context.getPlatformString();
 		this.displayString = context.getDisplayString();
 		this.sdk = context.getSDK();
-		sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 		this.contextKey = getBuildContextKey(context);
+		if (context instanceof ISBSv1BuildContext) {
+			builderId = ISymbianBuilderID.SBSV1_BUILDER;
+		} else {
+			builderId = ISymbianBuilderID.SBSV2_BUILDER;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -170,24 +173,16 @@ public class SymbianBuildContextDataCache {
 
 			List<IDefine> macros = new ArrayList<IDefine>();
 			Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
-			File prefixFile = null;
-			if (sbsv1BuildInfo != null) {
-				prefixFile = sbsv1BuildInfo.getPrefixFile(sdk);
-			} else if (sbsv2BuildInfo != null) {
-				prefixFile = sbsv2BuildInfo.getPrefixFile(sdk);
-			}
+			File prefixFile = sdk.getPrefixFile(builderId);
 			
 			if (prefixFile == null){
 				// Check that the prefix file may have become available since the SDK was scanned last.
 				// This can happen, for e.g., if the user opens the IDE _then_ does a subst on a drive that already has an SDK entry.
-				IPath prefixCheck = ((SymbianSDK)sdk).getPrefixFromVariantCfg();
+				ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
+				IPath prefixCheck = buildInfo.getPrefixFromVariantCfg();
 				if (prefixCheck != null){
 					prefixFile = prefixCheck.toFile();
-					if (sbsv1BuildInfo != null) {
-						sbsv1BuildInfo.setPrefixFile(sdk, prefixCheck);
-					} else if (sbsv2BuildInfo != null) {
-						sbsv2BuildInfo.setPrefixFile(sdk, prefixCheck);
-					}
+					((SymbianSDK)sdk).setPrefixFile(prefixCheck, builderId);
 				}
 			}
 			
@@ -202,12 +197,15 @@ public class SymbianBuildContextDataCache {
 				// add any BSF/SBV includes so the headers are picked up from the correct location
 				IBSFPlatform bsfPlat = null;
 				ISBVPlatform sbvPlat = null;
-				if (sbsv1BuildInfo != null) {
-					bsfPlat = sbsv1BuildInfo.getBSFCatalog(sdk).findPlatform(platformString);
-					sbvPlat = sbsv1BuildInfo.getSBVCatalog(sdk).findPlatform(platformString);
-				} else if (sbsv2BuildInfo != null) {
-					bsfPlat = sbsv2BuildInfo.getBSFCatalog(sdk).findPlatform(platformString);
-					sbvPlat = sbsv2BuildInfo.getSBVCatalog(sdk).findPlatform(platformString);
+				ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
+				if (buildInfo instanceof ISBSv1BuildInfo) {
+					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
+					bsfPlat = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
+					sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
+				} else {
+					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)buildInfo;
+					bsfPlat = sbsv2BuildInfo.getBSFCatalog().findPlatform(platformString);
+					sbvPlat = sbsv2BuildInfo.getSBVCatalog().findPlatform(platformString);
 				}
 				if (bsfPlat != null) {
 					for (IPath path : bsfPlat.getSystemIncludePaths()) {
@@ -313,12 +311,7 @@ public class SymbianBuildContextDataCache {
 					
 					userPaths.add(prefixFile.removeLastSegments(1).toFile());
 					systemPaths.add(prefixFile.removeLastSegments(1).toFile());
-					IPath includePath = null;
-					if (sbsv1BuildInfo != null) {
-						includePath = sbsv1BuildInfo.getIncludePath(sdk);
-					} else if (sbsv2BuildInfo != null) {
-						includePath = sbsv2BuildInfo.getIncludePath(sdk);
-					}
+					IPath includePath = sdk.getIncludePath();
 					if (includePath != null) {
 						File includeDir = includePath.toFile().getAbsoluteFile();
 						userPaths.add(includeDir);
@@ -381,21 +374,19 @@ public class SymbianBuildContextDataCache {
 		
 		IBSFPlatform bsfplatform = null;
 		ISBVPlatform sbvPlatform = null;
-		if (sbsv1BuildInfo != null) {
-			bsfplatform = sbsv1BuildInfo.getBSFCatalog(sdk).findPlatform(platformString);
-			sbvPlatform = sbsv1BuildInfo.getSBVCatalog(sdk).findPlatform(platformString);
-		} else if (sbsv2BuildInfo != null) {
-			bsfplatform = sbsv2BuildInfo.getBSFCatalog(sdk).findPlatform(platformString);
-			sbvPlatform = sbsv2BuildInfo.getSBVCatalog(sdk).findPlatform(platformString);
+		ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
+		if (buildInfo instanceof ISBSv1BuildInfo) {
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
+			bsfplatform = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
+			sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
+		} else {
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)buildInfo;
+			bsfplatform = sbsv2BuildInfo.getBSFCatalog().findPlatform(platformString);
+			sbvPlatform = sbsv2BuildInfo.getSBVCatalog().findPlatform(platformString);
 		}
 
 		// look in the epoc32 directory of the SDK
-		IPath includePath = null;
-		if (sbsv1BuildInfo != null) {
-			includePath = sbsv1BuildInfo.getIncludePath(sdk);
-		} else if (sbsv2BuildInfo != null) {
-			includePath = sbsv2BuildInfo.getIncludePath(sdk);
-		}
+		IPath includePath = sdk.getIncludePath();
 		if (includePath != null) {
 			File includeDir = includePath.toFile().getAbsoluteFile();
 			File dir;
@@ -456,12 +447,7 @@ public class SymbianBuildContextDataCache {
 		}
 		
 		// also search files in same folder as variant.hrh
-		File prefix = null;
-		if (sbsv1BuildInfo != null) {
-			prefix = sbsv1BuildInfo.getPrefixFile(sdk);
-		} else if (sbsv2BuildInfo != null) {
-			prefix = sbsv2BuildInfo.getPrefixFile(sdk);
-		}
+		File prefix = sdk.getPrefixFile(builderId);
 		if (sbvPlatform != null){
 			// might be an alternate HRH file to use
 			IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();

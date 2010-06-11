@@ -53,22 +53,20 @@ public class SDKCreationTest extends BaseDeviceModifierTest {
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 				// Test an SDK that exists and we know OS version
 				if (sdk.getUniqueId().equals("UIQ3")){
-					List<String> platMacros = sdk.getPlatformMacros("WINSCW");
+					List<String> platMacros = sbsv1BuildInfo.getPlatformMacros("WINSCW");
 					assertTrue(platMacros != null);
 					assertEquals(3, platMacros.size());
-					if (sbsv1BuildInfo != null) {
-						assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations(sdk).size() > 0);
-					}
+					assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations().size() > 0);
 				}
 				// Test an SDK that does not exist. Check for proper null values
 				else if (sdk.getUniqueId().equals("SDK_No_Exist")){
 					if (sbsv1BuildInfo != null) {
-						assertTrue(sbsv1BuildInfo.getSDKVersion(sdk).getMajor() == 0);
-						assertTrue(sbsv1BuildInfo.getAvailablePlatforms(sdk).size() == 0);
-						assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations(sdk).size() == 0);
+						assertTrue(sdk.getSDKVersion().getMajor() == 0);
+						assertTrue(sbsv1BuildInfo.getAvailablePlatforms().size() == 0);
+						assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations().size() == 0);
 					}
 					assertTrue(sdk.getOSVersion().getMajor() == 0);
-					assertTrue(sdk.getPlatformMacros("WINSCW").size() == 0);
+					assertTrue(sbsv1BuildInfo.getPlatformMacros("WINSCW").size() == 0);
 					assertTrue(sdk.getSupportedTargetTypes().size() == 0);
 					File epocRoot = new File(sdk.getEPOCROOT());
 					assertTrue(epocRoot.exists() == false);

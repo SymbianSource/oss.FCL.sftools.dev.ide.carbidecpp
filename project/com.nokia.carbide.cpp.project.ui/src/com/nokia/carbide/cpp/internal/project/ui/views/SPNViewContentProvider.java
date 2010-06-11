@@ -1657,13 +1657,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 						if (buildConfig != null) {
 							ISymbianSDK sdk = buildConfig.getSDK();
 							if (sdk != null) {
-								ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-								ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-								if (sbsv1BuildInfo != null) {
-									sdkEpoc32IncludeDir = sbsv1BuildInfo.getIncludePath(sdk);
-								} else if (sbsv2BuildInfo != null) {
-									sdkEpoc32IncludeDir = sbsv2BuildInfo.getIncludePath(sdk);
-								}
+								sdkEpoc32IncludeDir = sdk.getIncludePath();
 							}
 						}
 					}

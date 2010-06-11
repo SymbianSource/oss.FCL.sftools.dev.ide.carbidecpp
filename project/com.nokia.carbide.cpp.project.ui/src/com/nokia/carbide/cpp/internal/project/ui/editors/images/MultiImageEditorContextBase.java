@@ -440,9 +440,7 @@ public abstract class MultiImageEditorContextBase {
 		ISymbianSDK sdk = buildContext != null ? buildContext.getSDK() : null;
 		if (sdk != null) {
 			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			if (sbsv1BuildInfo != null) {
-				return sbsv1BuildInfo.isS60(sdk);
-			}
+			return sbsv1BuildInfo.isS60();
 		}
 		return false;
 		

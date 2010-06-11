@@ -99,14 +99,6 @@ public interface ISDKManager {
 	public void updateCarbideSDKCache();
 	
 	/**
-	 * Sets the default SDK attribute for the input SDK.
-	 * Sets all other sdks in devcies.xml to 'default=false'
-	 * @param sdk - ISymbianSDK object
-	 */
-	public void setDefaultSDK(ISymbianSDK sdk);
-	
-	
-	/**
 	 * Get whether or not the UI has enabled BSF scanning.
 	 * @return true if BSF scanning is enabled.
 	 */

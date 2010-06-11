@@ -85,6 +85,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.LanguageSelectionDialog;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -200,14 +201,11 @@ public class PreprocessHandler extends AbstractHandler {
 							}
 
 							// add the sdk prefix file if any
-							ISymbianSDK sdk = buildConfig.getSDK();
-							ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-							ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 							File sdkPrefix = null;
-							if (sbsv1BuildInfo != null) {
-								sdkPrefix = sbsv1BuildInfo.getPrefixFile(sdk);
-							} else if (sbsv2BuildInfo != null) {
-								sdkPrefix = sbsv2BuildInfo.getPrefixFile(sdk);
+							if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+								sdkPrefix = buildConfig.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
+							} else {
+								sdkPrefix = buildConfig.getSDK().getPrefixFile(ISymbianBuilderID.SBSV2_BUILDER);
 							}
 							if (sdkPrefix != null && sdkPrefix.exists()) {
 								args.add("-include"); //$NON-NLS-1$
@@ -416,16 +414,21 @@ public class PreprocessHandler extends AbstractHandler {
 	private List<String> getMacros(ICarbideBuildConfiguration buildConfig, final IPath filePath, final IProgressMonitor monitor) {
 		final List<String> macros = new ArrayList<String>();
 		ISymbianSDK sdk = buildConfig.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-
-		if (sbsv1BuildInfo != null) {
+		if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			// platform macros
-			for (String platMacro : sbsv1BuildInfo.getPlatformMacros(sdk, buildConfig.getPlatformString())) {
+			for (String platMacro : sbsv1BuildInfo.getPlatformMacros(buildConfig.getPlatformString())) {
 				macros.add("__" + platMacro + "__"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			// vendor macros (e.g. __SERIES60_3x__)
-			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros(sdk)) {
+			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
 				macros.add(builtinMacro);
+			}
+		} else {
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+			// platform macros
+			for (String platMacro : sbsv2BuildInfo.getPlatformMacros(buildConfig.getPlatformString())) {
+				macros.add("__" + platMacro + "__"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		

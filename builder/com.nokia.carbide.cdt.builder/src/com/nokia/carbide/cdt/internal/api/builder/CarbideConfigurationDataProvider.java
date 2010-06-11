@@ -244,7 +244,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 			if (sdk != null){
 				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
 			} else {
-				ISymbianSDK deadSDK = SymbianSDKFactory.createInstance(sdkID, "FIXME", "", new Version("0.0"), "", new Version("0.0"), false);
+				ISymbianSDK deadSDK = SymbianSDKFactory.createInstance(sdkID, "FIXME", "", new Version("0.0"), new Version("0.0"));
 				SDKCorePlugin.getSDKManager().addSDK(deadSDK);
 				
 				return new BuildContextSBSv2(deadSDK, platform, target, buidAlias, displayString, configID);

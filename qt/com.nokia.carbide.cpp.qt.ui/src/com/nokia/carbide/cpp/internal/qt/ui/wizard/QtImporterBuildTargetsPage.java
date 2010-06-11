@@ -24,6 +24,7 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -64,12 +65,12 @@ public class QtImporterBuildTargetsPage extends QtBuildTargetsPage {
 			for (ISymbianBuildContext currContext : selectedConfigs){
 				ISymbianSDK sdk = currContext.getSDK();
 				IBSFCatalog bsfCatalog = null;
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-				if (sbsv1BuildInfo != null) {
-					bsfCatalog = sbsv1BuildInfo.getBSFCatalog(sdk);
-				} else if (sbsv2BuildInfo != null) {
-					bsfCatalog = sbsv2BuildInfo.getBSFCatalog(sdk);
+				if (currContext instanceof ISBSv1BuildContext) {
+					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+					bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
+				} else {
+					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+					bsfCatalog = sbsv2BuildInfo.getBSFCatalog();
 				}
 				if (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0 || sdkMgr.getBSFScannerEnabled()){
 					// this setting needs to be persisted.

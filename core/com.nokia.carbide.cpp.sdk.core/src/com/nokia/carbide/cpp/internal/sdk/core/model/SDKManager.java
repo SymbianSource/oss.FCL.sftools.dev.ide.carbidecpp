@@ -38,13 +38,11 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
@@ -137,35 +135,6 @@ public class SDKManager extends AbstractSDKManager {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public void setDefaultSDK(ISymbianSDK sdk){
-		try {
-			File devicesFile = getDevicesXMLFile();
-			
-			synchronized(sdkList)
-			{
-				for (ISymbianSDK currSDK : sdkList){
-					if (!currSDK.getUniqueId().equals(sdk.getUniqueId())){
-						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						if (sbsv1BuildInfo != null) {
-							sbsv1BuildInfo.setIsDefaultSDK(currSDK, false);  // set all to false, except the input one
-						}
-					}
-				}
-			}
-			
-			DevicesLoader.setDefaultDevice(sdk, devicesFile.toURL());
-			updateCarbideSDKCache();
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	
 	protected boolean doRemoveSDK(String sdkId) {
 		// Now actually remove it from the file...
@@ -413,13 +382,9 @@ public class SDKManager extends AbstractSDKManager {
 							needsRescan = true;
 							break;
 						}
-						ISBSv1BuildInfo sbsv1BuildInfo1 = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						ISBSv1BuildInfo sbsv1BuildInfo2 = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						if (sbsv1BuildInfo1 != null) {
-							if (!sbsv1BuildInfo1.getName(sdk).equalsIgnoreCase(sbsv1BuildInfo2.getName(currSDK))){
-								needsRescan = true;
-								break;
-							}
+						if (!sdk.getName().equalsIgnoreCase(currSDK.getName())){
+							needsRescan = true;
+							break;
 						}
 					}
 				}

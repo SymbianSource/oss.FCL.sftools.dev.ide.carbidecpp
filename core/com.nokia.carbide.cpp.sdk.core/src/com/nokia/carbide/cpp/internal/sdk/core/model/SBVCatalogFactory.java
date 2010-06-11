@@ -12,16 +12,11 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
-import java.io.File;
-
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+
+import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
  * This factory creates SBV catalogs. 
@@ -36,17 +31,7 @@ public class SBVCatalogFactory {
 	 * @return a catalog, never null
 	 */
 	public static ISBVCatalog createCatalog(ISymbianSDK sdk) {
-		IPath sdkIncludePath;
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-		if (sbsv1BuildInfo != null) {
-			sdkIncludePath = sbsv1BuildInfo.getIncludePath(sdk);
-		} else if (sbsv2BuildInfo != null) {
-			sdkIncludePath = sbsv2BuildInfo.getIncludePath(sdk);
-		} else {
-			sdkIncludePath = new Path(sdk.getEPOCROOT()).append("include");
-		}
-		SBVCatalog catalog = new SBVCatalog(new Path(sdk.getEPOCROOT()), sdkIncludePath);
+		SBVCatalog catalog = new SBVCatalog(new Path(sdk.getEPOCROOT()), sdk.getIncludePath());
 		return catalog;
 	}
 

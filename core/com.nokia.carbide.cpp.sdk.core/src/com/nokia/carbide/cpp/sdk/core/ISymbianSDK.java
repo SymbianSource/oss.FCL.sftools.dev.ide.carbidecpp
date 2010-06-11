@@ -12,9 +12,11 @@
 */
 package com.nokia.carbide.cpp.sdk.core;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
 /**
@@ -38,6 +40,59 @@ public interface ISymbianSDK {
 	ISDKBuildInfo getBuildInfo(String builderId);
 	
 	/**
+	 * Returns the absolute path to the epoc32 directory of this SDK. This method is guaranteed to
+	 * return the path with a trailing File.separator.
+	 *
+	 * @return the absolute path to the epoc32 directory.
+	 */
+	String getEPOCROOT();
+		
+	/**
+	 * Returns the family name of a SDK. This is parsed from the 'vendor' attribute from devices.xml.
+	 */
+	String getFamily();
+
+	/**
+	 * Returns an IPath for the epoc32\include directory of a SDK.
+	 * @return an IPath for the epoc32\include directory, or <code>null</code>.
+	 */
+	IPath getIncludePath();
+
+	/**
+	 * Returns the display name of a SDK. This is the com.vendor.family identifier.
+	 * @return the name of a sdk.
+	 */
+	String getName();  
+
+	/**
+	 * Returns the OS version string of this SDK.
+	 *
+	 * @return the OS Version object. If the version cannot be determined it will be "0.0".
+	 */
+	Version getOSVersion();
+
+	/**
+	 * Returns the prefix file for a particular builder.
+	 * @param builderId id string of a builder
+	 * @return the File object for the prefix file, or
+	 * <code>null</code> if there isn't one for the SDK.
+	 */
+	File getPrefixFile(String builderId);
+
+	/**
+	 * Returns an IPath for the epoc32\release directory of a SDK.
+	 * @return an IPath for the epoc32\release directory, or <code>null</code>.
+	 */
+	IPath getReleaseRoot();
+
+	/**
+	 * Returns the SDK version string of a SDK.
+	 * @param sdk Symbian SDK
+	 * @return the SDK Version object. If the version cannot be determined it will be "0.0".
+	 */
+	Version getSDKVersion();
+
+	/**
 	 * Returns a set of features supported by the SDK. 
 	 * Feature IDs are defined in ISymbianSDKFeatures.
 	 * @return set of features
@@ -46,29 +101,24 @@ public interface ISymbianSDK {
 	Set getSupportedFeatures();
 	
 	/**
-	 * Returns true if the SDK is configured properly, false otherwise.
-	 *
-	 * @return <code>true</code> if the SDK is configured properly, and
-	 *   <code>false</code> otherwise
+	 * Get a list of supported targettypes listed by this SDK. This routine parses the 
+	 * \epoc32\tools\trgttype.pm file to build it's list.
+	 * @return A list of targettype names that can be used in an MMP file
 	 */
-	boolean isValid();
+	List<String> getSupportedTargetTypes();
 	
 	/**
-	 * Returns a list of human readable error strings desribing why the
-	 * SDK is not configured properly.
-	 *
-	 * @return a list of strings which may be empty.
-	 * @see #isValid()
+	 * Returns an IPath for the epoc32\tools directory of a SDK.
+	 * @return an IPath for the epoc32\tools directory, or <code>null</code>.
 	 */
-	List<String> validationErrors();
-	
+	IPath getToolsPath();
+
 	/**
-	 * Returns true if the SDK is enabled, false otherwise.
+	 * Returns the unique id of this SDK. This is the devices.xml 'id' attribute.
 	 *
-	 * @return <code>true</code> if the SDK is enabled, and
-	 *   <code>false</code> otherwise
+	 * @return the id string of this SDK.
 	 */
-	boolean isEnabled();
+	String getUniqueId();
 	
 	/**
 	 * Returns a list of the macros defined in the variant.cfg file. This is NOT the macros
@@ -78,43 +128,22 @@ public interface ISymbianSDK {
 	List<String> getVariantCFGMacros();
 	
 	/**
-	 * Returns the unique id of this SDK. This is the devices.xml 'id' attribute.
-	 *
-	 * @return the id string of this SDK.
+	 * Returns the vendor name of this SDK. This is parsed from the 'name' attribute from devices.xml.
+	 * @return the vendor name of a sdk.
 	 */
-	String getUniqueId();
-	
-	/**
-	 * Returns the absolute path to the epoc32 directory of this SDK. This method is guaranteed to
-	 * return the path with a trailing File.separator.
-	 *
-	 * @return the absolute path to the epoc32 directory.
-	 */
-	String getEPOCROOT();
-		
-	/**
-	 * Returns the OS version string of this SDK.
-	 *
-	 * @return the OS Version object. If the version cannot be determined it will be "0.0".
-	 */
-	Version getOSVersion();
+	String getVendor();
 
 	/**
-	 * Get a list of supported targettypes listed by this SDK. This routine parses the 
-	 * \epoc32\tools\trgttype.pm file to build it's list.
-	 * @return A list of targettype names that can be used in an MMP file
+	 * Returns true if the SDK is enabled, false otherwise.
+	 *
+	 * @return <code>true</code> if the SDK is enabled, and
+	 *   <code>false</code> otherwise
 	 */
-	List<String> getSupportedTargetTypes();
-	
-	/**
-	 * Set the absolute path to the epoc32 directory of this SDK.
-	 * @param epocRoot absolute path to the epoc32 directory
-	 */
-	void setEPOCROOT(String epocRoot);
+	boolean isEnabled();
 	
 	/**
 	 * Scans/Rescans the SDK for info such as prefix file, variant macros, manifest.xml, etc.
 	 */
 	void scanSDK();
-	
+
 }

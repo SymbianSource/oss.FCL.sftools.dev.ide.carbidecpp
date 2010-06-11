@@ -57,7 +57,7 @@ public class TestMMPView3 extends BaseMMPViewTest {
 		sdk = null;
 		if (!Platform.isRunning()) {
 			sdk = SymbianSDKFactory.createInstance("S60_3rd", "c:\\symbian\\9.1\\S60_3rd", "com.nokia.s60", 
-					new Version(9,0,0), null, null, false);
+					new Version(9,0,0), new Version(0,0,0));
 			// add to memory for standalone test, hopefully only affecting my system
 			SDKCorePlugin.getSDKManager().addSDK(sdk);
 		} else {

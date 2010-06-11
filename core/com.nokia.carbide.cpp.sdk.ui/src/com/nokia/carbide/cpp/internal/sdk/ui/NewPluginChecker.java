@@ -56,10 +56,10 @@ public class NewPluginChecker {
 				for (ISymbianSDK sdk : sdkList) {
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 					if (sbsv1BuildInfo != null) {
-						if (sbsv1BuildInfo.isPreviouslyScanned(sdk) == false) {
+						if (sbsv1BuildInfo.isPreviouslyScanned() == false) {
 							oneSDKWasScanned = true;
 							// XML was parsed, now try to run the feature installer
-							sbsv1BuildInfo.setPreviouslyScanned(sdk, true);
+							sbsv1BuildInfo.setPreviouslyScanned(true);
 							File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
 							try {
 								DynamicFeatureInstaller installer = new DynamicFeatureInstaller(featureDir, null);

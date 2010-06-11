@@ -76,14 +76,11 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGEmbeddedSISFile;
@@ -640,15 +637,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 						targetPath = "sys\\bin\\"; //$NON-NLS-1$
 					}
 
-					ISymbianSDK sdk = buildConfig.getSDK();
-					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-					IPath releaseRoot;
-					if (sbsv1BuildInfo != null) {
-						releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-					} else {
-						releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-					}
-					String dataZDir = releaseRoot.removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
+					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
 
 					IPath rezPath = null;
 					List<EMMPLanguage> languages = null;
@@ -1378,15 +1367,7 @@ public static String[] getParserIdArray(int id) {
 			args.add(resolvedPKGPath.toOSString());
 			args.add(sisName);
 
-			ISymbianSDK sdk = config.getSDK();
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			IPath toolsPath;
-			if (sbsv1BuildInfo != null) {
-				toolsPath = sbsv1BuildInfo.getReleaseRoot(sdk);
-			} else {
-				toolsPath = new Path(sdk.getEPOCROOT()).append("epoc32/tools");
-			}
-			IPath makeSisPath = toolsPath.append(MAKESIS_EXE);
+			IPath makeSisPath = config.getSDK().getToolsPath().append(MAKESIS_EXE);
 
 			cmdLauncher.writeToConsole("\n***Invoking " + MAKESIS_EXE + " ....\n");
 			cmdLauncher.setErrorParserManager(pkgPath.removeLastSegments(1), getParserIdArray(ICarbideBuildConfiguration.ERROR_PARSERS_SIS_BUILDER));
@@ -1494,14 +1475,6 @@ public static String[] getParserIdArray(int id) {
 	    	}
 
    	    	IPath buildDirPath = getBuilder(config.getCarbideProject().getProject()).getMakefileDirectory(config);
-			ISymbianSDK sdk = config.getSDK();
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			IPath toolsPath;
-			if (sbsv1BuildInfo != null) {
-				toolsPath = sbsv1BuildInfo.getReleaseRoot(sdk);
-			} else {
-				toolsPath = new Path(sdk.getEPOCROOT()).append("epoc32/tools");
-			}
 
    	    	int signingMethod = sisInfo.getSigningType();
 	   		if (signingMethod != ISISBuilderInfo.DONT_SIGN) {
@@ -1519,7 +1492,7 @@ public static String[] getParserIdArray(int id) {
 					
 					cmdLauncher.writeToConsole("\n***Invoking makekeys....\n");
 
-					IPath makekeys = toolsPath.append(MAKEKEYS_EXE);
+					IPath makekeys = config.getSDK().getToolsPath().append(MAKEKEYS_EXE);
 					List<String> makekeysArgList = new ArrayList<String>();
 					makekeysArgList.add("-cert");
 					makekeysArgList.add("-password");
@@ -1553,7 +1526,7 @@ public static String[] getParserIdArray(int id) {
 				// call signsis...
 				cmdLauncher.writeToConsole("\n***Invoking " + SIGNSIS_EXE + "....\n");
 
-				IPath signsis = toolsPath.append(SIGNSIS_EXE);
+				IPath signsis = config.getSDK().getToolsPath().append(SIGNSIS_EXE);
 				
 				List<String> signSISArgList = new ArrayList<String>();
 				
@@ -1771,15 +1744,7 @@ public static String[] getParserIdArray(int id) {
 		cmdLauncher.writeToConsole("\n***Invoking " + MAKESIS_EXE + " for partial upgrade....\n");
 		cmdLauncher.setErrorParserManager(pkgPath.removeLastSegments(1), getParserIdArray(ICarbideBuildConfiguration.ERROR_PARSERS_SIS_BUILDER));
 
-		ISymbianSDK sdk = config.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		IPath toolsPath;
-		if (sbsv1BuildInfo != null) {
-			toolsPath = sbsv1BuildInfo.getReleaseRoot(sdk);
-		} else {
-			toolsPath = new Path(sdk.getEPOCROOT()).append("epoc32/tools");
-		}
-		IPath makeSisPath = toolsPath.append(MAKESIS_EXE);
+		IPath makeSisPath = config.getSDK().getToolsPath().append(MAKESIS_EXE);
 		int retVal = cmdLauncher.executeCommand(makeSisPath, args.toArray(new String[args.size()]), getResolvedEnvVars(config), pkgPath.removeLastSegments(1));
 		
     	SubMonitor subMonitor = SubMonitor.convert(monitor, 1);
@@ -1830,15 +1795,7 @@ public static String[] getParserIdArray(int id) {
 		// call signsis...
 		cmdLauncher.writeToConsole("\n***Invoking " + SIGNSIS_EXE + " for partial upgrade....\n");
 
-		ISymbianSDK sdk = config.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		IPath toolsPath;
-		if (sbsv1BuildInfo != null) {
-			toolsPath = sbsv1BuildInfo.getReleaseRoot(sdk);
-		} else {
-			toolsPath = new Path(sdk.getEPOCROOT()).append("epoc32/tools");
-		}
-		IPath signsis = toolsPath.append(SIGNSIS_EXE);
+		IPath signsis = config.getSDK().getToolsPath().append(SIGNSIS_EXE);
 		
 		List<String> signSISArgList = new ArrayList<String>();
 		

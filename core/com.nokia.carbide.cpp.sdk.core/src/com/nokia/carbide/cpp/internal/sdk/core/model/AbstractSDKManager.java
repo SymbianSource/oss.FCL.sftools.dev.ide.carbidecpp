@@ -394,34 +394,22 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 					}
 					
 					if (customEpocroot != null) {
-						sdk.setEPOCROOT(customEpocroot);
+						((SymbianSDK)sdk).setEPOCROOT(customEpocroot);
 					}
 					
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-					if (sbsv1BuildInfo != null) {
-						if (wasScanned.equalsIgnoreCase("true")){
-							sbsv1BuildInfo.setPreviouslyScanned(sdk, true);
-						} else {
-							sbsv1BuildInfo.setPreviouslyScanned(sdk, false);
-						}
-						
-						if (!osBranch.equals("")){
-							sbsv1BuildInfo.setOSSDKBranch(sdk, osBranch);
-						}
-						
-						if (!sdkVersion.equals("")){
-							if (Version.parseVersion(sdkVersion).getMajor() != 0){
-								sbsv1BuildInfo.setSDKVersion(sdk, Version.parseVersion(sdkVersion));
-							}
-						}
-					}
-
 					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-					if (sbsv2BuildInfo != null) {
-						if (wasScanned.equalsIgnoreCase("true")){
-							sbsv2BuildInfo.setPreviouslyScanned(sdk, true);
-						} else {
-							sbsv2BuildInfo.setPreviouslyScanned(sdk, false);
+					if (wasScanned.equalsIgnoreCase("true")){
+						sbsv1BuildInfo.setPreviouslyScanned(true);
+						sbsv2BuildInfo.setPreviouslyScanned(true);
+					} else {
+						sbsv1BuildInfo.setPreviouslyScanned(false);
+						sbsv2BuildInfo.setPreviouslyScanned(false);
+					}
+					
+					if (!sdkVersion.equals("")){
+						if (Version.parseVersion(sdkVersion).getMajor() != 0){
+							((SymbianSDK)sdk).setSDKVersion(Version.parseVersion(sdkVersion));
 						}
 					}
 				}
@@ -480,6 +468,10 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				osVerNode.setNodeValue(currSDK.getOSVersion().toString());
 				attribs.setNamedItem(osVerNode);
 				
+				Node sdkVerNode = d.createAttribute(SDK_CACHE_SDK_VERSION_ATTRIB);
+				sdkVerNode.setNodeValue(currSDK.getSDKVersion().toString());
+				attribs.setNamedItem(sdkVerNode);
+
 				if (!isEPOCRootFixed()) {
 					Node sdkEpocRootNode = d.createAttribute(SDK_CACHE_EPOCROOT_ATTRIB);
 					sdkEpocRootNode.setNodeValue(currSDK.getEPOCROOT());
@@ -487,23 +479,15 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				}
 
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				if (sbsv1BuildInfo != null) {
-					Node wasScannedNode = d.createAttribute(SDK_SCANNED_FOR_PLUGINS);
-					if (true == sbsv1BuildInfo.isPreviouslyScanned(currSDK)) {
-						wasScannedNode.setNodeValue("true");
-					} else {
-						wasScannedNode.setNodeValue("false");
-					}
-					attribs.setNamedItem(wasScannedNode);
-					
-					Node osBranchNode = d.createAttribute(SDK_CACHE_OS_BRANCH_ATTRIB);
-					osBranchNode.setNodeValue(sbsv1BuildInfo.getSDKOSBranch(currSDK));
-					attribs.setNamedItem(osBranchNode);
-					
-					Node sdkVerNode = d.createAttribute(SDK_CACHE_SDK_VERSION_ATTRIB);
-					sdkVerNode.setNodeValue(sbsv1BuildInfo.getSDKVersion(currSDK).toString());
-					attribs.setNamedItem(sdkVerNode);
+				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+				Node wasScannedNode = d.createAttribute(SDK_SCANNED_FOR_PLUGINS);
+				if (true == sbsv1BuildInfo.isPreviouslyScanned() ||
+					true == sbsv2BuildInfo.isPreviouslyScanned()) {
+					wasScannedNode.setNodeValue("true");
+				} else {
+					wasScannedNode.setNodeValue("false");
 				}
+				attribs.setNamedItem(wasScannedNode);
 			}
 		}
 		DOMSource domSource = new DOMSource(d);

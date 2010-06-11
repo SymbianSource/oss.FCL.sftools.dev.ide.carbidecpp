@@ -142,7 +142,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		ISymbianSDK sdk = buildConfig.getSDK();
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		if (sbsv1BuildInfo != null) {
-			IBSFPlatform[] bsfPlatforms = sbsv1BuildInfo.getBSFCatalog(sdk).getAdditionalBuiltPlatforms(buildConfig.getPlatformString());
+			IBSFPlatform[] bsfPlatforms = sbsv1BuildInfo.getBSFCatalog().getAdditionalBuiltPlatforms(buildConfig.getPlatformString());
 			if (bsfPlatforms.length > 0) {
 				String plats = "";
 				for (IBSFPlatform plat : bsfPlatforms) {
@@ -661,15 +661,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 						}
 					}
 
-					ISymbianSDK sdk = buildConfig.getSDK();
-					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-					IPath releaseRoot;
-					if (sbsv1BuildInfo != null) {
-						releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-					} else {
-						releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-					}
-					String dataZDir = releaseRoot.removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
+					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
 
 					IPath rezPath = null;
 					List<EMMPLanguage> languages = null;
@@ -763,13 +755,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		// add the following to the top of the the Deps_GenDependsL subroutine in makdeps.pm
 		String change = "\r\n\t# Carbide.c++ change.  See CARBIDE_CHANGES.TXT for more details.\r\n\tif ($ENV{CARBIDE_NO_DEPENDENCIES}) {\r\n\t\treturn;\r\n\t}\r\n";
 
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		IPath toolsPath;
-		if (sbsv1BuildInfo != null) {
-			toolsPath = sbsv1BuildInfo.getReleaseRoot(sdk);
-		} else {
-			toolsPath = new Path(sdk.getEPOCROOT()).append("epoc32/tools");
-		}
+		IPath toolsPath = sdk.getToolsPath();
 		boolean updated = false;
 		try {
 			File mdFile = toolsPath.append("makdeps.pm").toFile();
@@ -2321,12 +2307,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			
 			// we need to check the variant hrh files as well
-			ISymbianSDK sdk = config.getSDK();
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			File prefixFile = null;
-			if (sbsv1BuildInfo != null) {
-				prefixFile = sbsv1BuildInfo.getPrefixFile(sdk);
-			}
+			File prefixFile = config.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
 			if (prefixFile != null && prefixFile.lastModified() > oldestMakefileTimestamp) {
 				return true;
 			}
@@ -2447,12 +2428,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		ISymbianSDK sdk = config.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		File prefixFile = null;
-		if (sbsv1BuildInfo != null) {
-			prefixFile = sbsv1BuildInfo.getPrefixFile(sdk);
-		}
+		File prefixFile = config.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
@@ -2535,12 +2511,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		ISymbianSDK sdk = config.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		File prefixFile = null;
-		if (sbsv1BuildInfo != null) {
-			prefixFile = sbsv1BuildInfo.getPrefixFile(sdk);
-		}
+		File prefixFile = config.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
@@ -2912,12 +2883,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				// add the compiler prefix file if any
 				ISymbianSDK sdk = config.getSDK();
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				ISBVPlatform sbvPlatform = null;
-				File sdkPrefix = null;
-				if (sbsv1BuildInfo != null) {
-					sbvPlatform = sbsv1BuildInfo.getSBVCatalog(sdk).findPlatform(config.getPlatformString());
-					sdkPrefix = sbsv1BuildInfo.getPrefixFile(sdk);
-				}
+				ISBVPlatform sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(config.getPlatformString());
+				File sdkPrefix = sdk.getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
 
 				if (sbvPlatform != null){
 					// might be an alternate HRH file to use
@@ -2983,15 +2950,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					// running gcc to get the version (which could be tricky), we can just check for the folder
 					// \epoc32\gcc\lib\gcc-lib\arm-epoc-pe\3.0-psion-98r2.  If it exists, we'll assume GCC 3.0 and treat it like GCCE.
 					boolean isGCC30 = false;
-					ISymbianSDK sdk = config.getSDK();
-					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-					IPath toolsPath;
-					if (sbsv1BuildInfo != null) {
-						toolsPath = sbsv1BuildInfo.getReleaseRoot(sdk);
-					} else {
-						toolsPath = new Path(sdk.getEPOCROOT()).append("epoc32/tools");
-					}
-					if (toolsPath.removeLastSegments(1).append("gcc\\lib\\gcc-lib\\arm-epoc-pe\\3.0-psion-98r2").toFile().exists()) {
+					if (config.getSDK().getToolsPath().removeLastSegments(1).append("gcc\\lib\\gcc-lib\\arm-epoc-pe\\3.0-psion-98r2").toFile().exists()) {
 						isGCC30 = true;
 					}
 					

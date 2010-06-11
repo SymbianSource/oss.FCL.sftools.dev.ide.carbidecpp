@@ -21,11 +21,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.Messages;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.template.engine.ITemplate;
@@ -175,13 +173,12 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 			ISymbianSDK sdk = symbianBuildContext.getSDK();
 			if (sdk != null) {
 				File middleWareInclude = new File(sdk.getEPOCROOT(), S60_MIDDWARE_INC);
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 				
 				// NOTE: Here we need to check the SDK major version becuase
 				// the 3.2 CustKit
 				// has the middleware folder but doesn't use the new build
 				// macros for include paths
-				if (sbsv1BuildInfo != null && sbsv1BuildInfo.getSDKVersion(sdk).getMajor() >= 5 && middleWareInclude.exists()) {
+				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
 					// add symbol as at least one build config is a CustKit
 					S60_50_Macros_String = S60_INC_MACROS;
 					break;
@@ -190,7 +187,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 				middleWareInclude = new File(sdk.getEPOCROOT(), S60_MIDDWARE_INC2);
 				File sfoPath = new File(sdk.getEPOCROOT(), S60_SF_FOLDER);
 				// check for middleware paths and /sf path (if SFO kit)
-				if (sbsv1BuildInfo != null && sbsv1BuildInfo.getSDKVersion(sdk).getMajor() >= 5 && middleWareInclude.exists() && sfoPath.exists()) {
+				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists() && sfoPath.exists()) {
 					// add symbol as at least one build config is a CustKit
 					S60_50_Macros_String = S60_INC_MACROS_SF;
 					break;
@@ -198,7 +195,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 				
 				// try newer middleware paths moved to app layer includes
 				
-				if (sbsv1BuildInfo != null && sbsv1BuildInfo.getSDKVersion(sdk).getMajor() >= 5 && middleWareInclude.exists()) {
+				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
 					// add symbol as at least one build config is a CustKit
 					File domainPath = new File(sdk.getEPOCROOT(), S60_DOMAND_OSTEXT_PLAT_PATHS);
 					if (domainPath.exists()){

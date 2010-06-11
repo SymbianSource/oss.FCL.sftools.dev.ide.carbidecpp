@@ -79,6 +79,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -402,16 +403,13 @@ public class EpocEngineHelper {
 					&& new File(context.getSDK().getEPOCROOT()).exists()) {
 				defaultContext = context;
 				ISymbianSDK sdk = defaultContext.getSDK();
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-				if (sbsv1BuildInfo != null) {
-					if (sbsv1BuildInfo.getPrefixFile(sdk) != null)
+				if (context instanceof ISBSv2BuildContext){
+					if (sdk.getPrefixFile(ISymbianBuilderID.SBSV2_BUILDER) != null)
 						break;
-				} else if (sbsv2BuildInfo != null) {
-					if (sbsv2BuildInfo.getPrefixFile(sdk) != null)
+				} else {
+					if (sdk.getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER) != null)
 						break;
 				}
-
 			}
 		}
 		final ISymbianBuildContext defaultContextToUse = defaultContext;
@@ -755,32 +753,38 @@ public class EpocEngineHelper {
 										}
 
 										ISymbianSDK sdk = buildConfig.getSDK();
-										ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-										if (sbsv1BuildInfo != null) {
-											String releasePlatform = sbsv1BuildInfo.getBSFCatalog(sdk).getReleasePlatform(buildConfig.getPlatformString());
-											IPath path = sbsv1BuildInfo.getReleaseRoot(sdk).append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
-
-											// if targetpath is non-null and this is an EKA1 emulator config then add it
-											if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
-												if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
-													String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-													if (targetPath != null) {
-														path = path.append("z").append(targetPath); //$NON-NLS-1$
-													}
-												}
-											}
-
-											// adapt to variant, if needed
-											IPath targetPath = path.append(exePath);
-											if (isVariantBldInf(buildConfig.getCarbideProject().getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, info.getProject())) {
-												targetPath = getBinaryVariantTargetName(mmpData, targetPath, info.getProject());
-												if (targetPath == null){
-													return null; 
-												}
-											}
-											
-											exePath = targetPath.toOSString();
+										String releasePlatform;
+										IPath path;
+										if (buildConfig.getBuildContext() instanceof ISBSv2BuildContext) {
+											ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+											releasePlatform = sbsv2BuildInfo.getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
+											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
+										} else {
+											ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+											releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
+											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 										}
+
+										// if targetpath is non-null and this is an EKA1 emulator config then add it
+										if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+											if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
+												String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
+												if (targetPath != null) {
+													path = path.append("z").append(targetPath); //$NON-NLS-1$
+												}
+											}
+										}
+
+										// adapt to variant, if needed
+										IPath targetPath = path.append(exePath);
+										if (isVariantBldInf(buildConfig.getCarbideProject().getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, info.getProject())) {
+											targetPath = getBinaryVariantTargetName(mmpData, targetPath, info.getProject());
+											if (targetPath == null){
+												return null; 
+											}
+										}
+										
+										exePath = targetPath.toOSString();
 
 										return exePath;
 
@@ -1100,15 +1104,7 @@ public class EpocEngineHelper {
 			}
 		}
 	
-		ISymbianSDK sdk = buildConfig.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		IPath releaseRoot;
-		if (sbsv1BuildInfo != null) {
-			releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-		} else {
-			releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-		}
-		IPath dataZDir = releaseRoot.removeLastSegments(1).append("/data/z/"); //$NON-NLS-1$
+		IPath dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).append("/data/z/"); //$NON-NLS-1$
 		
 		// get the aifs
 		List<IMMPAIFInfo> aifs = mmpData.getAifs();
@@ -1211,15 +1207,7 @@ public class EpocEngineHelper {
 
 					public Object run(IBldInfView view) {
 						EpocEnginePathHelper helper = new EpocEnginePathHelper(buildConfig);
-						ISymbianSDK sdk = buildConfig.getSDK();
-						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						IPath releaseRoot;
-						if (sbsv1BuildInfo != null) {
-							releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-						} else {
-							releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-						}						
-						final String dataZDir = releaseRoot.removeLastSegments(1).toOSString() + "\\data\\z\\"; //$NON-NLS-1$
+						final String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\data\\z\\"; //$NON-NLS-1$
 
 						for (IMakefileReference ref : view.getAllMakefileReferences()) {
 							final IPath workspaceRelativeMakefilePath = helper.convertToWorkspace(ref.getPath());
@@ -1804,14 +1792,7 @@ public class EpocEngineHelper {
 	 */
 	public static IPath[] getLibDirectoriesForBuildContext(ISymbianBuildContext buildContext) {
 		ArrayList<IPath> dirList = new ArrayList<IPath>();
-		ISymbianSDK sdk = buildContext.getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		IPath releaseRoot;
-		if (sbsv1BuildInfo != null) {
-			releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-		} else {
-			releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-		}
+		IPath releaseRoot = buildContext.getSDK().getReleaseRoot();
 		String platformString = buildContext.getPlatformString();
 		boolean isDebug = ISymbianBuildContext.DEBUG_TARGET.equals(buildContext.getTargetString());
 		// TODO is this correct, what about ARMv6?

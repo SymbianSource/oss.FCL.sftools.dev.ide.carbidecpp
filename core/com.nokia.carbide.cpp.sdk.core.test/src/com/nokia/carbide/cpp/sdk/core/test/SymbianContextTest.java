@@ -61,9 +61,9 @@ public class SymbianContextTest extends TestCase {
 	 */
 	private void doTestSDK(ISymbianSDK sdk) {
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		if (sbsv1BuildInfo != null && sbsv1BuildInfo.getName(sdk).equals("S60_5th_Edition_SDK_v1.0")) {
+		if (sdk.getName().equals("S60_5th_Edition_SDK_v1.0")) {
 			// test that we get the SDK version
-			Version sdkVer = sbsv1BuildInfo.getSDKVersion(sdk);
+			Version sdkVer = sdk.getSDKVersion();
 			assertEquals(5,sdkVer.getMajor());
 			assertEquals(0,sdkVer.getMinor());
 			
@@ -82,7 +82,7 @@ public class SymbianContextTest extends TestCase {
 		// test that we can get the macros for valid SDKs 
 		// (if the default of 0.0, then we never fetch macros)
 		if (sbsv1BuildInfo != null && sdk.getOSVersion().compareTo(new Version(0, 0, 0)) > 0) {
-			List<String> platMacros = sbsv1BuildInfo.getPlatformMacros(contextSDK, "WINSCW");
+			List<String> platMacros = sbsv1BuildInfo.getPlatformMacros("WINSCW");
 			if (platMacros.size() == 0)
 				fail("WINSCW platform macros should be > 0");
 		}

@@ -452,27 +452,18 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	public IPath getTargetOutputDirectory() {
 		String releasePlatform = "";
 		ISymbianSDK sdk = getSDK();
-		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		if (context instanceof ISBSv1BuildContext){
 			ISBSv1BuildContext v1Context = (ISBSv1BuildContext)context;
-			if (sbsv1BuildInfo != null) {
-				releasePlatform = sbsv1BuildInfo.getBSFCatalog(sdk).getReleasePlatform(v1Context.getBasePlatformForVariation());
-			}
-		}
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(v1Context.getBasePlatformForVariation());
+		} else if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
 			// Test is this is an SBSv2 build binary variant (changes the output directory)
 			ISBSv2BuildConfigInfo sbsv2Info = getSBSv2BuildConfigInfo();
 			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){
 				releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
 			}
 		}
-		IPath releaseRoot;
-		if (sbsv1BuildInfo != null) {
-			releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-		} else {
-			releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-		}
-		return releaseRoot.append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
+		return sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
 	}
  	
 	public boolean getRebuildNeeded() {

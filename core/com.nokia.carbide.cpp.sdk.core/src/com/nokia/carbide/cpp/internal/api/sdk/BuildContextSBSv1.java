@@ -213,7 +213,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	private ISBSv1BuildInfo getBuildInfo() {
 		ISBSv1BuildInfo buildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		if (buildInfo == null) {
-			buildInfo = new SBSv1BuildInfo();
+			buildInfo = new SBSv1BuildInfo(getSDK());
 			((SymbianSDK)getSDK()).setBuildInfo(buildInfo, ISymbianBuilderID.SBSV1_BUILDER);
 		}
 		return buildInfo;
@@ -225,7 +225,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		String dirName = getDefFileDirectoryNameForPlatform(platform);
 		if (dirName == null) {
 			// check BSF's
-			IBSFCatalog catalog = getBuildInfo().getBSFCatalog(getSDK());
+			IBSFCatalog catalog = getBuildInfo().getBSFCatalog();
 			if (catalog != null) {
 	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
 	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
@@ -273,7 +273,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 			return getRVCTPrefixFilePath();
 		} else {
 			// check BSF's
-			IBSFCatalog catalog = getBuildInfo().getBSFCatalog(getSDK());
+			IBSFCatalog catalog = getBuildInfo().getBSFCatalog();
 	    	if (catalog != null) {
 	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
 	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
@@ -301,7 +301,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	}
 
 	private IPath getIncludePath() {
-		return getBuildInfo().getIncludePath(getSDK());
+		return getSDK().getIncludePath();
 	}
 
 	private IPath getGCCEPrefixFilePath() {
