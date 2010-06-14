@@ -432,9 +432,14 @@ public class SDKManager extends AbstractSDKManager {
 				((SymbianSDK)sdk).setOSVersion(new Version("9.5"));
 			}
 
+			if (sdk.getSDKVersion().toString().equals("0.0.0")) {
+				((SymbianSDK)sdk).setSDKVersion(new Version("5.0"));
+			}
+
 			if (!isSupportedSDK(sdk)) {
 				continue;
 			}
+
 			if (isInSDKList(sdk)) {
 				continue;
 			}
