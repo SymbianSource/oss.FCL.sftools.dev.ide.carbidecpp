@@ -973,7 +973,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 		String theDefFile = singleArgumentSettings.get(EMMPStatement.DEFFILE);;
 		return convertMMPDefFileToProjectOrFullPath(
 				theDefFile, isDefFileInFixedDirectory(), 
-				viewConfiguration.getDefaultDefFileBase(isASSP()),
+				viewConfiguration.getDefaultDefFileBase(),
 				viewConfiguration.isEmulatorBuild());
 	}
 	
@@ -989,7 +989,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 		//Check.checkState(ModelSynchronizer.FORCE_NEW_CONTENT_TO_MAIN_DOCUMENT);
 		IMMPViewConfiguration viewConfiguration = (IMMPViewConfiguration) getViewConfiguration();
 		String newDefFile = convertPhysicalFileToMMPDefFile(path, 
-				viewConfiguration.getDefaultDefFileBase(isASSP()),
+				viewConfiguration.getDefaultDefFileBase(),
 				viewConfiguration.isEmulatorBuild(),
 				isFixedDirectory);
 		singleArgumentSettings.put(EMMPStatement.DEFFILE, newDefFile);

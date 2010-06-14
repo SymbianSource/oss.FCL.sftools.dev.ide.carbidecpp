@@ -199,14 +199,11 @@ public class SymbianBuildContextDataCache {
 				ISBVPlatform sbvPlat = null;
 				ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 				if (buildInfo instanceof ISBSv1BuildInfo) {
+					// SBSv1 only
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
 					bsfPlat = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
 					sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
-				} else {
-					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)buildInfo;
-					bsfPlat = sbsv2BuildInfo.getBSFCatalog().findPlatform(platformString);
-					sbvPlat = sbsv2BuildInfo.getSBVCatalog().findPlatform(platformString);
-				}
+				} 
 				if (bsfPlat != null) {
 					for (IPath path : bsfPlat.getSystemIncludePaths()) {
 						systemPaths.add(path.toFile());
@@ -376,14 +373,11 @@ public class SymbianBuildContextDataCache {
 		ISBVPlatform sbvPlatform = null;
 		ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 		if (buildInfo instanceof ISBSv1BuildInfo) {
+			// SBSv1 only
 			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
 			bsfplatform = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
 			sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
-		} else {
-			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)buildInfo;
-			bsfplatform = sbsv2BuildInfo.getBSFCatalog().findPlatform(platformString);
-			sbvPlatform = sbsv2BuildInfo.getSBVCatalog().findPlatform(platformString);
-		}
+		} 
 
 		// look in the epoc32 directory of the SDK
 		IPath includePath = sdk.getIncludePath();

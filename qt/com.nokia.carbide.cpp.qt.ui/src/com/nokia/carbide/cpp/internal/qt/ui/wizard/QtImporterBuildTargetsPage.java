@@ -66,12 +66,10 @@ public class QtImporterBuildTargetsPage extends QtBuildTargetsPage {
 				ISymbianSDK sdk = currContext.getSDK();
 				IBSFCatalog bsfCatalog = null;
 				if (currContext instanceof ISBSv1BuildContext) {
+					// SBSv1 only
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 					bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
-				} else {
-					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-					bsfCatalog = sbsv2BuildInfo.getBSFCatalog();
-				}
+				} 
 				if (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0 || sdkMgr.getBSFScannerEnabled()){
 					// this setting needs to be persisted.
 					settingsNeedUpdate = true;

@@ -123,7 +123,7 @@ public abstract class TestSystemMMPs extends BaseTest {
 				return parserConfig;
 			}
 
-			public String getDefaultDefFileBase(boolean isASSP) {
+			public String getDefaultDefFileBase() {
 				return "BWINS";
 			}
 

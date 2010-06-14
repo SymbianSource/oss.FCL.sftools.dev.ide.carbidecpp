@@ -757,7 +757,8 @@ public class EpocEngineHelper {
 										IPath path;
 										if (buildConfig.getBuildContext() instanceof ISBSv2BuildContext) {
 											ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-											releasePlatform = sbsv2BuildInfo.getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
+											// TODO: This will need to be the release folder name from the SBSv2Context. Could fail for a variant
+											releasePlatform = buildConfig.getPlatformString();
 											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 										} else {
 											ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);

@@ -64,9 +64,9 @@ public class DefaultMMPViewConfiguration extends DefaultViewConfiguration implem
 		return true;
 	}
 
-	public String getDefaultDefFileBase(boolean isASSP) {
+	public String getDefaultDefFileBase() {
 		if (context != null)
-			return context.getDefaultDefFileDirectoryName(isASSP);
+			return context.getDefaultDefFileDirectoryName();
 		return null;
 	}
 	

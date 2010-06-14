@@ -79,9 +79,8 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 								ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 								ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 								if (sbsv1BuildInfo != null) {
+									// SBSv1 only
 									bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
-								} else if (sbsv2BuildInfo != null) {
-									bsfCatalog = sbsv2BuildInfo.getBSFCatalog();
 								}
 								if (sdkMgr.getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
 									// Check and see if any of the configs in the SDK
@@ -139,12 +138,10 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 				ISymbianSDK sdk = currContext.getSDK();
 				IBSFCatalog bsfCatalog = null;
 				if (currContext instanceof ISBSv1BuildContext) {
+					// SBSv1 only
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 					bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
-				} else {
-					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-					bsfCatalog = sbsv2BuildInfo.getBSFCatalog();
-				}
+				} 
 				if (sdkMgr.getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
 					// this setting needs to be persisted.
 					settingsNeedUpdate = true;

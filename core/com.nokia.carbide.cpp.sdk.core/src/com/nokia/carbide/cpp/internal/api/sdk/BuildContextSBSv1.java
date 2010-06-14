@@ -219,7 +219,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return buildInfo;
 	}
 
-	public String getDefaultDefFileDirectoryName(boolean isASSP) {
+	public String getDefaultDefFileDirectoryName() {
 		// TODO: How the ASSP option affects the path?
 
 		String dirName = getDefFileDirectoryNameForPlatform(platform);

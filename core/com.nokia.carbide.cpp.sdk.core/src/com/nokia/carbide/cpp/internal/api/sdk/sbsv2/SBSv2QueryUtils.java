@@ -15,7 +15,7 @@
 * Test the BldInfViewPathHelper class.
 *
 */
-package com.nokia.carbide.cdt.builder.test.sandbox;
+package com.nokia.carbide.cpp.internal.api.sdk.sbsv2;
 
 import java.io.BufferedReader;
 import java.io.File;

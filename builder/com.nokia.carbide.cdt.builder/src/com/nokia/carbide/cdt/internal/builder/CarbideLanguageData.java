@@ -204,14 +204,11 @@ public class CarbideLanguageData extends CLanguageData {
 		IBSFPlatform platform = null;
 		ISBVPlatform sbvPlat = null;
 		if (context instanceof ISBSv1BuildContext) {
+			// SBSv1 only
 			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			platform = sbsv1BuildInfo.getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
 			sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
-		} else {
-			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-			platform = sbsv2BuildInfo.getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
-			sbvPlat = sbsv2BuildInfo.getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
-		}
+		} 
 		if (platform != null) {
 			IPath[] systemIncludePaths = platform.getSystemIncludePaths();
 			for (IPath path : systemIncludePaths) {

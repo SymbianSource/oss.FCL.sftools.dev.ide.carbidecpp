@@ -121,7 +121,7 @@ public class TestModelProvider extends BaseTest {
 				return true;
 			}
 			
-			public String getDefaultDefFileBase(boolean isASSP) {
+			public String getDefaultDefFileBase() {
 				return "BWINS";
 			}
 			

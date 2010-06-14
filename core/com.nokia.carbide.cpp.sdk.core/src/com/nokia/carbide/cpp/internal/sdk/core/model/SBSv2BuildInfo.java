@@ -28,8 +28,6 @@ import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -43,8 +41,6 @@ import com.nokia.cpp.internal.api.utils.core.PathUtils;
 public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	private ISymbianSDK sdk;
-	private IBSFCatalog bsfCatalog;
-	private ISBVCatalog sbvCatalog;
 	private boolean wasScanned = false;
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
 
@@ -63,15 +59,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		return SBSv2Utils.getAllSBSv2BuildContexts(sdk);
 	}
 
-	public IBSFCatalog getBSFCatalog() {
-		synchronized (sdk) {
-			if (bsfCatalog == null) {
-				bsfCatalog = BSFCatalogFactory.createCatalog(sdk);
-			}
-		}
-		return bsfCatalog;
-	}
-
 	@Override
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
 		// This is probably a bug, but the filtering only uses SBSv1 preferences if SBSv1 is enabled...
@@ -86,12 +73,13 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	}
 
 	public List<String> getPlatformMacros(String platform) {
+		// TODO: Need to get from Raptor Query
+		// TODO: Are these the metadata macros or compiler macros?
 		List<String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
 		if (platformMacros == null) {
 			synchronized (cachedPlatformMacros) {
-				IBSFCatalog bsfCatalog = getBSFCatalog();
 				ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-				platformMacros = sdkMgr.getSymbianMacroStore().getPlatformMacros(sdk.getOSVersion(), "", bsfCatalog, platform);
+				platformMacros = sdkMgr.getSymbianMacroStore().getPlatformMacros(sdk.getOSVersion(), "", null, platform);
 				cachedPlatformMacros.put(platform.toUpperCase(), platformMacros);
 			}
 		}
@@ -141,15 +129,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		}
 		
 		return null; // can't find the file...
-	}
-
-	public ISBVCatalog getSBVCatalog() {
-		synchronized (sdk) {
-			if (sbvCatalog == null) {
-				sbvCatalog = SBVCatalogFactory.createCatalog(sdk);
-			}
-		}
-		return sbvCatalog;
 	}
 
 	public List<String> getTargetTypeMacros(String targettype) {

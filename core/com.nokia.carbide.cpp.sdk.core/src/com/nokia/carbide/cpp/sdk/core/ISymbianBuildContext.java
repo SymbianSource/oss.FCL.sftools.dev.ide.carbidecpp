@@ -82,10 +82,9 @@ public interface ISymbianBuildContext {
 	
 	/**
 	 * Get the implicit directory searched for *.def files by the DEFFILE statement.
-	 * @param isASSP true if targeting ASSP
 	 * @return bare directory name (e.g. 'BWINS', 'BMARM', 'EABI')
 	 */
-	public String getDefaultDefFileDirectoryName(boolean isASSP);
+	public String getDefaultDefFileDirectoryName();
 	
 	/**
 	 * Get the prefix file used at build time.  This usually provides

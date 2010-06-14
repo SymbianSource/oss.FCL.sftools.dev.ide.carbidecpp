@@ -93,7 +93,7 @@ public abstract class BaseMMPViewTest extends BaseViewTests {
 				return parserConfig;
 			}
 			
-			public String getDefaultDefFileBase(boolean isASSP) {
+			public String getDefaultDefFileBase() {
 				return defFileBase;
 			}
 			public boolean isEmulatorBuild() {
@@ -117,7 +117,7 @@ public abstract class BaseMMPViewTest extends BaseViewTests {
 			public IViewParserConfiguration getViewParserConfiguration() {
 				return parserConfig;
 			}
-			public String getDefaultDefFileBase(boolean isASSP) {
+			public String getDefaultDefFileBase() {
 				return defFileBase;
 			}
 			public boolean isEmulatorBuild() {

@@ -17,4 +17,10 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	 */
 	public String getConfigID();
 	
+	/**
+	 * Get the implicit directory searched for *.def files by the DEFFILE statement.
+	 * @return bare directory name (e.g. 'BWINS', 'BMARM', 'EABI')
+	 */
+	public String getDefaultDefFileDirectoryName();
+	
 }

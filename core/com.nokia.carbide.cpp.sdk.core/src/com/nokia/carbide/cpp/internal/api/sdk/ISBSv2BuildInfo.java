@@ -17,8 +17,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 
-import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 
 /**
@@ -28,11 +26,6 @@ import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 public interface ISBSv2BuildInfo extends ISDKBuildInfo {
 
 	void clearPlatformMacros();
-
-	/**
-	 * Get the BSF catalog for a SDK.
-	 */
-	IBSFCatalog getBSFCatalog();
 
 	/**
 	 * Returns the list of all platform macros for a SDK.
@@ -50,11 +43,6 @@ public interface ISBSv2BuildInfo extends ISDKBuildInfo {
 	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
 	 */
 	public IPath getPrefixFromVariantCfg();
-
-	/**
-	 * Get the Symbian Binary Variation (SBV) catalog for a SDK.
-	 */
-	ISBVCatalog getSBVCatalog();
 
 	/**
 	 * Get a list of macros specific to the given target type, e.g. "__EXE__" or "__DLL__"

@@ -78,29 +78,12 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	}
 
 	@Override
-	public String getDefaultDefFileDirectoryName(boolean isASSP) {
+	public String getDefaultDefFileDirectoryName() {
 		// TOOD: THIS IS ABLD STUFF. isASSP does not belong with Raptor
 		// TODO: How the ASSP option affects the path?
 
 		String dirName = getDefFileDirectoryNameForPlatform(platform);
-		if (dirName == null) {
-			// check BSF's
-			IBSFCatalog catalog = getBuildInfo().getBSFCatalog();
-	    	if (catalog != null) {
-	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
-	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
-	    				String mainPlatform = catalog.getReleasePlatform(platform);
-	    				if (mainPlatform != null) {
-	    					dirName = getDefFileDirectoryNameForPlatform(mainPlatform);
-	    					if (dirName == null || dirName.length() < 1) {
-	    						// fallback - all BSF's should be EABI anyway
-			    				return "EABI"; //$NON-NLS-1$
-	    					}
-	    				}
-	    			}
-	    		}
-	    	}
-		}
+		// TODO: Previously BSF's folder was EABI? What is it for SBSv2 variants?
 		
 		if (dirName == null) {
 			// fallback for unknown cases
@@ -134,30 +117,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 					|| platform.equals(ARMV6_PLATFORM)
 					|| platform.equals(ARMV6_ABIV2_PLATFORM)) {
 			return getRVCTPrefixFilePath();
-		} else {
-			// check BSF's
-			IBSFCatalog catalog = getBuildInfo().getBSFCatalog();
-	    	if (catalog != null) {
-	    		for (IBSFPlatform plat : catalog.getPlatforms()) {
-	    			if (plat.getName().compareToIgnoreCase(platform) == 0) {
-	    				String mainPlatform = catalog.getReleasePlatform(platform);
-	    				if (mainPlatform != null) {
-	    					if (mainPlatform.equals(GCCE_PLATFORM)) {
-	    						return getGCCEPrefixFilePath();
-	    					} else if (mainPlatform.equals(ARMV5_PLATFORM) 
-	    								|| mainPlatform.equals(ARMV5_ABIV2_PLATFORM)
-	    								|| mainPlatform.equals(ARMV6_PLATFORM)
-	    								|| mainPlatform.equals(ARMV6_ABIV2_PLATFORM)) {
-	    						return getRVCTPrefixFilePath();
-	    					} else {
-	    						// fallback - all BSF's should be EABI anyway
-	    						return getRVCTPrefixFilePath();
-	    					}
-	    				}
-	    			}
-	    		}
-	    	}
-		}
+		} 
 
 		// fallback for WINSCW, MSVC, etc.
 		return null;
