@@ -76,7 +76,7 @@ public class TestsPlugin extends AbstractUIPlugin {
 	 */
 	public static List<ISymbianBuildContext> getUsableBuildConfigs() {
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
-			List<ISymbianBuildContext> contexts = sdk.getUnfilteredBuildConfigurations();
+			List<ISymbianBuildContext> contexts = sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getAllBuildConfigurations();
 			if (contexts.size() > 0)
 				return contexts.subList(0, Math.min(contexts.size(), 8));
 		}

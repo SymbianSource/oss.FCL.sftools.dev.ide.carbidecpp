@@ -142,7 +142,7 @@ public class NewProjectJob extends WorkspaceJob {
 		List<ISymbianBuildContext> result = new ArrayList<ISymbianBuildContext>();
 		List<ISymbianSDK> sdks = SDKCorePlugin.getSDKManager().getSDKList();
 		ISymbianSDK sdk = sdks.get(0);
-		result.addAll(sdk.getFilteredBuildConfigurations());
+		result.addAll(sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getFilteredBuildConfigurations());
 		return result;
 	}
 	

@@ -37,6 +37,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
@@ -89,7 +90,7 @@ public class MissingSdkTest extends TestCase {
 				// put up to 4 configs among each SDK in devices.xml (to improve speed with custkits)		
 				List<ISymbianBuildContext> allConfigs = new ArrayList<ISymbianBuildContext>();
 				for (ISymbianSDK sdk : sdkList) {
-					List<ISymbianBuildContext> sdkConfigs = sdk.getFilteredBuildConfigurations();
+					List<ISymbianBuildContext> sdkConfigs = sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getFilteredBuildConfigurations();
 					if (sdkConfigs == null)
 						continue;
 					if (sdkConfigs.size() <= 0)
