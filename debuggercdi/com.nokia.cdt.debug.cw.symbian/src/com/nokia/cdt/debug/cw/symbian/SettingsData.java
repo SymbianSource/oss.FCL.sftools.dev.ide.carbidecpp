@@ -262,16 +262,7 @@ public class SettingsData {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
 
 					if (isEmulatorRequired(buildConfig, mainExeHostPath, mainExeWorkspaceRelativeMMPPath)) {
-						ISymbianSDK sdk = buildConfig.getSDK();
-						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						IPath releaseRoot;
-						if (sbsv1BuildInfo != null) {
-							releaseRoot = sbsv1BuildInfo.getReleaseRoot(sdk);
-						} else {
-							releaseRoot = new Path(sdk.getEPOCROOT()).append("epoc32/release");
-						}
-						String winscwudeb = releaseRoot.toOSString() + File.separator + "WINSCW" + File.separator + buildConfig.getTargetString(); //$NON-NLS-1$ //$NON-NLS-2$
-
+						String winscwudeb = buildConfig.getSDK().getReleaseRoot().toOSString() + File.separator + "WINSCW" + File.separator + buildConfig.getTargetString(); //$NON-NLS-1$ //$NON-NLS-2$
 						String emulatorPath = winscwudeb + File.separator + "epoc.exe"; //$NON-NLS-1$
 						configuration.setAttribute(DebuggerCommonData.Host_App_Path, getCanonicalPath(emulatorPath));			
 					}
@@ -801,8 +792,8 @@ public class SettingsData {
 			    // Apparently this only works correctly with the S60 emulator.
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 				if (sbsv1BuildInfo != null) {
-			        if (!sbsv1BuildInfo.isS60(currSDK) &&
-			        	!sbsv1BuildInfo.getFamily(currSDK).equalsIgnoreCase(ISBSv1BuildInfo.TECHVIEW_FAMILY_ID))
+			        if (!sbsv1BuildInfo.isS60() &&
+			        	!currSDK.getFamily().equalsIgnoreCase(ISBSv1BuildInfo.TECHVIEW_FAMILY_ID))
 			        	return true;
 				}
 		        
