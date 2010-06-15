@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -170,7 +171,11 @@ public class DiscoveryView extends ViewPart {
 			}
 
 			private IStructuredSelection getAllItemsSelection() {
-				List<CatalogItem> catalogItems = viewer.getCatalog().getItems();
+				List<CatalogItem> catalogItems = new ArrayList<CatalogItem>();
+				for (CatalogItem catalogItem : viewer.getCatalog().getItems()) {
+					if (!catalogItem.isInstalled())
+						catalogItems.add(catalogItem);
+				}	
 				return new StructuredSelection(catalogItems);
 			}
 
