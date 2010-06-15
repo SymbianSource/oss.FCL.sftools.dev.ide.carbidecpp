@@ -366,7 +366,7 @@ long CRealSerialComm::SetDCB()
 long CRealSerialComm::ClosePort()
 {
 	COMMLOGOPEN();
-	COMMLOGS("CRealSerialComm::ClosePort\n");
+	COMMLOGA1("CRealSerialComm::ClosePort connected=%d\n", IsConnected());
 
 	long err = TCAPI_ERR_NONE;
 
@@ -443,8 +443,9 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 		//   and there was some kind of error
 		if (lclNumBytes != inSize)
 		{
+			m_lastCommError = 0;
 			COMMLOGOPEN();
-			COMMLOGA3("CRealSerialComm::SendDataToPort WriteFile not all bytes sent: lclNumBytes=%d inSize=%d err=%d\n", lclNumBytes, inSize, GetLastError());
+			COMMLOGA3("CRealSerialComm::SendDataToPort WriteFile not all bytes sent: lclNumBytes=%d inSize=%d err=%d\n", lclNumBytes, inSize, m_lastCommError);
 			COMMLOGCLOSE();
 
 			COMSTAT lclComStat;
@@ -468,7 +469,7 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 					m_lastCommError = lclErrorFlags;
 					err = TCAPI_ERR_COMM_ERROR;
 					COMMLOGOPEN();
-					COMMLOGA1("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=%d\n", m_lastCommError);
+					COMMLOGA1("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=%d\n", lclErrorFlags);
 					COMMLOGCLOSE();
 				}
 				else
@@ -477,7 +478,7 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 					//  therefore, since we are not doing overlapped I/O, this is an error.
 					err = TCAPI_ERR_COMM_ERROR;
 					COMMLOGOPEN();
-					COMMLOGS("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=0\n");
+					COMMLOGA1("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=0 err=%d\n", m_lastCommError);
 					COMMLOGCLOSE();
 //					DUMPCOMSTAT(&lclComStat);
 				}
@@ -530,6 +531,9 @@ long CRealSerialComm::PollPort(DWORD &outSize)
 //	Sleep(1);
 	if (!ClearCommError( m_hSerial, &lclErrorFlags, &lclComStat ))
 	{
+		if (!IsConnected())
+			return TCAPI_ERR_MEDIA_NOT_OPEN;
+
 		m_lastCommError = GetLastError();
 		err = TCAPI_ERR_COMM_ERROR;
 

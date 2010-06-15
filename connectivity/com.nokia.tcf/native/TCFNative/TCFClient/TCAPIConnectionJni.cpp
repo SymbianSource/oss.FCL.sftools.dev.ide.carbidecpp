@@ -1326,11 +1326,11 @@ JNIEXPORT jlong JNICALL Java_com_nokia_tcf_impl_TCAPIConnection_nativeSendMessag
 	TCDEBUGLOGA3("nativeSendMessage return ret=%d, osError=%d : %s\n", ret, osError, GetErrorText(osError));
 	TCDEBUGCLOSE();
 
-	if (ret == TCAPI_ERR_COMM_ERROR && osError > 0)
-	{
-		jclass clazz = env->FindClass("Ljava/lang/Exception;");
-		env->ThrowNew(clazz, GetErrorText(osError));
-	}
+//	if (ret == TCAPI_ERR_COMM_ERROR && osError > 0)
+//	{
+//		jclass clazz = env->FindClass("Ljava/lang/Exception;");
+//		env->ThrowNew(clazz, GetErrorText(osError));
+//	}
 	return ret;
 }
 
