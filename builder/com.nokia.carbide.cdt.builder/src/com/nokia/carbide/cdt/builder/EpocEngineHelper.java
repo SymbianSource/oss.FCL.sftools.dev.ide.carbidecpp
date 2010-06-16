@@ -767,7 +767,7 @@ public class EpocEngineHelper {
 										}
 
 										// if targetpath is non-null and this is an EKA1 emulator config then add it
-										if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+										if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 											if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
 												String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
 												if (targetPath != null) {
@@ -923,7 +923,7 @@ public class EpocEngineHelper {
 					IPath path = buildConfig.getTargetOutputDirectory();
 					
 					// if targetpath is non-null and this is an EKA1 emulator config then add it
-					if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+					if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 						if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
 							String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
 							if (targetPath != null) {
@@ -1797,9 +1797,23 @@ public class EpocEngineHelper {
 		String platformString = buildContext.getPlatformString();
 		boolean isDebug = ISymbianBuildContext.DEBUG_TARGET.equals(buildContext.getTargetString());
 		// TODO is this correct, what about ARMv6?
-		boolean isARMv5 = ISymbianBuildContext.ARMV5_PLATFORM.equals(platformString) ||
-		ISymbianBuildContext.ARMV5_ABIV2_PLATFORM.equals(platformString);
-		boolean isGCCE = ISymbianBuildContext.GCCE_PLATFORM.equals(platformString);
+		boolean isARMv5 = false;
+		boolean isGCCE = false;
+		
+		if (buildContext instanceof ISBSv1BuildContext) {
+			isARMv5 = ISBSv1BuildContext.ARMV5_PLATFORM.equals(platformString) ||
+			ISBSv1BuildContext.ARMV5_ABIV2_PLATFORM.equals(platformString);
+			isGCCE = ISBSv1BuildContext.GCCE_PLATFORM.equals(platformString);
+		} else if (buildContext instanceof ISBSv2BuildContext){
+			String alias = ((ISBSv2BuildContext)buildContext).getSBSv2Alias();
+			if (alias.toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_ARM)){
+				isARMv5 = true;
+			}
+			if (alias.toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_GCCE)){
+				isGCCE = true;
+			}
+		}
+		
 		if (isARMv5 || isGCCE) {
 			if (isDebug) {
 				dirList.add(releaseRoot.append("armv5/udeb/")); //$NON-NLS-1$

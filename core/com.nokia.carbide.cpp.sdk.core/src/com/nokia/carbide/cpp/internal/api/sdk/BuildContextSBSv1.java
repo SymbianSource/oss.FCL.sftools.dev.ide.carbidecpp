@@ -38,7 +38,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	private String platform;
 	private String target;
 	private String displayString = null;
-	
+		
 	private static String EMULATOR_DISPLAY_TEXT = "Emulator"; //$NON-NLS-1$
 	private static String PHONE_DISPLAY_TEXT = "Phone"; //$NON-NLS-1$
 	private static String DEBUG_DISPLAY_TEXT = "Debug"; //$NON-NLS-1$
@@ -120,7 +120,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		if (displayString == null) {
 			// in the form Emulation Debug (WINSCW) [S60_3rd_MR] or
 			// Phone Release (GCCE) [S60_3rd_MR]
-			if (platform.compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) == 0) {
+			if (platform.compareTo(EMULATOR_PLATFORM) == 0) {
 				displayString = EMULATOR_DISPLAY_TEXT;
 			} else {
 				displayString = PHONE_DISPLAY_TEXT;

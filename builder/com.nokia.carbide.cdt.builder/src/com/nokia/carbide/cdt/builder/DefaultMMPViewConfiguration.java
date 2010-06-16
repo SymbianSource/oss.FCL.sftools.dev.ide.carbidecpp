@@ -23,7 +23,9 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPViewConfiguration;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IViewFilter;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class DefaultMMPViewConfiguration extends DefaultViewConfiguration implements IMMPViewConfiguration {
@@ -71,8 +73,13 @@ public class DefaultMMPViewConfiguration extends DefaultViewConfiguration implem
 	}
 	
 	public boolean isEmulatorBuild() {
-		if (context != null)
-			return context.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM);
-		return true;
+		if (context != null){
+			if (context instanceof ISBSv1BuildContext){
+				return context.getPlatformString().equals(ISBSv1BuildContext.EMULATOR_PLATFORM);
+			} else if (context instanceof ISBSv2BuildContext){
+				return ((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_WINSCW);
+			}
+		}
+		return false;
 	}
 }

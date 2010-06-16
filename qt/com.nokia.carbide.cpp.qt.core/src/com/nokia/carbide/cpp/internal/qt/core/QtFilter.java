@@ -21,13 +21,14 @@ import java.io.File;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.IFilter;
 
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public abstract class QtFilter implements IFilter {
 
 	protected File getLibFile(ISymbianBuildContext context) {
 		IPath releaseRoot = context.getSDK().getReleaseRoot();
-		if (context.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+		if (context.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 			return releaseRoot.append(context.getPlatformString()).
 			append(context.getTargetString()).append("QtCore.dll").toFile(); //$NON-NLS-1$
 		} else {

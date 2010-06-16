@@ -30,16 +30,6 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 public interface ISymbianBuildContext {
 	
 	/**
-	 * Platform constants
-	 */
-	public static final String EMULATOR_PLATFORM = "WINSCW";
-	public static final String GCCE_PLATFORM = "GCCE";
-	public static final String ARMV5_PLATFORM = "ARMV5";
-	public static final String ARMV6_PLATFORM = "ARMV6";
-	public static final String ARMV5_ABIV2_PLATFORM = "ARMV5_ABIV2";
-	public static final String ARMV6_ABIV2_PLATFORM = "ARMV6_ABIV2";
-	
-	/**
 	 * DEFAULT suffix to use for components that are specified as variant, but don't buid as variants. For example, plain ARMV5, when specified as
 	 * as a FEATUREVARIANT, will build as ARMV5.DEFAULT
 	 * @since 2.0

@@ -408,7 +408,7 @@ public class SymbianBuildContextDataCache {
 			}
 			else {
 				// legacy behavior 
-				if (platformString.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+				if (platformString.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 					dir = new File(includeDir, "wins"); //$NON-NLS-1$
 					if (dir.exists() && dir.isDirectory()) {
 						systemIncludes.add(dir);

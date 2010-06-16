@@ -719,7 +719,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	}
 
 	protected static void runPreBuildChecks(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher) {
-		if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM) && BuilderPreferencePage.useBuiltInX86Vars()) {
+		if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM) && BuilderPreferencePage.useBuiltInX86Vars()) {
 			X86BuildPlugin.checkForUpdates();
 		}
 	}

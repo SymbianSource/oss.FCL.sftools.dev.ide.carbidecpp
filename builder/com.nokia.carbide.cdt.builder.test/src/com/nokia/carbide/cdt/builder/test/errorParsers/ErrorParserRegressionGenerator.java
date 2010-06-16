@@ -32,10 +32,10 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.test.TestPlugin;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 
@@ -47,7 +47,7 @@ public class ErrorParserRegressionGenerator extends TestCase {
 	private static final String PROJECT_NAME = "TestErrorParser";
 
 	// Platform matters, set this before you build
-	private static final String PLATFORM_STRING = ISymbianBuildContext.ARMV5_PLATFORM;
+	private static final String PLATFORM_STRING = ISBSv1BuildContext.ARMV5_PLATFORM;
 
 	CarbideErrorParserTestHarness harness;
 	private IProject project;

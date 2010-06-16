@@ -35,6 +35,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
 import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
@@ -83,15 +84,15 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 			return Collections.emptyList();
 		}
 		// TODO: Hard code build context hack
-		buildTargets.add(new BuildContextSBSv1(sdk, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
+		buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
 		
 		if (sdkFeatures.contains(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED)){
 			// TODO: Hard code build context hack
-			buildTargets.add(new BuildContextSBSv1(sdk, ISymbianBuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
+			buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
 		}
 		
 		for (String currPlat : buildPlats){
-			if (currPlat.equals(ISymbianBuildContext.EMULATOR_PLATFORM) ) { 
+			if (currPlat.equals(ISBSv1BuildContext.EMULATOR_PLATFORM) ) { 
 				// emulation targets already determined (some SDKs don't get WISNCW UREL
 				continue;
 			}

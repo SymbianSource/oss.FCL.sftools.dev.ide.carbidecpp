@@ -16,15 +16,12 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
-import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.*;
-import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
-import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
-import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.resources.IProject;
@@ -32,10 +29,24 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.*;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.IEnvironmentVariable;
+import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
+import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
+import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuildConfigFactory;
+import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuilderConfigInfoType;
+import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.ConfigurationType;
+import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.EnvVarsType;
+import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.UseType;
+import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.VarType;
+import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
+import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
+import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
  * @deprecated use {@link EnvironmentVarsInfo2} instead
@@ -206,7 +217,7 @@ public class EnvironmentVarsInfo implements IEnvironmentVarsInfo {
 		
 		// Now check for specific variables relating to the Nokia x86 environment
 		// and update the environment that we just updated, if at all.
-		if (context.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM) &&
+		if (context.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM) &&
 			BuilderPreferencePage.useBuiltInX86Vars()){
 			
 			int i = 0;

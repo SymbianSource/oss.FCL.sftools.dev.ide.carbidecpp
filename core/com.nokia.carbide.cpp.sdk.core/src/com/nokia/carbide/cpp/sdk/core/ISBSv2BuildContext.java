@@ -4,6 +4,10 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	
 	public static final String BUILDER_ID = "com.nokia.carbide.builder.raptor";
 	
+	public static final String TOOLCHAIN_WINSCW = "WINSCW";
+	public static final String TOOLCHAIN_GCCE = "GCCE";
+	public static final String TOOLCHAIN_ARM = "ARM";
+	
 	/**
 	 * Retrieve the build-able configuration; a valid command that cab be passed with Raptor's -c parameter.
 	 * This should not be used and should return null for abld-configurations.

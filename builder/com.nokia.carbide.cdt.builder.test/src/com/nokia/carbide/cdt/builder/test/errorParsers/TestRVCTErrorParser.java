@@ -32,6 +32,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.test.TestPlugin;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -57,7 +58,7 @@ public class TestRVCTErrorParser extends TestCase {
 		for (ISymbianSDK currSDK : sdkList){
 			List<ISymbianBuildContext> contexts = currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getAllBuildConfigurations();
 			for (ISymbianBuildContext context : contexts) {
-				if (context.getPlatformString().equals(ISymbianBuildContext.ARMV5_PLATFORM)) {
+				if (context.getPlatformString().equals(ISBSv1BuildContext.ARMV5_PLATFORM)) {
 					contextList.add(context);
 					break;
 				}

@@ -42,11 +42,11 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	private String configID;  // cconfiguration 'id' attribute from .cproject
 	
 	// Raptor config query data
-	String outputPathString;
-	List<String> metaDataMacros = new ArrayList<String>();  // macros to parse the INF/MMPs files (these do not contain values)
-	List<String> metaDataIncludes = new ArrayList<String>();
-	String metaDataVariantHRH;
-	String configParseErrorMessage = null;
+	private String outputPathString;
+	private List<String> metaDataMacros = new ArrayList<String>();  // macros to parse the INF/MMPs files (these do not contain values)
+	private List<String> metaDataIncludes = new ArrayList<String>();
+	private String metaDataVariantHRH;
+	private String configParseErrorMessage = null;
 	
 	public BuildContextSBSv2(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias, String displayName, String configID) {
 		this.sdk = theSDK;
@@ -69,7 +69,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		} else {
 			this.displayString = getPlatformString().toUpperCase() + " " + getTargetString().toUpperCase(); 
 		}
-		
 	}
 
 	@Override
@@ -128,11 +127,8 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	@Override
 	public String getDefaultDefFileDirectoryName() {
-		// TOOD: THIS IS ABLD STUFF. isASSP does not belong with Raptor
-		// TODO: How the ASSP option affects the path?
-
+	
 		String dirName = getDefFileDirectoryNameForPlatform(platform);
-		// TODO: Previously BSF's folder was EABI? What is it for SBSv2 variants?
 		
 		if (dirName == null) {
 			// fallback for unknown cases
@@ -143,14 +139,9 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	}
 
 	private String getDefFileDirectoryNameForPlatform(String platform) {
-		// TODO: This is still ABLD stype stuff
-		if (platform.equals(EMULATOR_PLATFORM)) {
+		if (sbsv2Alias.toUpperCase().contains("WINSCW")) {
 			return "BWINS"; //$NON-NLS-1$
-		} else if (platform.equals(ARMV5_PLATFORM)
-					|| platform.equals(ARMV5_ABIV2_PLATFORM)
-					|| platform.equals(ARMV6_PLATFORM)
-					|| platform.equals(ARMV6_ABIV2_PLATFORM)
-					|| platform.equals(GCCE_PLATFORM)) {
+		} else if (sbsv2Alias.toUpperCase().contains("ARM")) {
 			return "EABI"; //$NON-NLS-1$
 		}
 		return null;
@@ -158,13 +149,10 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
 	@Override
 	public IPath getCompilerPrefixFile() {
-		// TODO: This is ABLD hard-code mechanism. Should be able to get from Raptor query mechanism
-		if (platform.equals(GCCE_PLATFORM)) {
+		
+		if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE)) {
 			return getGCCEPrefixFilePath();
-		} else if (platform.equals(ARMV5_PLATFORM)
-					|| platform.equals(ARMV5_ABIV2_PLATFORM)
-					|| platform.equals(ARMV6_PLATFORM)
-					|| platform.equals(ARMV6_ABIV2_PLATFORM)) {
+		} else if (sbsv2Alias.toUpperCase().contains((TOOLCHAIN_ARM))) {
 			return getRVCTPrefixFilePath();
 		} 
 

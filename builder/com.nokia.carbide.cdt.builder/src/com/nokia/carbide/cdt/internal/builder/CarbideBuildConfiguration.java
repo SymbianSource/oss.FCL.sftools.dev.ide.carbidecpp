@@ -323,17 +323,24 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		String plat = this.getPlatformString();
 		
 		if (context instanceof ISBSv2BuildContext){
-			if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISymbianBuildContext.GCCE_PLATFORM)){
+			// TODO: Getting the tool chain can actually come from the SBSv2 build context.
+			// The metadata macros will tell what toolchain is being used (e.g. ARMCC, CW32, GCCE)
+			if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_GCCE)){
+				return ERROR_PARSERS_GCCE;
+			} else if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_WINSCW)){
+				return ERROR_PARSERS_WINSCW;
+			} else if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_ARM)){
+				return ERROR_PARSERS_ARMVx;
+			}
+		} else {
+			// SBSV1
+			if (plat.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)){
+				return ERROR_PARSERS_WINSCW;
+			} else if (plat.startsWith("ARMV")){
+				return ERROR_PARSERS_ARMVx;
+			} else if (plat.equals(ISBSv1BuildContext.GCCE_PLATFORM)){
 				return ERROR_PARSERS_GCCE;
 			}
-		}
-		
-		if (plat.equals(ISymbianBuildContext.EMULATOR_PLATFORM)){
-			return ERROR_PARSERS_WINSCW;
-		} else if (plat.startsWith("ARMV")){
-			return ERROR_PARSERS_ARMVx;
-		} else if (plat.equals(ISymbianBuildContext.GCCE_PLATFORM)){
-			return ERROR_PARSERS_GCCE;
 		}
 	
 		return ERROR_PARSERS_ALL;  

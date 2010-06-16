@@ -16,17 +16,11 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.extension.IEnvironmentModifier;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
-import com.nokia.cpp.internal.api.utils.core.PathUtils;
-import com.nokia.cpp.internal.api.utils.core.TrackedResource;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
@@ -34,8 +28,21 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.File;
-import java.util.*;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.extension.IEnvironmentModifier;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.IEnvironmentVariable;
+import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
+import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
+import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
 public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 
@@ -195,7 +202,7 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 		
 		// Now check for specific variables relating to the Nokia x86 environment
 		// and update the environment that we just updated, if at all.
-		if (context.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM) &&
+		if (context.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM) &&
 			BuilderPreferencePage.useBuiltInX86Vars()) {
 			
 			int i = 0;
