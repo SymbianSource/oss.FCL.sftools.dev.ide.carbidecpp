@@ -59,7 +59,7 @@ public class SBSv2QueryTests extends BaseTest {
 		
 		startTime = System.currentTimeMillis();
 		if (sbsAliasBaseQuery == null){
-			sbsAliasBaseQuery = SBSv2QueryUtils.queryAliasAndProductVariants();
+			sbsAliasBaseQuery = SBSv2QueryUtils.queryFilteredConfigsForSDK(null);
 		}
 		
 		if (printTimingStats)
@@ -98,7 +98,7 @@ public class SBSv2QueryTests extends BaseTest {
 		assertEquals(10, sdkSpecificConfigs.size());
 		
 		// Get the union of the base Raptor configs and the SDK
-		List<ISBSv2ConfigData> allSDKConfigUnion = sbsAliasBaseQuery.getAllConfigurationsForSDK(sdk);
+		List<ISBSv2ConfigData> allSDKConfigUnion = sbsAliasBaseQuery.getConfigsForSDK(sdk);
 		assertEquals(28, allSDKConfigUnion.size());
 	}
 	
@@ -114,9 +114,9 @@ public class SBSv2QueryTests extends BaseTest {
 		
 		ISBSv2ConfigData config = sbsAliasBaseQuery.getSBSConfigByAlias(null,  "armv5_udeb");
 		assertNotNull(config);
-		assertEquals("/epoc32/release/armv5/udeb", config.getReleaseDirectory(null));
-		assertEquals("armv5", config.getTraditionalPlatform(null));
-		assertEquals("udeb", config.getTraditionalTarget(null));
+		assertEquals("/epoc32/release/armv5/udeb", config.getReleaseDirectory());
+		assertEquals("armv5", config.getTraditionalPlatform());
+		assertEquals("udeb", config.getTraditionalTarget());
 		
 		config = sbsAliasBaseQuery.getSBSConfigByAlias(null, "armv5_udeb_gcce");
 		assertNull(config); // This config should only be defined by SDK suppliers

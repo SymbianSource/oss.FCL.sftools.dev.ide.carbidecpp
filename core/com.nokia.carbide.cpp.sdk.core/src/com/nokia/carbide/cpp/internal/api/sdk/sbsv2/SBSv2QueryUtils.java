@@ -54,58 +54,58 @@ public class SBSv2QueryUtils {
 	public static final String QUERY_CONFIG_COMMAND = "--query=config";
 	public static final String QUERY_COMMAND = "--query=aliases";
 	
-	public static ISBSv2QueryData queryAliasAndProductVariants() {
-		List<String> argListConfigQuery = new ArrayList<String>();
-		List<String> argListProductQuery = new ArrayList<String>();
-		argListConfigQuery.add(QUERY_COMMAND);
-		SBSv2QueryData sbsQueryData = new SBSv2QueryData();
+	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk){
+		List<String> argListAliasQuery = new ArrayList<String>();
+		argListAliasQuery.add(QUERY_COMMAND);
 		
-		/////// Invoke Raptor once with no EPOCROOT
 		Properties envVars = EnvironmentReader.getEnvVars();
-		envVars.setProperty("EPOCROOT", "FOOBAR");
-		String queryResult = getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
-	
-		HashMap<String, String> sbsAliasMap = parseQueryAliasResult(queryResult);
-		
-		for (String aliasKey : sbsAliasMap.keySet()){
-			String meaning = sbsAliasMap.get(aliasKey);
-			SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, null);
-			sbsQueryData.addConfigurationData(null, oneSBSConfig);
-		}
-		
-		/////// Do for each SDK to build up the alias list...
-		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
-			IPath epocRoot = new Path(sdk.getEPOCROOT());
-			if ((sdk.getOSVersion().getMajor() <= 9 && sdk.getOSVersion().getMinor() <5)
-				|| !epocRoot.toFile().exists()){
-				
-				continue; // skip it, the sdk is not supported or broken
-			}
-			
-			envVars = EnvironmentReader.getEnvVars();
+		if (sdk != null){
 			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
-			
-			queryResult = getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
-			
-			sbsAliasMap = parseQueryAliasResult(queryResult);
-			
-			for (String aliasKey : sbsAliasMap.keySet()){
-				String meaning = sbsAliasMap.get(aliasKey);
-				SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey, meaning, sdk);
-				sbsQueryData.addConfigurationData(sdk, oneSBSConfig);
-			}
-			
-			// Now get the products for each SDK
-			argListProductQuery.add(QUERY_PRODUCTS_COMMAND);
-			queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
-			List<String> productList = parseQueryProductsResults(queryResult);
-			sbsQueryData.addProductListForSDK(sdk, productList);
+		} else {
+			envVars.setProperty("EPOCROOT", "FOOBAR");
 		}
 		
-		return sbsQueryData;
+		String queryResult = getSBSQueryOutput(argListAliasQuery, createEnvStringList(envVars));
+		
+		return parseQueryAliasResult(queryResult);
 	}
 	
-	public static HashMap<String, String> queryConfigTargetInfo(List<String> aliasOrMeaningArray, ISymbianSDK sdk){
+	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk){
+		List<String> argListProductQuery = new ArrayList<String>();
+		
+		Properties envVars = EnvironmentReader.getEnvVars();
+		if (sdk != null){
+			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+		} else {
+			envVars.setProperty("EPOCROOT", "FOOBAR");
+		}
+		
+		argListProductQuery.add(QUERY_PRODUCTS_COMMAND);
+		String queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
+		return parseQueryProductsResults(queryResult);
+	}
+	
+	public static String getConfigQueryXML(ISymbianSDK sdk, List<String> aliasOrMeaningArray){
+		
+		List<String> argListConfigQuery = new ArrayList<String>();
+		
+		for (String alias : aliasOrMeaningArray){
+			argListConfigQuery.add(QUERY_CONFIG_COMMAND + "[" + alias + "]");
+		}
+		
+		Properties envVars = null;
+		if (sdk != null){
+			File epocRoot = new File(sdk.getEPOCROOT());
+			if (epocRoot.exists()){
+				envVars = EnvironmentReader.getEnvVars();
+				envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+			}
+		}
+		return getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
+	}
+	
+	
+	public static HashMap<String, String> queryConfigTargetInfo(ISymbianSDK sdk, List<String> aliasOrMeaningArray){
 		
 		List<String> argListConfigQuery = new ArrayList<String>();
 		
@@ -253,7 +253,7 @@ public class SBSv2QueryUtils {
     			if (aliasNode.getNodeName().equals("config")){
     				NamedNodeMap meaning = aliasNode.getAttributes();
     				String outputpath = meaning.getNamedItem("outputpath").getNodeValue();
-    				String fullName = meaning.getNamedItem("fullname").getNodeValue();
+    				String fullName = meaning.getNamedItem("meaning").getNodeValue();
     				//System.out.println("ALIAS QUERY ==> " + dottedName + " <==> " + alias);
     				sbsAliasMap.put(fullName, outputpath);
     			}
@@ -286,7 +286,6 @@ public class SBSv2QueryUtils {
     			if (aliasNode.getNodeName().equals("product")){
     				NamedNodeMap productAttribs = aliasNode.getAttributes();
     				String name = productAttribs.getNamedItem("name").getNodeValue();
-    				//System.out.println("ALIAS QUERY ==> " + dottedName + " <==> " + alias);
     				productList.add(name);
     			}
     		}
@@ -297,6 +296,41 @@ public class SBSv2QueryUtils {
     	}
 		
 		return productList;
+	}
+
+	public static ISBSv2QueryData queryFilteredConfigsForSDK(ISymbianSDK sdk) {
+		List<String> argListConfigQuery = new ArrayList<String>();
+		argListConfigQuery.add(QUERY_COMMAND);
+		SBSv2QueryData sbsQueryData = new SBSv2QueryData();
+		
+		IPath epocRoot = new Path(sdk.getEPOCROOT());
+		if ((sdk.getOSVersion().getMajor() <= 9 && sdk.getOSVersion()
+				.getMinor() < 5) || !epocRoot.toFile().exists()) {
+
+			return null; // skip it, the sdk is not supported or broken
+		}
+
+		Properties envVars = EnvironmentReader.getEnvVars();
+		envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+
+		String queryResult = getSBSQueryOutput(argListConfigQuery,
+				createEnvStringList(envVars));
+
+		HashMap<String, String> sbsAliasMap = parseQueryAliasResult(queryResult);
+
+		List<String> aliasFilterList = SBSv2Utils.getSBSv2FilteredConfigs();
+		for (String aliasKey : sbsAliasMap.keySet()) {
+			
+			if (!aliasFilterList.contains(aliasKey))
+				continue;
+			
+			String meaning = sbsAliasMap.get(aliasKey);
+			SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey,
+					meaning, sdk);
+			sbsQueryData.addConfigurationData(sdk, oneSBSConfig);
+		}
+
+		return sbsQueryData;
 	}
 
 	

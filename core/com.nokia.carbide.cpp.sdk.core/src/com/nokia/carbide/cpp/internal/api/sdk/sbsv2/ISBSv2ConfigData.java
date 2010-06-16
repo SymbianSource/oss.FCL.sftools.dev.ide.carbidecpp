@@ -44,28 +44,28 @@ public interface ISBSv2ConfigData {
 	 * @param sdk - use null if for base configuration
 	 * @return the portable OS string starting from /epoc32/
 	 */
-	String getReleaseDirectory(ISymbianSDK sdk);
+	String getReleaseDirectory();
 	
 	/** 
 	 * TODO: This API is not yet defined.
 	 * @param sdk
 	 * @return
 	 */
-	ISBSv2ConfigPreprocessorInfo getBuildData(ISymbianSDK sdk);
+	ISBSv2ConfigPreprocessorInfo getCPPPreprocessorData();
 	
 	/**
 	 * Get the name of the folder where executable binaries are written (typically 'debug' or 'release')
 	 * @param sdk - use null for base configuration
 	 * @return string of folder name
 	 */
-	String getTraditionalTarget(ISymbianSDK sdk);
+	String getTraditionalTarget();
 	
 	/**
 	 * Get the name of the folder where executable binaries are written (component before the target)
 	 * @param sdk - use null for base configuration
 	 * @return string of folder name
 	 */
-	String getTraditionalPlatform(ISymbianSDK sdk);
+	String getTraditionalPlatform();
 	
 	/**
 	 * Get the SDK for which this configuration was qeuried.

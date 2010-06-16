@@ -75,7 +75,7 @@ public class SBSv2QueryData implements ISBSv2QueryData {
 		return sdkDefinedConfigs;
 	}
 	
-	public List<ISBSv2ConfigData> getAllConfigurationsForSDK(ISymbianSDK sdk) {
+	public List<ISBSv2ConfigData> getConfigsForSDK(ISymbianSDK sdk) {
 		return sbsSDKBuildConfigMap.get(sdk);
 	}
 

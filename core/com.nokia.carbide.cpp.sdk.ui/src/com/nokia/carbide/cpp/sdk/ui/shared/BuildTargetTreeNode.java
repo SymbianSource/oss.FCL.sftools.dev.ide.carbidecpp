@@ -56,9 +56,12 @@ public class BuildTargetTreeNode extends TreeNode {
 		super(value);
 		
 		List<ISymbianBuildContext> configurations = sbsv2Project ? 
-				SBSv2Utils.getFilteredSBSv2BuildContexts(value) : 
+				value.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER).getFilteredBuildConfigurations() : 
 				value.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getFilteredBuildConfigurations();
-
+				
+		if (configurations == null){
+			return;
+		}
 		TreeNode[] children = new TreeNode[configurations.size()];
 		int index = 0;
 		for (ISymbianBuildContext config : configurations) {

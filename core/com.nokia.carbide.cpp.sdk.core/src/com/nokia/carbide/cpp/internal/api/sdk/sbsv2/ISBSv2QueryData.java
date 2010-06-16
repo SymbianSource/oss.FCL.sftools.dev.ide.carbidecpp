@@ -44,7 +44,7 @@ public interface ISBSv2QueryData {
 	 * @see {@link ISBSv2QueryData#getSDKSpecificConfigData(ISymbianSDK)}
 	 * @see {@link ISBSv2QueryData#getBaseSBSConfigurations()}
 	 */
-	List<ISBSv2ConfigData> getAllConfigurationsForSDK(ISymbianSDK sdk);
+	List<ISBSv2ConfigData> getConfigsForSDK(ISymbianSDK sdk);
 	
 	/**
 	 * Get the SBS configurations that are defined only by the SDK.

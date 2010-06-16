@@ -18,6 +18,7 @@ package com.nokia.carbide.cpp.internal.api.sdk.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -34,6 +35,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TableItem;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
 
 /**
@@ -86,36 +88,37 @@ public class SBSv2PlatformFilterComposite extends Composite {
 
 	public void performOk() {
 		// save the list of unchecked configs
-		List<String> uncheckedConfigs = new ArrayList<String>();
+		List<String> checkedConfigs = new ArrayList<String>();
 		for (TableItem item : tableViewer.getTable().getItems()) {
-			if (!tableViewer.getChecked(item.getData())) {
-				uncheckedConfigs.add(item.getText());
+			if (tableViewer.getChecked(item.getData())) {
+				checkedConfigs.add(item.getText());
 			}
 		}
 		
-		SBSv2Utils.setSBSv2ConfigurationsToFilter(uncheckedConfigs.toArray(new String[uncheckedConfigs.size()]));
+		SBSv2Utils.setSBSv2FilteredConfigs(checkedConfigs.toArray(new String[checkedConfigs.size()]));
 	}
 	
 	private void initTable(boolean refreshList) {
 
 		SBSv2Utils.initDefaultConfigsToFilter();
 		
-		Object[] keySet = SBSv2Utils.getUnfilteredSBSv2BuildConfigurations(refreshList).keySet().toArray();
+		// TODO: Aliases need to be the union of all SDKs
+		HashMap<String, String> aliasMap = SBSv2QueryUtils.getAliasesForSDK(null);
 		List<String> sbsAliases = new ArrayList<String>();
-		for (Object key : keySet)
-			sbsAliases.add((String)key);
+		for (String key : aliasMap.keySet())
+			sbsAliases.add(key);
 		Collections.sort(sbsAliases);
 		tableViewer.setInput(sbsAliases);
 		
 		// check all configs
-		tableViewer.setAllChecked(true);
+		tableViewer.setAllChecked(false);
 		
-		// now uncheck the ones from the store
-		String[] uncheckedConfigs = SBSv2Utils.getSBSv2ConfigurationsToFilter();
+		// now check ones from the store
+		List<String> uncheckedConfigs = SBSv2Utils.getSBSv2FilteredConfigs();
 		for (String config : uncheckedConfigs) {
 			for (TableItem item : tableViewer.getTable().getItems()) {
 				if (item.getText().equals(config)) {
-					tableViewer.setChecked(item.getData(), false);
+					tableViewer.setChecked(item.getData(), true);
 					break;
 				}
 			}
@@ -125,15 +128,15 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	public void setDefaults(){
 		initTable(true);
 		for (TableItem item : tableViewer.getTable().getItems()) {
-			if (item.getText().toLowerCase().startsWith("tool")  || 
-				item.getText().toLowerCase().startsWith("gccxml") ||
-				item.getText().toLowerCase().startsWith("armv6")  ||
-				item.getText().toLowerCase().startsWith("armv7")  || 
-				item.getText().toLowerCase().startsWith("armv7")  ||
-				item.getText().toLowerCase().startsWith("armv9")) {
-				tableViewer.setChecked(item.getData(), false);
-			} else {
+			if (item.getText().toLowerCase().startsWith("armv5_udeb")  || 
+				item.getText().toLowerCase().startsWith("armv5_urel") ||
+				item.getText().toLowerCase().startsWith("armv5_udeb_gcce")  || 
+				item.getText().toLowerCase().startsWith("armv5_urel_gcce") ||
+				item.getText().toLowerCase().startsWith("winscw_udeb")  ||
+				item.getText().toLowerCase().startsWith("winscw_urel")) {
 				tableViewer.setChecked(item.getData(), true);
+			} else {
+				tableViewer.setChecked(item.getData(), false);
 			}
 		}
 	}

@@ -26,8 +26,11 @@ import java.util.regex.Matcher;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -41,9 +44,12 @@ import com.nokia.cpp.internal.api.utils.core.PathUtils;
 public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	private ISymbianSDK sdk;
+	private List<ISymbianBuildContext> sbsv2FilteredConetxts = new ArrayList<ISymbianBuildContext>();
 	private boolean wasScanned = false;
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
 
+	private Map<String, String> aliasToMeaningMap = new HashMap<String, String>();
+	
 	public SBSv2BuildInfo(ISymbianSDK sdk) {
 		this.sdk = sdk;
 	}
@@ -56,20 +62,82 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	@Override
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
-		return SBSv2Utils.getAllSBSv2BuildContexts(sdk);
+		// TODO: Will get rid of this. Only filtered configs will apply
+		return sbsv2FilteredConetxts;
 	}
 
 	@Override
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
-		// This is probably a bug, but the filtering only uses SBSv1 preferences if SBSv1 is enabled...
-		List<ISymbianBuildContext> filteredContexts;
-		if (SBSv2Utils.enableSBSv2Support()) {
-			filteredContexts = SBSv2Utils.getFilteredSBSv2BuildContexts(sdk);
-		} else {
-			// be optimistic in this case... SBSv3? ;)
-			filteredContexts = getAllBuildConfigurations();
+		
+		if (aliasToMeaningMap.size() == 0)
+			aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
+		
+		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigs(); // From global prefs
+		if ((sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) 
+			 && SBSv2Utils.enableSBSv2Support()){
+						
+			if (!(new File(sdk.getEPOCROOT()).exists())){
+				return sbsv2FilteredConetxts;
+			}
+				
+			List<String> filteredAliasList = new ArrayList<String>();
+			
+			for (String alias : aliasToMeaningMap.keySet()){
+				for (String checkedAlias : allowedConfigs){
+					if (checkedAlias.equalsIgnoreCase(alias)){
+						filteredAliasList.add(alias);
+						break;
+					}
+				}
+			}
+			
+			String configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, filteredAliasList);
+			
+			for (String alias : filteredAliasList){
+				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
+				sbsv2FilteredConetxts.add(sbsv2Context);
+			}
+			
+		} else if (SBSv2Utils.enableSBSv2Support()){
+			// Check and see if the filtered list has changed
+			boolean contextExists = false;
+			List<String> newContextsToQuery = new ArrayList<String>();
+			for (String aliasName : allowedConfigs){
+				for (ISymbianBuildContext context : sbsv2FilteredConetxts){
+					ISBSv2BuildContext sbsv2Context = (ISBSv2BuildContext)context;
+					if (sbsv2Context.getSBSv2Alias().equals(aliasName)){
+						contextExists = true;
+						continue;
+					}
+				}
+				if (!contextExists){
+					newContextsToQuery.add(aliasName);
+				}
+				contextExists = false;
+			}
+			
+			String configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, newContextsToQuery);
+			for (String alias : newContextsToQuery){
+				if (aliasToMeaningMap.get(alias) == null){
+					continue; // This alias is not valid with this SDK, ignore
+				}
+				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
+				sbsv2FilteredConetxts.add(sbsv2Context);
+			}
+			
 		}
-		return filteredContexts;
+		
+		// Now we need to remove any configs that should not be present per filtering preferences
+		List<ISymbianBuildContext> contextsToReturn = new ArrayList<ISymbianBuildContext>();
+		for (ISymbianBuildContext currentContext : sbsv2FilteredConetxts){
+			for (String alias : allowedConfigs){
+				if (alias.equals(((ISBSv2BuildContext)currentContext).getSBSv2Alias())){
+					contextsToReturn.add(currentContext);
+				}
+			}
+		}
+		
+		return contextsToReturn;
 	}
 
 	public List<String> getPlatformMacros(String platform) {

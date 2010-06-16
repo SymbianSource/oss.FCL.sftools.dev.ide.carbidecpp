@@ -1,17 +1,27 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Version;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
-import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -19,15 +29,24 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
 	private String platform;
 	private String target;
 	private String sbsv2Alias;
+	private String meaning;
 	private ISymbianSDK sdk;
 	private String displayString;
 	private String configID;  // cconfiguration 'id' attribute from .cproject
+	
+	// Raptor config query data
+	String outputPathString;
+	List<String> metaDataMacros = new ArrayList<String>();  // macros to parse the INF/MMPs files (these do not contain values)
+	List<String> metaDataIncludes = new ArrayList<String>();
+	String metaDataVariantHRH;
+	String configParseErrorMessage = null;
 	
 	public BuildContextSBSv2(ISymbianSDK theSDK, String thePlatform, String theTarget, String theSBSv2Alias, String displayName, String configID) {
 		this.sdk = theSDK;
@@ -38,6 +57,16 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		this.configID = configID;
 	}
 
+	public BuildContextSBSv2(ISymbianSDK sdk, String alias, String meaning, String contextQueryXML) {
+		this.sdk = sdk;
+		this.sbsv2Alias = alias;
+		this.meaning = meaning;
+		this.configID = ISBSv2BuildContext.BUILDER_ID + "." + sbsv2Alias + "." + sdk.getUniqueId();
+		parseQueryConfigResults(contextQueryXML);
+		
+		this.displayString = getPlatformString().toUpperCase() + " " + getTargetString().toUpperCase(); 
+	}
+
 	@Override
 	public ISymbianSDK getSDK() {
 		return sdk;
@@ -45,11 +74,26 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	@Override
 	public String getPlatformString() {
+		
+		if (platform == null){
+			return configParseErrorMessage;
+		}
+		
+		if (platform.contains(".")){
+			return platform.split(".")[0];
+		}
+		return platform;
+	}
+	
+	public String getPlatformReleaseDirName() {
 		return platform;
 	}
 
 	@Override
 	public String getTargetString() {
+		if (target == null){
+			return configParseErrorMessage;
+		}
 		return target;
 	}
 
@@ -325,7 +369,105 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 			return ""; //$NON-NLS-1$
 		}
 	}
+	
+	
+	private void parseQueryConfigResults(String queryResult) {
+		
+		try {
+    		Element root = null;
+    		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+    		parser.setErrorHandler(new DefaultHandler());
+    		
+    		StringReader reader = new StringReader( queryResult );
+    		InputSource inputSource = new InputSource( reader );
+    		root = parser.parse(inputSource).getDocumentElement();
+    		
+    		NodeList children = root.getChildNodes();
+    		for (int i=0; i< children.getLength(); i++) {
+    			Node configNode = children.item(i);
+    			if (configNode.getNodeName().equals("config")){
+    				NamedNodeMap aliasAttribs = configNode.getAttributes();
+    				String dottedName = aliasAttribs.getNamedItem("meaning").getNodeValue();
+    				if (!dottedName.equalsIgnoreCase(meaning)){
+    					continue;
+    				}
+    				if (configNode.getTextContent() != null&& configNode.getTextContent().length() > 0){
+    					// The config failed, likely due to envrionment set up issue.
+    					// Save the error message
+    					configParseErrorMessage = configNode.getTextContent();
+    					break;
+    				}
+    				
+    				String outputpath = aliasAttribs.getNamedItem("outputpath").getNodeValue();
+    				if (outputpath != null){
+    					outputPathString = outputpath;
+    				}
+    				
+    				// get <metadata>
+    				NodeList configChillens = configNode.getChildNodes();
+    				for (int ii = 0; ii < configChillens.getLength(); ii++){
+    					Node metaDataNode = configChillens.item(ii);
+    					if (metaDataNode.getNodeName().equals("metadata")){
+    						NodeList metaDataChillens = metaDataNode.getChildNodes();
+    						for (int iii = 0; iii < metaDataChillens.getLength(); iii++){
+    							Node metaChild = metaDataChillens.item(iii);
+    							NamedNodeMap attribs = metaChild.getAttributes();
+    							try {
+									if (metaChild.getNodeName().equals("macro")){
+										String name = attribs.getNamedItem("name").getNodeValue();
+										metaDataMacros.add(name);
+									} else if (metaChild.getNodeName().equals("include")){
+										String path = attribs.getNamedItem("path").getNodeValue();
+										metaDataIncludes.add(path);
+									} else if (metaChild.getNodeName().equals("preinclude")){
+										metaDataVariantHRH = attribs.getNamedItem("file").getNodeValue();
+									}
+								} catch (Exception e) {
+									// skip it
+									e.printStackTrace();
+								}
+    						}
+    						
+    					} else if (metaDataNode.getNodeName().equals("compilerinfo")){
+    						// TODO: Placeholder for future cpp preprocessor macros and compiler prefix
+    						// Not sure what it will be called yet.
+    					}
+    				}
+    				
+    				break;
+    			}
+    		}
+    		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		Logging.log(SDKCorePlugin.getDefault(), Logging.newStatus(SDKCorePlugin.getDefault(), e));
+    	}
+    	
+    	setPlatformAndTargetFromOutputPath();
+		
+	}
 
+	private void setPlatformAndTargetFromOutputPath() {
+		if (outputPathString == null) return;
+		
+		IPath releasePath = new Path(outputPathString);
+		int epoc32SegmentIndex = 0;
+		for (String segment : releasePath.segments()){
+			if (segment.toLowerCase().equals("epoc32"))
+				break;
+			epoc32SegmentIndex++;
+		}
+		// assuming /epoc32/<release>/<target>/
+		platform = releasePath.segment(epoc32SegmentIndex+2);
+		target = releasePath.segment(epoc32SegmentIndex+3);
+	}
 
+	/**
+	 * Error message, if any.
+	 * @return An error message if a problem occurred while trying to get config info from Raptor. Null if no error.
+	 */
+	public String getConfigurationErrorMessage(){
+		return configParseErrorMessage;
+	}
 
 }

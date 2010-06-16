@@ -61,54 +61,23 @@ public class SBSv2ConfigData implements ISBSv2ConfigData {
 	}
 
 
-	public String getReleaseDirectory(ISymbianSDK sdk) {
-		if (releaseDirectory == null){
-			initDefaultConfigTargetInfo(sdk);
-		}
+	public String getReleaseDirectory() {
+		
 		return releaseDirectory;
 	}
 
-	private void initDefaultConfigTargetInfo(ISymbianSDK sdk) {
-		List<String> aliasOrMeaningArray = new ArrayList<String>();
-		aliasOrMeaningArray.add(buildAlias);
-		HashMap <String, String> configResponse = SBSv2QueryUtils.queryConfigTargetInfo(aliasOrMeaningArray, sdk);
-		String releaseTree = configResponse.get(meaning);
-		if (releaseTree == null){
-			// TODO: Throw Exception
-			return;
-		}
-		IPath releasePath = new Path(releaseTree);
-		int epoc32SegmentIndex = 0;
-		for (String segment : releasePath.segments()){
-			if (segment.toLowerCase().equals("epoc32"))
-				break;
-			epoc32SegmentIndex++;
-		}
-		platform = releasePath.segment(epoc32SegmentIndex+2);
-		target = releasePath.segment(epoc32SegmentIndex+3);
-		String device = releasePath.getDevice();
-		releaseDirectory = releasePath.removeFirstSegments(epoc32SegmentIndex).toPortableString();
-		releaseDirectory = releaseDirectory.replace(device, "");
-		
-	}
-
-	public ISBSv2ConfigPreprocessorInfo getBuildData(ISymbianSDK sdk) {
+	public ISBSv2ConfigPreprocessorInfo getCPPPreprocessorData() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getTraditionalTarget(ISymbianSDK sdk) {
-		if (target == null){
-			initDefaultConfigTargetInfo(sdk);
-		}
+	public String getTraditionalTarget() {
+		
 		
 		return target;
 	}
 
-	public String getTraditionalPlatform(ISymbianSDK sdk) {
-		if (platform == null){
-			initDefaultConfigTargetInfo(sdk);
-		}
+	public String getTraditionalPlatform() {
 		
 		return platform;
 	}
