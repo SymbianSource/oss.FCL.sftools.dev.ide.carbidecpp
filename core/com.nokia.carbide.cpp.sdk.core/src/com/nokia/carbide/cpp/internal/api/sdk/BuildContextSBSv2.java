@@ -313,19 +313,19 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		if (sbsv2Alias == null) {
 			if (other.sbsv2Alias != null)
 				return false;
-		} else if (!sbsv2Alias.equals(other.sbsv2Alias))
+		} else if (!sbsv2Alias.equalsIgnoreCase(other.sbsv2Alias))
 			return false;
 		if (getSDK() == null) {
 			if (other.getSDK() != null)
 				return false;
-		} else if (!getSDK().getEPOCROOT().equals(other.getSDK().getEPOCROOT()))
+		} else if (!getSDK().getEPOCROOT().equalsIgnoreCase(other.getSDK().getEPOCROOT()))
 			return false;
 		if (target == null) {
 			if (other.target != null)
 				return false;
-		} else if (!target.equals(other.target)) {
+		} else if (!target.equalsIgnoreCase(other.target)) {
 			return false;
-		} else if (!configID.equals(other.configID)){
+		} else if (!configID.equalsIgnoreCase(other.configID)){
 			// TODO: Do we really need anything other than a config ID comparison?
 			return false;
 		}
