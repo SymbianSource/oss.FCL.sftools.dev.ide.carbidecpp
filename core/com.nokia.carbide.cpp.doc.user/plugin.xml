@@ -140,9 +140,6 @@
        <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
        		plugin="com.nokia.carbide.cpp.builder.utils" />
 
-       <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
-       		plugin="com.nokia.carbide.cpp.leavescan" />
-
        <!-- SPN VIEW, INF IMPORTER, MMP, MBM, AIF editors, and miscellaneous HELP  -->
        <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
        		plugin="com.nokia.carbide.cpp.project.ui" />

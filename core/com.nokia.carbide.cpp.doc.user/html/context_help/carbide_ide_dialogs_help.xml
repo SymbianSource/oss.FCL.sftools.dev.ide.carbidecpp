@@ -6,7 +6,6 @@
 <!-- Includes context help references for:                                           -->
 <!--    plugin="com.nokia.carbide.cdt.builder"                                       -->
 <!--    plugin="com.nokia.carbide.cdt.rombuilder"                                    -->
-<!--    plugin="com.nokia.carbide.cpp.leavescan"                                     -->
 <!--    plugin="com.nokia.carbide.cpp.project.ui"                                    -->
 <!--    plugin="com.nokia.carbide.cpp.sdk.ui"                                        -->
 <!--    plugin="com.nokia.carbide.remoteConnections"                                 -->
@@ -94,17 +93,6 @@
 	<context id="rom_build_settings_page" >
 		<description>Use the ROM Build Settings panel to specify ROM build commands and working directory.</description>
 		<topic label="Carbide ROM Build Settings"		href="html/reference/ROM_build_settings.html" />
-	</context>
-	
-	
-<!-- =============================================================================== -->
-<!-- PLUGIN: com.nokia.carbide.cpp.leavescan                                         -->
-<!-- =============================================================================== -->
-	
-	<!-- LEAVESCAN PREF PANEL -->
-	<context id="leavescan_prefs_page" >
-		<description>Specify the Leavescan directory.</description>
-		<topic label="Leavescan Preferences" 	href="html/reference/leavescan_pref.html"/>
 	</context>
 	
 	

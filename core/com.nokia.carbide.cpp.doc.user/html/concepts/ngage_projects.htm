@@ -17,12 +17,12 @@
   <li>Install the N-Gage SDK on your PC</li>
   <li>Place your game project inside the N-Gage SDK</li>
   <li> In Carbide.c++, click<b> File &gt; <a href="../tasks/ImportingProjects.html">Import</a></b></li>
-  <li>Select <b>Symbian OS Bld.inf</b> importer and navigate to your bld.inf  file to import it </li>
+  <li>Select <b>Symbian OS Bld.inf</b> <strong>File</strong> importer and navigate to your <span class="code">bld.inf</span>  file to import it </li>
 </ol>
 <h4>Building the N-Gage project</h4>
 <p>Once the game project has been imported, use these steps to create an N-GAGE game file:</p>
 <ol>
-  <li>Right-click the project and choose <b>Properties</b> to open the <b>Properties for <i>project_name</i></b> window  </li>
+  <li>Right-click the project name and choose <b>Properties</b> to open the <b>Properties for <i>project_name</i></b> window  </li>
   <li>In the <b>Carbide.c++ &gt; Carbide Build Configuration &gt; <a href="../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a></b> panel, click <b>Add</b>.</li>
   <li>In the <b><a href="../reference/build_properties/wnd_sis_properties.htm">SIS Properties</a></b> window:
     <ol>
@@ -67,10 +67,10 @@
 <h4>Debugging the Game project</h4>
 <p>With your game file installed on the device, create a launch configuration for the project. In Carbide:</p>
 <ol>
-  <li>Open<span class="note"><b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel </span>and disable the <b>Build (if required) before launching</b> option</li>
-  <li>Right-click the project and choose <b>Debug As &gt; Debug As</b> to open the <b><a href="../reference/wnd_debug_configuration.htm">Debug</a></b> window</li>
-  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Application TRK</b> launch configuration
-    <ul>
+  <li>Open <span class="note"><b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel </span>and disable the <b>Build (if required) before launching</b> option under the General Options group</li>
+  <li>Right-click the project and choose <b>Debug As &gt; Debug Configuration</b> to open the <b><a href="../reference/wnd_debug_configuration.htm">Debug Cinfigurations</a></b> window</li>
+  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Symbian OS Application TRK</b> launch configuration
+      <ul>
       <li>In the <b><a href="../projects/launch/page_connection.htm">Connection</a></b> tab select the COM port used to connect to the device. </li>
       <li> In the <b><a href="../projects/launch/page_installation.htm">Installation</a></b> tab, verify that the game SISX file is correct </li>
       <li>In the <b><a href="../projects/launch/page_debugger.htm">Debug</a></b> tab, enable the View messges between PC and debug agent on the phone if you want to monitor communications between TRK and Carbide </li>
@@ -82,13 +82,13 @@
 <p>The Debugger launches the game project in the device and halts when it encounters the breakpoint you set. </p>
 <h3>For Emulator Debugging </h3>
 <h4>Deploying and debugging the N-Gage project on an emulator</h4>
-<p>With your game file installed to the emulator, create a launch configuration for the project. In Carbide:</p>
+<p>With your game file installed on the emulator, create a launch configuration for the project. In Carbide:</p>
 <ol>
-  <li>Open <b>Window &gt; Preferences &gt;   Run/Debug &gt; Launching</b> and disable the <b>Build (if required) before launching</b> option</li>
-  <li>Right-click the project and choose <b>Debug As &gt; Debug As</b> to open the <b>Debug</b> window</li>
+  <li>Open <b>Window &gt; Preferences &gt;   Run/Debug &gt; Launching</b> and disable the <b>Build (if required) before launching</b> option under the General Options group</li>
+  <li>Right-click the project and choose <b>Debug As &gt; Debug Configurations</b> to open the <b>Debug Configurations</b> window</li>
   <li>Create an <b>Symbian OS Emulation </b> launch configuration</li>
   <li>Click <b>Debug</b> to launch the emulator </li>
-  <li>In the emulator, select <b>File &gt; Open</b>,  locate and select the .N-GAGE installation file and click <b>Open</b> to install the project </li>
+  <li>In the emulator, select <b>File &gt; Open</b>,  locate and select the <span class="code">.N-GAGE</span> installation file and click <b>Open</b> to install the project </li>
   <li>Open the Installation folder, launch the N-Gage runtime application</li>
   <li>In the N-Gage runtime launch the game  </li>
   <li>If any breakpoint is hit in the game project, the debugger suspends</li>

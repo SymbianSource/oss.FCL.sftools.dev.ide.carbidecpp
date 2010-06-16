@@ -9,7 +9,7 @@
 </head>
 <body bgcolor="#FFFFFF">
 <h2>External Builds Support</h2>
-<p>  The IDE will perform the following tasks on external makefiles:</p>
+<p>  The Carbide IDE  performs the following tasks on external makefiles:</p>
 <ul>
   <li>Build</li>
   <li>Debug</li>
@@ -17,10 +17,10 @@
   <li>Source Browsing</li>
   <li>Error Lookup</li>
 </ul>
-<p>The IDE can build an external makefile and debug its output. A linker plugin will enable the IDE to manage a command line and targets associated with a makefile. The command line is executed when a build step is initiated. The linker plugin will also supply the executable to use for debugging.</p>
-<p>The linker plugin will provide a preference panel named External Build that is used to configure a target. The preference panel provides text fields for you to configure the command line for the target (which will enable building), specify the working directory and the output file used to launch a debugging session, and the debug platform.</p>
+<p>Carbide can build an external makefile and debug its output. A linker plugin  enables Carbide to manage a command line and targets associated with a makefile. The command line is executed when a build step is initiated. The linker plugin will also supply the executable to use for debugging.</p>
+<p>The linker plugin  provides a preference panel named <strong>External Build</strong> that is used to configure a target. The preference panel provides text fields for you to configure the command line for the target (which will enable building), specify the working directory and the output file used to launch a debugging session, and the debug platform.</p>
 <p>The linker plugin is generic so that it can be used regardless of the target CPU and OS. The list of available debugger preference panels will be updated by the IDE when you select the debug platform.</p>
-<p>The External Build Target preference panel will collect the following information:</p>
+<p>The <strong>External Build Target</strong> preference panel  collects the following information:</p>
 <ul>
   <li>Build command line to be executed in the build step</li>
 </ul>
@@ -38,12 +38,12 @@
   <p>If multiple build steps are performed on the same target, the output from each build step will be appended to the build output window. Each block of output will be separated by &ldquo;----Build started----&rdquo; and &ldquo;----Done----&rdquo; tags.</p>
   <p>The build output window will allow users to navigate directly to the location of a compilation error. Double-click a line that contains an error message or press Enter when the cursor is in the line. If the IDE determines that a valid error message exists on the selected line, the source file is opened to the line on which the error occurred.</p>
   <p>Click the right mouse button in the build output window to display a context menu.</p>
+  <ul>
+      <li>The <strong>Copy</strong> command  copies selected text to the clipboard. If no text is selected then the line that contains the cursor is copied.</li>
+      <li>The <strong>Clear All</strong> command  clears the contents of output window.</li>
+      <li>The <strong>Go To Error</strong> command  navigates to the error location. This is identical to double-clicking.</li>
+  </ul>
 </blockquote>
-<ul>
-  <li>The Copy command will copy selected text to the clipboard. If no text is selected then the line that contains the cursor will be copied.</li>
-  <li>The Clear All command will clear contents of output window.</li>
-  <li>The Go To Error command will navigate to the error location. This is identical to double-clicking.</li>
-</ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 </body>

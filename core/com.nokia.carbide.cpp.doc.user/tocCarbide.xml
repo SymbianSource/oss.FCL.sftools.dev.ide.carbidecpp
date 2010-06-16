@@ -69,7 +69,6 @@
       <topic label="Build"							href="html/reference/wnd_build_prefs.htm" />
       <topic label="Carbide.c++ News"					href="html/reference/prefs_carbide_news.htm" />
       <topic label="Debugger"							href="html/reference/wnd_debugger_prefs.htm" />
-      <topic label="CodeScanner"	  					href="PLUGINS_ROOT/com.nokia.carbide.cpp.codescanner/html/pref_codescanner_01.htm" />
       <topic label="Diagnostic Logs"          		href="html/reference/wnd_diagnostic_logs_pref.htm" />
       <topic label="Performance Investigator"  		href="PLUGINS_ROOT/com.nokia.carbide.cpp.pi.doc.user/html/tasks/analyser/key_profile_pref.htm" />
       <topic label="Platform Filtering Preferences"	href="html/tasks/sdks/sdk_platform_filter.htm" />
@@ -198,6 +197,7 @@
       <topic label="Qt preference panel"				href="html/qt_help/qt_pref_panel.htm" />
       <topic label="Qt project properties"			href="html/qt_help/qt_project_properties.htm" />
     </topic>
+    <topic label="Software Configuration Management"	href="html/concepts/cvs.htm" />
   </topic>
   <topic label="Debugging projects" 				href="html/concepts/debugger_about.htm" >
     <topic label="Running a program" 			href="html/debugger/debug/cmds_starting.htm" />
