@@ -24,5 +24,6 @@ public interface ISymbianSDKFeatures {
 	public static final String IS_WINSCW_UREL_SUPPORTED = "isWINSCWURELSupported";
 	public static final String IS_EKA1 = "isEAK1";
 	public static final String IS_EKA2 = "isEKA2";
+	public static final String IS_FROM_DEVICES_XML = "isFromDevicesXml";
 
 }

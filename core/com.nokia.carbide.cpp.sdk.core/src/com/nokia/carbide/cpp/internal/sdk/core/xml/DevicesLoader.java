@@ -109,7 +109,8 @@ public class DevicesLoader {
 		boolean deviceExists = false;
 		for (Iterator i = devicesList.iterator(); i.hasNext();) {
 			DeviceType currDevice = (DeviceType)i.next();
-			 if (currDevice.getId().equals(sdk.getUniqueId())){
+			 if (currDevice.getId().equals(sdk.getUniqueId()) ||
+				 currDevice.getEpocroot().toLowerCase().equals(sdk.getEPOCROOT().toLowerCase())){
 				 deviceExists = true;
 				 currDevice.setEpocroot(sdk.getEPOCROOT());
 				 currDevice.setId(sdk.getUniqueId());

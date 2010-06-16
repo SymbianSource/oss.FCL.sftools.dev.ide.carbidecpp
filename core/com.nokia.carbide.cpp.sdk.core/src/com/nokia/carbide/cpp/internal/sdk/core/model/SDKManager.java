@@ -44,6 +44,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
@@ -89,19 +90,15 @@ public class SDKManager extends AbstractSDKManager {
 			File devicesFile = getDevicesXMLFile();
 
 			if (devicesFile == null || !devicesFile.exists()) {
-				// There is no devices.xml. Ask the user if he/she wants to
-				// add it
-				if (hasPromptedForDevicesXML == false) {
-					hasPromptedForDevicesXML = true;
-					doAsynchPromptCreateDevicesXML();
-				}
-				result = false; // no devices.xml file..
+				// It's ok if there is no devices.xml. 
+				// Raptor based SDKs no longer depends on it.
 			} else {
 				devicesXLMLastModified = devicesFile.lastModified();
 				devicesType = DevicesLoader.loadDevices(devicesFile.toURL());
 				EList devices = devicesType.getDevice();
 				for (Iterator iter = devices.iterator(); iter.hasNext();) {
 					SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
+					sdk.addSupportedFeature(ISymbianSDKFeatures.IS_FROM_DEVICES_XML);
 					sdkList.add(sdk);
 				}
 			}
@@ -115,25 +112,27 @@ public class SDKManager extends AbstractSDKManager {
 	}
 
 	public void updateSDK(ISymbianSDK sdk) {
-		try {
-			File devicesFile = getDevicesXMLFile();
+		if (((SymbianSDK)sdk).getSupportedFeatures().contains(ISymbianSDKFeatures.IS_FROM_DEVICES_XML)) {
+			try {
+				File devicesFile = getDevicesXMLFile();
 
-			if (devicesFile == null || !devicesFile.exists()) {
-				// There is no devices.xml. Ask the user if he/she wants to
-				// add it
-				doAsynchPromptCreateDevicesXML();
-				return;
+				if (devicesFile == null || !devicesFile.exists()) {
+					// There is no devices.xml. Ask the user if he/she wants to
+					// add it
+					doAsynchPromptCreateDevicesXML();
+					return;
+				}
+
+				// If file does not exist exception will catch it
+				DevicesLoader.updateDevice(sdk, devicesFile.toURL());
+				
+			} catch (Exception e) { 
+				// must catch and rethrow as unchecked exception this 
+				// because no throws clause in API method
+				throw new RuntimeException(e);
 			}
-
-			// If file does not exist exception will catch it
-			DevicesLoader.updateDevice(sdk, devicesFile.toURL());
-			updateCarbideSDKCache();
-			
-		} catch (Exception e) { 
-			// must catch and rethrow as unchecked exception this 
-			// because no throws clause in API method
-			throw new RuntimeException(e);
 		}
+		updateCarbideSDKCache();
 	}
 	
 	protected boolean doRemoveSDK(String sdkId) {
@@ -181,8 +180,8 @@ public class SDKManager extends AbstractSDKManager {
 		// registry entry exists, check existence of file
 		regPath = regPath.append(DEVICES_FILE_NAME);
 		if (!regPath.toFile().exists()){
-			String errMsg = MessageFormat.format("Devices.xml does not exist at: {0}", regPath);
-			logError(errMsg, null);
+//			String errMsg = MessageFormat.format("Devices.xml does not exist at: {0}", regPath);
+//			logError(errMsg, null);
 			return null;
 		}
 		
