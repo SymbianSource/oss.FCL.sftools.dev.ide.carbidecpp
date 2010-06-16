@@ -67,7 +67,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		if (configParseErrorMessage != null && configParseErrorMessage.length() > 0){
 			this.displayString = sbsv2Alias + " ERROR: " +  configParseErrorMessage;
 		} else {
-			this.displayString = getPlatformString().toUpperCase() + " " + getTargetString().toUpperCase(); 
+			this.displayString = sbsv2Alias + " [" + sdk.getUniqueId() + "]"; 
 		}
 	}
 

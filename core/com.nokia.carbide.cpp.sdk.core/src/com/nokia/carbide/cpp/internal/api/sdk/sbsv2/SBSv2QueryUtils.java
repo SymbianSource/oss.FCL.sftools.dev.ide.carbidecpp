@@ -36,6 +36,7 @@ import org.eclipse.cdt.utils.spawner.EnvironmentReader;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.osgi.framework.Version;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -54,7 +55,10 @@ public class SBSv2QueryUtils {
 	public static final String QUERY_CONFIG_COMMAND = "--query=config";
 	public static final String QUERY_COMMAND = "--query=aliases";
 	
-	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk){
+	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException{
+		
+		checkForMinimumRaptorVersion();
+		
 		List<String> argListAliasQuery = new ArrayList<String>();
 		argListAliasQuery.add(QUERY_COMMAND);
 		
@@ -70,7 +74,10 @@ public class SBSv2QueryUtils {
 		return parseQueryAliasResult(queryResult);
 	}
 	
-	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk){
+	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException{
+		
+		checkForMinimumRaptorVersion();
+		
 		List<String> argListProductQuery = new ArrayList<String>();
 		
 		Properties envVars = EnvironmentReader.getEnvVars();
@@ -85,7 +92,9 @@ public class SBSv2QueryUtils {
 		return parseQueryProductsResults(queryResult);
 	}
 	
-	public static String getConfigQueryXML(ISymbianSDK sdk, List<String> aliasOrMeaningArray){
+	public static String getConfigQueryXML(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException{
+		
+		checkForMinimumRaptorVersion();
 		
 		List<String> argListConfigQuery = new ArrayList<String>();
 		
@@ -105,7 +114,9 @@ public class SBSv2QueryUtils {
 	}
 	
 	
-	public static HashMap<String, String> queryConfigTargetInfo(ISymbianSDK sdk, List<String> aliasOrMeaningArray){
+	public static HashMap<String, String> queryConfigTargetInfo(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException{
+		
+		checkForMinimumRaptorVersion();
 		
 		List<String> argListConfigQuery = new ArrayList<String>();
 		
@@ -298,7 +309,10 @@ public class SBSv2QueryUtils {
 		return productList;
 	}
 
-	public static ISBSv2QueryData queryFilteredConfigsForSDK(ISymbianSDK sdk) {
+	public static ISBSv2QueryData queryFilteredConfigsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+		
+		checkForMinimumRaptorVersion();
+		
 		List<String> argListConfigQuery = new ArrayList<String>();
 		argListConfigQuery.add(QUERY_COMMAND);
 		SBSv2QueryData sbsQueryData = new SBSv2QueryData();
@@ -333,7 +347,15 @@ public class SBSv2QueryUtils {
 		return sbsQueryData;
 	}
 
-	
+	private static boolean checkForMinimumRaptorVersion() throws SBSv2MinimumVersionException{
+		Version sbsVers = SDKCorePlugin.getSDKManager().getSBSv2Version(false);
+		if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
+			return true;
+		else {
+			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation.";
+			throw new SBSv2MinimumVersionException(message);
+		}
+	}
 	
 	
 }

@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -35,6 +36,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TableItem;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
 
@@ -103,7 +105,12 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		SBSv2Utils.initDefaultConfigsToFilter();
 		
 		// TODO: Aliases need to be the union of all SDKs
-		HashMap<String, String> aliasMap = SBSv2QueryUtils.getAliasesForSDK(null);
+		HashMap<String, String> aliasMap = new HashMap<String, String>();
+		try {
+			aliasMap = SBSv2QueryUtils.getAliasesForSDK(null);
+		} catch (SBSv2MinimumVersionException e) {
+			MessageDialog.openError(getShell(), "Minimum sbs version not met.", e.getMessage());
+		}
 		List<String> sbsAliases = new ArrayList<String>();
 		for (String key : aliasMap.keySet())
 			sbsAliases.add(key);

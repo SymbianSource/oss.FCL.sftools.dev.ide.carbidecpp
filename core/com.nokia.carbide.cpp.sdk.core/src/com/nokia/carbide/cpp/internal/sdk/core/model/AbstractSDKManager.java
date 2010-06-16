@@ -111,7 +111,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	/**
 	 * Minimum SBSv2 version supported with Carbide
 	 */
-	public static final Version MINIMUM_RAPTOR_VERSION = new Version(2, 8, 6);
+	public static final Version MINIMUM_RAPTOR_VERSION = new Version(2, 15, 0);
 
 	static boolean hasScannedSDKs = false; // make sure we only scan SDKs when needed
 	

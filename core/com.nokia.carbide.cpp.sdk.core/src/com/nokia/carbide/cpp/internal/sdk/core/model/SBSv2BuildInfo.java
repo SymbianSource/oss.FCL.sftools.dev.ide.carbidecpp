@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,17 +25,20 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 /**
@@ -70,12 +74,22 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
 		
 		if (aliasToMeaningMap.size() == 0)
-			aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
+			try {
+				aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
+			} catch (SBSv2MinimumVersionException e) {
+				Logging.log( SDKCorePlugin.getDefault(),
+							Logging.newSimpleStatus(0, IStatus.ERROR,
+								MessageFormat.format(e.getMessage(), ""), e));
+			}
 		
 		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigPreferences(); // From global prefs
 		if ((sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) 
 			 && SBSv2Utils.enableSBSv2Support()){
-						
+			
+			//////// TODO Refactor this block to sub routine
+			// First time to be scanned so create a new list based on what we allow
+			// from the global prefs
+			
 //			if (!(new File(sdk.getEPOCROOT()).exists())){
 //				return sbsv2FilteredConetxts;
 //			}
@@ -91,15 +105,23 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				}
 			}
 			
-			String configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, filteredAliasList);
+			String configQueryXML;
+			try {
+				configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, filteredAliasList);
 			
-			for (String alias : filteredAliasList){
-				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
-				sbsv2FilteredConetxts.add(sbsv2Context);
+				for (String alias : filteredAliasList){
+					ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
+					sbsv2FilteredConetxts.add(sbsv2Context);
+				}	
+			} catch (SBSv2MinimumVersionException e) {
+				// ignore, previous exception would have caught the error
 			}
 			
 		} else if (SBSv2Utils.enableSBSv2Support()){
+			// TODO: Refactor to subroutine
+			//////////////////////////////////////////////////////
 			// Check and see if the filtered list has changed
+			//////////////////////////////////////////////////////
 			boolean contextExists = false;
 			List<String> newContextsToQuery = new ArrayList<String>();
 			for (String aliasName : allowedConfigs){
@@ -116,7 +138,12 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				contextExists = false;
 			}
 			
-			String configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, newContextsToQuery);
+			String configQueryXML = "";
+			try {
+				configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, newContextsToQuery);
+			} catch (SBSv2MinimumVersionException e) {
+				// ignore, previous exception would have caught the error
+			}
 			for (String alias : newContextsToQuery){
 				if (aliasToMeaningMap.get(alias) == null){
 					continue; // This alias is not valid with this SDK, ignore
