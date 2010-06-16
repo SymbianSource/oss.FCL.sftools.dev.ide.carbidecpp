@@ -59,6 +59,9 @@ public:
 	virtual ~CClientManager();
 
 	// starting/stopping server
+#ifdef _PSAPI_PRESENT
+	void FindOrCreateRunningServer();
+#endif
 	BOOL StartServer(pServerProcessData pData);
 	BOOL StopServer(pServerProcessData pData);
 	long StartServer();

@@ -103,7 +103,7 @@ public:
 	void SetClientId(long id);
 	BOOL Open(DWORD dwSize, CHAR *filePath);
 	BOOL Init();
-	Close();
+	void Close();
 
 	long m_ClientID;
 	HANDLE m_hFile; // handle from CreateFile

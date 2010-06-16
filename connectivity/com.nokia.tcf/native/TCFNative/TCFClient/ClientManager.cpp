@@ -23,6 +23,9 @@
 #include "TCErrorConstants.h"
 #include "resource.h"
 #include <stdio.h>
+#ifdef _PSAPI_PRESENT
+	#include <psapi.h>
+#endif
 
 #ifdef _DEBUG
 extern BOOL gDoLogging;
@@ -201,6 +204,99 @@ CClientManager::~CClientManager()
 		m_DebugLog = NULL;
 	}
 }
+
+#ifdef _PSAPI_PRESENT
+void
+CClientManager::FindOrCreateRunningServer()
+{
+	TCDEBUGOPEN();
+	TCDEBUGLOGS("CClientManager::FindOrCreateRunningServer: searching for existing TCFServer.exe\n");
+
+	// Directory where TCFServer.exe lives
+	char exeDirectory[MAX_DLLPATHNAME] = {0};
+
+	BOOL foundRunningServer = FALSE;
+
+	// Get the list of process identifiers.
+
+	DWORD aProcesses[1024], cbNeeded, cProcesses;
+	unsigned int i;
+
+	if ( EnumProcesses( aProcesses, sizeof(aProcesses), &cbNeeded ) )
+	{
+		// Calculate how many process identifiers were returned.
+
+		cProcesses = cbNeeded / sizeof(DWORD);
+
+		// Find existing TCFServer
+		for ( i = 0; i < cProcesses; i++ )
+		{
+			if( aProcesses[i] != 0 )
+			{
+				TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
+
+				// Get a handle to the process.
+				HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
+											   PROCESS_VM_READ,
+											   FALSE, aProcesses[i] );
+
+				// Get the process name.
+				if (NULL != hProcess )
+				{
+					HMODULE hMod;
+					DWORD cbNeeded;
+
+					if ( EnumProcessModules( hProcess, &hMod, sizeof(hMod),
+						 &cbNeeded) )
+					{
+						if (GetModuleBaseNameA( hProcess, hMod, szProcessName,
+										   sizeof(szProcessName)/sizeof(char) ))
+						{
+							if (strcmp(SERVER_PROCESS_NAME, szProcessName) == 0)
+							{
+								// get the full path
+								GetModuleFileNameExA(hProcess, hMod, exeDirectory,
+											sizeof(exeDirectory)/sizeof(char) );
+
+								TCDEBUGLOGA1("Found TCFServer at %s\n", exeDirectory);
+								CloseHandle( hProcess );
+								foundRunningServer = TRUE;
+								break;
+							}
+						}
+					}
+				}
+
+				CloseHandle( hProcess );
+			}
+		}
+	}
+
+	if (!foundRunningServer)
+	{
+		// start the one next to the DLL
+		strncpy(exeDirectory, m_DllLocation, strlen(m_DllLocation) + 1);
+		size_t len = strlen(exeDirectory);
+		// remove file
+		for (int i = len-1; i > 0; i--)
+		{
+			if (exeDirectory[i] == PATH_DELIMITER)
+				break;
+		}
+		exeDirectory[i] = NULL;
+	}
+
+	m_ServerExeFile = new char[MAX_DLLPATHNAME];
+	sprintf(m_ServerExeFile, "\"%s%c%s\"", exeDirectory, PATH_DELIMITER, SERVER_PROCESS_NAME);
+
+	m_ServerLockFile = new char[MAX_DLLPATHNAME];
+	sprintf(m_ServerLockFile, "%s%c%s", exeDirectory, PATH_DELIMITER, SERVER_LOCKFILE_NAME);
+
+	TCDEBUGCLOSE();
+
+}
+#endif
+
 CErrorMonitor*
 CClientManager::FindErrorMonitor(long inClientId)
 {

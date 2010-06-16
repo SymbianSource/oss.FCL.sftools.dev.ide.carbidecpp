@@ -44,7 +44,7 @@
 	#define TCAPI_ERR_MEDIA_IS_BUSY						20	// used for Trace bpx when someone else is connected
 	#define TCAPI_ERR_PROTOCOL_NOT_SUPPORTED_BY_MEDIA	21	// TraceBox does not support protocol
 	#define TCAPI_ERR_FEATURE_NOT_IMPLEMENTED			22	// API feature not implemented yet
-	#define TCAPI_ERR_COMM_ERROR						23	// error while polling/reading COMM port
+	#define TCAPI_ERR_COMM_ERROR						23	// error while writing/polling/reading COMM port (h/w)
 	#define TCAPI_ERR_COMM_TIMEOUT						24	// comm error retry timeout
 	#define TCAPI_ERR_COMM_MULTIPLE_OPEN				25	// there are multiple connections open - cannot attach
 	#define TCAPI_ERR_NO_COMM_OPEN						26	// there are no connections open - cannot attach
@@ -82,5 +82,6 @@
 	#define TCAPI_INFO_TRACEBOX_MEMORY_IS_NORMAL		58	// TRACEBOX buffer overflowed and is now closed
 	#define TCAPI_ERR_TRACEBOX_DATA_CORRUPTED			59	// TRACEBOX received corrupted trace data from phone
 	#define TCAPI_ERR_TRACEBOX_PROTOCOL_MEMORY_OVERFLOW	60	// TRACEBOX protocol processing buffer overflowed - fatal
+	#define TCAPI_ERR_COMM_ERROR_DEVICE_NOT_READING		61	// target device not reading output from TCF (USB)
 
 #endif //__TCERRORCONSTANTS_H__

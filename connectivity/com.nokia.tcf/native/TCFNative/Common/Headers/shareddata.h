@@ -25,7 +25,7 @@ public:
 
 	BOOL Open(DWORD dwSize, CHAR *sharedName);
 	BOOL Open(HANDLE hFile, DWORD dwSize, CHAR *sharedName);
-	Close();
+	void Close();
 	virtual BOOL Init();
 	LPVOID GetDataPtr();
 	BOOL IsCreator();

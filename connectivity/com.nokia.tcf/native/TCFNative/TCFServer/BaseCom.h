@@ -124,4 +124,4 @@ typedef CBaseCom* (*COMMCREATE)(ConnectData* connectSettings, DWORD connectionId
 
 #define COMMDLL_BASENAME	"TCFComm"
 
-#endif __BASECOM_H__
+#endif //__BASECOM_H__

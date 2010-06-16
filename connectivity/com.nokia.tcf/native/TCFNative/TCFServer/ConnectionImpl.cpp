@@ -407,7 +407,7 @@ long CConnectionImpl::DoSendMessage(long encodeOption, BYTE protocolVersion, BOO
 		delete[] encodedMessage;
 
 		TCDEBUGLOGS("CConnectionImpl::DoSendMessage done\n");
-		if (err == TCAPI_ERR_COMM_ERROR)
+		if (err == TCAPI_ERR_COMM_ERROR_DEVICE_NOT_READING)
 		{
 //			EnterRetryPeriod(err, true, m_BaseComm->m_lastCommError);
 			HandleFatalPortError(err, true, m_BaseComm->m_lastCommError);
@@ -783,7 +783,8 @@ DWORD WINAPI CConnectionImpl::MessageProcessor(LPVOID lpParam)
 				{
 					MPLOGA2("MessageProcessor  err = %d osError = %d\n", err, pThis->m_BaseComm->m_lastCommError);
 //					pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
-					pThis->HandleFatalPortError(err, true, pThis->m_BaseComm->m_lastCommError);
+					if (err == TCAPI_ERR_COMM_ERROR)
+						pThis->HandleFatalPortError(err, true, pThis->m_BaseComm->m_lastCommError);
 				}
 				else
 				{
@@ -804,7 +805,8 @@ DWORD WINAPI CConnectionImpl::MessageProcessor(LPVOID lpParam)
 							MPLOGA2("MessageProcessor  err = %d osError = %d\n", err, pThis->m_BaseComm->m_lastCommError);
 							// for this error we have os error, but we probably caught this in PollPort already
 //							pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
-							pThis->HandleFatalPortError(err, true, pThis->m_BaseComm->m_lastCommError);
+							if (err == TCAPI_ERR_COMM_ERROR)
+								pThis->HandleFatalPortError(err, true, pThis->m_BaseComm->m_lastCommError);
 						}
 						else if (err != TCAPI_ERR_NONE)
 						{
