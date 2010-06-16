@@ -318,7 +318,7 @@ public class SBSv2QueryUtils {
 
 		HashMap<String, String> sbsAliasMap = parseQueryAliasResult(queryResult);
 
-		List<String> aliasFilterList = SBSv2Utils.getSBSv2FilteredConfigs();
+		List<String> aliasFilterList = SBSv2Utils.getSBSv2FilteredConfigPreferences();
 		for (String aliasKey : sbsAliasMap.keySet()) {
 			
 			if (!aliasFilterList.contains(aliasKey))

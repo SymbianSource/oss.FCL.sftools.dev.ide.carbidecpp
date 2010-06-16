@@ -114,7 +114,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		tableViewer.setAllChecked(false);
 		
 		// now check ones from the store
-		List<String> uncheckedConfigs = SBSv2Utils.getSBSv2FilteredConfigs();
+		List<String> uncheckedConfigs = SBSv2Utils.getSBSv2FilteredConfigPreferences();
 		for (String config : uncheckedConfigs) {
 			for (TableItem item : tableViewer.getTable().getItems()) {
 				if (item.getText().equals(config)) {

@@ -72,13 +72,13 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		if (aliasToMeaningMap.size() == 0)
 			aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
 		
-		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigs(); // From global prefs
+		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigPreferences(); // From global prefs
 		if ((sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) 
 			 && SBSv2Utils.enableSBSv2Support()){
 						
-			if (!(new File(sdk.getEPOCROOT()).exists())){
-				return sbsv2FilteredConetxts;
-			}
+//			if (!(new File(sdk.getEPOCROOT()).exists())){
+//				return sbsv2FilteredConetxts;
+//			}
 				
 			List<String> filteredAliasList = new ArrayList<String>();
 			

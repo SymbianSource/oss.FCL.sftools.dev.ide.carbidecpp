@@ -64,7 +64,12 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		this.configID = ISBSv2BuildContext.BUILDER_ID + "." + sbsv2Alias + "." + sdk.getUniqueId();
 		parseQueryConfigResults(contextQueryXML);
 		
-		this.displayString = getPlatformString().toUpperCase() + " " + getTargetString().toUpperCase(); 
+		if (configParseErrorMessage != null && configParseErrorMessage.length() > 0){
+			this.displayString = sbsv2Alias + " ERROR: " +  configParseErrorMessage;
+		} else {
+			this.displayString = getPlatformString().toUpperCase() + " " + getTargetString().toUpperCase(); 
+		}
+		
 	}
 
 	@Override

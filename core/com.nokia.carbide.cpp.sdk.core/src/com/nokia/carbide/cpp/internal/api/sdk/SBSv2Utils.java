@@ -13,39 +13,24 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
-import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.Version;
 import org.osgi.service.prefs.BackingStoreException;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.helpers.DefaultHandler;
 
-import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
@@ -88,50 +73,6 @@ public class SBSv2Utils {
     }
 
     /**
-     * Get the build configurations supported by SBSv2
-     * @param refreshList whether or not to parse the configuration xml files again
-     * @return A map of raptor aliases (key) to base build platform. Never null;
-     */
-//    public static Map<String, String> getUnfilteredSBSv2BuildConfigurations(boolean refreshList) {
-//    	
-//    	if (unfilteredSBSv2ConfigNames == null || refreshList || unfilteredSBSv2ConfigNames.size() == 0) {
-//    		unfilteredSBSv2ConfigNames = new HashMap<String, String>();
-//    		
-//        	// parse the xml files in <sbs-install>/lib/config/ to get SBSv2 configs
-//    		try {
-//
-//    			IPath configPath = getSBSBinDirectory();
-//    			if (configPath != null) {
-//    				configPath = configPath.removeLastSegments(1).append("lib/config"); //$NON-NLS-1$
-//    				File configDir = configPath.toFile();
-//    				if (configDir.exists() && configDir.isDirectory()) {
-//    					File[] configFiles = FileUtils.listFilesInTree(configDir, new FileFilter() {
-//
-//    						public boolean accept(File arg0) {
-//    							if (arg0.isDirectory()) {
-//    								return true;
-//    							}
-//    							return arg0.getName().toLowerCase().endsWith("xml"); //$NON-NLS-1$
-//    						}
-//    						
-//    					}, false);
-//    					
-//    					for (File file : configFiles) {
-//    						getConfigsForFile(file);
-//    					}
-//    				}
-//    			}
-//
-//    		} catch (Exception e) {
-//        		e.printStackTrace();
-//        		Logging.log(SDKCorePlugin.getDefault(), Logging.newStatus(SDKCorePlugin.getDefault(), e));
-//    		}
-//    	}
-//    	
-//    	return unfilteredSBSv2ConfigNames;
-//	}
-
-    /**
      * Given a list of SDKs, returns the list of the SDK's supported by SBSv2
      * @param sdks list of SDK's to check
      * @return list of SBSv2 supported SDK's, may be empty
@@ -160,7 +101,7 @@ public class SBSv2Utils {
 	 * Returns the list of SBSv2 build configuration names that should
 	 * INCLUDED in any UI. Only configs to be displayed are saved
 	 */
-	public static List<String> getSBSv2FilteredConfigs() {
+	public static List<String> getSBSv2FilteredConfigPreferences() {
 		List<String> buildAliasList = new ArrayList<String>();
 		IEclipsePreferences prefs = new InstanceScope().getNode(SDKCorePlugin.PLUGIN_ID);
 		if (prefs != null) {
