@@ -61,7 +61,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
@@ -258,7 +258,7 @@ public class SettingsData {
 
 				// make sure the selected build configuration of the current project
 				// is an emulator build, otherwise warn them that we can't set default values.
-				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) == 0) {
+				if (buildConfig.getPlatformString().compareTo(ISBSv1BuildContext.EMULATOR_PLATFORM) == 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
 
 					if (isEmulatorRequired(buildConfig, mainExeHostPath, mainExeWorkspaceRelativeMMPPath)) {
@@ -375,7 +375,7 @@ public class SettingsData {
 
 				// make sure the selected build configuration of the current project is not an emulator build
 				// otherwise warn them that we can't set default values.
-				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
+				if (buildConfig.getPlatformString().compareTo(ISBSv1BuildContext.EMULATOR_PLATFORM) != 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
 					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, mainExeTargetPath == null ? "" : PathUtils.convertPathToWindows(mainExeTargetPath));
 				} else {
@@ -410,7 +410,7 @@ public class SettingsData {
 
 				// make sure the selected build configuration of the current project is not an emulator build
 				// otherwise warn them that we can't set default values.
-				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
+				if (buildConfig.getPlatformString().compareTo(ISBSv1BuildContext.EMULATOR_PLATFORM) != 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());					
 				} else {
 					displayWarningDialog(Messages.getString("SettingsData.37")); //$NON-NLS-1$
