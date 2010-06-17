@@ -198,7 +198,7 @@
 <!-- The following UI elements are from org.eclipse.cdt.debug.ui -->
       <category
             name="CDT - C/C++ Standard Debug UI"
-            description="CDT C/C++ Standard Debug UI"
+            description="CDT C/C++ Standard debug preferences, actions, and views"
             id="org.eclipse.cdt.debug.ui.category">
       </category>
 <!-- Debugger Types Preference Page -->
@@ -339,7 +339,7 @@
 <!-- The following UI elements are from org.eclipse.cdt.make.ui -->
       <category
             name="CDT - C/C++ Make UI"
-            description="CDT C/C++ Make UI Elements"
+            description="CDT C/C++ Make file preferences"
             id="org.eclipse.cdt.make.ui.category">
       </category>
       <activity
@@ -418,8 +418,8 @@
       </activityPatternBinding>
 <!-- New Type Wizard -->
       <activity
-            name="CDT - New C++ Class Drop Down"
-            description="CDT New C++ class drop down"
+            name="CDT - New C++ Class Wizard"
+            description="CDT New C++ class wizard"
             id="org.eclipse.cdt.ui.activityNewType">
       </activity>
       <categoryActivityBinding
@@ -432,8 +432,8 @@
       </activityPatternBinding>
 <!-- New File Wizard -->
       <activity
-            name="CDT - New C/C++ File Drop Down"
-            description="CDT New C/C++ source file drop down"
+            name="CDT - New C/C++ File Wizard"
+            description="CDT New C/C++ source file wizard"
             id="org.eclipse.cdt.ui.activityNewFile">
       </activity>
       <categoryActivityBinding
@@ -446,8 +446,8 @@
       </activityPatternBinding>
 <!-- New Folder Wizard -->
       <activity
-            name="CDT - New C/C++ Folder Drop Down"
-            description="CDT New C/C++ source folder drop down"
+            name="CDT - New C/C++ Folder Wizard"
+            description="CDT New C/C++ source folder wizard"
             id="org.eclipse.cdt.ui.activityNewFolder">
       </activity>
       <categoryActivityBinding
