@@ -136,7 +136,7 @@ public class SDKManager extends AbstractSDKManager {
 	}
 	
 	protected boolean doRemoveSDK(String sdkId) {
-		// Now actually remove it from the file...
+		// Now actually remove it from devices.xml...
 		DevicesType devicesType;
 		try {
 			File devicesFile = getDevicesXMLFile();
@@ -156,7 +156,7 @@ public class SDKManager extends AbstractSDKManager {
 			
 			return true;
 		} catch (Exception e) {
-			logError("Failed to remove SDK", e);
+			logError("Failed to remove SDK from devices.xml", e);
 		}
 		return false;
 		

@@ -44,7 +44,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
@@ -70,6 +69,7 @@ import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -111,7 +111,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	/**
 	 * Minimum SBSv2 version supported with Carbide
 	 */
-	public static final Version MINIMUM_RAPTOR_VERSION = new Version(2, 15, 0);
+	public static final Version MINIMUM_RAPTOR_VERSION = new Version(2, 8, 6);
 
 	static boolean hasScannedSDKs = false; // make sure we only scan SDKs when needed
 	
@@ -129,20 +129,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	 */
 	protected static ListenerList<ICarbideDevicesXMLChangeListener> devicesXMLListeners = new ListenerList<ICarbideDevicesXMLChangeListener>();
 	
-	IJobChangeListener scanJobListener = new IJobChangeListener() {
-		
-		public void sleeping(IJobChangeEvent event) {}
-		public void scheduled(IJobChangeEvent event) {}
-		public void running(IJobChangeEvent event) {}
-		public void awake(IJobChangeEvent event) {}
-		public void aboutToRun(IJobChangeEvent event) {}
-		
-		public void done(IJobChangeEvent event) {
-			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
-		}
-		
-	};
-	
 	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
@@ -152,8 +138,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				return handleScan(monitor);
 			}
 		};
-		
-		addScanJobListner(scanJobListener);
 	}
 	
 	public SymbianMacroStore getSymbianMacroStore(){
@@ -218,6 +202,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		hasScannedSDKs = true;
 		
 		// tell others about it
+		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		scanCarbideSDKCache();
 		updateCarbideSDKCache();
 		
@@ -241,13 +226,13 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	abstract protected boolean doScanSDKs(IProgressMonitor monitor);
 	
 	public void addScanJobListner(IJobChangeListener listener) {
-		if (scanJob != null && listener != null) {
+		if (scanJob != null) {
 			scanJob.addJobChangeListener(listener);
 		}
 	}
 
 	public void removeScanJobLisner(IJobChangeListener listener) {
-		if (scanJob != null && listener != null) {
+		if (scanJob != null) {
 			scanJob.removeJobChangeListener(listener);
 		}
 	}
@@ -320,8 +305,11 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						
 						// tell others about it
 						fireInstalledSdkChanged(SDKChangeEventType.eSDKRemoved);
-						
-						doRemoveSDK(sdkId);
+
+						// only remove sdk from devices.xml if the sdk is defined in it
+						if (((SymbianSDK)currSDK).getSupportedFeatures().contains(ISymbianSDKFeatures.IS_FROM_DEVICES_XML)) {
+							doRemoveSDK(sdkId);
+						}
 						
 						break;
 					}
@@ -880,6 +868,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		return;
 
 	}
-
+	
 	
 }
