@@ -39,12 +39,19 @@ import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 /**
  * @since 1.4
  */
+@SuppressWarnings("restriction")
 public class SBSv2PlatformFilterComposite extends Composite {
 
+	// TODO: Temporary map. We need a way to ensure we only get the alias map
+	// when needed and that the data we are getting is properly cached to avoid
+	// having to run Raptor queries too often
+	private static HashMap<String, String> aliasMap = new HashMap<String, String>();
+	
 	private CheckboxTableViewer tableViewer;
 	private Button refreshButton;
 
@@ -104,13 +111,21 @@ public class SBSv2PlatformFilterComposite extends Composite {
 
 		SBSv2Utils.initDefaultConfigsToFilter();
 		
-		// TODO: Aliases need to be the union of all SDKs
-		HashMap<String, String> aliasMap = new HashMap<String, String>();
-		try {
-			aliasMap = SBSv2QueryUtils.getAliasesForSDK(null);
-		} catch (SBSv2MinimumVersionException e) {
-			MessageDialog.openError(getShell(), "Minimum sbs version not met.", e.getMessage());
+		if (aliasMap.size() == 0){
+			try {
+				aliasMap = SBSv2QueryUtils.getCompleteAliasList();
+			} catch (SBSv2MinimumVersionException e) {
+				// Force a scan for version in case system was updated
+				SDKCorePlugin.getSDKManager().getSBSv2Version(true);
+				try {
+					// try, try again...
+					aliasMap = SBSv2QueryUtils.getCompleteAliasList();
+				} catch (SBSv2MinimumVersionException e2) {
+					MessageDialog.openError(getShell(), "Minimum sbs version not met.", e.getMessage());
+				}
+			} 
 		}
+		
 		List<String> sbsAliases = new ArrayList<String>();
 		for (String key : aliasMap.keySet())
 			sbsAliases.add(key);
@@ -135,12 +150,12 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	public void setDefaults(){
 		initTable(true);
 		for (TableItem item : tableViewer.getTable().getItems()) {
-			if (item.getText().toLowerCase().startsWith("armv5_udeb")  || 
-				item.getText().toLowerCase().startsWith("armv5_urel") ||
-				item.getText().toLowerCase().startsWith("armv5_udeb_gcce")  || 
-				item.getText().toLowerCase().startsWith("armv5_urel_gcce") ||
-				item.getText().toLowerCase().startsWith("winscw_udeb")  ||
-				item.getText().toLowerCase().startsWith("winscw_urel")) {
+			if (item.getText().toLowerCase().equals("armv5_udeb")  || 
+				item.getText().toLowerCase().equals("armv5_urel") ||
+				item.getText().toLowerCase().equals("armv5_udeb_gcce")  || 
+				item.getText().toLowerCase().equals("armv5_urel_gcce") ||
+				item.getText().toLowerCase().equals("winscw_udeb")  ||
+				item.getText().toLowerCase().equals("winscw_urel")) {
 				tableViewer.setChecked(item.getData(), true);
 			} else {
 				tableViewer.setChecked(item.getData(), false);

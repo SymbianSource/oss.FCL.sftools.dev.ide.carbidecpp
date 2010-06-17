@@ -63,12 +63,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		this.meaning = meaning;
 		this.configID = ISBSv2BuildContext.BUILDER_ID + "." + sbsv2Alias + "." + sdk.getUniqueId();
 		parseQueryConfigResults(contextQueryXML);
-		
-		if (configParseErrorMessage != null && configParseErrorMessage.length() > 0){
-			this.displayString = sbsv2Alias + " ERROR: " +  configParseErrorMessage;
-		} else {
-			this.displayString = sbsv2Alias + " [" + sdk.getUniqueId() + "]"; 
-		}
+		this.displayString = sbsv2Alias + " [" + sdk.getUniqueId() + "]"; 
 	}
 
 	@Override
@@ -84,7 +79,8 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		}
 		
 		if (platform.contains(".")){
-			return platform.split(".")[0];
+			String[] tok = platform.split(".");
+			if (tok.length > 0) return tok[0];
 		}
 		return platform;
 	}
@@ -459,6 +455,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	 * Error message, if any.
 	 * @return An error message if a problem occurred while trying to get config info from Raptor. Null if no error.
 	 */
+	@Override
 	public String getConfigurationErrorMessage(){
 		return configParseErrorMessage;
 	}

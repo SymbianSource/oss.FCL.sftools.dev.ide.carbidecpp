@@ -25,6 +25,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.TreeNode;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -35,6 +36,7 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
  * A tree node representing a Symbian OS SDK.  This node's children will be the
  * list of available build configurations.
  */
+@SuppressWarnings("restriction")
 public class BuildTargetTreeNode extends TreeNode {
 
 	public static final String SDK_NODE_ERROR_EPOCROOT_INVALID = " -- SDK location does not exist! Check Symbian SDKs!"; //$NON-NLS
@@ -70,7 +72,14 @@ public class BuildTargetTreeNode extends TreeNode {
 				public String toString() {
 					ISymbianBuildContext context = (ISymbianBuildContext)getValue();
 					String sdkId = context.getSDK().getUniqueId();
-					return context.getDisplayString().replace("[" + sdkId + "]", "");
+					String newDisplayString = context.getDisplayString().replace("[" + sdkId + "]", "");
+					if (context instanceof ISBSv2BuildContext){
+						ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
+						if (v2Context.getConfigurationErrorMessage() != null && v2Context.getConfigurationErrorMessage().length() > 0){
+							newDisplayString += " ERROR: " + v2Context.getConfigurationErrorMessage();
+						}
+					} 
+					return newDisplayString;
 				}
 			};
 		}

@@ -27,4 +27,6 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	 */
 	public String getDefaultDefFileDirectoryName();
 	
+	public String getConfigurationErrorMessage();
+	
 }

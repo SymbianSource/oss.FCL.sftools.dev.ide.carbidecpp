@@ -352,9 +352,28 @@ public class SBSv2QueryUtils {
 		if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
 			return true;
 		else {
-			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation.";
+			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation and Rescan from the Build Configuration Manager preference page .";
 			throw new SBSv2MinimumVersionException(message);
 		}
+	}
+
+	public static HashMap<String, String> getCompleteAliasList() throws SBSv2MinimumVersionException {
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		//return getAliasesForSDK(null);
+		
+		// iterate all SDKs and build the map up
+		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+			if (sdk.isEnabled() && (new File(sdk.getEPOCROOT()).exists())){
+				HashMap<String, String> aliasMap = getAliasesForSDK(sdk);
+				for (String alias : aliasMap.keySet()){
+					if (resultMap.get(alias) == null){
+						resultMap.put(alias, aliasMap.get(alias));
+					}
+				}
+			}
+		}
+		
+		return resultMap;
 	}
 	
 	
