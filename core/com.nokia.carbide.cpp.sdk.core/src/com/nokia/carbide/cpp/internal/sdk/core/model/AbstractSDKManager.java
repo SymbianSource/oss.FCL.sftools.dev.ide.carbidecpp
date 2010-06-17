@@ -44,6 +44,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
@@ -51,7 +52,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
-import org.xml.sax.SAXException;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
@@ -129,6 +129,18 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	 */
 	protected static ListenerList<ICarbideDevicesXMLChangeListener> devicesXMLListeners = new ListenerList<ICarbideDevicesXMLChangeListener>();
 	
+	IJobChangeListener scanJobListener = new IJobChangeListener() {
+		public void sleeping(IJobChangeEvent event) {}
+		public void scheduled(IJobChangeEvent event) {}
+		public void running(IJobChangeEvent event) {}
+		public void awake(IJobChangeEvent event) {}
+		public void aboutToRun(IJobChangeEvent event) {}
+		public void done(IJobChangeEvent event) {
+			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
+		}
+	};
+
+		
 	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
@@ -138,6 +150,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				return handleScan(monitor);
 			}
 		};
+		
+		addScanJobListner(scanJobListener);
 	}
 	
 	public SymbianMacroStore getSymbianMacroStore(){
@@ -201,8 +215,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		// make sure we don't rescan over and over again
 		hasScannedSDKs = true;
 		
-		// tell others about it
-		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		updateCarbideSDKCache();
 		
 		// Notify any plugins that want to know if the SDKManager has scanned plugins.
@@ -225,13 +237,13 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	abstract protected boolean doScanSDKs(IProgressMonitor monitor);
 	
 	public void addScanJobListner(IJobChangeListener listener) {
-		if (scanJob != null) {
+		if (scanJob != null && listener != null) {
 			scanJob.addJobChangeListener(listener);
 		}
 	}
 
 	public void removeScanJobLisner(IJobChangeListener listener) {
-		if (scanJob != null) {
+		if (scanJob != null && listener != null) {
 			scanJob.removeJobChangeListener(listener);
 		}
 	}
