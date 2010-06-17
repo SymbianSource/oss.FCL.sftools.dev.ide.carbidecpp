@@ -407,7 +407,7 @@ long CConnectionImpl::DoSendMessage(long encodeOption, BYTE protocolVersion, BOO
 		delete[] encodedMessage;
 
 		TCDEBUGLOGS("CConnectionImpl::DoSendMessage done\n");
-		if (err == TCAPI_ERR_COMM_ERROR_DEVICE_NOT_READING)
+		if (err != TCAPI_ERR_NONE)
 		{
 //			EnterRetryPeriod(err, true, m_BaseComm->m_lastCommError);
 			HandleFatalPortError(err, true, m_BaseComm->m_lastCommError);
