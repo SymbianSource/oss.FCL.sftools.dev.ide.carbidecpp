@@ -203,7 +203,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		
 		// tell others about it
 		fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
-		scanCarbideSDKCache();
 		updateCarbideSDKCache();
 		
 		// Notify any plugins that want to know if the SDKManager has scanned plugins.
@@ -409,107 +408,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-	
-	protected void scanCarbideSDKCache(){
-		
-		DocumentBuilder docBuilder = null;
-		try {
-			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-			throw new RuntimeException(e);
-		}
-		
-		try {
-			File carbideSDKCacheFile = getCardbieSDKCacheFile();
-		    if (!carbideSDKCacheFile.exists()){
-		    	try {
-		    	FileUtils.writeFileContents(carbideSDKCacheFile, EMPTY_STRING.toCharArray(), null);
-		    	} catch (CoreException e){
-		    		e.printStackTrace();
-		    	}
-		    } else if (carbideSDKCacheFile.length() > 0) {
-				Document lastKnownDoc = docBuilder.parse(carbideSDKCacheFile);
-				
-				NodeIterator ni = XPathAPI.selectNodeIterator(lastKnownDoc, "/sdks/sdk");
-				for (Node n = ni.nextNode(); n != null; n = ni.nextNode()) {
-					
-					// get the unique ID
-					NamedNodeMap attribs = n.getAttributes();
-					String id = attribs.getNamedItem(SDK_CACHE_ID_ATTRIB).getNodeValue();
-					
-					// get whether or not the SDK is enabled
-					String sdkEnabled = "true";
-					Node sdkEnabledItem = attribs.getNamedItem(SDK_CACHE_ENABLED_ATTRIB);
-					if (sdkEnabledItem != null)
-						sdkEnabled = sdkEnabledItem.getNodeValue();
-					
-					// get the os version
-					String osVersion = "";
-					Node osVersionItem = attribs.getNamedItem(SDK_CACHE_OS_VERSION_ATTRIB);
-					if (osVersionItem != null)
-						osVersion = osVersionItem.getNodeValue();
-					
-					// get the sdk version
-					String sdkVersion = "";
-					Node sdkVersionItem = attribs.getNamedItem(SDK_CACHE_SDK_VERSION_ATTRIB);
-					if (sdkVersionItem != null)
-						sdkVersion = sdkVersionItem.getNodeValue();
-					
-					// get the custom EPOCROOT
-					String epocRoot = null;
-					Node epocrootItem = attribs.getNamedItem(SDK_CACHE_EPOCROOT_ATTRIB);
-					if (epocrootItem != null)
-						epocRoot = epocrootItem.getNodeValue();
-					
-					// get whether or not this SDK has been scanned
-					String wasScanned = "false";
-					Node sdkScannedItem = attribs.getNamedItem(SDK_SCANNED_FOR_PLUGINS);
-					if (sdkScannedItem != null)
-						wasScanned = sdkScannedItem.getNodeValue();
-					
-					ISymbianSDK sdk = getSDK(id, false);
-					if (sdk != null){
-	
-						if (sdkEnabled.equalsIgnoreCase("true")){
-							((SymbianSDK)sdk).setEnabled(true);
-						} else {
-							((SymbianSDK)sdk).setEnabled(false);
-						}
-						
-						if (!osVersion.equals("")){
-							if (Version.parseVersion(osVersion).getMajor() != 0){
-								((SymbianSDK)sdk).setOSVersion(Version.parseVersion(osVersion));
-							}
-						}
-						
-						if (epocRoot != null) {
-							((SymbianSDK)sdk).setEPOCROOT(epocRoot);
-						}
-						
-						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-						if (wasScanned.equalsIgnoreCase("true")){
-							sbsv1BuildInfo.setPreviouslyScanned(true);
-							sbsv2BuildInfo.setPreviouslyScanned(true);
-						} else {
-							sbsv1BuildInfo.setPreviouslyScanned(false);
-							sbsv2BuildInfo.setPreviouslyScanned(false);
-						}
-						
-						if (!sdkVersion.equals("")){
-							if (Version.parseVersion(sdkVersion).getMajor() != 0){
-								((SymbianSDK)sdk).setSDKVersion(Version.parseVersion(sdkVersion));
-							}
-						}
-					}
-				} // for
-		    } 
-		} catch (TransformerException e) {
-		} catch (SAXException e) {
-		} catch (IOException e) {
 		}
 	}
 	
