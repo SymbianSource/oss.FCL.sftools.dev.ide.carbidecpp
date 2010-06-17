@@ -7,34 +7,25 @@
    <h2>MMP Editor</h2>
    
    <p>
-   The MMP Editor allows you to view and modify your project definitions.  Changes made in the MMP editor are automatically written to the project's .MMP file. You can view the .mmp file by selecting the <em>project_name</em>.mmp tab located along the bottom of the MMP editor.</p>
+   The MMP Editor <strong>Overview</strong> tab allows you to view and modify your project definitions.  Changes made in the MMP editor are automatically written to the project's .MMP file. You can view the .mmp file by selecting the <em>project_name</em>.mmp tab located along the bottom of the MMP editor.</p>
    <p>
 	  The MMP Editor is shown when an MMP  file is
    opened from the Project Explorer, C/C++ Projects, or Symbian Project Navigator views. The MMP Editor is shown in Figure 1. MMP editor fields are validated for existing or correct entries. For example, if the UID 2 field is blank the label is highlighted in red. If an error exists in the mmp file, the line where the error occurs is marked and also displayed in the Problems view.</p>
-   <p align="center"><img src="images/mmp_editor.png" width="656" height="428" /></p>
-   <p align="left" class="figure">Figure 1 - MMP Editor</p>
+   <p align="center"><img src="images/mmp_editor.png" width="675" height="406" /></p>
+   <p align="left" class="figure">Figure 1 - MMP Editor Overview tab</p>
    <table cellpadding="2" cellspacing="0"
 border="0">
-	 <tr valign="top"><th width="173" class="Cell">Name</th><th width="516" class="Cell">Function</th></tr><tr valign="top"><td class="Cell">
+	 <tr valign="top"><th width="190" class="Cell">Name</th><th width="955" class="Cell">Function</th></tr><tr valign="top"><td class="Cell">
 		    <p>
 			   <b>Target name</b></p></td><td class="Cell">
 			 <p>
-				Enter the name of the target file. 
-			 </p></td></tr><tr valign="top"><td class="Cell">
+				Enter the name of the target file.			 </p></td></tr><tr valign="top"><td class="Cell">
 			 <p>
-				<b>Target type</b> 
-			 </p></td><td class="Cell">
+				<b>Target type</b>			 </p></td><td class="Cell">
 			 <p>
 				Select the type of target file from the dropdown list.</p></td></tr><tr valign="top"><td class="Cell">
 			 <p>
-				<b>Target path</b> 
-			 </p></td><td class="Cell">
-			 <p>
-				Enter the path to the target file. 
-			 </p></td></tr><tr valign="top"><td class="Cell">
-			 <p>
-				<b>UID 2</b> 
-			 </p></td><td class="Cell">
+				<b>UID 2</b>			 </p></td><td class="Cell">
 			 <p>UID 2 is a unique identifier number that identifies the type of interface that the project implements. The values are defined by Symbian:</p>
 			 <ul>
 			   <li>For GUI applications, it is always 0x100039CE</li>
@@ -43,23 +34,20 @@ border="0">
 			 </ul>
 			 </td></tr><tr valign="top"><td class="Cell">
 			 <p>
-				<b>UID 3</b> 
-			 </p></td><td class="Cell">
+				<b>UID 3</b>			 </p></td><td class="Cell">
 			 <p>
-				Application UID (or UID3) is used to uniquely identify the binary (EXE or DLL) within the system. The purpose of UID 3 is to prevent one executable from interfering the operation of another executable.</p></td></tr><tr valign="top"><td class="Cell">
+				Application UID (or UID3) is used to uniquely identify the binary (EXE or DLL) within the system. The purpose of UID 3 is to prevent one executable from interfering the operation of another executable.</p></td></tr>
+			 <tr valign="top">
+			     <td class="Cell"><p> <b>Common tasks</b> </p></td>
+			     <td class="Cell"><p> This group provides links to the User and System include path options located in the Options window. </p></td>
+       </tr>
+			 <tr valign="top"><td class="Cell">
 			 <p>
-				<b>Project definition</b> 
-			 </p></td><td class="Cell">
+				<b>Project definition</b>			 </p></td><td class="Cell">
 			 <p>
-				The Project definition group provides links to the Sources, Libraries, and Options windows. You can also select the Sources, Libraries, and Options tabs to open the related window. </p></td></tr><tr valign="top"><td class="Cell">
-			 <p>
-				<b>Common tasks</b> 
-			 </p></td><td class="Cell">
-			 <p>
-				This group provides links to the User and System include path options located in the Options window. 
-			 </p></td></tr>
+				The Project definition group provides links to the Sources, Libraries, and Options windows. You can also select the Sources, Libraries, and Options tabs to open the related window. </p></td></tr>
    </table>
-	 <p>Any changes made to the MMP file either in Carbide or using an external editor are detected. If the build is for emulation, these changes are detected and used automatically. </p>
+   <p>Any changes made to the MMP file either in Carbide or using an external editor are detected. If the build is for emulation, these changes are detected and used automatically. </p>
 	 <p>For other build types like GCCE you are  presented with the <b>Modified MMP Files Detected</b> dialog (Figure 2) and asked which build action to take for each MMP file that has changed. Set the build option for each listed MMP file and click <b>OK</b>.</p>
 	 <p align="center"><img src="images/wnd_modified_mmp_files.png" width="617" height="300"></p>
 	 <p align="left" class="figure">Figure 2 - Modified MMP Files Detected dialog </p>
