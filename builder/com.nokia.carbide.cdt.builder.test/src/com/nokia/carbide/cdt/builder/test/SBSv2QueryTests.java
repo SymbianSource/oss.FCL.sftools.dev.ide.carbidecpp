@@ -151,13 +151,13 @@ public class SBSv2QueryTests extends BaseTest {
 		List<String> aliasOrMeaningArray = new ArrayList<String>();
 		aliasOrMeaningArray.add("armv5_udeb");
 		aliasOrMeaningArray.add("arm.9e.udeb.rvct2_2");
-		HashMap<String, String> releaseMap = SBSv2QueryUtils.queryConfigTargetInfo(aliasOrMeaningArray , null);
+		HashMap<String, String> releaseMap = SBSv2QueryUtils.queryConfigTargetInfo(null, aliasOrMeaningArray);
 		
 		assertEquals(2, releaseMap.size());
 		
 		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, false);
 		assertNotNull("Missing SDK on your system: " + SDK_ID1, sdk);
-		releaseMap = SBSv2QueryUtils.queryConfigTargetInfo(aliasOrMeaningArray , sdk);
+		releaseMap = SBSv2QueryUtils.queryConfigTargetInfo(sdk, aliasOrMeaningArray);
 		assertEquals(2, releaseMap.size());
 //		String queryResult = getSBSQueryOutput(argList, null);
 //		assertTrue("No output found from " + SBSv2QueryUtils.QUERY_CONFIG_COMMAND, queryResult.length() > 0);
