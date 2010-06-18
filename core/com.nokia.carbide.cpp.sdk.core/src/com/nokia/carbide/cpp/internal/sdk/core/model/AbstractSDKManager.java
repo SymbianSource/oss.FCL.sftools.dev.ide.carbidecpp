@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -144,7 +145,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
-		scanJob = new Job ("Scan System Drives") {
+		scanJob = new Job ("Scan for installed SDKs") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				return handleScan(monitor);
@@ -178,7 +179,9 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		
 			if (!doScanSDKs(monitor))
 				return Status.OK_STATUS;;
-			
+
+			scanCarbideSDKCache();
+
 			// now these SDK's are newly added, remove from internal list
 			for (ISymbianSDK sdk : sdkList) {
 				if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {
@@ -193,12 +196,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				boolean found = false;
 				for (ISymbianSDK sdk : sdkList) {
 					if (sdk.getUniqueId().equals(oldSdk.getUniqueId())) {
-						found = true;
-						break;
-					}
-					if (sdk.getEPOCROOT().toLowerCase().equals(oldSdk.getEPOCROOT().toLowerCase())) {
-						// use the existing SDK name
-						((SymbianSDK)sdk).setUniqueId(oldSdk.getUniqueId());
 						found = true;
 						break;
 					}
@@ -250,10 +247,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 
 	protected void ensureScannedSDKs() {
 		if (!hasScannedSDKs) {
-			// load sdk list from cache during start up, this way we don't have to wait
-			// for sdk scanning job to be completed.
-			loadCarbideSDKCache();
-			scanSDKs();
+			handleScan(new NullProgressMonitor());
+			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		}
 	}
 	
@@ -337,7 +332,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 
 	abstract protected boolean doRemoveSDK(String sdkId);
 
-	protected void loadCarbideSDKCache(){
+	protected void scanCarbideSDKCache(){
 		DocumentBuilder docBuilder = null;
 		try {
 			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -363,58 +358,75 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 					// get the unique ID
 					NamedNodeMap attribs = n.getAttributes();
 					String id = attribs.getNamedItem(SDK_CACHE_ID_ATTRIB).getNodeValue();
-					
-					// get whether or not the SDK is enabled
-					String sdkEnabled = "true";
-					Node sdkEnabledItem = attribs.getNamedItem(SDK_CACHE_ENABLED_ATTRIB);
-					if (sdkEnabledItem != null)
-						sdkEnabled = sdkEnabledItem.getNodeValue();
-					
-					// get the os version
-					String osVersion = "";
-					Node osVersionItem = attribs.getNamedItem(SDK_CACHE_OS_VERSION_ATTRIB);
-					if (osVersionItem != null)
-						osVersion = osVersionItem.getNodeValue();
-					
-					// get the sdk version
-					String sdkVersion = "";
-					Node sdkVersionItem = attribs.getNamedItem(SDK_CACHE_SDK_VERSION_ATTRIB);
-					if (sdkVersionItem != null)
-						sdkVersion = sdkVersionItem.getNodeValue();
-					
-					// get the custom EPOCROOT, if allowed
-					String epocRoot = null;
-					Node epocrootItem = attribs.getNamedItem(SDK_CACHE_EPOCROOT_ATTRIB);
-					if (epocrootItem != null)
-						epocRoot = epocrootItem.getNodeValue();
-					
-					// get whether or not this SDK has been scanned
-					String wasScanned = "false";
-					Node sdkScannedItem = attribs.getNamedItem(SDK_SCANNED_FOR_PLUGINS);
-					if (sdkScannedItem != null)
-						wasScanned = sdkScannedItem.getNodeValue();
-					
-					ISymbianSDK sdk = SymbianSDKFactory.createInstance(id, 
-																	   epocRoot, 
-																	   ISBSv1BuildInfo.S60_SDK_NAME, 
-																	   new Version(osVersion), 
-																	   new Version(sdkVersion));
-					if (sdkEnabled.equalsIgnoreCase("true")){
-						((SymbianSDK)sdk).setEnabled(true);
+
+					ISymbianSDK sdk = getSDK(id, false);
+					if (sdk == null) {
+						// unable to find ID in current SDK list, create a new entry and add it to the list
+
+						// get whether or not the SDK is enabled
+						String sdkEnabled = "true";
+						Node sdkEnabledItem = attribs.getNamedItem(SDK_CACHE_ENABLED_ATTRIB);
+						if (sdkEnabledItem != null)
+							sdkEnabled = sdkEnabledItem.getNodeValue();
+						
+						// get the os version
+						String osVersion = "";
+						Node osVersionItem = attribs.getNamedItem(SDK_CACHE_OS_VERSION_ATTRIB);
+						if (osVersionItem != null)
+							osVersion = osVersionItem.getNodeValue();
+						
+						// get the sdk version
+						String sdkVersion = "";
+						Node sdkVersionItem = attribs.getNamedItem(SDK_CACHE_SDK_VERSION_ATTRIB);
+						if (sdkVersionItem != null)
+							sdkVersion = sdkVersionItem.getNodeValue();
+						
+						// get the EPOCROOT
+						String epocRoot = null;
+						Node epocrootItem = attribs.getNamedItem(SDK_CACHE_EPOCROOT_ATTRIB);
+						if (epocrootItem != null)
+							epocRoot = epocrootItem.getNodeValue();
+						
+						// get whether or not this SDK has been scanned
+						String wasScanned = "false";
+						Node sdkScannedItem = attribs.getNamedItem(SDK_SCANNED_FOR_PLUGINS);
+						if (sdkScannedItem != null)
+							wasScanned = sdkScannedItem.getNodeValue();
+						
+						sdk = SymbianSDKFactory.createInstance(id, 
+															   epocRoot,
+															   ISBSv1BuildInfo.S60_SDK_NAME,
+															   new Version(osVersion),
+															   new Version(sdkVersion));
+						if (sdkEnabled.equalsIgnoreCase("true")){
+							((SymbianSDK)sdk).setEnabled(true);
+						} else {
+							((SymbianSDK)sdk).setEnabled(false);
+						}
+						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+						ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+						if (wasScanned.equalsIgnoreCase("true")){
+							sbsv1BuildInfo.setPreviouslyScanned(true);
+							sbsv2BuildInfo.setPreviouslyScanned(true);
+						} else {
+							sbsv1BuildInfo.setPreviouslyScanned(false);
+							sbsv2BuildInfo.setPreviouslyScanned(false);
+						}
+						synchronized (sdkList) {
+							sdkList.add(sdk);
+						}
 					} else {
-						((SymbianSDK)sdk).setEnabled(false);
-					}
-					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-					if (wasScanned.equalsIgnoreCase("true")){
-						sbsv1BuildInfo.setPreviouslyScanned(true);
-						sbsv2BuildInfo.setPreviouslyScanned(true);
-					} else {
-						sbsv1BuildInfo.setPreviouslyScanned(false);
-						sbsv2BuildInfo.setPreviouslyScanned(false);
-					}
-					synchronized (sdkList) {
-						sdkList.add(sdk);
+						// get whether or not the SDK is enabled
+						String sdkEnabled = "true";
+						Node sdkEnabledItem = attribs.getNamedItem(SDK_CACHE_ENABLED_ATTRIB);
+						if (sdkEnabledItem != null)
+							sdkEnabled = sdkEnabledItem.getNodeValue();
+
+						if (sdkEnabled.equalsIgnoreCase("true")){
+							((SymbianSDK)sdk).setEnabled(true);
+						} else {
+							((SymbianSDK)sdk).setEnabled(false);
+						}
 					}
 				} // for
 			} 
