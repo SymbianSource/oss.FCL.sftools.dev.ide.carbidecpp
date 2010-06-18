@@ -38,6 +38,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableColorProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -82,7 +83,7 @@ public class SDKPreferencePage
 	extends PreferencePage
 	implements IWorkbenchPreferencePage {
 	
-	private class SDKLabelProvider extends LabelProvider implements ITableLabelProvider {
+	private class SDKLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider {
 		public Image getColumnImage(Object element, int columnIndex) {
 			return null;
 		}
@@ -97,6 +98,15 @@ public class SDKPreferencePage
 			default:
 				return "";
 			}
+		}
+
+		public Color getForeground(Object element, int columnIndex) {
+			ISymbianSDK sdk = (ISymbianSDK) element;
+			return updateSDKcolor(sdk);
+		}
+
+		public Color getBackground(Object element, int columnIndex) {
+			return white;
 		}
 	}
 
@@ -252,9 +262,10 @@ public class SDKPreferencePage
 	private Label iconLabel;
 	private Label statusLabel;
 
-	private Color red;
 	private Color black;
 	private Color gray;
+	private Color red;
+	private Color white;
 
 	/**
 	 * Constructor.
@@ -339,9 +350,10 @@ public class SDKPreferencePage
 	protected Control createContents(Composite parent) {
 		// Set up colors used in this preference page
 		Shell shell = parent.getShell();
-		red = shell.getDisplay().getSystemColor(SWT.COLOR_RED);
 		black = shell.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		gray = shell.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
+		red = shell.getDisplay().getSystemColor(SWT.COLOR_RED);
+		white = shell.getDisplay().getSystemColor(SWT.COLOR_WHITE);
 
 		Composite content = new Composite(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout();
@@ -634,6 +646,27 @@ public class SDKPreferencePage
 		statusLabel.setBackground(gray);
 		statusLabel.update();
 		statusLabel.getParent().layout(true);
+	}
+
+	private Color updateSDKcolor(ISymbianSDK sdk){
+		Color color = black;
+
+		// Check SDK EPOCROOT
+		String epocRootStr = sdk.getEPOCROOT();
+		IPath epocRoot = new Path(epocRootStr);
+		epocRoot = epocRoot.append("epoc32");
+		File epocRootFile = epocRoot.toFile();
+		if (!epocRootFile.exists()) {
+			color = red;
+		}
+		
+		// Check SDK OS Version
+		if ((sdk.getOSVersion().getMajor() < 9 ||
+			(sdk.getOSVersion().getMajor() == 9 && sdk.getOSVersion().getMinor() < 4))) {
+			color = red;
+		}
+
+		return color;
 	}
 
 	private void updateSDKStatus(ISymbianSDK sdk){
