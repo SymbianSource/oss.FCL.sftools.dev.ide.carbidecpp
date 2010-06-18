@@ -68,6 +68,7 @@ import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetTreeNode;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
+@SuppressWarnings("restriction")
 public class ManageConfigurationsDialog extends TrayDialog {
 	
 	protected ContainerCheckedTreeViewer properSdkViewer;

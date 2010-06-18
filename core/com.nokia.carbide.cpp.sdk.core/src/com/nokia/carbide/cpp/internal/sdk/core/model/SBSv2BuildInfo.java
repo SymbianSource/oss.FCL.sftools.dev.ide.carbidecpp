@@ -145,6 +145,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				// ignore, previous exception would have caught the error
 			}
 			for (String alias : newContextsToQuery){
+				// TODO: Need to test for variants. Right now variants are not added
 				if (aliasToMeaningMap.get(alias) == null){
 					continue; // This alias is not valid with this SDK, ignore
 				}

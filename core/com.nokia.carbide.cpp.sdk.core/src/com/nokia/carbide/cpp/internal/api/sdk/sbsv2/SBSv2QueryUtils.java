@@ -359,7 +359,6 @@ public class SBSv2QueryUtils {
 
 	public static HashMap<String, String> getCompleteAliasList() throws SBSv2MinimumVersionException {
 		HashMap<String, String> resultMap = new HashMap<String, String>();
-		//return getAliasesForSDK(null);
 		
 		// iterate all SDKs and build the map up
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
@@ -376,5 +375,22 @@ public class SBSv2QueryUtils {
 		return resultMap;
 	}
 	
+	public static List<String> getCompleteProductVariantList() throws SBSv2MinimumVersionException {
+		List<String> resultList = new ArrayList<String>();
+		
+		// iterate all SDKs and build the map up
+		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+			if (sdk.isEnabled() && (new File(sdk.getEPOCROOT()).exists())){
+				List<String> productList = getProductVariantsForSDK(sdk);
+				for (String variant : productList){
+					if (!resultList.contains(variant)){
+						resultList.add(variant);
+					}
+				}
+			}
+		}
+		
+		return resultList;
+	}
 	
 }

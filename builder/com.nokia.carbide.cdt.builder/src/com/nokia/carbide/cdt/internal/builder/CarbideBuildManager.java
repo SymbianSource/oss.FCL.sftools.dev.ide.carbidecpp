@@ -389,19 +389,22 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 				CarbideBuilderPlugin.getDefault().getPreferenceStore().setValue(CONVERTED_SRC_MAPPINGS_2X_TO_3X, true);
 			}
 
-			synchronized(projectInfoMap){
-				for (IProject currPrj : projectInfoMap.keySet()){
-					try {
-					ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(currPrj);
-					if (projDes != null) {
-						CCorePlugin.getDefault().setProjectDescription(currPrj, projDes, true, null);
-					}
-					} catch (CoreException e) {
-						e.printStackTrace();
-						CarbideBuilderPlugin.log(e);
-					}
-				}
-			}
+			// TODO: This is causing deadlocks with the indexer and generally when other project info is being retrieved
+			// Need to consider what this is actually doing and why it even needs to be here.
+			
+//			synchronized(projectInfoMap){
+//				for (IProject currPrj : projectInfoMap.keySet()){
+//					try {
+//					ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(currPrj);
+//					if (projDes != null) {
+//						CCorePlugin.getDefault().setProjectDescription(currPrj, projDes, true, null);
+//					}
+//					} catch (CoreException e) {
+//						e.printStackTrace();
+//						CarbideBuilderPlugin.log(e);
+//					}
+//				}
+//			}
 		}
 	}
 
