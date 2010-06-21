@@ -25,7 +25,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -34,6 +36,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
@@ -70,30 +73,24 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		gridLayout.numColumns =  2;
 		setLayout(gridLayout);
 		
-		Group aliasGroup = new Group(this, SWT.NONE);
-		aliasGroup.setText(Messages.getString("SBSv2PlatformFilterComposite.PlatformsGroupText")); //$NON-NLS-1$
-		aliasGroup.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.PlatformsGroupToolTip")); //$NON-NLS-1$
-		GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		GridData gd = new GridData(SWT.LEFT, SWT.LEFT, true, false);
 		gd.widthHint = 200;
 		gd.heightHint = 350;
-		aliasGroup.setLayoutData(gd);
-		aliasGroup.setLayout(new GridLayout());
 
-		buildAliasTableViewer = CheckboxTableViewer.newCheckList(aliasGroup, SWT.BORDER);
+		Label aliasBoxLabel = new Label(this, SWT.NONE);
+		aliasBoxLabel.setText(Messages.getString("SBSv2PlatformFilterComposite.PlatformsGroupText"));
+		aliasBoxLabel.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.PlatformsGroupToolTip"));
+		
+		Label variantBoxLabel = new Label(this, SWT.NONE);
+		variantBoxLabel.setText(Messages.getString("SBSv2PlatformFilterComposite.ProductsGroupText"));
+		variantBoxLabel.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.ProductsGroupToolTip"));
+		
+		buildAliasTableViewer = CheckboxTableViewer.newCheckList(this, SWT.BORDER);
 		buildAliasTableViewer.getTable().setLayoutData(gd);
 		buildAliasTableViewer.setContentProvider(new ArrayContentProvider());
 		buildAliasTableViewer.setLabelProvider(new LabelProvider());
 		
-		Group customConfigGroup = new Group(this, SWT.NONE);
-		customConfigGroup.setText(Messages.getString("SBSv2PlatformFilterComposite.ProductsGroupText")); //$NON-NLS-1$
-		customConfigGroup.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.ProductsGroupToolTip")); //$NON-NLS-1$
-		GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		gd2.widthHint = 200;
-		gd2.heightHint = 350;
-		customConfigGroup.setLayoutData(gd2);
-		customConfigGroup.setLayout(new GridLayout());
-		
-		customVariantTableViewer = CheckboxTableViewer.newCheckList(customConfigGroup, SWT.BORDER);
+		customVariantTableViewer = CheckboxTableViewer.newCheckList(this, SWT.BORDER);
 		customVariantTableViewer.getTable().setLayoutData(gd);
 		customVariantTableViewer.setContentProvider(new ArrayContentProvider());
 		customVariantTableViewer.setLabelProvider(new LabelProvider());
@@ -125,7 +122,21 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				} else if  (productVariantList.size() == 0){
 						MessageDialog.openError(getShell(), "No products found.", "No products were found from any SDKs. Attempted 'sbs --query=products' but found no results.");
 				} else {
-					AddSBSv2ProductVariant addVariantDlg = new AddSBSv2ProductVariant(getShell(), aliasMap, productVariantList);
+					String selectedAlias = "";
+					ISelection selectedItem = buildAliasTableViewer.getSelection();
+					
+					StructuredSelection selection = (StructuredSelection)selectedItem;
+					String stringSelection = (String)selection.getFirstElement();
+					if (stringSelection != null){
+						TableItem[] tableItems = buildAliasTableViewer.getTable().getItems();
+						for (TableItem item : tableItems){
+							if (stringSelection.equals(item.getText())){
+								selectedAlias = item.getText();
+								break;
+							}
+						}
+					}
+					AddSBSv2ProductVariant addVariantDlg = new AddSBSv2ProductVariant(getShell(), selectedAlias, aliasMap, productVariantList);
 					if (addVariantDlg.open() == TrayDialog.OK){
 						if (customVariantTableViewer.testFindItem(addVariantDlg.getUserCreatedVariant()) == null){
 							// doesn't exist, add it. if it does exist just ignore it
@@ -225,8 +236,6 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				}
 			}
 		}
-		
-		
 	}
 	
 	public void setDefaults(){

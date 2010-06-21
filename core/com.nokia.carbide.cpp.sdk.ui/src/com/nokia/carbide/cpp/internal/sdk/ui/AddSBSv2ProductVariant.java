@@ -47,12 +47,14 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 
 	private List<String> aliasList = new ArrayList<String>();
 	private List<String> variantList = new ArrayList<String>();
+	private String defaultAlias;
 	
 	/**
 	 * Create the dialog
 	 * @param parentShell
+	 * @param selectedAlias 
 	 */
-	public AddSBSv2ProductVariant(Shell parentShell, HashMap<String, String> aliasMap, 
+	public AddSBSv2ProductVariant(Shell parentShell, String selectedAlias, HashMap<String, String> aliasMap, 
 										List<String> productVariantList) {
 		
 		super(parentShell);
@@ -60,6 +62,8 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 			aliasList.add(alias);
 		}
 		variantList = productVariantList;
+		defaultAlias = selectedAlias;
+		
 		
 	}
 
@@ -95,6 +99,10 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 		aliasCombo.setLayoutData(new GridData(263, SWT.DEFAULT));
 		Collections.sort(aliasList);
 		aliasCombo.setItems((String[])aliasList.toArray(new String[aliasList.size()]));
+		aliasCombo.select(0);
+		
+		if (defaultAlias != null && defaultAlias.length() > 0)
+			aliasCombo.setText(defaultAlias);
 		
 		new Label(container, SWT.NONE);
 
