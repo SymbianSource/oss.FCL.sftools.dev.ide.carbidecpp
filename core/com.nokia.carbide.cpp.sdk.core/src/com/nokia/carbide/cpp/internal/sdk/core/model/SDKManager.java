@@ -522,7 +522,7 @@ public class SDKManager extends AbstractSDKManager {
 	}
 
 	private boolean isUniqueSDKId(String sdkId) {
-		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+		for (ISymbianSDK sdk : sdkList){
 			if (sdk.getUniqueId().equalsIgnoreCase(sdkId)){
 				return false;
 			}
