@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
 
 	private Map<String, String> aliasToMeaningMap = new HashMap<String, String>();
+	private List<String> productList = null;
 	
 	public SBSv2BuildInfo(ISymbianSDK sdk) {
 		this.sdk = sdk;
@@ -66,14 +68,14 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	@Override
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
-		// TODO: Will get rid of this. Only filtered configs will apply
+		// TODO: Will get rid of this method. Only filtered configs will apply
 		return sbsv2FilteredConetxts;
 	}
 
 	@Override
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
 		
-		if (aliasToMeaningMap.size() == 0)
+		if (aliasToMeaningMap.size() == 0){
 			try {
 				aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
 			} catch (SBSv2MinimumVersionException e) {
@@ -81,96 +83,139 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 							Logging.newSimpleStatus(0, IStatus.ERROR,
 								MessageFormat.format(e.getMessage(), ""), e));
 			}
+		}
 		
-		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigPreferences(); // From global prefs
+		if (productList == null){
+			// Not all SDKs will have products, so size of 0 is acceptable
+			productList = new ArrayList<String>();
+			try {
+				productList = SBSv2QueryUtils.getProductVariantsForSDK(sdk);
+			} catch (SBSv2MinimumVersionException e) {
+				// ignore
+			}
+		}
+		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigPreferences(); // From global prefs	
 		if ((sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) 
 			 && SBSv2Utils.enableSBSv2Support()){
 			
-			//////// TODO Refactor this block to sub routine
-			// First time to be scanned so create a new list based on what we allow
-			// from the global prefs
-			
-//			if (!(new File(sdk.getEPOCROOT()).exists())){
-//				return sbsv2FilteredConetxts;
-//			}
-				
-			List<String> filteredAliasList = new ArrayList<String>();
-			
-			for (String alias : aliasToMeaningMap.keySet()){
-				for (String checkedAlias : allowedConfigs){
-					if (checkedAlias.equalsIgnoreCase(alias)){
-						filteredAliasList.add(alias);
-						break;
-					}
-				}
-			}
-			
-			String configQueryXML;
 			try {
-				configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, filteredAliasList);
-			
-				for (String alias : filteredAliasList){
-					ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
-					sbsv2FilteredConetxts.add(sbsv2Context);
-				}	
+				initSBSv2BuildContextList(allowedConfigs);
 			} catch (SBSv2MinimumVersionException e) {
-				// ignore, previous exception would have caught the error
+				// igore, would be caught above
 			}
-			
 		} else if (SBSv2Utils.enableSBSv2Support()){
-			// TODO: Refactor to subroutine
-			//////////////////////////////////////////////////////
-			// Check and see if the filtered list has changed
-			//////////////////////////////////////////////////////
-			boolean contextExists = false;
-			List<String> newContextsToQuery = new ArrayList<String>();
-			for (String aliasName : allowedConfigs){
-				for (ISymbianBuildContext context : sbsv2FilteredConetxts){
-					ISBSv2BuildContext sbsv2Context = (ISBSv2BuildContext)context;
-					if (sbsv2Context.getSBSv2Alias().equals(aliasName)){
-						contextExists = true;
-						continue;
+			
+			try {
+				updateSBSv2BuildContextList(allowedConfigs);
+			} catch (SBSv2MinimumVersionException e) {
+				// igore, would be caught above
+			}
+		}
+		
+
+		return sbsv2FilteredConetxts;
+	}
+
+	private void updateSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
+
+		// Check and see if the filtered list has changed
+		boolean contextExists = false;
+		List<String> newContextsToQuery = new ArrayList<String>();
+		for (String aliasName : allowedConfigs){
+			for (ISymbianBuildContext context : sbsv2FilteredConetxts){
+				ISBSv2BuildContext sbsv2Context = (ISBSv2BuildContext)context;
+				if (sbsv2Context.getSBSv2Alias().equals(aliasName)){
+					contextExists = true;
+					continue;
+				}
+			}
+			if (!contextExists){
+				newContextsToQuery.add(aliasName);
+			}
+			contextExists = false;
+		}
+		
+		String configQueryXML = "";
+		try {
+			configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, newContextsToQuery);
+		} catch (SBSv2MinimumVersionException e) {
+			// ignore, previous exception would have caught the error
+		}
+		for (String alias : newContextsToQuery){
+			// TODO: Need to test for variants. Right now variants are not added
+			if (aliasToMeaningMap.get(alias) == null){
+				continue; // This alias is not valid with this SDK, ignore
+			}
+			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
+			sbsv2FilteredConetxts.add(sbsv2Context);
+		}
+		
+	}
+
+	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
+		List<String> filteredAliasList = new ArrayList<String>();
+		
+		for (String alias : aliasToMeaningMap.keySet()){
+			for (String checkedAlias : allowedConfigs){
+				if (checkedAlias.equalsIgnoreCase(alias)){
+					filteredAliasList.add(alias);
+					break;
+				}
+			}
+		}
+		
+		if (productList != null && productList.size() > 0){
+			for (String testConfig : allowedConfigs) {
+				if (testConfig.contains(".")){
+					String tokens[] = testConfig.split("\\.");
+					for (String tok : tokens){
+						if (productList.contains(tok)){
+							filteredAliasList.add(testConfig);
+							break;
+						}
 					}
 				}
-				if (!contextExists){
-					newContextsToQuery.add(aliasName);
-				}
-				contextExists = false;
-			}
-			
-			String configQueryXML = "";
-			try {
-				configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, newContextsToQuery);
-			} catch (SBSv2MinimumVersionException e) {
-				// ignore, previous exception would have caught the error
-			}
-			for (String alias : newContextsToQuery){
-				// TODO: Need to test for variants. Right now variants are not added
-				if (aliasToMeaningMap.get(alias) == null){
-					continue; // This alias is not valid with this SDK, ignore
-				}
-				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
-				sbsv2FilteredConetxts.add(sbsv2Context);
-			}
-			
-		}
-		
-		// Now we need to remove any configs that should not be present per filtering preferences
-		List<ISymbianBuildContext> contextsToReturn = new ArrayList<ISymbianBuildContext>();
-		for (ISymbianBuildContext currentContext : sbsv2FilteredConetxts){
-			for (String alias : allowedConfigs){
-				if (alias.equals(((ISBSv2BuildContext)currentContext).getSBSv2Alias())){
-					contextsToReturn.add(currentContext);
-				}
 			}
 		}
 		
-		return contextsToReturn;
+		String configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk,
+				filteredAliasList);
+
+		for (String alias : filteredAliasList) {
+			String meaning = "";
+			if (alias.contains(".")){
+				meaning = getMeaningForVariant(alias);
+				if (meaning == null){
+					continue; // TODO: How to handle this scenaio
+				}
+			} else {
+				meaning = aliasToMeaningMap.get(alias);
+			}
+			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias,
+					meaning, configQueryXML);
+			sbsv2FilteredConetxts.add(sbsv2Context);
+		}
+	}
+
+	private String getMeaningForVariant(String alias) {
+		String meaning = null;
+		
+		// TODO: Assuming now that the alias now is the first part and the last bits are the variant bits.
+		String tokens[] = alias.split("\\.");
+		if (tokens.length > 0){
+			meaning = aliasToMeaningMap.get(tokens[0]);
+			for (int i = 1; i < tokens.length; i++){
+				meaning += "." + tokens[i];
+			}
+		}
+		
+		return meaning;
 	}
 
 	public List<String> getPlatformMacros(String platform) {
 		// TODO: Need to get from Raptor Query
-		// TODO: Are these the metadata macros or compiler macros?
+		// TODO: Are these the metadata macros or compiler macros? I presume these are the metadata macros
+		// but double check on how the CPP macros are applied (e.g. adding '__" prefix to the name.
 		List<String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
 		if (platformMacros == null) {
 			synchronized (cachedPlatformMacros) {

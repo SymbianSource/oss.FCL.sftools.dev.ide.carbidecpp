@@ -38,7 +38,6 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 	
 	SBSv1PlatformFilterComposite sbsv1Tab;
 	SBSv2PlatformFilterComposite sbsv2Tab;
-	SBSv2ConfigManager sbsConfigManagerTab;
 	
 	public BuildPlatformFilterPage() {
 		super();
@@ -62,18 +61,6 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 			sbsv2Tab = new SBSv2PlatformFilterComposite(tabFolder);
 			sbsv2Tab.createControls();
 			sbsv2TabItem.setControl(sbsv2Tab);
-	
-			// TODO: We will likely remove this suggested approach
-			// which means removing the SBSv2PlatformFilterComposite page too
-//			// New SBS config manager, to replace SBSv2PlatformFilterComposite
-//			TabItem sbsConfigMgrItem = new TabItem(tabFolder, SWT.NONE);
-//			sbsConfigMgrItem.setText("SBS Configuration Manager"); //$NON-NLS-1$
-//			sbsConfigMgrItem.setToolTipText("TODO"); //$NON-NLS-1$
-//
-//			sbsConfigManagerTab = new SBSv2ConfigManager(tabFolder);
-//			sbsConfigManagerTab.createControls();
-//			sbsConfigMgrItem.setControl(sbsConfigManagerTab);
-			
 		}
 		
 		if (SBSv2Utils.enableSBSv1Support()) {
