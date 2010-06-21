@@ -23,7 +23,6 @@ import com.nokia.carbide.cpp.sysdoc.internal.hover.dal.devlib.locator.IDevLibLoc
 import com.nokia.carbide.cpp.sysdoc.internal.hover.dal.interX.InterXIndexController;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.dal.sdk.SDKController;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.preferences.PreferencesPageController;
-import com.nokia.carbide.cpp.sysdoc.internal.hover.uitlis.DialogHelper;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.uitlis.Logger;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.webserver.IEmbeddedWebServer;
 import com.nokia.carbide.cpp.sysdoc.internal.hover.webserver.JettyWebServer;
@@ -101,7 +100,9 @@ final public class HoverManager {
 	public void haltHoveringService(final String msg) {
 		HoverManager.getInstance().setEnabled(false);
 		PreferencesPageController.setDeActivateHoverPlugin(true);
-		DialogHelper.displayErrorDialog(MessagesConstants.DEACTIVATED + msg);
+
+		// don't show error dialog here - fixes bug #10130
+		// DialogHelper.displayErrorDialog(MessagesConstants.DEACTIVATED + msg);
 	}
 
 	/**
