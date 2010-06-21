@@ -97,8 +97,8 @@
       <topic label="N-Gage Projects" 								href="html/concepts/ngage_projects.htm" />
     </topic>
     <topic label="C/C++ Project and File Properties"	href="html/reference/ProjectPreferences.html" >
-      <topic label="Carbide Build Configurations"					href="html/reference/build_properties/pane_build_config.htm" >
-        <topic label="SIS Builder" 								href="html/reference/build_properties/pane_build_config_sis.htm" >
+      <topic label="Build Configurations"					href="html/reference/build_properties/pane_build_config.htm" >
+        <topic label="SIS Builder" 							href="html/reference/build_properties/pane_build_config_sis.htm" >
           <topic label="SIS Properties"						href="html/reference/build_properties/wnd_sis_properties.htm" />
         </topic>
         <topic label="SBSv2"									href="html/reference/build_properties/pane_build_config_sbsv2.htm" />
@@ -107,10 +107,10 @@
         <topic label="Paths and Symbols"						href="html/reference/build_properties/pane_build_config_paths.htm" />
         <topic label="ROM Builder"								href="html/reference/ROM_build_settings.html" />
       </topic>
-      <topic label="Carbide Macro Settings"						href="html/reference/build_properties/pane_macro_settings.htm" />
-      <topic label="Carbide Project Settings"						href="html/reference/build_properties/pane_project_settings.htm" />
+      <topic label="Macro Settings"						href="html/reference/build_properties/pane_macro_settings.htm" />
+      <topic label="Project Settings"						href="html/reference/build_properties/pane_project_settings.htm" />
     </topic>
-    <topic label="Building projects"  							href="html/concepts/build_system.htm" >
+    <topic label="Building projects"  						href="html/concepts/build_system.htm" >
       <topic label="Active Build Configuration"				href="html/concepts/build_configurations.htm" />
       <topic label="Setting an Active Configuration"			href="html/tasks/projects/prj_set_build_tgt.htm" />
       <topic label="Adding/Removing Build Configurations"		href="html/tasks/projects/prj_new_build_config.htm" />
@@ -135,7 +135,7 @@
       </topic>
       <topic label="Classes"  								href="html/tasks/ClassesToc.htm" >
         <topic label="Adding Classes" 						href="html/tasks/AddingClasses.html" />
-        <topic label="New Class Wizard" 					href="html/reference/NewClassWizard.html" />
+        <topic label="New C++ Class Wizard" 				href="html/reference/NewClassWizard.html" />
         <topic label="Adding Symbian OS Classes Wizard"		href="html/tasks/projects/prj_adding_symbian_class.htm" />
       </topic>
       <topic label="INF editor"					href="html/reference/INF_Editor.html" >
