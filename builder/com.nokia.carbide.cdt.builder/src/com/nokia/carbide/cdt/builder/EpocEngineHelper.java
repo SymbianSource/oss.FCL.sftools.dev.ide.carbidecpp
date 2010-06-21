@@ -1066,7 +1066,7 @@ public class EpocEngineHelper {
 		// get the bitmaps
 		List<IMMPBitmap> bmps = mmpData.getBitmaps();
 		for (IMMPBitmap bmp : bmps) {
-			IPath mbmPath = bmp.getTargetFilePath().makeRelative();
+			IPath mbmPath = bmp.getTargetFilePath().makeAbsolute();
 			// if there's no target path then use the main target path
 			if (mbmPath.segmentCount() == 1) {
 				mbmPath = targetPath.append(mbmPath);
