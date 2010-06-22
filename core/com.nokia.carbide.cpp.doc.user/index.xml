@@ -8,11 +8,6 @@
        <topic href="html/concepts/build_configurations.htm"/>
     </entry>
 
-    <entry keyword="AIF">
-		<topic label="editor"	href="html/reference/AIFEditor.html"/>
-    	<topic label="file"		href="html/concepts/AIFDefWizard.html"/>
-	</entry>
-
     <entry keyword="ARM registers">
        <topic href="html/concepts/arm_registers.htm"/>
 	</entry>

@@ -14,20 +14,20 @@
   <li>a project</li>
   <li>a <a href="../projects/launch/launch_configs_overview.htm">build  configuration</a> -  a project level configuration that includes an  SDK and any related files required to compile and build the project </li>
 </ul>
-<p>Build configurations are defined when the project is created. A project can have any number of build configurations and more  can be <a href="../tasks/projects/prj_new_build_config.htm">added</a> as necessary. Each build configuration can have its own combination of tool settings to precisely control how it is defined and built. Build configurations are maintained in the project Properties window in the Carbide Build Configurations panel. To open the panel, select a project in the <a href="../reference/view_sym_proj_nav.htm">Symbian Project Navigator</a> or <a href="../reference/view_cpp_projects.htm">Project Explorer</a> view and select <b>Project &gt; Properties</b> or right-click and select Properties.</p>
-<p align="center"><img src="images/build_configs.png" width="778" height="595"></p>
-<p>You can select a build configuration in the <b>Active Configuration</b> dropdown list or use the <b>Project &gt; Active  Configuration</b> menu option  to <a href="../tasks/projects/prj_set_build_tgt.htm">set</a> which build configuration to launch when running or debugging a program. The currently selected project can be launched by clicking the <b>Run</b> (<img src="../images/icons/btn_run.png" width="16" height="16" align="absmiddle" />) or <b>Debug</b> (<img src="../images/icons/btn_debug.png" width="17" height="16" align="absmiddle" />) control on the tool bar to launch the project with the currently active build configuration. When no project is selected the last project debugged will be launched.</p>
+<p>Build configurations are defined when the project is created. A project can have any number of build configurations and more  can be <a href="../tasks/projects/prj_new_build_config.htm">added</a> as necessary. Each build configuration can have its own combination of tool settings to precisely control how it is defined and built. Build configurations are maintained in the project Properties window in the Carbide Build Configurations panel. To open the panel, select a project in the <a href="../reference/view_cpp_projects.htm">Project Explorer</a> or <a href="../reference/view_sym_proj_nav.htm">Symbian Project Navigator</a> view and select <b>Project &gt; Properties</b> or right-click and select Properties.</p>
+<p align="center"><img src="images/build_configs.png" width="801" height="350"></p>
+<p>You can select a build configuration in the <b>Active Configuration</b> group or use the <b>Project &gt; Active  Configuration</b> menu option  to <a href="../tasks/projects/prj_set_build_tgt.htm">set</a> which build configuration to launch when running or debugging a program. The currently selected project can be launched by clicking the <b>Run</b> (<img src="../images/icons/btn_run.png" width="16" height="16" align="absmiddle" />) or <b>Debug</b> (<img src="../images/icons/btn_debug.png" width="17" height="16" align="absmiddle" />) control on the tool bar to launch the project with the currently active build configuration. When no project is selected the last project debugged will be launched.</p>
 <p>If no <a href="../projects/launch/launch_configs_overview.htm">launch configuration</a> is present in the project, one is created on initial launch. Subsequent launches of the project will use either the last launch configuration or if more than one launch configuration exists, it uses the most correct one.</p>
 <p class="note"><b>NOTE</b> The Carbide <b>Run</b> and <b>Debug</b> buttons are shaded in blue to indicate their behavior differs from the standard Eclipse behavior.</p>
-<h5>Table 1 Carbide Build Configuration items </h5>
+<h5>Table 1 Build Configuration items </h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
     <th width="20%" scope="col">Item</th>
     <th width="71%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td width="20%"><b>Active Configuration </b></td>
-    <td>The <b>Active Configuration</b> drop down list allows you to <a href="../tasks/projects/prj_set_build_tgt.htm">select</a> a configuration that is currently available for the selected project. The entries in the related sub-panes will change according to the selected configuration. The Configuration name consists of a target name and an SDK identifier in brackets.</td>
+    <td width="20%"><b>Configuration </b></td>
+    <td>The <b> Configuration</b> drop down list allows you to <a href="../tasks/projects/prj_set_build_tgt.htm">select</a> a configuration that is currently available for the selected project. The entries in the related sub-panes will change according to the selected configuration. The Configuration name consists of a target name and an SDK identifier in brackets.</td>
   </tr>
   <tr>
     <td width="20%"><b>Manage...</b></td>
@@ -35,17 +35,17 @@
   </tr>
 </table>
 <h5>Build Configuration Naming</h5>
-<p>When the Carbide.c++ IDE creates an build  configuration it uses a standard naming convention to make it easy to identify. For example, <span class="code">HelloCarbide S60 5.0 Emulator Debug</span> is a typical configuration name.  The default name follows the form of:</p>
+<p>When the Carbide.c++ IDE creates an build  configuration it uses a standard naming convention to make it easy to identify. For example, <span class="code">HelloCarbide (armv5_udeb) Emulator Debug</span> is a typical configuration name.  The default name follows the form of:</p>
 <ul>
   <li><span class="code">&lt;Phone|Emulator&gt; </span>The build target (Emulator, Phone, etc.)</li>
   <li><span class="code">&lt;Debug|Release&gt; </span>Debug (final file contains debug symbols) or Release version</li>
-  <li><span class="code">&lt;platform&gt; </span>Platform on which you are building</li>
-  <li><span class="code">&lt;sdk ID from devices.xml&gt; </span>The SDK and version used by the build configurations (S60, etc.)</li>
+  <li><span class="code">&lt;platform_build&gt; </span>Platform on which you are building (<span class="code">winscw_urel</span>, <span class="code">armv5_udeb</span>)</li>
+  <li><span class="code">&lt;sdk ID from devices.xml&gt; </span>The SDK and version used by the build configurations (Symbian3, etc.)</li>
 </ul>
 <p>You can use the  <a href="../reference/wnd_debug_configuration.htm">Debug</a> window to edit the default build configuration names.</p>
 <h5>Other references </h5>
 <ul>
-  <li><a href="../reference/build_properties/pane_build_config.htm">Carbide Build Configurations</a> </li>
+  <li><a href="../reference/build_properties/pane_build_config.htm">Build Configurations</a> </li>
   <li><a href="../tasks/projects/prj_set_build_tgt.htm">Setting an Active Configuration</a></li>
   <li><a href="../tasks/projects/prj_debug_config.htm">Creating Launch Configurations</a> </li>
   <li><a href="../tasks/projects/prj_new_build_config.htm">Adding/Removing Build Configurations</a></li>

@@ -129,10 +129,6 @@
       <topic label="Freeze Exports"							href="html/reference/menus/freeze_exports.htm" />
     </topic>
     <topic label="Resource and project editors"		href="html/tasks/ModifyingResources.html" >
-      <topic label="AIF files"					href="html/concepts/AIFDefWizard.html" >
-        <topic label="AIF Editor"				href="html/reference/AIFEditor.html" />
-        <topic label="Creating an AIF File"		href="html/tasks/AppInfoFile.html" />
-      </topic>
       <topic label="Classes"  								href="html/tasks/ClassesToc.htm" >
         <topic label="Adding Classes" 						href="html/tasks/AddingClasses.html" />
         <topic label="New C++ Class Wizard" 				href="html/reference/NewClassWizard.html" />
