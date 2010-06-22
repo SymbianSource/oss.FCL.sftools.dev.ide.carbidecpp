@@ -46,7 +46,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
@@ -58,6 +58,22 @@ import com.nokia.carbide.discovery.ui.Messages;
 @SuppressWarnings("restriction")
 public class DiscoveryView extends ViewPart {
 	
+	private final class RunnableContextDialog extends ProgressMonitorDialog {
+		private final String title;
+
+		private RunnableContextDialog(Shell parent, String title) {
+			super(parent);
+			this.title = title;
+		}
+
+		@Override
+		protected void configureShell(Shell shell) {
+			super.configureShell(shell);
+			shell.setText(title);
+		}
+		
+	}
+
 	private static final String DIRECTORY_KEY = "com.nokia.carbide.discovery.directory"; //$NON-NLS-1$
 
 	private CatalogViewer viewer;
@@ -66,13 +82,7 @@ public class DiscoveryView extends ViewPart {
 	private BaseSelectionListenerAction checkNoneAction;
 	private BaseSelectionListenerAction installAction;
 	private Action showInstallWizardAction;
-
-	private boolean initialized;
-
 	private ISelectionChangedListener selectionListener;
-
-	public DiscoveryView() {
-	}
 
 	/**
 	 * This is a callback that will allow us
@@ -81,7 +91,10 @@ public class DiscoveryView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		Composite c = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().applyTo(c);
-		viewer = new CatalogViewer(getCatalog(), getSite(), getSite().getWorkbenchWindow(), getConfiguration());
+		viewer = new CatalogViewer(getCatalog(), getSite(), 
+				new RunnableContextDialog(DiscoveryView.this.getViewSite().getShell(), 
+						Messages.DiscoveryView_GatherExtensionsTitle), 
+				getConfiguration());
 		viewer.createControl(c);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
 		
@@ -90,6 +103,12 @@ public class DiscoveryView extends ViewPart {
 				"com.nokia.carbide.discovery.ui.view.DiscoveryView.catalogviewer"); //$NON-NLS-1$
 		makeActions();
 		contributeToActionBars();
+		getSite().getShell().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				viewer.updateCatalog();
+			}
+		});
 	}
 	
 	private CatalogConfiguration getConfiguration() {
@@ -195,7 +214,9 @@ public class DiscoveryView extends ViewPart {
 		};
 		installAction = new BaseSelectionListenerAction(Messages.DiscoveryView_InstallLabel) {
 			public void run() {
-				DiscoveryUi.install(viewer.getCheckedItems(), new ProgressMonitorDialog(DiscoveryView.this.getViewSite().getShell()));
+				DiscoveryUi.install(viewer.getCheckedItems(), 
+						new RunnableContextDialog(DiscoveryView.this.getViewSite().getShell(), 
+								Messages.DiscoveryView_GatheringInstallInfoTitle));
 			};
 			
 			protected boolean updateSelection(IStructuredSelection selection) {
@@ -238,17 +259,6 @@ public class DiscoveryView extends ViewPart {
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		if (!initialized) {
-			initialized = true;
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					if (viewer.getViewer().getContentProvider() != null) {
-						viewer.updateCatalog();
-					}
-				}
-			});
-		}
 	}
 
 	private void showInstallWizard() {
