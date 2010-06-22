@@ -1,5 +1,7 @@
 package com.nokia.carbide.cpp.sdk.core;
 
+import java.util.List;
+
 public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	
 	public static final String BUILDER_ID = "com.nokia.carbide.builder.raptor";
@@ -29,4 +31,7 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	
 	public String getConfigurationErrorMessage();
 	
+	public List<String> getMetaDataMacros();
+	
+	public String getmetaDataVariantHRH();
 }

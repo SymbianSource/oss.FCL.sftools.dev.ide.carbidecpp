@@ -460,4 +460,14 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return configParseErrorMessage;
 	}
 
+	@Override
+	public List<String> getMetaDataMacros() {
+		return metaDataMacros;
+	}
+
+	@Override
+	public String getmetaDataVariantHRH() {
+		return metaDataVariantHRH;
+	}
+
 }
