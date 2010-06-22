@@ -106,11 +106,16 @@ public class SBSv2Utils {
 		IEclipsePreferences prefs = new InstanceScope().getNode(SDKCorePlugin.PLUGIN_ID);
 		if (prefs != null) {
 			String configs = prefs.get(SBSV2_FILTERED_CONFIGS_STORE_V2, "");
+			if (configs.length() == 0){
+				initDefaultConfigsToFilter();
+				configs = prefs.get(SBSV2_FILTERED_CONFIGS_STORE_V2, "");
+			}
 			String aliasesToInclude[] = configs.split(SBSV2_FILTERED_CONFIGS_DELIMETER);
 			for (String alias : aliasesToInclude){
 				buildAliasList.add(alias);
 			}
 		}
+		
 		return buildAliasList;
 	}
 

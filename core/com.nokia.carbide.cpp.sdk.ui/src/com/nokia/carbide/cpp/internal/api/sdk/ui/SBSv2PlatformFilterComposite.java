@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,7 +36,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -59,11 +59,11 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	private static List<String> productVariantList = new ArrayList<String>();
 	
 	private CheckboxTableViewer buildAliasTableViewer;
-	private CheckboxTableViewer customVariantTableViewer;
+	private ListViewer customVariantListViewer;
 	private Button refreshButton;
 	private Button addVariantButton;
+	private Button removeVariantButton;
 
-	
 	SBSv2PlatformFilterComposite(Composite parent) {
 		super(parent, SWT.NONE);
 	}
@@ -90,14 +90,15 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		buildAliasTableViewer.setContentProvider(new ArrayContentProvider());
 		buildAliasTableViewer.setLabelProvider(new LabelProvider());
 		
-		customVariantTableViewer = CheckboxTableViewer.newCheckList(this, SWT.BORDER);
-		customVariantTableViewer.getTable().setLayoutData(gd);
-		customVariantTableViewer.setContentProvider(new ArrayContentProvider());
-		customVariantTableViewer.setLabelProvider(new LabelProvider());
+		customVariantListViewer = new ListViewer(this);
+		customVariantListViewer.getList().setLayoutData(gd);
+		customVariantListViewer.setContentProvider(new ArrayContentProvider());
+		customVariantListViewer.setLabelProvider(new LabelProvider());
 		
 		refreshButton = new Button(this, SWT.NONE);		
 		refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
 		refreshButton.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonToolTip")); //$NON-NLS-1$
+		
 		refreshButton.addSelectionListener(new SelectionListener() {
 			
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -110,11 +111,20 @@ public class SBSv2PlatformFilterComposite extends Composite {
 			
 		});
 		
-		addVariantButton = new Button(this, SWT.NONE);		
+		Composite variantButtonsComposite = new Composite(this, SWT.NONE);
+		gridLayout = new GridLayout();
+		gridLayout.makeColumnsEqualWidth = true;
+		gridLayout.numColumns = 2;
+		variantButtonsComposite.setLayout(gridLayout);
+		GridData gridData = new GridData(SWT.LEFT, SWT.TOP, true, false);
+		variantButtonsComposite.setLayoutData(gridData);
+		
+		addVariantButton = new Button(variantButtonsComposite, SWT.NONE);		
 		addVariantButton.setText(Messages.getString("SBSv2PlatformFilterComposite.AddProductButtonText")); //$NON-NLS-1$
 		addVariantButton.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.AddProductButtonToolTip")); //$NON-NLS-1$
+		addVariantButton.setLayoutData(gridData);
 		addVariantButton.addSelectionListener(new SelectionListener() {
-			
+		
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
 				if (aliasMap.size() == 0){
@@ -138,16 +148,37 @@ public class SBSv2PlatformFilterComposite extends Composite {
 					}
 					AddSBSv2ProductVariant addVariantDlg = new AddSBSv2ProductVariant(getShell(), selectedAlias, aliasMap, productVariantList);
 					if (addVariantDlg.open() == TrayDialog.OK){
-						if (customVariantTableViewer.testFindItem(addVariantDlg.getUserCreatedVariant()) == null){
+						if (customVariantListViewer.testFindItem(addVariantDlg.getUserCreatedVariant()) == null){
 							// doesn't exist, add it. if it does exist just ignore it
-							customVariantTableViewer.add(addVariantDlg.getUserCreatedVariant());
-							customVariantTableViewer.setChecked(addVariantDlg.getUserCreatedVariant(), true);
+							customVariantListViewer.add(addVariantDlg.getUserCreatedVariant());
 						}
 					}
 				}
 			}
 			
 		});
+		
+		removeVariantButton = new Button(variantButtonsComposite, SWT.NONE);		
+		removeVariantButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RemoveProductButtonText")); //$NON-NLS-1$
+		removeVariantButton.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.RemoveProductButtonToolTip")); //$NON-NLS-1$
+		removeVariantButton.setLayoutData(gridData);
+		removeVariantButton.addSelectionListener(new SelectionListener() {
+			
+			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			public void widgetSelected(SelectionEvent e) {
+				ISelection selectedVariant = customVariantListViewer.getSelection();
+				if (selectedVariant != null){
+					StructuredSelection selection = (StructuredSelection)selectedVariant;
+					String stringSelection = (String)selection.getFirstElement();
+					List<String> data = (List<String>)customVariantListViewer.getInput();
+					data.remove(stringSelection);
+					customVariantListViewer.setInput(data);
+					customVariantListViewer.refresh(true);
+				}
+			}
+			
+		});
+		
 		initTable(false);
 	}
 
@@ -160,10 +191,8 @@ public class SBSv2PlatformFilterComposite extends Composite {
 			}
 		}
 		
-		for (TableItem item : customVariantTableViewer.getTable().getItems()) {
-			if (customVariantTableViewer.getChecked(item.getData())) {
-				checkedConfigs.add(item.getText());
-			}
+		for (String variant : customVariantListViewer.getList().getItems()) {
+				checkedConfigs.add(variant);
 		}
 		
 		SBSv2Utils.setSBSv2FilteredConfigs(checkedConfigs.toArray(new String[checkedConfigs.size()]));
@@ -212,26 +241,15 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		
 		Collections.sort(sbsAliases);
 		buildAliasTableViewer.setInput(sbsAliases);
-		customVariantTableViewer.setInput(savedVariants);
+		customVariantListViewer.setInput(savedVariants);
 		
-		// check all configs
+		// uncheck all configs to init
 		buildAliasTableViewer.setAllChecked(false);
-		customVariantTableViewer.setAllChecked(true);
-		
 		
 		for (String config : checkedConfigsFromStore) {
 			for (TableItem item : buildAliasTableViewer.getTable().getItems()) {
 				if (item.getText().equals(config) && !item.getText().contains(".")) {
 					buildAliasTableViewer.setChecked(item.getData(), true);
-					break;
-				}
-			}
-		}
-		
-		for (String config : checkedConfigsFromStore) {
-			for (TableItem item : customVariantTableViewer.getTable().getItems()) {
-				if (item.getText().equals(config) && item.getText().contains(".")) {
-					customVariantTableViewer.setChecked(item.getData(), true);
 					break;
 				}
 			}

@@ -309,44 +309,6 @@ public class SBSv2QueryUtils {
 		return productList;
 	}
 
-	public static ISBSv2QueryData queryFilteredConfigsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
-		
-		checkForMinimumRaptorVersion();
-		
-		List<String> argListConfigQuery = new ArrayList<String>();
-		argListConfigQuery.add(QUERY_COMMAND);
-		SBSv2QueryData sbsQueryData = new SBSv2QueryData();
-		
-		IPath epocRoot = new Path(sdk.getEPOCROOT());
-		if ((sdk.getOSVersion().getMajor() <= 9 && sdk.getOSVersion()
-				.getMinor() < 5) || !epocRoot.toFile().exists()) {
-
-			return null; // skip it, the sdk is not supported or broken
-		}
-
-		Properties envVars = EnvironmentReader.getEnvVars();
-		envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
-
-		String queryResult = getSBSQueryOutput(argListConfigQuery,
-				createEnvStringList(envVars));
-
-		HashMap<String, String> sbsAliasMap = parseQueryAliasResult(queryResult);
-
-		List<String> aliasFilterList = SBSv2Utils.getSBSv2FilteredConfigPreferences();
-		for (String aliasKey : sbsAliasMap.keySet()) {
-			
-			if (!aliasFilterList.contains(aliasKey))
-				continue;
-			
-			String meaning = sbsAliasMap.get(aliasKey);
-			SBSv2ConfigData oneSBSConfig = new SBSv2ConfigData(aliasKey,
-					meaning, sdk);
-			sbsQueryData.addConfigurationData(sdk, oneSBSConfig);
-		}
-
-		return sbsQueryData;
-	}
-
 	private static boolean checkForMinimumRaptorVersion() throws SBSv2MinimumVersionException{
 		Version sbsVers = SDKCorePlugin.getSDKManager().getSBSv2Version(false);
 		if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
