@@ -27,7 +27,7 @@ import com.nokia.carbide.cpp.sysdoc.internal.hover.core.HoverManager;
 public class DialogHelper {
 
 	public static void displayErrorDialog(final String msg) {
-		displayErrorDialog(msg, "Developer Libary Hover Help Error",
+		displayErrorDialog(msg, "Developer Library Hover Help Error",
 				MessageDialog.ERROR);
 	}
 
