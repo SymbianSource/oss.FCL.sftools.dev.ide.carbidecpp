@@ -164,6 +164,7 @@ public class DiscoveryView extends ViewPart {
 		manager.add(checkAllAction);
 		manager.add(checkNoneAction);
 		manager.add(new Separator());
+		manager.add(installAction);
 		manager.add(showInstallWizardAction);
 	}
 
