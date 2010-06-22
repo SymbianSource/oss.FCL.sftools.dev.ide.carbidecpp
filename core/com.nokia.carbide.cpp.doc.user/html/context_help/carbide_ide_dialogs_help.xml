@@ -349,19 +349,10 @@
 		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
 	</context>
 
-	<!-- AIF Editor  -->
-	<context id="aif_editor_dialog" >
-		<description>Use the AIF editor to specify the Symbian OS resource file and bitmaps that should be included in a Symbian OS application information (AIF) file.</description>
-		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
-		<topic label="AIF File" 						href="html/concepts/AIFDefWizard.html" />
-		<topic label="Creating an AIF File" 			href="html/tasks/AppInfoFile.html" />
-	</context>
-
 	<!-- Image Editor add images from project -->
 	<context id="add_project_images_dialog" >
 		<description>Use the add image from project dialog to search for image files in your project.</description>
 		<topic label="Add Images from Project" 			href="html/reference/add_from_project.htm" />
-		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
 		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
 		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
 	</context>
@@ -370,7 +361,6 @@
 	<context id="add_filesystem_images_dialog" >
 		<description>Use the add image from file system dialog to search for image files on your file system.</description>
 		<topic label="Add Images from Filesystem" 		href="html/reference/add_from_filesys.htm" />
-		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
 		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
 		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
 	</context>
