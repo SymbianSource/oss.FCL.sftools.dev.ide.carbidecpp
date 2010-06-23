@@ -317,15 +317,7 @@ public class SDKManager extends AbstractSDKManager {
 		}
 		catch (IOException e) {
 			//	report error to PDE log
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Perl was not found on the PATH environment variable. Some tools will not function properly. Perl 5.6.1 is recommended for Carbide use (free download at www.activestate.com).", e));
-		 	// Report dialog since this is always fatal for future work and the error log
-			// may be hidden
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-				public void run() {
-					IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-					MessageDialog.openError(window.getShell(), "Missing Perl", "Perl was not found on your PATH. The Symbian build tools cannot work successfully without Perl. Please install Perl (v5.6.1 recommended).");
-				}
-			});
+			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Perl was not found on the PATH environment variable. Perl 5.6.1 is recommended for Carbide use if using SBSv1 and Symbian OS 9.4 and prior.", e));
 		}
 	}
 	

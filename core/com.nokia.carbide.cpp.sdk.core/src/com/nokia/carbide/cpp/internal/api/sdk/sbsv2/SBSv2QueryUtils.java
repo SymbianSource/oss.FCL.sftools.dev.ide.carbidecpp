@@ -314,7 +314,7 @@ public class SBSv2QueryUtils {
 		if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
 			return true;
 		else {
-			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation and Rescan from the Build Configuration Manager preference page .";
+			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation and 'Rescan' from the Build Configuration Filtering preference page .";
 			throw new SBSv2MinimumVersionException(message);
 		}
 	}
