@@ -9,9 +9,7 @@
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
 <style type="text/css">
 <!--
-.style1 {	font-family: Georgia, "Times New Roman", Times, serif;
-	font-weight: bold;
-}
+.style4 {font-family: Verdana, Ariel, Helvetica, sans-serif; font-weight: bold; }
 -->
 </style>
 </head>
@@ -21,7 +19,7 @@
 </a> page in the <b>Preferences</b> window provides global preferences to control general build options like clean, test components, dependency tracking, concurrent build jobs, build behavior, and emulator options.</p>
 <p align="center"><img src="images/prefs_build_workspace.png" width="620" height="458" alt="" /></p>
 <p class="figure">Figure 1 - Build workspace preferences page </p>
-<p>The following options are available in both the global Build preference panel and the project <b>Properties &gt; Carbide.c++ &gt; </b><b><a href="build_properties/pane_project_settings.htm">Carbide Project Settings</a></b> panel. </p>
+<p>The following options are available in both the global Build preference panel and the project <b>Properties &gt; Carbide.c++ &gt; </b><b><a href="build_properties/pane_project_settings.htm">Project Settings</a></b> panel. </p>
 <h5>Table 1 Build Preferences &mdash;items</h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
@@ -51,7 +49,7 @@
   </tr>
 </table>
 <p>&nbsp;</p>
-<p align="center"><img src="images/carbide_proj_settings_sbsv1.png" alt="sbsv1 tab" width="417" height="243"></p>
+<p align="center"><img src="images/carbide_proj_settings_sbsv1.png" alt="sbsv1 tab" width="444" height="143"></p>
 <p align="center" class="figure">Figure 2 - SBSv1 tab</p>
 <h5 align="left">Table 2 Symbian Build System v1 tab </h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -60,35 +58,31 @@
     <th width="57%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><span class="style1">Clean level </span></td>
+    <td><p class="style4">Clean level </p></td>
     <td><p>Specifies the level of clean to perform on  project files. The levels include:</p>
       <ul>
         <li>Level 0  (<span class="code">abld clean</span>) - removes all the intermediate files created during compilation, and all the executables and import libraries created by the linker</li>
         <li>Level 1  (<span class="code">abld reallyclean</span>) - performs a <span class="code">clean</span> operation, but also removes all exported files and makefiles</li>
         <li>Level 2  (<span class="code">abld reallyclean</span>, <span class="code">bldmake clean</span>) - performs  a <span class="code">reallyclean</span> operation and then removes all files created by bldmake</li>
-      </ul>
-    </td>
+      </ul>    </td>
   </tr>
   <tr>
-    <td><span class="style1">Manage dependency tracking (improves build speed) </span></td>
+    <td><p class="style4">Manage dependency tracking (improves build speed) </p></td>
     <td><p>Enable to have Carbide manage the dependency tracking for source and resource files. Carbide does this by separating out the generation of dependency information from the makefile and managing the entire process.  All builds now can quickly compare whether new dependency information is required due to changes in a source file and only build those that need updating. </p>
-    <p>If not enabled, the Symbian OS command line build system handles all dependency tracking by generating the dependency information in the makefiles. Because it does this for all project files, regardless of the number of changes, it can result in a performance penalty. A single edit in a MMP file  forces a complete regeneration of the makefile dependency information for all project files. </p>
-    </td>
+    <p>If not enabled, the Symbian OS command line build system handles all dependency tracking by generating the dependency information in the makefiles. Because it does this for all project files, regardless of the number of changes, it can result in a performance penalty. A single edit in a MMP file  forces a complete regeneration of the makefile dependency information for all project files. </p>    </td>
   </tr>
   <tr>
-    <td><b>Show a dialog to modify build actions when modified MMPs are detected </b></td>
-    <td><p>Enable to have Carbide ask before starting a build what action to take when modified files are detected. When disabled, do not show a dialog but use the default action listed below.</p>
-    </td>
+    <td><p><strong>Show a dialog to modify build actions when modified MMPs are detected </strong></p></td>
+    <td><p>Enable to have Carbide ask before starting a build what action to take when modified files are detected. When disabled, do not show a dialog but use the default action listed below.</p>    </td>
   </tr>
   <tr>
-    <td><b>Default action to take when mmp files are modified </b></td>
+    <td><p><strong>Default action to take when mmp files are modified </strong></p></td>
     <td><p>Defines the default action Carbide should execute when it detects modified MMP files and the option above is disabled: </p>
       <ul>
         <li>None</li>
         <li>Link Only</li>
         <li>Compile and Link</li>
-      </ul>
-    </td>
+      </ul>    </td>
   </tr>
   <tr>
     <td><strong>Do not offer to track dependencies for projects build on command-line </strong></td>
@@ -96,7 +90,7 @@
   </tr>
 </table>
 <p align="left">&nbsp;</p>
-<p align="center"><img src="images/carbide_proj_settings_sbsv2.png" alt="sbsv2 tab" width="427" height="269"></p>
+<p align="center"><img src="images/carbide_proj_settings_sbsv2.png" alt="sbsv2 tab" width="423" height="176"></p>
 <p align="center" class="figure">Figure 3 - SBSv2 tab </p>
 <h5 align="left">Table 3 Symbian Build System v2 tab </h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -130,7 +124,7 @@
 </table>
 <h5>Related references</h5>
 <ul>
-  <li><a href="build_properties/pane_project_settings.htm">Carbide Project Settings </a></li>
+  <li><a href="build_properties/pane_project_settings.htm">Project Settings </a></li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
