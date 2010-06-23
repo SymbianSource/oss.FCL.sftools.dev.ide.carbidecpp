@@ -101,17 +101,19 @@ public class QtSDKUtils {
 		
 		refreshQtStoredSDKs();
 		
-		if (qtSDKList.size() == 0){
-			return null;
-		}
-		
-		for (QtSDK qtSDK : qtSDKList){
-			File currBinPath = new File(qtSDK.binPath);
-			File currIncPath = new File(qtSDK.incPath);
+		synchronized(qtSDKList) {
+			if (qtSDKList.size() == 0){
+				return null;
+			}
 			
-			if ( (currBinPath.equals(oldQtBinPath) && currIncPath.equals(qtIncPath)) ||
-				 (currBinPath.equals(newQtBinPath) && currIncPath.equals(qtIncPath))){
-				return qtSDK.name;
+			for (QtSDK qtSDK : qtSDKList){
+				File currBinPath = new File(qtSDK.binPath);
+				File currIncPath = new File(qtSDK.incPath);
+				
+				if ( (currBinPath.equals(oldQtBinPath) && currIncPath.equals(qtIncPath)) ||
+					 (currBinPath.equals(newQtBinPath) && currIncPath.equals(qtIncPath))){
+					return qtSDK.name;
+				}
 			}
 		}
 		
@@ -170,33 +172,34 @@ public class QtSDKUtils {
 	 * Update the internal list of Qt-SDKs found in the Qt global preferences
 	 */
 	static void refreshQtStoredSDKs(){
-		
-		qtSDKList.clear();
-		
-		IPreferenceStore store = QtProjectPlugin.getDefault().getPreferenceStore();
-		int count = store.getInt(PreferenceConstants.QTVERSION_COUNT);
-		for (int i = 0; i < count; i++) {
-			String nameKey = PreferenceConstants.QTVERSION_NAME + "."
-					+ Integer.toString(i);
-			String binpathKey = PreferenceConstants.QTVERSION_BINPATH + "."
-					+ Integer.toString(i);
-			String includepathKey = PreferenceConstants.QTVERSION_INCLUDEPATH
-					+ "." + Integer.toString(i);
-			String name = "";
-			String binPath = "";
-			String incPath = "";
-			if (store.contains(nameKey)) {
-				name = store.getString(nameKey);
-			}
-			if (store.contains(binpathKey)) {
-				binPath = store.getString(binpathKey);
-			}
-			if (store.contains(includepathKey)) {
-				incPath = store.getString(includepathKey);
-			}
+		synchronized(qtSDKList) {
+			qtSDKList.clear();
 			
-			QtSDK qtSDK = new QtSDK(name, incPath, binPath);
-			qtSDKList.add(qtSDK);
+			IPreferenceStore store = QtProjectPlugin.getDefault().getPreferenceStore();
+			int count = store.getInt(PreferenceConstants.QTVERSION_COUNT);
+			for (int i = 0; i < count; i++) {
+				String nameKey = PreferenceConstants.QTVERSION_NAME + "."
+						+ Integer.toString(i);
+				String binpathKey = PreferenceConstants.QTVERSION_BINPATH + "."
+						+ Integer.toString(i);
+				String includepathKey = PreferenceConstants.QTVERSION_INCLUDEPATH
+						+ "." + Integer.toString(i);
+				String name = "";
+				String binPath = "";
+				String incPath = "";
+				if (store.contains(nameKey)) {
+					name = store.getString(nameKey);
+				}
+				if (store.contains(binpathKey)) {
+					binPath = store.getString(binpathKey);
+				}
+				if (store.contains(includepathKey)) {
+					incPath = store.getString(includepathKey);
+				}
+				
+				QtSDK qtSDK = new QtSDK(name, incPath, binPath);
+				qtSDKList.add(qtSDK);
+			}
 		}
 	}
 	
