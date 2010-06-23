@@ -47,14 +47,47 @@
     <topic label="Update Projects"          	href="html/reference/olderproject_updater.html" />
   </topic>
   <topic label="Carbide Views "  >
+      <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
       <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
+      <topic label="Console view" 					href="html/reference/view_log.htm" />
+      <topic label="Debug view"						href="html/debugger/debug/viewing_debug.htm" />
+      <topic label="Disassembly view"				href="html/reference/view_disassembly.htm" />
       <topic label="Executables view"				href="html/reference/view_executables.htm" />
       <topic label="Install Extensions view"	    href="html/reference/view_install_extensions.htm" >
       	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
   	  </topic>
+      <topic label="Memory view"				href="html/reference/view_memory_wnd.htm" >
+        <topic href="html/concepts/working_with_memory.htm" label="Working with Memory"></topic>
+        <topic label="Opening a Memory View"					href="html/tasks/memory/view_memory_show.htm" />
+        <topic label="Adding a Memory Monitor"					href="html/tasks/memory/memory_monitor_adding.htm" />
+        <topic label="Adding a Memory Rendering"				href="html/tasks/memory/memory_rendering_adding.htm" />
+        <topic label="Removing a Memory Monitor or Rendering"	href="html/tasks/memory/memory_monitor_removing.htm" />
+        <topic label="Memory Rendering Options"         		href="html/reference/memory_rendering_options.htm" />
+      </topic>
+      <topic label="Modules View"				href="html/reference/view_module_wnd.htm" />
       <topic label="Project Explorer view"			href="html/reference/view_cpp_projects.htm" />
+      <topic label="Registers"								href="html/concepts/registers.htm" >
+        <topic label="Registers view"						href="html/reference/view_registers.htm" />
+        <topic label="Opening a Registers View"				href="html/tasks/registers/mem_reg_open_wnd.htm" />
+        <topic href="html/tasks/registers/mem_reg_data_views.htm" label="Changing Register Data Views"></topic>
+        <topic label="Expanding Register Groups"			href="html/tasks/registers/mem_reg_viewing.htm" />
+        <topic label="Changing Register Values"				href="html/tasks/registers/mem_reg_changing.htm" />
+        <topic label="ARM Registers"						href="html/concepts/arm_registers.htm" />
+      </topic>
       <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
+      <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data view">
+        <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
+      </topic>
       <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
+      <topic label="Variables and Expressions"					href="Variables and Expressions" >
+        <topic label="Variables view"							href="html/reference/view_variables.htm" />
+        <topic label="Viewing Variables"						href="html/debugger/variables/viewing_variables.htm" />
+        <topic label="Adding and Removing Global Variables"		href="html/debugger/variables/adding_variables.htm" />
+        <topic label="Expressions view"							href="html/reference/view_expressions.htm" />
+        <topic label="Viewing Expressions"						href="html/debugger/variables/viewing_expressions.htm" />
+        <topic label="Editing Expressions" 						href="html/debugger/variables/editing_expressions.htm" />
+        <topic label="Adding and Removing Expressions"			href="html/debugger/variables/adding_expressions.htm" />
+      </topic>
       <topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
   </topic>
   <topic label="Project management" >
@@ -193,40 +226,6 @@
   <topic label="Debugging projects" 				href="html/concepts/debugger_about.htm" >
     <topic label="Running a program" 			href="html/debugger/debug/cmds_starting.htm" />
     <topic label="Debug perspective" 			href="html/reference/perspective_debug.htm" >
-      <topic label="BreakPoints view" 		href="html/reference/view_breakpoints.htm" />
-      <topic label="Console view" 			href="html/reference/view_log.htm" />
-      <topic label="Debug view"				href="html/debugger/debug/viewing_debug.htm" />
-      <topic label="Disassembly view"			href="html/reference/view_disassembly.htm" />
-      <topic href="html/reference/view_executables.htm" label="Executables view"></topic>
-      <topic label="Variables and Expressions"					href="Variables and Expressions" >
-        <topic label="Variables view"							href="html/reference/view_variables.htm" />
-        <topic label="Viewing Variables"						href="html/debugger/variables/viewing_variables.htm" />
-        <topic label="Adding and Removing Global Variables"		href="html/debugger/variables/adding_variables.htm" />
-        <topic label="Expressions view"							href="html/reference/view_expressions.htm" />
-        <topic label="Viewing Expressions"						href="html/debugger/variables/viewing_expressions.htm" />
-        <topic label="Editing Expressions" 						href="html/debugger/variables/editing_expressions.htm" />
-        <topic label="Adding and Removing Expressions"			href="html/debugger/variables/adding_expressions.htm" />
-      </topic>
-      <topic label="Memory view"				href="html/reference/view_memory_wnd.htm" >
-        <topic href="html/concepts/working_with_memory.htm" label="Working with Memory"></topic>
-        <topic label="Opening a Memory View"					href="html/tasks/memory/view_memory_show.htm" />
-        <topic label="Adding a Memory Monitor"					href="html/tasks/memory/memory_monitor_adding.htm" />
-        <topic label="Adding a Memory Rendering"				href="html/tasks/memory/memory_rendering_adding.htm" />
-        <topic label="Removing a Memory Monitor or Rendering"	href="html/tasks/memory/memory_monitor_removing.htm" />
-        <topic label="Memory Rendering Options"         		href="html/reference/memory_rendering_options.htm" />
-      </topic>
-      <topic label="Modules View"				href="html/reference/view_module_wnd.htm" />
-      <topic label="Registers"								href="html/concepts/registers.htm" >
-        <topic label="Registers view"						href="html/reference/view_registers.htm" />
-        <topic label="Opening a Registers View"				href="html/tasks/registers/mem_reg_open_wnd.htm" />
-        <topic href="html/tasks/registers/mem_reg_data_views.htm" label="Changing Register Data Views"></topic>
-        <topic label="Expanding Register Groups"			href="html/tasks/registers/mem_reg_viewing.htm" />
-        <topic label="Changing Register Values"				href="html/tasks/registers/mem_reg_changing.htm" />
-        <topic label="ARM Registers"						href="html/concepts/arm_registers.htm" />
-      </topic>
-      <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data view">
-        <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
-      </topic>
     </topic>
     <topic label="Debugging actions" href="html/debugger/debug/debug.htm">
       <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging"></topic>
