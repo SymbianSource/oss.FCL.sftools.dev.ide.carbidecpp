@@ -25,6 +25,7 @@ import org.eclipse.equinox.internal.p2.discovery.compatibility.BundleDiscoverySt
 import org.eclipse.equinox.internal.p2.discovery.compatibility.RemoteBundleDiscoveryStrategy;
 import org.eclipse.equinox.internal.p2.discovery.model.CatalogItem;
 import org.eclipse.equinox.internal.p2.ui.discovery.DiscoveryUi;
+import org.eclipse.equinox.internal.p2.ui.discovery.util.WorkbenchUtil;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogConfiguration;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogViewer;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
@@ -54,6 +55,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 @SuppressWarnings("restriction")
 public class DiscoveryView extends ViewPart {
@@ -103,12 +105,14 @@ public class DiscoveryView extends ViewPart {
 				"com.nokia.carbide.discovery.ui.view.DiscoveryView.catalogviewer"); //$NON-NLS-1$
 		makeActions();
 		contributeToActionBars();
-		getSite().getShell().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				viewer.updateCatalog();
-			}
-		});
+		if (!WorkbenchUtils.isJUnitRunning()) { // do not initialize the catalog if JUnit is running
+			getSite().getShell().getDisplay().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					viewer.updateCatalog();
+				}
+			});
+		}
 	}
 	
 	private CatalogConfiguration getConfiguration() {
