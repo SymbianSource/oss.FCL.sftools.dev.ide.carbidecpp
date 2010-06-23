@@ -46,29 +46,24 @@
     <topic label="Toggle HW Breakpoint"         href="html/reference/menus/hardware_breakpoints.htm" />
     <topic label="Update Projects"          	href="html/reference/olderproject_updater.html" />
   </topic>
-  <topic label="Carbide Views " 				href="html/reference/menus/menus.htm" >
+  <topic label="Carbide Views "  >
       <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
       <topic label="Executables view"				href="html/reference/view_executables.htm" />
-      <topic label="Install Extensions"	        	href="html/reference/view_install_extensions.htm" />
-      <topic label="Project Explorer view"			href="html/reference/view_cpp_projects.htm" />
-      <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
-      <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
-  </topic>
-  <topic label="Project management" >
-    <topic label="Carbide C/C++ perspective" 		href="html/concepts/CarbidePerspective.html" >
-      <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
-      <topic label="Executables view"				href="html/reference/view_executables.htm" />
-      <topic label="Install Extensions"	        	href="html/reference/view_install_extensions.htm" />
+      <topic label="Install Extensions view"	    href="html/reference/view_install_extensions.htm" >
+      	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
+  	  </topic>
       <topic label="Project Explorer view"			href="html/reference/view_cpp_projects.htm" />
       <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
       <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
       <topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
-    </topic>
-    <topic label="Carbide.c++ preferences" 				href="html/reference/wnd_carbide_pref.htm" >
-      <topic label="Bug Reports"						href="PLUGINS_ROOT/com.nokia.carbide.bugreport/html/prefs_bug_reporter.htm" />
+  </topic>
+  <topic label="Project management" >
+    <topic label="Carbide C/C++ perspective" 		href="html/concepts/CarbidePerspective.html" />
+    <topic label="Carbide.c++ preferences" 			href="html/reference/wnd_carbide_pref.htm" >
+      <topic label="Bug Reports"					href="PLUGINS_ROOT/com.nokia.carbide.bugreport/html/prefs_bug_reporter.htm" />
       <topic label="Build"							href="html/reference/wnd_build_prefs.htm" />
-      <topic label="Carbide.c++ News"					href="html/reference/prefs_carbide_news.htm" />
-      <topic label="Debugger"							href="html/reference/wnd_debugger_prefs.htm" />
+      <topic label="Carbide.c++ News"				href="html/reference/prefs_carbide_news.htm" />
+      <topic label="Debugger"						href="html/reference/wnd_debugger_prefs.htm" />
       <topic label="Diagnostic Logs"          		href="html/reference/wnd_diagnostic_logs_pref.htm" />
       <topic label="Performance Investigator"  		href="PLUGINS_ROOT/com.nokia.carbide.cpp.pi.doc.user/html/tasks/analyser/key_profile_pref.htm" />
       <topic label="Platform Filtering Preferences"	href="html/tasks/sdks/sdk_platform_filter.htm" />
