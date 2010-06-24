@@ -26,8 +26,10 @@ import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -94,6 +96,16 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		customVariantListViewer.getList().setLayoutData(gd);
 		customVariantListViewer.setContentProvider(new ArrayContentProvider());
 		customVariantListViewer.setLabelProvider(new LabelProvider());
+		customVariantListViewer.addSelectionChangedListener( new ISelectionChangedListener() {
+			
+			public void selectionChanged(SelectionChangedEvent event) {
+				if (customVariantListViewer.getSelection() != null && !customVariantListViewer.getSelection().isEmpty()){
+					removeVariantButton.setEnabled(true);
+				} else {
+					removeVariantButton.setEnabled(false);
+				}
+			}
+		});
 		
 		refreshButton = new Button(this, SWT.NONE);		
 		refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
@@ -162,6 +174,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		removeVariantButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RemoveProductButtonText")); //$NON-NLS-1$
 		removeVariantButton.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.RemoveProductButtonToolTip")); //$NON-NLS-1$
 		removeVariantButton.setLayoutData(gridData);
+		removeVariantButton.setEnabled(false);
 		removeVariantButton.addSelectionListener(new SelectionListener() {
 			
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
@@ -174,6 +187,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 					data.remove(stringSelection);
 					customVariantListViewer.setInput(data);
 					customVariantListViewer.refresh(true);
+					removeVariantButton.setEnabled(false);
 				}
 			}
 			
