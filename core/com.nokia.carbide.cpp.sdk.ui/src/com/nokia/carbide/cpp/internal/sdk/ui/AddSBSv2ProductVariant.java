@@ -27,6 +27,10 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -63,8 +67,6 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 		}
 		variantList = productVariantList;
 		defaultAlias = selectedAlias;
-		
-		
 	}
 
 	/**
@@ -77,6 +79,8 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 				true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
+		
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
 	}
 
 	/**
@@ -100,6 +104,24 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 		Collections.sort(aliasList);
 		aliasCombo.setItems((String[])aliasList.toArray(new String[aliasList.size()]));
 		aliasCombo.select(0);
+		aliasCombo.setEditable(false);
+		aliasCombo.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				validateData();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// ignore
+			}
+		});
+		aliasCombo.addKeyListener(new KeyListener() {
+			public void keyReleased(KeyEvent e) {
+				validateData();
+			}
+			public void keyPressed(KeyEvent e) {
+				
+			}
+		});
+		
 		
 		if (defaultAlias != null && defaultAlias.length() > 0)
 			aliasCombo.setText(defaultAlias);
@@ -114,7 +136,24 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 		variantCombo.setLayoutData(new GridData(263, SWT.DEFAULT));
 		Collections.sort(variantList);
 		variantCombo.setItems((String[])variantList.toArray(new String[variantList.size()]));
-
+		variantCombo.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				validateData();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// ignore
+			}
+		});
+		variantCombo.addKeyListener(new KeyListener() {
+			public void keyReleased(KeyEvent e) {
+				validateData();
+			}
+			public void keyPressed(KeyEvent e) {
+				
+			}
+		});
+		
+		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SDKUIHelpIds.SDK_ADD_DIALOG);
 		return container;
 	}
@@ -164,6 +203,22 @@ public class AddSBSv2ProductVariant extends TrayDialog {
 
 	public String getUserCreatedVariant() {
 		return newConfigString;
+	}
+	
+	private void validateData(){
+		if (variantCombo.getText().length() > 0){
+			getButton(IDialogConstants.OK_ID).setEnabled(true);
+		} else {
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
+			return;
+		}
+		
+		if (aliasCombo.getText().length() > 0){
+			getButton(IDialogConstants.OK_ID).setEnabled(true);
+		} else {
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
+			return;
+		}
 	}
 
 }

@@ -28,5 +28,6 @@ public class SDKUIHelpIds {
 	public static final String SDK_PROPERTIES_DIALOG = SDKUIPlugin.PLUGIN_ID + ".sdk_properties_dialog"; //$NON-NLS-1$
 	public static final String SDK_BUILD_FILTER_PAGE = SDKUIPlugin.PLUGIN_ID + ".sdk_platform_filter_page"; //$NON-NLS-1$
 	public static final String BUILD_TARGETS_PAGE = SDKUIPlugin.PLUGIN_ID + ".build_targets_page"; //$NON-NLS-1$
+	public static final String ADD_VARIANT_DIALOG = SDKUIPlugin.PLUGIN_ID + ".sdk_variant_dialog"; //$NON-NLS-1$
 }
 
