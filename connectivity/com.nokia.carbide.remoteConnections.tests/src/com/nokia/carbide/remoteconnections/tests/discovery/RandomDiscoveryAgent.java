@@ -101,7 +101,7 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 		}
 	}
 
-	private DiscoveryThread thread = new DiscoveryThread();
+	private DiscoveryThread thread;
 
 	public URL getInformation() {
 		return null;
@@ -131,20 +131,33 @@ public class RandomDiscoveryAgent implements IDeviceDiscoveryAgent {
 	}
 	
 	public void start() throws CoreException {
-		if (TestFilter.isTest)
+		if (TestFilter.isTest) {
+			thread = new DiscoveryThread();
 			thread.start();
+		}
 	}
 
 	public void stop() throws CoreException {
-		thread.stopRunning();
+		if (TestFilter.isTest) {
+			thread.stopRunning();
+			thread = null;
+		}
 	}
 
 	public String getDisplayName() {
-		return "Random Test Discovery Agent";
+		return "Random Test Discovery";
 	}
 
 	public IPrerequisiteStatus getPrerequisiteStatus() {
 		return (new RandomPrerequisiteStatus());
+	}
+
+	public boolean isRunning() {
+		return thread != null;
+	}
+
+	public String getId() {
+		return getClass().getName();
 	}
 
 }
