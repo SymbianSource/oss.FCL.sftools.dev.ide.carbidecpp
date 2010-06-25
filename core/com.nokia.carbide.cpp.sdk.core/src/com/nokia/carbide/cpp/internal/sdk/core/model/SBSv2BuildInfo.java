@@ -22,6 +22,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
@@ -33,6 +35,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * SBSv2 specific build information.
@@ -48,6 +51,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	private Map<String, String> aliasToMeaningMap = new HashMap<String, String>();
 	private List<String> productList = null;
 	private IPath cachedVariantHRHFile = null;
+	private static boolean hasShownDialog;
 	
 	public SBSv2BuildInfo(ISymbianSDK sdk) {
 		this.sdk = sdk;
@@ -71,10 +75,21 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		if (aliasToMeaningMap.size() == 0){
 			try {
 				aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
-			} catch (SBSv2MinimumVersionException e) {
+			} catch (final SBSv2MinimumVersionException e) {
+				if (hasShownDialog == false){
+					
+					PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Minimum sbs version not met.", e.getMessage());
+						}
+					});	
+					
 				Logging.log( SDKCorePlugin.getDefault(),
 							Logging.newSimpleStatus(0, IStatus.ERROR,
 								MessageFormat.format(e.getMessage(), ""), e));
+				
+				hasShownDialog = true;
+				}
 			}
 		}
 		
