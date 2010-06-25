@@ -162,7 +162,10 @@ public class SBSv2PlatformFilterComposite extends Composite {
 					if (addVariantDlg.open() == TrayDialog.OK){
 						if (customVariantListViewer.testFindItem(addVariantDlg.getUserCreatedVariant()) == null){
 							// doesn't exist, add it. if it does exist just ignore it
-							customVariantListViewer.add(addVariantDlg.getUserCreatedVariant());
+							List<String> variantList = (List<String>)customVariantListViewer.getInput();
+							variantList.add(addVariantDlg.getUserCreatedVariant());
+							customVariantListViewer.setInput(variantList);
+							customVariantListViewer.refresh();
 						}
 					}
 				}
