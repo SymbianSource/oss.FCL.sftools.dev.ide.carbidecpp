@@ -1300,4 +1300,11 @@ public class PCCSConnection {
     		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, PCCS_WRONG_VERSION, msg, null));
     	}
 	}
+	
+	/**
+	 * @return whether we have a valid handle
+	 */
+	public boolean isOpen() {
+		return dmHandle != APIHANDLE.INVALID_HANDLE_VALUE;
+	}
 }

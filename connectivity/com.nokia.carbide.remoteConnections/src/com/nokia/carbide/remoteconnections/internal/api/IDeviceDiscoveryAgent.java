@@ -87,6 +87,18 @@ public interface IDeviceDiscoveryAgent {
 	 */
 	IPrerequisiteStatus getPrerequisiteStatus();
 	
+	/**
+	 * Return whether this discovery agent is running
+	 * @return boolean
+	 */
+	boolean isRunning();
+	
+	/**
+	 * The unique id for this agent
+	 * @return String
+	 */
+	String getId();
+	
 	// In addition, there may need to be an additional API to do a deeper form of discovery for
 	// connection mechanisms that require pairing (like BT or Wifi). In these cases, normal discovery
 	// will probably be for already paired devices, however, the user will want to discover all 
