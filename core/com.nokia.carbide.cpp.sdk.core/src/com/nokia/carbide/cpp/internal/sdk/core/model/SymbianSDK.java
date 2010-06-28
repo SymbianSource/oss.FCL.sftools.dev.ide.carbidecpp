@@ -1000,7 +1000,7 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 	
 	/**
 	 * Scans the SDK's epoc32\data\buildinfo.txt file and tries to build the Version
-	 * and branch identifiers. This should not be called when a manifest.xml file exits
+	 * and branch identifiers. This should not be called when a manifest.xml file exits.
 	 *
 	 */
 	private void scanSDKForVersionInfo(){
@@ -1008,6 +1008,9 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 		File bldInfoFile = new File(epocRoot, BUILD_INFO_TXT_FILE);
 		if (!bldInfoFile.exists())
 			return;
+		
+		if (getOSVersion().getMajor() == 0)
+			setOSVersion(new Version("9.5.0"));  // Set a default version that will work with all EKA2
 		
 		try {
 			char[] cbuf = new char[(int) bldInfoFile.length()];
@@ -1026,11 +1029,15 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 					String[] versionTokens = line.split(" ");
 					if (versionTokens.length == 3){
 						
-						if (versionTokens[2].toUpperCase().startsWith("TB92SF") || versionTokens[2].toUpperCase().endsWith("TB92SF")){
+						if (versionTokens[2].toUpperCase().contains("TB92SF")){
 							setOSVersion(new Version("9.5.0"));
 							setSDKVersion(new Version("5.2.0"));
 							break;
-						} else if (versionTokens[2].toUpperCase().startsWith("TB101SF") || versionTokens[2].toUpperCase().endsWith("TB101SF")){
+						} else if (versionTokens[2].toUpperCase().contains("TB101SF")){
+							setOSVersion(new Version("9.6.0"));
+							setSDKVersion(new Version("6.0.0"));
+							break;
+						} else if (versionTokens[2].toUpperCase().contains("TB102SF")){
 							setOSVersion(new Version("9.6.0"));
 							setSDKVersion(new Version("6.0.0"));
 							break;
@@ -1038,24 +1045,6 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 						else if (versionTokens[2].lastIndexOf("v") > 0){
 							int index = versionTokens[2].lastIndexOf("v");
 							String osVersionString = versionTokens[2].substring(index+1, versionTokens[2].length());
-							
-							if (osVersionString.compareToIgnoreCase("tb91sf") == 0){
-								setOSVersion(new Version("9.4.0"));
-								setSDKVersion(new Version("5.1.0"));
-								break;
-							}
-							
-							if (osVersionString.compareToIgnoreCase("tb92sf") == 0){
-								setOSVersion(new Version("9.5.0"));
-								setSDKVersion(new Version("5.2.0"));
-								break;
-							}
-							
-							if (osVersionString.compareToIgnoreCase("tb101sf") == 0){
-								setOSVersion(new Version("9.6.0"));
-								setSDKVersion(new Version("6.0.0"));
-								break;
-							}
 							
 							if (osVersionString.endsWith(EKA1_A_BRANCH_IDENTIFIER) || 
 							    osVersionString.endsWith(EKA2_B_BRANCH_IDENTIFIER) ||
@@ -1068,9 +1057,14 @@ public List<ISymbianBuildContext> getBinaryVariationPlatformContexts(){
 							}
 							
 							// Set the version, split on alphanumeric to get rid of any junk at the end
-							String[] tempStr = osVersionString.split("[a-zA-Z]");
+							String[] tempStr = osVersionString.split("[a-zA-Z_]");
 							if (tempStr.length != 0){
-								setOSVersion(Version.parseVersion(tempStr[0]));
+								try {
+									setOSVersion(Version.parseVersion(tempStr[0]));
+								} catch (Exception e) {
+									// ignore, default version already set
+									// just catch exception so we move along to the next SDK
+								}
 							}
 						}
 					}

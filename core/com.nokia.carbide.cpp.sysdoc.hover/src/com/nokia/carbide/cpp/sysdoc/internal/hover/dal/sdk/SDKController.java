@@ -148,11 +148,13 @@ final public class SDKController {
 		List<ISymbianSDK> sdkList = sdkMgr.getSDKList();
 
 		for (ISymbianSDK currSDK : sdkList) {
-			String epocRootStr = currSDK.getEPOCROOT();
-			try {
-				addDirToSDKDirectoryList(epocRootStr);
-			} catch (Exception e){
-				continue;
+			if (currSDK.isEnabled()) {
+				String epocRootStr = currSDK.getEPOCROOT();
+				try {
+					addDirToSDKDirectoryList(epocRootStr);
+				} catch (Exception e){
+					continue;
+				}
 			}
 		}	
 			
