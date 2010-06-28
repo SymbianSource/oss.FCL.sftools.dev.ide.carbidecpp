@@ -254,14 +254,27 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		sdkStaticHelp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		sdkStaticHelp.setText(Messages.getString("ManageConfigurationsDialog.Select_config_help_text")); //$NON-NLS-1$
 		
-		Link fLink = new Link(parent, SWT.WRAP);
-		fLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		fLink.setText(Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		fLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		fLink.addSelectionListener(new SelectionAdapter() {
+		Link configPrefLink = new Link(parent, SWT.WRAP);
+		configPrefLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		configPrefLink.setText(Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		configPrefLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		configPrefLink.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// I don't see a way to open it to a specific tab, only the page
 				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage", null, null, 0).open()){ //$NON-NLS-1$
+					drawSDKConfigTree();
+				}
+			}
+		});
+		
+		Link sdkLink = new Link(parent, SWT.WRAP);
+		sdkLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		sdkLink.setText(Messages.getString("ManageConfigurationsDialog.Select_SymbianSDKs_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		sdkLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		sdkLink.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				// I don't see a way to open it to a specific tab, only the page
+				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage", null, null, 0).open()){ //$NON-NLS-1$
 					drawSDKConfigTree();
 				}
 			}
