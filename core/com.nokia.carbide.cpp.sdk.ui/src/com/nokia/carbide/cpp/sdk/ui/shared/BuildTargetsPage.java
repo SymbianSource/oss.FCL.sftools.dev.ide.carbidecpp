@@ -231,15 +231,34 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 
 		addOtherControls(parent);
 		
-		Link fLink = new Link(parent, SWT.WRAP);
-		fLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		fLink.setText(Messages.getString("BuildTargetsPage.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		fLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		fLink.addSelectionListener(new SelectionAdapter() {
+		Link fConfigPrefsLink = new Link(parent, SWT.WRAP);
+		fConfigPrefsLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		fConfigPrefsLink.setText(Messages.getString("BuildTargetsPage.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		fConfigPrefsLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		fConfigPrefsLink.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// I don't see a way to open it to a specific tab, only the page
 				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage", null, null, 0).open()){ //$NON-NLS-1$
-					
+					inited = false;
+					setVisible(true);
+					TemplateSDKFilter filter = filterCheckbox.getSelection() ? templateFilter : null;
+					filteringContentProviderWrapper.setFilter(filter);
+					viewer.getTree().clearAll(true);
+					viewer.refresh();
+					setPageComplete(validatePage());
+				}
+			}
+
+		});
+		
+		Link fSDKLink = new Link(parent, SWT.WRAP);
+		fSDKLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		fSDKLink.setText(Messages.getString("BuildTargetsPage.Select_SymbianSDKs_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		fSDKLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		fSDKLink.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				// I don't see a way to open it to a specific tab, only the page
+				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferences", null, null, 0).open()){ //$NON-NLS-1$
 					inited = false;
 					setVisible(true);
 					TemplateSDKFilter filter = filterCheckbox.getSelection() ? templateFilter : null;
