@@ -380,6 +380,20 @@
             activityId="org.eclipse.cdt.ui.activityProjectSettings"
             pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.projectSettingsExportWizard">
       </activityPatternBinding>
+<!-- Resource Configurations -->
+      <activity
+            name="CDT - Resource Configurations"
+            description="CDT C/C++ Resource configurations context menu commands"
+            id="org.eclipse.cdt.ui.activityResourceConfigurations">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.cdt.ui.activityResourceConfigurations"
+            categoryId="org.eclipse.cdt.ui.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activityResourceConfigurations"
+            pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.buildConfigContributionM">
+      </activityPatternBinding>
 <!-- Import Executable action -->      
       <activity
             name="CDT - C/C++ Import Executable Wizard"
