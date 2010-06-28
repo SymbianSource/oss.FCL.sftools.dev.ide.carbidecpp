@@ -76,19 +76,22 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator.IDiscoveryAgentsLoadedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
+import com.nokia.carbide.remoteconnections.internal.ToggleDiscoveryAgentAction;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
-import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
@@ -111,6 +114,7 @@ public class ConnectionsView extends ViewPart {
 	private List<Action> actions;
 	private List<Action> connectionSelectedActions;
 	private List<Action> serviceSelectedActions;
+	private List<Action> discoveryAgentActions;
 	private static final String UID = ".uid"; //$NON-NLS-1$
 
 	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
@@ -131,7 +135,7 @@ public class ConnectionsView extends ViewPart {
 
 	// handle, do not dispose
 	private Font boldViewerFont;
-	
+
 	private TreeNode[] loadConnections() {
 		if (serviceToListenerMap == null)
 			serviceToListenerMap = new HashMap<IConnectedService, IStatusChangedListener>();
@@ -624,8 +628,30 @@ public class ConnectionsView extends ViewPart {
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
-	private void fillLocalPullDown(IMenuManager manager) {
-		// nothing for now
+	private void fillLocalPullDown(final IMenuManager manager) {
+		if (discoveryAgentActions.isEmpty()) {
+			IDiscoveryAgentsLoadedListener listener = new IDiscoveryAgentsLoadedListener() {
+				public void agentsAreLoaded() {
+					makeToggleDiscoveryAgentActions();
+					addDiscoveryAgentActions(manager);
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							manager.update(true);
+						}
+					});
+				}
+			};
+			RemoteConnectionsActivator.getDefault().addDiscoveryAgentsLoadedListener(listener);
+		}
+		else {
+			addDiscoveryAgentActions(manager);
+		}
+	}
+
+	private void addDiscoveryAgentActions(IMenuManager manager) {
+		for (Action action : discoveryAgentActions) {
+			manager.add(action);
+		}
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -827,8 +853,19 @@ public class ConnectionsView extends ViewPart {
 		
 		enableConnectionSelectedActions(false);
 		enableServiceSelectedActions(false);
+		
+		makeToggleDiscoveryAgentActions();
 	}
 	
+	private void makeToggleDiscoveryAgentActions() {
+		discoveryAgentActions = new ArrayList<Action>();
+		Collection<IDeviceDiscoveryAgent> discoveryAgents = RemoteConnectionsActivator.getDefault().getDiscoveryAgents();
+		for (IDeviceDiscoveryAgent agent : discoveryAgents) {
+			discoveryAgentActions.add(new ToggleDiscoveryAgentAction(agent));
+		}
+		
+	}
+
 	private void enableConnectionSelectedActions(boolean enable) {
 		for (Action action : connectionSelectedActions) {
 			action.setEnabled(enable);
