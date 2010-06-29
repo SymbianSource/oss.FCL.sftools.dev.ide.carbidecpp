@@ -66,7 +66,6 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	private Map<String, String> connectionNames;
 
 	public ClientServiceSiteUI2(IService service) {
-		Check.checkArg(service);
 		this.service = service;
 	}
 	
@@ -297,11 +296,15 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 
 	private void getCompatibleConnectionTypes() {
 		compatibleConnectionTypes = new HashSet<IConnectionType>();
-		Collection<String> compatibleTypeIds =
-			Registry.instance().getCompatibleConnectionTypeIds(service);
-		for (String typeId : compatibleTypeIds) {
-			compatibleConnectionTypes.add(
-					Registry.instance().getConnectionType(typeId));
+		if (service != null) {
+			Collection<String> compatibleTypeIds =
+				Registry.instance().getCompatibleConnectionTypeIds(service);
+			for (String typeId : compatibleTypeIds) {
+				compatibleConnectionTypes.add(
+						Registry.instance().getConnectionType(typeId));
+			}
+		} else {
+			compatibleConnectionTypes.addAll(Registry.instance().getConnectionTypes());
 		}
 	}
 
@@ -317,12 +320,15 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 	public IStatus getSelectionStatus() {
 		String requiredConnectionTypes = getAllowedConnectionTypesString();
 		
+		String serviceName = service != null ? service.getDisplayName() 
+				: Messages.getString("ClientServiceSiteUI2.NoConnectionErrorPlaceholderForNoServiceName"); //$NON-NLS-1$
+		
 		// no selection yet...?
 		if (connection == null) {
 			return new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID,
 					MessageFormat.format(
 							Messages.getString("ClientServiceSiteUI2.NoConnectionError"), //$NON-NLS-1$
-							service.getDisplayName(),
+							serviceName,
 							requiredConnectionTypes));
 		}
 		
@@ -333,26 +339,28 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 				return new Status(IStatus.ERROR, RemoteConnectionsActivator.PLUGIN_ID,
 						MessageFormat.format(
 							Messages.getString("ClientServiceSiteUI2.NoCurrentConnection"), //$NON-NLS-1$
-							service.getDisplayName(),
+							serviceName,
 							requiredConnectionTypes));
 			}
 			
-			// is the service supported?
-			boolean found = false;
-			for (IConnectedService aService : Registry.instance().getConnectedServices(actual)) {
-				if (service.getIdentifier().equals(aService.getService().getIdentifier())) {
-					found = true;
-					break;
+			if (service != null) {
+				// is the service supported?
+				boolean found = false;
+				for (IConnectedService aService : Registry.instance().getConnectedServices(actual)) {
+					if (service.getIdentifier().equals(aService.getService().getIdentifier())) {
+						found = true;
+						break;
+					}
 				}
-			}
-			if (!found) {
-				return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
-						MessageFormat.format(
-								Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionService") //$NON-NLS-1$
-								+ "\n"  //$NON-NLS-1$
-								+ Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionFixupAdvice"), //$NON-NLS-1$
-								actual.getDisplayName(),
-								service.getDisplayName()));
+				if (!found) {
+					return new Status(IStatus.WARNING, RemoteConnectionsActivator.PLUGIN_ID,
+							MessageFormat.format(
+									Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionService") //$NON-NLS-1$
+									+ "\n"  //$NON-NLS-1$
+									+ Messages.getString("ClientServiceSiteUI2.IncompatibleCurrentConnectionFixupAdvice"), //$NON-NLS-1$
+									actual.getDisplayName(),
+									serviceName));
+				}
 			}
 			
 			// is the hardware type supported by the service?
