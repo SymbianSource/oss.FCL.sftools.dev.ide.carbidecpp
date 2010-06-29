@@ -301,7 +301,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (listeners == null)
 			return;
 		for (IConnectionsManagerListener listener : listeners) {
-			listener.connectionStoreChanged();
+			try {
+				listener.connectionStoreChanged();
+			} catch (Throwable t) {
+				RemoteConnectionsActivator.logError(t);	
+			}
 		}
 	}
 
@@ -451,7 +455,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (listeners == null)
 			return;
 		for (IConnectionsManagerListener listener : listeners) {
-			listener.displayChanged();
+			try {
+				listener.displayChanged();
+			} catch (Throwable t) {
+				RemoteConnectionsActivator.logError(t);	
+			}
 		}
 	}
 	
@@ -494,7 +502,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
-			listener.connectionAdded(connection);
+			try {
+				listener.connectionAdded(connection);
+			} catch (Throwable t) {
+				RemoteConnectionsActivator.logError(t);	
+			}
 		}
 	}
 	
@@ -502,7 +514,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
-			listener.connectionRemoved(connection);
+			try {
+				listener.connectionRemoved(connection);
+			} catch (Throwable t) {
+				RemoteConnectionsActivator.logError(t);	
+			}
 		}
 	}
 	
@@ -510,7 +526,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (connectionListeners == null)
 			return;
 		for (IConnectionListener listener : connectionListeners) {
-			listener.currentConnectionSet(connection);
+			try {
+				listener.currentConnectionSet(connection);
+			} catch (Throwable t) {
+				RemoteConnectionsActivator.logError(t);	
+			}
 		}
 	}
 	
