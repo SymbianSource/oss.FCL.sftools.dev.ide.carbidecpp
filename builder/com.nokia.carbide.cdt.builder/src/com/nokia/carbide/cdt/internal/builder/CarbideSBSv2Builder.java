@@ -534,9 +534,11 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 			args.add("-d"); //$NON-NLS-1$
 		}
 		
+		args.add("-j"); //$NON-NLS-1$
 		if (buildConfig.getCarbideProject().isConcurrentBuildingEnabled()) {
-			args.add("-j"); //$NON-NLS-1$
 			args.add(Integer.toString(cpi.concurrentBuildJobs()));
+		} else {
+			args.add(Integer.toString(1));
 		}
 		
 		if (cpi.shouldOverrideMakeEngine()) {
