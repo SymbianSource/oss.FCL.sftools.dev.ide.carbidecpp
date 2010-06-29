@@ -16,13 +16,13 @@
 .intro-header H1 {
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
-	color: #0A94D6;
+	color: #000000;
 }
 
 #page-links a .link-label, #action-links a .link-label {
 	font-size : 13pt;
 	font-weight : 600;
-	color : #0A94D6;
+	color : #000000;
 }
 #page-links a p .text, #action-links a p .text {
 	font-size : 13pt;
@@ -35,7 +35,8 @@
  */
 
 .page {
-	background-image: none;
+	background-position:left-10 top-10;
+	background-image: background.jpg;
 }
 
 /*

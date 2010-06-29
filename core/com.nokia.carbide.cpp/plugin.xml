@@ -61,7 +61,7 @@
 			value="Migration information available."/>
 		<property
 			name="introDescription-webresources"
-			value="The following web resources provide information and guidance on creating Symbian OS progams using Carbide.c++"/>
+			value="The following web resources provide information and guidance on creating Symbian OS programs using Carbide.c++"/>
 		
 		<!-- Splash screen attributes -->
 		<property 
