@@ -177,11 +177,13 @@ public interface IConnectionsManager {
 	IConnection getCurrentConnection();
 	
 	/**
-	 * Returns the IClientServiceSiteUI2 for a service. Filters connection types to those that
-	 * are supported by the service. Connection list UI as well as new and edit wizards are filtered.
+	 * Returns the IClientServiceSiteUI2 for selecting a connection.  
 	 * Allows selecting a "current" connection which maps to #getCurrentConnection()
-	 * when you use #ensureConenction().
-	 * @param service IService
+	 * when you use #ensureConnection().
+	 * <p>
+	 * Optionally filters connection types to those that are supported by the 
+	 * service. Connection list UI as well as new and edit wizards are filtered.
+	 * @param service IService or <code>null</code>
 	 * @return IClientServiceSiteUI2
 	 * @since 2.5
 	 */
@@ -189,7 +191,7 @@ public interface IConnectionsManager {
 	
 	/**
 	 * Can be called by specific service implementors (e.g., debugger) to ensure some connection
-	 * exists and supports this service. If the connection does not exist or does not support
+	 * exists and optionally supports this service.  If the connection does not exist or does not support
 	 * the service, a CoreException may be thrown after the framework attempts to allow the user
 	 * to correct the situation by showing a connection selection dialog. 
 	 * If an ISelectedConnectionInfo is returned, {@link ISelectedConnectionInfo#getConnection()} 
@@ -197,7 +199,7 @@ public interface IConnectionsManager {
 	 * and {@link ISelectedConnectionInfo#getStorableId()} is the id that can
  	 * be stored by the caller that represents the user's selection.
 	 * @param connectionId String
-	 * @param service IService
+	 * @param service IService or <code>null</code>
 	 * @return ISelectedConnectionInfo
 	 * @throws CoreException
 	 * @since 2.5
