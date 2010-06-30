@@ -20,7 +20,6 @@ package com.nokia.carbide.trk.support.service;
 
 import com.nokia.carbide.remoteconnections.interfaces.*;
 import com.nokia.carbide.trk.support.Messages;
-import com.nokia.carbide.trk.support.connection.TCFUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -48,7 +47,6 @@ public class TracingService implements IService {
 		return Arrays.asList(new String[] {
 				TCPIPConnectionType.ID,
 				USBConnectionType.ID,
-				TCFUSBConnectionType.ID,
 		});
 	}
 

@@ -44,18 +44,5 @@
             class="com.nokia.carbide.trk.support.connection.TCPIPConnectionType">
       </connectionType>
    </extension>
-   
-   <extension
-         point="com.nokia.carbide.remoteConnections.connectionType">
-      <connectionType
-            class="com.nokia.carbide.trk.support.connection.TCFConnectionType">
-      </connectionType>
-   </extension>
-   <extension
-         point="com.nokia.carbide.remoteConnections.connectionType">
-      <connectionType
-            class="com.nokia.carbide.trk.support.connection.TCFUSBConnectionType">
-      </connectionType>
-   </extension>
- 	
+
 </plugin>
