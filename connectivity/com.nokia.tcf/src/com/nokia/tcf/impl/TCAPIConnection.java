@@ -501,9 +501,13 @@ public class TCAPIConnection implements ITCAPIConnection {
 				settings = new String[1];
 			} else {
 				// Add other connections here
+				return new Status(Status.ERROR, Activator.PLUGIN_ID, (int)TCErrorConstants.TCAPI_ERR_MEDIA_NOT_SUPPORTED, 
+						"Unknown connection type: " + type, null); 
 			}
+			return finishConnect(type, settings, inConnection, inMessageOptions, inMessageIds);
+		} else {
+			return status;
 		}
-		return finishConnect(type, settings, inConnection, inMessageOptions, inMessageIds);
 	}
 	protected void ensureWritableFile(String filePath) throws IOException {
 		// ensure file path points to a writable regular file
