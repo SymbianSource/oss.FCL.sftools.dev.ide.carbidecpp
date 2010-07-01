@@ -18,19 +18,26 @@
 
 package com.nokia.carbide.trk.support.connection;
 
-import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.trk.support.Messages;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
+import com.nokia.carbide.trk.support.Messages;
 
 /**
  * Implementation of IConnectionFactory for serial connections
@@ -122,7 +129,8 @@ public class SerialConnectionFactory implements IConnectionFactory {
 		for (String key : map.keySet()) {
 			ComboViewer viewer = viewers.get(key);
 			if (viewer != null) {
-				viewer.setSelection(new StructuredSelection(settings.getSettings().get(key)));
+				String element = map.get(key);
+				viewer.setSelection(element != null ? new StructuredSelection(element) : StructuredSelection.EMPTY);
 			}
 		}
 	}
