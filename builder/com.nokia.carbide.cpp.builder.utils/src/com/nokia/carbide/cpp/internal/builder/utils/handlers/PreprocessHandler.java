@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -80,6 +82,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
@@ -427,9 +430,10 @@ public class PreprocessHandler extends AbstractHandler {
 		} else {
 			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 			// platform macros
-			for (String platMacro : sbsv2BuildInfo.getPlatformMacros(buildConfig.getPlatformString())) {
-				macros.add("__" + platMacro + "__"); //$NON-NLS-1$ //$NON-NLS-2$
-			}
+			for (Iterator<String> it = sbsv2BuildInfo.getPlatformMacros(buildConfig.getPlatformString()).keySet().iterator(); it.hasNext(); ) { 
+				String platMacro = it.next();
+				macros.add(platMacro);
+			} 
 		}
 		
 		// built in macros

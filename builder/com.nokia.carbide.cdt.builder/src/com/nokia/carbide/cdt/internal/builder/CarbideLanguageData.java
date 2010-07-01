@@ -282,10 +282,7 @@ public class CarbideLanguageData extends CLanguageData {
 		} else {
 			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 			// platform macros
-			for (String platMacro : sbsv2BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString())) {
-				macros.put("__" + platMacro + "__", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			}
-			
+			macros.putAll(sbsv2BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString()));			
 		}
 		
 		// built in macros

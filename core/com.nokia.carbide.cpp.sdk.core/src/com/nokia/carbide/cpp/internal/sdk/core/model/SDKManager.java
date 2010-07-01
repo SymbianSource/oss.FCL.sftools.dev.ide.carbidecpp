@@ -356,27 +356,23 @@ public class SDKManager extends AbstractSDKManager {
 					e.printStackTrace();
 				}
 				
-				if (localSDKList.size() != sdkList.size()){
-					needsRescan = true;
-				} else {
-					for (ISymbianSDK sdk : localSDKList){
-						ISymbianSDK currSDK = getSDK(sdk.getUniqueId(), false);
-						if (currSDK == null){
-							// sdk id has been changed
-							needsRescan = true;
-							break;
-						}
-						// check that the data are the same.
-						// Other than the 'id' attrib, all we really care is whether or not
-						// the EPOCROOT or vendor 'name' has changed.
-						if (!sdk.getEPOCROOT().equalsIgnoreCase(currSDK.getEPOCROOT())){
-							needsRescan = true;
-							break;
-						}
-						if (!sdk.getName().equalsIgnoreCase(currSDK.getName())){
-							needsRescan = true;
-							break;
-						}
+				for (ISymbianSDK sdk : localSDKList){
+					ISymbianSDK currSDK = getSDK(sdk.getUniqueId(), false);
+					if (currSDK == null){
+						// sdk id has been changed
+						needsRescan = true;
+						break;
+					}
+					// check that the data are the same.
+					// Other than the 'id' attrib, all we really care is whether or not
+					// the EPOCROOT or vendor 'name' has changed.
+					if (!sdk.getEPOCROOT().equalsIgnoreCase(currSDK.getEPOCROOT())){
+						needsRescan = true;
+						break;
+					}
+					if (!sdk.getName().equalsIgnoreCase(currSDK.getName())){
+						needsRescan = true;
+						break;
 					}
 				}
 				

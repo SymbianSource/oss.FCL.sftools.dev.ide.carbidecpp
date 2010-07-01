@@ -64,6 +64,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
@@ -160,6 +161,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 	
 	public void scanSDKs() {
+		SBSv2QueryUtils.removeAllCachedQueries();
 		// do the real sdk scanning in a job.
 		if (scanJob.getState() == Job.NONE) {
 			scanJob.schedule();

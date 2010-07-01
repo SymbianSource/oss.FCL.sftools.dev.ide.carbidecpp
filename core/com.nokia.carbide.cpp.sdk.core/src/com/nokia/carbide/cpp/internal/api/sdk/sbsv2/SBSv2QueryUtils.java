@@ -21,12 +21,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -51,69 +53,82 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class SBSv2QueryUtils {
 
+	public static final String QUERY_ALIASES_COMMAND = "--query=aliases";
 	public static final String QUERY_PRODUCTS_COMMAND = "--query=products";
 	public static final String QUERY_CONFIG_COMMAND = "--query=config";
-	public static final String QUERY_COMMAND = "--query=aliases";
-	
-	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException{
-		
-		checkForMinimumRaptorVersion();
-		
-		List<String> argListAliasQuery = new ArrayList<String>();
-		argListAliasQuery.add(QUERY_COMMAND);
-		
-		Properties envVars = EnvironmentReader.getEnvVars();
-		if (sdk != null){
-			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
-		} else {
-			envVars.setProperty("EPOCROOT", "FOOBAR");
+
+	public static final String ALIAS_CACHE_KEY = "alias_cache";
+	public static final String CONFIG_CACHE_KEY = "config_cache";
+	public static final String PRODUCT_CACHE_KEY = "product_cache";
+
+	public static final String BAD_EPOCROOT = "BADEPOCROOT";
+
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+		HashMap<String, String> aliases;
+		Map<String, HashMap<String, String>> aliasesMap = SDKCorePlugin.getCache().getCachedData(ALIAS_CACHE_KEY, Map.class, 0);
+		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
+
+		if (aliasesMap == null) {
+			aliasesMap = new HashMap<String, HashMap<String, String>>();
 		}
-		
-		String queryResult = getSBSQueryOutput(argListAliasQuery, createEnvStringList(envVars));
-		
-		return parseQueryAliasResult(queryResult);
-	}
-	
-	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException{
-		
-		checkForMinimumRaptorVersion();
-		
-		List<String> argListProductQuery = new ArrayList<String>();
-		
-		Properties envVars = EnvironmentReader.getEnvVars();
-		if (sdk != null){
-			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
-		} else {
-			envVars.setProperty("EPOCROOT", "FOOBAR");
-		}
-		
-		argListProductQuery.add(QUERY_PRODUCTS_COMMAND);
-		String queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
-		return parseQueryProductsResults(queryResult);
-	}
-	
-	public static String getConfigQueryXML(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException{
-		
-		checkForMinimumRaptorVersion();
-		
-		List<String> argListConfigQuery = new ArrayList<String>();
-		
-		for (String alias : aliasOrMeaningArray){
-			argListConfigQuery.add(QUERY_CONFIG_COMMAND + "[" + alias + "]");
-		}
-		
-		Properties envVars = null;
-		if (sdk != null){
-			File epocRoot = new File(sdk.getEPOCROOT());
-			if (epocRoot.exists()){
-				envVars = EnvironmentReader.getEnvVars();
-				envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+		else {
+			aliases = aliasesMap.get(key.toString());
+			if (aliases != null && !aliases.containsKey(BAD_EPOCROOT)) {
+				return aliases;
 			}
 		}
-		return getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
+
+		aliases = getAliasesQuery(sdk);
+		aliasesMap.put(key.toString(), aliases);
+		SDKCorePlugin.getCache().putCachedData(ALIAS_CACHE_KEY, (Serializable)aliasesMap, 0);
+		return aliases;
 	}
-	
-	
+
+	@SuppressWarnings("unchecked")
+	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+		List<String> products;
+		Map<String, List<String>> productsMap = SDKCorePlugin.getCache().getCachedData(PRODUCT_CACHE_KEY, Map.class, 0);
+		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
+		
+		if (productsMap == null) {
+			productsMap = new HashMap<String, List<String>>();
+		}
+		else {
+			products = productsMap.get(key.toString());
+			if (products != null && !products.contains(BAD_EPOCROOT)) {
+				return products;
+			}
+		}
+
+		products = getProductsQuery(sdk);
+		productsMap.put(key.toString(), products);
+		SDKCorePlugin.getCache().putCachedData(PRODUCT_CACHE_KEY, (Serializable)productsMap, 0);
+		return products;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static String getConfigQueryXMLforSDK(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException {
+		String configs;
+		Map<String, String> configsMap = SDKCorePlugin.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
+		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
+
+		if (configsMap == null) {
+			configsMap = new HashMap<String, String>();
+		}
+		else {
+			configs = configsMap.get(key.toString());
+			if (configs != null) {
+				return configs;
+			}
+		}
+
+		configs = getConfigurations(sdk, aliasOrMeaningArray);
+		configsMap.put(key.toString(), configs);
+		SDKCorePlugin.getCache().putCachedData(CONFIG_CACHE_KEY, (Serializable)configsMap, 0);
+		return configs;
+	}
+
 	public static HashMap<String, String> queryConfigTargetInfo(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException{
 		
 		checkForMinimumRaptorVersion();
@@ -136,7 +151,7 @@ public class SBSv2QueryUtils {
 		
 		return parseQueryConfigResults(queryResult);
 	}
-	
+
 	private static String[] createEnvStringList(Properties envProps) {
 		
 		if (envProps == null){
@@ -154,7 +169,75 @@ public class SBSv2QueryUtils {
 		}
 		return env;
 	}
-	
+
+	private static HashMap<String, String> getAliasesQuery(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+		
+		checkForMinimumRaptorVersion();
+		if (!isEpocRootValid(sdk)) {
+			HashMap<String, String> result = new HashMap<String, String>();
+			result.put(BAD_EPOCROOT, "");
+			return result;
+		}
+		
+		List<String> argListAliasQuery = new ArrayList<String>();
+		argListAliasQuery.add(QUERY_ALIASES_COMMAND);
+		
+		Properties envVars = EnvironmentReader.getEnvVars();
+		if (sdk != null){
+			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+		} else {
+			envVars.setProperty("EPOCROOT", "FOOBAR");
+		}
+		
+		String queryResult = getSBSQueryOutput(argListAliasQuery, createEnvStringList(envVars));
+		
+		return parseQueryAliasResult(queryResult);
+	}
+
+	private static List<String> getProductsQuery(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+		
+		checkForMinimumRaptorVersion();
+		if (!isEpocRootValid(sdk)) {
+			List<String> result = new ArrayList<String>();
+			result.add(BAD_EPOCROOT);
+			return result;
+		}
+
+		List<String> argListProductQuery = new ArrayList<String>();
+		argListProductQuery.add(QUERY_PRODUCTS_COMMAND);
+		
+		Properties envVars = EnvironmentReader.getEnvVars();
+		if (sdk != null){
+			envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+		} else {
+			envVars.setProperty("EPOCROOT", "FOOBAR");
+		}
+		
+		String queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
+		return parseQueryProductsResults(queryResult);
+	}
+
+	private static String getConfigurations(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException {
+		
+		checkForMinimumRaptorVersion();
+		
+		List<String> argListConfigQuery = new ArrayList<String>();
+		for (String alias : aliasOrMeaningArray){
+			argListConfigQuery.add(QUERY_CONFIG_COMMAND + "[" + alias + "]");
+		}
+		
+		Properties envVars = null;
+		if (sdk != null){
+			File epocRoot = new File(sdk.getEPOCROOT());
+			if (epocRoot.exists()){
+				envVars = EnvironmentReader.getEnvVars();
+				envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
+			}
+		}
+
+		return getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
+	}
+
 	private static String getSBSQueryOutput(List<String> queryCommandList, String[] env) {
 		String overallOutput = "";
 		
@@ -210,7 +293,18 @@ public class SBSv2QueryUtils {
 
 		return overallOutput;
 	}
-	
+
+	private static Boolean isEpocRootValid(ISymbianSDK sdk) {
+		IPath epocRoot = new Path(sdk.getEPOCROOT());
+		epocRoot = epocRoot.append("epoc32");
+		File epocRootFile = epocRoot.toFile();
+		if (epocRootFile.exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	private static HashMap<String, String> parseQueryAliasResult(String queryResult) {
 		/* Alias to dotted name config */
 		HashMap<String, String> sbsAliasMap = new HashMap<String, String>();
@@ -278,7 +372,7 @@ public class SBSv2QueryUtils {
 		
 		return sbsAliasMap;
 	}
-	
+
 	private static List<String> parseQueryProductsResults(String queryResult) {
 		List<String> productList = new ArrayList<String>();
 		
@@ -323,11 +417,14 @@ public class SBSv2QueryUtils {
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 		
 		// iterate all SDKs and build the map up
-		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
-			if (sdk.isEnabled() && (new File(sdk.getEPOCROOT()).exists())){
+		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
+			if (sdk.isEnabled() && isEpocRootValid(sdk)) {
 				HashMap<String, String> aliasMap = getAliasesForSDK(sdk);
-				for (String alias : aliasMap.keySet()){
-					if (resultMap.get(alias) == null){
+				for (String alias : aliasMap.keySet()) {
+					if (alias.equals(BAD_EPOCROOT)) {
+						continue;
+					}
+					if (resultMap.get(alias) == null) {
 						resultMap.put(alias, aliasMap.get(alias));
 					}
 				}
@@ -336,16 +433,19 @@ public class SBSv2QueryUtils {
 		
 		return resultMap;
 	}
-	
+
 	public static List<String> getCompleteProductVariantList() throws SBSv2MinimumVersionException {
 		List<String> resultList = new ArrayList<String>();
 		
 		// iterate all SDKs and build the map up
-		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
-			if (sdk.isEnabled() && (new File(sdk.getEPOCROOT()).exists())){
+		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
+			if (sdk.isEnabled() && isEpocRootValid(sdk)) {
 				List<String> productList = getProductVariantsForSDK(sdk);
-				for (String variant : productList){
-					if (!resultList.contains(variant)){
+				for (String variant : productList) {
+					if (variant.equals(BAD_EPOCROOT)) {
+						continue;
+					}
+					if (!resultList.contains(variant)) {
 						resultList.add(variant);
 					}
 				}
@@ -354,5 +454,23 @@ public class SBSv2QueryUtils {
 		
 		return resultList;
 	}
-	
+
+	public static void removeAllCachedQueries() {
+		removeCachedAliases();
+		removeCachedProducts();
+		removeCachedConfigurations();
+	}
+
+	public static void removeCachedAliases() {
+		SDKCorePlugin.getCache().removeCache(ALIAS_CACHE_KEY);
+	}
+
+	public static void removeCachedProducts() {
+		SDKCorePlugin.getCache().removeCache(PRODUCT_CACHE_KEY);		
+	}
+
+	public static void removeCachedConfigurations() {
+		SDKCorePlugin.getCache().removeCache(CONFIG_CACHE_KEY);
+	}
+
 }

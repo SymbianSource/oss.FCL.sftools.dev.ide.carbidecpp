@@ -14,6 +14,7 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
 
@@ -34,9 +35,9 @@ public interface ISBSv2BuildInfo extends ISDKBuildInfo {
 	 * These are the macros that can be used in MMP and INF files. They are only given by name (no value)
 	 * </p>
 	 * @param platform the platform name
-	 * @return a list of macros, which may be empty.
+	 * @return a map of macros and values, which may be empty.
 	 */
-	List<String> getPlatformMacros(String platform);
+	Map<String, String> getPlatformMacros(String platform);
 
 	/**
 	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg

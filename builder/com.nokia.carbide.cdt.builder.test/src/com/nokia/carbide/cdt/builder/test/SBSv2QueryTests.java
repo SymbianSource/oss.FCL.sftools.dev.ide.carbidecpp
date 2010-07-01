@@ -18,8 +18,6 @@
 package com.nokia.carbide.cdt.builder.test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.osgi.framework.Version;
@@ -77,10 +75,10 @@ public class SBSv2QueryTests extends BaseTest {
 			ISBSv2BuildContext sbsv2Context = (ISBSv2BuildContext)context;
 			
 			assertTrue(sbsv2Context.getVariantHRHDefines().size() > 0);
-			if (sbsv2Context.getConfigurationErrorMessage() == null || sbsv2Context.getConfigurationErrorMessage().length() == 0){
-				assertTrue((new File(sbsv2Context.getmetaDataVariantHRH())).exists());
+			if (sbsv2Context.getConfigQueryData().getConfigurationErrorMessage() == null || sbsv2Context.getConfigQueryData().getConfigurationErrorMessage().length() == 0){
+				assertTrue((new File(sbsv2Context.getConfigQueryData().getMetaDataVariantHRH())).exists());
 			} else {
-				System.out.println("Config " + sbsv2Context.getSBSv2Alias() + " had error, cannot fully test: " + sbsv2Context.getConfigurationErrorMessage());
+				System.out.println("Config " + sbsv2Context.getSBSv2Alias() + " had error, cannot fully test: " + sbsv2Context.getConfigQueryData().getConfigurationErrorMessage());
 			}
 		}
 	}

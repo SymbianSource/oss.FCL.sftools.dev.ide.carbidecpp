@@ -1,17 +1,20 @@
 package com.nokia.carbide.cpp.sdk.core.test;
 
 import java.io.File;
+import java.util.Map;
+
+import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
-
-import junit.framework.TestCase;
 
 public class TestCarbideSDKCache extends TestCase {
 
@@ -90,6 +93,24 @@ public class TestCarbideSDKCache extends TestCase {
 		waitASecond();
 		manager.removeSDK(sdkId);
 		assertTrue(manager.getCacheFile().lastModified() > orgTime);
+	}
+
+	public void testSBSv2QueryCache() throws Exception {
+		SBSv2QueryUtils.removeAllCachedQueries();
+		assertNull(SDKCorePlugin.getCache().getCache(SBSv2QueryUtils.ALIAS_CACHE_KEY));
+		assertNull(SDKCorePlugin.getCache().getCache(SBSv2QueryUtils.PRODUCT_CACHE_KEY));
+		assertNull(SDKCorePlugin.getCache().getCache(SBSv2QueryUtils.CONFIG_CACHE_KEY));
+		final TestSDKManager manager = new TestSDKManager();
+		manager.scanSDKs();
+		manager.getScanJob().join();
+		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.ALIAS_CACHE_KEY, Map.class, 0));
+		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.PRODUCT_CACHE_KEY, Map.class, 0));
+		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.CONFIG_CACHE_KEY, Map.class, 0));
+		SDKCorePlugin.getCache().flushAll();
+		SBSv2QueryUtils.removeAllCachedQueries();
+		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.ALIAS_CACHE_KEY, Map.class, 0));
+		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.PRODUCT_CACHE_KEY, Map.class, 0));
+		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.CONFIG_CACHE_KEY, Map.class, 0));
 	}
 
 	private void waitASecond() {

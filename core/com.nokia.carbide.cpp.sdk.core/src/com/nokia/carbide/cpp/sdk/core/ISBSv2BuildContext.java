@@ -1,6 +1,5 @@
 package com.nokia.carbide.cpp.sdk.core;
 
-import java.util.List;
 
 public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	
@@ -29,9 +28,5 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	 */
 	public String getDefaultDefFileDirectoryName();
 	
-	public String getConfigurationErrorMessage();
-	
-	public List<String> getMetaDataMacros();
-	
-	public String getmetaDataVariantHRH();
+	public ISBSv2ConfigQueryData getConfigQueryData();
 }

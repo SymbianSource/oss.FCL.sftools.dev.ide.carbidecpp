@@ -75,8 +75,9 @@ public class BuildTargetTreeNode extends TreeNode {
 					String newDisplayString = context.getDisplayString().replace("[" + sdkId + "]", "");
 					if (context instanceof ISBSv2BuildContext){
 						ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
-						if (v2Context.getConfigurationErrorMessage() != null && v2Context.getConfigurationErrorMessage().length() > 0){
-							newDisplayString += " ERROR: " + v2Context.getConfigurationErrorMessage();
+						if (v2Context.getConfigQueryData().getConfigurationErrorMessage() != null && 
+							v2Context.getConfigQueryData().getConfigurationErrorMessage().length() > 0){
+							newDisplayString += " ERROR: " + v2Context.getConfigQueryData().getConfigurationErrorMessage();
 						}
 					} 
 					return newDisplayString;

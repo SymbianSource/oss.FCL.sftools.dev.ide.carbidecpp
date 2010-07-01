@@ -28,9 +28,11 @@ import org.eclipse.ui.PlatformUI;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -46,7 +48,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	private ISymbianSDK sdk;
 	private List<ISymbianBuildContext> sbsv2FilteredConetxts = new ArrayList<ISymbianBuildContext>();
 	private boolean wasScanned = false;
-	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
+	private Map<String, Map<String, String>> cachedPlatformMacros = new HashMap<String, Map<String, String>>();
 
 	private Map<String, String> aliasToMeaningMap = new HashMap<String, String>();
 	private List<String> productList = null;
@@ -145,7 +147,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		
 		String configQueryXML = "";
 		try {
-			configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk, newContextsToQuery);
+			configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, newContextsToQuery);
 		} catch (SBSv2MinimumVersionException e) {
 			// ignore, previous exception would have caught the error
 		}
@@ -154,7 +156,8 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			if (aliasToMeaningMap.get(alias) == null){
 				continue; // This alias is not valid with this SDK, ignore
 			}
-			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, aliasToMeaningMap.get(alias), configQueryXML);
+			ISBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(aliasToMeaningMap.get(alias), configQueryXML);
+			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
 			sbsv2FilteredConetxts.add(sbsv2Context);
 		}
 		
@@ -186,21 +189,20 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			}
 		}
 		
-		String configQueryXML = SBSv2QueryUtils.getConfigQueryXML(sdk,
-				filteredAliasList);
+		String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, filteredAliasList);
 
 		for (String alias : filteredAliasList) {
 			String meaning = "";
 			if (alias.contains(".")){
 				meaning = getMeaningForVariant(alias);
-				if (meaning == null){
-					continue; // TODO: How to handle this scenaio
-				}
 			} else {
 				meaning = aliasToMeaningMap.get(alias);
 			}
-			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias,
-					meaning, configQueryXML);
+			if (meaning == null){
+				continue; // TODO: How to handle this scenario
+			}
+			ISBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(meaning, configQueryXML);
+			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
 			sbsv2FilteredConetxts.add(sbsv2Context);
 		}
 	}
@@ -220,10 +222,10 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		return meaning;
 	}
 
-	public List<String> getPlatformMacros(String platform) {
-		List<String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
+	public Map<String, String> getPlatformMacros(String platform) {
+		Map<String, String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
 		if (platformMacros == null) {
-			platformMacros = new ArrayList<String>();
+			platformMacros = new HashMap<String, String>();
 			synchronized (cachedPlatformMacros) {
 				if (sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) {
 					getFilteredBuildConfigurations();
@@ -231,12 +233,8 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				if (sbsv2FilteredConetxts.size() > 0) {
 					for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
 						if (context.getPlatformString().equalsIgnoreCase(platform)) {
-							List<String> macros = ((ISBSv2BuildContext)context).getMetaDataMacros();
-							for (String macro : macros) {
-								if (!platformMacros.contains(macro)) {
-									platformMacros.add(macro);
-								}
-							}
+							platformMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getBuildMacros());
+							platformMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getMetaDataMacros());
 						}
 					}
 					cachedPlatformMacros.put(platform.toUpperCase(), platformMacros);
@@ -257,7 +255,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			}
 			if (sbsv2FilteredConetxts.size() > 0) {
 				for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
-					String vStr = ((ISBSv2BuildContext)context).getmetaDataVariantHRH();
+					String vStr = ((ISBSv2BuildContext)context).getConfigQueryData().getMetaDataVariantHRH();
 					if (vStr != null) {
 						cachedVariantHRHFile = new Path(vStr);
 						break;

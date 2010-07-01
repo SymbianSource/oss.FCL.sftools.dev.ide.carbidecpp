@@ -209,9 +209,12 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 				macros.add(DefineFactory.createDefine("SBSV2", null));
 				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 				if (sbsv2BuildInfo != null) {
-					for (String platMacro : sbsv2BuildInfo.getPlatformMacros(context.getPlatformString())) {
-						macros.add(DefineFactory.createDefine(platMacro.trim(), platMacro.trim()));
-					}
+					Map<String, String> platMacros = sbsv2BuildInfo.getPlatformMacros(context.getPlatformString());
+					for (Iterator<String> it = platMacros.keySet().iterator(); it.hasNext(); ) { 
+						String name = it.next();
+						String value = platMacros.get(name);
+						macros.add(DefineFactory.createDefine(name, value));
+					} 
 				}
 			} else {
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
