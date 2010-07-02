@@ -18,6 +18,10 @@ import org.eclipse.debug.ui.ILaunchShortcut2;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -68,32 +72,36 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 
 	public void launch(ISelection selection, String mode) {
 
-		// launch an existing config if one exists
-		ILaunchConfiguration[] configs = getLaunchConfigurations(selection);
-		if (configs != null && configs.length > 0) {
-			// find all the ones that support the mode and shortcut (#11013)
-			List<ILaunchConfiguration> matches = new ArrayList<ILaunchConfiguration>();
-			for (int i = 0; i < configs.length; i++) {
-				ILaunchConfiguration config = configs[i];
-				try {
-					if (config.supportsMode(mode) && isSupportedConfiguration(config)) {
-						matches.add(config);
+		// if user holds down SHIFT, do not use existing launch (bug 11279)
+		if (!isShiftKeyPressed()) {
+			
+			// launch an existing config if one exists
+			ILaunchConfiguration[] configs = getLaunchConfigurations(selection);
+			if (configs != null && configs.length > 0) {
+				// find all the ones that support the mode and shortcut (#11013)
+				List<ILaunchConfiguration> matches = new ArrayList<ILaunchConfiguration>();
+				for (int i = 0; i < configs.length; i++) {
+					ILaunchConfiguration config = configs[i];
+					try {
+						if (config.supportsMode(mode) && isSupportedConfiguration(config)) {
+							matches.add(config);
+						}
+					} catch (CoreException e) {
+						e.printStackTrace();
 					}
-				} catch (CoreException e) {
-					e.printStackTrace();
 				}
-			}
-			// if only one matches, just launch
-			if (matches.size() > 0) {
-				if (matches.size() == 1 || WorkbenchUtils.isJUnitRunning()) {
-					DebugUITools.launch(matches.get(0), mode);
-				} else {
-					// else, ask the user
-					ILaunchConfiguration selected = chooseConfiguration(matches, mode);
-					if (selected != null)
-						DebugUITools.launch(selected, mode);
+				// if only one matches, just launch
+				if (matches.size() > 0) {
+					if (matches.size() == 1 || WorkbenchUtils.isJUnitRunning()) {
+						DebugUITools.launch(matches.get(0), mode);
+					} else {
+						// else, ask the user
+						ILaunchConfiguration selected = chooseConfiguration(matches, mode);
+						if (selected != null)
+							DebugUITools.launch(selected, mode);
+					}
+					return;
 				}
-				return;
 			}
 		}
 		
@@ -139,6 +147,44 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 		}
 	}
 	
+	/**
+	 * Tell whether a shift key is pressed or released in a 1/4 second period.
+	 * @return
+	 */
+	private boolean isShiftKeyPressed() {
+		final boolean[] pressed = { false };
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				final boolean[] event = { false };
+				Listener listener = new Listener() {
+					@Override
+					public void handleEvent(Event arg0) {
+						if ((arg0.stateMask & SWT.SHIFT) != 0 || arg0.keyCode == SWT.SHIFT)
+							pressed[0] = true;
+						event[0] = true;
+					}
+				};
+				Display display = Display.getDefault();
+				display.addFilter(SWT.KeyDown, listener);
+				display.addFilter(SWT.KeyUp, listener);
+				display.addFilter(SWT.MouseMove, listener);	// mouse move carries keyboard state
+
+				try {
+					long end = System.currentTimeMillis() + 250;
+					while (System.currentTimeMillis() < end && !pressed[0] && !event[0]) {
+						if (!display.readAndDispatch())
+							display.sleep();
+					}
+				} finally {
+					display.removeFilter(SWT.MouseMove, listener);
+					display.removeListener(SWT.KeyDown, listener);
+					display.removeListener(SWT.KeyUp, listener);
+				}
+			}
+		});
+		return pressed[0];
+	}
+
 	/**
 	 * Show a selection dialog that allows the user to choose one of the specified
 	 * launch configurations.  Return the chosen config, or <code>null</code> if the
