@@ -222,20 +222,19 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 	}
 	
 	private boolean getExePathsFromProjectAndDetermineIfX86(IProject project, List<IPath> exePaths) {
+		// changed logic to allow paths for executables for !isExecutable(path) for non-x86
+		// this allows new plug-and-play wizard to create attach configs for imported dlls (see bug 11444)
 		boolean isX86 = false;
         ICProject cProject = CoreModel.getDefault().create(project);
         if (cProject != null) {
 			try {
     			for (IBinary bin : cProject.getBinaryContainer().getBinaries()) {
-    				if (bin.isExecutable()) {
-    					IPath path = bin.getResource().getLocation();
-    					
-    					if (isEmulatorBinaryPath(path)) {
-							isX86 = true;
-						}
+					IPath path = bin.getResource().getLocation();
+					
+					isX86 = isX86 || isEmulatorBinaryPath(path); // only check once
 
+    				if (!isX86 || bin.isExecutable())
     					exePaths.add(path);
-    				}
     			}
 			} catch (CModelException e) {
 				log(e);

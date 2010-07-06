@@ -76,7 +76,7 @@ public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 		}
 		
 		if (data.getExeSelection().equals(EExeSelection.ATTACH_TO_PROCESS)) {
-			data.setInstallPackage(true);
+			data.setInstallPackage(false);
 		} else {
 			Boolean detectedSysTrk = data.isSysTRKConnection(); // TRUE, FALSE, or null
 			boolean isSysTrk = detectedSysTrk == Boolean.TRUE || (detectedSysTrk == null && data.isInternalLayout());
