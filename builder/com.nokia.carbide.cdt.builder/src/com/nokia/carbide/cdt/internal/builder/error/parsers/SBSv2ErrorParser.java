@@ -16,10 +16,16 @@
 */
 package com.nokia.carbide.cdt.internal.builder.error.parsers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.cdt.core.ErrorParserManager;
 import org.eclipse.cdt.core.IMarkerGenerator;
+import org.eclipse.core.runtime.Path;
 
 public class SBSv2ErrorParser extends CarbideBaseErrorParser {
+
+	private final Pattern msgPattern = Pattern.compile("(.*):(\\d*):(\\d*):(.*)"); //$NON-NLS-1$
 
 	public SBSv2ErrorParser() {
 	}
@@ -57,7 +63,7 @@ public class SBSv2ErrorParser extends CarbideBaseErrorParser {
 			
 			String text = line.substring(descStart, descEnd);
 			if (setFirstColon(text)) {
-				if (setFileNameAndLineNumber(text)) {
+				if (setFileNameAndLineNumber(text) || setSBSv2FileNameAndLineNumber(text)) {
 					setFile(errorParserManager);
 					setDescription(text);
 					errorParserManager.generateExternalMarker(msgIFile, msgLineNumber, msgDescription, severity, null, externalFilePath);
@@ -80,4 +86,21 @@ public class SBSv2ErrorParser extends CarbideBaseErrorParser {
 		}
 	}
 
+	protected boolean setSBSv2FileNameAndLineNumber(String line) {
+		// Get the first Substring, which must be in the form of
+		// "fileName:line number:postion"
+		String firstSubstr = line.substring(msgFirstColon + 1).trim();
+		if (firstSubstr != null) {
+			Matcher matcher = msgPattern.matcher(firstSubstr);
+			if (matcher.matches()) {
+				msgFileName = matcher.group(1);
+				if (!Path.EMPTY.isValidPath(msgFileName)) {
+					return false;
+				}
+				msgLineNumber = Integer.parseInt(matcher.group(2));
+				return true;
+			}
+		}
+		return false;
+	}
 }

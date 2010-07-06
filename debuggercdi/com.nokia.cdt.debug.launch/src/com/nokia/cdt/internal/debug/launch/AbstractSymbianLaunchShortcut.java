@@ -157,7 +157,6 @@ public abstract class AbstractSymbianLaunchShortcut implements ILaunchShortcut2 
 			public void run() {
 				final boolean[] event = { false };
 				Listener listener = new Listener() {
-					@Override
 					public void handleEvent(Event arg0) {
 						if ((arg0.stateMask & SWT.SHIFT) != 0 || arg0.keyCode == SWT.SHIFT)
 							pressed[0] = true;
