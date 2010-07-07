@@ -213,12 +213,14 @@ public class MMPView extends ViewASTBase implements IMMPView {
 			try {
 				list.add(EMMPLanguage.fromCode(node.getValue()));
 			} catch (IllegalArgumentException e) {
-				// ignore unknown language
+				// ignore unknown language... completely! (I'm tired of these bug reports)
+				/*
 				EpocEnginePlugin.log(
 						Logging.newStatus(EpocEnginePlugin.getDefault(), 
 								new IllegalArgumentException(
 										"Warning, ignoring unknown language code: " + node.getValue() + " in " + stmt)
 				));
+				*/
 			}
 		}
 		return list;

@@ -489,6 +489,22 @@ public class TestMMPView5 extends BaseMMPViewTest {
 		// ensure the unknown languages don't abort processing
 		assertEquals(3, seen.size());
 	}
+	public void testMissingLanguagesBug10958() {
+		// this has unknown languages
+		String text = 
+			"LANG 01 02 1000 1001 33\n";
+		IMMPView view;
+		makeModel(text);
+		view = getView(mmpConfig);
+		List<EMMPLanguage> languages = view.getLanguages();
+		
+		// add new entries
+		languages.add(EMMPLanguage.Punjabi);
+		
+		// should not remove unknown entries 
+		commitTest(view, "LANG 01 02 1000 1001 33 77\n");
+
+	}
 	
 	public void testUnterminatedCrossDocumentParseBug7886() {
 		String text =
