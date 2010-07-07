@@ -394,6 +394,10 @@
             activityId="org.eclipse.cdt.ui.activityResourceConfigurations"
             pattern="org.eclipse.cdt.ui/org.eclipse.cdt.ui.buildConfigContributionM">
       </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.cdt.ui.activityResourceConfigurations"
+            pattern="Preferences.ContextAction">
+      </activityPatternBinding>
 <!-- Import Executable action -->      
       <activity
             name="CDT - C/C++ Import Executable Wizard"
