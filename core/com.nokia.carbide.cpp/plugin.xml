@@ -90,6 +90,7 @@
       </introProductBinding>
    </extension>
 
+<!--
 <extension   
 	id="intro"
 	point="org.eclipse.ui.intro.config">
@@ -97,25 +98,26 @@
 		introId="com.nokia.carbide.cpp.intro"
 		id="com.nokia.carbide.cpp.introConfig"
 		content="intro/introContent.xml">
-	<presentation
-		home-page-id="root" standby-page-id="standby">
-			<implementation
- 				ws="win32"
-                style="$theme$/html/shared.css"
-				kind="html"
-				os="win32">
-			</implementation>
-			<implementation
-				kind="swt">
-			</implementation>
-			<launchBar
-               	location="fastview" 
-            	bg="$launchbarBackground$"
-            	computed="true" >
-			</launchBar>
-	</presentation>
+		<presentation
+			home-page-id="root" standby-page-id="standby">
+				<implementation
+	 				ws="win32"
+	                style="$theme$/html/shared.css"
+					kind="html"
+					os="win32">
+				</implementation>
+				<implementation
+					kind="swt">
+				</implementation>
+				<launchBar
+	               	location="fastview" 
+	            	bg="$launchbarBackground$"
+	            	computed="true" >
+				</launchBar>
+		</presentation>
 	</config>
 </extension>  
+-->
 
 <!-- =================================================================================== -->
 <!-- Universal intro extensions to show content in welcome pages                         -->
