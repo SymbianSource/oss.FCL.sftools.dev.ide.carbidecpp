@@ -680,9 +680,8 @@ public class SettingsData {
 		if (project != null) {
 			configuration.setMappedResources( new IResource[] { project });
 		    ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
-			if (cpi != null) {
-				configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, cpi.getDefaultBuildConfigName());
-			}
+		    configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, 
+		    		cpi != null ? cpi.getDefaultBuildConfigName() : ""); //$NON-NLS-1$
 		}
 		
 		// set rom log file defaults.  do this for all launch types since it shouldn't hurt
