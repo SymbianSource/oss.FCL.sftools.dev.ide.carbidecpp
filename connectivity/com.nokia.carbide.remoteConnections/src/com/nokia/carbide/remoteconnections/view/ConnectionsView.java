@@ -43,6 +43,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ICellEditorListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -135,6 +136,8 @@ public class ConnectionsView extends ViewPart {
 
 	// handle, do not dispose
 	private Font boldViewerFont;
+	private TextCellEditor nameEditor;
+	private boolean refreshPending;
 
 	private TreeNode[] loadConnections() {
 		if (serviceToListenerMap == null)
@@ -150,7 +153,7 @@ public class ConnectionsView extends ViewPart {
 				IConnectionStatusChangedListener statusChangedListener = 
 					new IConnectionStatusChangedListener() {
 						public void statusChanged(IConnectionStatus status) {
-							handleStatusChanged();
+							refreshViewer();
 						}
 					};
 				IConnection2 connection2 = (IConnection2) connection;
@@ -167,7 +170,7 @@ public class ConnectionsView extends ViewPart {
 				final TreeNode treeNode = new TreeNode(connectedService);
 				IStatusChangedListener statusChangedListener = new IStatusChangedListener() {
 					public void statusChanged(final IStatus status) {
-						handleStatusChanged();
+						refreshViewer();
 					}
 				};
 				connectedService.addStatusChangedListener(statusChangedListener);
@@ -185,23 +188,42 @@ public class ConnectionsView extends ViewPart {
 		return (TreeNode[]) connectionNodes.toArray(new TreeNode[connectionNodes.size()]);
 	}
 
-	private void handleStatusChanged() {
+	private void refreshViewer() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+				if (nameEditor != null && nameEditor.isActivated()) {
+					refreshPending = true;
+					return;
+				}
+				
 				if (!isDisposed && !viewer.getControl().isDisposed()) {
 					viewer.refresh(true);
 					packColumns();
 				}
+				refreshPending = false;
 			}
 		});
 	}
 
 	private class NameEditingSupport extends EditingSupport {
-		private TextCellEditor editor;
 
 		private NameEditingSupport(ColumnViewer viewer) {
 			super(viewer);
-			editor = new TextCellEditor((Composite) viewer.getControl(), SWT.BORDER);
+			nameEditor = new TextCellEditor((Composite) viewer.getControl(), SWT.BORDER);
+			nameEditor.addListener(new ICellEditorListener() {
+				public void editorValueChanged(boolean oldValidState, boolean newValidState) {
+				}
+				
+				public void cancelEditor() {
+					if (refreshPending)
+						refreshViewer();
+				}
+				
+				public void applyEditorValue() {
+					if (refreshPending)
+						refreshViewer();
+				}
+			});
 		}
 		
 		@Override
@@ -214,7 +236,7 @@ public class ConnectionsView extends ViewPart {
 
 		@Override
 		protected CellEditor getCellEditor(Object element) {
-			return editor;
+			return nameEditor;
 		}
 
 		@Override
@@ -227,8 +249,6 @@ public class ConnectionsView extends ViewPart {
 		protected void setValue(Object element, Object value) {
 			IConnection connection = (IConnection) ((TreeNode) element).getValue();
 			connection.setDisplayName(value.toString());
-			//viewer.refresh(true);
-			//packColumns();
 			Registry.instance().updateDisplays();
 			Registry.instance().storeConnections();
 		}
@@ -548,12 +568,7 @@ public class ConnectionsView extends ViewPart {
 			}
 
 			public void displayChanged() {
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						viewer.refresh(true);
-						packColumns();
-					}
-				});
+				refreshViewer();
 			}
 		};
 		Registry.instance().addConnectionStoreChangedListener(connectionStoreChangedListener);
@@ -561,12 +576,7 @@ public class ConnectionsView extends ViewPart {
 		connectionListener = new IConnectionListener() {
 			
 			public void currentConnectionSet(IConnection connection) {
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						viewer.refresh(true);
-						packColumns();
-					}
-				});				
+				refreshViewer();
 			}
 			
 			public void connectionRemoved(IConnection connection) {
