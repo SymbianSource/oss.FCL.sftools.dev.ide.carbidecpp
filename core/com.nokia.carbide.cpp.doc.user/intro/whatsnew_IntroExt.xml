@@ -28,25 +28,6 @@
        		</link>
        	</group>
 
-		<group style-id="content-group" id="carbide-cpp">
-       		<link 
-       		label="Performance Improvements (2.1)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm#new210" 
-       		id="carbide-link" 
-       		style-id="content-link">
-          	<text>Complete Carbide performance improvements are explained under the notes for Carbide.c++ 2.1.</text>
-       		</link>
-       	</group>
-
-		<group style-id="content-group" id="carbide-cpp">
-       		<link 
-       		label="Hover Help (2.0.4)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.sysdoc.hover/resources/help%20context/dl_hover/html/getting_started.html" 
-       		id="carbide-link" 
-       		style-id="content-link">
-          	<text>See Symbian API Reference information appear when you hover over a Symbian symbol in C/C++ editors.</text>
-       		</link>
-       	</group>
 
   	</extensionContent>
 

@@ -1,5 +1,5 @@
 /*	
-	Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+	Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies). 
 	All rights reserved. 
 	License: http://www.eclipse.org/legal/epl-v10.html
 */
@@ -10,7 +10,7 @@ html {
 	}
 
 /* 20091007 added verdana and ariel to list to match SFO website fonts choices */
-body, p, table {
+body, p, table, li {
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
 	font-size: 1.0em;
 	font-weight: normal;
