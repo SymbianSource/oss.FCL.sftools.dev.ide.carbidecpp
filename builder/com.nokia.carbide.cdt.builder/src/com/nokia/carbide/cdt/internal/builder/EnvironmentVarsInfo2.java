@@ -441,8 +441,11 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 	private Map<String, String> stringArrayToMap(String[] array) {
 		Map<String, String> map = new HashMap<String, String>(array.length);
 		for (String var : array) {
-			String[] split = var.split("=");
-			map.put(split[0], split[1]);
+			int idx = var.indexOf('=');
+			if (idx > 0)
+				map.put(var.substring(0, idx), var.substring(idx+1));
+			else if (var.length() > 0)
+				map.put(var, "");
 		}
 		
 		return map;
