@@ -5,16 +5,16 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Watchpoints Overview</title>
-<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Watchpoints Overview </h2>
 <p>  Use <em>watchpoints</em> (sometimes referred to as access breakpoints) to halt program execution when a specific global location is accessed. After you set a watchpoint at a key point in memory, you can halt program execution whenever that point in memory is written to or read from. You can then examine the call chain, check register and variable values, and step through your code. You can also change values and alter the flow of normal program execution.</p>
 <p>A watchpoint must be both enabled and resolved during a debug session in order to halt program execution. The  <a href="../reference/view_breakpoints.htm">Breakpoints view</a> indicates the status of any watchpoint using a set of common icons and checkmark status badge. These include:</p>
 <ul>
-  <li>An <b>enabled</b> watchpoint has a non-gray icon (<img src="../tasks/watchpoints/images/icon_watchpoint_write_resolved.png" width="15" height="16" align="absmiddle" />) indicating that program execution  halts when encountered.</li>
-  <li>A <b>disabled</b> watchpoint displays a gray icon (<img src="../tasks/watchpoints/images/icon_watchpoint_write_disabled.png" width="16" height="16" align="absmiddle" />) indicating that program execution will not stop when encountered. </li>
-  <li>A <b>resolved</b> watchpoint has a small checkmark badge (<img src="../tasks/watchpoints/images/icon_watchpoint_rw_enabled_resolved.png" width="16" height="16" align="absmiddle" /> ) indicating that the debugger has located it in memory during program launch. When resolved, the debugger can halt program execution if the watchpoint is encountered.</li>
+  <li>An <b>enabled</b> watchpoint has a non-gray icon (<img src="../images/icon_watchpoint_write_resolved.png" width="15" height="16" align="absmiddle" />) indicating that program execution  halts when encountered.</li>
+  <li>A <b>disabled</b> watchpoint displays a gray icon (<img src="../images/icon_watchpoint_write_disabled.png" width="16" height="16" align="absmiddle" />) indicating that program execution will not stop when encountered. </li>
+  <li>A <b>resolved</b> watchpoint has a small checkmark badge (<img src="../images/icon_watchpoint_rw_enabled_resolved.png" alt="Read Write resolved" width="16" height="16" align="absmiddle">) indicating that the debugger has located it in memory during program launch. When resolved, the debugger can halt program execution if the watchpoint is encountered.</li>
 </ul>
 <p>In effect, a watchpoint that is enabled by the user and resolved by the debugger during program launch can halt program execution. The table below shows the various states that cause the debugger to halt program execution: </p>
 <h5>Table 1 Watchpoint&mdash;stop execution chart </h5>
@@ -57,39 +57,39 @@
   <tr>
     <td rowspan="2"><b>Write</b></td>
     <td>enabled</td>
-    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_write_resolved.png" width="15" height="16" /></div></td>
+    <td><div align="center"><img src="../images/icon_watchpoint_write_resolved.png" width="15" height="16" /></div></td>
     <td><p>The watchpoint is activated for write access operations on the specific memory location and if resolved, will halt program execution on a write operation at the watchpoint. </p>
     </td>
   </tr>
   <tr>
     <td>disabled</td>
-    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_write_disabled.png" width="16" height="16" /></div></td>
+    <td><div align="center"><img src="../images/icon_watchpoint_write_disabled.png" width="16" height="16" /></div></td>
     <td><p>Watchpoint is disabled for the source line, debugger does not halt program execution on a write operation. </p>
     </td>
   </tr>
   <tr>
     <td rowspan="2"><b>Read</b></td>
     <td>enabled</td>
-    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_read_enabled.png" width="16" height="16" /></div></td>
+    <td><div align="center"><img src="../images/icon_watchpoint_read_enabled.png" width="16" height="16" /></div></td>
     <td><p>The watchpoint is activated for read access operations on the specific memory location and if resolved, will halt program execution on a read operation at the watchpoint. </p>
     </td>
   </tr>
   <tr>
     <td>disabled</td>
-    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_read_disabled.png" width="16" height="16" /></div></td>
+    <td><div align="center"><img src="../images/icon_watchpoint_read_disabled.png" width="16" height="16" /></div></td>
     <td><p>Watchpoint is disabled for the source line, debugger does not halt program execution on a read operation. </p>
     </td>
   </tr>
   <tr>
     <td rowspan="2"><b>Write/Read</b></td>
     <td>enabled</td>
-    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_rw_enabled.png" width="16" height="16" /></div></td>
+    <td><div align="center"><img src="../images/icon_watchpoint_rw_enabled.png" width="16" height="16" /></div></td>
     <td><p>The watchpoint is activated for both read and write access operations on the specific memory location and if resolved, will halt program execution  on any read or write operation at the watchpoint. </p>
     </td>
   </tr>
   <tr>
     <td>disabled</td>
-    <td><div align="center"><img src="../tasks/watchpoints/images/icon_watchpoint_rw_disabled.png" width="16" height="16" /></div></td>
+    <td><div align="center"><img src="../images/icon_watchpoint_rw_disabled.png" width="16" height="16" /></div></td>
     <td><p>Watchpoint is disabled for the source line, debugger does not halt program execution on a read or write operation. </p>
     </td>
   </tr>
