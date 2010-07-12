@@ -167,7 +167,7 @@ public class ExternalFileInfoCache implements Serializable {
 		// update info
 		info.put(file, newInfo);
 		
-		return finfo.isChangedFrom(newInfo);
+		return finfo == null || finfo.isChangedFrom(newInfo);
 	}
 	
 	/**
