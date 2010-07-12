@@ -20,8 +20,12 @@
 	<!-- DEBUG VIEW                                                     -->
 	<context id="debug_view_context" >
 		<description>The Debug view shows the target debugging information in a tree hierarchy.</description>
-		<topic label="Debug view"  						href="html/reference/view_debug.htm" />
-		<topic label="Controlling debugger execution"  	href="html/concepts/working_with_debugger.htm" />
+		<topic label="Debug view"  						href="html/debugger/debug/viewing_debug.htm" />
+		<topic label="Debug Overview"  					href="html/debugger/debug/debug.htm" />
+		<topic label="Starting & Stopping"  			href="html/debugger/debug/cmds_starting.htm" />
+		<topic label="Stepping"  						href="html/debugger/debug/cmds_stepping.htm" />
+		<topic label="Suspending & Resuming"  			href="html/debugger/debug/cmds_resuming.htm" />
+		<topic label="Other Actions"  					href="html/debugger/debug/cmds_other.htm" />
 	</context>
 
 
@@ -29,9 +33,8 @@
 	<!-- VARIABLES VIEW                                                 -->
 	<context id="variable_view_context" >
 		<description>Use the Variables view to manipulate the variables or variable hierarchy used in source code.</description>
-		<topic label="Variables view"             		href="html/reference/view_variables.htm" />
-		<topic label="Show Variables View"		  		href="html/tasks/variables/show_variables_view.htm" />
-		<topic label="Showing Global Variables"	  		href="html/tasks/variables/show_global_variables.htm" />
+		<topic label="Variables view"             		href="html/debugger/variables/viewing_variables.htm" />
+		<topic label="Adding Global Variables"		  	href="html/debugger/variables/adding_variables.htm" />
 	</context>
 
 	
@@ -39,8 +42,10 @@
 	<!-- BREAKPOINTS VIEW                                               -->
 	<context id="breakpoint_view_context"  >
 		<description>Use the Breakpoints view to examine, enable or disable the breakpoints in one or more build configurations.</description>
-		<topic label="Breakpoints view"  					href="html/reference/view_breakpoints.htm" />
-		<topic label="Breakpoints" 				            href="html/concepts/breakpoints.htm" />
+		<topic label="Breakpoints view"  					href="html/debugger/breakpoints/viewing_breakpoints.htm" />
+		<topic label="Breakpoints Overview" 				href="html/concepts/breakpoints.htm" />
+		<topic label="Enabling, Disabling and Removing Breakpoints" 	href="html/debugger/breakpoints/toggling_breakpoints.htm" />
+		<topic label="Breakpoint Status Indicators " 		href="html/debugger/breakpoints/resolving_breakpoints.htm" />
 	</context>
 
 
@@ -48,10 +53,18 @@
 	<!-- EXPRESSIONS VIEW                                               -->
 	<context id="expression_view_context" >
 		<description>Use the Expressions view to monitor and manipulate variables, structures, and arrays.</description>
-		<topic label="Expressions view"  				href="html/reference/view_expressions.htm" />
-		<topic label="Adding Expressions" 				href="html/tasks/expressions/expr_adding.htm" />
-		<topic label="Editing Expressions" 				href="html/tasks/expressions/expr_editding.htm" />
-		<topic label="Removing Expressions" 			href="html/tasks/expressions/expr_removing.htm" />
+		<topic label="Expressions view"  				href="html/debugger/variables/viewing_expressions.htm" />
+		<topic label="Adding Expressions" 				href="html/debugger/variables/adding_expressions.htm" />
+		<topic label="Editing Expressions" 				href="html/debugger/variables/editing_expressions.htm" />
+	</context>
+
+
+	<!-- ============================================================== -->
+	<!-- FIND DIALOG VAR/EXPR VIEW                                      -->
+	<context id="find_element_dialog_context" >
+		<description>Find elements in view.</description>
+		<topic label="Expressions view"  			href="html/debugger/variables/viewing_expressions.htm" />
+		<topic label="Variables view" 				href="html/debugger/variables/viewing_variables.htm" />
 	</context>
 
 
@@ -280,6 +293,7 @@
 	<!-- ============================================================== -->
 	<!-- NEW WIZARD -->
 	<context id="new_wizard_selection_wizard_page_context" >
+		<label>Symbian OS</label>
 		<description>Select the project, class, or file to create.</description>
 		<topic label="New Symbian OS ++ Projects" 				href="html/tasks/CreatingNewProjects.html"/>
 		<topic label="New Symbian OS C++ Classes"				href="html/tasks/projects/prj_adding_symbian_class.htm" />
@@ -290,11 +304,10 @@
 	<!-- ============================================================== -->
 	<!-- IMPORT WIZARD                                                  -->
 	<context id="import_wizard_selection_wizard_page_context" >
+		<label>Importing projects for development or debugging.</label>
 		<description>Select the type of file to import for debugging.</description>
 		<topic label="Importing Projects from a BLD.INF File"	href="html/tasks/ImportingProjects.html"/>
 		<topic label="Importing a Symbian Executable"  			href="html/reference/projects/prj_import_exe.htm" />
-		<topic label="Carbide.c++ Perspective" 					href="html/concepts/SymbianPerspective.html" />
-		<topic label="C/C++ Project and File Properties"		href="html/reference/ProjectPreferences.html" />
 	</context>
 
     <context id="import_wizard_context">
@@ -306,8 +319,8 @@
 	<!-- ============================================================== -->
 	<!-- EXPORT WIZARD                                                  -->
 	<context id="export_wizard_selection_wizard_page_context" >
-		<description>Use the Console view to show the output of a process and provide keyboard input to a process.</description>
-		<topic label="Console view"  			href="html/reference/view_log.htm" />
+		<label>Exporting from Carbide.c++</label>
+		<topic label="Exporting Remote Connections"  		href="html/reference/trk/exporting_remote_conns.htm" />
 	</context>
 
 
