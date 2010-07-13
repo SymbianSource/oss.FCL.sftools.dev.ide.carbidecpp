@@ -18,11 +18,11 @@
     <topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" />
     <topic label="Tour of the UI"				href="html/concepts/tour.html" />
     <topic label="Concepts" 					href="html/concepts/concepts.htm" />
-	<topic label="Application Emulator Example"  				href="html/tasks/start/carbide_example.htm" >
-	  <topic label="1. Creating New Projects" 		        	href="html/tasks/CreatingNewProjects.html" />
-	  <topic label="2. Building Projects and Symbian Components" 	href="html/tasks/projects/prj_build.htm" />
-	  <topic label="3. Creating a Launch Configuration"			href="html/tasks/projects/prj_debug_config.htm" />
-	  <topic label="4. Debugging a Symbian OS Program" 			href="html/tasks/start/carbide_debugging.htm" />
+	<topic label="Creating New Projects tutorial"				href="html/projects/tutorials/new_proj_from_template_00.htm" >
+	  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
+	  <topic label="Building projects and components" 			href="html/projects/tutorials/new_proj_from_template_02.htm" />
+	  <topic label="Defining a launch configuration"			href="html/projects/tutorials/new_proj_from_template_03.htm" />
+	  <topic label="Launching and debugging an executable" 		href="html/projects/tutorials/new_proj_from_template_04.htm" />
 	</topic>
   </topic>
   <topic label="Carbide Menus " 					href="html/reference/menus/menus.htm" >
