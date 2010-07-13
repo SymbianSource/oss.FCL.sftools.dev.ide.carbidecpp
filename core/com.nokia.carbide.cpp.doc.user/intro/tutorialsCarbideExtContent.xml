@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+DLL<?xml version="1.0" encoding="UTF-8" ?>
 
 <introContent>
 
@@ -12,11 +12,11 @@
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
 		
 			<link 
-				label="Create an application emulator debug example" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_example.htm"  
+				label="Creating New Symbian OS Projects" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_from_template_00.htm" 
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how to create, build, and debug a program for the emulator called HelloCarbide using Carbide project templates.</text>
+				<text>Learn how to create, build, and debug programs on the emulator using Carbide project templates.</text>
 			</link>
 			
 			<link 

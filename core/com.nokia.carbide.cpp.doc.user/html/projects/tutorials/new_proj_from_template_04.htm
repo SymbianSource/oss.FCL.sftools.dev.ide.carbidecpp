@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Launching and debugging an executable </title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2><strong>Launching and debugging an executable </strong></h2>
+<p>In this example we show how to create a new project using one of the built-in Carbide templates, how to build it into an executable, and how to launch the debugger to verify program accuracy. The steps to do this include:</p>
+<ol>
+    <li><a href="new_proj_from_template_01.htm">Creating</a> a project from a project template</li>
+    <li><a href="new_proj_from_template_02.htm">Building</a> an executable based on the project sources</li>
+    <li><a href="new_proj_from_template_03.htm">Defining</a> a launch configuration for running or debugging the application</li>
+    <li><strong>Launching and debugging an executable using the Carbide debugger</strong></li>
+</ol>
+<hr>
+<p>&nbsp;</p>
+<p class="note"><b>NOTE</b> You can only debug compiled programs. Use the <a href="../projects/prj_build.htm">Build Project</a> command to compile project sources into a binary file if you do not already have an executable in the project. A symbolics (<span class="code">.sym</span>) file is also required for debugging on a target device. Ensure that a <span class="code">.sym</span> file has been created. If you are importing an existing application, you may have to rebuild the application and create a related <span class="code">.sym</span> file. Make sure a <span class="code">.sym</span> file has been created in the output directory.</p>
+<div class="step">
+    <h4><strong></strong>Launching and debugging an executable</h4>
+    <ol>
+        <li>Select the project to debug in the Project Explorer view.<br />
+        	<p>For this example you should choose the HelloWorld project created in <a href="new_proj_from_template_01.htm">Step 1</a> of this tutorial.</p>
+        </li>
+        <li>Set a breakpoint in the project.<br>
+       		<p>Open the <span class="code">\src\HelloWorldAppUi.cpp</span> file and <a href="../../debugger/breakpoints/toggling_breakpoints.htm">set</a> a breakpoint in the <span class="code">HandleCommandL</span> routine on Line 103.</p>
+            <p><img src="../images/debugging_project_02.png" alt="Setting a breakpoint" width="577" height="192"></p>
+        </li>
+        <li>Launch the debug session.<br />
+            <p>To run the project on the chosen target and start a debug session use one of the following actions. Clicking Debug is the most common choice as it enables you to assume control of the executable should you encounter a problem.</p>
+            <ul>
+                <li>Right-click the project and choose Debug As &gt; Debug Symbian OS Application on Emulator.</li>
+                <li>Click the Run &gt; Debug (<span class="code">F11</span>) menu item.</li>
+                <li>Click the Debug (<img src="../images/icon_debug.png" alt="Debug icon" width="17" height="17" align="absmiddle">) icon in the toolbar.</li>
+            </ul>
+            <p>The emulator is launched and the <a href="../../reference/perspective_debug.htm">Debug</a> perspective appears to manage the debug session.</p>
+        </li>
+        <li>Click the Options soft-menu and select any menu option to hit the breakpoint set in Step 2. <br />
+        	<p><img src="../images/debugging_project_04.png" alt="Select menu option" width="360" height="397"></p>
+        	<p>Which returns control to the <strong>Debug</strong> perspective in Carbide. Use the various views to examine the program as it runs. Examine variables, set more breakpoints, etc.</p>
+        	<p><img src="../images/debugging_project_05.png" alt="Select menu option" width="749" height="626"></p>
+        </li>
+        <li>Use any of the step commands in the Debug view to step through the program source code.<br />
+       	    <ul>
+       	        <li>Click Step Into (<span class="code">F5</span>) to execute the current line and enter a function or method.</li>
+       	        <li>Click Step Over (<span class="code">F6</span>) to execute the current line.</li>
+       	        <li>Click Step Return (<span class="code">F7</span>) to execute lines until exiting the function or method.</li>
+   	        </ul>
+        </li>
+        <li>Click the Resume icon in the Debug view to return control to the program.</li>
+        <li>Click the Exit soft-key in the emulator to exit the debug session.<br />
+        	<p>The HelloWorld program stops, the emulator exits, and control returns to Carbide.</p>
+        </li>
+    </ol>
+</div>
+<p>That's it. Congratulations on creating, building, and debugging a Carbide project.</p>
+<h4>Other references</h4>
+<ul>
+    
+    <li><a href="./">Creating New Projects Tutorial</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>
