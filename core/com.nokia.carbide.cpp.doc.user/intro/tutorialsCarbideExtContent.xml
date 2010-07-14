@@ -20,11 +20,11 @@ DLL<?xml version="1.0" encoding="UTF-8" ?>
 			</link>
 			
 			<link 
-				label="Create a simple DLL example" 
+				label="Creating and Debugging DLL Projects" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/concepts/SampleExampleProjectCreate.html"  
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how to create a simple “Test1” DLL project.</text>
+				<text>Learn how to create and debug DLL projects.</text>
 			</link>
 			
 			<link 

@@ -24,6 +24,11 @@
 	  <topic label="Defining a launch configuration"			href="html/projects/tutorials/new_proj_from_template_03.htm" />
 	  <topic label="Launching and debugging an executable" 		href="html/projects/tutorials/new_proj_from_template_04.htm" />
 	</topic>
+	<topic label="Creating and Debugging DLL Projects Tutorial"	href="html/projects/tutorials/new_proj_dll_example_00.htm" >
+	  <topic label="Creating DLL Projects" 						href="html/projects/tutorials/new_proj_dll_example_01.htm" />
+	  <topic label="Building the DLL Project" 					href="html/projects/tutorials/new_proj_dll_example_02.htm" />
+	  <topic label="Debugging a DLL Project"					href="html/projects/tutorials/new_proj_dll_example_03.htm" />
+	</topic>
   </topic>
   <topic label="Carbide Menus " 					href="html/reference/menus/menus.htm" >
     <topic label="ABLD Actions" 				href="html/reference/menus/abld.htm" />
