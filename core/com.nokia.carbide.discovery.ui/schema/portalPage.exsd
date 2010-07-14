@@ -59,6 +59,13 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="rank" type="string">
+            <annotation>
+               <documentation>
+                  relative ordering of pages in the navigation bar (1-100)
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

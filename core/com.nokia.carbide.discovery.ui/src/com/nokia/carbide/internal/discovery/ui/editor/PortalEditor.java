@@ -16,7 +16,10 @@
 */
 package com.nokia.carbide.internal.discovery.ui.editor;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,7 @@ import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionBar;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class PortalEditor extends EditorPart {
@@ -68,21 +72,43 @@ public class PortalEditor extends EditorPart {
 
 	public PortalEditor() {
 		resources = new ArrayList<Resource>();
-		getPortalPages();
+		loadPortalPages();
 		pageToControlMap = new HashMap<IPortalPage, Control>();
 	}
 	
-	private void getPortalPages() {
-		uninitializedPages = new ArrayList<IPortalPage>();
+	private void loadPortalPages() {
+		List<Pair<IPortalPage, Integer>> pageExtensions = new ArrayList<Pair<IPortalPage,Integer>>();
 		IConfigurationElement[] elements = 
 			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPage"); //$NON-NLS-1$
 		for (IConfigurationElement element : elements) {
 			try {
-				uninitializedPages.add((IPortalPage) element.createExecutableExtension("class")); //$NON-NLS-1$
+				IPortalPage portalPage = (IPortalPage) element.createExecutableExtension("class"); //$NON-NLS-1$
+				String rankString = element.getAttribute("rank"); //$NON-NLS-1$
+				int rank = Integer.MAX_VALUE;
+				if (rankString != null) {
+					try {
+						rank = Integer.parseInt(rankString);
+					}
+					catch (NumberFormatException e) {
+						Activator.logError(MessageFormat.format("Could not get rank for portal page {0}",
+										portalPage.getClass().getName()), e);
+					}
+				}
+				pageExtensions.add(new Pair<IPortalPage, Integer>(portalPage, rank));
 			} 
 			catch (CoreException e) {
 				Activator.logError(Messages.PortalEditor_PageLoadError, e);
 			}
+		}
+		Collections.sort(pageExtensions, new Comparator<Pair<IPortalPage, Integer>>() {
+			@Override
+			public int compare(Pair<IPortalPage, Integer> o1, Pair<IPortalPage, Integer> o2) {
+				return o1.second.compareTo(o2.second);
+			}
+		});
+		uninitializedPages = new ArrayList<IPortalPage>();
+		for (Pair<IPortalPage, Integer> pair : pageExtensions) {
+			uninitializedPages.add(pair.first);
 		}
 	}
 

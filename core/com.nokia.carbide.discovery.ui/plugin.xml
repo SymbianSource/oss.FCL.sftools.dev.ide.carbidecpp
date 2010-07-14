@@ -48,19 +48,22 @@
  <extension
        point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.HomePage">
+          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPage"
+          rank="50">
     </portalPage>
  </extension>
  <extension
        point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPage">
+          class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
+          rank="1">
     </portalPage>
  </extension>
  <extension
        point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.SupportPage">
+          class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
+          rank="100">
     </portalPage>
  </extension>
 
