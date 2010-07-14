@@ -33,7 +33,7 @@ public interface IPortalPage {
 	public interface IActionBar {
 		
 		/**
-		 * Optional title for the action bar
+		 * Required title for the action bar
 		 * @return String
 		 */
 		String getTitle();

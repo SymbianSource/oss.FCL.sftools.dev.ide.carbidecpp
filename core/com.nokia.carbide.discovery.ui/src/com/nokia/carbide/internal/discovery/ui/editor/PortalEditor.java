@@ -47,6 +47,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionBar;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -74,13 +75,13 @@ public class PortalEditor extends EditorPart {
 	private void getPortalPages() {
 		uninitializedPages = new ArrayList<IPortalPage>();
 		IConfigurationElement[] elements = 
-			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPage");
+			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPage"); //$NON-NLS-1$
 		for (IConfigurationElement element : elements) {
 			try {
 				uninitializedPages.add((IPortalPage) element.createExecutableExtension("class")); //$NON-NLS-1$
 			} 
 			catch (CoreException e) {
-				Activator.logError("Could not load portal page", e);
+				Activator.logError(Messages.PortalEditor_PageLoadError, e);
 			}
 		}
 	}
@@ -121,7 +122,7 @@ public class PortalEditor extends EditorPart {
 		// create background
 		backgroundParent = new Composite(parent, SWT.NONE);
 		applyBG(backgroundParent);
-		backgroundParent.setLayout(GridLayoutFactory.fillDefaults().create());
+		GridLayoutFactory.fillDefaults().applyTo(backgroundParent);
 		// create top naviation bar
 		navigationBar = createNavigationBar(backgroundParent);
 		// create stack composite
@@ -135,36 +136,35 @@ public class PortalEditor extends EditorPart {
 			Control control = createPage(page);
 			pageToControlMap.put(page, control);
 		}
-		stackComposite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(stackComposite);
 	}
 
 	private Control createPage(IPortalPage page) {
 		Composite pageComposite = new SharedBackgroundComposite(stackComposite, backgroundParent);
-		pageComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).spacing(20, 0)
-				.extendedMargins(20, 20, 20, 0).create());
+		GridLayoutFactory.fillDefaults().numColumns(2).spacing(20, 0).extendedMargins(20, 20, 20, 0).applyTo(pageComposite);
 		ActionUIUpdater updater = new ActionUIUpdater();
 		IActionBar[] commandBars = page.createCommandBars(this, updater);
 		if (commandBars.length > 0) {
 			Composite taskComposite = new SharedBackgroundComposite(pageComposite, backgroundParent);
-			taskComposite.setLayout(GridLayoutFactory.fillDefaults().create());
-			taskComposite.setLayoutData(GridDataFactory.fillDefaults().grab(false, true).create());
+			GridLayoutFactory.fillDefaults().applyTo(taskComposite);
+			GridDataFactory.fillDefaults().grab(false, true).applyTo(taskComposite);
 			for (IActionBar actionBar : commandBars) {
 				Control control = createTaskBarControl(taskComposite, actionBar, updater);
-				control.setLayoutData(GridDataFactory.fillDefaults().indent(0, 0).create());
+				GridDataFactory.fillDefaults().indent(0, 0).applyTo(control);
 			}
 		}
 		Composite pageControl = new RoundedCornerComposite(pageComposite, backgroundParent, 
 				null, pageComposite.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		pageControl.setLayout(GridLayoutFactory.fillDefaults().margins(2, 2).create());
-		pageControl.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+		GridLayoutFactory.fillDefaults().margins(2, 2).applyTo(pageControl);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(pageControl);
 		Control control = page.createControl(pageControl, this);
-		control.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
 		return pageComposite;
 	}
 
 	private Control createTaskBarControl(Composite clientArea, IActionBar actionBar, ActionUIUpdater updater) {
 		TaskBar taskBar = new TaskBar(clientArea, this, actionBar);
-		updater.setTaskBar(taskBar);
+		updater.addTaskBar(taskBar);
 		return taskBar;
 	}
 
@@ -213,7 +213,7 @@ public class PortalEditor extends EditorPart {
 		try {
 			WorkbenchUtils.openEditor(getInput(), ID);
 		} catch (PartInitException e) {
-			Activator.logError("Could not open portal", e);
+			Activator.logError(Messages.PortalEditor_PageOpenError, e);
 		}
 	}
 
@@ -238,7 +238,7 @@ public class PortalEditor extends EditorPart {
 				
 				@Override
 				public String getName() {
-					return "Carbide.c++ Portal";
+					return Messages.PortalEditor_Name;
 				}
 				
 				@Override
@@ -265,7 +265,6 @@ public class PortalEditor extends EditorPart {
 	
 	Font createFont(String name, int height, int style) {
 		Font font = new Font(Display.getCurrent(), name, height, style);
-		
 		resources.add(font);
 		return font;
 	}

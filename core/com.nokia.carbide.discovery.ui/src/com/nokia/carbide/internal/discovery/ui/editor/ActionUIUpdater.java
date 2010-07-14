@@ -16,26 +16,35 @@
 */
 package com.nokia.carbide.internal.discovery.ui.editor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionUIUpdater;
 
 class ActionUIUpdater implements IActionUIUpdater {
 	
-	private TaskBar taskBar;
+	private List<TaskBar> taskBars;
+	
+	public ActionUIUpdater() {
+		taskBars = new ArrayList<TaskBar>();
+	}
 
-	void setTaskBar(TaskBar taskBar) {
-		this.taskBar = taskBar;
+	void addTaskBar(TaskBar taskBar) {
+		taskBars.add(taskBar);
 	}
 	
 	@Override
 	public void update(String actionId) {
-		if (taskBar != null)
+		for (TaskBar taskBar : taskBars) {
 			taskBar.updateActionUI(actionId);
+		}
 	}
 
 	@Override
 	public void updateAll() {
-		if (taskBar != null)
+		for (TaskBar taskBar : taskBars) {
 			taskBar.updateAllActionsUI();
+		}
 	}
 
 }

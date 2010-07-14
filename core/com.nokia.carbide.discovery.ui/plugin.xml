@@ -15,12 +15,13 @@
             default="false"
             icon="icons/Carbide_c_icon_16x16.png"
             id="com.nokia.carbide.discovery.ui.portalEditor"
-            name="Carbide.c++ Portal">
+            name="%menu.title">
       </editor>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
+            description="%portal.desc"
             id="com.nokia.carbide.discovery.commands.launch"
             name="%menu.title">
       </command>

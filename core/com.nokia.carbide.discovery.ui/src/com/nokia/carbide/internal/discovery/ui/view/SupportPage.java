@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage;
 
 public class SupportPage implements IPortalPage {
@@ -16,12 +17,12 @@ public class SupportPage implements IPortalPage {
 
 	@Override
 	public String getText() {
-		return "Carbide Support";
+		return Messages.SupportPage_Title;
 	}
 
 	@Override
 	public ImageDescriptor getImageDescriptor() {
-		return Activator.getImageDescriptor("icons/Carbide_c_icon_16x16.png");
+		return Activator.getImageDescriptor("icons/Carbide_c_icon_16x16.png"); //$NON-NLS-1$
 	}
 
 	@Override

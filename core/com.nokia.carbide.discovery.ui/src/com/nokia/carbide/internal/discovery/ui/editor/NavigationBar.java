@@ -34,6 +34,7 @@ import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage;
 
 class NavigationBar extends RoundedCornerComposite {
 
+	private static final String FONT_NAME = "Arial"; //$NON-NLS-1$
 	private PortalEditor portalEditor;
 
 
@@ -56,12 +57,11 @@ class NavigationBar extends RoundedCornerComposite {
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		this.portalEditor = portalEditor;
 		buttonToPageMap = new LinkedHashMap<Button, IPortalPage>();
-		setLayoutData(GridDataFactory.swtDefaults().grab(true, false)
-				.align(SWT.CENTER, SWT.TOP).indent(10, 10).create());
-		setLayout(RowLayoutFactory.swtDefaults().margins(3, 3).pack(false).wrap(false).create());
+		GridDataFactory.swtDefaults().grab(true, false).align(SWT.CENTER, SWT.TOP).indent(10, 10).applyTo(this);
+		RowLayoutFactory.swtDefaults().margins(3, 3).pack(false).wrap(false).applyTo(this);
 		listener = new ButtonListener();
-		buttonFont = this.portalEditor.createFont("Arial", 12, SWT.NORMAL);
-		selectedButtonFont = this.portalEditor.createFont("Arial", 12, SWT.BOLD);
+		buttonFont = this.portalEditor.createFont(FONT_NAME, 12, SWT.NORMAL);
+		selectedButtonFont = this.portalEditor.createFont(FONT_NAME, 12, SWT.BOLD);
 	}
 
 	public void initUI() {
@@ -76,7 +76,7 @@ class NavigationBar extends RoundedCornerComposite {
 		b.setText(page.getText());
 		b.setImage(this.portalEditor.createImage(page.getImageDescriptor()));
 		b.addSelectionListener(listener);
-		b.setLayoutData(RowDataFactory.swtDefaults().hint(200, SWT.DEFAULT).create());
+		RowDataFactory.swtDefaults().hint(200, SWT.DEFAULT).applyTo(b);
 		buttonToPageMap.put(b, page);
 	}
 

@@ -13,6 +13,15 @@ public class Messages extends NLS {
 	public static String DiscoveryView_RefreshLabel;
 	public static String DiscoveryView_StatusLineFmt;
 	public static String DiscoveryView_UncheckAllLabel;
+	public static String HomePage_Title;
+	public static String InstallExtensionsPage_ActionBarTitle;
+	public static String InstallExtensionsPage_BuzillaActionName;
+	public static String InstallExtensionsPage_LinkBarTitle;
+	public static String InstallExtensionsPage_Title;
+	public static String PortalEditor_Name;
+	public static String PortalEditor_PageLoadError;
+	public static String PortalEditor_PageOpenError;
+	public static String SupportPage_Title;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

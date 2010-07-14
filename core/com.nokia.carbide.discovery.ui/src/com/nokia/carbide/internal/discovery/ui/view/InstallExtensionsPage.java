@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -49,8 +50,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
+import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
@@ -85,7 +88,7 @@ public class InstallExtensionsPage implements IPortalPage {
 		
 		@Override
 		public String getTitle() {
-			return "Install Extensions";
+			return Messages.InstallExtensionsPage_ActionBarTitle;
 		}
 
 		@Override
@@ -93,12 +96,35 @@ public class InstallExtensionsPage implements IPortalPage {
 			return actions;
 		}
 	}
+	
+	private final class LinkBar implements IActionBar {
+		@Override
+		public String getTitle() {
+			return Messages.InstallExtensionsPage_LinkBarTitle;
+		}
+
+		@Override
+		public IAction[] getActions() {
+			IAction action = new Action(Messages.InstallExtensionsPage_BuzillaActionName) {
+				@Override
+				public void run() {
+					try {
+						URL url = new URL("https://xdabug001.ext.nokia.com/bugzilla"); //$NON-NLS-1$
+						IWorkbenchBrowserSupport browserSupport = PlatformUI.getWorkbench().getBrowserSupport();
+						browserSupport.createBrowser(null).openURL(url);
+					} catch (MalformedURLException e) {
+					} catch (PartInitException e) {
+					}
+				}
+			};
+			return new IAction[] { action };
+		}
+	}
 
 	private static final String DIRECTORY_KEY = "com.nokia.carbide.discovery.directory"; //$NON-NLS-1$
 
 	private CatalogViewer viewer;
 	private List<ISelectionChangedListener> selectionListeners;
-	private IActionBar actionBar;
 	private IActionUIUpdater updater;
 
 	public InstallExtensionsPage() {
@@ -106,7 +132,7 @@ public class InstallExtensionsPage implements IPortalPage {
 
 	@Override
 	public String getText() {
-		return "Install Extensions";
+		return Messages.InstallExtensionsPage_Title;
 	}
 
 	@Override
@@ -149,8 +175,7 @@ public class InstallExtensionsPage implements IPortalPage {
 	@Override
 	public IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater) {
 		this.updater = updater;
-		actionBar = new ActionBar(part);
-		return new IActionBar[] { actionBar };
+		return new IActionBar[] { new ActionBar(part), new LinkBar() };
 	}
 
 	private CatalogConfiguration getConfiguration() {
@@ -229,7 +254,7 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !getAllItemsSelection().equals(selection);
 			}
 		};
-		action.setId(getClass().getName() + ".checkAll");
+		action.setId(getClass().getName() + ".checkAll"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
 		
@@ -244,7 +269,7 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !selection.isEmpty();
 			};
 		};
-		action.setId(getClass().getName() + ".uncheckAll");
+		action.setId(getClass().getName() + ".uncheckAll"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
 
@@ -260,7 +285,7 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !selection.isEmpty();
 			};
 		};
-		action.setId(getClass().getName() + ".install");
+		action.setId(getClass().getName() + ".install"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
 

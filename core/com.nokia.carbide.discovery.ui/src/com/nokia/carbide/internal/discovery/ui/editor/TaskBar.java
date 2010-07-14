@@ -35,6 +35,8 @@ import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionBar;
 
 class TaskBar extends RoundedCornerComposite {
 
+	private static final String FONT_NAME = "Arial"; //$NON-NLS-1$
+
 	private final class ActionListener implements IHyperlinkListener {
 		@Override
 		public void linkActivated(HyperlinkEvent e) {
@@ -66,21 +68,18 @@ class TaskBar extends RoundedCornerComposite {
 		this.portalEditor = portalEditor;
 		createTitle(actionBar);
 		createActions(actionBar);
-		setLayoutData(GridDataFactory.swtDefaults().grab(true, true).align(SWT.CENTER, SWT.BEGINNING).create());
-		setLayout(RowLayoutFactory.swtDefaults().type(SWT.VERTICAL).margins(10, 10).extendedMargins(5, 5, 5, 10).fill(true).wrap(false).create());
+		GridDataFactory.swtDefaults().grab(true, true).align(SWT.CENTER, SWT.BEGINNING).applyTo(this);
+		RowLayoutFactory.swtDefaults().type(SWT.VERTICAL).margins(10, 10).extendedMargins(5, 5, 5, 10).fill(true).wrap(false).applyTo(this);
 	}
 
 	private void createTitle(IActionBar actionBar) {
-		String title = actionBar.getTitle();
-		if (title != null) {
-			Label l = new Label(this, SWT.LEFT);
-			l.setFont(portalEditor.createFont("Arial", 10, SWT.BOLD));
-			l.setBackground(l.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-			l.setText(title);
-			l.setLayoutData(RowDataFactory.swtDefaults().create());
-			l = new Label(this, SWT.HORIZONTAL | SWT.SEPARATOR);
-			l.setLayoutData(RowDataFactory.swtDefaults().create());
-		}
+		Label l = new Label(this, SWT.LEFT);
+		l.setFont(portalEditor.createFont(FONT_NAME, 10, SWT.BOLD));
+		l.setBackground(l.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		l.setText(actionBar.getTitle());
+		RowDataFactory.swtDefaults().applyTo(l);
+		l = new Label(this, SWT.HORIZONTAL | SWT.SEPARATOR);
+		RowDataFactory.swtDefaults().applyTo(l);
 	}
 
 	private void createActions(IActionBar actionBar) {
