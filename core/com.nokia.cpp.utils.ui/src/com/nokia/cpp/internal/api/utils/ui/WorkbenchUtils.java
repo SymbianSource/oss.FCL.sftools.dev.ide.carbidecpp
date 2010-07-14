@@ -195,6 +195,48 @@ public abstract class WorkbenchUtils {
 	}
 
 	/**
+	 * Open and provide an editor with the given input and id.
+	 * @param input
+	 * @param editorId
+	 * @return IEditorPart
+	 * @throws PartInitException
+	 */
+	public static IEditorPart openEditor(final IEditorInput input, final String editorId) throws PartInitException {		
+		final IEditorPart[] parts = { null } ;
+		final PartInitException ex[] = { null };
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				IWorkbench workbench = PlatformUI.getWorkbench();
+				IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+				if (workbenchWindow == null) {
+					if (workbench.getWorkbenchWindowCount() == 0)
+						return;
+					workbenchWindow = workbench.getWorkbenchWindows()[0];
+				}
+				IWorkbenchPage page = workbenchWindow.getActivePage();
+				if (page == null) {
+					if (workbenchWindow.getPages().length == 0)
+						return;
+					page = workbenchWindow.getPages()[0];
+				}
+				IEditorPart editor;
+				try {
+					editor = page.openEditor(input, editorId);
+				} catch (PartInitException e) {
+					ex[0] = e;
+					return;
+				}
+				parts[0] = editor;				
+			}
+			
+		});
+		if (ex[0] != null)
+			throw ex[0];
+		return parts[0];
+	}
+
+	/**
 	 * Open an external browser and go to the given URL.
 	 * Note this function must be called in UI thread.
 	 * 
