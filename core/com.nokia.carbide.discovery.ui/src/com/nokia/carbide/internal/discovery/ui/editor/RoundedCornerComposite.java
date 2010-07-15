@@ -36,11 +36,11 @@ class RoundedCornerComposite extends SharedBackgroundComposite {
 		super.drawBackground(gc, x, y, width, height);
 		if (background != null) {
 			gc.setBackground(background);
-			gc.fillRoundRectangle(0, 0, width, height, 5, 5);
+			gc.fillRoundRectangle(0, 0, width, height, 6, 6);
 		}
 		if (outline != null) {
 			gc.setForeground(outline);
-			gc.drawRoundRectangle(2, 2, width - 4, height - 4, 5, 5);
+			gc.drawRoundRectangle(2, 2, width - 4, height - 4, 6, 6);
 		}
 	}
 }

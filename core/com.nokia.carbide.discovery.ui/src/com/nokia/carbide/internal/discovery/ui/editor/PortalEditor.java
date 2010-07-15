@@ -30,11 +30,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.widgets.Composite;
@@ -219,7 +221,7 @@ public class PortalEditor extends EditorPart {
 				Image newImage = new Image(composite.getDisplay(), rect.width, rect.height);
 				GC gc = new GC(newImage);
 				gc.setForeground(composite.getDisplay().getSystemColor(SWT.COLOR_BLACK));
-				gc.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_GRAY));
+				gc.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 				gc.fillGradientRectangle(0, 0, rect.width, rect.height, true);
 				gc.dispose();
 				composite.setBackgroundImage(newImage);
@@ -282,15 +284,21 @@ public class PortalEditor extends EditorPart {
 		return input;
 	}
 	
-	Image createImage(ImageDescriptor desc) {
-//		Image image = new Image(Display.getCurrent(), desc.getImageData().scaledTo(16, 16));
-		Image image = desc.createImage();
+	Image createImage(ImageDescriptor desc, int width, int height) {
+		Image image;
+		ImageData data = desc.getImageData();
+		if (data.width != width || data.height != height) {
+			image = new Image(Display.getCurrent(), desc.getImageData().scaledTo(width, height));
+		}
+		else {
+			image = desc.createImage();
+		}
 		resources.add(image);
 		return image;
 	}
 	
-	Font createFont(String name, int height, int style) {
-		Font font = new Font(Display.getCurrent(), name, height, style);
+	Font createFont(FontDescriptor desc) {
+		Font font = desc.createFont(Display.getCurrent());
 		resources.add(font);
 		return font;
 	}

@@ -22,11 +22,14 @@ import java.util.Map;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
+import org.eclipse.jface.resource.FontDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
@@ -34,7 +37,6 @@ import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage;
 
 class NavigationBar extends RoundedCornerComposite {
 
-	private static final String FONT_NAME = "Arial"; //$NON-NLS-1$
 	private PortalEditor portalEditor;
 
 
@@ -58,10 +60,15 @@ class NavigationBar extends RoundedCornerComposite {
 		this.portalEditor = portalEditor;
 		buttonToPageMap = new LinkedHashMap<Button, IPortalPage>();
 		GridDataFactory.swtDefaults().grab(true, false).align(SWT.CENTER, SWT.TOP).indent(10, 10).applyTo(this);
-		RowLayoutFactory.swtDefaults().margins(3, 3).pack(false).wrap(false).applyTo(this);
+		RowLayoutFactory.swtDefaults().margins(3, 3).wrap(false).applyTo(this);
 		listener = new ButtonListener();
-		buttonFont = this.portalEditor.createFont(FONT_NAME, 12, SWT.NORMAL);
-		selectedButtonFont = this.portalEditor.createFont(FONT_NAME, 12, SWT.BOLD);
+		selectedButtonFont = JFaceResources.getHeaderFont();
+		FontData[] fontData = selectedButtonFont.getFontData();
+		for (FontData fd : fontData) {
+			fd.setStyle(SWT.NORMAL);
+		}
+		FontDescriptor desc = FontDescriptor.createFrom(fontData);
+		buttonFont = portalEditor.createFont(desc);
 	}
 
 	public void initUI() {
@@ -74,9 +81,9 @@ class NavigationBar extends RoundedCornerComposite {
 		Button b = new Button(bar, SWT.TOGGLE | SWT.FLAT);
 		b.setFont(buttonFont);
 		b.setText(page.getText());
-		b.setImage(this.portalEditor.createImage(page.getImageDescriptor()));
+		b.setImage(portalEditor.createImage(page.getImageDescriptor(), 16, 16));
 		b.addSelectionListener(listener);
-		RowDataFactory.swtDefaults().hint(200, SWT.DEFAULT).applyTo(b);
+		RowDataFactory.swtDefaults().applyTo(b);
 		buttonToPageMap.put(b, page);
 	}
 
@@ -87,7 +94,14 @@ class NavigationBar extends RoundedCornerComposite {
 			other.setFont(buttonFont);
 		}
 		button.setSelection(true);
-		this.portalEditor.showPage(buttonToPageMap.get(button));
+		portalEditor.showPage(buttonToPageMap.get(button));
 		button.setFont(selectedButtonFont);
+		layout();
+	}
+	
+	@Override
+	public void layout() {
+		super.layout();
+		pack();
 	}
 }

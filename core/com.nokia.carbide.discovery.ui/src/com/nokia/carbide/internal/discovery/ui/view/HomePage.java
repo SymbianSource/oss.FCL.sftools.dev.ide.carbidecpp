@@ -28,7 +28,7 @@ public class HomePage implements IPortalPage {
 	@Override
 	public Control createControl(Composite parent, IEditorPart part) {
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+		composite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		return composite;
 	}
 

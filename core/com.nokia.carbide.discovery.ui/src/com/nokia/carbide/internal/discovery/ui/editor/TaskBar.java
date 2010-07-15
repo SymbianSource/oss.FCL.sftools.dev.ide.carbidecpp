@@ -24,6 +24,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -34,8 +35,6 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionBar;
 
 class TaskBar extends RoundedCornerComposite {
-
-	private static final String FONT_NAME = "Arial"; //$NON-NLS-1$
 
 	private final class ActionListener implements IHyperlinkListener {
 		@Override
@@ -57,7 +56,6 @@ class TaskBar extends RoundedCornerComposite {
 		}
 	}
 
-	private PortalEditor portalEditor;
 	private Map<Hyperlink, IAction> linkToActionMap;
 	private ActionListener listener;
 
@@ -65,7 +63,6 @@ class TaskBar extends RoundedCornerComposite {
 		super(parent, portalEditor.getBackgroundParent(), 
 				parent.getDisplay().getSystemColor(SWT.COLOR_BLACK),
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		this.portalEditor = portalEditor;
 		createTitle(actionBar);
 		createActions(actionBar);
 		GridDataFactory.swtDefaults().grab(true, true).align(SWT.CENTER, SWT.BEGINNING).applyTo(this);
@@ -74,7 +71,7 @@ class TaskBar extends RoundedCornerComposite {
 
 	private void createTitle(IActionBar actionBar) {
 		Label l = new Label(this, SWT.LEFT);
-		l.setFont(portalEditor.createFont(FONT_NAME, 10, SWT.BOLD));
+		l.setFont(JFaceResources.getBannerFont());
 		l.setBackground(l.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		l.setText(actionBar.getTitle());
 		RowDataFactory.swtDefaults().applyTo(l);
@@ -95,7 +92,6 @@ class TaskBar extends RoundedCornerComposite {
 			linkToActionMap.put(link, action);
 			link.addHyperlinkListener(listener);
 		}
-//		updateAllActionsUI();
 	}
 	
 	public void runAction(Hyperlink link) {

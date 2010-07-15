@@ -57,6 +57,7 @@ class SharedBackgroundComposite extends Canvas {
 		height = Math.min(height, imageBounds.height - y);
 		if (width > 0 && height > 0)
 			gc.drawImage(image, x, y, width, height, 0, 0, width, height);
+//		gc.drawText(getClass().getSimpleName(), 2, 2);
 //		gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
 //		gc.drawRectangle(1, 1, width - 2, height - 2);
 	}
