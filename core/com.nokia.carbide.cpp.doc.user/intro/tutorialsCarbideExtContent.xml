@@ -12,7 +12,7 @@ DLL<?xml version="1.0" encoding="UTF-8" ?>
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
 		
 			<link 
-				label="Creating New Symbian OS Projects" 
+				label="Creating and Debugging Symbian OS Projects" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_from_template_00.htm" 
 				id="carbide-sample" 
 				style-id="content-link">
@@ -21,18 +21,18 @@ DLL<?xml version="1.0" encoding="UTF-8" ?>
 			
 			<link 
 				label="Creating and Debugging DLL Projects" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/concepts/SampleExampleProjectCreate.html"  
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_dll_example_00.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
 				<text>Learn how to create and debug DLL projects.</text>
 			</link>
 			
 			<link 
-				label="Create a run mode debugging application" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"  
+				label="Debugging on Remote Targets (Run-mode)" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/run_mode_debug_example_00.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how create and build an application and debug it on a device using the App TRK on-device debug agent.</text>
+				<text>Learn how debug applications on remote devices using the TRK debug agent.</text>
 			</link>
 
 			<link 
