@@ -12,25 +12,34 @@
        <topic href="html/tasks/debugger/run_mode_debug_04.htm" label="Setting up a virtual drive">
        </topic>
     </topic>
+    <topic label="Tour of the UI"				href="html/concepts/tour.html" />
     <topic label="Carbide Help" 				href="html/tasks/start/carbide_help.htm" />
     <topic label="Supported Target Types"		href="html/concepts/build_targets.htm" />
     <topic label="Supported SDKs" 		    	href="html/sos_references.htm" />
     <topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" />
-    <topic label="Tour of the UI"				href="html/concepts/tour.html" />
     <topic label="Concepts" 					href="html/concepts/concepts.htm" />
-	<topic label="Creating New Projects tutorial"				href="html/projects/tutorials/new_proj_from_template_00.htm" >
-	  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
-	  <topic label="Building projects and components" 			href="html/projects/tutorials/new_proj_from_template_02.htm" />
-	  <topic label="Defining a launch configuration"			href="html/projects/tutorials/new_proj_from_template_03.htm" />
-	  <topic label="Launching and debugging an executable" 		href="html/projects/tutorials/new_proj_from_template_04.htm" />
-	</topic>
-	<topic label="Creating and Debugging DLL Projects Tutorial"	href="html/projects/tutorials/new_proj_dll_example_00.htm" >
-	  <topic label="Creating DLL Projects" 						href="html/projects/tutorials/new_proj_dll_example_01.htm" />
-	  <topic label="Building the DLL Project" 					href="html/projects/tutorials/new_proj_dll_example_02.htm" />
-	  <topic label="Debugging a DLL Project"					href="html/projects/tutorials/new_proj_dll_example_03.htm" />
-	</topic>
   </topic>
-  <topic label="Carbide Menus " 					href="html/reference/menus/menus.htm" >
+   <topic label="Carbide tutorials">
+		<topic label="Creating and Debugging Projects Tutorial"		href="html/projects/tutorials/new_proj_from_template_00.htm" >
+		  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
+		  <topic label="Building projects and components" 			href="html/projects/tutorials/new_proj_from_template_02.htm" />
+		  <topic label="Defining a launch configuration"			href="html/projects/tutorials/new_proj_from_template_03.htm" />
+		  <topic label="Launching and debugging an executable" 		href="html/projects/tutorials/new_proj_from_template_04.htm" />
+		</topic>
+		<topic label="Creating and Debugging DLL Projects"			href="html/projects/tutorials/new_proj_dll_example_00.htm" >
+		  <topic label="Creating DLL Projects" 						href="html/projects/tutorials/new_proj_dll_example_01.htm" />
+		  <topic label="Building the DLL Project" 					href="html/projects/tutorials/new_proj_dll_example_02.htm" />
+		  <topic label="Debugging a DLL Project"					href="html/projects/tutorials/new_proj_dll_example_03.htm" />
+		</topic>
+		<topic label="Debugging on Remote Targets (Run-mode)"		href="html/projects/tutorials/run_mode_debug_example_00.htm" >
+		  <topic label="Verifying system setup" 					href="html/projects/tutorials/run_mode_debug_example_01.htm" />
+		  <topic label="Install remote debug agent" 				href="html/projects/tutorials/run_mode_debug_example_02.htm" />
+		  <topic label="Connect remote device to PC"				href="html/projects/tutorials/run_mode_debug_example_03.htm" />
+		  <topic label="Create or import project"					href="html/projects/tutorials/run_mode_debug_example_04.htm" />
+		  <topic label="Debug on remote device"						href="html/projects/tutorials/run_mode_debug_example_05.htm" />
+		</topic>
+   </topic>
+  <topic label="Carbide menus" 					href="html/reference/menus/menus.htm" >
     <topic label="ABLD Actions" 				href="html/reference/menus/abld.htm" />
     <topic label="Build All Configurations" 	href="html/reference/menus/build_all_targets.htm" />
     <topic label="Build PKG File" 				href="html/reference/menus/build_pkg_file.htm" />
@@ -51,8 +60,9 @@
     <topic label="Toggle HW Breakpoint"         href="html/reference/menus/hardware_breakpoints.htm" />
     <topic label="Update Projects"          	href="html/reference/olderproject_updater.html" />
   </topic>
-  <topic label="Carbide Views "  >
+  <topic label="Carbide views"  >
       <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
+      <topic label="Carbide Portal view"			href="html/reference/view_carbide_portal.htm" />
       <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
       <topic label="Console view" 					href="html/reference/view_log.htm" />
       <topic label="Debug view"						href="html/debugger/debug/viewing_debug.htm" />
