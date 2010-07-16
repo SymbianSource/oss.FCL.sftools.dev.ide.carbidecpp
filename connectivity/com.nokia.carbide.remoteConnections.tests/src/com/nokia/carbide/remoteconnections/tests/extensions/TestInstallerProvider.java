@@ -39,9 +39,9 @@ import java.util.*;
  */
 public class TestInstallerProvider implements IRemoteAgentInstallerProvider {
 	
-	private static final Version S60_32 = new Version("3.2");
-	private static final Version S60_50 = new Version("5.0");
-	private static final Version UIQ_30 = new Version("3.0");
+	private static final String S60_32 = "3.2";
+	private static final String S60_50 = "5.0";
+	private static final String UIQ_30 = "3.0";
 	private static final String S60 = "S60";
 	private static final String UIQ = "UIQ";
 	private static final String INSTALLER_CONTENTS = "This is a mock installer package.";
@@ -55,9 +55,9 @@ public class TestInstallerProvider implements IRemoteAgentInstallerProvider {
 	private static class TestInstaller implements IRemoteAgentInstaller {
 		
 		private final String family;
-		private final Version version;
+		private final String version;
 
-		public TestInstaller(String family, Version version) {
+		public TestInstaller(String family, String version) {
 			this.family = family;
 			this.version = version;
 		}
@@ -66,7 +66,7 @@ public class TestInstallerProvider implements IRemoteAgentInstallerProvider {
 			return family;
 		}
 
-		public Version getVersion() {
+		public String getVersion() {
 			return version;
 		}
 		
@@ -143,18 +143,18 @@ public class TestInstallerProvider implements IRemoteAgentInstallerProvider {
 		return new ArrayList<String>(Arrays.asList(familyNames));
 	}
 	
-	public List<Version> getVersions(String familyName) {
+	public List<String> getVersions(String familyName) {
 		if (familyName.equals(S60)) {
-			Version[] versions = { S60_32, S60_50 };
-			return new ArrayList<Version>(Arrays.asList(versions));
+			String[] versions = { S60_32, S60_50 };
+			return new ArrayList<String>(Arrays.asList(versions));
 		}
 		else if (familyName.equals(UIQ))
 			return Collections.singletonList(UIQ_30);
 		
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 	
-	public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, Version version) {
+	public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, String version) {
 		if (familyName.equals(S60)) {
 			if (version.equals(S60_32))
 				return Collections.singletonList(installers[0]);
@@ -164,7 +164,7 @@ public class TestInstallerProvider implements IRemoteAgentInstallerProvider {
 		else if (familyName.equals(UIQ) && version.equals(UIQ_30))
 			return Collections.singletonList(installers[2]);
 		
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	private static void getMockData(IProgressMonitor monitor) throws InterruptedException {

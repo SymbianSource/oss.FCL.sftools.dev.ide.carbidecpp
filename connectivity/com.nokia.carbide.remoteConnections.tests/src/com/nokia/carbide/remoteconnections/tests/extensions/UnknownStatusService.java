@@ -18,16 +18,22 @@
 
 package com.nokia.carbide.remoteconnections.tests.extensions;
 
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Version;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.*;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IService2;
+import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
 
 @SuppressWarnings("restriction")
 public class UnknownStatusService implements IService2 {
@@ -111,15 +117,15 @@ public class UnknownStatusService implements IService2 {
 				return Collections.singletonList(S60);
 			}
 			
-			public List<Version> getVersions(String familyName) {
+			public List<String> getVersions(String familyName) {
 				if (familyName.equals(S60))
-					return Collections.singletonList(new Version(_5_0));
+					return Collections.singletonList(_5_0);
 				
 				return null;
 			}
 			
-			public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, Version version) {
-				if (familyName.equals(S60) && version.equals(new Version(_5_0))) {
+			public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, String version) {
+				if (familyName.equals(S60) && version.equals(_5_0)) {
 					IRemoteAgentInstaller installer = new IRemoteAgentInstaller() {
 
 						public boolean fileSupportsInstall() {
@@ -183,6 +189,7 @@ public class UnknownStatusService implements IService2 {
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Class adapter) {
 		return null;
 	}

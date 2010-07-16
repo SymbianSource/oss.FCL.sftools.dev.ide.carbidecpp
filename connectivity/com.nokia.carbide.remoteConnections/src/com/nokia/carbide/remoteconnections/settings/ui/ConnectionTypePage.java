@@ -161,7 +161,7 @@ public class ConnectionTypePage extends WizardPage {
 		return getConnectionType().getDescription();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private int getCurrentTypeIndex() {
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 		if (connectionToEdit != null) {

@@ -20,6 +20,8 @@ package com.nokia.carbide.remoteconnections.interfaces;
 
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
+
 /**
  * An interface for a service connected to a remote agent via a connection
  */
@@ -87,6 +89,8 @@ public interface IConnectedService {
 	 * Set the device OS values, to potentially affect the information for the user.
 	 * @param familyName
 	 * @param version
+	 * @deprecated
+	 * @see IConnectedService2#setDeviceOS(String, String)
 	 */
 	void setDeviceOS(String familyName, Version version);
 	

@@ -83,30 +83,31 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.installpackages.InstallPackages;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
-import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.interfaces.IService2;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory.IValidationErrorReporter;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory2.ISettingsChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller.IPackageContents;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.carbide.remoteconnections.interfaces.IService2;
+import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.Check;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
@@ -307,20 +308,20 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 			@SuppressWarnings("unchecked")
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
-				Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
+				Pair<String, String> pair = (Pair<String, String>) selection.getFirstElement();
 				setSelectionToInstallComposite(pair);
-				if (connectedService != null)
-					connectedService.setDeviceOS(pair.first, pair.second);
+				if (connectedService instanceof IConnectedService2)
+					((IConnectedService2) connectedService).setDeviceOS(pair.first, pair.second);
 			}
 		});
 		deviceOSComboViewer.setContentProvider(new ArrayContentProvider());
 		deviceOSComboViewer.setLabelProvider(new LabelProvider() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public String getText(Object element) {
 				Check.checkState(element instanceof Pair);
 				Pair<String, Version> pair = (Pair) element;
-				return MessageFormat.format("{0} {1}", pair.first, InstallPackages.formatSDKVersion(pair.second)); //$NON-NLS-1$
+				return MessageFormat.format("{0} {1}", pair.first, pair.second); //$NON-NLS-1$
 			}
 		});
 		deviceOSComboViewer.getControl().setToolTipText(Messages.getString("ConnectionSettingsPage.DeviceOSComboToolTip")); //$NON-NLS-1$
@@ -446,9 +447,6 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 					String label = ((IRemoteAgentInstaller) value).getLabel();
 					return label == null ? Messages.getString("ConnectionSettingsPage.UnlabeledPackageLabel") : label; //$NON-NLS-1$
 				}
-				if (value instanceof Version)
-					return InstallPackages.formatSDKVersion((Version) value);
-					
 				return value.toString();
 			}
 			
@@ -715,7 +713,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 				}
 				
 				// update sdk combo
-				List<Pair<String, Version>> deviceOSPairs = createDeviceOSPairs();
+				List<Pair<String, String>> deviceOSPairs = createDeviceOSPairs();
 				deviceOSComboViewer.setInput(deviceOSPairs);
 				if (!deviceOSPairs.isEmpty()) {
 					deviceOSComboViewer.getCombo().select(0);
@@ -737,7 +735,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	}
 
-	protected void setSelectionToInstallComposite(Pair<String, Version> pair) {
+	protected void setSelectionToInstallComposite(Pair<String, String> pair) {
 		Object input = installerTreeViewer.getInput();
 		if (input instanceof TreeNode[]) {
 			TreeNode node = findTreeNodeForPair((TreeNode[]) input, pair);
@@ -748,14 +746,14 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private TreeNode findTreeNodeForPair(TreeNode[] treeNodes, Pair<String, Version> pair) {
+	private TreeNode findTreeNodeForPair(TreeNode[] treeNodes, Pair<String, String> pair) {
 		for (TreeNode treeNode : treeNodes) {
 			Object value = treeNode.getValue();
 			if (value instanceof IRemoteAgentInstaller) {
 				TreeNode versionNode = treeNode.getParent();
 				TreeNode familyNode = versionNode.getParent();
-				if (pair.equals(new Pair(familyNode.getValue(), versionNode.getValue())))
+				if (ObjectUtils.equals(pair.first, familyNode.getValue()) && 
+						ObjectUtils.equals(pair.second, versionNode.getValue()))
 					return treeNode;
 			}
 			TreeNode[] children = treeNode.getChildren();
@@ -786,9 +784,10 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 			connectedService = 
 				Registry.instance().createConnectedService(service, connection);
 			IStructuredSelection selection = (IStructuredSelection) deviceOSComboViewer.getSelection();
-			Pair<String, Version> pair = (Pair<String, Version>) selection.getFirstElement();
-			if (pair != null)
-				connectedService.setDeviceOS(pair.first, pair.second);
+			Pair<String, String> pair = (Pair<String, String>) selection.getFirstElement();
+			if (pair != null && connectedService instanceof IConnectedService2) {
+				((IConnectedService2) connectedService).setDeviceOS(pair.first, pair.second);
+			}
 			connectedService.addStatusChangedListener(statusListener = new IStatusChangedListener() {
 				public void statusChanged(final IStatus status) {
 					Display.getDefault().asyncExec(new Runnable() {
@@ -899,12 +898,12 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	private void createFamilySubNodes(TreeNode familyNode, IRemoteAgentInstallerProvider installerProvider) {
 		String familyName = familyNode.getValue().toString();
-		List<Version> versions = installerProvider.getVersions(familyName);
+		List<String> versions = installerProvider.getVersions(familyName);
 		List<TreeNode> childList = new ArrayList<TreeNode>();
 		TreeNode[] children = familyNode.getChildren();
 		if (children != null)
 			childList.addAll(Arrays.asList(children));
-		for (Version version : versions) {
+		for (String version : versions) {
 			TreeNode versionNode = getVersionNode(familyNode, version);
 			if (versionNode == null) {
 				versionNode = new TreeNode(version);
@@ -916,7 +915,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		familyNode.setChildren((TreeNode[]) childList.toArray(new TreeNode[childList.size()]));
 	}
 	
-	private TreeNode getVersionNode(TreeNode familyNode, Version version) {
+	private TreeNode getVersionNode(TreeNode familyNode, String version) {
 		TreeNode[] children = familyNode.getChildren();
 		if (children != null) {
 			for (TreeNode node : children) {
@@ -929,7 +928,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	private void createInstallerNodes(TreeNode versionNode, IRemoteAgentInstallerProvider installerProvider) {
 		String familyName = versionNode.getParent().getValue().toString();
-		Version version = (Version) versionNode.getValue();
+		String version = versionNode.getValue().toString();
 		List<IRemoteAgentInstaller> installers = 
 			installerProvider.getRemoteAgentInstallers(familyName, version);
 		List<TreeNode> childList = new ArrayList<TreeNode>();
@@ -944,14 +943,14 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		versionNode.setChildren((TreeNode[]) childList.toArray(new TreeNode[childList.size()]));
 	}
 	
-	private synchronized List<Pair<String, Version>> createDeviceOSPairs() {
-		List<Pair<String, Version>> deviceOSPairs = new ArrayList<Pair<String, Version>>();
+	private synchronized List<Pair<String, String>> createDeviceOSPairs() {
+		List<Pair<String, String>> deviceOSPairs = new ArrayList<Pair<String, String>>();
 		for (IRemoteAgentInstallerProvider installerProvider : installerProviders) {
 			List<String> familyNames = installerProvider.getSDKFamilyNames(null);
 			for (String familyName : familyNames) {
-				List<Version> versions = installerProvider.getVersions(familyName);
-				for (Version version : versions) {
-					Pair<String, Version> pair = new Pair<String, Version>(familyName, version);
+				List<String> versions = installerProvider.getVersions(familyName);
+				for (String version : versions) {
+					Pair<String, String> pair = new Pair<String, String>(familyName, version);
 					if (!deviceOSPairs.contains(pair))
 						deviceOSPairs.add(pair);
 				}

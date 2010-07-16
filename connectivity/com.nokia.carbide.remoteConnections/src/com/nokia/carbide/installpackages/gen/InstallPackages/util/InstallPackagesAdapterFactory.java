@@ -83,6 +83,14 @@ public class InstallPackagesAdapterFactory extends AdapterFactoryImpl {
 				return createPackageTypeAdapter();
 			}
 			@Override
+			public Adapter caseSDKFamilyType(SDKFamilyType object) {
+				return createSDKFamilyTypeAdapter();
+			}
+			@Override
+			public Adapter caseSDKVersionType(SDKVersionType object) {
+				return createSDKVersionTypeAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -141,6 +149,34 @@ public class InstallPackagesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPackageTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType <em>SDK Family Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType
+	 * @generated
+	 */
+	public Adapter createSDKFamilyTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType <em>SDK Version Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType
+	 * @generated
+	 */
+	public Adapter createSDKVersionTypeAdapter() {
 		return null;
 	}
 

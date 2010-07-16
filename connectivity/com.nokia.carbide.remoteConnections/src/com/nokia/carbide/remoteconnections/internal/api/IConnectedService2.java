@@ -28,6 +28,13 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 public interface IConnectedService2 extends IConnectedService {
 
 	/**
+	 * Set the device OS values, to potentially affect the information for the user.
+	 * @param familyName
+	 * @param version
+	 */
+	void setDeviceOS(String familyName, String version);
+	
+	/**
 	 * Return the properties for this connected service
 	 * @return Map
 	 */

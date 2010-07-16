@@ -19,18 +19,33 @@
 package com.nokia.carbide.installpackages;
 
 
-import com.nokia.carbide.installpackages.gen.InstallPackages.*;
-import com.nokia.carbide.installpackages.gen.InstallPackages.util.InstallPackagesResourceFactoryImpl;
-import com.nokia.carbide.remoteconnections.Messages;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
-import com.nokia.cpp.internal.api.utils.core.*;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Properties;
 
-import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.ConnectTimeoutException;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.core.net.proxy.IProxyData;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -38,13 +53,18 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.service.datalocation.Location;
-import org.osgi.framework.Version;
 
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
+import com.nokia.carbide.installpackages.gen.InstallPackages.DocumentRoot;
+import com.nokia.carbide.installpackages.gen.InstallPackages.PackageType;
+import com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType;
+import com.nokia.carbide.installpackages.gen.InstallPackages.util.InstallPackagesResourceFactoryImpl;
+import com.nokia.carbide.remoteconnections.Messages;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
 
 /**
  *
@@ -66,13 +86,13 @@ public class InstallPackages {
 		IRemoteAgentInstallerProvider getRemoteAgentInstallerProvider();
 	}
 
-	private final IServerData serverData;
+	private final IService service;
 	private List<PackageType> packageList;
 	private String serverPath;
 	
-	public InstallPackages(IServerData serverData, IRunnableContext runnableContext) {
-		Check.checkArg(serverData);
-		this.serverData = serverData;
+	public InstallPackages(IService service, IRunnableContext runnableContext) {
+		Check.checkArg(service);
+		this.service = service;
 		if (runnableContext == null)
 			getPackageList();
 		else {
@@ -129,9 +149,9 @@ public class InstallPackages {
 
 		return packages;
 	}
-
+	
 	private PackagesType getAvailablePackagesFromServer() throws Exception {
-        GetMethod getMethod = new GetMethod(getRelativePath(serverData.getMasterFileName()));
+        GetMethod getMethod = new GetMethod(getMasterFilePath());
 		HttpClient client = new HttpClient();
 		setProxyData(client, getMethod);
         client.getHttpConnectionManager().getParams().setConnectionTimeout(8000);
@@ -151,7 +171,7 @@ public class InstallPackages {
     	if (serverStatus >= 200 && serverStatus < 300) {
     		File tempDir = FileUtils.getTemporaryDirectory();
     		IPath path = new Path(tempDir.getAbsolutePath());
-    		IPath masterFilePath = path.append(serverData.getMasterFileName());
+    		IPath masterFilePath = path.append(getMasterFileName());
     		File masterFile = masterFilePath.toFile();
     		if (masterFile.exists())
     			masterFile.delete();
@@ -210,17 +230,16 @@ public class InstallPackages {
 		try {
 			url = new URL(installFilePath);
 		} catch (MalformedURLException e) {
-			return getRelativePath(installFilePath);
+			StringBuilder sb = new StringBuilder();
+			sb.append(getMasterFileParentPath());
+			sb.append('/');
+			sb.append(installFilePath);
+			return sb.toString();
 		}
 		return url.toString();
 	}
 
-	private String getRelativePath(String installFilePath) {
-		String path = getServerPath();
-		return path + "/" + installFilePath; //$NON-NLS-1$
-	}
-
-	private String getServerPath() {
+	private String getMasterFilePath() {
 		if (serverPath != null)
 			return serverPath;
 		// see if there's an alternate server, otherwise use IServerData
@@ -234,7 +253,7 @@ public class InstallPackages {
 			Properties properties = new Properties();
 			properties.load(is);
 			is.close();
-			String key = serverData.getRemoteAgentInstallerProvider().getService().getIdentifier();
+			String key = service.getIdentifier();
 			String pathStr = (String) properties.get(key);
 			if (pathStr != null)
 				return serverPath = pathStr;
@@ -243,14 +262,16 @@ public class InstallPackages {
 		}
 		return ""; //$NON-NLS-1$
 	}
-	
-	public static String formatSDKVersion(Version v) {
-		if (v.getMicro() != 0)
-			return v.toString();
-		StringBuffer sb = new StringBuffer();
-		sb.append(v.getMajor());
-		sb.append('.');
-		sb.append(v.getMinor());
-		return sb.toString();
+
+	private String getMasterFileParentPath() {
+		String path = getMasterFilePath();
+		int fileNameLoc = path.lastIndexOf('/');
+		return path.substring(0, fileNameLoc);
+	}
+
+	private String getMasterFileName() {
+		String path = getMasterFilePath();
+		int fileNameLoc = path.lastIndexOf('/');
+		return path.substring(fileNameLoc + 1);
 	}
 }

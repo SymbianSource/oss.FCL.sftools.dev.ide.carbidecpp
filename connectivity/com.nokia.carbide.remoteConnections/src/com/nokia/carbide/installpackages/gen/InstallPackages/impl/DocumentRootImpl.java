@@ -9,6 +9,8 @@ import com.nokia.carbide.installpackages.gen.InstallPackages.DocumentRoot;
 import com.nokia.carbide.installpackages.gen.InstallPackages.InstallPackagesPackage;
 import com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType;
 
+import com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType;
+import com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EMap;

@@ -29,10 +29,10 @@ import org.osgi.framework.Version;
 import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
-import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider.IRemoteAgentInstaller;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.IUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.SerialConnectionType;
@@ -92,7 +92,7 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 	private static final int REQUIRED_MSG_LEN = 
 					SYS_TRK_RESPONSE_STR.length + SYS_TRK_RESPONSE_STR_OFFSET;
 	
-	private Pair<String, Version> deviceOS;
+	private Pair<String, String> deviceOS;
 	private TRKService trkService;
 	static Class<?> startTCFServer = TCFClassFactory.class; // force the tcf plugin to load
 
@@ -365,7 +365,7 @@ public class TRKConnectedService extends AbstractConnectedService2 {
 		return new TestResult(estatus, getShortDescription(estatus), message);
 	}
 	
-	public void setDeviceOS(String familyName, Version version) {
-		deviceOS = new Pair<String, Version>(familyName, version);
+	public void setDeviceOS(String familyName, String version) {
+		deviceOS = new Pair<String, String>(familyName, version);
 	}
 }

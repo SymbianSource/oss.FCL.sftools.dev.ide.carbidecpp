@@ -26,6 +26,7 @@ import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
+import org.osgi.framework.Version;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
@@ -219,5 +220,9 @@ public abstract class AbstractConnectedService2 implements IConnectedService2 {
 		if (currentStatus == null)
 			currentStatus = new Status();
 		currentStatus.setEStatus(status.internalGetEStatus(), status.getShortDescription(), status.getLongDescription());
+	}
+
+	public void setDeviceOS(String familyName, Version version) {
+		// @deprecated
 	}
 }

@@ -125,13 +125,31 @@ public interface InstallPackagesPackage extends EPackage {
 	int PACKAGES_TYPE = 1;
 
 	/**
+	 * The feature id for the '<em><b>SDK Family</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGES_TYPE__SDK_FAMILY = 0;
+
+	/**
+	 * The feature id for the '<em><b>SDK Version</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGES_TYPE__SDK_VERSION = 1;
+
+	/**
 	 * The feature id for the '<em><b>Package</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGES_TYPE__PACKAGE = 0;
+	int PACKAGES_TYPE__PACKAGE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Packages Type</em>' class.
@@ -140,7 +158,7 @@ public interface InstallPackagesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGES_TYPE_FEATURE_COUNT = 1;
+	int PACKAGES_TYPE_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link com.nokia.carbide.installpackages.gen.InstallPackages.impl.PackageTypeImpl <em>Package Type</em>}' class.
@@ -217,6 +235,63 @@ public interface InstallPackagesPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKFamilyTypeImpl <em>SDK Family Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKFamilyTypeImpl
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.InstallPackagesPackageImpl#getSDKFamilyType()
+	 * @generated
+	 */
+	int SDK_FAMILY_TYPE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SDK_FAMILY_TYPE__ORDER = 0;
+
+	/**
+	 * The number of structural features of the '<em>SDK Family Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SDK_FAMILY_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKVersionTypeImpl <em>SDK Version Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKVersionTypeImpl
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.InstallPackagesPackageImpl#getSDKVersionType()
+	 * @generated
+	 */
+	int SDK_VERSION_TYPE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SDK_VERSION_TYPE__ORDER = 0;
+
+	/**
+	 * The number of structural features of the '<em>SDK Version Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SDK_VERSION_TYPE_FEATURE_COUNT = 1;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.nokia.carbide.installpackages.gen.InstallPackages.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -279,6 +354,28 @@ public interface InstallPackagesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getPackagesType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType#getSDKFamily <em>SDK Family</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>SDK Family</em>'.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType#getSDKFamily()
+	 * @see #getPackagesType()
+	 * @generated
+	 */
+	EReference getPackagesType_SDKFamily();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType#getSDKVersion <em>SDK Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>SDK Version</em>'.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType#getSDKVersion()
+	 * @see #getPackagesType()
+	 * @generated
+	 */
+	EReference getPackagesType_SDKVersion();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType#getPackage <em>Package</em>}'.
@@ -368,6 +465,48 @@ public interface InstallPackagesPackage extends EPackage {
 	EAttribute getPackageType_SdkVersion();
 
 	/**
+	 * Returns the meta object for class '{@link com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType <em>SDK Family Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>SDK Family Type</em>'.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType
+	 * @generated
+	 */
+	EClass getSDKFamilyType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType#getOrder <em>Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Order</em>'.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType#getOrder()
+	 * @see #getSDKFamilyType()
+	 * @generated
+	 */
+	EAttribute getSDKFamilyType_Order();
+
+	/**
+	 * Returns the meta object for class '{@link com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType <em>SDK Version Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>SDK Version Type</em>'.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType
+	 * @generated
+	 */
+	EClass getSDKVersionType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType#getOrder <em>Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Order</em>'.
+	 * @see com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType#getOrder()
+	 * @see #getSDKVersionType()
+	 * @generated
+	 */
+	EAttribute getSDKVersionType_Order();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -442,6 +581,22 @@ public interface InstallPackagesPackage extends EPackage {
 		EClass PACKAGES_TYPE = eINSTANCE.getPackagesType();
 
 		/**
+		 * The meta object literal for the '<em><b>SDK Family</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PACKAGES_TYPE__SDK_FAMILY = eINSTANCE.getPackagesType_SDKFamily();
+
+		/**
+		 * The meta object literal for the '<em><b>SDK Version</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PACKAGES_TYPE__SDK_VERSION = eINSTANCE.getPackagesType_SDKVersion();
+
+		/**
 		 * The meta object literal for the '<em><b>Package</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -506,6 +661,42 @@ public interface InstallPackagesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PACKAGE_TYPE__SDK_VERSION = eINSTANCE.getPackageType_SdkVersion();
+
+		/**
+		 * The meta object literal for the '{@link com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKFamilyTypeImpl <em>SDK Family Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKFamilyTypeImpl
+		 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.InstallPackagesPackageImpl#getSDKFamilyType()
+		 * @generated
+		 */
+		EClass SDK_FAMILY_TYPE = eINSTANCE.getSDKFamilyType();
+
+		/**
+		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SDK_FAMILY_TYPE__ORDER = eINSTANCE.getSDKFamilyType_Order();
+
+		/**
+		 * The meta object literal for the '{@link com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKVersionTypeImpl <em>SDK Version Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.SDKVersionTypeImpl
+		 * @see com.nokia.carbide.installpackages.gen.InstallPackages.impl.InstallPackagesPackageImpl#getSDKVersionType()
+		 * @generated
+		 */
+		EClass SDK_VERSION_TYPE = eINSTANCE.getSDKVersionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SDK_VERSION_TYPE__ORDER = eINSTANCE.getSDKVersionType_Order();
 
 	}
 

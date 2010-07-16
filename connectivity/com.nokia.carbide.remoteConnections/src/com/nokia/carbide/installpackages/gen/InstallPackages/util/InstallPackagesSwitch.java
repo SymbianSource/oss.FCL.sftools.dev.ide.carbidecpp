@@ -104,6 +104,18 @@ public class InstallPackagesSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InstallPackagesPackage.SDK_FAMILY_TYPE: {
+				SDKFamilyType sdkFamilyType = (SDKFamilyType)theEObject;
+				T result = caseSDKFamilyType(sdkFamilyType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InstallPackagesPackage.SDK_VERSION_TYPE: {
+				SDKVersionType sdkVersionType = (SDKVersionType)theEObject;
+				T result = caseSDKVersionType(sdkVersionType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -150,6 +162,36 @@ public class InstallPackagesSwitch<T> {
 	 * @generated
 	 */
 	public T casePackageType(PackageType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>SDK Family Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>SDK Family Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSDKFamilyType(SDKFamilyType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>SDK Version Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>SDK Version Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSDKVersionType(SDKVersionType object) {
 		return null;
 	}
 

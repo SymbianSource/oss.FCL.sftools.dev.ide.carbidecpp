@@ -106,4 +106,16 @@ class. -->
         </toolbar>
 	</menuContribution>
 </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="platform:/resource/com.nokia.carbide.remoteConnections/schema/InstallPackages.xsd"
+            class="com.nokia.carbide.installpackages.gen.InstallPackages.InstallPackagesPackage"
+            genModel="schema/InstallPackages.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="installpackages"
+            class="com.nokia.carbide.installpackages.gen.InstallPackages.util.InstallPackagesResourceFactoryImpl"/>
+   </extension>
 </plugin>
