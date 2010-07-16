@@ -71,6 +71,9 @@ import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
  */
 public class InstallPackages {
 	
+	/**
+	 * @deprecated server data completely taken from configuration/server.properties
+	 */
 	public interface IServerData {
 		
 		/**
@@ -242,7 +245,6 @@ public class InstallPackages {
 	private String getMasterFilePath() {
 		if (serverPath != null)
 			return serverPath;
-		// see if there's an alternate server, otherwise use IServerData
 		Location installLocation = Platform.getInstallLocation();
 		URL url = installLocation.getURL();
 		IPath path = new Path(url.getPath());
