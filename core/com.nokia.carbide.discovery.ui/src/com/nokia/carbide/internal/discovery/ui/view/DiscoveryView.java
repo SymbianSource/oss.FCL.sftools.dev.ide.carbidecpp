@@ -17,24 +17,15 @@
 package com.nokia.carbide.internal.discovery.ui.view;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.internal.p2.discovery.Catalog;
 import org.eclipse.equinox.internal.p2.discovery.DiscoveryCore;
 import org.eclipse.equinox.internal.p2.discovery.compatibility.BundleDiscoveryStrategy;
@@ -59,7 +50,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -143,7 +133,7 @@ public class DiscoveryView extends ViewPart {
 		
 		// look for remote descriptor
 		RemoteBundleDiscoveryStrategy remoteDiscoveryStrategy = new RemoteBundleDiscoveryStrategy();
-		String url = getFromServerProperties(DIRECTORY_KEY);
+		String url = Activator.getFromServerProperties(DIRECTORY_KEY);
 		if (url != null) {
 			remoteDiscoveryStrategy.setDirectoryUrl(url);
 			catalog.getDiscoveryStrategies().add(remoteDiscoveryStrategy);
@@ -152,25 +142,6 @@ public class DiscoveryView extends ViewPart {
 			catalog.getDiscoveryStrategies().add(new BundleDiscoveryStrategy());
 
 		return catalog;
-	}
-
-	public static String getFromServerProperties(String key) {
-		Location installLocation = Platform.getInstallLocation();
-		URL url = installLocation.getURL();
-		IPath path = new Path(url.getPath());
-		path = path.append("configuration/server.properties"); //$NON-NLS-1$
-		File file = path.toFile();
-		Properties properties = new Properties();
-		try {
-			InputStream is = new FileInputStream(file);
-			properties.load(is);
-			is.close();
-		} catch (IOException e) {
-			String message = 
-				MessageFormat.format(Messages.DiscoveryView_MissingDirectoryURLError, key);
-			Activator.logError(message, e);
-		}
-		return (String) properties.get(key);
 	}
 
 	private void contributeToActionBars() {

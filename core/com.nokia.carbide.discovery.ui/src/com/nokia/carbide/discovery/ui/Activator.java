@@ -16,9 +16,21 @@
 */
 package com.nokia.carbide.discovery.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.util.Properties;
+
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -83,4 +95,29 @@ public class Activator extends AbstractUIPlugin {
 	public static void logError(String message, Throwable t) {
 		getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, t));
 	}
+
+	/**
+	 * Get a value from the server.properties file
+	 * @param key
+	 * @return
+	 */
+	public static String getFromServerProperties(String key) {
+		Location installLocation = Platform.getInstallLocation();
+		URL url = installLocation.getURL();
+		IPath path = new Path(url.getPath());
+		path = path.append("configuration/server.properties"); //$NON-NLS-1$
+		File file = path.toFile();
+		Properties properties = new Properties();
+		try {
+			InputStream is = new FileInputStream(file);
+			properties.load(is);
+			is.close();
+		} catch (IOException e) {
+			String message = 
+				MessageFormat.format("Could not find URL in configuration/server.properties file for key={0}", key);
+			Activator.logError(message, e);
+		}
+		return (String) properties.get(key);
+	}
+
 }

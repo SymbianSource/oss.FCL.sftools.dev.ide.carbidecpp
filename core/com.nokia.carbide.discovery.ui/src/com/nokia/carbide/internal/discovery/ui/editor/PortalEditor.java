@@ -153,6 +153,7 @@ public class PortalEditor extends EditorPart {
 		GridLayoutFactory.fillDefaults().applyTo(backgroundParent);
 		// create top naviation bar
 		navigationBar = createNavigationBar(backgroundParent);
+		GridDataFactory.swtDefaults().grab(true, false).align(SWT.CENTER, SWT.TOP).indent(10, 10).applyTo(navigationBar);
 		// create stack composite
 		createStackComposite(backgroundParent, navigationBar);
 		return backgroundParent;
@@ -178,7 +179,7 @@ public class PortalEditor extends EditorPart {
 			GridDataFactory.fillDefaults().grab(false, true).applyTo(taskComposite);
 			for (IActionBar actionBar : commandBars) {
 				Control control = createTaskBarControl(taskComposite, actionBar, updater);
-				GridDataFactory.fillDefaults().indent(0, 0).applyTo(control);
+				GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(control);
 			}
 		}
 		Composite pageControl = new RoundedCornerComposite(pageComposite, backgroundParent, 

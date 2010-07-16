@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
@@ -65,7 +64,6 @@ class TaskBar extends RoundedCornerComposite {
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		createTitle(actionBar);
 		createActions(actionBar);
-		GridDataFactory.swtDefaults().grab(true, true).align(SWT.CENTER, SWT.BEGINNING).applyTo(this);
 		RowLayoutFactory.swtDefaults().type(SWT.VERTICAL).margins(10, 10).extendedMargins(5, 5, 5, 10).fill(true).wrap(false).applyTo(this);
 	}
 

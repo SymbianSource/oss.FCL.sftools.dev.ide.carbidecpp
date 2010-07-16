@@ -19,7 +19,6 @@ package com.nokia.carbide.internal.discovery.ui.editor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
@@ -59,7 +58,6 @@ class NavigationBar extends RoundedCornerComposite {
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		this.portalEditor = portalEditor;
 		buttonToPageMap = new LinkedHashMap<Button, IPortalPage>();
-		GridDataFactory.swtDefaults().grab(true, false).align(SWT.CENTER, SWT.TOP).indent(10, 10).applyTo(this);
 		RowLayoutFactory.swtDefaults().margins(3, 3).wrap(false).applyTo(this);
 		listener = new ButtonListener();
 		selectedButtonFont = JFaceResources.getHeaderFont();
