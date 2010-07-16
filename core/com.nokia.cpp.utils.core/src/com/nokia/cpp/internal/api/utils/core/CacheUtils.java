@@ -30,7 +30,7 @@ import com.nokia.cpp.utils.core.noexport.UtilsCorePlugin;
 
 public class CacheUtils {
 
-	private class CacheEntry {
+	protected class CacheEntry {
 
 		private String identifier;
 		private long freshness;
@@ -129,7 +129,7 @@ public class CacheUtils {
 		return null;
 	}
 
-	private CacheEntry loadCachedData(IPath location, String cacheIdentifier) {
+	protected CacheEntry loadCachedData(IPath location, String cacheIdentifier) {
 		IPath flushPath = location.append(Integer.toString(cacheIdentifier.hashCode())).addFileExtension("txt");
 
 		if (flushPath.toFile().exists()) {
@@ -149,7 +149,9 @@ public class CacheUtils {
 						}
 					}};
 					return new CacheEntry(ois);
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;

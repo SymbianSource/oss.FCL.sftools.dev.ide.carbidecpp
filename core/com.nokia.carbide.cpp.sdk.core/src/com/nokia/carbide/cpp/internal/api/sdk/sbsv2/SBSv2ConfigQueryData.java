@@ -22,47 +22,94 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 
+	private static final long serialVersionUID = 3358697901364441158L;
+
+	private String alias = "";
+	private String meaning = "";
+
 	// Raptor config query data
 	private Map<String, String> buildMacros = new HashMap<String, String>(); // cpp preprocessor macros
 	private Map<String, String> metaDataMacros = new HashMap<String, String>();  // macros to parse the INF/MMPs files (these do not contain values)
 	private List<String> metaDataIncludes = new ArrayList<String>();
-	private String buildPrefix;
-	private String metaDataVariantHRH;
-	private String meaning;
-	private String outputPathString;
-	private String configurationErrorMessage = null;
+	private String buildPrefix = "";
+	private String metaDataVariantHRH = "";
+	private String outputPathString = "";
+	private String configurationErrorMessage = "";
 
-	public SBSv2ConfigQueryData(String meaning, String queryResult) {
+	public SBSv2ConfigQueryData() {
+		this.alias = "";
+		this.meaning = "";
+	}
+
+	public SBSv2ConfigQueryData(String alias, String meaning, String queryResult) {
+		this.alias = alias;
 		this.meaning = meaning;
 		parseQueryConfigResults(queryResult);
 	}
 
+	@Override
+	public String getAlias() {
+		return alias;
+	}
+
+	@Override
 	public String getBuildPrefix() {
 		return buildPrefix;
 	}
 
+	@Override
 	public Map<String, String> getBuildMacros() {
 		return buildMacros;
 	}
 
+	@Override
 	public String getConfigurationErrorMessage() {
 		return configurationErrorMessage;
 	}
 
+	@Override
 	public Map<String, String> getMetaDataMacros() {
 		return metaDataMacros;
 	}
 
+	@Override
 	public List<String> getMetaDataIncludes() {
 		return metaDataIncludes;
 	}
 
+	@Override
 	public String getMetaDataVariantHRH() {
 		return metaDataVariantHRH;
 	}
 
+	@Override
 	public String getOutputPathString() {
 		return outputPathString;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alias == null) ? 0 : alias.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SBSv2ConfigQueryData other = (SBSv2ConfigQueryData) obj;
+		if (alias == null) {
+			if (other.alias != null)
+				return false;
+		} else if (!alias.equals(other.alias))
+			return false;
+		return true;
 	}
 
 	private void parseQueryConfigResults(String queryResult) {

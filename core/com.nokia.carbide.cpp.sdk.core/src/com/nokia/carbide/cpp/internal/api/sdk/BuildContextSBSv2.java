@@ -1,21 +1,30 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.osgi.framework.Version;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
-import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2ConfigQueryData;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
@@ -36,6 +45,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		this.sbsv2Alias = alias;
 		this.displayString = displayString;
 		this.configID = configID;
+		this.configQueryData = setConfigQueryData(sdk, alias);
 	}
 
 	public BuildContextSBSv2(ISymbianSDK sdk, String alias, ISBSv2ConfigQueryData configData) {
@@ -118,74 +128,29 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	@Override
 	public IPath getCompilerPrefixFile() {
 		
-		if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE)) {
-			return getGCCEPrefixFilePath();
-		} else if (sbsv2Alias.toUpperCase().contains((TOOLCHAIN_ARM))) {
-			return getRVCTPrefixFilePath();
+		if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE) ||
+			sbsv2Alias.toUpperCase().contains(TOOLCHAIN_ARM)) {
+			if (configQueryData != null) {
+				return new Path(configQueryData.getBuildPrefix());
+			}
 		} 
 
 		// fallback for WINSCW, MSVC, etc.
 		return null;
 	}
 	
-	private IPath getIncludePath() {
-		return getSDK().getIncludePath();
-	}
-
-	private IPath getGCCEPrefixFilePath() {
-		// TOOD: Should get from Raptor query when available
-		return getIncludePath().append("gcce/gcce.h"); //$NON-NLS-1$
-	}
-
-	private IPath getRVCTPrefixFilePath() {
-		// TODO: Should get this from query mechanism
-		IRVCTToolChainInfo[] installedRVCTTools = SDKCorePlugin.getSDKManager().getInstalledRVCTTools();
-		// use default in case tools aren't installed
-		String rvctFragment = "rvct2_2"; //$NON-NLS-1$
-		if (installedRVCTTools.length > 0) {
-			rvctFragment = getRVCTFragment(installedRVCTTools[0]);
-		}
-		IPath prefixFilePath = getIncludePath().append(rvctFragment).append(rvctFragment + ".h"); //$NON-NLS-1$
-		if (prefixFilePath.toFile().exists()){
-			return prefixFilePath;
-		} else {
-			// SF kits around SF^3 started to only use a single rvct.h header instead of specific versioned ones
-			// based on the default installation
-			return getIncludePath().append("rvct").append("rvct" + ".h");
-		}
-	}
-	
-	private String getRVCTFragment(IRVCTToolChainInfo info) {
-		// TODO: This should not be needed when raptor query is complete
-		int major = 0, minor = 0;
-		if (info != null) {
-			Version rvctToolsVersion = info.getRvctToolsVersion();
-			if (rvctToolsVersion != null) {
-				major = info.getRvctToolsVersion().getMajor();
-				minor = info.getRvctToolsVersion().getMinor();
-			}
-		}
-		return "rvct" + major + "_" + minor; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-	
 	@Override
 	public List<IDefine> getVariantHRHDefines() {
-		// TODO: Should get from raptor query
 		return getCachedData().getVariantHRHDefines();
 	}
 
 	@Override
 	public List<File> getPrefixFileIncludes() {
-		// TODO: Should get from raptor query
 		return getCachedData().getPrefixFileIncludes();
 	}
 
 	@Override
 	public List<IDefine> getCompilerMacros() {
-		// TODO: Should get from raptor query
-		// we parse the compiler prefix file to gather macros.  this can be time consuming so do it
-		// once and cache the values.  only reset the cache when the compiler prefix has changed.
-		
 		IPath prefixFile = getCompilerPrefixFile();
 		if (prefixFile == null) {
 			return Collections.emptyList();
@@ -219,7 +184,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	 * @return cache, never <code>null</code>
 	 */
 	private SymbianBuildContextDataCache getCachedData() {
-		// TODO: Still need to consider this for SBSv2 refactoring / Raptor query
 		return SymbianBuildContextDataCache.getCache(this);
 	}
 	
@@ -228,7 +192,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	 * @return List or <code>null</code>
 	 */
 	public List<File> getCachedSystemIncludePaths() {
-		// TODO: Still need to consider this for SBSv2 refactoring / Raptor query
 		return getCachedData().getSystemIncludePaths();
 	}
 	
@@ -253,26 +216,10 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		if (!(obj instanceof BuildContextSBSv2))
 			return false;
 		final BuildContextSBSv2 other = (BuildContextSBSv2) obj;
-		if (sbsv2Alias == null) {
-			if (other.sbsv2Alias != null)
-				return false;
-		} else if (!sbsv2Alias.equalsIgnoreCase(other.sbsv2Alias))
-			return false;
-		if (getSDK() == null) {
-			if (other.getSDK() != null)
-				return false;
-		} else if (!getSDK().getEPOCROOT().equalsIgnoreCase(other.getSDK().getEPOCROOT()))
-			return false;
-		if (target == null) {
-			if (other.target != null)
-				return false;
-		} else if (!target.equalsIgnoreCase(other.target)) {
-			return false;
-		} else if (!configID.equalsIgnoreCase(other.configID)){
-			// TODO: Do we really need anything other than a config ID comparison?
+		if (!configID.equalsIgnoreCase(other.configID)){
 			return false;
 		}
-		return true;
+ 		return true;
 	}
 
 	public static String getPlatformFromV1ConfigName(String displayString) {
@@ -314,7 +261,11 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	}
 	
 	private void setPlatformAndTargetFromOutputPath() {
-		if (configQueryData.getOutputPathString() == null) return;
+		if (configQueryData.getOutputPathString() == null) {
+			platform = "";
+			target = "";
+			return;
+		}
 		
 		IPath releasePath = new Path(configQueryData.getOutputPathString());
 		int epoc32SegmentIndex = 0;
@@ -324,12 +275,37 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 			epoc32SegmentIndex++;
 		}
 		// assuming /epoc32/<release>/<target>/
-		platform = releasePath.segment(epoc32SegmentIndex+2);
-		target = releasePath.segment(epoc32SegmentIndex+3);
+		platform = releasePath.segment(epoc32SegmentIndex+2).toUpperCase();
+		target = releasePath.segment(epoc32SegmentIndex+3).toUpperCase();
+	}
+
+	private ISBSv2ConfigQueryData setConfigQueryData(ISymbianSDK sdk, String alias) {
+		SBSv2ConfigQueryData configQueryData = null;
+		try {
+			configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
+			if (configQueryData == null) {
+				Map<String, String> aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
+				List<String> aliasList = new ArrayList<String>();
+				aliasList.add(alias);
+				String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, aliasList);
+				if (aliasToMeaningMap.get(alias) != null){
+					configQueryData = new SBSv2ConfigQueryData(alias, aliasToMeaningMap.get(alias), configQueryXML);
+				}
+			}
+		} catch (final SBSv2MinimumVersionException e) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Minimum sbs version not met.", e.getMessage());
+				}
+			});	
+			Logging.log(SDKCorePlugin.getDefault(), Logging.newSimpleStatus(0, IStatus.ERROR,
+						MessageFormat.format(e.getMessage(), ""), e));
+		}
+		
+		return configQueryData;
 	}
 
 	public ISBSv2ConfigQueryData getConfigQueryData() {
 		return configQueryData;
 	}
-
 }

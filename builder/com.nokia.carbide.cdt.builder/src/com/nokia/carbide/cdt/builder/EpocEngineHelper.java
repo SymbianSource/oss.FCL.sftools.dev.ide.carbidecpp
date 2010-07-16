@@ -76,7 +76,6 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
@@ -753,16 +752,13 @@ public class EpocEngineHelper {
 										}
 
 										ISymbianSDK sdk = buildConfig.getSDK();
-										String releasePlatform;
+										ISymbianBuildContext context = buildConfig.getBuildContext();
 										IPath path;
-										if (buildConfig.getBuildContext() instanceof ISBSv2BuildContext) {
-											ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-											// TODO: This will need to be the release folder name from the SBSv2Context. Could fail for a variant
-											releasePlatform = buildConfig.getPlatformString();
-											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
+										if (context instanceof ISBSv2BuildContext) {
+											path = new Path(((ISBSv2BuildContext)context).getConfigQueryData().getOutputPathString());
 										} else {
 											ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-											releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
+											String releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
 											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 										}
 

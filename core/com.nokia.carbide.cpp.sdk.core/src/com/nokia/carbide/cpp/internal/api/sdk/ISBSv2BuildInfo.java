@@ -26,8 +26,6 @@ import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
  */
 public interface ISBSv2BuildInfo extends ISDKBuildInfo {
 
-	void clearPlatformMacros();
-
 	/**
 	 * Returns the list of all platform macros for a SDK.
 	 * <p>

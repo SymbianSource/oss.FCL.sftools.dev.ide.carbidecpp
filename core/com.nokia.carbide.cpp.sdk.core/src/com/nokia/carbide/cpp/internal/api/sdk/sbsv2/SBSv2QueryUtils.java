@@ -107,26 +107,55 @@ public class SBSv2QueryUtils {
 		return products;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static String getConfigQueryXMLforSDK(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException {
-		String configs;
-		Map<String, String> configsMap = SDKCorePlugin.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
-		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
-
-		if (configsMap == null) {
-			configsMap = new HashMap<String, String>();
+		
+		checkForMinimumRaptorVersion();
+		
+		List<String> argListConfigQuery = new ArrayList<String>();
+		for (String alias : aliasOrMeaningArray){
+			argListConfigQuery.add(QUERY_CONFIG_COMMAND + "[" + alias + "]");
 		}
-		else {
-			configs = configsMap.get(key.toString());
-			if (configs != null) {
-				return configs;
+		
+		Properties envVars = null;
+		if (sdk != null){
+			File epocRoot = new File(sdk.getEPOCROOT());
+			if (epocRoot.exists()){
+				envVars = EnvironmentReader.getEnvVars();
+				envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
 			}
 		}
 
-		configs = getConfigurations(sdk, aliasOrMeaningArray);
-		configsMap.put(key.toString(), configs);
-		SDKCorePlugin.getCache().putCachedData(CONFIG_CACHE_KEY, (Serializable)configsMap, 0);
-		return configs;
+		return getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
+	}
+
+	@SuppressWarnings("unchecked")
+	public static SBSv2ConfigQueryData getConfigQueryDataForSDK(ISymbianSDK sdk, String alias) {
+		SBSv2ConfigQueryData configQueryData = null;
+		Map<String, SBSv2ConfigQueryData> configsMap = SDKCorePlugin.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
+		String key = (new SBSv2SDKKey(sdk)).toString() + "[" + alias + "]";
+
+		if (configsMap != null) {
+			configQueryData = configsMap.get(key);
+		}
+		return configQueryData;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void storeConfigQueryDataForSDK(ISymbianSDK sdk, String alias, SBSv2ConfigQueryData configQueryData) {
+		Map<String, SBSv2ConfigQueryData> configsMap = SDKCorePlugin.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
+		String key = (new SBSv2SDKKey(sdk)).toString() + "[" + alias + "]";
+
+		if (configsMap == null) {
+			configsMap = new HashMap<String, SBSv2ConfigQueryData>();
+		} else {
+			if (configsMap.get(key) != null) {
+				// configQueryData already exist in cache
+				return;
+			}
+		}
+
+		configsMap.put(key, configQueryData);
+		SDKCorePlugin.getCache().putCachedData(CONFIG_CACHE_KEY, (Serializable)configsMap, 0);		
 	}
 
 	public static HashMap<String, String> queryConfigTargetInfo(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException{
@@ -215,27 +244,6 @@ public class SBSv2QueryUtils {
 		
 		String queryResult = getSBSQueryOutput(argListProductQuery, createEnvStringList(envVars));
 		return parseQueryProductsResults(queryResult);
-	}
-
-	private static String getConfigurations(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException {
-		
-		checkForMinimumRaptorVersion();
-		
-		List<String> argListConfigQuery = new ArrayList<String>();
-		for (String alias : aliasOrMeaningArray){
-			argListConfigQuery.add(QUERY_CONFIG_COMMAND + "[" + alias + "]");
-		}
-		
-		Properties envVars = null;
-		if (sdk != null){
-			File epocRoot = new File(sdk.getEPOCROOT());
-			if (epocRoot.exists()){
-				envVars = EnvironmentReader.getEnvVars();
-				envVars.setProperty("EPOCROOT", sdk.getEPOCROOT());
-			}
-		}
-
-		return getSBSQueryOutput(argListConfigQuery, createEnvStringList(envVars));
 	}
 
 	private static String getSBSQueryOutput(List<String> queryCommandList, String[] env) {

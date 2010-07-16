@@ -60,12 +60,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	}
 
 	@Override
-	public void clearPlatformMacros() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
 		// TODO: Will get rid of this method. Only filtered configs will apply
 		return sbsv2FilteredConetxts;
@@ -145,22 +139,33 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			contextExists = false;
 		}
 		
-		String configQueryXML = "";
-		try {
-			configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, newContextsToQuery);
-		} catch (SBSv2MinimumVersionException e) {
-			// ignore, previous exception would have caught the error
-		}
-		for (String alias : newContextsToQuery){
-			// TODO: Need to test for variants. Right now variants are not added
-			if (aliasToMeaningMap.get(alias) == null){
-				continue; // This alias is not valid with this SDK, ignore
+		List<String> processedAliasList = new ArrayList<String>();
+		for (String alias : newContextsToQuery) {
+			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
+			if (configQueryData != null) {
+				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
+				sbsv2FilteredConetxts.add(sbsv2Context);
+				processedAliasList.add(alias);
 			}
-			ISBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(aliasToMeaningMap.get(alias), configQueryXML);
-			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-			sbsv2FilteredConetxts.add(sbsv2Context);
 		}
-		
+
+		if (!processedAliasList.isEmpty()) {
+			newContextsToQuery.removeAll(processedAliasList);
+		}
+
+		if (!newContextsToQuery.isEmpty()) {
+			String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, newContextsToQuery);
+
+			for (String alias : newContextsToQuery){
+				// TODO: Need to test for variants. Right now variants are not added
+				if (aliasToMeaningMap.get(alias) == null){
+					continue; // This alias is not valid with this SDK, ignore
+				}
+				ISBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(alias, aliasToMeaningMap.get(alias), configQueryXML);
+				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
+				sbsv2FilteredConetxts.add(sbsv2Context);
+			}
+		}		
 	}
 
 	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
@@ -188,22 +193,39 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				}
 			}
 		}
-		
-		String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, filteredAliasList);
 
+		List<String> processedAliasList = new ArrayList<String>();
 		for (String alias : filteredAliasList) {
-			String meaning = "";
-			if (alias.contains(".")){
-				meaning = getMeaningForVariant(alias);
-			} else {
-				meaning = aliasToMeaningMap.get(alias);
+			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
+			if (configQueryData != null) {
+				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
+				sbsv2FilteredConetxts.add(sbsv2Context);
+				processedAliasList.add(alias);
 			}
-			if (meaning == null){
-				continue; // TODO: How to handle this scenario
+		}
+
+		if (!processedAliasList.isEmpty()) {
+			filteredAliasList.removeAll(processedAliasList);
+		}
+
+		if (!filteredAliasList.isEmpty()) {
+			String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, filteredAliasList);
+
+			for (String alias : filteredAliasList) {
+				String meaning = "";
+				if (alias.contains(".")){
+					meaning = getMeaningForVariant(alias);
+				} else {
+					meaning = aliasToMeaningMap.get(alias);
+				}
+				if (meaning == null){
+					continue; // TODO: How to handle this scenario
+				}
+				SBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(alias, meaning, configQueryXML);
+				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
+				sbsv2FilteredConetxts.add(sbsv2Context);
+				SBSv2QueryUtils.storeConfigQueryDataForSDK(sdk, alias, configQueryData);
 			}
-			ISBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(meaning, configQueryXML);
-			ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-			sbsv2FilteredConetxts.add(sbsv2Context);
 		}
 	}
 
@@ -223,7 +245,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	}
 
 	public Map<String, String> getPlatformMacros(String platform) {
-		Map<String, String> platformMacros = cachedPlatformMacros.get(platform.toUpperCase());
+		Map<String, String> platformMacros = cachedPlatformMacros.get(platform);
 		if (platformMacros == null) {
 			platformMacros = new HashMap<String, String>();
 			synchronized (cachedPlatformMacros) {
@@ -233,11 +255,10 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				if (sbsv2FilteredConetxts.size() > 0) {
 					for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
 						if (context.getPlatformString().equalsIgnoreCase(platform)) {
-							platformMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getBuildMacros());
 							platformMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getMetaDataMacros());
 						}
 					}
-					cachedPlatformMacros.put(platform.toUpperCase(), platformMacros);
+					cachedPlatformMacros.put(platform, platformMacros);
 				}
 			}
 		}

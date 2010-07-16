@@ -17,10 +17,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import com.nokia.carbide.cpp.internal.api.sdk.SDKCacheUtils;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManagerRaptorOnly;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
-import com.nokia.cpp.internal.api.utils.core.CacheUtils;
 
 
 /**
@@ -41,7 +41,7 @@ public class SDKCorePlugin extends Plugin {
 	
 	private static ISDKManager sdkManager;
 	
-	private static CacheUtils cache;
+	private static SDKCacheUtils cache;
 	
 	/**
 	 * The constructor
@@ -106,11 +106,11 @@ public class SDKCorePlugin extends Plugin {
 	 * Get the persistent cache this plugin.
 	 * @return PersistentCache instance
 	 */
-	public static CacheUtils getCache() {
+	public static SDKCacheUtils getCache() {
 		if (cache == null)
 		{
 			IPath path = new Path(System.getProperty("user.home"));
-			cache = new CacheUtils(path.append(CACHE_FOLDER_NAME));
+			cache = new SDKCacheUtils(path.append(CACHE_FOLDER_NAME));
 		}
 		return cache;
 	}

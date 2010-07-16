@@ -49,7 +49,6 @@ import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
@@ -457,20 +456,15 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	}
 
 	public IPath getTargetOutputDirectory() {
-		String releasePlatform = "";
-		ISymbianSDK sdk = getSDK();
-		if (context instanceof ISBSv1BuildContext){
+		if (context instanceof ISBSv2BuildContext){
+			return new Path(((ISBSv2BuildContext)context).getConfigQueryData().getOutputPathString());
+		} else {
+			ISymbianSDK sdk = getSDK();
 			ISBSv1BuildContext v1Context = (ISBSv1BuildContext)context;
 			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(v1Context.getBasePlatformForVariation());
-		} else if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
-			// Test is this is an SBSv2 build binary variant (changes the output directory)
-			ISBSv2BuildConfigInfo sbsv2Info = getSBSv2BuildConfigInfo();
-			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){
-				releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
-			}
-		}
-		return sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
+			String releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(v1Context.getBasePlatformForVariation());
+			return sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
+		} 
 	}
  	
 	public boolean getRebuildNeeded() {

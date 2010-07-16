@@ -359,7 +359,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 
 		sbsv1BuildInfo.clearPlatformMacros();
-		sbsv2BuildInfo.clearPlatformMacros();
 
 		if (!setDataFromManifestXML()){
 			//need to scan SDK files for OS and SDK version

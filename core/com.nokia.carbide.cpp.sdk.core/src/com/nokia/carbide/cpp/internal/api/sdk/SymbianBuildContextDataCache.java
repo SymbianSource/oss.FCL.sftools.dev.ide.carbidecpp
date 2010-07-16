@@ -102,6 +102,7 @@ public class SymbianBuildContextDataCache {
 	private ExternalFileInfoCollection compilerPrefixFileInfo = null; 
 	private List<File> systemIncludes;
 	private ISymbianSDK sdk;
+	private ISymbianBuildContext context;
 	private IPath compilerPrefixFile;
 
 	private String platformString;
@@ -118,6 +119,7 @@ public class SymbianBuildContextDataCache {
 
 	private SymbianBuildContextDataCache(ISymbianBuildContext context) {
 		if (DEBUG) System.out.println("Creating cache for " + context.getDisplayString());
+		this.context = context;
 		this.platformString = context.getPlatformString();
 		this.displayString = context.getDisplayString();
 		this.sdk = context.getSDK();
@@ -174,11 +176,11 @@ public class SymbianBuildContextDataCache {
 			List<IDefine> macros = new ArrayList<IDefine>();
 			Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
 			File prefixFile = sdk.getPrefixFile(builderId);
+			ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 			
 			if (prefixFile == null){
 				// Check that the prefix file may have become available since the SDK was scanned last.
 				// This can happen, for e.g., if the user opens the IDE _then_ does a subst on a drive that already has an SDK entry.
-				ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 				IPath prefixCheck = buildInfo.getPrefixFromVariantCfg();
 				if (prefixCheck != null){
 					prefixFile = prefixCheck.toFile();
@@ -194,30 +196,28 @@ public class SymbianBuildContextDataCache {
 				// Always add epoc32/include to the search path as this is implicit for includes in the HRH
 				systemPaths.add(new File(sdk.getEPOCROOT() + "epoc32/include"));
 				
-				// add any BSF/SBV includes so the headers are picked up from the correct location
-				IBSFPlatform bsfPlat = null;
-				ISBVPlatform sbvPlat = null;
-				ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 				if (buildInfo instanceof ISBSv1BuildInfo) {
+					// add any BSF/SBV includes so the headers are picked up from the correct location
 					// SBSv1 only
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
-					bsfPlat = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
-					sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
-				} 
-				if (bsfPlat != null) {
-					for (IPath path : bsfPlat.getSystemIncludePaths()) {
-						systemPaths.add(path.toFile());
-					}
-				} else if (sbvPlat != null) {
-					LinkedHashMap<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
-					Set<IPath> set = platPaths.keySet();
-					for (IPath path : set) {
-						String pathType = platPaths.get(path);
-						if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
+					IBSFPlatform bsfPlat = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
+					ISBVPlatform sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
+
+					if (bsfPlat != null) {
+						for (IPath path : bsfPlat.getSystemIncludePaths()) {
 							systemPaths.add(path.toFile());
 						}
+					} else if (sbvPlat != null) {
+						LinkedHashMap<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
+						Set<IPath> set = platPaths.keySet();
+						for (IPath path : set) {
+							String pathType = platPaths.get(path);
+							if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
+								systemPaths.add(path.toFile());
+							}
+						}
 					}
-				}
+				} 
 				
 				MacroScanner scanner = new MacroScanner(
 						new BasicIncludeFileLocator(null, systemPaths.toArray(new File[systemPaths.size()])),
@@ -339,6 +339,19 @@ public class SymbianBuildContextDataCache {
 						compilerPrefixFileInfo.setFiles(files);
 				}
 				
+				if (context instanceof ISBSv2BuildContext) {
+					// add macros from raptor query
+					ISBSv2BuildContext v2Context = (ISBSv2BuildContext) context;
+					Map<String, String> buildMacros = v2Context.getConfigQueryData().getBuildMacros();
+					if (buildMacros != null) {
+						for (Iterator<String> itr = buildMacros.keySet().iterator(); itr.hasNext(); ) { 
+							String name = itr.next();
+							String value = buildMacros.get(name);
+							macros.add(DefineFactory.createDefine(name, value));
+						}
+					}
+				}
+
 				compilerPrefixMacros = macros;
 				
 				saveCacheFile();
