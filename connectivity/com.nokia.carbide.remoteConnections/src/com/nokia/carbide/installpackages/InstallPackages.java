@@ -1,23 +1,21 @@
 /*
-* Copyright (c) 2008 Nokia Corporation and/or its subsidiary(-ies).
-* All rights reserved.
-* This component and the accompanying materials are made available
-* under the terms of the License "Eclipse Public License v1.0"
-* which accompanies this distribution, and is available
-* at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
-* Initial Contributors:
-* Nokia Corporation - initial contribution.
-*
-* Contributors:
-*
-* Description: 
-*
-*/
-
+ * Copyright (c) 2008 Nokia Corporation and/or its subsidiary(-ies).
+ * All rights reserved.
+ * This component and the accompanying materials are made available
+ * under the terms of the License "Eclipse Public License v1.0"
+ * which accompanies this distribution, and is available
+ * at the URL "http://www.eclipse.org/legal/epl-v10.html".
+ *
+ * Initial Contributors:
+ * Nokia Corporation - initial contribution.
+ *
+ * Contributors:
+ *
+ * Description: 
+ *
+ */
 
 package com.nokia.carbide.installpackages;
-
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -30,6 +28,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -57,6 +56,8 @@ import org.eclipse.osgi.service.datalocation.Location;
 import com.nokia.carbide.installpackages.gen.InstallPackages.DocumentRoot;
 import com.nokia.carbide.installpackages.gen.InstallPackages.PackageType;
 import com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType;
+import com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType;
+import com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType;
 import com.nokia.carbide.installpackages.gen.InstallPackages.util.InstallPackagesResourceFactoryImpl;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
@@ -70,20 +71,25 @@ import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
  *
  */
 public class InstallPackages {
-	
+
+	private static final String ORDER_DELIM = ";"; //$NON-NLS-1$
+
 	/**
-	 * @deprecated server data completely taken from configuration/server.properties
+	 * @deprecated server data completely taken from
+	 *             configuration/server.properties
 	 */
 	public interface IServerData {
-		
+
 		/**
 		 * The file name of the master xml file
+		 * 
 		 * @return String
 		 */
 		String getMasterFileName();
-		
+
 		/**
 		 * Return the IRemoteAgentInstallerProvider for this server data
+		 * 
 		 * @return IRemoteAgentInstallerProvider
 		 */
 		IRemoteAgentInstallerProvider getRemoteAgentInstallerProvider();
@@ -92,7 +98,9 @@ public class InstallPackages {
 	private final IService service;
 	private List<PackageType> packageList;
 	private String serverPath;
-	
+	private List<String> sdkFamilyOrder;
+	private List<String> sdkVersionOrder;
+
 	public InstallPackages(IService service, IRunnableContext runnableContext) {
 		Check.checkArg(service);
 		this.service = service;
@@ -101,8 +109,11 @@ public class InstallPackages {
 		else {
 			try {
 				runnableContext.run(true, false, new IRunnableWithProgress() {
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						monitor.beginTask(Messages.getString("InstallPackages.GettingPackagesJobLabel"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						monitor.beginTask(
+								Messages.getString("InstallPackages.GettingPackagesJobLabel"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 						getPackageList();
 					}
 				});
@@ -111,7 +122,7 @@ public class InstallPackages {
 			}
 		}
 	}
-	
+
 	private void getPackageList() {
 		try {
 			PackagesType packages = getAvailablePackagesFromServer();
@@ -120,22 +131,74 @@ public class InstallPackages {
 				packageList = new ArrayList<PackageType>(elist);
 				Collections.sort(packageList, new Comparator<PackageType>() {
 					public int compare(PackageType o1, PackageType o2) {
-						return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
+						return o1.getDisplayName().compareToIgnoreCase(
+								o2.getDisplayName());
 					}
 				});
+				getSDKFamilyOrder(packages);
+				getSDKVersionOrder(packages);
 			}
 		} catch (Exception e) {
 			RemoteConnectionsActivator.logError(e);
 			if (e.getCause() instanceof ConnectTimeoutException)
-				RemoteConnectionsActivator.logMessage(Messages.getString("InstallPackages.TimeoutMissingProxyMessage"), IStatus.INFO); //$NON-NLS-1$
+				RemoteConnectionsActivator
+						.logMessage(
+								Messages.getString("InstallPackages.TimeoutMissingProxyMessage"), IStatus.INFO); //$NON-NLS-1$
 		}
 	}
-	
+
+	private void getSDKFamilyOrder(PackagesType packages) {
+		SDKFamilyType sdkFamily = packages.getSDKFamily();
+		if (sdkFamily != null) {
+			String order = sdkFamily.getOrder();
+			sdkFamilyOrder = Arrays.asList(order.split(ORDER_DELIM));
+		} else
+			sdkFamilyOrder = Collections.emptyList();
+	}
+
+	private void getSDKVersionOrder(PackagesType packages) {
+		SDKVersionType sdkVersion = packages.getSDKVersion();
+		if (sdkVersion != null) {
+			String order = sdkVersion.getOrder();
+			sdkVersionOrder = Arrays.asList(order.split(ORDER_DELIM));
+		} else
+			sdkVersionOrder = Collections.emptyList();
+	}
+
+	public Comparator<String> getSDKFamilyComparator() {
+		return getOrderListStringComparator(sdkFamilyOrder);
+	}
+
+	public Comparator<String> getSDKVersionComparator() {
+		if (sdkVersionOrder.isEmpty())
+			return Collections.reverseOrder(); // for backward compatibility
+		return getOrderListStringComparator(sdkVersionOrder);
+	}
+
+	private static Comparator<String> getOrderListStringComparator(
+			final List<String> orderList) {
+		return new Comparator<String>() {
+			public int compare(String o1, String o2) {
+				if (o1.equals(o2))
+					return 0;
+
+				for (String orderString : orderList) {
+					if (o1.equals(orderString))
+						return -1;
+					else if (o2.equals(orderString))
+						return 1;
+				}
+				
+				return o1.compareTo(o2);
+			}
+		};
+	}
+
 	public List<PackageType> getAvailablePackageList() {
 		return packageList;
 	}
-	
-	private static PackagesType loadPackages(URL url) throws Exception  {
+
+	private static PackagesType loadPackages(URL url) throws Exception {
 		if (url == null)
 			return null;
 
@@ -146,20 +209,21 @@ public class InstallPackages {
 
 		r.load(null);
 		EList<EObject> contents = r.getContents();
-	
+
 		DocumentRoot root = (DocumentRoot) contents.get(0);
 		PackagesType packages = root.getPackages();
 
 		return packages;
 	}
-	
+
 	private PackagesType getAvailablePackagesFromServer() throws Exception {
-        GetMethod getMethod = new GetMethod(getMasterFilePath());
+		GetMethod getMethod = new GetMethod(getMasterFilePath());
 		HttpClient client = new HttpClient();
 		setProxyData(client, getMethod);
-        client.getHttpConnectionManager().getParams().setConnectionTimeout(8000);
-        int serverStatus = 0;
-        byte[] responseBody;
+		client.getHttpConnectionManager().getParams()
+				.setConnectionTimeout(8000);
+		int serverStatus = 0;
+		byte[] responseBody;
 		try {
 			serverStatus = client.executeMethod(getMethod);
 			responseBody = getMethod.getResponseBody();
@@ -169,42 +233,42 @@ public class InstallPackages {
 		} finally {
 			getMethod.releaseConnection();
 		}
-        
-        // HTTP status codes: 2xx = Success
-    	if (serverStatus >= 200 && serverStatus < 300) {
-    		File tempDir = FileUtils.getTemporaryDirectory();
-    		IPath path = new Path(tempDir.getAbsolutePath());
-    		IPath masterFilePath = path.append(getMasterFileName());
-    		File masterFile = masterFilePath.toFile();
-    		if (masterFile.exists())
-    			masterFile.delete();
-            FileOutputStream fos = new FileOutputStream(masterFile);
-            BufferedOutputStream out = new BufferedOutputStream(fos);
-            ByteArrayInputStream in = new ByteArrayInputStream(responseBody);
-            boolean foundOpenBrace = false;
-            int c;
-            while ((c = in.read()) != -1) {
-            	if (c == '<')
-            		foundOpenBrace = true;
-            	if (foundOpenBrace)
-            		out.write(c);
-            }
-            out.close();
-            in.close();
-    		URL url = masterFile.toURI().toURL();
-    		return loadPackages(url);
-    	}
-    	
-       return null;
+
+		// HTTP status codes: 2xx = Success
+		if (serverStatus >= 200 && serverStatus < 300) {
+			File tempDir = FileUtils.getTemporaryDirectory();
+			IPath path = new Path(tempDir.getAbsolutePath());
+			IPath masterFilePath = path.append(getMasterFileName());
+			File masterFile = masterFilePath.toFile();
+			if (masterFile.exists())
+				masterFile.delete();
+			FileOutputStream fos = new FileOutputStream(masterFile);
+			BufferedOutputStream out = new BufferedOutputStream(fos);
+			ByteArrayInputStream in = new ByteArrayInputStream(responseBody);
+			boolean foundOpenBrace = false;
+			int c;
+			while ((c = in.read()) != -1) {
+				if (c == '<')
+					foundOpenBrace = true;
+				if (foundOpenBrace)
+					out.write(c);
+			}
+			out.close();
+			in.close();
+			URL url = masterFile.toURI().toURL();
+			return loadPackages(url);
+		}
+
+		return null;
 	}
-	
+
 	private static java.net.URI getURI(GetMethod getMethod) {
 		try {
 			return new java.net.URI(getMethod.getURI().toString());
 		} catch (Exception e) {
 			RemoteConnectionsActivator.logError(e);
 		}
-		
+
 		return null;
 	}
 
@@ -221,13 +285,14 @@ public class InstallPackages {
 		if (proxyData.isRequiresAuthentication()) {
 			String userId = proxyData.getUserId();
 			String password = proxyData.getPassword();
-			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(userId, password);
+			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
+					userId, password);
 			AuthScope authScope = new AuthScope(host, port);
 			client.getState().setCredentials(authScope, credentials);
 			getMethod.setDoAuthentication(true);
 		}
 	}
-	
+
 	public String getInstallUrlString(String installFilePath) {
 		URL url;
 		try {

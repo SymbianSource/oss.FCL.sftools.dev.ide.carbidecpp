@@ -45,6 +45,7 @@ import com.nokia.carbide.installpackages.gen.InstallPackages.PackageType;
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 
+@SuppressWarnings("deprecation")
 public abstract class AbstractPackageInstallerProvider implements IRemoteAgentInstallerProvider {
 
 	public class PackageTypeInstaller implements IRemoteAgentInstaller {
@@ -190,7 +191,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 			sdkFamilyNames.add(sdkFamily);
 		}
 		List<String> sdkFamilyNameList = new ArrayList<String>(sdkFamilyNames);
-		Collections.sort(sdkFamilyNameList);
+		Collections.sort(sdkFamilyNameList, packages.getSDKFamilyComparator());
 		return sdkFamilyNameList;
 	}
 
@@ -207,8 +208,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 			}
 		}
 		List<String> versionList = new ArrayList<String>(versions);
-		Collections.sort(versionList);
-		Collections.reverse(versionList);
+		Collections.sort(versionList, packages.getSDKVersionComparator());
 		return versionList;
 	}
 
