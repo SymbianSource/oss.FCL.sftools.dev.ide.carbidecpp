@@ -9,6 +9,7 @@
 		style="carbide.css" 
 		path="tutorials/@">
 		
+		<!--
 		<group label="N-Gage Development" id="carbide-cpp" style-id="content-group">
 		
 			<link 
@@ -20,6 +21,8 @@
 			</link>			
 
 		</group>
+		-->
+		
 	</extensionContent>
 	
 </introContent>

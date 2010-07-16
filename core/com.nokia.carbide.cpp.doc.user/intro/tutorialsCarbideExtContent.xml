@@ -1,4 +1,4 @@
-DLL<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <introContent>
 
@@ -41,14 +41,6 @@ DLL<?xml version="1.0" encoding="UTF-8" ?>
 				id="carbide-sample" 
 				style-id="content-link">
 				<text>Learn how to create and build an application and debug it on a device using JTAG debug software on Lauterbach hardware.</text>
-			</link>
-
-			<link 
-				label="Using soft attach for on-device debugging example" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/soft_attach_debug.htm"  
-				id="carbide-sample" 
-				style-id="content-link">
-				<text>Learn how to use soft attach to debug an image flashed to ROM or on a memory card.</text>
 			</link>
 			
 		</group>
