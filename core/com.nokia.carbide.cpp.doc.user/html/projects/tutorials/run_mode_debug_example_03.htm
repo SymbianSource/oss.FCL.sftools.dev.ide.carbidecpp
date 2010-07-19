@@ -18,8 +18,44 @@
     </ol>
 <hr>
 <p>&nbsp;</p>
-<p><strong>Configure project for debugging</strong></p>
-<p>&nbsp;</p>
+<div class="step">
+    <h4><strong>Configure project for debugging</strong></h4>
+    <ol>
+        <li>Select a configuration to debug the HelloWorld application on the target device.
+    		<p>We choose <strong>Phone Debug (armv5_udeb)</strong> for this example using the <strong>Manage Configurations</strong> icon on the toolbar, but yours name may differ based upon the SDK  selected for your project.</p>
+            <p><img src="../images/debugging_project_07.png" alt="Select device target"></p>
+        </li>
+        <li>Click the Debug icon (<img src="../images/icon_debug.png" alt="Debug icon" width="17" height="17" align="absmiddle">) on the toolbar.
+    		<p>This opens the <strong>New Launch Configuration Wizard</strong> dialog asking for additional information. For the first launch you must define the name of the package to install on the target device.</p>
+            <p><img src="../images/debugging_project_08.png" alt="New Launch Configuration Wizard" width="538" height="434"></p>
+            <ol type="a">
+                <li>Click the Change... button in the Debug Process section to open the Change Debug Process dialog.
+                	<p><img src="../images/debugging_project_09.png" alt="New Launch Configuration Wizard" width="621" height="410"></p>
+                </li>
+                <li>Enable the 'Launch program on device' option and select the executable to launch.
+                	<p>This tells the TRK remote agent which application to launch once its downloaded.</p>
+                </li>
+                <li>Click the 'Modify SIS builder settings for build configuration' to open the Properties for <em>project</em> dialog.</li>
+                	<p>The <strong>Carbide.c++ &gt; Build Configurations &gt; SIS Builder</strong> tab is shown.</p>
+                	<p><img src="../images/debugging_project_11.png" alt="SIS Builder tab" width="606" height="297"></p>
+                <li>Click Add to open the SIS Properties dialog.
+                	<p><img src="../images/debugging_project_10.png" alt="SIS Properties dialog"></p>
+                </li>
+                <li>Select the project's PKG file to download to the device, then click OK.
+                	<p><img src="../images/debugging_project_12.png" alt="SIS Builder tab" width="607" height="292"></p>
+                </li>
+                <li>Verify the PKG in the SIS Builder tab, then click OK.</li>
+            </ol>
+            <li>Verify the settings in the Change Debug Process, then click OK.
+            	<p><img src="../images/debugging_project_13.png" alt="SIS Builder tab" width="557" height="410"></p>
+            </li>
+        <li>Review the Configure launch configuration setup, then click Debug.
+            <p><img src="../images/debugging_project_14.png" alt="SIS Builder tab" width="516" height="434"></p>
+            <p>The project is built, downloaded to the target device, and the executable launched on the device.</p>
+        </li>
+    </ol>
+    <p>On subsequent launches the project will be compiled and downloaded to the target device without any setup on your part. The only time you should need to perform these actions is if you change anything that effects to launch configuration. Of course, you can always modify the settings by using the <strong>New</strong> or <strong>Debug</strong> window to edit launch configurations.</p>
+</div>
 <p><strong>NEXT:</strong> <a href="run_mode_debug_example_04.htm">Debug project on target device</a></p>
 <h4>Other references</h4>
 <ul>
