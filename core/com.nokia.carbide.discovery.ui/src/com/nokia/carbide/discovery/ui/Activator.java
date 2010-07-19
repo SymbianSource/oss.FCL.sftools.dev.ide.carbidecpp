@@ -20,10 +20,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Properties;
 
+import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -33,6 +35,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -44,6 +48,9 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
+	private static final String PROPERTY_PROXYPORT = "network.proxy_port"; //$NON-NLS-1$
+	private static final String PROPERTY_PROXYHOST = "network.proxy_host"; //$NON-NLS-1$
+	
 	/**
 	 * The constructor
 	 */
@@ -56,6 +63,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com"));
+		System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
+		System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
 	}
 
 	/*

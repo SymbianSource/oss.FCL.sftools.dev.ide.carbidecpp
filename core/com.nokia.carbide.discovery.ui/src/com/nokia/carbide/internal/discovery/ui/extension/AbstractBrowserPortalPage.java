@@ -162,7 +162,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 		composite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		composite.setLayout(new FillLayout());
 		try {
-			browser = new Browser(composite, SWT.NONE);
+			browser = new Browser(composite, SWT.MOZILLA);
 		} catch (SWTError e) {
 			e.printStackTrace();
 		}
