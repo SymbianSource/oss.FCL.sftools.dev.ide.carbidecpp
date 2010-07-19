@@ -20,23 +20,22 @@
     <topic label="Concepts" 					href="html/concepts/concepts.htm" />
   </topic>
    <topic label="Carbide tutorials">
-		<topic label="Creating and Debugging Projects Tutorial"		href="html/projects/tutorials/new_proj_from_template_00.htm" >
+		<topic label="Emulator Application Projects"				href="html/projects/tutorials/new_proj_from_template_00.htm" >
 		  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
 		  <topic label="Building projects and components" 			href="html/projects/tutorials/new_proj_from_template_02.htm" />
 		  <topic label="Defining a launch configuration"			href="html/projects/tutorials/new_proj_from_template_03.htm" />
 		  <topic label="Launching and debugging an executable" 		href="html/projects/tutorials/new_proj_from_template_04.htm" />
 		</topic>
-		<topic label="Creating and Debugging DLL Projects"			href="html/projects/tutorials/new_proj_dll_example_00.htm" >
+		<topic label="DLL Projects"									href="html/projects/tutorials/new_proj_dll_example_00.htm" >
 		  <topic label="Creating DLL Projects" 						href="html/projects/tutorials/new_proj_dll_example_01.htm" />
 		  <topic label="Building the DLL Project" 					href="html/projects/tutorials/new_proj_dll_example_02.htm" />
 		  <topic label="Debugging a DLL Project"					href="html/projects/tutorials/new_proj_dll_example_03.htm" />
 		</topic>
-		<topic label="Debugging on Remote Targets (Run-mode)"		href="html/projects/tutorials/run_mode_debug_example_00.htm" >
-		  <topic label="Verifying system setup" 					href="html/projects/tutorials/run_mode_debug_example_01.htm" />
-		  <topic label="Install remote debug agent" 				href="html/projects/tutorials/run_mode_debug_example_02.htm" />
-		  <topic label="Connect remote device to PC"				href="html/projects/tutorials/run_mode_debug_example_03.htm" />
-		  <topic label="Create or import project"					href="html/projects/tutorials/run_mode_debug_example_04.htm" />
-		  <topic label="Debug on remote device"						href="html/projects/tutorials/run_mode_debug_example_05.htm" />
+		<topic label="Remote Target Debugging (Run-mode)"			href="html/projects/tutorials/run_mode_debug_example_00.htm" >
+		  <topic label="Install remote debug agent" 				href="html/projects/tutorials/run_mode_debug_example_01.htm" />
+		  <topic label="Connect remote device to PC"				href="html/projects/tutorials/run_mode_debug_example_02.htm" />
+		  <topic label="Create or import project"					href="html/projects/tutorials/run_mode_debug_example_03.htm" />
+		  <topic label="Debug on remote device"						href="html/projects/tutorials/run_mode_debug_example_04.htm" />
 		</topic>
    </topic>
   <topic label="Carbide menus" 					href="html/reference/menus/menus.htm" >
