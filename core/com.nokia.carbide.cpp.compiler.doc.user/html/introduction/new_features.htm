@@ -5,11 +5,50 @@
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>New Features &amp; Bug Fixes</title>
 <link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style5 {color: #FF0000}
+-->
+</style>
 </head>
 <body bgcolor="#FFFFFF">
 <h2>New Features &amp; Bug Fixes</h2>
-<p>A list of bug fixes for the compiler and linker can be found in the <span class="code">Symbian_x86_BuildTools_Notes.txt</span> file located in the <span class="code">&lt;Carbide_Install_Dir&gt;\x86Build\Release_Notes</span> directory.</p>
+<p>A list of bug fixes for the compiler and linker can be found in the <span class="code">Symbian_x86_BuildTools_Notes.txt</span> file located in the <span class="code">&lt;Carbide_Install_Dir&gt;\x86Build\Release_Notes</span> directory. The latest build information is always available on the Symbian Foundation Wiki under <a href="http://developer.symbian.org/wiki/index.php/Category:C/C++/WINSCW">WINSCW (build version information)</a>.</p>
 <p>This reference has new and updated topics:</p>
+<h5>3.2.5 Build 489</h5>
+<ul>
+    <li>Corrected an issue that prevented compiling of files with different case handling across different OS systems.</li>
+</ul>
+<h5>3.2.5 Build 488</h5>
+<ul>
+    <li> Fixed an issue where a <span class="code">const</span> exception is thrown but it was not getting caught by a non <span class="code">const catch</span> block.</li>
+    <li>Fixed an internal compiler error in floating point code generation during optimization.</li>
+</ul>
+<h5>3.2.5 Build 487</h5>
+<ul>
+    <li><span class="style5"><b>IMPORTANT WINSCW COMPILER</b></span> change - the WINSCW compiler 3.2.5 build 487  provides new name mangling to support critical exception handling. Without this change an exception can cause a program or system crash. For more information visit the <a href="http://developer.symbian.org/wiki/index.php/Category:C/C++/WINSCW">WINSCW</a> wiki page. <br>
+    </li>
+    <li>Made &quot;<span class="code">-def_for_structclass on</span>&quot; the default.</li>
+</ul>
+<h5>3.2.5 Build 486</h5>
+<ul>
+    <li>Fixed a C file compile error when assigning a DLL import function name to a function pointer.</li>
+</ul>
+<h5>3.2.5 Build 485</h5>
+<ul>
+    <li>Fixed a codegen bug when a bit field object with post-decrement is used as a while loop counter.</li>
+</ul>
+<h5>3.2.5 Build 482</h5>
+<ul>
+    <li>Fixed a bad assert flagging false an internal compiler error.</li>
+</ul>
+<h5>3.2.5 Build 481</h5>
+<ul>
+    <li>Default constructor initialized to zero to comply with C++ standard &sect;5.3.4.15.</li>
+    <li>Fixed an issue for bad relocation type in reference to the destructor of an imported class from a DLL.</li>
+    <li>Reverted bugfix on the issue around forward declaration in class/struct conflicting with definition, 	we added a new command line switch <span class="code">-def_for_structclass on</span>, and <span class="code">#pragma def_for_structclass</span> for the picking 	up the definition instead of forward declaration.</li>
+</ul>
+<h4>Previous releases</h4>
 <ul>
   <li>See pragma <a href="../pragmas/p_gcc_extensions.htm">gcc_extensions </a>for GCC improvements</li>
   <li>See pragma <a href="../pragmas/p_c99.htm">c99</a> for C99 improvements</li>
@@ -134,7 +173,7 @@
   <li>Information in this manual now uses references to the ISO C and C++ standards instead of Ellis and Stroustrup&rsquo;s The Annotated C++ Reference Manual (ARM) and Kernighan and Richie&rsquo;s The C Programming Language (K&amp;R).<br />
 </li>
 </ul>
-<div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 
 </body>

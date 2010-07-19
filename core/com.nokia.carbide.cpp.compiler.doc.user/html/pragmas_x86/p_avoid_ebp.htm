@@ -17,7 +17,7 @@
   <p>Disabling the use of the EBP register with <span class="code">#pragma avoid_ebp</span> on ensures that the stack chains are coherent, even if they do not include every called function, so code that relies on the stack chain (i.e. crash recovery tools and structured exception handling) will work more consistently. Note that this can have an effect on performance (only 6 internal registers are available instead of 7) so do not use it in speed-critical code.</p>
   <p>This #pragma is recommended for programs using <span class="code">_set_se_translator()</span> under the zero-overhead exceptions model. The SEH handler chain and the zero-overhead exception stack are independent of each other, unlike the MS exceptions model where both share the same chain, so the zero-overhead exceptions model needs more help reconciling the fact that exceptions can be thrown from anywhere in the program. <br />
 </p>
-  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+  <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 
 </body>
