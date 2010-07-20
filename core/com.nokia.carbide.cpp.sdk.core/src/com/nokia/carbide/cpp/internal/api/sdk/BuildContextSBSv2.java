@@ -313,8 +313,9 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	@Override
 	public String getToolChain() {
-		Map<String, String> buildMacros = configQueryData.getBuildMacros();
-		if (buildMacros != null) {
+		
+		if (configQueryData != null) {
+			Map<String, String> buildMacros = configQueryData.getBuildMacros();
 			// try to figure out the tool chain using macros from Raptor config query
 			if (buildMacros.containsKey(MACRO_ARM)) {
 				return TOOLCHAIN_ARM;
@@ -324,7 +325,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 				return TOOLCHAIN_WINSCW;
 			}
 		} else {
-			// if no macros available, use alais name instead
+			// if no macros available, use alias name instead
 			if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_ARM)) {
 				return TOOLCHAIN_ARM;
 			} else if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE)) {

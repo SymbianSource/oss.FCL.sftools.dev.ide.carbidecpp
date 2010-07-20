@@ -50,6 +50,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -456,7 +457,11 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 
 	public IPath getTargetOutputDirectory() {
 		if (context instanceof ISBSv2BuildContext){
-			return new Path(((ISBSv2BuildContext)context).getConfigQueryData().getOutputPathString());
+			if (((ISBSv2BuildContext) context).getConfigQueryData() != null){
+				return new Path(((ISBSv2BuildContext)context).getConfigQueryData().getOutputPathString());
+			} else {
+				return new Path("/" + SBSv2QueryUtils.BAD_EPOCROOT);
+			}
 		} else {
 			ISymbianSDK sdk = getSDK();
 			ISBSv1BuildContext v1Context = (ISBSv1BuildContext)context;
