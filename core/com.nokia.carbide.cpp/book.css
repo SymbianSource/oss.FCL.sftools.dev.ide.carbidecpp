@@ -1,5 +1,5 @@
 /*	
-	Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+	Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies). 
 	All rights reserved. 
 	License: http://www.eclipse.org/legal/epl-v10.html
 */
@@ -12,7 +12,7 @@ html {
 /* 20091007 added verdana and ariel to list to match SFO website fonts choices */
 body, p, table, li {
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
-	font-size: 1em;
+	font-size: 1.0em;
 	font-weight: normal;
 }
 
@@ -32,10 +32,14 @@ h6 { font-size: 0.8em }
 /*	For headlines at the top of a view, add space	*/
 /*	20090224-changed green fade to gold header image	*/
 h1, h2, h3 {
-	background-image: url(icons/gold_header.png);
+	background-image: url(html/images/gold_header.png);
 	background-repeat: no-repeat;
 	padding:10px 0px 10px 12px;	
 	}
+
+/* 20091007 SFO styling added */
+h1.NavTitle		{ font-size: 1.2em }
+h3	.NavListTitle 	{ font-size: 1.1em }
 
 li	{
 	margin-bottom:8px;	
@@ -53,7 +57,7 @@ li	{
 	}
 
 .listing	{
-	background-color: #ffe869;
+	background-color: #FFFFCC;
 	font-family: "Courier New", Courier, mono;
 	font-size: 1.1em;
 	color: #000000;
@@ -97,7 +101,7 @@ td, th	{
 	}
 	
 th	{
-	background-color: #8FCAE7;
+	background-color: #66CC66;
 	}
 
 div.ol.p	{
@@ -116,7 +120,7 @@ div ol > p, div ul > p, div li > p {
 	
 div h5, div h4	{
 	padding:5px 0px 5px 12px;
-	background-color: #ffd62c;
+	background-color: #D3DAD4;
 	font-weight:bold;
 	color: #000000;
 	}
@@ -174,4 +178,4 @@ p.figure {
 
 a:link 		{ color: #026690 }
 a:visited	{ color: #555555 }
-aa:hover 	{ color: #FFD62C }
+a:hover 	{ color: #FFD62C }

@@ -12,7 +12,7 @@
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
 		
 			<link 
-				label="Creating and Debugging Symbian OS Projects" 
+				label="Emulator Application Projects" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_from_template_00.htm" 
 				id="carbide-sample" 
 				style-id="content-link">
@@ -20,7 +20,7 @@
 			</link>
 			
 			<link 
-				label="Creating and Debugging DLL Projects" 
+				label="DLL Projects" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_dll_example_00.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
@@ -28,13 +28,14 @@
 			</link>
 			
 			<link 
-				label="Debugging on Remote Targets (Run-mode)" 
+				label="Remote Target Debugging (Run-mode)" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/run_mode_debug_example_00.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how debug applications on remote devices using the TRK debug agent.</text>
+				<text>Learn how debug applications on remote devices using the TRK remote agent.</text>
 			</link>
 
+			<!--
 			<link 
 				label="Create a stop mode debugging application" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/stop_mode_debug.htm"  
@@ -42,6 +43,7 @@
 				style-id="content-link">
 				<text>Learn how to create and build an application and debug it on a device using JTAG debug software on Lauterbach hardware.</text>
 			</link>
+			-->
 			
 		</group>
 	</extensionContent>
