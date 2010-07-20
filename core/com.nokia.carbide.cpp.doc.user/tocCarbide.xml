@@ -32,9 +32,9 @@
 		  <topic label="Debugging a DLL Project"					href="html/projects/tutorials/new_proj_dll_example_03.htm" />
 		</topic>
 		<topic label="Remote Target Debugging (Run-mode)"			href="html/projects/tutorials/run_mode_debug_example_00.htm" >
-		  <topic label="Install remote debug agent" 				href="html/projects/tutorials/run_mode_debug_example_01.htm" />
-		  <topic label="Connect remote device to PC"				href="html/projects/tutorials/run_mode_debug_example_02.htm" />
-		  <topic label="Create or import project"					href="html/projects/tutorials/run_mode_debug_example_03.htm" />
+		  <topic label="Connect remote device to PC" 				href="html/projects/tutorials/run_mode_debug_example_01.htm" />
+		  <topic label="Install remote debug agent"					href="html/projects/tutorials/run_mode_debug_example_02.htm" />
+		  <topic label="Configure project for downloading"			href="html/projects/tutorials/run_mode_debug_example_03.htm" />
 		  <topic label="Debug on remote device"						href="html/projects/tutorials/run_mode_debug_example_04.htm" />
 		</topic>
    </topic>
