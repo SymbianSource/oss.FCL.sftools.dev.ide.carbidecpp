@@ -3,6 +3,7 @@ package com.nokia.carbide.cpp.sdk.core.test;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -84,6 +85,23 @@ public class TestSBSv2BuildContext extends TestCase {
 
 		// getCompilerMacros()
 		assertNotNull(context.getCompilerMacros());		
+
+		// getToolChain()
+		String toolChain = context.getToolChain();
+		assertNotNull(toolChain);
+		Map<String, String> buildMacros = context.getConfigQueryData().getBuildMacros();
+		if (buildMacros != null) {
+			if (buildMacros.containsKey(ISBSv2BuildContext.MACRO_ARM)) {
+				assertTrue(toolChain.equals(ISBSv2BuildContext.TOOLCHAIN_ARM));
+			} else if (buildMacros.containsKey(ISBSv2BuildContext.MACRO_GCCE)) {
+				assertTrue(toolChain.equals(ISBSv2BuildContext.TOOLCHAIN_GCCE));
+			} else if (buildMacros.containsKey(ISBSv2BuildContext.MACRO_WINSCW)) {
+				assertTrue(toolChain.equals(ISBSv2BuildContext.TOOLCHAIN_WINSCW));
+			} else {
+				assertTrue(toolChain.equals(ISBSv2BuildContext.TOOLCHAIN_UNKNOWN));
+			}
+		}
+
 	}
 
 }

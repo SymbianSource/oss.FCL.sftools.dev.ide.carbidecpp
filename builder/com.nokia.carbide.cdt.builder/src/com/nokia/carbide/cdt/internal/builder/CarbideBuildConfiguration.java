@@ -322,15 +322,14 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		String plat = this.getPlatformString();
 		
 		if (context instanceof ISBSv2BuildContext){
-			// TODO: Getting the tool chain can actually come from the SBSv2 build context.
-			// The metadata macros will tell what toolchain is being used (e.g. ARMCC, CW32, GCCE)
-			if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_GCCE)){
-				return ERROR_PARSERS_GCCE;
-			} else if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_WINSCW)){
-				return ERROR_PARSERS_WINSCW;
-			} else if (((ISBSv2BuildContext)context).getSBSv2Alias().toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_ARM)){
+			String toolChain = ((ISBSv2BuildContext)context).getToolChain();
+			if (toolChain.equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_ARM)){
 				return ERROR_PARSERS_ARMVx;
-			}
+			} else if (toolChain.equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_GCCE)){
+				return ERROR_PARSERS_GCCE;
+			} else if (toolChain.equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_WINSCW)){
+				return ERROR_PARSERS_WINSCW;
+			} 
 		} else {
 			// SBSV1
 			if (plat.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)){

@@ -27,7 +27,7 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class BuildContextSBSv2 implements ISBSv2BuildContext {
-	
+
 	private String platform;
 	private String target;
 	private String sbsv2Alias;
@@ -261,7 +261,8 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	}
 	
 	private void setPlatformAndTargetFromOutputPath() {
-		if (configQueryData.getOutputPathString() == null) {
+		String pathString = configQueryData.getOutputPathString();
+		if (pathString == null || pathString.length() == 0) {
 			platform = "";
 			target = "";
 			return;
@@ -305,7 +306,33 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return configQueryData;
 	}
 
+	@Override
 	public ISBSv2ConfigQueryData getConfigQueryData() {
 		return configQueryData;
+	}
+
+	@Override
+	public String getToolChain() {
+		Map<String, String> buildMacros = configQueryData.getBuildMacros();
+		if (buildMacros != null) {
+			// try to figure out the tool chain using macros from Raptor config query
+			if (buildMacros.containsKey(MACRO_ARM)) {
+				return TOOLCHAIN_ARM;
+			} else if (buildMacros.containsKey(MACRO_GCCE)) {
+				return TOOLCHAIN_GCCE;
+			} else if (buildMacros.containsKey(MACRO_WINSCW)) {
+				return TOOLCHAIN_WINSCW;
+			}
+		} else {
+			// if no macros available, use alais name instead
+			if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_ARM)) {
+				return TOOLCHAIN_ARM;
+			} else if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE)) {
+				return TOOLCHAIN_GCCE;
+			} else if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_WINSCW)) {
+				return TOOLCHAIN_WINSCW;
+			}
+		}
+		return TOOLCHAIN_UNKNOWN;
 	}
 }
