@@ -59,15 +59,14 @@
   </topic>
   <topic label="Carbide views"  >
       <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
-      <topic label="Carbide Portal view"			href="html/reference/view_carbide_portal.htm" />
       <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
+      <topic label="Carbide Portal"	    			href="html/reference/view_carbide_portal.htm" >
+      	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
+  	  </topic>
       <topic label="Console view" 					href="html/reference/view_log.htm" />
       <topic label="Debug view"						href="html/debugger/debug/viewing_debug.htm" />
       <topic label="Disassembly view"				href="html/reference/view_disassembly.htm" />
       <topic label="Executables view"				href="html/reference/view_executables.htm" />
-      <topic label="Install Extensions view"	    href="html/reference/view_install_extensions.htm" >
-      	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
-  	  </topic>
       <topic label="Memory view"				href="html/reference/view_memory_wnd.htm" >
         <topic href="html/concepts/working_with_memory.htm" label="Working with Memory"></topic>
         <topic label="Opening a Memory View"					href="html/tasks/memory/view_memory_show.htm" />
@@ -257,6 +256,7 @@
       <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
     </topic>
 	
+	<!--
        <topic label="Debugging with an emulator"				href="html/projects/launch/launch_emulator.htm" >
 			<topic label="Executable Selection"					href="html/projects/launch/wiz_new_launch_config.htm#EXE_SEL" />
 			<topic label="Build Options Selection"				href="html/projects/launch/wiz_new_launch_config.htm#BLD_OPT" />
@@ -267,7 +267,7 @@
 			</topic>
     		<topic label="DLL Emulator Example" href="html/concepts/SampleExampleProjectCreate.html" />
        </topic>
-       
+	
     <topic label="Run mode projects"  href="html/projects/launch/pnp_debug_overview.htm" >
       <topic label="Run Mode Overview"  			href="html/tasks/start/carbide_overview_trk.htm" ></topic>
       <topic href="html/concepts/autotargeting.htm" label="Auto-Targeting of Executables"></topic>
@@ -279,6 +279,8 @@
        </topic>
       <topic href="html/tasks/debugger/run_mode_debug.htm" label="Run Mode Example">
       </topic>
+    </topic>
+    -->
         
       <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
       <topic href="html/tasks/projects/prj_import_exe.htm" label="Importing a Symbian Executable"></topic>
@@ -287,7 +289,6 @@
       <topic href="html/concepts/arm_registers.htm" label="Registers"></topic>
       <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data View"></topic>
         
-    </topic>
     
     <topic label="Stop mode projects" 				href="html/tasks/StopModeToc.htm">
        <topic href="html/projects/launch/launch_board.htm" label="Debugging a reference board">
