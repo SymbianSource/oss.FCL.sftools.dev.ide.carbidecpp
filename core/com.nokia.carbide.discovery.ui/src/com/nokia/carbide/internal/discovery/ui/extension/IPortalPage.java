@@ -46,6 +46,12 @@ public interface IPortalPage {
 		 * @return IAction
 		 */
 		IAction[] getActions();
+		
+		/**
+		 * Action ids for actions that should be emphasized in the action bar (e.g., bold font)
+		 * @return String[] or null
+		 */
+		String[] getHighlightedActionIds();
 
 	}
 	

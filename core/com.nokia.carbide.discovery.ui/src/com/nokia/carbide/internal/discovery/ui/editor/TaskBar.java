@@ -88,6 +88,16 @@ class TaskBar extends RoundedCornerComposite {
 				link.setToolTipText(toolTipText);
 			link.setForeground(link.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
 			link.setBackground(link.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+			String actionId = action.getId();
+			String[] highlightedActionIds = actionBar.getHighlightedActionIds();
+			if (actionId != null && highlightedActionIds != null) {
+				for (String highlightedId : highlightedActionIds) {
+					if (highlightedId.equals(actionId)) {
+						link.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DIALOG_FONT));
+						break;
+					}
+				}
+			}
 			linkToActionMap.put(link, action);
 			link.addHyperlinkListener(listener);
 		}

@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 public abstract class AbstractBrowserPortalPage implements IPortalPage {
 
@@ -74,7 +75,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 
 		@Override
 		public String getTitle() {
-			return "Navigation";
+			return Messages.AbstractBrowserPortalPage_NavigationTitle;
 		}
 
 		@Override
@@ -84,7 +85,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 
 		private void makeActions() {
 			actions = new ArrayList<IAction>();
-			IAction a = new Action("Back") {
+			IAction a = new Action(Messages.AbstractBrowserPortalPage_BackLabel) {
 				@Override
 				public void run() {
 					if (browser != null) {
@@ -99,7 +100,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 			};
 			actions.add(a);
 			
-			a = new Action("Forward") {
+			a = new Action(Messages.AbstractBrowserPortalPage_ForwardLabel) {
 				@Override
 				public void run() {
 					if (browser != null) {
@@ -114,7 +115,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 			};
 			actions.add(a);
 			
-			a = new Action("Refresh Page") {
+			a = new Action(Messages.AbstractBrowserPortalPage_RefreshLabel) {
 				@Override
 				public void run() {
 					if (browser != null) {
@@ -130,7 +131,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 			};
 			actions.add(a);
 
-			a = new Action("Stop Loading") {
+			a = new Action(Messages.AbstractBrowserPortalPage_StopLabel) {
 				@Override
 				public void run() {
 					if (browser != null) {
@@ -154,6 +155,11 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 		private void setLoading(boolean loading) {
 			browser.setCursor(loading ? browser.getDisplay().getSystemCursor(SWT.CURSOR_WAIT) : null);
 			this.loading = loading;
+		}
+
+		@Override
+		public String[] getHighlightedActionIds() {
+			return null;
 		}
 	}
 
@@ -179,7 +185,7 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 			URL url = new URL(Activator.getFromServerProperties(getClass().getName()));
 			return url.toString();
 		} catch (MalformedURLException e) {
-			Activator.logError("Could not load page due to bad URL", e);
+			Activator.logError(Messages.AbstractBrowserPortalPage_BadURLError, e);
 		}
 		
 		return null;

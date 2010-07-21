@@ -54,6 +54,8 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 @SuppressWarnings("restriction")
 public class InstallExtensionsPage implements IPortalPage {
 
+	private static final String INSTALL_ACTION_ID = InstallExtensionsPage.class.getName() + ".install"; //$NON-NLS-1$
+
 	private final class RunnableContextDialog extends ProgressMonitorDialog {
 		private final String title;
 
@@ -86,6 +88,11 @@ public class InstallExtensionsPage implements IPortalPage {
 		public IAction[] getActions() {
 			return actions;
 		}
+
+		@Override
+		public String[] getHighlightedActionIds() {
+			return new String[] {INSTALL_ACTION_ID};
+		}
 	}
 	
 	private final class LinkBar implements IActionBar {
@@ -109,6 +116,11 @@ public class InstallExtensionsPage implements IPortalPage {
 				}
 			};
 			return new IAction[] { action };
+		}
+
+		@Override
+		public String[] getHighlightedActionIds() {
+			return null;
 		}
 	}
 
@@ -137,7 +149,7 @@ public class InstallExtensionsPage implements IPortalPage {
 		GridLayoutFactory.swtDefaults().applyTo(c);
 		viewer = new CatalogViewer(getCatalog(), part.getEditorSite(), 
 				new RunnableContextDialog(part.getEditorSite().getShell(), 
-						Messages.DiscoveryView_GatherExtensionsTitle), 
+						Messages.InstallExtensionsPage_GatherExtensionsTitle), 
 				getConfiguration());
 		viewer.createControl(c);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
@@ -196,7 +208,28 @@ public class InstallExtensionsPage implements IPortalPage {
 	private IAction[] makeActions(final IEditorPart part) {
 		selectionListeners = new ArrayList<ISelectionChangedListener>();
 		List<IAction> actions = new ArrayList<IAction>();
-		IAction action = new Action(Messages.DiscoveryView_RefreshLabel) {
+		IAction action;
+		
+		// install
+		action = new BaseSelectionListenerAction(Messages.InstallExtensionsPage_InstallLabel) {
+			public void run() {
+				DiscoveryUi.install(viewer.getCheckedItems(), 
+						new RunnableContextDialog(part.getEditorSite().getShell(), 
+								Messages.InstallExtensionsPage_GatheringInstallInfoTitle));
+			};
+			
+			protected boolean updateSelection(IStructuredSelection selection) {
+				scheduleUpdateAllActionUIs();
+				return !selection.isEmpty();
+			};
+		};
+		action.setToolTipText(Messages.InstallExtensionsPage_InstallTip);
+		action.setId(INSTALL_ACTION_ID);
+		selectionListeners.add((ISelectionChangedListener) action);
+		actions.add(action);
+		
+		// refresh
+		action = new Action(Messages.InstallExtensionsPage_RefreshLabel) {
 			public void run() {
 				viewer.setSelection(StructuredSelection.EMPTY);
 				viewer.updateCatalog();
@@ -205,7 +238,8 @@ public class InstallExtensionsPage implements IPortalPage {
 		};
 		actions.add(action);
 		
-		action = new BaseSelectionListenerAction(Messages.DiscoveryView_CheckAllLabel) {
+		// check all
+		action = new BaseSelectionListenerAction(Messages.InstallExtensionsPage_CheckAllLabel) {
 			public void run() {
 				viewer.setSelection(StructuredSelection.EMPTY);
 				viewer.setSelection(getAllItemsSelection());
@@ -226,11 +260,12 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !getAllItemsSelection().equals(selection);
 			}
 		};
-		action.setId(getClass().getName() + ".checkAll"); //$NON-NLS-1$
+		action.setId(InstallExtensionsPage.class.getName() + ".checkAll"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
 		
-		action = new BaseSelectionListenerAction(Messages.DiscoveryView_UncheckAllLabel) {
+		// uncheck all
+		action = new BaseSelectionListenerAction(Messages.InstallExtensionsPage_UncheckAllLabel) {
 			public void run() {
 				viewer.setSelection(StructuredSelection.EMPTY);
 				viewer.refresh();
@@ -241,27 +276,12 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !selection.isEmpty();
 			};
 		};
-		action.setId(getClass().getName() + ".uncheckAll"); //$NON-NLS-1$
+		action.setId(InstallExtensionsPage.class.getName() + ".uncheckAll"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
-
-		action = new BaseSelectionListenerAction(Messages.DiscoveryView_InstallLabel) {
-			public void run() {
-				DiscoveryUi.install(viewer.getCheckedItems(), 
-						new RunnableContextDialog(part.getEditorSite().getShell(), 
-								Messages.DiscoveryView_GatheringInstallInfoTitle));
-			};
-			
-			protected boolean updateSelection(IStructuredSelection selection) {
-				scheduleUpdateAllActionUIs();
-				return !selection.isEmpty();
-			};
-		};
-		action.setId(getClass().getName() + ".install"); //$NON-NLS-1$
-		selectionListeners.add((ISelectionChangedListener) action);
-		actions.add(action);
-
-		action = new Action(Messages.DiscoveryView_AdvancedInstallLabel) {
+		
+		// advanced install
+		action = new Action(Messages.InstallExtensionsPage_AdvancedInstallLabel) {
 			public void run() {
 				showInstallWizard();
 			}
@@ -275,7 +295,7 @@ public class InstallExtensionsPage implements IPortalPage {
 				IActionBars bars = part.getEditorSite().getActionBars();
 				bars.getStatusLineManager().setMessage(
 						selection.isEmpty() ? null : MessageFormat.format(
-								Messages.DiscoveryView_StatusLineFmt, selection.size()));
+								Messages.InstallExtensionsPage_StatusLineFmt, selection.size()));
 			}
 		};
 		selectionListeners.add(selectionListener);

@@ -92,7 +92,7 @@ public class PortalEditor extends EditorPart {
 						rank = Integer.parseInt(rankString);
 					}
 					catch (NumberFormatException e) {
-						Activator.logError(MessageFormat.format("Could not get rank for portal page {0}",
+						Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError,
 										portalPage.getClass().getName()), e);
 					}
 				}
