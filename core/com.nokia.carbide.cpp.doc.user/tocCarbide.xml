@@ -48,10 +48,8 @@
     <topic label="Context menus" 				href="html/concepts/contextual_menus.htm" />
     <topic label="Freeze Exports" 				href="html/reference/menus/freeze_exports.htm" />
     <topic label="Freeze Symbian Component" 	href="html/reference/menus/freeze_symbian_comp.htm" />
-    <topic label="On-Device Connections..."		href="html/reference/trk/wnd_on_device_setup.htm" />
     <topic label="Open Command Window"			href="html/reference/menus/open_cmd_window.htm" />
     <topic label="Preprocess" 					href="html/reference/menus/preprocess_source.htm" />
-    <topic label="Run CodeScanner"				href="html/reference/menus/run_codescanner.htm" />
     <topic label="Show in Explorer"				href="html/reference/menus/open_explorer_window.htm" />
     <topic label="Symbian OS C++ Class"			href="html/tasks/projects/prj_adding_symbian_class.htm"  />
     <topic label="Symbian OS C++ Project"		href="html/tasks/CreatingNewProjects.html" />
