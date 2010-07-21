@@ -23,14 +23,13 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.osgi.framework.Version;
 
 import com.freescale.cdt.debug.cw.core.SerialConnectionSettings;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnectedService2;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.IUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionFactory;
@@ -244,7 +243,7 @@ public class TracingConnectedService extends AbstractConnectedService2 {
 		return new TestResult(estatus, getShortDescription(estatus), message);
 	}
 
-	public void setDeviceOS(String familyName, Version version) {
+	public void setDeviceOS(String familyName, String version) {
 		// unimplemented
 	}
 }

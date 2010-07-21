@@ -417,8 +417,15 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 			// removeLastSegments(2) will strip the filename and 'urel', 'udeb' or 'lib'
 			IPath launchExeTargetPath = new Path(new File(launchExeName).getCanonicalPath()).removeLastSegments(2); 
 			for (Executable executable : ExecutablesManager.getExecutablesManager().getExecutables(true)) {
-				IPath exePath = executable.getPath();
-				if (launchExeTargetPath.isPrefixOf(exePath))
+ 				IPath exePath = executable.getPath();
+				// remove last two segments here also (ignore urel, udeb, lib on executables)
+				//  this is so we can match down to the compiler but not beyond:
+				//  y:\epoc32\release\armv5.<variant>\... (for a variant build in raptor) will match
+				//  y:\epco32\release\armv5\... for a non-variant built executable
+				IPath exePathShort = exePath.removeLastSegments(2);
+				String sLaunchExeTargetPath = launchExeTargetPath.toOSString();
+				String sExePath = exePathShort.toOSString();
+				if (sExePath.startsWith(sLaunchExeTargetPath) || sLaunchExeTargetPath.startsWith(sExePath))
 						files.add(new ExeFileToDebug(exePath.toOSString(), true));
 			}
 		} catch (Exception e) {

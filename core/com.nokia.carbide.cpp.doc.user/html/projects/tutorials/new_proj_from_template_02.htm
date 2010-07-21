@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Building Projects and Components</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+<body >
+<h2>Building Projects and Components</h2>
+<p>In this example we show how to create a new project using one of the built-in Carbide templates, how to build it into an executable, and how to launch the debugger to verify program accuracy. The steps to do this include:</p>
+<ol>
+    <li><a href="new_proj_from_template_01.htm">Creating</a> a project from a project template</li>
+    <li><strong>Building the object code based on the project sources</strong></li>
+    <li><a href="new_proj_from_template_03.htm">Defining</a> a launch configuration for running or debugging the application</li>
+    <li><a href="new_proj_from_template_04.htm">Controlling and debugging</a> the running program using  the Carbide debugger</li>
+</ol>
+<hr>
+<p><strong></strong>Once you have a project in hand, the next thing to do is compile or build it into object code.</p>
+<p>Building projects consists of a sbs or abld-based build system that wraps build functionality around existing SDK build tools that invoke <span class="code">makmake</span> commands (e.g. <span class="code">makmake bldfiles</span> and <span class="code">sbs build</span>).</p>
+<p> The plug-ins provide extra functionality to set up suitable build configurations for Symbian OS C++ projects.  The initial selection of a build configuration is done when you create a project, as described in <a href="new_proj_from_template_01.htm">Creating New Projects from Templates</a>. You can later <a href="../../tasks/projects/prj_set_build_tgt.htm">change</a> the Active Build Configuration. The Build Configurations also provides a command (<b>Project &gt; <a href="../../reference/menus/build_all_targets.htm">Build All Configurations</a></b>) to build all the selected build configurations in a batch.</p>
+<p> Building Symbian OS C++ projects can involve the use of Symbian OS specific tools, such as the Symbian OS resource compiler. For detailed information on such tools, see the documentation for the SDK that you are using.</p>
+<p>You build  projects to process the source files that comprise a program and
+    generate object code. The compiler flags syntax errors in the source files. Use the <a href="../../reference/ProjectPreferences.html">Properties for &lt;project_name&gt; </a> window to control how the project is built. The following methods build a project:</p>
+<ul>
+    <li><b>Build All Configurations</b> (<span class="code">CTRL-ALT-A</span>) &#8212; builds all build configurations for a project</li>
+    <li><b>Build Working Set</b> &#8212; specify which projects to build in a working set </li>
+    <li><b>Build Project</b> &#8212; builds the entire project if it has never been built before or on subsequent builds only those files that have changed since the last build operation</li>
+</ul>
+<blockquote>
+    <p align="left"><img src="../images/menu_new_proj_build_project.png" alt="Build Project menu" width="355" height="357"></p>
+</blockquote>
+<div class="step">
+    <h4>Building a project</h4>
+    <ol>
+        <li>Select the project to build in the Project Explorer view.</li>
+        <li>Build the project using one of these actions:
+            <div align="left">
+            <ul>
+                <li>Right-click the project in the Project Explorer view and choose Build Project (see above).</li>
+                <li>Click the Run &gt; Build Project menu option.</li>
+                <li>Click the Build (<img src="../images/icon_build_project.png" alt="Build Project icon" width="17" height="17" align="absmiddle">) icon in the toolbar to build the project.</li>
+            </ul>
+        </li>
+    </ol>
+    <blockquote>
+        <p>Choosing any of the above actions causes Carbide to build the selected project. A <strong>Build Project</strong> dialog  (below) and a progress bar appear during a lengthy build operation. All build output  is shown in a <a href="../../reference/view_log.htm">Console</a> view while build errors and warnings appear in the Problems view.</p>
+        <p align="left"><img src="../images/dlg_build_project_progress.png" alt="Build Project progress dialog" width="532" height="233"></p>
+        <p>Whether a full build or incremental build is requested, Carbide forwards the request to the SDK make system. The SDK make system determines if anything needs to be
+            built. Carbide  always checks that makefiles are up-to-date and
+            dependencies present.</p>
+        <p>The project is also built if you make a change to it and then click <b>Debug</b>. It may be useful to automatically save modified resources before a manual build process by enabling the <b>Save automatically before build</b> option in the <b>Window &gt; Preferences &gt; General &gt;</b> <img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Workbench)")'> Workspace</a> preference panel. </p>
+        <p class="note"><b>NOTE</b> If you want to turn off building before launching, uncheck the <b>Build (if required) before launching</b> option in the <b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel.</p>
+        <p>When performing a build, output is displayed in the <a href="../../reference/view_log.htm">Console</a> view. If you do not want to clear the console before each build you need to uncheck the option <b>Always clear console before building</b> in the <b> Console</b> panel. This option is enabled by default. You can access this panel by selecting <b>Window &gt; Preferences &gt; C/C++ &gt; Build &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferneces.CBuildConsolePreferernces)")'> Console</a></b> preference panel (below).</p>
+        <p align="left"><img src="../images/pref_cdt_build_console.png" alt="Console preference panel" width="635" height="554"></p>
+        <p>Not clearing the console is useful when you are performing multiple builds, such as a regular project build, building a project package (.pkg) file, and building a ROM image. For example, if you do not clear the console before each build, then a subsequent build will not overwrite information from a previous build.</p>
+    </blockquote>
+    <ol start="2">
+        <li>Verifying a successful project build <br />
+            <p>Once compiling is complete use the <strong>Project Explorer</strong>, <strong>Problems</strong>, <strong>Console</strong>, and <strong>Executables</strong> views to locate and resolve any problems generated during the build.</p>
+       	    <ol type="a">
+       	        <li>Examine the project icon in the Project Explorer view<br>
+               	    <ul>
+               	        <li><img src="../images/icon_project_built.png" alt="Project built icon" width="19" height="17"> &mdash; a successfully built project icon.</li>
+               	        <li> <img src="../images/icon_project_warning_badge.png" alt="Warning badge" width="19" height="18"> &mdash; projects with warning messages show a yield badge.</li>
+               	        <li><img src="../images/icon_project_error_badge.png" alt="Error badge" width="20" height="19"> &mdash; projects with error messages show a red badge.</li>
+           	        </ul>
+       	        </li>
+            
+                <li>Check the Problems view for error or warning messages<br />
+                    <p>Examine the <a href="PLUGINS_ROOT//org.eclipse.cdt.doc.user/reference/cdt_u_problems_view.htm">Problems</a> view to see what errors and warning messages were generated during the build. The Description column contains additional information about the problem that can help you resolve it.</p>
+               	    <p><img src="../images/new_build_project_problems_view.png" alt="Executables view" width="797" height="210"></p>
+                </li>
+                <li>Examine the Console view for more specific details on  an error or warning message<br />
+                    <p>Use the <a href="../../reference/view_log.htm">Console</a> view to see where a specific problem occured during the build.</p>
+               	    <p><img src="../images/new_build_project_console_view.png" alt="Executables view" width="797" height="210"></p>
+                </li>
+                <li>Examine the Executables view for  missing source files<br />
+                    <p>Use the <a href="../../reference/view_executables.htm">Executables</a> view to see what source files were used during the build. Sources shown in gray are those Carbide cannot find. Missing sources in an SDK not built on your machine are common, but missing sources that you created can be resolved.</p>
+               	    <p><img src="../images/new_build_project_executables_view.png" alt="Executables view" width="713" height="210"></p>
+                </li>
+       	    </ol>
+            <p>Once you're resolved all the build errors in a project, its time to link the program to a specific target. This is done with a launch configuration.</p>
+        </li>
+    </ol>
+</div>
+<h4><strong>NEXT STEP</strong> &gt; <a href="new_proj_from_template_03.htm">Defining</a> a launch configuration for running or debugging the application</h4>
+<h4></h4>
+<h4>Other references</h4>
+<ul>
+    
+    
+    <li><a href="new_proj_from_template_00.htm">Emulator Application Projects</a><a href="./"></a><a href="./"></a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

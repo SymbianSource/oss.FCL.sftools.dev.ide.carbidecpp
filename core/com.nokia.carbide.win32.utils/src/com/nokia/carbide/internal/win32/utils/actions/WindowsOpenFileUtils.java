@@ -22,12 +22,14 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
 public class WindowsOpenFileUtils extends ActionResourceAction implements IViewActionDelegate  {
+
+	public final static int OPEN_IN_EXPLORER = 1;
+	public final static int OPEN_IN_COMMAND_PROMPT = 2;
 
 	/**
 	 * ProcessResourceTree default constructor.
@@ -50,14 +52,22 @@ public class WindowsOpenFileUtils extends ActionResourceAction implements IViewA
 		
 		// First get the folder name for the selected workspace resource.
 		// Then our simple operations will work on the folder where the resource lives.
-		Shell shell = new Shell();
-		
 		IResource res = (IResource) selection.getFirstElement();
 		String pathList = ""; //$NON-NLS-1$
 		pathList = pathList.concat(Messages.getString("WindowsOpenFileUtils.2") + res + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		traceEnabled = false;
 		
+		int actionType = 0;
+		if (action.getId().equals("openInWindowsExplorer"))
+			actionType = OPEN_IN_EXPLORER;
+		else if (action.getId().equals("openInCmdPrompt"))
+			actionType = OPEN_IN_COMMAND_PROMPT;
+		
+		executeAction(actionType, res);
+	}
+
+	public static void executeAction(int actionType, IResource res) {
 		String folderFullPath = ""; //$NON-NLS-1$
 		if (res instanceof IFolder || res instanceof IProject){
 			folderFullPath = res.getLocation().toOSString();
@@ -66,7 +76,7 @@ public class WindowsOpenFileUtils extends ActionResourceAction implements IViewA
 		}
 		
 		//  figure out what action logic to run based on xml id
-		if (action.getId().equals("openInWindowsExplorer")) //$NON-NLS-1$
+		if (actionType == OPEN_IN_EXPLORER)
 		{
 			String exeCmd = "explorer.exe "; //$NON-NLS-1$
 			exeCmd += "\""; //$NON-NLS-1$
@@ -80,12 +90,12 @@ public class WindowsOpenFileUtils extends ActionResourceAction implements IViewA
 			catch (CoreException e)
 			{
 				MessageDialog.openInformation(
-						shell,
+						null,
 						Messages.getString("WindowsOpenFileUtils.10"), //$NON-NLS-1$
 						""); //$NON-NLS-1$
 			}
 		}
-		else if (action.getId().equals("openInCmdPrompt")) //$NON-NLS-1$
+		else if (actionType == OPEN_IN_COMMAND_PROMPT)
 		{	
 			String exeCmd = "cmd.exe /c start cd /d "; //$NON-NLS-1$
 			exeCmd += folderFullPath;
@@ -96,7 +106,7 @@ public class WindowsOpenFileUtils extends ActionResourceAction implements IViewA
 			catch (CoreException e)
 			{
 				MessageDialog.openInformation(
-						shell,
+						null,
 						Messages.getString("WindowsOpenFileUtils.14"), //$NON-NLS-1$
 						""); //$NON-NLS-1$
 			}

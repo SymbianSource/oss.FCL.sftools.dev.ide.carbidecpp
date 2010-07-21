@@ -12,29 +12,30 @@
 		<group label="Carbide.c++ Development" id="carbide-cpp" style-id="content-group">
 		
 			<link 
-				label="Create an application emulator debug example" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/start/carbide_example.htm"  
+				label="Emulator Application Projects" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_from_template_00.htm" 
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how to create, build, and debug a program for the emulator called HelloCarbide using Carbide project templates.</text>
+				<text>Learn how to create, build, and debug programs on the emulator using Carbide project templates.</text>
 			</link>
 			
 			<link 
-				label="Create a simple DLL example" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/concepts/SampleExampleProjectCreate.html"  
+				label="DLL Projects" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/new_proj_dll_example_00.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how to create a simple “Test1” DLL project.</text>
+				<text>Learn how to create and debug DLL projects.</text>
 			</link>
 			
 			<link 
-				label="Create a run mode debugging application" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/run_mode_debug.htm"  
+				label="Remote Target Debugging (Run-mode)" 
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/projects/tutorials/run_mode_debug_example_00.htm"  
 				id="carbide-sample" 
 				style-id="content-link">
-				<text>Learn how create and build an application and debug it on a device using the App TRK on-device debug agent.</text>
+				<text>Learn how debug applications on remote devices using the TRK remote agent.</text>
 			</link>
 
+			<!--
 			<link 
 				label="Create a stop mode debugging application" 
 				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/stop_mode_debug.htm"  
@@ -42,14 +43,7 @@
 				style-id="content-link">
 				<text>Learn how to create and build an application and debug it on a device using JTAG debug software on Lauterbach hardware.</text>
 			</link>
-
-			<link 
-				label="Using soft attach for on-device debugging example" 
-				url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/soft_attach_debug.htm"  
-				id="carbide-sample" 
-				style-id="content-link">
-				<text>Learn how to use soft attach to debug an image flashed to ROM or on a memory card.</text>
-			</link>
+			-->
 			
 		</group>
 	</extensionContent>

@@ -982,7 +982,7 @@ BOOL CInputStreamFile::Open(DWORD dwSize, CHAR* filePath)
 	return fOk;
 }
 
-CInputStreamFile::Close()
+void CInputStreamFile::Close()
 {
 	// close all mapping handles
 	CSharedData::Close();

@@ -3,81 +3,14 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: TCFServer - Win32 Debug--------------------
+--------------------Configuration: TCFServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAC9.tmp" with contents
-[
-/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I "..\Common\Source" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/TCFServer.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\ServerManager.cpp"
-]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAC9.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPACA.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib shlwapi.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/TCFServer.pdb" /debug /machine:I386 /out:"Debug/TCFServer.exe" /pdbtype:sept 
-.\Debug\Client.obj
-.\Debug\CommRegistryItem.obj
-.\Debug\Connection.obj
-.\Debug\ConnectionImpl.obj
-.\Debug\ErrorMonitorData.obj
-.\Debug\InputStream.obj
-.\Debug\MessageFile.obj
-.\Debug\mutex.obj
-.\Debug\ProtocolRegistryItem.obj
-.\Debug\Registry.obj
-.\Debug\RegistryImpl.obj
-.\Debug\ServerClient.obj
-.\Debug\ServerManager.obj
-.\Debug\shareddata.obj
-.\Debug\StdAfx.obj
-.\Debug\TCDebugLog.obj
-.\Debug\TCFServer.obj
-.\Debug\resource.res
-]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPACA.tmp"
-<h3>Output Window</h3>
-Compiling...
-ServerManager.cpp
-Linking...
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPACC.tmp" with contents
-[
-/nologo /o"Debug/TCFServer.bsc" 
-.\Debug\StdAfx.sbr
-.\Debug\Client.sbr
-.\Debug\CommRegistryItem.sbr
-.\Debug\Connection.sbr
-.\Debug\ConnectionImpl.sbr
-.\Debug\ErrorMonitorData.sbr
-.\Debug\InputStream.sbr
-.\Debug\MessageFile.sbr
-.\Debug\mutex.sbr
-.\Debug\ProtocolRegistryItem.sbr
-.\Debug\Registry.sbr
-.\Debug\RegistryImpl.sbr
-.\Debug\ServerClient.sbr
-.\Debug\ServerManager.sbr
-.\Debug\shareddata.sbr
-.\Debug\TCDebugLog.sbr
-.\Debug\TCFServer.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPACC.tmp"
-Creating browse info file...
-<h3>Output Window</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPACD.bat" with contents
-[
-@echo off
-copybinaries Debug
-]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPACD.bat"
-copy binary
-Copy binaries to ..\..\..\os\win32\x86
-The system cannot find the path specified.
-        0 file(s) copied.
-Error executing c:\winnt\system32\cmd.exe.
 
 
 
 <h3>Results</h3>
-TCFServer.exe - 1 error(s), 0 warning(s)
+TCFServer.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

@@ -52,6 +52,24 @@ public interface InstallPackagesFactory extends EFactory {
 	PackageType createPackageType();
 
 	/**
+	 * Returns a new object of class '<em>SDK Family Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>SDK Family Type</em>'.
+	 * @generated
+	 */
+	SDKFamilyType createSDKFamilyType();
+
+	/**
+	 * Returns a new object of class '<em>SDK Version Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>SDK Version Type</em>'.
+	 * @generated
+	 */
+	SDKVersionType createSDKVersionType();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

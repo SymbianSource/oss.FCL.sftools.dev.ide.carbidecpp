@@ -179,7 +179,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		if (areWeManagingTheMakeFiles || buildConfig.getCarbideProject().isConcurrentBuildingEnabled()) {
 			
 			SubMonitor progress = SubMonitor.convert(monitor, 7);
-			progress.setTaskName("Building " + componentName);
+			progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, componentName));
 
 			// run abld export or test export
 			List<String> args = new ArrayList<String>();
@@ -310,7 +310,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			
 		} else {
 			SubMonitor progress = SubMonitor.convert(monitor, 1);
-			progress.setTaskName("Building " + componentName);
+			progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, componentName));
 
 			List<String> argsList = new ArrayList<String>();
 			if (isTest) {
@@ -838,7 +838,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			// because the dependency info is in the makefiles.
 			
 			SubMonitor progress = SubMonitor.convert(monitor, 3);
-			progress.setTaskName("Building " + buildConfig.getDisplayString());
+			progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
 			if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 				return false;
@@ -912,7 +912,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 		
 		SubMonitor progress = SubMonitor.convert(monitor, unitsOfWork);
-		progress.setTaskName("Building " + buildConfig.getDisplayString());
+		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
@@ -1154,7 +1154,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			// because the dependency info is in the makefiles.
 			
 			SubMonitor progress = SubMonitor.convert(monitor, 1 + normalMakMakePaths.size() + testMakMakePaths.size());
-			progress.setTaskName("Building " + buildConfig.getDisplayString());
+			progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
 			if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 				return false;
@@ -1247,7 +1247,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 		
 		SubMonitor progress = SubMonitor.convert(monitor, 4 + (normalMakMakePaths.size()*4) + (testMakMakePaths.size()*4));
-		progress.setTaskName("Building " + buildConfig.getDisplayString());
+		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;

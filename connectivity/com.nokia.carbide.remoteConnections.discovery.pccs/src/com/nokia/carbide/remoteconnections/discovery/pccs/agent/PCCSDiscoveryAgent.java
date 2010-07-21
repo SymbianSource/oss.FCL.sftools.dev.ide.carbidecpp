@@ -353,4 +353,12 @@ public class PCCSDiscoveryAgent implements IDeviceDiscoveryAgent, DeviceEventLis
 		}
 		return loadStatus;
 	}
+
+	public boolean isRunning() {
+		return pccsConnection != null && pccsConnection.isOpen();
+	}
+
+	public String getId() {
+		return getClass().getName();
+	}
 }

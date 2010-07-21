@@ -47,7 +47,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		
 		SubMonitor progress = SubMonitor.convert(monitor, 3);
-		progress.setTaskName("Building " + buildConfig.getDisplayString());
+		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
@@ -113,7 +113,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		}
 
 		SubMonitor progress = SubMonitor.convert(monitor, 1);
-		progress.setTaskName("Building " + componentName);
+		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, componentName));
 
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(COMPONENT_ARG);
@@ -136,7 +136,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	public boolean buildComponentSubset(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		SubMonitor progress = SubMonitor.convert(monitor, 1 + normalMakMakePaths.size() + testMakMakePaths.size());
-		progress.setTaskName("Building " + buildConfig.getDisplayString());
+		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;

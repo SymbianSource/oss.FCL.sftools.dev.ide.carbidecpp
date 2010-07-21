@@ -6,7 +6,6 @@
 <!-- Includes context help references for:                                           -->
 <!--    plugin="com.nokia.carbide.cdt.builder"                                       -->
 <!--    plugin="com.nokia.carbide.cdt.rombuilder"                                    -->
-<!--    plugin="com.nokia.carbide.cpp.leavescan"                                     -->
 <!--    plugin="com.nokia.carbide.cpp.project.ui"                                    -->
 <!--    plugin="com.nokia.carbide.cpp.sdk.ui"                                        -->
 <!--    plugin="com.nokia.carbide.remoteConnections"                                 -->
@@ -15,6 +14,7 @@
 <!--    plugin="com.nokia.carbide.cpp.builder.utils"                                 -->
 <!--    plugin="com.nokia.carbide.cpp.news.reader"                                   -->
 <!--    plugin="com.nokia.search.system"                                 		 	 -->
+<!--    plugin="com.nokia.carbide.discovery.ui"                                 	 -->
 <!-- =============================================================================== -->
 
 <contexts>
@@ -93,17 +93,6 @@
 	<context id="rom_build_settings_page" >
 		<description>Use the ROM Build Settings panel to specify ROM build commands and working directory.</description>
 		<topic label="Carbide ROM Build Settings"		href="html/reference/ROM_build_settings.html" />
-	</context>
-	
-	
-<!-- =============================================================================== -->
-<!-- PLUGIN: com.nokia.carbide.cpp.leavescan                                         -->
-<!-- =============================================================================== -->
-	
-	<!-- LEAVESCAN PREF PANEL -->
-	<context id="leavescan_prefs_page" >
-		<description>Specify the Leavescan directory.</description>
-		<topic label="Leavescan Preferences" 	href="html/reference/leavescan_pref.html"/>
 	</context>
 	
 	
@@ -360,19 +349,10 @@
 		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
 	</context>
 
-	<!-- AIF Editor  -->
-	<context id="aif_editor_dialog" >
-		<description>Use the AIF editor to specify the Symbian OS resource file and bitmaps that should be included in a Symbian OS application information (AIF) file.</description>
-		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
-		<topic label="AIF File" 						href="html/concepts/AIFDefWizard.html" />
-		<topic label="Creating an AIF File" 			href="html/tasks/AppInfoFile.html" />
-	</context>
-
 	<!-- Image Editor add images from project -->
 	<context id="add_project_images_dialog" >
 		<description>Use the add image from project dialog to search for image files in your project.</description>
 		<topic label="Add Images from Project" 			href="html/reference/add_from_project.htm" />
-		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
 		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
 		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
 	</context>
@@ -381,7 +361,6 @@
 	<context id="add_filesystem_images_dialog" >
 		<description>Use the add image from file system dialog to search for image files on your file system.</description>
 		<topic label="Add Images from Filesystem" 		href="html/reference/add_from_filesys.htm" />
-		<topic label="AIF Editor" 						href="html/reference/AIFEditor.html" />
 		<topic label="MBM Editor" 						href="html/reference/MBMEditor.html" />
 		<topic label="MBM/MIF Editor" 					href="html/reference/view_mifdef_editor.htm" />
 	</context>
@@ -615,4 +594,14 @@
 		<topic label="Carbide.c++ News preferences" 	href="html/reference/prefs_carbide_news.htm"/>
 	</context>
 
+<!-- =============================================================================== -->
+<!-- PLUGIN: com.nokia.carbide.discovery.ui	                                    	 -->
+<!-- =============================================================================== -->
+
+	<!-- INSTALL EXTENSIONS VIEW (added v3.0.0) -->
+	<context id="catalogviewer" >
+		<description>Locate, download, and install Carbide plug-ins.</description>
+		<topic label="Install Extensions view" 	href="html/reference/view_install_extensions.htm"/>
+	</context>
+	
 </contexts>

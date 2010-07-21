@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Nokia Carbide Developer Library Hover
 Bundle-SymbolicName: com.nokia.carbide.cpp.sysdoc.hover;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.sysdoc.hover.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="3.4.1",
  org.eclipse.core.runtime,

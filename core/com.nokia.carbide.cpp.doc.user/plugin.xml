@@ -140,10 +140,7 @@
        <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
        		plugin="com.nokia.carbide.cpp.builder.utils" />
 
-       <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
-       		plugin="com.nokia.carbide.cpp.leavescan" />
-
-       <!-- SPN VIEW, INF IMPORTER, MMP, MBM, AIF editors, and miscellaneous HELP  -->
+       <!-- SPN VIEW, INF IMPORTER, MMP, MBM, and miscellaneous HELP  -->
        <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
        		plugin="com.nokia.carbide.cpp.project.ui" />
 
@@ -170,6 +167,10 @@
         <!-- News Reader HELP  (added 2.0.2) -->
        <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
        		plugin="com.nokia.carbide.cpp.news.reader" />
+           
+        <!-- Install Extensions HELP  (added 3.0.0) -->
+       <contexts file="html/context_help/carbide_ide_dialogs_help.xml"
+       		plugin="com.nokia.carbide.discovery.ui" />
            
 		<!-- ====================================================  -->
 		<!-- CARBIDE DEBUGGER DIALOGS AND PREFS                    -->

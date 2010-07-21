@@ -18,17 +18,18 @@
 
 package com.nokia.carbide.trk.support.service;
 
-import com.nokia.carbide.remoteconnections.interfaces.*;
+import java.util.Arrays;
+import java.util.Collection;
+
+import com.nokia.carbide.remoteconnections.interfaces.AbstractSynchronizedConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.trk.support.Messages;
-import com.nokia.carbide.trk.support.connection.TCFUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.TCPIPConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.cpp.internal.api.utils.core.HostOS;
-
-
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Implementation of IService for Tracing
@@ -48,7 +49,6 @@ public class TracingService implements IService {
 		return Arrays.asList(new String[] {
 				TCPIPConnectionType.ID,
 				USBConnectionType.ID,
-				TCFUSBConnectionType.ID,
 		});
 	}
 
@@ -61,9 +61,7 @@ public class TracingService implements IService {
 	}
 
 	public IRemoteAgentInstallerProvider getInstallerProvider() {
-		if (HostOS.IS_UNIX)
-			return null;		// TODO: implement
-		return new TracingInstallerProvider(this);
+		return null;
 	}
 
 	public boolean isTestable() {

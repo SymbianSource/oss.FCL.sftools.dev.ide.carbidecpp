@@ -10,7 +10,7 @@
  *******************************************************************************/
 
 body {
-	/* background-image : url(../graphics/root/background.jpg); */
+	background-image : url(../graphics/root/background.jpg);
 }
 
 /* show the "selected" image for this page */

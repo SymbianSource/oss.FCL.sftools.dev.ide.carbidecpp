@@ -49,58 +49,62 @@
 	 <ol> 
 		<li> 
 	   Click File &gt; Import... to get a list of available import wizards</li> 
-		<li>Select Symbian OS Bld.inf file and click Next to go to the Import Bld.inf page
-		  <div class="Figure">
-    
-		  <p class="Image"><img src="../images/import1.gif" alt="" width="373" height="419"  border="0" /></p>
-	      </div>
+		<li>Select Symbian OS &gt; Symbian OS Bld.inf file and click Next to go to the Import Bld.inf page
+		    <div class="Figure"></div>
 		</li>
-		<li> 
-			 Type the location of the bld.inf file to import, or browse to the file using the Browse button. </li> 
-	
-	      <p class="Image"><img src="images/file_import.png" alt="file import" width="521" height="391"></p>
-	      <p class="note"><strong>NOTE</strong> There will be two builders available in Carbide, one for SBSv1 (current version of Symbian Build System) and  one for SBSv2 (newer version). The Builder option will only be displayed when a SBSv2  installation is detected.</p>
-	      <p class="Image">SBSv2  only works with recent versions of Symbian OS9.5. Both  SBSv1 and SBSv2 are GNU make based build systems.&nbsp; SBSv1 uses Perl to generate make files,  while SBSv2 uses Python. Select the appropriate builder for your project.</p>
-	      When building for  SBSv2, the builder will set EPOCROOT to the absolute path (including drive  letter) to the kit for the active build configuration.&nbsp; It will also add the path to the sbs bin  directory to the start of the PATH variable.&nbsp;  This is derived from the SBS_HOME environment variable.<p class="Image">For SBSv2, all  build configurations (platform/target), including the built-in platforms  (WISNCW, ARMV5), are declared in xml files in the \sbs\lib\config directory.  The Build  Configurations selection page will display only those kits  known to support SBSv2.</p>
-       <li>	    Click Next to select the recognized SDKs and Build Configurations to be created for this project
-  <p>The SDKs and Build Configurations shows a tree of
-			 the SDKs that are available to be used, and for each SDK, the type of build configurations
-			 that are available. You can select a single SDK if you are developing the program
-			 for just one version of a platform, or multiple SDKs if your
-			 program is to be built against multiple platforms or operating system
-		  versions.</p>
-		  <p class="note"><b>NOTE</b> The platforms listed are dependent upon the filter settings in the <a href="sdks/sdk_platform_filter.htm">Platform Filtering Preferences</a>.</p>
-		  <p></p>
-		  <div class="Figure">
-            <p class="Image"><img src="../images/import3.gif" alt="" width="448" height="410"  border="0" /></p>
-	      </div>
-	   </li> 
-	   <li value="5"> Click Next to select the mmp and extension make files
-		  <div class="Figure">
-            <p>One MMP file must be selected in order to continue. If the bld.inf file contains more than three MMP files, just select the MMP files you need to import. If there are three or less MMP files, then all are selected for importing.</p>
-            <p class="Image"><img src="../images/import4.gif" alt="" width="521" height="550"  border="0" /></p>
-         </div>
-	   </li>
-	   <li>Click Next to enter the Project name and root directory</li>
-		<p>When creating a project, project files are created in the root directory. Carbide.c++ creates additional files for each project. They consist of:</p>
-	    <ul>
-	      <li>.project - an xml file that provides a project description </li>
-	      <li>.cproject - an xml file that provides additional project information </li>
-	      <li>.settings folder - contains files that provide build configuration and preference settings </li>
-       </ul>
-       <p>The root directory is a path to the root of your project. All necessary tool components, developer libraries, and information about the SDK are stored in subdirectories under this root. The whole path leading to the SDK root directory must be declared to the Windows system via the Environment Variables settings. The variable name is EPOCROOT and the variable value is the full path where a Symbian OS SDK is installed in the Windows system.</p>
-       <p>The root directory should contain all project related files that you want to work with in Carbide. The default directory is calculated by parsing the bld.inf file and mmp file(s).</p>
-       <p class="Image"><img src="../images/import5.gif" alt="" width="518" height="313"  border="0" /></p>
-       
-	    <li> Click Finish to import the project
-	      <p>
-             The
-			   wizard creates the project in the C/C++ Projects view, where it can be built and edited as normal. If the wizard is unable to read the project files, then the page
-	        describes the error that occurred. If an error occurs, you must fix the project file, and then
-          re-import the bld.inf.</p>
-       </li>
-	 </ol>
+       </ol>
 
+     <blockquote>
+         <p><img src="../reference/images/import_bld_inf_01.png" alt="Select Symbian bld.inf file to import" width="525" height="550"></p>
+     </blockquote>
+     <ol start="3">
+		 <li> 
+			 Type the location of the bld.inf file to import, or browse to the file using the Browse button. </li>
+		  <p class="Image"><img src="../reference/images/import_bld_inf_02.png" alt="Select bld.inf file to import" width="573" height="550"></p>
+		  <p class="note"><strong>NOTE</strong> Depending upon which SDKs are installed, you may see both SBSv1 and SBSv2 builders available. It is recommended that SBSv2 be the primary choice as SBSv1 has been deprecated for future Symbian OS development.</p>
+		  <p class="Image">SBSv2   works with recent versions of Symbian^3 and Symbian ^4 SDKs. Both  SBSv1 and SBSv2 are GNU make based build systems.&nbsp; SBSv1 uses Perl to generate make files,  while SBSv2 uses Python. Select the appropriate builder for your project.</p>
+		  When building for  SBSv2, the builder will set <span class="code">EPOCROOT</span> to the absolute path (including drive  letter) to the kit for the active build configuration.&nbsp; It will also add the path to the sbs bin  directory to the start of the <span class="code">PATH</span> variable.&nbsp;  This is derived from the SBS_HOME environment variable.
+		  <p class="Image">For SBSv2, all  build configurations (platform/target), including the built-in platforms  (WINSCW, ARMV5), are declared in xml files in the <span class="code">\sbs\lib\config</span> directory.  The Build  Configurations selection page  displays only kits  known to support SBSv2.</p>
+		  <li> Click Next to select the recognized SDKs and Build Configurations to be created for this project
+		      <blockquote>
+		          <p>The SDKs and Build Configurations shows a tree of
+		              the SDKs that are available to be used, and for each SDK, the type of build configurations
+		              that are available. You can select a single SDK if you are developing the program
+		              for just one version of a platform, or multiple SDKs if your
+		              program is to be built against multiple platforms or operating system
+		              versions.</p>
+	          </blockquote>
+         </li>
+     </ol>
+     <blockquote>
+         <p class="note"><b>NOTE</b> The platforms listed are dependent upon the filter settings in the <a href="sdks/sdk_platform_filter.htm">Platform Filtering Preferences</a>.</p>
+         <p><img src="../reference/images/import_bld_inf_03.png" alt="Symbian OS SDKs page" width="573" height="550"></p>
+     </blockquote>
+     <ol>
+         <li value="5"> Click Next to select the mmp and extension make files
+             <div class="Figure">
+                 <p>One MMP file must be selected in order to continue. If the bld.inf file contains more than three MMP files, just select the MMP files you need to import. If there are three or less MMP files, then all are selected for importing.</p>
+                 <p class="Image"><img src="../reference/images/import_bld_inf_04.png" alt="" width="573" height="550"  border="0" /></p>
+             </div>
+                 </li>
+         <li>Click Next to enter the Project name and root directory</li>
+         <p>When creating a project, project files are created in the root directory. Carbide.c++ creates additional files for each project. They consist of:</p>
+         <ul>
+             <li>.project - an xml file that provides a project description </li>
+             <li>.cproject - an xml file that provides additional project information </li>
+             <li>.settings folder - contains files that provide build configuration and preference settings </li>
+                     </ul>
+         <p>The root directory is a path to the root of your project. All necessary tool components, developer libraries, and information about the SDK are stored in subdirectories under this root. The whole path leading to the SDK root directory must be declared to the Windows system via the Environment Variables settings. The variable name is <span class="code">EPOCROOT</span> and the variable value is the full path where a Symbian OS SDK is installed in the Windows system.</p>
+         <p>The root directory should contain all project related files that you want to work with in Carbide. The default directory is calculated by parsing the bld.inf file and mmp file(s).</p>
+         <p class="Image"><img src="../reference/images/import_bld_inf_05.png" alt="" width="573" height="550"  border="0" /></p>
+         <li> Click Finish to import the project
+             <p>
+                 The
+                 wizard creates the project in the <a href="../reference/view_cpp_projects.htm">Project Explorer</a> view, where it can be built and edited as normal. If the wizard is unable to read the project files, then the page
+                 describes the error that occurred. If an error occurs, you must fix the project file, and then
+             re-import the bld.inf.</p>
+                     </li>
+     </ol>
    </div>
 	   <h5>Related  concepts</h5>
 

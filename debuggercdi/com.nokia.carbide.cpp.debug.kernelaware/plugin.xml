@@ -9,7 +9,7 @@
             id="com.nokia.carbide.cpp">
       </category>
       <view
-            name="Symbian OS Data"
+            name="Classic Symbian OS Data"
             icon="icons/symbian-120.gif"
             category="com.nokia.carbide.cpp"
             class="com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView"

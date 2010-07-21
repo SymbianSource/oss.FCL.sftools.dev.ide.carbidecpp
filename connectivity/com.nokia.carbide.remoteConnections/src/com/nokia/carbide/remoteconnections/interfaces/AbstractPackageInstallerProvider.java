@@ -16,27 +16,36 @@
 */
 package com.nokia.carbide.remoteconnections.interfaces;
 
-import com.nokia.carbide.installpackages.InstallPackages;
-import com.nokia.carbide.installpackages.InstallPackages.IServerData;
-import com.nokia.carbide.installpackages.gen.InstallPackages.PackageType;
-import com.nokia.carbide.remoteconnections.Messages;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
-import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Version;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import com.nokia.carbide.installpackages.InstallPackages;
+import com.nokia.carbide.installpackages.InstallPackages.IServerData;
+import com.nokia.carbide.installpackages.gen.InstallPackages.PackageType;
+import com.nokia.carbide.remoteconnections.Messages;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 
+@SuppressWarnings("deprecation")
 public abstract class AbstractPackageInstallerProvider implements IRemoteAgentInstallerProvider {
 
 	public class PackageTypeInstaller implements IRemoteAgentInstaller {
@@ -165,11 +174,14 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 	private List<PackageType> packageList;
 	private Map<ImageDescriptor, Image> imageCache;
 
+	/**
+	 * @deprecated
+	 */
 	protected abstract IServerData getServerData();
 
 	public List<String> getSDKFamilyNames(IRunnableContext runnableContext) {
 		if (packages == null)
-			packages = new InstallPackages(getServerData(), runnableContext);
+			packages = new InstallPackages(getService(), runnableContext);
 		Set<String> sdkFamilyNames = new HashSet<String>();
 		packageList = packages.getAvailablePackageList();
 		if (packageList == null)
@@ -179,30 +191,28 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 			sdkFamilyNames.add(sdkFamily);
 		}
 		List<String> sdkFamilyNameList = new ArrayList<String>(sdkFamilyNames);
-		Collections.sort(sdkFamilyNameList);
+		Collections.sort(sdkFamilyNameList, packages.getSDKFamilyComparator());
 		return sdkFamilyNameList;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Version> getVersions(String familyName) {
-		Set<Version> versions = new HashSet<Version>();
+	public List<String> getVersions(String familyName) {
+		Set<String> versions = new HashSet<String>();
 		for (PackageType packageType : packageList) {
 			if (packageType.getSdkFamily().equals(familyName)) {
 				try {
-					versions.add(new Version(packageType.getSdkVersion()));
+					versions.add(packageType.getSdkVersion());
 				}
 				catch (IllegalArgumentException e) {
 					RemoteConnectionsActivator.logError(e);
 				}
 			}
 		}
-		List<Version> versionList = new ArrayList<Version>(versions);
-		Collections.sort(versionList);
-		Collections.reverse(versionList);
+		List<String> versionList = new ArrayList<String>(versions);
+		Collections.sort(versionList, packages.getSDKVersionComparator());
 		return versionList;
 	}
 
-	public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, Version version) {
+	public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, String version) {
 		Set<IRemoteAgentInstaller> installers = new HashSet<IRemoteAgentInstaller>();
 		if (packageList == null) {
 			getSDKFamilyNames(null);
@@ -210,7 +220,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 		for (PackageType packageType : packageList) {
 			if (packageType.getSdkFamily().equals(familyName)) {
 				try {
-					if (version.equals(new Version(packageType.getSdkVersion()))) {
+					if (version.equals(packageType.getSdkVersion())) {
 						installers.add(new PackageTypeInstaller(packages, packageType));
 					}
 				}

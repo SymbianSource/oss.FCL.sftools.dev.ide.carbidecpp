@@ -46,7 +46,6 @@ public class TRKService implements IService {
 				SerialBTConnectionType.ID,
 				TCPIPConnectionType.ID,
 				USBConnectionType.ID,
-				TCFUSBConnectionType.ID
 				}); 
 	}
 

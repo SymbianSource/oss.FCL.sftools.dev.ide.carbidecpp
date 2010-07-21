@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            name="%view.name"
-            icon="icons/icon-discovery.png"
-            category="com.nokia.carbide.cpp"
-            class="com.nokia.carbide.discovery.ui.view.DiscoveryView"
-            id="com.nokia.carbide.discovery.view">
-      </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="com.nokia.carbide.cpp.CarbideCppPerspective">
-         <view
-               id="com.nokia.carbide.discovery.view"
-               relationship="stack"
-               relative="org.eclipse.ui.internal.introview">
-         </view>
-      </perspectiveExtension>
-   </extension>
+   <extension-point id="portalPage" name="Portal Page" schema="schema/portalPage.exsd"/>
    <extension
          point="org.eclipse.help.contexts">
       <contexts
             file="contexts.xml">
       </contexts>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.nokia.carbide.internal.discovery.ui.editor.PortalEditor"
+            default="false"
+            icon="icons/Carbide_c_icon_16x16.png"
+            id="com.nokia.carbide.discovery.ui.portalEditor"
+            name="%menu.title">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="%portal.desc"
+            id="com.nokia.carbide.discovery.commands.launch"
+            name="%menu.title">
+      </command>
+   </extension>
+	<extension point="org.eclipse.ui.handlers">
+    	<handler
+			class="com.nokia.carbide.internal.discovery.ui.command.LaunchHandler"
+			commandId="com.nokia.carbide.discovery.commands.launch">
+		</handler>
+	</extension>
+
+	<extension point="org.eclipse.ui.menus">
+		<!-- Defines a new menu contribution to the Eclipse help menu -->
+		<menuContribution
+			locationURI="menu:help?after=helpEnd">
+            <command
+				commandId="com.nokia.carbide.discovery.commands.launch"
+				icon="icons/Carbide_c_icon_16x16.png"
+				label="%menu.title"
+				id="portalCommand">
+			</command>
+		</menuContribution>
+	</extension>
+ <extension
+       point="com.nokia.carbide.discovery.ui.portalPage">
+    <portalPage
+          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPage"
+          rank="50">
+    </portalPage>
+ </extension>
+ <extension
+       point="com.nokia.carbide.discovery.ui.portalPage">
+    <portalPage
+          class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
+          rank="1">
+    </portalPage>
+ </extension>
+ <extension
+       point="com.nokia.carbide.discovery.ui.portalPage">
+    <portalPage
+          class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
+          rank="100">
+    </portalPage>
+ </extension>
 
 </plugin>

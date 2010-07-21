@@ -107,7 +107,7 @@ CSharedData::Open(HANDLE hFile, DWORD dwSize, CHAR* name)
 	}
 	return fOK;
 }
-CSharedData::Close()
+void CSharedData::Close()
 {
 	BOOL fIgnore = FALSE;
 

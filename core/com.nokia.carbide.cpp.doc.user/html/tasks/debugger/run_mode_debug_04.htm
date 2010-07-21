@@ -4,19 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>Setup a Virtual Drive for Techview and Cust Kits</title>
+<title>Setup a Virtual Drive</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 </head>
 <body bgcolor="#FFFFFF">
-<h2>Setup a Virtual Drive for Techview and Cust Kits (optional)</h2>
-<p>Techview Kits and cust kits have kernel components, kernel extensions and device drivers that are typically built on a virtual drive. So if you want to debug them the debugger will need to load files from the virtual drive that the binaries were built on. If you do not know the virtual drive the kit was built on you should first pick a drive letter randomly.</p>
+<h2>Setup a Virtual Drive (optional)</h2>
+<p>SDKs have kernel components, kernel extensions and device drivers that are typically built on a virtual drive. So if you want to debug them the debugger will need to load files from the virtual drive that the binaries were built on. If you do not know the virtual drive the kit was built on you should first pick a drive letter randomly.</p>
 <div class="step">
-  <h4><a name="runVirDrive" id="runVirDrive"> </a>Setup a Virtual Drive for Techview and Cust Kits</h4>
+  <h4><a name="runVirDrive" id="runVirDrive"> </a>Setup a Virtual Drive for SDKs</h4>
   <ol>
     <li>To subst a drive, type on a command line:<br />
     &gt; subst <span class="question">drive_letter:</span> <span class="question">path_to_kit<br />
     </span>For example:<br />
-&gt;<span class="code"> subst M: C:\Symbian\S60_3_0_200626</span></li>
+&gt;<span class="code"> subst M: C:\Symbian\S60_5_0_201012</span></li>
     <li>On the command line type:<br />
 &gt;<span class="code">subst</span><br />
     <p>You should see the new virtual drive pointing to your kit. If the debugger tries to load a file it can&rsquo;t find, it will look for it on the virtual drive. You can see this in the stack crawl. The stack crawl should give the full path of the file on the virtual drive the file was built on. The debugger will not be able to load the file until the correct virtual drive is specified.</p>
@@ -27,7 +27,7 @@
 </div>
 <h5>Other references</h5>
 <ul>
-  <li><a href="run_mode_debug.htm">Run Mode On-Device Debugging</a>  </li>
+  <li><a href="../../projects/tutorials/run_mode_debug_example_01.htm">Verify System Setup (Run-mode) Tutorial</a><a href="run_mode_debug.htm"></a>  </li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

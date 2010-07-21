@@ -366,7 +366,7 @@ long CRealSerialComm::SetDCB()
 long CRealSerialComm::ClosePort()
 {
 	COMMLOGOPEN();
-	COMMLOGS("CRealSerialComm::ClosePort\n");
+	COMMLOGA1("CRealSerialComm::ClosePort connected=%d\n", IsConnected());
 
 	long err = TCAPI_ERR_NONE;
 
@@ -443,8 +443,9 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 		//   and there was some kind of error
 		if (lclNumBytes != inSize)
 		{
+			m_lastCommError = 0;
 			COMMLOGOPEN();
-			COMMLOGA3("CRealSerialComm::SendDataToPort WriteFile not all bytes sent: lclNumBytes=%d inSize=%d err=%d\n", lclNumBytes, inSize, GetLastError());
+			COMMLOGA3("CRealSerialComm::SendDataToPort WriteFile not all bytes sent: lclNumBytes=%d inSize=%d err=%d\n", lclNumBytes, inSize, m_lastCommError);
 			COMMLOGCLOSE();
 
 			COMSTAT lclComStat;
@@ -465,19 +466,27 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 				if (lclErrorFlags)
 				{
 					// there really was an error
-					m_lastCommError = lclErrorFlags;
 					err = TCAPI_ERR_COMM_ERROR;
 					COMMLOGOPEN();
-					COMMLOGA1("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=%d\n", m_lastCommError);
+					COMMLOGA1("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=%d\n", lclErrorFlags);
 					COMMLOGCLOSE();
 				}
 				else
 				{
 					// No OS error returned, but WriteFile failed to write out all bytes
 					//  therefore, since we are not doing overlapped I/O, this is an error.
-					err = TCAPI_ERR_COMM_ERROR;
+//					DUMPCOMSTAT(&lclComStat);
+					BOOL flush = FlushFileBuffers(m_hSerial); // flush transmit buffer
+//					ClearCommError(m_hSerial, &lclErrorFlags, &lclComStat);
+//					if (WriteFile(m_hSerial, inData, inSize, &lclNumBytes, NULL))
+//					{
+//						COMMLOGOPEN();
+//						COMMLOGA1("CRealSerialComm::SendDataToPort WriteFile#2 succeeded lclNumBytes=%d\n", lclNumBytes);
+//						COMMLOGCLOSE();
+//					}
+					err = TCAPI_ERR_COMM_ERROR_DEVICE_NOT_READING;
 					COMMLOGOPEN();
-					COMMLOGS("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=0\n");
+					COMMLOGA2("CRealSerialComm::SendDataToPort ClearCommError succeeded lclErrorFlags=0 err=%d flush=%d\n", m_lastCommError, flush);
 					COMMLOGCLOSE();
 //					DUMPCOMSTAT(&lclComStat);
 				}
@@ -492,7 +501,7 @@ long CRealSerialComm::SendDataToPort(DWORD inSize, const void *inData)
 			COMMLOGS("CRealSerialComm::SendDataToPort WriteFile successful\n");
 			BYTE* ptr = (BYTE*)inData;
 			long numBytes = (inSize > 80) ? 80 : inSize;
-			char msg[200];
+			char msg[300];
 			sprintf(msg, "CRealSerialComm::SendDataToPort = ");
 			for (int i = 0; i < numBytes; i++)
 			{
@@ -524,12 +533,16 @@ long CRealSerialComm::PollPort(DWORD &outSize)
 	COMSTAT lclComStat;
 	DWORD lclErrorFlags=0;
 
-	if (!IsConnected())
+	if (!IsConnected() || m_hSerial == INVALID_HANDLE_VALUE)
 		return TCAPI_ERR_MEDIA_NOT_OPEN;
+
 
 //	Sleep(1);
 	if (!ClearCommError( m_hSerial, &lclErrorFlags, &lclComStat ))
 	{
+		if (!IsConnected() || m_hSerial == INVALID_HANDLE_VALUE)
+			return TCAPI_ERR_MEDIA_NOT_OPEN;
+
 		m_lastCommError = GetLastError();
 		err = TCAPI_ERR_COMM_ERROR;
 

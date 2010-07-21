@@ -3,57 +3,38 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: TCFCommVirtualSerial - Win32 Debug--------------------
+--------------------Configuration: TCFCommVirtualSerial - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAFA.tmp" with contents
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPE38.tmp" with contents
 [
-/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\TCFCommSerial" /I "..\Common\Headers" /I "..\TCFServer" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMVIRTUALSERIAL_EXPORTS" /Fp"Debug/TCFCommVirtualSerial.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFServer\BaseCom.cpp"
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\mutex.cpp"
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommSerial\RealSerialComm.cpp"
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\Common\Source\TCDebugLog.cpp"
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\TCFCommVirtualSerial.cpp"
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\VirtualSerialComm.cpp"
+/nologo /Zp2 /MT /W3 /GX /O2 /I "..\TCFCommSerial" /I "..\Common\Headers" /I "..\TCFServer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMVIRTUALSERIAL_EXPORTS" /Fp"Release/TCFCommVirtualSerial.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\dev22clone2\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommSerial\RealSerialComm.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAFA.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAFB.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPE38.tmp" 
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPE39.tmp" with contents
 [
-/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\TCFCommSerial" /I "..\Common\Headers" /I "..\TCFServer" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCOMMVIRTUALSERIAL_EXPORTS" /Fp"Debug/TCFCommVirtualSerial.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\dev22clone\carbidecpp\connectivity\com.nokia.tcf\native\TCFNative\TCFCommVirtualSerial\StdAfx.cpp"
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/TCFCommVirtualSerial.pdb" /map:"Release/TCFCommVirtualSerial.map" /machine:I386 /out:"Release/TCFCommVirtualSerial.dll" /implib:"Release/TCFCommVirtualSerial.lib" 
+.\Release\BaseCom.obj
+.\Release\mutex.obj
+.\Release\RealSerialComm.obj
+.\Release\StdAfx.obj
+.\Release\TCDebugLog.obj
+.\Release\TCFCommVirtualSerial.obj
+.\Release\VirtualSerialComm.obj
 ]
-Creating command line "cl.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAFB.tmp" 
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAFC.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"Debug/TCFCommVirtualSerial.pdb" /map:"Debug/TCFCommVirtualSerial.map" /debug /machine:I386 /out:"Debug/TCFCommVirtualSerial.dll" /implib:"Debug/TCFCommVirtualSerial.lib" /pdbtype:sept 
-.\Debug\BaseCom.obj
-.\Debug\mutex.obj
-.\Debug\RealSerialComm.obj
-.\Debug\StdAfx.obj
-.\Debug\TCDebugLog.obj
-.\Debug\TCFCommVirtualSerial.obj
-.\Debug\VirtualSerialComm.obj
-]
-Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPAFC.tmp"
+Creating command line "link.exe @C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPE39.tmp"
 <h3>Output Window</h3>
 Compiling...
-StdAfx.cpp
-Compiling...
-BaseCom.cpp
-mutex.cpp
 RealSerialComm.cpp
-TCDebugLog.cpp
-TCFCommVirtualSerial.cpp
-VirtualSerialComm.cpp
-Generating Code...
 Linking...
-   Creating library Debug/TCFCommVirtualSerial.lib and object Debug/TCFCommVirtualSerial.exp
-Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPB00.bat" with contents
+   Creating library Release/TCFCommVirtualSerial.lib and object Release/TCFCommVirtualSerial.exp
+Creating temporary file "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPE3D.bat" with contents
 [
 @echo off
-copyBinaries Debug
+copyBinaries Release
 ]
-Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPB00.bat"
+Creating command line "C:\DOCUME~1\chpeckha\LOCALS~1\Temp\RSPE3D.bat"
 copy libs
 Copy binaries to ..\..\..\os\win32\x86
 The system cannot find the path specified.

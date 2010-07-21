@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 
+import java.io.File;
 import java.util.*;
 
 public class FileTransferTab extends CLaunchConfigurationTab {
@@ -127,11 +128,11 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 	 */
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		FileToTransfer[] files = fFilesBlock.getFiles();
-		String filesString = ""; //$NON-NLS-1$
+		StringBuilder filesString = new StringBuilder();
 		for (int i=0; i<files.length; i++) {
-			filesString += files[i].getHostPath() + "," + files[i].getTargetPath() + "," + (files[i].getEnabled() ? "1" : "0") + ","; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+			filesString.append(files[i].getHostPath()).append(",").append(files[i].getTargetPath()).append(",").append(files[i].getEnabled() ? "1" : "0").append(","); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
-		configuration.setAttribute( PreferenceConstants.J_PN_FilesToTransfer, filesString);
+		configuration.setAttribute( PreferenceConstants.J_PN_FilesToTransfer, filesString.toString());
 	}
 
 	/* (non-Javadoc)
@@ -176,9 +177,12 @@ public class FileTransferTab extends CLaunchConfigurationTab {
 			// be building before launch which would build the missing
 			// files before launching the debugger.
 			for (FileToTransfer file : fFilesBlock.getFiles()) {
-				if (file.getEnabled() && !new Path(file.getHostPath()).toFile().exists()) {
-					setMessage(Messages.getString("FileTransferTab.HostFilesDontExist")); //$NON-NLS-1$
-					break;
+				if (file.getEnabled()) {
+					File hostFile = new Path(file.getHostPath()).toFile();
+					if (!fFilesBlock.fileExists(hostFile)) {
+						setMessage(Messages.getString("FileTransferTab.HostFilesDontExist")); //$NON-NLS-1$
+						break;
+					}
 				}
 			}
 		}		

@@ -48,6 +48,7 @@ public:
 	long DoSendMessage(long encodeOption, BYTE protocolVersion, BOOL useMsgId, BYTE msgId, DWORD msgLength, BYTE* msg);
 	long DoRetryProcessing();
 	long EnterRetryPeriod(long err, bool passOsErr, DWORD osErr);
+	long HandleFatalPortError(long err, bool passOsErr, DWORD osErr);
 
 	BOOL PauseProcessing();				// pause processing thread (not exit)
 	BOOL RestartProcessing();			// restart processing after a pause

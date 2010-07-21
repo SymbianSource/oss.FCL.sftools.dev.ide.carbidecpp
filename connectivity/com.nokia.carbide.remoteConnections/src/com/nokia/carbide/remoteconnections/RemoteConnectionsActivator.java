@@ -18,6 +18,7 @@ package com.nokia.carbide.remoteconnections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.swt.widgets.Control;
@@ -40,11 +42,12 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
-import com.nokia.carbide.remoteconnections.internal.api.IStatusDisplay;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent.IPrerequisiteStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IStatusDisplay;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.DeviceDiscoveryPrequisiteErrorDialog;
 import com.nokia.carbide.remoteconnections.internal.ui.StatusDisplay;
+import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -85,6 +88,10 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 				runnable.run();
 		}
 	}
+	
+	public interface IDiscoveryAgentsLoadedListener {
+		void agentsAreLoaded();
+	}
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.remoteConnections"; //$NON-NLS-1$
@@ -95,13 +102,16 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	private static RemoteConnectionsActivator plugin;
 
 	private Collection<IDeviceDiscoveryAgent> discoveryAgents;
+	private ListenerList<IDiscoveryAgentsLoadedListener> listeners;
 
 	private static final String IGNORE_AGENT_LOAD_ERRORS_KEY = "ignoreAgentLoadErrors"; //$NON-NLS-1$
+	private static final String AGENT_STATE_KEY_PREFIX = "agentState."; //$NON-NLS-1$
 
 	/**
 	 * The constructor
 	 */
 	public RemoteConnectionsActivator() {
+		listeners = new ListenerList<IDiscoveryAgentsLoadedListener>();
 	}
  
 	public void start(BundleContext context) throws Exception {
@@ -176,6 +186,28 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 			logError(e);
 		}
 	}
+	
+	private void storeAgentRunningStates() {
+		IPreferenceStore preferenceStore = getPreferenceStore();
+		for (IDeviceDiscoveryAgent agent : discoveryAgents) {
+			String agentKey = AGENT_STATE_KEY_PREFIX + agent.getId();
+			if (!preferenceStore.contains(agentKey))
+				preferenceStore.setDefault(agentKey, true);
+			preferenceStore.setValue(agentKey, agent.isRunning());
+		}
+		try {
+			new InstanceScope().getNode(PLUGIN_ID).flush();
+		} catch (BackingStoreException e) {
+			logError(e);
+		}
+	}
+	
+	private boolean getStoredAgentRunningState(IDeviceDiscoveryAgent agent) {
+		String agentKey = AGENT_STATE_KEY_PREFIX + agent.getId();
+		if (!getPreferenceStore().contains(agentKey))
+			return true;
+		return getPreferenceStore().getBoolean(agentKey);
+	}
 
 	/**
 	 * Returns the shared instance
@@ -232,7 +264,9 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 			public boolean select(Object toTest) {
 				if (toTest instanceof IDeviceDiscoveryAgent) {
 					try {
-						((IDeviceDiscoveryAgent) toTest).start();
+						IDeviceDiscoveryAgent discoveryAgent = (IDeviceDiscoveryAgent) toTest;
+						if (getStoredAgentRunningState(discoveryAgent))
+							discoveryAgent.start();
 						return true;
 					} catch (Throwable e) {
 						// since we launch arbitrary code, catch any exception to prevent killing the view
@@ -242,13 +276,15 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 				return false;
 			}
 		});
-		
+		fireDiscoveryAgentsLoaded();
 	}
 
 	private void stopDeviceDiscoveryAgents() {
+		storeAgentRunningStates();
 		for (IDeviceDiscoveryAgent agent : discoveryAgents) {
 			try {
-				agent.stop();
+				if (agent.isRunning())
+					agent.stop();
 			} catch (CoreException e) {
 				logError(e);
 			}
@@ -286,5 +322,25 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 	
 	public static IStatusDisplay getStatusDisplay() {
 		return new StatusDisplay();
+	}
+
+	public Collection<IDeviceDiscoveryAgent> getDiscoveryAgents() {
+		if (discoveryAgents != null)
+			return Collections.unmodifiableCollection(discoveryAgents);
+		return Collections.emptySet();
+	}
+
+	public void addDiscoveryAgentsLoadedListener(IDiscoveryAgentsLoadedListener listener) {
+		listeners.add(listener);
+	}
+	
+	public void removeDiscoveryAgentsLoadedListener(IDiscoveryAgentsLoadedListener listener) {
+		listeners.remove(listener);
+	}
+	
+	private void fireDiscoveryAgentsLoaded() {
+		for (IDiscoveryAgentsLoadedListener listener : listeners) {
+			listener.agentsAreLoaded();
+		}
 	}
 }

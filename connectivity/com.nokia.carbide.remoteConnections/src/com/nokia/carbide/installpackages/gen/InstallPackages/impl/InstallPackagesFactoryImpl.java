@@ -62,6 +62,8 @@ public class InstallPackagesFactoryImpl extends EFactoryImpl implements InstallP
 			case InstallPackagesPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case InstallPackagesPackage.PACKAGES_TYPE: return createPackagesType();
 			case InstallPackagesPackage.PACKAGE_TYPE: return createPackageType();
+			case InstallPackagesPackage.SDK_FAMILY_TYPE: return createSDKFamilyType();
+			case InstallPackagesPackage.SDK_VERSION_TYPE: return createSDKVersionType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -95,6 +97,26 @@ public class InstallPackagesFactoryImpl extends EFactoryImpl implements InstallP
 	public PackageType createPackageType() {
 		PackageTypeImpl packageType = new PackageTypeImpl();
 		return packageType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SDKFamilyType createSDKFamilyType() {
+		SDKFamilyTypeImpl sdkFamilyType = new SDKFamilyTypeImpl();
+		return sdkFamilyType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SDKVersionType createSDKVersionType() {
+		SDKVersionTypeImpl sdkVersionType = new SDKVersionTypeImpl();
+		return sdkVersionType;
 	}
 
 	/**

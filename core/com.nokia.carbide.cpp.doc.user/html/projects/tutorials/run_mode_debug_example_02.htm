@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Install TRK remote agent Tutorial</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/></head>
+<body bgcolor="#FFFFFF">
+<h2>Install TRK remote agent</h2>
+<p>In this example we demonstrate how to debug applications on a remote device using the Application TRK remote debug agent. This enables you to test  programs on the actual device it will operate on while observing its behavior using the Carbide debugger. The steps to do this include:</p>
+<ol>
+    <li><a href="run_mode_debug_example_01.htm">Connect</a> target device to PC</li>
+    <li><strong>Install TRK remote agent (v3.2.7) or later on the target device</strong></li>
+    <li><a href="run_mode_debug_example_03.htm">Configure</a> project for downloading</li>
+    <li><a href="run_mode_debug_example_04.htm">Debug</a> project on target device</li>
+    </ol>
+<hr>
+<p>To debug on a remote device you need a program to communicate between the Carbide debugger and your executable running on the device. That program is the <strong>TRK</strong> (Terminal Resident Kernel) remote agent, also known as <strong>Application TRK</strong>. </p>
+<p>&nbsp;</p>
+<div class="step">
+    <h4>Installing or updating the TRK remote agent</h4>
+    <ol>
+        <li>Select the Connection to edit in the Remote Connections view.</li>
+        <li>Click the Edit Settings... icon (<img src="../images/icon_edit_settings.png" alt="Edit Settings icon" width="17" height="17" align="absmiddle">) in the Remote Connections toolbar.<br />
+        	<p><img src="../images/run_mode_debug_05.png" alt="Click Edit Settings icon"></p>
+        </li>
+        <li>Click the Install Remote Agents tab. <br />
+        	<p><img src="../images/run_mode_debug_06.png" alt="Click Install Remote Agents tab"></p>
+        </li>
+        <li>Select the latest remote agent to install.<br />
+        	<p>Choose the remote agent to install. Since there are different builds for different OSes, knowing the OS installed on the device helps.           </p>
+        </li>
+    <p><img src="../images/run_mode_debug_07.png" alt="Click Install Remote Agents tab"></p>
+        <p class="note"><strong>NOTE</strong> If you don't know what OS version is on the device, always choose the remote agent that supports the highest OS version available. Should that one not work, drop down to the next OS version in line and repeat.</p>
+        <li>
+            <p>Click <strong>Install</strong>.</p>
+        </li>
+    </ol>
+</div>
+<p><strong>NEXT:</strong> <a href="run_mode_debug_example_03.htm">Configure project for debugging</a></p>
+<h4>Other references</h4>
+<ul>
+    <li><a href="run_mode_debug_example_00.htm">Remote Target Debugging (Run-mode)</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

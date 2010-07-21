@@ -43,6 +43,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ICellEditorListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -76,19 +77,22 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nokia.carbide.remoteconnections.Messages;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator.IDiscoveryAgentsLoadedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
+import com.nokia.carbide.remoteconnections.internal.ToggleDiscoveryAgentAction;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
-import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
+import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
+import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
@@ -111,6 +115,7 @@ public class ConnectionsView extends ViewPart {
 	private List<Action> actions;
 	private List<Action> connectionSelectedActions;
 	private List<Action> serviceSelectedActions;
+	private List<Action> discoveryAgentActions;
 	private static final String UID = ".uid"; //$NON-NLS-1$
 
 	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
@@ -131,7 +136,9 @@ public class ConnectionsView extends ViewPart {
 
 	// handle, do not dispose
 	private Font boldViewerFont;
-	
+	private TextCellEditor nameEditor;
+	private boolean refreshPending;
+
 	private TreeNode[] loadConnections() {
 		if (serviceToListenerMap == null)
 			serviceToListenerMap = new HashMap<IConnectedService, IStatusChangedListener>();
@@ -146,7 +153,7 @@ public class ConnectionsView extends ViewPart {
 				IConnectionStatusChangedListener statusChangedListener = 
 					new IConnectionStatusChangedListener() {
 						public void statusChanged(IConnectionStatus status) {
-							handleStatusChanged();
+							refreshViewer();
 						}
 					};
 				IConnection2 connection2 = (IConnection2) connection;
@@ -163,7 +170,7 @@ public class ConnectionsView extends ViewPart {
 				final TreeNode treeNode = new TreeNode(connectedService);
 				IStatusChangedListener statusChangedListener = new IStatusChangedListener() {
 					public void statusChanged(final IStatus status) {
-						handleStatusChanged();
+						refreshViewer();
 					}
 				};
 				connectedService.addStatusChangedListener(statusChangedListener);
@@ -181,23 +188,42 @@ public class ConnectionsView extends ViewPart {
 		return (TreeNode[]) connectionNodes.toArray(new TreeNode[connectionNodes.size()]);
 	}
 
-	private void handleStatusChanged() {
+	private void refreshViewer() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+				if (nameEditor != null && nameEditor.isActivated()) {
+					refreshPending = true;
+					return;
+				}
+				
 				if (!isDisposed && !viewer.getControl().isDisposed()) {
 					viewer.refresh(true);
 					packColumns();
 				}
+				refreshPending = false;
 			}
 		});
 	}
 
 	private class NameEditingSupport extends EditingSupport {
-		private TextCellEditor editor;
 
 		private NameEditingSupport(ColumnViewer viewer) {
 			super(viewer);
-			editor = new TextCellEditor((Composite) viewer.getControl(), SWT.BORDER);
+			nameEditor = new TextCellEditor((Composite) viewer.getControl(), SWT.BORDER);
+			nameEditor.addListener(new ICellEditorListener() {
+				public void editorValueChanged(boolean oldValidState, boolean newValidState) {
+				}
+				
+				public void cancelEditor() {
+					if (refreshPending)
+						refreshViewer();
+				}
+				
+				public void applyEditorValue() {
+					if (refreshPending)
+						refreshViewer();
+				}
+			});
 		}
 		
 		@Override
@@ -210,7 +236,7 @@ public class ConnectionsView extends ViewPart {
 
 		@Override
 		protected CellEditor getCellEditor(Object element) {
-			return editor;
+			return nameEditor;
 		}
 
 		@Override
@@ -223,8 +249,6 @@ public class ConnectionsView extends ViewPart {
 		protected void setValue(Object element, Object value) {
 			IConnection connection = (IConnection) ((TreeNode) element).getValue();
 			connection.setDisplayName(value.toString());
-			//viewer.refresh(true);
-			//packColumns();
 			Registry.instance().updateDisplays();
 			Registry.instance().storeConnections();
 		}
@@ -544,12 +568,7 @@ public class ConnectionsView extends ViewPart {
 			}
 
 			public void displayChanged() {
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						viewer.refresh(true);
-						packColumns();
-					}
-				});
+				refreshViewer();
 			}
 		};
 		Registry.instance().addConnectionStoreChangedListener(connectionStoreChangedListener);
@@ -557,12 +576,7 @@ public class ConnectionsView extends ViewPart {
 		connectionListener = new IConnectionListener() {
 			
 			public void currentConnectionSet(IConnection connection) {
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						viewer.refresh(true);
-						packColumns();
-					}
-				});				
+				refreshViewer();
 			}
 			
 			public void connectionRemoved(IConnection connection) {
@@ -624,8 +638,30 @@ public class ConnectionsView extends ViewPart {
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
-	private void fillLocalPullDown(IMenuManager manager) {
-		// nothing for now
+	private void fillLocalPullDown(final IMenuManager manager) {
+		if (discoveryAgentActions.isEmpty()) {
+			IDiscoveryAgentsLoadedListener listener = new IDiscoveryAgentsLoadedListener() {
+				public void agentsAreLoaded() {
+					makeToggleDiscoveryAgentActions();
+					addDiscoveryAgentActions(manager);
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							manager.update(true);
+						}
+					});
+				}
+			};
+			RemoteConnectionsActivator.getDefault().addDiscoveryAgentsLoadedListener(listener);
+		}
+		else {
+			addDiscoveryAgentActions(manager);
+		}
+	}
+
+	private void addDiscoveryAgentActions(IMenuManager manager) {
+		for (Action action : discoveryAgentActions) {
+			manager.add(action);
+		}
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -827,8 +863,19 @@ public class ConnectionsView extends ViewPart {
 		
 		enableConnectionSelectedActions(false);
 		enableServiceSelectedActions(false);
+		
+		makeToggleDiscoveryAgentActions();
 	}
 	
+	private void makeToggleDiscoveryAgentActions() {
+		discoveryAgentActions = new ArrayList<Action>();
+		Collection<IDeviceDiscoveryAgent> discoveryAgents = RemoteConnectionsActivator.getDefault().getDiscoveryAgents();
+		for (IDeviceDiscoveryAgent agent : discoveryAgents) {
+			discoveryAgentActions.add(new ToggleDiscoveryAgentAction(agent));
+		}
+		
+	}
+
 	private void enableConnectionSelectedActions(boolean enable) {
 		for (Action action : connectionSelectedActions) {
 			action.setEnabled(enable);

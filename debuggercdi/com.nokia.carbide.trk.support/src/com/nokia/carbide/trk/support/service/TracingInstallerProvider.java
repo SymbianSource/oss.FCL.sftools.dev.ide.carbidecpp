@@ -18,40 +18,28 @@
 
 package com.nokia.carbide.trk.support.service;
 
-import com.nokia.carbide.installpackages.InstallPackages.IServerData;
-import com.nokia.carbide.remoteconnections.interfaces.*;
-import com.nokia.carbide.trk.support.Activator;
-
-import org.eclipse.jface.operation.IRunnableContext;
-import org.osgi.framework.Version;
-
-import java.net.URL;
 import java.util.List;
 
+import org.eclipse.jface.operation.IRunnableContext;
+
+import com.nokia.carbide.installpackages.InstallPackages.IServerData;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractPackageInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IRemoteAgentInstallerProvider;
+import com.nokia.carbide.remoteconnections.interfaces.IService;
+
 /**
- *
+ * @deprecated
  */
 public class TracingInstallerProvider extends AbstractPackageInstallerProvider {
 
 	public class ServerData implements IServerData {
 
-		private static final String SERVER = "http://dacvs002.americas.nokia.com/trk"; //$NON-NLS-1$
-		private static final String MASTER_FILE_NAME = "TracingPackages.xml"; //$NON-NLS-1$
+	private static final String MASTER_FILE_NAME = "TracingPackages.xml"; //$NON-NLS-1$
 		
 		public String getMasterFileName() {
 			return MASTER_FILE_NAME;
 		}
 
-		public URL getRelativePathRoot() {
-			URL url = null;
-			try {
-				url = new URL(SERVER);
-			} catch (Exception e) {
-				Activator.log(e);
-			}
-			return url;
-		}
-		
 		public IRemoteAgentInstallerProvider getRemoteAgentInstallerProvider() {
 			return TracingInstallerProvider.this;
 		}
@@ -65,7 +53,7 @@ public class TracingInstallerProvider extends AbstractPackageInstallerProvider {
 	}
 
 	@Override
-	public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, Version version) {
+	public List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, String version) {
 		return super.getRemoteAgentInstallers(familyName, version);
 	}
 
@@ -75,7 +63,7 @@ public class TracingInstallerProvider extends AbstractPackageInstallerProvider {
 	}
 
 	@Override
-	public List<Version> getVersions(String familyName) {
+	public List<String> getVersions(String familyName) {
 		return super.getVersions(familyName);
 	}
 	

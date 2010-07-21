@@ -19,7 +19,9 @@ package com.nokia.cdt.internal.debug.launch.ui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -61,6 +63,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 
 /**
  * A composite that displays files in a table. Files can be 
@@ -101,6 +104,12 @@ public class FilesBlock {
 	// index of column used for sorting
 	private int fSortColumn = 1;
 	
+	// cache of file info: we expect this to remain relatively static while
+	// any UI using FilesBlock is up.
+	private static Map<File, Pair<Long, Boolean>> fFileInfoCache = new LinkedHashMap<File, Pair<Long,Boolean>>();
+	private static long fFileInfoCacheFlushTime = 0;
+	private static final int CACHE_CHECK_QUANTUM = 60 * 1000;
+
 	/** 
 	 * Content provider to show a list of files to be transferred
 	 */ 
@@ -149,7 +158,7 @@ public class FilesBlock {
 				// add warning icon for any host files that don't exist
 				FileToTransfer file = (FileToTransfer)element;
 				File hostFile = new Path(file.getHostPath()).toFile();
-				if (!hostFile.exists()) {
+				if (!fileExists(hostFile)) {
 					return LaunchPlugin.getImageDescriptor("icons/Launch/etool16/warning_obj.gif").createImage();
 				}
 			}
@@ -160,6 +169,7 @@ public class FilesBlock {
 	
 	FilesBlock(FileTransferTab launchTab) {
 		fLaunchTab = launchTab;
+		fFileInfoCacheFlushTime = System.currentTimeMillis();
 	}
 
 	/**
@@ -541,7 +551,7 @@ public class FilesBlock {
 	private void removeFiles() {
 		IStructuredSelection selection= (IStructuredSelection)fFileList.getSelection();
 		FileToTransfer[] files = new FileToTransfer[selection.size()];
-		Iterator iter = selection.iterator();
+		Iterator<?> iter = selection.iterator();
 		int i = 0;
 		while (iter.hasNext()) {
 			files[i] = (FileToTransfer)iter.next();
@@ -632,5 +642,33 @@ public class FilesBlock {
 
 	Viewer getViewer() {
 		return fFileList;
+	}
+	
+	boolean fileExists(File file) {
+		Pair<Long, Boolean> entry = fFileInfoCache.get(file);
+		
+		// recheck the status occasionally, either after time passes or
+		// whenever the UI is recreated (as in constructor)
+		if (System.currentTimeMillis() >= fFileInfoCacheFlushTime) {
+			// remove entries not checked at all in a while
+			long deadLine = System.currentTimeMillis() - CACHE_CHECK_QUANTUM;
+			Iterator<Pair<Long, Boolean>> iter = fFileInfoCache.values().iterator();
+			while (iter.hasNext()) {
+				Pair<Long, Boolean> ientry = iter.next();
+				if (ientry.first < deadLine) {
+					iter.remove();
+				}
+			}
+			fFileInfoCacheFlushTime = System.currentTimeMillis() + CACHE_CHECK_QUANTUM;
+		}
+		
+		if (entry == null) {
+			//System.out.println("Checking " + file);
+			entry = new Pair<Long, Boolean>(System.currentTimeMillis(), file.exists());
+			fFileInfoCache.put(file, entry);
+		} else {
+			//System.out.println("Not checking " + file);
+		}
+		return entry.second;
 	}
 }

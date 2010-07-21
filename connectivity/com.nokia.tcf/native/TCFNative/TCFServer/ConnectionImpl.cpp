@@ -27,7 +27,7 @@
 extern BOOL gDoLogging;
 #endif
 
-//#define LOG_CONNECTION
+#define LOG_CONNECTION
 #if defined(LOG_CONNECTION) && defined(_DEBUG)
 #define TCDEBUGOPEN() if (gDoLogging) { this->m_DebugLog->WaitForAccess(); }
 #define TCDEBUGLOGS(s) if (gDoLogging) { sprintf(this->m_DebugLogMsg,"%s", s); this->m_DebugLog->log(this->m_DebugLogMsg); }
@@ -407,9 +407,10 @@ long CConnectionImpl::DoSendMessage(long encodeOption, BYTE protocolVersion, BOO
 		delete[] encodedMessage;
 
 		TCDEBUGLOGS("CConnectionImpl::DoSendMessage done\n");
-		if (err == TCAPI_ERR_COMM_ERROR)
+		if (err != TCAPI_ERR_NONE)
 		{
 //			EnterRetryPeriod(err, true, m_BaseComm->m_lastCommError);
+			HandleFatalPortError(err, true, m_BaseComm->m_lastCommError);
 			m_OsError = m_BaseComm->m_lastCommError;
 		}
 	}
@@ -662,6 +663,19 @@ BOOL CConnectionImpl::AddClientToRegistry(CClient* client, long numberIds, BYTE*
 	return m_Registry->AddClient(client, numberIds, ids);
 }
 
+long CConnectionImpl::HandleFatalPortError(long err, bool passOsErr, DWORD osErr)
+{
+	TCDEBUGOPEN();
+	TCDEBUGLOGA3("CConnectionImpl::HandleFatalPortError err=%d passOsErr=%d osErr=%d\n", err, passOsErr, osErr);
+	TCDEBUGCLOSE();
+
+	m_BaseComm->ClosePort();
+	m_Status = eDisconnected;
+
+	NotifyClientsCommError(err);
+
+	return TCAPI_ERR_NONE;
+}
 void CConnectionImpl::NotifyClientsCommError(long tcfError, bool passOsError, DWORD osError)
 {
 //	TCDEBUGOPEN();
@@ -769,6 +783,8 @@ DWORD WINAPI CConnectionImpl::MessageProcessor(LPVOID lpParam)
 				{
 					MPLOGA2("MessageProcessor  err = %d osError = %d\n", err, pThis->m_BaseComm->m_lastCommError);
 //					pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
+					if (err == TCAPI_ERR_COMM_ERROR)
+						pThis->HandleFatalPortError(err, true, pThis->m_BaseComm->m_lastCommError);
 				}
 				else
 				{
@@ -786,8 +802,11 @@ DWORD WINAPI CConnectionImpl::MessageProcessor(LPVOID lpParam)
 
 						if (err == TCAPI_ERR_COMM_ERROR)
 						{
+							MPLOGA2("MessageProcessor  err = %d osError = %d\n", err, pThis->m_BaseComm->m_lastCommError);
 							// for this error we have os error, but we probably caught this in PollPort already
 //							pThis->EnterRetryPeriod(err, true, pThis->m_BaseComm->m_lastCommError);
+							if (err == TCAPI_ERR_COMM_ERROR)
+								pThis->HandleFatalPortError(err, true, pThis->m_BaseComm->m_lastCommError);
 						}
 						else if (err != TCAPI_ERR_NONE)
 						{

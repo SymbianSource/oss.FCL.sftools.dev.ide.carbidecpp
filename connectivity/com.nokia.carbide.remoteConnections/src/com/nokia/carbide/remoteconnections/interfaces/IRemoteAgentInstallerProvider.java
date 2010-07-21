@@ -112,7 +112,7 @@ public interface IRemoteAgentInstallerProvider {
 	 * @param familyName String
 	 * @return List
 	 */
-	List<Version> getVersions(String familyName);
+	List<String> getVersions(String familyName);
 	
 	/**
 	 * Return the IRemoteAgentInstaller objects for a given sdk family + version qualifier
@@ -120,7 +120,7 @@ public interface IRemoteAgentInstallerProvider {
 	 * @param version
 	 * @return
 	 */
-	List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, Version version);
+	List<IRemoteAgentInstaller> getRemoteAgentInstallers(String familyName, String version);
 	
 	/**
 	 * Dispose this provider

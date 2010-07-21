@@ -16,11 +16,27 @@
 */
 package com.nokia.carbide.discovery.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.util.Properties;
+
+import org.eclipse.core.net.proxy.IProxyData;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import com.nokia.cpp.internal.api.utils.core.ProxyUtils;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -32,6 +48,9 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
+	private static final String PROPERTY_PROXYPORT = "network.proxy_port"; //$NON-NLS-1$
+	private static final String PROPERTY_PROXYHOST = "network.proxy_host"; //$NON-NLS-1$
+	
 	/**
 	 * The constructor
 	 */
@@ -44,6 +63,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com"));
+		System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
+		System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
 	}
 
 	/*
@@ -83,4 +105,29 @@ public class Activator extends AbstractUIPlugin {
 	public static void logError(String message, Throwable t) {
 		getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, t));
 	}
+
+	/**
+	 * Get a value from the server.properties file
+	 * @param key
+	 * @return
+	 */
+	public static String getFromServerProperties(String key) {
+		Location installLocation = Platform.getInstallLocation();
+		URL url = installLocation.getURL();
+		IPath path = new Path(url.getPath());
+		path = path.append("configuration/server.properties"); //$NON-NLS-1$
+		File file = path.toFile();
+		Properties properties = new Properties();
+		try {
+			InputStream is = new FileInputStream(file);
+			properties.load(is);
+			is.close();
+		} catch (IOException e) {
+			String message = 
+				MessageFormat.format("Could not find URL in configuration/server.properties file for key={0}", key);
+			Activator.logError(message, e);
+		}
+		return (String) properties.get(key);
+	}
+
 }

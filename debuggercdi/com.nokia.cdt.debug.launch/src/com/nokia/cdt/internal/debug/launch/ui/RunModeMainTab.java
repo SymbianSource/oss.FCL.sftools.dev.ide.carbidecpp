@@ -81,7 +81,10 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		if (wantsConnectionUI)
 		{
 			createVerticalSpacer(comp, 1);
-			clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(LaunchPlugin.getTRKService());
+			/* TODO: do not filter by service: we need to match either TRK or TCF TRK and the API does not support this yet; 
+			 * this isn't a problem, though, since all stock connections support TRK anyway */
+			//clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(LaunchPlugin.getTRKService());
+			clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(null);
 			clientSiteUI.createComposite(comp);
 			clientSiteUI.addListener(new IListener() {
 				public void connectionSelected() {

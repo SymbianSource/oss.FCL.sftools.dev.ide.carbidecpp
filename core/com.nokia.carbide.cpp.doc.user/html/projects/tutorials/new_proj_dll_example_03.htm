@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Debugging a DLL Project Tutorial</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Debugging a  DLL Project Tutorial</h2>
+<p>In this example we show how to create a  project for a DLL (Dynamic Linked Library) using one of the built-in Carbide templates, how to build it into an executable, and how to launch the debugger to verify program accuracy. The steps to do this include:</p>
+<ol>
+    <li><a href="new_proj_from_template_01.htm">Creating</a> a DLL project from a project template</li>
+    <li><a href="new_proj_from_template_02.htm">Building</a> the DLL object code based on the project sources</li>
+    <li><strong>Debugging the DLL using  the Carbide debugger</strong></li>
+</ol>
+<hr>
+<p>With the DLL compiled into object code, it's time to link it to any process running on the target device, then launch it with the debugger. Using the <strong>New Launch Configuration Wizard</strong> makes doing this quick, easy, and reliable.</p>
+<div class="step">
+    <p>Debugging a DLL project</p>
+    <ol>
+        <li>Select the project to launch in the Project Explorer view.</li>
+        <li>Launch a debug session using one of these actions:<br />
+            <ul>
+                <li>Right-click the project in the Project Explorer view and choose <strong>Debug As &gt; Debug Symbian OS Application on Phone or Simulator</strong> menu option.</li>
+                <li>Click the Run &gt; Debug (F11) menu option.</li>
+                <li>Click the Debug (<img src="../images/icon_debug.png" alt="Debug icon" width="17" height="17" align="absmiddle">) icon in the toolbar to build the project. </li>
+            </ul>
+            <p>The first time you perform any of the following actions, the <strong>New Launch Configuration Wizard</strong> appears asking for the additional info to connect to a device.</p>
+            <p><img src="../images/dll_new_launch_config.png" alt="New Launch Configuration Wizard" width="550" height="460"></p>
+        </li>
+        <li>Provide the wizard the information it needs to complete the Configure launch configuration.<br />
+        	<p>Complete all of the options below to create a launch connection for the DLL project.</p>
+            <ol type="a">
+                <li>Connect to device &mdash; click Change... to select a Current connection, create a new one, or edit the chosen remote connection settings.<br />
+                	<p><img src="../images/dll_change_remote_connection.png" alt="Change connection dialog"></p>
+                </li>
+                <li>Debug process &mdash; click <strong>Change...</strong> to open the <strong>Change Debug Process</strong> dialog. Then select the <strong>Attach to process</strong> option and click <strong>OK</strong><br />
+                	<p>To debug a DLL you simply need to attach it to any process running on the target device. Setting the<strong> Attach to process</strong> option will throw up a <strong>Attach to Process</strong> dialog when you start a debug session.</p>
+                	<p><img src="../images/dll_change_debug_process.png" alt="Change Debug Process dialog"></p>
+                </li>
+                <li>Other Settings &mdash; click Change... to open the Other Settings dialog to set a preference for when the project is built during a launch, then click OK.<br />
+                	<p><img src="../images/dll_other_settings.png" alt="Other Settings dialog"></p>
+                </li>
+                <li>(Optional) Edit advanced settings before launch &mdash; enable this option and click Edit to open the Debug Configurations dialog where you can set more launch options. Click Close to cancel the debug session launch.</li>
+            </ol>
+            <p>The <strong>Debug</strong> control enables when all the information is complete.</p>
+        </li>
+        <li>Click Debug.<br />
+        	<p>The debug session is launched and the <strong>Attach to Process</strong> dialog appears. Select a process and click <strong>OK</strong> to continue.</p>
+            <p><img src="../images/dll_attach_to_process.png" alt="Attach to Process dialog"></p>
+        </li>
+        <p>The DLL is attached to the running process and control returns to the Carbide debugger. From this point you can use all of the Carbide debugger features to debug the DLL as it runs on the device.</p>
+    </ol>
+</div>
+<h4>Other references</h4>
+<ul>
+    
+    <li><a href="new_proj_dll_example_00.htm">DLL Projects</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

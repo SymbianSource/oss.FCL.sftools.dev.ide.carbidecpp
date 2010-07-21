@@ -11,6 +11,8 @@ import com.nokia.carbide.installpackages.gen.InstallPackages.InstallPackagesPack
 import com.nokia.carbide.installpackages.gen.InstallPackages.PackageType;
 import com.nokia.carbide.installpackages.gen.InstallPackages.PackagesType;
 
+import com.nokia.carbide.installpackages.gen.InstallPackages.SDKFamilyType;
+import com.nokia.carbide.installpackages.gen.InstallPackages.SDKVersionType;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -49,6 +51,20 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 	private EClass packageTypeEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass sdkFamilyTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass sdkVersionTypeEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -75,20 +91,10 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link InstallPackagesPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -100,7 +106,7 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		if (isInited) return (InstallPackagesPackage)EPackage.Registry.INSTANCE.getEPackage(InstallPackagesPackage.eNS_URI);
 
 		// Obtain or create and register package
-		InstallPackagesPackageImpl theInstallPackagesPackage = (InstallPackagesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof InstallPackagesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new InstallPackagesPackageImpl());
+		InstallPackagesPackageImpl theInstallPackagesPackage = (InstallPackagesPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof InstallPackagesPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new InstallPackagesPackageImpl());
 
 		isInited = true;
 
@@ -116,6 +122,9 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		// Mark meta-data to indicate it can't be changed
 		theInstallPackagesPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(InstallPackagesPackage.eNS_URI, theInstallPackagesPackage);
 		return theInstallPackagesPackage;
 	}
 
@@ -178,8 +187,26 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPackagesType_Package() {
+	public EReference getPackagesType_SDKFamily() {
 		return (EReference)packagesTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPackagesType_SDKVersion() {
+		return (EReference)packagesTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPackagesType_Package() {
+		return (EReference)packagesTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -250,6 +277,42 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSDKFamilyType() {
+		return sdkFamilyTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSDKFamilyType_Order() {
+		return (EAttribute)sdkFamilyTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSDKVersionType() {
+		return sdkVersionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSDKVersionType_Order() {
+		return (EAttribute)sdkVersionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public InstallPackagesFactory getInstallPackagesFactory() {
 		return (InstallPackagesFactory)getEFactoryInstance();
 	}
@@ -280,6 +343,8 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		createEReference(documentRootEClass, DOCUMENT_ROOT__PACKAGES);
 
 		packagesTypeEClass = createEClass(PACKAGES_TYPE);
+		createEReference(packagesTypeEClass, PACKAGES_TYPE__SDK_FAMILY);
+		createEReference(packagesTypeEClass, PACKAGES_TYPE__SDK_VERSION);
 		createEReference(packagesTypeEClass, PACKAGES_TYPE__PACKAGE);
 
 		packageTypeEClass = createEClass(PACKAGE_TYPE);
@@ -289,6 +354,12 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		createEAttribute(packageTypeEClass, PACKAGE_TYPE__PACKAGE_VERSION);
 		createEAttribute(packageTypeEClass, PACKAGE_TYPE__SDK_FAMILY);
 		createEAttribute(packageTypeEClass, PACKAGE_TYPE__SDK_VERSION);
+
+		sdkFamilyTypeEClass = createEClass(SDK_FAMILY_TYPE);
+		createEAttribute(sdkFamilyTypeEClass, SDK_FAMILY_TYPE__ORDER);
+
+		sdkVersionTypeEClass = createEClass(SDK_VERSION_TYPE);
+		createEAttribute(sdkVersionTypeEClass, SDK_VERSION_TYPE__ORDER);
 	}
 
 	/**
@@ -331,6 +402,8 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		initEReference(getDocumentRoot_Packages(), this.getPackagesType(), null, "packages", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(packagesTypeEClass, PackagesType.class, "PackagesType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPackagesType_SDKFamily(), this.getSDKFamilyType(), null, "sDKFamily", null, 0, 1, PackagesType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPackagesType_SDKVersion(), this.getSDKVersionType(), null, "sDKVersion", null, 0, 1, PackagesType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPackagesType_Package(), this.getPackageType(), null, "package", null, 0, -1, PackagesType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(packageTypeEClass, PackageType.class, "PackageType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -340,6 +413,12 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		initEAttribute(getPackageType_PackageVersion(), theXMLTypePackage.getString(), "packageVersion", null, 1, 1, PackageType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPackageType_SdkFamily(), theXMLTypePackage.getString(), "sdkFamily", null, 1, 1, PackageType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPackageType_SdkVersion(), theXMLTypePackage.getString(), "sdkVersion", null, 1, 1, PackageType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(sdkFamilyTypeEClass, SDKFamilyType.class, "SDKFamilyType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSDKFamilyType_Order(), theXMLTypePackage.getString(), "order", null, 1, 1, SDKFamilyType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(sdkVersionTypeEClass, SDKVersionType.class, "SDKVersionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSDKVersionType_Order(), theXMLTypePackage.getString(), "order", null, 1, 1, SDKVersionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -407,6 +486,22 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 			 "kind", "elementOnly"
 		   });		
 		addAnnotation
+		  (getPackagesType_SDKFamily(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "SDKFamily",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getPackagesType_SDKVersion(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "SDKVersion",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
 		  (getPackagesType_Package(), 
 		   source, 
 		   new String[] {
@@ -467,6 +562,36 @@ public class InstallPackagesPackageImpl extends EPackageImpl implements InstallP
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "sdkVersion",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (sdkFamilyTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "SDKFamily_._type",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getSDKFamilyType_Order(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "order",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (sdkVersionTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "SDKVersion_._type",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getSDKVersionType_Order(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "order",
 			 "namespace", "##targetNamespace"
 		   });
 	}

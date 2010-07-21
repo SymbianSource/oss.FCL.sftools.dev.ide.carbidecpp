@@ -62,20 +62,6 @@
          </description>
       </wizard>
    </extension>
- <extension
-       point="org.eclipse.ui.actionSets">
-    <actionSet
-          id="com.nokia.carbide.remoteConnections.OnDevice.actionSet"
-          label="On-Device Connections"
-          visible="true">
-       <action
-             class="com.nokia.carbide.remoteconnections.settings.ui.OnDeviceConnectionAction"
-             id="com.nokia.carbide.remoteConnections.OnDevice.action"
-             label="%OnDevice.label"
-             menubarPath="help/onDeviceGroup">
-       </action>
-    </actionSet>
- </extension>
 
 <!-- We use an Eclipse toolbar command to show the ToolItem icon for the 
 current connection status.  This is required to get the same kind of
@@ -120,4 +106,16 @@ class. -->
         </toolbar>
 	</menuContribution>
 </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="platform:/resource/com.nokia.carbide.remoteConnections/schema/InstallPackages.xsd"
+            class="com.nokia.carbide.installpackages.gen.InstallPackages.InstallPackagesPackage"
+            genModel="schema/InstallPackages.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="installpackages"
+            class="com.nokia.carbide.installpackages.gen.InstallPackages.util.InstallPackagesResourceFactoryImpl"/>
+   </extension>
 </plugin>

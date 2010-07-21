@@ -61,18 +61,18 @@
 			value="Migration information available."/>
 		<property
 			name="introDescription-webresources"
-			value="The following web resources provide information and guidance on creating Symbian OS progams using Carbide.c++"/>
+			value="The following web resources provide information and guidance on creating Symbian OS programs using Carbide.c++"/>
 		
 		<!-- Splash screen attributes -->
 		<property 
 			name="startupProgressRect" 
-			value="0,244,469,22" /> 
+			value="0,257,469,10" />
 		<property 
 			name="startupForegroundColor" 
-			value="777777" />
+			value="333333" />
 		<property 
 			name="startupMessageRect" 
-			value="12,180,441,15" /> 
+			value="24,190,441,15" /> 
 	</product> 
 
    </extension>
@@ -90,6 +90,7 @@
       </introProductBinding>
    </extension>
 
+<!--
 <extension   
 	id="intro"
 	point="org.eclipse.ui.intro.config">
@@ -97,25 +98,26 @@
 		introId="com.nokia.carbide.cpp.intro"
 		id="com.nokia.carbide.cpp.introConfig"
 		content="intro/introContent.xml">
-	<presentation
-		home-page-id="root" standby-page-id="standby">
-			<implementation
- 				ws="win32"
-                style="$theme$/html/shared.css"
-				kind="html"
-				os="win32">
-			</implementation>
-			<implementation
-				kind="swt">
-			</implementation>
-			<launchBar
-               	location="fastview" 
-            	bg="$launchbarBackground$"
-            	computed="true" >
-			</launchBar>
-	</presentation>
+		<presentation
+			home-page-id="root" standby-page-id="standby">
+				<implementation
+	 				ws="win32"
+	                style="$theme$/html/shared.css"
+					kind="html"
+					os="win32">
+				</implementation>
+				<implementation
+					kind="swt">
+				</implementation>
+				<launchBar
+	               	location="fastview" 
+	            	bg="$launchbarBackground$"
+	            	computed="true" >
+				</launchBar>
+		</presentation>
 	</config>
 </extension>  
+-->
 
 <!-- =================================================================================== -->
 <!-- Universal intro extensions to show content in welcome pages                         -->

@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -518,7 +519,9 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	 */
 	@Override
 	public void update() {
-		getParent().update(true);
+		IContributionManager parent = getParent();
+		if (parent != null)
+			parent.update(true);
 	}
 	
 	/**

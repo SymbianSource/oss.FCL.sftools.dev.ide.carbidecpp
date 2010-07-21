@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Defining a launch configuration</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2>Defining a launch configuration</h2>
+<p>In this example we show how to create a new project using one of the built-in Carbide templates, how to build it into an executable, and how to launch the debugger to verify program accuracy. The steps to do this include:</p>
+<ol>
+    <li><a href="new_proj_from_template_01.htm">Creating</a> a project from a project template</li>
+    <li><a href="new_proj_from_template_02.htm">Building</a> the object code based on the project sources</li>
+    <li><strong>Defining a launch configuration for running or debugging the application</strong></li>
+    <li><a href="new_proj_from_template_04.htm">Controlling and debugging</a> the running program using  the Carbide debugger</li>
+</ol>
+<hr>
+<p><strong></strong>To run or debug a project you need a <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a>. A project must have at least one launch configuration, and can have as many as necessary. It is not unusual to have two or more launch configurations per target device, usually a debug version and a run version. You can use the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a> to create them all.</p>
+<ul>
+    <li>On emulator targets, the <strong>New Launch Configuration</strong> <strong>Wizard</strong> usually has all the information it requires to create a launch configuration and launch the program on the emulator. If at any time it needs additional information, dialogs will  ask for it, then launch the program.</li>
+    <li>On device targets, the <strong>New Launch Configuration</strong> <strong>Wizard</strong>  requests all the additional information it needs like the target device, the remote connection, and more, before it creates the launch configuration. Once it has all the required data, it  creates the launch configuration, then downloads the executable to the device and launches it.</li>
+</ul>
+<p>Once the emulator or device is loaded with the executable, a debug session  can begin. </p>
+<p>If at any time the <strong>New Launch Configuration</strong> <strong>Wizard</strong> encounters a problem during a later launch sequence it will request settings clarification before continuing. For example, maybe the target device has changed, or a new ROM has been installed. Either of these will trigger a request for clarification.</p>
+<div class="step">
+    <h4>Defining a launch configuration (emulator example)</h4>
+    <ol>
+        <li>Select the project to run in the Project Explorer view.</li>
+        <li>To run the project without the debugger choose:<br />
+        	<p>To simply run the project on the chosen target use one of the following actions. Use this option to verify a release program's execution without debugging symbols.</p>
+        	<ol type="a">
+                <li>Right-click the project and click Run As &gt; Run Symbian OS Application on Emulator.</li>
+                <li>Click the Run &gt; Run (<span class="code">CTRL-F11</span>) menu item.</li>
+                <li>Click the Run (<img src="../images/icon_run.png" alt="Run icon" width="16" height="16" align="absmiddle">) icon in the toolbar.</li>
+            </ol>
+        </li>
+        <li>Select the Process to launch in the Executable Selection page, then click Next.<br />
+            <p><img src="../images/new_launch_config_03.png" width="671" height="433"></p>
+        </li>
+        <li>Set the Build (if required) before launching option in the Build Options Selection page, then click Next.<br />
+            <p><img src="../images/new_launch_config_04.png" width="671" height="433"></p>
+        </li>
+		<li>Verify the new launch configuration settings in the New Launch Configuration page.<br />
+        	<p><img src="../images/new_launch_config_05.png" width="671" height="433"></p>
+        </li>
+        <li>(Optional) Checkmark the Advanced settings option to further customize the launch configuration.</li>
+        <li>Click Finish. <br />
+            <p>Carbide launches the emulator,  transfers the HelloWorld executable to it, then launches the program (see below). You can then use the soft-keys to choose actions from the <strong>Options</strong> soft-menu. Click the <strong>Exit</strong> soft-key to close the emulator and return to Carbide.c++.</p>
+            <p align="left"><img src="../images/new_launch_config_08.png" alt="Emulator" width="235" height="450"></p>
+        </li>
+    </ol>
+    <p>With a launch configuration in place, its now possible to edit, build, and run a project in the emulator. However, since none of us can write perfect code the first time the use of a debugger is essential for further development of our project.</p>
+</div>
+<h4><strong>NEXT STEP</strong> &gt; <a href="new_proj_from_template_04.htm">Controlling and debugging</a> the running program using  the Carbide debugger</h4>
+<h4>Other references</h4>
+<ul>
+    
+    <li><a href="new_proj_from_template_00.htm">Emulator Application Projects</a><a href="./"></a><a href="./"></a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

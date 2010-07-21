@@ -1,9 +1,13 @@
 package com.nokia.carbide.cdt.internal.builder;
 
+import java.text.MessageFormat;
+
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
+
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 
 public class CarbideBuildManagerUtils {
 	
@@ -34,4 +38,9 @@ public class CarbideBuildManagerUtils {
 		}
 	}
 
+	public static String getBuildLabel(ICarbideBuildConfiguration buildConfig, String componentName) {
+		return MessageFormat.format("Building {0}: {1}", 
+					buildConfig.getCarbideProject().getProject().getName(), 
+					componentName != null ? componentName : buildConfig.getDisplayString());
+	}
 }

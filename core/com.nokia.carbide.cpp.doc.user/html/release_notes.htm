@@ -31,6 +31,12 @@ Updating the CDT feature in Carbide.c++/Eclipse will wipe out our
 changes making the tools unusable!</p>
 <h3><a name="whatsNew" id="whatsNew"></a>What's New in 3.0.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
+<h4>Milestone 2</h4>
+<ul>
+    <li>A new <a href="reference/view_carbide_portal.htm">Carbide Portal</a> view provides easier access to Carbide information, an extensions marketplace, and support.</li>
+    <li>The <a href="reference/view_variables.htm">Variables</a> view and debug hover now supports the following Qt data types: <span class="code">QString</span>, <span class="code">QByteArray</span>, <span class="code">QSet</span>, <span class="code">QHash</span>, <span class="code">QMap</span>, <span class="code">QVector</span>, <span class="code">QList</span>, <span class="code">QLinkedList</span> and <span class="code">Qvariant</span>.</li>
+</ul>
+<h4>Milestone 1</h4>
 <ul>
     <li><b>Eclipse 3.6 </b>&#8212; The Eclipse 3.6 project (Helios) provides the foundation, or integration platform, on which  Carbide.c++  is built. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.6</a> for more information.</li>
     <li><b>CDT 7.0 </b>&#8212; The final version of CDT is included as part of the Helios release. See the <a href="http://wiki.eclipse.org/CDT/User/NewIn70">CDT 7.0 News and Noteworthy</a> page for more information.    </li>
@@ -45,16 +51,19 @@ changes making the tools unusable!</p>
         </ul>
   </li>
 </ul>
-<h4><a name="new260" id="new260"></a>2.6.0 </h4>
+<h4><a name="new270" id="new270"></a>2.7.0 </h4>
+<ul>
+    
+  <li>The Leavescan plug-in has been deprecated and is no longer included in  Carbide.c++ releases. Use Codescanner to replace the Leavescan functionality.</li>
+</ul>
+<h4><a name="new260" id="new2"></a>2.6.0 </h4>
 <ul>
     <li><b>GCCE 4.0 </b> supported &mdash; required for future SBSv2 releases.</li>
     <li><b>Symbian^3 </b>supported &mdash; new templates and improvements required for the public Symbian^3 SDK.</li>
-    <li><b>Known Issues in v2.6.0</b>:
-        <ul>
-                <li>GCCE4 support requires using a SBSv2 build alias (<span class="code">-c</span> parameter) of <span class="code">armv5_udeb_gcce</span> or <span class="code">armv5_urel_gcce</span>. As of this writing, these aliases were not available in the SDK or SBSv2, but will appear in some future version. Carbide versions prior to 2.6 do not support GCCE4.</li>
-            <li>Users should consult the SDK documentation for GCCE and SBSv2 issues and installation requirements.</li>
-            <li>TRK: If you install the TRK app onto your phone's flash memory (Mass Storage) a Remote Connection may not find the TRK-service even though TRK is already connected to your PC.         Workaround: Uninstall TRK then reinstall it onto your PHONE memory (C-drive). The TRK service should now be &quot;Available&quot;.</li>
-        </ul>
+    <li><b>Known Issues in v2.6.0</b>: 
+        <p>GCCE4 support requires using a SBSv2 build alias (<span class="code">-c</span> parameter) of <span class="code">armv5_udeb_gcce</span> or <span class="code">armv5_urel_gcce</span>. As of this writing, these aliases were not available in the SDK or SBSv2, but will appear in some future version. Carbide versions prior to 2.6 do not support GCCE4.</p>
+        <p>Users should consult the SDK documentation for GCCE and SBSv2 issues and installation requirements.</p>
+        <p>TRK: If you install the TRK app onto your phone's flash memory (Mass Storage) a Remote Connection may not find the TRK-service even though TRK is already connected to your PC.         Workaround: Uninstall TRK then reinstall it onto your PHONE memory (C-drive). The TRK service should now be &quot;Available&quot;.</p>
     </li>
 </ul>
 <h4><a name="new250" id="new"></a>2.5.0</h4>
@@ -75,10 +84,11 @@ changes making the tools unusable!</p>
 <p>Workarounds for known issues: </p>
 <ul>
     <li><strong>Qt issues</strong> &mdash; If Qt does not seem to be working as expected, be sure to run the <span class="code">\configuration\qt\register_plugins.bat</span> file to properly register the Qt plugins. This is especially important if you installed Carbide using a zip file and not an installer.</li>
+    <li><strong>USB issues</strong>  &mdash; There are know problems with some USB configurations. We are working to resolve these asap.</li>
 </ul>
 <h3><a name="support" id="support"></a>Technical support </h3>
 <p>The following support services are available:</p>
-<ul><li>Visit the <a href="http://web-dev.foundationhost.org/">Symbian Foundation</a> for Carbide.c++ and Symbian development information </li>
+<ul><li>Visit the <a href="http://developer.symbian.org/">Symbian Foundation</a> for Carbide.c++ and Symbian development information </li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

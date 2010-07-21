@@ -26,26 +26,6 @@
       </service>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="com.nokia.carbide.remoteconnections.tests.extensions.actionSet"
-            label="Service Dialogs"
-            visible="true">
-         <action
-               class="com.nokia.carbide.remoteconnections.tests.extensions.RandomCycleServiceDialogAction"
-               id="com.nokia.carbide.remoteconnections.tests.randomCycle.action"
-               label="Random Cycle Service Dialog..."
-               menubarPath="help/TestServiceDialogs">
-         </action>
-         <action
-               class="com.nokia.carbide.remoteconnections.tests.extensions.UnknownStatusServiceDialogAction"
-               id="com.nokia.carbide.remoteconnections.tests.unknownStatus.action"
-               label="Unknown Status Service Dialog..."
-               menubarPath="help/TestServiceDialogs">
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="com.nokia.carbide.remoteConnections.extensionFilter">
       <extensionFilter
             class="com.nokia.carbide.remoteconnections.tests.extensions.TestFilter">

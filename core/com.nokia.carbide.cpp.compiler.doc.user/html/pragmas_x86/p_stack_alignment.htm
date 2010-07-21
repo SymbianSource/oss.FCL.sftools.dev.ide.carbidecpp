@@ -24,7 +24,7 @@
   <p>This pragma recommends a minimum alignment. When one of the above situations occurs, the actual alignment may be greater.<br />
     In some functions, in order to guarantee alignment, the EBX register is used as a surrogate local base pointer. This happens in functions which have indeterminate control flow (i.e., jump through a pointer), which are involved in exception handling, or which use <span class="code">alloca()</span>. Use of EBX to access locals is not possible if Microsoft C++ exception handling is used in the function, so alignment is disabled for such functions. You can use <span class="code">#pragma warn_stack_alignment</span> to check for such cases.<br />
 </p>
-  <div id="footer">Copyright &copy; 2009 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+  <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
 
 </body>

@@ -4,7 +4,6 @@
       label="%featureName"
       version="3.0.0.qualifier"
       provider-name="Nokia"
-      plugin="com.nokia.carbide.cpp"
       image="Carbide_Image.png">
 
    <description>

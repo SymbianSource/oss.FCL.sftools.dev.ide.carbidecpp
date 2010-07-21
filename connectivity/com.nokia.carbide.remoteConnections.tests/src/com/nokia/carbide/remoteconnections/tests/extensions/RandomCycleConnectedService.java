@@ -35,9 +35,9 @@ import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 
 public class RandomCycleConnectedService implements IConnectedService {

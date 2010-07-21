@@ -932,12 +932,24 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 									visitedPaths.add(baseExtensionMakefilePath);
 									
 									IPath extensionMakefilePath = baseExtensionMakefilePath.addFileExtension("mk");
-									IPath extensionMetaPath = baseExtensionMakefilePath.addFileExtension("meta");
-
-									addBldInfExtensionMakefile(objects, project, cpi, view,
-											extensionMakefilePath);
-									addBldInfExtensionMakefile(objects, project, cpi, view,
-											extensionMetaPath);
+									
+									if (extensionMakefilePath.toFile().exists()) {
+										// old-style
+										IPath extensionMetaPath = baseExtensionMakefilePath.addFileExtension("meta");
+										addBldInfExtensionMakefile(objects, project, cpi, view,
+												extensionMakefilePath);
+										addBldInfExtensionMakefile(objects, project, cpi, view,
+												extensionMetaPath);
+									} else {
+										// new-style (default for the future)
+										IPath flmMakefilePath;
+										if ("export".equals(baseExtensionMakefilePath.getFileExtension()))
+											flmMakefilePath = baseExtensionMakefilePath.removeFileExtension().addFileExtension("flm");
+										else
+											flmMakefilePath = baseExtensionMakefilePath.addFileExtension("flm");
+										addBldInfExtensionMakefile(objects, project, cpi, view,
+												flmMakefilePath);
+									}
 								}
 								return null;
 							}

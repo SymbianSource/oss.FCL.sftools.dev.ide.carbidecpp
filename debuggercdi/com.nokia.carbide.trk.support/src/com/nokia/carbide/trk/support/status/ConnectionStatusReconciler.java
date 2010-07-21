@@ -37,7 +37,6 @@ import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.trk.support.Messages;
-import com.nokia.carbide.trk.support.connection.TCFUSBConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.carbide.trk.support.service.TRKConnectedService;
 import com.nokia.carbide.trk.support.service.TracingConnectedService;
@@ -205,8 +204,7 @@ public class ConnectionStatusReconciler {
 	
 	private boolean canBeSetToCurrent(IConnection connection) {
 		// USB connections for now
-		return USBConnectionType.ID.equals(connection.getConnectionType().getIdentifier())
-		|| TCFUSBConnectionType.ID.equals(connection.getConnectionType().getIdentifier());
+		return USBConnectionType.ID.equals(connection.getConnectionType().getIdentifier());
 	}
 
 	private void reconcileStatus(IConnection connection) {

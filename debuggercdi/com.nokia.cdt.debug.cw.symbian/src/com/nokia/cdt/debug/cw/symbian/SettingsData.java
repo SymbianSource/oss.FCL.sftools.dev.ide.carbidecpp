@@ -67,10 +67,12 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 import cwdbg.PreferenceConstants;
 
+@SuppressWarnings("restriction")
 public class SettingsData {
 
 	// NOTE: Many of these constants are mirrored in 
@@ -254,7 +256,7 @@ public class SettingsData {
 			if (cpi != null) {
 				ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 				String configName = projectName + " " + buildConfig.getDisplayString(); //$NON-NLS-1$
-				configuration.rename(DebugPlugin.getDefault().getLaunchManager().generateUniqueLaunchConfigurationNameFrom(configName));
+				setLaunchConfigurationName(configuration, configName);
 
 				// make sure the selected build configuration of the current project
 				// is an emulator build, otherwise warn them that we can't set default values.
@@ -346,6 +348,7 @@ public class SettingsData {
 		//
 		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, ""); //$NON-NLS-1$
 		configuration.setAttribute(PreferenceConstants.J_PN_ProgramArguments, ""); //$NON-NLS-1$
+		configuration.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, Registry.CURRENT_CONNECTION_ID);
 
 	    HashSet<String> set = new HashSet<String>();
 	    set.add(ILaunchManager.DEBUG_MODE);
@@ -371,7 +374,7 @@ public class SettingsData {
 			if (cpi != null) {
 				ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 				String configName = projectName + " " + buildConfig.getDisplayString(); //$NON-NLS-1$
-				configuration.rename(DebugPlugin.getDefault().getLaunchManager().generateUniqueLaunchConfigurationNameFrom(configName));
+				setLaunchConfigurationName(configuration, configName);
 
 				// make sure the selected build configuration of the current project is not an emulator build
 				// otherwise warn them that we can't set default values.
@@ -406,7 +409,7 @@ public class SettingsData {
 			if (cpi != null) {
 				ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 				String configName = projectName + " " + buildConfig.getDisplayString(); //$NON-NLS-1$
-				configuration.rename(DebugPlugin.getDefault().getLaunchManager().generateUniqueLaunchConfigurationNameFrom(configName));
+				setLaunchConfigurationName(configuration, configName);
 
 				// make sure the selected build configuration of the current project is not an emulator build
 				// otherwise warn them that we can't set default values.
@@ -673,14 +676,13 @@ public class SettingsData {
 		configuration.setAttribute(DebuggerCommonData.Host_App_Path, ""); //$NON-NLS-1$
 		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_NAME, ""); //$NON-NLS-1$
 		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, ""); //$NON-NLS-1$
-		if (project != null)
-		{
+		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_BUILD_BEFORE_LAUNCH, ICDTLaunchConfigurationConstants.BUILD_BEFORE_LAUNCH_USE_WORKSPACE_SETTING);
+
+		if (project != null) {
 			configuration.setMappedResources( new IResource[] { project });
 		    ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
-			if (cpi != null) {
-				configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, cpi.getDefaultBuildConfigName());
-				}
-			
+		    configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, 
+		    		cpi != null ? cpi.getDefaultBuildConfigName() : ""); //$NON-NLS-1$
 		}
 		
 		// set rom log file defaults.  do this for all launch types since it shouldn't hurt
@@ -902,4 +904,20 @@ public class SettingsData {
 		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, PathUtils.convertPathToWindows(path));
 	}
 	
+	private static void setLaunchConfigurationName(ILaunchConfigurationWorkingCopy config, String proposedName) {
+		String name = proposedName;
+		
+		// the call to generateLaunchConfigurationName below will replace all \'s with _'s
+		// the code below just removes any \ or : at the end of the SDK name, if for example
+		// they gave the SDK a name of "M:" or "M:\".
+		if (name.endsWith("\\]")) { //$NON-NLS-1$
+			name = name.substring(0, name.length() - 2) + "]"; //$NON-NLS-1$
+		}
+
+		if (name.endsWith(":]")) { //$NON-NLS-1$
+			name = name.substring(0, name.length() - 2) + "]"; //$NON-NLS-1$
+		}
+
+		config.rename(DebugPlugin.getDefault().getLaunchManager().generateLaunchConfigurationName(name));
+	}
 }

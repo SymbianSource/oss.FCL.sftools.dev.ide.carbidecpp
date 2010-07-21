@@ -38,4 +38,4 @@ private:
 	DWORD m_waitTimeout;
 	BOOL m_mutexOpen;
 };
-#endif __MUTEX_H__
+#endif //__MUTEX_H__

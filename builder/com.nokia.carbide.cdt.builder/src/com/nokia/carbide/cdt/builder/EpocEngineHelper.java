@@ -217,13 +217,27 @@ public class EpocEngineHelper {
 								BldInfViewPathHelper helper = new BldInfViewPathHelper(data, context);
 								for (IExtension extension : data.getExtensions()) {
 									IPath extensionMakefileBase = helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath());
-									normalFiles.add(extensionMakefileBase.addFileExtension("mk")); //$NON-NLS-1$
+									IPath makefile = getControllingFile(extensionMakefileBase);
+									normalFiles.add(makefile);
 								}
 								for (IExtension extension : data.getTestExtensions()) {
 									IPath extensionMakefileBase = helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath());
-									testFiles.add(extensionMakefileBase.addFileExtension("mk")); //$NON-NLS-1$
+									IPath makefile = getControllingFile(extensionMakefileBase);
+									testFiles.add(makefile);
 								}
 								return null;
+							}
+
+							private IPath getControllingFile(
+									IPath extensionMakefileBase) {
+								IPath candidate = extensionMakefileBase.addFileExtension("mk"); //$NON-NLS-1$
+								if (candidate.toFile().exists())
+									return candidate;
+								if ("export".equals(extensionMakefileBase.getFileExtension())) //$NON-NLS-1$
+									candidate = extensionMakefileBase.removeFileExtension().addFileExtension("flm"); //$NON-NLS-1$
+								else
+									candidate = extensionMakefileBase.addFileExtension("flm"); //$NON-NLS-1$
+								return candidate;
 							}
 					});
 	
@@ -1128,7 +1142,7 @@ public class EpocEngineHelper {
 		// get the bitmaps
 		List<IMMPBitmap> bmps = mmpData.getBitmaps();
 		for (IMMPBitmap bmp : bmps) {
-			IPath mbmPath = bmp.getTargetFilePath().makeRelative();
+			IPath mbmPath = bmp.getTargetFilePath().makeAbsolute();
 			// if there's no target path then use the main target path
 			if (mbmPath.segmentCount() == 1) {
 				mbmPath = targetPath.append(mbmPath);
