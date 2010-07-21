@@ -152,7 +152,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	@Override
 	public List<IDefine> getCompilerMacros() {
 		IPath prefixFile = getCompilerPrefixFile();
-		if (prefixFile == null) {
+		if (prefixFile == null || !prefixFile.toFile().exists()) {
 			return Collections.emptyList();
 		}
 		
