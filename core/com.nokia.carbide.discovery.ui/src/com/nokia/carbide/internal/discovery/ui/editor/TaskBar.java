@@ -86,6 +86,7 @@ class TaskBar extends RoundedCornerComposite {
 			String toolTipText = action.getToolTipText();
 			if (toolTipText != null)
 				link.setToolTipText(toolTipText);
+			link.setForeground(link.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
 			link.setBackground(link.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 			linkToActionMap.put(link, action);
 			link.addHyperlinkListener(listener);

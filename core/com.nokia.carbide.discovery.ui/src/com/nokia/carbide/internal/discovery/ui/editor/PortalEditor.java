@@ -230,6 +230,7 @@ public class PortalEditor extends EditorPart {
 				if (oldBGImg != null)
 					oldBGImg.dispose();
 				oldBGImg = newImage;
+				backgroundParent.layout();
 			}
 		});
 	}

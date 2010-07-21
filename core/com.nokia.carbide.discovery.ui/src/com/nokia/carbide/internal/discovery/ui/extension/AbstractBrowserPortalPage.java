@@ -61,12 +61,12 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 				public void changed(ProgressEvent event) {
 	                if (event.total == 0)
 	                    return;
-	                loading = (event.current != event.total);
+	                setLoading(event.current != event.total);
 					NavigationActionBar.this.updater.updateAll();
 				}
 				@Override
 				public void completed(ProgressEvent event) {
-					loading = false;
+					setLoading(false);
 					NavigationActionBar.this.updater.updateAll();
 				}
 			});
@@ -151,6 +151,10 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 			updater.updateAll();
 		}
 
+		private void setLoading(boolean loading) {
+			browser.setCursor(loading ? browser.getDisplay().getSystemCursor(SWT.CURSOR_WAIT) : null);
+			this.loading = loading;
+		}
 	}
 
 	private Browser browser;
@@ -201,5 +205,5 @@ public abstract class AbstractBrowserPortalPage implements IPortalPage {
 	@Override
 	public void dispose() {
 	}
-
+	
 }
