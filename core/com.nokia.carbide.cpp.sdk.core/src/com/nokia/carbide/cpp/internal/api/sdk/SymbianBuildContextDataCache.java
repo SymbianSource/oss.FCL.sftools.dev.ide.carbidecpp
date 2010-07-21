@@ -462,7 +462,7 @@ public class SymbianBuildContextDataCache {
 				prefix = varVarHRH.toFile();
 			} 
 		}
-		if (prefix != null) {
+		if (prefix != null && prefix.getParentFile() != null) {
 			systemIncludes.add(prefix.getParentFile());
 		}
 		
