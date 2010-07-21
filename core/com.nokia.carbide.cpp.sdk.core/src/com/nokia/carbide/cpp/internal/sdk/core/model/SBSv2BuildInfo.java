@@ -139,6 +139,9 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			contextExists = false;
 		}
 		
+		// Get the list of configs that have already been queried. If they have not been queried
+		// we'll save them off in a list to run an actual query.
+		// TODO: If a config has an error condition should we try to scan it again?
 		List<String> processedAliasList = new ArrayList<String>();
 		for (String alias : newContextsToQuery) {
 			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
@@ -150,12 +153,13 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		}
 
 		if (!processedAliasList.isEmpty()) {
-			newContextsToQuery.removeAll(processedAliasList);
+			newContextsToQuery.removeAll(processedAliasList);  // No need to qeury anything
 		}
 
+		// Query any contextst that don't have configQueryData and add them to the filtered list
+		// We do this separately b/c it can be a slow operation so we don't want to do it often
 		if (!newContextsToQuery.isEmpty()) {
 			String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, newContextsToQuery);
-
 			for (String alias : newContextsToQuery){
 				// TODO: Need to test for variants. Right now variants are not added
 				if (aliasToMeaningMap.get(alias) == null){
@@ -166,6 +170,21 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				sbsv2FilteredConetxts.add(sbsv2Context);
 			}
 		}		
+		
+		// Now remove any contexts that don't fit
+		List<ISymbianBuildContext> contextListCopy = new ArrayList<ISymbianBuildContext>(sbsv2FilteredConetxts);
+		for (ISymbianBuildContext currentContext : contextListCopy){
+			boolean match = false;
+			for (String allowedAlias : allowedConfigs){
+				if (allowedAlias.equals(((ISBSv2BuildContext)currentContext).getSBSv2Alias())){
+					match = true;
+					break;
+				}
+			}
+			if (!match)
+				sbsv2FilteredConetxts.remove(currentContext);
+		}
+		
 	}
 
 	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {

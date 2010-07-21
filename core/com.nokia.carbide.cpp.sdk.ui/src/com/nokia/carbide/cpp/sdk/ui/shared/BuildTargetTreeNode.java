@@ -72,7 +72,7 @@ public class BuildTargetTreeNode extends TreeNode {
 				public String toString() {
 					ISymbianBuildContext context = (ISymbianBuildContext)getValue();
 					String sdkId = context.getSDK().getUniqueId();
-					String newDisplayString = context.getDisplayString().replace("[" + sdkId + "]", "");
+					String newDisplayString = stripSDKIDFromConfigName(context.getDisplayString(), sdkId);
 					if (context instanceof ISBSv2BuildContext){
 						ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
 						if (v2Context.getConfigQueryData().getConfigurationErrorMessage() != null && 
@@ -167,5 +167,10 @@ public class BuildTargetTreeNode extends TreeNode {
 		}
 		return realInput;
 	}
+	
+	private static String stripSDKIDFromConfigName(String configName, String sdkID){
+		return configName.replace("[" + sdkID + "]", "");
+	}
+
 
 }

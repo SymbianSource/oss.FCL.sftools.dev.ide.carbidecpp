@@ -359,7 +359,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 						@Override
 						public String toString() {
 							ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-							return context.getDisplayString();
+							return stripSDKIDFromConfigName(context.getDisplayString(), context.getSDK().getUniqueId());
 						}
 					};
 				}
@@ -371,7 +371,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 					@Override
 					public String toString() {
 						ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-						return context.getDisplayString();
+						return stripSDKIDFromConfigName(context.getDisplayString(), context.getSDK().getUniqueId());
 					}
 				};
 			}
@@ -526,5 +526,10 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		// now apply any changes
 		cpm.saveChanges();
 	}
+	
+	private static String stripSDKIDFromConfigName(String configName, String sdkID){
+		return configName.replace("[" + sdkID + "]", "");
+	}
 
+	
 }
