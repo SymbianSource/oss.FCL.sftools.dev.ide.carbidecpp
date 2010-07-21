@@ -182,8 +182,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			if (!doScanSDKs(monitor))
 				return Status.OK_STATUS;;
 
-			scanCarbideSDKCache();
-
 			// now these SDK's are newly added, remove from internal list
 			for (ISymbianSDK sdk : sdkList) {
 				if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {

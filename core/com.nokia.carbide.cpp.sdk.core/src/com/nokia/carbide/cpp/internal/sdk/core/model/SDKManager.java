@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
@@ -107,6 +106,7 @@ public class SDKManager extends AbstractSDKManager {
 			result = false;
 		}
 
+		scanCarbideSDKCache();
 		doScanDrives(monitor);
 		return result;
 	}
@@ -485,8 +485,8 @@ public class SDKManager extends AbstractSDKManager {
 	}
 
 	private boolean isEPOCRoot(File drive) {
-		File epocRoot = new File(drive, "epoc32");
-		if (epocRoot.exists()) {
+		IPath epocInclude = new Path(drive.getAbsolutePath()).append("epoc32").append("include");
+		if (epocInclude.toFile().exists()) {
 			return true;
 		} else {
 			return false;
