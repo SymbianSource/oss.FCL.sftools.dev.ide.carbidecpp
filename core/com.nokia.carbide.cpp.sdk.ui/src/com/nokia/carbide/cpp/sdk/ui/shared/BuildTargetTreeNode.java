@@ -152,7 +152,7 @@ public class BuildTargetTreeNode extends TreeNode {
 		for (ISymbianSDK sdk : sdkListCopy) {
 			
 			BuildTargetTreeNode treeNode = new BuildTargetTreeNode(sdk, sbsv2Project);
-			if (treeNode.getChildren() != null){
+			if (treeNode.getChildren() != null || sbsv2Project){
 				input[index++] = treeNode;
 			}
 		}

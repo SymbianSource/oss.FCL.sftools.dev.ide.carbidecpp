@@ -78,7 +78,7 @@ public class SBSv2QueryUtils {
 				return aliases;
 			}
 		}
-
+		
 		aliases = getAliasesQuery(sdk);
 		aliasesMap.put(key.toString(), aliases);
 		SDKCorePlugin.getCache().putCachedData(ALIAS_CACHE_KEY, (Serializable)aliasesMap, 0);
@@ -205,7 +205,6 @@ public class SBSv2QueryUtils {
 		if (!isEpocRootValid(sdk)) {
 			HashMap<String, String> result = new HashMap<String, String>();
 			result.put(BAD_EPOCROOT, "");
-			return result;
 		}
 		
 		List<String> argListAliasQuery = new ArrayList<String>();
