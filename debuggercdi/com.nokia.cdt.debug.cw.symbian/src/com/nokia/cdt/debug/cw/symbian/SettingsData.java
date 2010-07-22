@@ -792,13 +792,7 @@ public class SettingsData {
 			if (new Path(currSDK.getEPOCROOT()).isPrefixOf(mainExeHostPath))
 			{
 			    // Apparently this only works correctly with the S60 emulator.
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				if (sbsv1BuildInfo != null) {
-			        if (!sbsv1BuildInfo.isS60() &&
-			        	!currSDK.getFamily().equalsIgnoreCase(ISBSv1BuildInfo.TECHVIEW_FAMILY_ID))
-			        	return true;
-				}
-		        
+				
 				if ("exe".equalsIgnoreCase(mainExeHostPath.getFileExtension())) { //$NON-NLS-1$
 					Version version = currSDK.getOSVersion();
 					if (!(version.getMajor() == 9 && version.getMinor() == 1)) {

@@ -394,7 +394,9 @@ public class CSKbManager {
 			List<ICarbideBuildConfiguration> buildConfigList = projectInfo.getBuildConfigurations();
 			for (Iterator<ICarbideBuildConfiguration> iterator = buildConfigList.iterator(); iterator.hasNext();) {
 				ICarbideBuildConfiguration buildConfig = iterator.next();
-				Version version = buildConfig.getSDK().getSDKVersion();
+				// TODO: What is SDK version used for for codescanner?
+//				Version version = buildConfig.getSDK().getSDKVersion();
+				Version version = new Version("5.0.0");
 				sdkVersions.add(version);
 			}
 		}
