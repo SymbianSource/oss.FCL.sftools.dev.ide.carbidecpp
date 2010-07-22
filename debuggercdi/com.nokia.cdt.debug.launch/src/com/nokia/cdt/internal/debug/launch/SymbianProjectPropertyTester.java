@@ -109,7 +109,7 @@ public class SymbianProjectPropertyTester extends PropertyTester {
 					if (cpi != null) {
 						ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 						// just check the platform for the default config
-						if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+						if (buildConfig != null && buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
 							return true;
 						}
 					}
