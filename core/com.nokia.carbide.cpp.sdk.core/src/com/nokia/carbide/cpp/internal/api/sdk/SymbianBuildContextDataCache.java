@@ -87,7 +87,16 @@ public class SymbianBuildContextDataCache {
 	 * @return
 	 */
 	private static String getBuildContextKey(ISymbianBuildContext context) {
-		String key = context.getPlatformString() + "/" + context.getTargetString() + "/";
+		String key;
+		if (context instanceof ISBSv2BuildContext) {
+			// use config ID instead of platform + target since
+			// platform and target can be the same for different build contexts
+			ISBSv2BuildContext v2Context = (ISBSv2BuildContext) context;
+			key = v2Context.getConfigID() + "/";
+		}
+		else {
+			key = context.getPlatformString() + "/" + context.getTargetString() + "/";
+		}
 		ISymbianSDK sdk = context.getSDK();
 		if (sdk != null)
 			key += sdk.getEPOCROOT();
@@ -285,7 +294,8 @@ public class SymbianBuildContextDataCache {
 		// we assume that the prefix file will not change often,
 		// (if at all) for a build context, so dump the cache if the prefix file changes.
 		
-		if (compilerPrefixFile != null && !compilerPrefixFile.equals(prefixFile)) {
+		if (compilerPrefixFile != null && prefixFile != null && 
+			!compilerPrefixFile.equals(prefixFile)) {
 			compilerPrefixFileInfo = null;
 		}
 		
@@ -342,12 +352,15 @@ public class SymbianBuildContextDataCache {
 				if (context instanceof ISBSv2BuildContext) {
 					// add macros from raptor query
 					ISBSv2BuildContext v2Context = (ISBSv2BuildContext) context;
-					Map<String, String> buildMacros = v2Context.getConfigQueryData().getBuildMacros();
-					if (buildMacros != null) {
-						for (Iterator<String> itr = buildMacros.keySet().iterator(); itr.hasNext(); ) { 
-							String name = itr.next();
-							String value = buildMacros.get(name);
-							macros.add(DefineFactory.createDefine(name, value));
+					ISBSv2ConfigQueryData configData = v2Context.getConfigQueryData();
+					if (configData != null) {
+						Map<String, String> buildMacros = configData.getBuildMacros();
+						if (buildMacros != null) {
+							for (Iterator<String> itr = buildMacros.keySet().iterator(); itr.hasNext(); ) { 
+								String name = itr.next();
+								String value = buildMacros.get(name);
+								macros.add(DefineFactory.createDefine(name, value));
+							}
 						}
 					}
 				}
