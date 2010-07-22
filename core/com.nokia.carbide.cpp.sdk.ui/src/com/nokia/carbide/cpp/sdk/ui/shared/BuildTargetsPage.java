@@ -258,7 +258,7 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 		fSDKLink.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// I don't see a way to open it to a specific tab, only the page
-				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferences", null, null, 0).open()){ //$NON-NLS-1$
+				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage", null, null, 0).open()){ //$NON-NLS-1$
 					inited = false;
 					setVisible(true);
 					TemplateSDKFilter filter = filterCheckbox.getSelection() ? templateFilter : null;
