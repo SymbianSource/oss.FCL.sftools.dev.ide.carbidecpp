@@ -12,9 +12,11 @@
         </group>
         <group id="action-links" computed="true">
         </group>        
-        <group id="branding">
+        <!-- 
+		<group id="branding">
         	<img src="$introBrandingImage$" alt="$introBrandingImageText$"/>
         </group>
+		-->
 		<!-- General purpose groups for adding additional content -->
 		<group id="extra-group1" filteredFrom="swt"><anchor id="anchor"/></group>
 		<group id="extra-group2" filteredFrom="swt"><anchor id="anchor"/></group>
@@ -33,9 +35,11 @@
         </group>
         <group id="action-links" computed="true">
         </group>        
+        <!-- 
         <group id="branding">
         	<img src="$introBrandingImage$" alt="$introBrandingImageText$"/>
         </group>
+		-->
 		<!-- General-purpose groups for additional content -->
 		<group id="extra-group1" filteredFrom="swt"><anchor id="anchor"/></group>
 		<group id="extra-group2" filteredFrom="swt"><anchor id="anchor"/></group>
