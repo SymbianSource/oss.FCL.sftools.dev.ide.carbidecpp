@@ -256,7 +256,7 @@ public class PathsAndSymbolsTabComposite extends Composite {
 		
 		ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(buildConfig.getCarbideProject().getProject());
 		if (projDes != null) {
-			ICConfigurationDescription configDes = projDes.getConfigurationById(buildConfig.getDisplayString());
+			ICConfigurationDescription configDes = projDes.getConfigurationById(buildConfig.getConfigurationID());
 			if (configDes != null) {
 				CConfigurationData configData = configDes.getConfigurationData();
 				if (configData != null) {
