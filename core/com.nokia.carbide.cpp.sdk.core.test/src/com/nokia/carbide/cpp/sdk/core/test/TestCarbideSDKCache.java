@@ -79,8 +79,7 @@ public class TestCarbideSDKCache extends TestCase {
 		manager.getScanJob().join();
 		assertTrue(manager.getCacheFile().lastModified() > orgTime);
 		final String sdkId = "test";
-		ISymbianSDK sdk = SymbianSDKFactory.createInstance(sdkId, "C:\\", "com.nokia.s60", 
-							new Version("9.5"), new Version("5.0"));
+		ISymbianSDK sdk = SymbianSDKFactory.createInstance(sdkId, "C:\\", new Version("9.5"));
 		orgTime = manager.getCacheFile().lastModified();
 		waitASecond();
 		manager.addSDK(sdk);

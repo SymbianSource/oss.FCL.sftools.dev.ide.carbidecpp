@@ -90,11 +90,6 @@ public class SDKPropertiesDialog extends TrayDialog {
 		itemOSVersion.setText(new String[] {Messages.getString("SDKPropertiesDialog.OS_Version"),  //$NON-NLS-2$
 											sdk.getOSVersion().toString()}); //$NON-NLS-1$
 		
-		// SDK Version at Row 2.
-		TableItem itemSDKVersion = new TableItem(propsTable, SWT.NONE);
-		String sdkVersion = sdk.getSDKVersion().toString();
-		itemSDKVersion.setText(new String[] {Messages.getString("SDKPropertiesDialog.SDK_Version"), sdkVersion}); //$NON-NLS-1$
-		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SDKUIHelpIds.SDK_PROPERTIES_DIALOG);
 		
 		return container;

@@ -437,13 +437,10 @@ public abstract class MultiImageEditorContextBase {
 	 */
 	public boolean isS60() {
 		ISymbianBuildContext buildContext = getCarbideBuildConfiguration().getBuildContext();
-		ISymbianSDK sdk = buildContext != null ? buildContext.getSDK() : null;
-		if (sdk != null) {
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			return sbsv1BuildInfo.isS60();
+		if (buildContext.getSDK().getSupportedFeatures().contains(ISymbianSDKFeatures.IS_AVKON_SUPPORTED)){
+			return true;
 		}
 		return false;
-		
 	}
 
 	/**

@@ -25,26 +25,6 @@ import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
  */
 public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 
-	// Family Ids don't include the vendor
-	public static final String SERIES60_FAMILY_ID = "series60"; //deprecated
-	public static final String S60_FAMILY_ID = "s60";
-	public static final String S80_FAMILY_ID = "Series80";
-	public static final String UIQ_FAMILY_ID = "UIQ";
-	public static final String TECHVIEW_FAMILY_ID = "TechView";
-	public static final String SYMBIAN_FOUNDATION_FAMILY_ID = "symbian"; // Symbian Foundation, starting with Symbian^3
-
-	// Unique Ids include the vendor
-	public static final String SERIES60_SDK_NAME = "com.nokia." + SERIES60_FAMILY_ID;
-	public static final String S60_SDK_NAME = "com.nokia." + S60_FAMILY_ID;
-	public static final String NOKIA_SF_SDK_NAME = "com.nokia." + SYMBIAN_FOUNDATION_FAMILY_ID; // Nokia+Symbian Foundation SDK
-	public static final String S80_SDK_NAME = "com.nokia." + S80_FAMILY_ID;
-	public static final String UIQ_SDK_NAME = "com.symbian." + UIQ_FAMILY_ID;
-	public static final String TECHVIEW_SDK_NAME = "com.symbian." + TECHVIEW_FAMILY_ID;
-
-	public static final String PUBLISHER_NOKIA = "Nokia, Inc.";
-	public static final String PUBLISHER_UIQ = "UIQ Technology";
-	public static final String PUBLISHER_SYMBIAN = "Symbian, Ltd.";
-
 	void clearPlatformMacros();
 
 	/**
@@ -94,12 +74,6 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 * @return true if the SDK was scanned
 	 */
 	boolean isPreviouslyScanned();
-
-	/**
-	 * Tell if the SDK is Series60.
-	 * @return true if the SDK is Series60
-	 */
-	boolean isS60();
 
 	void setPreviouslyScanned(boolean wasScanned);
 

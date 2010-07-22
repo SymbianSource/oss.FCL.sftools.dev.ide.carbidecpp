@@ -34,10 +34,8 @@ public class SymbianMissingSDKFactory extends SymbianSDKFactory {
 		if (sdk.getOSVersion().getMajor() != 0){
 		// use the version detected from the SDK creation
 		} else {
-			sdk.setOSVersion(new Version("0.0"));	//$NON-NLS-1$
+			sdk.setOSVersion(new Version("9.5"));	//$NON-NLS-1$
 		}
-		sdk.setSDKVersion(new Version("0.0"));	//$NON-NLS-1$
 		return sdk;
 	}
-
 }

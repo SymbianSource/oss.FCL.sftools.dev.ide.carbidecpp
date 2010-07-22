@@ -61,17 +61,6 @@ public class SymbianContextTest extends TestCase {
 	 */
 	private void doTestSDK(ISymbianSDK sdk) {
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		if (sdk.getName().equals("S60_5th_Edition_SDK_v1.0")) {
-			// test that we get the SDK version
-			Version sdkVer = sdk.getSDKVersion();
-			assertEquals(5,sdkVer.getMajor());
-			assertEquals(0,sdkVer.getMinor());
-			
-			// test that we get the OS version
-			Version osVer = sdk.getOSVersion();
-			assertEquals(9,osVer.getMajor());
-			assertEquals(4,osVer.getMinor());
-		}
 		
 		BuildContextSBSv1 context = new BuildContextSBSv1(sdk, "WINSCW", "UDEB");
 		ISymbianSDK contextSDK = context.getSDK();

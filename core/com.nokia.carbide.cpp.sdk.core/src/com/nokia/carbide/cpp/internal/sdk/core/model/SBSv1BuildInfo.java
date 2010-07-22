@@ -229,13 +229,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	}
 
 	public List<String> getVendorSDKMacros() {
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		return sdkMgr.getSymbianMacroStore().getVendorMacros(sdk.getSDKVersion(), sdk.getName());
-	}
-
-	public boolean isS60() {
-		return sdk.getFamily().equals(ISBSv1BuildInfo.S60_FAMILY_ID)
-			|| sdk.getFamily().equals(ISBSv1BuildInfo.SERIES60_FAMILY_ID);
+		return new ArrayList<String>();  // vendor macros no longer apply for Symbian^3 and up
 	}
 
 	public boolean isPreviouslyScanned() {

@@ -60,13 +60,13 @@ public class DevicesLoaderTest extends BaseDeviceModifierTest {
 		
 		Version osVersion = new Version("9.1");
 		Version sdkVersion = new Version("3.0");
-		ISymbianSDK sdk = SymbianSDKFactory.createInstance(S60_SDKID, M_DRIVE, ISBSv1BuildInfo.SERIES60_SDK_NAME, osVersion, sdkVersion);
+		ISymbianSDK sdk = SymbianSDKFactory.createInstance(S60_SDKID, M_DRIVE, osVersion);
 		DevicesLoader.updateDevice(sdk, devicesFile.toURI().toURL());
 		
-		sdk = SymbianSDKFactory.createInstance(TV_SDKID, P_DRIVE, ISBSv1BuildInfo.TECHVIEW_SDK_NAME, osVersion, sdkVersion);
+		sdk = SymbianSDKFactory.createInstance(TV_SDKID, P_DRIVE, osVersion);
 		DevicesLoader.updateDevice(sdk, devicesFile.toURI().toURL());
 		
-		sdk = SymbianSDKFactory.createInstance(UIQ3_SDKID, UIQ3_EPOCROOT, ISBSv1BuildInfo.UIQ_SDK_NAME, osVersion, sdkVersion);
+		sdk = SymbianSDKFactory.createInstance(UIQ3_SDKID, UIQ3_EPOCROOT, osVersion);
 		DevicesLoader.updateDevice(sdk, devicesFile.toURI().toURL());	
 	}
 	

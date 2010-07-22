@@ -180,14 +180,10 @@ public class AddSDKDialog extends TrayDialog {
 		}
 
 		// No objections raised, write the new device entry
-		String vendorName = ISBSv1BuildInfo.S60_SDK_NAME;
 		Version osVersion = new Version("9.4.0"); //$NON-NLS-1$
-		Version sdkVersion = new Version("5.0"); //$NON-NLS-1$
 		ISymbianSDK sdk = SymbianSDKFactory.createInstance(deviceIDtext.getText(), 
 														   epocRootText.getText(), 
-														   vendorName, 
-														   osVersion,
-														   sdkVersion);
+														   osVersion );
 		((SymbianSDK)sdk).setEnabled(true);
 		SDKCorePlugin.getSDKManager().addSDK(sdk);
 		List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();

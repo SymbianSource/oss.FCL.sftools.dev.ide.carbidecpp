@@ -301,20 +301,8 @@ public abstract class CarbideImageModelFactory extends ImageModelFactory {
 	 */
 	public static IImageConverterFactory getImageConverterFactory(
 			ICarbideProjectInfo projectInfo) {
-		IImageConverterFactory imageConverterFactory = null;
-		if (projectInfo != null) {
-			List<ICarbideBuildConfiguration> buildConfigurations = projectInfo.getBuildConfigurations();
-			for (ICarbideBuildConfiguration buildConfiguration : buildConfigurations) {
-				if (buildConfiguration.getSDK().getFamily().equals(ISBSv1BuildInfo.UIQ_FAMILY_ID)) {
-					imageConverterFactory = new UIQImageConverterFactory();
-					break;
-				}
-	        }
-		}
-		if (imageConverterFactory == null) {
-			imageConverterFactory = new SymbianImageConverterFactory();
-		}
-		return imageConverterFactory;
+		
+		return new SymbianImageConverterFactory();
 	}
 
 	/**

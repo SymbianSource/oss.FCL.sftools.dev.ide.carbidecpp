@@ -61,7 +61,6 @@ public class SDKCreationTest extends BaseDeviceModifierTest {
 				// Test an SDK that does not exist. Check for proper null values
 				else if (sdk.getUniqueId().equals("SDK_No_Exist")){
 					if (sbsv1BuildInfo != null) {
-						assertTrue(sdk.getSDKVersion().getMajor() == 0);
 						assertTrue(sbsv1BuildInfo.getAvailablePlatforms().size() == 0);
 						assertTrue(sbsv1BuildInfo.getFilteredBuildConfigurations().size() == 0);
 					}

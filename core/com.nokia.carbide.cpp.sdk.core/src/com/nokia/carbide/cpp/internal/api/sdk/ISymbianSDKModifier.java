@@ -69,12 +69,6 @@ public interface ISymbianSDKModifier {
 	void setPrefixFile(IPath prefixFile, String builderId);
 
 	/**
-	 * Sets the SDK version string of a SDK.
-	 * @param sdkVers SDK version
-	 */
-	void setSDKVersion(Version sdkVers);
-
-	/**
 	 * Sets the unique id of a SDK.
 	 * @param id id string of a SDK
 	 */

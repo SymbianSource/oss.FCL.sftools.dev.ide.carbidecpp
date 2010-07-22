@@ -48,26 +48,16 @@ public interface ISymbianSDK {
 	String getEPOCROOT();
 		
 	/**
-	 * Returns the family name of a SDK. This is parsed from the 'vendor' attribute from devices.xml.
-	 */
-	String getFamily();
-
-	/**
 	 * Returns an IPath for the epoc32\include directory of a SDK.
 	 * @return an IPath for the epoc32\include directory, or <code>null</code>.
 	 */
 	IPath getIncludePath();
 
 	/**
-	 * Returns the display name of a SDK. This is the com.vendor.family identifier.
-	 * @return the name of a sdk.
-	 */
-	String getName();  
-
-	/**
 	 * Returns the OS version string of this SDK.
 	 *
 	 * @return the OS Version object. If the version cannot be determined it will be "0.0".
+	 * @deprecated - use ISymbianSDK{@link #getSupportedFeatures()} to figure out the properties of an SDK
 	 */
 	Version getOSVersion();
 
@@ -84,13 +74,6 @@ public interface ISymbianSDK {
 	 * @return an IPath for the epoc32\release directory, or <code>null</code>.
 	 */
 	IPath getReleaseRoot();
-
-	/**
-	 * Returns the SDK version string of a SDK.
-	 * @param sdk Symbian SDK
-	 * @return the SDK Version object. If the version cannot be determined it will be "0.0".
-	 */
-	Version getSDKVersion();
 
 	/**
 	 * Returns a set of features supported by the SDK. 
@@ -127,12 +110,6 @@ public interface ISymbianSDK {
 	 */
 	List<String> getVariantCFGMacros();
 	
-	/**
-	 * Returns the vendor name of this SDK. This is parsed from the 'name' attribute from devices.xml.
-	 * @return the vendor name of a sdk.
-	 */
-	String getVendor();
-
 	/**
 	 * Returns true if the SDK is enabled, false otherwise.
 	 *

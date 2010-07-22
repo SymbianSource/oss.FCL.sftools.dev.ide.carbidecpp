@@ -91,8 +91,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	protected static final String SDK_CACHE_ID_ATTRIB = "id";
 	protected static final String SDK_CACHE_ENABLED_ATTRIB = "isEnabled";
 	protected static final String SDK_CACHE_OS_VERSION_ATTRIB = "osVersion";
-	protected static final String SDK_CACHE_OS_BRANCH_ATTRIB = "osBranch";
-	protected static final String SDK_CACHE_SDK_VERSION_ATTRIB = "sdkVersion";
 	protected static final String SDK_SCANNED_FOR_PLUGINS = "sdkScanned";
 
 	protected static final String SDK_CACHE_EPOCROOT_ATTRIB = "epocroot";
@@ -375,12 +373,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						if (osVersionItem != null)
 							osVersion = osVersionItem.getNodeValue();
 						
-						// get the sdk version
-						String sdkVersion = "";
-						Node sdkVersionItem = attribs.getNamedItem(SDK_CACHE_SDK_VERSION_ATTRIB);
-						if (sdkVersionItem != null)
-							sdkVersion = sdkVersionItem.getNodeValue();
-						
 						// get the EPOCROOT
 						String epocRoot = null;
 						Node epocrootItem = attribs.getNamedItem(SDK_CACHE_EPOCROOT_ATTRIB);
@@ -395,9 +387,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						
 						sdk = SymbianSDKFactory.createInstance(id, 
 															   epocRoot,
-															   ISBSv1BuildInfo.S60_SDK_NAME,
-															   new Version(osVersion),
-															   new Version(sdkVersion));
+															   new Version(osVersion));
 						if (sdkEnabled.equalsIgnoreCase("true")){
 							((SymbianSDK)sdk).setEnabled(true);
 						} else {
@@ -481,10 +471,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				osVerNode.setNodeValue(currSDK.getOSVersion().toString());
 				attribs.setNamedItem(osVerNode);
 				
-				Node sdkVerNode = d.createAttribute(SDK_CACHE_SDK_VERSION_ATTRIB);
-				sdkVerNode.setNodeValue(currSDK.getSDKVersion().toString());
-				attribs.setNamedItem(sdkVerNode);
-
 				Node sdkEpocRootNode = d.createAttribute(SDK_CACHE_EPOCROOT_ATTRIB);
 				sdkEpocRootNode.setNodeValue(currSDK.getEPOCROOT());
 				attribs.setNamedItem(sdkEpocRootNode);

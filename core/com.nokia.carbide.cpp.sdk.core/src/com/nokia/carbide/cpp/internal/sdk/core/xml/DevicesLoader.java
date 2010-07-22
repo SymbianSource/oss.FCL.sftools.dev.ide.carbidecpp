@@ -114,7 +114,6 @@ public class DevicesLoader {
 				 deviceExists = true;
 				 currDevice.setEpocroot(sdk.getEPOCROOT());
 				 currDevice.setId(sdk.getUniqueId());
-				 currDevice.setName(sdk.getName());
 				 if (currDevice.getUserdeletetable() != null){
 					 currDevice.setUserdeletable(currDevice.getUserdeletetable());
 				 }
@@ -133,7 +132,6 @@ public class DevicesLoader {
 			DeviceType newDeviceEntry = DevicesFactory.eINSTANCE.createDeviceType();
 			newDeviceEntry.setId(sdk.getUniqueId());
 			newDeviceEntry.setEpocroot(sdk.getEPOCROOT());
-			newDeviceEntry.setName(sdk.getName());
 			newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
 			newDeviceEntry.setUserdeletable("no");
 			newDeviceEntry.setUserdeletetable(null); // just to be sure it doens't get written out

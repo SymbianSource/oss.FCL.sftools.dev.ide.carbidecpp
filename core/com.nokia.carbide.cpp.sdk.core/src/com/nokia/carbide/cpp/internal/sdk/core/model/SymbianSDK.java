@@ -83,7 +83,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	protected DeviceType deviceEntry = null;
 	private boolean enabled = true;
 	private Version osVersion;
-	private Version sdkVersion;
 	private List<String> supportedTargetTypesList = new ArrayList<String>();
 	private Map<String, ISDKBuildInfo> buildInfoMap = new HashMap<String, ISDKBuildInfo>();
 	private Map<String, File> prefixFileMap = new HashMap<String, File>();
@@ -137,21 +136,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return "";
 	}
 
-	public String getFamily() {
-		String[] parts = getName().split("\\.");
-		if (parts.length == 3){
-			if (getSDKVersion().getMajor() == 5 && getName().equalsIgnoreCase(ISBSv1BuildInfo.NOKIA_SF_SDK_NAME)){
-				// A vendor of "symbian" and SDK major version 5 is the same as prior naming for "com.nokia.s60" & 5th Edition.
-				// Return "s60" so that project template generation continues to work as it's a S60 5th ed. SDK. 
-				return ISBSv1BuildInfo.S60_FAMILY_ID;
-			} else {
-				return parts[2];
-			}
-		}
-		
-		return "";
-	}
-
 	public IPath getIncludePath() {
 		String epocRoot = getEPOCROOT();
 		if (epocRoot.length() > 0) {
@@ -164,13 +148,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 			return epoc32IncPath;
 		}
 		return null;
-	}
-
-	public String getName() {
-		if (deviceEntry != null) {
-			return deviceEntry.getName();
-		}
-		return "";
 	}
 
 	public Version getOSVersion() {		
@@ -197,13 +174,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 			return epoc32RelPath;
 		}
 		return null;
-	}
-
-	public Version getSDKVersion() {
-		if (sdkVersion == null){
-			return new Version("0.0");
-		}
-		return sdkVersion;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -316,14 +286,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return variantCFGMacros;
 	}
 
-	public String getVendor() {
-		String[] parts = getName().split("\\.");
-		if (parts.length == 3)
-			return parts[1];
-		
-		return "";
-	}
-
 	public boolean isEnabled() {
 		if (!SDKCorePlugin.SUPPORTS_SBSV1_BUILDER && 
 			(getOSVersion().getMajor() < 9 ||
@@ -395,10 +357,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		this.osVersion = osVer;
 	}
 	
-	public void setSDKVersion(Version sdkVers) {
-		sdkVersion = sdkVers;
-	}
-
 	public void setPrefixFile(IPath prefixFile, String builderId) {
 		if (prefixFile == null)
 			return;
@@ -552,7 +510,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 				node = XPathAPI.selectSingleNode(doc, "sdk/sdkVersion");
 				if (null != node) {
 					try {
-						setSDKVersion(new Version(node.getTextContent()));
+						// ignored
 					}
 					catch (IllegalArgumentException e){	
 						// ignored...improper format
@@ -600,21 +558,12 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 						if (versionTokens[2].toUpperCase().contains("TB92SF")){
 							setOSVersion(new Version("9.5.0"));
-							if (sbsv1BuildInfo != null) {
-								setSDKVersion(new Version("5.2.0"));
-							}
 							break;
 						} else if (versionTokens[2].toUpperCase().contains("TB101SF")){
 							setOSVersion(new Version("9.6.0"));
-							if (sbsv1BuildInfo != null) {
-								setSDKVersion(new Version("6.0.0"));
-							}
 							break;
 						} else if (versionTokens[2].toUpperCase().contains("TB102SF")){
 							setOSVersion(new Version("9.6.0"));
-							if (sbsv1BuildInfo != null) {
-								setSDKVersion(new Version("6.0.0"));
-							}
 							break;
 						}
 						else if (versionTokens[2].lastIndexOf("v") > 0){

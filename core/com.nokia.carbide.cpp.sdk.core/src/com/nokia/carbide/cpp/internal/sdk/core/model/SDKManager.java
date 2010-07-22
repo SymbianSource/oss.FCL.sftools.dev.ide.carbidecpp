@@ -370,10 +370,6 @@ public class SDKManager extends AbstractSDKManager {
 						needsRescan = true;
 						break;
 					}
-					if (!sdk.getName().equalsIgnoreCase(currSDK.getName())){
-						needsRescan = true;
-						break;
-					}
 				}
 				
 				if (!needsRescan){
@@ -417,10 +413,6 @@ public class SDKManager extends AbstractSDKManager {
 			ISymbianSDK sdk = new SymbianSDK(deviceType);
 			if (sdk.getOSVersion().toString().equals("0.0.0")) {
 				((SymbianSDK)sdk).setOSVersion(new Version("9.5"));
-			}
-
-			if (sdk.getSDKVersion().toString().equals("0.0.0")) {
-				((SymbianSDK)sdk).setSDKVersion(new Version("5.0"));
 			}
 
 			if (!isSupportedSDK(sdk)) {
