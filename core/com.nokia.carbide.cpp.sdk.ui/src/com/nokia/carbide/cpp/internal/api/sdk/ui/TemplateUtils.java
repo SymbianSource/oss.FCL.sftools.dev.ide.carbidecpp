@@ -20,19 +20,21 @@ package com.nokia.carbide.cpp.internal.api.sdk.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import org.osgi.framework.Version;
-
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.template.engine.ITemplate;
 
 public class TemplateUtils {
+		
+	private static final String SDK_FEATURE_DELIM = ";"; //$NON-NLS-1$
 	
-	private static final String FAMILY_DELIM = ":"; //$NON-NLS-1$
-	private static final String RANGE_DELIM = "-"; //$NON-NLS-1$
-	private static final String VERSION_DELIM = ";"; //$NON-NLS-1$
+	// Template flags. These are the template flags used for filtering
+	// As of Carbide 3.0, we no longer use OS/SDK version or family name
+	// to filter templates.
+	private static final String FEATURE_SUPPORTS_AVKON = "supportsAvkon"; //$NON-NLS-1$
 
 	public static final String PROJECT_NAME = "projectName"; //$NON-NLS-1$
 	public static final String BASE_NAME = "baseName"; //$NON-NLS-1$
@@ -45,70 +47,33 @@ public class TemplateUtils {
 	 * @param symbianSDK
 	 * @param template
 	 * @return whether this sdk matches the template
-	 * template filter arguments:= framework[:versionSpec]
-	 * versionSpec is a list of version or versionRange delimited by ;
-	 * versionRange is a minVersion and maxVersion delimited by - 
+	 * template filter arguments
 	 */
 	public static boolean sdkMatchesTemplate(ISymbianSDK symbianSDK, ITemplate template) {
-		Version sdkVersion = symbianSDK.getSDKVersion();
-		String family = symbianSDK.getFamily(); // S60, symbian... 3rd segment of devices.xml 'name' attrib
-		return sdkMatchesTemplate(sdkVersion, family, template);
-	}
-	
-	
-	private static boolean isSameFamily(String f1, String f2) {
-		if (f1.equalsIgnoreCase(f2))
-			return true;
-		
-		if ((f1.equalsIgnoreCase(ISBSv1BuildInfo.S60_FAMILY_ID) &&
-				f2.equalsIgnoreCase(ISBSv1BuildInfo.SERIES60_FAMILY_ID)) ||
-				(f2.equalsIgnoreCase(ISBSv1BuildInfo.S60_FAMILY_ID) &&
-						f1.equalsIgnoreCase(ISBSv1BuildInfo.SERIES60_FAMILY_ID)))
-			return true;
-		
-		return false;
-	}
-	
-	/**
-	 * @param symbianSDK
-	 * @param template
-	 * @return whether this sdk matches the template
-	 * template filter arguments:= family[:versionSpec]
-	 * versionSpec is a list of version or versionRange delimited by ;
-	 * versionRange is a minVersion and maxVersion delimited by - 
-	 */
-	public static boolean sdkMatchesTemplate(Version sdkVersion, String family, ITemplate template) {
 		String filterArgs = template.getFilterArguments();
-		if (filterArgs != null) {
-			String[] strings = filterArgs.split(FAMILY_DELIM);
+		Set supportedFeatures = symbianSDK.getSupportedFeatures();
+		if (filterArgs != null && filterArgs.length() > 0) {
+			String[] strings = filterArgs.split(SDK_FEATURE_DELIM);
 			if (strings.length > 0) {
-				if (!isSameFamily(family, strings[0]))
-					return false;
-				
-				if (strings.length > 1) {
-					String[] versions = strings[1].split(VERSION_DELIM);
-					for (int i = 0; i < versions.length; i++) {
-						String[] versionRange = versions[i].split(RANGE_DELIM);
-						if (versionRange.length == 1) {
-							Version version = Version.parseVersion(versionRange[0]);
-							if (sdkVersion.equals(version))
-								return true;
-						}
-						else if (versionRange.length > 1) {
-							Version minVersion = Version.parseVersion(versionRange[0]);
-							Version maxVersion = Version.parseVersion(versionRange[1]);
-							if (sdkVersion.compareTo(minVersion) >= 0 &&
-									sdkVersion.compareTo(maxVersion) <= 0)
-								return true;
+				// check for avkon support
+				boolean hasAvkon = false;
+				if (supportedFeatures.contains(ISymbianSDKFeatures.IS_AVKON_SUPPORTED)){
+					
+					for (String templateFeature : strings){
+						if (templateFeature.equals(FEATURE_SUPPORTS_AVKON)){
+							hasAvkon = true; // This template requires avkon support and it's there
+							break;
 						}
 					}
-					return false;
 				}
+				if (!hasAvkon)
+					return false;  // This template requires avkon support but is not there. Don't show
 			}
 		}
+		
 		return true;
 	}
-
+	
 	public static List<ISymbianSDK> getEnabledSDKs() {
 		List<ISymbianSDK> enabledSDKList = new ArrayList<ISymbianSDK>();
 		

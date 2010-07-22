@@ -77,6 +77,8 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	private static final String BUILD_INFO_KEYWORD = "ManufacturerSoftwareBuild";
 	
 	private static final String WINSCW_UREL_DIR = "epoc32/release/winscw/urel";
+	private static final String WINSCW_UDEB_DIR = "epoc32/release/winscw/udeb";
+	private static final String ARMV5_UDEB_DIR = "epoc32/release/armv5/udeb";
 	
 	protected DeviceType deviceEntry = null;
 	private boolean enabled = true;
@@ -86,7 +88,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	private Map<String, ISDKBuildInfo> buildInfoMap = new HashMap<String, ISDKBuildInfo>();
 	private Map<String, File> prefixFileMap = new HashMap<String, File>();
 	@SuppressWarnings("rawtypes")
-	private Set sdkFeatures = new HashSet();
+	private Set<Object> sdkFeatures = new HashSet<Object>();
 
 	// greedy match means the filename is in the last group
 	public static Pattern VARIANT_HRH_LINE_PATTERN = Pattern.compile("(?i)(.*)(/|\\\\)(.*hrh)");
@@ -639,23 +641,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		
 	}
 
-	/**
-	 * Check to see whether or not we should support WINSCW UREL
-	 */
-	@SuppressWarnings("unchecked")
-	private void scanForWINSCW_UREL(){
-		String winscwURELFullPathStr = getEPOCROOT();
-		winscwURELFullPathStr += WINSCW_UREL_DIR;
-		IPath winscwURELPath = new Path(winscwURELFullPathStr);
-		if (winscwURELPath != null && winscwURELPath.toFile().exists()){
-			if (winscwURELPath.append("epoc.exe").toFile().exists()){
-				if (winscwURELPath.append("euser.dll").toFile().exists()){
-					sdkFeatures.add(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED);
-				}
-			}
-		}
-	}
-	
 	private boolean setDataFromManifestXML(){
 		if (hasManifestXML()){
 			
@@ -673,7 +658,50 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	@SuppressWarnings("unchecked")
 	private void setSupportFeatures() {
 		scanForWINSCW_UREL();
+		scanForAvkon();
 		sdkFeatures.add(ISymbianSDKFeatures.IS_EKA2);
+	}
+
+	/**
+	 * Check if avkon is a supported feature.
+	 */
+	private void scanForAvkon() {
+		String armv5UDEBFullPathStr = getEPOCROOT();
+		armv5UDEBFullPathStr += ARMV5_UDEB_DIR;
+		IPath armv5UDEBPath = new Path(armv5UDEBFullPathStr);
+		if (armv5UDEBPath != null && armv5UDEBPath.toFile().exists()){
+			if (armv5UDEBPath.append("avkon.dll").toFile().exists()){
+				sdkFeatures.add(ISymbianSDKFeatures.IS_AVKON_SUPPORTED);
+				return;
+			}
+			// not there, check winscw
+			String winscwURELFullPathStr = getEPOCROOT();
+			winscwURELFullPathStr += WINSCW_UREL_DIR;
+			IPath winscwURELPath = new Path(winscwURELFullPathStr);
+			if (winscwURELPath != null && winscwURELPath.toFile().exists()){
+				if (winscwURELPath.append("avkon.dll").toFile().exists()){
+					sdkFeatures.add(ISymbianSDKFeatures.IS_AVKON_SUPPORTED);
+					return;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Check to see whether or not we should support WINSCW UREL
+	 */
+	@SuppressWarnings("unchecked")
+	private void scanForWINSCW_UREL(){
+		String winscwURELFullPathStr = getEPOCROOT();
+		winscwURELFullPathStr += WINSCW_UREL_DIR;
+		IPath winscwURELPath = new Path(winscwURELFullPathStr);
+		if (winscwURELPath != null && winscwURELPath.toFile().exists()){
+			if (winscwURELPath.append("epoc.exe").toFile().exists()){
+				if (winscwURELPath.append("euser.dll").toFile().exists()){
+					sdkFeatures.add(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED);
+				}
+			}
+		}
 	}
 
 }

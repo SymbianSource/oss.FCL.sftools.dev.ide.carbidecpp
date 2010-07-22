@@ -14,7 +14,7 @@
 
       <template
       		displayName="%Qt.gui.dialog.template.label"
-            filterArguments="S60:3.0-5.9"
+            filterArguments=""
             groupLabel="%Qt.gui.label"
             image="icons/guiproject.gif"
             location="templates/Qt-GUI-Dialog/template.xml"
@@ -23,7 +23,7 @@
 
       <template
       		displayName="%Qt.gui.mainwindow.template.label"
-            filterArguments="S60:3.0-5.9"
+            filterArguments=""
             groupLabel="%Qt.gui.label"
             image="icons/guiproject.gif"
             location="templates/Qt-GUI-MainWindow/template.xml"
@@ -32,7 +32,7 @@
 
       <template
       		displayName="%Qt.gui.widget.template.label"
-            filterArguments="S60:3.0-5.9"
+            filterArguments=""
             groupLabel="%Qt.gui.label"
             image="icons/guiproject.gif"
             location="templates/Qt-GUI-Widget/template.xml"

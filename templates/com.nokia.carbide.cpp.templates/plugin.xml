@@ -7,7 +7,7 @@
 
       <template
       		displayName="%gui.label"
-            filterArguments="S60:3.0-5.9"
+            filterArguments="supportsAvkon"
             groupLabel="%S60.3.label"
             image="icons/icon_S60.png"
             location="templates/projecttemplates/S60-TouchUIApplication/template.xml"
@@ -45,7 +45,7 @@
 
       <template
       		displayName="%openc.label"
-            filterArguments="S60:3.0-5.9"
+            filterArguments=""
             groupLabel="%S60.3.label"
             image="icons/icon_S60.png"
             location="templates/projecttemplates/OpenC-HelloWorld/template.xml"
