@@ -3,7 +3,7 @@ package com.nokia.carbide.cpp.internal.api.sdk;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -336,4 +336,27 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		}
 		return TOOLCHAIN_UNKNOWN;
 	}
+
+	@Override
+	public List<IPath> getSystemIncludes() {
+		if (configQueryData != null) {
+			List<String> includes = configQueryData.getMetaDataIncludes();
+			if (includes != null && !includes.isEmpty()) {
+				List<IPath> includePaths = new ArrayList<IPath>();
+				for (Iterator<String> itr = includes.iterator(); itr.hasNext();) {
+					String include = itr.next();
+					if (include.length() == 0 || include.equals(".")) {
+						continue;
+					}
+					Path includePath = new Path(include);
+					if (!includePaths.contains(includePath)) {
+						includePaths.add(includePath);
+					}
+				}
+				return includePaths;
+			}
+		}
+		return null;
+	}
+
 }

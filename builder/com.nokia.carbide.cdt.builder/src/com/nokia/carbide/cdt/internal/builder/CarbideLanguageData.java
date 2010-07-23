@@ -55,6 +55,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -243,6 +244,25 @@ public class CarbideLanguageData extends CLanguageData {
 				includeEntries.add(new CIncludePathEntry(incPath, ICSettingEntry.LOCAL));
 			}
 		}
+		
+		if (context instanceof ISBSv2BuildContext) {
+			// SBSv2 only system includes
+			for (IPath incPath : ((ISBSv2BuildContext)context).getSystemIncludes()) {
+				IPath projRelIncPath = FileUtils.removePrefixFromPath(projectPath, incPath);
+				if (projRelIncPath != null) {
+					includeEntries.add(new CIncludePathEntry(projectPath.append(projRelIncPath), 0));
+				} else {
+					includeEntries.add(new CIncludePathEntry(incPath, 0));
+				}
+
+				// remove duplicate system includes
+				File inc = incPath.toFile();
+				if (systemIncludes.contains(inc)) {
+					systemIncludes.remove(inc);
+				}
+			}
+		}
+		
 		for (File inc : systemIncludes) {
 			// convert the absolute path to project relative if possible
 			IPath incPath = new Path(inc.toString());

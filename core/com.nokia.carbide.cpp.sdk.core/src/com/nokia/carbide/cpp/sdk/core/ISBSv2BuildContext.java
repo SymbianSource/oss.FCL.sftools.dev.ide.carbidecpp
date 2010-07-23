@@ -1,5 +1,9 @@
 package com.nokia.carbide.cpp.sdk.core;
 
+import java.util.List;
+
+import org.eclipse.core.runtime.IPath;
+
 
 public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	
@@ -44,5 +48,10 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	 * @return tool chain name (e.g. 'ARM', 'GCCE', 'WINSCW')
 	 */
 	public String getToolChain();
-	
+
+	/**
+	 * Get system include paths returned by Raptor config query.
+	 * @return list of include paths
+	 */
+	public List<IPath> getSystemIncludes();
 }
