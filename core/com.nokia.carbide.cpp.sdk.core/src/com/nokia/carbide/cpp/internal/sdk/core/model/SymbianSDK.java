@@ -152,7 +152,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public Version getOSVersion() {		
 		if (osVersion == null){
-			return new Version("0.0");
+			return new Version("9.5");
 		}
 		return osVersion;
 	}
