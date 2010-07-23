@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -88,12 +89,20 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	}
     
     /** Get the build-able configuration from the command line (i.e. build alias). This is passed after the sbs -c parameter */
-    protected String getConfigName(ICarbideBuildConfiguration buildConfig) {
+    protected String getConfigName(ICarbideBuildConfiguration buildConfig, IPath componentPath) {
     	String buildAlias = ((ISBSv2BuildContext)buildConfig.getBuildContext()).getSBSv2Alias();
     	if (buildAlias == null){ 
     		// Just get the default target. This is a SBSv1 style configuration name...
     		buildAlias = buildConfig.getPlatformString().toLowerCase() + "_" + buildConfig.getTargetString().toLowerCase();
     	}
+    	
+    	if (buildAlias.contains(".") && componentPath != null &&
+    		!EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), componentPath)){
+    		
+    		// This is a variant build, but the MMP is not a variant so just take the base alias.
+    		buildAlias = buildAlias.split("\\.")[0];
+    	}
+    	
     	ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
     	if (sbsv2Info != null){
     		String variant = sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
@@ -117,7 +126,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(COMPONENT_ARG);
-		argsList.add(componentName);
+		argsList.add(componentPath.toOSString());
 		
 		if (!invokeSBSCommand(buildConfig, launcher, argsList, isTest)) {
 			return false;
@@ -258,7 +267,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(cleanCmd);
 		argsList.add(COMPONENT_ARG);
-		argsList.add(componentName);
+		argsList.add(componentPath.toOSString());
 		
 		if (!invokeSBSCommand(buildConfig, launcher, argsList, isTest)) {
 			return false;
@@ -391,7 +400,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(FREEZE_CMD);
 		argsList.add(COMPONENT_ARG);
-		argsList.add(componentPath.lastSegment());
+		argsList.add(componentPath.toOSString());
 		
 		if (!invokeSBSCommand(buildConfig, launcher, argsList, isTest)) {
 			return false;
@@ -509,13 +518,25 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		args.add("-b"); //$NON-NLS-1$
 		args.add(cpi.getAbsoluteBldInfPath().toOSString());
 		args.add("-c"); //$NON-NLS-1$
-		String configName = getConfigName(buildConfig);
+		IPath componentPath = null;
+		if (sbsArgs.size() >= 2){
+			componentPath =  new Path(sbsArgs.get(sbsArgs.indexOf("-p")+ 1));
+			sbsArgs.remove(1);
+			sbsArgs.add(componentPath.lastSegment());
+		} 
+		String configName = getConfigName(buildConfig, componentPath);
 		
 		if (isTest) {
 			configName = configName + ".test"; //$NON-NLS-1$
 		}
 		
 		args.add(configName);
+		
+		if (!sbsArgs.contains("-p") && configName.contains(".")){
+			// normal build, we also need to add an extra -c param for non-variation build
+			args.add("-c");
+			args.add(configName.split("\\.")[0]);
+		}
 		
 		//TODO this causes output to go to stdout, but only at the end of the build.  should we specify a logfile name and tail the file?
 		args.add("-f"); //$NON-NLS-1$
@@ -591,7 +612,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		IPath workingDirectory = cpi.getINFWorkingDirectory();
 		
-		String configName = getConfigName(buildConfig);
+		String configName = getConfigName(buildConfig, fullMMPPath);
 		
 		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());

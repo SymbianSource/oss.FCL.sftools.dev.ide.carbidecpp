@@ -922,7 +922,8 @@ public class EpocEngineHelper {
 
 					// adapt the exe filename to the variant, if any
 					IPath tempPath = null;
-					if (isVariantBldInf(cpi.getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, cpi.getProject())) {
+					if ((isVariantBldInf(cpi.getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, cpi.getProject()))
+							&& !CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject())) {
 						tempPath = getBinaryVariantTargetName(mmpData, PathUtils.createPath(exePath), cpi.getProject());
 						if (tempPath == null){
 							return null; 
@@ -930,20 +931,45 @@ public class EpocEngineHelper {
 						exePath = tempPath.lastSegment();
 					}
 					
-					IPath path = buildConfig.getTargetOutputDirectory();
-					
-					// if targetpath is non-null and this is an EKA1 emulator config then add it
-					if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
-						if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
-							String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-							if (targetPath != null) {
-								path = path.append("z").append(targetPath); //$NON-NLS-1$
-							}
+					IPath path = null;
+					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()) && 
+							isFeatureVariantMMP(mmpData, cpi.getProject())){
+						
+						path = buildConfig.getTargetOutputDirectory();
+						
+					} else {
+						// Not a variant
+						path = buildConfig.getTargetOutputDirectory();
+						if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject())){
+							// For SBSv2, it's not a variant, so it goes under the standard output dir
+							path = stripVariationFolder(path);
 						}
+						
 					}
 					path = path.append(exePath);
 					
 					return path;
+				}
+
+				private IPath stripVariationFolder(IPath path) {
+					if (!path.toOSString().contains(".")){
+						return path;
+					}
+					String[] segments = path.segments();
+					int segmentCount = path.segmentCount();
+					path = path.removeFirstSegments(segmentCount);
+					int count = 0;
+					path = path.addTrailingSeparator();
+					for (String segment : segments){
+						if (count == segmentCount - 2 && segment.contains(".")){
+							path = path.append(segment.split("\\.")[0]);
+						} else {
+							path = path.append(segment);
+						}
+						count ++;
+					}
+					return path;
+					
 				}
 		});								
 	}
@@ -978,9 +1004,7 @@ public class EpocEngineHelper {
 						// if the target path is not set then by default it will usually
 						// be left blank.  for EKA2 though binaries need to go in \sys\bin\
 						exePath = Path.ROOT.setDevice("C:"); //$NON-NLS-1$
-						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							exePath = exePath.append("sys/bin/"); //$NON-NLS-1$
-						}
+						exePath = exePath.append("sys/bin/"); //$NON-NLS-1$
 						String targetName = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGET);
 						if  (targetName != null) {
 							exePath = exePath.append(targetName);
@@ -2226,7 +2250,9 @@ public class EpocEngineHelper {
 			if (defaultConfig != null){
 				if (defaultConfig.getBuildVariationName().length() > 0 && 
 					mmpData.getFlags().contains(EMMPStatement.FEATUREVARIANT)) {
-					
+					isFeatureVariant = true;
+				} else if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project) &&
+						mmpData.getFlags().contains(EMMPStatement.FEATUREVARIANT)){
 					isFeatureVariant = true;
 				}
 			}
@@ -2312,7 +2338,7 @@ public class EpocEngineHelper {
 	}
 	
 	/**
-	 * Get the MD5 hash for a configuration if it is a true binary variation.
+	 * Get the MD5 hash for a configuration if it is a true binary variation. This is for abld buidler only.
 	 * @param config - The Carbide build configuration to check against
 	 * @param mmpFullPath - The path to the MMP file that builds the binary
 	 * @return A string of the MD5 hash. Returns an empty string if the configuration is not a binary variant or cannot be determined.
@@ -2337,7 +2363,12 @@ public class EpocEngineHelper {
 		});								
 	}
 	
-	
+	/**
+	 * NOTE: This only works for ABLD. Not SBSv2/Raptor!
+	 * @param mmpData
+	 * @param config
+	 * @return
+	 */
 	private static File getMakeFileForSymbianBinaryVariant(IMMPData mmpData, ICarbideBuildConfiguration config){
 		
 		IPath makefileDir = CarbideCPPBuilder.getBuilderMakefileDir(config);
