@@ -24,5 +24,5 @@ body {
 /*
  * Default images for content links in this page.
  */
-.content-link img { background-image : url(../graphics/icons/obj48/new_obj.gif); }
-.content-link:hover img { background-image : url(../graphics/icons/obj48/newhov_obj.gif); }
+.content-link img { background-image : url(../graphics/icons/obj48/new_obj.png); }
+.content-link:hover img { background-image : url(../graphics/icons/obj48/newhov_obj.png); }

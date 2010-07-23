@@ -75,8 +75,8 @@ body {
 
 #noteworthy-links a:hover { border-right : 5px; }
 
-#noteworthy-links a img { background-image : url(../graphics/icons/obj48/new_obj.gif); }
-#noteworthy-links a:hover img { background-image : url(../graphics/icons/obj48/newhov_obj.gif); }
+#noteworthy-links a img { background-image : url(../graphics/icons/obj48/new_obj.png); }
+#noteworthy-links a:hover img { background-image : url(../graphics/icons/obj48/newhov_obj.png); }
 
 
 #news-links {
