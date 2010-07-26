@@ -40,8 +40,17 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
 	public BuildContextSBSv2(ISymbianSDK sdk, String platform, String target, String alias, String displayString, String configID) {
 		this.sdk = sdk;
-		this.platform = platform.toUpperCase();
-		this.target = target.toUpperCase();
+		if (platform == null){
+			this.platform = "unknown_platform";
+		} else {
+			this.platform = platform.toUpperCase();
+		}
+		
+		if (target == null){
+			this.target = "unknown_target";
+		} else {
+			this.target = target.toUpperCase();
+		}
 		this.sbsv2Alias = alias;
 		this.displayString = displayString;
 		this.configID = configID;

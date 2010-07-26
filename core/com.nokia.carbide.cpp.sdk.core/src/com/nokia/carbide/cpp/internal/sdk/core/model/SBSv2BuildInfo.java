@@ -99,92 +99,16 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			}
 		}
 		List<String> allowedConfigs = SBSv2Utils.getSBSv2FilteredConfigPreferences(); // From global prefs	
-		if ((sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) 
-			 && SBSv2Utils.enableSBSv2Support()){
+		if (SBSv2Utils.enableSBSv2Support()){
 			
 			try {
 				initSBSv2BuildContextList(allowedConfigs);
 			} catch (SBSv2MinimumVersionException e) {
 				// igore, would be caught above
 			}
-		} else if (SBSv2Utils.enableSBSv2Support()){
-			
-			try {
-				updateSBSv2BuildContextList(allowedConfigs);
-			} catch (SBSv2MinimumVersionException e) {
-				// igore, would be caught above
-			}
-		}
+		} 
 		
-
 		return sbsv2FilteredConetxts;
-	}
-
-	private void updateSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
-
-		// Check and see if the filtered list has changed
-		boolean contextExists = false;
-		List<String> newContextsToQuery = new ArrayList<String>();
-		for (String aliasName : allowedConfigs){
-			for (ISymbianBuildContext context : sbsv2FilteredConetxts){
-				ISBSv2BuildContext sbsv2Context = (ISBSv2BuildContext)context;
-				if (sbsv2Context.getSBSv2Alias().equals(aliasName)){
-					contextExists = true;
-					continue;
-				}
-			}
-			if (!contextExists){
-				newContextsToQuery.add(aliasName);
-			}
-			contextExists = false;
-		}
-		
-		// Get the list of configs that have already been queried. If they have not been queried
-		// we'll save them off in a list to run an actual query.
-		// TODO: If a config has an error condition should we try to scan it again?
-		List<String> processedAliasList = new ArrayList<String>();
-		for (String alias : newContextsToQuery) {
-			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
-			if (configQueryData != null) {
-				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-				sbsv2FilteredConetxts.add(sbsv2Context);
-				processedAliasList.add(alias);
-			}
-		}
-
-		if (!processedAliasList.isEmpty()) {
-			newContextsToQuery.removeAll(processedAliasList);  // No need to qeury anything
-		}
-
-		// Query any contextst that don't have configQueryData and add them to the filtered list
-		// We do this separately b/c it can be a slow operation so we don't want to do it often
-		if (!newContextsToQuery.isEmpty()) {
-			String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, newContextsToQuery);
-			for (String alias : newContextsToQuery){
-				if (!isValidConfigForSDK(alias)){
-					continue;
-				}
-				
-				ISBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(alias, aliasToMeaningMap.get(alias), configQueryXML);
-				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-				sbsv2FilteredConetxts.add(sbsv2Context);
-			}
-		}		
-		
-		// Now remove any contexts that don't fit
-		List<ISymbianBuildContext> contextListCopy = new ArrayList<ISymbianBuildContext>(sbsv2FilteredConetxts);
-		for (ISymbianBuildContext currentContext : contextListCopy){
-			boolean match = false;
-			for (String allowedAlias : allowedConfigs){
-				if (allowedAlias.equals(((ISBSv2BuildContext)currentContext).getSBSv2Alias())){
-					match = true;
-					break;
-				}
-			}
-			if (!match)
-				sbsv2FilteredConetxts.remove(currentContext);
-		}
-		
 	}
 
 	private boolean isValidConfigForSDK(String alias) {
@@ -235,6 +159,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		}
 
 		List<String> processedAliasList = new ArrayList<String>();
+		sbsv2FilteredConetxts.clear();
 		for (String alias : filteredAliasList) {
 			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
 			if (configQueryData != null) {
