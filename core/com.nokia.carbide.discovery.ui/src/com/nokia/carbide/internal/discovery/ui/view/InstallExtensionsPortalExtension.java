@@ -48,13 +48,13 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 @SuppressWarnings("restriction")
-public class InstallExtensionsPage implements IPortalPage {
+public class InstallExtensionsPortalExtension implements IPortalExtension {
 
-	private static final String INSTALL_ACTION_ID = InstallExtensionsPage.class.getName() + ".install"; //$NON-NLS-1$
+	private static final String INSTALL_ACTION_ID = InstallExtensionsPortalExtension.class.getName() + ".install"; //$NON-NLS-1$
 
 	private final class RunnableContextDialog extends ProgressMonitorDialog {
 		private final String title;
@@ -130,7 +130,7 @@ public class InstallExtensionsPage implements IPortalPage {
 	private List<ISelectionChangedListener> selectionListeners;
 	private IActionUIUpdater updater;
 
-	public InstallExtensionsPage() {
+	public InstallExtensionsPortalExtension() {
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !getAllItemsSelection().equals(selection);
 			}
 		};
-		action.setId(InstallExtensionsPage.class.getName() + ".checkAll"); //$NON-NLS-1$
+		action.setId(InstallExtensionsPortalExtension.class.getName() + ".checkAll"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
 		
@@ -276,7 +276,7 @@ public class InstallExtensionsPage implements IPortalPage {
 				return !selection.isEmpty();
 			};
 		};
-		action.setId(InstallExtensionsPage.class.getName() + ".uncheckAll"); //$NON-NLS-1$
+		action.setId(InstallExtensionsPortalExtension.class.getName() + ".uncheckAll"); //$NON-NLS-1$
 		selectionListeners.add((ISelectionChangedListener) action);
 		actions.add(action);
 		

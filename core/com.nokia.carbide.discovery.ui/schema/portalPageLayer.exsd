@@ -3,7 +3,7 @@
 <schema targetNamespace="com.nokia.carbide.discovery.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="com.nokia.carbide.discovery.ui" id="portalPage" name="Portal Page"/>
+         <meta.schema plugin="com.nokia.carbide.discovery.ui" id="portalPageLayer" name="Portal Page Layer"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -17,8 +17,8 @@
          </appinfo>
       </annotation>
       <complexType>
-         <sequence>
-            <element ref="portalPage" minOccurs="1" maxOccurs="unbounded"/>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="portalPageLayer"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="portalPage">
+   <element name="portalPageLayer">
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
@@ -62,14 +62,14 @@
          <attribute name="order" type="string">
             <annotation>
                <documentation>
-                  relative ordering of pages in the navigation bar (integer used to sort pages)
+                  relative ordering of layers in a page navigation bar (integer used to sort layers)
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="id" type="string">
+         <attribute name="pageId" type="string" use="required">
             <annotation>
                <documentation>
-                  identifier for the page - required for multi-layer pages
+                  
                </documentation>
             </annotation>
          </attribute>

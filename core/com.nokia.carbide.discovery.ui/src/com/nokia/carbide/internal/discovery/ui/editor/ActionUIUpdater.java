@@ -19,7 +19,7 @@ package com.nokia.carbide.internal.discovery.ui.editor;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionUIUpdater;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension.IActionUIUpdater;
 
 class ActionUIUpdater implements IActionUIUpdater {
 	

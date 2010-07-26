@@ -2,6 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="portalPage" name="Portal Page" schema="schema/portalPage.exsd"/>
+   <extension-point id="portalPageLayer" name="Portal Page Layer" schema="schema/portalPageLayer.exsd"/>
    <extension
          point="org.eclipse.help.contexts">
       <contexts
@@ -48,21 +49,21 @@
  <extension
        point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPage"
+          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPortalExtension"
+          id="installExtensionsPage"
+          order="50"
           rank="50">
     </portalPage>
- </extension>
- <extension
-       point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
           class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
+          id="homePage"
+          order="1"
           rank="1">
     </portalPage>
- </extension>
- <extension
-       point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
           class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
+          id="supportPage"
+          order="100"
           rank="100">
     </portalPage>
  </extension>

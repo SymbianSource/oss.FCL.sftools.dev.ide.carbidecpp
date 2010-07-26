@@ -23,12 +23,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 /**
- * Interface to a portal page extension
+ * Interface to a portal extension
  */
-public interface IPortalPage {
+public interface IPortalExtension {
 
 	/**
-	 * Interface to an action/navigation bar for the portal page
+	 * Interface to an action/navigation bar for the portal extension
 	 */
 	public interface IActionBar {
 		
@@ -42,7 +42,7 @@ public interface IPortalPage {
 		 * Actions shown in the action bar:
 		 * Required: text and run() methods
 		 * Optional: tool tip text
-		 * Unused: image
+		 * Unused: image/check
 		 * @return IAction
 		 */
 		IAction[] getActions();
@@ -86,7 +86,7 @@ public interface IPortalPage {
 	ImageDescriptor getImageDescriptor();
 	
 	/**
-	 * Called to create the control for the page
+	 * Called to create the control for the extension
 	 * @param parent Composite
 	 * @param part IEditorPart
 	 * @return Control
@@ -94,12 +94,12 @@ public interface IPortalPage {
 	Control createControl(Composite parent, IEditorPart part);
 	
 	/**
-	 * Called to initialize the page when shown for the first time
+	 * Called to initialize the extension when shown for the first time
 	 */
 	void init();
 	
 	/**
-	 * Return action bars for the page (can't be null)
+	 * Return action bars for the extension
 	 * @param part IEditorPart
 	 * @param updater IActionUIUpdater
 	 * @return IActionBar[]
@@ -107,7 +107,7 @@ public interface IPortalPage {
 	IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater);
 	
 	/**
-	 * Called to dispose internal resources of the page
+	 * Called to dispose internal resources of the extension
 	 */
 	void dispose();
 }

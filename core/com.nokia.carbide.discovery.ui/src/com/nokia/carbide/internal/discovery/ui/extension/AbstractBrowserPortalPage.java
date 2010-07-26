@@ -35,10 +35,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension;
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
 
-public abstract class AbstractBrowserPortalPage implements IPortalPage {
+public abstract class AbstractBrowserPortalPage implements IPortalExtension {
 
 	private final class NavigationActionBar implements IActionBar {
 		private List<IAction> actions;

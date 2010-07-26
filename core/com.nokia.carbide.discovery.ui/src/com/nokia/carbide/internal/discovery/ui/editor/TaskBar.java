@@ -31,7 +31,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension.IActionBar;
 
 class TaskBar extends RoundedCornerComposite {
 
