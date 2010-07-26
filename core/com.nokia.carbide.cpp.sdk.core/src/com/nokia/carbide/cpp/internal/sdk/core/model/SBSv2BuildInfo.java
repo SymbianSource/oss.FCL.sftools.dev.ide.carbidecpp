@@ -111,27 +111,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		return sbsv2FilteredConetxts;
 	}
 
-	private boolean isValidConfigForSDK(String alias) {
-		if (!alias.contains(".") && aliasToMeaningMap.get(alias) == null){
-			return false;
-		}
-		
-		// test variant
-		String[] configTokens = alias.split("\\.");
-		if (aliasToMeaningMap.get(configTokens[0]) == null){
-			return false;
-		}
-		
-		if (productList != null && productList.size() > 0)
-		for (String tok : configTokens){
-			if (productList.contains(tok)){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
 	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
 		List<String> filteredAliasList = new ArrayList<String>();
 		
@@ -162,7 +141,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		sbsv2FilteredConetxts.clear();
 		for (String alias : filteredAliasList) {
 			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
-			if (configQueryData != null) {
+			if (configQueryData != null && configQueryData.getConfigurationErrorMessage().trim().length() == 0) {
 				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
 				sbsv2FilteredConetxts.add(sbsv2Context);
 				processedAliasList.add(alias);
