@@ -19,8 +19,16 @@ import com.nokia.carbide.cpp.sdk.core.*;
 
 public class SDKManagerInternalAPI {
 	    
+    public static void addMissingSdk(ISymbianSDK sdk) {
+    	((AbstractSDKManager)SDKCorePlugin.getSDKManager()).addMissingSdk(sdk);
+    }
+    
     public static ISymbianSDK addMissingSdk(String uid) {
     	return ((AbstractSDKManager)SDKCorePlugin.getSDKManager()).addMissingSdk(uid);
+    }
+    
+    public static void removeMissingSdk(ISymbianSDK sdk) {
+    	((AbstractSDKManager)SDKCorePlugin.getSDKManager()).removeMissingSdk(sdk);
     }
     
     public static void removeMissingSdk(String uid) {

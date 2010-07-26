@@ -183,8 +183,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			// now these SDK's are newly added, remove from internal list
 			for (ISymbianSDK sdk : sdkList) {
 				if (SDKManagerInternalAPI.getMissingSdk(sdk.getUniqueId()) != null) {
-					SDKManagerInternalAPI.removeMissingSdk(sdk
-							.getUniqueId());
+					SDKManagerInternalAPI.removeMissingSdk(sdk);
 				}
 			}
 
@@ -199,8 +198,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 					}
 				}
 				if (found == false) {
-					SDKManagerInternalAPI.addMissingSdk(oldSdk
-							.getUniqueId());
+					SDKManagerInternalAPI.addMissingSdk(oldSdk);
 					// flush cache
 					SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { oldSdk });
 				}
@@ -285,7 +283,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			try {
 				sdkList.add(sdk);
 				updateSDK(sdk);
-				SDKManagerInternalAPI.removeMissingSdk(sdk.getUniqueId());
+				SDKManagerInternalAPI.removeMissingSdk(sdk);
 				// tell others about it
 				fireInstalledSdkChanged(SDKChangeEventType.eSDKAdded);
 			}
@@ -305,7 +303,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 					if (currSDK.getUniqueId().equals(sdkId)){
 						sdkList.remove(currSDK);
 						
-						SDKManagerInternalAPI.addMissingSdk(currSDK.getUniqueId());
+						SDKManagerInternalAPI.addMissingSdk(currSDK);
 						
 						// tell others about it
 						fireInstalledSdkChanged(SDKChangeEventType.eSDKRemoved);
@@ -600,6 +598,10 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		return rvctToolList;
 	}
 	
+    public void addMissingSdk(ISymbianSDK sdk) {
+		missingSdkMap.put(sdk.getUniqueId(), sdk);
+    }
+    
     public ISymbianSDK addMissingSdk(String uid) {
 		ISymbianSDK sdk = getMissingSdk(uid);
 		if (sdk == null) {
@@ -607,6 +609,10 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			missingSdkMap.put(uid, sdk);
 		}
     	return sdk;
+    }
+    
+    public void removeMissingSdk(ISymbianSDK sdk) {
+    	missingSdkMap.remove(sdk.getUniqueId());
     }
     
     public void removeMissingSdk(String uid) {
