@@ -119,7 +119,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 
 			public void widgetSelected(SelectionEvent e) {
 				refreshButton.setEnabled(false);
-				refreshButton.setToolTipText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonScanningText")); //$NON-NLS-1$
+				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonScanningText")); //$NON-NLS-1$
 				initTable(true);
 				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
 				refreshButton.setEnabled(true);
