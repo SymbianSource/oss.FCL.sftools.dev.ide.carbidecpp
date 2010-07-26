@@ -359,7 +359,19 @@ public class ManageConfigurationsDialog extends TrayDialog {
 						@Override
 						public String toString() {
 							ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-							return stripSDKIDFromConfigName(context.getDisplayString(), context.getSDK().getUniqueId());
+							String sdkId = context.getSDK().getUniqueId();
+							String newDisplayString = stripSDKIDFromConfigName(context.getDisplayString(), sdkId);
+							if (context instanceof ISBSv2BuildContext){
+								ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
+								if (v2Context.getConfigQueryData() == null){
+									newDisplayString += " ERROR: " + "Unable to load configuration data because the query to sbs failed."; // $NON-NLS-N$
+								}
+								else if (v2Context.getConfigQueryData().getConfigurationErrorMessage() != null && 
+									v2Context.getConfigQueryData().getConfigurationErrorMessage().length() > 0){
+									newDisplayString += " ERROR: " + v2Context.getConfigQueryData().getConfigurationErrorMessage();
+								}
+							} 
+							return newDisplayString;
 						}
 					};
 				}
@@ -371,7 +383,19 @@ public class ManageConfigurationsDialog extends TrayDialog {
 					@Override
 					public String toString() {
 						ISymbianBuildContext context = (ISymbianBuildContext)getValue();
-						return stripSDKIDFromConfigName(context.getDisplayString(), context.getSDK().getUniqueId());
+						String sdkId = context.getSDK().getUniqueId();
+						String newDisplayString = stripSDKIDFromConfigName(context.getDisplayString(), sdkId);
+						if (context instanceof ISBSv2BuildContext){
+							ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
+							if (v2Context.getConfigQueryData() == null){
+								newDisplayString += " ERROR: " + "Unable to load configuration data because the query to sbs failed."; // $NON-NLS-N$
+							}
+							else if (v2Context.getConfigQueryData().getConfigurationErrorMessage() != null && 
+								v2Context.getConfigQueryData().getConfigurationErrorMessage().length() > 0){
+								newDisplayString += " ERROR: " + v2Context.getConfigQueryData().getConfigurationErrorMessage();
+							}
+						} 
+						return newDisplayString;
 					}
 				};
 			}
