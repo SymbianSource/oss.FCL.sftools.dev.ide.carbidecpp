@@ -247,18 +247,22 @@ public class CarbideLanguageData extends CLanguageData {
 		
 		if (context instanceof ISBSv2BuildContext) {
 			// SBSv2 only system includes
-			for (IPath incPath : ((ISBSv2BuildContext)context).getSystemIncludes()) {
-				IPath projRelIncPath = FileUtils.removePrefixFromPath(projectPath, incPath);
-				if (projRelIncPath != null) {
-					includeEntries.add(new CIncludePathEntry(projectPath.append(projRelIncPath), 0));
-				} else {
-					includeEntries.add(new CIncludePathEntry(incPath, 0));
-				}
-
-				// remove duplicate system includes
-				File inc = incPath.toFile();
-				if (systemIncludes.contains(inc)) {
-					systemIncludes.remove(inc);
+			if (((ISBSv2BuildContext)context).getSystemIncludes() != null){
+				// TODO: THIS SHOULD NOT HAPPEN
+			
+				for (IPath incPath : ((ISBSv2BuildContext)context).getSystemIncludes()) {
+					IPath projRelIncPath = FileUtils.removePrefixFromPath(projectPath, incPath);
+					if (projRelIncPath != null) {
+						includeEntries.add(new CIncludePathEntry(projectPath.append(projRelIncPath), 0));
+					} else {
+						includeEntries.add(new CIncludePathEntry(incPath, 0));
+					}
+	
+					// remove duplicate system includes
+					File inc = incPath.toFile();
+					if (systemIncludes.contains(inc)) {
+						systemIncludes.remove(inc);
+					}
 				}
 			}
 		}

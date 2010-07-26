@@ -128,13 +128,11 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
     			if (configNode.getNodeName().equals("config")){
     				NamedNodeMap aliasAttribs = configNode.getAttributes();
     				String dottedName = aliasAttribs.getNamedItem("meaning").getNodeValue();
-    				if (!dottedName.equalsIgnoreCase(meaning)){
+    				if (!dottedName.equalsIgnoreCase(meaning) && meaning != null){
     					continue;
     				}
-    				if (configNode.getTextContent() != null&& configNode.getTextContent().length() > 0){
-    					// The config failed, likely due to envrionment set up issue.
-    					// Save the error message
-    					configurationErrorMessage = configNode.getTextContent();
+    				if (configNode.getTextContent() != null &&  configNode.getTextContent().trim().length() > 0){
+    					configurationErrorMessage = configNode.getTextContent().trim();
     					break;
     				}
     				
