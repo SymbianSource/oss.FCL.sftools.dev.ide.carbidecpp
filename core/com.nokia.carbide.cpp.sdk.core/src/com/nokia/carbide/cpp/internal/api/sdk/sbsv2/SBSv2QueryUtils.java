@@ -64,12 +64,12 @@ public class SBSv2QueryUtils {
 	public static final String BAD_EPOCROOT = "BADEPOCROOT";
 
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk, boolean forceRescan) throws SBSv2MinimumVersionException {
 		HashMap<String, String> aliases;
 		Map<String, HashMap<String, String>> aliasesMap = SDKCorePlugin.getCache().getCachedData(ALIAS_CACHE_KEY, Map.class, 0);
 		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
 
-		if (aliasesMap == null) {
+		if (aliasesMap == null || forceRescan) {
 			aliasesMap = new HashMap<String, HashMap<String, String>>();
 		}
 		else {
@@ -86,12 +86,12 @@ public class SBSv2QueryUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
+	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk, boolean force) throws SBSv2MinimumVersionException {
 		List<String> products;
 		Map<String, List<String>> productsMap = SDKCorePlugin.getCache().getCachedData(PRODUCT_CACHE_KEY, Map.class, 0);
 		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
 		
-		if (productsMap == null) {
+		if (productsMap == null || force) {
 			productsMap = new HashMap<String, List<String>>();
 		}
 		else {
@@ -420,13 +420,13 @@ public class SBSv2QueryUtils {
 		}
 	}
 
-	public static HashMap<String, String> getCompleteAliasList() throws SBSv2MinimumVersionException {
+	public static HashMap<String, String> getCompleteAliasList(boolean forceRescan) throws SBSv2MinimumVersionException {
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 		
 		// iterate all SDKs and build the map up
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
 			if (sdk.isEnabled() && isEpocRootValid(sdk)) {
-				HashMap<String, String> aliasMap = getAliasesForSDK(sdk);
+				HashMap<String, String> aliasMap = getAliasesForSDK(sdk, forceRescan);
 				for (String alias : aliasMap.keySet()) {
 					if (alias.equals(BAD_EPOCROOT)) {
 						continue;
@@ -441,13 +441,13 @@ public class SBSv2QueryUtils {
 		return resultMap;
 	}
 
-	public static List<String> getCompleteProductVariantList() throws SBSv2MinimumVersionException {
+	public static List<String> getCompleteProductVariantList(boolean forceRescan) throws SBSv2MinimumVersionException {
 		List<String> resultList = new ArrayList<String>();
 		
 		// iterate all SDKs and build the map up
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
 			if (sdk.isEnabled() && isEpocRootValid(sdk)) {
-				List<String> productList = getProductVariantsForSDK(sdk);
+				List<String> productList = getProductVariantsForSDK(sdk, forceRescan);
 				for (String variant : productList) {
 					if (variant.equals(BAD_EPOCROOT)) {
 						continue;

@@ -294,7 +294,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		try {
 			configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
 			if (configQueryData == null) {
-				Map<String, String> aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
+				Map<String, String> aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk, false);
 				List<String> aliasList = new ArrayList<String>();
 				aliasList.add(alias);
 				String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, aliasList);

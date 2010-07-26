@@ -70,7 +70,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		
 		if (aliasToMeaningMap.size() == 0){
 			try {
-				aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk);
+				aliasToMeaningMap = SBSv2QueryUtils.getAliasesForSDK(sdk, false);
 			} catch (final SBSv2MinimumVersionException e) {
 				if (hasShownDialog == false){
 					
@@ -93,7 +93,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			// Not all SDKs will have products, so size of 0 is acceptable
 			productList = new ArrayList<String>();
 			try {
-				productList = SBSv2QueryUtils.getProductVariantsForSDK(sdk);
+				productList = SBSv2QueryUtils.getProductVariantsForSDK(sdk, false);
 			} catch (SBSv2MinimumVersionException e) {
 				// ignore
 			}

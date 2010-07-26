@@ -118,7 +118,11 @@ public class SBSv2PlatformFilterComposite extends Composite {
 			}
 
 			public void widgetSelected(SelectionEvent e) {
+				refreshButton.setEnabled(false);
+				refreshButton.setText("Please wait....Scanning.");
 				initTable(true);
+				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
+				refreshButton.setEnabled(true);
 			}
 			
 		});
@@ -215,28 +219,28 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		SBSv2Utils.setSBSv2FilteredConfigs(checkedConfigs.toArray(new String[checkedConfigs.size()]));
 	}
 	
-	private void initTable(boolean refreshList) {
+	private void initTable(boolean forceRescan) {
 
 		SBSv2Utils.initDefaultConfigsToFilter();
 		
-		if (aliasMap.size() == 0){
+		if (aliasMap.size() == 0 || forceRescan){
 			try {
-				aliasMap = SBSv2QueryUtils.getCompleteAliasList();
+				aliasMap = SBSv2QueryUtils.getCompleteAliasList(forceRescan);
 			} catch (SBSv2MinimumVersionException e) {
 				// Force a scan for version in case system was updated
 				SDKCorePlugin.getSDKManager().getSBSv2Version(true);
 				try {
 					// try, try again...
-					aliasMap = SBSv2QueryUtils.getCompleteAliasList();
+					aliasMap = SBSv2QueryUtils.getCompleteAliasList(forceRescan);
 				} catch (SBSv2MinimumVersionException e2) {
 					MessageDialog.openError(getShell(), "Minimum sbs version not met.", e.getMessage());
 				}
 			} 
 		}
 		
-		if (productVariantList.size() == 0){
+		if (productVariantList.size() == 0 || forceRescan){
 			try {
-				productVariantList = SBSv2QueryUtils.getCompleteProductVariantList();
+				productVariantList = SBSv2QueryUtils.getCompleteProductVariantList(forceRescan);
 			} catch (SBSv2MinimumVersionException e) {
 				
 			}
@@ -274,7 +278,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	}
 	
 	public void setDefaults(){
-		initTable(true);
+		initTable(false);
 		for (TableItem item : buildAliasTableViewer.getTable().getItems()) {
 			if (item.getText().toLowerCase().equals("armv5_udeb")  || 
 				item.getText().toLowerCase().equals("armv5_urel") ||
