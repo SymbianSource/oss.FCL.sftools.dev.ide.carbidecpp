@@ -424,7 +424,7 @@ h1, p { margin-left : 10px; } /* required in mozilla so the page description is 
 
 /* .content-link:hover { border-right : 0px; } */
 .content-link:hover { 
-	background-image : url(../graphics/contentpage/page-link-wide.gif);
+	/* background-image : url(../graphics/contentpage/page-link-wide.gif); */
 }
 
 
