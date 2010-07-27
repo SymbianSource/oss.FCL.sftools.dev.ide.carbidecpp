@@ -57,14 +57,12 @@ import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
 import com.nokia.carbide.cdt.builder.PKGViewPathHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv1Builder;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
-import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
@@ -76,7 +74,6 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
@@ -341,7 +338,6 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 			// build ROM if necessary
 			subMonitor = SubMonitor.convert(monitor, 1);
-			invokeROMBuilder(buildConfig, launcher, subMonitor.newChild(1));
 
 		} else {
 			launcher.writeToConsole("\n***Errors were detected in build. See the Problems or Console view for details.\n");
@@ -1992,53 +1988,6 @@ public static String[] getParserIdArray(int id) {
     	return null;
     }
     
-	/**
-	 * Invoke the ROM builder for the given build configuration
-	 * @param config - The current configuration from where to get the settings from
-	 * @param cmdLauncher - The object to use for the process execution
-	 * @param monitor - An IProgressMonitor
-	 */   
-	public static void invokeROMBuilder(ICarbideBuildConfiguration config, CarbideCommandLauncher cmdLauncher, IProgressMonitor monitor) {
-
-		IROMBuilderInfo info = config.getROMBuildInfo();
-		if (info != null) {
-			String commandLine = info.getCommandLine().trim();
-			if (commandLine.length() > 0) {
-
-				monitor.setTaskName("Building ROM Image");
-
-				IPath workingDir = config.getCarbideProject().getINFWorkingDirectory();
-				String workingDirString = info.getWorkingDirectory().trim();
-				if (workingDirString.length() > 0) {
-					workingDir = new Path(workingDirString);
-				}
-				
-				cmdLauncher.writeToConsole("\n***Building ROM Image ....\n");
-				List<String> args = tokenizeArgsWithQuotes(commandLine);
-				args.add(0, "/c");
-
-				cmdLauncher.setErrorParserManager(workingDir, getParserIdArray(ICarbideBuildConfiguration.ERROR_PARSERS_ROM_BUILDER));
-				int retVal = cmdLauncher.executeCommand(CarbideCommandLauncher.getCmdExeLocation(), args.toArray(new String[args.size()]), getResolvedEnvVars(config), workingDir);
-		   		if (retVal != 0){
-		   			cmdLauncher.writeToConsole("***Non-Zero Status: Specified rom build command returned with exit value = " + retVal);  //$NON-NLS-1$
-		   			CarbideBuilderPlugin.createCarbideProjectMarker(config.getCarbideProject().getProject(), IMarker.SEVERITY_ERROR,  "Specified rom build command returned with exit value = " + retVal, IMarker.PRIORITY_LOW); //$NON-NLS-1$
-		   			cmdLauncher.writeToConsole("\nRom build failed\n");			   			
-		   		} else { 
-		   			cmdLauncher.writeToConsole("\nRom build completed\n");	//$NON-NLS-1$
-		   		}
-				cmdLauncher.writeToConsole(cmdLauncher.getTimingStats());					
-
-				
-		   		monitor.worked(1);
-		   		if (monitor.isCanceled()) {
-		   			return;
-		   		}
-			}
-		}
-		
-    	monitor.done();
-	}
-
 	 /**
 	  * Returns a list of arguments as strings.  The given string is basically split at spaces, but not if the space(s)
 	  * is contained in quotes.  Arguments are typically quoted if they contain spaces.

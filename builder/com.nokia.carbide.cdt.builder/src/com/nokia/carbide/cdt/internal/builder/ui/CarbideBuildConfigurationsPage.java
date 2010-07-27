@@ -151,9 +151,6 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 	// paths and symbols tab
 	PathsAndSymbolsTabComposite pathsAndSymbolsTabComposite;
 
-	// rom builder tab
-	ROMBuilderTabComposite romBuilderTabComposite;
-		
 	// Configuration management/switching
 	private IProject project;
 	private BuildConfigCombo buildConfigurationCombo;
@@ -347,15 +344,6 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 		pathsAndSymbolsTabComposite.createControls();
 		pathsAndSymbolsTabItem.setControl(pathsAndSymbolsTabComposite);
 
-		/////////////////// ROM Builder Tab /////////////////
-		TabItem romBuilderTabItem = new TabItem(tabFolder, SWT.NONE);
-		romBuilderTabItem.setText(Messages.getString("CarbideRomBuilderTab.Title")); //$NON-NLS-1$
-		romBuilderTabItem.setToolTipText(Messages.getString("CarbideRomBuilderTab.ToolTip")); //$NON-NLS-1$
-
-		romBuilderTabComposite = new ROMBuilderTabComposite(romBuilderTabItem);
-		romBuilderTabComposite.createControls();
-		romBuilderTabItem.setControl(romBuilderTabComposite);
-
 		// read in the settings and populate the prefs...
 		if (project != null) {
 			loadConfigurationSettings();
@@ -369,7 +357,6 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 						argumentsTabcomposite.initData(config);
 					}
 					pathsAndSymbolsTabComposite.initData(config);
-					romBuilderTabComposite.initData(config);
 				}
 			}
 			setUpEnvVarsTable(new String[0], null);
@@ -655,9 +642,7 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 
 		boolean pathsAndSynmbolsSettingsEqual = pathsAndSymbolsTabComposite.compareConfigurationSettings(selectedConfig, writeToConfig);
 
-		boolean romBuilderSettingsEqual = romBuilderTabComposite.compareConfigurationSettings(selectedConfig, writeToConfig);
-
-		return sisSettingsEqual && sbsv2ConfigEqual && envVarsSettingsEqual && argsSettingsEqual && pathsAndSynmbolsSettingsEqual && romBuilderSettingsEqual;
+		return sisSettingsEqual && sbsv2ConfigEqual && envVarsSettingsEqual && argsSettingsEqual && pathsAndSynmbolsSettingsEqual;
 	}
 	
 	private void saveConfigurationSettings(ICarbideBuildConfiguration config) {
@@ -966,7 +951,6 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 				argumentsTabcomposite.initData(lastConfig);
 			}
 			pathsAndSymbolsTabComposite.initData(lastConfig);
-			romBuilderTabComposite.initData(lastConfig);
 		}
 	}
 	
@@ -985,7 +969,6 @@ public class CarbideBuildConfigurationsPage extends PropertyPage {
 			argumentsTabcomposite.performDefaults(cpi.getNamedConfiguration(lastSelectedConfigName).getSDK());
 		}
 		pathsAndSymbolsTabComposite.performDefaults(cpi.getNamedConfiguration(lastSelectedConfigName).getSDK());
-		romBuilderTabComposite.performDefaults(cpi.getNamedConfiguration(lastSelectedConfigName).getSDK());
 		
 		super.performDefaults();
 	}

@@ -122,12 +122,6 @@ public interface ICarbideBuildConfiguration {
 	List<String> getBuiltinMacros();
 	
 	/**
-	 * Returns the ROM builder info from the ROM Builder tab.
-	 * @return
-	 */
-	IROMBuilderInfo getROMBuildInfo();
-	
-	/**
 	 * Compares two configurations to see if their display names are equivalent.
 	 */
 	boolean equals(Object obj);

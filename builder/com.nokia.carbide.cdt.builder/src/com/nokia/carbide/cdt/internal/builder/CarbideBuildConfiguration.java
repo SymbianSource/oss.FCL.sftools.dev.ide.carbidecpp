@@ -43,7 +43,6 @@ import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
-import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
@@ -77,7 +76,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	protected EnvironmentVarsInfo2 envVarsInfo;
 	protected BuildArgumentsInfo buildArgumentsInfo;
 	protected BuildConfigurationData buildConfigData;
-	protected ROMBuilderInfo romBuilderInfo;
 	protected SBSv2BuilderInfo sbsv2BuilderInfo;
 	protected boolean rebuildNeeded;
 	
@@ -96,7 +94,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		envVarsInfo = new EnvironmentVarsInfo2(project, context);
 		buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
 		buildConfigData = new BuildConfigurationData(this);
-		romBuilderInfo = new ROMBuilderInfo(getSDK());
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
 			sbsv2BuilderInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
 		}
@@ -121,8 +118,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 					envVarsInfo.loadFromStorage(se);
 				} else if (se.getName().equals(ARGUMENTS_DATA_ID)) {
 					loadBuildArgsFromStorage(se);
-				} else if (se.getName().equals(ROM_BUILDER_DATA_ID)) {
-					romBuilderInfo.loadFromStorage(se);
 				} else if (se.getName().equals(SBSV2_DATA_ID)){
 					if (sbsv2BuilderInfo != null){
 						sbsv2BuilderInfo.loadFromStorage(se);
@@ -146,7 +141,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 			
 			envVarsInfo.saveToStorage(rootStorage.createChild(ENV_VAR_DATA_ID));
 			saveBuildArgsToStorage(rootStorage.createChild(ARGUMENTS_DATA_ID));
-			romBuilderInfo.saveToStorage(rootStorage.createChild(ROM_BUILDER_DATA_ID));
 			
 			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){ 
 				sbsv2BuilderInfo.saveToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
@@ -422,10 +416,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	
 	public void setBuildArgumentsInfo(BuildArgumentsInfo buildArgumentsInfo) {
 		this.buildArgumentsInfo = buildArgumentsInfo;
-	}
-
-	public IROMBuilderInfo getROMBuildInfo() {
-		return romBuilderInfo;
 	}
 
 	public ISBSv2BuildConfigInfo getSBSv2BuildConfigInfo(){
