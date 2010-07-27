@@ -590,25 +590,5 @@
    </extension>
 
 
-<!-- =================================================================================== -->
-<!-- Carbide custom theme experiment                                                     -->
-<!-- =================================================================================== -->
-
-   <extension
-         point="org.eclipse.ui.themes">
-      <theme
-            id="carbide.custom.ui.theme"
-            name="Custom Theme">
-         <colorOverride
-               id="org.eclipse.ui.workbench.ACTIVE_TAB_BG_END"
-               value="255,0,0">
-         </colorOverride>
-         <colorOverride
-               id="org.eclipse.ui.workbench.ACTIVE_TAB_BG_START"
-               value="0,255,0">
-         </colorOverride>
-      </theme>
-   </extension>
-
 </plugin>
    
