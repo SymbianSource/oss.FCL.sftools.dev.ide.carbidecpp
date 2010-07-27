@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -74,7 +73,6 @@ import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.AddSDKDialog;
 import com.nokia.carbide.cpp.ui.TextAndDialogCellEditor;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
@@ -248,16 +246,13 @@ public class SDKPreferencePage
 		
 	}
 
-	private IPreferenceStore prefsStore;
 	private ISDKManager sdkMgr;
 	private List<ISymbianSDK> sdkList;
 	private ScanJobListener scanJobListner;
-	private boolean scanForNewPlugins;
 	private CheckboxTableViewer sdkListTableViewer;
 	private Button addButton;
 	private Button deleteButton;
 	private Button propertiesButton;
-	private Button scanForNewPluginsButton;
 	private Button rescanButton;
 	private Label iconLabel;
 	private Label statusLabel;
@@ -280,7 +275,6 @@ public class SDKPreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent){
-		prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
 		sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr == null){
 			return; 
@@ -322,9 +316,6 @@ public class SDKPreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#performOk()
 	 */
 	public boolean performOk() {
-		// Save preference page specific values;
-		prefsStore.setValue(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS, scanForNewPluginsButton.getSelection());
-
 		// Remember which SDK is enabled
 		for (ISymbianSDK sdk : sdkMgr.getSDKList()){
 			((SymbianSDK)sdk).setEnabled(false);
@@ -414,15 +405,6 @@ public class SDKPreferencePage
 
 		new Label(content, SWT.WRAP); // filler
 		
-		// Scan SDK checkbox
-		scanForNewPluginsButton = new Button(content, SWT.CHECK);
-		scanForNewPluginsButton.setText(Messages.getString("SDKPreferencePage.ScanForNewPlugins_Button_Label")); //$NON-NLS-1$
-		scanForNewPluginsButton.setSelection(prefsStore.getBoolean(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS));
-		addButtonListener(scanForNewPluginsButton);
-
-
-		new Label(content, SWT.WRAP); // filler
-		
 		// Rescan button
 		rescanButton = new Button(content, SWT.NONE);
 		rescanButton.setToolTipText(Messages.getString("SDKPreferencePage.Rescan_Button_ToolTip")); //$NON-NLS-1$
@@ -445,8 +427,6 @@ public class SDKPreferencePage
 					handleDeleteButton();
 				} else if (e.getSource().equals(propertiesButton)) {
 					handlePropertiesButton();
-				} else if (e.getSource().equals(scanForNewPluginsButton)) {
-					handleScanForNewPluginsButton();
 				} else if (e.getSource().equals(rescanButton)) {
 					handleRescanButton();
 				}
@@ -563,10 +543,6 @@ public class SDKPreferencePage
 		}
 	}
 
-	private void handleScanForNewPluginsButton() {
-		scanForNewPlugins = scanForNewPluginsButton.getSelection();
-	}
-
 	private void handleRescanButton() {
 		// forcible rescan; dump cache
 		SymbianBuildContextDataCache.refreshForSDKs(null);
@@ -590,10 +566,6 @@ public class SDKPreferencePage
 		selectSDKEntry(0);
 		rescanButton.setText(Messages.getString("SDKPreferencePage.Rescan_Button_Label")); //$NON-NLS-1$
 		rescanButton.setEnabled(true);
-
-		if (scanForNewPlugins){
-			NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
-		}
 	}
 
 	private void selectSDKEntry(int index) {

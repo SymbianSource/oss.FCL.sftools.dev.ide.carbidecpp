@@ -56,8 +56,6 @@ import org.w3c.dom.traversal.NodeIterator;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
@@ -69,7 +67,6 @@ import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener.SDKChangeEventType;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -91,7 +88,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	protected static final String SDK_CACHE_ID_ATTRIB = "id";
 	protected static final String SDK_CACHE_ENABLED_ATTRIB = "isEnabled";
 	protected static final String SDK_CACHE_OS_VERSION_ATTRIB = "osVersion";
-	protected static final String SDK_SCANNED_FOR_PLUGINS = "sdkScanned";
 
 	protected static final String SDK_CACHE_EPOCROOT_ATTRIB = "epocroot";
 
@@ -377,12 +373,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						if (epocrootItem != null)
 							epocRoot = epocrootItem.getNodeValue();
 						
-						// get whether or not this SDK has been scanned
-						String wasScanned = "false";
-						Node sdkScannedItem = attribs.getNamedItem(SDK_SCANNED_FOR_PLUGINS);
-						if (sdkScannedItem != null)
-							wasScanned = sdkScannedItem.getNodeValue();
-						
 						sdk = SymbianSDKFactory.createInstance(id, 
 															   epocRoot,
 															   new Version(osVersion));
@@ -390,15 +380,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 							((SymbianSDK)sdk).setEnabled(true);
 						} else {
 							((SymbianSDK)sdk).setEnabled(false);
-						}
-						ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-						ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-						if (wasScanned.equalsIgnoreCase("true")){
-							sbsv1BuildInfo.setPreviouslyScanned(true);
-							sbsv2BuildInfo.setPreviouslyScanned(true);
-						} else {
-							sbsv1BuildInfo.setPreviouslyScanned(false);
-							sbsv2BuildInfo.setPreviouslyScanned(false);
 						}
 						synchronized (sdkList) {
 							sdkList.add(sdk);
@@ -472,17 +453,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				Node sdkEpocRootNode = d.createAttribute(SDK_CACHE_EPOCROOT_ATTRIB);
 				sdkEpocRootNode.setNodeValue(currSDK.getEPOCROOT());
 				attribs.setNamedItem(sdkEpocRootNode);
-
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)currSDK.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-				Node wasScannedNode = d.createAttribute(SDK_SCANNED_FOR_PLUGINS);
-				if (true == sbsv1BuildInfo.isPreviouslyScanned() ||
-					true == sbsv2BuildInfo.isPreviouslyScanned()) {
-					wasScannedNode.setNodeValue("true");
-				} else {
-					wasScannedNode.setNodeValue("false");
-				}
-				attribs.setNamedItem(wasScannedNode);
 			}
 		}
 		DOMSource domSource = new DOMSource(d);
