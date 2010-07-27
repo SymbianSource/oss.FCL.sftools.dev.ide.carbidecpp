@@ -29,7 +29,6 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -48,11 +47,11 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 @SuppressWarnings("restriction")
-public class InstallExtensionsPortalExtension implements IPortalExtension {
+public class InstallExtensionsPortalExtension implements IPortalPageLayer {
 
 	private static final String INSTALL_ACTION_ID = InstallExtensionsPortalExtension.class.getName() + ".install"; //$NON-NLS-1$
 
@@ -134,13 +133,8 @@ public class InstallExtensionsPortalExtension implements IPortalExtension {
 	}
 
 	@Override
-	public String getText() {
+	public String getTitle() {
 		return Messages.InstallExtensionsPage_Title;
-	}
-
-	@Override
-	public ImageDescriptor getImageDescriptor() {
-		return Activator.getImageDescriptor("icons/icon-discovery.png"); //$NON-NLS-1$
 	}
 
 	@Override

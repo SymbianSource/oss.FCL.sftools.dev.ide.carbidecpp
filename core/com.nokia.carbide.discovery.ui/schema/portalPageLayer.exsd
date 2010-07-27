@@ -55,15 +55,8 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension"/>
+                  <meta.attribute kind="java" basedOn=":com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer"/>
                </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="order" type="string">
-            <annotation>
-               <documentation>
-                  relative ordering of layers in a page navigation bar (integer used to sort layers)
-               </documentation>
             </annotation>
          </attribute>
          <attribute name="pageId" type="string" use="required">

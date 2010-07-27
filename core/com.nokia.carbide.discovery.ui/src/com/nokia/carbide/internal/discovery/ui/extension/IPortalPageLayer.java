@@ -17,18 +17,23 @@
 package com.nokia.carbide.internal.discovery.ui.extension;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 /**
- * Interface to a portal extension
+ * Interface to a portal page layer extension
  */
-public interface IPortalExtension {
+public interface IPortalPageLayer {
 
 	/**
-	 * Interface to an action/navigation bar for the portal extension
+	 * The title of this portal page layer
+	 * @return String
+	 */
+	String getTitle();
+	
+	/**
+	 * Interface to an action/navigation bar for the portal portal page layer
 	 */
 	public interface IActionBar {
 		
@@ -74,19 +79,7 @@ public interface IPortalExtension {
 	}
 
 	/**
-	 * Required title text used by main navigation bar
-	 * @return String
-	 */
-	String getText();
-	
-	/**
-	 * Required image descriptor used by main navigation bar
-	 * @return ImageDescriptor
-	 */
-	ImageDescriptor getImageDescriptor();
-	
-	/**
-	 * Called to create the control for the extension
+	 * Called to create the control for the portal page layer
 	 * @param parent Composite
 	 * @param part IEditorPart
 	 * @return Control
@@ -94,12 +87,12 @@ public interface IPortalExtension {
 	Control createControl(Composite parent, IEditorPart part);
 	
 	/**
-	 * Called to initialize the extension when shown for the first time
+	 * Called to initialize the portal page layer when shown for the first time
 	 */
 	void init();
 	
 	/**
-	 * Return action bars for the extension
+	 * Return action bars for the portal page layer
 	 * @param part IEditorPart
 	 * @param updater IActionUIUpdater
 	 * @return IActionBar[]
@@ -107,7 +100,7 @@ public interface IPortalExtension {
 	IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater);
 	
 	/**
-	 * Called to dispose internal resources of the extension
+	 * Called to dispose internal resources of the portal page layer
 	 */
 	void dispose();
 }

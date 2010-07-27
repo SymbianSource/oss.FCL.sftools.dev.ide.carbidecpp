@@ -49,23 +49,42 @@
  <extension
        point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPortalExtension"
-          id="installExtensionsPage"
+          id="com.nokia.carbide.discovery.ui.customizePage"
+          image="icons/icon-discovery.png"
           order="50"
-          rank="50">
+          title="Customize">
     </portalPage>
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
-          id="homePage"
+          id="com.nokia.carbide.discovery.ui.homePage"
+          image="icons/Carbide_c_icon_16x16.png"
           order="1"
-          rank="1">
+          title="Home">
     </portalPage>
     <portalPage
-          class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
-          id="supportPage"
+          id="com.nokia.carbide.discovery.ui.supportPage"
+          image="icons/debug.png"
           order="100"
-          rank="100">
+          title="Support">
     </portalPage>
+ </extension>
+ <extension
+       point="com.nokia.carbide.discovery.ui.portalPageLayer">
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
+          pageId="com.nokia.carbide.discovery.ui.homePage">
+    </portalPageLayer>
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
+          pageId="com.nokia.carbide.discovery.ui.homePage">
+    </portalPageLayer>
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
+          pageId="com.nokia.carbide.discovery.ui.supportPage">
+    </portalPageLayer>
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPortalExtension"
+          pageId="com.nokia.carbide.discovery.ui.customizePage">
+    </portalPageLayer>
  </extension>
 
 </plugin>

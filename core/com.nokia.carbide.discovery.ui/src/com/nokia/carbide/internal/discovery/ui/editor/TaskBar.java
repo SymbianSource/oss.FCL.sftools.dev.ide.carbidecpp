@@ -31,7 +31,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer.IActionBar;
 
 class TaskBar extends RoundedCornerComposite {
 
@@ -58,8 +58,8 @@ class TaskBar extends RoundedCornerComposite {
 	private Map<Hyperlink, IAction> linkToActionMap;
 	private ActionListener listener;
 
-	public TaskBar(Composite parent, PortalEditor portalEditor, IActionBar actionBar) {
-		super(parent, portalEditor.getBackgroundParent(), 
+	public TaskBar(Composite parent, Composite backgroundParent, IActionBar actionBar) {
+		super(parent, backgroundParent, 
 				parent.getDisplay().getSystemColor(SWT.COLOR_BLACK),
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		createTitle(actionBar);

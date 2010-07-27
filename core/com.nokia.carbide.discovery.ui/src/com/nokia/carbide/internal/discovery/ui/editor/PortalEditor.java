@@ -20,7 +20,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -38,7 +40,6 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -49,12 +50,12 @@ import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalEditor;
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension;
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalExtension.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -75,30 +76,51 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 		loadPortalPages();
 	}
 	
+	private Map<String, List<IPortalPageLayer>> loadPortalLayers() {
+		Map<String, List<IPortalPageLayer>> pageIdToExtensionsMap = new HashMap<String, List<IPortalPageLayer>>();
+		IConfigurationElement[] elements = 
+			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPageLayer"); //$NON-NLS-1$
+		for (IConfigurationElement element : elements) {
+			String pageId = element.getAttribute("pageId"); //$NON-NLS-1$
+			try {
+				IPortalPageLayer extension = (IPortalPageLayer) element.createExecutableExtension("class"); //$NON-NLS-1$
+				if (!pageIdToExtensionsMap.containsKey(pageId))
+					pageIdToExtensionsMap.put(pageId, new ArrayList<IPortalPageLayer>());
+				pageIdToExtensionsMap.get(pageId).add(extension);
+			} catch (CoreException e) {
+				Activator.logError(MessageFormat.format(Messages.PortalEditor_PageLoadError, pageId), e);
+			}
+		}
+		return pageIdToExtensionsMap;
+	}
+
 	private void loadPortalPages() {
+		Map<String, List<IPortalPageLayer>> portalLayersMap = loadPortalLayers();
 		List<Pair<PortalPage, Integer>> pageList = new ArrayList<Pair<PortalPage, Integer>>();
 		IConfigurationElement[] elements = 
 			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPage"); //$NON-NLS-1$
 		for (IConfigurationElement element : elements) {
-			try {
-				IPortalExtension portalExtension = (IPortalExtension) element.createExecutableExtension("class"); //$NON-NLS-1$
-				String id = element.getAttribute("id"); //$NON-NLS-1$
-				String orderString = element.getAttribute("order"); //$NON-NLS-1$
-				int order = Integer.MAX_VALUE;
-				if (orderString != null) {
-					try {
-						order = Integer.parseInt(orderString);
-					}
-					catch (NumberFormatException e) {
-						Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError,
-										portalExtension.getClass().getName()), e);
-					}
+			String id = element.getAttribute("id"); //$NON-NLS-1$
+			int order = Integer.MAX_VALUE;
+			String orderString = element.getAttribute("order"); //$NON-NLS-1$
+			if (orderString != null) {
+				try {
+					order = Integer.parseInt(orderString);
 				}
-				pageList.add(new Pair<PortalPage, Integer>(new PortalPage(portalExtension, id), order));
-			} 
-			catch (CoreException e) {
-				Activator.logError(Messages.PortalEditor_PageLoadError, e);
+				catch (NumberFormatException e) {
+					Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError, id), e);
+				}
 			}
+			String title = element.getAttribute("title"); //$NON-NLS-1$
+			String imageFilePath = element.getAttribute("image"); //$NON-NLS-1$
+			String pluginId = element.getContributor().getName();
+			ImageDescriptor imageDesc = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, imageFilePath);
+			List<IPortalPageLayer> portalLayers = portalLayersMap.get(id);
+			if (portalLayers == null || portalLayers.isEmpty()) {
+				Activator.logError(MessageFormat.format("Could not load portal page because no layers were found for id: {0}", id), null);
+			}
+			PortalPage portalPage = new PortalPage(title, imageDesc, id, portalLayers);
+			pageList.add(new Pair<PortalPage, Integer>(portalPage, order));
 		}
 		Collections.sort(pageList, new Comparator<Pair<PortalPage, Integer>>() {
 			@Override
@@ -160,38 +182,9 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	private void createStackComposite(Composite parent, NavigationBar bar) {
 		stackComposite = new StackComposite(parent, backgroundParent);
 		for (PortalPage page : pages) {
-			page.setControl(createPage(page.getPortalExtension()));
+			page.createPageComposite(stackComposite, this);
 		}
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(stackComposite);
-	}
-
-	private Control createPage(IPortalExtension page) {
-		Composite pageComposite = new SharedBackgroundComposite(stackComposite, backgroundParent);
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(20, 0).extendedMargins(20, 20, 20, 0).applyTo(pageComposite);
-		ActionUIUpdater updater = new ActionUIUpdater();
-		IActionBar[] commandBars = page.createCommandBars(this, updater);
-		if (commandBars.length > 0) {
-			Composite taskComposite = new SharedBackgroundComposite(pageComposite, backgroundParent);
-			GridLayoutFactory.fillDefaults().applyTo(taskComposite);
-			GridDataFactory.fillDefaults().grab(false, true).applyTo(taskComposite);
-			for (IActionBar actionBar : commandBars) {
-				Control control = createTaskBarControl(taskComposite, actionBar, updater);
-				GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(control);
-			}
-		}
-		Composite pageControl = new RoundedCornerComposite(pageComposite, backgroundParent, 
-				null, pageComposite.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		GridLayoutFactory.fillDefaults().margins(2, 2).applyTo(pageControl);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(pageControl);
-		Control control = page.createControl(pageControl, this);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
-		return pageComposite;
-	}
-
-	private Control createTaskBarControl(Composite clientArea, IActionBar actionBar, ActionUIUpdater updater) {
-		TaskBar taskBar = new TaskBar(clientArea, this, actionBar);
-		updater.addTaskBar(taskBar);
-		return taskBar;
 	}
 
 	private NavigationBar createNavigationBar(Composite parent) {
@@ -205,9 +198,9 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	
 	void showPage(PortalPage page) {
 		if (!page.isInitialized()) {
-			page.getPortalExtension().init();
+			page.initialize();
 		}
-		stackComposite.showControl(page.getControl());
+		stackComposite.showControl(page.getPageControl());
 	}
 
 	private void applyBG(final Composite composite) {
