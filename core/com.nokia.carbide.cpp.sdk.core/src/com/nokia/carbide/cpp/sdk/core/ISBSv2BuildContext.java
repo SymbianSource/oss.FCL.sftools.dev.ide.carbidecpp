@@ -54,4 +54,11 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	 * @return list of include paths
 	 */
 	public List<IPath> getSystemIncludes();
+	
+	/**
+	 * Retrieve the actual \epoc32\release directory a binary is targeted for. 
+	 * @return
+	 */
+	public String getPlatformReleaseDirName();
+	
 }

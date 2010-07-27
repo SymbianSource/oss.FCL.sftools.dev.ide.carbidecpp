@@ -103,14 +103,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
     		buildAlias = buildAlias.split("\\.")[0];
     	}
     	
-    	ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
-    	if (sbsv2Info != null){
-    		String variant = sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
-    		if (variant != null && variant.length() > 1){
-    			buildAlias = buildAlias + variant;
-    		}
-    		
-    	}
     	return buildAlias;
     }
     

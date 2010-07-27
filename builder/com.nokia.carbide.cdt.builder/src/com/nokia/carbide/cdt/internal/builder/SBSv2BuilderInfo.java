@@ -38,7 +38,6 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM, context.getPlatformString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET, context.getTargetString());
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING, context.getDisplayString());
-		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT, "");
 		sbsv2ConfigDataMap.put(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID, context.getSDK().getUniqueId());
 		this.context = context;
 	}
@@ -48,11 +47,6 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 		String value = rootStorage.getAttribute(ATRRIB_CONFIG_BASE_PLATFORM);
 		if (value != null) {
 			sbsv2ConfigDataMap.put(ATRRIB_CONFIG_BASE_PLATFORM, value);
-		}
-		
-		value = rootStorage.getAttribute(ATTRIB_SBSV2_VARIANT);
-		if (value != null) {
-			sbsv2ConfigDataMap.put(ATTRIB_SBSV2_VARIANT, value);
 		}
 		
 		value = rootStorage.getAttribute(ATTRIB_CONFIG_TARGET);
@@ -74,8 +68,6 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 		if (value != null) {
 			sbsv2ConfigDataMap.put(ATTRIB_SBSV2_SDK_ID, value);
 		}
-		
-		
 	}
 	
 	public void saveToStorage(ICStorageElement rootStorage) {
@@ -83,11 +75,6 @@ public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {
 		String value = sbsv2ConfigDataMap.get(ATRRIB_CONFIG_BASE_PLATFORM);
 		if (value != null && value.trim().length() > 0){
 			rootStorage.setAttribute(ATRRIB_CONFIG_BASE_PLATFORM, value);
-		}
-		
-		value = sbsv2ConfigDataMap.get(ATTRIB_SBSV2_VARIANT);
-		if (value != null && value.trim().length() > 0){
-			rootStorage.setAttribute(ATTRIB_SBSV2_VARIANT, value);
 		}
 		
 		value = sbsv2ConfigDataMap.get(ATTRIB_CONFIG_TARGET);

@@ -80,6 +80,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
@@ -1943,12 +1944,9 @@ public static String[] getParserIdArray(int id) {
     				// need to create a new PKG file, resolved...
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_EPOCROOT, context.getSDK().getEPOCROOT());
     				String platSubst = context.getPlatformString().toLowerCase();				
-    				if (context instanceof CarbideBuildConfiguration){
+    				if (context instanceof ISBSv2BuildContext){
     					// Test is this is an SBSv2 build binary variant (changes the output directory)
-    					ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)context).getSBSv2BuildConfigInfo();
-    					if (sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null){
-    						platSubst = platSubst + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
-    					}
+    					platSubst = ((ISBSv2BuildContext)context).getPlatformReleaseDirName();
     				}
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, platSubst);
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_TARGET, context.getTargetString().toLowerCase());

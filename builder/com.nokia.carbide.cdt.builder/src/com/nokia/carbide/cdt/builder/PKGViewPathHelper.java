@@ -25,6 +25,7 @@ import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
@@ -75,10 +76,7 @@ public class PKGViewPathHelper {
 		this.platform = buildConfig.getPlatformString();		
 		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(buildConfig.getCarbideProject().getProject())){
 			// Test is this is an SBSv2 build binary variant (changes the output directory)
-			ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)buildConfig).getSBSv2BuildConfigInfo();
-			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !platform.contains(".") ){
-				this.platform = this.platform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
-			}
+			this.platform = ((ISBSv2BuildContext)buildConfig.getBuildContext()).getPlatformReleaseDirName();
 		} 
 		this.target = buildConfig.getTargetString();
 		this.mainDirectory = pkgFilePath.removeLastSegments(1);

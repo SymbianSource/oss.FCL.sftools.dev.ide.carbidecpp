@@ -177,7 +177,6 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		String platform = null;
 		String target = null;
 		String displayString = null;
-		String variant = "";
 		String sdkID = null;
 		if (rootStorage != null) {
 			for (ICStorageElement se : rootStorage.getChildren()) {
@@ -187,11 +186,6 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 					String value = se.getAttribute(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
 					if (value != null) {
 						platform = value;
-					}
-
-					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT);
-					if (value != null) {
-						variant = value;
 					}
 
 					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
