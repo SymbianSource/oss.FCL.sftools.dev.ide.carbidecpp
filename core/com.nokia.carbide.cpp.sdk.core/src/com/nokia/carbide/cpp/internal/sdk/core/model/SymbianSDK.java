@@ -94,8 +94,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public SymbianSDK(DeviceType device) {
 		deviceEntry = device;
-		setBuildInfo(new SBSv1BuildInfo(this), ISymbianBuilderID.SBSV1_BUILDER);
-		setBuildInfo(new SBSv2BuildInfo(this), ISymbianBuilderID.SBSV2_BUILDER);
 		scanSDK();
 	}
 
@@ -106,6 +104,13 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public ISDKBuildInfo getBuildInfo(String builderId) {
 		ISDKBuildInfo buildInfo = buildInfoMap.get(builderId);
+		if (buildInfo == null) {
+			if (builderId.equals(ISymbianBuilderID.SBSV1_BUILDER)) {
+				buildInfo = createSBSv1BuildInfo();
+			} else if (builderId.equals(ISymbianBuilderID.SBSV2_BUILDER)) {
+				buildInfo = createSBSv2BuildInfo();
+			}
+		}
 		return buildInfo;
 	}
 
@@ -159,6 +164,16 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public File getPrefixFile(String builderId) {
 		File prefixFile = prefixFileMap.get(builderId);
+		if (prefixFile == null) {
+			ISDKBuildInfo buildInfo = getBuildInfo(builderId);
+			if (buildInfo != null) {
+				IPath prefixFilePath = buildInfo.getPrefixFromVariantCfg();
+				if (prefixFilePath != null) {
+					prefixFile = prefixFilePath.toFile();
+					setPrefixFile(prefixFilePath, builderId);
+				}
+			}
+		}
 		return prefixFile;
 	}
 
@@ -320,17 +335,13 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public void scanSDK(){
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 
 		sbsv1BuildInfo.clearPlatformMacros();
 
 		if (!setDataFromManifestXML()){
-			//need to scan SDK files for OS and SDK version
+			//need to scan SDK files for OS version
 			scanSDKForVersionInfo();
 		}
-		
-		setPrefixFile(sbsv1BuildInfo.getPrefixFromVariantCfg(), ISymbianBuilderID.SBSV1_BUILDER);
-		setPrefixFile(sbsv2BuildInfo.getPrefixFromVariantCfg(), ISymbianBuilderID.SBSV2_BUILDER);
 		
 		setSupportFeatures();
 	}
@@ -360,7 +371,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	public void setPrefixFile(IPath prefixFile, String builderId) {
 		if (prefixFile == null)
 			return;
-		File file = new File(prefixFile.toOSString());
+		File file = prefixFile.toFile();
 		prefixFileMap.put(builderId, file);
 	}
 
@@ -376,6 +387,18 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return getUniqueId();
 	}
 	
+	private SBSv1BuildInfo createSBSv1BuildInfo() {
+		SBSv1BuildInfo buildInfo = new SBSv1BuildInfo(this);
+		setBuildInfo(buildInfo, ISymbianBuilderID.SBSV1_BUILDER);
+		return buildInfo;
+	}
+	
+	private SBSv2BuildInfo createSBSv2BuildInfo() {
+		SBSv2BuildInfo buildInfo = new SBSv2BuildInfo(this);
+		setBuildInfo(buildInfo, ISymbianBuilderID.SBSV2_BUILDER);
+		return buildInfo;
+	}
+
 	private boolean hasManifestXML(){
 		File manifestXML = new File(deviceEntry.getEpocroot(), MANIFEST_XML_LOCATION);
 		if (manifestXML.exists()){
