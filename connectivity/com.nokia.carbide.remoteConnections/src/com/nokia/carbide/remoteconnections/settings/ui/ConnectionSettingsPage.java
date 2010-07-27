@@ -149,6 +149,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	private ComboViewer connectionTypeViewer;
 	private Text nameText;
 	private boolean modifiedName;
+	private String generatedName;
 	private boolean initialized;
 	private Composite agentTestTabComposite;
 	private ListViewer servicesListViewer;
@@ -649,12 +650,17 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 
 	public void settingsChanged() {
 		if (!modifiedName) {
-			String preferredName = connectionFactory.getSettingsFromUI().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
-			if (preferredName != null) {
-				nameText.setText(ensureUniquePreferredName(preferredName));
-			}
-			else {
-				nameText.setText(getInitialNameText());
+			String currentName = nameText.getText();
+			if (currentName == null || currentName.length() == 0 || currentName.equals(generatedName)) {
+				String preferredName = connectionFactory.getSettingsFromUI().get(IConnectionFactory2.PREFERRED_CONNECTION_NAME);
+				if (preferredName != null) {
+					preferredName = ensureUniquePreferredName(preferredName);
+					generatedName = preferredName;
+					nameText.setText(preferredName);
+				}
+				else {
+					nameText.setText(getInitialNameText());
+				}
 			}
 			modifiedName = false;
 		}
@@ -1065,6 +1071,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	private String getInitialNameText() {
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 		if (connectionToEdit != null) {
+			generatedName = "";
 			return connectionToEdit.getDisplayName();
 		}
 		
@@ -1072,6 +1079,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		while (true) {
 			String name = MessageFormat.format(INITIAL_NAME_FMT, CONNECTION_PREFIX, Long.toString(i++));
 			if (isNameUnique(name)) {
+				generatedName = name;
 				return name;
 			}
 		}
