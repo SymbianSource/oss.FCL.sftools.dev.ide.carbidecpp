@@ -23,8 +23,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -57,7 +55,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -68,7 +65,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -229,26 +225,8 @@ public class SDKPreferencePage
 		}
 	}
 
-	private class ScanJobListener implements IJobChangeListener {
-		public void done(IJobChangeEvent event) {
-			Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					finishRescanning();
-				}
-			});
-		}
-
-		public void aboutToRun(IJobChangeEvent event) {}
-		public void awake(IJobChangeEvent event) {}
-		public void running(IJobChangeEvent event) {}
-		public void scheduled(IJobChangeEvent event) {}
-		public void sleeping(IJobChangeEvent event) {}
-		
-	}
-
 	private ISDKManager sdkMgr;
 	private List<ISymbianSDK> sdkList;
-	private ScanJobListener scanJobListner;
 	private CheckboxTableViewer sdkListTableViewer;
 	private Button addButton;
 	private Button deleteButton;
@@ -267,7 +245,6 @@ public class SDKPreferencePage
 	 */
 	public SDKPreferencePage() {
 		super();
-//		scanJobListner = new ScanJobListener();
 	}
 
 	/*
@@ -280,10 +257,6 @@ public class SDKPreferencePage
 			return; 
 		}
 		sdkList = sdkMgr.getSDKList();
-		if (sdkMgr instanceof SDKManager) {
-			SDKManager mgr = (SDKManager) sdkMgr;
-//			mgr.addScanJobListner(scanJobListner);
-		}
 
 		super.createControl(parent);
 
@@ -291,17 +264,6 @@ public class SDKPreferencePage
 		getDefaultsButton().setVisible(false);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(super.getControl(), SDKUIHelpIds.SDK_PREFERENCES_PAGE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.DialogPage#dispose()
-	 */
-	public void dispose() {
-		if (sdkMgr != null && sdkMgr instanceof SDKManager){
-			SDKManager mgr = (SDKManager) sdkMgr;
-			mgr.removeScanJobLisner(scanJobListner);
-		}
 	}
 
 	/*
