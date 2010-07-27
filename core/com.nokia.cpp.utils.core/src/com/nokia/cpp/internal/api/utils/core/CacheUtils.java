@@ -105,7 +105,7 @@ public class CacheUtils {
 	public void removeCache(String identifier) {
 		CacheEntry cache = caches.get(identifier);
 		if (cache != null) {
-			caches.remove(cache);
+			caches.remove(identifier);
 			cache.delete();
 		}
 	}
