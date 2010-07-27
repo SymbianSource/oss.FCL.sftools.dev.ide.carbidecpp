@@ -776,16 +776,6 @@ public class EpocEngineHelper {
 											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 										}
 
-										// if targetpath is non-null and this is an EKA1 emulator config then add it
-										if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
-											if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
-												String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-												if (targetPath != null) {
-													path = path.append("z").append(targetPath); //$NON-NLS-1$
-												}
-											}
-										}
-
 										// adapt to variant, if needed
 										IPath targetPath = path.append(exePath);
 										if (isVariantBldInf(buildConfig.getCarbideProject().getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, info.getProject())) {
@@ -1131,12 +1121,8 @@ public class EpocEngineHelper {
 		if (targetPathStr != null) {
 			targetPath = PathUtils.createPath(targetPathStr).makeAbsolute();
 		} else {
-			// for EKA1 just leave empty.  for EKA2 use sys\bin\
-			if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-				targetPath = new Path("/sys/bin/"); //$NON-NLS-1$
-			} else {
-				targetPath = Path.ROOT; //$NON-NLS-1$
-			}
+			//for EKA2 use sys\bin\
+			targetPath = new Path("/sys/bin/"); //$NON-NLS-1$
 		}
 	
 		IPath dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).append("/data/z/"); //$NON-NLS-1$

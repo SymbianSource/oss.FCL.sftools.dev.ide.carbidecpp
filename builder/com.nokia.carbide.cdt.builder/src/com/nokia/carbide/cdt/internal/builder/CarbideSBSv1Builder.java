@@ -653,12 +653,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 						IPath targetP = new Path(targetPath).makeRelative().addTrailingSeparator();
 						targetPath = targetP.toOSString();
 					} else {
-						// for EKA1 just leave empty.  for EKA2 use sys\bin\
-						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							targetPath = "sys\\bin\\"; //$NON-NLS-1$
-						} else {
-							targetPath = ""; //$NON-NLS-1$
-						}
+						// for EKA2 use sys\bin\
+						targetPath = "sys\\bin\\"; //$NON-NLS-1$
 					}
 
 					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
