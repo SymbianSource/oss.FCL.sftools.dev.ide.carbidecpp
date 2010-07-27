@@ -103,7 +103,11 @@ public class CacheUtils {
 	}
 
 	public void removeCache(String identifier) {
-		caches.remove(identifier);
+		CacheEntry cache = caches.get(identifier);
+		if (cache != null) {
+			caches.remove(cache);
+			cache.delete();
+		}
 	}
 
 	public <T> T getCachedData(String cacheIdentifier, Class<T> expectedClass, long freshness) {
@@ -118,6 +122,7 @@ public class CacheUtils {
 			T result = cache.getData(expectedClass);
 			if (cachedFreshness == freshness && result != null)
 			{
+				caches.put(cacheIdentifier, cache);
 				return result;
 			}
 			else
