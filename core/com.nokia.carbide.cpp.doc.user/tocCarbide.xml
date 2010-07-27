@@ -108,7 +108,6 @@
       <topic label="Carbide.c++ News"				href="html/reference/pref_carb_carbide_news.htm" />
       <topic label="Debugger"						href="html/reference/pref_carb_debugger.htm" />
       <topic label="Diagnostic Logs"          		href="html/reference/pref_carb_diagnostic_logs.htm" />
-      <topic label="Performance Investigator"  		href="PLUGINS_ROOT/com.nokia.carbide.cpp.pi.doc.user/html/tasks/analyser/key_profile_pref.htm" />
       <topic label="Platform Filtering Preferences"	href="html/tasks/sdks/sdk_platform_filter.htm" />
       <topic label="Preprocess"						href="html/reference/pref_carb_preprocess.htm" />
       <topic label="SDK Preferences"                  href="html/reference/pref_carb_sdk_preferencea.html" />
