@@ -304,9 +304,6 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		if (config != null) {
 			CConfigurationData data = config.getConfigurationData();
 			if (data == null){
-				// TODO: HACK. FOR REASONS I DON'T GET RIGHT NOW, IF I CREATE A VARIANT AND SAVE IT'S
-				// OK. BUT IF I CLOSE AND RE-OPEN THE PROJECT THE DEFAULT CONFIG DATA IS NOT LOADED.
-				// SO JUST LOAD THE FIRST IN THE LIST. THIS NEEDS TO BE ADDRESSED.
 				ICConfigurationDescription[] config2 = projectDescription.getConfigurations();
 				data = config2[0].getConfigurationData();
 			}

@@ -115,9 +115,9 @@ public class MissingSdkTest extends TestCase {
 			// check we only have those configs in the removed SDK in the missing list
 			List<ICarbideBuildConfiguration> configList = cpi.getBuildConfigurations();
 			int badCount = 0;
-			for (ICarbideBuildConfiguration config: configList) {		
-				// TODO: Hack to use static method for prototyping BuildContextSBSv1.getSDKIDFromConfigName
-				// Should be no static calls on those classes.
+			for (ICarbideBuildConfiguration config: configList) {
+				// TODO: Using SBSv1 static method. Currently display name keeps the SDKID the same for both
+				// SBSv1 and SBSv2 configs. Will need to update in the event that SBSv1 support is removed. TCK.
 				if (SDKManagerInternalAPI.getMissingSdk(BuildContextSBSv1.getSDKIDFromConfigName(config.getDisplayString())) != null) {
 					badCount++;
 				}

@@ -170,14 +170,14 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	@Override
 	public String getBuildVariationName() {
-		// TODO: This should not be needed for Raptor
+		// Not needed for Raptor
 		return "";
 	}
 
 	@Override
 	public boolean isSymbianBinaryVariation() {
-		// This should not be needed for Raptor. We do need a check
-		// in the MPP for the featurevariant keyword perhaps
+		// Not be needed for Raptor. We do check
+		// in the MPP for the featurevariant keyword
 		return false;
 	}
 	

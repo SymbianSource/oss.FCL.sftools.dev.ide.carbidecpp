@@ -117,6 +117,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		return baseData;
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	public CConfigurationData loadConfiguration(ICConfigurationDescription des,
 			IProgressMonitor monitor) throws CoreException {
@@ -139,7 +140,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 									+ project.getProject().getName(), null));
 				}
 			} else {
-				// TODO: Presume it's SBSv1?
+				// Presume it's SBSv1
 				// find the configuration that matches the id (sdk, platform, target)
 				String configId = des.getConfiguration().getId();
 				context = BuildContextSBSv1.getBuildContextFromDisplayName(configId);
@@ -163,6 +164,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		return null;
 	}
 
+	@SuppressWarnings("restriction")
 	private ISymbianBuildContext loadSBSv2Configuration(ICConfigurationDescription des, 
 														IProgressMonitor monitor) {
 		
@@ -215,7 +217,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		
 		ISymbianSDK sdk = null;
 		if (!configID.startsWith(ISBSv2BuildContext.BUILDER_ID)){
-			// pre-C3 project, get SDK id from config name
+			// pre-C3 (Carbide 2.x) project, get SDK id from config name
 			if (displayString == null){
 				displayString = configID;
 			} 
@@ -234,7 +236,6 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		}
 		if (sdkID != null){
 			sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
-			// TODO: NEED TO HANDLE MISSING SDK ID
 			if (sdk != null){
 				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
 			} else {
@@ -244,7 +245,6 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 				return new BuildContextSBSv2(deadSDK, platform, target, buidAlias, displayString, configID);
 			}
 		}
-		
 		
 		return null;
 		
@@ -285,12 +285,13 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 	protected static void convertSettingsData(IProject project, CarbideBuilderConfigInfoType buildConfigType) {
 		
 		if (buildConfigType.getVersion() == CarbideBuildConfigurationLoader.SETTINGS_VERSION_0) {
-			// Iteraate through all the configurations and convert from version 0 to 1.
+			// Iterate through all the configurations and convert from version 0 to 1.
 			// Reset all PATH, EPOCROOT, and MW* variables set back to their defaults
 			// as they are computed dynamically now.
 			for (Iterator i = buildConfigType.getConfiguration().iterator(); i.hasNext();) {
 				ConfigurationType currConfig = (ConfigurationType)i.next();
-				// TODO: YUKCY!
+				
+				@SuppressWarnings("restriction")
 				ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
 				IEnvironmentVarsInfo envSettings = new EnvironmentVarsInfo(project, context, currConfig.getEnvVars());
 				List<IEnvironmentVariable> varsFromSettings = envSettings.getModifiedEnvVarsListFromSettings();
@@ -415,8 +416,9 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 					List<ISymbianBuildContext> configs = new ArrayList<ISymbianBuildContext>();
 					for (Iterator i = oldConfigInfo.getConfiguration().iterator(); i.hasNext();) {
 						ConfigurationType currConfig = (ConfigurationType)i.next();
-						// TODO: YUCKY!
-		    			ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
+						
+		    			@SuppressWarnings("restriction")
+						ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
 						if (context != null) {
 							configs.add(context);
 						}

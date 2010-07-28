@@ -215,7 +215,7 @@ public class SDKManager extends AbstractSDKManager {
 		} catch (Exception e) {			
 			//TODO: Localise
 			String errMsg = "Could not read registry for local machine key: '" +  CSL_ARM_TOOLCHAIN_REG_PATH 
-								+ " (" + e.getMessage() +").";
+								+ " (" + e.getMessage() +")."; //$NON-NLS-N$
 			throw new SDKEnvInfoFailureException(errMsg);
 		}
 		
@@ -223,7 +223,7 @@ public class SDKManager extends AbstractSDKManager {
 			//TODO: Localise
 			String errMsg = "CSL Arm Toolchain installation path pointed by registry key '" 
 							+  CSL_ARM_TOOLCHAIN_REG_PATH 
-							+ "' does not exist.";
+							+ "' does not exist."; //$NON-NLS-N$
 			throw new SDKEnvInfoFailureException(errMsg);
 		}
 
@@ -240,9 +240,8 @@ public class SDKManager extends AbstractSDKManager {
 			toolPathName = gcceToolDir + "\\" + toolName;
 			
 			if (!new File(toolPathName).exists()){
-				//TODO: Localise
 				String errMsg = "Required tool from CSL Arm Toolchain is missing: " 
-								+ toolPathName;
+								+ toolPathName; //$NON-NLS-N$
 				throw new SDKEnvInfoFailureException(errMsg);
 			}			
 		}

@@ -2383,13 +2383,13 @@ public class EpocEngineHelper {
 	}
 	
 	/**
-	 * Get the MD5 hash value for an existing configuration by parsing its makefile.
+	 * Get the MD5 hash value for an existing configuration by parsing its makefile. Should only be used for ABLD build system.
 	 * @param makefile - The build makefile to parse to check for the MD5
 	 * @param config - The build configuration to check under
 	 * @return The string for the MD5 hash. An empty string if it cannot be determined.
 	 */
 	private static String getMD5VariantFromMakefile(File makefile, ICarbideBuildConfiguration config){
-		// TODO: We can also use the .vmap in the release folder as well.
+		// We could also use the .vmap in the release folder as well.
 		// we can parse the makefile and get the variant name for each in the comments:
 		//
 		//# FeatureVariantURELLabel d41d8cd98f00b204e9800998ecf8427e

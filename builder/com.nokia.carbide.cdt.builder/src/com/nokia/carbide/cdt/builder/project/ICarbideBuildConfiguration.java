@@ -148,19 +148,14 @@ public interface ICarbideBuildConfiguration {
 	/** ISymbianBuildContext wrapper */
 	String getTargetString();
 	
-	/** TODO: Detect on instanceof ? */
 	public IPath getCompilerPrefixFile();
 	
-	/** TODO: Detect on instanceof ? */
 	public List<IDefine> getCompilerMacros();
 	
-	/** TODO: Detect on instanceof ? */
 	public List<IDefine> getVariantHRHDefines();
 	
-	/** TODO: Detect on instanceof ? */
 	public List<File> getPrefixFileIncludes();
 	
-	/** TODO: Detect on instanceof ? */
 	public String getBuildVariationName();
 
 	String getConfigurationID();

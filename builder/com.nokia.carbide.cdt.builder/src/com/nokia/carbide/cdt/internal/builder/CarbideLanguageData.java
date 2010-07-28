@@ -248,7 +248,6 @@ public class CarbideLanguageData extends CLanguageData {
 		if (context instanceof ISBSv2BuildContext) {
 			// SBSv2 only system includes
 			if (((ISBSv2BuildContext)context).getSystemIncludes() != null){
-				// TODO: THIS SHOULD NOT HAPPEN
 			
 				for (IPath incPath : ((ISBSv2BuildContext)context).getSystemIncludes()) {
 					IPath projRelIncPath = FileUtils.removePrefixFromPath(projectPath, incPath);

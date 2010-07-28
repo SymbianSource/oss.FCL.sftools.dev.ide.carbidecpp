@@ -138,9 +138,6 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 			helpCompilerNames = new String[] { HELP_COMPILER_WIN32, HELP_COMPILER_PERL };
 		} else {
 			
-			// TODO: the infrastructure for the techview/bldhelp.mk is a total mess 
-			// currently, and it also appears that help is obsolete in recent devkits,
-			// so just drop this
 			if (!SBSv2Utils.enableSBSv1Support() && isSBSv2Project(template))
 				return null;
 			

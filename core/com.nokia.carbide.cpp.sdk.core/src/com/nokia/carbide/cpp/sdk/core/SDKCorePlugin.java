@@ -94,6 +94,7 @@ public class SDKCorePlugin extends Plugin {
 		if (sdkManager == null) {
 			// TODO: SDKManagerRaptorOnly, currently only works on Linux
 			// ... and SDKManager depends on Windows
+			// Win32 can use this instead once ABLD support is dropped from Carbide
 			if (HostOS.IS_WIN32)
 				sdkManager = new SDKManager();
 			else

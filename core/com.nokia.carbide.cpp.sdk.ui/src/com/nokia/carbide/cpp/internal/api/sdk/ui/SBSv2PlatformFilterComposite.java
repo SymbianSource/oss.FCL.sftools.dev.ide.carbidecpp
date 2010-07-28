@@ -54,9 +54,6 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 @SuppressWarnings("restriction")
 public class SBSv2PlatformFilterComposite extends Composite {
 
-	// TODO: Temporary map. We need a way to ensure we only get the alias map
-	// when needed and that the data we are getting is properly cached to avoid
-	// having to run Raptor queries too often
 	private static HashMap<String, String> aliasMap = new HashMap<String, String>();
 	private static List<String> productVariantList = new ArrayList<String>();
 	

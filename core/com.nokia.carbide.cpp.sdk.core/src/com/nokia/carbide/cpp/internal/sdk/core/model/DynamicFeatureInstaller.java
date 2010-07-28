@@ -137,7 +137,6 @@ public class DynamicFeatureInstaller {
 			for (IConfiguredSite site : configuredSites) {
 				installedFeatureRefs.addAll(Arrays.asList(site.getConfiguredFeatures()));
 				if (localSite == null && site.isUpdatable()) {
-					// TODO: If there are multiple sites should the user be presented a list to choose from?
 					localSite = site;
 				}
 			}

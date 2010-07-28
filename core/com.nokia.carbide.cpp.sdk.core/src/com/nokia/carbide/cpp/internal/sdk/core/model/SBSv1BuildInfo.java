@@ -83,11 +83,10 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		if (buildPlats.size() == 0){
 			return Collections.emptyList();
 		}
-		// TODO: Hard code build context hack
+
 		buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
 		
 		if (sdkFeatures.contains(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED)){
-			// TODO: Hard code build context hack
 			buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
 		}
 		
@@ -96,11 +95,9 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 				// emulation targets already determined (some SDKs don't get WISNCW UREL
 				continue;
 			}
-			// TODO: Hard code build context hack
 			buildTargets.add(new BuildContextSBSv1(sdk, currPlat, ISymbianBuildContext.DEBUG_TARGET));
 			
 			// everything gets release except for WINSCW
-			// TODO: Hard code build context hack
 			buildTargets.add(new BuildContextSBSv1(sdk, currPlat, ISymbianBuildContext.RELEASE_TARGET));
 		}
 		

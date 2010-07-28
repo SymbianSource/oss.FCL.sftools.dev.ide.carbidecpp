@@ -54,7 +54,6 @@ public class DefaultIncludeFileLocator extends BasicIncludeFileLocator {
 			}
 
 			// get info from context
-			// TODO: HACK HACK. Hard coded build context to get working....
 			Check.checkState(buildContext instanceof BuildContextSBSv1 || buildContext instanceof BuildContextSBSv2);
 			
 			if (buildContext instanceof BuildContextSBSv1){

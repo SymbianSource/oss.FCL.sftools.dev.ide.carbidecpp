@@ -61,7 +61,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	@Override
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
-		// TODO: Will get rid of this method. Only filtered configs will apply
+		// This really only applies to SBSv1. We never return the full list of configs for SBSv2, only the filtered ones
 		return sbsv2FilteredConetxts;
 	}
 
@@ -176,7 +176,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	private String getMeaningForVariant(String alias) {
 		String meaning = null;
 		
-		// TODO: Assuming now that the alias now is the first part and the last bits are the variant bits.
+		// The alias is the first token when splitting on a dot.
 		String tokens[] = alias.split("\\.");
 		if (tokens.length > 0){
 			meaning = aliasToMeaningMap.get(tokens[0]);

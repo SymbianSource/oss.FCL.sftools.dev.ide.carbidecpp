@@ -42,7 +42,6 @@ public class TestMakeErrorParser extends TestCase {
 
 	public TestMakeErrorParser(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
 	CarbideErrorParserTestHarness harness;

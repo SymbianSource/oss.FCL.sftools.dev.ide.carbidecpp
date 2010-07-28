@@ -2400,7 +2400,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				} catch (CoreException e) {
 					CarbideBuilderPlugin.log(e);
 					e.printStackTrace();
-					//TODO is this enough?
 				}
 			}
 		}

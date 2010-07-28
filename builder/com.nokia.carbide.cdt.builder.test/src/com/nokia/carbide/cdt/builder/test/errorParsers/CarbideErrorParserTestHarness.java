@@ -170,7 +170,6 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 					file = FileUtils.pluginRelativeFile(TestPlugin.getDefault(), "data/currentOutput.xml");
 					writeRegressionXMLFile(new java.io.PrintStream(file));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -377,7 +376,6 @@ public class CarbideErrorParserTestHarness extends CarbideCommandLauncher {
 	        printStream.close();
         
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
