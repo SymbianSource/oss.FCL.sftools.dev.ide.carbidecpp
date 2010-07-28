@@ -213,7 +213,6 @@ public class SDKManager extends AbstractSDKManager {
 			installPath = wr.getLocalMachineValue(CSL_ARM_TOOLCHAIN_REG_PATH, 
 													 CSL_ARM_TOOLCHAIN_REG_KEY);			
 		} catch (Exception e) {			
-			//TODO: Localise
 			String errMsg = "Could not read registry for local machine key: '" +  CSL_ARM_TOOLCHAIN_REG_PATH 
 								+ " (" + e.getMessage() +")."; //$NON-NLS-N$
 			throw new SDKEnvInfoFailureException(errMsg);

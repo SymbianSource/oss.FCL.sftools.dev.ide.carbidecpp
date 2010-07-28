@@ -36,6 +36,7 @@ public interface ISymbianSDK {
 	 * Returns build info for a particular builder.
 	 * @param builderId id string of a builder
 	 * @return build info
+	 * @since 3.0
 	 */
 	ISDKBuildInfo getBuildInfo(String builderId);
 	
@@ -79,6 +80,7 @@ public interface ISymbianSDK {
 	 * Returns a set of features supported by the SDK. 
 	 * Feature IDs are defined in ISymbianSDKFeatures.
 	 * @return set of features
+	 * @since 3.0
 	 */
 	@SuppressWarnings("rawtypes")
 	Set getSupportedFeatures();

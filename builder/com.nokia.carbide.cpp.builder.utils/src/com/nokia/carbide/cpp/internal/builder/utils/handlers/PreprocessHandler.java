@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -82,7 +81,6 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
@@ -427,6 +425,12 @@ public class PreprocessHandler extends AbstractHandler {
 			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
 				macros.add(builtinMacro);
 			}
+			
+			// built in macros
+			for (String builtinMacro : sbsv1BuildInfo.getBuiltinMacros(buildConfig.getBuildContext())) {
+				macros.add(builtinMacro);
+			}
+			
 		} else {
 			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 			// platform macros
@@ -436,10 +440,10 @@ public class PreprocessHandler extends AbstractHandler {
 			} 
 		}
 		
-		// built in macros
-		for (String builtinMacro : buildConfig.getBuiltinMacros()) {
-			macros.add(builtinMacro);
+		if (buildConfig.hasSTDCPPSupport()){
+			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
 		}
+		
 		
 		IProject project = buildConfig.getCarbideProject().getProject();
 		

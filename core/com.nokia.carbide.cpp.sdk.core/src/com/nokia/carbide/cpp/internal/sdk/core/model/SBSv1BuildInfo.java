@@ -307,4 +307,26 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		return buildContexts;
 	}
 
+	@Override
+	public List<String> getBuiltinMacros(ISymbianBuildContext context) {
+		List<String> macros = new ArrayList<String>();
+		
+		macros.add("SBSV2"); //$NON-NLS-1$
+		
+		// add the macros that should always be defined
+		macros.add("__SYMBIAN32__"); //$NON-NLS-1$
+		macros.add("_UNICODE"); //$NON-NLS-1$
+		
+		macros.add("__SUPPORT_CPP_EXCEPTIONS__"); //$NON-NLS-1$
+		
+		if (context.getTargetString().equals(ISymbianBuildContext.DEBUG_TARGET)) {
+			macros.add("_DEBUG"); //$NON-NLS-1$
+		} else {
+			macros.add("NDEBUG"); //$NON-NLS-1$
+		}
+		
+		return macros;
+	}
+
+
 }

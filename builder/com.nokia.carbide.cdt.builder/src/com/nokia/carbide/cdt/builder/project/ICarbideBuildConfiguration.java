@@ -112,16 +112,6 @@ public interface ICarbideBuildConfiguration {
 	int getErrorParserId();
 	
 	/**
-	 * Returns the list of all built in macros for this configuration
-	 * <p>
-	 * Macros will be just a name, e.g. "_DEBUG", "__SYMBIAN32__", etc..
-	 * </p>
-	 *
-	 * @return a list of macros which may be empty.
-	 */
-	List<String> getBuiltinMacros();
-	
-	/**
 	 * Compares two configurations to see if their display names are equivalent.
 	 */
 	boolean equals(Object obj);
@@ -134,6 +124,10 @@ public interface ICarbideBuildConfiguration {
 	 */
 	IPath getTargetOutputDirectory();
 	
+	/**
+	 * Retrieve the build context specific info.
+	 * @return
+	 */
 	ISymbianBuildContext getBuildContext();
 	
 	/** ISymbianBuildContext wrapper */
@@ -148,16 +142,47 @@ public interface ICarbideBuildConfiguration {
 	/** ISymbianBuildContext wrapper */
 	String getTargetString();
 	
+	/**
+	 * Get the compiler prefix file. This is an ISymbianBuildContext wrapper.
+	 * @return The path to the compiler's prefix file. May be null if none.
+	 */
 	public IPath getCompilerPrefixFile();
 	
+	/**
+	 * Get the macros associated with preprocessing CPP source files. This is an ISymbianBuildContext wrapper.
+	 * @return the list of IDefine macros
+	 */
 	public List<IDefine> getCompilerMacros();
 	
+	/**
+	 * Get the macros discovered from preprocessing the SDK prefix file for the configuration. This is an ISymbianBuildContext wrapper.
+	 * @return the list of IDefine macros
+	 */
 	public List<IDefine> getVariantHRHDefines();
 	
+	/**
+	 * Get the list of include files included in the variant HRH SDK preinclude file
+	 * This is used to check dependencies on all SDK/Configuration includes. This is an ISymbianBuildContext wrapper.
+	 * @return
+	 */
 	public List<File> getPrefixFileIncludes();
 	
+	/**
+	 * Get the variant portion of a build configuration name. May be an empty string. This is an ISymbianBuildContext wrapper.
+	 * @return
+	 */
 	public String getBuildVariationName();
 
+	/**
+	 * Get the <cconfiguration/> 'id' attribute for this configuration (from .cproject file). This is an ISymbianBuildContext wrapper.
+	 * @return
+	 */
 	String getConfigurationID();
+	
+	/**
+	 * Check that at least one MMP in the project configuration has stdcpp support keyword
+	 * @return
+	 */
+	public boolean hasSTDCPPSupport();
 	
 }

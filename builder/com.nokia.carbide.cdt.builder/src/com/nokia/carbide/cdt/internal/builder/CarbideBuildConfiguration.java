@@ -79,14 +79,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	protected SBSv2BuilderInfo sbsv2BuilderInfo;
 	protected boolean rebuildNeeded;
 	
-	/**
-	 * TODO: Target constants - copied from ISymbianBuildContext 
-	 */
-
-	public static final String DEBUG_TARGET = "UDEB";
-
-	public static final String RELEASE_TARGET = "UREL";
-	
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
 		this.context = context;
 		projectTracker = new TrackedResource(project);
@@ -339,35 +331,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		return ERROR_PARSERS_ALL;  
 	}
 
-	public List<String> getBuiltinMacros() {
-		List<String> macros = new ArrayList<String>();
-		
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
-			macros.add("SBSV2"); //$NON-NLS-1$
-		}
-		
-		// add the macros that should always be defined
-		macros.add("__SYMBIAN32__"); //$NON-NLS-1$
-		macros.add("_UNICODE"); //$NON-NLS-1$
-		
-		ISymbianSDK sdk = getSDK();
-		if (sdk != null && sdk.getOSVersion().getMajor() >= 9) {
-			macros.add("__SUPPORT_CPP_EXCEPTIONS__"); //$NON-NLS-1$
-		}
-		
-		if (getTargetString().equals(DEBUG_TARGET)) {
-			macros.add("_DEBUG"); //$NON-NLS-1$
-		} else {
-			macros.add("NDEBUG"); //$NON-NLS-1$
-		}
-		
-		if (hasSTDCPPSupport()){
-			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
-		}
-		
-		return macros;
-	}
-
 	public CConfigurationData getBuildConfigurationData() {
 		return buildConfigData;
 	}
@@ -420,25 +383,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 
 	public ISBSv2BuildConfigInfo getSBSv2BuildConfigInfo(){
 		return sbsv2BuilderInfo;
-	}
-
-	private boolean hasSTDCPPSupport() {
-		
-		ICarbideProjectInfo cpi = getCarbideProject();
-		
-		List<ISymbianBuildContext> buildConfig = new ArrayList<ISymbianBuildContext>();
-		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
-		List<IPath> testMakMakePaths = new ArrayList<IPath>();
-		buildConfig.add(this.getBuildContext());
-		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfig, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
-		
-		for (IPath mmpPath : normalMakMakePaths){
-			if (EpocEngineHelper.hasSTDCPPSupport(cpi, mmpPath)){
-				return true;
-			}
-		}
-		
-		return false;
 	}
 
 	public ISBSv2BuildConfigInfo getSBSv2ConfigInfo() {
@@ -509,6 +453,23 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		return context.getBuildVariationName();
 	}
 	
-	
+	public boolean hasSTDCPPSupport() {
+		
+		ICarbideProjectInfo cpi = this.getCarbideProject();
+		
+		List<ISymbianBuildContext> buildConfig = new ArrayList<ISymbianBuildContext>();
+		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
+		List<IPath> testMakMakePaths = new ArrayList<IPath>();
+		buildConfig.add(this.getBuildContext());
+		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfig, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
+		
+		for (IPath mmpPath : normalMakMakePaths){
+			if (EpocEngineHelper.hasSTDCPPSupport(cpi, mmpPath)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 }

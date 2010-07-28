@@ -196,6 +196,9 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return sdkFeatures;
 	}
 
+	// TODO: This needs to move under ISymianBuildContext. For abld we can use this method.
+	// For SBSv2, this is configuration dependent and the information is obtained from
+	// the sbs --query=config[<config>] call.
 	public List<String> getSupportedTargetTypes() {
 		
 		synchronized (supportedTargetTypesList) {

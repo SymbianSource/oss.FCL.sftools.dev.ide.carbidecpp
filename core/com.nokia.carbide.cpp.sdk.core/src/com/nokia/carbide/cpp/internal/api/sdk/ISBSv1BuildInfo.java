@@ -18,6 +18,7 @@ import java.util.List;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**
  * Interface for SBSv1 specific build information.
@@ -76,5 +77,15 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	boolean isPreviouslyScanned();
 
 	void setPreviouslyScanned(boolean wasScanned);
+
+	/**
+	 * Returns the list of all built in macros for this configuration. This is ABLD specific. SBSv2 gets these macros from the --query=config.
+	 * <p>
+	 * Macros will be just a name, e.g. "_DEBUG", "__SYMBIAN32__", etc..
+	 * </p>
+	 *
+	 * @return a list of macros which may be empty.
+	 */
+	List<String> getBuiltinMacros(ISymbianBuildContext context);
 
 }

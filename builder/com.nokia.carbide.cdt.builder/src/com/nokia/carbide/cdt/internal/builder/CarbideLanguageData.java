@@ -40,6 +40,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
@@ -49,6 +50,7 @@ import org.eclipse.core.runtime.content.IContentTypeSettings;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
@@ -302,15 +304,20 @@ public class CarbideLanguageData extends CLanguageData {
 			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
 				macros.put(builtinMacro, ""); //$NON-NLS-1$
 			}
+			
+			// built in macros
+			for (String builtinMacro : sbsv1BuildInfo.getBuiltinMacros(context)) {
+				macros.put(builtinMacro, ""); //$NON-NLS-1$
+			}
+			
 		} else {
 			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 			// platform macros
 			macros.putAll(sbsv2BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString()));			
 		}
 		
-		// built in macros
-		for (String builtinMacro : carbideBuildConfig.getBuiltinMacros()) {
-			macros.put(builtinMacro, ""); //$NON-NLS-1$
+		if (carbideBuildConfig.hasSTDCPPSupport()){
+			macros.put("__SYMBIAN_STDCPP_SUPPORT__", "");
 		}
 		
 		// target type macros (e.g. __DLL__)
@@ -376,7 +383,7 @@ public class CarbideLanguageData extends CLanguageData {
 		// the cache.
 		cacheTimestamp = System.currentTimeMillis();
 	}
-	
+
 	private void persistCache() {
 		// persist the cache between IDE launches.
 		try {
