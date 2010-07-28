@@ -16,6 +16,10 @@
 */
 package com.nokia.cdt.internal.debug.launch.ui;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -28,13 +32,21 @@ import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionFactory;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 public class StopModeMainTab extends CarbideMainTab {
 
 	protected IClientServiceSiteUI2 clientSiteUI;
 	protected String connection;
-	
+
+	// PlatSim settings keys
+	private final static String SETTING_LOCATION = "location"; //$NON-NLS-1$
+	private final static String SETTING_INSTANCE = "instance"; //$NON-NLS-1$
+
+	private static String PLATSIM_CONNECTION_TYPE = "com.nokia.carbide.trk.support.connection.PlatSimConnectionType"; //$NON-NLS-1$
+
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
 		setControl(comp);
@@ -104,7 +116,7 @@ public class StopModeMainTab extends CarbideMainTab {
 				
 				// if an existing PlatSim connection matches, then use it
 				// if no connection matches, then create a new one
-				IConnection connectionToUse = RemoteConnectionsTRKHelper.findOrCreatePlatSimConnection(location, instanceId);
+				IConnection connectionToUse = findOrCreatePlatSimConnection(location, instanceId);
 				connection = connectionToUse.getIdentifier();
 				if (connection != null) {
 					wcConfig.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, connection);
@@ -138,5 +150,89 @@ public class StopModeMainTab extends CarbideMainTab {
 		boolean result = super.isValid(config);
 		return result;
 	}
+	
+
+	/**
+	 * Find a PlatSim connection with the given location and instance, or create one
+	 * 
+	 * @param locationToFind path to PlatSim executable
+	 * @param instanceToFind PlatSim instance number
+	 * @return
+	 */
+	private IConnection findOrCreatePlatSimConnection(String locationToFind, String instanceToFind) {
+		Collection<IConnection> connections = RemoteConnectionsActivator.getConnectionsManager().getConnections();
+		IConnection matchingConnection = null;
+		for (IConnection connection : connections) {
+			String connectionTypeId = connection.getConnectionType().getIdentifier();
+			if (connectionTypeId.equals(PLATSIM_CONNECTION_TYPE)) {
+				Map<String, String> settings = connection.getSettings(); 
+				String instance = settings.get(SETTING_INSTANCE);
+				String location = settings.get(SETTING_LOCATION);
+				if (instanceToFind.equals(instance) && locationToFind.equals(location)) {
+					matchingConnection = connection;
+					break;
+				}
+			}
+		}
+		
+		if (matchingConnection == null) {
+			// create a new one
+			IConnectionType connectionType = RemoteConnectionsActivator.getConnectionTypeProvider().getConnectionType(PLATSIM_CONNECTION_TYPE);
+			if (connectionType == null)
+				return null;
+			IConnectionFactory factory = connectionType.getConnectionFactory();
+			Map<String, String> settings = new HashMap<String, String>(factory.getSettingsFromUI());
+			settings.put(SETTING_LOCATION, locationToFind);
+			settings.put(SETTING_INSTANCE, instanceToFind);
+			matchingConnection = factory.createConnection(settings);
+
+			// if location is non-null, see if you can find the brief SDK name
+			// TODO: if we could access PlatSimManager from here, use the following
+//			String preferredName = null;
+//			try {
+//				IPlatSimInstance theInstance = PlatSimManager.INSTANCE.getInstallationInstance(
+//						new Path(locationToFind), Integer.parseInt(instanceToFind));
+//				preferredName = PlatSimManager.INSTANCE.getPreferredConnectionName(theInstance);
+//			} catch (Exception e) {
+//				// no luck: suggest nothing
+//			}
+//
+//			if (preferredName == null) {
+//				if (locationToFind.charAt(1) == ':') // Windows drive indicator
+//					preferredName = "PlatSim " + locationToFind.substring(0, 2) +
+//									", Instance " + instanceToFind;
+//				else
+//					preferredName = "PlatSim Instance " + instanceToFind;
+//			}
+
+			String preferredName;
+			if (locationToFind.charAt(1) == ':') // Windows drive indicator
+				preferredName = "PlatSim " + locationToFind.substring(0, 2) +
+									", Instance " + instanceToFind;
+			else
+				preferredName = "PlatSim Instance " + instanceToFind;
+
+			String newName = preferredName;
+			boolean isUnique = true;
+			long i = 1;
+			do {
+				for (IConnection connection : connections) {
+					if (preferredName.equals(connection.getDisplayName())) {
+						isUnique = false;
+						break;
+					}
+				}
+				
+				if (!isUnique)
+					newName = preferredName + i;
+			} while (!isUnique);
+
+			matchingConnection.setDisplayName(newName);
+			RemoteConnectionsActivator.getConnectionsManager().addConnection(matchingConnection);
+		}
+		
+		return matchingConnection;
+	}
+
 
 }
