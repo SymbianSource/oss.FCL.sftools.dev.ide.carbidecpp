@@ -1,5 +1,11 @@
 package com.nokia.carbide.cpp.sdk.core;
 
+/**
+ * Build Context specific information for the SBS/Raptor Symbian Builder.
+ * @see ICarbideBuildConfigation
+ * @since 3.0
+ *
+ */
 public interface ISBSv1BuildContext extends ISymbianBuildContext {
 
 	/**

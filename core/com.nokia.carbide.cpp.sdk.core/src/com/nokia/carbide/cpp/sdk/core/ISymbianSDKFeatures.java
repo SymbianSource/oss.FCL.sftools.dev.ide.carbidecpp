@@ -15,6 +15,7 @@ package com.nokia.carbide.cpp.sdk.core;
 
 /**
  * A collection of Symbian SDK feature IDs.
+ * @since 3.0
  *
  */
 public interface ISymbianSDKFeatures {

@@ -30,7 +30,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 public interface ISymbianBuildContext {
 	
 	/**
-	 * DEFAULT suffix to use for components that are specified as variant, but don't buid as variants. For example, plain ARMV5, when specified as
+	 * DEFAULT suffix to use for components that are specified as variant, but don't build as variants. For example, plain ARMV5, when specified as
 	 * as a FEATUREVARIANT, will build as ARMV5.DEFAULT
 	 * @since 2.0
 	 */

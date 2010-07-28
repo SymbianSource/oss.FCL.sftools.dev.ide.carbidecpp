@@ -15,6 +15,7 @@ package com.nokia.carbide.cpp.internal.api.sdk.sbsv2;
 /**
  * Exception thrown in case something fails when trying
  * find out facts about current SDK/Platform environment tools.
+ * @since 3.0
  */
 public class SBSv2MinimumVersionException extends Exception {
 		

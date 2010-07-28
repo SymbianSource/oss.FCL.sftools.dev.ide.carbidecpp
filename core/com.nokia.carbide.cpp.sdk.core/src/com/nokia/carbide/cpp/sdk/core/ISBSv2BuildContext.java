@@ -4,7 +4,12 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 
-
+/**
+ * Build Context specific information for the SBS/Raptor Symbian Builder.
+ * @see ICarbideBuildConfigation
+ * @since 3.0
+ *
+ */
 public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	
 	public static final String BUILDER_ID = "com.nokia.carbide.builder.raptor";

@@ -126,51 +126,45 @@ public interface ICarbideBuildConfiguration {
 	
 	/**
 	 * Retrieve the build context specific info.
-	 * @return
+	 * @return ISymbianBuildContext
+	 * @since 3.0
 	 */
 	ISymbianBuildContext getBuildContext();
 	
-	/** ISymbianBuildContext wrapper */
+	/** ISymbianBuildContext wrapper
+	 *  @since 3.0 */
 	String getDisplayString();
 	
-	/** ISymbianBuildContext wrapper */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	ISymbianSDK getSDK();
 	
-	/** ISymbianBuildContext wrapper */
+	/** ISymbianBuildContext wrapper 
+	 * @since 3.0 */
 	String getPlatformString();
 	
-	/** ISymbianBuildContext wrapper */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	String getTargetString();
 	
-	/**
-	 * Get the compiler prefix file. This is an ISymbianBuildContext wrapper.
-	 * @return The path to the compiler's prefix file. May be null if none.
-	 */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	public IPath getCompilerPrefixFile();
 	
-	/**
-	 * Get the macros associated with preprocessing CPP source files. This is an ISymbianBuildContext wrapper.
-	 * @return the list of IDefine macros
-	 */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	public List<IDefine> getCompilerMacros();
 	
-	/**
-	 * Get the macros discovered from preprocessing the SDK prefix file for the configuration. This is an ISymbianBuildContext wrapper.
-	 * @return the list of IDefine macros
-	 */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	public List<IDefine> getVariantHRHDefines();
 	
-	/**
-	 * Get the list of include files included in the variant HRH SDK preinclude file
-	 * This is used to check dependencies on all SDK/Configuration includes. This is an ISymbianBuildContext wrapper.
-	 * @return
-	 */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	public List<File> getPrefixFileIncludes();
 	
-	/**
-	 * Get the variant portion of a build configuration name. May be an empty string. This is an ISymbianBuildContext wrapper.
-	 * @return
-	 */
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
 	public String getBuildVariationName();
 
 	/**
@@ -182,6 +176,7 @@ public interface ICarbideBuildConfiguration {
 	/**
 	 * Check that at least one MMP in the project configuration has stdcpp support keyword
 	 * @return
+	 * @since 3.0
 	 */
 	public boolean hasSTDCPPSupport();
 	

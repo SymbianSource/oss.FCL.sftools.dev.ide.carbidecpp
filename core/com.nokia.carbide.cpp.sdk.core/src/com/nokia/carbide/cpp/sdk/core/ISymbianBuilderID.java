@@ -15,7 +15,7 @@ package com.nokia.carbide.cpp.sdk.core;
 
 /**
  * A collection of Symbian builder IDs.
- *
+ * @since 3.0
  */
 public interface ISymbianBuilderID {
 
