@@ -13,24 +13,15 @@
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Result;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import java.util.Map;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -42,17 +33,12 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.traversal.NodeIterator;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
@@ -71,12 +57,10 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
-import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.ListenerList;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
-import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInternal {
 	
@@ -84,12 +68,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	protected HashMap<String,ISymbianSDK> missingSdkMap = new HashMap<String,ISymbianSDK>();
 	protected Job scanJob;
 
-	protected static final String CARBIDE_SDK_CACHE_FILE_NAME = "carbideSDKCache.xml";
-	protected static final String SDK_CACHE_ID_ATTRIB = "id";
-	protected static final String SDK_CACHE_ENABLED_ATTRIB = "isEnabled";
-	protected static final String SDK_CACHE_OS_VERSION_ATTRIB = "osVersion";
-
-	protected static final String SDK_CACHE_EPOCROOT_ATTRIB = "epocroot";
+	public static final String SDK_MANAGER_CACHE_KEY = "sdk_manager_cache";
 
 	protected static final String EMPTY_STRING = "";
 	protected static boolean enableBSFScanner;
@@ -325,151 +304,41 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	abstract protected boolean doRemoveSDK(String sdkId);
 
 	protected void scanCarbideSDKCache(){
-		DocumentBuilder docBuilder = null;
-		try {
-			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-			throw new RuntimeException(e);
-		}
-		
-		try {
-			File carbideSDKCacheFile = getCardbieSDKCacheFile();
-		    if (!carbideSDKCacheFile.exists()){
-		    	try {
-		    	FileUtils.writeFileContents(carbideSDKCacheFile, EMPTY_STRING.toCharArray(), null);
-		    	} catch (CoreException e){
-		    		e.printStackTrace();
-		    	}
-		    } else if (carbideSDKCacheFile.length() > 0) {
-				Document lastKnownDoc = docBuilder.parse(carbideSDKCacheFile);
-				
-				NodeIterator ni = XPathAPI.selectNodeIterator(lastKnownDoc, "/sdks/sdk");
-				for (Node n = ni.nextNode(); n != null; n = ni.nextNode()) {
-					
-					// get the unique ID
-					NamedNodeMap attribs = n.getAttributes();
-					String id = attribs.getNamedItem(SDK_CACHE_ID_ATTRIB).getNodeValue();
-
-					ISymbianSDK sdk = getSDK(id, false);
-					if (sdk == null) {
-						// unable to find ID in current SDK list, create a new entry and add it to the list
-
-						// get whether or not the SDK is enabled
-						String sdkEnabled = "true";
-						Node sdkEnabledItem = attribs.getNamedItem(SDK_CACHE_ENABLED_ATTRIB);
-						if (sdkEnabledItem != null)
-							sdkEnabled = sdkEnabledItem.getNodeValue();
-						
-						// get the os version
-						String osVersion = "";
-						Node osVersionItem = attribs.getNamedItem(SDK_CACHE_OS_VERSION_ATTRIB);
-						if (osVersionItem != null)
-							osVersion = osVersionItem.getNodeValue();
-						
-						// get the EPOCROOT
-						String epocRoot = null;
-						Node epocrootItem = attribs.getNamedItem(SDK_CACHE_EPOCROOT_ATTRIB);
-						if (epocrootItem != null)
-							epocRoot = epocrootItem.getNodeValue();
-						
-						sdk = SymbianSDKFactory.createInstance(id, 
-															   epocRoot,
-															   new Version(osVersion));
-						if (sdkEnabled.equalsIgnoreCase("true")){
-							((SymbianSDK)sdk).setEnabled(true);
-						} else {
-							((SymbianSDK)sdk).setEnabled(false);
-						}
-						synchronized (sdkList) {
-							sdkList.add(sdk);
-						}
-					} else {
-						// get whether or not the SDK is enabled
-						String sdkEnabled = "true";
-						Node sdkEnabledItem = attribs.getNamedItem(SDK_CACHE_ENABLED_ATTRIB);
-						if (sdkEnabledItem != null)
-							sdkEnabled = sdkEnabledItem.getNodeValue();
-
-						if (sdkEnabled.equalsIgnoreCase("true")){
-							((SymbianSDK)sdk).setEnabled(true);
-						} else {
-							((SymbianSDK)sdk).setEnabled(false);
-						}
-					}
-				} // for
-			} 
-		} catch (Exception e) {
-			e.printStackTrace();
+		List<String> idList = getSDKCacheIdList();
+		for (Iterator<String> itr = idList.iterator(); itr.hasNext();) {
+			String id = itr.next();
+			SDKManagerCacheEntry entry = getSDKCacheEntry(id);
+			ISymbianSDK sdk = getSDK(id, false);
+			if (sdk == null) {
+				sdk = SymbianSDKFactory.createInstance(id, 
+						   entry.getEpocRoot(),
+						   new Version(entry.getOsVersion()));
+				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
+				synchronized (sdkList) {
+					sdkList.add(sdk);
+				}
+			} else {
+				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
+			}
 		}
 	}
 	
 	public void updateCarbideSDKCache() {
 		if (!Platform.isRunning())
 			return;
-			
-		DocumentBuilder docBuilder = null;
-		try {
-			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-			return;
-		}
-		
-		File carbideSDKCacheFile = getCardbieSDKCacheFile();
-		if (!carbideSDKCacheFile.exists()){
-			try {
-			FileUtils.writeFileContents(carbideSDKCacheFile, EMPTY_STRING.toCharArray(), null);
-			} catch (CoreException e){
-				e.printStackTrace();
-			}
-		}
-		
-		Document d = docBuilder.newDocument();
-		Node sdks = d.appendChild(d.createElement("sdks"));
-			
+
+		clearSDKCache();
 		synchronized(sdkList)
 		{
 			for (ISymbianSDK currSDK: sdkList) {
-				Node sdk = sdks.appendChild(d.createElement("sdk"));
-				NamedNodeMap attribs = sdk.getAttributes();
-				Node idNode = d.createAttribute(SDK_CACHE_ID_ATTRIB);
-				idNode.setNodeValue(currSDK.getUniqueId());
-				attribs.setNamedItem(idNode);
-
-				// Hide the build config from view in the build config list?
-				Node enabledNode = d.createAttribute(SDK_CACHE_ENABLED_ATTRIB);
-				if (true == currSDK.isEnabled()) {
-					enabledNode.setNodeValue("true");
-				} else {
-					enabledNode.setNodeValue("false");
-				}
-				attribs.setNamedItem(enabledNode);
-				
-				Node osVerNode = d.createAttribute(SDK_CACHE_OS_VERSION_ATTRIB);
-				osVerNode.setNodeValue(currSDK.getOSVersion().toString());
-				attribs.setNamedItem(osVerNode);
-				
-				Node sdkEpocRootNode = d.createAttribute(SDK_CACHE_EPOCROOT_ATTRIB);
-				sdkEpocRootNode.setNodeValue(currSDK.getEPOCROOT());
-				attribs.setNamedItem(sdkEpocRootNode);
+				SDKManagerCacheEntry entry = new SDKManagerCacheEntry();
+				entry.setId(currSDK.getUniqueId());
+				entry.setEpocRoot(currSDK.getEPOCROOT());
+				entry.setOsVersion(currSDK.getOSVersion().toString());
+				entry.setEnabled(currSDK.isEnabled());
+				setSDKCacheEntry(entry);
 			}
 		}
-		DOMSource domSource = new DOMSource(d);
-		TransformerFactory transFactory = TransformerFactory.newInstance();
-		Result fileResult = new StreamResult(carbideSDKCacheFile);
-		try {
-			transFactory.newTransformer().transform(domSource, fileResult);
-		} catch (TransformerConfigurationException e) {
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-		} catch (TransformerException e) {
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e));
-		}
-	}
-
-	protected File getCardbieSDKCacheFile() {
-		IPath path = new Path(System.getProperty("user.home"));
-		return path.append(CARBIDE_SDK_CACHE_FILE_NAME).toFile();
 	}
 
 	/**
@@ -752,6 +621,46 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		return;
 
 	}
-	
-	
+
+	protected void clearSDKCache() {
+		SDKCorePlugin.getCache().removeCache(SDK_MANAGER_CACHE_KEY);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected List<String> getSDKCacheIdList() {
+		Map<String, SDKManagerCacheEntry> cacheMap = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+		List<String> idList = new ArrayList<String>();
+
+		if (cacheMap != null) {
+			idList.addAll(cacheMap.keySet()); 
+		}
+
+		return idList;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected SDKManagerCacheEntry getSDKCacheEntry(String id) {
+		SDKManagerCacheEntry entry = null;
+		Map<String, SDKManagerCacheEntry> cacheMap = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+
+		if (cacheMap != null) {
+			entry = cacheMap.get(id);
+		}
+
+		return entry;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void setSDKCacheEntry(SDKManagerCacheEntry entry) {
+		String id = entry.getId();
+		Map<String, SDKManagerCacheEntry> cacheMap = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+
+		if (cacheMap == null) {
+			cacheMap = new HashMap<String, SDKManagerCacheEntry>();
+		}
+
+		cacheMap.put(id, entry);
+		SDKCorePlugin.getCache().putCachedData(SDK_MANAGER_CACHE_KEY, (Serializable)cacheMap, 0);
+	}
+
 }

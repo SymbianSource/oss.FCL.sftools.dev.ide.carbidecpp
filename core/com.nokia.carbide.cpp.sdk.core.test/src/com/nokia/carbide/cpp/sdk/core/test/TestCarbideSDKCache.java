@@ -1,6 +1,7 @@
 package com.nokia.carbide.cpp.sdk.core.test;
 
-import java.io.File;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.TestCase;
@@ -11,7 +12,9 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.AbstractSDKManager;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManagerCacheEntry;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
@@ -19,9 +22,32 @@ import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
 public class TestCarbideSDKCache extends TestCase {
 
 	private class TestSDKManager extends SDKManager {
-		private File cacheFile = new File(System.getProperty("user.home"), CARBIDE_SDK_CACHE_FILE_NAME);
-		public File getCacheFile() {
-			return cacheFile;
+
+		@SuppressWarnings("unchecked")
+		public TestSDKManager() {
+			Map<String, SDKManagerCacheEntry> cache = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+			if (cache == null) {
+				cache = new HashMap<String, SDKManagerCacheEntry>();
+				SDKCorePlugin.getCache().putCachedData(SDK_MANAGER_CACHE_KEY, (Serializable)cache, 0);
+			}
+		}
+
+		public void clearCache() {
+			clearSDKCache();
+		}
+
+		@SuppressWarnings("unchecked")
+		public Map<String, SDKManagerCacheEntry> getCache() {
+			Map<String, SDKManagerCacheEntry> cache = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+			if (cache == null) {
+				cache = new HashMap<String, SDKManagerCacheEntry>();
+				SDKCorePlugin.getCache().putCachedData(SDK_MANAGER_CACHE_KEY, (Serializable)cache, 0);
+			}
+			return cache;
+		}
+
+		public SDKManagerCacheEntry getCacheEntry(String id) {
+			return getSDKCacheEntry(id);
 		}
 
 		public Job getScanJob() {
@@ -39,10 +65,7 @@ public class TestCarbideSDKCache extends TestCase {
 	
 	public void testCacheCreation() throws Exception {
 		final TestSDKManager manager = new TestSDKManager();
-		File cacheFile = manager.getCacheFile();
-		if (cacheFile != null && cacheFile.exists()) {
-			cacheFile.delete();
-		}
+		manager.clearCache();
 		IJobChangeListener listener = new IJobChangeListener() {
 			
 			public void sleeping(IJobChangeEvent event) {
@@ -55,9 +78,8 @@ public class TestCarbideSDKCache extends TestCase {
 			}
 			
 			public void done(IJobChangeEvent event) {
-				File cacheFile = manager.getCacheFile();
-				assertNotNull(cacheFile);
-				assertTrue(cacheFile.exists());
+				Map<String, SDKManagerCacheEntry> cache = manager.getCache();
+				assertNotNull(cache);
 			}
 			
 			public void awake(IJobChangeEvent event) {
@@ -74,24 +96,21 @@ public class TestCarbideSDKCache extends TestCase {
 
 	public void testCacheModification() throws Exception {
 		final TestSDKManager manager = new TestSDKManager();
-		long orgTime = manager.getCacheFile().lastModified();
 		manager.scanSDKs();
 		manager.getScanJob().join();
-		assertTrue(manager.getCacheFile().lastModified() > orgTime);
+		assertTrue(manager.getSDKList().isEmpty() == manager.getCache().isEmpty());
+		manager.clearCache();
+		assertNull(SDKCorePlugin.getCache().getCache(AbstractSDKManager.SDK_MANAGER_CACHE_KEY));
 		final String sdkId = "test";
 		ISymbianSDK sdk = SymbianSDKFactory.createInstance(sdkId, "C:\\", new Version("9.5"));
-		orgTime = manager.getCacheFile().lastModified();
-		waitASecond();
 		manager.addSDK(sdk);
-		assertTrue(manager.getCacheFile().lastModified() > orgTime);
-		orgTime = manager.getCacheFile().lastModified();
-		waitASecond();
+		assertFalse(manager.getCache().isEmpty());
+		assertNotNull(manager.getCacheEntry(sdkId));
 		manager.updateSDK(sdk);
-		assertTrue(manager.getCacheFile().lastModified() > orgTime);
-		orgTime = manager.getCacheFile().lastModified();
-		waitASecond();
+		assertFalse(manager.getCache().isEmpty());
+		assertNotNull(manager.getCacheEntry(sdkId));
 		manager.removeSDK(sdkId);
-		assertTrue(manager.getCacheFile().lastModified() > orgTime);
+		assertNull(manager.getCacheEntry(sdkId));
 	}
 
 	public void testSBSv2QueryCache() throws Exception {
@@ -102,22 +121,9 @@ public class TestCarbideSDKCache extends TestCase {
 		final TestSDKManager manager = new TestSDKManager();
 		manager.scanSDKs();
 		manager.getScanJob().join();
-		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.ALIAS_CACHE_KEY, Map.class, 0));
-		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.PRODUCT_CACHE_KEY, Map.class, 0));
-		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.CONFIG_CACHE_KEY, Map.class, 0));
-		SDKCorePlugin.getCache().flushAll();
-		SBSv2QueryUtils.removeAllCachedQueries();
-		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.ALIAS_CACHE_KEY, Map.class, 0));
-		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.PRODUCT_CACHE_KEY, Map.class, 0));
-		assertNotNull(SDKCorePlugin.getCache().getCachedData(SBSv2QueryUtils.CONFIG_CACHE_KEY, Map.class, 0));
-	}
-
-	private void waitASecond() {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		assertNull(SDKCorePlugin.getCache().getCache(SBSv2QueryUtils.ALIAS_CACHE_KEY));
+		assertNull(SDKCorePlugin.getCache().getCache(SBSv2QueryUtils.PRODUCT_CACHE_KEY));
+		assertNull(SDKCorePlugin.getCache().getCache(SBSv2QueryUtils.CONFIG_CACHE_KEY));
 	}
 
 }
