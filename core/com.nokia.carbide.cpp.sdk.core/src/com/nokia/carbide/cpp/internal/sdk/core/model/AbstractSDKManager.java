@@ -395,9 +395,9 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				// RVCT waits for like 4 minutes trying to find a license when the computer is
 				// not connected to the network.  in such cases, the call to br.readline doesn't
 				// return for 4 minutes which is unacceptable here.  Instead we'll poll at 1/2 second
-				// intervals for 40 seconds and see if we get a response. On the first response we break out
+				// intervals for 5 seconds and see if we get a response. On the first response we break out
 				// of the loop and read the output. So in most normal circumstances it will take 1/2 to 1 seconds.
-				int maxTries = 80;
+				int maxTries = 10;
 				int numTries = 0;
 				while (numTries < maxTries) {
 					try {
