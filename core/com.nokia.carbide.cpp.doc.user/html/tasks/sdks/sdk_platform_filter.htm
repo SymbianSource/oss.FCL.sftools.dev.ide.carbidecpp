@@ -7,26 +7,48 @@
 <title>SDK Platform Filter</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
-<style type="text/css">
-<!--
-.style1 {
-	color: #000000;
-	font-weight: bold;
-}
-.style2 {
-	color: #000000
-}
-.style3 {font-size: 14px; font-family: "Courier New", Courier, mono;}
--->
-</style>
 </head>
 <body bgcolor="#FFFFFF">
 <h2> Platform Filtering Preferences </h2>
 <p> Use the <img src="../../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage)")'>
-Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to select which platforms are visible when creating new projects or build configurations. For Symbian Build System version 1 (SBSv1), the EKA2 and EKA1 platforms are available with a list of build targets for each.</p>
-<p align="center"><img src="images/wnd_sdk_platform_filter.png" width="673" height="544" alt="" /></p>
-<p class="figure">Figure 1. SDK Platform Filter window (SBSv1 tab) </p>
-<h5>Table 1 SDK Platform Filter&mdash;SBSv1 items</h5>
+Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to select which platforms are visible when creating new projects or build configurations. </p>
+<h3>SBSv2 tab</h3>
+<p>Use the <strong>SBSv2</strong> tab to select  configurations for that build system. SBSv2 is the prefered build system for the most current SDKs.</p>
+<p align="center"><img src="images/wnd_sdk_platform_filter_sbsv2.png" alt="SBSv2 tab" width="719" height="554"></p>
+<p align="center" class="figure">Figure 1. Platform Filtering Preferences page (SBSv2 tab)</p>
+<h5>Table 1 <span class="figure">Platform Filtering Preferences</span> &mdash; SBSv2 items</h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+        <th width="29%" scope="col">Item</th>
+        <th width="57%" scope="col">Explanation</th>
+    </tr>
+    <tr>
+        <td><b>SBSv2 Configuration Filter</b></td>
+        <td><p>Select platform build targets to be displayed for OS 9.5 and later when creating new projects and build configurations. BSF&rsquo;s  are gone in SBSv2.&nbsp; All build  configurations (platform/target), including the built-in platforms (WISNCW,  ARMV5), are declared in xml files in the <span class="code">\sbs\lib\config</span> directory.</p>
+                <p>Build targets include:</p>
+            <ul>
+                    <li>armv5_udeb</li>
+                <li>armv5_urel</li>
+                <li>armv6_udeb</li>
+                <li>armv6_urel</li>
+                <li>armv7_udeb</li>
+                <li>armv7_urel</li>
+                <li>armv9e_udeb</li>
+                <li>armv9e_urel</li>
+                <li>winscw_udeb</li>
+                <li>winscw_urel</li>
+            </ul></td>
+    </tr>
+    <tr>
+        <td><strong>Refresh</strong></td>
+        <td><p>Select this button to obtain a fresh list of configurations from SBSv2. The list is refreshed each time Carbide  starts up, but this button will allow users to add configuration xml files and  get those new configurations  without restarting Carbide.c++. </p></td>
+    </tr>
+</table>
+<h3>SBSv1 tab</h3>
+<p>Use the <strong>SBSv1</strong> tab to select  configurations for that build system.</p>
+<p align="center"><img src="images/wnd_sdk_platform_filter.png" width="501" height="387" alt="" /></p>
+<p class="figure">Figure 2. Platform Filtering Preferences page (SBSv1 tab) </p>
+<h5>Table 2 <span class="figure">Platform Filtering Preferences</span> &mdash;SBSv1 items</h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
     <th width="29%" scope="col">Item</th>
@@ -45,63 +67,19 @@ Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to sele
     </ul></td>
   </tr>
   <tr>
-    <td><b>EKA1 Platforms</b></td>
-    <td><p>Select platform build targets to be displayed for OS versions 8.1a and less (8.xa, 7.x, 6.x) when creating new projects and build configurations.</p>
-      <p>Build targets include:</p>
-      <ul>
-        <li>Emulation (WINSCW)</li>
-        <li>ARMI</li>
-        <li>ARM4</li>
-        <li>THUMB</li>
-    </ul></td>
-  </tr>
-  <tr>
     <td><b>Discover customization (.bsf) and Symbian Binary Variant (.var) platforms dynamically</b></td>
     <td><p>Select this option to scan for customized platform extensions and binary variations. The variant files searched for include:</p>
       <ul>
         <li>.bsf files, located in the <span class="code">\epoc32\root</span> directory</li>
         <li>Symbian Binary Variant (.var) files, located in the <span class="code">\epoc32\tools</span> directory</li>
-      </ul>
-    </td>
+      </ul>    </td>
   </tr>
 </table>
-<p>&nbsp;</p>
-<p align="center"><img src="images/wnd_sdk_platform_filter_sbsv2.png" alt="SBSv2 tab" width="469" height="463"></p>
-<p align="center" class="figure">Figure 2. SDK Platform Filter window (SBSv2 tab)</p>
-<h5>Table 2 SDK Platform Filter&mdash;SBSv2 items</h5>
-<table width="100%"  border="0" cellpadding="2" cellspacing="0">
-  <tr>
-    <th width="29%" scope="col">Item</th>
-    <th width="57%" scope="col">Explanation</th>
-  </tr>
-  <tr>
-    <td><b>Platforms</b></td>
-    <td><p>Select platform build targets to be displayed for OS 9.5 and later when creating new projects and build configurations. BSF&rsquo;s  are gone in SBSv2.&nbsp; All build  configurations (platform/target), including the built-in platforms (WISNCW,  ARMV5), are declared in xml files in the \sbs\lib\config directory.</p>
-        <p>Build targets include:</p>
-      <ul>
-          <li>armv5_udeb</li>
-        <li>armv5_urel</li>
-        <li>armv7_udeb</li>
-        <li>armv7_urel</li>
-        <li>tools2_deb</li>
-        <li>tools2_rel</li>
-        <li>gccxml_udeb</li>
-        <li>gccxml_urel</li>
-        <li>tools_deb</li>
-        <li>tools_rel</li>
-        <li>winscw_udeb</li>
-        <li>winscw_urel</li>
-      </ul></td>
-  </tr>
-  <tr>
-    <td><strong>Refresh</strong></td>
-    <td><p>Select this button to obtain a fresh list of configurations from SBSv2. The list is refreshed each time Carbide  starts up, but this button will allow users to add configuration xml files and  get those new configurations  without restarting Carbide.c++. </p></td>
-  </tr>
-</table>
+<p align="left" class="note"><strong>NOTE</strong> EKA1 platform configurations are no longer supported by Carbide.</p>
 <h4>Related references </h4>
 <ul>
   <li><a href="../WorkingwithSDKs.html">Working with SDKs</a></li>
-  <li><a href="../../reference/SDKPreferences.html">SDK Preferences Panel </a> </li>
+  <li><a href="../../reference/pref_carb_sdk_preferencea.html">SDK Preferences Panel </a> </li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

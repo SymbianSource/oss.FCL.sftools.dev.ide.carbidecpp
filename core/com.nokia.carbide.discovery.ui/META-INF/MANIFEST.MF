@@ -25,3 +25,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Nokia
+Export-Package: com.nokia.carbide.discovery.ui;x-internal:=true,
+ com.nokia.carbide.internal.discovery.ui.command;x-internal:=true,
+ com.nokia.carbide.internal.discovery.ui.editor;x-internal:=true,
+ com.nokia.carbide.internal.discovery.ui.extension;x-internal:=true,
+ com.nokia.carbide.internal.discovery.ui.view;x-internal:=true

@@ -7,7 +7,6 @@ import org.eclipse.swt.widgets.Control;
 public class StackComposite extends SharedBackgroundComposite {
 
 	private StackLayout stackLayout;
-	private Control currentControl;
 
 	public StackComposite(Composite parent, Composite backgroundParent) {
 		super(parent, backgroundParent);
@@ -16,7 +15,7 @@ public class StackComposite extends SharedBackgroundComposite {
 	}
 
 	public void showControl(Control control) {
-		if (control == currentControl)
+		if (stackLayout.topControl == control)
 			return;
 
 		stackLayout.topControl = control;

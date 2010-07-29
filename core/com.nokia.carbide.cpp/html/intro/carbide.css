@@ -1,14 +1,20 @@
-a#carbide img { background-image : url(../images/carbide.gif); }
-a#carbide:hover img { background-image : url(../images/carbide_hov.gif); }
+a#carbide img { background-image : url(../images/carbide.png); }
+a#carbide:hover img { background-image : url(../images/carbide_hov.png); }
 
-a#carbide-sample img { background-image : url(../images/carbide_sample.gif); }
-a#carbide-sample:hover img { background-image : url(../images/carbide_sample_hov.gif); }
+a#carbide-whatsnew img { background-image : url(../images/carbide_new.png); }
+a#carbide-whatsnew :hover img { background-image : url(../images/carbide_new_hov.png); }
 
-a#carbide-keys img { background-image : url(../images/carbide_keys.gif); }
-a#carbide-keys:hover img { background-image : url(../images/carbide_keys_hov.gif); }
+a#carbide-sample img { background-image : url(../images/carbide_sample.png); }
+a#carbide-sample:hover img { background-image : url(../images/carbide_sample_hov.png); }
 
-a#carbide-web img { background-image : url(../images/carbide_web.gif); }
-a#carbide-web:hover img { background-image : url(../images/carbide_web_hov.gif); }
+a#carbide-tutorial img { background-image : url(../images/carbide_tutorial.png); }
+a#carbide-tutorial:hover img { background-image : url(../images/carbide_tutorial_hov.png); }
 
-a#carbide-people img { background-image : url(../images/carbide_people.gif); }
-a#carbide-people:hover img { background-image : url(../images/carbide_people_hov.gif); }
+a#carbide-keys img { background-image : url(../images/carbide_keys.png); }
+a#carbide-keys:hover img { background-image : url(../images/carbide_keys_hov.png); }
+
+a#carbide-web img { background-image : url(../images/carbide_web.png); }
+a#carbide-web:hover img { background-image : url(../images/carbide_web_hov.png); }
+
+a#carbide-people img { background-image : url(../images/carbide_people.png); }
+a#carbide-people:hover img { background-image : url(../images/carbide_people_hov.png); }

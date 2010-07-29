@@ -9,20 +9,11 @@
       <category id="carbide.references"/>
       <toc id="/org.eclipse.workbench/XXX.xml" />
       <toc id="/com.nokia.carbide.cpp.doc.user/debuggerTOC.xml" />
-	  <toc id="/com.nokia.carbide.cpp.sdk.doc.user/sdkTOC.xml" />
 	  
       <category id="carbide.tools"/>
       <toc id="/com.nokia.carbide.help.common/carbideHelpTOC.xml" />
-	  <toc id="/com.nokia.carbide.apiquery.help/html/toolTOC.xml" />
-      <toc id="/com.nokia.carbide.cpp.codescanner/tocCodeScanner.xml" />	   
       <toc id="/com.nokia.carbide.cpp.debug.crashdebugger/help/tocCDB.xml" />	   
-      <toc id="/com.nokia.carbide.cpp.epocwindDisplay/html/toolTOC.xml" />
-      <toc id="/com.nokia.carbide.cpp.pi.doc.user/tocPI.xml" />	
-      <toc id="/com.nokia.carbide.cpp.uidesigner.doc.user/toc.xml" />
-
-      <category id="carbide.s60tools"/>
-      <toc id="/com.nokia.s60tools.appdep.help/toc.xml" />	   
-      <toc id="/com.nokia.s60tools.symbianfoundationtemplates.help/toc.xml" />	   
+	  <toc id="/com.nokia.carbide.cpp.sdk.doc.user/sdkTOC.xml" />
 	    
       <category id="carbide.languages"/>
       <toc id="/org.eclipse.cdt.doc.user/toc.xml" />	

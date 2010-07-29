@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="portalPage"/>
+            <element ref="portalPage" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -49,20 +49,37 @@
 
    <element name="portalPage">
       <complexType>
-         <attribute name="class" type="string">
+         <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  identifier for the page
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="title" type="string" use="required">
+            <annotation>
+               <documentation>
+                  title used in the navigation bar
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.nokia.carbide.internal.discovery.ui.extension.IPortalPage"/>
+                  <meta.attribute translatable="true"/>
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="rank" type="string">
+         <attribute name="image" type="string" use="required">
             <annotation>
                <documentation>
-                  relative ordering of pages in the navigation bar (1-100)
+                  16x16 image used in the navigation bar
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="order" type="string">
+            <annotation>
+               <documentation>
+                  relative ordering of pages in the navigation bar (integer used to sort pages)
                </documentation>
             </annotation>
          </attribute>

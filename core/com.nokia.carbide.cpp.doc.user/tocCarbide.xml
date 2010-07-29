@@ -59,15 +59,14 @@
   </topic>
   <topic label="Carbide views"  >
       <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
-      <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
       <topic label="Carbide Portal"	    			href="html/reference/view_carbide_portal.htm" >
       	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
   	  </topic>
-      <topic label="Console view" 					href="html/reference/view_log.htm" />
+      <topic label="Console view" 					href="html/reference/view_console.htm" />
       <topic label="Debug view"						href="html/debugger/debug/viewing_debug.htm" />
       <topic label="Disassembly view"				href="html/reference/view_disassembly.htm" />
       <topic label="Executables view"				href="html/reference/view_executables.htm" />
-      <topic label="Memory view"				href="html/reference/view_memory_wnd.htm" >
+      <topic label="Memory view"				href="html/reference/view_memory.htm" >
         <topic href="html/concepts/working_with_memory.htm" label="Working with Memory"></topic>
         <topic label="Opening a Memory View"					href="html/tasks/memory/view_memory_show.htm" />
         <topic label="Adding a Memory Monitor"					href="html/tasks/memory/memory_monitor_adding.htm" />
@@ -75,8 +74,8 @@
         <topic label="Removing a Memory Monitor or Rendering"	href="html/tasks/memory/memory_monitor_removing.htm" />
         <topic label="Memory Rendering Options"         		href="html/reference/memory_rendering_options.htm" />
       </topic>
-      <topic label="Modules View"				href="html/reference/view_module_wnd.htm" />
-      <topic label="Project Explorer view"			href="html/reference/view_cpp_projects.htm" />
+      <topic label="Modules View"				href="html/reference/view_module.htm" />
+      <topic label="Project Explorer view"			href="html/reference/view_proj_explorer.htm" />
       <topic label="Registers"								href="html/concepts/registers.htm" >
         <topic label="Registers view"						href="html/reference/view_registers.htm" />
         <topic label="Opening a Registers View"				href="html/tasks/registers/mem_reg_open_wnd.htm" />
@@ -90,7 +89,7 @@
         <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
       </topic>
       <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
-      <topic label="Variables and Expressions"					href="Variables and Expressions" >
+      <topic label="Variables and Expressions"					href="html/concepts/working_with_variables.htm" >
         <topic label="Variables view"							href="html/reference/view_variables.htm" />
         <topic label="Viewing Variables"						href="html/debugger/variables/viewing_variables.htm" />
         <topic label="Adding and Removing Global Variables"		href="html/debugger/variables/adding_variables.htm" />
@@ -103,17 +102,15 @@
   </topic>
   <topic label="Project management" >
     <topic label="Carbide C/C++ perspective" 		href="html/concepts/CarbidePerspective.html" />
-    <topic label="Carbide.c++ preferences" 			href="html/reference/wnd_carbide_pref.htm" >
-      <topic label="Bug Reports"					href="PLUGINS_ROOT/com.nokia.carbide.bugreport/html/prefs_bug_reporter.htm" />
-      <topic label="Build"							href="html/reference/wnd_build_prefs.htm" />
-      <topic label="Carbide.c++ News"				href="html/reference/prefs_carbide_news.htm" />
-      <topic label="Debugger"						href="html/reference/wnd_debugger_prefs.htm" />
-      <topic label="Diagnostic Logs"          		href="html/reference/wnd_diagnostic_logs_pref.htm" />
-      <topic label="Performance Investigator"  		href="PLUGINS_ROOT/com.nokia.carbide.cpp.pi.doc.user/html/tasks/analyser/key_profile_pref.htm" />
+    <topic label="Carbide.c++ preferences" 			href="html/reference/pref_carb_cpp.htm" >
+      <topic label="Build"							href="html/reference/pref_carb_build.htm" />
+      <topic label="Carbide.c++ News"				href="html/reference/pref_carb_carbide_news.htm" />
+      <topic label="Debugger"						href="html/reference/pref_carb_debugger.htm" />
+      <topic label="Diagnostic Logs"          		href="html/reference/pref_carb_diagnostic_logs.htm" />
       <topic label="Platform Filtering Preferences"	href="html/tasks/sdks/sdk_platform_filter.htm" />
-      <topic label="Preprocess"						href="html/reference/wnd_preprocess_prefs.htm" />
-      <topic label="SDK Preferences"                  href="html/reference/SDKPreferences.html" />
-      <topic label="Code Styles"						href="html/reference/wnd_pref_code_style.htm" >
+      <topic label="Preprocess"						href="html/reference/pref_carb_preprocess.htm" />
+      <topic label="SDK Preferences"                  href="html/reference/pref_carb_sdk_preferencea.html" />
+      <topic label="Code Styles"						href="html/reference/pref_cpp_code_style.htm" >
         <topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />
         <topic label="Reformatting a Source File"		href="html/tasks/code_style_reformatting_sources.htm" />
       </topic>
@@ -353,7 +350,7 @@
 	   
   <topic href="html/reference/search/wnd_system_search.htm" label="System Search">
     <topic label="System Search view"      		href="html/reference/search/view_system_search.htm" />
-    <topic label="System Search preferences"    href="html/reference/search/wnd_system_search_prefs.htm" />
+    <topic label="System Search preferences"    href="html/reference/search/pref_system_search.htm" />
   </topic>
   <topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
   <topic href="html/tasks/carbide_tools.htm" label="Creating Carbide Tools" />

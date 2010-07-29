@@ -61,7 +61,7 @@ iframe {
 	vertical-align : top;
 	/* Carbide branding mod */
 	margin-bottom : 0px;
-	background-image : url(../graphics/carbide/page-link-wide.gif);
+	/* background-image : url(../graphics/carbide/page-link-wide.gif); */
 	background-repeat:no-repeat;
 	background-position : top left;
 }
@@ -103,7 +103,7 @@ iframe {
 
 /* #overview-links a:hover { border-right : 5px; } */
 #overview-links a:hover { 
-	background-image : url(../graphics/contentpage/page-link-wide.gif);
+	/* background-image : url(../graphics/contentpage/page-link-wide.gif); */
 }
 
 a#basics img { background-image : url(../graphics/icons/obj48/wbbasics_obj.gif); }

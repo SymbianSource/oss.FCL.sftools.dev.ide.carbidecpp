@@ -31,7 +31,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalPage.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer.IActionBar;
 
 class TaskBar extends RoundedCornerComposite {
 
@@ -58,8 +58,8 @@ class TaskBar extends RoundedCornerComposite {
 	private Map<Hyperlink, IAction> linkToActionMap;
 	private ActionListener listener;
 
-	public TaskBar(Composite parent, PortalEditor portalEditor, IActionBar actionBar) {
-		super(parent, portalEditor.getBackgroundParent(), 
+	public TaskBar(Composite parent, Composite backgroundParent, IActionBar actionBar) {
+		super(parent, backgroundParent, 
 				parent.getDisplay().getSystemColor(SWT.COLOR_BLACK),
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		createTitle(actionBar);
@@ -88,6 +88,16 @@ class TaskBar extends RoundedCornerComposite {
 				link.setToolTipText(toolTipText);
 			link.setForeground(link.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
 			link.setBackground(link.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+			String actionId = action.getId();
+			String[] highlightedActionIds = actionBar.getHighlightedActionIds();
+			if (actionId != null && highlightedActionIds != null) {
+				for (String highlightedId : highlightedActionIds) {
+					if (highlightedId.equals(actionId)) {
+						link.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DIALOG_FONT));
+						break;
+					}
+				}
+			}
 			linkToActionMap.put(link, action);
 			link.addHyperlinkListener(listener);
 		}

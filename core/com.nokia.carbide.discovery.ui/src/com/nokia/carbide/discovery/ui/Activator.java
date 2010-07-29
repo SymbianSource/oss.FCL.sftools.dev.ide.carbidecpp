@@ -62,10 +62,13 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
+		plugin = this;
 		super.start(context);
-		IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com"));
-		System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
-		System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
+		IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com")); //$NON-NLS-1$
+		if (proxyData != null) {
+			System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
+			System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
+		}
 	}
 
 	/*
@@ -124,7 +127,7 @@ public class Activator extends AbstractUIPlugin {
 			is.close();
 		} catch (IOException e) {
 			String message = 
-				MessageFormat.format("Could not find URL in configuration/server.properties file for key={0}", key);
+				MessageFormat.format(Messages.Activator_MissingConfigURLError, key);
 			Activator.logError(message, e);
 		}
 		return (String) properties.get(key);

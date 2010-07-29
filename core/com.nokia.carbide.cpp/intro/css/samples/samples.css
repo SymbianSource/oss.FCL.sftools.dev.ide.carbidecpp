@@ -30,7 +30,7 @@ body {
 	vertical-align : top;
 	/* Carbide branding mod */
 	margin-bottom : 0px;
-	background-image : url(../graphics/carbide/page-link-wide.gif);
+	/* background-image : url(../graphics/carbide/page-link-wide.gif); */
 	background-repeat:no-repeat;
 	background-position : top left;
 }
