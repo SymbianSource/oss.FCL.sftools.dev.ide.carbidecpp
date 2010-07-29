@@ -5,28 +5,42 @@
 .intro-header H1 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 20px;
-	color: #00A1D0;
+	color: #5B6B74;
 /*	font-size : 18pt; */
 }
 #page-links a .link-label, #action-links a .link-label {
-	font-size : 13pt;	font-weight : 600;	color : #1B1B1B;
+	font-size : 13pt;
+	font-weight : 600;
+	color : #5B6B74;
 }
 #page-links a p .text, #action-links a p .text {
-	font-size : 13pt;	font-weight : 500;	color : #1B1B1B;
+	font-size : 13pt;
+	font-weight : 500;
+	color : #5B6B74;
 }
 /*
  * Set up the content for the root page.
  */
 body {
-	min-width : 770px;	/* since IE doesn't support min-width, use expression */
-	width:expression(document.body.clientWidth < 770? "770px": "auto" );	/* swapped Eclipse background image for Carbide version */
-	background-image : url(graphics/rootpage/background_carbide.jpg);	background-repeat : no-repeat;	background-position : top left;	background-color : #CCC;
+	min-width : 770px;
+	/* since IE doesn't support min-width, use expression */
+	width:expression(document.body.clientWidth < 770? "770px": "auto" );
+	/* swapped Eclipse background image for Carbide version */
+	background-image : url(graphics/rootpage/background_carbide.jpg);
+	background-repeat : no-repeat;
+	background-position : top left;
+	background-color : #CCC;
 }
 #root {
 	/* Carbide branding mod */
 	/* swapped Eclipse background image for Carbide version */
-	/* background-image : url(graphics/rootpage/brandmark.gif); */	/* background-image : url(graphics/rootpage/brandmark.png); */
-	background-repeat : no-repeat;	background-position : bottom left;	min-height : 450px;	height : 100%;	height : expression(document.body.clientHeight < 450? "450px": "100%" );
+	/* background-image : url(graphics/rootpage/brandmark.gif); */
+	/* background-image : url(graphics/rootpage/brandmark.png); */
+	background-repeat : no-repeat;
+	background-position : bottom left;
+	min-height : 450px;
+	height : 100%;
+	height : expression(document.body.clientHeight < 450? "450px": "100%" );
 }
 /* 
  * Set up the navigation bar.  It should be centered in the middle
@@ -34,27 +48,41 @@ body {
  */
 #links-background {
 	/* removed dot graphic that ran across page! */
-	width : 100%;	height : 177px;	margin-top : 18%;	margin-bottom : auto;	text-align : center;
+	width : 100%;
+	height : 177px;
+	margin-top : 18%;
+	margin-bottom : auto;
+	text-align : center;
 }
 /* specify a width for Moz so we can center.  
  * **Important** If additional links are added, we will have to increase this width 
  * to accomodate them, otherwise they will wrap to a new line 
  */
 #links-background > #page-links {
-	width : 33em;	margin : 0 auto;
+	width : 33em;
+	margin : 0 auto;
 }
 #page-links {
-	position : relative;	top : 50px;
+	position : relative;
+	top : 50px;
 }
 #page-links a {
-	position : relative;	width : 86px;	margin-left : 1em;	margin-right : 1em;	text-align : center;	vertical-align : top;
+	position : relative;
+	width : 86px;
+	margin-left : 1em;
+	margin-right : 1em;
+	text-align : center;
+	vertical-align : top;
 }
 /* float left for Moz so the items all appear inline */
 #page-links > a {
-	float : left;	position : relative;
+	float : left;
+	position : relative;
 }
 #page-links a img {
-	height : 72px; /* was 82 */	width : 72px;  /* was 82 */	vertical-align : middle;
+	height : 72px; /* was 82 */
+	width : 72px;  /* was 82 */
+	vertical-align : middle;
 }
 /* remove the hover image from the flow of the document,
    so it doesn't take up space and change the position
@@ -64,13 +92,15 @@ body {
 }
 /* properly align the link label and text based on class (left vs. right) */
 #page-links a:hover {
-	/* This is needed for IE to force the hover pseudo selectors below to work.*/	padding : 0 em;
+	/* This is needed for IE to force the hover pseudo selectors below to work.*/
+	padding : 0 em;
 }
 /* Hide both the label and the description of the link and remove them from static HTML flow, until user hovers over link */
 /* First, set the width of both the label and the description to a max of 15 em. */
 /* This can be changed when translated to different country locals. */
 #page-links a span {
-	width : 16em;}
+	width : 16em;
+}
 /* Set up left links orientation first. */
 #page-links a.left:link .link-label,
 #page-links a.left:visited .link-label {
@@ -79,7 +109,11 @@ body {
 #page-links a.left:hover .link-label,
 #page-links a.left:focus .link-label,
 #page-links a.left:active .link-label {
-	text-align: left;	display: block;	position: absolute;	top : 120 %;	left : 0;
+	text-align: left;
+	display: block;
+	position: absolute;
+	top : 120 %;
+	left : 0;
 }
 /* hide description and remove it from static HTML flow, until user hovers over link */
 #page-links a.left:link .text,
@@ -89,7 +123,11 @@ body {
 #page-links a.left:hover .text,
 #page-links a.left:focus .text,
 #page-links a.left:active .text {
-	text-align: left;	display: block;	position: absolute;	left : 0;	top: 145%;
+	text-align: left;
+	display: block;
+	position: absolute;
+	left : 0;
+	top: 145%;
 }
 /* Set up right links orientation now. */
 #page-links a.right:link .link-label,
@@ -99,7 +137,11 @@ body {
 #page-links a.right:hover .link-label,
 #page-links a.right:focus .link-label,
 #page-links a.right:active .link-label {
-	text-align: right;	display: block;	position: absolute;	top : 120 %;	right : 0;
+	text-align: right;
+	display: block;
+	position: absolute;
+	top : 120 %;
+	right : 0;
 }
 /* hide description and remove it from static HTML flow, until user hovers over link */
 #page-links a.right:link .text,
@@ -109,20 +151,28 @@ body {
 #page-links a.right:hover .text,
 #page-links a.right:focus .text,
 #page-links a.right:active .text {
-	text-align: right;	display: block;	position: absolute;	right : 0;	top: 145%;
+	text-align: right;
+	display: block;
+	position: absolute;
+	right : 0;
+	top: 145%;
 }
 /* properties for each of the page-links  */
 a#overview .background-image {
-	background-image : url(graphics/icons/ctool/overview72.gif);	visibility : hidden;
+	background-image : url(graphics/icons/ctool/overview72.gif);
+	visibility : hidden;
 }
 a#tutorials .background-image {
-	background-image : url(graphics/icons/ctool/tutorials72.gif);	visibility : hidden;
+	background-image : url(graphics/icons/ctool/tutorials72.gif);
+	visibility : hidden;
 }
 a#samples .background-image {
-	background-image : url(graphics/icons/ctool/samples72.gif);	visibility : hidden;
+	background-image : url(graphics/icons/ctool/samples72.gif);
+	visibility : hidden;
 }
 a#news .background-image {
-	background-image : url(graphics/icons/ctool/whatsnew72.gif);	visibility : hidden;
+	background-image : url(graphics/icons/ctool/whatsnew72.gif);
+	visibility : hidden;
 }
 /* show the hover image on hover, focus, and active */
 #page-links a:hover .background-image,
@@ -134,14 +184,23 @@ a#news .background-image {
  * Set up the action links
  */
 #action-links {
-	width : 98%;	position : absolute;	left : 0px;	top : 20px;
+	width : 98%;
+	position : absolute;
+	left : 0px;
+	top : 20px;
 }
 #action-links a#workbench {
-	position : absolute;	top : -16px;	right : -8px;	text-align : right;
+	position : absolute;
+	top : -16px;
+	right : -8px;
+	text-align : right;
 }
 #action-links a .background-image,
 #action-links a #workbench_img {
-	height : 53px;	width : 53px;	text-align : center;	vertical-align : top;
+	height : 53px;
+	width : 53px;
+	text-align : center;
+	vertical-align : top;
 }
 /* special case for mozilla */
 #action-links a > .background-image,
@@ -155,7 +214,8 @@ a#news .background-image {
 	position : absolute;
 }
 #action-links a#workbench .background-image {
-	background-image : url(graphics/icons/ctool/wb48.gif);	visibility : hidden;
+	background-image : url(graphics/icons/ctool/wb48.gif);
+	visibility : hidden;
 }
 #action-links a#workbench:hover .background-image,
 #action-links a#workbench:focus .background-image,
@@ -172,13 +232,15 @@ a#news .background-image {
 #action-links a:hover .link-label,
 #action-links a:focus .link-label,
 #action-links a:active .link-label {
-	display : block;	width : 16em;
+	display : block;
+	width : 16em;
 	margin-left : 10px;
 }
 #action-links a:hover p .text,
 #action-links a:focus p .text,
 #action-links a:active p .text {
-	display : block;	width : 16em;
+	display : block;
+	width : 16em;
 }
 #action-links a:hover,
 #action-links a:focus,

@@ -3,14 +3,14 @@
  */
 body { font-family : Arial, sans-serif; }
 
-H1, H2, H3, H4, p, a { color : #4D4D4D; }
+H1, H2, H3, H4, p, a { color : #5B6B74; }
 
 .intro-header H1 {
 	font-size : 16pt;
 	font-weight : normal;
 	/* color : #E5E5E5; */
 	/* added turquose to titles */
-	color : #00A1D0;
+	color : #5B6B74;
 }
 
 h2 {
@@ -18,7 +18,7 @@ h2 {
 	font-weight : normal;
 	/* color : #7B8694; */
 	/* changed color to dark gray */
-	color : #333333;
+	color : #5B6B74;
 }
 /* For regular div labels */
 H4 .div-label {
@@ -32,7 +32,7 @@ H4 .div-label {
 	font-weight : normal;
 	/* color : #8C96A2; */
 	/* changed color to dark gray */
-	color : #333333;
+	color : #5B6B74;
 	float : none;
 	clear : both;
 }
@@ -63,7 +63,7 @@ H4 .div-label {
 a {
 	font-weight : bold;
 	text-decoration : none;
-	color : #4D4D4D;
+	color : #5B6B74;
 }
 
 a .link-label {
@@ -76,7 +76,7 @@ a .link-label {
 	font-weight : normal;
 	/* color : #E5E5E5; */
 	/* added turquose to links */
-	color : #00A1D0;
+	color : #5B6B74;
 }
 
 a .text {
