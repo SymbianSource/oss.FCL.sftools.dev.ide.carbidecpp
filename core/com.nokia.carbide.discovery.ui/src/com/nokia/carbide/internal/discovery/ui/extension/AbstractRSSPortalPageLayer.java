@@ -85,16 +85,18 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 			buf.append("<div class=\"channelBody\">"); //$NON-NLS-1$
 			buf.append(clean(channel.getDescription()));
 			buf.append("</div><br>"); //$NON-NLS-1$
+			buf.append("<ul>"); //$NON-NLS-1$
 			for (Item item : channel.getItems()) {
-				buf.append("<div class=\"item\"><a class=\"itemTitle\" href=\""); //$NON-NLS-1$
+				buf.append("<li><div class=\"item\"><a class=\"itemTitle\" href=\""); //$NON-NLS-1$
 				buf.append(item.getLink().toString());
 				buf.append("\">"); //$NON-NLS-1$
 				buf.append(clean(item.getTitle()));
 				buf.append("</a>"); //$NON-NLS-1$
 				buf.append("<div class=\"itemBody\">"); //$NON-NLS-1$
 				buf.append(clean(item.getDescription()));
-				buf.append("</div>"); //$NON-NLS-1$
+				buf.append("</div></li>"); //$NON-NLS-1$
 			}
+			buf.append("</ul>"); //$NON-NLS-1$
 		}
 		buf.append(HTML_BODY_FOOTER);
 		System.out.println(buf.toString());

@@ -1,3 +1,19 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
 package com.nokia.carbide.internal.discovery.ui.view;
 
 import java.net.MalformedURLException;
@@ -48,6 +64,7 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
+import com.nokia.carbide.internal.discovery.ui.extension.OpenPreferencePageAction;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 @SuppressWarnings("restriction")
@@ -94,27 +111,28 @@ public class InstallExtensionsPortalExtension implements IPortalPageLayer {
 		}
 	}
 	
-	private final class LinkBar implements IActionBar {
+	private class SettingsBar implements IActionBar {
 		@Override
 		public String getTitle() {
-			return Messages.InstallExtensionsPage_LinkBarTitle;
+			return "Settings";
 		}
 
 		@Override
 		public IAction[] getActions() {
-			IAction action = new Action(Messages.InstallExtensionsPage_BuzillaActionName) {
-				@Override
-				public void run() {
-					try {
-						URL url = new URL("https://xdabug001.ext.nokia.com/bugzilla"); //$NON-NLS-1$
-						IWorkbenchBrowserSupport browserSupport = PlatformUI.getWorkbench().getBrowserSupport();
-						browserSupport.createBrowser(null).openURL(url);
-					} catch (MalformedURLException e) {
-					} catch (PartInitException e) {
-					}
-				}
-			};
-			return new IAction[] { action };
+			List<IAction> actions = new ArrayList<IAction>();
+			actions.add(new OpenPreferencePageAction(
+					"Capabilities", 
+					"org.eclipse.sdk.capabilities"));
+			actions.add(new OpenPreferencePageAction(
+					"Code Style", 
+					"org.eclipse.cdt.ui.preferences.CodeFormatterPreferencePage"));
+			actions.add(new OpenPreferencePageAction(
+					"Key bindings", 
+					"org.eclipse.ui.preferencePages.Keys"));
+			actions.add(new OpenPreferencePageAction(
+					"Proxies", 
+					"org.eclipse.ui.net.NetPreferences"));
+			return (IAction[]) actions.toArray(new IAction[actions.size()]);
 		}
 
 		@Override
@@ -167,7 +185,7 @@ public class InstallExtensionsPortalExtension implements IPortalPageLayer {
 	@Override
 	public IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater) {
 		this.updater = updater;
-		return new IActionBar[] { new ActionBar(part), new LinkBar() };
+		return new IActionBar[] { new ActionBar(part), new SettingsBar() };
 	}
 
 	private CatalogConfiguration getConfiguration() {
