@@ -300,7 +300,7 @@ public class SDKPreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	public Control createContents(Composite parent) {
 		// Set up colors used in this preference page
 		Shell shell = parent.getShell();
 		black = shell.getDisplay().getSystemColor(SWT.COLOR_BLACK);
