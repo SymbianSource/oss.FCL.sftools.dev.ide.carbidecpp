@@ -57,7 +57,7 @@ public interface ISymbianSDK {
 	/**
 	 * Returns the OS version string of this SDK.
 	 *
-	 * @return the OS Version object. If the version cannot be determined it will be "0.0".
+	 * @return the OS Version object. If the version cannot be determined it will be "9.5".
 	 * @deprecated - use ISymbianSDK{@link #getSupportedFeatures()} to figure out the properties of an SDK
 	 */
 	Version getOSVersion();

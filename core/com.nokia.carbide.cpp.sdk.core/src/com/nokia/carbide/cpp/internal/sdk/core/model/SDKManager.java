@@ -409,7 +409,7 @@ public class SDKManager extends AbstractSDKManager {
 			deviceType.setUserdeletable("false");
 			deviceType.setUserdeletetable("false");
 			ISymbianSDK sdk = new SymbianSDK(deviceType);
-			if (sdk.getOSVersion().toString().equals("0.0.0")) {
+			if (sdk.getOSVersion().toString().equals("0.0")) {
 				((SymbianSDK)sdk).setOSVersion(new Version("9.5"));
 			}
 

@@ -61,6 +61,8 @@ public class SBSv2QueryTests extends BaseTest {
 	 */
 	public void testQueryBuildConfigsFromSDK() throws Exception {
 		
+		SBSv2QueryUtils.removeAllCachedQueries();  // ensure sbs needs to build an entirely new cache
+		
 		ISymbianSDK sdk = SDKCorePlugin.getSDKManager().getSDK(SDK_ID1, true);
 		assertNotNull(sdk);
 		
