@@ -59,7 +59,6 @@
   </topic>
   <topic label="Carbide views"  >
       <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
-      <topic label="Carbide.c++ News view"			href="html/reference/view_carbide_news.htm" />
       <topic label="Carbide Portal"	    			href="html/reference/view_carbide_portal.htm" >
       	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
   	  </topic>
