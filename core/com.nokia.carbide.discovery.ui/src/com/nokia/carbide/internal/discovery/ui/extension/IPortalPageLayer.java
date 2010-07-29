@@ -27,12 +27,6 @@ import org.eclipse.ui.IEditorPart;
 public interface IPortalPageLayer {
 
 	/**
-	 * The title of this portal page layer
-	 * @return String
-	 */
-	String getTitle();
-	
-	/**
 	 * Interface to an action/navigation bar for the portal portal page layer
 	 */
 	public interface IActionBar {

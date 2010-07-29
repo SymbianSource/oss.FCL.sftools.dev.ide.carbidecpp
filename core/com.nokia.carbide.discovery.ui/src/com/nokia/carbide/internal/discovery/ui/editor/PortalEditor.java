@@ -76,17 +76,19 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 		loadPortalPages();
 	}
 	
-	private Map<String, List<IPortalPageLayer>> loadPortalLayers() {
-		Map<String, List<IPortalPageLayer>> pageIdToExtensionsMap = new HashMap<String, List<IPortalPageLayer>>();
+	private Map<String, List<Pair<IPortalPageLayer, String>>> loadPortalLayers() {
+		Map<String, List<Pair<IPortalPageLayer, String>>> pageIdToExtensionsMap = 
+			new HashMap<String, List<Pair<IPortalPageLayer, String>>>();
 		IConfigurationElement[] elements = 
 			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPageLayer"); //$NON-NLS-1$
 		for (IConfigurationElement element : elements) {
 			String pageId = element.getAttribute("pageId"); //$NON-NLS-1$
+			String title = element.getAttribute("title"); //$NON-NLS-1$
 			try {
 				IPortalPageLayer extension = (IPortalPageLayer) element.createExecutableExtension("class"); //$NON-NLS-1$
 				if (!pageIdToExtensionsMap.containsKey(pageId))
-					pageIdToExtensionsMap.put(pageId, new ArrayList<IPortalPageLayer>());
-				pageIdToExtensionsMap.get(pageId).add(extension);
+					pageIdToExtensionsMap.put(pageId, new ArrayList<Pair<IPortalPageLayer, String>>());
+				pageIdToExtensionsMap.get(pageId).add(new Pair<IPortalPageLayer, String>(extension, title));
 			} catch (CoreException e) {
 				Activator.logError(MessageFormat.format(Messages.PortalEditor_PageLoadError, pageId), e);
 			}
@@ -95,7 +97,7 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	}
 
 	private void loadPortalPages() {
-		Map<String, List<IPortalPageLayer>> portalLayersMap = loadPortalLayers();
+		Map<String, List<Pair<IPortalPageLayer, String>>> portalLayersMap = loadPortalLayers();
 		List<Pair<PortalPage, Integer>> pageList = new ArrayList<Pair<PortalPage, Integer>>();
 		IConfigurationElement[] elements = 
 			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPage"); //$NON-NLS-1$
@@ -115,9 +117,9 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 			String imageFilePath = element.getAttribute("image"); //$NON-NLS-1$
 			String pluginId = element.getContributor().getName();
 			ImageDescriptor imageDesc = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, imageFilePath);
-			List<IPortalPageLayer> portalLayers = portalLayersMap.get(id);
+			List<Pair<IPortalPageLayer, String>> portalLayers = portalLayersMap.get(id);
 			if (portalLayers == null || portalLayers.isEmpty()) {
-				Activator.logError(MessageFormat.format("Could not load portal page because no layers were found for id: {0}", id), null);
+				Activator.logError(MessageFormat.format(Messages.PortalEditor_NoLayersError, id), null);
 			}
 			PortalPage portalPage = new PortalPage(title, imageDesc, id, portalLayers);
 			pageList.add(new Pair<PortalPage, Integer>(portalPage, order));

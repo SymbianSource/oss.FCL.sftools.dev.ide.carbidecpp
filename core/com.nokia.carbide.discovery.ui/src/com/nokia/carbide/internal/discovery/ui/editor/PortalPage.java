@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Control;
 
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer.IActionBar;
+import com.nokia.cpp.internal.api.utils.core.Pair;
 
 
 public class PortalPage implements IActionBar {
@@ -39,7 +40,7 @@ public class PortalPage implements IActionBar {
 		private Layer layer;
 
 		private ChangeLayerAction(Layer layer) {
-			super(layer.getLayer().getTitle());
+			super(layer.getTitle());
 			this.layer = layer;
 		}
 
@@ -56,9 +57,11 @@ public class PortalPage implements IActionBar {
 		private IPortalPageLayer layer;
 		private boolean initialized;
 		private Control control;
+		private String title;
 		
-		public Layer(IPortalPageLayer layer) {
+		public Layer(IPortalPageLayer layer, String title) {
 			this.layer = layer;
+			this.title = title;
 		}
 		
 		public IPortalPageLayer getLayer() {
@@ -81,6 +84,10 @@ public class PortalPage implements IActionBar {
 		public Control getControl() {
 			return control;
 		}
+		
+		public String getTitle() {
+			return title;
+		}
 	}
 
 	private String id;
@@ -93,15 +100,16 @@ public class PortalPage implements IActionBar {
 	private IAction[] actions;
 	private List<TaskBar> navigationTaskBars;
 	
-	public PortalPage(String title, ImageDescriptor imageDescriptor, String id, List<IPortalPageLayer> layerExtensions) {
+	public PortalPage(String title, ImageDescriptor imageDescriptor, String id, 
+			List<Pair<IPortalPageLayer, String>> layerExtensionPairs) {
 		this.title = title;
 		this.imageDescriptor = imageDescriptor;
 		this.id = id;
-		layers = new ArrayList<Layer>(layerExtensions.size());
-		for (IPortalPageLayer layerExtension : layerExtensions) {
-			layers.add(new Layer(layerExtension));
+		layers = new ArrayList<Layer>(layerExtensionPairs.size());
+		for (Pair<IPortalPageLayer, String> layerExtensionTitlePair : layerExtensionPairs) {
+			layers.add(new Layer(layerExtensionTitlePair.first, layerExtensionTitlePair.second));
 		}
-		navigationTaskBars = new ArrayList<TaskBar>(layerExtensions.size());
+		navigationTaskBars = new ArrayList<TaskBar>(layerExtensionPairs.size());
 	}
 	
 	public String getId() {
@@ -152,10 +160,12 @@ public class PortalPage implements IActionBar {
 		navigationTaskBars.add(taskBar);
 		ActionUIUpdater updater = new ActionUIUpdater();
 		IActionBar[] commandBars = layerExtension.createCommandBars(portalEditor, updater);
-		for (IActionBar actionBar : commandBars) {
-			taskBar = new TaskBar(taskComposite, backgroundParent, actionBar);
-			updater.addTaskBar(taskBar);
-			GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(taskBar);
+		if (commandBars != null) {
+			for (IActionBar actionBar : commandBars) {
+				taskBar = new TaskBar(taskComposite, backgroundParent, actionBar);
+				updater.addTaskBar(taskBar);
+				GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(taskBar);
+			}
 		}
 	}
 

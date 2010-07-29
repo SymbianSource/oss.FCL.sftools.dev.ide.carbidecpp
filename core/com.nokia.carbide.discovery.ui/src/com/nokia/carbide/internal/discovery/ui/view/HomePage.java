@@ -1,13 +1,6 @@
 package com.nokia.carbide.internal.discovery.ui.view;
 
-import com.nokia.carbide.discovery.ui.Messages;
-import com.nokia.carbide.internal.discovery.ui.extension.AbstractBrowserPortalPage;
+import com.nokia.carbide.internal.discovery.ui.extension.AbstractBrowserPortalPageLayer;
 
-public class HomePage extends AbstractBrowserPortalPage {
-
-	@Override
-	public String getTitle() {
-		return Messages.HomePage_Title;
-	}
-
+public class HomePage extends AbstractBrowserPortalPageLayer {
 }

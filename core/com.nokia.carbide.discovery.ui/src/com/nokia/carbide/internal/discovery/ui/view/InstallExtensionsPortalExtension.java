@@ -80,7 +80,7 @@ public class InstallExtensionsPortalExtension implements IPortalPageLayer {
 		
 		@Override
 		public String getTitle() {
-			return Messages.InstallExtensionsPage_ActionBarTitle;
+			return Messages.InstallExtensionsPortalExtension_InstallExtensionsTitle;
 		}
 
 		@Override
@@ -130,11 +130,6 @@ public class InstallExtensionsPortalExtension implements IPortalPageLayer {
 	private IActionUIUpdater updater;
 
 	public InstallExtensionsPortalExtension() {
-	}
-
-	@Override
-	public String getTitle() {
-		return Messages.InstallExtensionsPage_Title;
 	}
 
 	@Override

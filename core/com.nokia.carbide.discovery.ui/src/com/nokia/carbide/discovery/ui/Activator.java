@@ -62,10 +62,13 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
+		plugin = this;
 		super.start(context);
 		IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com")); //$NON-NLS-1$
-		System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
-		System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
+		if (proxyData != null) {
+			System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
+			System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
+		}
 	}
 
 	/*
