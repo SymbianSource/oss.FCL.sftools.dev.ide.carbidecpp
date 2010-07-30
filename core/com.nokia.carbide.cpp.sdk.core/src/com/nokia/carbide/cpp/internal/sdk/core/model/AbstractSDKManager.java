@@ -310,9 +310,13 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			SDKManagerCacheEntry entry = getSDKCacheEntry(id);
 			ISymbianSDK sdk = getSDK(id, false);
 			if (sdk == null) {
+				Version osVersion = new Version(entry.getOsVersion());
+				if (osVersion.getMajor() == 0) {
+					osVersion = new Version("9.5");
+				}
 				sdk = SymbianSDKFactory.createInstance(id, 
 						   entry.getEpocRoot(),
-						   new Version(entry.getOsVersion()));
+						   osVersion);
 				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
 				synchronized (sdkList) {
 					sdkList.add(sdk);
