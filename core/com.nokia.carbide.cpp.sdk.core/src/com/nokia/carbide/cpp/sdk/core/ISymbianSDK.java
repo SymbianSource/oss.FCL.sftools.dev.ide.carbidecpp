@@ -34,9 +34,10 @@ public interface ISymbianSDK {
 
 	/**
 	 * Returns build info for a particular builder.
-	 * @param builderId id string of a builder
+	 * @param builderId id string of a builder (ISymbianBuilderID constant)
 	 * @return build info
 	 * @since 3.0
+	 * @see {@link ISymbianBuilderID}
 	 */
 	ISDKBuildInfo getBuildInfo(String builderId);
 	
