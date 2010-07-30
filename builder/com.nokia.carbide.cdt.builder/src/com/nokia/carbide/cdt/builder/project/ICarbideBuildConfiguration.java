@@ -169,7 +169,8 @@ public interface ICarbideBuildConfiguration {
 
 	/**
 	 * Get the <cconfiguration/> 'id' attribute for this configuration (from .cproject file). This is an ISymbianBuildContext wrapper.
-	 * @return
+	 * @return String
+	 * @since 3.0
 	 */
 	String getConfigurationID();
 	

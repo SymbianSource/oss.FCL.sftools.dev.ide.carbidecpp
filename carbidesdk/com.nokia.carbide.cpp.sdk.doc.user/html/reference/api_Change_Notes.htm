@@ -107,13 +107,47 @@ span.attr
 	<li>Added <em> com.nokia.carbide.cdt.builder.project.ISymbianBuildConfiguration#getTargetOutputDirectory( )</em>.</li>
 </ul>
 
-<p>Since Carbide 3.0.0</p>
+<p>Since Carbide 3.0.0 (C3)</p>
 <ul>
-	<li>IConnectionsManager was updated to indicate it is not intended to be implemented by clients.
-	<li>Added several new methods to support automated connection/device discovery agents and default connections.</li>
-	<li>Deprecated IClientServiceSiteUI and adding new IClientServiceSiteUI2 to support concept of default connection
+
+	<li>C3 is an API breaking release, primarily around areas of Symbian SDK management and Symbian build support.
+	This release removes support for Symbian OS versions prior to 9.4 (i.e. only support for Symbian^2 and up are supported).
+	Management of Symbian SDKs has been simplified and the APIs have been trimmed to reflect this.</li>
+
+	<li><i>ISymbianSDK</i></li>
 	<ul>
-		<li>getSelectedConnection() and selectConnection() now use connection ids rather than connection objects
+		<li>added <i>getSupportedFeatures()</i> - see <i>com.nokia.carbide.cpp.sdk.core#ISymbianSDKFeatures</i> for supported feature constants.</li>
+		<li>added <i>ISDKBuildInfo getBuildInfo(String builderId)</i> - This is used to get the base data (ISymbianBuildContext) for a build configuration, depending on the builder you are using (e.g. abld versus sbsv2). See com.nokia.carbide.cpp.sdk.core#ISDKBuildInfo </li>
+	</ul>
+	
+	<li><i>com.nokia.carbide.cpp.sdk.core#ISDKBuildInfo</i> was added.</li>
+	<li><i>com.nokia.carbide.cpp.sdk.core#ISBSv1BuildContext</i> was added.</li>
+	<li><i>com.nokia.carbide.cpp.sdk.core#ISBSv2BuildContext</i> was added.</li>
+	<li><i>com.nokia.carbide.cpp.sdk.core#ISBSv2BuiISymbianSDKFeatures</i> was added.</li>
+	
+	<li><i>ICarbideBuildConfiguration</i></li>
+	<ul>
+		<li>added <i>ISymbianBuildContext getBuildContext()</i></li>
+		<li>added <i>getDisplayString()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getSDK()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getPlatformString()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getTargetString()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getCompilerPrefixFile()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getCompilerMacros()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getVariantHRHDefines()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getPrefixFileIncludes()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getBuildVariationName()</i> - A convenience wrapper for ISymbiabBuildContext</li>
+		<li>added <i>getConfigurationID()</i></li>
+		<li>added <i>hasSTDCPPSupport()</i></li>
+	</ul>
+
+	<li><i>ISymbianBuildContext</i> - This interface is no longer implemented by ICarbideBuildConfiguration. Rather, it is now an abstracted interface for builders to provide base build data for an <i>ICarbideBuildConfiguration</i> instance</li>
+
+	<li><i>IConnectionsManager</i> was updated to indicate it is not intended to be implemented by clients.
+	<li>Added several new methods to support automated connection/device discovery agents and default connections.</li>
+	<li>Deprecated <i>IClientServiceSiteUI</i> and adding new <i>IClientServiceSiteUI2</i> to support concept of default connection
+	<ul>
+		<li><i>getSelectedConnection()</i> and <i>selectConnection()</i> now use connection ids rather than connection objects
 		<li>Exposing new selection status to allow reporting when default connection is not supported by client service
 	</ul>
 </ul>
@@ -162,6 +196,12 @@ span.attr
 <ul>
   <li><i>com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder#generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest)</i></li>
 </ul>
+
+<p>Since Carbide 3.0</p>
+<ul>
+  <li><i>ISymbiabSDK#getOSVersion</i> - use ISymbianSDK#getSupportedFeatures instead to test for properties of an SDK.</li>
+</ul>
+
 <h3>Removed APIs</h3>
 <p>The following Carbide APIs have been removed and are no longer available to plug-ins.</p>
 <p>Since Carbide 1.2.0</p>
@@ -190,6 +230,12 @@ span.attr
 <p>Since Carbide 2.1.0</p>
 <ul>
   <li>None</li>
+</ul>
+
+<p>Since Carbide 3.0</p>
+<ul>
+  <li><i>com.nokia.carbide.cpp.sdk.core#ISymbianSDK</i> removed several methods. Please refer to the source code.</li>
+   <li><i>ICarbideBuildConfiguration</i> no longer implements <i>ISymbiabBuildContext</i>. You will need to use the ISymbianBuildContext wrapper methods to access that interface now.</li>
 </ul>
 
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
