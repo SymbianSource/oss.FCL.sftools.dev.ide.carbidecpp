@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IPath;
 /**
  * Interface for build related information of a Symbian SDK.
  * @since 3.0
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISDKBuildInfo {
 

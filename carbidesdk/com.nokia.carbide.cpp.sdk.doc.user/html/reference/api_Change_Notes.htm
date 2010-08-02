@@ -117,7 +117,7 @@ span.attr
 	<li><i>ISymbianSDK</i></li>
 	<ul>
 		<li>added <i>getSupportedFeatures()</i> - see <i>com.nokia.carbide.cpp.sdk.core#ISymbianSDKFeatures</i> for supported feature constants.</li>
-		<li>added <i>ISDKBuildInfo getBuildInfo(String builderId)</i> - This is used to get the base data (ISymbianBuildContext) for a build configuration, depending on the builder you are using (e.g. abld versus sbsv2). See com.nokia.carbide.cpp.sdk.core#ISDKBuildInfo </li>
+		<li>added <i>ISDKBuildInfo getBuildInfo(String builderId)</i> - This is used to get the base data (ISymbianBuildContext) for a build configuration, depending on the builder you are using (e.g. abld versus sbsv2). See also <i>com.nokia.carbide.cpp.sdk.core#ISDKBuildInfo</i> </li>
 	</ul>
 	
 	<li><i>com.nokia.carbide.cpp.sdk.core#ISDKBuildInfo</i> was added.</li>
@@ -142,6 +142,9 @@ span.attr
 	</ul>
 
 	<li><i>ISymbianBuildContext</i> - This interface is no longer implemented by ICarbideBuildConfiguration. Rather, it is now an abstracted interface for builders to provide base build data for an <i>ICarbideBuildConfiguration</i> instance</li>
+	<p/>
+	<ul>Due to this change, methods that take ISymbiabBuildContext as a parameter may have been using the ICarbideBuildConfiguraiton interface. For example, in <i>com.nokia.carbide.cdt.builder#DefaultMMPViewConfiguration.</i>
+	 For these calls, simply add <i>.getBuildContext()</i> to the <i>ICarbideBuildConfiguration</i> instance to explicitly pass the <i>ISymbianBuildContext</i>.</ul>
 
 	<li><i>IConnectionsManager</i> was updated to indicate it is not intended to be implemented by clients.
 	<li>Added several new methods to support automated connection/device discovery agents and default connections.</li>
@@ -235,6 +238,12 @@ span.attr
 <p>Since Carbide 3.0</p>
 <ul>
   <li><i>com.nokia.carbide.cpp.sdk.core#ISymbianSDK</i> removed several methods. Please refer to the source code.</li>
+   <p/>
+   <ul>
+   		<li><i>getFilteredBuildConfigurations()</i> has been removed. Please use <i> </i> instead.  </li>
+   		<li><i>getSDKVersion()</i> has been removed. Users should not use SDK and OS version any longer but use <i>ISymbiabSDK#getBuildInfo(ISymbianBuilderID."BUILDERID").getFilteredBuildConfigurations()</i> instead.</li>
+   </ul>
+   
    <li><i>ICarbideBuildConfiguration</i> no longer implements <i>ISymbiabBuildContext</i>. You will need to use the ISymbianBuildContext wrapper methods to access that interface now.</li>
 </ul>
 
