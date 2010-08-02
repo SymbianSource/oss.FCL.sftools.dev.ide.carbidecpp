@@ -14,9 +14,22 @@
 * Description: 
 *
 */
-package com.nokia.carbide.internal.discovery.ui.view;
+package com.nokia.carbide.internal.discovery.ui.extension;
 
-import com.nokia.carbide.internal.discovery.ui.extension.AbstractRSSPortalPageLayer;
-
-public class WrenchSciencePage extends AbstractRSSPortalPageLayer {
+/**
+ * Interface allowing the UI for provided actions of an IActionBar to be updated (e.g., enabled state)
+ */
+public interface IActionUIUpdater {
+	
+	/**
+	 * Update the UI for a specific action by id
+	 * @param actionId
+	 */
+	void update(String actionId);
+	
+	/**
+	 * Update the UI for all actions in the IActionBar
+	 */
+	void updateAll();
+	
 }

@@ -53,6 +53,15 @@
             label="%carbcPreference.platformfiltering">
       </keyword>
    </extension>
+   <extension
+         point="com.nokia.carbide.discovery.ui.portalPageLayer">
+      <portalPageLayer
+            class="com.nokia.carbide.cpp.sdk.ui.SDKPreferencesPortalPageLayer"
+            order="1"
+            pageId="com.nokia.carbide.discovery.ui.kitsPage"
+            title="SDKs">
+      </portalPageLayer>
+   </extension>
    
 
 </plugin>

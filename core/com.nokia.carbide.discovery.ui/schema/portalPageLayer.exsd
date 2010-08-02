@@ -76,6 +76,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="order" type="string">
+            <annotation>
+               <documentation>
+                  relative ordering of layers on a page (integer used to sort layers)
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

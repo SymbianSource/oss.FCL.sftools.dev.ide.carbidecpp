@@ -6,14 +6,14 @@
 
 body {
 	font-family: Verdana, Helvetica, sans-serif;
-	color: #000000;
+	color: #5B6B74;
 	margin:20px;
 	}
 
 .intro-header h1 {
 	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 20px;
-	color: #00A1D0;
+	color: #5B6B74;
 	}
 
 .bgbox {  background-image: url(images/whitebg.gif); background-repeat: repeat}

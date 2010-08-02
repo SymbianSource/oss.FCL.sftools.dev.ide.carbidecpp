@@ -83,6 +83,16 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  optionally provide command bars visible in all layers
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.nokia.carbide.internal.discovery.ui.extension.ICommandBarFactory"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

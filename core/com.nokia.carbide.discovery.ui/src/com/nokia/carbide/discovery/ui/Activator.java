@@ -21,18 +21,24 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -50,6 +56,8 @@ public class Activator extends AbstractUIPlugin {
 
 	private static final String PROPERTY_PROXYPORT = "network.proxy_port"; //$NON-NLS-1$
 	private static final String PROPERTY_PROXYHOST = "network.proxy_host"; //$NON-NLS-1$
+
+	private boolean proxyDataAvailable;
 	
 	/**
 	 * The constructor
@@ -64,13 +72,66 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		plugin = this;
 		super.start(context);
-		IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com")); //$NON-NLS-1$
-		if (proxyData != null) {
-			System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
-			System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
-		}
+		Job j = new Job("Getting proxy info") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com"));
+					if (proxyData != null) {
+						System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
+						System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
+					}
+				} catch (URISyntaxException e) {
+				} //$NON-NLS-1$
+				setProxyDataAvailable();
+				return Status.OK_STATUS;
+			}
+		};
+		j.setSystem(true);
+		j.setUser(false);
+		j.schedule();
 	}
 
+	private synchronized void setProxyDataAvailable() {
+		proxyDataAvailable = true;
+	}
+	
+	public synchronized boolean isProxyDataAvailable() {
+		return proxyDataAvailable;
+	}
+
+	public static void runInUIThreadWhenProxyDataSet(final Control control, final Runnable r) {
+		Job j = new Job("") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				setBusyCursor(control, true);
+				Activator activator = getDefault();
+				while (!activator.isProxyDataAvailable()) {
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+					}
+				}
+				setBusyCursor(control, false);
+				Display.getDefault().asyncExec(r);
+				return Status.OK_STATUS;
+			}
+		};
+		j.setSystem(true);
+		j.setUser(false);
+		j.schedule();
+	}
+	
+	public static void setBusyCursor(final Control control, final boolean isBusy) {
+		final Display display = control.getDisplay();
+		display.syncExec(new Runnable() {
+			@Override
+			public void run() {
+				control.setCursor(isBusy ? display.getSystemCursor(SWT.CURSOR_WAIT) : null);
+			}
+		});
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)

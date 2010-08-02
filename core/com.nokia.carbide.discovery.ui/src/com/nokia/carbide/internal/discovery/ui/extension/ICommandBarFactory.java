@@ -14,9 +14,21 @@
 * Description: 
 *
 */
-package com.nokia.carbide.internal.discovery.ui.view;
+package com.nokia.carbide.internal.discovery.ui.extension;
 
-import com.nokia.carbide.internal.discovery.ui.extension.AbstractRSSPortalPageLayer;
+import org.eclipse.ui.IEditorPart;
 
-public class WrenchSciencePage extends AbstractRSSPortalPageLayer {
+/**
+ * Interface to a factory for command bars for a portal page/layer
+ */
+public interface ICommandBarFactory {
+
+	/**
+	 * Return action bars for the portal page layer
+	 * @param part IEditorPart
+	 * @param updater IActionUIUpdater
+	 * @return IActionBar[]
+	 */
+	IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater);
+
 }

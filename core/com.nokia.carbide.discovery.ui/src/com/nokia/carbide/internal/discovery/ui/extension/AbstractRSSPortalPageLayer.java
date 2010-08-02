@@ -1,3 +1,19 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
 package com.nokia.carbide.internal.discovery.ui.extension;
 
 import java.net.URL;
@@ -60,17 +76,22 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 
 	@Override
 	public void init() {
-		URL url = getURL();
-		if (url != null) {
-			try {
-				rss = SimpleRSSReader.readRSS(url);
-				displayRSS();
-				actionBar.hookBrowser();
-			} catch (Exception e) {
-				Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+		Activator.runInUIThreadWhenProxyDataSet(browser, new Runnable() {
+			@Override
+			public void run() {
+				URL url = getURL();
+				if (url != null) {
+					try {
+						rss = SimpleRSSReader.readRSS(url);
+						displayRSS();
+						actionBar.hookBrowser();
+					} catch (Exception e) {
+						Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+					}
+					actionBar.update();
+				}
 			}
-			actionBar.update();
-		}
+		});
 	}
 
 	private void displayRSS() {
@@ -85,16 +106,18 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 			buf.append("<div class=\"channelBody\">"); //$NON-NLS-1$
 			buf.append(clean(channel.getDescription()));
 			buf.append("</div><br>"); //$NON-NLS-1$
+			buf.append("<ul>"); //$NON-NLS-1$
 			for (Item item : channel.getItems()) {
-				buf.append("<div class=\"item\"><a class=\"itemTitle\" href=\""); //$NON-NLS-1$
+				buf.append("<li><div class=\"item\"><a class=\"itemTitle\" href=\""); //$NON-NLS-1$
 				buf.append(item.getLink().toString());
 				buf.append("\">"); //$NON-NLS-1$
 				buf.append(clean(item.getTitle()));
 				buf.append("</a>"); //$NON-NLS-1$
 				buf.append("<div class=\"itemBody\">"); //$NON-NLS-1$
 				buf.append(clean(item.getDescription()));
-				buf.append("</div>"); //$NON-NLS-1$
+				buf.append("</div></li>"); //$NON-NLS-1$
 			}
+			buf.append("</ul>"); //$NON-NLS-1$
 		}
 		buf.append(HTML_BODY_FOOTER);
 		System.out.println(buf.toString());

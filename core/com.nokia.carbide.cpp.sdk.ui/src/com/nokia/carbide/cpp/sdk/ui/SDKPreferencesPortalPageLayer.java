@@ -14,39 +14,39 @@
 * Description: 
 *
 */
-package com.nokia.carbide.internal.discovery.ui.view;
+package com.nokia.carbide.cpp.sdk.ui;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 
+import com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage;
 import com.nokia.carbide.internal.discovery.ui.extension.IActionBar;
 import com.nokia.carbide.internal.discovery.ui.extension.IActionUIUpdater;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 
-public class SupportPage implements IPortalPageLayer {
+@SuppressWarnings("restriction")
+public class SDKPreferencesPortalPageLayer implements IPortalPageLayer {
 
-	@Override
+	private SDKPreferencePage preferencePage;
+
 	public Control createControl(Composite parent, IEditorPart part) {
-		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		composite.setLayout(new FillLayout());
-
-		return composite;
+		preferencePage = new SDKPreferencePage();
+		preferencePage.createControl(parent);
+		return preferencePage.getControl();
 	}
 
-	@Override
 	public void init() {
+		preferencePage.init(PlatformUI.getWorkbench());
 	}
 
-	@Override
 	public IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater) {
 		return null;
 	}
 
-	@Override
 	public void dispose() {
+		preferencePage.dispose();
 	}
+
 }

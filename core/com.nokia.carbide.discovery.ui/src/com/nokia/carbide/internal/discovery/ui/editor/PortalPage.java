@@ -17,6 +17,8 @@
 package com.nokia.carbide.internal.discovery.ui.editor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.jface.action.Action;
@@ -29,9 +31,10 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import com.nokia.carbide.internal.discovery.ui.editor.PortalEditor.LayerExtension;
+import com.nokia.carbide.internal.discovery.ui.extension.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.ICommandBarFactory;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer.IActionBar;
-import com.nokia.cpp.internal.api.utils.core.Pair;
 
 
 public class PortalPage implements IActionBar {
@@ -90,26 +93,34 @@ public class PortalPage implements IActionBar {
 		}
 	}
 
-	private String id;
 	private String title;
 	private ImageDescriptor imageDescriptor;
+	private String id;
+	private final ICommandBarFactory commandBarFactory;
 	private StackComposite pageComposite;
 	private boolean initialized;
 	private List<Layer> layers;
 	private Layer currentLayer;
 	private IAction[] actions;
-	private List<TaskBar> navigationTaskBars;
+	private List<TaskBar> pageTaskBars;
 	
 	public PortalPage(String title, ImageDescriptor imageDescriptor, String id, 
-			List<Pair<IPortalPageLayer, String>> layerExtensionPairs) {
+			List<LayerExtension> layerExtensions, ICommandBarFactory commandBarFactory) {
 		this.title = title;
 		this.imageDescriptor = imageDescriptor;
 		this.id = id;
-		layers = new ArrayList<Layer>(layerExtensionPairs.size());
-		for (Pair<IPortalPageLayer, String> layerExtensionTitlePair : layerExtensionPairs) {
-			layers.add(new Layer(layerExtensionTitlePair.first, layerExtensionTitlePair.second));
+		this.commandBarFactory = commandBarFactory;
+		layers = new ArrayList<Layer>(layerExtensions.size());
+		Collections.sort(layerExtensions, new Comparator<LayerExtension>() {
+			@Override
+			public int compare(LayerExtension o1, LayerExtension o2) {
+				return o1.order - o2.order;
+			}
+		});
+		for (LayerExtension layerExtension : layerExtensions) {
+			layers.add(new Layer(layerExtension.layer, layerExtension.title));
 		}
-		navigationTaskBars = new ArrayList<TaskBar>(layerExtensionPairs.size());
+		pageTaskBars = new ArrayList<TaskBar>(layerExtensions.size());
 	}
 	
 	public String getId() {
@@ -157,12 +168,22 @@ public class PortalPage implements IActionBar {
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(taskComposite);
 		TaskBar taskBar = new TaskBar(taskComposite, backgroundParent, this);
 		GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(taskBar);
-		navigationTaskBars.add(taskBar);
+		pageTaskBars.add(taskBar);
 		ActionUIUpdater updater = new ActionUIUpdater();
-		IActionBar[] commandBars = layerExtension.createCommandBars(portalEditor, updater);
+		createCommandBars(backgroundParent, taskComposite, updater, 
+				layerExtension.createCommandBars(portalEditor, updater));
+		if (commandBarFactory != null) {
+			createCommandBars(backgroundParent, taskComposite, updater, 
+					commandBarFactory.createCommandBars(portalEditor, updater));
+
+		}
+	}
+
+	private void createCommandBars(Composite backgroundParent, Composite taskComposite,
+			ActionUIUpdater updater, IActionBar[] commandBars) {
 		if (commandBars != null) {
 			for (IActionBar actionBar : commandBars) {
-				taskBar = new TaskBar(taskComposite, backgroundParent, actionBar);
+				TaskBar taskBar = new TaskBar(taskComposite, backgroundParent, actionBar);
 				updater.addTaskBar(taskBar);
 				GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(taskBar);
 			}
@@ -201,7 +222,7 @@ public class PortalPage implements IActionBar {
 		pageComposite.showControl(currentLayer.getControl());
 		if (!currentLayer.isInitialized())
 			currentLayer.initialize();
-		for (TaskBar taskBar : navigationTaskBars) {
+		for (TaskBar taskBar : pageTaskBars) {
 			taskBar.updateAllActionsUI();
 		}
 	}

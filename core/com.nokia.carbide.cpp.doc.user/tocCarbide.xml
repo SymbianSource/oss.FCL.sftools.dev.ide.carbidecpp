@@ -57,7 +57,7 @@
     <topic label="Toggle HW Breakpoint"         href="html/reference/menus/hardware_breakpoints.htm" />
     <topic label="Update Projects"          	href="html/reference/olderproject_updater.html" />
   </topic>
-  <topic label="Carbide views"  >
+  <topic label="Carbide views" 						href="html/reference/views_overview.htm"  >
       <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
       <topic label="Carbide Portal"	    			href="html/reference/view_carbide_portal.htm" >
       	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />

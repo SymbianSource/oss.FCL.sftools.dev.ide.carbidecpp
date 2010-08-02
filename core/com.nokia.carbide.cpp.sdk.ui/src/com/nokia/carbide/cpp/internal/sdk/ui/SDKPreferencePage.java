@@ -252,11 +252,9 @@ public class SDKPreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent){
-		sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr == null){
 			return; 
 		}
-		sdkList = sdkMgr.getSDKList();
 
 		super.createControl(parent);
 
@@ -270,7 +268,11 @@ public class SDKPreferencePage
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
-	public void init(IWorkbench arg0) {
+	public void init(IWorkbench workbench) {
+		sdkMgr = SDKCorePlugin.getSDKManager();
+		if (sdkMgr != null){
+			sdkList = sdkMgr.getSDKList();
+		}
 	}
 
 	/*

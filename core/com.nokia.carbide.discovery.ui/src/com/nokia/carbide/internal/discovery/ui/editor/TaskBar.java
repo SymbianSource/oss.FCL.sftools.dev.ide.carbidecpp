@@ -31,7 +31,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 
-import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IActionBar;
 
 class TaskBar extends RoundedCornerComposite {
 
@@ -112,14 +112,18 @@ class TaskBar extends RoundedCornerComposite {
 		for (Entry<Hyperlink, IAction> entry : linkToActionMap.entrySet()) {
 			IAction action = entry.getValue();
 			if (actionId.equals(action.getId())) {
-				entry.getKey().setEnabled(action.isEnabled());
+				Hyperlink link = entry.getKey();
+				if (link != null && !link.isDisposed())
+					link.setEnabled(entry.getValue().isEnabled());
 			}
 		}
 	}
 
 	public void updateAllActionsUI() {
 		for (Entry<Hyperlink, IAction> entry : linkToActionMap.entrySet()) {
-			entry.getKey().setEnabled(entry.getValue().isEnabled());
+			Hyperlink link = entry.getKey();
+			if (link != null && !link.isDisposed())
+				link.setEnabled(entry.getValue().isEnabled());
 		}
 	}
 
