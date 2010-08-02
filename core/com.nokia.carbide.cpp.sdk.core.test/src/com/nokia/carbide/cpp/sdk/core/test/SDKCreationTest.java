@@ -66,7 +66,6 @@ public class SDKCreationTest extends BaseDeviceModifierTest {
 					}
 					assertTrue(sdk.getOSVersion().getMajor() == 0);
 					assertTrue(sbsv1BuildInfo.getPlatformMacros("WINSCW").size() == 0);
-					assertTrue(sdk.getSupportedTargetTypes().size() == 0);
 					File epocRoot = new File(sdk.getEPOCROOT());
 					assertTrue(epocRoot.exists() == false);
 				}

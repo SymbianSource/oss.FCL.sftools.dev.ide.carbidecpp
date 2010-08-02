@@ -70,9 +70,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	private static final String PATH_ID_SRCDIR = "srcDir"; //$NON-NLS-1$
 	
 	private static final String RELEASE = "release"; //$NON-NLS-1$
-	public static final String VARIANT_CFG_FILE = "epoc32/tools/variant/variant.cfg"; //$NON-NLS-1$
-	public static final String SPP_VARIANT_CFG_FILE = "epoc32/tools/variant/spp_variant.cfg"; //$NON-NLS-1$
-	private static final String TARGETTYPE_PM_FILE = "epoc32/tools/trgtype.pm"; //$NON-NLS-1$
 	private static final String BUILD_INFO_TXT_FILE = "epoc32/data/buildinfo.txt"; //$NON-NLS-1$
 	private static final String BUILD_INFO_KEYWORD = "ManufacturerSoftwareBuild";
 	
@@ -83,14 +80,10 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	protected DeviceType deviceEntry = null;
 	private boolean enabled = true;
 	private Version osVersion;
-	private List<String> supportedTargetTypesList = new ArrayList<String>();
 	private Map<String, ISDKBuildInfo> buildInfoMap = new HashMap<String, ISDKBuildInfo>();
 	private Map<String, File> prefixFileMap = new HashMap<String, File>();
 	@SuppressWarnings("rawtypes")
 	private Set<Object> sdkFeatures = new HashSet<Object>();
-
-	// greedy match means the filename is in the last group
-	public static Pattern VARIANT_HRH_LINE_PATTERN = Pattern.compile("(?i)(.*)(/|\\\\)(.*hrh)");
 
 	public SymbianSDK(DeviceType device) {
 		deviceEntry = device;
@@ -196,52 +189,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return sdkFeatures;
 	}
 
-	// TODO: This needs to move under ISymianBuildContext. For abld we can use this method.
-	// For SBSv2, this is configuration dependent and the information is obtained from
-	// the sbs --query=config[<config>] call.
-	public List<String> getSupportedTargetTypes() {
-		
-		synchronized (supportedTargetTypesList) {
-			if (supportedTargetTypesList.size() > 0){
-				return supportedTargetTypesList;
-			}
-			
-			File epocRoot = new File(getEPOCROOT());
-			File targetTypePM = new File(epocRoot, TARGETTYPE_PM_FILE);
-			if (!targetTypePM.exists())
-				return supportedTargetTypesList;
-			
-			// greedy match means the filename is in the last group
-			try {
-				char[] cbuf = new char[(int) targetTypePM.length()];
-				Reader reader = new FileReader(targetTypePM);
-				reader.read(cbuf);
-				reader.close();
-				String[] lines = new String(cbuf).split("\r|\r\n|\n");
-				for (int i = 0; i < lines.length; i++) {
-					// skip comments and blank lines
-					String line = removeComments(lines[i]);
-					if (line.matches("\\s*#.*") || line.trim().length() == 0) 
-						continue;
-					
-					// parse current line... the slitting could be done better with more efficent reg exp....
-					line = line.trim();
-					line = line.replaceAll(" ", "");
-					if (line.endsWith("=>{")){
-						String[] lineSplit = line.split("=>");
-						if (lineSplit.length == 2 && Character.isLetter(lineSplit[0].charAt(0))){
-							supportedTargetTypesList.add(lineSplit[0]);
-						}
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return supportedTargetTypesList;
-	}
-
 	public IPath getToolsPath() {
 		String epocRoot = getEPOCROOT();
 		if (epocRoot.length() > 0) {
@@ -263,46 +210,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return "";
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<String> getVariantCFGMacros(){
-		
-		List<String> variantCFGMacros = new ArrayList<String>();
-		File epocRoot = new File(getEPOCROOT());
-		File variantCfg;
-		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);
-		if (!variantCfg.exists()) {
-			variantCfg = new File(epocRoot, VARIANT_CFG_FILE);
-			if (!variantCfg.exists())
-				return Collections.EMPTY_LIST;
-		}
-		
-		try {
-			char[] cbuf = new char[(int) variantCfg.length()];
-			Reader reader = new FileReader(variantCfg);
-			reader.read(cbuf);
-			reader.close();
-			String[] lines = new String(cbuf).split("\r\n|\r|\n");
-			for (int i = 0; i < lines.length; i++) {
-				// skip comments and blank lines
-				String line = removeComments(lines[i]);
-				if (line.matches("\\s*#.*") || line.trim().length() == 0) 
-					continue;
-				
-				// parse the variant line, which is an EPOCROOT-relative
-				// path to a bldvariant.hrh file
-				Matcher matcher = VARIANT_HRH_LINE_PATTERN.matcher(line);
-				if (matcher.matches()) {
-					continue; // Skip this it's the file
-				} else {
-					// all other patterns are assumed to be macro
-					variantCFGMacros.add(line.trim());
-				}
-			}
-		} catch (IOException e) {
-		}
-		
-		return variantCFGMacros;
-	}
+
 
 	public boolean isEnabled() {
 		if (!SDKCorePlugin.SUPPORTS_SBSV1_BUILDER && 

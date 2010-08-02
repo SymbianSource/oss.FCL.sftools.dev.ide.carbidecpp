@@ -40,5 +40,5 @@ public interface ISDKBuildInfo {
 	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
 	 */
 	public IPath getPrefixFromVariantCfg();
-
+	
 }

@@ -17,4 +17,5 @@ public interface ISBSv2ConfigQueryData extends Serializable {
 	public List<String> getMetaDataIncludes();
 	public String getMetaDataVariantHRH();
 	public String getOutputPathString();
+	public List<String> getTargettypes();
 }

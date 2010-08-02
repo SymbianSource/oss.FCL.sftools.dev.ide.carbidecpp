@@ -120,6 +120,9 @@ public class SymbianBuildContextDataCache {
 
 	private String contextKey;
 
+	/**
+	 * One of {@link ISymbianBuilderID}
+	 */
 	private String builderId;
 
 	private boolean changed;
@@ -254,18 +257,22 @@ public class SymbianBuildContextDataCache {
 					hrhFilesParsed.add(inc);
 				}
 				
-				List<String> variantCFGMacros = new ArrayList<String>();
-				variantCFGMacros = sdk.getVariantCFGMacros();
-				for (String cfgMacros : variantCFGMacros){
-					// we don't want duplicate macros, so check to see if it's already there.
-					IDefine existingMacro = namedMacros.get(cfgMacros);
-					if (existingMacro != null) {
-						macros.remove(existingMacro);
-					}
+				if (buildInfo instanceof ISBSv1BuildInfo) {
+					// SBSv2 does not parse the variant.cfg file to collect macros.
+					List<String> variantCFGMacros = new ArrayList<String>();
 					
-					IDefine macro = DefineFactory.createSimpleFreeformDefine(cfgMacros);
-					macros.add(macro);
-					namedMacros.put(macro.getName(), macro);
+					variantCFGMacros = ((ISBSv1BuildInfo)buildInfo).getVariantCFGMacros();
+					for (String cfgMacros : variantCFGMacros){
+						// we don't want duplicate macros, so check to see if it's already there.
+						IDefine existingMacro = namedMacros.get(cfgMacros);
+						if (existingMacro != null) {
+							macros.remove(existingMacro);
+						}
+						
+						IDefine macro = DefineFactory.createSimpleFreeformDefine(cfgMacros);
+						macros.add(macro);
+						namedMacros.put(macro.getName(), macro);
+					}
 				}
 			} 
 			

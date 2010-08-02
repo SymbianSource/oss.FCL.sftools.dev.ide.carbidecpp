@@ -88,4 +88,19 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 */
 	List<String> getBuiltinMacros(ISymbianBuildContext context);
 
+	/**
+	 * Get a list of supported targettypes listed by this SDK. This routine parses the 
+	 * \epoc32\tools\trgttype.pm file to build it's list.
+	 * @return A list of targettype names that can be used in an MMP file
+	 */
+	List<String> getSupportedTargetTypes();
+
+	
+	/**
+	 * Returns a list of the macros defined in the variant.cfg file. This is NOT the macros
+	 * in the HRH file, but the actual maros written to the variant.cfg file.
+	 * @return A String list of macros found as is, or an empty list if none.
+	 */
+	List<String> getVariantCFGMacros();
+	
 }

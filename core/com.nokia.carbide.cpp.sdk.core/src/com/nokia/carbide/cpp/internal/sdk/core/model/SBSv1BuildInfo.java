@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -58,7 +59,15 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	private List<ISymbianBuildContext> binaryVariantContextList = new ArrayList<ISymbianBuildContext>(0);
 	private List<ISymbianBuildContext> bsfContextList = new ArrayList<ISymbianBuildContext>(0);
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
+	private List<String> supportedTargetTypesList = new ArrayList<String>();
+	
+	private static final String TARGETTYPE_PM_FILE = "epoc32/tools/trgtype.pm"; //$NON-NLS-1$
+	public static final String VARIANT_CFG_FILE = "epoc32/tools/variant/variant.cfg"; //$NON-NLS-1$
+	public static final String SPP_VARIANT_CFG_FILE = "epoc32/tools/variant/spp_variant.cfg"; //$NON-NLS-1$
 
+	// greedy match means the filename is in the last group
+	public static Pattern VARIANT_HRH_LINE_PATTERN = Pattern.compile("(?i)(.*)(/|\\\\)(.*hrh)");
+	
 	public SBSv1BuildInfo(ISymbianSDK sdk) {
 		this.sdk = sdk;
 	}
@@ -151,9 +160,9 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	public IPath getPrefixFromVariantCfg(){
 		File epocRoot = new File(sdk.getEPOCROOT());
 		File variantCfg;
-		variantCfg = new File(epocRoot, SymbianSDK.SPP_VARIANT_CFG_FILE);
+		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);
 		if (!variantCfg.exists()) {
-			variantCfg = new File(epocRoot, SymbianSDK.VARIANT_CFG_FILE);
+			variantCfg = new File(epocRoot, VARIANT_CFG_FILE);
 			if (!variantCfg.exists())
 				return null;
 		}
@@ -174,7 +183,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 				
 				// parse the variant line, which is an EPOCROOT-relative
 				// path to a bldvariant.hrh file
-				Matcher matcher = SymbianSDK.VARIANT_HRH_LINE_PATTERN.matcher(line);
+				Matcher matcher = VARIANT_HRH_LINE_PATTERN.matcher(line);
 				if (matcher.matches()) {
 					variantDir = matcher.group(1);
 					variantFile = matcher.group(3); 
@@ -327,6 +336,93 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		
 		return macros;
 	}
+	
+	// TODO: This needs to move under ISymianBuildContext. For abld we can use this method.
+	// For SBSv2, this is configuration dependent and the information is obtained from
+	// the sbs --query=config[<config>] call.
+	public List<String> getSupportedTargetTypes() {
+		
+		synchronized (supportedTargetTypesList) {
+			if (supportedTargetTypesList.size() > 0){
+				return supportedTargetTypesList;
+			}
+			
+			File epocRoot = new File(sdk.getEPOCROOT());
+			File targetTypePM = new File(epocRoot, TARGETTYPE_PM_FILE);
+			if (!targetTypePM.exists())
+				return supportedTargetTypesList;
+			
+			// greedy match means the filename is in the last group
+			try {
+				char[] cbuf = new char[(int) targetTypePM.length()];
+				Reader reader = new FileReader(targetTypePM);
+				reader.read(cbuf);
+				reader.close();
+				String[] lines = new String(cbuf).split("\r|\r\n|\n");
+				for (int i = 0; i < lines.length; i++) {
+					// skip comments and blank lines
+					String line = SymbianSDK.removeComments(lines[i]);
+					if (line.matches("\\s*#.*") || line.trim().length() == 0) 
+						continue;
+					
+					// parse current line... the slitting could be done better with more efficent reg exp....
+					line = line.trim();
+					line = line.replaceAll(" ", "");
+					if (line.endsWith("=>{")){
+						String[] lineSplit = line.split("=>");
+						if (lineSplit.length == 2 && Character.isLetter(lineSplit[0].charAt(0))){
+							supportedTargetTypesList.add(lineSplit[0]);
+						}
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
+		return supportedTargetTypesList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getVariantCFGMacros(){
+		
+		List<String> variantCFGMacros = new ArrayList<String>();
+		File epocRoot = new File(sdk.getEPOCROOT());
+		File variantCfg;
+		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);
+		if (!variantCfg.exists()) {
+			variantCfg = new File(epocRoot, VARIANT_CFG_FILE);
+			if (!variantCfg.exists())
+				return Collections.EMPTY_LIST;
+		}
+		
+		try {
+			char[] cbuf = new char[(int) variantCfg.length()];
+			Reader reader = new FileReader(variantCfg);
+			reader.read(cbuf);
+			reader.close();
+			String[] lines = new String(cbuf).split("\r\n|\r|\n");
+			for (int i = 0; i < lines.length; i++) {
+				// skip comments and blank lines
+				String line = SymbianSDK.removeComments(lines[i]);
+				if (line.matches("\\s*#.*") || line.trim().length() == 0) 
+					continue;
+				
+				// parse the variant line, which is an EPOCROOT-relative
+				// path to a bldvariant.hrh file
+				Matcher matcher = VARIANT_HRH_LINE_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					continue; // Skip this it's the file
+				} else {
+					// all other patterns are assumed to be macro
+					variantCFGMacros.add(line.trim());
+				}
+			}
+		} catch (IOException e) {
+		}
+		
+		return variantCFGMacros;
+	}
+	
 
 }

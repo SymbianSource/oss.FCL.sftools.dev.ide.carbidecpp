@@ -31,6 +31,7 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 	private Map<String, String> buildMacros = new HashMap<String, String>(); // cpp preprocessor macros
 	private Map<String, String> metaDataMacros = new HashMap<String, String>();  // macros to parse the INF/MMPs files (these do not contain values)
 	private List<String> metaDataIncludes = new ArrayList<String>();
+	private List<String> targettypes = new ArrayList<String>();
 	private String buildPrefix = "";
 	private String metaDataVariantHRH = "";
 	private String outputPathString = "";
@@ -60,6 +61,11 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 	@Override
 	public Map<String, String> getBuildMacros() {
 		return buildMacros;
+	}
+	
+	@Override
+	public List<String> getTargettypes() {
+		return targettypes;
 	}
 
 	@Override
@@ -187,6 +193,11 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 										buildMacros.put(name, value);
 									} else if (buildChild.getNodeName().equals("preinclude")){
 										buildPrefix = attribs.getNamedItem("file").getNodeValue();
+									} else if (buildChild.getNodeName().equals("targettype")){
+										String targettype = attribs.getNamedItem("name").getNodeValue();
+										if (targettype != null && targettype.length() > 0){
+											targettypes.add(targettype);
+										}
 									}
 								} catch (Exception e) {
 									// skip it

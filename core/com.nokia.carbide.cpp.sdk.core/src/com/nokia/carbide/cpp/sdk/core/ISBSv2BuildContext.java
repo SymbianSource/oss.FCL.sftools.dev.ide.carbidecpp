@@ -65,5 +65,11 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	 * @return
 	 */
 	public String getPlatformReleaseDirName();
+
+	/**
+	 * Get the supported targettypes for this build configuration
+	 * @return
+	 */
+	public List<String> getSupportedTargettypes();
 	
 }

@@ -368,4 +368,9 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return null;
 	}
 
+	@Override
+	public List<String> getSupportedTargettypes() {
+		return configQueryData.getTargettypes();
+	}
+
 }

@@ -85,14 +85,7 @@ public interface ISymbianSDK {
 	 */
 	@SuppressWarnings("rawtypes")
 	Set getSupportedFeatures();
-	
-	/**
-	 * Get a list of supported targettypes listed by this SDK. This routine parses the 
-	 * \epoc32\tools\trgttype.pm file to build it's list.
-	 * @return A list of targettype names that can be used in an MMP file
-	 */
-	List<String> getSupportedTargetTypes();
-	
+		
 	/**
 	 * Returns an IPath for the epoc32\tools directory of a SDK.
 	 * @return an IPath for the epoc32\tools directory, or <code>null</code>.
@@ -105,13 +98,6 @@ public interface ISymbianSDK {
 	 * @return the id string of this SDK.
 	 */
 	String getUniqueId();
-	
-	/**
-	 * Returns a list of the macros defined in the variant.cfg file. This is NOT the macros
-	 * in the HRH file, but the actual maros written to the variant.cfg file.
-	 * @return A String list of macros found as is, or an empty list if none.
-	 */
-	List<String> getVariantCFGMacros();
 	
 	/**
 	 * Returns true if the SDK is enabled, false otherwise.
