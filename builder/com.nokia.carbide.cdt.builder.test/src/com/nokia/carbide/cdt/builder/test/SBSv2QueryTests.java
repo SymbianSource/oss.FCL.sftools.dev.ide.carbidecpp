@@ -82,6 +82,8 @@ public class SBSv2QueryTests extends BaseTest {
 			} else {
 				System.out.println("Config " + sbsv2Context.getSBSv2Alias() + " had error, cannot fully test: " + sbsv2Context.getConfigQueryData().getConfigurationErrorMessage());
 			}
+			
+			assertTrue(sbsv2Context.getConfigQueryData().getTargettypes().size() > 0);
 		}
 	}
 		
