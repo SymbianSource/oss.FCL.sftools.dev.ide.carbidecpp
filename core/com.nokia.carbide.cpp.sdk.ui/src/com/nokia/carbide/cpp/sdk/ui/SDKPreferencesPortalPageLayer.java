@@ -19,8 +19,11 @@ package com.nokia.carbide.cpp.sdk.ui;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage;
+import com.nokia.carbide.internal.discovery.ui.extension.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IActionUIUpdater;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 
 @SuppressWarnings("restriction")
@@ -35,6 +38,7 @@ public class SDKPreferencesPortalPageLayer implements IPortalPageLayer {
 	}
 
 	public void init() {
+		preferencePage.init(PlatformUI.getWorkbench());
 	}
 
 	public IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater) {

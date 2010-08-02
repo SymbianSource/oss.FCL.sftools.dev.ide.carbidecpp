@@ -82,6 +82,7 @@ public class SDKPreferencePage
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
+		sdkList = sdkMgr.getSDKList();
 	}
 	
 	/* (non-Javadoc)
@@ -96,7 +97,6 @@ public class SDKPreferencePage
 		}
 		
 		shell = parent.getShell();
-		sdkList = sdkMgr.getSDKList();
 		RED = shell.getDisplay().getSystemColor(SWT.COLOR_RED);
 		BLACK = shell.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		GRAY = shell.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);

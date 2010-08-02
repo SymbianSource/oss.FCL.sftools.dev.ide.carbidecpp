@@ -54,12 +54,24 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.carbide.internal.discovery.ui.extension.ICommandBarFactory;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalEditor;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class PortalEditor extends EditorPart implements IPortalEditor {
+	
+	class LayerExtension {
+		public LayerExtension(IPortalPageLayer layer, String title, int order) {
+			this.layer = layer;
+			this.title = title;
+			this.order = order;
+		}
+		public IPortalPageLayer layer;
+		public String title;
+		public int order;
+	}
 
 	private static final String ID = "com.nokia.carbide.discovery.ui.portalEditor"; //$NON-NLS-1$
 	private static final String CONTEXT_ID = ID + ".context"; //$NON-NLS-1$
@@ -76,19 +88,20 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 		loadPortalPages();
 	}
 	
-	private Map<String, List<Pair<IPortalPageLayer, String>>> loadPortalLayers() {
-		Map<String, List<Pair<IPortalPageLayer, String>>> pageIdToExtensionsMap = 
-			new HashMap<String, List<Pair<IPortalPageLayer, String>>>();
+	private Map<String, List<LayerExtension>> loadPortalLayers() {
+		Map<String, List<LayerExtension>> pageIdToExtensionsMap = 
+			new HashMap<String, List<LayerExtension>>();
 		IConfigurationElement[] elements = 
 			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPageLayer"); //$NON-NLS-1$
 		for (IConfigurationElement element : elements) {
 			String pageId = element.getAttribute("pageId"); //$NON-NLS-1$
 			String title = element.getAttribute("title"); //$NON-NLS-1$
+			int order = getOrderStringFromElement(element, title);
 			try {
 				IPortalPageLayer extension = (IPortalPageLayer) element.createExecutableExtension("class"); //$NON-NLS-1$
 				if (!pageIdToExtensionsMap.containsKey(pageId))
-					pageIdToExtensionsMap.put(pageId, new ArrayList<Pair<IPortalPageLayer, String>>());
-				pageIdToExtensionsMap.get(pageId).add(new Pair<IPortalPageLayer, String>(extension, title));
+					pageIdToExtensionsMap.put(pageId, new ArrayList<LayerExtension>());
+				pageIdToExtensionsMap.get(pageId).add(new LayerExtension(extension, title, order));
 			} catch (CoreException e) {
 				Activator.logError(MessageFormat.format(Messages.PortalEditor_PageLoadError, pageId), e);
 			}
@@ -97,31 +110,30 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	}
 
 	private void loadPortalPages() {
-		Map<String, List<Pair<IPortalPageLayer, String>>> portalLayersMap = loadPortalLayers();
+		Map<String, List<LayerExtension>> portalLayersMap = loadPortalLayers();
 		List<Pair<PortalPage, Integer>> pageList = new ArrayList<Pair<PortalPage, Integer>>();
 		IConfigurationElement[] elements = 
 			Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID + ".portalPage"); //$NON-NLS-1$
 		for (IConfigurationElement element : elements) {
 			String id = element.getAttribute("id"); //$NON-NLS-1$
-			int order = Integer.MAX_VALUE;
-			String orderString = element.getAttribute("order"); //$NON-NLS-1$
-			if (orderString != null) {
-				try {
-					order = Integer.parseInt(orderString);
-				}
-				catch (NumberFormatException e) {
-					Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError, id), e);
-				}
-			}
+			int order = getOrderStringFromElement(element, id);
 			String title = element.getAttribute("title"); //$NON-NLS-1$
 			String imageFilePath = element.getAttribute("image"); //$NON-NLS-1$
 			String pluginId = element.getContributor().getName();
 			ImageDescriptor imageDesc = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, imageFilePath);
-			List<Pair<IPortalPageLayer, String>> portalLayers = portalLayersMap.get(id);
+			List<LayerExtension> portalLayers = portalLayersMap.get(id);
 			if (portalLayers == null || portalLayers.isEmpty()) {
 				Activator.logError(MessageFormat.format(Messages.PortalEditor_NoLayersError, id), null);
 			}
-			PortalPage portalPage = new PortalPage(title, imageDesc, id, portalLayers);
+			ICommandBarFactory commandBarFactory = null;
+			if (element.getAttribute("class") != null) { //$NON-NLS-1$
+				try {
+					commandBarFactory = (ICommandBarFactory) element.createExecutableExtension("class"); //$NON-NLS-1$
+				} catch (CoreException e) {
+					Activator.logError(MessageFormat.format(Messages.PortalEditor_BadCommandBarFactoryError, id), e);
+				}
+			}
+			PortalPage portalPage = new PortalPage(title, imageDesc, id, portalLayers, commandBarFactory);
 			pageList.add(new Pair<PortalPage, Integer>(portalPage, order));
 		}
 		Collections.sort(pageList, new Comparator<Pair<PortalPage, Integer>>() {
@@ -134,6 +146,20 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 		for (Pair<PortalPage, Integer> pair : pageList) {
 			pages.add(pair.first);
 		}
+	}
+
+	private int getOrderStringFromElement(IConfigurationElement element, String id) {
+		int order = Integer.MAX_VALUE;
+		String orderString = element.getAttribute("order"); //$NON-NLS-1$
+		if (orderString != null) {
+			try {
+				order = Integer.parseInt(orderString);
+			}
+			catch (NumberFormatException e) {
+				Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError, id), e);
+			}
+		}
+		return order;
 	}
 
 	@Override

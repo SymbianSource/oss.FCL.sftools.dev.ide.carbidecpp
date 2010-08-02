@@ -16,30 +16,19 @@
 */
 package com.nokia.carbide.internal.discovery.ui.extension;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 /**
- * Interface to a portal page layer extension
+ * Interface to a factory for command bars for a portal page/layer
  */
-public interface IPortalPageLayer extends ICommandBarFactory {
+public interface ICommandBarFactory {
 
 	/**
-	 * Called to create the control for the portal page layer
-	 * @param parent Composite
+	 * Return action bars for the portal page layer
 	 * @param part IEditorPart
-	 * @return Control
+	 * @param updater IActionUIUpdater
+	 * @return IActionBar[]
 	 */
-	Control createControl(Composite parent, IEditorPart part);
-	
-	/**
-	 * Called to initialize the portal page layer when shown for the first time
-	 */
-	void init();
-	
-	/**
-	 * Called to dispose internal resources of the portal page layer
-	 */
-	void dispose();
+	IActionBar[] createCommandBars(IEditorPart part, IActionUIUpdater updater);
+
 }

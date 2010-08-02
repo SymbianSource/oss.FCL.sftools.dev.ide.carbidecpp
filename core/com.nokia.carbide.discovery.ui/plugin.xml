@@ -49,6 +49,7 @@
  <extension
        point="com.nokia.carbide.discovery.ui.portalPage">
     <portalPage
+          class="com.nokia.carbide.internal.discovery.ui.view.SettingsBarCreator"
           id="com.nokia.carbide.discovery.ui.customizePage"
           image="icons/icon-discovery.png"
           order="50"
@@ -77,6 +78,7 @@
        point="com.nokia.carbide.discovery.ui.portalPageLayer">
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
+          order="1"
           pageId="com.nokia.carbide.discovery.ui.homePage"
           title="Forum Nokia">
     </portalPageLayer>
@@ -87,23 +89,33 @@
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPortalExtension"
+          order="50"
           pageId="com.nokia.carbide.discovery.ui.customizePage"
           title="%install.layer.title">
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.WrenchSciencePage"
+          order="30"
           pageId="com.nokia.carbide.discovery.ui.homePage"
           title="%wrenchscience.title">
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.CreatingCarbidePage"
+          order="25"
           pageId="com.nokia.carbide.discovery.ui.homePage"
           title="%creatingcarbide.title">
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.BugzillaPage"
-          pageId="com.nokia.carbide.discovery.ui.bugzillaPageLayer"
+          order="100"
+          pageId="com.nokia.carbide.discovery.ui.homePage"
           title="Report Bugs">
+    </portalPageLayer>
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.PulsarPageLayer"
+          order="25"
+          pageId="com.nokia.carbide.discovery.ui.kitsPage"
+          title="Install SDKs">
     </portalPageLayer>
  </extension>
 

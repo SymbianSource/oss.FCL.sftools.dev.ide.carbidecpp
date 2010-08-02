@@ -111,8 +111,8 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 			updater.updateAll();
 		}
 
-		private void setLoading(boolean loading) {
-			browser.setCursor(loading ? browser.getDisplay().getSystemCursor(SWT.CURSOR_WAIT) : null);
+		public void setLoading(boolean loading) {
+			Activator.setBusyCursor(browser, loading);
 			this.loading = loading;
 		}
 
@@ -156,13 +156,19 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 	@Override
 	public void init() {
 		if (browser != null) {
-			URL url = getURL();
-			if (url != null) {
-				browser.setUrl(url.toString());
-			}
-			actionBar.hookBrowser();
+			Activator.runInUIThreadWhenProxyDataSet(browser, new Runnable() {
+				@Override
+				public void run() {
+					URL url = getURL();
+					if (url != null) {
+						browser.setUrl(url.toString());
+						actionBar.setLoading(true);
+					}
+					actionBar.hookBrowser();
+					actionBar.update();
+				}
+			});
 		}
-		actionBar.update();
 	}
 	
 	@Override

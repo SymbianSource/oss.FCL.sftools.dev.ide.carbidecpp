@@ -1,3 +1,19 @@
+/*
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*
+*/
 package com.nokia.carbide.internal.discovery.ui.extension;
 
 import java.net.URL;
@@ -60,17 +76,22 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 
 	@Override
 	public void init() {
-		URL url = getURL();
-		if (url != null) {
-			try {
-				rss = SimpleRSSReader.readRSS(url);
-				displayRSS();
-				actionBar.hookBrowser();
-			} catch (Exception e) {
-				Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+		Activator.runInUIThreadWhenProxyDataSet(browser, new Runnable() {
+			@Override
+			public void run() {
+				URL url = getURL();
+				if (url != null) {
+					try {
+						rss = SimpleRSSReader.readRSS(url);
+						displayRSS();
+						actionBar.hookBrowser();
+					} catch (Exception e) {
+						Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+					}
+					actionBar.update();
+				}
 			}
-			actionBar.update();
-		}
+		});
 	}
 
 	private void displayRSS() {

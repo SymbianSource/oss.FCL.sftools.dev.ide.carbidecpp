@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
+import com.nokia.carbide.internal.discovery.ui.extension.IActionBar;
+import com.nokia.carbide.internal.discovery.ui.extension.IActionUIUpdater;
 import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 
 public class SupportPage implements IPortalPageLayer {
