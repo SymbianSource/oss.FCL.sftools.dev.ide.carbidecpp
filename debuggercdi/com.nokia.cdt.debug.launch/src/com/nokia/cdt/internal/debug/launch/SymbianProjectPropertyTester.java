@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.IPath;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 
 /**
  * A property tester that determines if a file is an executable.
