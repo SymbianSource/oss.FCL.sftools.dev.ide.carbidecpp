@@ -43,8 +43,8 @@ import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.UseType;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.VarType;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
-import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 

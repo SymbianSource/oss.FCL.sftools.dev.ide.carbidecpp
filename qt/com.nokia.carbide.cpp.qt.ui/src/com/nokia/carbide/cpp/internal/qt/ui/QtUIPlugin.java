@@ -42,11 +42,11 @@ import com.nokia.carbide.cdt.builder.project.ICarbideConfigurationChangedListene
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
 import com.nokia.carbide.cpp.internal.qt.ui.wizard.Messages;
-import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class QtUIPlugin extends AbstractUIPlugin implements ICarbideConfigurationChangedListener, ISDKManagerLoadedHook {

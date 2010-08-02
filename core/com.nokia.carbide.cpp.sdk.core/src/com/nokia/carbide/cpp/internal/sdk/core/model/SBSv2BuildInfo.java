@@ -26,13 +26,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
-import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;

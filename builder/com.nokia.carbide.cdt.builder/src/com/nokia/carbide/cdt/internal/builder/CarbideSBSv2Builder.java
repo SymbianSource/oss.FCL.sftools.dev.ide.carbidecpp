@@ -33,8 +33,8 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 
 public class CarbideSBSv2Builder implements ICarbideBuilder {
 

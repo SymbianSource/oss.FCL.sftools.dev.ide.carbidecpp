@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
 
-import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class SBSv2BuilderInfo implements ISBSv2BuildConfigInfo {

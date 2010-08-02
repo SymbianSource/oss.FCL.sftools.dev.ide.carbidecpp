@@ -16,7 +16,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.nokia.carbide.cpp.sdk.core.ISBSv2ConfigQueryData;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 

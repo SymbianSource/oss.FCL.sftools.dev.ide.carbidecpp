@@ -21,7 +21,7 @@ import java.io.File;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.IFilter;
 
-import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public abstract class QtFilter implements IFilter {

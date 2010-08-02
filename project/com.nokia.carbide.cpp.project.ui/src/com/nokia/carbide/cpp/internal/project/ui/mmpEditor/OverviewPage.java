@@ -51,14 +51,14 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.ControlHandler;
 import com.nokia.carbide.cpp.internal.project.ui.editors.common.FormUtilities;
 import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.commands.EMMPListSelector;
 import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.commands.EMMPStringValueSelector;
-import com.nokia.carbide.cpp.sdk.core.ISBSv1BuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
