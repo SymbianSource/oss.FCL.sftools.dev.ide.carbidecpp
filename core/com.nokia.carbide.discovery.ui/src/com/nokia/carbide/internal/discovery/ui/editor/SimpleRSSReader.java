@@ -37,6 +37,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.nokia.carbide.discovery.ui.Activator;
+
 /**
  * A simple RSS reader
  * @see http://www.rssboard.org/rss-specification
@@ -94,7 +96,7 @@ public class SimpleRSSReader {
 					link = new URL(value);
 				} catch (MalformedURLException e) {
 					// don't store malformed URLs
-					e.printStackTrace();
+					Activator.logError("Bad URL", e);
 				}
 			}
 			else if (RSSHandler.DESCRIPTION.equals(element) || RSSHandler.SUMMARY.equals(element))
@@ -102,10 +104,11 @@ public class SimpleRSSReader {
 			else if (RSSHandler.PUBDATE.equals(element)) {
 				try {
 					// FIXME parser needs writing!!
-					pubDate = DateFormat.getInstance().parse(value);
+					DateFormat dateFormat = DateFormat.getInstance();
+					dateFormat.setLenient(true);
+					pubDate = dateFormat.parse(value);
 				} catch (ParseException e) {
 					// don't store malformed dates
-//					e.printStackTrace();
 				}
 			}
 			else if (RSSHandler.CATEGORY.equals(element))
