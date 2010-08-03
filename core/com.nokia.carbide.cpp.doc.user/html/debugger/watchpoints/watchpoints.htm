@@ -10,7 +10,7 @@
 <body bgcolor="#FFFFFF">
 <h2>Watchpoints Overview </h2>
 <p>  Use <em>watchpoints</em> (sometimes referred to as access breakpoints) to halt program execution when a specific global location is accessed. After you set a watchpoint at a key point in memory, you can halt program execution whenever that point in memory is written to or read from. You can then examine the call chain, check register and variable values, and step through your code. You can also change values and alter the flow of normal program execution.</p>
-<p>A watchpoint must be both enabled and resolved during a debug session in order to halt program execution. The  <a href="../reference/view_breakpoints.htm">Breakpoints view</a> indicates the status of any watchpoint using a set of common icons and checkmark status badge. These include:</p>
+<p>A watchpoint must be both enabled and resolved during a debug session in order to halt program execution. The  <a href="toggling_watchpoints.htm">Breakpoints view</a> indicates the status of any watchpoint using a set of common icons and checkmark status badge. These include:</p>
 <ul>
   <li>An <b>enabled</b> watchpoint has a non-gray icon (<img src="../images/icon_watchpoint_write_resolved.png" width="15" height="16" align="absmiddle" />) indicating that program execution  halts when encountered.</li>
   <li>A <b>disabled</b> watchpoint displays a gray icon (<img src="../images/icon_watchpoint_write_disabled.png" width="16" height="16" align="absmiddle" />) indicating that program execution will not stop when encountered. </li>
@@ -40,8 +40,8 @@
 <p>&nbsp;</p>
 <p>In addition, you can use these types of watchpoints:</p>
 <ul>
-  <li><a href="../tasks/watchpoints/pgm_wpt_setting.htm">regular</a> watchpoints&mdash;halt program execution</li>
-  <li><a href="../tasks/watchpoints/pgm_wpt_conditional.htm">conditional</a> watchpoints&mdash;halt program execution after meeting a condition that you specify (same as for breakpoints)</li>
+  <li><a href="setting_watchpoints.htm">regular</a> watchpoints&mdash;halt program execution</li>
+  <li><a href="setting_watchpoints.htm">conditional</a> watchpoints&mdash;halt program execution after meeting a condition that you specify (same as for breakpoints)</li>
 </ul>
 <p>A watchpoint is equivalent to a memory breakpoint.</p>
 <p>Unlike a breakpoint, a watchpoint can detect when any part of your program affects memory. For example, if a write or write/read watchpoint is set, when the program writes a new value to the address or area of memory that has the watchpoint, the debugger suspends program execution.</p>
@@ -95,21 +95,21 @@
   </tr>
 </table>
 <p>A project can have a different maximum number of watchpoints, depending on the build target. The IDE generally limits the acceptable range for watchpoints to memory that it can write-protect. This range also depends on the host and on the application. </p>
-<p>All set watchpoints appear in the <a href="../reference/view_breakpoints.htm">Breakpoints view</a>  list.</p>
+<p>All set watchpoints appear in the <a href="toggling_watchpoints.htm">Breakpoints view</a>  list.</p>
 <h5>Related concepts</h5>
 <ul>
-  <li> <a href="breakpoints.htm">Breakpoints</a></li>
+  <li> <a href="toggling_watchpoints.htm">Breakpoints</a></li>
 </ul>
 <h5>Related tasks </h5>
 <ul>
-  <li><a href="../tasks/watchpoints/pgm_wpt_setting.htm">Setting Watchpoints</a></li>
-  <li><a href="../tasks/watchpoints/pgm_wpt_enable.htm">Enabling Watchpoints</a></li>
-  <li><a href="../tasks/watchpoints/pgm_wpt_disable.htm">Disabling Watchpoints</a></li>
+  <li><a href="setting_watchpoints.htm">Setting Watchpoints</a></li>
+  <li><a href="toggling_watchpoints.htm">Enabling Watchpoints</a></li>
+  <li><a href="toggling_watchpoints.htm">Disabling Watchpoints</a></li>
   <li><a href="../tasks/watchpoints/pgm_wpt_clearing.htm">Clearing Watchpoints</a></li>
 </ul>
 <h5>Related references </h5>
 <ul>
-  <li><a href="../reference/view_breakpoints.htm">Breakpoints view</a> </li>
+  <li><a href="toggling_watchpoints.htm">Breakpoints view</a> </li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

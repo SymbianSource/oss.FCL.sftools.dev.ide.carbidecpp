@@ -9,11 +9,12 @@
 </head>
 <body bgcolor="#FFFFFF">
 <h2>Using Soft Attach  for On-Device Debugging</h2>
-<p>You can debug hardware via Trace32 using the soft attach option. This enables you to debug an image flashed to ROM or on a memory card. Soft attach includes all the capabilities fo Stop-mode debugging but can't debug any code loaded before the OS is booted. </p>
+<p align="center" class="fix">NEEDS REWRITING</p>
+<p>You can debug hardware via TCF using the soft attach option. This enables you to debug an image flashed to ROM or on a memory card. Soft attach includes all the capabilities fo Stop-mode debugging but can't debug any code loaded before the OS is booted. </p>
 <p>There are several components that must be provided to the debugger so that it can communicate with the attached hardware device. They are:</p>
 <ul>
   <li><b>Config_carbide.t32</b> - a required configuration file used to configure Carbide for soft attach debugging</li>
-  <li><b>.cmm file</b> - you must select the correct .cmm script file for the hardware otherwise it will not initialize properly and the debugger will be unable to communicate. The .cmm script files are located in the <span class="code">&lt;Carbide&gt;\plugins\com.nokia.carbide.cpp.support_2.0.x.xxx\Symbian_Support\Trace32\cmm_scripts</span> directory.<br>
+  <li><b>.cmm file</b> - you must select the correct .cmm script file for the hardware otherwise it will not initialize properly and the debugger will be unable to communicate. The .cmm script files are located in the <span class="code">&lt;Carbide&gt;\plugins\com.nokia.carbide.cpp.support_3.0.x.xxx\Symbian_Support\TCF\cmm_scripts</span> directory.<br>
     <br>
   Also, if there is a specific .cmm file for the device, like H2 or H4, especially if it includes <span class="code">_attach</span> in the name, choose that version over the others to do soft attach on the hardware. </li>
   <li><b>.log file</b> - you must have a valid .log file for the ROM image in order to debug the image </li>
@@ -53,13 +54,13 @@
   <li>Click Run &gt; Debug to launch the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a></li>
   <li>In the Launch Types page
     <ol type="a">
-      <li>Select the Trace32 Launch Configuration</li>
+      <li>Select the TCF Launch Configuration</li>
       <li>Click Next </li>
     </ol>
   </li>
   <li>In the Symbian ROM Image Settings page
     <ol type="a">
-      <li>Enter the path to the Trace32 Initialization Script .cmm file </li>
+      <li>Enter the path to the TCF Initialization Script .cmm file </li>
       <li>Select the Target Processor  </li>
       <li>Click Next </li>
     </ol>
