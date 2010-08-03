@@ -1012,27 +1012,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		return true;
 	}
-	
-	/**
-	 * Generates the abld makefile if necessary.
-	 * Generates the makefile for the given mmp file if:
-	 * 	 1) the makefile for the mmp does not exist
-	 *   2) if the mmp or any of its includes is newer than the makefile
-	 *   3) the makefile does not have the necessary Carbide changes
-	 *   
-	 *   The command used will be 'abld [test] makefile platform mmpname'
-	 * @param config the build configuration context
-	 * @param launcher the Carbide launcher
-	 * @param componentPath the absolute file system path of the component
-	 * @param isTest true for test components, false otherwise
-	 * @return false if any makefile generation was necessary but failed, true otherwise
-	 * 
-	 * @deprecated use {@link #generateAbldMakefileIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, IPath, boolean, IProgressMonitor)} instead
-	 */
-	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
-		return generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, new NullProgressMonitor());
-	}
-	
+		
 	/**
 	 * Generates the abld makefile if necessary.
 	 * Generates the makefile for the given mmp file if:
@@ -2020,44 +2000,6 @@ public static String[] getParserIdArray(int id) {
 		allTokens.add(line.substring(tokenStart, line.length()));
 
 		return allTokens;
-	}
-
-	/**
-	 * This method performs a build for a given Carbide build configuration.
-	 * @param config - The Carbide configuration to build
-	 * @param monitor - A progress monitor so user can cancel build (can be null)
-	 * @param console - Where to pipe the output. If null, a new CConole will be created and existing console cleared.
-	 * @param buildKind - FULL_BUILD, else incremental build assumed.
-	 * 
-	 * @deprecated use {@link #invokeBuild(ICarbideBuildConfiguration, IConsole, IProgressMonitor)} instead
-	 */
-	public static void callAbldBuildForConfiguration(ICarbideBuildConfiguration config, IProgressMonitor monitor, IConsole console, int buildKind, boolean clearMarkers){
-		
-		if (monitor == null) {
-			monitor = new NullProgressMonitor();
-		}
-		
-		if (console == null){
-			console = CCorePlugin.getDefault().getConsole();
-		}
-
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(config.getCarbideProject().getProject(), monitor, console, config.getErrorParserList(), config.getCarbideProject().getINFWorkingDirectory());
-		launcher.showCommand(true);
-
-		invokeBuild(config, launcher, monitor, clearMarkers);
-	}
-
-	/**
-	 * Check to see if abld.bat and the SDK's platform makefile exists. If either don't exist, re-generate makefiles
-	 * This also tests to make sure the makefile target is OLDER than the bld.inf file.
-	 * @param bldInfDir - The working dir of the bld.inf file (should not contain 'bld.inf')
-	 * @param defaultConfig - The ISymbianBuildConfiguration to be built.
-	 * @return true if makefiles need to be regenerated
-	 * 
-	 * @deprecated use {@link #needsBldmakeMakefileGeneration(ICarbideBuildConfiguration)}
-	 */
-	public static boolean projectNeedsMakefileGeneration(IPath bldInfDir, ICarbideBuildConfiguration defaultConfig){
-		return needsBldmakeMakefileGeneration(defaultConfig);
 	}
 
     /**
