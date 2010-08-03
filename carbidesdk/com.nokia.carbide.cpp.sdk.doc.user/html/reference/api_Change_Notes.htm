@@ -240,11 +240,11 @@ span.attr
   <li><i>com.nokia.carbide.cpp.sdk.core#ISymbianSDK</i> removed several methods. Please refer to the source code.</li>
    <p/>
    <ul>
-   		<li><i>getFilteredBuildConfigurations()</i> has been removed. Please use <i> </i> instead.  </li>
-   		<li><i>getSDKVersion()</i> has been removed. Users should not use SDK and OS version any longer but use <i>ISymbiabSDK#getBuildInfo(ISymbianBuilderID."BUILDERID").getFilteredBuildConfigurations()</i> instead.</li>
+   		<li><i>getFilteredBuildConfigurations()</i> has been removed. Please use <i>ISymbianSDK#getBuildInfo(String builderId).getFilteredBuildConfigurations()</i> instead.  </li>
+   		<li><i>getSDKVersion()</i> has been removed. Users should not use SDK and OS version any longer but use <i>ISymbianSDK#getSupportedFeatures()</i> instead.</li>
    </ul>
    
-   <li><i>ICarbideBuildConfiguration</i> no longer implements <i>ISymbiabBuildContext</i>. You will need to use the ISymbianBuildContext wrapper methods to access that interface now.</li>
+   <li><i>ICarbideBuildConfiguration</i> no longer implements <i>ISymbianBuildContext</i>. You will need to use the <i>ISymbianBuildContext</i> wrapper methods to access that interface now.</li>
 </ul>
 
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
