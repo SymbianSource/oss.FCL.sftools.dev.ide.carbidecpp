@@ -2047,6 +2047,19 @@ public static String[] getParserIdArray(int id) {
 		invokeBuild(config, launcher, monitor, clearMarkers);
 	}
 
+	/**
+	 * Check to see if abld.bat and the SDK's platform makefile exists. If either don't exist, re-generate makefiles
+	 * This also tests to make sure the makefile target is OLDER than the bld.inf file.
+	 * @param bldInfDir - The working dir of the bld.inf file (should not contain 'bld.inf')
+	 * @param defaultConfig - The ISymbianBuildConfiguration to be built.
+	 * @return true if makefiles need to be regenerated
+	 * 
+	 * @deprecated use {@link #needsBldmakeMakefileGeneration(ICarbideBuildConfiguration)}
+	 */
+	public static boolean projectNeedsMakefileGeneration(IPath bldInfDir, ICarbideBuildConfiguration defaultConfig){
+		return needsBldmakeMakefileGeneration(defaultConfig);
+	}
+
     /**
      * Checks the Problems view for any error markers.
      * @param project - IProject to check for problem markers

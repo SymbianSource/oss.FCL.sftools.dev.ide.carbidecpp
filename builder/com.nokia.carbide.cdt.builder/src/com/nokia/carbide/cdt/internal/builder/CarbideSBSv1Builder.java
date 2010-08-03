@@ -3116,4 +3116,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public IPath getMakefileDirectory(ICarbideBuildConfiguration config) {
 		return new Path(config.getSDK().getEPOCROOT()).append(EPOC_BUILD_DIR).append(config.getCarbideProject().getAbsoluteBldInfPath().removeLastSegments(1).setDevice(null));
 	}
+	
+	
 }

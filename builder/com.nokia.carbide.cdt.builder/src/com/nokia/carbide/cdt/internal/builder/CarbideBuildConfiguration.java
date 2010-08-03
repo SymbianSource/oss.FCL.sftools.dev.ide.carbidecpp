@@ -75,7 +75,7 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	protected EnvironmentVarsInfo2 envVarsInfo;
 	
 	protected BuildConfigurationData buildConfigData;
-	protected SBSv2BuilderInfo sbsv2BuilderInfo;
+	
 	protected boolean rebuildNeeded;
 	
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
@@ -85,9 +85,7 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		envVarsInfo = new EnvironmentVarsInfo2(project, context);
 		
 		buildConfigData = new BuildConfigurationData(this);
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
-			sbsv2BuilderInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
-		}
+		
 		rebuildNeeded = true;
 	}
 	
@@ -106,11 +104,7 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 					}
 				} else if (se.getName().equals(ENV_VAR_DATA_ID)) {
 					envVarsInfo.loadFromStorage(se);
-				} else if (se.getName().equals(SBSV2_DATA_ID)){
-					if (sbsv2BuilderInfo != null){
-						sbsv2BuilderInfo.loadFromStorage(se);
-					}
-				}
+				} 
 				
 				// Load build context specific settings.
 				getBuildContext().loadConfigurationSettings(se);
@@ -135,14 +129,8 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 			
 			// Save build context specific settings.
 			this.getBuildContext().saveConfigurationSettings(rootStorage);
-			
-			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){ 
-				sbsv2BuilderInfo.saveToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
-			}
 		}
 	}
-	
-
 	
 	public ICarbideProjectInfo getCarbideProject() {
 		// we need to get the project info from the build manager to ensure we

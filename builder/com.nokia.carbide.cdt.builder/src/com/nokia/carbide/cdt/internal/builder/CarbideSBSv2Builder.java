@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.SubMonitor;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
-import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
@@ -49,10 +48,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		
 		SubMonitor progress = SubMonitor.convert(monitor, 3);
 		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
-
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return false;
-		}
 		
 		progress.worked(1);
 		if (progress.isCanceled()) {
@@ -109,10 +104,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	public boolean buildComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		String componentName = componentPath.lastSegment();
 
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return false;
-		}
-
 		SubMonitor progress = SubMonitor.convert(monitor, 1);
 		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, componentName));
 
@@ -139,10 +130,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 1 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName(CarbideBuildManagerUtils.getBuildLabel(buildConfig, null));
 
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return false;
-		}
-		
 		progress.worked(1);
 		if (progress.isCanceled()) {
 			return false;
@@ -193,10 +180,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 3);
 		progress.setTaskName("Cleaning " + buildConfig.getDisplayString());
 
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return;
-		}
-
 		progress.worked(1);
 		if (progress.isCanceled()) {
 			return;
@@ -246,10 +229,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		progress.setTaskName("Cleaning " + componentName);
 
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return false;
-		}
-
 		int cleanLevel = buildConfig.getCarbideProject().getCleanLevel();
 		String cleanCmd = REALLYCLEAN_CMD;
 		if (0 == cleanLevel) {
@@ -279,10 +258,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 
 		SubMonitor progress = SubMonitor.convert(monitor, 1 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName("Cleaning " + buildConfig.getDisplayString());
-
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return;
-		}
 
 		progress.worked(1);
 		if (progress.isCanceled()) {
@@ -345,10 +320,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 3);
 		progress.setTaskName("Freezing " + buildConfig.getDisplayString());
 
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return;
-		}
-
 		progress.worked(1);
 		if (progress.isCanceled()) {
 			return;
@@ -385,9 +356,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	}
 
 	public boolean freezeComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return false;
-		}
 
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(FREEZE_CMD);
@@ -411,10 +379,6 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 	public void freezeComponentSubset(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		SubMonitor progress = SubMonitor.convert(monitor, 1 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName("Freezing " + buildConfig.getDisplayString());
-
-		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
-			return;
-		}
 
 		progress.worked(1);
 		if (progress.isCanceled()) {
