@@ -17,7 +17,9 @@
 package com.nokia.carbide.internal.discovery.ui.extension;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -114,13 +116,15 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 				buf.append(clean(item.getTitle()));
 				buf.append("</a>"); //$NON-NLS-1$
 				buf.append("<div class=\"itemBody\">"); //$NON-NLS-1$
+				Date date = item.getPubDate();
+				if (date != null)
+					buf.append(DateFormat.getInstance().format(date));
 				buf.append(clean(item.getDescription()));
 				buf.append("</div></li>"); //$NON-NLS-1$
 			}
 			buf.append("</ul>"); //$NON-NLS-1$
 		}
 		buf.append(HTML_BODY_FOOTER);
-		System.out.println(buf.toString());
 		browser.setText(buf.toString());
 	}
 
