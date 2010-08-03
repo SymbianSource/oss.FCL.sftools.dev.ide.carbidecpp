@@ -104,6 +104,7 @@ public class SDKPreferencePage
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
+		sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr != null)
 			sdkList = sdkMgr.getSDKList();
 	}
@@ -114,7 +115,6 @@ public class SDKPreferencePage
 	public void createControl(Composite parent) {
 		
 		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
-		sdkMgr = SDKCorePlugin.getSDKManager();
 		if (sdkMgr == null){
 			return; 
 		}
