@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.editors,
  org.eclipse.ui.forms;bundle-version="3.5.0",
  com.nokia.cpp.utils.ui;bundle-version="1.0.0",
- com.nokia.cpp.utils.core;bundle-version="1.0.0"
+ com.nokia.cpp.utils.core;bundle-version="1.0.0",
+ org.eclipse.equinox.p2.touchpoint.natives;bundle-version="1.0.200"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Nokia
