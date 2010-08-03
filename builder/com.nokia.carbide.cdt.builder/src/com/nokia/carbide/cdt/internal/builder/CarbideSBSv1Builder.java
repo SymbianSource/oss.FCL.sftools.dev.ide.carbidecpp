@@ -2345,7 +2345,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			ICarbideProjectInfo cpi = config.getCarbideProject();
 			IPath workingDir = cpi.getINFWorkingDirectory();
 
-			launcher.setErrorParserManager(workingDir, CarbideCPPBuilder.getParserIdArray(config.getErrorParserId()));
+			launcher.setErrorParserManager(workingDir, config.getErrorParserList());
 			launcher.writeToConsole("\n***Generating abld makefile.\n");
 
 			// delete the *.uid.cpp file if it exists so it gets regenerated.  makmake won't regenerate it if only an mmp include

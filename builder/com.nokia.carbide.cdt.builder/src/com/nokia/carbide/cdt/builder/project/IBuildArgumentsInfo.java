@@ -21,7 +21,7 @@ package com.nokia.carbide.cdt.builder.project;
  * This interface only applies for the Symbian 'abld' build system (SBSv1)
  * @see ICarbideBuildConfiguration
  * 
- * @deprecated use BuildArgumentsInfo directly
+ * @deprecated - ABLD specific implementation. ABLD will be removed in a future Carbide 3.x release.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IBuildArgumentsInfo {

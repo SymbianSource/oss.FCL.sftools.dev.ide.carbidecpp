@@ -87,7 +87,7 @@ public class ErrorParserRegressionGenerator extends TestCase {
 		ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 		harness = new CarbideErrorParserTestHarness(project, 
 												new NullProgressMonitor(),
-												CarbideCPPBuilder.getParserIdArray(buildConfig.getErrorParserId()), 
+												buildConfig.getErrorParserList(), 
 												cpi.getINFWorkingDirectory());
 	}
 

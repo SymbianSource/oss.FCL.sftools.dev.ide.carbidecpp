@@ -180,7 +180,7 @@ public class ProjectCommandHandler extends AbstractHandler {
 						SubMonitor subMonitor = SubMonitor.convert(monitor, buildConfigList.size());
 						
 						for (final ICarbideBuildConfiguration currConfig : buildConfigList) {
-							launcher.setErrorParserManager(cpi.getINFWorkingDirectory(), CarbideCPPBuilder.getParserIdArray(currConfig.getErrorParserId()));
+							launcher.setErrorParserManager(cpi.getINFWorkingDirectory(), currConfig.getErrorParserList());
 							
 							if (monitor.isCanceled()) {
 								return new Status(IStatus.CANCEL, "Carbide.c++ builder utils plugin", IStatus.CANCEL, "Build Cancelled", null); 

@@ -202,32 +202,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return getCachedData().getSystemIncludePaths();
 	}
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((platform == null) ? 0 : platform.hashCode());
-		result = prime * result + ((getSDK() == null) ? 0 : getSDK().getEPOCROOT().hashCode());
-		result = prime * result + ((target == null) ? 0 : target.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof BuildContextSBSv2))
-			return false;
-		final BuildContextSBSv2 other = (BuildContextSBSv2) obj;
-		if (!configID.equalsIgnoreCase(other.configID)){
-			return false;
-		}
- 		return true;
-	}
 
 	public static String getPlatformFromV1ConfigName(String displayString) {
 		String[] tokens = displayString.split(" ");
@@ -239,6 +213,32 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		} else {
 			return sdkIdToken.substring(1, sdkIdToken.length()-1);
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((configID == null) ? 0 : configID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BuildContextSBSv2 other = (BuildContextSBSv2) obj;
+		if (configID == null) {
+			if (other.configID != null)
+				return false;
+		} else if (!configID.equals(other.configID))
+			return false;
+		return true;
 	}
 
 	public static String getTargetFromV1ConfigName(String displayString) {

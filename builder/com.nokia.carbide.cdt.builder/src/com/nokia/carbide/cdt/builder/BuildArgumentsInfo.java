@@ -20,8 +20,9 @@ import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
-/*
+/**
  * Wrapper for the build arguments settings in Carbide Build Configuration preferences
+ * @deprecated - ABLD specific implementation. ABLD will be removed in a future Carbide 3.x release.
  */
 public class BuildArgumentsInfo implements IBuildArgumentsInfo {
 

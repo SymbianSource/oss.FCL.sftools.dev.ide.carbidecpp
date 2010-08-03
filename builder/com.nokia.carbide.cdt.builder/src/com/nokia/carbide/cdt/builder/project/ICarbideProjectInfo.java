@@ -56,7 +56,7 @@ public interface ICarbideProjectInfo {
 	 * Load all the configurations associated with this project. If this is a new project,
 	 * then a dummy .settings file will be created which can be used to generate new build
 	 * configurations.
-	 * @return A list of ICarbideBuildConfiguration objects, which may be empty
+	 * @return A copy of the list of ICarbideBuildConfiguration objects, which may be empty. Modifying the result does not affect the project.
 	 */
 	public List<ICarbideBuildConfiguration> getBuildConfigurations();
 	

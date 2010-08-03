@@ -134,7 +134,7 @@ public class PreprocessHandler extends AbstractHandler {
 			        			e.printStackTrace();
 			        		}
 
-			        		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, CarbideCPPBuilder.getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+			        		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, buildConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 							launcher.showCommand(true);
 
 							String cppTool = "cpp" + HostOS.EXE_EXT; //$NON-NLS-1$

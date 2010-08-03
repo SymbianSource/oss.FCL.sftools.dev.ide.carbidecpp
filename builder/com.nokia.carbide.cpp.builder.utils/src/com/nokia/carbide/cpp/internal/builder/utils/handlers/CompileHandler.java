@@ -80,7 +80,7 @@ public class CompileHandler extends AbstractHandler {
 
 					IProject lastProject = selectedFiles.get(0).getProject();
 					ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(lastProject);
-					String[] errorParserIds = CarbideCPPBuilder.getParserIdArray(cpi.getDefaultConfiguration().getErrorParserId());
+					String[] errorParserIds = cpi.getDefaultConfiguration().getErrorParserList();
 					IPath workingDirectory = cpi.getINFWorkingDirectory();
 
 					// create the launcher for the first file's project.  if there are files selected for other projects, change the
@@ -104,7 +104,7 @@ public class CompileHandler extends AbstractHandler {
 							if (lastProject != project && path != null) {
 					    		lastProject = project;
 								cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(lastProject);
-								errorParserIds = CarbideCPPBuilder.getParserIdArray(cpi.getDefaultConfiguration().getErrorParserId());
+								errorParserIds = cpi.getDefaultConfiguration().getErrorParserList();
 								workingDirectory = cpi.getINFWorkingDirectory();
 								launcher = new CarbideCommandLauncher(lastProject, monitor, errorParserIds, workingDirectory);
 								launcher.showCommand(true);

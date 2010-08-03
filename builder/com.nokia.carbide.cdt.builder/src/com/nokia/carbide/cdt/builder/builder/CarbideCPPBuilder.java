@@ -193,7 +193,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 			}
 			
 			if (defaultConfig != null) {
-				CarbideCommandLauncher launcher = new CarbideCommandLauncher(currentProject, monitor, getParserIdArray(defaultConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+				CarbideCommandLauncher launcher = new CarbideCommandLauncher(currentProject, monitor, defaultConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 				launcher.showCommand(true);
 				invokeBuild(defaultConfig, launcher, subMonitor.newChild(1), true);
 			} else {
@@ -379,7 +379,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		getBuilder(cpi.getProject()).preCleanStep(buildConfig);
 
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, buildConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 		launcher.showCommand(true);
 
 		calculateComponentLists(buildConfig, launcher);
@@ -422,7 +422,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		IProject project = cpi.getProject();
 		
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, buildConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 		launcher.showCommand(true);
 
 		// make sure the project is built
@@ -2035,7 +2035,7 @@ public static String[] getParserIdArray(int id) {
 			console = CCorePlugin.getDefault().getConsole();
 		}
 
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(config.getCarbideProject().getProject(), monitor, console, getParserIdArray(config.getErrorParserId()), config.getCarbideProject().getINFWorkingDirectory());
+		CarbideCommandLauncher launcher = new CarbideCommandLauncher(config.getCarbideProject().getProject(), monitor, console, config.getErrorParserList(), config.getCarbideProject().getINFWorkingDirectory());
 		launcher.showCommand(true);
 
 		invokeBuild(config, launcher, monitor, clearMarkers);

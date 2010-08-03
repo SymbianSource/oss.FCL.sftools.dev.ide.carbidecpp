@@ -90,7 +90,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 			sbsv2BuilderInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
 		}
 		rebuildNeeded = true;
-		
 	}
 	
 	public void loadFromStorage(ICConfigurationDescription projDes) throws CoreException {
@@ -305,7 +304,7 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		}
 	}
 		
-	public int getErrorParserId(){
+	private int getErrorParserId(){
 		String plat = this.getPlatformString();
 		
 		if (context instanceof ISBSv2BuildContext){

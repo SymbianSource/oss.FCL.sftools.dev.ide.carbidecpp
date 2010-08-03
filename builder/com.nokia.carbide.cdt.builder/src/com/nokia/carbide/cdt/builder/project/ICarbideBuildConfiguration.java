@@ -22,6 +22,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
+import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -50,8 +51,9 @@ public interface ICarbideBuildConfiguration {
     public static final int ERROR_PARSERS_ALL = 99;
 	
 	/**
-	 * Get a list of error parser ID's
+	 * Get a list of error parser ID's for this configuration.
 	 * @return A full list of error parser IDs. Returns an empty array if none are specified
+	 * @see {@link CarbideCPPBuilder#getParserIdArray(int)}
 	 */
 	String[] getErrorParserList();
 
@@ -82,6 +84,7 @@ public interface ICarbideBuildConfiguration {
 	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
 	 * This only applies when building with SBSv1 (bldmake, abld)
 	 * @return A copy of BuildArgumentsInfo instance, never null
+	 * @deprecated - ABLD specific implementation. ABLD will be removed in a future Carbide 3.x release.
 	 */
 	BuildArgumentsInfo getBuildArgumentsInfoCopy();
 	
@@ -89,6 +92,7 @@ public interface ICarbideBuildConfiguration {
 	 * Set the build arguments info for SBSv2 build arguments. This only sets values in memory, does
 	 * not write settings to disk. See 
 	 * @return IBuildArgumentsInfo instance, never null
+	 * @deprecated - ABLD specific implementation. ABLD will be removed in a future Carbide 3.x release.
 	 */
 	void setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo);
 	
@@ -103,18 +107,6 @@ public interface ICarbideBuildConfiguration {
 	 * @return IEnvironmentVarsInfo object.
 	 */
 	IEnvironmentVarsInfo getEnvironmentVarsInfo();
-	
-	/**
-	 * Get the id that specifies the array of error parsers to use for a given build platform.
-	 * @return The integer ID of the parser to be use.
-	 * @see CarbideCPPBuilder.getParserIds(int id)
-	 */
-	int getErrorParserId();
-	
-	/**
-	 * Compares two configurations to see if their display names are equivalent.
-	 */
-	boolean equals(Object obj);
 	
 	/** Get the full path of the release directory into the SDK where binaries are built
 	 *  NOTE: This does not account for whether or not a project has the FEATUREVARIANT keyword
