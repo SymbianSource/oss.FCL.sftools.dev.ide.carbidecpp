@@ -25,10 +25,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
-import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.IBuildArgumentsInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
@@ -160,7 +161,8 @@ public class ArgumentsTabComposite extends Composite {
 	}
 	
 	public void initData(ICarbideBuildConfiguration buildConfig) {
-		IBuildArgumentsInfo argsInfo = buildConfig.getBuildArgumentsInfo();
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		IBuildArgumentsInfo argsInfo = sbsv1Context.getBuildArgumentsInfo();
 		bldMakeBldfilesEdit.setText(argsInfo.getBldmakeBldFilesArgs());
 		bldMakeCleanEdit.setText(argsInfo.getBldmakeCleanArgs());
 		abldBuildEdit.setText(argsInfo.getAbldBuildArgs());
@@ -177,7 +179,8 @@ public class ArgumentsTabComposite extends Composite {
 	public boolean compareConfigurationSettings(ICarbideBuildConfiguration selectedConfig, boolean writeToConfig) {
 		boolean settingsEqual = true;
 		
-		IBuildArgumentsInfo existingInfo = selectedConfig.getBuildArgumentsInfo();
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)selectedConfig.getBuildContext();
+		IBuildArgumentsInfo existingInfo = sbsv1Context.getBuildArgumentsInfo();
 		settingsEqual = existingInfo.getBldmakeBldFilesArgs().equals(bldMakeBldfilesEdit.getText()) &&
 		existingInfo.getBldmakeCleanArgs().equals(bldMakeCleanEdit.getText()) &&
 		existingInfo.getAbldBuildArgs().equals(abldBuildEdit.getText()) &&
@@ -191,7 +194,7 @@ public class ArgumentsTabComposite extends Composite {
 		existingInfo.getAbldFreezeArgs().equals(abldFreezeEdit.getText());
 		
 		if (!settingsEqual && writeToConfig) {
-			((CarbideBuildConfiguration)selectedConfig).setBuildArgumentsInfo(new BuildArgumentsInfo(bldMakeBldfilesEdit.getText(), bldMakeCleanEdit.getText(),
+			sbsv1Context.setBuildArgumentsInfo(new BuildArgumentsInfo(bldMakeBldfilesEdit.getText(), bldMakeCleanEdit.getText(),
 					abldBuildEdit.getText(), abldExportEdit.getText(), abldMakefileEdit.getText(), abldLibraryEdit.getText(), abldResourceEdit.getText(),
 					abldTargetEdit.getText(), abldFinalEdit.getText(), abldCleanEdit.getText(), abldFreezeEdit.getText()));
 		}

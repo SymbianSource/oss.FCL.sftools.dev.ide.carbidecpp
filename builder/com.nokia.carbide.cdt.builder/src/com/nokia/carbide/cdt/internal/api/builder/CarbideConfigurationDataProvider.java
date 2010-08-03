@@ -42,7 +42,6 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
@@ -59,8 +58,10 @@ import com.nokia.carbide.cdt.internal.builder.SISBuilderInfo;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuilderConfigInfoType;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.ConfigurationType;
 import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -453,8 +454,9 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 				    			EnvironmentVarsInfo oldEnvVars = new EnvironmentVarsInfo(project, context, currConfig.getEnvVars());
 				    			buildConfiguration.setEnvironmentVarsInfo(new EnvironmentVarsInfo2(oldEnvVars));
 				    			
+				    			if (context instanceof ISBSv1BuildContext)
 				    			if (wasVerboseChecked) {
-				    				buildConfiguration.setBuildArgumentsInfo(new BuildArgumentsInfo("", "", "-v", "", "", "", "", "", "", "-v", "-v"));
+				    				((ISBSv1BuildContext)context).setBuildArgumentsInfo(new BuildArgumentsInfo("", "", "-v", "", "", "", "", "", "", "-v", "-v"));
 				    			}
 				    			
 								buildConfiguration.saveConfiguration(false);

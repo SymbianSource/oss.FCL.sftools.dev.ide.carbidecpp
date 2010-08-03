@@ -37,6 +37,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class ABLDCommandHandler extends ProjectCommandHandler {
@@ -180,7 +181,8 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		args.add(buildConfig.getPlatformString().toLowerCase());
 		args.add(buildConfig.getTargetString().toLowerCase());
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) { //$NON-NLS-1$
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
 		
@@ -191,7 +193,8 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		List<String> args = new ArrayList<String>();
 		args.add("export"); //$NON-NLS-1$
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) { //$NON-NLS-1$
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
 		
@@ -204,7 +207,8 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		args.add(buildConfig.getPlatformString().toLowerCase());
 		args.add(buildConfig.getTargetString().toLowerCase());
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) { //$NON-NLS-1$
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
 		
@@ -217,7 +221,8 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		args.add(buildConfig.getPlatformString().toLowerCase());
 		args.add(buildConfig.getTargetString().toLowerCase());
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) { //$NON-NLS-1$
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
 		

@@ -26,15 +26,16 @@ import org.eclipse.cdt.core.dom.IPDOMManager;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.IBuildArgumentsInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
@@ -270,11 +271,12 @@ public class ProjectPropertiesTest extends TestCase {
 		assertNotNull("Ooops, ICarbideProjectInfo is null, something bad happened.", cpi);
 		
 		ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
-		BuildArgumentsInfo argInfoCopyOrig = defaultConfig.getBuildArgumentsInfoCopy();
-		BuildArgumentsInfo argInfoCopyMod = defaultConfig.getBuildArgumentsInfoCopy();
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)defaultConfig.getBuildContext();
+		BuildArgumentsInfo argInfoCopyOrig = sbsv1Context.getBuildArgumentsInfoCopy();
+		BuildArgumentsInfo argInfoCopyMod = sbsv1Context.getBuildArgumentsInfoCopy();
 		
 		// Just sanity check to make sure deprecated methods still exist.
-		IBuildArgumentsInfo testDeprecation = defaultConfig.getBuildArgumentsInfo();
+		IBuildArgumentsInfo testDeprecation = sbsv1Context.getBuildArgumentsInfo();
 		/*String test =*/ testDeprecation.getAbldBuildArgs();
 		
 		
@@ -290,10 +292,10 @@ public class ProjectPropertiesTest extends TestCase {
 		argInfoCopyMod.abldTargetArgs    += target_ARG;
 		
 		// set the argument
-		defaultConfig.setBuildArgumentsInfo(argInfoCopyMod);
+		sbsv1Context.setBuildArgumentsInfo(argInfoCopyMod);
 		
 		// read the args from memory, make sure it's OK
-		BuildArgumentsInfo argInfoCopyVerify = defaultConfig.getBuildArgumentsInfoCopy();
+		BuildArgumentsInfo argInfoCopyVerify = sbsv1Context.getBuildArgumentsInfoCopy();
 		assertTrue("Failed to re-read build args", argInfoCopyVerify.abldBuildArgs.contains(build_ARG));
 		assertTrue("Failed to re-read clean args", argInfoCopyVerify.abldCleanArgs.contains(clean_ARG));
 		assertTrue("Failed to re-read export args", argInfoCopyVerify.abldExportArgs.contains(export_ARG));
@@ -310,7 +312,7 @@ public class ProjectPropertiesTest extends TestCase {
 		// now read again
 		
 		// no work, how to know if it loads from disk....
-		BuildArgumentsInfo argInfoFromDisk = defaultConfig.getBuildArgumentsInfoCopy();
+		BuildArgumentsInfo argInfoFromDisk = sbsv1Context.getBuildArgumentsInfoCopy();
 		
 		// read the args now that were pulled from disk, make sure it's OK
 		assertTrue("Failed to re-read build args", argInfoFromDisk.abldBuildArgs.contains(build_ARG));
@@ -324,10 +326,10 @@ public class ProjectPropertiesTest extends TestCase {
 		assertTrue("Failed to re-read target args", argInfoFromDisk.abldTargetArgs.contains(target_ARG));
 		
 		// Now restore the settings, write to disk and verify
-		defaultConfig.setBuildArgumentsInfo(argInfoCopyOrig);
+		sbsv1Context.setBuildArgumentsInfo(argInfoCopyOrig);
 		defaultConfig.saveConfiguration(false); // write to disk
 		defaultConfig = cpi.getDefaultConfiguration();
-		argInfoCopyVerify = defaultConfig.getBuildArgumentsInfoCopy();
+		argInfoCopyVerify = sbsv1Context.getBuildArgumentsInfoCopy();
 		assertFalse("Failed to re-read build args after restore", argInfoCopyVerify.abldBuildArgs.contains(build_ARG));
 		assertFalse("Failed to re-read clean args after restore", argInfoCopyVerify.abldCleanArgs.contains(clean_ARG));
 		assertFalse("Failed to re-read export args after restore", argInfoCopyVerify.abldExportArgs.contains(export_ARG));

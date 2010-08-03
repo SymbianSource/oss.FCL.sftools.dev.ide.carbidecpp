@@ -15,6 +15,7 @@ package com.nokia.carbide.cpp.sdk.core;
 import java.io.File;
 import java.util.List;
 
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
@@ -121,5 +122,19 @@ public interface ISymbianBuildContext {
 	 */
 	public boolean isSymbianBinaryVariation();
 	
+	/**
+	 * Load build context specific configuration settings
+	 * @param ICStorageElement - a child of CARBIDE_STORAGE_ID ("CarbideConfigurationDataProvider") in .cproject data
+	 * @since 3.0
+	 *
+	 */
+	public void loadConfigurationSettings(ICStorageElement se);
+	
+	/**
+	 * Save build context specific configuration settings
+	 * @param ICStorageElement - a child of CARBIDE_STORAGE_ID ("CarbideConfigurationDataProvider") in .cproject data
+	 * @since 3.0
+	 */
+	public void saveConfigurationSettings(ICStorageElement se);
 	
 }

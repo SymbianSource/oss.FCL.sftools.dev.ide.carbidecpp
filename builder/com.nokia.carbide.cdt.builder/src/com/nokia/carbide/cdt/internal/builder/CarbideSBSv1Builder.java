@@ -161,7 +161,9 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public boolean buildComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
 		}
@@ -188,7 +190,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			args.add(EXPORT_CMD);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -224,7 +226,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildPlatform);
 			args.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -248,7 +250,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getTargetString().toLowerCase());
 			args.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -272,7 +274,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getTargetString().toLowerCase());
 			args.add(componentName);
 
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -295,7 +297,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getTargetString().toLowerCase());
 			args.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -321,7 +323,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(buildConfig.getTargetString().toLowerCase());
 			argsList.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -343,7 +345,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public boolean cleanComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
 		}
@@ -385,7 +388,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(buildConfig.getTargetString().toLowerCase());
 		argsList.add(componentName);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -406,7 +409,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public boolean freezeComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
 		}
@@ -438,7 +442,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(buildPlatform);
 		argsList.add(componentName);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -823,6 +827,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	
 	public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		//TODO: do we really want to bail if abld returns an error?  is this the keepgoing flag?  see what the command line builds do.
 		// they bail on an individual build step, but keep building the other steps even if there's an error and keepgoing is not specified
 		
@@ -853,7 +859,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getPlatformString().toLowerCase());
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -877,7 +883,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					argsList.add(buildConfig.getPlatformString().toLowerCase());
 					argsList.add(buildConfig.getTargetString().toLowerCase());
 					
-					for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+					for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 						argsList.add(arg);
 					}
 					
@@ -923,7 +929,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		List<String> args = new ArrayList<String>();
 		args.add(EXPORT_CMD);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 			args.add(arg);
 		}
 		
@@ -958,7 +964,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(LIBRARY_CMD);
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -978,7 +984,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -998,7 +1004,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1017,7 +1023,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1039,7 +1045,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(TEST_CMD);
 			args.add(EXPORT_CMD);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1062,7 +1068,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(LIBRARY_CMD);
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1083,7 +1089,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1104,7 +1110,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1124,7 +1130,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1143,6 +1149,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	
 	public boolean buildComponentSubset(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		// need to run individual build steps when managing makefiles or doing concurrent builds
 		if (!areWeManagingTheMakeFiles && !buildConfig.getCarbideProject().isConcurrentBuildingEnabled()) {
 			// not using our dependency stuff.  just call abld [test] build.  note that we need
@@ -1180,7 +1188,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1213,7 +1221,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1258,7 +1266,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(EXPORT_CMD);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -1306,7 +1314,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1339,7 +1347,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1372,7 +1380,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1403,7 +1411,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1422,7 +1430,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(TEST_CMD);
 		argsList.add(EXPORT_CMD);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -1457,7 +1465,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1491,7 +1499,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1525,7 +1533,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1558,7 +1566,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1580,6 +1588,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 5);
 		progress.setTaskName("Cleaning " + buildConfig.getDisplayString());
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();	
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1614,7 +1624,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			argsList.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1638,7 +1648,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			argsList.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1660,7 +1670,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(CLEAN_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1678,6 +1688,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 3 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName("Cleaning " + buildConfig.getDisplayString());
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1726,7 +1738,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1753,7 +1765,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1774,7 +1786,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(CLEAN_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1791,7 +1803,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		SubMonitor progress = SubMonitor.convert(monitor, 4);
 		progress.setTaskName("Freezing " + buildConfig.getDisplayString());
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1817,7 +1830,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(FREEZE_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1840,7 +1853,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(FREEZE_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1860,7 +1873,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		SubMonitor progress = SubMonitor.convert(monitor, 2 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName("Freezing " + buildConfig.getDisplayString());
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1900,7 +1914,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1926,7 +1940,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getPlatformString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -2137,7 +2151,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(buildConfig.getTargetString().toLowerCase());
 		argsList.add(componentName);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -2378,7 +2393,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			abldArgs.add(buildPlatform);
 			abldArgs.add(componentPath.removeFileExtension().lastSegment());
 			
-			for (String arg : config.getBuildArgumentsInfo().getAbldMakefileArgs().split(" ")) {
+			ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)config.getBuildContext();
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldMakefileArgs().split(" ")) {
 				abldArgs.add(arg);
 			}
 			

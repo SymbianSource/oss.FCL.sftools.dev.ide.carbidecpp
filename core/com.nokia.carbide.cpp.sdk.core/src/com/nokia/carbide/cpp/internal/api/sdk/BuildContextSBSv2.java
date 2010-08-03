@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -369,6 +370,19 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	@Override
 	public List<String> getSupportedTargettypes() {
 		return configQueryData.getTargettypes();
+	}
+
+
+	@Override
+	public void loadConfigurationSettings(ICStorageElement se) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveConfigurationSettings(ICStorageElement se) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

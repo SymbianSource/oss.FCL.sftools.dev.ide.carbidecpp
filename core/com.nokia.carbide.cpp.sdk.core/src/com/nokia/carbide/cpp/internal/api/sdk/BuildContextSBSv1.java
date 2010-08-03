@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.Version;
 
@@ -47,6 +48,10 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	
 	// a copy of bad SDK default to fall back
 	private static ISymbianSDK fallbackForBadSdk = SymbianMissingSDKFactory.createInstance("dummy_ID"); //$NON-NLS-1$
+	
+	// Preference data
+	protected BuildArgumentsInfo buildArgumentsInfo;
+	protected final static String ARGUMENTS_DATA_ID = "ARGUMENTS_DATA_ID"; //$NON-NLS-1$
 	
 	public BuildContextSBSv1(ISymbianSDK theSDK, String thePlatform, String theTarget) {
 		sdkId = theSDK.getUniqueId();
@@ -411,5 +416,143 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	public List<File> getCachedSystemIncludePaths() {
 		return getCachedData().getSystemIncludePaths();
 	}
+
+	@Override
+	public void loadConfigurationSettings(ICStorageElement se) {
+		if (se.getName().equals(ARGUMENTS_DATA_ID)) {
+			loadBuildArgsFromStorage(se);
+		}
+	}
+
+	@Override
+	public IBuildArgumentsInfo getBuildArgumentsInfo() {
+		return (IBuildArgumentsInfo)buildArgumentsInfo;
+	}
+	
+	@Override
+	public BuildArgumentsInfo getBuildArgumentsInfoCopy() {
+		return new BuildArgumentsInfo(buildArgumentsInfo);
+	}
+	
+	@Override
+	public void setBuildArgumentsInfo(BuildArgumentsInfo buildArgumentsInfo) {
+		this.buildArgumentsInfo = buildArgumentsInfo;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void loadBuildArgsFromStorage(ICStorageElement rootStorage) {
+		buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
+		String value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.bldmakeBldFilesArgs = value;
+		}
+		
+		value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKECLEANARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.bldmakeCleanArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDBUILDARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldBuildArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDEXPORTARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldExportArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDMAKEFILEARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldMakefileArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDLIBRARYARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldLibraryArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDRESOURCEARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldResourceArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDTARGETARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldTargetArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDFINALARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldFinalArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDCLEANARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldCleanArgs = value;
+		}
+
+		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDFREEZEARGSSTORAGE);
+		if (value != null) {
+			buildArgumentsInfo.abldFreezeArgs = value;
+		}
+	}
+	
+	public void saveBuildArgsToStorage(ICStorageElement rootStorage) {
+		if (buildArgumentsInfo == null){
+			buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
+		}
+		
+		if (buildArgumentsInfo.bldmakeBldFilesArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE, buildArgumentsInfo.bldmakeBldFilesArgs);
+		}
+
+		if (buildArgumentsInfo.bldmakeCleanArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.BLDMAKECLEANARGSSTORAGE, buildArgumentsInfo.bldmakeCleanArgs);
+		}
+
+		if (buildArgumentsInfo.abldBuildArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDBUILDARGSSTORAGE, buildArgumentsInfo.abldBuildArgs);
+		}
+
+		if (buildArgumentsInfo.abldExportArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDEXPORTARGSSTORAGE, buildArgumentsInfo.abldExportArgs);
+		}
+
+		if (buildArgumentsInfo.abldMakefileArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDMAKEFILEARGSSTORAGE, buildArgumentsInfo.abldMakefileArgs);
+		}
+
+		if (buildArgumentsInfo.abldLibraryArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDLIBRARYARGSSTORAGE, buildArgumentsInfo.abldLibraryArgs);
+		}
+
+		if (buildArgumentsInfo.abldResourceArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDRESOURCEARGSSTORAGE, buildArgumentsInfo.abldResourceArgs);
+		}
+
+		if (buildArgumentsInfo.abldTargetArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDTARGETARGSSTORAGE, buildArgumentsInfo.abldTargetArgs);
+		}
+
+		if (buildArgumentsInfo.abldFinalArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDFINALARGSSTORAGE, buildArgumentsInfo.abldFinalArgs);
+		}
+
+		if (buildArgumentsInfo.abldCleanArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDCLEANARGSSTORAGE, buildArgumentsInfo.abldCleanArgs);
+		}
+
+		if (buildArgumentsInfo.abldFreezeArgs.trim().length() > 0) {
+			rootStorage.setAttribute(BuildArgumentsInfo.ABLDFREEZEARGSSTORAGE, buildArgumentsInfo.abldFreezeArgs);
+		}
+	}
+
+	@Override
+	public void saveConfigurationSettings(ICStorageElement se) {
+		saveBuildArgsToStorage(se.createChild(ARGUMENTS_DATA_ID)); 
+	}
+	
+	
 
 }

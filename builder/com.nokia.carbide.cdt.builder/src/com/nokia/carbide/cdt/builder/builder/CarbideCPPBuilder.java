@@ -899,6 +899,10 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 */
 	public static boolean generateBldmakeMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher) {
 
+		if (!(config.getBuildContext() instanceof ISBSv1BuildContext)){
+			return false; // SBSv1 only!
+		}
+		
 		if (needsBldmakeMakefileGeneration(config)) {
 			
 			List<String> argsList = new ArrayList<String>();
@@ -907,7 +911,9 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 				argsList.add(((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation().toLowerCase());
 			}
 			
-			for (String arg : config.getBuildArgumentsInfo().getBldmakeBldFilesArgs().split(" ")) {
+			ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)config.getBuildContext();
+			
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getBldmakeBldFilesArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -2039,34 +2045,6 @@ public static String[] getParserIdArray(int id) {
 		launcher.showCommand(true);
 
 		invokeBuild(config, launcher, monitor, clearMarkers);
-	}
-
-	/**
-	 * Invoke bldmake bldfiles on the current bld.inf and SDK.
-	 * @param config - Config to generate makefiles for.
-	 * @param cmdLauncher - The process launcher
-	 * @param monitor - The progress monitor
-	 * @param console - The console to write the messages to.
-	 * @param env - The array of environment variables to be used for the process
-	 * @param workingDir - The full path to the bld.inf file to be used as the current working directory
-	 * 
-	 * @deprecated use {@link #generateBldmakeMakefilesIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, IConsole, IProgressMonitor, boolean)} instead
-	 */
-	public static boolean invokeBldmakeBldFiles(ICarbideBuildConfiguration config, CarbideCommandLauncher cmdLauncher, IProgressMonitor monitor, IConsole console, String[] env, IPath workingDir ){
-		return generateBldmakeMakefilesIfNecessary(config, cmdLauncher);
-	}
-
-	/**
-	 * Check to see if abld.bat and the SDK's platform makefile exists. If either don't exist, re-generate makefiles
-	 * This also tests to make sure the makefile target is OLDER than the bld.inf file.
-	 * @param bldInfDir - The working dir of the bld.inf file (should not contain 'bld.inf')
-	 * @param defaultConfig - The ISymbianBuildConfiguration to be built.
-	 * @return true if makefiles need to be regenerated
-	 * 
-	 * @deprecated use {@link #needsBldmakeMakefileGeneration(ICarbideBuildConfiguration)}
-	 */
-	public static boolean projectNeedsMakefileGeneration(IPath bldInfDir, ICarbideBuildConfiguration defaultConfig){
-		return needsBldmakeMakefileGeneration(defaultConfig);
 	}
 
     /**

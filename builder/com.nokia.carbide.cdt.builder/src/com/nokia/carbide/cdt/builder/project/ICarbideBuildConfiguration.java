@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -71,31 +70,7 @@ public interface ICarbideBuildConfiguration {
 	 */
 	List<ISISBuilderInfo> getSISBuilderInfoList();
 	
-	/**
-	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
-	 * This only applies when building with SBSv1 (bldmake, abld)
-	 * @return IBuildArgumentsInfo instance, never null
-	 * 
-	 * @deprecated use 
-	 */
-	IBuildArgumentsInfo getBuildArgumentsInfo();
-	
-	/**
-	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
-	 * This only applies when building with SBSv1 (bldmake, abld)
-	 * @return A copy of BuildArgumentsInfo instance, never null
-	 * @deprecated - ABLD specific implementation. ABLD will be removed in a future Carbide 3.x release.
-	 */
-	BuildArgumentsInfo getBuildArgumentsInfoCopy();
-	
-	/**
-	 * Set the build arguments info for SBSv2 build arguments. This only sets values in memory, does
-	 * not write settings to disk. See 
-	 * @return IBuildArgumentsInfo instance, never null
-	 * @deprecated - ABLD specific implementation. ABLD will be removed in a future Carbide 3.x release.
-	 */
-	void setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo);
-	
+
 	/**
 	 * Get the parent Carbide project of this configuration.
 	 * @return ICarbideProjectInfo
