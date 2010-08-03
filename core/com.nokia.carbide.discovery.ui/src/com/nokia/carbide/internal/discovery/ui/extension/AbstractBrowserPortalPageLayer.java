@@ -137,7 +137,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 		try {
 			browser = new Browser(composite, SWT.MOZILLA);
 		} catch (SWTError e) {
-			e.printStackTrace();
+			Activator.logError(Messages.AbstractBrowserPortalPageLayer_BrowserCreateError, e);
 		}
 		
 		return composite;
