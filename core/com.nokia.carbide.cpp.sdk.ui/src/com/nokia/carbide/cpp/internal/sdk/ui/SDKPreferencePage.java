@@ -16,26 +16,48 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.ui;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableColorProvider;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.AddSDKDialog;
 
@@ -82,7 +104,8 @@ public class SDKPreferencePage
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
-		sdkList = sdkMgr.getSDKList();
+		if (sdkMgr != null)
+			sdkList = sdkMgr.getSDKList();
 	}
 	
 	/* (non-Javadoc)
