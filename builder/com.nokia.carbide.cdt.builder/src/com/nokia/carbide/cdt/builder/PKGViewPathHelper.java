@@ -22,10 +22,7 @@ import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
-import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
 import com.nokia.cpp.internal.api.utils.core.Check;
 

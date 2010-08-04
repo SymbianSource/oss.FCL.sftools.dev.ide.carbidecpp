@@ -25,6 +25,9 @@ public interface ISBSv2BuildContext extends ISymbianBuildContext {
 	public static final String MACRO_GCCE = "__GCCE__";
 	public static final String MACRO_WINSCW = "__WINSCW__";
 	
+	// SBSv2 only config settings 
+	public final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
+	
 	/**
 	 * Retrieve the build-able configuration; a valid command that cab be passed with Raptor's -c parameter.
 	 * This should not be used and should return null for abld-configurations.

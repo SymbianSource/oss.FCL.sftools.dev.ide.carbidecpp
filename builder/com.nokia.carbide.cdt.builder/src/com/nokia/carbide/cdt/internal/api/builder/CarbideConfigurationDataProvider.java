@@ -53,7 +53,6 @@ import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.builder.EnvironmentVarsInfo;
 import com.nokia.carbide.cdt.internal.builder.EnvironmentVarsInfo2;
-import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cdt.internal.builder.SISBuilderInfo;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuilderConfigInfoType;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.ConfigurationType;
@@ -62,7 +61,9 @@ import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2BuilderInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -184,32 +185,15 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		if (rootStorage != null) {
 			for (ICStorageElement se : rootStorage.getChildren()) {
 				if (se.getName().equals(
-						CarbideBuildConfiguration.SBSV2_DATA_ID)) {
+						ISBSv2BuildContext.SBSV2_DATA_ID)) {
 					
-					String value = se.getAttribute(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
-					if (value != null) {
-						platform = value;
-					}
-
-					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
-					if (value != null) {
-						target = value;
-					}
-
-					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS);
-					if (value != null) {
-						buidAlias = value;
-					}
-
-					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING);
-					if (value != null) {
-						displayString = value;
-					}
-					
-					value = se.getAttribute(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
-					if (value != null) {
-						sdkID = value;
-					}
+					SBSv2BuilderInfo sbsv2BuilderInfo = new SBSv2BuilderInfo();
+					sbsv2BuilderInfo.loadFromStorage(se);
+					platform = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
+					target = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
+					buidAlias = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS);
+					displayString = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING);				
+					sdkID = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
 				}
 			}
 		} else {

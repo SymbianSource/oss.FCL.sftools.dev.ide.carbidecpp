@@ -549,7 +549,7 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	}
 
 	@Override
-	public void saveConfigurationSettings(ICStorageElement se) {
+	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext context) {
 		saveBuildArgsToStorage(se.createChild(ARGUMENTS_DATA_ID)); 
 	}
 	

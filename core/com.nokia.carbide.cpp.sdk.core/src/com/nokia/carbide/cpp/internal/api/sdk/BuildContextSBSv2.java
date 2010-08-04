@@ -18,6 +18,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -36,6 +37,9 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
 	// Raptor config query data
 	private ISBSv2ConfigQueryData configQueryData;
+	
+	// cconfiguration data store
+	private SBSv2BuilderInfo sbsv2BuildInfo;
 	
 	public BuildContextSBSv2(ISymbianSDK sdk, String platform, String target, String alias, String displayString, String configID) {
 		this.sdk = sdk;
@@ -375,14 +379,17 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	@Override
 	public void loadConfigurationSettings(ICStorageElement se) {
-		// TODO Auto-generated method stub
+		if (sbsv2BuildInfo == null){
+			sbsv2BuildInfo = new SBSv2BuilderInfo();
+		}
 		
+		sbsv2BuildInfo.loadFromStorage(se);
 	}
 
 	@Override
-	public void saveConfigurationSettings(ICStorageElement se) {
-		// TODO Auto-generated method stub
-		
+	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext context) {
+		sbsv2BuildInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
+		sbsv2BuildInfo.saveToStorage(se.createChild(SBSV2_DATA_ID)); 
 	}
-
+	
 }

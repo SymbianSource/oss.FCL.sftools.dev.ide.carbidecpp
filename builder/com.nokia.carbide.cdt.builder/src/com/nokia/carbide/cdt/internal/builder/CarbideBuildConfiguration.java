@@ -66,9 +66,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	protected final static String ENV_VAR_DATA_ID = "ENV_VAR_DATA_ID"; //$NON-NLS-1$
 	protected final static String ROM_BUILDER_DATA_ID = "ROM_BUILDER_DATA_ID"; //$NON-NLS-1$
 	
-	// SBSv2 only config settings 
-	public final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
-	
 	protected ISymbianBuildContext context;
 	protected TrackedResource projectTracker;
 	protected List<ISISBuilderInfo> sisBuilderInfoList;
@@ -128,7 +125,7 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 			envVarsInfo.saveToStorage(rootStorage.createChild(ENV_VAR_DATA_ID));
 			
 			// Save build context specific settings.
-			this.getBuildContext().saveConfigurationSettings(rootStorage);
+			this.getBuildContext().saveConfigurationSettings(rootStorage, getBuildContext());
 		}
 	}
 	

@@ -132,9 +132,10 @@ public interface ISymbianBuildContext {
 	
 	/**
 	 * Save build context specific configuration settings
+	 * @param ISymbianBuildContext 
 	 * @param ICStorageElement - a child of CARBIDE_STORAGE_ID ("CarbideConfigurationDataProvider") in .cproject data
 	 * @since 3.0
 	 */
-	public void saveConfigurationSettings(ICStorageElement se);
+	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext ISymbianBuildContext);
 	
 }

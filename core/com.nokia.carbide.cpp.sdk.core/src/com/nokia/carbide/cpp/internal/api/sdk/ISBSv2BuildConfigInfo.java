@@ -14,7 +14,7 @@
 * Description: 
 *
 */
-package com.nokia.carbide.cdt.internal.builder;
+package com.nokia.carbide.cpp.internal.api.sdk;
 
 /**
  * Interface to SBSv2 build configuration specific data
