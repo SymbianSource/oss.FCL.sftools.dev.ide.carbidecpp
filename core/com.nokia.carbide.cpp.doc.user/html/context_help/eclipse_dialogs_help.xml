@@ -327,6 +327,17 @@
 		<topic label="Project Settings"					href="html/reference/build_properties/pane_project_settings.htm" />
 	</context>
 	
+
+	<!-- ============================================================== -->
+	<!-- PREFERENCE PANELS                                              -->
+	
+	<!-- QT - ADDED for 3.0 -->
+	<context id="preference_dialog_context" >
+		<label>Qt</label>
+		<topic label="Qt preferences"  		href="html/qt_help/qt_pref_panel.htm" />
+	</context>
+
+
 	
 	<!-- PREFERENCE PANELS -->
 
