@@ -21,8 +21,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -102,17 +102,19 @@ public class SimpleRSSReader {
 			else if (RSSHandler.DESCRIPTION.equals(element) || RSSHandler.SUMMARY.equals(element))
 				description = value;
 			else if (RSSHandler.PUBDATE.equals(element)) {
-				try {
-					// FIXME parser needs writing!!
-					DateFormat dateFormat = DateFormat.getInstance();
-					dateFormat.setLenient(true);
-					pubDate = dateFormat.parse(value);
-				} catch (ParseException e) {
-					// don't store malformed dates
-				}
+				pubDate = parseRFC822Date(value);
 			}
 			else if (RSSHandler.CATEGORY.equals(element))
 				categories.add(value);
+		}
+
+		private Date parseRFC822Date(String value) {
+	        SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z"); //$NON-NLS-1$
+	        try {
+				return format.parse(value);
+			} catch (ParseException e) {
+			}
+			return null;
 		}
 	}
 	
@@ -216,7 +218,6 @@ public class SimpleRSSReader {
 		}
 		
 	}
-
 	
 	public static Rss readRSS(URL url) throws SAXException, IOException, ParserConfigurationException {
 		Rss rss = new Rss();
@@ -227,4 +228,6 @@ public class SimpleRSSReader {
 		parser.parse(inputStream, new RSSHandler(rss));
 		return rss;
 	}
+
+
 }

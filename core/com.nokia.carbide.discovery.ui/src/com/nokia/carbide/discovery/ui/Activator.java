@@ -123,7 +123,6 @@ public class Activator extends AbstractUIPlugin {
 	}
 	
 	public static void setBusyCursor(final Control control, final boolean isBusy) {
-		System.out.println("control="+control);
 		if (control == null)
 			return;
 		final Display display = control.getDisplay();
