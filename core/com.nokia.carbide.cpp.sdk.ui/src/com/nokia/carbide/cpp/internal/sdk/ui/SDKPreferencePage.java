@@ -252,7 +252,10 @@ public class SDKPreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent){
-		if (sdkMgr == null){
+		if (sdkMgr == null) {
+			sdkMgr = SDKCorePlugin.getSDKManager();
+		}
+		if (sdkMgr == null) {
 			return; 
 		}
 
@@ -269,8 +272,10 @@ public class SDKPreferencePage
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
-		sdkMgr = SDKCorePlugin.getSDKManager();
-		if (sdkMgr != null){
+		if (sdkMgr == null) {
+			sdkMgr = SDKCorePlugin.getSDKManager();
+		}
+		if (sdkMgr != null) {
 			sdkList = sdkMgr.getSDKList();
 		}
 	}
@@ -281,7 +286,7 @@ public class SDKPreferencePage
 	 */
 	public boolean performOk() {
 		// Remember which SDK is enabled
-		for (ISymbianSDK sdk : sdkMgr.getSDKList()){
+		for (ISymbianSDK sdk : sdkMgr.getSDKList()) {
 			((SymbianSDK)sdk).setEnabled(false);
 		}
 		Object[] sdkObjects = sdkListTableViewer.getCheckedElements();
@@ -392,7 +397,7 @@ public class SDKPreferencePage
 				} else if (e.getSource().equals(propertiesButton)) {
 					handlePropertiesButton();
 				} else if (e.getSource().equals(rescanButton)) {
-					handleRescanButton();
+					handleRescanButton(false);
 				}
 			}
 		};
@@ -467,7 +472,7 @@ public class SDKPreferencePage
 		locationCol.getColumn().setWidth(170);
 	}
 
-	private void handleAddButton() {
+	public void handleAddButton() {
 		AddSDKDialog dialog = new AddSDKDialog(getShell());
 		if (dialog.open() == AddSDKDialog.OK){
 			sdkList = sdkMgr.getSDKList();
@@ -478,7 +483,7 @@ public class SDKPreferencePage
 		}
 	}
 
-	private void handleDeleteButton() {
+	public void handleDeleteButton() {
 		ISymbianSDK sdk = (ISymbianSDK)((IStructuredSelection)sdkListTableViewer.getSelection()).getFirstElement();
 		int index = sdkListTableViewer.getTable().getSelectionIndex();
 		if (sdk != null){
@@ -495,7 +500,7 @@ public class SDKPreferencePage
 		}
 	}
 
-	private void handlePropertiesButton() {
+	public void handlePropertiesButton() {
 		ISymbianSDK sdk = (ISymbianSDK)((IStructuredSelection)sdkListTableViewer.getSelection()).getFirstElement();
 		int index = sdkListTableViewer.getTable().getSelectionIndex();
 		if (sdk != null){
@@ -507,7 +512,7 @@ public class SDKPreferencePage
 		}
 	}
 
-	private void handleRescanButton() {
+	public void handleRescanButton(boolean fromPortalPage) {
 		// forcible rescan; dump cache
 		SymbianBuildContextDataCache.refreshForSDKs(null);
 		startRescanning();
@@ -532,7 +537,7 @@ public class SDKPreferencePage
 		rescanButton.setEnabled(true);
 	}
 
-	private void selectSDKEntry(int index) {
+	public void selectSDKEntry(int index) {
 		ISymbianSDK sdk = (ISymbianSDK)sdkListTableViewer.getElementAt(index);
 		if (sdk != null){
 			sdkListTableViewer.setSelection(new StructuredSelection(sdk), true);
@@ -633,6 +638,16 @@ public class SDKPreferencePage
 			// No error
 			statusClear();
 		}
+	}
+
+	public void updateForPortalLayer() {
+		addButton.setVisible(false);
+		deleteButton.setVisible(false);
+		propertiesButton.setVisible(false);
+		rescanButton.setVisible(false);
+		getApplyButton().setVisible(false);
+		GridLayout gridLayout = new GridLayout();
+		sdkListTableViewer.getTable().getParent().setLayout(gridLayout);
 	}
 
 }
