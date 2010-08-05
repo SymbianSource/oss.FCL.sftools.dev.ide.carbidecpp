@@ -644,6 +644,15 @@
 	<entry keyword="System Browser View">
 	   <topic href="html/reference/view_system_browser.htm" label="System Browser" />
 	</entry>
+	
+	<entry keyword="Symbian Build System">
+	   <topic href="html/concepts/sbsv2.htm" label="Symbian Build System" />
+	</entry>
+
+	<entry keyword="SBSv2">
+	   <topic href="html/concepts/sbsv2.htm" label="Symbian Build System" />
+	</entry>
+
 
 <!-- T -->
 

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Symbian Build System (SBSv2)</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+</head>
+<body bgcolor="#FFFFFF">
+<h2><strong>Symbian</strong> Build System (SBSv2)</h2>
+<p>Carbide.c++ v3.x fully supports the <strong>Symbian Build System</strong> (SBSv2) for building Symbian executables. Codenamed RAPTOR, SBSv2 is also designed to overcome several limitations in GNU Make, including: </p>
+<ul>
+    <li>modularity and code re-use</li>
+    <li>separation of interface and implementation</li>
+    <li>extensibility</li>
+    <li>testability</li>
+</ul>
+<p>In addition, SBSv2:</p>
+<ul>
+    <li>is supported on the Windows and Linux operating systems</li>
+    <li>is more scalable than previous systems</li>
+    <li>supports incremental and parallel builds</li>
+    <li>offers more flexibility in build configurations</li>
+    <li>offers an overall 20% speed improvement</li>
+</ul>
+<p>SBSv2 also supports the use of build variants. A variant  is basically something which modifies a build. For example, a variant could be the standard ARMv5 build with Demand Paging functions enabled. Already defined variants are found in the <strong>Build &gt; SBSv2</strong> preference panel.</p>
+<p class="note"><strong>NOTE</strong> Carbide no longer supports the ABLD system. Use Carbide.c++ v2.7 instead if you require SBSv1 support.</p>
+<p>Preferences  for configuring SBSv2 is found  by clicking <strong>Window &gt; Preferences &gt; Carbide.c++</strong>:</p>
+<ul>
+    <li><a href="../reference/pref_carb_build.htm">Build &gt; SBSv2</a> &ndash; control general build options like clean, test components, dependency tracking, concurrent build jobs, build behavior, and emulator options</li>
+    <li><a href="../tasks/sdks/sdk_platform_filter.htm">Build Configuration Filtering</a> &ndash; controls which platforms are visible when creating new projects or build configurations.</li>
+    <li><a href="../reference/pref_carb_symbian_sdk.htm">Symbian SDKs</a> &ndash;  control which installed SDKs are available to projects during project creation or importing.</li>
+</ul>
+<p>Every project also has a set of SBSv2 properties to customize: </p>
+<ul>
+    <li><a href="../reference/build_properties/prop_carb_project_settings.htm">Properties for <em>project</em> &gt; Carbide.c++ &gt; Project Settings</a> &ndash; specifies whether all components or selected subcomponents listed in a build information file (<span class="code">bld.inf</span>) should be built for the currently selected project.</li>
+</ul>
+<p>For more information on SBSv2, see the Symbian Foundation's wiki article <a href="http://developer.symbian.org/wiki/index.php/Introduction_to_RAPTOR">Introduction to RAPTOR</a> and others.</p>
+<h5>Other References</h5>
+<ul>
+  <li><a href="concepts.htm">Concepts</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

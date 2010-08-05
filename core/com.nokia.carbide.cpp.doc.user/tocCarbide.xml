@@ -102,6 +102,7 @@
   </topic>
   <topic label="Project management" >
     <topic label="Carbide C/C++ perspective" 			href="html/concepts/CarbidePerspective.html" />
+    <topic label="Symbian Build System (SBSv2)" 			href="html/concepts/sbsv2.htm" />
     <topic label="Carbide.c++ preferences" 				href="html/reference/pref_carb_cpp.htm" >
       <topic label="Build"								href="html/reference/pref_carb_build.htm" />
       <topic label="Debugger"							href="html/reference/pref_carb_debugger.htm" />
