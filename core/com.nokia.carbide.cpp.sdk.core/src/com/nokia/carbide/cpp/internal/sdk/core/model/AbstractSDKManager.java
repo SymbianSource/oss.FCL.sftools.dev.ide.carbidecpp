@@ -520,12 +520,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		SDKCorePlugin.getDefault().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), message, t));		
 	}
 
-	/**
-	 * Get the version of SBSv2 installed on the PATH.
-	 * @param boolean forceScan - forceScan even if version already determined.
-	 * @return A Verion object of the installed SBSv2 version. Version will be 0.0.0 if not found.
-	 * @since 2.3
-	 */
 	public Version getSBSv2Version(boolean forceScan) {
 		if (sbsV2Version == null || forceScan){
 			sbsV2Version = new Version(0, 0, 0);
