@@ -79,7 +79,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 
 	public List<String> getAvailablePlatforms() {
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		return sdkMgr.getSymbianMacroStore().getSupportedPlatforms(((SymbianSDK)sdk).getOSVersion(), "", getBSFCatalog());
+		return ((SDKManager)sdkMgr).getSymbianMacroStore().getSupportedPlatforms(((SymbianSDK)sdk).getOSVersion(), "", getBSFCatalog());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -112,7 +112,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		}
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (sdkMgr.getBSFScannerEnabled()){
+		if (((SDKManager)sdkMgr).getBSFScannerEnabled()){
 			buildTargets.addAll(getBSFPlatformContexts());
 			buildTargets.addAll(getBinaryVariationPlatformContexts()); // Symbian Binary Variation (.var)
 		}
@@ -147,7 +147,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 			synchronized (cachedPlatformMacros) {
 				IBSFCatalog bsfCatalog = getBSFCatalog();
 				ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-				platformMacros = sdkMgr.getSymbianMacroStore().getPlatformMacros(sdk.getOSVersion(), "", bsfCatalog, platform);
+				platformMacros = ((SDKManager)sdkMgr).getSymbianMacroStore().getPlatformMacros(sdk.getOSVersion(), "", bsfCatalog, platform);
 				cachedPlatformMacros.put(platform.toUpperCase(), platformMacros);
 			}
 		}
@@ -283,9 +283,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 			for (IBSFPlatform platform : catalog.getPlatforms()) {
 				// only return non-variant style BSF's.  see boog #4533 for details.
 				if (!platform.isVariant()) {
-					// TODO: Hard code build context hack
 					bsfContextList.add(new BuildContextSBSv1(sdk, platform.getName().toUpperCase(), ISymbianBuildContext.DEBUG_TARGET));
-					// TODO: Hard code build context hack
 					bsfContextList.add(new BuildContextSBSv1(sdk, platform.getName().toUpperCase(), ISymbianBuildContext.RELEASE_TARGET));
 				}
 			}
@@ -302,7 +300,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		}
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		List<BuildPlat> platFilterList = sdkMgr.getPlatformList();
+		List<BuildPlat> platFilterList = ((SDKManager)sdkMgr).getPlatformList();
 		Iterator<ISymbianBuildContext> li = buildContexts.iterator();
 		while(li.hasNext()){
 			ISymbianBuildContext currContext = li.next();

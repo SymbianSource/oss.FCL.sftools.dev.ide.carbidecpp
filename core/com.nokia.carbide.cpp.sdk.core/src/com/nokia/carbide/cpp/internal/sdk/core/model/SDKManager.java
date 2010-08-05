@@ -204,6 +204,13 @@ public class SDKManager extends AbstractSDKManager {
 		return deviceDirPath.append(DEVICES_FILE_NAME).toFile();
 	}
 	
+	/**
+	 * Getting installation path of CSL (GCCE) Arm Toolchain from the registry.
+	 * The method also check that the all required tools exist.
+	 * @return Path to tool binaries under installation path directory, 
+	 *         successful. Otherwise throws an exception.
+	 * @throws SDKEnvInfoFailureException 
+	 */
 	public String getCSLArmToolchainInstallPathAndCheckReqTools() throws SDKEnvInfoFailureException{
 		
 		String installPath = null;
@@ -319,6 +326,14 @@ public class SDKManager extends AbstractSDKManager {
 		}
 	}
 	
+	/**
+	 * Checks to see if the devices.xml on disk contains the same current information
+	 * as what we have in the sdk list. When not synchronized, when an SDK is add or removed
+	 * outside of Carbide for example, this means an SDK rescan operation is needed.
+	 * @return true if synchronized (no rescan needed), otherwise false (not up to date). Will also return true when devices.xml does not exist
+	 * @see ISDKManager.fireDevicesXMLChanged
+	 * @since 2.0
+	 */ 
 	public boolean checkDevicesXMLSynchronized(){
 		if (devicesXLMLastModified == 0){
 			return true; // no devices.xml file

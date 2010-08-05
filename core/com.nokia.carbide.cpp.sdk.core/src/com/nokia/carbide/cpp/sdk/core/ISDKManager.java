@@ -17,9 +17,6 @@ import java.util.List;
 
 import org.osgi.framework.Version;
 
-import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
-
 /**
  * Interface to Symbian OS SDK's. Use this interface to get the list of all SDKs.
  * @see ISymianSDK
@@ -86,43 +83,10 @@ public interface ISDKManager {
 	void updateSDK(ISymbianSDK sdkId);
 	
 	/**
-	 * Retrieves the instance of the Symbian Macro Store
-	 * @return
-	 */
-	SymbianMacroStore getSymbianMacroStore();
-	
-	/**
-	 * Refresh the configuration cache that contains additional information that the devices.xml
-	 * data does not have, such as OS and SDK version.
+	 * Refresh the configuration cache that contains Symbian SDK info such as 'id' and EPOCROOT
 	 *
 	 */
 	public void updateCarbideSDKCache();
-	
-	/**
-	 * Get whether or not the UI has enabled BSF scanning.
-	 * @return true if BSF scanning is enabled.
-	 */
-	public boolean getBSFScannerEnabled();
-	
-	/**
-	 * Set whether or not build platforms should be added for SDKs that contain .bsf extensions.
-	 * @param enabled - When true, add BSF platforms.
-	 */
-	public void enableBSFScanner(boolean enabled);
-	
-	/**
-	 * Sets the list of available build platforms
-	 * @param platList, a list of BuildPlat objects
-	 * @see BuildPlat
-	 */
-	public void setPlatformList(List<BuildPlat> platList);
-	
-	/**
-	 * Get the list of all available built-in platforms
-	 * @return A list of BuildPlat objects
-	 * @see BuildPlat
-	 */
-	public List<BuildPlat> getPlatformList();
 	
 	/**
 	 * Get the absolute path to the devices.xml file. 
@@ -132,22 +96,7 @@ public interface ISDKManager {
 	 * @return File object. Clients should check File.exists() to make sure the file exists on disk.
 	 */
 	public File getDevicesXMLFile();
-	
-	/**
-	 * Getting installation path of CSL (GCCE) Arm Toolchain from the registry.
-	 * The method also check that the all required tools exist.
-	 * @return Path to tool binaries under installation path directory, 
-	 *         successful. Otherwise throws an exception.
-	 * @throws SDKEnvInfoFailureException 
-	 */
-	public String getCSLArmToolchainInstallPathAndCheckReqTools() throws SDKEnvInfoFailureException;
 		
-	/**
-	 * Returns toolchain info for all detected RVCT tools.
-	 * @return Array of toolchain information objects.
-	 */
-	public IRVCTToolChainInfo[] getInstalledRVCTTools();
-	
 	/**
 	 * Add an ICarbideInstalledSDKChangeListener listener
 	 * @param listener - An instance of ICarbideInstalledSDKChangeListener
@@ -160,28 +109,4 @@ public interface ISDKManager {
 	 */
 	public void removeInstalledSdkChangeListener(ICarbideInstalledSDKChangeListener listener);
 	
-	/**
-	 * Checks to see if the devices.xml on disk contains the same current information
-	 * as what we have in the sdk list. When not synchronized, when an SDK is add or removed
-	 * outside of Carbide for example, this means an SDK rescan operation is needed.
-	 * @return true if synchronized (no rescan needed), otherwise false (not up to date). Will also return true when devices.xml does not exist
-	 * @see ISDKManager.fireDevicesXMLChanged
-	 * @since 2.0
-	 */ 
-	public boolean checkDevicesXMLSynchronized();
-	
-	/**
-	 * Get the version of SBSv2 installed on the PATH.
-	 * @param boolean forceScan - forceScan even if version already determined.
-	 * @return A Verion object of the installed SBSv2 version. Version will be 0.0.0 if not found.
-	 * @since 2.3
-	 */
-	public Version getSBSv2Version(boolean forceScan);
-	
-	/**
-	 * Retrieve the minimum supported version of SBSv2 for Carbide.c++
-	 * @return Version
-	 * @since 2.3
-	 */
-	public Version getMinimumSupportedSBSv2Version();
 }

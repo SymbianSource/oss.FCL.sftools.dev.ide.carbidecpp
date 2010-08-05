@@ -16,7 +16,10 @@
 */
 package com.nokia.carbide.cpp.sdk.core.test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 
 import junit.framework.TestCase;
@@ -28,8 +31,11 @@ import org.osgi.framework.Bundle;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 /**
  * Tests the ICarbideDevicesXMLChangeListener class
@@ -89,17 +95,17 @@ public class TestDevicesXMLListener extends TestCase {
 
 		
 		// Here we just changed the time stamp and not the contents so it should be OK.
-		assertTrue("Devices.xml has changed only timestamp, bad return value", sdkMgr.checkDevicesXMLSynchronized());
+		assertTrue("Devices.xml has changed only timestamp, bad return value", ((SDKManager)sdkMgr).checkDevicesXMLSynchronized());
 		
 		ISymbianSDK sdk = sdkMgr.getSDKList().get(0);
 		((SymbianSDK)sdk).setEPOCROOT("K:\\");
 		sdkMgr.updateSDK(sdk);
-		assertTrue("Devices.xml should still be true with sdk update via APIs", sdkMgr.checkDevicesXMLSynchronized());
+		assertTrue("Devices.xml should still be true with sdk update via APIs", ((SDKManager)sdkMgr).checkDevicesXMLSynchronized());
 		
 		// copy a different devices.xml file over.
 		copyFile (pluginRelativeFile(devicesTestFile), devicesFile);
 		
-		assertFalse("Devices.xml has changed changed content, should reutrn false. ", sdkMgr.checkDevicesXMLSynchronized());
+		assertFalse("Devices.xml has changed changed content, should reutrn false. ", ((SDKManager)sdkMgr).checkDevicesXMLSynchronized());
 		
 		ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
 		sdkMgrInternal.fireDevicesXMLChanged();

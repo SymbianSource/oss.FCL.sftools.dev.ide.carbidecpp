@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -82,7 +83,7 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 									// SBSv1 only
 									bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
 								}
-								if (sdkMgr.getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
+								if (((SDKManager)sdkMgr).getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
 									// Check and see if any of the configs in the SDK
 									// match any configuration that has been selected before
 									// for this SDK.
@@ -142,7 +143,7 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 					bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
 				} 
-				if (sdkMgr.getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
+				if (((SDKManager)sdkMgr).getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
 					// this setting needs to be persisted.
 					settingsNeedUpdate = true;
 					selectedConfigsToSave.add(currContext);

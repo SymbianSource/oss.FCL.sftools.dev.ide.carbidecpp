@@ -22,11 +22,13 @@ import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianMissingSDKFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.IRVCTToolChainInfo;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -313,7 +315,8 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	}
 
 	private IPath getRVCTPrefixFilePath() {
-		IRVCTToolChainInfo[] installedRVCTTools = SDKCorePlugin.getSDKManager().getInstalledRVCTTools();
+		ISDKManager sdkManager = SDKCorePlugin.getSDKManager();
+		IRVCTToolChainInfo[] installedRVCTTools = ((SDKManager)sdkManager).getInstalledRVCTTools();
 		// use default in case tools aren't installed
 		String rvctFragment = "rvct2_2"; //$NON-NLS-1$
 		if (installedRVCTTools.length > 0) {

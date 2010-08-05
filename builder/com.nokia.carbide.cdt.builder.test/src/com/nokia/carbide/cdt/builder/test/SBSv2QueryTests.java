@@ -24,6 +24,7 @@ import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -41,7 +42,7 @@ public class SBSv2QueryTests extends BaseTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		Version sbsVersion = SDKCorePlugin.getSDKManager().getSBSv2Version(true);
+		Version sbsVersion = ((SDKManager)SDKCorePlugin.getSDKManager()).getSBSv2Version(true);
 		if ((sbsVersion.getMajor() == 2 && sbsVersion.getMinor() < 15) ||
 			 sbsVersion.getMajor() < 2){
 			

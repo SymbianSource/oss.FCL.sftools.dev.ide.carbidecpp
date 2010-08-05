@@ -60,6 +60,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.qt.core.QtConfigFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKFilter;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -148,7 +149,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!sdkMgr.checkDevicesXMLSynchronized()){
+		if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 			if (sdkMgr instanceof ISDKManagerInternal){
 				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
 				sdkMgrInternal.fireDevicesXMLChanged();

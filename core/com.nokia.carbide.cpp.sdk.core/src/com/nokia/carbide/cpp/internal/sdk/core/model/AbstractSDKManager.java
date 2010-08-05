@@ -351,10 +351,18 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	 */
 	abstract protected boolean isEPOCRootFixed();
 
+	/**
+	 * Get whether or not the UI has enabled BSF scanning.
+	 * @return true if BSF scanning is enabled.
+	 */
 	public boolean getBSFScannerEnabled(){
 		return enableBSFScanner;
 	}
 	
+	/**
+	 * Set whether or not build platforms should be added for SDKs that contain .bsf extensions.
+	 * @param enabled - When true, add BSF platforms.
+	 */
 	public void enableBSFScanner(boolean enabled){
 		enableBSFScanner = enabled;
 	}
@@ -367,6 +375,10 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		return platList;
 	}
 
+	/**
+	 * Returns toolchain info for all detected RVCT tools.
+	 * @return Array of toolchain information objects.
+	 */
 	public synchronized IRVCTToolChainInfo[] getInstalledRVCTTools() {
 		// the path wn't change inside one invocation so cache the results
 		if (rvctInfoList == null) {
@@ -508,6 +520,12 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		SDKCorePlugin.getDefault().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.getPluginId(), message, t));		
 	}
 
+	/**
+	 * Get the version of SBSv2 installed on the PATH.
+	 * @param boolean forceScan - forceScan even if version already determined.
+	 * @return A Verion object of the installed SBSv2 version. Version will be 0.0.0 if not found.
+	 * @since 2.3
+	 */
 	public Version getSBSv2Version(boolean forceScan) {
 		if (sbsV2Version == null || forceScan){
 			sbsV2Version = new Version(0, 0, 0);
@@ -586,6 +604,11 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		return sbsV2Version;
 	}
 
+	/**
+	 * Retrieve the minimum supported version of SBSv2 for Carbide.c++
+	 * @return Version
+	 * @since 2.3
+	 */
 	public Version getMinimumSupportedSBSv2Version() {
 		return MINIMUM_RAPTOR_VERSION;
 	}

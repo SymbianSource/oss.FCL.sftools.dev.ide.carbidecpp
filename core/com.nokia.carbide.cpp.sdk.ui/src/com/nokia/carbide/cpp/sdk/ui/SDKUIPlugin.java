@@ -27,6 +27,7 @@ import org.osgi.framework.BundleContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.SBSv1PlatformFilterComposite;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.SDKUIPreferenceConstants;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -60,7 +61,7 @@ public class SDKUIPlugin extends AbstractUIPlugin implements IStartup, ICarbideD
 		super.start(context);
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		sdkMgr.setPlatformList(SBSv1PlatformFilterComposite.getPlatFilterPrefsStore());	
+		((SDKManager)sdkMgr).setPlatformList(SBSv1PlatformFilterComposite.getPlatFilterPrefsStore());	
 	}
 	
 	

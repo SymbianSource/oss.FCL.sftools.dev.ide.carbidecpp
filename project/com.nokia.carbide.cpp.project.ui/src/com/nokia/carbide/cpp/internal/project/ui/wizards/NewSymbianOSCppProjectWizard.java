@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.TemplateSDKsFilter;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.project.ui.sharedui.NewProjectPage;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -52,7 +53,7 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 		setWindowTitle(Messages.getString("NewSymbianOSCppProjectWizard.WindowTitle")); //$NON-NLS-1$
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!sdkMgr.checkDevicesXMLSynchronized()){
+		if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 			if (sdkMgr instanceof ISDKManagerInternal){
 				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
 				sdkMgrInternal.fireDevicesXMLChanged();

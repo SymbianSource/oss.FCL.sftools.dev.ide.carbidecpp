@@ -106,14 +106,6 @@ public interface ICarbideProjectInfo {
 	public IPath getWorkspaceRelativeBldInfPath();
 	
 	/**
-	 * Get the name of the MMP file that is used to calculate the target output (final artifact) for setting up launch configurations
-	 * @return
-	 * 
-	 * @deprecated no longer used in 1.3.  now returns an empty string.
-	 */
-	public String getMMPTargetFile();
-	
-	/**
 	 * Get the IProject for the Carbide.c++ project.
 	 * @return IProject object
 	 */

@@ -337,11 +337,6 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	public IPath getWorkspaceRelativeBldInfPath(){
 		return new Path(projectTracker.getProject().getName()).append(projectRelativeBldInfPath);
 	}
-
-	public String getMMPTargetFile(){
-		// now deprecated in 1.3
-		return "";
-	}
 	
 	public IProject getProject(){
 		return projectTracker.getProject();

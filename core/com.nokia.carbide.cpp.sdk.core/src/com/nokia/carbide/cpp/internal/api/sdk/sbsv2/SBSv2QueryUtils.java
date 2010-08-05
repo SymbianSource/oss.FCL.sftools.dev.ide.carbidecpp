@@ -47,6 +47,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
@@ -411,11 +412,12 @@ public class SBSv2QueryUtils {
 	}
 
 	private static boolean checkForMinimumRaptorVersion() throws SBSv2MinimumVersionException{
-		Version sbsVers = SDKCorePlugin.getSDKManager().getSBSv2Version(false);
-		if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
+		SDKManager sdkMgr = (SDKManager)SDKCorePlugin.getSDKManager();
+		Version sbsVers = sdkMgr.getSBSv2Version(false);
+		if (sbsVers.compareTo(sdkMgr.getMinimumSupportedSBSv2Version()) >= 0)
 			return true;
 		else {
-			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation and 'Rescan' from the Build Configuration Filtering preference page .";
+			String message = "Raptor/SBSv2 minimum version supported in Carbide.c++ is " + sdkMgr.getMinimumSupportedSBSv2Version() + ". Your sbs version is " + sbsVers + ". Please update your sbs installation and 'Rescan' from the Build Configuration Filtering preference page .";
 			throw new SBSv2MinimumVersionException(message);
 		}
 	}

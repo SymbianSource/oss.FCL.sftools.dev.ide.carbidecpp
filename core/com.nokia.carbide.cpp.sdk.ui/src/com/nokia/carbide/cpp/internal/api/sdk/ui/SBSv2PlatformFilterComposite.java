@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.TableItem;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.AddSBSv2ProductVariant;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -233,7 +234,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				aliasMap = SBSv2QueryUtils.getCompleteAliasList();
 			} catch (SBSv2MinimumVersionException e) {
 				// Force a scan for version in case system was updated
-				SDKCorePlugin.getSDKManager().getSBSv2Version(true);
+				((SDKManager)SDKCorePlugin.getSDKManager()).getSBSv2Version(true);
 				try {
 					// try, try again...
 					aliasMap = SBSv2QueryUtils.getCompleteAliasList();
