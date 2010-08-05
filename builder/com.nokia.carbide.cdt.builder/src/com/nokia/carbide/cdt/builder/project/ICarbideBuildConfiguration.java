@@ -16,13 +16,11 @@
 */
 package com.nokia.carbide.cdt.builder.project;
 
-import java.io.File;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
@@ -114,38 +112,11 @@ public interface ICarbideBuildConfiguration {
 	 * @since 3.0 */
 	String getTargetString();
 	
-	/** ISymbianBuildContext wrapper
-	 * @since 3.0 */
-	public IPath getCompilerPrefixFile();
-	
-	/** ISymbianBuildContext wrapper
-	 * @since 3.0 */
-	public List<IDefine> getCompilerMacros();
-	
-	/** ISymbianBuildContext wrapper
-	 * @since 3.0 */
-	public List<IDefine> getVariantHRHDefines();
-	
-	/** ISymbianBuildContext wrapper
-	 * @since 3.0 */
-	public List<File> getPrefixFileIncludes();
-	
-	/** ISymbianBuildContext wrapper
-	 * @since 3.0 */
-	public String getBuildVariationName();
-
-	/**
-	 * Get the <cconfiguration/> 'id' attribute for this configuration (from .cproject file). This is an ISymbianBuildContext wrapper.
-	 * @return String
-	 * @since 3.0
-	 */
-	String getConfigurationID();
-	
 	/**
 	 * Check that at least one MMP in the project configuration has stdcpp support keyword
 	 * @return
 	 * @since 3.0
 	 */
-	public boolean hasSTDCPPSupport();
+	boolean hasSTDCPPSupport();
 	
 }

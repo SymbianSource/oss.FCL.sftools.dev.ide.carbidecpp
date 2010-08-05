@@ -195,7 +195,7 @@ public class PreprocessHandler extends AbstractHandler {
 							}
 							
 							// add the compiler prefix file if any
-							IPath compilerPrefix = buildConfig.getCompilerPrefixFile();
+							IPath compilerPrefix = buildConfig.getBuildContext().getCompilerPrefixFile();
 							if (compilerPrefix != null) {
 								args.add("-include"); //$NON-NLS-1$
 				        		args.add("\"" + compilerPrefix.toOSString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -443,7 +443,6 @@ public class PreprocessHandler extends AbstractHandler {
 		if (buildConfig.hasSTDCPPSupport()){
 			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
 		}
-		
 		
 		IProject project = buildConfig.getCarbideProject().getProject();
 		

@@ -552,7 +552,15 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext context) {
 		saveBuildArgsToStorage(se.createChild(ARGUMENTS_DATA_ID)); 
 	}
-	
-	
+
+	@Override
+	/**
+	 * Get the unique ID for this build configuration.
+	 * For ABLD it is the display name, for SBSv2, it is the builder ID
+	 * @return
+	 */
+	public String getConfigurationID() {
+		return getDisplayString();
+	}
 
 }

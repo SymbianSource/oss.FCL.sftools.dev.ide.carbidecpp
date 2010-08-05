@@ -128,7 +128,7 @@ public class BuildConfigurationData extends CConfigurationData {
 	@Override
 	public String getId() {
 		if (carbideBuildConfig.getBuildContext() instanceof ISBSv1BuildContext){
-			return carbideBuildConfig.getDisplayString();
+			return carbideBuildConfig.getBuildContext().getDisplayString();
 		} else if (carbideBuildConfig.getBuildContext() instanceof ISBSv2BuildContext) {
 			return ((ISBSv2BuildContext)carbideBuildConfig.getBuildContext()).getConfigID();
 		}
@@ -138,7 +138,7 @@ public class BuildConfigurationData extends CConfigurationData {
 
 	@Override
 	public String getName() {
-		return carbideBuildConfig.getDisplayString();
+		return carbideBuildConfig.getBuildContext().getDisplayString();
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class BuildConfigurationData extends CConfigurationData {
 			
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(cpi.getProject());
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getConfigurationID());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					String sourcesCacheValue = "";
 					for (ICSourceEntry src : sourceEntries) {
@@ -316,7 +316,7 @@ public class BuildConfigurationData extends CConfigurationData {
 		try {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(((CarbideBuildConfiguration)carbideBuildConfig).getConfigurationID());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(((CarbideBuildConfiguration)carbideBuildConfig).getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					ICStorageElement storage = configDes.getStorage(CONFIG_DATA_CACHE, false);
 					if (storage != null) {

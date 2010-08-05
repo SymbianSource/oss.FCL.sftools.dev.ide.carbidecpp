@@ -138,4 +138,11 @@ public interface ISymbianBuildContext {
 	 */
 	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext ISymbianBuildContext);
 	
+	/**
+	 * Get the <cconfiguration/> 'id' attribute for this configuration (from .cproject file). This is an ISymbianBuildContext wrapper.
+	 * @return String
+	 * @since 3.0
+	 */
+	String getConfigurationID();
+	
 }

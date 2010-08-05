@@ -2234,7 +2234,7 @@ public class EpocEngineHelper {
 		if (cpi != null){
 			ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
 			if (defaultConfig != null){
-				if (defaultConfig.getBuildVariationName().length() > 0 && 
+				if (defaultConfig.getBuildContext().getBuildVariationName().length() > 0 && 
 					mmpData.getFlags().contains(EMMPStatement.FEATUREVARIANT)) {
 					isFeatureVariant = true;
 				} else if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project) &&
@@ -2369,7 +2369,7 @@ public class EpocEngineHelper {
 		} else {
 			basePlat = config.getPlatformString();
 		}
-		String variantPlat = config.getBuildVariationName();
+		String variantPlat = config.getBuildContext().getBuildVariationName();
 		
 		if (variantPlat.length() == 0){
 			plat = plat + "." + ISymbianBuildContext.DEFAULT_VARIANT;

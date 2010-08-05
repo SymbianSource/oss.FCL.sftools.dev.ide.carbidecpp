@@ -16,7 +16,6 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +42,6 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
-import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
@@ -145,7 +142,7 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(projectTracker.getProject());
 			if (projDes != null) {
 			
-				ICConfigurationDescription configDes = projDes.getConfigurationById(getConfigurationID());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					// save the CDT project description.  this saves all configs but that's the
 					// only thing CDT allows at this point.
@@ -159,18 +156,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		}
 
 		return false;
-	}
-	
-	/**
-	 * Get the unique ID for this build configuration.
-	 * For ABLD it is the display name, for SBSv2, it is the builder ID
-	 * @return
-	 */
-	public String getConfigurationID() {
-		if (context instanceof ISBSv2BuildContext){
-			return ((ISBSv2BuildContext) context).getConfigID();
-		}
-		return context.getDisplayString();
 	}
 
 	public List<ISISBuilderInfo> getSISBuilderInfoList() {
@@ -297,26 +282,6 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 
 	public ISymbianBuildContext getBuildContext() {
 		return context;
-	}
-
-	public List<IDefine> getCompilerMacros() {
-		return context.getCompilerMacros();
-	}
-
-	public IPath getCompilerPrefixFile() {
-		return context.getCompilerPrefixFile();
-	}
-
-	public List<IDefine> getVariantHRHDefines() {
-		return context.getVariantHRHDefines();
-	}
-
-	public List<File> getPrefixFileIncludes() {
-		return context.getPrefixFileIncludes();
-	}
-
-	public String getBuildVariationName() {
-		return context.getBuildVariationName();
 	}
 	
 	public boolean hasSTDCPPSupport() {

@@ -391,5 +391,16 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		sbsv2BuildInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
 		sbsv2BuildInfo.saveToStorage(se.createChild(SBSV2_DATA_ID)); 
 	}
+
+	@Override
+	/**
+	 * Get the unique ID for this build configuration.
+	 * For ABLD it is the display name, for SBSv2, it is the builder ID (cconfiguration 'id')
+	 * @return
+	 */
+	public String getConfigurationID() {
+		return getConfigID();
+	}
+
 	
 }

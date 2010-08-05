@@ -2323,7 +2323,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				return true;
 			}
 
-			for (File file : config.getPrefixFileIncludes()) {
+			for (File file : config.getBuildContext().getPrefixFileIncludes()) {
 				if (file.lastModified() > oldestMakefileTimestamp) {
 					return true;
 				}
@@ -2444,7 +2444,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return true;
 		}
 
-		for (File file : config.getPrefixFileIncludes()) {
+		for (File file : config.getBuildContext().getPrefixFileIncludes()) {
 			if (file.lastModified() > makefileTimestamp) {
 				return true;
 			}
@@ -2527,7 +2527,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			return true;
 		}
 		
-		for (File file : config.getPrefixFileIncludes()) {
+		for (File file : config.getBuildContext().getPrefixFileIncludes()) {
 			if (file.lastModified() > makefileTimestamp) {
 				return true;
 			}
@@ -2804,7 +2804,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				newRule = newRule + "\t" + cpp + " -undef -M -nostdinc ";
 
 				// add the compiler prefix file if any
-				IPath compilerPrefix = config.getCompilerPrefixFile();
+				IPath compilerPrefix = config.getBuildContext().getCompilerPrefixFile();
 				if (compilerPrefix != null) {
 					newRule = newRule + "-include \"" + compilerPrefix.toOSString() + "\" "; 
 				}

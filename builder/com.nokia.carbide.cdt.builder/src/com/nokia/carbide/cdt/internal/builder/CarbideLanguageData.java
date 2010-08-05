@@ -158,11 +158,11 @@ public class CarbideLanguageData extends CLanguageData {
 			Set<ICLanguageSettingEntry> macros = new HashSet<ICLanguageSettingEntry>();
 			macros.addAll(macroEntries);
 			
-			for (IDefine define : carbideBuildConfig.getVariantHRHDefines()) {
+			for (IDefine define : carbideBuildConfig.getBuildContext().getVariantHRHDefines()) {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 
-			for (IDefine define : carbideBuildConfig.getCompilerMacros()) {
+			for (IDefine define : carbideBuildConfig.getBuildContext().getCompilerMacros()) {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 			
@@ -316,7 +316,7 @@ public class CarbideLanguageData extends CLanguageData {
 			macros.putAll(sbsv2BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString()));			
 		}
 		
-		if (carbideBuildConfig.hasSTDCPPSupport()){
+		if ((carbideBuildConfig).hasSTDCPPSupport()){
 			macros.put("__SYMBIAN_STDCPP_SUPPORT__", "");
 		}
 		
