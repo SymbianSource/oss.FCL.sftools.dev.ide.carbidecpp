@@ -36,13 +36,21 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
             id="com.nokia.carbide.ide.cheatsheets"
-            name="Carbide.c++ Getting Started" />
+            name="Carbide How to..." />
             
       <cheatsheet
             category="com.nokia.carbide.ide.cheatsheets"
+            composite="false"
             contentFile="html/cheatsheets/getStarted_cs.xml"
             id="com.nokia.carbide.cpp.doc.user.getStarted"
-            name="HelloCarbide Project Example"/>
+            name="Application Project Example"/>
+      <cheatsheet
+            category="com.nokia.carbide.ide.cheatsheets"
+            composite="false"
+            contentFile="html/cheatsheets/getStarted_cs.xml"
+            id="com.nokia.carbide.cpp.doc.user.dll_example"
+            name="DLL Project Example">
+      </cheatsheet>
    </extension>
 
    <extension
@@ -75,6 +83,13 @@
 			contentFile="html/cheatsheets/stop_mode_cs.xml"
             id="com.nokia.carbide.cpp.doc.user.stop_mode"
             name="Stop Mode On-Device Debugging" />
+          <cheatsheet
+                category="com.nokia.carbide.ide.cheatsheets"
+                composite="false"
+                contentFile="$nl$/html/cheatsheets/getStarted_cs.xml"
+                id="com.nokia.carbide.cpp.doc.user.cheatsheet1176819414"
+                name="Creating and debugging an application project">
+          </cheatsheet>
 
    </extension>
 
