@@ -93,8 +93,6 @@ public class LaunchWizardData extends LaunchOptions {
 	public final static LaunchType APP_TRK = new LaunchType(null);
 	public final static LaunchType SYS_TRK = new LaunchType(null);
 	public final static LaunchType ATTACH_TO_PROCESS_LAUNCH = new LaunchType(null);
-	public final static LaunchType PLATSIM_RUN_MODE = new LaunchType(null);
-	public final static LaunchType PLATSIM_STOP_MODE = new LaunchType(null);
 	
 	// settings made in Debug/Run Process section
 	enum EExeSelection {

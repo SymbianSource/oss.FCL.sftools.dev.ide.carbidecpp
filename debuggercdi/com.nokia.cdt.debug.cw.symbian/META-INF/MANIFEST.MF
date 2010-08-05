@@ -33,9 +33,7 @@ Export-Package: com.nokia.cdt.debug.cw.symbian;
   x-friends:="com.nokia.carbide.automation.smoke.test,
    com.nokia.carbide.automation.utils,
    com.nokia.cdt.debug.cw.symbian.tests,
-   com.nokia.cdt.debug.launch,
-   com.nokia.cdt.debug.launch.platSim,
-   com.nokia.cdt.debug.launch.platSim.stopMode",
+   com.nokia.cdt.debug.launch",
  com.nokia.cdt.debug.cw.symbian.binaryparser;
   x-friends:="com.nokia.carbide.automation.smoke.test,
    com.nokia.carbide.automation.utils,
