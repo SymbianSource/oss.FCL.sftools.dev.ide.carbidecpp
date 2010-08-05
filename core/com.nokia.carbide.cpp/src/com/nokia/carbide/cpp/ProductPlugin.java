@@ -20,6 +20,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
+
 /**
  * The main plugin class to be used in the desktop.
  */
@@ -40,6 +43,8 @@ public class ProductPlugin extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+
+		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_IDE);
 	}
 
 	/**
