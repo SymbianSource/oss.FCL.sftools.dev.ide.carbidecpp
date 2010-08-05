@@ -60,6 +60,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	private List<ISymbianBuildContext> bsfContextList = new ArrayList<ISymbianBuildContext>(0);
 	private Map<String, List<String>> cachedPlatformMacros = new HashMap<String, List<String>>();
 	private List<String> supportedTargetTypesList = new ArrayList<String>();
+	private IPath variantFilePath;
 	
 	private static final String TARGETTYPE_PM_FILE = "epoc32/tools/trgtype.pm"; //$NON-NLS-1$
 	public static final String VARIANT_CFG_FILE = "epoc32/tools/variant/variant.cfg"; //$NON-NLS-1$
@@ -158,6 +159,11 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
 	 */
 	public IPath getPrefixFromVariantCfg(){
+		
+		if (variantFilePath != null){
+			return variantFilePath;
+		}
+		
 		File epocRoot = new File(sdk.getEPOCROOT());
 		File variantCfg;
 		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);
@@ -188,7 +194,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 					variantDir = matcher.group(1);
 					variantFile = matcher.group(3); 
 					File variantFullPathFile = new File(epocRoot, variantDir + File.separator + variantFile);
-					IPath variantFilePath = new Path(PathUtils.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
+					variantFilePath = new Path(PathUtils.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
 					return variantFilePath;
 				}
 			}

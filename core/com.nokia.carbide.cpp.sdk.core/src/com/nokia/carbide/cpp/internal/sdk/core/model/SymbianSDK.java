@@ -155,20 +155,20 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return osVersion;
 	}
 
-	public File getPrefixFile(String builderId) {
-		File prefixFile = prefixFileMap.get(builderId);
-		if (prefixFile == null) {
-			ISDKBuildInfo buildInfo = getBuildInfo(builderId);
-			if (buildInfo != null) {
-				IPath prefixFilePath = buildInfo.getPrefixFromVariantCfg();
-				if (prefixFilePath != null) {
-					prefixFile = prefixFilePath.toFile();
-					setPrefixFile(prefixFilePath, builderId);
-				}
-			}
-		}
-		return prefixFile;
-	}
+//	public File getPrefixFile(String builderId) {
+//		File prefixFile = prefixFileMap.get(builderId);
+//		if (prefixFile == null) {
+//			ISDKBuildInfo buildInfo = getBuildInfo(builderId);
+//			if (buildInfo != null) {
+//				IPath prefixFilePath = buildInfo.getPrefixFromVariantCfg();
+//				if (prefixFilePath != null) {
+//					prefixFile = prefixFilePath.toFile();
+//					setPrefixFile(prefixFilePath, builderId);
+//				}
+//			}
+//		}
+//		return prefixFile;
+//	}
 
 	public IPath getReleaseRoot() {
 		String epocRoot = getEPOCROOT();

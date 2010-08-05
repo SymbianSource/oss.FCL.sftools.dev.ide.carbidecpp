@@ -83,6 +83,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -2318,7 +2319,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			
 			// we need to check the variant hrh files as well
-			File prefixFile = config.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
+			ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
+			File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 			if (prefixFile != null && prefixFile.lastModified() > oldestMakefileTimestamp) {
 				return true;
 			}
@@ -2439,7 +2441,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		File prefixFile = config.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
+		ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
+		File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
@@ -2522,7 +2525,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		File prefixFile = config.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
+		ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
+		File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
@@ -2895,7 +2899,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				ISymbianSDK sdk = config.getSDK();
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 				ISBVPlatform sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(config.getPlatformString());
-				File sdkPrefix = sdk.getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
+				ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
+				File sdkPrefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 
 				if (sbvPlatform != null){
 					// might be an alternate HRH file to use

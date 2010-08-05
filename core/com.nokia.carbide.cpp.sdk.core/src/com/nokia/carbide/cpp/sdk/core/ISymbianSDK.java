@@ -63,13 +63,13 @@ public interface ISymbianSDK {
 	 */
 	Version getOSVersion();
 
-	/**
-	 * Returns the prefix file for a particular builder.
-	 * @param builderId id string of a builder
-	 * @return the File object for the prefix file, or
-	 * <code>null</code> if there isn't one for the SDK.
-	 */
-	File getPrefixFile(String builderId);
+//	/**
+//	 * Returns the prefix file for a particular builder.
+//	 * @param builderId id string of a builder
+//	 * @return the File object for the prefix file, or
+//	 * <code>null</code> if there isn't one for the SDK.
+//	 */
+//	File getPrefixFile(String builderId);
 
 	/**
 	 * Returns an IPath for the epoc32\release directory of a SDK.

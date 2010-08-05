@@ -187,7 +187,9 @@ public class SymbianBuildContextDataCache {
 
 			List<IDefine> macros = new ArrayList<IDefine>();
 			Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
-			File prefixFile = sdk.getPrefixFile(builderId);
+			
+			ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(builderId);
+			File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 			ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 			
 			if (prefixFile == null){
@@ -474,7 +476,8 @@ public class SymbianBuildContextDataCache {
 		}
 		
 		// also search files in same folder as variant.hrh
-		File prefix = sdk.getPrefixFile(builderId);
+		ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(builderId);
+		File prefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 		if (sbvPlatform != null){
 			// might be an alternate HRH file to use
 			IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();

@@ -79,6 +79,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
+import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -416,11 +417,14 @@ public class EpocEngineHelper {
 					&& new File(context.getSDK().getEPOCROOT()).exists()) {
 				defaultContext = context;
 				ISymbianSDK sdk = defaultContext.getSDK();
-				if (context instanceof ISBSv2BuildContext){
-					if (sdk.getPrefixFile(ISymbianBuilderID.SBSV2_BUILDER) != null)
+				
+				if (context instanceof ISBSv1BuildContext){
+					ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
+					if (sdkBuildInfo.getPrefixFromVariantCfg() != null)
 						break;
 				} else {
-					if (sdk.getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER) != null)
+					ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);;
+					if (sdkBuildInfo.getPrefixFromVariantCfg() != null)
 						break;
 				}
 			}

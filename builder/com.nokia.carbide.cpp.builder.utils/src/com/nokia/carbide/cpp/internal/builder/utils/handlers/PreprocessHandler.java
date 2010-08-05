@@ -87,6 +87,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.LanguageSelectionDialog;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage;
+import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -204,10 +205,13 @@ public class PreprocessHandler extends AbstractHandler {
 							// add the sdk prefix file if any
 							File sdkPrefix = null;
 							if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-								sdkPrefix = buildConfig.getSDK().getPrefixFile(ISymbianBuilderID.SBSV1_BUILDER);
+								ISDKBuildInfo sdkBuildInfo = buildConfig.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
+								sdkPrefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 							} else {
-								sdkPrefix = buildConfig.getSDK().getPrefixFile(ISymbianBuilderID.SBSV2_BUILDER);
+								ISDKBuildInfo sdkBuildInfo = buildConfig.getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);;
+								sdkPrefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
 							}
+							
 							if (sdkPrefix != null && sdkPrefix.exists()) {
 								args.add("-include"); //$NON-NLS-1$
 				        		args.add("\"" + sdkPrefix.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
