@@ -226,7 +226,6 @@ public class SDKManager extends AbstractSDKManager {
 		}
 		
 		if (!new File(installPath).exists()){
-			//TODO: Localise
 			String errMsg = "CSL Arm Toolchain installation path pointed by registry key '" 
 							+  CSL_ARM_TOOLCHAIN_REG_PATH 
 							+ "' does not exist."; //$NON-NLS-N$

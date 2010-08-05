@@ -84,8 +84,7 @@ public class SBSv2Utils {
     	if (!enableSBSv1Support()) {
     		supportedSDKs.addAll(sdks);
     	} else {
-	    	//TODO need a better way to do this from Symbian.
-	    	// For now, just filter out anything older than 9.4
+	    	// Filter out anything older than 9.4
 	    	for (ISymbianSDK sdk : sdks) {
 	    		Version osVersion = sdk.getOSVersion();
 	    		if (osVersion.getMajor() > 8 || osVersion.getMajor() == 0 ||

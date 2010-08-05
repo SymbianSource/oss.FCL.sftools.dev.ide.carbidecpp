@@ -163,7 +163,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 					meaning = aliasToMeaningMap.get(alias);
 				}
 				if (meaning == null){
-					continue; // TODO: How to handle this scenario
+					continue; 
 				}
 				SBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(alias, meaning, configQueryXML);
 				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);

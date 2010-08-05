@@ -321,7 +321,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	
 	/**
 	 * Parses the epoc32\kit\manifest.xml file and add the relavant SDK information 
-	 * Currently this is just a bunch of hackish code to parse the simplest manifest.xml file that really does nothing useful at all
 	 * For a manifest to be properly mapped you need at minimum: epocRoot, id, and label filled out.
 	 */
 	

@@ -263,9 +263,7 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 				// Currently only variation of ARMV5 is supported... So just hard code the variated platform
 				// Only add the build platform if it's not virtual.
 				if (!sbvPlatform.isVirtual()){
-					// TODO: Hard code build context hack
 					binaryVariantContextList.add(new BuildContextSBSv1(sdk, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.DEBUG_TARGET));
-					// TODO: Hard code build context hack
 					binaryVariantContextList.add(new BuildContextSBSv1(sdk, BuildContextSBSv1.ARMV5_PLATFORM + "." + sbvPlatform.getName(), ISymbianBuildContext.RELEASE_TARGET));
 				}
 			}
