@@ -132,12 +132,6 @@ span.attr
 		<li>added <i>getSDK()</i> - A convenience wrapper for ISymbiabBuildContext</li>
 		<li>added <i>getPlatformString()</i> - A convenience wrapper for ISymbiabBuildContext</li>
 		<li>added <i>getTargetString()</i> - A convenience wrapper for ISymbiabBuildContext</li>
-		<li>added <i>getCompilerPrefixFile()</i> - A convenience wrapper for ISymbiabBuildContext</li>
-		<li>added <i>getCompilerMacros()</i> - A convenience wrapper for ISymbiabBuildContext</li>
-		<li>added <i>getVariantHRHDefines()</i> - A convenience wrapper for ISymbiabBuildContext</li>
-		<li>added <i>getPrefixFileIncludes()</i> - A convenience wrapper for ISymbiabBuildContext</li>
-		<li>added <i>getBuildVariationName()</i> - A convenience wrapper for ISymbiabBuildContext</li>
-		<li>added <i>getConfigurationID()</i></li>
 		<li>added <i>hasSTDCPPSupport()</i></li>
 	</ul>
 
@@ -244,7 +238,22 @@ span.attr
    		<li><i>getSDKVersion()</i> has been removed. Users should not use SDK and OS version any longer but use <i>ISymbianSDK#getSupportedFeatures()</i> instead.</li>
    </ul>
    
-   <li><i>ICarbideBuildConfiguration</i> no longer implements <i>ISymbianBuildContext</i>. You will need to use the <i>ISymbianBuildContext</i> wrapper methods to access that interface now.</li>
+   <li><i>ICarbideBuildConfiguration</i> no longer implements <i>ISymbianBuildContext</i>. You will need to use the <i>ICarbideBuildConfiguration#getBuildContext()</i> to access most build context specific data.</li>
+   
+   <li><i>com.nokia.carbide.cpp.sdk.core#ISDKManager</i> removed several methods.</li>
+   <p/>
+   <ul>
+   		<li><i>getSymbianMacroStore()</i> has been removed. </li>
+   		<li><i>getBSFScannerEnabled()</i> has been removed.</li>
+   		<li><i>enableBSFScanner(boolean enabled)</i> has been removed.</li>
+   		<li><i>setPlatformList(List<BuildPlat> platList)</i> has been removed.</li>
+   		<li><i>getPlatformList()</i> has been removed.</li>
+   		<li><i>getCSLArmToolchainInstallPathAndCheckReqTools()</i> has been removed.</li>
+   		<li><i>checkDevicesXMLSynchronized()</i> has been removed.</li>
+   		<li><i>getSBSv2Version(boolean forceScan)</i> has been removed.</li>
+   		<li><i>getMinimumSupportedSBSv2Version()</i> has been removed.</li>
+   </ul>
+   
 </ul>
 
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
