@@ -28,7 +28,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationAdapter;
 import org.eclipse.swt.browser.LocationEvent;
@@ -137,9 +136,14 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 		composite.setLayout(new FillLayout());
 		try {
 			browser = new Browser(composite, SWT.MOZILLA);
-		} catch (SWTError e) {
-			// don't log with SWTError as Throwable because it displays a dialog and this may occur and be benign
-			Activator.logError(MessageFormat.format(Messages.AbstractBrowserPortalPageLayer_BrowserCreateError, e.getMessage()), null);
+		} catch (Throwable e1) {
+			try {
+				// try creating regular browser
+				browser = new Browser(composite, SWT.NONE);
+			} catch (Throwable e2) {
+				// don't log with Throwable directly because it may display a dialog
+				Activator.logError(MessageFormat.format(Messages.AbstractBrowserPortalPageLayer_BrowserCreateError, e2.getMessage()), null);
+			}
 		}
 		
 		return composite;
