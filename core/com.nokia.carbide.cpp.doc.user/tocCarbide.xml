@@ -120,7 +120,7 @@
     <topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
       <topic label="SDK Preferences (deprecated)"					href="html/reference/SDKPreferences.html" />
       <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
-      <topic label="Adding an SDK"					href="html/tasks/AddinganSDK.html" >
+      <topic label="Adding an SDK"					href="html/tasks/sdks/sdk_add.htm" >
         <topic label="Adding SDKs"					href="html/tasks/sdks/sdk_add.htm" />
       </topic>
       <topic label="Searching for SDKs"				href="html/tasks/sdks/sdk_search.htm" />
@@ -354,6 +354,12 @@
     <topic label="System Search view"      		href="html/reference/search/view_system_search.htm" />
     <topic label="System Search preferences"    href="html/reference/search/pref_system_search.htm" />
   </topic>
-  <topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
   <topic href="html/tasks/carbide_tools.htm" label="Creating Carbide Tools" />
+  <topic href="html/tasks/custom/carb_customizing.htm" label="Customizing Carbide">
+     <topic href="html/tasks/custom/carb_custom_menus.htm" label="Toolbars and Menus">
+     </topic>
+     <topic href="html/tasks/custom/carb_export_setup.htm" label="Sharing Carbide Setups">
+     </topic>
+  </topic>
+  <topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
 </toc>

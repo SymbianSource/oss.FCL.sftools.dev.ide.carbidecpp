@@ -583,7 +583,7 @@
 	</entry>
 
 	<entry keyword="SDK Support">
-	   <topic href="html/tasks/AddinganSDK.html" />
+	   <topic href="html/tasks/sdks/sdk_add.htm" />
 	   <topic href="html/tasks/WorkingwithSDKs.html"/>
 	   <topic href="html/tasks/RmvngandVwngPropsosSDK.html" label="Viewing and Editing SDK Properties"/>
 	</entry>
