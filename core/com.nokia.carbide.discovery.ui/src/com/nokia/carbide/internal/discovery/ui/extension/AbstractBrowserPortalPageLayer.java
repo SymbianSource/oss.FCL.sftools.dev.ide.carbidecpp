@@ -18,6 +18,7 @@ package com.nokia.carbide.internal.discovery.ui.extension;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -137,7 +138,8 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 		try {
 			browser = new Browser(composite, SWT.MOZILLA);
 		} catch (SWTError e) {
-			Activator.logError(Messages.AbstractBrowserPortalPageLayer_BrowserCreateError, e);
+			// don't log with SWTError as Throwable because it displays a dialog and this may occur and be benign
+			Activator.logError(MessageFormat.format(Messages.AbstractBrowserPortalPageLayer_BrowserCreateError, e.getMessage()), null);
 		}
 		
 		return composite;
