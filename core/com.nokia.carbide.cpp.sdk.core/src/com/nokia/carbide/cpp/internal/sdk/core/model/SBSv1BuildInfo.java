@@ -322,8 +322,6 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 	public List<String> getBuiltinMacros(ISymbianBuildContext context) {
 		List<String> macros = new ArrayList<String>();
 		
-		macros.add("SBSV2"); //$NON-NLS-1$
-		
 		// add the macros that should always be defined
 		macros.add("__SYMBIAN32__"); //$NON-NLS-1$
 		macros.add("_UNICODE"); //$NON-NLS-1$
@@ -339,9 +337,11 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		return macros;
 	}
 	
-	// TODO: This needs to move under ISymianBuildContext. For abld we can use this method.
-	// For SBSv2, this is configuration dependent and the information is obtained from
-	// the sbs --query=config[<config>] call.
+	/**
+	 * ABLD specifc mechanism of parsing perl script to get targettypes. This is imperfect
+	 * but is the best way to generalize targettypes. Raptor/SBSv2 API improves on this
+	 * by retrieving configuration specific targettypes.
+	 */
 	public List<String> getSupportedTargetTypes() {
 		
 		synchronized (supportedTargetTypesList) {
