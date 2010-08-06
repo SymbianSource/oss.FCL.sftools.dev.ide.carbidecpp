@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
+
 <toc label="Introduction" href="html/concepts/Introduction.html"  >
   <topic label="Carbide.c++ Overview" 			href="html/tasks/start/carbide_overview.htm" >
     <topic href="html/tasks/start/carbide_requirements.htm" label="System Requirements">
@@ -17,8 +18,8 @@
     <topic label="Supported Target Types"		href="html/concepts/build_targets.htm" />
     <topic label="Supported SDKs" 		    	href="html/sos_references.htm" />
     <topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" />
-    <topic label="Concepts" 					href="html/concepts/concepts.htm" />
   </topic>
+   <topic label="Concepts" 					href="html/concepts/concepts.htm" />
    <topic label="Carbide tutorials">
 		<topic label="Emulator Application Projects"				href="html/projects/tutorials/new_proj_from_template_00.htm" >
 		  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
@@ -107,9 +108,9 @@
       <topic label="Build"								href="html/reference/pref_carb_build.htm" />
       <topic label="Debugger"							href="html/reference/pref_carb_debugger.htm" />
       <topic label="Diagnostic Logs"          			href="html/reference/pref_carb_diagnostic_logs.htm" />
-      <topic label="Platform Filtering Preferences"		href="html/tasks/sdks/sdk_platform_filter.htm" />
+      <topic label="Symbian Filtering Preferences"		href="html/tasks/sdks/sdk_platform_filter.htm" />
       <topic label="Preprocess"							href="html/reference/pref_carb_preprocess.htm" />
-      <topic label="SDK Preferences"                  	href="html/reference/pref_carb_sdk_preference.html" />
+      <topic label="SDK Preferences (deprecated)"                  	href="html/reference/pref_carb_sdk_preference.html" />
       <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
       <topic label="Code Styles"						href="html/reference/pref_cpp_code_style.htm" >
         <topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />

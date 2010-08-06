@@ -6,8 +6,8 @@
    <body>
    <h2>INF Editor - Add / Edit MMP File Entry</h2>
    
-      The <b>Add MMP file entry</b> dialog (figure 1) is used to add a mmp file and, if desired, apply the Tidy attribute or specify the Build as ARM option to the mmp file. 
-     <p align="center"><img src="images/inf_editor_addMMP.png" width="600" height="180" /></p>
+      The <b>Add MMP File Entry</b> dialog (figure 1) is used to add a mmp file and apply the Tidy, Manual, and Support attributes. 
+      <p align="center"><img src="images/inf_editor_addMMP.png" width="600" height="200" /></p>
    <p align="left" class="figure">Figure 1 - Add MMP File Entry</p>
 	 <h5>Table 1. Add MMP file entry &mdash; items</h5>
 	 <table width="796"
@@ -25,8 +25,12 @@ border="0" cellpadding="2" cellspacing="0">
          <td class="Cell"><p>Specify the tidy attribute if the release that an .mmp file defines is internal to your component and  not required by other components or for your component to execute.</p></td>
        </tr>
        <tr valign="top">
-         <td class="Cell"><b>Build as ARM</b></td>
-         <td class="Cell">Specifies the <span class="code">build_as_arm</span> statement, which instructs an ARMV5 build to  build the project for the ARM instruction set and not the THUMB instruction set.</td>
+           <td class="Cell"><strong>Manual</strong></td>
+           <td class="Cell">Checkmark to indicate a test that requires manual interaction to complete.</td>
+       </tr>
+       <tr valign="top">
+           <td class="Cell"><strong>Support</strong></td>
+           <td class="Cell">Checkmark to not include the test in a batch file.</td>
        </tr>
      </table>
    <h5>Other references</h5>
