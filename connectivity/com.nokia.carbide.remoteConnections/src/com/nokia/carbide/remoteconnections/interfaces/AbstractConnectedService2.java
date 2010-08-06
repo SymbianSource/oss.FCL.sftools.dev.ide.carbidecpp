@@ -225,4 +225,9 @@ public abstract class AbstractConnectedService2 implements IConnectedService2 {
 	public void setDeviceOS(String familyName, Version version) {
 		// @deprecated
 	}
+
+
+	public void setDeviceOS(String familyName, String version) {
+		// empty implementation
+	}
 }

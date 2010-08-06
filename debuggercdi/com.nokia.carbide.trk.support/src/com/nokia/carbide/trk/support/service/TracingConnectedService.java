@@ -242,8 +242,4 @@ public class TracingConnectedService extends AbstractConnectedService2 {
 		
 		return new TestResult(estatus, getShortDescription(estatus), message);
 	}
-
-	public void setDeviceOS(String familyName, String version) {
-		// unimplemented
-	}
 }
