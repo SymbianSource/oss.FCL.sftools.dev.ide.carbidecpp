@@ -52,6 +52,7 @@ public interface ICarbideProjectInfo {
 	public static final int ACTION_LINK_ONLY = 1;
 	public static final int ACTION_COMPILE_AND_LINK = 2;
 
+
 	/**
 	 * Load all the configurations associated with this project. If this is a new project,
 	 * then a dummy .settings file will be created which can be used to generate new build

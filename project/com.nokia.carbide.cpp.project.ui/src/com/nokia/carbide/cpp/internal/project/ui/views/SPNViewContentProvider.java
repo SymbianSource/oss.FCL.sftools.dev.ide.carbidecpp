@@ -43,6 +43,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -70,6 +71,7 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 import com.nokia.carbide.cdt.builder.BldInfViewPathHelper;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
@@ -106,15 +108,13 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultModelDocumentProvider;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProvider;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IIncludeFileLocator;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
 import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.DependencyScanner;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * Content provider for the SymbianProjectNavigatorView
@@ -2329,7 +2329,20 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
         if (info != null) {
     		IPath infPath = info.getProjectRelativeBldInfPath();
     		if (infPath != null) {
-        		IFile file = getIFileFromBldInfViewPath(project, infPath);
+    			IFile file = null;
+    			if (infPath.isAbsolute()){
+    				// Make sure to get the project relative location if the inf path is absolute.
+    				// This means the project has linked resources
+    				// TODO: Just using for prototyping with using linked resources....
+    				// XXX: This is still not working, as the path is relative to the workspace and
+    				// hence it's wrong. Seems we need to change the container for the SPN to take
+    				// a bld.inf as an absolute path???
+    				IFile infFile = ResourcesPlugin.getWorkspace().getRoot().getFile(infPath);
+    				children.add(infFile);
+    				return children.toArray();
+    			} else {
+    				file = getIFileFromBldInfViewPath(project, infPath);
+    			}
         		if (file != null) {
         			children.add(containerFactory.getBldInfContainer(file, true));
 
@@ -2516,6 +2529,11 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	}
 
 	protected IFile getIFileFromBldInfViewPath(IProject project, IPath pathFromBldInfView) {
+		
+		if (pathFromBldInfView.isAbsolute()){
+			IWorkspace workspace= ResourcesPlugin.getWorkspace();
+			return workspace.getRoot().getFile(pathFromBldInfView);
+		}
 		EpocEnginePathHelper helper = new EpocEnginePathHelper(project);
 		IPath resolvedProjectRelativePath = helper.convertToProject(pathFromBldInfView);
 		if (resolvedProjectRelativePath != null)

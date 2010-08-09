@@ -112,6 +112,10 @@ public class Messages extends NLS {
 	public static String ProjectPropertiesPage_directoryTooLong;
 	
 	public static String ProjectPropertiesPage_directoryIsRoot;
+	
+	public static String ProjectPropertiesPage_linkedProject;
+	
+	public static String ProjectPropertiesPage_linkedProjectTooltip;
 
 	static {
 		// initialize resource bundle

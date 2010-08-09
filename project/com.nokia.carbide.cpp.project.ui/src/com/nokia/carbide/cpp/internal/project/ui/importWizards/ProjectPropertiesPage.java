@@ -45,6 +45,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIHelpIds;
+import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
@@ -53,6 +54,7 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
     private Text projectName;
     private Text rootDirectory;
     private Button browseButton;
+    private Button linkedResourcesCheck;
     
     String projectNameText = ""; //$NON-NLS-1$
     IPath rootDirectoryPath = null;
@@ -143,6 +145,14 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
 		gd.horizontalSpan = 3;
 		helpText.setLayoutData(gd);
 
+		if (ProjectUIPlugin.supportLinkedResources()){
+			linkedResourcesCheck = new Button(parent, SWT.CHECK);
+			linkedResourcesCheck.setFont(font);
+			linkedResourcesCheck.setText(Messages.ProjectPropertiesPage_linkedProject);
+			linkedResourcesCheck.setToolTipText(Messages.ProjectPropertiesPage_linkedProjectTooltip);
+			linkedResourcesCheck.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
+		}
+		
 		setButtonLayoutData(browseButton);
 	}
 
@@ -280,6 +290,10 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
     	return rootDirectoryPath;
     }
 
+    public boolean linkedResourcesEnabled(){
+    	return linkedResourcesCheck.getSelection();
+    }
+    
 	@Override
 	public void setVisible(boolean visible) {
 		// this gets called just before the page goes in or out of view.  if it's

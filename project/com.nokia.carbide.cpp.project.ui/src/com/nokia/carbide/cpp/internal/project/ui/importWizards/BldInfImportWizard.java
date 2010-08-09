@@ -20,12 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -82,11 +84,13 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
     	
 		final String projectName = projectPropertiesPage.getProjectName();
 		final IPath rootDirectory = projectPropertiesPage.getRootDirectory();
+		final boolean isLinkedProject = projectPropertiesPage.linkedResourcesEnabled();
 		
 		// calculate the project relative path to the bld.inf file.
 		IPath absoluteBldInfPath = new Path(getBldInfFile());
 		assert(rootDirectory.isPrefixOf(absoluteBldInfPath));
 		final String projectRelativePath = absoluteBldInfPath.removeFirstSegments(rootDirectory.segmentCount()).setDevice(null).toOSString();
+		final String absoluteInfPath = absoluteBldInfPath.toOSString();
 		
 		// if all mmps are checked then don't pass any to createProject.  that
 		// way the project setting will be set to build bld.inf.
@@ -122,13 +126,21 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 				} // for
 
 				IProject newProject = null;
-        		newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
+				if (isLinkedProject){
+					newProject = ProjectCorePlugin.createProject(projectName, null);
+					newProject.getFolder(rootDirectory.lastSegment()).createLink(rootDirectory.toFile().toURI(), IResource.BACKGROUND_REFRESH, new NullProgressMonitor());
+				} else {
+					newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
+				}
         		monitor.worked(1);
-
+        		
     			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder()));
 
-    			// TODO pass PKG file path to postProjectCreatedActions, currently passing null
-        		ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
+    			if (isLinkedProject){
+    				ProjectCorePlugin.postProjectCreatedActions(newProject, absoluteInfPath, selectedConfigs, components, debugMMP, null, monitor);
+    			} else {
+    				ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
+    			}
         		
         		if (monitor.isCanceled()) {
 	    			// the user canceled the import so delete the project
