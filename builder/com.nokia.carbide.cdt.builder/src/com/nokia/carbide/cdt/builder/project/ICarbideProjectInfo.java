@@ -82,7 +82,7 @@ public interface ICarbideProjectInfo {
 	
 	/**
 	 * Check whether or not all components of the inf are built or subcomponents.
-	 * Building from inf means that only 'abld build' is invoked rather than invoking 'abld build' on specific MMP and makefiles
+	 * Building from inf means that the build system is invoked on a single bld.inf, rather than build steps for individual MMPs
 	 * @return true when building from bld.inf
 	 */
 	public boolean isBuildingFromInf();

@@ -818,6 +818,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param bldmakeArgs array of String arguments to be passed to bldmake
 	 * @param removeMarkers project markers will be removed when true
 	 * @return true if operation was successful, false otherwise
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	public static boolean invokeBldmakeCommand(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher, String[] bldmakeArgs, boolean removeMarkers) {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
@@ -896,6 +897,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param config the build configuration context
 	 * @param launcher the Carbide launcher
 	 * @return false if makefile generation was necessary but failed, true otherwise
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	public static boolean generateBldmakeMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher) {
 
@@ -933,6 +935,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * is newer than any of the makefiles, then returns true.
 	 * @param config - The build configuration to check the makefiles for
 	 * @return true if makefiles need to be regenerated (bldmake bldfiles platform)
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	protected static boolean needsBldmakeMakefileGeneration(ICarbideBuildConfiguration config) {
 		return getBuilder(config.getCarbideProject().getProject()).needsBldmakeMakefileGeneration(config);
@@ -990,6 +993,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param progress monitor to allow user to cancel
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 * @since 2.0
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists, IProgressMonitor progress) {
 
@@ -1026,6 +1030,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param componentPath the absolute file system path of the component
 	 * @param isTest true for test components, false otherwise
 	 * @return false if any makefile generation was necessary but failed, true otherwise
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, progress);
@@ -2026,6 +2031,11 @@ public static String[] getParserIdArray(int id) {
 		return false;
     }
     
+    /**
+     * @deprecated - Abld support to be be removed vFuture
+     * @param config
+     * @return
+     */
     public static IPath getBuilderMakefileDir(ICarbideBuildConfiguration config){
     	return getBuilder(config.getCarbideProject().getProject()).getMakefileDirectory(config);
     }

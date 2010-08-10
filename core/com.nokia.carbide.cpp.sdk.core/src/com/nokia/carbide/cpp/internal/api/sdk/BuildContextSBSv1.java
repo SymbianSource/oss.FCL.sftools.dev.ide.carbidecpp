@@ -34,6 +34,10 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
+/**
+ * @deprecated - Temporary support exists for abld on Symbian^2 but will be removed, vFuture
+ *
+ */
 public class BuildContextSBSv1 implements ISBSv1BuildContext {
 
 	private String sdkId;

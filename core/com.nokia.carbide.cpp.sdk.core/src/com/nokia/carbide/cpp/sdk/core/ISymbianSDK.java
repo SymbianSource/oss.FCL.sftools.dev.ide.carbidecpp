@@ -35,7 +35,7 @@ public interface ISymbianSDK {
 	/**
 	 * Returns build info for a particular builder.
 	 * @param builderId id string of a builder (ISymbianBuilderID constant)
-	 * @return build info
+	 * @return ISDKBuildInfo - may be null if the builderId is deprecated.
 	 * @since 3.0
 	 * @see {@link ISymbianBuilderID}
 	 */
