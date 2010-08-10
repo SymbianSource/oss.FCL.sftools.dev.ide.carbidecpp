@@ -35,22 +35,50 @@
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
-            id="com.nokia.carbide.ide.cheatsheets"
-            name="Carbide How to..." />
+            id="com.nokia.carbide.how_to.cheatsheets"
+            name="Carbide How do I..." />
             
-      <cheatsheet
-            category="com.nokia.carbide.ide.cheatsheets"
-            composite="false"
-            contentFile="html/cheatsheets/getStarted_cs.xml"
-            id="com.nokia.carbide.cpp.doc.user.getStarted"
-            name="Application Project Example"/>
-      <cheatsheet
-            category="com.nokia.carbide.ide.cheatsheets"
-            composite="false"
-            contentFile="html/cheatsheets/getStarted_cs.xml"
-            id="com.nokia.carbide.cpp.doc.user.dll_example"
-            name="DLL Project Example">
-      </cheatsheet>
+            
+         <!-- HOW TO PROJECTS CARBIDE 								-->
+         
+         <!-- HOW TO DEBUG CARBIDE 									-->
+         
+         <!-- HOW TO CUSTOMIZE CARBIDE 								-->
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_customize_cmd_groups.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_cmd_groups"
+           name="Customize Toolbars and Menus"/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_customize_code_styles.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_code_styles"
+           name="Customize Code Styles"/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_customize_editors.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_editors"
+           name="Customize Editors"/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_customize_key_cmds.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_key_cmds"
+           name="Customize Key Commands"/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_customize_share_settings.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_share_settings"
+           name="Share my Settings..."/>
+
    </extension>
 
    <extension
