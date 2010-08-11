@@ -2332,6 +2332,7 @@ public class EpocEngineHelper {
 	 * @param config - The Carbide build configuration to check against
 	 * @param mmpFullPath - The path to the MMP file that builds the binary
 	 * @return A string of the MD5 hash. Returns an empty string if the configuration is not a binary variant or cannot be determined.
+	 * @deprecated - ABLD support to be removed vFuture
 	 */
 	static public String getMD5HashForBinaryVariant(final ICarbideBuildConfiguration config, final IPath mmpFullPath){
 		
@@ -2358,6 +2359,7 @@ public class EpocEngineHelper {
 	 * @param mmpData
 	 * @param config
 	 * @return
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	private static File getMakeFileForSymbianBinaryVariant(IMMPData mmpData, ICarbideBuildConfiguration config){
 		
@@ -2391,6 +2393,7 @@ public class EpocEngineHelper {
 	 * @param makefile - The build makefile to parse to check for the MD5
 	 * @param config - The build configuration to check under
 	 * @return The string for the MD5 hash. An empty string if it cannot be determined.
+	 * @deprecated - abld support to be removed
 	 */
 	private static String getMD5VariantFromMakefile(File makefile, ICarbideBuildConfiguration config){
 		// We could also use the .vmap in the release folder as well.

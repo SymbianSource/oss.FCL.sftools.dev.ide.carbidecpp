@@ -8,6 +8,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
  * Build Context specific information for the SBS/Raptor Symbian Builder.
  * @see ICarbideBuildConfigation
  * @since 3.0
+ * @deprecated - Temporary support exists for abld on Symbian^2 but will be removed, vFuture
  *
  */
 public interface ISBSv1BuildContext extends ISymbianBuildContext {
@@ -29,6 +30,7 @@ public interface ISBSv1BuildContext extends ISymbianBuildContext {
 	 * @return The base platform string.
 	 * @see isSymbianBinaryVariation()
 	 * @since 2.0
+	 * @deprecated
 	 */
 	public String getBasePlatformForVariation();
 	
@@ -36,7 +38,7 @@ public interface ISBSv1BuildContext extends ISymbianBuildContext {
 	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
 	 * This only applies when building with SBSv1 (bldmake, abld)
 	 * @return IBuildArgumentsInfo instance, never null
-	 *  
+	 * @deprecated 
 	 */
 	IBuildArgumentsInfo getBuildArgumentsInfo();
 	
@@ -44,6 +46,7 @@ public interface ISBSv1BuildContext extends ISymbianBuildContext {
 	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
 	 * This only applies when building with SBSv1 (bldmake, abld)
 	 * @return A copy of BuildArgumentsInfo instance, never null
+	 * @deprecated
 	 */
 	BuildArgumentsInfo getBuildArgumentsInfoCopy();
 	
@@ -51,6 +54,7 @@ public interface ISBSv1BuildContext extends ISymbianBuildContext {
 	 * Set the build arguments info for SBSv2 build arguments. This only sets values in memory, does
 	 * not write settings to disk. See 
 	 * @return IBuildArgumentsInfo instance, never null
+	 * @deprecated
 	 */
 	void setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo);
 	

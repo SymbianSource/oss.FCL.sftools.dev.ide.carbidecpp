@@ -22,20 +22,28 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**
  * Interface for SBSv1 specific build information.
+ * @since 3.0
+ * @deprecated - Temporary support exists for abld on Symbian^2 but will be removed, vFuture
  *
  */
 public interface ISBSv1BuildInfo extends ISDKBuildInfo {
-
+	
+	/**
+	 * Clears the list of macros specific to all abld build platforms
+	 * @deprecated
+	 */
 	void clearPlatformMacros();
 
 	/**
 	 * Returns the list of all available platforms for a SDK.
 	 * @return a list of platform names which may be empty.
+	 * @deprecated
 	 */
 	List<String> getAvailablePlatforms();
 
 	/**
 	 * Get the BSF catalog for a SDK.
+	 * @deprecated
 	 */
 	IBSFCatalog getBSFCatalog();
 
@@ -47,11 +55,13 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 * </p>
 	 * @param platform the platform name
 	 * @return a list of macros, which may be empty.
+	 * @deprecated
 	 */
 	List<String> getPlatformMacros(String platform);
 
 	/**
 	 * Get the Symbian Binary Variation (SBV) catalog for a SDK.
+	 * @deprecated
 	 */
 	ISBVCatalog getSBVCatalog();
 
@@ -59,6 +69,7 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 * Get a list of macros specific to the given target type, e.g. "__EXE__" or "__DLL__"
 	 * @param targettype
 	 * @return list of macro strings, may be empty
+	 * @deprecated
 	 */
 	List<String> getTargetTypeMacros(String targettype);
 
@@ -67,15 +78,20 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 * S603rd edition SDKs contain this information and it's used to differentiate between
 	 * varios S60 SDK releases. Other vendors, such as UIQ may put their macros in the variant HRH file.
 	 * @return A list of macros just returned by name.
+	 * @deprecated
 	 */
 	public List<String> getVendorSDKMacros();
 
 	/**
 	 * Tells whether or not the plug-in installer has sniffed this SDK for eclipse plug-ins to install.
 	 * @return true if the SDK was scanned
+	 * @deprecated
 	 */
 	boolean isPreviouslyScanned();
-
+	
+	/**
+	 * @deprecated
+	 */
 	void setPreviouslyScanned(boolean wasScanned);
 
 	/**
@@ -85,6 +101,7 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 * </p>
 	 *
 	 * @return a list of macros which may be empty.
+	 * @deprecated
 	 */
 	List<String> getBuiltinMacros(ISymbianBuildContext context);
 
@@ -92,7 +109,9 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 * Get a list of supported targettypes listed by this SDK. This routine parses the 
 	 * \epoc32\tools\trgttype.pm file to build it's list.
 	 * @return A list of targettype names that can be used in an MMP file
+	 * @deprecated
 	 */
 	List<String> getSupportedTargetTypes();
 	
+	 * @deprecated
 }

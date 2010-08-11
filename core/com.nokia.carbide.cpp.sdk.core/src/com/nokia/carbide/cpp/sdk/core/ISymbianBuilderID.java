@@ -18,7 +18,10 @@ package com.nokia.carbide.cpp.sdk.core;
  * @since 3.0
  */
 public interface ISymbianBuilderID {
-
+	
+	/**
+	 * @deprecated - SBSv1 / ABLD builder will be removed in vFuture.
+	 */
 	public static final String SBSV1_BUILDER = "SBSv1Builder";
 	public static final String SBSV2_BUILDER = "SBSv2Builder";
 
