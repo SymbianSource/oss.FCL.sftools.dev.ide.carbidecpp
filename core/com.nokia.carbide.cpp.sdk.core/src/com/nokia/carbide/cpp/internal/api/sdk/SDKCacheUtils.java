@@ -17,11 +17,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.CacheUtils;
 
 public class SDKCacheUtils extends CacheUtils {
+
+	private static final String CACHE_FOLDER_NAME = "CarbideSDKCache"; //$NON-NLS-1$
+	private static SDKCacheUtils cache;
+
+	public static SDKCacheUtils getCache() {
+		if (cache == null)
+		{
+			IPath path = new Path(System.getProperty("user.home"));
+			cache = new SDKCacheUtils(path.append(CACHE_FOLDER_NAME));
+		}
+		return cache;
+	}
 
 	public SDKCacheUtils(IPath defaultLocation) {
 		super(defaultLocation);

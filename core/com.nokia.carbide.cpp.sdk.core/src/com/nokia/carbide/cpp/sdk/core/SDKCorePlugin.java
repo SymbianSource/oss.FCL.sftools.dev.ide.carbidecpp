@@ -12,8 +12,6 @@
 */
 package com.nokia.carbide.cpp.sdk.core;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
@@ -34,14 +32,10 @@ public class SDKCorePlugin extends Plugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.sdk.core"; //$NON-NLS-1$
 
-	public static final String CACHE_FOLDER_NAME = "CarbideSDKCache"; //$NON-NLS-1$
-
 	// The shared instance
 	private static SDKCorePlugin plugin;
 	
 	private static ISDKManager sdkManager;
-	
-	private static SDKCacheUtils cache;
 	
 	/**
 	 * The constructor
@@ -64,8 +58,7 @@ public class SDKCorePlugin extends Plugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		try {
-			if (cache != null)
-				cache.flushAll();
+			SDKCacheUtils.getCache().flushAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,17 +96,4 @@ public class SDKCorePlugin extends Plugin {
 		return sdkManager;
 	}
 	
-	/**
-	 * Get the persistent cache this plugin.
-	 * @return PersistentCache instance
-	 */
-	public static SDKCacheUtils getCache() {
-		if (cache == null)
-		{
-			IPath path = new Path(System.getProperty("user.home"));
-			cache = new SDKCacheUtils(path.append(CACHE_FOLDER_NAME));
-		}
-		return cache;
-	}
-
 }
