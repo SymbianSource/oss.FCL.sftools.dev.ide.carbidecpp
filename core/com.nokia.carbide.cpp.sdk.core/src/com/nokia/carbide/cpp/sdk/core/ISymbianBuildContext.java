@@ -147,7 +147,7 @@ public interface ISymbianBuildContext {
 	/**
 	 * This is the list of macros used to preprocess CPP source files.
 	 * @return a list of defines.
-	 * @since 3.0
+	 * @since 
 	 */
 	List<IDefine> getBuildMacros();
 	
