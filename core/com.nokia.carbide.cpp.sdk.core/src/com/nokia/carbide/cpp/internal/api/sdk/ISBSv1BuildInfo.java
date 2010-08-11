@@ -113,5 +113,4 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	 */
 	List<String> getSupportedTargetTypes();
 	
-	 * @deprecated
 }
