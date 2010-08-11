@@ -89,6 +89,7 @@
       <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data view">
         <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
       </topic>
+      <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data view"></topic>
       <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
       <topic label="Variables and Expressions"					href="html/concepts/working_with_variables.htm" >
         <topic label="Variables view"							href="html/reference/view_variables.htm" />
@@ -286,7 +287,7 @@
       <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching to a Symbian OS Process"></topic>
       <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
       <topic href="html/concepts/arm_registers.htm" label="Registers"></topic>
-      <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data View"></topic>
+      <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data View"></topic>
         
     
     <topic label="Stop mode projects" 				href="html/tasks/StopModeToc.htm">
