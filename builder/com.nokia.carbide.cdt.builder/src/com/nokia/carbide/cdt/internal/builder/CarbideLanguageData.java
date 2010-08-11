@@ -50,6 +50,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
@@ -291,27 +292,8 @@ public class CarbideLanguageData extends CLanguageData {
 		Map<String, String> macros = new HashMap<String, String>();
 		
 		// platform macros
-		if (context instanceof ISBSv1BuildContext) {
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			// platform macros
-			for (String platMacro : sbsv1BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString())) {
-				macros.put("__" + platMacro + "__", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			}
-			
-			// vendor macros (e.g. __SERIES60_3x__)
-			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
-				macros.put(builtinMacro, ""); //$NON-NLS-1$
-			}
-			
-			// built in macros
-			for (String builtinMacro : sbsv1BuildInfo.getBuiltinMacros(context)) {
-				macros.put(builtinMacro, ""); //$NON-NLS-1$
-			}
-			
-		} else {
-			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-			// platform macros
-			macros.putAll(sbsv2BuildInfo.getPlatformMacros(carbideBuildConfig.getPlatformString()));			
+		for (IDefine metaDataDefine : context.getMetadataMacros()){
+			macros.put(metaDataDefine.getName(), metaDataDefine.getExpansion());
 		}
 		
 		if ((carbideBuildConfig).hasSTDCPPSupport()){
@@ -324,17 +306,9 @@ public class CarbideLanguageData extends CLanguageData {
 		// more than one but all have the same target type macro.  it wouldn't make sense to add different
 		// target type macros like __EXE__ and __DLL__.
 		if (targetTypes.size() == 1) {
-			if (context instanceof ISBSv1BuildContext) {
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				for (String targetTypeMacro : sbsv1BuildInfo.getTargetTypeMacros(targetTypes.get(0))) {
-					macros.put(targetTypeMacro, ""); //$NON-NLS-1$
-				}
-			} else {
-				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-				for (String targetTypeMacro : sbsv2BuildInfo.getTargetTypeMacros(targetTypes.get(0))) {
-					macros.put(targetTypeMacro, ""); //$NON-NLS-1$
-				}
-			}
+			// Just get the macro for the first MMP found
+			IDefine ttMacro = context.getTargetTypeMacro(targetTypes.get(0));
+			macros.put(ttMacro.getName(), ttMacro.getExpansion());
 		}
 		
 		// get the list of all mmp files selected for the build configuration

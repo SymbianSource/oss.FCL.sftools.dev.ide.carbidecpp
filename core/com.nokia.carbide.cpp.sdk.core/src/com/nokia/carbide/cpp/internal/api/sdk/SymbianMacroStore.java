@@ -193,6 +193,7 @@ public class SymbianMacroStore {
      * @param osVersion - A version object. Only the major and minor rev are checked.
      * @param branch - An OS branch (e.g. 'a' or 'b') or an empty string if none.
      * @return A full list of define macro names (no values). Returns an empty list if the OS version is not in the store
+     * @deprecated - use {@link ISymbianBuildContext#getVariantHRHDefines()}
      */
     public List<String> getOSMacros(Version osVersion){
     	List<String> osMacroList = new ArrayList<String>();

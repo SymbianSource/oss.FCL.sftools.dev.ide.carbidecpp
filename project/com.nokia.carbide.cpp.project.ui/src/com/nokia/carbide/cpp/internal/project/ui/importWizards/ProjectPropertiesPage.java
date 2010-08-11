@@ -16,7 +16,6 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.importWizards;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -291,6 +290,10 @@ public class ProjectPropertiesPage extends WizardPage implements Listener {
     }
 
     public boolean linkedResourcesEnabled(){
+    	if (linkedResourcesCheck == null){
+    		return false;
+    	}
+    	
     	return linkedResourcesCheck.getSelection();
     }
     

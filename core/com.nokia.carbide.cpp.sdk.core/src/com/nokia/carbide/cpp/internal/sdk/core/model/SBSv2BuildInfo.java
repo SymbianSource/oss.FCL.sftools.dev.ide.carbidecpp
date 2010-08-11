@@ -48,7 +48,10 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	private ISymbianSDK sdk;
 	private List<ISymbianBuildContext> sbsv2FilteredConetxts = new ArrayList<ISymbianBuildContext>();
 	private boolean wasScanned = false;
-	private Map<String, Map<String, String>> cachedPlatformMacros = new HashMap<String, Map<String, String>>();
+	/** from <metadata> element from sbs --query=config[] */
+	private Map<String, Map<String, String>> cachedMetadataMacros = new HashMap<String, Map<String, String>>();
+	/** from <build> element from sbs --query=config[] */
+	private Map<String, Map<String, String>> cachedBuildMacros = new HashMap<String, Map<String, String>>();
 
 	private Map<String, String> aliasToMeaningMap = new HashMap<String, String>();
 	private List<String> productList = null;
@@ -188,25 +191,46 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		return meaning;
 	}
 
-	public Map<String, String> getPlatformMacros(String platform) {
-		Map<String, String> platformMacros = cachedPlatformMacros.get(platform);
+	public Map<String, String> getMetadataMacros(String buildAlias) {
+		Map<String, String> platformMacros = cachedMetadataMacros.get(buildAlias);
 		if (platformMacros == null) {
 			platformMacros = new HashMap<String, String>();
-			synchronized (cachedPlatformMacros) {
+			synchronized (cachedMetadataMacros) {
 				if (sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) {
 					getFilteredBuildConfigurations();
 				}
 				if (sbsv2FilteredConetxts.size() > 0) {
 					for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
-						if (context.getPlatformString().equalsIgnoreCase(platform)) {
+						if (((ISBSv2BuildContext)context).getSBSv2Alias().equalsIgnoreCase(buildAlias)) {
 							platformMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getMetaDataMacros());
 						}
 					}
-					cachedPlatformMacros.put(platform, platformMacros);
+					cachedMetadataMacros.put(buildAlias, platformMacros);
 				}
 			}
 		}
 		return platformMacros;
+	}
+	
+	public Map<String, String> getBuildMacros(String buildAlias) {
+		Map<String, String> buildMacros = cachedBuildMacros.get(buildAlias);
+		if (buildMacros == null) {
+			buildMacros = new HashMap<String, String>();
+			synchronized (cachedBuildMacros) {
+				if (sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) {
+					getFilteredBuildConfigurations();
+				}
+				if (sbsv2FilteredConetxts.size() > 0) {
+					for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
+						if (((ISBSv2BuildContext)context).getSBSv2Alias().equalsIgnoreCase(buildAlias)) {
+							buildMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getBuildMacros());
+						}
+					}
+					cachedBuildMacros.put(buildAlias, buildMacros);
+				}
+			}
+		}
+		return buildMacros;
 	}
 
 	/**
@@ -231,31 +255,30 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		return cachedVariantHRHFile;
 	}
 
-	public List<String> getTargetTypeMacros(String targettype) {
+	public String getTargetTypeMacro(String targettype) {
 		// this is based on \epoc32\tools\trgtype.pm which changes from
 		// OS version to OS version, but largely remains constant with
 		// regards to the basic type.
-		List<String> macros = new ArrayList<String>();
 		
 		// if it's not one of these then it's a DLL
 		if (targettype.compareToIgnoreCase("EPOCEXE") == 0) {
-			macros.add("__EXEDLL__");
+			return "__EXEDLL__";
 		} else if (targettype.compareToIgnoreCase("EXEDLL") == 0) {
-			macros.add("__EXEDLL__");
+			return "__EXEDLL__";
 		} else if (targettype.compareToIgnoreCase("EXE") == 0) {
-			macros.add("__EXE__");
+			return "__EXE__";
 		} else if (targettype.compareToIgnoreCase("EXEXP") == 0) {
-			macros.add("__EXE__");
+			return "__EXE__";
 		} else if (targettype.compareToIgnoreCase("IMPLIB") == 0) {
-			macros.add("__IMPLIB__");
+			return "__IMPLIB__";
 		} else if (targettype.compareToIgnoreCase("KLIB") == 0) {
-			macros.add("__LIB__");
+			return "__LIB__";
 		} else if (targettype.compareToIgnoreCase("LIB") == 0) {
-			macros.add("__LIB__");
+			return "__LIB__";
 		} else {
-			macros.add("__DLL__");
+			return "__DLL__";
 		}
-		return macros;
+
 	}
 
 	public boolean isPreviouslyScanned() {

@@ -14,11 +14,11 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
 
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -409,14 +409,32 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	@Override
 	public List<IDefine> getBuildMacros() {
-		// TODO Auto-generated method stub
-		return null;
+		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
+		Map<String, String> buildMacroMap = sbsv2BldInfo.getBuildMacros(getSBSv2Alias());
+		List<IDefine> defines = new ArrayList<IDefine>();
+		for (String macroName : buildMacroMap.keySet()){
+			defines.add(DefineFactory.createDefine(macroName, buildMacroMap.get(macroName)));
+		}
+
+		return defines;
 	}
 
 	@Override
 	public List<IDefine> getMetadataMacros() {
-		// TODO Auto-generated method stub
-		return null;
+		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
+		Map<String, String> platMacroMap = sbsv2BldInfo.getMetadataMacros(getSBSv2Alias());
+		List<IDefine> defines = new ArrayList<IDefine>();
+		for (String macroName : platMacroMap.keySet()){
+			defines.add(DefineFactory.createDefine(macroName, platMacroMap.get(macroName)));
+		}
+		
+		return defines;
+	}
+
+	@Override
+	public IDefine getTargetTypeMacro(String targettype) {
+		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+		return DefineFactory.createDefine(sbsv2BuildInfo.getTargetTypeMacro(targettype));
 	}
 
 

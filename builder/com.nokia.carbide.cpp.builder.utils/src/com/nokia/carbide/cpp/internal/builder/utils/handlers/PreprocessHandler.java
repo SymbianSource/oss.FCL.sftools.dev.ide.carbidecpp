@@ -81,13 +81,13 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.LanguageSelectionDialog;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage;
-import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -411,30 +411,15 @@ public class PreprocessHandler extends AbstractHandler {
 	
 	private List<String> getMacros(ICarbideBuildConfiguration buildConfig, final IPath filePath, final IProgressMonitor monitor) {
 		final List<String> macros = new ArrayList<String>();
-		ISymbianSDK sdk = buildConfig.getSDK();
-		if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-			// platform macros
-			for (String platMacro : sbsv1BuildInfo.getPlatformMacros(buildConfig.getPlatformString())) {
-				macros.add("__" + platMacro + "__"); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-			// vendor macros (e.g. __SERIES60_3x__)
-			for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
-				macros.add(builtinMacro);
-			}
-			
-			// built in macros
-			for (String builtinMacro : sbsv1BuildInfo.getBuiltinMacros(buildConfig.getBuildContext())) {
-				macros.add(builtinMacro);
-			}
-			
-		} else {
-			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-			// platform macros
-			for (Iterator<String> it = sbsv2BuildInfo.getPlatformMacros(buildConfig.getPlatformString()).keySet().iterator(); it.hasNext(); ) { 
-				String platMacro = it.next();
-				macros.add(platMacro);
-			} 
+		
+		List<IDefine> buildMacros = buildConfig.getBuildContext().getBuildMacros();
+		for (IDefine define : buildMacros){
+			macros.add(define.getName());
+		}
+		
+		List<IDefine> metaDataMacros = buildConfig.getBuildContext().getMetadataMacros();
+		for (IDefine define : metaDataMacros){
+			macros.add(define.getName());
 		}
 		
 		if (buildConfig.hasSTDCPPSupport()){
@@ -458,7 +443,7 @@ public class PreprocessHandler extends AbstractHandler {
 						String targetType = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
 						if (targetType != null) {
 							targetType = targetType.toUpperCase();
-							macros.add(targetType);
+							macros.add("__" + targetType + "__");
 						}
 						
 						// mmp macros

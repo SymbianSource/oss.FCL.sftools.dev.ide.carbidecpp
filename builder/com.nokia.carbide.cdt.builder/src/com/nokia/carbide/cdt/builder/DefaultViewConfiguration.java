@@ -205,28 +205,8 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 		if (context != null) {
 			ISymbianSDK sdk = context.getSDK();
 
-			if (context instanceof ISBSv2BuildContext){
-				macros.add(DefineFactory.createDefine("SBSV2", null));
-				ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
-				if (sbsv2BuildInfo != null) {
-					Map<String, String> platMacros = sbsv2BuildInfo.getPlatformMacros(context.getPlatformString());
-					for (Iterator<String> it = platMacros.keySet().iterator(); it.hasNext(); ) { 
-						String name = it.next();
-						String value = platMacros.get(name);
-						macros.add(DefineFactory.createDefine(name, value));
-					} 
-				}
-			} else {
-				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-				if (sbsv1BuildInfo != null) {
-					for (String platMacro : sbsv1BuildInfo.getPlatformMacros(context.getPlatformString())) {
-						macros.add(DefineFactory.createDefine(platMacro.trim(), platMacro.trim()));
-					}
-					
-					for (String vendorMacro : sbsv1BuildInfo.getVendorSDKMacros()){
-						macros.add(DefineFactory.createDefine(vendorMacro.trim(), vendorMacro.trim()));
-					}
-				}
+			for (IDefine metaDataMacro : context.getMetadataMacros()) {
+				macros.add(metaDataMacro);
 			}
 			
 			for (IDefine macro : context.getVariantHRHDefines()) {

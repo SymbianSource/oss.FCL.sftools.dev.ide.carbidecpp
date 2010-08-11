@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
@@ -677,15 +678,42 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 
 	@Override
 	public List<IDefine> getBuildMacros() {
-		// TODO Auto-generated method stub
-		return null;
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		List<IDefine> defines = new ArrayList<IDefine>();
+		for (String builtinMacro : sbsv1BuildInfo.getVendorSDKMacros()) {
+			defines.add(DefineFactory.createDefine(builtinMacro));
+		}
+		
+		for (String builtinMacro : sbsv1BuildInfo.getBuiltinMacros(this)) {
+			defines.add(DefineFactory.createDefine(builtinMacro));
+		}
+		
+		for (String variantCFGMacro : getVariantCFGMacros()) {
+			defines.add(DefineFactory.createDefine(variantCFGMacro));
+		}
+		
+		for (String platMacro : sbsv1BuildInfo.getPlatformMacros(getPlatformString())) {
+			defines.add(DefineFactory.createDefine("__" + platMacro + "__")); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		
+		return defines;
 	}
 
 	@Override
 	public List<IDefine> getMetadataMacros() {
-		// TODO Auto-generated method stub
-		return null;
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		List<IDefine> defines = new ArrayList<IDefine>();
+		for (String platMacro : sbsv1BuildInfo.getPlatformMacros(getPlatformString())) {
+			defines.add(DefineFactory.createDefine(platMacro)); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		
+		return defines;
+	}
+
+	@Override
+	public IDefine getTargetTypeMacro(String targettype) {
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		return DefineFactory.createDefine(sbsv1BuildInfo.getTargetTypeMacro(targettype));
 	}
 	
-
 }

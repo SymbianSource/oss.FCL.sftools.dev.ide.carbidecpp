@@ -66,12 +66,12 @@ public interface ISBSv1BuildInfo extends ISDKBuildInfo {
 	ISBVCatalog getSBVCatalog();
 
 	/**
-	 * Get a list of macros specific to the given target type, e.g. "__EXE__" or "__DLL__"
+	 * Get the macro for the given target type, e.g. "__EXE__" or "__DLL__"
 	 * @param targettype
 	 * @return list of macro strings, may be empty
 	 * @deprecated
 	 */
-	List<String> getTargetTypeMacros(String targettype);
+	String getTargetTypeMacro(String targettype);
 
 	/**
 	 * Get a list of macros that are used to distinguish a SDK. Typically only

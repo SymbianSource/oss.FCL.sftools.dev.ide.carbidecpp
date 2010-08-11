@@ -27,16 +27,27 @@ import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 public interface ISBSv2BuildInfo extends ISDKBuildInfo {
 
 	/**
-	 * Returns the list of all platform macros for a SDK.
+	 * Returns the list of all platform/metadata macros for a given build alias (sbs configuration).
 	 * <p>
-	 * This is somewhat equivalent to calling "bldmake plat" on the command line
-	 * These are the macros that can be used in MMP and INF files. They are only given by name (no value)
+	 * These are the &lt;metadata/&gt; macros from a query to Raptor with 'sbs --query=config[<config>].
+	 * These are the macros that can be used in MMP and INF files.
 	 * </p>
-	 * @param platform the platform name
-	 * @return a map of macros and values, which may be empty.
+	 * @param sbs build alias
+	 * @return a map of macros and value pairs, which may be empty.
 	 */
-	Map<String, String> getPlatformMacros(String platform);
+	Map<String, String> getMetadataMacros(String buildAlias);
 
+	/**
+	 * Returns the list of all build macros fro a given build alias (sbs configuration).
+	 * <p>
+	 * These are the &lt;build/&gt; macros from a query to Raptor with 'sbs --query=config[<config>].
+	 * These are the macros that can be used in C/C++ files.
+	 * </p>
+	 * @param buildAlias
+	 * @return a map of macros and value pairs, which may be empty.
+	 */
+	public Map<String, String> getBuildMacros(String buildAlias);
+	
 	/**
 	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
 	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
@@ -44,11 +55,11 @@ public interface ISBSv2BuildInfo extends ISDKBuildInfo {
 	public IPath getPrefixFromVariantCfg();
 
 	/**
-	 * Get a list of macros specific to the given target type, e.g. "__EXE__" or "__DLL__"
+	 * Get the macro for the given target type, e.g. "__EXE__" or "__DLL__"
 	 * @param targettype
 	 * @return list of macro strings, may be empty
 	 */
-	List<String> getTargetTypeMacros(String targettype);
+	String getTargetTypeMacro(String targettype);
 
 	/**
 	 * Tells whether or not the plug-in installer has sniffed this SDK for eclipse plug-ins to install.

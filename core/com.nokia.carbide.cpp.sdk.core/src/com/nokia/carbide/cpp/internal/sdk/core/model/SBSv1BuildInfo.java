@@ -153,31 +153,30 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		return sbvCatalog;
 	}
 
-	public List<String> getTargetTypeMacros(String targettype) {
+	public String getTargetTypeMacro(String targettype) {
 		// this is based on \epoc32\tools\trgtype.pm which changes from
 		// OS version to OS version, but largely remains constant with
 		// regards to the basic type.
-		List<String> macros = new ArrayList<String>();
 		
 		// if it's not one of these then it's a DLL
 		if (targettype.compareToIgnoreCase("EPOCEXE") == 0) {
-			macros.add("__EXEDLL__");
+			return "__EXEDLL__";
 		} else if (targettype.compareToIgnoreCase("EXEDLL") == 0) {
-			macros.add("__EXEDLL__");
+			return "__EXEDLL__";
 		} else if (targettype.compareToIgnoreCase("EXE") == 0) {
-			macros.add("__EXE__");
+			return "__EXE__";
 		} else if (targettype.compareToIgnoreCase("EXEXP") == 0) {
-			macros.add("__EXE__");
+			return "__EXE__";
 		} else if (targettype.compareToIgnoreCase("IMPLIB") == 0) {
-			macros.add("__IMPLIB__");
+			return "__IMPLIB__";
 		} else if (targettype.compareToIgnoreCase("KLIB") == 0) {
-			macros.add("__LIB__");
+			return "__LIB__";
 		} else if (targettype.compareToIgnoreCase("LIB") == 0) {
-			macros.add("__LIB__");
+			return "__LIB__";
 		} else {
-			macros.add("__DLL__");
+			return "__DLL__";
 		}
-		return macros;
+
 	}
 
 	public List<String> getVendorSDKMacros() {

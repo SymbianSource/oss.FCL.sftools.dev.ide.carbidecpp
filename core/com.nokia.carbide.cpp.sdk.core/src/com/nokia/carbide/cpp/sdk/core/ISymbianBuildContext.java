@@ -147,14 +147,24 @@ public interface ISymbianBuildContext {
 	/**
 	 * This is the list of macros used to preprocess CPP source files.
 	 * @return a list of defines.
+	 * @since 3.0
 	 */
 	List<IDefine> getBuildMacros();
 	
 	/**
 	 * This is the list of macros used to preprocess Symbian build files (bld.inf & mmp)
 	 * @return a list of defines
+	 * @since 3.0
 	 */
 	List<IDefine> getMetadataMacros();
+	
+	/**
+	 * Get a list of macros specific to the given target type, e.g. "__EXE__" or "__DLL__"
+	 * @param targettype
+	 * @return list of macro strings, may be empty
+	 * @since 3.0
+	 */
+	IDefine getTargetTypeMacro(String targettype);
 	
 	
 }
